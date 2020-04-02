@@ -24,6 +24,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.MailTo
 import android.net.http.SslError
 import android.os.Build
@@ -133,7 +134,13 @@ class LightningWebClient(
         if (lightningView.invertPage) {
             view.evaluateJavascript(invertPageJs.provideJs(), null)
         }
-        uiController.tabChanged(lightningView)
+
+        // Extract meta theme-color
+        view.evaluateJavascript("(function() { return document.querySelector('meta[name=\"theme-color\"]').content; })();") {
+             themeColor -> try { lightningView.themeColor = Color.parseColor(themeColor.trim('\'').trim('"')) } catch (e: Exception) { lightningView.themeColor = Color.WHITE }
+            finally { uiController.tabChanged(lightningView) }
+        }
+
     }
 
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {

@@ -37,7 +37,7 @@ public final class DrawableUtils {
         final Bitmap image = Bitmap.createBitmap(icon.getWidth(), icon.getHeight(), Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(image);
         final Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.TRANSPARENT);
         paint.setAntiAlias(true);
         paint.setFilterBitmap(true);
         paint.setDither(true);
@@ -48,6 +48,7 @@ public final class DrawableUtils {
         canvas.drawRoundRect(outer, radius, radius, paint);
 
         final Rect dest = new Rect(Math.round(outer.left + radius), Math.round(outer.top + radius), Math.round(outer.right - radius), Math.round(outer.bottom - radius));
+        paint.setColor(Color.WHITE);
         canvas.drawBitmap(icon, null, dest, paint);
 
         return image;

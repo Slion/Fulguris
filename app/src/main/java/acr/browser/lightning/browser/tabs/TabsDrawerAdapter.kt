@@ -66,7 +66,7 @@ class TabsDrawerAdapter(
     private fun updateViewHolderAppearance(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
         if (isForeground) {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
-            uiController.changeToolbarBackground(favicon, null)
+            //uiController.changeToolbarBackground(favicon, null)
         } else {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.normalText)
         }

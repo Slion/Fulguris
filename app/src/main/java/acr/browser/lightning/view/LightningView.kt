@@ -75,6 +75,11 @@ class LightningView(
     val titleInfo: LightningViewTitle
 
     /**
+     * Meta theme-color content value as extracted from page HTML
+     */
+    var themeColor: Int = Color.WHITE
+
+    /**
      * A tab initializer that should be run when the view is first attached.
      */
     private var latentTabInitializer: FreezableBundleInitializer? = null
