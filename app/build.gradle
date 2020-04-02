@@ -69,6 +69,14 @@ android {
             applicationId "acr.browser.barebones"
             versionCode 102
         }
+
+        slions {
+            dimension "capabilities"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
+            applicationId "net.slions.lightning"
+            versionCode 103
+        }
+
     }
 
     lintOptions {

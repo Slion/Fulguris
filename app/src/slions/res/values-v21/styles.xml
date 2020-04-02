@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+    Removed the following from themes to make status bar transparent
+    <item name="android:statusBarColor">@color/secondary_color</item>
+
+    So it looks like themes are overridden rather than merged which makes sense.
+    Therefore you need specify every item of the theme you need.
+    -->
+
+    <!-- Regular themes -->
+    <style name="Theme.LightTheme" parent="Theme.BaseLightTheme">
+        <item name="searchBackground">@drawable/card_bg</item>
+        <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
+        <item name="progressBackgroundColor">@color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
+    <style name="Theme.DarkTheme" parent="Theme.BaseDarkTheme">
+        <item name="searchBackground">@drawable/card_bg</item>
+        <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
+        <item name="progressBackgroundColor">@color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
+</resources>
