@@ -73,7 +73,7 @@ android {
         slions {
             dimension "capabilities"
             buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
-            applicationId "net.slions.lightning"
+            applicationId "net.slions.lightbolt"
             versionCode 103
         }
 
