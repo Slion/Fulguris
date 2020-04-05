@@ -136,11 +136,13 @@ class LightningWebClient(
         }
 
         // Extract meta theme-color
+
         view.evaluateJavascript("(function() { return document.querySelector('meta[name=\"theme-color\"]').content; })();") {
              themeColor -> try { lightningView.themeColor = Color.parseColor(themeColor.trim('\'').trim('"')) } catch (e: Exception) { lightningView.themeColor = Color.WHITE }
-            finally { uiController.tabChanged(lightningView) }
+            //finally { uiController.tabChanged(lightningView) }
         }
 
+        uiController.tabChanged(lightningView)
     }
 
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {

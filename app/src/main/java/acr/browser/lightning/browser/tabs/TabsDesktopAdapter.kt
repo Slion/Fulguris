@@ -91,7 +91,7 @@ class TabsDesktopAdapter(
             }
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
             viewHolder.layout.background = foregroundDrawable
-            uiController.changeToolbarBackground(favicon, foregroundDrawable)
+            uiController.changeToolbarBackground(favicon, Color.TRANSPARENT, foregroundDrawable)
         } else {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.normalText)
             viewHolder.layout.background = backgroundTabDrawable

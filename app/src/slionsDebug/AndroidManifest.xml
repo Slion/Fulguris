@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!-- Copyright 2014 A.C.R. Development -->
+<manifest
+xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"    >
+
+    <!-- Replace application icon -->
+    <application
+        tools:replace="icon, roundIcon"
+        android:icon="@mipmap/ic_launcher_debug"
+        android:roundIcon="@mipmap/ic_launcher_debug_round"> </application>
+
+
+</manifest>

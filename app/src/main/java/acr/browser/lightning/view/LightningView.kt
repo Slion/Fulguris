@@ -77,7 +77,7 @@ class LightningView(
     /**
      * Meta theme-color content value as extracted from page HTML
      */
-    var themeColor: Int = Color.WHITE
+    var themeColor: Int = Color.TRANSPARENT
 
     /**
      * A tab initializer that should be run when the view is first attached.
@@ -533,7 +533,10 @@ class LightningView(
                 // setSoftwareRendering(); // Some devices get segfaults
                 // in the WebView with Hardware Acceleration enabled,
                 // the only fix is to disable hardware rendering
-                setNormalRendering()
+                //setNormalRendering()
+                // SL: enabled that and the performance gain is very noticeable on  F(x)tec Pro1
+                // Notably on: https://www.bbc.com/worklife
+                setHardwareRendering()
                 invertPage = false
             }
             RenderingMode.INVERTED -> {

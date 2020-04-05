@@ -87,11 +87,11 @@ public class ReadingActivity extends AppCompatActivity {
         if (mInvert) {
             setTheme(R.style.Theme_SettingsTheme_Dark);
             color = ThemeUtils.getPrimaryColorDark(this);
-            getWindow().setBackgroundDrawable(new ColorDrawable(color));
+            //getWindow().setBackgroundDrawable(new ColorDrawable(color));
         } else {
             setTheme(R.style.Theme_SettingsTheme);
             color = ThemeUtils.getPrimaryColor(this);
-            getWindow().setBackgroundDrawable(new ColorDrawable(color));
+            //getWindow().setBackgroundDrawable(new ColorDrawable(color));
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reading_view);

@@ -43,10 +43,11 @@ interface UIController {
      * the color of the favicon.
      *
      * @param favicon the new favicon
+     * @param color meta theme color as specified in HTML
      * @param tabBackground the background of the tab, only used when tabs are not displayed in the
      * drawer.
      */
-    fun changeToolbarBackground(favicon: Bitmap?, tabBackground: Drawable?)
+    fun changeToolbarBackground(favicon: Bitmap?, color: Int, tabBackground: Drawable?)
 
     /**
      * Updates the current URL of the page.

@@ -9,6 +9,7 @@ import android.graphics.Bitmap
  * [LightningViewTitle] acts as a container class
  * for the favicon and page title, the information used
  * by the tab adapters to show the tabs to the user.
+ * TODO: Add HTML meta theme color?
  */
 class LightningViewTitle(context: Context) {
 
