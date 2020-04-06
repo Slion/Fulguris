@@ -138,7 +138,7 @@ class LightningWebClient(
         // Extract meta theme-color
 
         view.evaluateJavascript("(function() { return document.querySelector('meta[name=\"theme-color\"]').content; })();") {
-             themeColor -> try { lightningView.themeColor = Color.parseColor(themeColor.trim('\'').trim('"')) } catch (e: Exception) { lightningView.themeColor = Color.WHITE }
+             themeColor -> try { lightningView.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"')) } catch (e: Exception) { lightningView.htmlMetaThemeColor = LightningView.KHtmlMetaThemeColorInvalid }
             //finally { uiController.tabChanged(lightningView) }
         }
 

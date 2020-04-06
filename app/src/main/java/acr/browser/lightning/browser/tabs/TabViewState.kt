@@ -25,5 +25,5 @@ fun LightningView.asTabViewState() = TabViewState(
     title = title,
     favicon = favicon,
     isForegroundTab = isForegroundTab,
-    themeColor = themeColor
+    themeColor = htmlMetaThemeColor
 )

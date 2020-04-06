@@ -77,7 +77,7 @@ class LightningView(
     /**
      * Meta theme-color content value as extracted from page HTML
      */
-    var themeColor: Int = Color.TRANSPARENT
+    var htmlMetaThemeColor: Int = KHtmlMetaThemeColorInvalid
 
     /**
      * A tab initializer that should be run when the view is first attached.
@@ -917,6 +917,8 @@ class LightningView(
     }
 
     companion object {
+
+        public const val KHtmlMetaThemeColorInvalid: Int = Color.TRANSPARENT
 
         private const val TAG = "LightningView"
 

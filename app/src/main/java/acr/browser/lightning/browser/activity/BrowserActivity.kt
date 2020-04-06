@@ -59,7 +59,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.provider.MediaStore
-import android.util.TypedValue
 import android.view.*
 import android.view.View.*
 import android.view.ViewGroup.LayoutParams
@@ -73,7 +72,6 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -82,7 +80,6 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.customview.widget.ViewDragHelper
-import androidx.customview.widget.ViewDragHelper.STATE_DRAGGING
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import butterknife.ButterKnife
@@ -95,7 +92,6 @@ import kotlinx.android.synthetic.main.browser_content.*
 import kotlinx.android.synthetic.main.search.*
 import kotlinx.android.synthetic.main.search_interface.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar_content.*
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -488,13 +484,17 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
-    private inner class DrawerLocker : DrawerLayout.DrawerListener {
+    var drawerOpened : Boolean = false
+    var drawerOpening : Boolean = false
+    var drawerClosing : Boolean = false
 
-        var systemUiVisibility :Int = 0
-        var drawerOpened : Boolean = false
+    private inner class DrawerLocker : DrawerLayout.DrawerListener {
 
         override fun onDrawerClosed(v: View) {
             drawerOpened = false
+            drawerClosing = false
+            drawerOpening = false
+
             //TODO: make this a settings option?
             if (isFlavorSlions) return; // Drawers remain locked for tha flavor
             val tabsDrawer = getTabDrawer()
@@ -510,6 +510,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         override fun onDrawerOpened(v: View) {
 
             drawerOpened = true
+            drawerClosing = false
+            drawerOpening = false
+
             //TODO: make this a settings option?
             if (isFlavorSlions) return; // Drawers remain locked for tha flavor
             val tabsDrawer = getTabDrawer()
@@ -533,20 +536,15 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             // We set status bar icon color according to current theme
             if (arg == ViewDragHelper.STATE_SETTLING) {
                 if (!drawerOpened) {
-                    // Backup current system UI visibility
-                    systemUiVisibility = window.decorView.systemUiVisibility;
+                    drawerOpening = true
                     // Make sure icons on status bar remain visible
                     // We should really check the primary theme color and work out its luminance but that should do for now
-                    if (!isDarkTheme) {
-                        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    } else {
-                        window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-                    }
+                    setStatusBarIconsColor(!isDarkTheme)
                 }
                 else {
+                    drawerClosing = true
                     // Restore previous system UI visibility flag
-                    //window.decorView.systemUiVisibility = systemUiVisibility;
-                    //setStatusBarIconsColor(foregroundColorFromBackgroundColor(activity.toolbar_layout.backgroundColor))
+                    setToolbarColor()
                 }
 
             }
@@ -577,23 +575,28 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
-    private fun initializePreferences() {
+    // Set tool bar color corresponding to the current tab
+    private fun setToolbarColor()
+    {
         val currentView = tabsManager.currentTab
+        if (isColorMode() && currentView != null && currentView.htmlMetaThemeColor!=Color.TRANSPARENT) {
+            // Web page does specify theme color, use it much like Google Chrome does
+            mainHandler.post {changeToolbarBackground(currentView.htmlMetaThemeColor, null)}
+        }
+        else if (isColorMode() && currentView?.favicon != null) {
+            // Web page as favicon, use it to extract page theme color
+            changeToolbarBackground(currentView.favicon, Color.TRANSPARENT, null)
+        } else {
+            // That should be the primary color from current theme
+            mainHandler.post {changeToolbarBackground(backgroundDrawable.color, null)}
+        }
+    }
+
+    private fun initializePreferences() {
+
         isFullScreen = userPreferences.fullScreenEnabled
 
-
-        //webPageBitmap?.let { webBitmap ->
-            if (isColorMode() && currentView != null && currentView.themeColor!=Color.TRANSPARENT) {
-                // Web page does specify theme color, use it much like Google Chrome does
-                mainHandler.post {changeToolbarBackground(currentView.themeColor, null)}
-            }
-            else if (isColorMode() && currentView?.favicon != null) {
-                // Web page as favicon, use it to extract page theme color
-                changeToolbarBackground(currentView.favicon, Color.TRANSPARENT, null)
-            } else {
-                // That should be the primary color from current theme
-                mainHandler.post {changeToolbarBackground(backgroundDrawable.color, null)}
-            }
+        setToolbarColor()
 
         // TODO layout transition causing memory leak
         //        content_frame.setLayoutTransition(new LayoutTransition());
@@ -1243,31 +1246,27 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     }
 
-    //private fun setStatusBarColor(color: Int, darkIcons: Boolean) {
-    //    mainHandler.post {doSetStatusBarColor(color,darkIcons)}
-    //}
-
 
     private fun setStatusBarColor(color: Int, darkIcons: Boolean) {
-        // TODO: window.setBackgroundDrawable somehow breaks everything on F(x)tec Pro1 (Android 9) at least
-        // window.statusBarColor = color is no better unfortunately
-        // All seems to be working fine on Huawei P30 Pro though (Android 10)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (shouldShowTabsInDrawer) {
-                //window.statusBarColor = color
-                backgroundDrawable.color = color
-                window.setBackgroundDrawable(backgroundDrawable)
+        if (shouldShowTabsInDrawer) {
+            //window.statusBarColor = color
+            backgroundDrawable.color = color
+            window.setBackgroundDrawable(backgroundDrawable)
+            // That if statement is preventing us to change the icons color while a drawer is showing
+            // That's typically the case when user open a drawer before the HTML meta theme color was delivered
+            if (drawerClosing || !drawerOpened) // Do not update icons color if drawer is opened
+            {
                 // Make sure the status bar icons are still readable
                 setStatusBarIconsColor(darkIcons)
             }
-            else {
-                // Keep it black for tab bar mode
-                ////window.statusBarColor = Color.BLACK
-                backgroundDrawable.color = color
-                window.setBackgroundDrawable(backgroundDrawable)
-                // Make sure the status bar icons are still readable
-                setStatusBarIconsColor(false)
-            }
+        }
+        else {
+            // Keep it black for desktop tab bar mode
+            ////window.statusBarColor = Color.BLACK
+            backgroundDrawable.color = color
+            window.setBackgroundDrawable(backgroundDrawable)
+            // Make sure the status bar icons are still readable
+            setStatusBarIconsColor(false)
         }
     }
 
@@ -1346,6 +1345,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      * of the screen.
      *
      * @param favicon the Bitmap to extract the color from
+     * @param color HTML meta theme color. Color.TRANSPARENT if not available.
      * @param tabBackground the optional LinearLayout to color
      */
     override fun changeToolbarBackground(favicon: Bitmap?, color: Int, tabBackground: Drawable?) {
@@ -1353,24 +1353,26 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             return
         }
 
+        val defaultColor = ThemeUtils.getPrimaryColor(this)
+
         if (color != Color.TRANSPARENT)
         {
             // We have a meta theme color specified in our page HTML, use it
             changeToolbarBackground(color,tabBackground);
-            return;
+        }
+        else if (favicon==null)
+        {
+            // No HTML meta theme color and no favicon, use app theme color then
+            changeToolbarBackground(defaultColor,tabBackground);
+        }
+        else {
+            Palette.from(favicon).generate { palette ->
+                // OR with opaque black to remove transparency glitches
+                val color = Color.BLACK or (palette?.getVibrantColor(defaultColor) ?: defaultColor)
+                changeToolbarBackground(color, tabBackground);
+            }
         }
 
-        val defaultColor = ContextCompat.getColor(this, R.color.primary_color)
-        if (currentUiColor == Color.BLACK) {
-            currentUiColor = defaultColor
-        }
-
-        Palette.from(favicon ?: webPageBitmap!!).generate { palette ->
-            // OR with opaque black to remove transparency glitches
-            val color = Color.BLACK or (palette?.getVibrantColor(defaultColor) ?: defaultColor)
-
-            changeToolbarBackground(color,tabBackground);
-        }
     }
 
     private fun getSearchBarColor(requestedColor: Int): Int =
