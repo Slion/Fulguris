@@ -953,6 +953,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     override fun setTabView(view: View) {
+        // SL: Hide any drawers first, thus making sure we close our tab drawer even when user taps current tab
+        // Use a delayed handler to make the transition smooth
+        // otherwise it will get caught up with the showTab code
+        // and cause a janky motion
+        mainHandler.postDelayed(drawer_layout::closeDrawers, 200)
+
         if (currentTabView == view) {
             return
         }
@@ -974,11 +980,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         currentTabView = view
 
         showActionBar()
-
-        // Use a delayed handler to make the transition smooth
-        // otherwise it will get caught up with the showTab code
-        // and cause a janky motion
-        mainHandler.postDelayed(drawer_layout::closeDrawers, 200)
     }
 
     override fun showBlockedLocalFileDialog(onPositiveClick: Function0<Unit>) {
