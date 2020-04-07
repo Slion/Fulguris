@@ -112,7 +112,6 @@ public final class Utils {
     public static String getDisplayDomainName(@Nullable String url) {
         if (url == null || url.isEmpty()) return "";
 
-        boolean ssl = URLUtil.isHttpsUrl(url);
         int index = url.indexOf('/', 8);
         if (index != -1) {
             url = url.substring(0, index);
@@ -131,10 +130,8 @@ public final class Utils {
         if (domain == null || domain.isEmpty()) {
             return url;
         }
-        if (ssl)
-            return Constants.HTTPS + domain;
-        else
-            return domain.startsWith("www.") ? domain.substring(4) : domain;
+
+        return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
     public static void trimCache(@NonNull Context context) {
