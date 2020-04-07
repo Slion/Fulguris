@@ -17,11 +17,6 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
-    sourceSets {
-        lightningPlus.setRoot('src/LightningPlus')
-        lightningLite.setRoot('src/LightningLite')
-    }
-
     buildTypes {
         debug {
             multiDexEnabled true
@@ -56,29 +51,46 @@ android {
         }
     }
 
-    flavorDimensions "capabilities"
+    flavorDimensions "brand", "version", "publisher"
 
     productFlavors {
-        lightningPlus {
-            dimension "capabilities"
-            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
+
+        lightning {
+            dimension "brand"
             applicationId "acr.browser.lightning"
             versionCode 101
         }
 
-        lightningLite {
-            dimension "capabilities"
-            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
-            applicationId "acr.browser.barebones"
-            versionCode 102
+        slions {
+            dimension "brand"
+            applicationId "net.slions.fulguris"
+            versionCode 0
+            versionName "0.0.1"
         }
 
-        slions {
-            dimension "capabilities"
-            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
-            applicationId "net.slions.lightbolt"
-            versionCode 103
+        lite {
+            dimension "version"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
+            applicationIdSuffix ".lite"
         }
+
+        full {
+            dimension "version"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
+            applicationIdSuffix ".full"
+        }
+
+        google {
+            dimension "publisher"
+            applicationIdSuffix ".playstore"
+        }
+
+        download {
+            dimension "publisher"
+            applicationIdSuffix ".download"
+        }
+
+
 
     }
 

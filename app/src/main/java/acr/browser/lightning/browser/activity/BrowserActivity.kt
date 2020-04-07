@@ -137,7 +137,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private var findResult: FindResults? = null
 
     // Flavors
-    private val isFlavorSlions = BuildConfig.FLAVOR=="slions"
+    private val isFlavorSlions = BuildConfig.FLAVOR.contains("slions")
 
     // The singleton BookmarkManager
     @Inject lateinit var bookmarkManager: BookmarkRepository
@@ -496,7 +496,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             drawerOpening = false
 
             //TODO: make this a settings option?
-            if (isFlavorSlions) return; // Drawers remain locked for tha flavor
+            if (isFlavorSlions) return; // Drawers remain locked for that flavor
             val tabsDrawer = getTabDrawer()
             val bookmarksDrawer = getBookmarkDrawer()
 
@@ -1213,40 +1213,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
 
-
-
-
-    private fun computeLuminance(r: Int, g: Int, b: Int) : Float {
-        return (0.2126f * r + 0.7152f * g + 0.0722f * b);
-    }
-
-    private fun foregroundColorFromBackgroundColor(color: Int) :Int {
-        // The following needed newer API level so we implement it here instead
-        //val c: Color = Color.valueOf(color);
-
-        //
-        val a = (color shr 24 and 0xff)
-        val r = (color shr 16 and 0xff)
-        val g = (color shr 8 and 0xff)
-        val b = (color and 0xff)
-
-        //val c: Color = Color.argb(a,r,g,b);
-
-        val luminance = computeLuminance(r,g,b);
-
-        // Mix with original color?
-        //return (luminance<140?0xFFFFFFFF:0xFF000000)
-
-        var res = 0xFF000000;
-        if (luminance<140) {
-            res = 0xFFFFFFFF
-        }
-
-        return res.toInt();
-
-    }
-
-
     private fun setStatusBarColor(color: Int, darkIcons: Boolean) {
         if (shouldShowTabsInDrawer) {
             //window.statusBarColor = color
@@ -1268,20 +1234,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             // Make sure the status bar icons are still readable
             setStatusBarIconsColor(false)
         }
-    }
-
-
-    private fun setStatusBarIconsColor(dark: Boolean)
-    {
-        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
-            //window.statusBarColor = finalColor;
-            if (dark) {
-                window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            } else {
-                window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-            }
-        }
-
     }
 
 
