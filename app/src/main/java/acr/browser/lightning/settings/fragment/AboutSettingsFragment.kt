@@ -16,7 +16,7 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
 
         clickablePreference(
             preference = SETTINGS_VERSION,
-            summary = BuildConfig.VERSION_NAME,
+            summary = BuildConfig.APPLICATION_ID + " - v" + BuildConfig.VERSION_NAME,
             onClick = { }
         )
     }

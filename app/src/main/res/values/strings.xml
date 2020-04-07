@@ -102,6 +102,7 @@
     <string name="action_auto">Auto</string>
     <string name="action_follow_me">Contact me</string>
     <string name="url_twitter">twitter.com/RestainoAnthony</string>
+    <string name="full_url_twitter">http://twitter.com/RestainoAnthony</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
     <string name="message_import">Bookmarks were imported</string>
