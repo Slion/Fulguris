@@ -3,8 +3,10 @@ package acr.browser.lightning.settings.activity
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
 import acr.browser.lightning.di.injector
+import acr.browser.lightning.extensions.setStatusBarIconsColor
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
+import acr.browser.lightning.utils.foregroundColorFromBackgroundColor
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -53,6 +55,8 @@ abstract class ThemableSettingsActivity : AppCompatPreferenceActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Make sure icons have the right color
+        setStatusBarIconsColor(foregroundColorFromBackgroundColor(ThemeUtils.getPrimaryColor(this))==Color.BLACK)
         resetPreferences()
         if (userPreferences.useTheme != themeId) {
             recreate()

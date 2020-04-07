@@ -5,6 +5,7 @@
 package acr.browser.lightning.browser.activity
 
 import acr.browser.lightning.AppTheme
+import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.IncognitoActivity
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.*
@@ -78,6 +79,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
+import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import butterknife.ButterKnife
@@ -133,6 +135,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private var cameraPhotoPath: String? = null
 
     private var findResult: FindResults? = null
+
+    // Flavors
+    private val isFlavorSlions = BuildConfig.FLAVOR.contains("slions")
 
     // The singleton BookmarkManager
     @Inject lateinit var bookmarkManager: BookmarkRepository
@@ -199,6 +204,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     protected abstract fun updateCookiePreference(): Completable
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        //window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         super.onCreate(savedInstanceState)
         injector.inject(this)
         setContentView(R.layout.activity_main)
@@ -250,7 +258,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         left_drawer.setLayerType(LAYER_TYPE_NONE, null)
         right_drawer.setLayerType(LAYER_TYPE_NONE, null)
 
-        setNavigationDrawerWidth()
+        ui_layout.doOnLayout {setNavigationDrawerWidth()}
         drawer_layout.addDrawerListener(DrawerLocker())
 
         webPageBitmap = drawable(R.drawable.ic_webpage).toBitmap()
@@ -333,7 +341,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         searchBackground = customView.findViewById<View>(R.id.search_container).apply {
             // initialize search background color
-            background.tint(getSearchBarColor(primaryColor, primaryColor))
+            background.tint(getSearchBarColor(primaryColor))
         }
 
         drawer_layout.setDrawerShadow(R.drawable.drawer_right_shadow, GravityCompat.END)
@@ -476,9 +484,19 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
+    var drawerOpened : Boolean = false
+    var drawerOpening : Boolean = false
+    var drawerClosing : Boolean = false
+
     private inner class DrawerLocker : DrawerLayout.DrawerListener {
 
         override fun onDrawerClosed(v: View) {
+            drawerOpened = false
+            drawerClosing = false
+            drawerOpening = false
+
+            //TODO: make this a settings option?
+            if (isFlavorSlions) return; // Drawers remain locked for that flavor
             val tabsDrawer = getTabDrawer()
             val bookmarksDrawer = getBookmarkDrawer()
 
@@ -490,6 +508,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
 
         override fun onDrawerOpened(v: View) {
+
+            drawerOpened = true
+            drawerClosing = false
+            drawerOpening = false
+
+            //TODO: make this a settings option?
+            if (isFlavorSlions) return; // Drawers remain locked for tha flavor
             val tabsDrawer = getTabDrawer()
             val bookmarksDrawer = getBookmarkDrawer()
 
@@ -502,12 +527,41 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         override fun onDrawerSlide(v: View, arg: Float) = Unit
 
-        override fun onDrawerStateChanged(arg: Int) = Unit
+        override fun onDrawerStateChanged(arg: Int) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                return;
+            }
+
+            // Make sure status bar icons have the proper color set when we start opening and closing a drawer
+            // We set status bar icon color according to current theme
+            if (arg == ViewDragHelper.STATE_SETTLING) {
+                if (!drawerOpened) {
+                    drawerOpening = true
+                    // Make sure icons on status bar remain visible
+                    // We should really check the primary theme color and work out its luminance but that should do for now
+                    setStatusBarIconsColor(!isDarkTheme)
+                }
+                else {
+                    drawerClosing = true
+                    // Restore previous system UI visibility flag
+                    setToolbarColor()
+                }
+
+            }
+        }
 
     }
 
     private fun setNavigationDrawerWidth() {
-        val width = resources.displayMetrics.widthPixels - dimen(R.dimen.navigation_drawer_minimum_space)
+
+        if (isFlavorSlions) {
+            //TODO: make this a settings option?
+            // Drawers are full screen and locked for this flavor so as to avoid closing them when scrolling through tabs
+            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
+            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getBookmarkDrawer())
+        }
+
+        val width = window.decorView.width - dimen(R.dimen.navigation_drawer_minimum_space)
         val maxWidth = resources.getDimensionPixelSize(R.dimen.navigation_drawer_max_width)
         if (width < maxWidth) {
             val params = left_drawer.layoutParams as DrawerLayout.LayoutParams
@@ -521,19 +575,28 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
-    private fun initializePreferences() {
+    // Set tool bar color corresponding to the current tab
+    private fun setToolbarColor()
+    {
         val currentView = tabsManager.currentTab
+        if (isColorMode() && currentView != null && currentView.htmlMetaThemeColor!=Color.TRANSPARENT) {
+            // Web page does specify theme color, use it much like Google Chrome does
+            mainHandler.post {changeToolbarBackground(currentView.htmlMetaThemeColor, null)}
+        }
+        else if (isColorMode() && currentView?.favicon != null) {
+            // Web page as favicon, use it to extract page theme color
+            changeToolbarBackground(currentView.favicon, Color.TRANSPARENT, null)
+        } else {
+            // That should be the primary color from current theme
+            mainHandler.post {changeToolbarBackground(backgroundDrawable.color, null)}
+        }
+    }
+
+    private fun initializePreferences() {
+
         isFullScreen = userPreferences.fullScreenEnabled
 
-        webPageBitmap?.let { webBitmap ->
-            if (!isIncognito() && !isColorMode() && !isDarkTheme) {
-                changeToolbarBackground(webBitmap, null)
-            } else if (!isIncognito() && currentView != null && !isDarkTheme) {
-                changeToolbarBackground(currentView.favicon ?: webBitmap, null)
-            } else if (!isIncognito() && !isDarkTheme) {
-                changeToolbarBackground(webBitmap, null)
-            }
-        }
+        setToolbarColor()
 
         // TODO layout transition causing memory leak
         //        content_frame.setLayoutTransition(new LayoutTransition());
@@ -814,7 +877,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         findViewById<ImageButton>(R.id.button_quit).setOnClickListener(this)
     }
 
-    override fun isColorMode(): Boolean = userPreferences.colorModeEnabled && !isDarkTheme
+    // SL: I'm not quite sure what the meaning of that guy
+    // Is it still being used? Could not find it in settings.
+    override fun isColorMode(): Boolean = userPreferences.colorModeEnabled
 
     override fun getTabModel(): TabsManager = tabsManager
 
@@ -865,7 +930,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     override fun tabChanged(tab: LightningView) {
+        // SL: Is this being called way too many times?
         presenter?.tabChangeOccurred(tab)
+        // SL: Putting this here to update toolbar background color was a bad idea
+        // That somehow freezes the WebView after switching between a few tabs on F(x)tec Pro1 at least (Android 9)
+        //initializePreferences()
     }
 
     override fun removeTabView() {
@@ -996,10 +1065,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             showActionBar()
             toolbar_layout.translationY = 0f
             setWebViewTranslation(toolbar_layout.height.toFloat())
-        }
+    }
 
         invalidateOptionsMenu()
         initializeToolbarHeight(newConfig)
+        ui_layout.doOnLayout {setNavigationDrawerWidth()}
     }
 
     private fun initializeToolbarHeight(configuration: Configuration) =
@@ -1123,6 +1193,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         } else {
             putToolbarInRoot()
         }
+
     }
 
     /**
@@ -1141,68 +1212,124 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
+
+    private fun setStatusBarColor(color: Int, darkIcons: Boolean) {
+        if (shouldShowTabsInDrawer) {
+            //window.statusBarColor = color
+            backgroundDrawable.color = color
+            window.setBackgroundDrawable(backgroundDrawable)
+            // That if statement is preventing us to change the icons color while a drawer is showing
+            // That's typically the case when user open a drawer before the HTML meta theme color was delivered
+            if (drawerClosing || !drawerOpened) // Do not update icons color if drawer is opened
+            {
+                // Make sure the status bar icons are still readable
+                setStatusBarIconsColor(darkIcons)
+            }
+        }
+        else {
+            // Keep it black for desktop tab bar mode
+            ////window.statusBarColor = Color.BLACK
+            backgroundDrawable.color = color
+            window.setBackgroundDrawable(backgroundDrawable)
+            // Make sure the status bar icons are still readable
+            setStatusBarIconsColor(false)
+        }
+    }
+
+
+    private fun changeToolbarBackground(color: Int, tabBackground: Drawable?) {
+
+        //Workout a foreground colour that will be working with our background color
+        val textColor = foregroundColorFromBackgroundColor(color).toInt()
+        // Change search view text color
+        searchView?.setTextColor(textColor)
+        searchView?.setHintTextColor(DrawableUtils.mixColor(0.5f, textColor, color))
+        // Change reload icon color
+        search_refresh.setColorFilter(textColor)
+        // Change tab counter color
+        tabCountView?.textColor = textColor
+        tabCountView?.invalidate();
+        // Set overflow/menu icon color
+        toolbar.overflowIcon?.tint(textColor)
+        toolbar.navigationIcon?.tint(textColor) // Is that needed
+        toolbar.collapseIcon?.tint(textColor) // Is that needed
+        // No animation for now
+        // Toolbar background color
+        toolbar_layout.setBackgroundColor(color)
+        // Search text field color
+        searchBackground?.background?.tint(getSearchBarColor(color))
+        // Then the color of the status bar itself
+        setStatusBarColor(color,textColor==Color.BLACK)
+
+
+
+        /*
+        // Define our color animation
+        val animation = object : Animation() {
+            override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+                val animatedColor = DrawableUtils.mixColor(interpolatedTime, currentUiColor, color)
+                if (shouldShowTabsInDrawer) {
+                    backgroundDrawable.color = animatedColor
+                    mainHandler.post { window.setBackgroundDrawable(backgroundDrawable) }
+                } else {
+                    tabBackground?.tint(animatedColor)
+                }
+                currentUiColor = animatedColor
+                toolbar_layout.setBackgroundColor(animatedColor)
+                searchBackground?.background?.tint(
+                        // Set search background a little lighter
+                        // SL: See also Utils.mixTwoColors, why do we have those two functions?
+                        getSearchBarColor(animatedColor)
+                )
+            }
+        }
+        animation.duration = 300
+        toolbar_layout.startAnimation(animation)
+
+         */
+
+    }
+
+
     /**
      * Animates the color of the toolbar from one color to another. Optionally animates
      * the color of the tab background, for use when the tabs are displayed on the top
      * of the screen.
      *
      * @param favicon the Bitmap to extract the color from
+     * @param color HTML meta theme color. Color.TRANSPARENT if not available.
      * @param tabBackground the optional LinearLayout to color
      */
-    override fun changeToolbarBackground(favicon: Bitmap?, tabBackground: Drawable?) {
+    override fun changeToolbarBackground(favicon: Bitmap?, color: Int, tabBackground: Drawable?) {
         if (!isColorMode()) {
             return
         }
-        val defaultColor = ContextCompat.getColor(this, R.color.primary_color)
-        if (currentUiColor == Color.BLACK) {
-            currentUiColor = defaultColor
+
+        val defaultColor = ThemeUtils.getPrimaryColor(this)
+
+        if (color != Color.TRANSPARENT)
+        {
+            // We have a meta theme color specified in our page HTML, use it
+            changeToolbarBackground(color,tabBackground);
         }
-        Palette.from(favicon ?: webPageBitmap!!).generate { palette ->
-            // OR with opaque black to remove transparency glitches
-            val color = Color.BLACK or (palette?.getVibrantColor(defaultColor) ?: defaultColor)
-
-            // Lighten up the dark color if it is too dark
-            val finalColor = if (!shouldShowTabsInDrawer || Utils.isColorTooDark(color)) {
-                Utils.mixTwoColors(defaultColor, color, 0.25f)
-            } else {
-                color
-            }
-
-            val window = window
-            if (!shouldShowTabsInDrawer) {
-                window.setBackgroundDrawable(ColorDrawable(Color.BLACK))
-            }
-
-            val startSearchColor = getSearchBarColor(currentUiColor, defaultColor)
-            val finalSearchColor = getSearchBarColor(finalColor, defaultColor)
-
-            val animation = object : Animation() {
-                override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-                    val animatedColor = DrawableUtils.mixColor(interpolatedTime, currentUiColor, finalColor)
-                    if (shouldShowTabsInDrawer) {
-                        backgroundDrawable.color = animatedColor
-                        mainHandler.post { window.setBackgroundDrawable(backgroundDrawable) }
-                    } else {
-                        tabBackground?.tint(animatedColor)
-                    }
-                    currentUiColor = animatedColor
-                    toolbar_layout.setBackgroundColor(animatedColor)
-                    searchBackground?.background?.tint(
-                        DrawableUtils.mixColor(interpolatedTime, startSearchColor, finalSearchColor)
-                    )
-                }
-            }
-            animation.duration = 300
-            toolbar_layout.startAnimation(animation)
+        else if (favicon==null)
+        {
+            // No HTML meta theme color and no favicon, use app theme color then
+            changeToolbarBackground(defaultColor,tabBackground);
         }
+        else {
+            Palette.from(favicon).generate { palette ->
+                // OR with opaque black to remove transparency glitches
+                val color = Color.BLACK or (palette?.getVibrantColor(defaultColor) ?: defaultColor)
+                changeToolbarBackground(color, tabBackground);
+            }
+        }
+
     }
 
-    private fun getSearchBarColor(requestedColor: Int, defaultColor: Int): Int =
-        if (requestedColor == defaultColor) {
-            if (isDarkTheme) DrawableUtils.mixColor(0.25f, defaultColor, Color.WHITE) else Color.WHITE
-        } else {
+    private fun getSearchBarColor(requestedColor: Int): Int =
             DrawableUtils.mixColor(0.25f, requestedColor, Color.WHITE)
-        }
+
 
     @ColorInt
     override fun getUiColor(): Int = currentUiColor
@@ -1556,6 +1683,14 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         closeDrawers(null)
     }
 
+
+    private val fullScreenFlags = (SYSTEM_UI_FLAG_LAYOUT_STABLE
+            or SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            or SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            or SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            or SYSTEM_UI_FLAG_FULLSCREEN
+            or SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
     /**
      * This method sets whether or not the activity will display
      * in full-screen mode (i.e. the ActionBar will be hidden) and
@@ -1574,20 +1709,15 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         val decor = window.decorView
         if (enabled) {
             if (immersive) {
-                decor.systemUiVisibility = (SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    or SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    or SYSTEM_UI_FLAG_FULLSCREEN
-                    or SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+                decor.systemUiVisibility = decor.systemUiVisibility or fullScreenFlags
             } else {
-                decor.systemUiVisibility = SYSTEM_UI_FLAG_VISIBLE
+                decor.systemUiVisibility = decor.systemUiVisibility and fullScreenFlags.inv()
             }
             window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         } else {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            decor.systemUiVisibility = SYSTEM_UI_FLAG_VISIBLE
+            decor.systemUiVisibility = decor.systemUiVisibility and fullScreenFlags.inv()
         }
     }
 

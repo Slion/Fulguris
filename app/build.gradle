@@ -17,11 +17,6 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
-    sourceSets {
-        lightningPlus.setRoot('src/LightningPlus')
-        lightningLite.setRoot('src/LightningLite')
-    }
-
     buildTypes {
         debug {
             multiDexEnabled true
@@ -29,6 +24,7 @@ android {
             shrinkResources false
             proguardFiles 'proguard-project.txt'
             testCoverageEnabled true
+            applicationIdSuffix ".debug"
         }
 
         release {
@@ -37,6 +33,8 @@ android {
             shrinkResources true
             proguardFiles 'proguard-project.txt'
             testCoverageEnabled false
+            // Use debug signing for now
+            signingConfig debug.signingConfig
 
             ndk {
                 abiFilters "arm64-v8a", "armeabi-v7a", "armeabi", "mips"
@@ -53,29 +51,46 @@ android {
         }
     }
 
-    flavorDimensions "capabilities"
+    flavorDimensions "brand", "version", "publisher"
 
     productFlavors {
-        lightningPlus {
-            dimension "capabilities"
-            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
+
+        lightning {
+            dimension "brand"
             applicationId "acr.browser.lightning"
             versionCode 101
         }
 
-        lightningLite {
-            dimension "capabilities"
-            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
-            applicationId "acr.browser.barebones"
-            versionCode 102
+        slions {
+            dimension "brand"
+            applicationId "net.slions.fulguris"
+            versionCode 0
+            versionName "0.0.1"
         }
 
-        slions {
-            dimension "capabilities"
-            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
-            applicationId "net.slions.lightning"
-            versionCode 103
+        lite {
+            dimension "version"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
+            applicationIdSuffix ".lite"
         }
+
+        full {
+            dimension "version"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
+            applicationIdSuffix ".full"
+        }
+
+        google {
+            dimension "publisher"
+            applicationIdSuffix ".playstore"
+        }
+
+        download {
+            dimension "publisher"
+            applicationIdSuffix ".download"
+        }
+
+
 
     }
 
@@ -126,7 +141,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.core:core:1.2.0"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
-    implementation "androidx.fragment:fragment:1.2.1"
+    implementation "androidx.fragment:fragment:1.2.3"
     implementation "androidx.drawerlayout:drawerlayout:1.0.0"
 
     // html parsing for reading mode
@@ -176,7 +191,7 @@ dependencies {
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation 'androidx.core:core-ktx:1.3.0-alpha01'
+    implementation 'androidx.core:core-ktx:1.3.0-alpha02'
 }
 
 kapt {

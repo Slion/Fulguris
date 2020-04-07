@@ -13,7 +13,8 @@ data class TabViewState(
     val id: Int,
     val title: String,
     val favicon: Bitmap?,
-    val isForegroundTab: Boolean
+    val isForegroundTab: Boolean,
+    val themeColor: Int
 )
 
 /**
@@ -23,5 +24,6 @@ fun LightningView.asTabViewState() = TabViewState(
     id = id,
     title = title,
     favicon = favicon,
-    isForegroundTab = isForegroundTab
+    isForegroundTab = isForegroundTab,
+    themeColor = htmlMetaThemeColor
 )
