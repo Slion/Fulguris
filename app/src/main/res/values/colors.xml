@@ -21,6 +21,7 @@
     <color name="hint_text_dark_theme">#80ffffff</color>
 
     <color name="primary_color_dark">#424242</color>
+    <color name="accent_color_dark">#5C6BC0</color>
 
     <color name="divider_dark">#1FFFFFFF</color>
     <color name="divider_light">#1F000000</color>
