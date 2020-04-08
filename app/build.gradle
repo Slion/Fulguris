@@ -65,7 +65,7 @@ android {
             dimension "brand"
             applicationId "net.slions.fulguris"
             versionCode 0
-            versionName "0.0.1"
+            versionName "0.0.2"
             archivesBaseName = "Fulguris-v$versionName"
         }
 
