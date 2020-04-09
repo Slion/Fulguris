@@ -9,6 +9,7 @@ import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.preference.UserPreferences
+import android.app.Activity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import javax.inject.Inject
 
 class DisplaySettingsFragment : AbstractSettingsFragment() {
@@ -25,8 +27,8 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource() = R.xml.preference_display
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
 
         injector.inject(this)
 
@@ -42,16 +44,28 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             onClick = ::showTextSizePicker
         )
 
-        checkBoxPreference(
-            preference = SETTINGS_HIDESTATUSBAR,
-            isChecked = userPreferences.hideStatusBarEnabled,
-            onCheckChange = { userPreferences.hideStatusBarEnabled = it }
+        switchPreference(
+            preference = context?.resources!!.getString(R.string.pref_key_portrait_hide_status_bar),
+            isChecked = userPreferences.hideStatusBarInPortrait,
+            onCheckChange = { userPreferences.hideStatusBarInPortrait = it }
         )
 
-        checkBoxPreference(
-            preference = SETTINGS_FULLSCREEN,
-            isChecked = userPreferences.fullScreenEnabled,
-            onCheckChange = { userPreferences.fullScreenEnabled = it }
+        switchPreference(
+                preference = context?.resources!!.getString(R.string.pref_key_landscape_hide_status_bar),
+                isChecked = userPreferences.hideStatusBarInLandscape,
+                onCheckChange = { userPreferences.hideStatusBarInLandscape = it }
+        )
+
+        switchPreference(
+            preference = context?.resources!!.getString(R.string.pref_key_portrait_hide_tool_bar),
+            isChecked = userPreferences.hideToolBarInPortrait,
+            onCheckChange = { userPreferences.hideToolBarInPortrait = it }
+        )
+
+        switchPreference(
+                preference = context?.resources!!.getString(R.string.pref_key_landscape_hide_tool_bar),
+                isChecked = userPreferences.hideToolBarInLandscape,
+                onCheckChange = { userPreferences.hideToolBarInLandscape = it }
         )
 
         checkBoxPreference(
@@ -93,8 +107,8 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     private fun showTextSizePicker() {
         val maxValue = 5
-        AlertDialog.Builder(activity).apply {
-            val layoutInflater = activity.layoutInflater
+        AlertDialog.Builder(activity as Activity).apply {
+            val layoutInflater = (activity as Activity).layoutInflater
             val customView = (layoutInflater.inflate(R.layout.dialog_seek_bar, null) as LinearLayout).apply {
                 val text = TextView(activity).apply {
                     setText(R.string.untitled)
@@ -119,7 +133,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     private fun showThemePicker(summaryUpdater: SummaryUpdater) {
         val currentTheme = userPreferences.useTheme
-        AlertDialog.Builder(activity).apply {
+        AlertDialog.Builder(activity as Activity).apply {
             setTitle(resources.getString(R.string.theme))
             val values = AppTheme.values().map { Pair(it, it.toDisplayString()) }
             withSingleChoiceItems(values, userPreferences.useTheme) {
@@ -128,12 +142,12 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             }
             setPositiveButton(resources.getString(R.string.action_ok)) { _, _ ->
                 if (currentTheme != userPreferences.useTheme) {
-                    activity.onBackPressed()
+                    (activity as Activity).onBackPressed()
                 }
             }
             setOnCancelListener {
                 if (currentTheme != userPreferences.useTheme) {
-                    activity.onBackPressed()
+                    (activity as Activity).onBackPressed()
                 }
             }
         }.resizeAndShow()
@@ -160,9 +174,6 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
     }
 
     companion object {
-
-        private const val SETTINGS_HIDESTATUSBAR = "fullScreenOption"
-        private const val SETTINGS_FULLSCREEN = "fullscreen"
         private const val SETTINGS_VIEWPORT = "wideViewPort"
         private const val SETTINGS_OVERVIEWMODE = "overViewMode"
         private const val SETTINGS_REFLOW = "text_reflow"

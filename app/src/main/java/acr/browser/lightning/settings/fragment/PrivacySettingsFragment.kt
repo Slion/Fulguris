@@ -13,8 +13,10 @@ import acr.browser.lightning.isSupported
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.WebUtils
 import acr.browser.lightning.view.LightningView
+import android.app.Activity
 import android.os.Bundle
 import android.webkit.WebView
+import androidx.fragment.app.FragmentActivity
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import javax.inject.Inject
@@ -28,8 +30,8 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource() = R.xml.preference_privacy
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
         injector.inject(this)
 
         clickablePreference(preference = SETTINGS_CLEARCACHE, onClick = this::clearCache)
@@ -104,7 +106,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     private fun clearHistoryDialog() {
         BrowserDialog.showPositiveNegativeDialog(
-            activity = activity,
+            activity = activity as Activity,
             title = R.string.title_clear_history,
             message = R.string.dialog_history,
             positiveButton = DialogItem(title = R.string.action_yes) {
@@ -112,7 +114,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
                     .subscribeOn(databaseScheduler)
                     .observeOn(mainScheduler)
                     .subscribe {
-                        activity.snackbar(R.string.message_clear_history)
+                        (activity as Activity).snackbar(R.string.message_clear_history)
                     }
             },
             negativeButton = DialogItem(title = R.string.action_no) {},
@@ -122,7 +124,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     private fun clearCookiesDialog() {
         BrowserDialog.showPositiveNegativeDialog(
-            activity = activity,
+            activity = activity as Activity,
             title = R.string.title_clear_cookies,
             message = R.string.dialog_cookies,
             positiveButton = DialogItem(title = R.string.action_yes) {
@@ -130,7 +132,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
                     .subscribeOn(databaseScheduler)
                     .observeOn(mainScheduler)
                     .subscribe {
-                        activity.snackbar(R.string.message_cookies_cleared)
+                        (activity as Activity).snackbar(R.string.message_cookies_cleared)
                     }
             },
             negativeButton = DialogItem(title = R.string.action_no) {},
@@ -143,7 +145,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
             clearCache(true)
             destroy()
         }
-        activity.snackbar(R.string.message_cache_cleared)
+        (activity as Activity).snackbar(R.string.message_cache_cleared)
     }
 
     private fun clearHistory(): Completable = Completable.fromAction {
@@ -167,7 +169,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     private fun clearWebStorage() {
         WebUtils.clearWebStorage()
-        activity.snackbar(R.string.message_web_storage_cleared)
+        (activity as Activity).snackbar(R.string.message_web_storage_cleared)
     }
 
     companion object {

@@ -4,68 +4,91 @@
 package acr.browser.lightning.settings.activity
 
 import acr.browser.lightning.R
-import acr.browser.lightning.device.BuildInfo
-import acr.browser.lightning.device.BuildType
-import acr.browser.lightning.di.injector
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import com.anthonycr.grant.PermissionsManager
-import javax.inject.Inject
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import kotlinx.android.synthetic.main.toolbar.*
 
-class SettingsActivity : ThemableSettingsActivity() {
+private const val TITLE_TAG = "settingsActivityTitle"
 
-    @Inject lateinit var buildInfo: BuildInfo
+class SettingsActivity : ThemableSettingsActivity(),
+        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injector.inject(this)
         super.onCreate(savedInstanceState)
-        // this is a workaround for the Toolbar in PreferenceActivity
-        val root = findViewById<ViewGroup>(android.R.id.content)
-        val content = root.getChildAt(0) as LinearLayout
-        val toolbarContainer = View.inflate(this, R.layout.toolbar_settings, null) as LinearLayout
-
-        root.removeAllViews()
-        toolbarContainer.addView(content)
-        root.addView(toolbarContainer)
-
-        // now we can set the Toolbar using AppCompatPreferenceActivity
-        setSupportActionbar(toolbarContainer.findViewById(R.id.toolbar))
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    override fun onBuildHeaders(target: MutableList<Header>) {
-        loadHeadersFromResource(R.xml.preferences_headers, target)
-        fragments.clear()
-
-        if (buildInfo.buildType == BuildType.RELEASE) {
-            target.removeAll { it.titleRes == R.string.debug_title }
+        setContentView(R.layout.activity_settings)
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.settings, HeaderFragment())
+                    .commit()
+        } else {
+            title = savedInstanceState.getCharSequence(TITLE_TAG)
+        }
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                setTitle(R.string.settings)
+            }
         }
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            // Workaround for bug in the AppCompat support library
-            target.forEach { it.iconRes = R.drawable.empty }
-        }
-
-        fragments.addAll(target.map(Header::fragment))
+        // Set our toolbar as action bar so that our title is displayed
+        // See: https://stackoverflow.com/questions/27665018/what-is-the-difference-between-action-bar-and-newly-introduced-toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setDisplayShowTitleEnabled(true)
     }
-
-    override fun isValidFragment(fragmentName: String): Boolean = fragments.contains(fragmentName)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        finish()
+        // Make sure the back button closes the application
+        // See: https://stackoverflow.com/questions/14545139/android-back-button-in-the-title-bar
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Save current activity title so we can set it again after a configuration change
+        outState.putCharSequence(TITLE_TAG, title)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        if (supportFragmentManager.popBackStackImmediate()) {
+            return true
+        }
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onPreferenceStartFragment(
+            caller: PreferenceFragmentCompat,
+            pref: Preference
+    ): Boolean {
+        // Instantiate the new Fragment
+        val args = pref.extras
+        val fragment = supportFragmentManager.fragmentFactory.instantiate(
+                classLoader,
+                pref.fragment
+        ).apply {
+            arguments = args
+            setTargetFragment(caller, 0)
+        }
+        // Replace the existing Fragment with the new Fragment
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.settings, fragment)
+                .addToBackStack(null)
+                .commit()
+        title = pref.title
         return true
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        PermissionsManager.getInstance().notifyPermissionsChange(permissions, grantResults)
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    companion object {
-        private val fragments = mutableListOf<String>()
+    class HeaderFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.preferences_headers, rootKey)
+        }
     }
 }

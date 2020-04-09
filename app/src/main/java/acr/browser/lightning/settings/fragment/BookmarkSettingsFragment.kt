@@ -19,10 +19,12 @@ import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.utils.Utils
 import android.Manifest
+import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.os.Environment
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
 import io.reactivex.Scheduler
@@ -48,8 +50,8 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource() = R.xml.preference_bookmarks
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
         injector.inject(this)
 
         PermissionsManager
@@ -140,7 +142,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
 
     private fun showDeleteBookmarksDialog() {
         BrowserDialog.showPositiveNegativeDialog(
-            activity = activity,
+            activity = activity as Activity,
             title = R.string.action_delete,
             message = R.string.action_delete_all_bookmarks,
             positiveButton = DialogItem(title = R.string.yes) {
@@ -190,7 +192,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
     }
 
     private fun showImportBookmarkDialog(path: File?) {
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(activity as Activity)
 
         val title = getString(R.string.title_chooser)
         builder.setTitle(title + ": " + Environment.getExternalStorageDirectory())

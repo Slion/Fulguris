@@ -11,9 +11,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import javax.inject.Inject
 
-abstract class ThemableSettingsActivity : AppCompatPreferenceActivity() {
+abstract class ThemableSettingsActivity : AppCompatActivity() {
 
     private var themeId: AppTheme = AppTheme.LIGHT
 

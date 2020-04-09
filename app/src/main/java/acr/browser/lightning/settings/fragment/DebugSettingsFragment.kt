@@ -13,11 +13,11 @@ class DebugSettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource() = R.xml.preference_debug
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
         injector.inject(this)
 
-        togglePreference(
+        switchPreference(
             preference = LEAK_CANARY,
             isChecked = developerPreferences.useLeakCanary,
             onCheckChange = { change ->

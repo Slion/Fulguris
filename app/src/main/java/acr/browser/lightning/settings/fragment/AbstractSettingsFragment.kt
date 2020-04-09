@@ -1,16 +1,13 @@
 package acr.browser.lightning.settings.fragment
 
 import android.os.Bundle
-import android.preference.CheckBoxPreference
-import android.preference.Preference
-import android.preference.PreferenceFragment
-import android.preference.SwitchPreference
 import androidx.annotation.XmlRes
+import androidx.preference.*
 
 /**
  * An abstract settings fragment which performs wiring for an instance of [PreferenceFragment].
  */
-abstract class AbstractSettingsFragment : PreferenceFragment() {
+abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
 
     /**
      * Provide the XML resource which holds the preferences.
@@ -18,10 +15,8 @@ abstract class AbstractSettingsFragment : PreferenceFragment() {
     @XmlRes
     protected abstract fun providePreferencesXmlResource(): Int
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        addPreferencesFromResource(providePreferencesXmlResource())
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(providePreferencesXmlResource(),rootKey)
     }
 
     /**
@@ -39,7 +34,7 @@ abstract class AbstractSettingsFragment : PreferenceFragment() {
         isEnabled: Boolean = true,
         summary: String? = null,
         onCheckChange: (Boolean) -> Unit
-    ): CheckBoxPreference = (findPreference(preference) as CheckBoxPreference).apply {
+    ): CheckBoxPreference = (findPreference<CheckBoxPreference>(preference) as CheckBoxPreference).apply {
         this.isChecked = isChecked
         this.isEnabled = isEnabled
         summary?.let {
@@ -87,7 +82,7 @@ abstract class AbstractSettingsFragment : PreferenceFragment() {
         isEnabled: Boolean = true,
         summary: String? = null,
         onClick: (SummaryUpdater) -> Unit
-    ): Preference = findPreference(preference).apply {
+    ): Preference = (findPreference<Preference>(preference) as Preference).apply {
         this.isEnabled = isEnabled
         summary?.let {
             this.summary = summary
@@ -107,12 +102,12 @@ abstract class AbstractSettingsFragment : PreferenceFragment() {
      * @param isEnabled true if the preference should be enabled, false otherwise. Defaults to true.
      * @param onCheckChange the function that should be called when the toggle is toggled.
      */
-    protected fun togglePreference(
+    protected fun switchPreference(
         preference: String,
         isChecked: Boolean,
         isEnabled: Boolean = true,
         onCheckChange: (Boolean) -> Unit
-    ): SwitchPreference = (findPreference(preference) as SwitchPreference).apply {
+    ): SwitchPreferenceCompat = (findPreference<SwitchPreferenceCompat>(preference) as SwitchPreferenceCompat).apply {
         this.isChecked = isChecked
         this.isEnabled = isEnabled
         onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, any: Any ->

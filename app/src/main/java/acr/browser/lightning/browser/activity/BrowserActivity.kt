@@ -592,16 +592,46 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
+    private fun initFullScreen() {
+        isFullScreen = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            userPreferences.hideToolBarInPortrait
+        }
+        else {
+            userPreferences.hideToolBarInLandscape
+        }
+    }
+
+    /**
+     * Setup our tool bar as collapsible or always on according to orientation and user preferences
+     */
+    private fun setupToolBar(configuration: Configuration) {
+
+        initFullScreen()
+
+        if (isFullScreen) {
+            showActionBar()
+            toolbar_layout.translationY = 0f
+            setWebViewTranslation(toolbar_layout.height.toFloat())
+        }
+
+        if (isFullScreen) {
+            overlayToolbarOnWebView()
+        } else {
+            putToolbarInRoot()
+        }
+
+    }
+
     private fun initializePreferences() {
 
-        isFullScreen = userPreferences.fullScreenEnabled
+        initFullScreen()
 
         setToolbarColor()
 
         // TODO layout transition causing memory leak
         //        content_frame.setLayoutTransition(new LayoutTransition());
 
-        setFullscreen(userPreferences.hideStatusBarEnabled, false)
+        setFullscreenIfNeeded()
 
         val currentSearchEngine = searchEngineProvider.provideSearchEngine()
         searchText = currentSearchEngine.queryUrl
@@ -1062,11 +1092,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         logger.log(TAG, "onConfigurationChanged")
 
-        if (isFullScreen) {
-            showActionBar()
-            toolbar_layout.translationY = 0f
-            setWebViewTranslation(toolbar_layout.height.toFloat())
-    }
+        // TODO: why did we not have to pass the new config in there?
+        setFullscreenIfNeeded()
+
+        setupToolBar(newConfig)
 
         invalidateOptionsMenu()
         initializeToolbarHeight(newConfig)
@@ -1188,12 +1217,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
         tabsManager.resumeAll()
         initializePreferences()
-
-        if (isFullScreen) {
-            overlayToolbarOnWebView()
-        } else {
-            putToolbarInRoot()
-        }
 
     }
 
@@ -1615,7 +1638,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             logger.log(TAG, "WebView is not allowed to keep the screen on")
         }
 
-        setFullscreen(userPreferences.hideStatusBarEnabled, false)
+        setFullscreenIfNeeded()
         if (fullscreenContainerView != null) {
             val parent = fullscreenContainerView?.parent as ViewGroup
             parent.removeView(fullscreenContainerView)
@@ -1691,6 +1714,20 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             or SYSTEM_UI_FLAG_HIDE_NAVIGATION
             or SYSTEM_UI_FLAG_FULLSCREEN
             or SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
+
+    /**
+     * Hide the status bar according to orientation and user preferences
+     */
+    private fun setFullscreenIfNeeded() {
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setFullscreen( userPreferences.hideStatusBarInPortrait, false)
+        }
+        else {
+            setFullscreen( userPreferences.hideStatusBarInLandscape, false)
+        }
+    }
+
 
     /**
      * This method sets whether or not the activity will display

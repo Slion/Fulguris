@@ -17,7 +17,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.preference.Preference
+import androidx.fragment.app.FragmentActivity
+import androidx.preference.Preference
 import io.reactivex.Maybe
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -45,8 +46,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource(): Int = R.xml.preference_ad_block
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
 
         injector.inject(this)
 
@@ -95,7 +96,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     private fun showHostsSourceChooser(summaryUpdater: SummaryUpdater) {
         BrowserDialog.showListChoices(
-            activity,
+                activity as Activity,
             R.string.block_ad_source,
             DialogItem(
                 title = R.string.block_source_default,
@@ -135,7 +136,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     private fun showUrlChooser(summaryUpdater: SummaryUpdater) {
         BrowserDialog.showEditText(
-            activity,
+                activity as Activity,
             title = R.string.block_source_remote,
             hint = R.string.hint_url,
             currentText = userPreferences.hostsRemoteFile,

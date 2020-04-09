@@ -27,6 +27,7 @@ import android.webkit.URLUtil
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import javax.inject.Inject
 
 /**
@@ -41,8 +42,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource() = R.xml.preference_general
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
 
         injector.inject(this)
 
@@ -120,7 +121,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
     }
 
     private fun showProxyPicker(summaryUpdater: SummaryUpdater) {
-        BrowserDialog.showCustomDialog(activity) {
+        BrowserDialog.showCustomDialog(activity as Activity) {
             setTitle(R.string.http_proxy)
             val stringArray = resources.getStringArray(R.array.proxy_choices_array)
             val values = ProxyChoice.values().map {
@@ -132,7 +133,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 })
             }
             withSingleChoiceItems(values, userPreferences.proxyChoice) {
-                updateProxyChoice(it, activity, summaryUpdater)
+                updateProxyChoice(it, activity as Activity, summaryUpdater)
             }
             setPositiveButton(R.string.action_ok, null)
         }

@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/settings_display">
+
+    <PreferenceCategory android:title="@string/pref_category_portrait">
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_portrait_hide_status_bar"
+            app:title="@string/pref_title_hide_status_bar"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_portrait_hide_tool_bar"
+            app:title="@string/pref_title_hide_tool_bar"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="@string/pref_category_landscape">
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_landscape_hide_status_bar"
+            app:title="@string/pref_title_hide_status_bar"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_landscape_hide_tool_bar"
+            app:title="@string/pref_title_hide_tool_bar"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            />
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory android:title="@string/pref_category_general">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="cb_drawertabs"
@@ -10,10 +45,6 @@
             android:defaultValue="true"
             android:key="cb_swapdrawers"
             android:title="@string/swap_bookmarks_and_tabs"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="fullScreenOption"
-            android:title="@string/fullScreenOption"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="fullscreen"

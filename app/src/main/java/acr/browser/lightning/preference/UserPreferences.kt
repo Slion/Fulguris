@@ -60,13 +60,25 @@ class UserPreferences @Inject constructor(
      * True if the browser should hide the navigation bar when scrolling, false if it should be
      * immobile.
      */
-    var fullScreenEnabled by preferences.booleanPreference(FULL_SCREEN, true)
+    var hideToolBarInPortrait by preferences.booleanPreference(HIDE_TOOL_BAR_PORTRAIT, false)
+
+    /**
+     * True if the browser should hide the navigation bar when scrolling, false if it should be
+     * immobile.
+     */
+    var hideToolBarInLandscape by preferences.booleanPreference(HIDE_TOOL_BAR_LANDSCAPE, true)
 
     /**
      * True if the system status bar should be hidden throughout the app, false if it should be
      * visible.
      */
-    var hideStatusBarEnabled by preferences.booleanPreference(HIDE_STATUS_BAR, false)
+    var hideStatusBarInPortrait by preferences.booleanPreference(HIDE_STATUS_BAR_PORTRAIT, false)
+
+    /**
+     * True if the system status bar should be hidden throughout the app, false if it should be
+     * visible.
+     */
+    var hideStatusBarInLandscape by preferences.booleanPreference(HIDE_STATUS_BAR_LANDSCAPE, true)
 
     /**
      * The URL of the selected homepage.
@@ -294,8 +306,10 @@ private const val BLOCK_IMAGES = "blockimages"
 private const val CLEAR_CACHE_EXIT = "cache"
 private const val COOKIES = "cookies"
 private const val DOWNLOAD_DIRECTORY = "downloadLocation"
-private const val FULL_SCREEN = "fullscreen"
-private const val HIDE_STATUS_BAR = "hidestatus"
+private const val HIDE_TOOL_BAR_PORTRAIT = "hideToolBarPortrait"
+private const val HIDE_TOOL_BAR_LANDSCAPE = "hideToolBarLandscape"
+private const val HIDE_STATUS_BAR_PORTRAIT = "hideStatusBarPortrait"
+private const val HIDE_STATUS_BAR_LANDSCAPE = "hideStatusBarLandscape"
 private const val HOMEPAGE = "home"
 private const val INCOGNITO_COOKIES = "incognitocookies"
 private const val JAVASCRIPT = "java"
