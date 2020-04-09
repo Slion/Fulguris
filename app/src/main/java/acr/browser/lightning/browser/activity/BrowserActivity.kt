@@ -907,8 +907,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         findViewById<ImageButton>(R.id.button_quit).setOnClickListener(this)
     }
 
-    // SL: I'm not quite sure what the meaning of that guy
-    // Is it still being used? Could not find it in settings.
+    /**
+     * Tells if web page color should be applied to tool and status bar
+     */
     override fun isColorMode(): Boolean = userPreferences.colorModeEnabled
 
     override fun getTabModel(): TabsManager = tabsManager
@@ -1325,13 +1326,14 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      * @param tabBackground the optional LinearLayout to color
      */
     override fun changeToolbarBackground(favicon: Bitmap?, color: Int, tabBackground: Drawable?) {
-        if (!isColorMode()) {
-            return
-        }
 
         val defaultColor = ThemeUtils.getPrimaryColor(this)
 
-        if (color != Color.TRANSPARENT)
+        if (!isColorMode()) {
+            // Put back the theme color then
+            changeToolbarBackground(defaultColor,tabBackground);
+        }
+        else if (color != Color.TRANSPARENT)
         {
             // We have a meta theme color specified in our page HTML, use it
             changeToolbarBackground(color,tabBackground);

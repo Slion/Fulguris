@@ -231,6 +231,7 @@
     <string name="pref_category_portrait">Portrait</string>
     <string name="pref_title_hide_status_bar">Hide status bar</string>
     <string name="pref_title_hide_tool_bar">Hide tool bar</string>
+    <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
     <string name="settings_about_explain">Details about version, author and license.</string>
     <string name="close_tab">Close current tab</string>
     <string name="close_all_tabs">Close all tabs</string>

@@ -103,11 +103,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             onCheckChange = { userPreferences.javaScriptEnabled = it }
         )
 
-        checkBoxPreference(
-            preference = SETTINGS_COLOR_MODE,
-            isChecked = userPreferences.colorModeEnabled,
-            onCheckChange = { userPreferences.colorModeEnabled = it }
-        )
     }
 
     private fun ProxyChoice.toSummary(): String {
@@ -448,7 +443,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_IMAGES = "cb_images"
         private const val SETTINGS_SAVEDATA = "savedata"
         private const val SETTINGS_JAVASCRIPT = "cb_javascript"
-        private const val SETTINGS_COLOR_MODE = "cb_colormode"
         private const val SETTINGS_USER_AGENT = "agent"
         private const val SETTINGS_DOWNLOAD = "download"
         private const val SETTINGS_HOME = "home"

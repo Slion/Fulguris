@@ -37,6 +37,13 @@
 
 
     <PreferenceCategory android:title="@string/pref_category_general">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="cb_colormode"
+            android:title="@string/color_mode"
+            android:summary="@string/pref_summary_color_mode"
+            app:iconSpaceReserved="false" />
+
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="cb_drawertabs"

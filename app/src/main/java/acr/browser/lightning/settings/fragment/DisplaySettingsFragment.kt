@@ -103,6 +103,13 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             isChecked = userPreferences.bookmarksAndTabsSwapped,
             onCheckChange = { userPreferences.bookmarksAndTabsSwapped = it }
         )
+
+        switchPreference(
+                preference = SETTINGS_COLOR_MODE,
+                isChecked = userPreferences.colorModeEnabled,
+                onCheckChange = { userPreferences.colorModeEnabled = it }
+        )
+
     }
 
     private fun showTextSizePicker() {
@@ -174,6 +181,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
     }
 
     companion object {
+        private const val SETTINGS_COLOR_MODE = "cb_colormode"
         private const val SETTINGS_VIEWPORT = "wideViewPort"
         private const val SETTINGS_OVERVIEWMODE = "overViewMode"
         private const val SETTINGS_REFLOW = "text_reflow"
