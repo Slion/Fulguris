@@ -669,6 +669,24 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         // Keyboard shortcuts
         if (event.action == KeyEvent.ACTION_DOWN) {
+
+            if (event.isCtrlPressed) {
+                // Ctrl + tab number for direct tab access
+                tabsManager.let {
+                    if (KeyEvent.KEYCODE_0 <= event.keyCode && event.keyCode <= KeyEvent.KEYCODE_9) {
+                        val nextIndex = if (event.keyCode > it.last() + KeyEvent.KEYCODE_1 || event.keyCode == KeyEvent.KEYCODE_0) {
+                            // Go to the last tab for 0 or if not enough tabs
+                            it.last()
+                        } else {
+                            // Otherwise access any of the first nine tabs
+                            event.keyCode - KeyEvent.KEYCODE_1
+                        }
+                        presenter?.tabChanged(nextIndex)
+                        return true
+                    }
+                }
+            }
+
             when {
                 event.isCtrlPressed -> when (event.keyCode) {
                     KeyEvent.KEYCODE_F -> {
@@ -729,18 +747,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     searchView?.selectAll()
                     return true
                 }
-                event.isAltPressed -> // Alt + tab number
-                    tabsManager.let {
-                        if (KeyEvent.KEYCODE_0 <= event.keyCode && event.keyCode <= KeyEvent.KEYCODE_9) {
-                            val nextIndex = if (event.keyCode > it.last() + KeyEvent.KEYCODE_1 || event.keyCode == KeyEvent.KEYCODE_0) {
-                                it.last()
-                            } else {
-                                event.keyCode - KeyEvent.KEYCODE_1
-                            }
-                            presenter?.tabChanged(nextIndex)
-                            return true
-                        }
-                    }
             }
         }
         return super.dispatchKeyEvent(event)
