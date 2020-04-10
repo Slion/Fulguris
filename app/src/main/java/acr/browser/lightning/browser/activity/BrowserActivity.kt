@@ -79,6 +79,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
+import androidx.core.view.doOnPreDraw
 import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
@@ -241,7 +242,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     private fun initialize(savedInstanceState: Bundle?) {
-        initializeToolbarHeight(resources.configuration)
+        //initializeToolbarHeight(resources.configuration)
         setSupportActionBar(toolbar)
         val actionBar = requireNotNull(supportActionBar)
 
@@ -514,7 +515,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             drawerOpening = false
 
             //TODO: make this a settings option?
-            if (isFlavorSlions) return; // Drawers remain locked for tha flavor
+            if (isFlavorSlions) return; // Drawers remain locked for that flavor
             val tabsDrawer = getTabDrawer()
             val bookmarksDrawer = getBookmarkDrawer()
 
@@ -592,8 +593,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
-    private fun initFullScreen() {
-        isFullScreen = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+    private fun initFullScreen(configuration: Configuration) {
+        isFullScreen = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             userPreferences.hideToolBarInPortrait
         }
         else {
@@ -606,7 +607,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      */
     private fun setupToolBar(configuration: Configuration) {
 
-        initFullScreen()
+        initFullScreen(configuration)
+        initializeToolbarHeight(configuration)
 
         if (isFullScreen) {
             showActionBar()
@@ -620,18 +622,14 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             putToolbarInRoot()
         }
 
+        setToolbarColor()
+        setFullscreenIfNeeded(resources.configuration)
     }
 
     private fun initializePreferences() {
 
-        initFullScreen()
-
-        setToolbarColor()
-
         // TODO layout transition causing memory leak
         //        content_frame.setLayoutTransition(new LayoutTransition());
-
-        setFullscreenIfNeeded()
 
         val currentSearchEngine = searchEngineProvider.provideSearchEngine()
         searchText = currentSearchEngine.queryUrl
@@ -1093,14 +1091,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         logger.log(TAG, "onConfigurationChanged")
 
-        // TODO: why did we not have to pass the new config in there?
-        setFullscreenIfNeeded()
-
+        setFullscreenIfNeeded(newConfig)
         setupToolBar(newConfig)
 
         invalidateOptionsMenu()
-        initializeToolbarHeight(newConfig)
-        ui_layout.doOnLayout {setNavigationDrawerWidth()}
+
+        // First close drawers then set width again
+        closeDrawers{drawer_layout.doOnPreDraw {setNavigationDrawerWidth()}}
     }
 
     private fun initializeToolbarHeight(configuration: Configuration) =
@@ -1218,6 +1215,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
         tabsManager.resumeAll()
         initializePreferences()
+
+        setupToolBar(resources.configuration)
 
     }
 
@@ -1640,7 +1639,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             logger.log(TAG, "WebView is not allowed to keep the screen on")
         }
 
-        setFullscreenIfNeeded()
+        setFullscreenIfNeeded(resources.configuration)
         if (fullscreenContainerView != null) {
             val parent = fullscreenContainerView?.parent as ViewGroup
             parent.removeView(fullscreenContainerView)
@@ -1721,8 +1720,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     /**
      * Hide the status bar according to orientation and user preferences
      */
-    private fun setFullscreenIfNeeded() {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+    private fun setFullscreenIfNeeded(configuration: Configuration) {
+        if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setFullscreen( userPreferences.hideStatusBarInPortrait, false)
         }
         else {
