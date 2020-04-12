@@ -19,6 +19,7 @@ import acr.browser.lightning.utils.IntentUtils
 import acr.browser.lightning.utils.ProxyUtils
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isSpecialUrl
+import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTries
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -135,13 +136,6 @@ class LightningWebClient(
             view.evaluateJavascript(invertPageJs.provideJs(), null)
         }
 
-        // Extract meta theme-color
-
-        view.evaluateJavascript("(function() { return document.querySelector('meta[name=\"theme-color\"]').content; })();") {
-             themeColor -> try { lightningView.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"')) } catch (e: Exception) { lightningView.htmlMetaThemeColor = LightningView.KHtmlMetaThemeColorInvalid }
-            //finally { uiController.tabChanged(lightningView) }
-        }
-
         uiController.tabChanged(lightningView)
     }
 
@@ -160,6 +154,10 @@ class LightningWebClient(
             uiController.updateUrl(url, true)
             uiController.showActionBar()
         }
+
+        // Try to fetch meta theme color a few times
+        lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
+
         uiController.tabChanged(lightningView)
     }
 

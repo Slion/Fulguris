@@ -16,6 +16,7 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Message
@@ -48,6 +49,33 @@ class LightningChromeClient(
     override fun onProgressChanged(view: WebView, newProgress: Int) {
         if (lightningView.isShown) {
             uiController.updateProgress(newProgress)
+        }
+
+        if (newProgress > 10 && lightningView.fetchMetaThemeColorTries > 0)
+        {
+            val triesLeft = lightningView.fetchMetaThemeColorTries - 1
+            lightningView.fetchMetaThemeColorTries = 0
+
+            // Extract meta theme-color
+            view?.evaluateJavascript("(function() { return document.querySelector('meta[name=\"theme-color\"]').content; })();") { themeColor ->
+                try {
+                    lightningView.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"')); uiController.tabChanged(lightningView)
+                } catch (e: Exception) {
+                    if (triesLeft==0)
+                    {
+                        // Exhausted all our tries, just give up then and reset our theme color
+                        lightningView.htmlMetaThemeColor = LightningView.KHtmlMetaThemeColorInvalid
+                        uiController.tabChanged(lightningView)
+                    }
+                    else
+                    {
+                        // Try it again next time around
+                        lightningView.fetchMetaThemeColorTries = triesLeft
+                    }
+                }
+                //finally { uiController.tabChanged(lightningView) }
+            }
+
         }
     }
 
@@ -83,6 +111,7 @@ class LightningChromeClient(
         if (view != null && view.url != null) {
             uiController.updateHistory(title, view.url)
         }
+
     }
 
     override fun requestPermissions(permissions: Set<String>, onGrant: (Boolean) -> Unit) {

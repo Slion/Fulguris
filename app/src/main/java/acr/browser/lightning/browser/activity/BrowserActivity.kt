@@ -589,7 +589,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             changeToolbarBackground(currentView.favicon, Color.TRANSPARENT, null)
         } else {
             // That should be the primary color from current theme
-            mainHandler.post {changeToolbarBackground(backgroundDrawable.color, null)}
+            mainHandler.post {changeToolbarBackground(ThemeUtils.getPrimaryColor(this), null)}
         }
     }
 
@@ -670,7 +670,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Keyboard shortcuts
         if (event.action == KeyEvent.ACTION_DOWN) {
 
-            if (event.isCtrlPressed) {
+            // Used this to debug control usage on emulator as both ctrl and alt just don't work on emulator
+            //val isCtrlOnly  = if (Build.PRODUCT.contains("sdk")) { true } else KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
+            val isCtrlOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
+
+            if (isCtrlOnly) {
                 // Ctrl + tab number for direct tab access
                 tabsManager.let {
                     if (KeyEvent.KEYCODE_0 <= event.keyCode && event.keyCode <= KeyEvent.KEYCODE_9) {
@@ -687,8 +691,35 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 }
             }
 
+            // Ctrl + Tab for tab cycling logic
+            if (event.isCtrlPressed && event.keyCode == KeyEvent.KEYCODE_TAB) {
+                tabsManager.let {
+                    // Reversing can be done with those three modifiers notably to make it easier with two thumbs on F(x)tec Pro1
+                    val nextIndex = if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
+                        // Go back one tab
+                        if (it.indexOfCurrentTab() > 0) {
+                            it.indexOfCurrentTab() - 1
+                        } else {
+                            it.last()
+                        }
+                    } else {
+                        // Go forward one tab
+                        if (it.indexOfCurrentTab() < it.last()) {
+                            it.indexOfCurrentTab() + 1
+                        } else {
+                            0
+                        }
+                    }
+
+                    presenter?.tabChanged(nextIndex)
+                }
+
+                return true
+            }
+
+
             when {
-                event.isCtrlPressed -> when (event.keyCode) {
+                isCtrlOnly -> when (event.keyCode) {
                     KeyEvent.KEYCODE_F -> {
                         // Search in page
                         findInPage()
@@ -715,29 +746,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     KeyEvent.KEYCODE_R -> {
                         // Refresh current tab
                         tabsManager.currentTab?.reload()
-                        return true
-                    }
-                    KeyEvent.KEYCODE_TAB -> {
-                        tabsManager.let {
-                            val nextIndex = if (event.isShiftPressed) {
-                                // Go back one tab
-                                if (it.indexOfCurrentTab() > 0) {
-                                    it.indexOfCurrentTab() - 1
-                                } else {
-                                    it.last()
-                                }
-                            } else {
-                                // Go forward one tab
-                                if (it.indexOfCurrentTab() < it.last()) {
-                                    it.indexOfCurrentTab() + 1
-                                } else {
-                                    0
-                                }
-                            }
-
-                            presenter?.tabChanged(nextIndex)
-                        }
-
                         return true
                     }
                 }
@@ -945,6 +953,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     override fun notifyTabViewChanged(position: Int) {
         logger.log(TAG, "Notify Tab Changed: $position")
         tabsView?.tabChanged(position)
+        setToolbarColor()
     }
 
     override fun notifyTabViewInitialized() {

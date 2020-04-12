@@ -80,6 +80,11 @@ class LightningView(
     var htmlMetaThemeColor: Int = KHtmlMetaThemeColorInvalid
 
     /**
+     * Define the number of times we should try to fetch HTML meta tehme-color
+     */
+    var fetchMetaThemeColorTries = KFetchMetaThemeColorTries
+
+    /**
      * A tab initializer that should be run when the view is first attached.
      */
     private var latentTabInitializer: FreezableBundleInitializer? = null
@@ -919,6 +924,7 @@ class LightningView(
     companion object {
 
         public const val KHtmlMetaThemeColorInvalid: Int = Color.TRANSPARENT
+        public const val KFetchMetaThemeColorTries: Int = 6
 
         private const val TAG = "LightningView"
 
