@@ -59,11 +59,15 @@ class LightningChromeClient(
             // Extract meta theme-color
             view?.evaluateJavascript("(function() { return document.querySelector('meta[name=\"theme-color\"]').content; })();") { themeColor ->
                 try {
-                    lightningView.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"')); uiController.tabChanged(lightningView)
-                } catch (e: Exception) {
-                    if (triesLeft==0)
+                    lightningView.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"'));
+                    // We did find a valid theme-color, tell our controller about it
+                    uiController.tabChanged(lightningView)
+                }
+                catch (e: Exception) {
+                    if (triesLeft==0 || newProgress==100)
                     {
-                        // Exhausted all our tries, just give up then and reset our theme color
+                        // Exhausted all our tries or the page finished loading before we did
+                        // Just give up then and reset our theme color
                         lightningView.htmlMetaThemeColor = LightningView.KHtmlMetaThemeColorInvalid
                         uiController.tabChanged(lightningView)
                     }
@@ -73,7 +77,6 @@ class LightningChromeClient(
                         lightningView.fetchMetaThemeColorTries = triesLeft
                     }
                 }
-                //finally { uiController.tabChanged(lightningView) }
             }
 
         }
