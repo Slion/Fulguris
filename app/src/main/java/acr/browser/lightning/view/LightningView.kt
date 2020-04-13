@@ -253,7 +253,7 @@ class LightningView(
         } else {
             latentTabInitializer = tabInitializer
             titleInfo.setTitle(tabInitializer.initialTitle)
-            titleInfo.setFavicon(activity.drawable(R.drawable.ic_frozen).toBitmap())
+            titleInfo.setFavicon(tabInitializer.favicon)
         }
 
         networkDisposable = networkConnectivityModel.connectivity()

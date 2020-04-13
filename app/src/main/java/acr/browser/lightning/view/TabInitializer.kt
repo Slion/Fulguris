@@ -13,6 +13,7 @@ import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.preference.UserPreferences
 import android.app.Activity
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Message
 import android.webkit.WebView
@@ -158,7 +159,8 @@ open class BundleInitializer(private val bundle: Bundle) : TabInitializer {
  */
 class FreezableBundleInitializer(
     val bundle: Bundle,
-    val initialTitle: String
+    val initialTitle: String,
+    val favicon: Bitmap?
 ) : BundleInitializer(bundle)
 
 /**

@@ -10,6 +10,12 @@ import androidx.core.graphics.createBitmap
  *
  * @return the padded bitmap.
  */
+fun Bitmap.pad(): Bitmap {
+    // SL: Disabled that funny padding it would cause favicon from frozen tab to look even smaller somehow
+    return this;
+}
+
+/*
 fun Bitmap.pad(): Bitmap = let {
     val padding = Utils.dpToPx(4f)
     val width = it.width + padding
@@ -21,7 +27,7 @@ fun Bitmap.pad(): Bitmap = let {
             drawBitmap(it, (padding / 2).toFloat(), (padding / 2).toFloat(), Paint(Paint.FILTER_BITMAP_FLAG))
         }
     }
-}
+}*/
 
 private val desaturatedPaint = Paint().apply {
     colorFilter = ColorMatrixColorFilter(ColorMatrix().apply {

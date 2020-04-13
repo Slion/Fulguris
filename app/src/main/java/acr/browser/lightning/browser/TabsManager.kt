@@ -12,13 +12,17 @@ import android.app.Activity
 import android.app.Application
 import android.app.SearchManager
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.webkit.URLUtil
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
+
 
 /**
  * A manager singleton that holds all the [LightningView] and tracks the current tab. It handles
@@ -155,7 +159,7 @@ class TabsManager @Inject constructor(
      * saved on disk. Can potentially be empty.
      */
     private fun restorePreviousTabs(): Observable<TabInitializer> = readSavedStateFromDisk()
-        .map { (bundle, title) ->
+        .map { (bundle, title, favicon) ->
             return@map bundle.getString(URL_KEY)?.let { url ->
                 when {
                     url.isBookmarkUrl() -> bookmarkPageInitializer
@@ -165,7 +169,7 @@ class TabsManager @Inject constructor(
                     else -> homePageInitializer
                 }
             } ?: FreezableBundleInitializer(bundle, title
-                ?: application.getString(R.string.tab_frozen))
+                ?: application.getString(R.string.tab_frozen), favicon)
         }
 
 
@@ -332,6 +336,12 @@ class TabsManager @Inject constructor(
                 if (!tab.url.isSpecialUrl()) {
                     outState.putBundle(BUNDLE_KEY + index, tab.saveState())
                     outState.putString(TAB_TITLE_KEY + index, tab.title)
+                    val stream = ByteArrayOutputStream()
+                    tab.favicon?.let {
+                        it.compress(Bitmap.CompressFormat.WEBP, 100, stream)
+                        val byteArray = stream.toByteArray()
+                        outState.putByteArray(TAB_FAVICON_KEY + index, byteArray)
+                    };
                 } else {
                     outState.putBundle(BUNDLE_KEY + index, Bundle().apply {
                         putString(URL_KEY, tab.url)
@@ -354,16 +364,18 @@ class TabsManager @Inject constructor(
      * on disk. After the list of bundle [Bundle] is read off disk, the old state will be deleted.
      * Can potentially be empty.
      */
-    private fun readSavedStateFromDisk(): Observable<Pair<Bundle, String?>> = Maybe
+    private fun readSavedStateFromDisk(): Observable<Triple<Bundle, String?, Bitmap?>> = Maybe
         .fromCallable { FileUtils.readBundleFromStorage(application, BUNDLE_STORAGE) }
         .flattenAsObservable { bundle ->
             bundle.keySet()
                 .filter { it.startsWith(BUNDLE_KEY) }
                 .mapNotNull { bundleKey ->
                     bundle.getBundle(bundleKey)?.let {
-                        Pair(
+                        val byteArray: ByteArray? = bundle.getByteArray(TAB_FAVICON_KEY + bundleKey.extractNumberFromEnd())
+                        Triple(
                             it,
-                            bundle.getString(TAB_TITLE_KEY + bundleKey.extractNumberFromEnd())
+                            bundle.getString(TAB_TITLE_KEY + bundleKey.extractNumberFromEnd()),
+                                byteArray?.let {BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)}
                         )
                     }
                 }
@@ -426,6 +438,7 @@ class TabsManager @Inject constructor(
 
         private const val BUNDLE_KEY = "WEBVIEW_"
         private const val TAB_TITLE_KEY = "TITLE_"
+        private const val TAB_FAVICON_KEY = "FAVICON_"
         private const val URL_KEY = "URL_KEY"
         private const val BUNDLE_STORAGE = "SAVED_TABS.parcel"
     }
