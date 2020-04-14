@@ -259,7 +259,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         left_drawer.setLayerType(LAYER_TYPE_NONE, null)
         right_drawer.setLayerType(LAYER_TYPE_NONE, null)
 
-        ui_layout.doOnLayout {setNavigationDrawerWidth()}
+
         drawer_layout.addDrawerListener(DrawerLocker())
 
         webPageBitmap = drawable(R.drawable.ic_webpage).toBitmap()
@@ -367,6 +367,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             setIntent(null)
             proxyUtils.checkForProxy(this)
         }
+
+        if (isFlavorSlions) {
+            //TODO: make this a settings option?
+            // Drawers are full screen and locked for this flavor so as to avoid closing them when scrolling through tabs
+            lockDrawers()
+        }
+
     }
 
     private fun getBookmarksContainerId(): Int = if (swapBookmarksAndTabs) {
@@ -553,28 +560,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     }
 
-    private fun setNavigationDrawerWidth() {
 
-        if (isFlavorSlions) {
-            //TODO: make this a settings option?
-            // Drawers are full screen and locked for this flavor so as to avoid closing them when scrolling through tabs
-            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
-            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getBookmarkDrawer())
-        }
-
-        val width = window.decorView.width - dimen(R.dimen.navigation_drawer_minimum_space)
-        val maxWidth = resources.getDimensionPixelSize(R.dimen.navigation_drawer_max_width)
-        if (width < maxWidth) {
-            val params = left_drawer.layoutParams as DrawerLayout.LayoutParams
-            params.width = width
-            left_drawer.layoutParams = params
-            left_drawer.requestLayout()
-            val paramsRight = right_drawer.layoutParams as DrawerLayout.LayoutParams
-            paramsRight.width = width
-            right_drawer.layoutParams = paramsRight
-            right_drawer.requestLayout()
-        }
+    private fun lockDrawers()
+    {
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getBookmarkDrawer())
     }
+
 
     // Set tool bar color corresponding to the current tab
     private fun setToolbarColor()
@@ -1111,8 +1103,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         invalidateOptionsMenu()
 
-        // First close drawers then set width again
-        closeDrawers{drawer_layout.doOnPreDraw {setNavigationDrawerWidth()}}
+        // Make sure our drawers adjust accordingly
+        drawer_layout.requestLayout()
     }
 
     private fun initializeToolbarHeight(configuration: Configuration) =
@@ -1233,6 +1225,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         setupToolBar(resources.configuration)
 
+        // We think that's needed in case there was a rotation while in the background
+        drawer_layout.requestLayout()
     }
 
     /**

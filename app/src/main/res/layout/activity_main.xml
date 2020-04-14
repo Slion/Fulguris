@@ -28,21 +28,23 @@
 
             <FrameLayout
                 android:id="@+id/left_drawer"
-                android:layout_width="@dimen/navigation_drawer_max_width"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:background="?attr/drawerBackground"
                 android:fitsSystemWindows="true"
-                android:weightSum="1"/>
+                android:weightSum="1"
+                android:layout_marginLeft="-64dp"/>
 
             <FrameLayout
                 android:id="@+id/right_drawer"
-                android:layout_width="@dimen/navigation_drawer_max_width"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:background="?attr/drawerBackground"
                 android:fitsSystemWindows="true"
-                android:weightSum="1"/>
+                android:weightSum="1"
+                android:layout_marginLeft="-64dp"/>
 
         </androidx.drawerlayout.widget.DrawerLayout>
 

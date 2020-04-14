@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="navigation_drawer_max_width">6000dp</dimen>
-    <dimen name="navigation_drawer_minimum_space">0dp</dimen>
-</resources>
