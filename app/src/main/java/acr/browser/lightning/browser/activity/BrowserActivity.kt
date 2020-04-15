@@ -72,6 +72,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -1250,25 +1251,19 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
 
     private fun setStatusBarColor(color: Int, darkIcons: Boolean) {
-        if (shouldShowTabsInDrawer) {
-            //window.statusBarColor = color
-            backgroundDrawable.color = color
-            window.setBackgroundDrawable(backgroundDrawable)
-            // That if statement is preventing us to change the icons color while a drawer is showing
-            // That's typically the case when user open a drawer before the HTML meta theme color was delivered
-            if (drawerClosing || !drawerOpened) // Do not update icons color if drawer is opened
-            {
-                // Make sure the status bar icons are still readable
-                setStatusBarIconsColor(darkIcons)
-            }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // You don't want this as it somehow prevents smooth transition of tool bar when opening drawer
+            //window.statusBarColor = R.color.transparent
         }
-        else {
-            // Keep it black for desktop tab bar mode
-            ////window.statusBarColor = Color.BLACK
-            backgroundDrawable.color = color
-            window.setBackgroundDrawable(backgroundDrawable)
+        backgroundDrawable.color = color
+        window.setBackgroundDrawable(backgroundDrawable)
+        // That if statement is preventing us to change the icons color while a drawer is showing
+        // That's typically the case when user open a drawer before the HTML meta theme color was delivered
+        if (drawerClosing || !drawerOpened) // Do not update icons color if drawer is opened
+        {
             // Make sure the status bar icons are still readable
-            setStatusBarIconsColor(false)
+            setStatusBarIconsColor(darkIcons)
         }
     }
 
