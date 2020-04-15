@@ -298,17 +298,20 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             homeImageView?.visibility = VISIBLE
             homeImageView?.setImageResource(R.drawable.incognito_mode)
             // Post drawer locking in case the activity is being recreated
-            mainHandler.post { drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getTabDrawer()) }
+            // SL: why did we need this?
+            //mainHandler.post { drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getTabDrawer()) }
         } else {
             tabCountView?.visibility = GONE
             homeImageView?.visibility = VISIBLE
             homeImageView?.setImageResource(R.drawable.ic_action_home)
             // Post drawer locking in case the activity is being recreated
-            mainHandler.post { drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer()) }
+            // SL: why did we need this?
+            //mainHandler.post { drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer()) }
         }
 
         // Post drawer locking in case the activity is being recreated
-        mainHandler.post { drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getBookmarkDrawer()) }
+        // SL: why did we need this?
+        //mainHandler.post { drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getBookmarkDrawer()) }
 
         customView.findViewById<FrameLayout>(R.id.home_button).setOnClickListener(this)
 
