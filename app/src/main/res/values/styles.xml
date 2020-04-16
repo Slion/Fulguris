@@ -95,6 +95,11 @@
 
         <!-- Alert dialogs -->
         <item name="alertDialogTheme">@style/AppCompatDialogStyle.Dark</item>
+
+        <!-- Why is this not working
+        <item name="swipeRefreshLayoutProgressSpinnerBackgroundColor">#FF808080</item>
+        -->
+
     </style>
 
     <style name="Theme.BaseBlackTheme" parent="Theme.AppCompat">

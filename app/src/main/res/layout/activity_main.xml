@@ -17,7 +17,9 @@
                 android:id="@+id/ui_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="?attr/colorPrimary"
+                android:animateLayoutChanges="true">
 
                 <include layout="@layout/toolbar"/>
 
@@ -25,6 +27,7 @@
 
                 <include layout="@layout/search_interface"/>
             </LinearLayout>
+
 
             <FrameLayout
                 android:id="@+id/left_drawer"

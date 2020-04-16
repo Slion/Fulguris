@@ -29,7 +29,6 @@ import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.icon.TabCountView
-import acr.browser.lightning.interpolator.BezierDecelerateInterpolator
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.notifications.IncognitoNotification
 import acr.browser.lightning.reading.activity.ReadingActivity
@@ -62,8 +61,6 @@ import android.provider.MediaStore
 import android.view.*
 import android.view.View.*
 import android.view.ViewGroup.LayoutParams
-import android.view.animation.Animation
-import android.view.animation.Transformation
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.ValueCallback
@@ -72,7 +69,6 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -80,7 +76,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
-import androidx.core.view.doOnPreDraw
 import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
@@ -378,6 +373,16 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             lockDrawers()
         }
 
+        // Enable swipe to refresh
+        content_frame.setOnRefreshListener {
+            tabsManager.currentTab?.reload()
+            content_frame.isRefreshing = false   // reset the SwipeRefreshLayout (stop the loading spinner)
+        }
+
+        // TODO: define custom transitions
+        //ui_layout.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, ui_layout.layoutTransition.getAnimator(LayoutTransition.CHANGE_DISAPPEARING))
+
+
     }
 
     private fun getBookmarksContainerId(): Int = if (swapBookmarksAndTabs) {
@@ -606,17 +611,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         initFullScreen(configuration)
         initializeToolbarHeight(configuration)
 
-        if (isFullScreen) {
-            showActionBar()
-            toolbar_layout.translationY = 0f
-            setWebViewTranslation(toolbar_layout.height.toFloat())
-        }
 
-        if (isFullScreen) {
-            overlayToolbarOnWebView()
-        } else {
-            putToolbarInRoot()
-        }
+        showActionBar()
+
+
+
 
         setToolbarColor()
         setFullscreenIfNeeded(resources.configuration)
@@ -636,8 +635,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     public override fun onWindowVisibleToUserAfterResume() {
         super.onWindowVisibleToUserAfterResume()
-        toolbar_layout.translationY = 0f
-        setWebViewTranslation(toolbar_layout.height.toFloat())
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -863,32 +860,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             }
     }
 
-    private fun putToolbarInRoot() {
-        if (toolbar_layout.parent != ui_layout) {
-            (toolbar_layout.parent as ViewGroup?)?.removeView(toolbar_layout)
-
-            ui_layout.addView(toolbar_layout, 0)
-            ui_layout.requestLayout()
-        }
-        setWebViewTranslation(0f)
-    }
-
-    private fun overlayToolbarOnWebView() {
-        if (toolbar_layout.parent != content_frame) {
-            (toolbar_layout.parent as ViewGroup?)?.removeView(toolbar_layout)
-
-            content_frame.addView(toolbar_layout)
-            content_frame.requestLayout()
-        }
-        setWebViewTranslation(toolbar_layout.height.toFloat())
-    }
-
-    private fun setWebViewTranslation(translation: Float) =
-        if (isFullScreen) {
-            currentTabView?.translationY = translation
-        } else {
-            currentTabView?.translationY = 0f
-        }
 
     /**
      * method that shows a dialog asking what string the user wishes to search
@@ -1004,21 +975,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
 
         logger.log(TAG, "Setting the tab view")
-
         view.removeFromParent()
         currentTabView.removeFromParent()
-
+        content_frame.resetTarget() // Needed to make it work together with swipe to refresh
         content_frame.addView(view, 0, MATCH_PARENT)
-        if (isFullScreen) {
-            view.translationY = toolbar_layout.height + toolbar_layout.translationY
-        } else {
-            view.translationY = 0f
-        }
 
         view.requestFocus()
-
         currentTabView = view
-
         showActionBar()
     }
 
@@ -1104,9 +1067,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         setFullscreenIfNeeded(newConfig)
         setupToolBar(newConfig)
-
         invalidateOptionsMenu()
-
         // Make sure our drawers adjust accordingly
         drawer_layout.requestLayout()
     }
@@ -1123,7 +1084,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 height = dimen(toolbarSize)
             }
             toolbar.minimumHeight = toolbarSize
-            toolbar.doOnLayout { setWebViewTranslation(toolbar_layout.height.toFloat()) }
             toolbar.requestLayout()
         }
 
@@ -1284,6 +1244,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         toolbar.overflowIcon?.tint(textColor)
         toolbar.navigationIcon?.tint(textColor) // Is that needed
         toolbar.collapseIcon?.tint(textColor) // Is that needed
+
+        // Color also applies to the following backgrounds as they show during tool bar show/hide animation
+        ui_layout.setBackgroundColor(color)
+        content_frame.setBackgroundColor(color)
+
         // No animation for now
         // Toolbar background color
         toolbar_layout.setBackgroundColor(color)
@@ -1792,61 +1757,23 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     /**
-     * Hide the ActionBar using an animation if we are in full-screen
-     * mode. This method also re-parents the ActionBar if its parent is
-     * incorrect so that the animation can happen correctly.
+     * Hide the ActionBar if we are in full-screen
      */
     override fun hideActionBar() {
         if (isFullScreen) {
-            if (toolbar_layout == null || content_frame == null)
-                return
-
-            val height = toolbar_layout.height
-            if (toolbar_layout.translationY > -0.01f) {
-                val hideAnimation = object : Animation() {
-                    override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-                        val trans = interpolatedTime * height
-                        toolbar_layout.translationY = -trans
-                        setWebViewTranslation(height - trans)
-                    }
-                }
-                hideAnimation.duration = 250
-                hideAnimation.interpolator = BezierDecelerateInterpolator()
-                content_frame.startAnimation(hideAnimation)
-            }
+            ui_layout.removeView(toolbar_layout)
         }
     }
 
     /**
-     * Display the ActionBar using an animation if we are in full-screen
-     * mode. This method also re-parents the ActionBar if its parent is
-     * incorrect so that the animation can happen correctly.
+     * Display the ActionBar if it was hidden
      */
     override fun showActionBar() {
-        if (isFullScreen) {
-            logger.log(TAG, "showActionBar")
-            if (toolbar_layout == null)
-                return
+        logger.log(TAG, "showActionBar")
 
-            var height = toolbar_layout.height
-            if (height == 0) {
-                toolbar_layout.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
-                height = toolbar_layout.measuredHeight
-            }
-
-            val totalHeight = height
-            if (toolbar_layout.translationY < -(height - 0.01f)) {
-                val show = object : Animation() {
-                    override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-                        val trans = interpolatedTime * totalHeight
-                        toolbar_layout.translationY = trans - totalHeight
-                        setWebViewTranslation(trans)
-                    }
-                }
-                show.duration = 250
-                show.interpolator = BezierDecelerateInterpolator()
-                content_frame.startAnimation(show)
-            }
+        if (toolbar_layout.parent==null)
+        {
+            ui_layout.addView(toolbar_layout,0)
         }
     }
 
