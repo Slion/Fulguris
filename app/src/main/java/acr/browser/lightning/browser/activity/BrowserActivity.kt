@@ -599,16 +599,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      * Setup our tool bar as collapsible or always on according to orientation and user preferences
      */
     private fun setupToolBar(configuration: Configuration) {
-
         initFullScreen(configuration)
         initializeToolbarHeight(configuration)
-
-
         showActionBar()
-
-
-
-
         setToolbarColor()
         setFullscreenIfNeeded(resources.configuration)
     }
@@ -1274,7 +1267,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         toolbar.collapseIcon?.tint(currentToolBarTextColor) // Is that needed
         // Change reload icon color
         setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
-        //toolbar.findViewById<ActionMenuItemView>(R.id.action_reload)?.compoundDrawables?.get(0)?.colorFilter = PorterDuffColorFilter(textColor,PorterDuff.Mode.SRC_ATOP)
+        // SSL status icon color
+        search_ssl_status.setColorFilter(currentToolBarTextColor)
 
         // Pull to refresh spinner color also follow current theme
         content_frame.setProgressBackgroundColorSchemeColor(color)
