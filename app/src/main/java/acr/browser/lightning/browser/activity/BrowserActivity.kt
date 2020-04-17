@@ -652,6 +652,18 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             //val isCtrlOnly  = if (Build.PRODUCT.contains("sdk")) { true } else KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
             val isCtrlOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
 
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_F10 -> {
+                    setFullscreen(!statusBarHidden,false)
+                    return true
+                }
+
+                KeyEvent.KEYCODE_F11 -> {
+                    toggleToolBar()
+                    return true
+                }
+            }
+
             if (isCtrlOnly) {
                 // Ctrl + tab number for direct tab access
                 tabsManager.let {
@@ -1731,6 +1743,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
 
+    var statusBarHidden = false
+
     /**
      * This method sets whether or not the activity will display
      * in full-screen mode (i.e. the ActionBar will be hidden) and
@@ -1755,9 +1769,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             }
             window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            statusBarHidden = true
         } else {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
             decor.systemUiVisibility = decor.systemUiVisibility and fullScreenFlags.inv()
+            statusBarHidden = false
         }
     }
 
@@ -1790,7 +1806,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      */
     override fun hideActionBar() {
         if (isFullScreen) {
-            ui_layout.removeView(toolbar_layout)
+            doHideToolBar()
         }
     }
 
@@ -1805,6 +1821,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             ui_layout.addView(toolbar_layout,0)
         }
     }
+
+    private fun doHideToolBar() = ui_layout.removeView(toolbar_layout)
+
+    private fun isToolBarVisible() = toolbar_layout.parent!=null
+
+    private fun toggleToolBar() = if (isToolBarVisible()) doHideToolBar() else showActionBar()
 
     override fun handleBookmarksChange() {
         val currentTab = tabsManager.currentTab
