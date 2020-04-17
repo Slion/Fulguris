@@ -36,6 +36,7 @@ Slions flavor is making changes to search layout notably adjusting margins.
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Apparently ellipsis won't work with AppCompatAutoCompleteTextView -->
     <acr.browser.lightning.view.SearchView
         android:id="@+id/search"
         android:layout_width="0dp"
@@ -49,23 +50,18 @@ Slions flavor is making changes to search layout notably adjusting margins.
         android:imeOptions="actionGo"
         android:importantForAutofill="no"
         android:inputType="textUri"
-        android:maxLines="1"
         android:selectAllOnFocus="true"
         android:textColor="?attr/autoCompleteTitleColor"
         android:textColorHint="?attr/autoCompleteUrlColor"
         android:textCursorDrawable="@null"
-        app:layout_constraintEnd_toStartOf="@+id/search_refresh"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/search_ssl_status"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginLeft="8dp" />
-
-    <ImageView
-        android:id="@+id/search_refresh"
-        android:layout_width="@dimen/material_grid_touch_small"
-        android:layout_height="match_parent"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_goneMarginLeft="8dp"
+        android:layout_marginEnd="10dp"
+        android:ellipsize="middle"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

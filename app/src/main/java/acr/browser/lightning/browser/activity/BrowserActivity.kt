@@ -50,6 +50,8 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
@@ -70,8 +72,10 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -128,6 +132,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     private var originalOrientation: Int = 0
     private var currentUiColor = Color.BLACK
+    private var currentToolBarTextColor = Color.BLACK
     private var keyDownStartTime: Long = 0
     private var searchText: String? = null
     private var cameraPhotoPath: String? = null
@@ -310,7 +315,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 }
             }
             search_ssl_status.updateVisibilityForContent()
-            search_refresh.setImageResource(R.drawable.ic_action_refresh)
+            setMenuItemIcon(R.id.action_reload, R.drawable.ic_action_refresh)
+            //toolbar?.menu?.findItem(R.id.action_reload)?.let { it.icon = ContextCompat.getDrawable(this@BrowserActivity, R.drawable.ic_action_refresh) }
 
             val searchListener = SearchListenerClass()
             setOnKeyListener(searchListener)
@@ -322,13 +328,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             initializeSearchSuggestions(this)
         }
 
-        search_refresh.setOnClickListener {
-            if (searchView?.hasFocus() == true) {
-                searchView?.setText("")
-            } else {
-                refreshOrStop()
-            }
-        }
 
         searchBackground = customView.findViewById<View>(R.id.search_container).apply {
             // initialize search background color
@@ -471,7 +470,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 // Hack to make sure the text gets selected
                 (v as SearchView).selectAll()
                 search_ssl_status.visibility = GONE
-                search_refresh.setImageResource(R.drawable.ic_action_delete)
+                setMenuItemIcon(R.id.action_reload, R.drawable.ic_action_delete)
+                //toolbar?.menu?.findItem(R.id.action_reload)?.let { it.icon = ContextCompat.getDrawable(this@BrowserActivity, R.drawable.ic_action_delete) }
             }
 
             if (!hasFocus) {
@@ -783,6 +783,15 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 presenter?.newTab(homePageInitializer, true)
                 return true
             }
+            R.id.action_reload -> {
+                if (searchView?.hasFocus() == true) {
+                    // SL: Not sure why?
+                    searchView?.setText("")
+                } else {
+                    refreshOrStop()
+                }
+                return true
+            }
             R.id.action_incognito -> {
                 startActivity(IncognitoActivity.createIntent(this))
                 overridePendingTransition(R.anim.slide_up_in, R.anim.fade_out_scale)
@@ -997,7 +1006,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         presenter?.tabChanged(position)
     }
 
-    // This is the callback from new tab button on page drawer
+    // This is the callback from 'new tab' button on page drawer
     override fun newTabButtonClicked() {
         // First close drawer
         closeDrawers(null)
@@ -1224,22 +1233,52 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
 
+    private fun setMenuItemIcon(id: Int, drawable: Int)
+    {
+        toolbar?.menu?.findItem(id)?.let {
+            // We need to preserve the color filter before changing the icon
+            val cf = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                it.icon.colorFilter
+            } else {
+                // TODO maybe just move to API 21, or use compoundDrawables instead
+                PorterDuffColorFilter(currentToolBarTextColor, PorterDuff.Mode.SRC_ATOP)
+            }
+            // Change our icon
+            it.icon = ContextCompat.getDrawable(this, drawable)
+            // Now reset our color filter as it was
+            it.icon.colorFilter = cf
+        }
+    }
+
+
+    private fun setMenuItemColor(id: Int, color: Int)
+    {
+        //toolbar.findViewById<ActionMenuItemView>(id)?.compoundDrawables?.get(0)?.colorFilter = PorterDuffColorFilter(color,PorterDuff.Mode.SRC_ATOP)
+        toolbar?.menu?.findItem(id)?.let { it.icon.colorFilter = PorterDuffColorFilter(color,PorterDuff.Mode.SRC_ATOP)  }
+    }
+
+
     private fun changeToolbarBackground(color: Int, tabBackground: Drawable?) {
 
         //Workout a foreground colour that will be working with our background color
-        val textColor = foregroundColorFromBackgroundColor(color).toInt()
+        currentToolBarTextColor = foregroundColorFromBackgroundColor(color)
         // Change search view text color
-        searchView?.setTextColor(textColor)
-        searchView?.setHintTextColor(DrawableUtils.mixColor(0.5f, textColor, color))
-        // Change reload icon color
-        search_refresh.setColorFilter(textColor)
+        searchView?.setTextColor(currentToolBarTextColor)
+        searchView?.setHintTextColor(DrawableUtils.mixColor(0.5f, currentToolBarTextColor, color))
         // Change tab counter color
-        tabCountView?.textColor = textColor
+        tabCountView?.textColor = currentToolBarTextColor
         tabCountView?.invalidate();
         // Set overflow/menu icon color
-        toolbar.overflowIcon?.tint(textColor)
-        toolbar.navigationIcon?.tint(textColor) // Is that needed
-        toolbar.collapseIcon?.tint(textColor) // Is that needed
+        toolbar.overflowIcon?.tint(currentToolBarTextColor)
+        toolbar.navigationIcon?.tint(currentToolBarTextColor) // Is that needed
+        toolbar.collapseIcon?.tint(currentToolBarTextColor) // Is that needed
+        // Change reload icon color
+        setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
+        //toolbar.findViewById<ActionMenuItemView>(R.id.action_reload)?.compoundDrawables?.get(0)?.colorFilter = PorterDuffColorFilter(textColor,PorterDuff.Mode.SRC_ATOP)
+
+        // Pull to refresh spinner color also follow current theme
+        content_frame.setProgressBackgroundColorSchemeColor(color)
+        content_frame.setColorSchemeColors(currentToolBarTextColor)
 
         // Color also applies to the following backgrounds as they show during tool bar show/hide animation
         ui_layout.setBackgroundColor(color)
@@ -1251,7 +1290,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Search text field color
         searchBackground?.background?.tint(getSearchBarColor(color))
         // Then the color of the status bar itself
-        setStatusBarColor(color,textColor==Color.BLACK)
+        setStatusBarColor(color,currentToolBarTextColor==Color.BLACK)
 
 
 
@@ -1821,7 +1860,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private fun setIsLoading(isLoading: Boolean) {
         if (searchView?.hasFocus() == false) {
             search_ssl_status.updateVisibilityForContent()
-            search_refresh.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
+
+            setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
+
+            //toolbar?.menu?.findItem(R.id.action_reload)?.let { it.icon = if (isLoading) ContextCompat.getDrawable(this, R.drawable.ic_action_delete) else ContextCompat.getDrawable(this, R.drawable.ic_action_refresh);  }
+
         }
     }
 
