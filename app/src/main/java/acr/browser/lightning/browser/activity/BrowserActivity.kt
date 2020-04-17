@@ -42,6 +42,7 @@ import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
 import acr.browser.lightning.view.SearchView
 import acr.browser.lightning.view.find.FindResults
+import android.animation.LayoutTransition
 import android.app.Activity
 import android.app.NotificationManager
 import android.content.ClipboardManager
@@ -293,21 +294,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             tabCountView?.visibility = GONE
             homeImageView?.visibility = VISIBLE
             homeImageView?.setImageResource(R.drawable.incognito_mode)
-            // Post drawer locking in case the activity is being recreated
-            // SL: why did we need this?
-            //mainHandler.post { drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getTabDrawer()) }
         } else {
             tabCountView?.visibility = GONE
             homeImageView?.visibility = VISIBLE
             homeImageView?.setImageResource(R.drawable.ic_action_home)
-            // Post drawer locking in case the activity is being recreated
-            // SL: why did we need this?
-            //mainHandler.post { drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer()) }
         }
-
-        // Post drawer locking in case the activity is being recreated
-        // SL: why did we need this?
-        //mainHandler.post { drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getBookmarkDrawer()) }
 
         customView.findViewById<FrameLayout>(R.id.home_button).setOnClickListener(this)
 
@@ -376,13 +367,14 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Enable swipe to refresh
         content_frame.setOnRefreshListener {
             tabsManager.currentTab?.reload()
-            content_frame.isRefreshing = false   // reset the SwipeRefreshLayout (stop the loading spinner)
+            mainHandler.postDelayed({content_frame.isRefreshing = false}, 1000)   // Stop the loading spinner after one second
         }
 
-        // TODO: define custom transitions
+        // TODO: define custom transitions to make flying in and out of the tool bar nicer
         //ui_layout.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, ui_layout.layoutTransition.getAnimator(LayoutTransition.CHANGE_DISAPPEARING))
-
-
+        // Disabling animations which are not so nice
+        ui_layout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING)
+        ui_layout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
     }
 
     private fun getBookmarksContainerId(): Int = if (swapBookmarksAndTabs) {
@@ -1005,11 +997,15 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         presenter?.tabChanged(position)
     }
 
+    // This is the callback from new tab button on page drawer
     override fun newTabButtonClicked() {
-        presenter?.newTab(
+        // First close drawer
+        closeDrawers(null)
+        // Then slightly delay page loading to give enough time for the drawer to close without stutter
+        mainHandler.postDelayed({presenter?.newTab(
             homePageInitializer,
             true
-        )
+        )}, 300)
     }
 
     override fun newTabButtonLongClicked() {
