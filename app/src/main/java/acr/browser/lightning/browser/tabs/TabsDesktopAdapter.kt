@@ -75,12 +75,9 @@ class TabsDesktopAdapter(
 
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
         favicon?.let {
-            if (isForeground) {
                 viewHolder.favicon.setImageBitmap(it)
-            } else {
-                viewHolder.favicon.setImageBitmap(it.desaturate())
             }
-        } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
+        ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
     }
 
     private fun updateViewHolderAppearance(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
