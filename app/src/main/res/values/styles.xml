@@ -73,6 +73,7 @@
 
         <!-- Theme colors -->
         <item name="colorPrimary">@color/primary_color_dark</item>
+        <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <item name="colorAccent">@color/accent_color_dark</item>
         <item name="drawerBackground">@color/drawer_background_dark</item>
@@ -131,7 +132,7 @@
         <item name="alertDialogTheme">@style/AppCompatDialogStyle.Black</item>
     </style>
 
-    <!-- AlertDialog Theming -->
+    <!-- AlertDialog Theme -->
     <style name="AppCompatDialogStyle.Light" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/accent_color</item>
     </style>
