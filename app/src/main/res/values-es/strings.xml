@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Lightning</string>
     <string name="action_new_tab">Nueva pestaña</string>
     <string name="action_share">Compartir</string>
     <string name="action_history">Historial</string>

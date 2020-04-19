@@ -17,7 +17,6 @@
 
 <resources>
 
-    <string name="app_name">Lightning</string>
     <string name="action_new_tab">Új Lap</string>
     <string name="action_share">Megosztás</string>
     <string name="action_history">Előzmények</string>

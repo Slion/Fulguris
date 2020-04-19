@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <string name="app_name">Lightning</string>
+
     <string name="pref_key_portrait_hide_status_bar">pref_key_portrait_hide_status_bar</string>
     <string name="pref_key_landscape_hide_status_bar">pref_key_landscape_hide_status_bar</string>
 
     <string name="pref_key_portrait_hide_tool_bar">pref_key_portrait_hide_tool_bar</string>
     <string name="pref_key_landscape_hide_tool_bar">pref_key_landscape_hide_tool_bar</string>
-
-
 
 </resources>

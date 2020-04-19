@@ -16,7 +16,6 @@
 
 <resources>
 
-    <string name="app_name">Lightning</string>
     <string name="action_new_tab">Nova aba</string>
     <string name="action_share">Compartilhar</string>
     <string name="action_history">Histórico</string>

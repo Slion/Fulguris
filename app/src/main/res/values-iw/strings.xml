@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Lightning</string>
     <string name="settings">הגדרות דפדפן</string>
     <string name="location">מאפשר לאתרים לגשת למיקומך</string>
     <string name="password">שמור את הסיסמאות שלך</string>
