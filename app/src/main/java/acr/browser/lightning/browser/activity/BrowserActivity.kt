@@ -1118,13 +1118,21 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     if (!currentTab.isShown) {
                         onHideCustomView()
                     } else {
-                        currentTab.goBack()
+                        if (isToolBarVisible()) {
+                            currentTab.goBack()
+                        } else {
+                            showActionBar()
+                        }
                     }
                 } else {
                     if (customView != null || customViewCallback != null) {
                         onHideCustomView()
                     } else {
-                        presenter?.deleteTab(tabsManager.positionOf(currentTab))
+                        if (isToolBarVisible()) {
+                            presenter?.deleteTab(tabsManager.positionOf(currentTab))
+                        } else {
+                            showActionBar()
+                        }
                     }
                 }
             } else {
