@@ -361,7 +361,7 @@ class TabsManager @Inject constructor(
 
     /**
      * Creates an [Observable] that emits the [Bundle] state stored for each previously opened tab
-     * on disk. After the list of bundle [Bundle] is read off disk, the old state will be deleted.
+     * on disk.
      * Can potentially be empty.
      */
     private fun readSavedStateFromDisk(): Observable<Triple<Bundle, String?, Bitmap?>> = Maybe

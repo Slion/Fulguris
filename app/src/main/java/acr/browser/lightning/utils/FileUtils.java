@@ -45,6 +45,7 @@ public final class FileUtils {
             FileOutputStream outputStream = null;
             try {
                 //noinspection IOResourceOpenedButNotSafelyClosed
+                // Overwrite any existing file
                 outputStream = new FileOutputStream(outputFile);
                 Parcel parcel = Parcel.obtain();
                 parcel.writeBundle(bundle);
@@ -108,7 +109,6 @@ public final class FileUtils {
             Log.e(TAG, "Unable to read bundle from storage", e);
         } finally {
             //noinspection ResultOfMethodCallIgnored
-            inputFile.delete();
             Utils.close(inputStream);
         }
         return null;

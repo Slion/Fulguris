@@ -1100,12 +1100,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     override fun closeBrowser() {
         currentTabView.removeFromParent()
         performExitCleanUp()
-        val size = tabsManager.size()
-        tabsManager.shutdown()
-        currentTabView = null
-        for (n in 0 until size) {
-            tabsView?.tabRemoved(0)
-        }
         finish()
     }
 
