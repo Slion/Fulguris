@@ -55,6 +55,8 @@ class TabsManager @Inject constructor(
 
     private var isInitialized = false
     private var postInitializationWorkList = emptyList<() -> Unit>()
+    // Current tab index as restored from our persited bundle
+    public var savedCurrentTabIndex: Int = -1
 
     /**
      * Adds a listener to be notified when the number of tabs changes.
@@ -111,9 +113,10 @@ class TabsManager @Inject constructor(
                 } else {
                     initializeRegularMode(it.value(), activity)
                 }
+            }.observeOn(mainScheduler)
+            .map {
+                newTab(activity, it, incognito)
             }
-            .observeOn(mainScheduler)
-            .map { newTab(activity, it, incognito) }
             .lastOrError()
             .doAfterSuccess { finishInitialization() }
 
@@ -158,19 +161,26 @@ class TabsManager @Inject constructor(
      * Returns an observable that emits the [TabInitializer] for each previously opened tab as
      * saved on disk. Can potentially be empty.
      */
-    private fun restorePreviousTabs(): Observable<TabInitializer> = readSavedStateFromDisk()
-        .map { (bundle, title, favicon) ->
-            return@map bundle.getString(URL_KEY)?.let { url ->
-                when {
-                    url.isBookmarkUrl() -> bookmarkPageInitializer
-                    url.isDownloadsUrl() -> downloadPageInitializer
-                    url.isStartPageUrl() -> homePageInitializer
-                    url.isHistoryUrl() -> historyPageInitializer
-                    else -> homePageInitializer
+    private fun restorePreviousTabs(): Observable<TabInitializer>
+    {
+        val bundle = FileUtils.readBundleFromStorage(application, BUNDLE_STORAGE)
+	// Read saved current tab index if any
+        bundle?.let{ savedCurrentTabIndex = it.getInt(CURRENT_TAB_INDEX) }
+
+        return readSavedStateFromDisk(bundle)
+                .map { (bundle, title, favicon) ->
+                    return@map bundle.getString(URL_KEY)?.let { url ->
+                        when {
+                            url.isBookmarkUrl() -> bookmarkPageInitializer
+                            url.isDownloadsUrl() -> downloadPageInitializer
+                            url.isStartPageUrl() -> homePageInitializer
+                            url.isHistoryUrl() -> historyPageInitializer
+                            else -> homePageInitializer
+                        }
+                    } ?: FreezableBundleInitializer(bundle, title
+                            ?: application.getString(R.string.tab_frozen), favicon)
                 }
-            } ?: FreezableBundleInitializer(bundle, title
-                ?: application.getString(R.string.tab_frozen), favicon)
-        }
+    }
 
 
     /**
@@ -348,6 +358,11 @@ class TabsManager @Inject constructor(
                     })
                 }
             }
+
+        //Now save our current tab
+        outState.putInt(CURRENT_TAB_INDEX,indexOfCurrentTab());
+
+        // Write our bundle to disk
         FileUtils.writeBundleToStorage(application, outState, BUNDLE_STORAGE)
             .subscribeOn(diskScheduler)
             .subscribe()
@@ -364,8 +379,8 @@ class TabsManager @Inject constructor(
      * on disk.
      * Can potentially be empty.
      */
-    private fun readSavedStateFromDisk(): Observable<Triple<Bundle, String?, Bitmap?>> = Maybe
-        .fromCallable { FileUtils.readBundleFromStorage(application, BUNDLE_STORAGE) }
+    private fun readSavedStateFromDisk(aBundle: Bundle?): Observable<Triple<Bundle, String?, Bitmap?>> = Maybe
+        .fromCallable { aBundle }
         .flattenAsObservable { bundle ->
             bundle.keySet()
                 .filter { it.startsWith(BUNDLE_KEY) }
@@ -441,6 +456,8 @@ class TabsManager @Inject constructor(
         private const val TAB_FAVICON_KEY = "FAVICON_"
         private const val URL_KEY = "URL_KEY"
         private const val BUNDLE_STORAGE = "SAVED_TABS.parcel"
+        private const val CURRENT_TAB_INDEX = "CURRENT_TAB_INDEX"
+
     }
 
 }

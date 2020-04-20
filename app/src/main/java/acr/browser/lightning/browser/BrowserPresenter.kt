@@ -60,7 +60,8 @@ class BrowserPresenter(
                     // At this point we always have at least a tab in the tab manager
                     view.notifyTabViewInitialized()
                     view.updateTabNumber(tabsModel.size())
-                    tabChanged(tabsModel.positionOf(it))
+                    // Switch to saved current tab if any otherwise the last tab I guess
+                    tabChanged(if (tabsModel.savedCurrentTabIndex>=0) tabsModel.savedCurrentTabIndex else tabsModel.positionOf(it))
                 }
             )
     }
