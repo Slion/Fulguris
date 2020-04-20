@@ -258,8 +258,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         backgroundDrawable.color = primaryColor
 
         // Drawer stutters otherwise
-        left_drawer.setLayerType(LAYER_TYPE_NONE, null)
-        right_drawer.setLayerType(LAYER_TYPE_NONE, null)
+        //left_drawer.setLayerType(LAYER_TYPE_NONE, null)
+        //right_drawer.setLayerType(LAYER_TYPE_NONE, null)
 
 
         drawer_layout.addDrawerListener(DrawerLocker())

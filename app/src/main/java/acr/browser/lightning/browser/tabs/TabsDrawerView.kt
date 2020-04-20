@@ -1,5 +1,6 @@
 package acr.browser.lightning.browser.tabs
 
+import TabTouchHelperCallback
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabsView
 import acr.browser.lightning.controller.UIController
@@ -10,6 +11,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -27,6 +29,7 @@ class TabsDrawerView @JvmOverloads constructor(
     private val tabList: RecyclerView
     private val actionBack: View
     private val actionForward: View
+    private var mItemTouchHelper: ItemTouchHelper? = null
 
     init {
         orientation = VERTICAL
@@ -73,6 +76,12 @@ class TabsDrawerView @JvmOverloads constructor(
         findViewById<View>(R.id.action_home).setOnClickListener {
             uiController.onHomeButtonPressed()
         }
+
+        val callback: ItemTouchHelper.Callback = TabTouchHelperCallback(tabsAdapter)
+
+        mItemTouchHelper = ItemTouchHelper(callback)
+        mItemTouchHelper?.attachToRecyclerView(tabList)
+
     }
 
 

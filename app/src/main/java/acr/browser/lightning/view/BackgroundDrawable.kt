@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.TransitionDrawable
+import androidx.annotation.AttrRes
 import androidx.core.content.ContextCompat
 
 /**
@@ -13,15 +14,17 @@ import androidx.core.content.ContextCompat
  * 2 layers are required for this drawable to work properly.
  */
 class BackgroundDrawable(
-    context: Context
+    context: Context,
+    @AttrRes first: Int = R.attr.colorPrimaryDark,
+    @AttrRes second: Int = R.attr.selectedBackground
 ) : TransitionDrawable(
     arrayOf<Drawable>(
-        ColorDrawable(ContextCompat.getColor(context, R.color.transparent)),
-        ColorDrawable(ThemeUtils.getColor(context, R.attr.selectedBackground))
+        ColorDrawable(ThemeUtils.getColor(context, first)),
+        ColorDrawable(ThemeUtils.getColor(context, second))
     )
 ) {
 
-    private var isSelected: Boolean = false
+    public var isSelected: Boolean = false
 
     override fun startTransition(durationMillis: Int) {
         if (!isSelected) {

@@ -2,7 +2,6 @@ package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
 import acr.browser.lightning.controller.UIController
-import acr.browser.lightning.extensions.desaturate
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.view.BackgroundDrawable
 import android.graphics.Bitmap
@@ -10,13 +9,14 @@ import android.view.ViewGroup
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
 
 /**
  * The adapter for vertical mobile style browser tabs.
  */
 class TabsDrawerAdapter(
     private val uiController: UIController
-) : RecyclerView.Adapter<TabViewHolder>() {
+) : RecyclerView.Adapter<TabViewHolder>(), ItemTouchHelperAdapter {
 
     private var tabList: List<TabViewState> = emptyList()
 
@@ -69,5 +69,28 @@ class TabsDrawerAdapter(
     }
 
     override fun getItemCount() = tabList.size
+
+    // From ItemTouchHelperAdapter
+    // An item was was moved through drag & drop
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
+    {
+        // Swap local list position
+        Collections.swap(tabList, fromPosition, toPosition)
+        // Swap model list position
+        Collections.swap(uiController.getTabModel().allTabs, fromPosition, toPosition)
+        // Tell base class an item was moved
+        notifyItemMoved(fromPosition, toPosition)
+        return true
+    }
+
+    // From ItemTouchHelperAdapter
+    override fun onItemDismiss(position: Int)
+    {
+        uiController.tabCloseClicked(position)
+        //mItems.removeAt(position)
+        //notifyItemRemoved(position)
+    }
+
+
 
 }
