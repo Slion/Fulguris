@@ -42,6 +42,8 @@ class TabsManager @Inject constructor(
 ) {
 
     private val tabList = arrayListOf<LightningView>()
+    val iRecentTabs = mutableSetOf<LightningView>()
+    val savedRecentTabsIndices = mutableSetOf<Int>()
 
     /**
      * Return the current [LightningView] or null if no current tab has been set.
@@ -55,8 +57,6 @@ class TabsManager @Inject constructor(
 
     private var isInitialized = false
     private var postInitializationWorkList = emptyList<() -> Unit>()
-    // Current tab index as restored from our persited bundle
-    public var savedCurrentTabIndex: Int = -1
 
     /**
      * Adds a listener to be notified when the number of tabs changes.
@@ -84,9 +84,36 @@ class TabsManager @Inject constructor(
     }
 
     private fun finishInitialization() {
+
+        if (allTabs.size == savedRecentTabsIndices.size) {
+            // Populate our recent tab list from our persisted indices
+            iRecentTabs.clear()
+            savedRecentTabsIndices.forEach { iRecentTabs.add(allTabs.elementAt(it))}
+        }
+
+        // Defensive, if we have missing tabs in our recent tab list just reset it
+        if (iRecentTabs.size != tabList.size) {
+            resetRecentTabsList()
+        }
+
         isInitialized = true
         for (runnable in postInitializationWorkList) {
             runnable()
+        }
+    }
+
+    fun resetRecentTabsList()
+    {
+        // Reset recent tabs list to arbitrary order
+        iRecentTabs.clear()
+        iRecentTabs.addAll(allTabs)
+
+        // Put back current tab on top
+        currentTab?.let {
+            iRecentTabs.apply {
+                remove(it)
+                add(it)
+            }
         }
     }
 
@@ -164,8 +191,12 @@ class TabsManager @Inject constructor(
     private fun restorePreviousTabs(): Observable<TabInitializer>
     {
         val bundle = FileUtils.readBundleFromStorage(application, BUNDLE_STORAGE)
-	// Read saved current tab index if any
-        bundle?.let{ savedCurrentTabIndex = it.getInt(CURRENT_TAB_INDEX) }
+
+	    // Read saved current tab index if any
+        bundle?.let{
+            savedRecentTabsIndices.clear()
+            it.getIntArray(RECENT_TAB_INDICES)?.toList()?.let { it1 -> savedRecentTabsIndices.addAll(it1) }
+        }
 
         return readSavedStateFromDisk(bundle)
                 .map { (bundle, title, favicon) ->
@@ -293,7 +324,9 @@ class TabsManager @Inject constructor(
         if (position >= tabList.size) {
             return
         }
+
         val tab = tabList.removeAt(position)
+        iRecentTabs.remove(tab)
         if (currentTab == tab) {
             currentTab = null
         }
@@ -359,8 +392,11 @@ class TabsManager @Inject constructor(
                 }
             }
 
-        //Now save our current tab
-        outState.putInt(CURRENT_TAB_INDEX,indexOfCurrentTab());
+        //Now save our recent tabs
+        // Create an array of tab indices from our recent tab list to be persisted
+        savedRecentTabsIndices.clear()
+        iRecentTabs.forEach { savedRecentTabsIndices.add(indexOfTab(it))}
+        outState.putIntArray(RECENT_TAB_INDICES,savedRecentTabsIndices.toIntArray())
 
         // Write our bundle to disk
         FileUtils.writeBundleToStorage(application, outState, BUNDLE_STORAGE)
@@ -443,9 +479,16 @@ class TabsManager @Inject constructor(
         } else {
             tabList[position].also {
                 currentTab = it
+                // Put that tab at the top of our recent tab list
+                iRecentTabs.apply{
+                    remove(it)
+                    add(it)
+                    }
+
+                //logger.log(TAG, "Recent indices: $recentTabsIndices")
+                }
             }
         }
-    }
 
     companion object {
 
@@ -456,7 +499,7 @@ class TabsManager @Inject constructor(
         private const val TAB_FAVICON_KEY = "FAVICON_"
         private const val URL_KEY = "URL_KEY"
         private const val BUNDLE_STORAGE = "SAVED_TABS.parcel"
-        private const val CURRENT_TAB_INDEX = "CURRENT_TAB_INDEX"
+        private const val RECENT_TAB_INDICES = "RECENT_TAB_INDICES"
 
     }
 

@@ -61,7 +61,7 @@ class BrowserPresenter(
                     view.notifyTabViewInitialized()
                     view.updateTabNumber(tabsModel.size())
                     // Switch to saved current tab if any otherwise the last tab I guess
-                    tabChanged(if (tabsModel.savedCurrentTabIndex>=0) tabsModel.savedCurrentTabIndex else tabsModel.positionOf(it))
+                    tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(it))
                 }
             )
     }
@@ -302,6 +302,14 @@ class BrowserPresenter(
 
         if (show) {
             onTabChanged(tabsModel.switchToTab(tabsModel.last()))
+        }
+        else {
+            // We still need to add it to our recent tabs
+            // Adding at the beginning of a Set is doggy though
+            val recentTabs = tabsModel.iRecentTabs.toSet()
+            tabsModel.iRecentTabs.clear()
+            tabsModel.iRecentTabs.add(startingTab)
+            tabsModel.iRecentTabs.addAll(recentTabs)
         }
 
         return true

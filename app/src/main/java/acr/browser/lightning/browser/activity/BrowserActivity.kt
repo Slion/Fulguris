@@ -72,10 +72,8 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -644,7 +642,19 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         return super.onKeyUp(keyCode, event)
     }
 
+    // For CTRL+TAB implementation
+    var iRecentTabIndex = -1;
+    var iCapturedRecentTabsIndices : Set<LightningView>? = null
+
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+
+        if (event.action == KeyEvent.ACTION_UP && (event.keyCode==KeyEvent.KEYCODE_CTRL_LEFT||event.keyCode==KeyEvent.KEYCODE_CTRL_RIGHT)) {
+                // Exiting CTRL+TAB mode
+                iRecentTabIndex = -1;
+                iCapturedRecentTabsIndices = null;
+                //logger.log(TAG,"CTRL+TAB: Reset")
+        }
+
         // Keyboard shortcuts
         if (event.action == KeyEvent.ACTION_DOWN) {
 
@@ -653,11 +663,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             val isCtrlOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
 
             when (event.keyCode) {
+                // Toggle status bar visibility
                 KeyEvent.KEYCODE_F10 -> {
                     setFullscreen(!statusBarHidden,false)
                     return true
                 }
-
+                // Toggle tool bar visibility
                 KeyEvent.KEYCODE_F11 -> {
                     toggleToolBar()
                     return true
@@ -681,27 +692,43 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 }
             }
 
-            // Ctrl + Tab for tab cycling logic
+            // CTRL+TAB for tab cycling logic
             if (event.isCtrlPressed && event.keyCode == KeyEvent.KEYCODE_TAB) {
-                tabsManager.let {
-                    // Reversing can be done with those three modifiers notably to make it easier with two thumbs on F(x)tec Pro1
-                    val nextIndex = if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
-                        // Go back one tab
-                        if (it.indexOfCurrentTab() > 0) {
-                            it.indexOfCurrentTab() - 1
+
+                tabsManager.let { it ->
+
+                    if (iCapturedRecentTabsIndices==null)
+                    {
+                        // Entering CTRL+TAB mode
+                        // Fetch snapshot of our recent tab list
+                        iCapturedRecentTabsIndices = it.iRecentTabs.toSet()
+                        iRecentTabIndex = iCapturedRecentTabsIndices?.size?.minus(1) ?: -1
+                        //logger.log(TAG, "Recent indices snapshot: iCapturedRecentTabsIndices")
+                    }
+
+                    iCapturedRecentTabsIndices?.let{
+
+                        // Reversing can be done with those three modifiers notably to make it easier with two thumbs on F(x)tec Pro1
+                        if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
+                            // Go forward one tab
+                            iRecentTabIndex++
+                            if (iRecentTabIndex>=it.size) iRecentTabIndex=0
+
                         } else {
-                            it.last()
+                            // Go back one tab
+                            iRecentTabIndex--
+                            if (iRecentTabIndex<0) iRecentTabIndex=iCapturedRecentTabsIndices?.size?.minus(1) ?: -1
                         }
-                    } else {
-                        // Go forward one tab
-                        if (it.indexOfCurrentTab() < it.last()) {
-                            it.indexOfCurrentTab() + 1
-                        } else {
-                            0
+
+                        //logger.log(TAG, "Switching to $iRecentTabIndex : $iCapturedRecentTabsIndices")
+
+                        if (iRecentTabIndex >= 0) {
+                            // We worked out which tab to switch to, just do it now
+                            presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))
                         }
                     }
 
-                    presenter?.tabChanged(nextIndex)
+
                 }
 
                 return true

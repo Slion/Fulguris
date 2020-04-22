@@ -74,6 +74,7 @@ class TabsDrawerAdapter(
     // An item was was moved through drag & drop
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
     {
+        // Note: recent tab list is not affected
         // Swap local list position
         Collections.swap(tabList, fromPosition, toPosition)
         // Swap model list position
@@ -87,8 +88,6 @@ class TabsDrawerAdapter(
     override fun onItemDismiss(position: Int)
     {
         uiController.tabCloseClicked(position)
-        //mItems.removeAt(position)
-        //notifyItemRemoved(position)
     }
 
 
