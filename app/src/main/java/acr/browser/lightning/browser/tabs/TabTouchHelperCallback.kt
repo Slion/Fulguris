@@ -26,16 +26,12 @@ class TabTouchHelperCallback(adapter: ItemTouchHelperAdapter) : ItemTouchHelper.
     }
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        // Set movement flags based on the layout manager
-        return if (recyclerView.layoutManager is GridLayoutManager) {
-            val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            val swipeFlags = 0
-            makeMovementFlags(dragFlags, swipeFlags)
-        } else {
-            val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-            val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-            makeMovementFlags(dragFlags, swipeFlags)
-        }
+        // Define which movement trigger swipe or drag
+        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        //val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+        // Only swipe right
+        val swipeFlags = ItemTouchHelper.END
+        return makeMovementFlags(dragFlags, swipeFlags)
     }
 
     override fun onMove(recyclerView: RecyclerView, source: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {

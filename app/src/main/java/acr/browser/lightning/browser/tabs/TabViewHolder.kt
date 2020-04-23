@@ -31,6 +31,9 @@ class TabViewHolder(
         exitButton.setOnClickListener(this)
         layout.setOnClickListener(this)
         layout.setOnLongClickListener(this)
+        // Not showing exit button for now
+        // Config that maybe at some point
+        exitButton.visibility = View.GONE
     }
 
     override fun onClick(v: View) {
