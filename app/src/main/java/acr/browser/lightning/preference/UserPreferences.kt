@@ -81,6 +81,14 @@ class UserPreferences @Inject constructor(
     var hideStatusBarInLandscape by preferences.booleanPreference(HIDE_STATUS_BAR_LANDSCAPE, true)
 
     /**
+     */
+    var searchInNewTab by preferences.booleanPreference(SEARCH_IN_NEW_TAB, true)
+
+    /**
+     */
+    var urlInNewTab by preferences.booleanPreference(URL_IN_NEW_TAB, false)
+
+    /**
      * The URL of the selected homepage.
      */
     var homepage by preferences.stringPreference(HOMEPAGE, SCHEME_HOMEPAGE)
@@ -310,6 +318,8 @@ private const val HIDE_TOOL_BAR_PORTRAIT = "hideToolBarPortrait"
 private const val HIDE_TOOL_BAR_LANDSCAPE = "hideToolBarLandscape"
 private const val HIDE_STATUS_BAR_PORTRAIT = "hideStatusBarPortrait"
 private const val HIDE_STATUS_BAR_LANDSCAPE = "hideStatusBarLandscape"
+private const val SEARCH_IN_NEW_TAB = "searchInNewTab"
+private const val URL_IN_NEW_TAB = "urlInNewTab"
 private const val HOMEPAGE = "home"
 private const val INCOGNITO_COOKIES = "incognitocookies"
 private const val JAVASCRIPT = "java"

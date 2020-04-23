@@ -28,6 +28,18 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
 
         injector.inject(this)
 
+        switchPreference(
+                preference = context?.resources!!.getString(R.string.pref_key_search_in_new_tab),
+                isChecked = userPreferences.searchInNewTab,
+                onCheckChange = { userPreferences.searchInNewTab = it }
+        )
+
+        switchPreference(
+                preference = context?.resources!!.getString(R.string.pref_key_url_in_new_tab),
+                isChecked = userPreferences.urlInNewTab,
+                onCheckChange = { userPreferences.urlInNewTab = it }
+        )
+
         clickableDynamicPreference(
             preference = SETTINGS_RENDERING_MODE,
             summary = userPreferences.renderingMode.toDisplayString(),

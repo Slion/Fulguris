@@ -38,7 +38,7 @@ import java.util.regex.Pattern
  * invalid URLs will return null.
  * @return original or modified URL.
  */
-fun smartUrlFilter(url: String, canBeSearch: Boolean, searchUrl: String): String {
+fun smartUrlFilter(url: String, canBeSearch: Boolean, searchUrl: String): Pair<String,Boolean> {
     var inUrl = url.trim()
     val hasSpace = inUrl.contains(' ')
     val matcher = ACCEPTED_URI_SCHEMA.matcher(inUrl)
@@ -52,18 +52,18 @@ fun smartUrlFilter(url: String, canBeSearch: Boolean, searchUrl: String): String
         if (hasSpace && Patterns.WEB_URL.matcher(inUrl).matches()) {
             inUrl = inUrl.replace(" ", URL_ENCODED_SPACE)
         }
-        return inUrl
+        return Pair(inUrl,false)
     }
     if (!hasSpace) {
         if (Patterns.WEB_URL.matcher(inUrl).matches()) {
-            return URLUtil.guessUrl(inUrl)
+            return Pair(URLUtil.guessUrl(inUrl),false)
         }
     }
 
     return if (canBeSearch) {
-        URLUtil.composeSearchUrl(inUrl, searchUrl, QUERY_PLACE_HOLDER)
+        Pair(URLUtil.composeSearchUrl(inUrl, searchUrl, QUERY_PLACE_HOLDER),true)
     } else {
-        ""
+        Pair("",false)
     }
 }
 

@@ -178,7 +178,7 @@ class TabsManager @Inject constructor(
         val searchUrl = "${searchEngineProvider.provideSearchEngine().queryUrl}$QUERY_PLACE_HOLDER"
 
         return if (query?.isNotBlank() == true) {
-            smartUrlFilter(query, true, searchUrl)
+            smartUrlFilter(query, true, searchUrl).first
         } else {
             null
         }

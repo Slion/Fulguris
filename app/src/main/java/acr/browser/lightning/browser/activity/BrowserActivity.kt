@@ -1247,9 +1247,17 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             return
         }
         val searchUrl = "$searchText$QUERY_PLACE_HOLDER"
-        if (currentTab != null) {
+
+        val (url,isSearch) = smartUrlFilter(query.trim(), true, searchUrl)
+
+        if ((userPreferences.searchInNewTab && isSearch) or (userPreferences.urlInNewTab && !isSearch)) {
+            // Create a new tab according to user preferences
+            presenter?.newTab(UrlInitializer(url), true)
+        }
+        else if (currentTab != null) {
+            // User don't want us the create a new tab
             currentTab.stopLoading()
-            presenter?.loadUrlInCurrentView(smartUrlFilter(query.trim(), true, searchUrl))
+            presenter?.loadUrlInCurrentView(url)
         }
     }
 

@@ -3,10 +3,18 @@
 
     <string name="app_name">Lightning</string>
 
+    <!-- Settings keys -->
     <string name="pref_key_portrait_hide_status_bar">pref_key_portrait_hide_status_bar</string>
     <string name="pref_key_landscape_hide_status_bar">pref_key_landscape_hide_status_bar</string>
 
     <string name="pref_key_portrait_hide_tool_bar">pref_key_portrait_hide_tool_bar</string>
     <string name="pref_key_landscape_hide_tool_bar">pref_key_landscape_hide_tool_bar</string>
+
+
+    <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
+    <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>
+
+
+
 
 </resources>
