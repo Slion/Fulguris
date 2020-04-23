@@ -1130,7 +1130,21 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         finish()
     }
 
+    override fun onPause() {
+        super.onPause()
+        logger.log(TAG, "onPause")
+        tabsManager.pauseAll()
+
+        if (isIncognito() && isFinishing) {
+            overridePendingTransition(R.anim.fade_in_scale, R.anim.slide_down_out)
+        }
+    }
+
     override fun onBackPressed() {
+        doBackAction()
+    }
+
+    private fun doBackAction() {
         val currentTab = tabsManager.currentTab
         if (drawer_layout.isDrawerOpen(getTabDrawer())) {
             drawer_layout.closeDrawer(getTabDrawer())
@@ -1167,16 +1181,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 super.onBackPressed()
             }
         }
-    }
 
-    override fun onPause() {
-        super.onPause()
-        logger.log(TAG, "onPause")
-        tabsManager.pauseAll()
-
-        if (isIncognito() && isFinishing) {
-            overridePendingTransition(R.anim.fade_in_scale, R.anim.slide_down_out)
-        }
     }
 
     protected fun saveOpenTabs() {

@@ -348,8 +348,8 @@ class TabsManager @Inject constructor(
         if (current == position) {
             when {
                 size() == 1 -> this.currentTab = null
-                current < size() - 1 -> switchToTab(current + 1)
-                else -> switchToTab(current - 1)
+                // Switch to previous tab
+                else -> switchToTab(indexOfTab(iRecentTabs.elementAt(iRecentTabs.size-2)))
             }
         }
 
