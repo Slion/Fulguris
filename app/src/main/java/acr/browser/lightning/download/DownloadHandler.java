@@ -63,6 +63,10 @@ public class DownloadHandler {
     private final Scheduler mainScheduler;
     private final Logger logger;
 
+    long iDownloadId =0;
+    String iFilename="";
+
+
     @Inject
     public DownloadHandler(DownloadsRepository downloadsRepository,
                            DownloadManager downloadManager,
@@ -164,7 +168,7 @@ public class DownloadHandler {
 
     /**
      * Notify the host application a download should be done, even if there is a
-     * streaming viewer available for thise type.
+     * streaming viewer available for this type.
      *
      * @param context            The context in which the download is requested.
      * @param url                The full url to the content that should be downloaded
@@ -177,7 +181,7 @@ public class DownloadHandler {
     private void onDownloadStartNoStream(@NonNull final Activity context, @NonNull UserPreferences preferences,
                                          @NonNull String url, String userAgent,
                                          String contentDisposition, @Nullable String mimetype, @NonNull String contentSize) {
-        final String filename = URLUtil.guessFileName(url, contentDisposition, mimetype);
+        iFilename = URLUtil.guessFileName(url, contentDisposition, mimetype);
 
         // Check to see if we have an SDCard
         String status = Environment.getExternalStorageState();
@@ -236,10 +240,10 @@ public class DownloadHandler {
             ActivityExtensions.snackbar(context, R.string.problem_location_download);
             return;
         }
-        String newMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(Utils.guessFileExtension(filename));
+        String newMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(Utils.guessFileExtension(iFilename));
         logger.log(TAG, "New mimetype: " + newMimeType);
         request.setMimeType(newMimeType);
-        request.setDestinationUri(Uri.parse(Constants.FILE + location + filename));
+        request.setDestinationUri(Uri.parse(Constants.FILE + location + iFilename));
         // let this downloaded file be scanned by MediaScanner - so that it can
         // show up in Gallery app, for example.
         request.setVisibleInDownloadsUi(true);
@@ -249,7 +253,8 @@ public class DownloadHandler {
         // old percent-encoded url.
         String cookies = CookieManager.getInstance().getCookie(url);
         request.addRequestHeader(COOKIE_REQUEST_HEADER, cookies);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        // We don't want to show the default download complete notification as it just opens our app when you click it
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
 
         //noinspection VariableNotUsedInsideIf
         if (mimetype == null) {
@@ -279,7 +284,7 @@ public class DownloadHandler {
         } else {
             logger.log(TAG, "Valid mimetype, attempting to download");
             try {
-                downloadManager.enqueue(request);
+                iDownloadId = downloadManager.enqueue(request);
             } catch (IllegalArgumentException e) {
                 // Probably got a bad URL or something
                 logger.log(TAG, "Unable to enqueue request", e);
@@ -289,7 +294,7 @@ public class DownloadHandler {
                 // because the system can only handle Environment.getExternal... as a path
                 ActivityExtensions.snackbar(context, R.string.problem_location_download);
             }
-            ActivityExtensions.snackbar(context, context.getString(R.string.download_pending) + ' ' + filename);
+            ActivityExtensions.snackbar(context, context.getString(R.string.download_pending) + ' ' + iFilename);
         }
 
         // save download in database
@@ -297,7 +302,7 @@ public class DownloadHandler {
         LightningView view = browserActivity.getTabModel().getCurrentTab();
 
         if (view != null && !view.isIncognito()) {
-            downloadsRepository.addDownloadIfNotExists(new DownloadEntry(url, filename, contentSize))
+            downloadsRepository.addDownloadIfNotExists(new DownloadEntry(url, iFilename, contentSize))
                 .subscribeOn(databaseScheduler)
                 .subscribe(aBoolean -> {
                     if (!aBoolean) {

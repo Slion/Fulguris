@@ -24,6 +24,8 @@ import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.find.FindResults
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DownloadManager
+import android.content.IntentFilter
 import android.graphics.*
 import android.net.http.SslCertificate
 import android.os.Build
@@ -241,8 +243,8 @@ class LightningView(
             setNetworkAvailable(true)
             webChromeClient = LightningChromeClient(activity, this@LightningView)
             webViewClient = lightningWebClient
-
-            setDownloadListener(LightningDownloadListener(activity))
+            // We want to receive download complete notifications
+            setDownloadListener(LightningDownloadListener(activity).also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
             setOnTouchListener(TouchListener())
             initializeSettings()
         }

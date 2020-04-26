@@ -5,6 +5,7 @@ package acr.browser.lightning.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
@@ -294,5 +295,30 @@ public final class Utils {
         }
         return null;
     }
+
+
+    /**
+     * Construct an intent to display downloads folder either by using a file browser application
+     * or using system download manager.
+     *
+     * @param aContext
+     * @param aDownloadFolder
+     * @return
+     */
+    public static Intent getIntentForDownloads(Context aContext, String aDownloadFolder) {
+        // This is the solution from there: https://stackoverflow.com/a/26651827/3969362
+        // Build an intent to open our download folder in a file explorer app
+        Intent intent = new Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setDataAndType(Uri.parse(aDownloadFolder), "resource/folder");
+        // Check that there is an app activity handling that intent on our system
+        if (intent.resolveActivityInfo(aContext.getPackageManager(), 0) != null) {
+            // Yes there is one use it
+            return intent;
+        } else {
+            // Just launch system download manager activity if no custom file explorer found
+            return new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
+    }
+
 
 }

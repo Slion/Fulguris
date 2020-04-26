@@ -44,8 +44,11 @@ import acr.browser.lightning.view.SearchView
 import acr.browser.lightning.view.find.FindResults
 import android.animation.LayoutTransition
 import android.app.Activity
+import android.app.DownloadManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
@@ -56,10 +59,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
+import android.os.*
 import android.provider.MediaStore
 import android.view.*
 import android.view.View.*
@@ -97,6 +97,9 @@ import javax.inject.Inject
 import kotlin.system.exitProcess
 
 abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIController, OnClickListener {
+
+    lateinit var CHANNEL_ID: String
+
 
     // Toolbar Views
     private var searchBackground: View? = null
@@ -241,7 +244,33 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         initialize(savedInstanceState)
     }
 
+    /**
+     * Needed to be able to display system notifications
+     */
+    private fun createNotificationChannel() {
+        // Is that string visible in system UI somehow?
+        CHANNEL_ID = "Fulguris Channel ID"
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.downloads)
+            val descriptionText = getString(R.string.downloads_notification_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+
     private fun initialize(savedInstanceState: Bundle?) {
+
+        createNotificationChannel()
+
         //initializeToolbarHeight(resources.configuration)
         setSupportActionBar(toolbar)
         val actionBar = requireNotNull(supportActionBar)
@@ -1235,6 +1264,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         // We think that's needed in case there was a rotation while in the background
         drawer_layout.requestLayout()
+
+
+        //intent?.let {logger.log(TAG, it.toString())}
     }
 
     /**
@@ -1487,12 +1519,18 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         )
     }
 
+    /**
+     * Display downloads folder one way or another
+     */
     private fun openDownloads() {
-        presenter?.newTab(
-            downloadPageInitializer,
-            true
-        )
+        startActivity(Utils.getIntentForDownloads(this, userPreferences.downloadDirectory))
+        // Our built-in downloads list did not display downloaded items properly
+        // Not sure why, consider fixing it or just removing it altogether at some point
+        //presenter?.newTab(downloadPageInitializer,true)
     }
+
+
+
 
     /**
      * helper function that opens the bookmark drawer
