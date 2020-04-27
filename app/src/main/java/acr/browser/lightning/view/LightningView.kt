@@ -34,7 +34,7 @@ import android.os.Handler
 import android.os.Message
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
-import android.view.View.OnTouchListener
+import android.view.View.*
 import android.webkit.CookieManager
 import android.webkit.WebSettings
 import android.webkit.WebSettings.LayoutAlgorithm
@@ -222,8 +222,9 @@ class LightningView(
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()
         lightningWebClient = LightningWebClient(activity, this)
         gestureDetector = GestureDetector(activity, CustomGestureListener())
-
-        val tab = WebView(activity).also { webView = it }.apply {
+        // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
+        val tab = activity.layoutInflater.inflate(R.layout.webview, null) as WebView;
+        tab.also { webView = it }.apply {
             id = this@LightningView.id
 
             isFocusableInTouchMode = true
@@ -238,7 +239,6 @@ class LightningView(
                 importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES
             }
 
-            isScrollbarFadingEnabled = true
             isSaveEnabled = true
             setNetworkAvailable(true)
             webChromeClient = LightningChromeClient(activity, this@LightningView)
@@ -248,7 +248,17 @@ class LightningView(
             setOnTouchListener(TouchListener())
             initializeSettings()
         }
+
         initializePreferences()
+
+        // We did not manage to set scrollbar color in code
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            //tab.verticalScrollbarThumbDrawable?.colorFilter = PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+            //tab.verticalScrollbarThumbDrawable = ThemeUtils.getVectorDrawable(activity, R.drawable.scrollbar)
+            //tab.verticalScrollbarThumbDrawable = activity.getDrawable(R.drawable.scrollbar)
+            //tab.isVerticalScrollBarEnabled = true
+        //}
+
 
         if (tabInitializer !is FreezableBundleInitializer) {
             tabInitializer.initialize(tab, requestHeaders)
