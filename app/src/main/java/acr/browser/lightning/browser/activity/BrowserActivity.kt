@@ -34,6 +34,7 @@ import acr.browser.lightning.notifications.IncognitoNotification
 import acr.browser.lightning.reading.activity.ReadingActivity
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.SuggestionsAdapter
+import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.createSslDrawableForState
@@ -433,7 +434,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     protected fun panicClean() {
         logger.log(TAG, "Closing browser")
-        tabsManager.newTab(this, NoOpInitializer(), false)
+        tabsManager.newTab(this, NoOpInitializer(), false, NewTabPosition.END_OF_TAB_LIST)
         tabsManager.switchToTab(0)
         tabsManager.clearSavedState()
 

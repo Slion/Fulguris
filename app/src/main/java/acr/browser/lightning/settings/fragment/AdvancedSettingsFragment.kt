@@ -9,6 +9,7 @@ import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.view.RenderingMode
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -38,6 +39,12 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
                 preference = context?.resources!!.getString(R.string.pref_key_url_in_new_tab),
                 isChecked = userPreferences.urlInNewTab,
                 onCheckChange = { userPreferences.urlInNewTab = it }
+        )
+
+        listPreference(
+                preference = context?.resources!!.getString(R.string.pref_key_new_tab_position),
+                value = userPreferences.newTabPosition.toString(),
+                onPreferenceChange = { userPreferences.newTabPosition = NewTabPosition.valueOf(it) }
         )
 
         clickableDynamicPreference(
@@ -157,6 +164,12 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
             setPositiveButton(resources.getString(R.string.action_ok), null)
         }?.resizeAndShow()
     }
+
+    private fun NewTabPosition.toDisplayString(): String {
+        val stringArray = resources.getStringArray(R.array.new_tab_positions)
+        return stringArray[this.value]
+    }
+
 
     private fun SearchBoxDisplayChoice.toDisplayString(): String {
         val stringArray = resources.getStringArray(R.array.url_content_array)

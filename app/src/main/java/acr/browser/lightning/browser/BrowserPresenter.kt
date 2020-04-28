@@ -292,7 +292,7 @@ class BrowserPresenter(
 
         logger.log(TAG, "New tab, show: $show")
 
-        val startingTab = tabsModel.newTab(view as Activity, tabInitializer, isIncognito)
+        val startingTab = tabsModel.newTab(view as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
         if (tabsModel.size() == 1) {
             startingTab.resumeTimers()
         }
@@ -301,7 +301,7 @@ class BrowserPresenter(
         view.updateTabNumber(tabsModel.size())
 
         if (show) {
-            onTabChanged(tabsModel.switchToTab(tabsModel.last()))
+            onTabChanged(tabsModel.switchToTab(tabsModel.indexOfTab(startingTab)))
         }
         else {
             // We still need to add it to our recent tabs

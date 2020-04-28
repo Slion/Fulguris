@@ -251,6 +251,11 @@
     <string name="url_contents">URL box contents</string>
     <string name="search_in_new_tab">Search in new tab</string>
     <string name="url_in_new_tab">URL in new tab</string>
+    <string name="new_tab_position">New tab position</string>
+    <string name="new_tab_position_before">Before current tab</string>
+    <string name="new_tab_position_after">After current tab</string>
+    <string name="new_tab_position_start">Start of tab list</string>
+    <string name="new_tab_position_end">End of tab list</string>
     <string name="text_encoding">Text encoding</string>
     <string-array name="url_content_array">
         <item>Domain (default)</item>

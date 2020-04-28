@@ -11,6 +11,7 @@ import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.preference.delegates.*
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.engine.GoogleSearch
+import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.view.RenderingMode
 import android.content.SharedPreferences
@@ -81,12 +82,22 @@ class UserPreferences @Inject constructor(
     var hideStatusBarInLandscape by preferences.booleanPreference(HIDE_STATUS_BAR_LANDSCAPE, true)
 
     /**
+     * Defines if a new tab should be opened when user is doing a new search.
      */
     var searchInNewTab by preferences.booleanPreference(SEARCH_IN_NEW_TAB, true)
 
     /**
+     * Defines if a new tab should be opened when user provided a new URL.
      */
     var urlInNewTab by preferences.booleanPreference(URL_IN_NEW_TAB, false)
+
+    /**
+     * Value of our new tab position enum.
+     * Defines where a new tab should be created in our tab list.
+     *
+     * @see NewTabPosition
+     */
+    var newTabPosition by preferences.enumPreference(NEW_TAB_POSITION, NewTabPosition.AFTER_CURRENT_TAB)
 
     /**
      * The URL of the selected homepage.
@@ -320,6 +331,7 @@ private const val HIDE_STATUS_BAR_PORTRAIT = "hideStatusBarPortrait"
 private const val HIDE_STATUS_BAR_LANDSCAPE = "hideStatusBarLandscape"
 private const val SEARCH_IN_NEW_TAB = "searchInNewTab"
 private const val URL_IN_NEW_TAB = "urlInNewTab"
+private const val NEW_TAB_POSITION = "newTabPosition"
 private const val HOMEPAGE = "home"
 private const val INCOGNITO_COOKIES = "incognitocookies"
 private const val JAVASCRIPT = "java"

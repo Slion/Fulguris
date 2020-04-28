@@ -32,4 +32,21 @@
         <item>@string/dark_theme</item>
         <item>@string/black_theme</item>
     </string-array>
+
+    <string-array name="new_tab_positions">
+        <item>@string/new_tab_position_before</item>
+        <item>@string/new_tab_position_after</item>
+        <item>@string/new_tab_position_start</item>
+        <item>@string/new_tab_position_end</item>
+    </string-array>
+
+    <string-array name="new_tab_position_values">
+        <item>@string/new_tab_position_before_value</item>
+        <item>@string/new_tab_position_after_value</item>
+        <item>@string/new_tab_position_start_value</item>
+        <item>@string/new_tab_position_end_value</item>
+    </string-array>
+
+
+
 </resources>

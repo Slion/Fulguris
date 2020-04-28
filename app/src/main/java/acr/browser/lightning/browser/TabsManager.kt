@@ -6,6 +6,7 @@ import acr.browser.lightning.di.DiskScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.search.SearchEngineProvider
+import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
 import android.app.Activity
@@ -142,7 +143,7 @@ class TabsManager @Inject constructor(
                 }
             }.observeOn(mainScheduler)
             .map {
-                newTab(activity, it, incognito)
+                newTab(activity, it, incognito,NewTabPosition.END_OF_TAB_LIST)
             }
             .lastOrError()
             .doAfterSuccess { finishInitialization() }
@@ -297,7 +298,8 @@ class TabsManager @Inject constructor(
     fun newTab(
         activity: Activity,
         tabInitializer: TabInitializer,
-        isIncognito: Boolean
+        isIncognito: Boolean,
+        newTabPosition: NewTabPosition
     ): LightningView {
         logger.log(TAG, "New tab")
         val tab = LightningView(
@@ -309,7 +311,15 @@ class TabsManager @Inject constructor(
             downloadPageInitializer,
             logger
         )
-        tabList.add(tab)
+
+        // Add our new tab at the specified position
+        when(newTabPosition){
+            NewTabPosition.BEFORE_CURRENT_TAB -> tabList.add(indexOfCurrentTab(),tab)
+            NewTabPosition.AFTER_CURRENT_TAB -> tabList.add(indexOfCurrentTab()+1,tab)
+            NewTabPosition.START_OF_TAB_LIST -> tabList.add(0,tab)
+            NewTabPosition.END_OF_TAB_LIST -> tabList.add(tab)
+        }
+
         tabNumberListeners.forEach { it(size()) }
         return tab
     }

@@ -8,11 +8,21 @@
             app:title="@string/search_in_new_tab"
             app:defaultValue="true"
             app:iconSpaceReserved="false" />
+
         <SwitchPreferenceCompat
             app:key="@string/pref_key_url_in_new_tab"
             app:title="@string/url_in_new_tab"
             app:defaultValue="false"
             app:iconSpaceReserved="false" />
+
+        <ListPreference
+            app:key="@string/pref_key_new_tab_position"
+            app:title="@string/new_tab_position"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="@string/new_tab_position_after_value"
+            app:entries="@array/new_tab_positions"
+            app:entryValues="@array/new_tab_position_values"/>
 
         <CheckBoxPreference
             android:defaultValue="true"

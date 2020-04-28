@@ -116,4 +116,27 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    /**
+     * Setup a [ListPreference] with the provided options and listener.
+     *
+     * @param preference Preference key.
+     * @param value Default string value, typically an enum class value converted to string.
+     * @param isEnabled true if the preference should be enabled, false otherwise. Defaults to true.
+     * @param onPreferenceChange Callback function used when that preference value is changed.
+     */
+    protected fun listPreference(
+            preference: String,
+            value: String,
+            isEnabled: Boolean = true,
+            onPreferenceChange: (String) -> Unit
+    ): ListPreference = (findPreference<ListPreference>(preference) as ListPreference).apply {
+        this.value = value
+        this.isEnabled = isEnabled
+        onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, any: Any ->
+            onPreferenceChange(any as String)
+            true
+        }
+    }
+
+
 }

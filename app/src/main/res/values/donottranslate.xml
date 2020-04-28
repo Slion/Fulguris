@@ -13,8 +13,13 @@
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>
+    <string name="pref_key_new_tab_position">pref_key_new_tab_position</string>
 
 
-
+    <!-- See: NewTabPosition -->
+    <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>
+    <string name="new_tab_position_after_value">AFTER_CURRENT_TAB</string>
+    <string name="new_tab_position_start_value">START_OF_TAB_LIST</string>
+    <string name="new_tab_position_end_value">END_OF_TAB_LIST</string>
 
 </resources>
