@@ -391,7 +391,10 @@ class TabsManager @Inject constructor(
                     outState.putString(TAB_TITLE_KEY + index, tab.title)
                     val stream = ByteArrayOutputStream()
                     tab.favicon?.let {
-                        it.compress(Bitmap.CompressFormat.WEBP, 100, stream)
+                        // Using PNG instead of WEBP as it is hopefully lossless
+                        // Using WEBP results in the quality degrading reload after reload
+                        // Maybe consider something like: https://stackoverflow.com/questions/8065050/convert-bitmap-to-byte-array-without-compress-method-in-android
+                        it.compress(Bitmap.CompressFormat.PNG, 100, stream)
                         val byteArray = stream.toByteArray()
                         outState.putByteArray(TAB_FAVICON_KEY + index, byteArray)
                     };

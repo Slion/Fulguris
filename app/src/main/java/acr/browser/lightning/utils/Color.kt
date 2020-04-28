@@ -1,5 +1,8 @@
 package acr.browser.lightning.utils
 
+import android.graphics.Bitmap
+
+// TODO: use [ColorUtils.calculateLuminance] instead
 fun computeLuminance(r: Int, g: Int, b: Int) : Float {
     return (0.2126f * r + 0.7152f * g + 0.0722f * b);
 }
@@ -27,4 +30,14 @@ fun foregroundColorFromBackgroundColor(color: Int) :Int {
     }
 
     return res.toInt();
+}
+
+/**
+ * Scale given bitmap to one pixel to get a rough average color
+ */
+fun getFilteredColor(bitmap: Bitmap?): Int {
+    val newBitmap = Bitmap.createScaledBitmap(bitmap!!, 1, 1, false)
+    val color = newBitmap.getPixel(0, 0)
+    newBitmap.recycle()
+    return color
 }

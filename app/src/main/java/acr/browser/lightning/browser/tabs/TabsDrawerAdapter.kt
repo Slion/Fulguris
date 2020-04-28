@@ -1,11 +1,15 @@
 package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.inflater
+import acr.browser.lightning.utils.getFilteredColor
 import acr.browser.lightning.view.BackgroundDrawable
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.view.ViewGroup
+import androidx.core.graphics.ColorUtils
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -43,11 +47,69 @@ class TabsDrawerAdapter(
         updateViewHolderBackground(holder, web.isForegroundTab)
     }
 
+
+
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
+        // Remove any existing filter
+        viewHolder.favicon.clearColorFilter()
+
         favicon?.let {
-                viewHolder.favicon.setImageBitmap(it)
+            val ba = uiController as BrowserActivity // Nasty cast, I know, who care :)
+            if (ba.isDarkTheme)
+            {
+                // Use white filter on darkest favicons
+                // That works well enough for theregister.co.uk and github.com while not impacting bbc.c.uk
+                val color = Color.BLACK or getFilteredColor(it) // OR with opaque black to remove transparency glitches
+                val luminance = ColorUtils.calculateLuminance(color)
+                // Only apply to darkest icons
+                if (luminance==0.0) {
+                    viewHolder.favicon.setColorFilter(Color.WHITE)
+                }
+            }
+            viewHolder.favicon.setImageBitmap(it)
         } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
     }
+
+    /*
+    private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
+
+        viewHolder.favicon.clearColorFilter()
+
+        favicon?.let {bitmap ->
+            // Check if favicon is too dark
+            Palette.from(bitmap).generate { palette ->
+
+                palette?.let {
+                    // OR with opaque black to remove transparency glitches
+                    val color = Color.BLACK or (it.getVibrantColor(it.getMutedColor(Color.BLACK)))
+                    val luminance = ColorUtils.calculateLuminance(color).toFloat()
+                    val threshold = 0.05f
+                    if (luminance==0f) {
+                        // All black icon
+                        viewHolder.favicon.setColorFilter(Color.RED)
+                    }
+                    else if (luminance<threshold) {
+
+                        var colorMatrix = ColorMatrix()
+                        var scale = 1.0f + threshold / luminance;
+                        colorMatrix.set(floatArrayOf(
+                                scale, 0.0f, 0.0f, 0.0f, 0.0f, //RED
+                                0.0f, scale, 0.0f, 0.0f, 0.0f, // GREEN
+                                0.0f, 0.0f, scale, 0.0f, 0.0f, // BLUE
+                                0.0f, 0.0f, 0.0f, 1.0f,  0.0f // ALPHA
+                        ))
+                        //colorMatrix.setSaturation(0.0F)
+                        val colorMatrixColorFilter = ColorMatrixColorFilter(colorMatrix)
+                        viewHolder.favicon.setColorFilter(colorMatrixColorFilter)
+                        //viewHolder.favicon.setColorFilter(Color.WHITE)
+                    }
+                }
+
+
+            }
+                viewHolder.favicon.setImageBitmap(favicon)
+        } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
+    }*/
 
     private fun updateViewHolderBackground(viewHolder: TabViewHolder, isForeground: Boolean) {
         val verticalBackground = viewHolder.layout.background as BackgroundDrawable

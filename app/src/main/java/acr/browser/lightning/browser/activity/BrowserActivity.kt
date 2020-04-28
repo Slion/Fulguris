@@ -127,7 +127,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     // Primitives
     private var isFullScreen: Boolean = false
     private var hideStatusBar: Boolean = false
-    private var isDarkTheme: Boolean = false
+    public var isDarkTheme: Boolean = false
     private var isImmersiveMode = false
     private var shouldShowTabsInDrawer: Boolean = false
     private var swapBookmarksAndTabs: Boolean = false
