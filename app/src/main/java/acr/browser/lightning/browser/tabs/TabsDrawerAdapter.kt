@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.view.ViewGroup
 import androidx.core.graphics.ColorUtils
 import androidx.core.widget.TextViewCompat
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
@@ -48,13 +49,13 @@ class TabsDrawerAdapter(
     }
 
 
-
+/*
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
         // Remove any existing filter
         viewHolder.favicon.clearColorFilter()
 
         favicon?.let {
-            val ba = uiController as BrowserActivity // Nasty cast, I know, who care :)
+            val ba = uiController as BrowserActivity // Nasty cast, I know, who cares :)
             if (ba.isDarkTheme)
             {
                 // Use white filter on darkest favicons
@@ -70,46 +71,56 @@ class TabsDrawerAdapter(
         } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
     }
 
-    /*
-    private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
+ */
 
+
+    private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
+        // Remove any existing filter
         viewHolder.favicon.clearColorFilter()
 
         favicon?.let {bitmap ->
-            // Check if favicon is too dark
+            val ba = uiController as BrowserActivity // Nasty cast, I know, who cares :)
+            if (ba.isDarkTheme) {
+                // Check if favicon is too dark
             Palette.from(bitmap).generate { palette ->
-
-                palette?.let {
                     // OR with opaque black to remove transparency glitches
-                    val color = Color.BLACK or (it.getVibrantColor(it.getMutedColor(Color.BLACK)))
-                    val luminance = ColorUtils.calculateLuminance(color).toFloat()
-                    val threshold = 0.05f
-                    if (luminance==0f) {
+                    val filteredColor = Color.BLACK or getFilteredColor(bitmap) // OR with opaque black to remove transparency glitches
+                    val filteredLuminance = ColorUtils.calculateLuminance(filteredColor)
+                    //val color = Color.BLACK or (it.getVibrantColor(it.getLightVibrantColor(it.getDominantColor(Color.BLACK))))
+                    val color = Color.BLACK or (palette?.let { it. getDominantColor(Color.BLACK)} ?: Color.BLACK)
+                    val luminance = ColorUtils.calculateLuminance(color)
+                    val threshold = 0.025
+                    // Use white filter on darkest favicons
+                    // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.c.uk
+                    // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
+                    if (luminance<threshold && filteredLuminance<threshold) {
                         // All black icon
-                        viewHolder.favicon.setColorFilter(Color.RED)
+                        viewHolder.favicon.setColorFilter(Color.WHITE)
                     }
+                    /*
                     else if (luminance<threshold) {
 
                         var colorMatrix = ColorMatrix()
                         var scale = 1.0f + threshold / luminance;
+                        var stf = scale.toFloat()
                         colorMatrix.set(floatArrayOf(
-                                scale, 0.0f, 0.0f, 0.0f, 0.0f, //RED
-                                0.0f, scale, 0.0f, 0.0f, 0.0f, // GREEN
-                                0.0f, 0.0f, scale, 0.0f, 0.0f, // BLUE
+                                stf, 0.0f, 0.0f, 0.0f, 0.0f, //RED
+                                0.0f, stf, 0.0f, 0.0f, 0.0f, // GREEN
+                                0.0f, 0.0f, stf, 0.0f, 0.0f, // BLUE
                                 0.0f, 0.0f, 0.0f, 1.0f,  0.0f // ALPHA
                         ))
                         //colorMatrix.setSaturation(0.0F)
                         val colorMatrixColorFilter = ColorMatrixColorFilter(colorMatrix)
                         viewHolder.favicon.setColorFilter(colorMatrixColorFilter)
                         //viewHolder.favicon.setColorFilter(Color.WHITE)
-                    }
+                        }
+
+                     */
                 }
-
-
             }
                 viewHolder.favicon.setImageBitmap(favicon)
         } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
-    }*/
+    }
 
     private fun updateViewHolderBackground(viewHolder: TabViewHolder, isForeground: Boolean) {
         val verticalBackground = viewHolder.layout.background as BackgroundDrawable
