@@ -89,7 +89,8 @@ class TabsDrawerAdapter(
                     //val color = Color.BLACK or (it.getVibrantColor(it.getLightVibrantColor(it.getDominantColor(Color.BLACK))))
                     val color = Color.BLACK or (palette?.let { it. getDominantColor(Color.BLACK)} ?: Color.BLACK)
                     val luminance = ColorUtils.calculateLuminance(color)
-                    val threshold = 0.025
+                    // Lowered threshold from 0.025 to 0.02 for it to work with bbc.com/future
+                    val threshold = 0.02
                     // Use white filter on darkest favicons
                     // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.c.uk
                     // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
