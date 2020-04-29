@@ -700,7 +700,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 }
                 // Toggle tool bar visibility
                 KeyEvent.KEYCODE_F11 -> {
-                    toggleToolBar()
+                    if (toggleToolBar()) {
+                        // Highlight search field
+                        searchView?.requestFocus()
+                        searchView?.selectAll()
+                    }
                     return true
                 }
             }
@@ -1907,7 +1911,17 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     private fun isToolBarVisible() = toolbar_layout.parent!=null
 
-    private fun toggleToolBar() = if (isToolBarVisible()) doHideToolBar() else showActionBar()
+    private fun toggleToolBar() : Boolean
+    {
+        return if (isToolBarVisible()) {
+            doHideToolBar()
+            false
+        } else {
+            showActionBar()
+            true
+        }
+    }
+
 
     override fun handleBookmarksChange() {
         val currentTab = tabsManager.currentTab
