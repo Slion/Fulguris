@@ -88,6 +88,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import com.anthonycr.grant.PermissionsManager
@@ -425,8 +426,18 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         })
 
         button_more.setOnClickListener(OnClickListener {
-            //Display our popup menu
-            popup?.show()
+            // Web page is loosing focus as we open our menu
+            currentTabView?.clearFocus()
+            // Check if virtual keyboard is showing
+            if (inputMethodManager.isActive) {
+                // Open our menu with a slight delay giving enough time for our virtual keyboard to close
+                mainHandler.postDelayed({popup?.show()},100)
+            } else {
+                //Display our popup menu instantly
+                popup?.show()
+            }
+
+
         })
     }
 
@@ -594,6 +605,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         override fun onDrawerSlide(v: View, arg: Float) = Unit
 
         override fun onDrawerStateChanged(arg: Int) {
+
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 return;
             }
@@ -1066,7 +1078,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         logger.log(TAG, "Remove the tab view")
 
         currentTabView.removeFromParent()
-
+        currentTabView?.onFocusChangeListener = null
         currentTabView = null
 
         // Use a delayed handler to make the transition smooth
@@ -1092,9 +1104,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         currentTabView.removeFromParent()
         content_frame.resetTarget() // Needed to make it work together with swipe to refresh
         content_frame.addView(view, 0, MATCH_PARENT)
-
         view.requestFocus()
+        // Remove existing focus change observer before we change our tab
+        currentTabView?.onFocusChangeListener = null
+        // Change our tab
         currentTabView = view
+        // Close virtual keyboard if we loose focus
+        currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(ui_layout.windowToken, 0) }
         showActionBar()
     }
 
@@ -1413,12 +1429,30 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Color also applies to the following backgrounds as they show during tool bar show/hide animation
         ui_layout.setBackgroundColor(color)
         content_frame.setBackgroundColor(color)
+        // This one is going to be a problem as it will break some websites such as bbc.com
+        // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color
+        currentTabView?.setBackgroundColor(if (isLoadedPast(75)) Color.WHITE else color)
+        //TODO: upon page load complete reset it to white?
 
         // No animation for now
         // Toolbar background color
         toolbar_layout.setBackgroundColor(color)
+        progress_view.mProgressColor = color
         // Search text field color
-        searchBackground?.background?.tint(getSearchBarColor(color))
+        getSearchBarColor(color).let {
+            searchBackground?.background?.tint(it)
+            // Set progress bar background color making sure it isn't too bright
+            // That's notably making it more visible on lequipe.fr and bbc.com/sport
+            // We hope this is going to work with most white themed website too
+            if (ColorUtils.calculateLuminance(it)>0.5) {
+                progress_view.setBackgroundColor(Color.BLACK)
+            }
+            else {
+                progress_view.setBackgroundColor(it)
+            }
+        }
+
+
         // Then the color of the status bar itself
         setStatusBarColor(color,currentToolBarTextColor==Color.BLACK)
 
@@ -2087,10 +2121,18 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
             setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
 
-            //toolbar?.menu?.findItem(R.id.action_reload)?.let { it.icon = if (isLoading) ContextCompat.getDrawable(this, R.drawable.ic_action_delete) else ContextCompat.getDrawable(this, R.drawable.ic_action_refresh);  }
-
         }
     }
+
+    /**
+     * Tell us if the current tab is loading.
+     */
+    private fun isLoading() = !isLoadedPast(100)
+
+    /**
+     *
+     */
+    private fun isLoadedPast(percent: Int) = tabsManager.currentTab?.let {it.progress >= percent}?:false
 
     /**
      * handle presses on the refresh icon in the search bar, if the page is

@@ -199,8 +199,6 @@ dependencies {
     implementation "info.guardianproject.netcipher:netcipher:$netCipherVersion"
     implementation "info.guardianproject.netcipher:netcipher-webkit:$netCipherVersion"
 
-    implementation 'com.anthonycr.progress:animated-progress:1.0'
-
     // memory leak analysis
     final def leakCanaryVersion = '1.6.3'
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"

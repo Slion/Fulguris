@@ -44,6 +44,20 @@ inline fun View?.doOnPreDraw(crossinline runnable: () -> Unit) = this?.let {
     })
 }
 
+
+/**
+ * Performs an whenever this view is loosing focus.
+ *
+ * @param runnable the runnable to run.
+ */
+inline fun View?.onFocusLost(crossinline runnable: () -> Unit) = this?.let {
+    it.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) {
+            runnable()
+        }
+    }
+}
+
 /**
  * Performs an action once next time a drawer is opened.
  *

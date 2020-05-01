@@ -19,4 +19,11 @@
         <attr name="tabIconBorderWidth" format="dimension"/>
         <attr name="tabIconBorderRadius" format="dimension"/>
     </declare-styleable>
+
+    <!-- Progress Bar -->
+    <declare-styleable name="AnimatedProgressBar">
+        <attr name="progressColor" format="color" />
+        <attr name="bidirectionalAnimate" format="boolean" />
+        <attr name="animationDuration" format="integer" />
+    </declare-styleable>
 </resources>
