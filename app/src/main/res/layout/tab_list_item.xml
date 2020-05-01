@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+android:focusableInTouchMode="true"
+    Makes it so that you need to double tap an item to select it
+    Could be an interesting settings option
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tab_item_background"

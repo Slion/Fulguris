@@ -102,8 +102,6 @@ android {
             applicationIdSuffix ".download"
         }
 
-
-
     }
 
     lintOptions {
@@ -116,6 +114,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // Disabling this now breaks our runtime, go figure
+    // Maybe we somehow used it before implicitly
+    dataBinding {
+        enabled true
     }
 }
 
@@ -145,11 +149,11 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.3.1'
 
     // support libraries
+    implementation "com.google.android.material:material:1.1.0"
     implementation "androidx.palette:palette:1.0.0"
     implementation "androidx.annotation:annotation:1.1.0"
     implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
     implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation "com.google.android.material:material:1.1.0"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.core:core:1.2.0"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
@@ -208,9 +212,9 @@ dependencies {
 
     // Firebase
     // Recommended: Add the Firebase SDK for Google Analytics.
-    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    implementation 'com.google.firebase:firebase-analytics:17.4.0'
     // Add the Firebase SDK for Crashlytics.
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta04'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
 
 }
 

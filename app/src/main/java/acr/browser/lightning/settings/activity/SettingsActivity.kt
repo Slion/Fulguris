@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import kotlinx.android.synthetic.main.toolbar.*
 
 private const val TITLE_TAG = "settingsActivityTitle"
 
@@ -34,7 +33,8 @@ class SettingsActivity : ThemableSettingsActivity(),
 
         // Set our toolbar as action bar so that our title is displayed
         // See: https://stackoverflow.com/questions/27665018/what-is-the-difference-between-action-bar-and-newly-introduced-toolbar
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById(R.id.settings_toolbar))
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         //supportActionBar?.setDisplayShowTitleEnabled(true)
     }
@@ -44,7 +44,7 @@ class SettingsActivity : ThemableSettingsActivity(),
         // See: https://stackoverflow.com/questions/14545139/android-back-button-in-the-title-bar
         when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                onBackPressed()
                 return true
             }
         }

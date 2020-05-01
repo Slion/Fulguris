@@ -16,15 +16,15 @@ Slions flavor is making changes to search layout notably adjusting margins.
     android:layout_marginLeft="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginRight="2dp"
-    android:layout_marginBottom="8dp"
-    android:layout_weight="1"
+    android:layout_marginBottom="12dp"
     android:background="@drawable/card_bg_elevate"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:descendantFocusability="beforeDescendants"
     android:elevation="2dp"
-    android:focusableInTouchMode="true"
+    android:focusableInTouchMode="false"
     android:gravity="center"
+    android:layout_weight="1"
     android:orientation="horizontal">
 
     <ImageView

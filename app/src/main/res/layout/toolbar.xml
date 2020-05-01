@@ -22,7 +22,7 @@ Elevation defines the shadow being cast by our tool bar
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.Toolbar
+    <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -33,7 +33,8 @@ Elevation defines the shadow being cast by our tool bar
         app:contentInsetStart="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabs_toolbar_container" />
+        app:layout_constraintTop_toBottomOf="@id/tabs_toolbar_container"
+        android:orientation="horizontal" />
 
     <com.anthonycr.progress.AnimatedProgressBar
         android:id="@+id/progress_view"

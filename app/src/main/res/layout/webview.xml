@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-WebView layout we had to use to be able to define our scrollbars color.
-Attempt to modify scrollbar color after creating our WebView object failed.
+android:scrollbarThumbVertical="@drawable/scrollbar"
+android:scrollbarThumbHorizontal="@drawable/scrollbar"
+    WebView layout we had to use to be able to define our scrollbars color.
+    Attempt to modify scrollbar color after creating our WebView object failed.
+
+android:focusableInTouchMode="true"
+    Not sure what than bring so we removed it
+
+android:defaultFocusHighlightEnabled="false"
+    This is needed to remove the focus highlight filtering on the whole web page whenever it is focused
+    Not sure what happens then with version
 -->
 <WebView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scrollbar"
     android:scrollbarThumbHorizontal="@drawable/scrollbar"
+    android:focusable="true"
+    android:defaultFocusHighlightEnabled="false"
+    android:id="@+id/web_view"
     />
+

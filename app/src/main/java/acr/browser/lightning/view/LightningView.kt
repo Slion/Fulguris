@@ -225,7 +225,7 @@ class LightningView(
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
         val tab = activity.layoutInflater.inflate(R.layout.webview, null) as WebView;
         tab.also { webView = it }.apply {
-            id = this@LightningView.id
+            //id = this@LightningView.id
 
             isFocusableInTouchMode = true
             isFocusable = true

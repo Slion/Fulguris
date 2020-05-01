@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+    // THAT HERE IS NOT USED
+    // Can't get data binding to work just duplicate code for now
+
+    <data>
+        <variable name="myText" type="java.lang.String"/>
+        <variable name="mySrc" type="android.graphics.drawable.Drawable"/>
+    </data>
+
+
+
+    <ImageView
+
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@{mySrc}"
+        style="?attr/actionButtonStyle"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="?attr/iconColor"
+        android:nextFocusDown="@id/web_view"
+        android:contentDescription="@{myText}" />
+
+-->
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</layout>
+
+
+

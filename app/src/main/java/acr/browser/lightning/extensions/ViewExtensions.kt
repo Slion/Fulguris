@@ -3,6 +3,8 @@ package acr.browser.lightning.extensions
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 /**
@@ -27,7 +29,59 @@ inline fun View?.doOnLayout(crossinline runnable: () -> Unit) = this?.let {
     })
 }
 
+/**
+ * Performs an action once next time this view is pre drawn.
+ *
+ * @param runnable the runnable to run.
+ */
+inline fun View?.doOnPreDraw(crossinline runnable: () -> Unit) = this?.let {
+    viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+        override fun onPreDraw() : Boolean {
+            viewTreeObserver.removeOnPreDrawListener(this)
+            runnable()
+            return true
+        }
+    })
+}
 
+/**
+ * Performs an action once next time a drawer is opened.
+ *
+ * @param runnable the runnable to run.
+ */
+inline fun DrawerLayout?.onceOnDrawerOpened(crossinline runnable: () -> Unit) = this?.apply {
+    addDrawerListener(object : DrawerLayout.DrawerListener {
+        override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
+        override fun onDrawerOpened(drawerView: View) { runnable(); removeDrawerListener(this) }
+        override fun onDrawerClosed(drawerView: View) = Unit
+        override fun onDrawerStateChanged(newState: Int) = Unit
+    })
+}
+
+/**
+ * Performs an action once next time a drawer is closed.
+ *
+ * @param runnable the runnable to run.
+ */
+inline fun DrawerLayout?.onceOnDrawerClosed(crossinline runnable: () -> Unit) = this?.apply {
+        addDrawerListener(object : DrawerLayout.DrawerListener {
+        override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
+        override fun onDrawerOpened(drawerView: View) = Unit
+        override fun onDrawerClosed(drawerView: View) { runnable();removeDrawerListener(this) }
+        override fun onDrawerStateChanged(newState: Int) = Unit
+    })
+}
+
+/**
+ * Performs an action once next time a recycler view goes idle.
+ *
+ * @param runnable the runnable to run.
+ */
+inline fun RecyclerView?.onceOnScrollStateIdle(crossinline runnable: () -> Unit) = this?.apply {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {if (newState==RecyclerView.SCROLL_STATE_IDLE) {runnable(); removeOnScrollListener(this)}}
+    })
+}
 
 /**
  * Reset Swipe Refresh Layout target.

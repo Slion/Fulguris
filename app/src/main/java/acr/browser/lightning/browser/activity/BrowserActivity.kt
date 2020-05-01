@@ -45,7 +45,6 @@ import acr.browser.lightning.view.SearchView
 import acr.browser.lightning.view.find.FindResults
 import android.animation.LayoutTransition
 import android.app.Activity
-import android.app.DownloadManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ClipboardManager
@@ -60,7 +59,10 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.provider.MediaStore
 import android.view.*
 import android.view.View.*
@@ -75,6 +77,7 @@ import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -83,6 +86,9 @@ import androidx.core.view.GravityCompat
 import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.PopupMenu
+import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import com.anthonycr.grant.PermissionsManager
 import io.reactivex.Completable
@@ -93,6 +99,7 @@ import kotlinx.android.synthetic.main.browser_content.*
 import kotlinx.android.synthetic.main.search.*
 import kotlinx.android.synthetic.main.search_interface.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.slions.toolbar_content.*
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -180,6 +187,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     // Menu
     private var backMenuItem: MenuItem? = null
     private var forwardMenuItem: MenuItem? = null
+    private var popup: PopupMenu? = null
 
     private val longPressBackRunnable = Runnable {
         showCloseDialog(tabsManager.positionOf(tabsManager.currentTab))
@@ -245,6 +253,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         initialize(savedInstanceState)
     }
 
+
+
     /**
      * Needed to be able to display system notifications
      */
@@ -273,8 +283,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         createNotificationChannel()
 
         //initializeToolbarHeight(resources.configuration)
-        setSupportActionBar(toolbar)
-        val actionBar = requireNotNull(supportActionBar)
+        //setSupportActionBar(toolbar)
+        layoutInflater.inflate(R.layout.toolbar_content,toolbar)
+        //val actionBar = requireNotNull(supportActionBar)
 
         //TODO make sure dark theme flag gets set correctly
         isDarkTheme = userPreferences.useTheme != AppTheme.LIGHT || isIncognito()
@@ -306,17 +317,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             tabs_toolbar_container.visibility = GONE
         }
 
-        // set display options of the ActionBar
-        actionBar.setDisplayShowTitleEnabled(false)
-        actionBar.setDisplayShowHomeEnabled(false)
-        actionBar.setDisplayShowCustomEnabled(true)
-        actionBar.setCustomView(R.layout.toolbar_content)
-
-        val customView = actionBar.customView
+        // Is that still needed
+        val customView = toolbar
         customView.layoutParams = customView.layoutParams.apply {
             width = LayoutParams.MATCH_PARENT
             height = LayoutParams.MATCH_PARENT
         }
+
 
         tabCountView = customView.findViewById(R.id.tab_count_view)
         homeImageView = customView.findViewById(R.id.home_image_view)
@@ -333,7 +340,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             homeImageView?.setImageResource(R.drawable.ic_action_home)
         }
 
-        customView.findViewById<FrameLayout>(R.id.home_button).setOnClickListener(this)
+        customView.findViewById<View>(R.id.home_button).setOnClickListener(this)
 
         // create the search EditText in the ToolBar
         searchView = customView.findViewById<SearchView>(R.id.search).apply {
@@ -402,6 +409,25 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Disabling animations which are not so nice
         ui_layout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING)
         ui_layout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
+
+
+        // Create our custom popup overflow menu
+        popup = PopupMenu(this, button_more)
+        // Needed for the menu to pop-up on top of the button
+        // See: https://stackoverflow.com/a/46557131/3969362
+        popup?.gravity = Gravity.END;
+        //Inflating the Popup using xml file
+        popup?.menuInflater?.inflate(R.menu.main, popup?.menu)
+        //registering popup with OnMenuItemClickListener
+        popup?.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+            // Hook in our legacy handler
+            this@BrowserActivity.onOptionsItemSelected(item)
+        })
+
+        button_more.setOnClickListener(OnClickListener {
+            //Display our popup menu
+            popup?.show()
+        })
     }
 
     private fun getBookmarksContainerId(): Int = if (swapBookmarksAndTabs) {
@@ -532,6 +558,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             drawerClosing = false
             drawerOpening = false
 
+            currentTabView?.requestFocus()
+
             //TODO: make this a settings option?
             if (isFlavorSlions) return; // Drawers remain locked for that flavor
             val tabsDrawer = getTabDrawer()
@@ -542,6 +570,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             } else if (shouldShowTabsInDrawer) {
                 drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, tabsDrawer)
             }
+
         }
 
         override fun onDrawerOpened(v: View) {
@@ -691,6 +720,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             // Used this to debug control usage on emulator as both ctrl and alt just don't work on emulator
             //val isCtrlOnly  = if (Build.PRODUCT.contains("sdk")) { true } else KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
             val isCtrlOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
+            val isCtrlShiftOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON or KeyEvent.META_SHIFT_ON)
 
             when (event.keyCode) {
                 // Toggle status bar visibility
@@ -799,7 +829,23 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                         tabsManager.currentTab?.reload()
                         return true
                     }
+                    KeyEvent.KEYCODE_L -> {
+                        toggleTabs()
+                    }
+                    KeyEvent.KEYCODE_B -> {
+                        toggleBookmarks()
+                    }
                 }
+
+                isCtrlShiftOnly -> when (event.keyCode) {
+                    KeyEvent.KEYCODE_T -> {
+                        toggleTabs()
+                    }
+                    KeyEvent.KEYCODE_B -> {
+                        toggleBookmarks()
+                    }
+                }
+
                 event.keyCode == KeyEvent.KEYCODE_SEARCH -> {
                     // Highlight search field
                     searchView?.requestFocus()
@@ -1271,6 +1317,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         drawer_layout.requestLayout()
 
 
+
         //intent?.let {logger.log(TAG, it.toString())}
     }
 
@@ -1319,7 +1366,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     private fun setMenuItemIcon(id: Int, drawable: Int)
     {
-        toolbar?.menu?.findItem(id)?.let {
+        popup?.menu?.findItem(id)?.let {
             // We need to preserve the color filter before changing the icon
             val cf = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 it.icon.colorFilter
@@ -1338,7 +1385,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private fun setMenuItemColor(id: Int, color: Int)
     {
         //toolbar.findViewById<ActionMenuItemView>(id)?.compoundDrawables?.get(0)?.colorFilter = PorterDuffColorFilter(color,PorterDuff.Mode.SRC_ATOP)
-        toolbar?.menu?.findItem(id)?.let { it.icon.colorFilter = PorterDuffColorFilter(color,PorterDuff.Mode.SRC_ATOP)  }
+        //toolbar?.menu?.findItem(id)?.let { it.icon.colorFilter = PorterDuffColorFilter(color,PorterDuff.Mode.SRC_ATOP)  }
     }
 
 
@@ -1352,14 +1399,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Change tab counter color
         tabCountView?.textColor = currentToolBarTextColor
         tabCountView?.invalidate();
-        // Set overflow/menu icon color
-        toolbar.overflowIcon?.tint(currentToolBarTextColor)
-        toolbar.navigationIcon?.tint(currentToolBarTextColor) // Is that needed
-        toolbar.collapseIcon?.tint(currentToolBarTextColor) // Is that needed
         // Change reload icon color
         setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
         // SSL status icon color
         search_ssl_status.setColorFilter(currentToolBarTextColor)
+        // Toolbar buttons filter
+        button_more.setColorFilter(currentToolBarTextColor)
 
         // Pull to refresh spinner color also follow current theme
         content_frame.setProgressBackgroundColorSchemeColor(color)
@@ -1534,18 +1579,85 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         //presenter?.newTab(downloadPageInitializer,true)
     }
 
-
-
+    private fun showingBookmarks() = drawer_layout.isDrawerOpen(getBookmarkDrawer())
+    private fun showingTabs() = drawer_layout.isDrawerOpen(getTabDrawer())
 
     /**
      * helper function that opens the bookmark drawer
      */
     private fun openBookmarks() {
-        if (drawer_layout.isDrawerOpen(getTabDrawer())) {
+        if (showingTabs()) {
             drawer_layout.closeDrawers()
         }
         drawer_layout.openDrawer(getBookmarkDrawer())
     }
+
+    /**
+     *
+     */
+    private fun toggleBookmarks() {
+        if (showingBookmarks()) {
+            drawer_layout.closeDrawers()
+        } else {
+            openBookmarks()
+        }
+    }
+
+    /**
+     * Open our tab list drawer
+     */
+    private fun openTabs() {
+        if (showingBookmarks()) {
+            drawer_layout.closeDrawers()
+        }
+
+        // Loose focus on current tab web page
+        currentTabView?.clearFocus()
+
+        // Define what to do once our list drawer it opened
+        // Item focus won't work sometimes when not using keyboard, I'm guessing that's somehow a feature
+        drawer_layout.onceOnDrawerOpened {
+            // Set focus
+            // Find our recycler list view
+            drawer_layout.findViewById<RecyclerView>(R.id.tabs_list)?.apply {
+                // Get current tab index and layout manager
+                val index = tabsManager.indexOfCurrentTab()
+                val lm = layoutManager as LinearLayoutManager
+                // Check if current item is currently visible
+                if (lm.findFirstCompletelyVisibleItemPosition() <= index && index <= lm.findLastCompletelyVisibleItemPosition()) {
+                    // We don't need to scroll as current item is already visible
+                    // Just focus our current item then for best keyboard navigation experience
+                    findViewHolderForAdapterPosition(tabsManager.indexOfCurrentTab())?.itemView?.requestFocus()
+                } else {
+                    // Our current item is not completely visible, we need to scroll then
+                    // Once scroll is complete we will focus our current item
+                    onceOnScrollStateIdle { findViewHolderForAdapterPosition(tabsManager.indexOfCurrentTab())?.itemView?.requestFocus() }
+                    // Trigger scroll
+                    smoothScrollToPosition(index)
+                }
+            }
+        }
+
+        // Open our tab list drawer
+        drawer_layout.openDrawer(getTabDrawer())
+    }
+
+    /**
+     *
+     */
+    private fun toggleTabs() {
+        if (showingTabs()) {
+            drawer_layout.closeDrawers()
+        } else {
+            openTabs()
+        }
+    }
+
+
+
+
+
+
 
     /**
      * This method closes any open drawer and executes the runnable after the drawers are closed.
@@ -1603,6 +1715,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             type = "*/*"
         }, getString(R.string.title_file_chooser)), FILE_CHOOSER_REQUEST_CODE)
     }
+
 
     /**
      * used to allow uploading into the browser
@@ -2007,7 +2120,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         when (v.id) {
             R.id.home_button -> when {
                 searchView?.hasFocus() == true -> currentTab.requestFocus()
-                shouldShowTabsInDrawer -> drawer_layout.openDrawer(getTabDrawer())
+                shouldShowTabsInDrawer -> openTabs()
                 else -> currentTab.loadHomePage()
             }
             R.id.button_next -> findResult?.nextResult()

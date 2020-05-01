@@ -14,7 +14,7 @@ buildscript {
         // (if not, add it).
         classpath 'com.google.gms:google-services:4.3.3'
         // Add the Crashlytics Gradle plugin.
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.0.0-beta04'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.0.0'
     }
 }
 
