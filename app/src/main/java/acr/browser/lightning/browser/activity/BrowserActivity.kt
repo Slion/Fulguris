@@ -1432,7 +1432,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // This one is going to be a problem as it will break some websites such as bbc.com
         // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color
         currentTabView?.setBackgroundColor(if (isLoadedPast(75)) Color.WHITE else color)
-        //TODO: upon page load complete reset it to white?
+        currentTabView?.invalidate()
 
         // No animation for now
         // Toolbar background color
