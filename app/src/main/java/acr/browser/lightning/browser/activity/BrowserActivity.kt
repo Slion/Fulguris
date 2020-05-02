@@ -1431,7 +1431,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         content_frame.setBackgroundColor(color)
         // This one is going to be a problem as it will break some websites such as bbc.com
         // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color
-        currentTabView?.setBackgroundColor(if (isLoadedPast(75)) Color.WHITE else color)
+        currentTabView?.setBackgroundColor(if (progress_view.progress>=100) Color.WHITE else color)
         currentTabView?.invalidate()
 
         // No animation for now
@@ -1439,19 +1439,20 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         toolbar_layout.setBackgroundColor(color)
         progress_view.mProgressColor = color
         // Search text field color
-        getSearchBarColor(color).let {
-            searchBackground?.background?.tint(it)
+        searchBackground?.background?.tint(getSearchBarColor(color))
+
+        // Progress bar background color
+        DrawableUtils.mixColor(0.5f, color, Color.WHITE).let {
             // Set progress bar background color making sure it isn't too bright
             // That's notably making it more visible on lequipe.fr and bbc.com/sport
             // We hope this is going to work with most white themed website too
-            if (ColorUtils.calculateLuminance(it)>0.5) {
+            if (ColorUtils.calculateLuminance(it)>0.75) {
                 progress_view.setBackgroundColor(Color.BLACK)
             }
             else {
                 progress_view.setBackgroundColor(it)
             }
         }
-
 
         // Then the color of the status bar itself
         setStatusBarColor(color,currentToolBarTextColor==Color.BLACK)
@@ -2124,15 +2125,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
-    /**
-     * Tell us if the current tab is loading.
-     */
-    private fun isLoading() = !isLoadedPast(100)
-
-    /**
-     *
-     */
-    private fun isLoadedPast(percent: Int) = tabsManager.currentTab?.let {it.progress >= percent}?:false
 
     /**
      * handle presses on the refresh icon in the search bar, if the page is
