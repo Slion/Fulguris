@@ -8,6 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 /**
+ * Tells if this view can scroll vertically.
+ * This view may still contain children who can scroll.
+ */
+fun View.canScrollVertically() = this.let {
+    it.canScrollVertically(-1) || it.canScrollVertically(1)
+}
+
+/**
  * Removes a view from its parent if it has one.
  */
 fun View?.removeFromParent() = this?.let {
@@ -46,7 +54,7 @@ inline fun View?.doOnPreDraw(crossinline runnable: () -> Unit) = this?.let {
 
 
 /**
- * Performs an whenever this view is loosing focus.
+ * Performs an action whenever this view is loosing focus.
  *
  * @param runnable the runnable to run.
  */
@@ -56,6 +64,22 @@ inline fun View?.onFocusLost(crossinline runnable: () -> Unit) = this?.let {
             runnable()
         }
     }
+}
+
+
+/**
+ * Performs an action once next time this view layout is changing.
+ *
+ * @param runnable the runnable to run.
+ */
+inline fun View?.onceOnLayoutChange(crossinline runnable: () -> Unit) = this?.apply {
+    addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+        override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int,
+                                    oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int)
+        {
+            runnable(); removeOnLayoutChangeListener(this)
+        }
+    })
 }
 
 /**

@@ -71,6 +71,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient.CustomViewCallback
+import android.webkit.WebView
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
@@ -1011,6 +1012,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         findViewById<ImageButton>(R.id.button_quit).setOnClickListener(this)
     }
 
+    fun setupPullToRefresh()
+    {
+        // Disable pull to refresh if no vertical scroll as it bugs with frame internal scroll
+        // See: https://github.com/Slion/Lightning-Browser/projects/1
+        content_frame.isEnabled = currentTabView?.canScrollVertically()?:false
+    }
+
     /**
      * Tells if web page color should be applied to tool and status bar
      */
@@ -1046,6 +1054,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         logger.log(TAG, "Notify Tab Changed: $position")
         tabsView?.tabChanged(position)
         setToolbarColor()
+        setupPullToRefresh()
     }
 
     override fun notifyTabViewInitialized() {
@@ -1200,7 +1209,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         setFullscreenIfNeeded(newConfig)
         setupToolBar(newConfig)
-        invalidateOptionsMenu()
+        // Can't find a proper event to do that after the configuration changes were applied so we just delay it
+        mainHandler.postDelayed({setupPullToRefresh()} ,300)
+        popup?.dismiss() // As it wont update somehow
         // Make sure our drawers adjust accordingly
         drawer_layout.requestLayout()
     }
@@ -1328,11 +1339,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         initializePreferences()
 
         setupToolBar(resources.configuration)
+        setupPullToRefresh()
 
         // We think that's needed in case there was a rotation while in the background
         drawer_layout.requestLayout()
-
-
 
         //intent?.let {logger.log(TAG, it.toString())}
     }

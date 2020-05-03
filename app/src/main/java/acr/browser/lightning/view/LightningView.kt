@@ -13,6 +13,7 @@ import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
+import acr.browser.lightning.extensions.canScrollVertically
 import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.log.Logger
@@ -221,11 +222,11 @@ class LightningView(
 
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()
         lightningWebClient = LightningWebClient(activity, this)
-        gestureDetector = GestureDetector(activity, CustomGestureListener())
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
         val tab = activity.layoutInflater.inflate(R.layout.webview, null) as WebView;
         tab.also { webView = it }.apply {
             //id = this@LightningView.id
+            gestureDetector = GestureDetector(activity, CustomGestureListener(this))
 
             isFocusableInTouchMode = true
             isFocusable = true
@@ -840,19 +841,30 @@ class LightningView(
             if (!view.hasFocus()) {
                 view.requestFocus()
             }
+
+
+
             action = arg1.action
+
+
             y = arg1.y
+            // Handle tool bar visibility when doing slow scrolling
             if (action == MotionEvent.ACTION_DOWN) {
                 location = y
             } else if (action == MotionEvent.ACTION_UP) {
                 val distance = y - location
-                if (distance > SCROLL_UP_THRESHOLD && view.scrollY < SCROLL_UP_THRESHOLD) {
-                    uiController.showActionBar()
+                if (distance > SCROLL_UP_THRESHOLD && view.scrollY < SCROLL_UP_THRESHOLD
+                        // Touch input won't show tool bar again if no vertical scroll
+                        // It can still ba accessed using the back button
+                        && view.canScrollVertically()) {
+                        uiController.showActionBar()
                 } else if (distance < -SCROLL_UP_THRESHOLD) {
                     uiController.hideActionBar()
                 }
                 location = 0f
             }
+
+            // Handle tool bar visibility upon fling gesture
             gestureDetector.onTouchEvent(arg1)
 
             return false
@@ -865,7 +877,7 @@ class LightningView(
      * the user flings the page. Also handles long press events so
      * that we can capture them accurately.
      */
-    private inner class CustomGestureListener : SimpleOnGestureListener() {
+    private inner class CustomGestureListener(private val view: View) : SimpleOnGestureListener() {
 
         /**
          * Without this, onLongPress is not called when user is zooming using
@@ -881,7 +893,10 @@ class LightningView(
             val power = (velocityY * 100 / maxFling).toInt()
             if (power < -10) {
                 uiController.hideActionBar()
-            } else if (power > 15) {
+            } else if (power > 15
+                    // Touch input won't show tool bar again if no vertical scroll
+                    // It can still ba accessed using the back button
+                    && view.canScrollVertically()) {
                 uiController.showActionBar()
             }
             return super.onFling(e1, e2, velocityX, velocityY)
