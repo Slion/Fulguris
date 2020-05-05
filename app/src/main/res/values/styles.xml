@@ -40,8 +40,9 @@
     </style>
 
     <!-- Base Themes -->
-    <style name="Theme.BaseLightTheme" parent="Theme.AppCompat.Light">
-
+    <style name="Theme.BaseLightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowDisablePreview">false</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Theme Colors -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryDark">@color/transparent</item>
@@ -69,8 +70,10 @@
 
     </style>
 
-    <style name="Theme.BaseDarkTheme" parent="Theme.AppCompat">
+    <style name="Theme.BaseDarkTheme" parent="Theme.AppCompat.NoActionBar">
 
+        <item name="android:windowDisablePreview">false</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Theme colors -->
         <item name="colorPrimary">@color/primary_color_dark</item>
         <!-- Make status bar transparent so that it looks better with drawers -->
@@ -103,8 +106,10 @@
 
     </style>
 
-    <style name="Theme.BaseBlackTheme" parent="Theme.AppCompat">
+    <style name="Theme.BaseBlackTheme" parent="Theme.AppCompat.NoActionBar">
 
+        <item name="android:windowDisablePreview">false</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Theme Colors -->
         <item name="colorPrimary">@color/black</item>
         <!-- This for some reason overrides the status bar color, leave it transparent for the runtime to decide -->
