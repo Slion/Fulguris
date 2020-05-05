@@ -54,6 +54,8 @@
     <string name="agent_desktop">Desktop</string>
     <string name="agent_mobile">Mobile</string>
     <string name="agent_custom">Custom</string>
+    <string name="agent_system">System</string>
+    <string name="agent_web_view">Web View</string>
     <string name="title_search_engine">Search engine</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Do you want to download this file? (%1$s)</string>

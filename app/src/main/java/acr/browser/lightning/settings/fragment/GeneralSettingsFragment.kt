@@ -9,6 +9,7 @@ import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.preference.userAgent
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.Suggestions
 import acr.browser.lightning.search.engine.BaseSearchEngine
@@ -17,6 +18,7 @@ import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.utils.ProxyUtils
 import acr.browser.lightning.utils.ThemeUtils
 import android.app.Activity
+import android.app.Application
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
@@ -57,7 +59,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
         clickableDynamicPreference(
             preference = SETTINGS_USER_AGENT,
-            summary = choiceToUserAgent(userPreferences.userAgentChoice),
+            summary = userAgentSummary(userPreferences.userAgentChoice, activity?.application),
             onClick = ::showUserAgentChooserDialog
         )
 
@@ -178,11 +180,19 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
+
+    private fun userAgentSummary(index: Int, application: Application?) =
+            choiceToUserAgent(userPreferences.userAgentChoice) + activity?.application?.let { ":\n" + userPreferences.userAgent(it) }
+
+
+
     private fun choiceToUserAgent(index: Int) = when (index) {
         1 -> resources.getString(R.string.agent_default)
         2 -> resources.getString(R.string.agent_desktop)
         3 -> resources.getString(R.string.agent_mobile)
         4 -> resources.getString(R.string.agent_custom)
+        5 -> resources.getString(R.string.agent_web_view)
+        6 -> resources.getString(R.string.agent_system)
         else -> resources.getString(R.string.agent_default)
     }
 
@@ -191,14 +201,16 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             setTitle(resources.getString(R.string.title_user_agent))
             setSingleChoiceItems(R.array.user_agent, userPreferences.userAgentChoice - 1) { _, which ->
                 userPreferences.userAgentChoice = which + 1
-                summaryUpdater.updateSummary(choiceToUserAgent(userPreferences.userAgentChoice))
                 when (which) {
                     in 0..2 -> Unit
                     3 -> {
-                        summaryUpdater.updateSummary(resources.getString(R.string.agent_custom))
                         showCustomUserAgentPicker(summaryUpdater)
                     }
+                    4 -> Unit
+                    5 -> Unit
                 }
+
+                summaryUpdater.updateSummary(userAgentSummary(userPreferences.userAgentChoice,activity?.application))
             }
             setPositiveButton(resources.getString(R.string.action_ok), null)
         }
@@ -212,7 +224,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 userPreferences.userAgentString,
                 R.string.action_ok) { s ->
                 userPreferences.userAgentString = s
-                summaryUpdater.updateSummary(it.getString(R.string.agent_custom))
             }
         }
     }
