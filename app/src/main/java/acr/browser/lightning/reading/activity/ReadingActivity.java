@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import acr.browser.lightning.AppTheme;
 import acr.browser.lightning.R;
 import acr.browser.lightning.di.Injector;
 import acr.browser.lightning.di.MainScheduler;
@@ -26,12 +26,11 @@ import acr.browser.lightning.dialog.BrowserDialog;
 import acr.browser.lightning.preference.UserPreferences;
 import acr.browser.lightning.reading.HtmlFetcher;
 import acr.browser.lightning.reading.JResult;
-import acr.browser.lightning.utils.ThemeUtils;
+import acr.browser.lightning.settings.activity.ThemableSettingsActivity;
 import acr.browser.lightning.utils.Utils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +38,7 @@ import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
-public class ReadingActivity extends AppCompatActivity {
+public class ReadingActivity extends ThemableSettingsActivity {
 
     private static final String LOAD_READING_URL = "ReadingUrl";
 
@@ -83,17 +82,18 @@ public class ReadingActivity extends AppCompatActivity {
 
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.fade_out_scale);
         mInvert = mUserPreferences.getInvertColors();
-        final int color;
-        if (mInvert) {
-            setTheme(R.style.Theme_SettingsTheme_Dark);
-            color = ThemeUtils.getPrimaryColorDark(this);
-            //getWindow().setBackgroundDrawable(new ColorDrawable(color));
-        } else {
-            setTheme(R.style.Theme_SettingsTheme);
-            color = ThemeUtils.getPrimaryColor(this);
-            //getWindow().setBackgroundDrawable(new ColorDrawable(color));
-        }
+
         super.onCreate(savedInstanceState);
+
+        // Change our theme if inverted
+        if (mInvert) {
+            if (getThemeId() == AppTheme.LIGHT) {
+                applyTheme(AppTheme.BLACK);
+            } else {
+                applyTheme(AppTheme.LIGHT);
+            }
+        }
+
         setContentView(R.layout.reading_view);
         ButterKnife.bind(this);
 

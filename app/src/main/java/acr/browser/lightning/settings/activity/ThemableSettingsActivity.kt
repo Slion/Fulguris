@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 abstract class ThemableSettingsActivity : AppCompatActivity() {
 
-    private var themeId: AppTheme = AppTheme.LIGHT
+    protected var themeId: AppTheme = AppTheme.LIGHT
 
     @Inject internal lateinit var userPreferences: UserPreferences
 
@@ -25,6 +25,15 @@ abstract class ThemableSettingsActivity : AppCompatActivity() {
         themeId = userPreferences.useTheme
 
         // set the theme
+        applyTheme(themeId)
+
+        super.onCreate(savedInstanceState)
+
+        resetPreferences()
+    }
+
+
+    protected fun applyTheme(themeId: AppTheme) {
         when (themeId) {
             AppTheme.LIGHT -> {
                 setTheme(R.style.Theme_SettingsTheme)
@@ -39,10 +48,8 @@ abstract class ThemableSettingsActivity : AppCompatActivity() {
                 window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColorDark(this)))
             }
         }
-        super.onCreate(savedInstanceState)
-
-        resetPreferences()
     }
+
 
     private fun resetPreferences() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
