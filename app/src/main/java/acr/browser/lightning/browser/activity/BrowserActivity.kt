@@ -1304,6 +1304,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     override fun onDestroy() {
         logger.log(TAG, "onDestroy")
+        // Should we remove saveOpenTabs from MainActivity.onPause then?
+        // Make sure we save our tabs before we are destroyed
+        saveOpenTabs()
 
         incognitoNotification?.hide()
 
