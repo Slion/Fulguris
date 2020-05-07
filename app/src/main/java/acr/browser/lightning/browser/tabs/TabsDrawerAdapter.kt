@@ -4,14 +4,11 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.inflater
-import acr.browser.lightning.utils.getFilteredColor
+import acr.browser.lightning.extensions.setImageForTheme
 import acr.browser.lightning.view.BackgroundDrawable
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.view.ViewGroup
-import androidx.core.graphics.ColorUtils
 import androidx.core.widget.TextViewCompat
-import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
@@ -49,78 +46,11 @@ class TabsDrawerAdapter(
     }
 
 
-/*
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
-        // Remove any existing filter
-        viewHolder.favicon.clearColorFilter()
-
+        // Apply filter to favicon if needed
         favicon?.let {
-            val ba = uiController as BrowserActivity // Nasty cast, I know, who cares :)
-            if (ba.isDarkTheme)
-            {
-                // Use white filter on darkest favicons
-                // That works well enough for theregister.co.uk and github.com while not impacting bbc.c.uk
-                val color = Color.BLACK or getFilteredColor(it) // OR with opaque black to remove transparency glitches
-                val luminance = ColorUtils.calculateLuminance(color)
-                // Only apply to darkest icons
-                if (luminance==0.0) {
-                    viewHolder.favicon.setColorFilter(Color.WHITE)
-                }
-            }
-            viewHolder.favicon.setImageBitmap(it)
-        } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
-    }
-
- */
-
-
-    private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
-        // Remove any existing filter
-        viewHolder.favicon.clearColorFilter()
-
-        favicon?.let {bitmap ->
-            val ba = uiController as BrowserActivity // Nasty cast, I know, who cares :)
-            if (ba.isDarkTheme) {
-                // Check if favicon is too dark
-            Palette.from(bitmap).generate { palette ->
-                    // OR with opaque black to remove transparency glitches
-                    val filteredColor = Color.BLACK or getFilteredColor(bitmap) // OR with opaque black to remove transparency glitches
-                    val filteredLuminance = ColorUtils.calculateLuminance(filteredColor)
-                    //val color = Color.BLACK or (it.getVibrantColor(it.getLightVibrantColor(it.getDominantColor(Color.BLACK))))
-                    val color = Color.BLACK or (palette?.let { it. getDominantColor(Color.BLACK)} ?: Color.BLACK)
-                    val luminance = ColorUtils.calculateLuminance(color)
-                    // Lowered threshold from 0.025 to 0.02 for it to work with bbc.com/future
-                    // At 0.015 it does not kick in for GitHub
-                    val threshold = 0.02
-                    // Use white filter on darkest favicons
-                    // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.c.uk
-                    // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
-                    if (luminance<threshold && filteredLuminance<threshold) {
-                        // All black icon
-                        viewHolder.favicon.setColorFilter(Color.WHITE)
-                    }
-                    /*
-                    else if (luminance<threshold) {
-
-                        var colorMatrix = ColorMatrix()
-                        var scale = 1.0f + threshold / luminance;
-                        var stf = scale.toFloat()
-                        colorMatrix.set(floatArrayOf(
-                                stf, 0.0f, 0.0f, 0.0f, 0.0f, //RED
-                                0.0f, stf, 0.0f, 0.0f, 0.0f, // GREEN
-                                0.0f, 0.0f, stf, 0.0f, 0.0f, // BLUE
-                                0.0f, 0.0f, 0.0f, 1.0f,  0.0f // ALPHA
-                        ))
-                        //colorMatrix.setSaturation(0.0F)
-                        val colorMatrixColorFilter = ColorMatrixColorFilter(colorMatrix)
-                        viewHolder.favicon.setColorFilter(colorMatrixColorFilter)
-                        //viewHolder.favicon.setColorFilter(Color.WHITE)
-                        }
-
-                     */
-                }
-            }
-                viewHolder.favicon.setImageBitmap(favicon)
+                val ba = uiController as BrowserActivity
+                viewHolder.favicon.setImageForTheme(it,ba.isDarkTheme)
         } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
     }
 

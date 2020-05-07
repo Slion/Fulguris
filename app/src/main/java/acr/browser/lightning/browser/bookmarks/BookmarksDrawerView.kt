@@ -5,6 +5,7 @@ import acr.browser.lightning.adblock.allowlist.AllowListModel
 import acr.browser.lightning.animation.AnimationUtils
 import acr.browser.lightning.browser.BookmarksView
 import acr.browser.lightning.browser.TabsManager
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
@@ -18,6 +19,7 @@ import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.extensions.color
 import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.extensions.inflater
+import acr.browser.lightning.extensions.setImageForTheme
 import acr.browser.lightning.favicon.FaviconModel
 import acr.browser.lightning.reading.activity.ReadingActivity
 import acr.browser.lightning.utils.isSpecialUrl
@@ -282,7 +284,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
     }
 
     private class BookmarkListAdapter(
-        context: Context,
+        val context: Context,
         private val faviconModel: FaviconModel,
         private val networkScheduler: Scheduler,
         private val mainScheduler: Scheduler,
@@ -361,7 +363,8 @@ class BookmarksDrawerView @JvmOverloads constructor(
                             onSuccess = { bitmap ->
                                 viewModel.icon = bitmap
                                 if (holder.favicon.tag == url) {
-                                    holder.favicon.setImageBitmap(bitmap)
+                                    val ba = context as BrowserActivity
+                                    holder.favicon.setImageForTheme(bitmap, ba.isDarkTheme)
                                 }
                             }
                         )

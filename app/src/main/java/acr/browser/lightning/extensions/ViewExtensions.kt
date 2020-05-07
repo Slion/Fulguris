@@ -1,9 +1,15 @@
 package acr.browser.lightning.extensions
 
+import acr.browser.lightning.utils.getFilteredColor
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.ImageView
+import androidx.core.graphics.ColorUtils
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
@@ -133,4 +139,37 @@ fun SwipeRefreshLayout?.resetTarget() {
     // Then reset it
     field.set(this,null);
     // Next time this is doing a layout ensureTarget() will be called and the target set properly again
+}
+
+
+/**
+ * Analyse the given bitmap and apply a filter if it is too dark for the given theme before loading it in this ImageView
+ * Basically turns icons which are too dark for dark theme to white.
+ */
+fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
+    // Remove any existing filter
+    clearColorFilter()
+
+    if (isDarkTheme) {
+        Palette.from(bitmap).generate { palette ->
+            // OR with opaque black to remove transparency glitches
+            val filteredColor = Color.BLACK or getFilteredColor(bitmap) // OR with opaque black to remove transparency glitches
+            val filteredLuminance = ColorUtils.calculateLuminance(filteredColor)
+            //val color = Color.BLACK or (it.getVibrantColor(it.getLightVibrantColor(it.getDominantColor(Color.BLACK))))
+            val color = Color.BLACK or (palette?.getDominantColor(Color.BLACK) ?: Color.BLACK)
+            val luminance = ColorUtils.calculateLuminance(color)
+            // Lowered threshold from 0.025 to 0.02 for it to work with bbc.com/future
+            // At 0.015 it does not kick in for GitHub
+            val threshold = 0.02
+            // Use white filter on darkest favicons
+            // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.c.uk
+            // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
+            if (luminance < threshold && filteredLuminance < threshold) {
+                // All black icon
+                setColorFilter(Color.WHITE)
+            }
+        }
+    }
+
+    setImageBitmap(bitmap)
 }
