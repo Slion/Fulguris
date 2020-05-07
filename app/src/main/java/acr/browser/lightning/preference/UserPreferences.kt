@@ -276,6 +276,12 @@ class UserPreferences @Inject constructor(
     var bookmarksAndTabsSwapped by preferences.booleanPreference(SWAP_BOOKMARKS_AND_TABS, false)
 
     /**
+     * Not an actual user preference. Just used to communicate between settings and browser activity.
+     * Don't ask :)
+     */
+    var bookmarksChanged by preferences.booleanPreference(BOOKMARKS_CHANGED, false)
+
+    /**
      * True if the status bar of the app should always be high contrast, false if it should follow
      * the theme of the app.
      */
@@ -364,6 +370,7 @@ private const val DO_NOT_TRACK = "doNotTrack"
 private const val SAVE_DATA = "saveData"
 private const val IDENTIFYING_HEADERS = "removeIdentifyingHeaders"
 private const val SWAP_BOOKMARKS_AND_TABS = "swapBookmarksAndTabs"
+private const val BOOKMARKS_CHANGED = "bookmarksChanged"
 private const val BLACK_STATUS_BAR = "blackStatusBar"
 private const val PROXY_CHOICE = "proxyChoice"
 private const val USE_PROXY_HOST = "useProxyHost"

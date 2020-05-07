@@ -108,8 +108,8 @@ import kotlin.system.exitProcess
 
 abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIController, OnClickListener {
 
+    // Notifications
     lateinit var CHANNEL_ID: String
-
 
     // Toolbar Views
     private var searchBackground: View? = null
@@ -1329,6 +1329,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         logger.log(TAG, "onResume")
         if (swapBookmarksAndTabs != userPreferences.bookmarksAndTabsSwapped) {
             restart()
+        }
+
+        if (userPreferences.bookmarksChanged)
+        {
+            handleBookmarksChange()
+            userPreferences.bookmarksChanged = false
         }
 
         suggestionsAdapter?.let {

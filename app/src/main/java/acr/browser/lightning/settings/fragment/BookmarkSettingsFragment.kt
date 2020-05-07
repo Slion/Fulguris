@@ -17,6 +17,7 @@ import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
+import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.utils.Utils
 import android.Manifest
 import android.app.Activity
@@ -150,6 +151,8 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                     .deleteAllBookmarks()
                     .subscribeOn(databaseScheduler)
                     .subscribe()
+                // Tell browser activity bookmarks have changed
+                (activity as SettingsActivity).userPreferences.bookmarksChanged = true
             },
             negativeButton = DialogItem(title = R.string.no) {},
             onCancel = {}
@@ -221,6 +224,8 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                         onSuccess = { count ->
                             activity?.apply {
                                 snackbar("$count ${getString(R.string.message_import)}")
+                                // Tell browser activity bookmarks have changed
+                                (activity as SettingsActivity).userPreferences.bookmarksChanged = true
                             }
                         },
                         onError = {
