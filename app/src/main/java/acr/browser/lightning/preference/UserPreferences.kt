@@ -89,7 +89,7 @@ class UserPreferences @Inject constructor(
     /**
      * Defines if a new tab should be opened when user provided a new URL.
      */
-    var urlInNewTab by preferences.booleanPreference(URL_IN_NEW_TAB, false)
+    var urlInNewTab by preferences.booleanPreference(URL_IN_NEW_TAB, true)
 
     /**
      * Value of our new tab position enum.

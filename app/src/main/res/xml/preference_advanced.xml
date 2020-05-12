@@ -12,7 +12,7 @@
         <SwitchPreferenceCompat
             app:key="@string/pref_key_url_in_new_tab"
             app:title="@string/url_in_new_tab"
-            app:defaultValue="false"
+            app:defaultValue="true"
             app:iconSpaceReserved="false" />
 
         <ListPreference
