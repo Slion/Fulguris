@@ -18,23 +18,39 @@ import kotlin.math.abs
  */
 class PullRefreshLayout(context: Context, attrs: AttributeSet?) : SwipeRefreshLayout(context, attrs) {
     private val mTouchSlop: Int = ViewConfiguration.get(context).scaledTouchSlop
-    private var mPrevX = 0f
+    private var mTouchDownX = 0f
+    //private var mTouchDownY = 0f
+    private var mIntercept = true
+
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
+
         when (event.action) {
             // Mark X position of our touchdown
-            MotionEvent.ACTION_DOWN -> mPrevX = event.x
+            MotionEvent.ACTION_DOWN -> {
+                mTouchDownX = event.x
+                //mTouchDownY = event.y
+                mIntercept = true
+            }
             MotionEvent.ACTION_MOVE -> {
+                if (!mIntercept) {
+                    return false;
+                }
                 // Check if we think user is scrolling vertically
                 val eventX = event.x
-                val xDiff = abs(eventX - mPrevX)
+                val xDiff = abs(eventX - mTouchDownX)
                 if (xDiff > mTouchSlop) {
                     // User is scrolling vertically do not intercept inputs
                     // Thus preventing pull-to-refresh to trigger while we scroll vertically
-                    return false
+                    mIntercept = false
                 }
             }
         }
-        return super.onInterceptTouchEvent(event)
+
+        if (mIntercept) {
+            return super.onInterceptTouchEvent(event)
+        }
+
+        return false;
     }
 
 }
