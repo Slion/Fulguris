@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <string name="app_name">Fulguris</string>
-
-
+    <string name="url_twitter">twitter.com/LencludStephane</string>
+    <string name="full_url_twitter">http://twitter.com/LencludStephane</string>
+    <string name="url_app_home_page">https://slions.net/resources/fulguris.10/</string>
 </resources>

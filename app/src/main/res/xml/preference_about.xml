@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--suppress AndroidElementNotAllowed -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/settings_about">
         <Preference
             android:summary="@string/url_twitter"
-            android:title="@string/action_follow_me">
+            android:title="@string/action_follow_me"
+            app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="@string/full_url_twitter">
@@ -16,12 +18,22 @@
         </Preference>
         <Preference
             android:key="pref_version"
-            android:title="@string/version" />
+            android:title="@string/check_for_updates"
+            app:iconSpaceReserved="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/url_app_home_page">
+                <extra
+                    android:name="SOURCE"
+                    android:value="SELF" />
+            </intent>
+        </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/licenses">
         <Preference
             android:summary="@string/mpl_license"
-            android:title="@string/app_name">
+            android:title="@string/app_name"
+            app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://www.mozilla.org/MPL/2.0/">
@@ -32,7 +44,8 @@
         </Preference>
         <Preference
             android:summary="@string/apache"
-            android:title="@string/android_open_source_project">
+            android:title="@string/android_open_source_project"
+            app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://www.apache.org/licenses/LICENSE-2.0">
@@ -43,7 +56,8 @@
         </Preference>
         <Preference
             android:summary="@string/freeware"
-            android:title="@string/hphosts_ad_server_list">
+            android:title="@string/hphosts_ad_server_list"
+            app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://hosts-file.net/">
@@ -54,7 +68,8 @@
         </Preference>
         <Preference
             android:summary="@string/license_gnu"
-            android:title="@string/library_netcipher">
+            android:title="@string/library_netcipher"
+            app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://www.gnu.org/licenses/lgpl.html">
@@ -65,7 +80,8 @@
         </Preference>
         <Preference
             android:summary="@string/apache"
-            android:title="@string/snacktory">
+            android:title="@string/snacktory"
+            app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://www.apache.org/licenses/LICENSE-2.0">
@@ -76,7 +92,8 @@
         </Preference>
         <Preference
             android:summary="@string/mit_license"
-            android:title="@string/jsoup">
+            android:title="@string/jsoup"
+            app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="http://jsoup.org/license">
