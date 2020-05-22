@@ -13,12 +13,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.text.format.Formatter;
+import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
 
 import com.anthonycr.grant.PermissionsManager;
 import com.anthonycr.grant.PermissionsResultAction;
+import com.google.android.material.snackbar.Snackbar;
 
 import javax.inject.Inject;
 
@@ -33,6 +36,7 @@ import acr.browser.lightning.utils.Utils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -99,6 +103,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                 // Passing a null intent in case of failure means nothing happens when user taps our notification
                 // User needs to dismiss it using swipe
                 PendingIntent pendingIntent = null;
+                Intent downloadsIntent = null;
 
                 if (!success) {
                     contentTitle = context.getString(R.string.download_failed);
@@ -107,7 +112,8 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                 else
                 {
                     // Create pending intent to open downloads folder when tapping notification
-                    pendingIntent = PendingIntent.getActivity(mActivity, 0, Utils.getIntentForDownloads(mActivity, userPreferences.getDownloadDirectory()), 0);
+                    downloadsIntent = Utils.getIntentForDownloads(mActivity, userPreferences.getDownloadDirectory());
+                    pendingIntent = PendingIntent.getActivity(mActivity, 0, downloadsIntent, 0);
                 }
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(mActivity, ((BrowserActivity)mActivity).CHANNEL_ID)
@@ -123,7 +129,22 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                 // notificationId is a unique int for each notification that you must define
                 notificationManager.notify(0, builder.build());
 
-                //TODO: show a snackbar with a link to open the downloaded file
+                //Show a snackbar with a link to open the downloaded file
+                if (success) {
+                    final Intent i = downloadsIntent;
+                    View view = ((AppCompatActivity) mActivity).findViewById(android.R.id.content);
+                    Snackbar.make(view,contentTitle, Snackbar.LENGTH_LONG)
+                            .setAction(R.string.show, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    context.startActivity(i);
+                                }
+                            }).show();
+                }
+                else {
+                    View view = ((AppCompatActivity) mActivity).findViewById(android.R.id.content);
+                    Snackbar.make(view,contentTitle, Snackbar.LENGTH_LONG).show();
+                }
             }
         }
     }
