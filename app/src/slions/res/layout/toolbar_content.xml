@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height_portrait"
     android:orientation="horizontal"
-    android:layout_marginRight="5dp">
+    android:layout_marginRight="5dp"
+    android:animateLayoutChanges="true">
 
 
     <include layout="@layout/search" />
@@ -33,6 +34,19 @@
         app:myText="@{`my text`}"
         />
 -->
+
+    <ImageView
+        android:id="@+id/button_reload"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@drawable/ic_action_refresh"
+        android:tint="?attr/iconColor"
+        android:contentDescription="@string/action_reload"
+        android:nextFocusDown="@id/web_view" />
 
     <FrameLayout
         android:id="@+id/home_button"
@@ -71,7 +85,7 @@
         android:focusable="true"
         app:srcCompat="@drawable/ic_more_vertical"
         android:tint="?attr/iconColor"
-        android:contentDescription="More"
+        android:contentDescription="@string/action_more"
         android:nextFocusDown="@id/web_view" />
 
 

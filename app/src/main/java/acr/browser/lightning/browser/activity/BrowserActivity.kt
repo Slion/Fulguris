@@ -264,8 +264,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         if (BuildConfig.FLAVOR.contains("slionsFullDownload")) {
             // Check for update after a short delay, hoping user engagement is better and message more visible
-            mainHandler.postDelayed({checkForUpdates()},6000)
+            mainHandler.postDelayed({checkForUpdates()},3000)
         }
+
+        // Hook in buttons with onClick handler
+        button_reload.setOnClickListener(this)
     }
 
     /**
@@ -1023,11 +1026,16 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         findViewById<ImageButton>(R.id.button_quit).setOnClickListener(this)
     }
 
+
+    private fun isLoading() : Boolean = tabsManager.currentTab?.let{it.progress < 100} ?: false
+
     fun setupPullToRefresh()
     {
         // Disable pull to refresh if no vertical scroll as it bugs with frame internal scroll
         // See: https://github.com/Slion/Lightning-Browser/projects/1
         content_frame.isEnabled = currentTabView?.canScrollVertically()?:false
+        // Don't show reload button if pull-to-refresh is enabled and once we are not loading
+        button_reload.visibility = if (content_frame.isEnabled && !isLoading()) View.GONE else View.VISIBLE
     }
 
     /**
@@ -1453,6 +1461,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         search_ssl_status.setColorFilter(currentToolBarTextColor)
         // Toolbar buttons filter
         button_more.setColorFilter(currentToolBarTextColor)
+        button_reload.setColorFilter(currentToolBarTextColor)
 
         // Pull to refresh spinner color also follow current theme
         content_frame.setProgressBackgroundColorSchemeColor(color)
@@ -2153,7 +2162,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             search_ssl_status.updateVisibilityForContent()
 
             setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
-
+            button_reload.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
         }
     }
 
@@ -2189,6 +2198,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 shouldShowTabsInDrawer -> openTabs()
                 else -> currentTab.loadHomePage()
             }
+            R.id.button_reload -> refreshOrStop()
             R.id.button_next -> findResult?.nextResult()
             R.id.button_back -> findResult?.previousResult()
             R.id.button_quit -> {
@@ -2238,7 +2248,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                         // We have an update available, tell our user about it
                         val view = findViewById<View>(android.R.id.content)
                         Snackbar.make(view,
-                                getString(R.string.update_available) + " - v" + latestVersion, Snackbar.LENGTH_LONG)
+                                getString(R.string.update_available) + " - v" + latestVersion, 5000) //Snackbar.LENGTH_LONG
                                 .setAction(R.string.show, OnClickListener {
                                     val url = getString(R.string.url_app_home_page)
                                     val i = Intent(Intent.ACTION_VIEW)
