@@ -71,28 +71,30 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient.CustomViewCallback
-import android.webkit.WebView
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.PopupMenu
-import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.ButterKnife
+import com.android.volley.*
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.anthonycr.grant.PermissionsManager
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -102,6 +104,7 @@ import kotlinx.android.synthetic.main.search.*
 import kotlinx.android.synthetic.main.search_interface.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.slions.toolbar_content.*
+import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -177,6 +180,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     @Inject lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject lateinit var exitCleanup: ExitCleanup
 
+    // HTTP
+    private lateinit var queue: RequestQueue
+
     // Image
     private var webPageBitmap: Bitmap? = null
     private val backgroundDrawable = ColorDrawable()
@@ -226,6 +232,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         injector.inject(this)
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
+        queue = Volley.newRequestQueue(this)
+
 
         if (isIncognito()) {
             incognitoNotification = IncognitoNotification(this, notificationManager)
@@ -253,9 +261,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         )
 
         initialize(savedInstanceState)
+
+        if (BuildConfig.FLAVOR.contains("slionsFullDownload")) {
+            // Check for update after a short delay, hoping user engagement is better and message more visible
+            mainHandler.postDelayed({checkForUpdates()},6000)
+        }
     }
-
-
 
     /**
      * Needed to be able to display system notifications
@@ -1308,6 +1319,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Make sure we save our tabs before we are destroyed
         saveOpenTabs()
 
+        queue.cancelAll(TAG)
+
         incognitoNotification?.hide()
 
         mainHandler.removeCallbacksAndMessages(null)
@@ -2210,6 +2223,56 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         } else {
             false
         }
+
+    /**
+     * Check for update on slions.net.
+     */
+    private fun checkForUpdates() {
+        val url = getString(R.string.slions_update_check_url)
+        // Request a JSON object response from the provided URL.
+        val request = object: JsonObjectRequest(Request.Method.GET,url,null,
+                Response.Listener<JSONObject> { response ->
+
+                    val latestVersion = response.getJSONArray("versions").getJSONObject(0).getString("version_string")
+                    if ( latestVersion != BuildConfig.VERSION_NAME) {
+                        // We have an update available, tell our user about it
+                        val view = findViewById<View>(android.R.id.content)
+                        Snackbar.make(view,
+                                getString(R.string.update_available) + " - v" + latestVersion, Snackbar.LENGTH_LONG)
+                                .setAction(R.string.show, OnClickListener {
+                                    val url = getString(R.string.url_app_home_page)
+                                    val i = Intent(Intent.ACTION_VIEW)
+                                    i.data = Uri.parse(url)
+                                    // Not sure that does anything
+                                    i.putExtra("SOURCE", "SELF")
+                                    startActivity(i)
+                                }).show()
+                    }
+
+                    //Log.d(TAG,response.toString())
+                },
+                Response.ErrorListener { error: VolleyError ->
+                        // Just ignore error for background update check
+                        // Use the following for network status code
+                        // Though networkResponse can be null in flight mode for instance
+                        // error.networkResponse.statusCode.toString()
+
+                }
+        ){
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                // Provide here slions.net API key as part of this requests HTTP headers
+                params["XF-Api-Key"] = getString(R.string.slions_api_key)
+                return params
+            }
+        }
+
+        request.tag = TAG
+        // Add the request to the RequestQueue.
+        queue.add(request)
+    }
+
 
     companion object {
 

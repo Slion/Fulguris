@@ -46,6 +46,8 @@ import androidx.appcompat.app.AlertDialog;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 
+import static acr.browser.lightning.utils.UrlUtils.guessFileName;
+
 /**
  * Handle download requests
  */
@@ -181,7 +183,7 @@ public class DownloadHandler {
     private void onDownloadStartNoStream(@NonNull final Activity context, @NonNull UserPreferences preferences,
                                          @NonNull String url, String userAgent,
                                          String contentDisposition, @Nullable String mimetype, @NonNull String contentSize) {
-        iFilename = URLUtil.guessFileName(url, contentDisposition, mimetype);
+        iFilename = guessFileName(url, contentDisposition, mimetype);
 
         // Check to see if we have an SDCard
         String status = Environment.getExternalStorageState();

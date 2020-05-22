@@ -23,4 +23,8 @@
     <string name="new_tab_position_start_value">START_OF_TAB_LIST</string>
     <string name="new_tab_position_end_value">END_OF_TAB_LIST</string>
 
+
+    <string name="slions_update_check_url">https://slions.net/api/resources/10/versions</string>
+    <string name="slions_api_key">eQxvqk5DGEXUBqdt5Y_7rGRxF2m0REdb</string>
+
 </resources>

@@ -22,23 +22,26 @@
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AdvancedSettingsFragment"
         app:title="@string/settings_advanced"/>
-    <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.AboutSettingsFragment"
-        app:summary="@string/settings_about_explain"
-        app:title="@string/settings_about"/>
+    <!-- Just hide Lightning FAQ for now -->
     <Preference
         app:summary="@string/faq_description"
+        app:isPreferenceVisible="false"
         app:title="@string/faq">
         <intent
             android:action="android.intent.action.VIEW"
             android:data="http://acrdevelopment.org/lightning/faq">
-
         </intent>
     </Preference>
+
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.DebugSettingsFragment"
         app:title="@string/debug_title"/>
 
+    <!-- About is traditionally last -->
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.AboutSettingsFragment"
+        app:summary="@string/settings_about_explain"
+        app:title="@string/settings_about"/>
 
 </PreferenceScreen>
 

@@ -17,6 +17,8 @@ import acr.browser.lightning.utils.Utils;
 import androidx.annotation.NonNull;
 import io.reactivex.Single;
 
+import static acr.browser.lightning.utils.UrlUtils.guessFileName;
+
 /**
  * This class is used to pull down the http headers of a given URL so that we
  * can analyse the mimetype and make any correction needed before we give the
@@ -96,7 +98,7 @@ class FetchUrlMimeType {
                         mRequest.setMimeType(newMimeType);
                     }
                 }
-                final String filename = URLUtil.guessFileName(mUri, contentDisposition, mimeType);
+                final String filename = guessFileName(mUri, contentDisposition, mimeType);
                 mRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
             }
 

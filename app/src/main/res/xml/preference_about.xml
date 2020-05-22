@@ -18,7 +18,7 @@
         </Preference>
         <Preference
             android:key="pref_version"
-            android:title="@string/check_for_updates"
+            android:title="@string/version"
             app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
