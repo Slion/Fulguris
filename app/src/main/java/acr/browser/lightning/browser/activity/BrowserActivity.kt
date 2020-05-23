@@ -542,16 +542,21 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         override fun onFocusChange(v: View, hasFocus: Boolean) {
             val currentView = tabsManager.currentTab
-            if (!hasFocus && currentView != null) {
-                setIsLoading(currentView.progress < 100)
-                updateUrl(currentView.url, false)
-            } else if (hasFocus && currentView != null) {
 
-                // Hack to make sure the text gets selected
-                (v as SearchView).selectAll()
-                search_ssl_status.visibility = GONE
-                setMenuItemIcon(R.id.action_reload, R.drawable.ic_action_delete)
-                //toolbar?.menu?.findItem(R.id.action_reload)?.let { it.icon = ContextCompat.getDrawable(this@BrowserActivity, R.drawable.ic_action_delete) }
+            if (currentView != null) {
+                setIsLoading(currentView.progress < 100)
+
+                if (!hasFocus) {
+                    updateUrl(currentView.url, false)
+                } else if (hasFocus) {
+                    showUrl()
+                    // Select all text so that user conveniently start typing or copy current URL
+                    (v as SearchView).selectAll()
+                    search_ssl_status.visibility = GONE
+                    // SL: why did we need this?
+                    setMenuItemIcon(R.id.action_reload, R.drawable.ic_action_delete)
+                    //toolbar?.menu?.findItem(R.id.action_reload)?.let { it.icon = ContextCompat.getDrawable(this@BrowserActivity, R.drawable.ic_action_delete) }
+                }
             }
 
             if (!hasFocus) {
@@ -563,13 +568,23 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
 
         override fun onPreFocus() {
-            val currentView = tabsManager.currentTab ?: return
-            val url = currentView.url
-            if (!url.isSpecialUrl()) {
-                if (searchView?.hasFocus() == false) {
-                    searchView?.setText(url)
-                }
-            }
+            // SL: hopefully not needed anymore
+            // That was never working with keyboard
+            //val currentView = tabsManager.currentTab ?: return
+            //val url = currentView.url
+            //if (!url.isSpecialUrl()) {
+            //    if (searchView?.hasFocus() == false) {
+            //        searchView?.setText(url)
+            //    }
+            //}
+        }
+    }
+
+    private fun showUrl() {
+        val currentView = tabsManager.currentTab ?: return
+        val url = currentView.url
+        if (!url.isSpecialUrl()) {
+                searchView?.setText(url)
         }
     }
 
@@ -760,9 +775,30 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     if (toggleToolBar()) {
                         // Highlight search field
                         searchView?.requestFocus()
-                        searchView?.selectAll()
                     }
                     return true
+                }
+                // Reload current tab
+                KeyEvent.KEYCODE_F5 -> {
+                    // Refresh current tab
+                    tabsManager.currentTab?.reload()
+                    return true
+                }
+
+                // Was needed as WebView does not do that apparently
+                KeyEvent.KEYCODE_FORWARD -> {
+                    if (tabsManager.currentTab?.canGoForward() == true) {
+                        tabsManager.currentTab?.goForward()
+                        return true
+                    }
+                }
+
+                // Not strictly needed since WebView does it apparently
+                KeyEvent.KEYCODE_BACK -> {
+                    if (tabsManager.currentTab?.canGoBack() == true) {
+                        tabsManager.currentTab?.goBack()
+                        return true
+                    }
                 }
             }
 
@@ -851,6 +887,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                         closeBrowser()
                         return true
                     }
+                    // Mostly there because on F(x)tec Pro1 F5 switches off keyboard backlight
                     KeyEvent.KEYCODE_R -> {
                         // Refresh current tab
                         tabsManager.currentTab?.reload()
@@ -876,7 +913,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 event.keyCode == KeyEvent.KEYCODE_SEARCH -> {
                     // Highlight search field
                     searchView?.requestFocus()
-                    searchView?.selectAll()
                     return true
                 }
             }
@@ -1029,7 +1065,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     private fun isLoading() : Boolean = tabsManager.currentTab?.let{it.progress < 100} ?: false
 
-    fun setupPullToRefresh()
+    /**
+     *
+     */
+    private fun setupPullToRefresh()
     {
         // Disable pull to refresh if no vertical scroll as it bugs with frame internal scroll
         // See: https://github.com/Slion/Lightning-Browser/projects/1
@@ -2160,10 +2199,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private fun setIsLoading(isLoading: Boolean) {
         if (searchView?.hasFocus() == false) {
             search_ssl_status.updateVisibilityForContent()
-
-            setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
-            button_reload.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
         }
+
+        // Set stop or reload icon according to current load status
+        setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
+        button_reload.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
+
+        setupPullToRefresh()
     }
 
 
