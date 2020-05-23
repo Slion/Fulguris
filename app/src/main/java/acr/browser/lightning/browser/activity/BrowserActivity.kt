@@ -507,10 +507,16 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             when (keyCode) {
                 KeyEvent.KEYCODE_ENTER -> {
                     searchView?.let {
-                        inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
-                        searchTheWeb(it.text.toString())
+                        if (it.listSelection==ListView.INVALID_POSITION) {
+                            // No suggestion pop up item selected, just trigger a search then
+                            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+                            searchTheWeb(it.text.toString())
+                        }
+                        else {
+                            // An item in our selection pop up is selected, just action it
+                            doSearchSuggestionAction(it, it.listSelection)
+                        }
                     }
-
                     tabsManager.currentTab?.requestFocus()
                     return true
                 }
@@ -1660,18 +1666,23 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             }
         }
         getUrl.onItemClickListener = OnItemClickListener { _, _, position, _ ->
-            val url = when (val selection = suggestionsAdapter?.getItem(position) as WebPage) {
-                is HistoryEntry,
-                is Bookmark.Entry -> selection.url
-                is SearchSuggestion -> selection.title
-                else -> null
-            } ?: return@OnItemClickListener
-            getUrl.setText(url)
-            searchTheWeb(url)
-            inputMethodManager.hideSoftInputFromWindow(getUrl.windowToken, 0)
-            presenter?.onAutoCompleteItemPressed()
+            doSearchSuggestionAction(getUrl,position)
         }
         getUrl.setAdapter(suggestionsAdapter)
+    }
+
+
+    private fun doSearchSuggestionAction(getUrl: AutoCompleteTextView, position: Int) {
+        val url = when (val selection = suggestionsAdapter?.getItem(position) as WebPage) {
+            is HistoryEntry,
+            is Bookmark.Entry -> selection.url
+            is SearchSuggestion -> selection.title
+            else -> null
+        } ?: return
+        getUrl.setText(url)
+        searchTheWeb(url)
+        inputMethodManager.hideSoftInputFromWindow(getUrl.windowToken, 0)
+        presenter?.onAutoCompleteItemPressed()
     }
 
     /**
