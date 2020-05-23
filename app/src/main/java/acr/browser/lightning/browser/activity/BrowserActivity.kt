@@ -787,7 +787,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
                 // Was needed as WebView does not do that apparently
                 KeyEvent.KEYCODE_FORWARD -> {
-                    if (tabsManager.currentTab?.canGoForward() == true) {
+                    if (tabsManager.currentTab?.webView?.hasFocus() == true && tabsManager.currentTab?.canGoForward() == true) {
                         tabsManager.currentTab?.goForward()
                         return true
                     }
@@ -795,7 +795,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
                 // Not strictly needed since WebView does it apparently
                 KeyEvent.KEYCODE_BACK -> {
-                    if (tabsManager.currentTab?.canGoBack() == true) {
+                    if (tabsManager.currentTab?.webView?.hasFocus() == true && tabsManager.currentTab?.canGoBack() == true) {
                         tabsManager.currentTab?.goBack()
                         return true
                     }
