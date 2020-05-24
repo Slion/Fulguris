@@ -1,6 +1,7 @@
 package acr.browser.lightning.preference
 
 import acr.browser.lightning.AppTheme
+import acr.browser.lightning.R
 import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.browser.SearchBoxDisplayChoice
 import acr.browser.lightning.browser.SearchBoxModel
@@ -68,6 +69,22 @@ class UserPreferences @Inject constructor(
      * immobile.
      */
     var hideToolBarInLandscape by preferences.booleanPreference(HIDE_TOOL_BAR_LANDSCAPE, true)
+
+    /**
+     */
+    var showToolBarOnScrollUpInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_show_tool_bar_on_scroll_up, true)
+
+    /**
+     */
+    var showToolBarOnScrollUpInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_show_tool_bar_on_scroll_up, false)
+
+    /**
+     */
+    var showToolBarOnPageTopInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_show_tool_bar_on_page_top, false)
+
+    /**
+     */
+    var showToolBarOnPageTopInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_show_tool_bar_on_page_top, true)
 
     /**
      * True if the system status bar should be hidden throughout the app, false if it should be
@@ -325,6 +342,8 @@ class UserPreferences @Inject constructor(
     var hostsRemoteFile by preferences.nullableStringPreference(HOSTS_REMOTE_FILE)
 }
 
+// SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML
+// TODO: That does not make sense, we need to sort this out
 private const val WEB_RTC = "webRtc"
 private const val BLOCK_ADS = "AdBlock"
 private const val BLOCK_IMAGES = "blockimages"

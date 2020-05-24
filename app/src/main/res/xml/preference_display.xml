@@ -16,6 +16,18 @@
             app:defaultValue="false"
             app:iconSpaceReserved="false"
             />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_portrait_show_tool_bar_on_scroll_up"
+            app:title="@string/pref_title_show_tool_bar_when_scroll_up"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_portrait_show_tool_bar_on_page_top"
+            app:title="@string/pref_title_show_tool_bar_on_page_top"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            />
     </PreferenceCategory>
 
 
@@ -29,6 +41,18 @@
         <SwitchPreferenceCompat
             app:key="@string/pref_key_landscape_hide_tool_bar"
             app:title="@string/pref_title_hide_tool_bar"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_landscape_show_tool_bar_on_scroll_up"
+            app:title="@string/pref_title_show_tool_bar_when_scroll_up"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_landscape_show_tool_bar_on_page_top"
+            app:title="@string/pref_title_show_tool_bar_on_page_top"
             app:defaultValue="true"
             app:iconSpaceReserved="false"
             />

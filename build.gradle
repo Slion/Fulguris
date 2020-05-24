@@ -14,7 +14,7 @@ buildscript {
         // (if not, add it).
         classpath 'com.google.gms:google-services:4.3.3'
         // Add the Crashlytics Gradle plugin.
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.0.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'
     }
 }
 
@@ -29,6 +29,7 @@ allprojects {
 }
 
 ext {
+    // Consider moving to 23
     minSdkVersion = 19
     targetSdkVersion = 29
     buildToolsVersion = '29.0.2'

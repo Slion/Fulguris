@@ -1,6 +1,8 @@
 package acr.browser.lightning.preference.delegates
 
+import acr.browser.lightning.BrowserApp
 import android.content.SharedPreferences
+import androidx.annotation.StringRes
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -29,3 +31,12 @@ fun SharedPreferences.booleanPreference(
     name: String,
     defaultValue: Boolean
 ): ReadWriteProperty<Any, Boolean> = BooleanPreferenceDelegate(name, defaultValue, this)
+
+/**
+ * Creates a [Boolean] from [SharedPreferences] with the provided arguments.
+ * NOTE: Using Resources.getSystems from here is not working so we need our app instance to access resources.
+ */
+fun SharedPreferences.booleanPreference(
+        @StringRes stringRes: Int,
+        defaultValue: Boolean
+): ReadWriteProperty<Any, Boolean> = BooleanPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), defaultValue, this)

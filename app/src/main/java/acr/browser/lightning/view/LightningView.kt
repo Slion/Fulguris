@@ -14,7 +14,6 @@ import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
 import acr.browser.lightning.extensions.canScrollVertically
-import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.network.NetworkConnectivityModel
@@ -27,6 +26,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.IntentFilter
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.*
 import android.net.http.SslCertificate
 import android.os.Build
@@ -35,13 +36,13 @@ import android.os.Handler
 import android.os.Message
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
-import android.view.View.*
+import android.view.View.OnScrollChangeListener
+import android.view.View.OnTouchListener
 import android.webkit.CookieManager
 import android.webkit.WebSettings
 import android.webkit.WebSettings.LayoutAlgorithm
 import android.webkit.WebView
 import androidx.collection.ArrayMap
-import androidx.core.graphics.drawable.toBitmap
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -246,7 +247,13 @@ class LightningView(
             webViewClient = lightningWebClient
             // We want to receive download complete notifications
             setDownloadListener(LightningDownloadListener(activity).also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
-            setOnTouchListener(TouchListener())
+            val tl = TouchListener()
+            setOnTouchListener(tl)
+            // For older devices show Tool Bar On Page Top won't work after fling to top.
+            // Who cares? I mean those devices are probably from 2014 or older.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                setOnScrollChangeListener(tl)
+            }
             initializeSettings()
         }
 
@@ -824,41 +831,77 @@ class LightningView(
     }
 
     /**
+     * Check relevant user preferences and configuration before showing the tool bar if needed
+     */
+    fun showToolBarOnScrollUpIfNeeded() {
+        if (userPreferences.showToolBarOnScrollUpInPortrait && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+                || userPreferences.showToolBarOnScrollUpInLandscape && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            uiController.showActionBar()
+        }
+    }
+
+    /**
+     * Check relevant user preferences and configuration before showing the tool bar if needed
+     */
+    fun showToolBarOnPageTopIfNeeded() {
+        if (userPreferences.showToolBarOnPageTopInPortrait && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+                || userPreferences.showToolBarOnPageTopInLandscape && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            uiController.showActionBar()
+        }
+    }
+
+    /**
      * The OnTouchListener used by the WebView so we can
      * get scroll events and show/hide the action bar when
      * the page is scrolled up/down.
      */
-    private inner class TouchListener : OnTouchListener {
+    private inner class TouchListener : OnTouchListener, OnScrollChangeListener {
 
         internal var location: Float = 0f
+        internal var touchingScreen: Boolean = false
         internal var y: Float = 0f
         internal var action: Int = 0
 
+        override fun onScrollChange(view: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
+
+            view?.apply {
+                if (canScrollVertically()) {
+                    // Handle the case after fling all the way to the top of the web page
+                    // Are we near the top of our web page and is user finder not on the screen
+                    if (scrollY < SCROLL_DOWN_THRESHOLD && !touchingScreen) {
+                        showToolBarOnPageTopIfNeeded()
+                    }
+                }
+            }
+        }
+
         @SuppressLint("ClickableViewAccessibility")
         override fun onTouch(view: View?, arg1: MotionEvent): Boolean {
+
             if (view == null) return false
 
             if (!view.hasFocus()) {
                 view.requestFocus()
             }
 
-
-
             action = arg1.action
-
-
             y = arg1.y
             // Handle tool bar visibility when doing slow scrolling
             if (action == MotionEvent.ACTION_DOWN) {
                 location = y
-            } else if (action == MotionEvent.ACTION_UP) {
+                touchingScreen=true
+            }
+            // Only show or hide tool bar when the user stop touching the screen otherwise that looks ugly
+            else if (action == MotionEvent.ACTION_UP) {
                 val distance = y - location
-                if (distance > SCROLL_UP_THRESHOLD && view.scrollY < SCROLL_UP_THRESHOLD
+                touchingScreen=false
+                if (view.scrollY < SCROLL_DOWN_THRESHOLD
                         // Touch input won't show tool bar again if no vertical scroll
-                        // It can still ba accessed using the back button
+                        // It can still be accessed using the back button
                         && view.canScrollVertically()) {
-                        uiController.showActionBar()
+                    showToolBarOnPageTopIfNeeded()
                 } else if (distance < -SCROLL_UP_THRESHOLD) {
+                    // Aggressive hiding of tool bar
                     uiController.hideActionBar()
                 }
                 location = 0f
@@ -894,10 +937,10 @@ class LightningView(
             if (power < -10) {
                 uiController.hideActionBar()
             } else if (power > 15
-                    // Touch input won't show tool bar again if no vertical scroll
-                    // It can still ba accessed using the back button
+                    // Touch input won't show tool bar again if no top level vertical scroll
+                    // It can still be accessed using the back button
                     && view.canScrollVertically()) {
-                uiController.showActionBar()
+                showToolBarOnScrollUpIfNeeded()
             }
             return super.onFling(e1, e2, velocityX, velocityY)
         }
@@ -962,6 +1005,7 @@ class LightningView(
 
         private val API = Build.VERSION.SDK_INT
         private val SCROLL_UP_THRESHOLD = Utils.dpToPx(10f)
+        private val SCROLL_DOWN_THRESHOLD = Utils.dpToPx(30f)
 
         private val negativeColorArray = floatArrayOf(
             -1.0f, 0f, 0f, 0f, 255f, // red

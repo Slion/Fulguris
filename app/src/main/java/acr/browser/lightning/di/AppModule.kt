@@ -29,6 +29,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
+import androidx.preference.PreferenceManager
 import com.anthonycr.mezzanine.MezzanineGenerator
 import dagger.Module
 import dagger.Provides
@@ -58,7 +59,8 @@ class AppModule {
 
     @Provides
     @UserPrefs
-    fun provideUserPreferences(application: Application): SharedPreferences = application.getSharedPreferences("settings", 0)
+    // Access default shared preferences to make sure preferences framework binding is working from XML
+    fun provideUserPreferences(application: Application): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
 
     @Provides
     @DevPrefs

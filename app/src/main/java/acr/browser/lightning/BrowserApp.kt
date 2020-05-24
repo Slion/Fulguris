@@ -46,6 +46,7 @@ class BrowserApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                 .detectAll()
@@ -124,6 +125,7 @@ class BrowserApp : Application() {
 
     companion object {
         private const val TAG = "BrowserApp"
+        lateinit var instance: BrowserApp
 
         init {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT)

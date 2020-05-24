@@ -2139,16 +2139,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      */
     override fun showActionBar() {
         logger.log(TAG, "showActionBar")
-
-        if (toolbar_layout.parent==null)
-        {
-            ui_layout.addView(toolbar_layout,0)
-        }
+        toolbar_layout.visibility = View.VISIBLE
     }
 
-    private fun doHideToolBar() = ui_layout.removeView(toolbar_layout)
-
-    private fun isToolBarVisible() = toolbar_layout.parent!=null
+    private fun doHideToolBar() { toolbar_layout.visibility = View.GONE }
+    private fun isToolBarVisible() = toolbar_layout.visibility == View.VISIBLE
 
     private fun toggleToolBar() : Boolean
     {
