@@ -13,11 +13,16 @@
 
         <!-- Dark settings has a special primary dark color-->
         <item name="colorPrimaryDark">@color/secondary_color_settings_dark</item>
+
+        <!-- Notably applies to settings icons -->
+        <item name="android:tint">#fff</item>
     </style>
 
     <style name="Theme.SettingsTheme.Black" parent="Theme.BlackTheme">
         <item name="android:windowBackground">@null</item>
         <item name="toolbarSettingsBackground">@color/black</item>
+        <!-- Notably applies to settings icons -->
+        <item name="android:tint">#fff</item>
     </style>
 
     <!-- Regular themes -->
