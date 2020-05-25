@@ -385,7 +385,7 @@ class LightningView(
 
         settings.useWideViewPort = userPreferences.useWideViewPortEnabled
         settings.loadWithOverviewMode = userPreferences.overviewModeEnabled
-        settings.textZoom = when (userPreferences.textSize) {
+        settings.textZoom = when (userPreferences.browserTextSize) {
             0 -> 200
             1 -> 150
             2 -> 125

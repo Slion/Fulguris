@@ -273,12 +273,12 @@
         <item>Title</item>
     </string-array>
     <string name="invert_color">Invert color</string>
-    <string name="dark_theme">Dark theme</string>
     <string name="settings_black_status_bar">Black status bar</string>
     <string name="tabs">Tabs</string>
-    <string name="theme">App theme</string>
-    <string name="light_theme">Light theme</string>
-    <string name="black_theme">Black theme (AMOLED)</string>
+    <string name="theme">Theme</string>
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
+    <string name="black_theme">Black</string>
     <string name="folder">Folder name</string>
     <string name="action_folder">Folder</string>
     <string name="action_rename">Rename</string>

@@ -18,7 +18,6 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.FragmentActivity
 import javax.inject.Inject
 
 class DisplaySettingsFragment : AbstractSettingsFragment() {
@@ -34,20 +33,15 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
         // preferences storage
         clickableDynamicPreference(
-            preference = SETTINGS_THEME,
+            preference = getString(R.string.pref_key_theme),
             summary = userPreferences.useTheme.toDisplayString(),
             onClick = ::showThemePicker
         )
 
-        clickablePreference(
-            preference = SETTINGS_TEXTSIZE,
+        clickableDynamicPreference(
+            preference = getString(R.string.pref_key_browser_text_size),
+            summary = (MAX_BROWSER_TEXT_SIZE - userPreferences.browserTextSize).toString(),
             onClick = ::showTextSizePicker
-        )
-
-        checkBoxPreference(
-            preference = SETTINGS_VIEWPORT,
-            isChecked = userPreferences.useWideViewPortEnabled,
-            onCheckChange = { userPreferences.useWideViewPortEnabled = it }
         )
 
         checkBoxPreference(
@@ -88,8 +82,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     }
 
-    private fun showTextSizePicker() {
-        val maxValue = 5
+    private fun showTextSizePicker(summaryUpdater: SummaryUpdater) {
         AlertDialog.Builder(activity as Activity).apply {
             val layoutInflater = (activity as Activity).layoutInflater
             val customView = (layoutInflater.inflate(R.layout.dialog_seek_bar, null) as LinearLayout).apply {
@@ -101,15 +94,16 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                 addView(text)
                 findViewById<SeekBar>(R.id.text_size_seekbar).apply {
                     setOnSeekBarChangeListener(TextSeekBarListener(text))
-                    max = maxValue
-                    progress = maxValue - userPreferences.textSize
+                    max = MAX_BROWSER_TEXT_SIZE
+                    progress = MAX_BROWSER_TEXT_SIZE - userPreferences.browserTextSize
                 }
             }
             setView(customView)
             setTitle(R.string.title_text_size)
             setPositiveButton(android.R.string.ok) { _, _ ->
                 val seekBar = customView.findViewById<SeekBar>(R.id.text_size_seekbar)
-                userPreferences.textSize = maxValue - seekBar.progress
+                userPreferences.browserTextSize = MAX_BROWSER_TEXT_SIZE - seekBar.progress
+                summaryUpdater.updateSummary(seekBar.progress.toString())
             }
         }.resizeAndShow()
     }
@@ -158,11 +152,8 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     companion object {
         private const val SETTINGS_COLOR_MODE = "cb_colormode"
-        private const val SETTINGS_VIEWPORT = "wideViewPort"
         private const val SETTINGS_OVERVIEWMODE = "overViewMode"
         private const val SETTINGS_REFLOW = "text_reflow"
-        private const val SETTINGS_THEME = "app_theme"
-        private const val SETTINGS_TEXTSIZE = "text_size"
         private const val SETTINGS_DRAWERTABS = "cb_drawertabs"
         private const val SETTINGS_SWAPTABS = "cb_swapdrawers"
         private const val SETTINGS_BLACK_STATUS = "black_status_bar"
@@ -173,6 +164,8 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
         private const val MEDIUM = 18.0f
         private const val SMALL = 14.0f
         private const val X_SMALL = 10.0f
+
+        private const val MAX_BROWSER_TEXT_SIZE = 5
 
         private fun getTextSize(size: Int): Float = when (size) {
             0 -> X_SMALL

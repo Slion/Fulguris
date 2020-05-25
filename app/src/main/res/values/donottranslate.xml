@@ -17,10 +17,14 @@
     <string name="pref_key_portrait_show_tool_bar_on_page_top">pref_key_portrait_show_tool_bar_on_page_top</string>
     <string name="pref_key_landscape_show_tool_bar_on_page_top">pref_key_landscape_show_tool_bar_on_page_top</string>
 
+    <string name="pref_key_wide_viewport">pref_key_wide_viewport</string>
+    <string name="pref_key_browser_text_size">pref_key_browser_text_size</string>
+
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>
     <string name="pref_key_new_tab_position">pref_key_new_tab_position</string>
+    <string name="pref_key_theme">pref_key_theme</string>
 
 
     <!-- See: NewTabPosition -->
@@ -32,5 +36,6 @@
 
     <string name="slions_update_check_url">https://slions.net/api/resources/10/versions</string>
     <string name="slions_api_key">eQxvqk5DGEXUBqdt5Y_7rGRxF2m0REdb</string>
+
 
 </resources>

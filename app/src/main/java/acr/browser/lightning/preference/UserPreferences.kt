@@ -183,12 +183,12 @@ class UserPreferences @Inject constructor(
     /**
      * The index of the text size that should be used in the browser.
      */
-    var textSize by preferences.intPreference(TEXT_SIZE, 3)
+    var browserTextSize by preferences.intPreference(R.string.pref_key_browser_text_size, 3)
 
     /**
      * True if the browser should fit web pages to the view port, false otherwise.
      */
-    var useWideViewPortEnabled by preferences.booleanPreference(USE_WIDE_VIEWPORT, true)
+    var useWideViewPortEnabled by preferences.booleanPreference(R.string.pref_key_wide_viewport, true)
 
     /**
      * The index of the user agent choice that should be used by the browser.
@@ -250,7 +250,7 @@ class UserPreferences @Inject constructor(
     /**
      * The index of the theme used by the application.
      */
-    var useTheme by preferences.enumPreference(THEME, AppTheme.LIGHT)
+    var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.LIGHT)
 
     /**
      * The text encoding used by the browser.
@@ -361,8 +361,6 @@ private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
 private const val SEARCH_URL = "searchurl"
 private const val TEXT_REFLOW = "textreflow"
-private const val TEXT_SIZE = "textsize"
-private const val USE_WIDE_VIEWPORT = "wideviewport"
 private const val USER_AGENT = "agentchoose"
 private const val USER_AGENT_STRING = "userAgentString"
 private const val CLEAR_HISTORY_EXIT = "clearHistoryExit"
@@ -373,7 +371,6 @@ private const val ENABLE_COLOR_MODE = "colorMode"
 private const val URL_BOX_CONTENTS = "urlContent"
 private const val INVERT_COLORS = "invertColors"
 private const val READING_TEXT_SIZE = "readingTextSize"
-private const val THEME = "Theme"
 private const val TEXT_ENCODING = "textEncoding"
 private const val CLEAR_WEB_STORAGE_EXIT = "clearWebStorageExit"
 private const val SHOW_TABS_IN_DRAWER = "showTabsInDrawer"

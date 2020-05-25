@@ -3,9 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        android:key="app_theme"
+        android:key="@string/pref_key_theme"
         android:title="@string/theme"
         app:icon="@drawable/ic_palette" />
+
+    <Preference
+        android:key="@string/pref_key_browser_text_size"
+        android:title="@string/title_text_size"
+        app:icon="@drawable/ic_text_size" />
 
     <PreferenceCategory android:title="@string/pref_category_portrait"
         app:icon="@drawable/ic_portrait">
@@ -90,11 +95,12 @@
             android:defaultValue="false"
             android:key="black_status_bar"
             android:title="@string/settings_black_status_bar"/>
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:key="wideViewPort"
+            android:key="@string/pref_key_wide_viewport"
             android:summary="@string/recommended"
-            android:title="@string/wideViewPort"/>
+            android:title="@string/wideViewPort"
+            app:iconSpaceReserved="false"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="overViewMode"
@@ -104,8 +110,5 @@
             android:defaultValue="false"
             android:key="text_reflow"
             android:title="@string/reflow"/>
-        <Preference
-            android:key="text_size"
-            android:title="@string/title_text_size"/>
     </PreferenceCategory>
 </PreferenceScreen>
