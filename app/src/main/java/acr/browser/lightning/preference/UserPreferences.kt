@@ -62,13 +62,13 @@ class UserPreferences @Inject constructor(
      * True if the browser should hide the navigation bar when scrolling, false if it should be
      * immobile.
      */
-    var hideToolBarInPortrait by preferences.booleanPreference(HIDE_TOOL_BAR_PORTRAIT, false)
+    var hideToolBarInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_hide_tool_bar, false)
 
     /**
      * True if the browser should hide the navigation bar when scrolling, false if it should be
      * immobile.
      */
-    var hideToolBarInLandscape by preferences.booleanPreference(HIDE_TOOL_BAR_LANDSCAPE, true)
+    var hideToolBarInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_hide_tool_bar, true)
 
     /**
      */
@@ -90,23 +90,23 @@ class UserPreferences @Inject constructor(
      * True if the system status bar should be hidden throughout the app, false if it should be
      * visible.
      */
-    var hideStatusBarInPortrait by preferences.booleanPreference(HIDE_STATUS_BAR_PORTRAIT, false)
+    var hideStatusBarInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_hide_status_bar, false)
 
     /**
      * True if the system status bar should be hidden throughout the app, false if it should be
      * visible.
      */
-    var hideStatusBarInLandscape by preferences.booleanPreference(HIDE_STATUS_BAR_LANDSCAPE, true)
+    var hideStatusBarInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_hide_status_bar, true)
 
     /**
      * Defines if a new tab should be opened when user is doing a new search.
      */
-    var searchInNewTab by preferences.booleanPreference(SEARCH_IN_NEW_TAB, true)
+    var searchInNewTab by preferences.booleanPreference(R.string.pref_key_search_in_new_tab, true)
 
     /**
      * Defines if a new tab should be opened when user provided a new URL.
      */
-    var urlInNewTab by preferences.booleanPreference(URL_IN_NEW_TAB, true)
+    var urlInNewTab by preferences.booleanPreference(R.string.pref_key_url_in_new_tab, true)
 
     /**
      * Value of our new tab position enum.
@@ -114,7 +114,7 @@ class UserPreferences @Inject constructor(
      *
      * @see NewTabPosition
      */
-    var newTabPosition by preferences.enumPreference(NEW_TAB_POSITION, NewTabPosition.AFTER_CURRENT_TAB)
+    var newTabPosition by preferences.enumPreference(R.string.pref_key_new_tab_position, NewTabPosition.AFTER_CURRENT_TAB)
 
     /**
      * The URL of the selected homepage.
@@ -350,13 +350,6 @@ private const val BLOCK_IMAGES = "blockimages"
 private const val CLEAR_CACHE_EXIT = "cache"
 private const val COOKIES = "cookies"
 private const val DOWNLOAD_DIRECTORY = "downloadLocation"
-private const val HIDE_TOOL_BAR_PORTRAIT = "hideToolBarPortrait"
-private const val HIDE_TOOL_BAR_LANDSCAPE = "hideToolBarLandscape"
-private const val HIDE_STATUS_BAR_PORTRAIT = "hideStatusBarPortrait"
-private const val HIDE_STATUS_BAR_LANDSCAPE = "hideStatusBarLandscape"
-private const val SEARCH_IN_NEW_TAB = "searchInNewTab"
-private const val URL_IN_NEW_TAB = "urlInNewTab"
-private const val NEW_TAB_POSITION = "newTabPosition"
 private const val HOMEPAGE = "home"
 private const val INCOGNITO_COOKIES = "incognitocookies"
 private const val JAVASCRIPT = "java"
@@ -374,7 +367,6 @@ private const val USER_AGENT = "agentchoose"
 private const val USER_AGENT_STRING = "userAgentString"
 private const val CLEAR_HISTORY_EXIT = "clearHistoryExit"
 private const val CLEAR_COOKIES_EXIT = "clearCookiesExit"
-private const val SAVE_URL = "saveUrl"
 private const val RENDERING_MODE = "renderMode"
 private const val BLOCK_THIRD_PARTY = "thirdParty"
 private const val ENABLE_COLOR_MODE = "colorMode"

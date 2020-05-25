@@ -89,6 +89,8 @@
         <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
 
         <item name="selectedBackground">@color/selected_dark</item>
+        <!-- Notably applies to settings icons -->
+        <item name="android:tint">#fff</item>
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -123,6 +125,8 @@
 
         <item name="autoCompleteTitleColor">@color/white</item>
         <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
+        <!-- Notably applies to settings icons -->
+        <item name="android:tint">#fff</item>
 
         <item name="selectedBackground">@color/selected_dark</item>
 

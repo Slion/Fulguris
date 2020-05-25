@@ -3,19 +3,24 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.GeneralSettingsFragment"
+        app:title="@string/settings_general"/>
+
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.DisplaySettingsFragment"
+        app:title="@string/settings_display"
+        app:icon="@drawable/ic_palette"/>
+
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AdBlockSettingsFragment"
         app:title="@string/settings_adblock"/>
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.GeneralSettingsFragment"
-        app:title="@string/settings_general"/>
-    <Preference
         app:fragment="acr.browser.lightning.settings.fragment.BookmarkSettingsFragment"
         app:title="@string/bookmark_settings"/>
-    <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.DisplaySettingsFragment"
-        app:title="@string/settings_display"/>
+
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.PrivacySettingsFragment"
         app:title="@string/settings_privacy"/>

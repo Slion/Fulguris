@@ -2,8 +2,13 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <Preference
+        android:key="app_theme"
+        android:title="@string/theme"
+        app:icon="@drawable/ic_palette" />
 
-    <PreferenceCategory android:title="@string/pref_category_portrait">
+    <PreferenceCategory android:title="@string/pref_category_portrait"
+        app:icon="@drawable/ic_portrait">
         <SwitchPreferenceCompat
             app:key="@string/pref_key_portrait_hide_status_bar"
             app:title="@string/pref_title_hide_status_bar"
@@ -31,7 +36,8 @@
     </PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/pref_category_landscape">
+    <PreferenceCategory android:title="@string/pref_category_landscape"
+        app:icon="@drawable/ic_landscape">
         <SwitchPreferenceCompat
             app:key="@string/pref_key_landscape_hide_status_bar"
             app:title="@string/pref_title_hide_status_bar"
@@ -98,9 +104,6 @@
             android:defaultValue="false"
             android:key="text_reflow"
             android:title="@string/reflow"/>
-        <Preference
-            android:key="app_theme"
-            android:title="@string/theme"/>
         <Preference
             android:key="text_size"
             android:title="@string/title_text_size"/>

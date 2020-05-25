@@ -1,7 +1,9 @@
 package acr.browser.lightning.preference.delegates
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.preference.IntEnum
 import android.content.SharedPreferences
+import androidx.annotation.StringRes
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -15,14 +17,15 @@ class EnumPreference<T>(
     preferences: SharedPreferences
 ) : ReadWriteProperty<Any, T> where T : Enum<T>, T : IntEnum {
 
-    private var backingInt: Int by preferences.intPreference(name, defaultValue.value)
+    //private var backingInt: Int by preferences.intPreference(name, defaultValue.value)
+    private var backingValue: String by preferences.stringPreference(name, defaultValue.toString())
 
     override fun getValue(thisRef: Any, property: KProperty<*>): T {
-        return clazz.enumConstants!!.first { it.value == backingInt } ?: defaultValue
+        return clazz.enumConstants!!.first { it.toString() == backingValue } ?: defaultValue
     }
 
     override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
-        backingInt = value.value
+        backingValue = value.toString()
     }
 
 }
@@ -38,4 +41,18 @@ inline fun <reified T> SharedPreferences.enumPreference(
     defaultValue,
     T::class.java,
     this
+)
+
+
+/**
+ * Creates a [T] enum from [SharedPreferences] with the provide arguments.
+ */
+inline fun <reified T> SharedPreferences.enumPreference(
+        @StringRes stringRes: Int,
+        defaultValue: T
+): ReadWriteProperty<Any, T> where T : Enum<T>, T : IntEnum = EnumPreference(
+        BrowserApp.instance.resources.getString(stringRes),
+        defaultValue,
+        T::class.java,
+        this
 )

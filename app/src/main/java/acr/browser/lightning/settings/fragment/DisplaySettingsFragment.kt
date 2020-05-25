@@ -44,30 +44,6 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             onClick = ::showTextSizePicker
         )
 
-        switchPreference(
-            preference = context?.resources!!.getString(R.string.pref_key_portrait_hide_status_bar),
-            isChecked = userPreferences.hideStatusBarInPortrait,
-            onCheckChange = { userPreferences.hideStatusBarInPortrait = it }
-        )
-
-        switchPreference(
-                preference = context?.resources!!.getString(R.string.pref_key_landscape_hide_status_bar),
-                isChecked = userPreferences.hideStatusBarInLandscape,
-                onCheckChange = { userPreferences.hideStatusBarInLandscape = it }
-        )
-
-        switchPreference(
-            preference = context?.resources!!.getString(R.string.pref_key_portrait_hide_tool_bar),
-            isChecked = userPreferences.hideToolBarInPortrait,
-            onCheckChange = { userPreferences.hideToolBarInPortrait = it }
-        )
-
-        switchPreference(
-                preference = context?.resources!!.getString(R.string.pref_key_landscape_hide_tool_bar),
-                isChecked = userPreferences.hideToolBarInLandscape,
-                onCheckChange = { userPreferences.hideToolBarInLandscape = it }
-        )
-
         checkBoxPreference(
             preference = SETTINGS_VIEWPORT,
             isChecked = userPreferences.useWideViewPortEnabled,
