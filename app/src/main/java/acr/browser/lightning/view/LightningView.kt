@@ -19,6 +19,7 @@ import acr.browser.lightning.log.Logger
 import acr.browser.lightning.network.NetworkConnectivityModel
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.preference.userAgent
+import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.find.FindResults
@@ -385,15 +386,8 @@ class LightningView(
 
         settings.useWideViewPort = userPreferences.useWideViewPortEnabled
         settings.loadWithOverviewMode = userPreferences.overviewModeEnabled
-        settings.textZoom = when (userPreferences.browserTextSize) {
-            0 -> 200
-            1 -> 150
-            2 -> 125
-            3 -> 100
-            4 -> 75
-            5 -> 50
-            else -> throw IllegalArgumentException("Unsupported text size")
-        }
+
+        settings.textZoom = userPreferences.browserTextSize +  MIN_BROWSER_TEXT_SIZE
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager.getInstance().setAcceptThirdPartyCookies(webView,

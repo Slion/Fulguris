@@ -9,7 +9,10 @@ import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.utils.Utils
 import android.app.Activity
+import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -40,7 +43,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
         clickableDynamicPreference(
             preference = getString(R.string.pref_key_browser_text_size),
-            summary = (MAX_BROWSER_TEXT_SIZE - userPreferences.browserTextSize).toString(),
+            summary = (userPreferences.browserTextSize + MIN_BROWSER_TEXT_SIZE).toString() +  "%",
             onClick = ::showTextSizePicker
         )
 
@@ -87,23 +90,25 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             val layoutInflater = (activity as Activity).layoutInflater
             val customView = (layoutInflater.inflate(R.layout.dialog_seek_bar, null) as LinearLayout).apply {
                 val text = TextView(activity).apply {
-                    setText(R.string.untitled)
-                    layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-                    gravity = Gravity.CENTER_HORIZONTAL
+                    text = getTextDemo(context, userPreferences.browserTextSize)
+                    layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+                    gravity = Gravity.CENTER
+                    height = Utils.dpToPx(100f)
                 }
-                addView(text)
+                addView(text,0)
                 findViewById<SeekBar>(R.id.text_size_seekbar).apply {
                     setOnSeekBarChangeListener(TextSeekBarListener(text))
-                    max = MAX_BROWSER_TEXT_SIZE
-                    progress = MAX_BROWSER_TEXT_SIZE - userPreferences.browserTextSize
+                    max = MAX_BROWSER_TEXT_SIZE - MIN_BROWSER_TEXT_SIZE
+                    progress = userPreferences.browserTextSize
+
                 }
             }
             setView(customView)
             setTitle(R.string.title_text_size)
             setPositiveButton(android.R.string.ok) { _, _ ->
                 val seekBar = customView.findViewById<SeekBar>(R.id.text_size_seekbar)
-                userPreferences.browserTextSize = MAX_BROWSER_TEXT_SIZE - seekBar.progress
-                summaryUpdater.updateSummary(seekBar.progress.toString())
+                userPreferences.browserTextSize = seekBar.progress
+                summaryUpdater.updateSummary((seekBar.progress + MIN_BROWSER_TEXT_SIZE).toString() + "%")
             }
         }.resizeAndShow()
     }
@@ -142,6 +147,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
         override fun onProgressChanged(view: SeekBar, size: Int, user: Boolean) {
             this.sampleText.textSize = getTextSize(size)
+            this.sampleText.text = getTextDemo(view.context,size)
         }
 
         override fun onStartTrackingTouch(arg0: SeekBar) {}
@@ -159,22 +165,22 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_BLACK_STATUS = "black_status_bar"
 
         private const val XX_LARGE = 30.0f
-        private const val X_LARGE = 26.0f
-        private const val LARGE = 22.0f
-        private const val MEDIUM = 18.0f
-        private const val SMALL = 14.0f
         private const val X_SMALL = 10.0f
 
-        private const val MAX_BROWSER_TEXT_SIZE = 5
+        // I guess those are percent
+        const val MAX_BROWSER_TEXT_SIZE = 200
+        const val DEFAULT_BROWSER_TEXT_SIZE = 100
+        const val MIN_BROWSER_TEXT_SIZE = 50
 
-        private fun getTextSize(size: Int): Float = when (size) {
-            0 -> X_SMALL
-            1 -> SMALL
-            2 -> MEDIUM
-            3 -> LARGE
-            4 -> X_LARGE
-            5 -> XX_LARGE
-            else -> MEDIUM
+        private fun getTextSize(size: Int): Float {
+            var ratio : Float = (XX_LARGE - X_SMALL) / (MAX_BROWSER_TEXT_SIZE - MIN_BROWSER_TEXT_SIZE)
+            return X_SMALL + size * ratio
         }
+
+        private fun getTextDemo(context: Context, size: Int): String {
+            return context.getText(R.string.untitled).toString() + ": " + (size + MIN_BROWSER_TEXT_SIZE) + "%"
+        }
+
+
     }
 }
