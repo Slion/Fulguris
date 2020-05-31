@@ -182,8 +182,9 @@ class UserPreferences @Inject constructor(
 
     /**
      * The index of the text size that should be used in the browser.
+     * Default to 50 to have 100% as default text size.
      */
-    var browserTextSize by preferences.intPreference(R.string.pref_key_browser_text_size, 100)
+    var browserTextSize by preferences.intPreference(R.string.pref_key_browser_text_size, 50)
 
     /**
      * True if the browser should fit web pages to the view port, false otherwise.
