@@ -144,7 +144,7 @@ class UserPreferences @Inject constructor(
      * True if the browser should load pages zoomed out instead of zoomed in so that the text is
      * legible, false otherwise.
      */
-    var overviewModeEnabled by preferences.booleanPreference(OVERVIEW_MODE, true)
+    var overviewModeEnabled by preferences.booleanPreference(R.string.pref_key_overview_mode, true)
 
     /**
      * True if the browser should allow websites to open new windows, false otherwise.
@@ -178,7 +178,7 @@ class UserPreferences @Inject constructor(
      * True if the browser should attempt to reflow the text on a web page after zooming in or out
      * of the page.
      */
-    var textReflowEnabled by preferences.booleanPreference(TEXT_REFLOW, false)
+    var textReflowEnabled by preferences.booleanPreference(R.string.pref_key_text_reflow, false)
 
     /**
      * The index of the text size that should be used in the browser.
@@ -227,7 +227,7 @@ class UserPreferences @Inject constructor(
      * True if the browser should extract the theme color from a website and color the UI with it,
      * false otherwise.
      */
-    var colorModeEnabled by preferences.booleanPreference(ENABLE_COLOR_MODE, true)
+    var colorModeEnabled by preferences.booleanPreference(R.string.pref_key_web_page_theme, true)
 
     /**
      * The index of the URL/search box display choice/
@@ -266,7 +266,7 @@ class UserPreferences @Inject constructor(
      * True if the app should use the navigation drawer UI, false if it should use the traditional
      * desktop browser tabs UI.
      */
-    var showTabsInDrawer by preferences.booleanPreference(SHOW_TABS_IN_DRAWER, !screenSize.isTablet())
+    var showTabsInDrawer by preferences.booleanPreference(R.string.pref_key_tabs_in_drawer, !screenSize.isTablet())
 
     /**
      * True if the browser should send a do not track (DNT) header with every GET request, false
@@ -290,7 +290,7 @@ class UserPreferences @Inject constructor(
      * the navigation drawer UI is used, the tab drawer will be displayed on the opposite side as
      * well.
      */
-    var bookmarksAndTabsSwapped by preferences.booleanPreference(SWAP_BOOKMARKS_AND_TABS, false)
+    var bookmarksAndTabsSwapped by preferences.booleanPreference(R.string.pref_key_swap_tabs_and_bookmarks, false)
 
     /**
      * Not an actual user preference. Just used to communicate between settings and browser activity.
@@ -302,7 +302,7 @@ class UserPreferences @Inject constructor(
      * True if the status bar of the app should always be high contrast, false if it should follow
      * the theme of the app.
      */
-    var useBlackStatusBar by preferences.booleanPreference(BLACK_STATUS_BAR, false)
+    var useBlackStatusBar by preferences.booleanPreference(R.string.pref_key_black_status_bar, false)
 
     /**
      * The index of the proxy choice.
@@ -354,32 +354,26 @@ private const val HOMEPAGE = "home"
 private const val INCOGNITO_COOKIES = "incognitocookies"
 private const val JAVASCRIPT = "java"
 private const val LOCATION = "location"
-private const val OVERVIEW_MODE = "overviewmode"
 private const val POPUPS = "newwindows"
 private const val RESTORE_LOST_TABS = "restoreclosed"
 private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
 private const val SEARCH_URL = "searchurl"
-private const val TEXT_REFLOW = "textreflow"
 private const val USER_AGENT = "agentchoose"
 private const val USER_AGENT_STRING = "userAgentString"
 private const val CLEAR_HISTORY_EXIT = "clearHistoryExit"
 private const val CLEAR_COOKIES_EXIT = "clearCookiesExit"
 private const val RENDERING_MODE = "renderMode"
 private const val BLOCK_THIRD_PARTY = "thirdParty"
-private const val ENABLE_COLOR_MODE = "colorMode"
 private const val URL_BOX_CONTENTS = "urlContent"
 private const val INVERT_COLORS = "invertColors"
 private const val READING_TEXT_SIZE = "readingTextSize"
 private const val TEXT_ENCODING = "textEncoding"
 private const val CLEAR_WEB_STORAGE_EXIT = "clearWebStorageExit"
-private const val SHOW_TABS_IN_DRAWER = "showTabsInDrawer"
 private const val DO_NOT_TRACK = "doNotTrack"
 private const val SAVE_DATA = "saveData"
 private const val IDENTIFYING_HEADERS = "removeIdentifyingHeaders"
-private const val SWAP_BOOKMARKS_AND_TABS = "swapBookmarksAndTabs"
 private const val BOOKMARKS_CHANGED = "bookmarksChanged"
-private const val BLACK_STATUS_BAR = "blackStatusBar"
 private const val PROXY_CHOICE = "proxyChoice"
 private const val USE_PROXY_HOST = "useProxyHost"
 private const val USE_PROXY_PORT = "useProxyPort"

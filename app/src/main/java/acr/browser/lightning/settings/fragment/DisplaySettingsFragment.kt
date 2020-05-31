@@ -34,54 +34,20 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
         injector.inject(this)
 
-        // preferences storage
+        // Setup theme selection
         clickableDynamicPreference(
             preference = getString(R.string.pref_key_theme),
             summary = userPreferences.useTheme.toDisplayString(),
             onClick = ::showThemePicker
         )
 
+        // Setup web browser font size selector
         clickableDynamicPreference(
             preference = getString(R.string.pref_key_browser_text_size),
             summary = (userPreferences.browserTextSize + MIN_BROWSER_TEXT_SIZE).toString() +  "%",
             onClick = ::showTextSizePicker
         )
 
-        checkBoxPreference(
-            preference = SETTINGS_OVERVIEWMODE,
-            isChecked = userPreferences.overviewModeEnabled,
-            onCheckChange = { userPreferences.overviewModeEnabled = it }
-        )
-
-        checkBoxPreference(
-            preference = SETTINGS_REFLOW,
-            isChecked = userPreferences.textReflowEnabled,
-            onCheckChange = { userPreferences.textReflowEnabled = it }
-        )
-
-        checkBoxPreference(
-            preference = SETTINGS_BLACK_STATUS,
-            isChecked = userPreferences.useBlackStatusBar,
-            onCheckChange = { userPreferences.useBlackStatusBar = it }
-        )
-
-        checkBoxPreference(
-            preference = SETTINGS_DRAWERTABS,
-            isChecked = userPreferences.showTabsInDrawer,
-            onCheckChange = { userPreferences.showTabsInDrawer = it }
-        )
-
-        checkBoxPreference(
-            preference = SETTINGS_SWAPTABS,
-            isChecked = userPreferences.bookmarksAndTabsSwapped,
-            onCheckChange = { userPreferences.bookmarksAndTabsSwapped = it }
-        )
-
-        switchPreference(
-                preference = SETTINGS_COLOR_MODE,
-                isChecked = userPreferences.colorModeEnabled,
-                onCheckChange = { userPreferences.colorModeEnabled = it }
-        )
 
     }
 
@@ -157,12 +123,6 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
     }
 
     companion object {
-        private const val SETTINGS_COLOR_MODE = "cb_colormode"
-        private const val SETTINGS_OVERVIEWMODE = "overViewMode"
-        private const val SETTINGS_REFLOW = "text_reflow"
-        private const val SETTINGS_DRAWERTABS = "cb_drawertabs"
-        private const val SETTINGS_SWAPTABS = "cb_swapdrawers"
-        private const val SETTINGS_BLACK_STATUS = "black_status_bar"
 
         private const val XX_LARGE = 30.0f
         private const val X_SMALL = 10.0f
