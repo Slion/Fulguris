@@ -36,6 +36,8 @@ import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.SuggestionsAdapter
 import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.settings.activity.SettingsActivity
+import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
+import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.createSslDrawableForState
 import acr.browser.lightning.ssl.showSslDialog
@@ -905,6 +907,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     KeyEvent.KEYCODE_B -> {
                         toggleBookmarks()
                     }
+                    // Text zoom in and out
+                    // TODO: persist that setting per tab?
+                    KeyEvent.KEYCODE_MINUS -> tabsManager.currentTab?.webView?.apply{settings.textZoom=Math.max(settings.textZoom-5, MIN_BROWSER_TEXT_SIZE)}
+                    KeyEvent.KEYCODE_EQUALS -> tabsManager.currentTab?.webView?.apply{settings.textZoom=Math.min(settings.textZoom+5, MAX_BROWSER_TEXT_SIZE)}
                 }
 
                 isCtrlShiftOnly -> when (event.keyCode) {
