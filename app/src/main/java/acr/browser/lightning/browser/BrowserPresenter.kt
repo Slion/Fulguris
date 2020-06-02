@@ -60,8 +60,15 @@ class BrowserPresenter(
                     // At this point we always have at least a tab in the tab manager
                     view.notifyTabViewInitialized()
                     view.updateTabNumber(tabsModel.size())
-                    // Switch to saved current tab if any otherwise the last tab I guess
-                    tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(it))
+                    if (tabsModel.savedRecentTabsIndices.count() == tabsModel.allTabs.count()) {
+                        // Switch to saved current tab if any, otherwise the last tab I guess
+                        tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(it))
+                    } else {
+                        // Number of tabs does not match the number of recent tabs saved
+                        // That means we were most certainly launched from another app opening a new tab
+                        // Assuming our new tab is the last one we switch to it
+                        tabChanged(tabsModel.positionOf(it))
+                    }
                 }
             )
     }

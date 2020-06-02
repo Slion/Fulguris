@@ -86,10 +86,17 @@ class TabsManager @Inject constructor(
 
     private fun finishInitialization() {
 
-        if (allTabs.size == savedRecentTabsIndices.size) {
+        if (allTabs.size >= savedRecentTabsIndices.size) { // Defensive
             // Populate our recent tab list from our persisted indices
             iRecentTabs.clear()
             savedRecentTabsIndices.forEach { iRecentTabs.add(allTabs.elementAt(it))}
+
+            if (allTabs.size == (savedRecentTabsIndices.size + 1)) {
+                // That's happening whenever the app was closed and user opens a link from another application
+                // Add our new tab to recent list, assuming that's the last one
+                // That's needed to preserve our recent tabs list otherwise it resets
+                iRecentTabs.add(allTabs.last())
+            }
         }
 
         // Defensive, if we have missing tabs in our recent tab list just reset it

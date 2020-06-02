@@ -17,6 +17,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Build
+import android.os.Debug
 import android.os.StrictMode
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
@@ -45,6 +46,9 @@ class BrowserApp : Application() {
     }
 
     override fun onCreate() {
+        // SL: Use this to debug when launched from another app for instance
+        //Debug.waitForDebugger()
+
         super.onCreate()
         instance = this
         if (BuildConfig.DEBUG) {
