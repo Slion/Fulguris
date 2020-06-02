@@ -346,6 +346,18 @@ class UserPreferences @Inject constructor(
      * The remote URL from which ad blocking hosts should be read, depending on the [hostsSource].
      */
     var hostsRemoteFile by preferences.nullableStringPreference(HOSTS_REMOTE_FILE)
+
+    /**
+     * User can disable Firebase Google Analytics.
+     */
+    var analytics by preferences.booleanPreference(R.string.pref_key_analytics, R.bool.pref_default_analytics)
+
+    /**
+     * User can disable Firebase Crash Report AKA Crashlytics.
+     */
+    var crashReport by preferences.booleanPreference(R.string.pref_key_crash_report, R.bool.pref_default_crash_report)
+
+
 }
 
 // SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML

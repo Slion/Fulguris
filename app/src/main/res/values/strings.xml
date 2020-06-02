@@ -247,6 +247,9 @@
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
     <string name="pref_title_locked_drawers">Locked drawers</string>
     <string name="pref_summary_locked_drawers">Tabs and Bookmarks drawers are locked</string>
+    <string name="pref_title_crash_report">Crash report</string>
+    <string name="pref_title_analytics">Analytics</string>
+    <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
     <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
     <string name="settings_about_explain">Details about version, update, author and license.</string>
     <string name="close_tab">Close current tab</string>

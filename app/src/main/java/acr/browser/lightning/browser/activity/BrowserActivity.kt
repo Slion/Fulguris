@@ -97,6 +97,8 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.anthonycr.grant.PermissionsManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -198,6 +200,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private var backMenuItem: MenuItem? = null
     private var forwardMenuItem: MenuItem? = null
     private var popup: PopupMenu? = null
+
+    // Settings
+    private var crashReport = true
+    private var analytics = true
 
     private val longPressBackRunnable = Runnable {
         showCloseDialog(tabsManager.positionOf(tabsManager.currentTab))
@@ -304,6 +310,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         //setSupportActionBar(toolbar)
         layoutInflater.inflate(R.layout.toolbar_content,toolbar)
         //val actionBar = requireNotNull(supportActionBar)
+
+        // TODO: disable those for incognito mode?
+        analytics = userPreferences.analytics
+        crashReport = userPreferences.crashReport
+        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(userPreferences.analytics)
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(userPreferences.crashReport)
 
         //TODO make sure dark theme flag gets set correctly
         isDarkTheme = userPreferences.useTheme != AppTheme.LIGHT || isIncognito()
@@ -1423,7 +1435,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     override fun onResume() {
         super.onResume()
         logger.log(TAG, "onResume")
-        if (swapBookmarksAndTabs != userPreferences.bookmarksAndTabsSwapped) {
+        // Check if some settings changes require application restart
+        if (swapBookmarksAndTabs != userPreferences.bookmarksAndTabsSwapped
+                || analytics != userPreferences.analytics
+                || crashReport != userPreferences.crashReport
+        ) {
             restart()
         }
 

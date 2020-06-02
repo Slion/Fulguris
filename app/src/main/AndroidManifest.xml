@@ -197,6 +197,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
+        <!-- Firebase configuration -->
+        <meta-data android:name="firebase_analytics_collection_enabled" android:value="@bool/pref_default_analytics" />
+        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="@bool/pref_default_crash_report" />
+
     </application>
 
 </manifest>
