@@ -294,6 +294,11 @@ class UserPreferences @Inject constructor(
     var bookmarksAndTabsSwapped by preferences.booleanPreference(R.string.pref_key_swap_tabs_and_bookmarks, false)
 
     /**
+     *
+     */
+    var lockedDrawers by preferences.booleanPreference(R.string.pref_key_locked_drawers, R.bool.pref_default_locked_drawers)
+
+    /**
      * Not an actual user preference. Just used to communicate between settings and browser activity.
      * Don't ask :)
      */

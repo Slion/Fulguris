@@ -410,7 +410,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             proxyUtils.checkForProxy(this)
         }
 
-        if (isFlavorSlions) {
+        if (userPreferences.lockedDrawers) {
             //TODO: make this a settings option?
             // Drawers are full screen and locked for this flavor so as to avoid closing them when scrolling through tabs
             lockDrawers()
@@ -609,8 +609,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
             currentTabView?.requestFocus()
 
-            //TODO: make this a settings option?
-            if (isFlavorSlions) return; // Drawers remain locked for that flavor
+            if (userPreferences.lockedDrawers) return; // Drawers remain locked
             val tabsDrawer = getTabDrawer()
             val bookmarksDrawer = getBookmarkDrawer()
 
@@ -628,8 +627,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             drawerClosing = false
             drawerOpening = false
 
-            //TODO: make this a settings option?
-            if (isFlavorSlions) return; // Drawers remain locked for that flavor
+            if (userPreferences.lockedDrawers) return; // Drawers remain locked
+
             val tabsDrawer = getTabDrawer()
             val bookmarksDrawer = getBookmarkDrawer()
 
@@ -673,6 +672,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     {
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
         drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getBookmarkDrawer())
+    }
+
+    private fun unlockDrawers()
+    {
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getTabDrawer())
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getBookmarkDrawer())
     }
 
 
@@ -1405,6 +1410,14 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         if (swapBookmarksAndTabs != userPreferences.bookmarksAndTabsSwapped) {
             restart()
         }
+
+        if (userPreferences.lockedDrawers) {
+            lockDrawers()
+        }
+        else {
+            unlockDrawers()
+        }
+
 
         if (userPreferences.bookmarksChanged)
         {

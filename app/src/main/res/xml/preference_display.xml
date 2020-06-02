@@ -87,6 +87,13 @@
             app:iconSpaceReserved="false"/>
 
         <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_locked_drawers"
+            android:key="@string/pref_key_locked_drawers"
+            android:title="@string/pref_title_locked_drawers"
+            android:summary="@string/pref_summary_locked_drawers"
+            app:iconSpaceReserved="false"/>
+
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_key_tabs_in_drawer"
             android:title="@string/tabs_in_drawer"

@@ -20,7 +20,7 @@
     <string name="fullscreen">Full-screen mode</string>
     <string name="java">Enable JavaScript</string>
     <string name="download">Download location</string>
-    <string name="settings_advanced">Advanced Settings</string>
+    <string name="settings_advanced">Advanced</string>
     <string name="apache">Apache License 2.0</string>
     <string name="version">Application version</string>
     <string name="update_available">Update available</string>
@@ -230,13 +230,13 @@
     <string name="import_backup">Import bookmarks from backup</string>
     <string name="bookmark_export_path">Bookmarks exported to</string>
     <string name="bookmark_export_failure">Sorry, bookmarks could not be exported!</string>
-    <string name="bookmark_settings">Bookmark Settings</string>
+    <string name="bookmark_settings">Bookmarks</string>
     <string name="import_bookmark_error">Could not import bookmarks from file</string>
     <string name="message_bookmark_added">Bookmark added.</string>
     <string name="title_chooser">Choose a file</string>
-    <string name="settings_general">General Settings</string>
-    <string name="settings_display">Display Settings</string>
-    <string name="settings_privacy">Privacy Settings</string>
+    <string name="settings_general">General</string>
+    <string name="settings_display">Look &amp; Feel</string>
+    <string name="settings_privacy">Privacy</string>
     <string name="settings_about">About</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_landscape">Landscape</string>
@@ -245,6 +245,8 @@
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
+    <string name="pref_title_locked_drawers">Locked drawers</string>
+    <string name="pref_summary_locked_drawers">Tabs and Bookmarks drawers are locked</string>
     <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
     <string name="settings_about_explain">Details about version, update, author and license.</string>
     <string name="close_tab">Close current tab</string>
@@ -288,7 +290,7 @@
     <string name="clear_web_storage_exit">Clear web storage on exit</string>
     <string name="message_web_storage_cleared">Web storage cleared</string>
     <string name="hosts_source">Hosts file ad blocking source</string>
-    <string name="settings_adblock">Ad Block Settings</string>
+    <string name="settings_adblock">Ad Block</string>
     <string name="tabs_in_drawer">Show tabs in navigation drawer</string>
     <string name="swap_bookmarks_and_tabs">Swap bookmark and tab drawers</string>
     <string name="do_not_track">Request \'Do Not Track\'</string>
@@ -307,7 +309,7 @@
     <string name="faq_description">Frequently asked questions</string>
 
     <!-- debug strings -->
-    <string name="debug_title">Debug Settings</string>
+    <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Please restart the app for the change to take effect.</string>
 
