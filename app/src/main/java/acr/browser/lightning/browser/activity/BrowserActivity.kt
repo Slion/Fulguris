@@ -914,8 +914,14 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     }
                     // Text zoom in and out
                     // TODO: persist that setting per tab?
-                    KeyEvent.KEYCODE_MINUS -> tabsManager.currentTab?.webView?.apply{settings.textZoom=Math.max(settings.textZoom-5, MIN_BROWSER_TEXT_SIZE)}
-                    KeyEvent.KEYCODE_EQUALS -> tabsManager.currentTab?.webView?.apply{settings.textZoom=Math.min(settings.textZoom+5, MAX_BROWSER_TEXT_SIZE)}
+                    KeyEvent.KEYCODE_MINUS -> tabsManager.currentTab?.webView?.apply {
+                        settings.textZoom=Math.max(settings.textZoom-5, MIN_BROWSER_TEXT_SIZE)
+                        application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
+                    }
+                    KeyEvent.KEYCODE_EQUALS -> tabsManager.currentTab?.webView?.apply{
+                        settings.textZoom=Math.min(settings.textZoom+5, MAX_BROWSER_TEXT_SIZE)
+                        application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
+                    }
                 }
 
                 isCtrlShiftOnly -> when (event.keyCode) {
@@ -924,6 +930,16 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     }
                     KeyEvent.KEYCODE_B -> {
                         toggleBookmarks()
+                    }
+                    // Text zoom in and out
+                    // TODO: persist that setting per tab?
+                    KeyEvent.KEYCODE_MINUS -> tabsManager.currentTab?.webView?.apply {
+                        settings.textZoom=Math.max(settings.textZoom-1, MIN_BROWSER_TEXT_SIZE)
+                        application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
+                    }
+                    KeyEvent.KEYCODE_EQUALS -> tabsManager.currentTab?.webView?.apply{
+                        settings.textZoom=Math.min(settings.textZoom+1, MAX_BROWSER_TEXT_SIZE)
+                        application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
                     }
                 }
 

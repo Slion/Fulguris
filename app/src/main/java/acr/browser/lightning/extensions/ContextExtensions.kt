@@ -30,6 +30,11 @@ inline fun Context.color(@ColorRes colorRes: Int): Int = ContextCompat.getColor(
 inline fun Context.toast(@StringRes stringRes: Int) = Toast.makeText(this, stringRes, Toast.LENGTH_SHORT).show()
 
 /**
+ *
+ */
+inline fun Context.toast(string: String) = Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+
+/**
  * The [LayoutInflater] available on the [Context].
  */
 inline val Context.inflater: LayoutInflater
