@@ -43,7 +43,7 @@ class TabsManager @Inject constructor(
 ) {
 
     private val tabList = arrayListOf<LightningView>()
-    val iRecentTabs = mutableSetOf<LightningView>()
+    var iRecentTabs = mutableSetOf<LightningView>()
     val savedRecentTabsIndices = mutableSetOf<Int>()
 
     /**

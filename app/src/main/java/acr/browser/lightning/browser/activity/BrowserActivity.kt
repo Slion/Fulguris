@@ -775,10 +775,19 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
 
         if (event.action == KeyEvent.ACTION_UP && (event.keyCode==KeyEvent.KEYCODE_CTRL_LEFT||event.keyCode==KeyEvent.KEYCODE_CTRL_RIGHT)) {
-                // Exiting CTRL+TAB mode
-                iRecentTabIndex = -1;
-                iCapturedRecentTabsIndices = null;
-                //logger.log(TAG,"CTRL+TAB: Reset")
+            // Exiting CTRL+TAB mode
+            iCapturedRecentTabsIndices?.let {
+                // Replace our recent tabs list by putting our captured one back in place making sure the selected tab is going back on top
+                // See: https://github.com/Slion/Fulguris/issues/56
+                tabsManager.iRecentTabs = it.toMutableSet()
+                val tab = tabsManager.iRecentTabs.elementAt(iRecentTabIndex)
+                tabsManager.iRecentTabs.remove(tab)
+                tabsManager.iRecentTabs.add(tab)
+            }
+
+            iRecentTabIndex = -1;
+            iCapturedRecentTabsIndices = null;
+            //logger.log(TAG,"CTRL+TAB: Reset")
         }
 
         // Keyboard shortcuts
