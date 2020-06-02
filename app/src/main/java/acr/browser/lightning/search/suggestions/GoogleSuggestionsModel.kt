@@ -37,7 +37,7 @@ class GoogleSuggestionsModel(
 
     @Throws(Exception::class)
     override fun parseResults(responseBody: ResponseBody): List<SearchSuggestion> {
-        parser.setInput(responseBody.byteStream(), UTF8)
+        parser.setInput(responseBody.byteStream(), responseBody.contentType()?.charset()?.toString()?: UTF8)
 
         val suggestions = mutableListOf<SearchSuggestion>()
         var eventType = parser.eventType
