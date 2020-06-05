@@ -83,7 +83,7 @@
         android:layout_gravity="center"
         android:clickable="true"
         android:focusable="true"
-        app:srcCompat="@drawable/ic_more_vertical"
+        app:srcCompat="@drawable/ic_lightning"
         android:tint="?attr/iconColor"
         android:contentDescription="@string/action_more"
         android:nextFocusDown="@id/web_view" />

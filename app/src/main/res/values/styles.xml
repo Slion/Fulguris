@@ -163,4 +163,54 @@
     <style name="OverflowPopupMenu" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
     </style>
 
+
+    <style name="BrowserIconMenuItem">
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <!--
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:tint">?attr/iconColor</item>
+        -->
+    </style>
+
+
+    <style name="AppActionButton" parent="@style/Widget.AppCompat.ActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="BrowserTextMenuItem" parent="@style/Widget.AppCompat.ActionButton">
+        <item name="android:paddingEnd">30dp</item>
+        <item name="android:paddingStart">30dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textAlignment">gravity</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:paddingLeft">12dp</item>
+
+        <!--
+        <item name="android:textColor">?attr/iconColor</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:color">?attr/iconColor</item>
+        -->
+    </style>
+
+    <style name="AnimationMenuAlt">
+        <item name="android:windowEnterAnimation">@anim/fade_in_scale</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_scale</item>
+    </style>
+
+    <style name="AnimationMenu">
+        <item name="android:windowEnterAnimation">@anim/menu_open</item>
+        <item name="android:windowExitAnimation">@anim/menu_close</item>
+    </style>
+
+
 </resources>

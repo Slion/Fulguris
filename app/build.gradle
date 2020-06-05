@@ -155,7 +155,7 @@ dependencies {
     implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
     implementation "androidx.appcompat:appcompat:1.1.0"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
-    implementation "androidx.core:core:1.2.0"
+    implementation "androidx.core:core:1.3.0"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
     implementation "androidx.fragment:fragment:1.2.4"
     implementation "androidx.drawerlayout:drawerlayout:1.0.0"
@@ -206,13 +206,13 @@ dependencies {
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation 'androidx.core:core-ktx:1.3.0-rc01'
+    implementation 'androidx.core:core-ktx:1.4.0-alpha01'
 
     // Firebase
     // Recommended: Add the Firebase SDK for Google Analytics.
-    implementation 'com.google.firebase:firebase-analytics:17.4.0'
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
     // Add the Firebase SDK for Crashlytics.
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
 
     // Volley HTTP request
     implementation 'com.android.volley:volley:1.1.1'
@@ -235,24 +235,4 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
             freeCompilerArgs += ['-progressive']
         }
     }
-}
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testLightningPlusDebugUnitTest', 'createLightningPlusDebugCoverageReport']) {
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    final def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    final def debugTree = fileTree(dir: "$buildDir/intermediates/classes/lightningPlus/debug", excludes: fileFilter)
-    final def kotlinDebugTree = fileTree(dir: "$buildDir/tmp/kotlin-classes/lightningPlusDebug", excludes: fileFilter)
-    final def mainSrc = "${project.projectDir}/src/test/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree], [kotlinDebugTree])
-    executionData = fileTree(dir: "$buildDir", includes: [
-            "jacoco/testLightningPlusDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
-    ])
 }

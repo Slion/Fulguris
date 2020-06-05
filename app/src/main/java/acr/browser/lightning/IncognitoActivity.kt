@@ -27,11 +27,6 @@ class IncognitoActivity : BrowserActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.incognito, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
     @Suppress("RedundantOverride")
     override fun onNewIntent(intent: Intent) {
         handleNewIntent(intent)

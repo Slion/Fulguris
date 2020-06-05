@@ -19,4 +19,5 @@
     <dimen name="desktop_tab_height">30dp</dimen>
 
     <dimen name="progress_bar_height">2dp</dimen>
+    <dimen name="menu_corner_radius">10dp</dimen>
 </resources>

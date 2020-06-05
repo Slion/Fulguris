@@ -20,10 +20,6 @@ class MainActivity : BrowserActivity() {
         cookieManager.setAcceptCookie(userPreferences.cookiesEnabled)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
 
     override fun onNewIntent(intent: Intent) =
         if (intent.action == INTENT_PANIC_TRIGGER) {

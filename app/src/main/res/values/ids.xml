@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    <item name="action_recover_all_tabs" type="id" />
+    -->
+    <item name="action_show_homepage" type="id" />
+    <item name="action_new_tab" type="id" />
+    <item name="action_incognito" type="id" />
+    <item name="action_history" type="id" />
+    <item name="action_downloads" type="id" />
+    <item name="action_share" type="id" />
+    <item name="action_add_to_homescreen" type="id" />
+    <item name="action_reading_mode" type="id" />
+    <item name="action_settings" type="id" />
+    <item name="action_reload" type="id" />
+    <item name="action_forward" type="id" />
+    <item name="action_back" type="id" />
+    <item name="action_bookmarks" type="id" />
+    <item name="action_find" type="id" />
+    <item name="action_copy" type="id" />
+</resources>

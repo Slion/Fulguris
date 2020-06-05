@@ -3,6 +3,7 @@ package acr.browser.lightning.browser.tabs
 import TabTouchHelperCallback
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabsView
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.list.VerticalItemAnimator
@@ -14,6 +15,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.tab_drawer.view.*
 
 /**
  * A view which displays tabs in a vertical [RecyclerView].
@@ -27,8 +29,8 @@ class TabsDrawerView @JvmOverloads constructor(
     private val uiController = context as UIController
     private val tabsAdapter = TabsDrawerAdapter(uiController)
     private val tabList: RecyclerView
-    private val actionBack: View
-    private val actionForward: View
+    //private val actionBack: View
+    //private val actionForward: View
     private var mItemTouchHelper: ItemTouchHelper? = null
 
     init {
@@ -36,8 +38,8 @@ class TabsDrawerView @JvmOverloads constructor(
         isClickable = true
         isFocusable = true
         context.inflater.inflate(R.layout.tab_drawer, this, true)
-        actionBack = findViewById(R.id.action_back)
-        actionForward = findViewById(R.id.action_forward)
+        //actionBack = findViewById(R.id.action_back)
+        //actionForward = findViewById(R.id.action_forward)
 
         val animator = VerticalItemAnimator().apply {
             supportsChangeAnimations = false
@@ -55,26 +57,25 @@ class TabsDrawerView @JvmOverloads constructor(
             setHasFixedSize(true)
         }
 
-        findViewById<View>(R.id.tab_header_button).setOnClickListener {
-            uiController.showCloseDialog(uiController.getTabModel().indexOfCurrentTab())
+        // SL: Removed that button
+        //findViewById<View>(R.id.tab_header_button).setOnClickListener {
+        //    uiController.showCloseDialog(uiController.getTabModel().indexOfCurrentTab())
+        //}
+
+        new_tab_button.setOnClickListener {
+            uiController.newTabButtonClicked()
         }
-        findViewById<View>(R.id.new_tab_button).apply {
-            setOnClickListener {
-                uiController.newTabButtonClicked()
-            }
-            setOnLongClickListener {
-                uiController.newTabButtonLongClicked()
-                true
-            }
+
+        action_restore_all_pages.setOnClickListener {
+            uiController.executeAction(R.id.action_restore_all_pages)
         }
-        findViewById<View>(R.id.action_back).setOnClickListener {
-            uiController.onBackButtonPressed()
+
+        action_restore_page.setOnClickListener {
+            uiController.executeAction(R.id.action_restore_page)
         }
-        findViewById<View>(R.id.action_forward).setOnClickListener {
-            uiController.onForwardButtonPressed()
-        }
-        findViewById<View>(R.id.action_home).setOnClickListener {
-            uiController.onHomeButtonPressed()
+
+        action_close_all_tabs.setOnClickListener {
+            uiController.executeAction(R.id.action_close_all_tabs)
         }
 
         val callback: ItemTouchHelper.Callback = TabTouchHelperCallback(tabsAdapter)
@@ -84,14 +85,27 @@ class TabsDrawerView @JvmOverloads constructor(
 
     }
 
+    /**
+     * Enable tool bar buttons according to current state of things
+     */
+    private fun updateTabActionButtons() {
+        // If more than one tab, enable close all tabs button
+        action_close_all_tabs.isEnabled = uiController.getTabModel().allTabs.count()>1
+        // If we have more than one tab in our closed tabs list enable restore all pages button
+        action_restore_all_pages.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>1
+        // If we have at least one tab in our closed tabs list enable restore page button
+        action_restore_page.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>0
+    }
 
     override fun tabAdded() {
         displayTabs()
         tabList.postDelayed({ tabList.smoothScrollToPosition(tabsAdapter.itemCount - 1) }, 500)
+        updateTabActionButtons()
     }
 
     override fun tabRemoved(position: Int) {
         displayTabs()
+        updateTabActionButtons()
     }
 
     override fun tabChanged(position: Int) {
@@ -104,14 +118,15 @@ class TabsDrawerView @JvmOverloads constructor(
 
     override fun tabsInitialized() {
         tabsAdapter.notifyDataSetChanged()
+        updateTabActionButtons()
     }
 
     override fun setGoBackEnabled(isEnabled: Boolean) {
-        actionBack.isEnabled = isEnabled
+        //actionBack.isEnabled = isEnabled
     }
 
     override fun setGoForwardEnabled(isEnabled: Boolean) {
-        actionForward.isEnabled = isEnabled
+        //actionForward.isEnabled = isEnabled
     }
 
 }

@@ -29,15 +29,15 @@ import io.reactivex.rxkotlin.subscribeBy
  * browser.
  */
 class BrowserPresenter(
-    private val view: BrowserView,
-    private val isIncognito: Boolean,
-    private val userPreferences: UserPreferences,
-    private val tabsModel: TabsManager,
-    @MainScheduler private val mainScheduler: Scheduler,
-    private val homePageFactory: HomePageFactory,
-    private val bookmarkPageFactory: BookmarkPageFactory,
-    private val recentTabModel: RecentTabModel,
-    private val logger: Logger
+        private val view: BrowserView,
+        private val isIncognito: Boolean,
+        private val userPreferences: UserPreferences,
+        private val tabsModel: TabsManager,
+        @MainScheduler private val mainScheduler: Scheduler,
+        private val homePageFactory: HomePageFactory,
+        private val bookmarkPageFactory: BookmarkPageFactory,
+        public val closedTabs: RecentTabModel,
+        private val logger: Logger
 ) {
 
     private var currentTab: LightningView? = null
@@ -147,7 +147,21 @@ class BrowserPresenter(
         while (0 != tabsModel.indexOfCurrentTab()) {
             deleteTab(0)
         }
+    }
 
+    /**
+     * SL: That's not quite working for some reason.
+     * Close all tabs
+     */
+    fun closeAllTabs() {
+        // That should never be the case though
+        if (tabsModel.allTabs.count()==0) return
+
+        while (tabsModel.allTabs.count() > 1) {
+            deleteTab(tabsModel.last())
+        }
+
+        //deleteTab(tabsModel.last())
     }
 
     private fun mapHomepageToCurrentUrl(): String = when (val homepage = userPreferences.homepage) {
@@ -165,7 +179,7 @@ class BrowserPresenter(
         logger.log(TAG, "deleting tab...")
         val tabToDelete = tabsModel.getTabAtPosition(position) ?: return
 
-        recentTabModel.addClosedTab(tabToDelete.saveState())
+        closedTabs.add(tabToDelete.saveState())
 
         val isShown = tabToDelete.isShown
         val shouldClose = shouldClose && isShown && tabToDelete.isNewTab
@@ -242,12 +256,21 @@ class BrowserPresenter(
     }
 
     /**
-     * Call when the user long presses the new tab button.
+     * Recover last closed tab.
      */
-    fun onNewTabLongClicked() {
-        recentTabModel.lastClosed()?.let {
+    fun recoverClosedTab() {
+        closedTabs.popLast()?.let {
             newTab(BundleInitializer(it), true)
             view.showSnackbar(R.string.reopening_recent_tab)
+        }
+    }
+
+    /**
+     * Recover all closed tabs
+     */
+    fun recoverAllClosedTabs() {
+        while (closedTabs.bundleStack.count()>0) {
+            recoverClosedTab()
         }
     }
 

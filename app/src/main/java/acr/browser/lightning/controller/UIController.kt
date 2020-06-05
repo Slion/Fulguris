@@ -16,6 +16,7 @@ import android.view.View
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient.CustomViewCallback
 import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
 
 /**
  * The monolithic controller that routes events between views in the browser.
@@ -211,5 +212,8 @@ interface UIController {
      */
     fun handleNewTab(newTabType: LightningDialogBuilder.NewTab, url: String)
 
-
+    /**
+     *
+     */
+    fun executeAction(@IdRes id: Int): Boolean
 }

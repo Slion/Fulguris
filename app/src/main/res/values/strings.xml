@@ -92,6 +92,7 @@
     <string name="action_edit">Edit</string>
     <string name="action_incognito">New incognito tab</string>
     <string name="action_homepage">Default</string>
+    <string name="action_show_homepage">Show homepage</string>
     <string name="action_back">Back</string>
     <string name="action_find">Find in page</string>
     <string name="downloads">Downloads</string>
@@ -215,7 +216,7 @@
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>
-    <string name="reopening_recent_tab">Reopened old tab</string>
+    <string name="reopening_recent_tab">Tab recovered</string>
     <string name="rendering_mode">Rendering mode</string>
     <string name="name_inverted">Inverted</string>
     <string name="name_grayscale">Grayscale</string>
@@ -378,4 +379,8 @@
 
     <!-- Search -->
     <string name="search_insert_suggestion">Insert suggestion</string>
+
+    <string name="action_close_all_other_tabs">Close all other tabs</string>
+    <string name="action_restore_all_tabs">Restore all tabs</string>
+    <string name="action_restore_tab">Restore tab</string>
 </resources>

@@ -55,8 +55,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
@@ -77,9 +75,9 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -104,6 +102,7 @@ import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.browser_content.*
+import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import kotlinx.android.synthetic.main.search.*
 import kotlinx.android.synthetic.main.search_interface.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -192,14 +191,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private val backgroundDrawable = ColorDrawable()
     private var incognitoNotification: IncognitoNotification? = null
 
-    private var presenter: BrowserPresenter? = null
+    var presenter: BrowserPresenter? = null
     private var tabsView: TabsView? = null
     private var bookmarksView: BookmarksView? = null
 
     // Menu
-    private var backMenuItem: MenuItem? = null
-    private var forwardMenuItem: MenuItem? = null
-    private var popup: PopupMenu? = null
+    private lateinit var popupMenu: BrowserPopupMenu
 
     // Settings
     private var crashReport = true
@@ -241,7 +238,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
-
+        createPopupMenu()
 
         if (isIncognito()) {
             incognitoNotification = IncognitoNotification(this, notificationManager)
@@ -277,6 +274,40 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         // Hook in buttons with onClick handler
         button_reload.setOnClickListener(this)
+    }
+
+
+
+    private fun createPopupMenu() {
+        popupMenu = BrowserPopupMenu(layoutInflater)
+        val view = popupMenu.contentView
+        popupMenu.apply {
+            // Bind our actions
+            onMenuItemClicked(view.menuItemNewTab) { executeAction(R.id.action_new_tab) }
+            onMenuItemClicked(view.menuItemIncognito) { executeAction(R.id.action_incognito) }
+            //onMenuItemClicked(view.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
+            onMenuItemClicked(view.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
+            onMenuItemClicked(view.menuItemHistory) { executeAction(R.id.action_history) }
+            onMenuItemClicked(view.menuItemDownloads) { executeAction(R.id.action_downloads) }
+            onMenuItemClicked(view.menuItemShare) { executeAction(R.id.action_share) }
+            onMenuItemClicked(view.menuItemFind) { executeAction(R.id.action_find) }
+            onMenuItemClicked(view.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
+            onMenuItemClicked(view.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
+            onMenuItemClicked(view.menuItemSettings) { executeAction(R.id.action_settings) }
+
+            // Popup menu action shortcut icons
+            onMenuItemClicked(view.menuShortcutRefresh) { executeAction(R.id.action_reload) }
+            onMenuItemClicked(view.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
+            onMenuItemClicked(view.menuShortcutForward) { executeAction(R.id.action_forward) }
+            onMenuItemClicked(view.menuShortcutBack) { executeAction(R.id.action_back) }
+            onMenuItemClicked(view.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+            // TODO: Desktop mode
+
+        }
+    }
+
+    private fun showPopupMenu() {
+        popupMenu.show(coordinator_layout,button_more)
     }
 
     /**
@@ -363,7 +394,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         } else if (shouldShowTabsInDrawer) {
             tabCountView?.visibility = GONE
             homeImageView?.visibility = VISIBLE
-            homeImageView?.setImageResource(R.drawable.incognito_mode)
+            homeImageView?.setImageResource(R.drawable.ic_incognito)
         } else {
             tabCountView?.visibility = GONE
             homeImageView?.visibility = VISIBLE
@@ -380,7 +411,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 }
             }
             search_ssl_status.updateVisibilityForContent()
-            setMenuItemIcon(R.id.action_reload, R.drawable.ic_action_refresh)
+            //setMenuItemIcon(R.id.action_reload, R.drawable.ic_action_refresh)
             //toolbar?.menu?.findItem(R.id.action_reload)?.let { it.icon = ContextCompat.getDrawable(this@BrowserActivity, R.drawable.ic_action_refresh) }
 
             val searchListener = SearchListenerClass()
@@ -441,32 +472,26 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         ui_layout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
 
 
-        // Create our custom popup overflow menu
-        popup = PopupMenu(this, button_more)
-        // Needed for the menu to pop-up on top of the button
-        // See: https://stackoverflow.com/a/46557131/3969362
-        popup?.gravity = Gravity.END;
-        //Inflating the Popup using xml file
-        popup?.menuInflater?.inflate(R.menu.main, popup?.menu)
-        //registering popup with OnMenuItemClickListener
-        popup?.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-            // Hook in our legacy handler
-            this@BrowserActivity.onOptionsItemSelected(item)
-        })
-
         button_more.setOnClickListener(OnClickListener {
             // Web page is loosing focus as we open our menu
             currentTabView?.clearFocus()
             // Check if virtual keyboard is showing
             if (inputMethodManager.isActive) {
                 // Open our menu with a slight delay giving enough time for our virtual keyboard to close
-                mainHandler.postDelayed({popup?.show()},100)
+                mainHandler.postDelayed({showPopupMenu()},100)
+
             } else {
                 //Display our popup menu instantly
-                popup?.show()
+                showPopupMenu()
             }
+        })
 
-
+        // Enable recovery of closed tabs using long tap on tab button
+        // TODO: remove that?
+        home_button.setOnLongClickListener(OnLongClickListener {
+            val res = !(presenter?.closedTabs?.bundleStack?.isEmpty()?:false)
+            presenter?.recoverClosedTab()
+            res
         })
     }
 
@@ -573,9 +598,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     // Select all text so that user conveniently start typing or copy current URL
                     (v as SearchView).selectAll()
                     search_ssl_status.visibility = GONE
-                    // SL: why did we need this?
-                    setMenuItemIcon(R.id.action_reload, R.drawable.ic_action_delete)
-                    //toolbar?.menu?.findItem(R.id.action_reload)?.let { it.icon = ContextCompat.getDrawable(this@BrowserActivity, R.drawable.ic_action_delete) }
                 }
             }
 
@@ -974,11 +996,15 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         return super.dispatchKeyEvent(event)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /**
+     *
+     */
+    override fun executeAction(@IdRes id: Int): Boolean {
+
         val currentView = tabsManager.currentTab
         val currentUrl = currentView?.url
-        // Handle action buttons
-        when (item.itemId) {
+
+        when (id) {
             android.R.id.home -> {
                 if (drawer_layout.isDrawerOpen(getBookmarkDrawer())) {
                     drawer_layout.closeDrawer(getBookmarkDrawer())
@@ -999,8 +1025,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             }
             R.id.action_add_to_homescreen -> {
                 if (currentView != null
-                    && currentView.url.isNotBlank()
-                    && !currentView.url.isSpecialUrl()) {
+                        && currentView.url.isNotBlank()
+                        && !currentView.url.isSpecialUrl()) {
                     HistoryEntry(currentView.url, currentView.title).also {
                         Utils.createShortcut(this, it, currentView.favicon ?: webPageBitmap!!)
                         logger.log(TAG, "Creating shortcut: ${it.title} ${it.url}")
@@ -1069,9 +1095,39 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 }
                 return true
             }
-            else -> return super.onOptionsItemSelected(item)
+            R.id.action_restore_page -> {
+                presenter?.recoverClosedTab()
+                return true
+            }
+            R.id.action_restore_all_pages -> {
+                presenter?.recoverAllClosedTabs()
+                return true
+            }
+
+            R.id.action_close_all_tabs -> {
+                // TODO: consider just closing all tabs
+                // TODO: Confirmation dialog
+                //closeBrowser()
+                //presenter?.closeAllTabs()
+                presenter?.closeAllOtherTabs()
+                return true
+            }
+
+            R.id.action_show_homepage -> {
+                tabsManager.currentTab?.loadHomePage()
+                closeDrawers(null)
+                return true
+            }
+
+            else -> return false
         }
     }
+
+    // Legacy from menu framework. Since we are using custom popup window as menu we don't need this anymore.
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            return if (executeAction(item.itemId)) true else super.onOptionsItemSelected(item)
+    }
+
 
     // By using a manager, adds a bookmark and notifies third parties about that
     private fun addBookmark(title: String, url: String) {
@@ -1267,7 +1323,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     override fun newTabButtonLongClicked() {
-        presenter?.onNewTabLongClicked()
+        presenter?.recoverClosedTab()
     }
 
     override fun bookmarkButtonClicked() {
@@ -1323,7 +1379,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         setupToolBar(newConfig)
         // Can't find a proper event to do that after the configuration changes were applied so we just delay it
         mainHandler.postDelayed({setupPullToRefresh()} ,300)
-        popup?.dismiss() // As it wont update somehow
+        popupMenu.dismiss() // As it wont update somehow
         // Make sure our drawers adjust accordingly
         drawer_layout.requestLayout()
     }
@@ -1525,29 +1581,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
 
-    private fun setMenuItemIcon(id: Int, drawable: Int)
-    {
-        popup?.menu?.findItem(id)?.let {
-            // We need to preserve the color filter before changing the icon
-            val cf = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                it.icon.colorFilter
-            } else {
-                // TODO maybe just move to API 21, or use compoundDrawables instead
-                PorterDuffColorFilter(currentToolBarTextColor, PorterDuff.Mode.SRC_ATOP)
-            }
-            // Change our icon
-            it.icon = ContextCompat.getDrawable(this, drawable)
-            // Now reset our color filter as it was
-            it.icon.colorFilter = cf
-        }
-    }
-
-
-    private fun setMenuItemColor(id: Int, color: Int)
-    {
-        //toolbar.findViewById<ActionMenuItemView>(id)?.compoundDrawables?.get(0)?.colorFilter = PorterDuffColorFilter(color,PorterDuff.Mode.SRC_ATOP)
-        //toolbar?.menu?.findItem(id)?.let { it.icon.colorFilter = PorterDuffColorFilter(color,PorterDuff.Mode.SRC_ATOP)  }
-    }
 
 
     private fun changeToolbarBackground(color: Int, tabBackground: Drawable?) {
@@ -1561,7 +1594,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         tabCountView?.textColor = currentToolBarTextColor
         tabCountView?.invalidate();
         // Change reload icon color
-        setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
+        //setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
         // SSL status icon color
         search_ssl_status.setColorFilter(currentToolBarTextColor)
         // Toolbar buttons filter
@@ -1874,19 +1907,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     override fun setForwardButtonEnabled(enabled: Boolean) {
-        forwardMenuItem?.isEnabled = enabled
+        popupMenu.contentView.menuShortcutForward.isEnabled = enabled
         tabsView?.setGoForwardEnabled(enabled)
     }
 
     override fun setBackButtonEnabled(enabled: Boolean) {
-        backMenuItem?.isEnabled = enabled
+        popupMenu.contentView.menuShortcutBack.isEnabled = enabled
         tabsView?.setGoBackEnabled(enabled)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        backMenuItem = menu.findItem(R.id.action_back)
-        forwardMenuItem = menu.findItem(R.id.action_forward)
-        return super.onCreateOptionsMenu(menu)
     }
 
     /**
@@ -2101,8 +2128,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     override fun onHomeButtonPressed() {
-        tabsManager.currentTab?.loadHomePage()
-        closeDrawers(null)
+        executeAction(R.id.action_show_homepage)
     }
 
 
@@ -2268,7 +2294,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
 
         // Set stop or reload icon according to current load status
-        setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
+        //setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
         button_reload.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
 
         setupPullToRefresh()
