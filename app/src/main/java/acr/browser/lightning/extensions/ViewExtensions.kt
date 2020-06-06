@@ -3,6 +3,7 @@ package acr.browser.lightning.extensions
 import acr.browser.lightning.utils.getFilteredColor
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.ColorMatrixColorFilter
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -14,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+
 
 /**
  * Tells if this view can scroll vertically.
@@ -167,8 +169,12 @@ fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
             // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.c.uk
             // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
             if (luminance < threshold && filteredLuminance < threshold) {
-                // All black icon
-                setColorFilter(Color.WHITE)
+                // Mostly black icon
+                //setColorFilter(Color.WHITE)
+                // Invert its colors
+                // See: https://stackoverflow.com/a/17871384/3969362
+                val matrix = floatArrayOf(-1.0f, 0f, 0f, 0f, 255f, 0f, -1.0f, 0f, 0f, 255f, 0f, 0f, -1.0f, 0f, 255f, 0f, 0f, 0f, 1.0f, 0f)
+                colorFilter = ColorMatrixColorFilter(matrix)
             }
         }
     }
