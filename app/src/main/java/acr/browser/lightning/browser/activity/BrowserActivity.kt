@@ -20,6 +20,7 @@ import acr.browser.lightning.database.SearchSuggestion
 import acr.browser.lightning.database.WebPage
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.database.history.HistoryRepository
+import acr.browser.lightning.databinding.ToolbarContentBinding
 import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
@@ -85,6 +86,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.customview.widget.ViewDragHelper
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -281,6 +283,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private fun createPopupMenu() {
         popupMenu = BrowserPopupMenu(layoutInflater)
         val view = popupMenu.contentView
+        // TODO: could use data binding instead
         popupMenu.apply {
             // Bind our actions
             onMenuItemClicked(view.menuItemNewTab) { executeAction(R.id.action_new_tab) }
@@ -339,7 +342,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         //initializeToolbarHeight(resources.configuration)
         //setSupportActionBar(toolbar)
-        layoutInflater.inflate(R.layout.toolbar_content,toolbar)
+        ToolbarContentBinding.inflate(layoutInflater,toolbar,true)
         //val actionBar = requireNotNull(supportActionBar)
 
         // TODO: disable those for incognito mode?
@@ -486,13 +489,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             }
         })
 
-        // Enable recovery of closed tabs using long tap on tab button
-        // TODO: remove that?
-        home_button.setOnLongClickListener(OnLongClickListener {
-            val res = !(presenter?.closedTabs?.bundleStack?.isEmpty()?:false)
-            presenter?.recoverClosedTab()
-            res
-        })
     }
 
     private fun getBookmarksContainerId(): Int = if (swapBookmarksAndTabs) {
@@ -641,6 +637,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             drawerClosing = false
             drawerOpening = false
 
+            // Trying to sort out our issue with touch input reaching through drawer into address bar
+            //toolbar_layout.isEnabled = true
+
             currentTabView?.requestFocus()
 
             if (userPreferences.lockedDrawers) return; // Drawers remain locked
@@ -660,6 +659,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             drawerOpened = true
             drawerClosing = false
             drawerOpening = false
+
+            // Trying to sort out our issue with touch input reaching through drawer into address bar
+            //toolbar_layout.isEnabled = false
 
             if (userPreferences.lockedDrawers) return; // Drawers remain locked
 
@@ -927,10 +929,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     }
                     KeyEvent.KEYCODE_T -> {
                         // Open new tab
-                        presenter?.newTab(
-                            homePageInitializer,
-                            true
-                        )
+                        presenter?.newTab(homePageInitializer,true)
                         return true
                     }
                     KeyEvent.KEYCODE_W -> {

@@ -46,6 +46,7 @@
         app:srcCompat="@drawable/ic_action_refresh"
         android:tint="?attr/iconColor"
         android:contentDescription="@string/action_reload"
+        app:tooltipText="@{@string/action_reload}"
         android:nextFocusDown="@id/web_view" />
 
     <FrameLayout
@@ -55,14 +56,16 @@
         android:background="?attr/actionBarItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center">
+        android:gravity="center"
+        android:contentDescription="@string/tabs"
+        app:tooltipText="@{@string/tabs}" >
 
     <ImageView
         android:id="@+id/home_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:contentDescription="@string/home" />
+        />
 
     <acr.browser.lightning.icon.TabCountView
         android:id="@+id/tab_count_view"
@@ -86,6 +89,7 @@
         app:srcCompat="@drawable/ic_lightning"
         android:tint="?attr/iconColor"
         android:contentDescription="@string/action_more"
+        app:tooltipText="@{@string/action_more}"
         android:nextFocusDown="@id/web_view" />
 
 

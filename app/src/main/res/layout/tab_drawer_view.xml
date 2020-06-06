@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="uiController"
+            type="acr.browser.lightning.controller.UIController"/>
+    </data>
+
+<merge
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true"
     tools:parentTag="android.widget.LinearLayout">
-
 
 
     <LinearLayout
@@ -16,45 +26,57 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/action_close_all_tabs"
+            style="?android:attr/actionButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/action_close_all_other_tabs"
+            app:tooltipText="@{@string/action_close_all_other_tabs}"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_delete_sweep" />
+            app:srcCompat="@drawable/ic_delete_sweep"
+            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+            />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/action_restore_all_pages"
+            style="?android:attr/actionButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/action_restore_all_tabs"
+            app:tooltipText="@{@string/action_restore_all_tabs}"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_restore_from_trash" />
+            app:srcCompat="@drawable/ic_restore_from_trash"
+            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+            />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/action_restore_page"
+            style="?android:attr/actionButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/action_restore_tab"
+            app:tooltipText="@{@string/action_restore_tab}"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_restore_page" />
+            app:srcCompat="@drawable/ic_restore_page"
+            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+            />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/new_tab_button"
+            style="?android:attr/actionButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/action_new_tab"
+            app:tooltipText="@{@string/action_new_tab}"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_action_plus" />
+            app:srcCompat="@drawable/ic_action_plus"
+            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+            />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -70,3 +92,4 @@
 
 
 </merge>
+</layout>

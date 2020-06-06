@@ -1,6 +1,7 @@
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
+import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.utils.Utils
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -41,7 +42,7 @@ class BrowserPopupMenu : PopupWindow {
         private const val margin = 15
 
         fun inflate(layoutInflater: LayoutInflater): View {
-            return layoutInflater.inflate(R.layout.popup_menu_browser, null)
+            return PopupMenuBrowserBinding.inflate(layoutInflater).root
         }
 
     }

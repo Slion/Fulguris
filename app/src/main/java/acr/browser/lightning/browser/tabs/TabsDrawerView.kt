@@ -5,6 +5,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabsView
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.databinding.TabDrawerViewBinding
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.list.VerticalItemAnimator
 import acr.browser.lightning.view.LightningView
@@ -15,7 +16,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.tab_drawer.view.*
+import kotlinx.android.synthetic.main.tab_drawer_view.view.*
 
 /**
  * A view which displays tabs in a vertical [RecyclerView].
@@ -28,18 +29,17 @@ class TabsDrawerView @JvmOverloads constructor(
 
     private val uiController = context as UIController
     private val tabsAdapter = TabsDrawerAdapter(uiController)
-    private val tabList: RecyclerView
-    //private val actionBack: View
-    //private val actionForward: View
+
     private var mItemTouchHelper: ItemTouchHelper? = null
 
     init {
         orientation = VERTICAL
         isClickable = true
         isFocusable = true
-        context.inflater.inflate(R.layout.tab_drawer, this, true)
-        //actionBack = findViewById(R.id.action_back)
-        //actionForward = findViewById(R.id.action_forward)
+
+        // Inflate our layout with binding support, provide UI controller
+        TabDrawerViewBinding.inflate(context.inflater,this, true).uiController = uiController
+
 
         val animator = VerticalItemAnimator().apply {
             supportsChangeAnimations = false
@@ -49,39 +49,18 @@ class TabsDrawerView @JvmOverloads constructor(
             moveDuration = 200
         }
 
-        tabList = findViewById<RecyclerView>(R.id.tabs_list).apply {
-            setLayerType(View.LAYER_TYPE_NONE, null)
+        tabs_list.apply {
+            //setLayerType(View.LAYER_TYPE_NONE, null)
             itemAnimator = animator
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = tabsAdapter
             setHasFixedSize(true)
         }
 
-        // SL: Removed that button
-        //findViewById<View>(R.id.tab_header_button).setOnClickListener {
-        //    uiController.showCloseDialog(uiController.getTabModel().indexOfCurrentTab())
-        //}
-
-        new_tab_button.setOnClickListener {
-            uiController.newTabButtonClicked()
-        }
-
-        action_restore_all_pages.setOnClickListener {
-            uiController.executeAction(R.id.action_restore_all_pages)
-        }
-
-        action_restore_page.setOnClickListener {
-            uiController.executeAction(R.id.action_restore_page)
-        }
-
-        action_close_all_tabs.setOnClickListener {
-            uiController.executeAction(R.id.action_close_all_tabs)
-        }
-
         val callback: ItemTouchHelper.Callback = TabTouchHelperCallback(tabsAdapter)
 
         mItemTouchHelper = ItemTouchHelper(callback)
-        mItemTouchHelper?.attachToRecyclerView(tabList)
+        mItemTouchHelper?.attachToRecyclerView(tabs_list)
 
     }
 
@@ -99,7 +78,7 @@ class TabsDrawerView @JvmOverloads constructor(
 
     override fun tabAdded() {
         displayTabs()
-        tabList.postDelayed({ tabList.smoothScrollToPosition(tabsAdapter.itemCount - 1) }, 500)
+        tabs_list.postDelayed({ tabs_list.smoothScrollToPosition(tabsAdapter.itemCount - 1) }, 500)
         updateTabActionButtons()
     }
 
