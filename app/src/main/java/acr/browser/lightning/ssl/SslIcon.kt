@@ -5,6 +5,7 @@ import acr.browser.lightning.utils.DrawableUtils
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 
 /**
  * Creates the proper [Drawable] to represent the [SslState].
@@ -12,13 +13,9 @@ import android.graphics.drawable.Drawable
 fun Context.createSslDrawableForState(sslState: SslState): Drawable? = when (sslState) {
     is SslState.None -> null
     is SslState.Valid -> {
-        val bitmap = DrawableUtils.createImageInsetInRoundedSquare(this, R.drawable.ic_secured)
-        val securedDrawable = BitmapDrawable(resources, bitmap)
-        securedDrawable
+        ContextCompat.getDrawable(this, R.drawable.ic_secured)
     }
     is SslState.Invalid -> {
-        val bitmap = DrawableUtils.createImageInsetInRoundedSquare(this, R.drawable.ic_unsecured)
-        val unsecuredDrawable = BitmapDrawable(resources, bitmap)
-        unsecuredDrawable
+        ContextCompat.getDrawable(this, R.drawable.ic_unsecured);
     }
 }
