@@ -14,6 +14,14 @@
 
     <PreferenceCategory android:title="@string/pref_category_portrait"
         app:icon="@drawable/ic_portrait">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_portrait_pull_to_refresh"
+            android:key="@string/pref_key_portrait_pull_to_refresh"
+            android:title="@string/pref_title_pull_to_refresh"
+            app:icon="@drawable/ic_action_refresh"
+            app:iconSpaceReserved="false" />
+
         <SwitchPreferenceCompat
             app:key="@string/pref_key_portrait_hide_status_bar"
             app:title="@string/pref_title_hide_status_bar"
@@ -43,6 +51,14 @@
 
     <PreferenceCategory android:title="@string/pref_category_landscape"
         app:icon="@drawable/ic_landscape">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_landscape_pull_to_refresh"
+            android:key="@string/pref_key_landscape_pull_to_refresh"
+            android:title="@string/pref_title_pull_to_refresh"
+            app:icon="@drawable/ic_action_refresh"
+            app:iconSpaceReserved="false" />
+
         <SwitchPreferenceCompat
             app:key="@string/pref_key_landscape_hide_status_bar"
             app:title="@string/pref_title_hide_status_bar"
@@ -72,13 +88,6 @@
 
 
     <PreferenceCategory android:title="@string/pref_category_general">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/pref_default_pull_to_refresh"
-            android:key="@string/pref_key_pull_to_refresh"
-            android:title="@string/pref_title_pull_to_refresh"
-            app:icon="@drawable/ic_action_refresh"
-            app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"

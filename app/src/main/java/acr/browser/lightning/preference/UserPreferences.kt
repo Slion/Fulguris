@@ -301,7 +301,8 @@ class UserPreferences @Inject constructor(
     /**
      *
      */
-    var pullToRefresh by preferences.booleanPreference(R.string.pref_key_pull_to_refresh, R.bool.pref_default_pull_to_refresh)
+    var pullToRefreshInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_pull_to_refresh, R.bool.pref_default_portrait_pull_to_refresh)
+    var pullToRefreshInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_pull_to_refresh, R.bool.pref_default_landscape_pull_to_refresh)
 
     /**
      * Not an actual user preference. Just used to communicate between settings and browser activity.

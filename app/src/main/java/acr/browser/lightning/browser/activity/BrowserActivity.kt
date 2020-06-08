@@ -751,7 +751,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         initializeToolbarHeight(configuration)
         showActionBar()
         setToolbarColor()
-        setFullscreenIfNeeded(resources.configuration)
+        setFullscreenIfNeeded(configuration)
     }
 
     private fun initializePreferences() {
@@ -1177,8 +1177,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     /**
      * Enable or disable pull-to-refresh according to user preferences and state
      */
-    private fun setupPullToRefresh() {
-        if (!userPreferences.pullToRefresh) {
+    private fun setupPullToRefresh(configuration: Configuration) {
+        if (!userPreferences.pullToRefreshInPortrait && configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+                || !userPreferences.pullToRefreshInLandscape && configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // User does not want to use pull to refresh
             content_frame.isEnabled = false
             button_reload.visibility = View.VISIBLE
@@ -1227,7 +1228,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         logger.log(TAG, "Notify Tab Changed: $position")
         tabsView?.tabChanged(position)
         setToolbarColor()
-        setupPullToRefresh()
+        setupPullToRefresh(resources.configuration)
     }
 
     override fun notifyTabViewInitialized() {
@@ -1383,7 +1384,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         setFullscreenIfNeeded(newConfig)
         setupToolBar(newConfig)
         // Can't find a proper event to do that after the configuration changes were applied so we just delay it
-        mainHandler.postDelayed({setupPullToRefresh()} ,300)
+        mainHandler.postDelayed({setupPullToRefresh(newConfig)} ,300)
         popupMenu.dismiss() // As it wont update somehow
         // Make sure our drawers adjust accordingly
         drawer_layout.requestLayout()
@@ -1535,7 +1536,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         initializePreferences()
 
         setupToolBar(resources.configuration)
-        setupPullToRefresh()
+        setupPullToRefresh(resources.configuration)
 
         // We think that's needed in case there was a rotation while in the background
         drawer_layout.requestLayout()
@@ -2302,7 +2303,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         //setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
         button_reload.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
 
-        setupPullToRefresh()
+        setupPullToRefresh(resources.configuration)
     }
 
 
