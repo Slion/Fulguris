@@ -1175,10 +1175,16 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private fun isLoading() : Boolean = tabsManager.currentTab?.let{it.progress < 100} ?: false
 
     /**
-     *
+     * Enable or disable pull-to-refresh according to user preferences and state
      */
-    private fun setupPullToRefresh()
-    {
+    private fun setupPullToRefresh() {
+        if (!userPreferences.pullToRefresh) {
+            // User does not want to use pull to refresh
+            content_frame.isEnabled = false
+            button_reload.visibility = View.VISIBLE
+            return
+        }
+
         // Disable pull to refresh if no vertical scroll as it bugs with frame internal scroll
         // See: https://github.com/Slion/Lightning-Browser/projects/1
         content_frame.isEnabled = currentTabView?.canScrollVertically()?:false

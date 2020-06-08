@@ -299,6 +299,11 @@ class UserPreferences @Inject constructor(
     var lockedDrawers by preferences.booleanPreference(R.string.pref_key_locked_drawers, R.bool.pref_default_locked_drawers)
 
     /**
+     *
+     */
+    var pullToRefresh by preferences.booleanPreference(R.string.pref_key_pull_to_refresh, R.bool.pref_default_pull_to_refresh)
+
+    /**
      * Not an actual user preference. Just used to communicate between settings and browser activity.
      * Don't ask :)
      */

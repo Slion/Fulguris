@@ -28,6 +28,7 @@
     <string name="pref_key_locked_drawers">pref_key_locked_drawers</string>
     <string name="pref_key_crash_report">pref_key_crash_report</string>
     <string name="pref_key_analytics">pref_key_analytics</string>
+    <string name="pref_key_pull_to_refresh">pref_key_pull_to_refresh</string>
 
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>

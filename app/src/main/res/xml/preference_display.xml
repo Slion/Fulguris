@@ -74,6 +74,13 @@
     <PreferenceCategory android:title="@string/pref_category_general">
 
         <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_pull_to_refresh"
+            android:key="@string/pref_key_pull_to_refresh"
+            android:title="@string/pref_title_pull_to_refresh"
+            app:icon="@drawable/ic_action_refresh"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_key_web_page_theme"
             android:title="@string/color_mode"
