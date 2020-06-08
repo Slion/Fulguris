@@ -211,7 +211,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     /**
      * Determines if the current browser instance is in incognito mode or not.
      */
-    protected abstract fun isIncognito(): Boolean
+    public abstract fun isIncognito(): Boolean
 
     /**
      * Choose the behavior when the controller closes the view.
@@ -348,11 +348,16 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // TODO: disable those for incognito mode?
         analytics = userPreferences.analytics
         crashReport = userPreferences.crashReport
-        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(userPreferences.analytics)
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(userPreferences.crashReport)
+
+        if (!isIncognito()) {
+            // For some reason that was crashing when incognito
+            // I'm guessing somehow that's already disabled when incognito
+            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(userPreferences.analytics)
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(userPreferences.crashReport)
+        }
 
         //TODO make sure dark theme flag gets set correctly
-        isDarkTheme = userPreferences.useTheme != AppTheme.LIGHT || isIncognito()
+        isDarkTheme = userPreferences.useTheme != AppTheme.LIGHT
         shouldShowTabsInDrawer = userPreferences.showTabsInDrawer
         swapBookmarksAndTabs = userPreferences.bookmarksAndTabsSwapped
 
@@ -388,16 +393,17 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             height = LayoutParams.MATCH_PARENT
         }
 
+        // Show incognito icon in more menu button
+        if (isIncognito()) {
+            button_more.setImageResource(R.drawable.ic_incognito)
+        }
+
 
         tabCountView = customView.findViewById(R.id.tab_count_view)
         homeImageView = customView.findViewById(R.id.home_image_view)
-        if (shouldShowTabsInDrawer && !isIncognito()) {
+        if (shouldShowTabsInDrawer) {
             tabCountView?.visibility = VISIBLE
             homeImageView?.visibility = GONE
-        } else if (shouldShowTabsInDrawer) {
-            tabCountView?.visibility = GONE
-            homeImageView?.visibility = VISIBLE
-            homeImageView?.setImageResource(R.drawable.ic_incognito)
         } else {
             tabCountView?.visibility = GONE
             homeImageView?.visibility = VISIBLE
@@ -1729,7 +1735,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     override fun updateTabNumber(number: Int) {
-        if (shouldShowTabsInDrawer && !isIncognito()) {
+        if (shouldShowTabsInDrawer) {
             tabCountView?.updateCount(number)
         }
     }

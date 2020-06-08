@@ -1,6 +1,7 @@
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.utils.Utils
 import android.graphics.Color
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.PopupWindow
+import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 
 class BrowserPopupMenu : PopupWindow {
 
@@ -19,6 +21,12 @@ class BrowserPopupMenu : PopupWindow {
 
         animationStyle = R.style.AnimationMenu
         //animationStyle = android.R.style.Animation_Dialog
+
+        // Hide incognito menu item if we are already incognito
+        if ((view.context as BrowserActivity).isIncognito()) {
+            view.menuItemIncognito.visibility = View.GONE
+        }
+
     }
 
     fun onMenuItemClicked(menuView: View, onClick: () -> Unit) {

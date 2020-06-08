@@ -90,7 +90,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Edit bookmark</string>
     <string name="action_edit">Edit</string>
-    <string name="action_incognito">New incognito tab</string>
+    <string name="action_incognito">Go incognito</string>
     <string name="action_homepage">Default</string>
     <string name="action_show_homepage">Show homepage</string>
     <string name="action_back">Back</string>

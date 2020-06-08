@@ -102,12 +102,6 @@
                     android:drawableStart="@drawable/ic_action_plus"
                     android:text="@string/action_new_tab" />
 
-                <Button
-                    android:id="@+id/menuItemIncognito"
-                    style="@style/BrowserTextMenuItem"
-                    android:drawableStart="@drawable/ic_incognito"
-                    android:text="@string/action_incognito"
-                    android:enabled="false" />
                 <!--
                             <Button
                                 android:id="@+id/menuItemBookmarks"
@@ -171,6 +165,13 @@
                     android:drawableStart="@drawable/ic_desktop"
                     android:text="@string/agent_desktop"
                     android:enabled="false" />
+
+                <Button
+                    android:id="@+id/menuItemIncognito"
+                    style="@style/BrowserTextMenuItem"
+                    android:drawableStart="@drawable/ic_incognito"
+                    android:text="@string/action_incognito"
+                    android:enabled="true" />
 
                 <Button
                     android:id="@+id/menuItemSettings"
