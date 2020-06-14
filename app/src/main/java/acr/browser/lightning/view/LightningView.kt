@@ -134,7 +134,7 @@ class LightningView(
      */
     var invertPage = false
         private set
-    private var toggleDesktop = false
+    var toggleDesktop = false
     private val webViewHandler = WebViewHandler(this)
 
     /**
@@ -464,6 +464,9 @@ class LightningView(
         } else {
             setUserAgentForPreference(userPreferences)
         }
+
+
+
 
         toggleDesktop = !toggleDesktop
     }

@@ -152,19 +152,16 @@
                     android:text="@string/reading_mode" />
 
                 <CheckBox
-                    android:id="@+id/requestDesktopSiteCheckMenuItem"
+                    android:id="@+id/menuItemDesktopMode"
                     style="@style/BrowserTextMenuItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
                     android:button="@null"
                     android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                    android:drawablePadding="30dp"
-                    android:paddingStart="30dp"
-                    android:paddingEnd="0dp"
                     android:drawableStart="@drawable/ic_desktop"
                     android:text="@string/agent_desktop"
-                    android:enabled="false" />
+                    android:gravity="center_vertical"
+                    android:enabled="true" />
 
                 <Button
                     android:id="@+id/menuItemIncognito"

@@ -37,6 +37,10 @@ class BrowserPopupMenu : PopupWindow {
     }
 
     fun show(rootView: View, anchorView: View) {
+
+        // Set desktop mode check box according to current tab
+        contentView.menuItemDesktopMode.isChecked = (contentView.context as BrowserActivity).tabsManager.currentTab?.toggleDesktop?:false
+
         // Assuming top right for now
         //val anchorLocation = IntArray(2)
         //anchorView.getLocationOnScreen(anchorLocation)

@@ -25,7 +25,6 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.MailTo
 import android.net.http.SslError
 import android.os.Build
@@ -118,6 +117,18 @@ class LightningWebClient(
             return WebResourceResponse("text/plain", "utf-8", empty)
         }
         return null
+    }
+
+    override fun onLoadResource(view: WebView, url: String?) {
+        super.onLoadResource(view, url)
+        if (lightningView.toggleDesktop) {
+            // That's needed for desktop mode support
+            // See: https://stackoverflow.com/a/60621350/3969362
+            // See: https://stackoverflow.com/a/39642318/3969362
+            // Note how we compute our initial scale to be zoomed out and fit the page
+            // TODO: Check if we really need this here in onLoadResource
+            view.evaluateJavascript("document.querySelector('meta[name=\"viewport\"]').setAttribute('content', 'width=1024px, initial-scale=' + (window.screen.width / 1024));", null)
+        }
     }
 
     override fun onPageFinished(view: WebView, url: String) {

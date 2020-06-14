@@ -288,7 +288,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             // Bind our actions
             onMenuItemClicked(view.menuItemNewTab) { executeAction(R.id.action_new_tab) }
             onMenuItemClicked(view.menuItemIncognito) { executeAction(R.id.action_incognito) }
-            //onMenuItemClicked(view.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
             onMenuItemClicked(view.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
             onMenuItemClicked(view.menuItemHistory) { executeAction(R.id.action_history) }
             onMenuItemClicked(view.menuItemDownloads) { executeAction(R.id.action_downloads) }
@@ -297,6 +296,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             onMenuItemClicked(view.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
             onMenuItemClicked(view.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
             onMenuItemClicked(view.menuItemSettings) { executeAction(R.id.action_settings) }
+            onMenuItemClicked(view.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
 
             // Popup menu action shortcut icons
             onMenuItemClicked(view.menuShortcutRefresh) { executeAction(R.id.action_reload) }
@@ -304,12 +304,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             onMenuItemClicked(view.menuShortcutForward) { executeAction(R.id.action_forward) }
             onMenuItemClicked(view.menuShortcutBack) { executeAction(R.id.action_back) }
             onMenuItemClicked(view.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
-            // TODO: Desktop mode
+
 
         }
     }
 
     private fun showPopupMenu() {
+
         popupMenu.show(coordinator_layout,button_more)
     }
 
@@ -1124,6 +1125,14 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 return true
             }
 
+            R.id.action_toggle_desktop_mode -> {
+                tabsManager.currentTab?.apply {
+                    toggleDesktopUA()
+                    reload()
+                }
+                return true
+            }
+
             else -> return false
         }
     }
@@ -1206,6 +1215,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     override fun getTabModel(): TabsManager = tabsManager
 
+    // TODO: That's not being used anymore
     override fun showCloseDialog(position: Int) {
         if (position < 0) {
             return
@@ -2299,6 +2309,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      * This method lets the search bar know that the page is currently loading
      * and that it should display the stop icon to indicate to the user that
      * pressing it stops the page from loading
+     *
+     *  TODO: Should we just have two buttons and manage their visibility?
+     *  That should also animate the transition I guess.
      */
     private fun setIsLoading(isLoading: Boolean) {
         if (searchView?.hasFocus() == false) {

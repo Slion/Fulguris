@@ -18,4 +18,5 @@
     <item name="action_bookmarks" type="id" />
     <item name="action_find" type="id" />
     <item name="action_copy" type="id" />
+    <item name="action_toggle_desktop_mode" type="id" />
 </resources>
