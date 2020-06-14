@@ -75,8 +75,8 @@ android {
         slions {
             dimension "brand"
             applicationId "net.slions.fulguris"
-            versionCode 39
-            versionName "0.9.3"
+            versionCode 40
+            versionName "0.9.4"
             archivesBaseName = "Fulguris-v$versionName"
         }
 
