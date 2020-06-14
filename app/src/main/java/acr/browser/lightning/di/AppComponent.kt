@@ -3,6 +3,7 @@ package acr.browser.lightning.di
 import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.adblock.BloomFilterAdBlocker
 import acr.browser.lightning.adblock.NoOpAdBlocker
+import acr.browser.lightning.browser.BrowserPopupMenu
 import acr.browser.lightning.browser.SearchBoxModel
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.browser.activity.ThemableBrowserActivity
@@ -80,6 +81,8 @@ interface AppComponent {
     fun inject(adBlockSettingsFragment: AdBlockSettingsFragment)
 
     fun inject(bookmarksView: BookmarksDrawerView)
+
+    fun inject(popupMenu: BrowserPopupMenu)
 
     fun provideBloomFilterAdBlocker(): BloomFilterAdBlocker
 

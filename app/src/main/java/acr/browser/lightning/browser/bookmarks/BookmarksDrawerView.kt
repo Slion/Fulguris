@@ -9,6 +9,8 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
+import acr.browser.lightning.databinding.BookmarkDrawerViewBinding
+import acr.browser.lightning.databinding.TabDrawerViewBinding
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
@@ -39,6 +41,7 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.android.synthetic.main.bookmark_drawer_view.view.*
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 
@@ -72,32 +75,19 @@ class BookmarksDrawerView @JvmOverloads constructor(
 
     private val uiModel = BookmarkUiModel()
 
-    private var bookmarkRecyclerView: RecyclerView? = null
-    private var backNavigationView: ImageView? = null
-    private var addBookmarkView: ImageView? = null
 
     init {
-        context.inflater.inflate(R.layout.bookmark_drawer, this, true)
         context.injector.inject(this)
-
         uiController = context as UIController
+        BookmarkDrawerViewBinding.inflate(context.inflater,this, true).uiController = uiController
 
-        bookmarkRecyclerView = findViewById(R.id.bookmark_list_view)
-        backNavigationView = findViewById(R.id.bookmark_back_button)
-        addBookmarkView = findViewById(R.id.action_add_bookmark)
-        backNavigationView?.setOnClickListener {
+
+        rootView.bookmark_back_button.setOnClickListener {
             if (!uiModel.isCurrentFolderRoot()) {
                 setBookmarksShown(null, true)
-                bookmarkRecyclerView?.layoutManager?.scrollToPosition(scrollIndex)
+                rootView.bookmark_list_view.layoutManager?.scrollToPosition(scrollIndex)
             }
         }
-        addBookmarkView?.setOnClickListener { uiController.bookmarkButtonClicked() }
-        findViewById<View>(R.id.action_reading).setOnClickListener {
-            getTabsManager().currentTab?.url?.let {
-                ReadingActivity.launch(context, it)
-            }
-        }
-        findViewById<View>(R.id.action_page_tools).setOnClickListener { showPageToolsDialog(context) }
 
         bookmarkAdapter = BookmarkListAdapter(
             context,
@@ -108,7 +98,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
             ::handleItemClick
         )
 
-        bookmarkRecyclerView?.let {
+        rootView.bookmark_list_view.let {
             it.layoutManager = LinearLayoutManager(context)
             it.adapter = bookmarkAdapter
         }
@@ -127,6 +117,8 @@ class BookmarksDrawerView @JvmOverloads constructor(
 
     private fun getTabsManager(): TabsManager = uiController.getTabModel()
 
+    // TODO: apply that logic to the add bookmark menu item from main pop-up menu
+    // SL: I guess this is of no use here anymore since we removed the add bookmark button
     private fun updateBookmarkIndicator(url: String) {
         bookmarkUpdateSubscription?.dispose()
         bookmarkUpdateSubscription = bookmarkModel.isBookmark(url)
@@ -134,8 +126,8 @@ class BookmarksDrawerView @JvmOverloads constructor(
             .observeOn(mainScheduler)
             .subscribe { isBookmark ->
                 bookmarkUpdateSubscription = null
-                addBookmarkView?.isSelected = isBookmark
-                addBookmarkView?.isEnabled = !url.isSpecialUrl()
+                //addBookmarkView?.isSelected = isBookmark
+                //addBookmarkView?.isEnabled = !url.isSpecialUrl()
             }
     }
 
@@ -167,18 +159,18 @@ class BookmarksDrawerView @JvmOverloads constructor(
     private fun setBookmarkDataSet(items: List<Bookmark>, animate: Boolean) {
         bookmarkAdapter?.updateItems(items.map { BookmarksViewModel(it) })
         val resource = if (uiModel.isCurrentFolderRoot()) {
-            R.drawable.ic_action_star
+            R.drawable.ic_bookmarks
         } else {
             R.drawable.ic_action_back
         }
 
         if (animate) {
-            backNavigationView?.let {
+            rootView.bookmark_back_button.let {
                 val transition = AnimationUtils.createRotationTransitionAnimation(it, resource)
                 it.startAnimation(transition)
             }
         } else {
-            backNavigationView?.setImageResource(resource)
+            rootView.bookmark_back_button.setImageResource(resource)
         }
     }
 
@@ -194,7 +186,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
 
     private fun handleItemClick(bookmark: Bookmark) = when (bookmark) {
         is Bookmark.Folder -> {
-            scrollIndex = (bookmarkRecyclerView?.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            scrollIndex = (rootView.bookmark_list_view.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             setBookmarksShown(bookmark.title, true)
         }
         is Bookmark.Entry -> uiController.bookmarkItemClicked(bookmark)
@@ -245,7 +237,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
             uiController.onBackButtonPressed()
         } else {
             setBookmarksShown(null, true)
-            bookmarkRecyclerView?.layoutManager?.scrollToPosition(scrollIndex)
+            rootView.bookmark_list_view.layoutManager?.scrollToPosition(scrollIndex)
         }
     }
 

@@ -8,6 +8,7 @@ import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.IncognitoActivity
 import acr.browser.lightning.R
+import acr.browser.lightning.animation.AnimationUtils
 import acr.browser.lightning.browser.*
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
 import acr.browser.lightning.browser.cleanup.ExitCleanup
@@ -2305,6 +2306,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
+
+    //var refreshButtonResId = R.drawable.ic_action_refresh
+
     /**
      * This method lets the search bar know that the page is currently loading
      * and that it should display the stop icon to indicate to the user that
@@ -2321,6 +2325,27 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Set stop or reload icon according to current load status
         //setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
         button_reload.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
+
+        // That fancy animation would be great but somehow it looks like it is causing issues making the button unresponsive.
+        // I'm guessing it is conflicting with animations from layout change.
+        // Animations on Android really are a pain in the ass, half baked crappy implementations.
+        /*
+        button_reload.let {
+            val imageRes = if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh
+            // Only change our image if needed otherwise we animate for nothing
+            // Therefore first check if the selected image is already displayed
+            if (refreshButtonResId != imageRes){
+                refreshButtonResId = imageRes
+                if (it.animation==null) {
+                    val transition = AnimationUtils.createRotationTransitionAnimation(it, refreshButtonResId)
+                    it.startAnimation(transition)
+                }
+                else{
+                    button_reload.setImageResource(imageRes);
+                }
+            }
+        }
+         */
 
         setupPullToRefresh(resources.configuration)
     }

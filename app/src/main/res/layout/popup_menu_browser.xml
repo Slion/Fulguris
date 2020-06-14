@@ -35,16 +35,6 @@
                 app:srcCompat="@drawable/ic_action_refresh" />
 
             <ImageButton
-                android:id="@+id/menuShortcutHome"
-                style="?android:attr/actionButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/action_show_homepage"
-                app:tooltipText="@{@string/action_show_homepage}"
-                app:srcCompat="@drawable/ic_action_home" />
-
-            <ImageButton
                 android:id="@+id/menuShortcutBack"
                 style="?android:attr/actionButtonStyle"
                 android:layout_width="wrap_content"
@@ -53,6 +43,16 @@
                 android:contentDescription="@string/action_back"
                 app:tooltipText="@{@string/action_back}"
                 app:srcCompat="@drawable/ic_action_back" />
+
+            <ImageButton
+                android:id="@+id/menuShortcutForward"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_forward"
+                app:tooltipText="@{@string/action_forward}"
+                app:srcCompat="@drawable/ic_action_forward" />
 
             <ImageButton
                 android:id="@+id/menuShortcutBookmarks"
@@ -65,14 +65,14 @@
                 app:srcCompat="@drawable/ic_bookmarks" />
 
             <ImageButton
-                android:id="@+id/menuShortcutForward"
+                android:id="@+id/menuShortcutHome"
                 style="?android:attr/actionButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/action_forward"
-                app:tooltipText="@{@string/action_forward}"
-                app:srcCompat="@drawable/ic_action_forward" />
+                android:contentDescription="@string/action_show_homepage"
+                app:tooltipText="@{@string/action_show_homepage}"
+                app:srcCompat="@drawable/ic_action_home" />
 
         </LinearLayout>
 
