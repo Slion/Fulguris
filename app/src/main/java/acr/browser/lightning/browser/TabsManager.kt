@@ -9,16 +9,10 @@ import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
-import acr.browser.lightning.view.LightningView.Companion.TAB_FAVICON_KEY
-import acr.browser.lightning.view.LightningView.Companion.WEBVIEW_KEY
-import acr.browser.lightning.view.LightningView.Companion.TAB_TITLE_KEY
-import acr.browser.lightning.view.LightningView.Companion.URL_KEY
 import android.app.Activity
 import android.app.Application
 import android.app.SearchManager
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.webkit.URLUtil
 import io.reactivex.Maybe
@@ -26,7 +20,6 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import javax.inject.Inject
-
 
 /**
  * A manager singleton that holds all the [LightningView] and tracks the current tab. It handles
@@ -210,11 +203,12 @@ class TabsManager @Inject constructor(
         }
 
         return readSavedStateFromDisk(bundle)
-                .map { (bundle, title, favicon) ->
-                    return@map bundle?.getString(URL_KEY)?.let { url ->
-                        tabInitializerForSpecialUrl(url)
-                    } ?: FreezableBundleInitializer(bundle ?: Bundle(), title
-                            ?: application.getString(R.string.tab_frozen), favicon)
+                .map { tabModel ->
+                    return@map if (tabModel.url.isSpecialUrl()) {
+                        tabInitializerForSpecialUrl(tabModel.url)
+                    } else {
+                        FreezableBundleInitializer(tabModel.webView?:Bundle(), tabModel.title ?: application.getString(R.string.tab_frozen), tabModel.favicon)
+                    }
                 }
     }
 
@@ -430,22 +424,15 @@ class TabsManager @Inject constructor(
      * on disk.
      * Can potentially be empty.
      */
-    private fun readSavedStateFromDisk(aBundle: Bundle?): Observable<Triple<Bundle?, String?, Bitmap?>> = Maybe
+    private fun readSavedStateFromDisk(aBundle: Bundle?): Observable<TabModel> = Maybe
         .fromCallable { aBundle }
         .flattenAsObservable { bundle ->
             bundle.keySet()
                 .filter { it.startsWith(TAB_KEY_PREFIX) }
                 .mapNotNull { bundleKey ->
-                    bundle.getBundle(bundleKey)?.let {
-                        val byteArray: ByteArray? = it.getByteArray(TAB_FAVICON_KEY )
-                        Triple(
-                                it.getBundle(WEBVIEW_KEY),
-                                it.getString(TAB_TITLE_KEY),
-                                byteArray?.let {BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)}
-                        )
-                    }
+                    bundle.getBundle(bundleKey)?.let {TabModelFromBundle(it) as TabModel }
                 }
-        }
+            }
         .doOnNext { logger.log(TAG, "Restoring previous WebView state now") }
 
     /**

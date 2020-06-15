@@ -2,6 +2,7 @@ package acr.browser.lightning.browser
 
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
+import acr.browser.lightning.browser.TabModel.Companion.URL_KEY
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.INTENT_ORIGIN
 import acr.browser.lightning.constant.SCHEME_BOOKMARKS
@@ -12,10 +13,8 @@ import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.ssl.SslState
+import acr.browser.lightning.utils.isSpecialUrl
 import acr.browser.lightning.view.*
-import acr.browser.lightning.view.LightningView.Companion.TAB_TITLE_KEY
-import acr.browser.lightning.view.LightningView.Companion.URL_KEY
-import acr.browser.lightning.view.LightningView.Companion.WEBVIEW_KEY
 import acr.browser.lightning.view.find.FindResults
 import android.app.Activity
 import android.content.Intent
@@ -38,7 +37,7 @@ class BrowserPresenter(
         @MainScheduler private val mainScheduler: Scheduler,
         private val homePageFactory: HomePageFactory,
         private val bookmarkPageFactory: BookmarkPageFactory,
-        public val closedTabs: RecentTabModel,
+        public val closedTabs: RecentTabsModel,
         private val logger: Logger
 ) {
 
@@ -261,19 +260,16 @@ class BrowserPresenter(
      * Recover last closed tab.
      */
     fun recoverClosedTab(show: Boolean = true) {
-        closedTabs.popLast()?.let {
-            // First try build our favicon
-            val byteArray: ByteArray? = it.getByteArray(LightningView.TAB_FAVICON_KEY)
-            val icon = byteArray?.let { bytes: ByteArray ->  BitmapFactory.decodeByteArray(bytes, 0, bytes.size) }
-            // Then check if we are dealing with an actual webview bundle or a fake one containing URL for special page
-            val webViewBundle = it.getBundle(WEBVIEW_KEY)
-            webViewBundle?.getString(URL_KEY)?.let { url ->
-                // That's a special URL
-                newTab(tabsModel.tabInitializerForSpecialUrl(url), show)
+        closedTabs.popLast()?.let { bundle ->
+            TabModelFromBundle(bundle).let {
+                if (it.url.isSpecialUrl()) {
+                    // That's a special URL
+                    newTab(tabsModel.tabInitializerForSpecialUrl(it.url), show)
+                } else {
+                    // That's an actual WebView bundle
+                    newTab(FreezableBundleInitializer(it.webView?: Bundle() , it.title, it.favicon), show)
+                }
             }
-            // That's an actual WebView bundle
-            ?: newTab(FreezableBundleInitializer(it.getBundle(WEBVIEW_KEY) ?: it.getBundle(URL_KEY) ?: Bundle(), it.getString(TAB_TITLE_KEY)?:"", icon), show)
-
             view.showSnackbar(R.string.reopening_recent_tab)
         }
     }

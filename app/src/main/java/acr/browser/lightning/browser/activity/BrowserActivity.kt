@@ -8,7 +8,6 @@ import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.IncognitoActivity
 import acr.browser.lightning.R
-import acr.browser.lightning.animation.AnimationUtils
 import acr.browser.lightning.browser.*
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
 import acr.browser.lightning.browser.cleanup.ExitCleanup
@@ -87,7 +86,6 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.customview.widget.ViewDragHelper
-import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -264,7 +262,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             mainScheduler,
             homePageFactory,
             bookmarkPageFactory,
-            RecentTabModel(),
+            RecentTabsModel(),
             logger
         )
 

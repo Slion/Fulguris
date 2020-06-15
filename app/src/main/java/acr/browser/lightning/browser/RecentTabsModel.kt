@@ -7,7 +7,7 @@ import java.util.*
 /**
  * A model that saves [Bundle] and returns the last returned one.
  */
-class RecentTabModel {
+class RecentTabsModel {
 
     public val bundleStack: Stack<Bundle> = Stack()
 
