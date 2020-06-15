@@ -12,13 +12,15 @@ import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.ssl.SslState
-import acr.browser.lightning.view.BundleInitializer
-import acr.browser.lightning.view.LightningView
-import acr.browser.lightning.view.TabInitializer
-import acr.browser.lightning.view.UrlInitializer
+import acr.browser.lightning.view.*
+import acr.browser.lightning.view.LightningView.Companion.TAB_TITLE_KEY
+import acr.browser.lightning.view.LightningView.Companion.URL_KEY
+import acr.browser.lightning.view.LightningView.Companion.WEBVIEW_KEY
 import acr.browser.lightning.view.find.FindResults
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.webkit.URLUtil
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
@@ -258,9 +260,20 @@ class BrowserPresenter(
     /**
      * Recover last closed tab.
      */
-    fun recoverClosedTab() {
+    fun recoverClosedTab(show: Boolean = true) {
         closedTabs.popLast()?.let {
-            newTab(BundleInitializer(it), true)
+            // First try build our favicon
+            val byteArray: ByteArray? = it.getByteArray(LightningView.TAB_FAVICON_KEY)
+            val icon = byteArray?.let { bytes: ByteArray ->  BitmapFactory.decodeByteArray(bytes, 0, bytes.size) }
+            // Then check if we are dealing with an actual webview bundle or a fake one containing URL for special page
+            val webViewBundle = it.getBundle(WEBVIEW_KEY)
+            webViewBundle?.getString(URL_KEY)?.let { url ->
+                // That's a special URL
+                newTab(tabsModel.tabInitializerForSpecialUrl(url), show)
+            }
+            // That's an actual WebView bundle
+            ?: newTab(FreezableBundleInitializer(it.getBundle(WEBVIEW_KEY) ?: it.getBundle(URL_KEY) ?: Bundle(), it.getString(TAB_TITLE_KEY)?:"", icon), show)
+
             view.showSnackbar(R.string.reopening_recent_tab)
         }
     }
@@ -270,7 +283,7 @@ class BrowserPresenter(
      */
     fun recoverAllClosedTabs() {
         while (closedTabs.bundleStack.count()>0) {
-            recoverClosedTab()
+            recoverClosedTab(false)
         }
     }
 

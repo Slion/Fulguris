@@ -48,6 +48,7 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
+import java.io.ByteArrayOutputStream
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -479,13 +480,40 @@ class LightningView(
     }
 
     /**
-     * Save the state of the tab and return it as a [Bundle].
+     * Save the state of this tab Web View and return it as a [Bundle].
+     * We get that state bundle either directly from our Web View,
+     * or from our frozen tab initializer if ever our Web View was never loaded.
      */
-    fun saveState(): Bundle = latentTabInitializer?.bundle
+    private fun webViewState(): Bundle = latentTabInitializer?.bundle
         ?: Bundle(ClassLoader.getSystemClassLoader()).also {
             webView?.saveState(it)
         }
 
+    /**
+     * Save the state of this tab and return it as a [Bundle].
+     */
+    fun saveState(): Bundle {
+         return Bundle(ClassLoader.getSystemClassLoader()).let {
+            if (!url.isSpecialUrl()) {
+                it.putBundle(WEBVIEW_KEY, webViewState())
+                it.putString(TAB_TITLE_KEY, title)
+                val stream = ByteArrayOutputStream()
+                favicon?.apply {
+                    // Using PNG instead of WEBP as it is hopefully lossless
+                    // Using WEBP results in the quality degrading reload after reload
+                    // Maybe consider something like: https://stackoverflow.com/questions/8065050/convert-bitmap-to-byte-array-without-compress-method-in-android
+                    compress(Bitmap.CompressFormat.PNG, 100, stream)
+                    val byteArray = stream.toByteArray()
+                    it.putByteArray(TAB_FAVICON_KEY, byteArray)
+                }
+            } else {
+                it.putBundle(WEBVIEW_KEY, Bundle().apply {
+                    putString(URL_KEY, url)
+                })
+            }
+        it
+        }
+    }
     /**
      * Pause the current WebView instance.
      */
@@ -989,6 +1017,12 @@ class LightningView(
     }
 
     companion object {
+
+        const val WEBVIEW_KEY = "WEBVIEW"
+        const val TAB_TITLE_KEY = "TITLE"
+        const val TAB_FAVICON_KEY = "FAVICON"
+        const val URL_KEY = "URL"
+
 
         public const val KHtmlMetaThemeColorInvalid: Int = Color.TRANSPARENT
         public const val KFetchMetaThemeColorTries: Int = 6

@@ -9,6 +9,10 @@ import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
+import acr.browser.lightning.view.LightningView.Companion.TAB_FAVICON_KEY
+import acr.browser.lightning.view.LightningView.Companion.WEBVIEW_KEY
+import acr.browser.lightning.view.LightningView.Companion.TAB_TITLE_KEY
+import acr.browser.lightning.view.LightningView.Companion.URL_KEY
 import android.app.Activity
 import android.app.Application
 import android.app.SearchManager
@@ -21,7 +25,6 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 
@@ -208,19 +211,25 @@ class TabsManager @Inject constructor(
 
         return readSavedStateFromDisk(bundle)
                 .map { (bundle, title, favicon) ->
-                    return@map bundle.getString(URL_KEY)?.let { url ->
-                        when {
-                            url.isBookmarkUrl() -> bookmarkPageInitializer
-                            url.isDownloadsUrl() -> downloadPageInitializer
-                            url.isStartPageUrl() -> homePageInitializer
-                            url.isHistoryUrl() -> historyPageInitializer
-                            else -> homePageInitializer
-                        }
-                    } ?: FreezableBundleInitializer(bundle, title
+                    return@map bundle?.getString(URL_KEY)?.let { url ->
+                        tabInitializerForSpecialUrl(url)
+                    } ?: FreezableBundleInitializer(bundle ?: Bundle(), title
                             ?: application.getString(R.string.tab_frozen), favicon)
                 }
     }
 
+    /**
+     * Provide a tab initializer for the given special URL
+     */
+    fun tabInitializerForSpecialUrl(url: String): TabInitializer {
+        return when {
+            url.isBookmarkUrl() -> bookmarkPageInitializer
+            url.isDownloadsUrl() -> downloadPageInitializer
+            url.isStartPageUrl() -> homePageInitializer
+            url.isHistoryUrl() -> historyPageInitializer
+            else -> homePageInitializer
+        }
+    }
 
     /**
      * Method used to resume all the tabs in the browser. This is necessary because we cannot pause
@@ -393,24 +402,10 @@ class TabsManager @Inject constructor(
         tabList
             .withIndex()
             .forEach { (index, tab) ->
-                if (!tab.url.isSpecialUrl()) {
-                    outState.putBundle(BUNDLE_KEY + index, tab.saveState())
-                    outState.putString(TAB_TITLE_KEY + index, tab.title)
-                    val stream = ByteArrayOutputStream()
-                    tab.favicon?.let {
-                        // Using PNG instead of WEBP as it is hopefully lossless
-                        // Using WEBP results in the quality degrading reload after reload
-                        // Maybe consider something like: https://stackoverflow.com/questions/8065050/convert-bitmap-to-byte-array-without-compress-method-in-android
-                        it.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                        val byteArray = stream.toByteArray()
-                        outState.putByteArray(TAB_FAVICON_KEY + index, byteArray)
-                    };
-                } else {
-                    outState.putBundle(BUNDLE_KEY + index, Bundle().apply {
-                        putString(URL_KEY, tab.url)
-                    })
+                    // Index padding with zero to make sure they are restored in the correct order
+                    // That gives us proper sorting up to 99999 tabs which should be more than enough :)
+                    outState.putBundle(TAB_KEY_PREFIX +  String.format("%05d", index), tab.saveState())
                 }
-            }
 
         //Now save our recent tabs
         // Create an array of tab indices from our recent tab list to be persisted
@@ -435,32 +430,23 @@ class TabsManager @Inject constructor(
      * on disk.
      * Can potentially be empty.
      */
-    private fun readSavedStateFromDisk(aBundle: Bundle?): Observable<Triple<Bundle, String?, Bitmap?>> = Maybe
+    private fun readSavedStateFromDisk(aBundle: Bundle?): Observable<Triple<Bundle?, String?, Bitmap?>> = Maybe
         .fromCallable { aBundle }
         .flattenAsObservable { bundle ->
             bundle.keySet()
-                .filter { it.startsWith(BUNDLE_KEY) }
+                .filter { it.startsWith(TAB_KEY_PREFIX) }
                 .mapNotNull { bundleKey ->
                     bundle.getBundle(bundleKey)?.let {
-                        val byteArray: ByteArray? = bundle.getByteArray(TAB_FAVICON_KEY + bundleKey.extractNumberFromEnd())
+                        val byteArray: ByteArray? = it.getByteArray(TAB_FAVICON_KEY )
                         Triple(
-                            it,
-                            bundle.getString(TAB_TITLE_KEY + bundleKey.extractNumberFromEnd()),
+                                it.getBundle(WEBVIEW_KEY),
+                                it.getString(TAB_TITLE_KEY),
                                 byteArray?.let {BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)}
                         )
                     }
                 }
         }
         .doOnNext { logger.log(TAG, "Restoring previous WebView state now") }
-
-    private fun String.extractNumberFromEnd(): String {
-        val underScore = lastIndexOf('_')
-        return if (underScore in 0 until length) {
-            substring(underScore + 1)
-        } else {
-            ""
-        }
-    }
 
     /**
      * Returns the index of the current tab.
@@ -513,11 +499,7 @@ class TabsManager @Inject constructor(
     companion object {
 
         private const val TAG = "TabsManager"
-
-        private const val BUNDLE_KEY = "WEBVIEW_"
-        private const val TAB_TITLE_KEY = "TITLE_"
-        private const val TAB_FAVICON_KEY = "FAVICON_"
-        private const val URL_KEY = "URL_KEY"
+        private const val TAB_KEY_PREFIX = "TAB_"
         private const val BUNDLE_STORAGE = "SAVED_TABS.parcel"
         private const val RECENT_TAB_INDICES = "RECENT_TAB_INDICES"
 
