@@ -384,4 +384,9 @@
     <string name="action_close_all_other_tabs">Close all other tabs</string>
     <string name="action_restore_all_tabs">Restore all tabs</string>
     <string name="action_restore_tab">Restore tab</string>
+    <string name="settings_summary_apps">Enable third-party apps</string>
+    <string name="settings_title_apps">Apps</string>
+    <string name="settings_app_prefix">app_for_</string>
+    <string name="dialog_title_third_party_app">Third-party app available</string>
+    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
 </resources>

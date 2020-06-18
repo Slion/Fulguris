@@ -42,6 +42,11 @@
         app:fragment="acr.browser.lightning.settings.fragment.DebugSettingsFragment"
         app:title="@string/debug_title"/>
 
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.AppsSettingsFragment"
+        app:summary="@string/settings_summary_apps"
+        app:title="@string/settings_title_apps"/>
+
     <!-- About is traditionally last -->
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AboutSettingsFragment"

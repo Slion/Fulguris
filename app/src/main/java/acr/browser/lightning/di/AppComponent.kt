@@ -84,6 +84,8 @@ interface AppComponent {
 
     fun inject(popupMenu: BrowserPopupMenu)
 
+    fun inject(appsSettingsFragment: AppsSettingsFragment)
+
     fun provideBloomFilterAdBlocker(): BloomFilterAdBlocker
 
     fun provideNoOpAdBlocker(): NoOpAdBlocker

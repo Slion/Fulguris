@@ -1,6 +1,8 @@
 package acr.browser.lightning.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -8,6 +10,11 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.webkit.WebView;
 
@@ -34,13 +41,19 @@ public class IntentUtils {
         mActivity = activity;
     }
 
-    public boolean startActivityForUrl(@Nullable WebView tab, @NonNull String url) {
+    /**
+     *
+     * @param tab
+     * @param url
+     * @return
+     */
+    public Intent intentForUrl(@Nullable WebView tab, @NonNull String url) {
         Intent intent;
         try {
             intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
         } catch (URISyntaxException ex) {
             Log.w("Browser", "Bad URI " + url + ": " + ex.getMessage());
-            return false;
+            return null;
         }
 
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -48,15 +61,16 @@ public class IntentUtils {
         intent.setSelector(null);
 
         if (mActivity.getPackageManager().resolveActivity(intent, 0) == null) {
+            // SL: Not sure what that special case is for
             String packagename = intent.getPackage();
             if (packagename != null) {
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:"
-                    + packagename));
+                        + packagename));
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                mActivity.startActivity(intent);
-                return true;
+                //mActivity.startActivity(intent);
+                return intent;
             } else {
-                return false;
+                return null;
             }
         }
         if (tab != null) {
@@ -65,17 +79,27 @@ public class IntentUtils {
 
         Matcher m = ACCEPTED_URI_SCHEMA.matcher(url);
         if (m.matches() && !isSpecializedHandlerAvailable(intent)) {
-            return false;
+            return null;
         }
-        try {
-            if (mActivity.startActivityIfNeeded(intent, -1)) {
-                return true;
+
+        return intent;
+    }
+
+    public boolean startActivityForIntent(Intent aIntent) {
+            try {
+                if (mActivity.startActivityIfNeeded(aIntent, -1)) {
+                    return true;
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                // TODO: 6/5/17 fix case where this could throw a FileUriExposedException due to file:// urls
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            // TODO: 6/5/17 fix case where this could throw a FileUriExposedException due to file:// urls
-        }
         return false;
+    }
+
+    public boolean startActivityForUrl(@Nullable WebView tab, @NonNull String url) {
+        Intent intent = intentForUrl(tab,url);
+        return startActivityForIntent(intent);
     }
 
     /**

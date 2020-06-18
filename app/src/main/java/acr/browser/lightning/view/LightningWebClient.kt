@@ -4,8 +4,10 @@ import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AdBlocker
 import acr.browser.lightning.adblock.allowlist.AllowListModel
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.snackbar
@@ -23,7 +25,9 @@ import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTr
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.net.MailTo
 import android.net.http.SslError
@@ -41,6 +45,7 @@ import io.reactivex.subjects.PublishSubject
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.net.URISyntaxException
+import java.net.URL
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
@@ -56,6 +61,7 @@ class LightningWebClient(
 
     @Inject internal lateinit var proxyUtils: ProxyUtils
     @Inject internal lateinit var userPreferences: UserPreferences
+    @Inject @UserPrefs internal lateinit var preferences: SharedPreferences
     @Inject internal lateinit var sslWarningPreferences: SslWarningPreferences
     @Inject internal lateinit var whitelistModel: AllowListModel
     @Inject internal lateinit var logger: Logger
@@ -280,6 +286,9 @@ class LightningWebClient(
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean =
         shouldOverrideLoading(view, url) || super.shouldOverrideUrlLoading(view, url)
 
+    // We use this to prevent opening such dialogs multiple times
+    var exAppLaunchDialog: AlertDialog? = null
+
     private fun shouldOverrideLoading(view: WebView, url: String): Boolean {
         // Check if configured proxy is available
         if (!proxyUtils.isProxyReady(activity)) {
@@ -298,13 +307,53 @@ class LightningWebClient(
             return continueLoadingUrl(view, url, headers)
         }
 
-        return if (isMailOrIntent(url, view) || intentUtils.startActivityForUrl(view, url)) {
+        if (isMailOrIntent(url, view)) {
             // If it was a mailto: link, or an intent, or could be launched elsewhere, do that
-            true
-        } else {
-            // If none of the special conditions was met, continue with loading the url
-            continueLoadingUrl(view, url, headers)
+            return true
         }
+
+        val intent = intentUtils.intentForUrl(view, url)
+        intent?.let {
+            // Check if that external app is already known
+            val prefKey = activity.getString(R.string.settings_app_prefix) + URL(url).host
+            if (preferences.contains(prefKey)) {
+                if (preferences.getBoolean(prefKey,false)) {
+                    // Trusted app, just launch it on the stop and abort loading
+                    intentUtils.startActivityForIntent(intent)
+                    return true
+                } else {
+                    // User does not want use to use this app
+                    return false
+                }
+            }
+
+            // We first encounter that app ask user if we should use it?
+            // We will keep loading even if an external app is available the first time we encounter it.
+            (activity as BrowserActivity).mainHandler.postDelayed({
+                if (exAppLaunchDialog==null) {
+                exAppLaunchDialog = AlertDialog.Builder(activity).setTitle(R.string.dialog_title_third_party_app).setMessage(R.string.dialog_message_third_party_app)
+                    .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
+                        // Handle Ok
+                        intentUtils.startActivityForIntent(intent)
+                        dialog.dismiss()
+                        exAppLaunchDialog = null
+                        // Remember user choice
+                        preferences.edit().putBoolean(prefKey,true).apply()
+                    })
+                    .setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
+                        // Handle Cancel
+                        dialog.dismiss()
+                        exAppLaunchDialog = null
+                        // Remember user choice
+                        preferences.edit().putBoolean(prefKey,false).apply()
+                    })
+                    .create()
+                exAppLaunchDialog?.show()
+                }},1000)
+        }
+
+        // If none of the special conditions was met, continue with loading the url
+        return continueLoadingUrl(view, url, headers)
     }
 
     private fun continueLoadingUrl(webView: WebView, url: String, headers: Map<String, String>): Boolean {
