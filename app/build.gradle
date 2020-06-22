@@ -44,7 +44,7 @@ android {
             proguardFiles 'proguard-project.txt'
             testCoverageEnabled false
             // Use debug signing for now
-            signingConfig debug.signingConfig
+            //signingConfig debug.signingConfig
 
             ndk {
                 abiFilters "arm64-v8a", "armeabi-v7a", "armeabi", "mips"
@@ -75,8 +75,8 @@ android {
         slions {
             dimension "brand"
             applicationId "net.slions.fulguris"
-            versionCode 42
-            versionName "0.9.6"
+            versionCode 43
+            versionName "0.9.7"
             archivesBaseName = "Fulguris-v$versionName"
         }
 
@@ -161,6 +161,9 @@ dependencies {
     implementation "androidx.drawerlayout:drawerlayout:1.0.0"
     implementation 'androidx.preference:preference:1.1.1'
 
+    // Play Store billing
+    playstoreImplementation 'com.android.billingclient:billing:3.0.0'
+
     // html parsing for reading mode
     implementation 'org.jsoup:jsoup:1.11.3'
 
@@ -212,7 +215,7 @@ dependencies {
     // Recommended: Add the Firebase SDK for Google Analytics.
     implementation 'com.google.firebase:firebase-analytics:17.4.3'
     // Add the Firebase SDK for Crashlytics.
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
 
     // Volley HTTP request
     implementation 'com.android.volley:volley:1.1.1'

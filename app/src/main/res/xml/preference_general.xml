@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/tabs">
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_search_in_new_tab"
+            app:title="@string/search_in_new_tab"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_url_in_new_tab"
+            app:title="@string/url_in_new_tab"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false" />
+
+        <ListPreference
+            app:key="@string/pref_key_new_tab_position"
+            app:title="@string/new_tab_position"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="@string/new_tab_position_after_value"
+            app:entries="@array/new_tab_positions"
+            app:entryValues="@array/new_tab_position_values"/>
+
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_general">
         <CheckBoxPreference

@@ -6,7 +6,8 @@
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.GeneralSettingsFragment"
-        app:title="@string/settings_general"/>
+        app:title="@string/settings_general"
+        app:icon="@drawable/ic_settings" />
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.DisplaySettingsFragment"
@@ -15,15 +16,18 @@
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AdBlockSettingsFragment"
-        app:title="@string/settings_adblock"/>
+        app:title="@string/settings_adblock"
+        app:icon="@drawable/ic_block" />
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.BookmarkSettingsFragment"
-        app:title="@string/bookmark_settings"/>
+        app:title="@string/bookmark_settings"
+        app:icon="@drawable/ic_bookmarks" />
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.PrivacySettingsFragment"
-        app:title="@string/settings_privacy"/>
+        app:title="@string/settings_privacy"
+        app:icon="@drawable/ic_security" />
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AdvancedSettingsFragment"
         app:title="@string/settings_advanced"/>
@@ -40,18 +44,21 @@
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.DebugSettingsFragment"
-        app:title="@string/debug_title"/>
+        app:title="@string/debug_title"
+        app:icon="@drawable/ic_bug" />
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AppsSettingsFragment"
         app:summary="@string/settings_summary_apps"
-        app:title="@string/settings_title_apps"/>
+        app:title="@string/settings_title_apps"
+        app:icon="@drawable/ic_apps" />
 
     <!-- About is traditionally last -->
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AboutSettingsFragment"
         app:summary="@string/settings_about_explain"
-        app:title="@string/settings_about"/>
+        app:title="@string/settings_about"
+        app:icon="@drawable/ic_about" />
 
 </PreferenceScreen>
 
