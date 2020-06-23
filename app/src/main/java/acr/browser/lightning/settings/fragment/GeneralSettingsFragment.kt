@@ -5,8 +5,10 @@ import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.constant.SCHEME_BLANK
 import acr.browser.lightning.constant.SCHEME_BOOKMARKS
 import acr.browser.lightning.constant.SCHEME_HOMEPAGE
+import acr.browser.lightning.constant.TEXT_ENCODINGS
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
+import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.preference.userAgent
@@ -29,6 +31,7 @@ import android.view.LayoutInflater
 import android.webkit.URLUtil
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import javax.inject.Inject
 
@@ -105,7 +108,34 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             onCheckChange = { userPreferences.javaScriptEnabled = it }
         )
 
+        clickableDynamicPreference(
+                preference = getString(R.string.pref_key_default_text_encoding),
+                summary = userPreferences.textEncoding,
+                onClick = this::showTextEncodingDialogPicker
+        )
     }
+
+    /**
+     * Shows the dialog which allows the user to choose the browser's text encoding.
+     *
+     * @param summaryUpdater the command which allows the summary to be updated.
+     */
+    private fun showTextEncodingDialogPicker(summaryUpdater: SummaryUpdater) {
+        activity?.let {
+            AlertDialog.Builder(it).apply {
+                setTitle(resources.getString(R.string.text_encoding))
+
+                val currentChoice = TEXT_ENCODINGS.indexOf(userPreferences.textEncoding)
+
+                setSingleChoiceItems(TEXT_ENCODINGS, currentChoice) { _, which ->
+                    userPreferences.textEncoding = TEXT_ENCODINGS[which]
+                    summaryUpdater.updateSummary(TEXT_ENCODINGS[which])
+                }
+                setPositiveButton(resources.getString(R.string.action_ok), null)
+            }.resizeAndShow()
+        }
+    }
+
 
     private fun ProxyChoice.toSummary(): String {
         val stringArray = resources.getStringArray(R.array.proxy_choices_array)

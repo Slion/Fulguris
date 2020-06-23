@@ -256,7 +256,7 @@ class UserPreferences @Inject constructor(
     /**
      * The text encoding used by the browser.
      */
-    var textEncoding by preferences.stringPreference(TEXT_ENCODING, DEFAULT_ENCODING)
+    var textEncoding by preferences.stringPreference(R.string.pref_key_default_text_encoding, DEFAULT_ENCODING)
 
     /**
      * True if the web page storage should be cleared when the app exits, false otherwise.

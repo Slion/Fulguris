@@ -35,6 +35,7 @@
     <string name="pref_key_tool_bar_text_display">pref_key_tool_bar_text_display</string>
     <string name="pref_key_restore_tabs_on_startup">pref_key_restore_tabs_on_startup</string>
     <string name="pref_key_support_multiple_window">pref_key_support_multiple_window</string>
+    <string name="pref_key_default_text_encoding">pref_key_default_text_encoding</string>
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>

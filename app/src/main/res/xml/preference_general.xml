@@ -42,7 +42,8 @@
             android:defaultValue="true"
             android:key="@string/pref_key_support_multiple_window"
             android:summary="@string/recommended"
-            android:title="@string/window" />
+            android:title="@string/window"
+            app:iconSpaceReserved="false" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -74,5 +75,9 @@
         <Preference
             android:key="suggestions_choice"
             android:title="@string/search_suggestions"/>
+        <Preference
+            android:key="@string/pref_key_default_text_encoding"
+            android:title="@string/text_encoding" />
+
     </PreferenceCategory>
 </PreferenceScreen>

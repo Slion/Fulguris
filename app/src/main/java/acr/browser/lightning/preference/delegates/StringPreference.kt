@@ -1,6 +1,8 @@
 package acr.browser.lightning.preference.delegates
 
+import acr.browser.lightning.BrowserApp
 import android.content.SharedPreferences
+import androidx.annotation.StringRes
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -30,3 +32,12 @@ fun SharedPreferences.stringPreference(
     name: String,
     defaultValue: String
 ): ReadWriteProperty<Any, String> = StringPreferenceDelegate(name, defaultValue, this)
+
+
+/**
+ * Creates a [String] from [SharedPreferences] with the provided arguments.
+ */
+fun SharedPreferences.stringPreference(
+        @StringRes stringRes: Int,
+        defaultValue: String
+): ReadWriteProperty<Any, String> = StringPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), defaultValue, this)

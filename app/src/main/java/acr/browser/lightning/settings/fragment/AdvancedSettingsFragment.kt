@@ -29,12 +29,6 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
 
         injector.inject(this)
 
-        clickableDynamicPreference(
-            preference = SETTINGS_TEXT_ENCODING,
-            summary = userPreferences.textEncoding,
-            onClick = this::showTextEncodingDialogPicker
-        )
-
 
         val incognitoCheckboxPreference = switchPreference(
             preference = SETTINGS_COOKIES_INCOGNITO,
@@ -67,32 +61,9 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
 
 
 
-    /**
-     * Shows the dialog which allows the user to choose the browser's text encoding.
-     *
-     * @param summaryUpdater the command which allows the summary to be updated.
-     */
-    private fun showTextEncodingDialogPicker(summaryUpdater: SummaryUpdater) {
-        activity?.let {
-            AlertDialog.Builder(it).apply {
-                setTitle(resources.getString(R.string.text_encoding))
-
-                val currentChoice = TEXT_ENCODINGS.indexOf(userPreferences.textEncoding)
-
-                setSingleChoiceItems(TEXT_ENCODINGS, currentChoice) { _, which ->
-                    userPreferences.textEncoding = TEXT_ENCODINGS[which]
-                    summaryUpdater.updateSummary(TEXT_ENCODINGS[which])
-                }
-                setPositiveButton(resources.getString(R.string.action_ok), null)
-            }.resizeAndShow()
-        }
-    }
-
-
     companion object {
         private const val SETTINGS_ENABLE_COOKIES = "allow_cookies"
         private const val SETTINGS_COOKIES_INCOGNITO = "incognito_cookies"
-        private const val SETTINGS_TEXT_ENCODING = "text_encoding"
     }
 
 }
