@@ -49,7 +49,6 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
-import java.io.ByteArrayOutputStream
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -382,7 +381,7 @@ class LightningView(
             settings.layoutAlgorithm = LayoutAlgorithm.NORMAL
         }
 
-        settings.blockNetworkImage = userPreferences.blockImagesEnabled
+        settings.blockNetworkImage = !userPreferences.loadImages
         // Modifying headers causes SEGFAULTS, so disallow multi window if headers are enabled.
         settings.setSupportMultipleWindows(userPreferences.popupsEnabled && !modifiesHeaders)
 

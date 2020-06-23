@@ -38,6 +38,9 @@
     <string name="pref_key_default_text_encoding">pref_key_default_text_encoding</string>
     <string name="pref_key_cookies">pref_key_cookies</string>
     <string name="pref_key_cookies_incognito">pref_key_cookies_incognito</string>
+    <string name="pref_key_javascript">pref_key_javascript</string>
+    <string name="pref_key_request_save_data">pref_key_request_save_data</string>
+    <string name="pref_key_load_images">pref_key_load_images</string>
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>

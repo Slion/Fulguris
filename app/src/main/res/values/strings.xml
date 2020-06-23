@@ -30,6 +30,7 @@
     <string name="cache">Clear cache on exit</string>
     <string name="reflow">Enable text reflow</string>
     <string name="block">Block images</string>
+    <string name="load_images">Load images</string>
     <string name="window">Allow sites to open new windows</string>
     <string name="cookies">Enable cookies</string>
     <string name="size">Text size</string>

@@ -2,6 +2,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Preference
+        android:key="home"
+        android:title="@string/home"
+        app:icon="@drawable/ic_action_home" />
+
+    <Preference
+        android:key="search"
+        android:title="@string/search"
+        app:icon="@drawable/ic_search" />
+
+    <Preference
+        android:key="suggestions_choice"
+        android:title="@string/search_suggestions"
+        app:icon="@drawable/ic_list" />
+
     <PreferenceCategory android:title="@string/tabs">
 
         <SwitchPreferenceCompat
@@ -40,6 +55,13 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
+            android:key="@string/pref_key_load_images"
+            android:title="@string/load_images"
+            app:icon="@drawable/ic_image"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
             android:key="@string/pref_key_support_multiple_window"
             android:summary="@string/recommended"
             android:title="@string/window"
@@ -58,43 +80,38 @@
             android:title="@string/incognito_cookies"
             app:iconSpaceReserved="false" />
 
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="cb_images"
-            android:title="@string/block"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="savedata"
-            android:title="@string/save_data" />
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:key="cb_javascript"
-            android:title="@string/java"/>
+            android:key="@string/pref_key_javascript"
+            android:title="@string/java"
+            app:iconSpaceReserved="false"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_request_save_data"
+            android:title="@string/save_data"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="proxy"
-            android:title="@string/http_proxy"/>
+            android:title="@string/http_proxy"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="agent"
-            android:title="@string/agent"/>
+            android:title="@string/agent"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="download"
-            android:title="@string/download"/>
+            android:title="@string/download"
+            app:icon="@drawable/ic_file_download"
+            app:iconSpaceReserved="false"/>
 
         <Preference
-            android:key="home"
-            android:title="@string/home"/>
-        <Preference
-            android:key="search"
-            android:title="@string/search"/>
-        <Preference
-            android:key="suggestions_choice"
-            android:title="@string/search_suggestions"/>
-        <Preference
             android:key="@string/pref_key_default_text_encoding"
-            android:title="@string/text_encoding" />
+            android:title="@string/text_encoding"
+            app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 </PreferenceScreen>

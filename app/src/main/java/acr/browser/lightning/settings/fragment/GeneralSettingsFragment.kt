@@ -18,7 +18,6 @@ import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.Suggestions
 import acr.browser.lightning.search.engine.BaseSearchEngine
 import acr.browser.lightning.search.engine.CustomSearch
-import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.utils.ProxyUtils
 import acr.browser.lightning.utils.ThemeUtils
@@ -90,24 +89,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             preference = SETTINGS_SUGGESTIONS,
             summary = searchSuggestionChoiceToTitle(Suggestions.from(userPreferences.searchSuggestionChoice)),
             onClick = ::showSearchSuggestionsDialog
-        )
-
-        checkBoxPreference(
-            preference = SETTINGS_IMAGES,
-            isChecked = userPreferences.blockImagesEnabled,
-            onCheckChange = { userPreferences.blockImagesEnabled = it }
-        )
-
-        checkBoxPreference(
-            preference = SETTINGS_SAVEDATA,
-            isChecked = userPreferences.saveDataEnabled,
-            onCheckChange = { userPreferences.saveDataEnabled = it }
-        )
-
-        checkBoxPreference(
-            preference = SETTINGS_JAVASCRIPT,
-            isChecked = userPreferences.javaScriptEnabled,
-            onCheckChange = { userPreferences.javaScriptEnabled = it }
         )
 
         clickableDynamicPreference(
@@ -510,9 +491,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
     companion object {
         private const val SETTINGS_PROXY = "proxy"
-        private const val SETTINGS_IMAGES = "cb_images"
-        private const val SETTINGS_SAVEDATA = "savedata"
-        private const val SETTINGS_JAVASCRIPT = "cb_javascript"
         private const val SETTINGS_USER_AGENT = "agent"
         private const val SETTINGS_DOWNLOAD = "download"
         private const val SETTINGS_HOME = "home"

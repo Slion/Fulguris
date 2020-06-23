@@ -41,7 +41,7 @@ class UserPreferences @Inject constructor(
     /**
      * True if the browser should block images from being loaded, false otherwise.
      */
-    var blockImagesEnabled by preferences.booleanPreference(BLOCK_IMAGES, false)
+    var loadImages by preferences.booleanPreference(R.string.pref_key_load_images, true)
 
     /**
      * True if the browser should clear the browser cache when the app is exited, false otherwise.
@@ -131,7 +131,7 @@ class UserPreferences @Inject constructor(
     /**
      * True if the browser should allow execution of javascript, false otherwise.
      */
-    var javaScriptEnabled by preferences.booleanPreference(JAVASCRIPT, true)
+    var javaScriptEnabled by preferences.booleanPreference(R.string.pref_key_javascript, true)
 
     /**
      * True if the device location should be accessible by websites, false otherwise.
@@ -278,7 +278,7 @@ class UserPreferences @Inject constructor(
     /**
      * True if the browser should save form data, false otherwise.
      */
-    var saveDataEnabled by preferences.booleanPreference(SAVE_DATA, false)
+    var saveDataEnabled by preferences.booleanPreference(R.string.pref_key_request_save_data, false)
 
     /**
      * True if the browser should attempt to remove identifying headers in GET requests, false if
@@ -370,11 +370,9 @@ class UserPreferences @Inject constructor(
 // TODO: That does not make sense, we need to sort this out
 private const val WEB_RTC = "webRtc"
 private const val BLOCK_ADS = "AdBlock"
-private const val BLOCK_IMAGES = "blockimages"
 private const val CLEAR_CACHE_EXIT = "cache"
 private const val DOWNLOAD_DIRECTORY = "downloadLocation"
 private const val HOMEPAGE = "home"
-private const val JAVASCRIPT = "java"
 private const val LOCATION = "location"
 private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
@@ -388,7 +386,6 @@ private const val INVERT_COLORS = "invertColors"
 private const val READING_TEXT_SIZE = "readingTextSize"
 private const val CLEAR_WEB_STORAGE_EXIT = "clearWebStorageExit"
 private const val DO_NOT_TRACK = "doNotTrack"
-private const val SAVE_DATA = "saveData"
 private const val IDENTIFYING_HEADERS = "removeIdentifyingHeaders"
 private const val BOOKMARKS_CHANGED = "bookmarksChanged"
 private const val PROXY_CHOICE = "proxyChoice"
