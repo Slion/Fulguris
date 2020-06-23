@@ -51,7 +51,14 @@ class UserPreferences @Inject constructor(
     /**
      * True if the browser should allow websites to store and access cookies, false otherwise.
      */
-    var cookiesEnabled by preferences.booleanPreference(COOKIES, true)
+    var cookiesEnabled by preferences.booleanPreference(R.string.pref_key_cookies, true)
+
+    /**
+     * True if cookies should be enabled in incognito mode, false otherwise.
+     *
+     * WARNING: Cookies will be shared between regular and incognito modes if this is enabled.
+     */
+    var incognitoCookiesEnabled by preferences.booleanPreference(R.string.pref_key_cookies_incognito, false)
 
     /**
      * The folder into which files will be downloaded.
@@ -120,13 +127,6 @@ class UserPreferences @Inject constructor(
      * The URL of the selected homepage.
      */
     var homepage by preferences.stringPreference(HOMEPAGE, SCHEME_HOMEPAGE)
-
-    /**
-     * True if cookies should be enabled in incognito mode, false otherwise.
-     *
-     * WARNING: Cookies will be shared between regular and incognito modes if this is enabled.
-     */
-    var incognitoCookiesEnabled by preferences.booleanPreference(INCOGNITO_COOKIES, false)
 
     /**
      * True if the browser should allow execution of javascript, false otherwise.
@@ -372,10 +372,8 @@ private const val WEB_RTC = "webRtc"
 private const val BLOCK_ADS = "AdBlock"
 private const val BLOCK_IMAGES = "blockimages"
 private const val CLEAR_CACHE_EXIT = "cache"
-private const val COOKIES = "cookies"
 private const val DOWNLOAD_DIRECTORY = "downloadLocation"
 private const val HOMEPAGE = "home"
-private const val INCOGNITO_COOKIES = "incognitocookies"
 private const val JAVASCRIPT = "java"
 private const val LOCATION = "location"
 private const val SAVE_PASSWORDS = "passwords"
@@ -388,7 +386,6 @@ private const val CLEAR_COOKIES_EXIT = "clearCookiesExit"
 private const val BLOCK_THIRD_PARTY = "thirdParty"
 private const val INVERT_COLORS = "invertColors"
 private const val READING_TEXT_SIZE = "readingTextSize"
-private const val TEXT_ENCODING = "textEncoding"
 private const val CLEAR_WEB_STORAGE_EXIT = "clearWebStorageExit"
 private const val DO_NOT_TRACK = "doNotTrack"
 private const val SAVE_DATA = "saveData"

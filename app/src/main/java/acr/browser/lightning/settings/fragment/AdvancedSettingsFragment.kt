@@ -30,40 +30,9 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
         injector.inject(this)
 
 
-        val incognitoCheckboxPreference = switchPreference(
-            preference = SETTINGS_COOKIES_INCOGNITO,
-            isEnabled = !Capabilities.FULL_INCOGNITO.isSupported,
-            isChecked = if (Capabilities.FULL_INCOGNITO.isSupported) {
-                userPreferences.cookiesEnabled
-            } else {
-                userPreferences.incognitoCookiesEnabled
-            },
-            summary = if (Capabilities.FULL_INCOGNITO.isSupported) {
-                getString(R.string.incognito_cookies_pie)
-            } else {
-                null
-            },
-            onCheckChange = { userPreferences.incognitoCookiesEnabled = it }
-        )
 
-        switchPreference(
-            preference = SETTINGS_ENABLE_COOKIES,
-            isChecked = userPreferences.cookiesEnabled,
-            onCheckChange = {
-                userPreferences.cookiesEnabled = it
-                if (Capabilities.FULL_INCOGNITO.isSupported) {
-                    incognitoCheckboxPreference.isChecked = it
-                }
-            }
-        )
 
     }
 
-
-
-    companion object {
-        private const val SETTINGS_ENABLE_COOKIES = "allow_cookies"
-        private const val SETTINGS_COOKIES_INCOGNITO = "incognito_cookies"
-    }
 
 }

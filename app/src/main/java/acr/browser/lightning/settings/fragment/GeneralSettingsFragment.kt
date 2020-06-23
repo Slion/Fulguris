@@ -1,5 +1,6 @@
 package acr.browser.lightning.settings.fragment
 
+import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.constant.SCHEME_BLANK
@@ -10,6 +11,7 @@ import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
+import acr.browser.lightning.isSupported
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.preference.userAgent
 import acr.browser.lightning.search.SearchEngineProvider
@@ -112,6 +114,33 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 preference = getString(R.string.pref_key_default_text_encoding),
                 summary = userPreferences.textEncoding,
                 onClick = this::showTextEncodingDialogPicker
+        )
+
+        val incognitoCheckboxPreference = switchPreference(
+                preference = getString(R.string.pref_key_cookies_incognito),
+                isEnabled = !Capabilities.FULL_INCOGNITO.isSupported,
+                isChecked = if (Capabilities.FULL_INCOGNITO.isSupported) {
+                    userPreferences.cookiesEnabled
+                } else {
+                    userPreferences.incognitoCookiesEnabled
+                },
+                summary = if (Capabilities.FULL_INCOGNITO.isSupported) {
+                    getString(R.string.incognito_cookies_pie)
+                } else {
+                    null
+                },
+                onCheckChange = { userPreferences.incognitoCookiesEnabled = it }
+        )
+
+        switchPreference(
+                preference = getString(R.string.pref_key_cookies),
+                isChecked = userPreferences.cookiesEnabled,
+                onCheckChange = {
+                    userPreferences.cookiesEnabled = it
+                    if (Capabilities.FULL_INCOGNITO.isSupported) {
+                        incognitoCheckboxPreference.isChecked = it
+                    }
+                }
         )
     }
 

@@ -28,8 +28,11 @@
         app:fragment="acr.browser.lightning.settings.fragment.PrivacySettingsFragment"
         app:title="@string/settings_privacy"
         app:icon="@drawable/ic_security" />
+
+    <!-- Advanced settings are now empty, remove them at some point -->
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AdvancedSettingsFragment"
+        app:isPreferenceVisible="false"
         app:title="@string/settings_advanced"/>
     <!-- Just hide Lightning FAQ for now -->
     <Preference

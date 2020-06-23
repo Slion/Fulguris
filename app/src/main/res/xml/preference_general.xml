@@ -45,6 +45,19 @@
             android:title="@string/window"
             app:iconSpaceReserved="false" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_cookies"
+            android:summary="@string/recommended"
+            android:title="@string/cookies"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_cookies_incognito"
+            android:title="@string/incognito_cookies"
+            app:iconSpaceReserved="false" />
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="cb_images"
@@ -57,15 +70,19 @@
             android:defaultValue="true"
             android:key="cb_javascript"
             android:title="@string/java"/>
+
         <Preference
             android:key="proxy"
             android:title="@string/http_proxy"/>
+
         <Preference
             android:key="agent"
             android:title="@string/agent"/>
+
         <Preference
             android:key="download"
             android:title="@string/download"/>
+
         <Preference
             android:key="home"
             android:title="@string/home"/>
