@@ -51,13 +51,14 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             onClick = ::showTextSizePicker
         )
 
+        // Setup rendering mode selection
         clickableDynamicPreference(
                 preference = getString(R.string.pref_key_rendering_mode),
                 summary = userPreferences.renderingMode.toDisplayString(),
                 onClick = this::showRenderingDialogPicker
         )
 
-
+        // Setup tool bar text selection
         clickableDynamicPreference(
                 preference = getString(R.string.pref_key_tool_bar_text_display),
                 summary = userPreferences.urlBoxContentChoice.toDisplayString(),

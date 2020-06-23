@@ -1481,8 +1481,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     protected fun saveOpenTabs() {
-        if (userPreferences.restoreLostTabsEnabled) {
+        if (userPreferences.restoreTabsOnStartup) {
             tabsManager.saveState()
+        }
+        else {
+            tabsManager.clearSavedState()
         }
     }
 

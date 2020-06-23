@@ -32,7 +32,7 @@
     <string name="search_hint">Ara</string>
     <string name="wideViewPort">Geniş ekranda kullan</string>
     <string name="overViewMode">Sayfaları önizleme modunda göster</string>
-    <string name="restore">Açılırken önceki sekmeleri geri yükle</string>
+    <string name="restore_tabs_on_startup">Açılırken önceki sekmeleri geri yükle</string>
     <string name="supported_browsers_title">Desteklenen tarayıcılar</string>
     <string name="stock_browser">Stock tarayıcı</string>
     <string name="stock_browser_unavailable">Stock tarayıcı bulunamadı</string>

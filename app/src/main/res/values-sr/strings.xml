@@ -47,7 +47,7 @@
     <string name="search_hint">Тражи</string>
     <string name="wideViewPort">Широки приказ</string>
     <string name="overViewMode">Учитај странице у режиму прегледа</string>
-    <string name="restore">Врати изгубљене језичке по покретању</string>
+    <string name="restore_tabs_on_startup">Врати изгубљене језичке по покретању</string>
     <string name="supported_browsers_title">Подржани прегледачи</string>
     <string name="stock_browser">Уграђени прегледач</string>
     <string name="stock_browser_unavailable">Нема уграђеног прегледача</string>

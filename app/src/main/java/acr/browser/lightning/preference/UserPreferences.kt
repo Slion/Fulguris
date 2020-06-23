@@ -155,7 +155,7 @@ class UserPreferences @Inject constructor(
      * True if the app should remember which browser tabs were open and restore them if the browser
      * is automatically closed by the system.
      */
-    var restoreLostTabsEnabled by preferences.booleanPreference(RESTORE_LOST_TABS, true)
+    var restoreTabsOnStartup by preferences.booleanPreference(R.string.pref_key_restore_tabs_on_startup, true)
 
     /**
      * True if the browser should save form input, false otherwise.
@@ -379,7 +379,6 @@ private const val INCOGNITO_COOKIES = "incognitocookies"
 private const val JAVASCRIPT = "java"
 private const val LOCATION = "location"
 private const val POPUPS = "newwindows"
-private const val RESTORE_LOST_TABS = "restoreclosed"
 private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
 private const val SEARCH_URL = "searchurl"

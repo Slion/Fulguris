@@ -46,7 +46,7 @@
     <string name="search_hint">Pesquisa</string>
     <string name="wideViewPort">Utilizar viewport amplo</string>
     <string name="overViewMode">Carregar páginas no modo panorâmico</string>
-    <string name="restore">Restaurar abas ao iniciar</string>
+    <string name="restore_tabs_on_startup">Restaurar abas ao iniciar</string>
     <string name="stock_browser_unavailable">Navegador não detectado</string>
     <string name="stock_browser_available">Navegador detetado</string>
     <string name="fullScreenOption">Ocultar barra de estado ao navegar</string>

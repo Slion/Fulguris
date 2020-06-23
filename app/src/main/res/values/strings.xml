@@ -38,7 +38,7 @@
     <string name="search_hint">Search</string>
     <string name="wideViewPort">Use wide viewport</string>
     <string name="overViewMode">Load pages in overview mode</string>
-    <string name="restore">Restore lost tabs on start</string>
+    <string name="restore_tabs_on_startup">Restore tabs on startup</string>
     <string name="supported_browsers_title">Supported browsers</string>
     <string name="stock_browser">Stock browser</string>
     <string name="stock_browser_unavailable">No stock browser detected</string>

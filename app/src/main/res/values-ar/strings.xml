@@ -23,7 +23,7 @@
     <string name="search_hint">بحث</string>
     <string name="wideViewPort">استخدام إطار عرض واسع</string>
     <string name="overViewMode">تحميل الصفحات في نظرة عامة</string>
-    <string name="restore">استعادة علامات التبويب المفقودة عند  البدء</string>
+    <string name="restore_tabs_on_startup">استعادة علامات التبويب المفقودة عند  البدء</string>
     <string name="stock_browser_unavailable">(لا يوجد مخزون في المتصفح)</string>
     <string name="stock_browser_available">(دعم مخزون المتصفح )</string>
     <string name="fullScreenOption">إخفاء شريط الحالة أثناء التصفح</string>

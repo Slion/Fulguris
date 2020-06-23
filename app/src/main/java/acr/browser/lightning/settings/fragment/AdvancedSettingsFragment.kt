@@ -35,13 +35,13 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
             onClick = this::showTextEncodingDialogPicker
         )
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_NEW_WINDOW,
             isChecked = userPreferences.popupsEnabled,
             onCheckChange = { userPreferences.popupsEnabled = it }
         )
 
-        val incognitoCheckboxPreference = checkBoxPreference(
+        val incognitoCheckboxPreference = switchPreference(
             preference = SETTINGS_COOKIES_INCOGNITO,
             isEnabled = !Capabilities.FULL_INCOGNITO.isSupported,
             isChecked = if (Capabilities.FULL_INCOGNITO.isSupported) {
@@ -57,7 +57,7 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
             onCheckChange = { userPreferences.incognitoCookiesEnabled = it }
         )
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_ENABLE_COOKIES,
             isChecked = userPreferences.cookiesEnabled,
             onCheckChange = {
@@ -68,11 +68,6 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
             }
         )
 
-        checkBoxPreference(
-            preference = SETTINGS_RESTORE_TABS,
-            isChecked = userPreferences.restoreLostTabsEnabled,
-            onCheckChange = { userPreferences.restoreLostTabsEnabled = it }
-        )
     }
 
 
@@ -103,7 +98,6 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_NEW_WINDOW = "allow_new_window"
         private const val SETTINGS_ENABLE_COOKIES = "allow_cookies"
         private const val SETTINGS_COOKIES_INCOGNITO = "incognito_cookies"
-        private const val SETTINGS_RESTORE_TABS = "restore_tabs"
         private const val SETTINGS_TEXT_ENCODING = "text_encoding"
     }
 

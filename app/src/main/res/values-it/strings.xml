@@ -45,7 +45,7 @@
     <string name="recommended">Consigliato</string>
     <string name="search">Motore di ricerca</string>
     <string name="search_hint">Cerca</string>
-    <string name="restore">Ripristina schede chiuse all\'avvio</string>
+    <string name="restore_tabs_on_startup">Ripristina schede chiuse all\'avvio</string>
     <string name="stock_browser">Browser di sistema</string>
     <string name="stock_browser_unavailable">Nessun browser stock trovato</string>
     <string name="stock_browser_available">Browser stock supportato trovato</string>

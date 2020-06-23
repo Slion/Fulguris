@@ -31,7 +31,7 @@
     <string name="search_hint">搜索</string>
     <string name="wideViewPort">使用宽视口</string>
     <string name="overViewMode">以概览模式加载页面</string>
-    <string name="restore">启动时恢复未关闭的标签页</string>
+    <string name="restore_tabs_on_startup">启动时恢复未关闭的标签页</string>
     <string name="supported_browsers_title">支持的浏览器</string>
     <string name="stock_browser">原生浏览器</string>
     <string name="stock_browser_unavailable">没有检测到原生浏览器</string>

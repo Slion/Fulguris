@@ -29,7 +29,7 @@
     <string name="search_hint">Buscar</string>
     <string name="wideViewPort">Utilizar viewport normal</string>
     <string name="overViewMode">Visualizar la página de lejos al cargar</string>
-    <string name="restore">Restaurar pestañas cerradas al iniciar</string>
+    <string name="restore_tabs_on_startup">Restaurar pestañas cerradas al iniciar</string>
     <string name="supported_browsers_title">Navegadores compatibles</string>
     <string name="stock_browser">Navegador de sistema</string>
     <string name="stock_browser_unavailable">Navegador de sistema no detectado</string>

@@ -31,7 +31,7 @@
     <string name="search_hint">Поиск</string>
     <string name="wideViewPort">Широкий вид</string>
     <string name="overViewMode">Загружать обзор</string>
-    <string name="restore">Восстановление предыдущей сессии</string>
+    <string name="restore_tabs_on_startup">Восстановление предыдущей сессии</string>
     <string name="supported_browsers_title">Поддерживаемые браузеры</string>
     <string name="stock_browser">Встроенный браузер</string>
     <string name="stock_browser_unavailable">Встроенный браузер не обнаружен</string>

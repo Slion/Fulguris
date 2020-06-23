@@ -48,7 +48,7 @@
     <string name="search_hint">Rechercher</string>
     <string name="wideViewPort">Utiliser large fenêtre d\'affichage</string>
     <string name="overViewMode">Charger les pages en mode aperçu</string>
-    <string name="restore">Restaurer les onglets perdus au démarrage</string>
+    <string name="restore_tabs_on_startup">Restaurer les onglets perdus au démarrage</string>
     <string name="supported_browsers_title">Navigateurs pris en charge</string>
     <string name="stock_browser">Navigateur par défaut</string>
     <string name="stock_browser_unavailable">Aucun navigateur détecté</string>

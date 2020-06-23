@@ -109,10 +109,14 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         preference: String,
         isChecked: Boolean,
         isEnabled: Boolean = true,
+        summary: String? = null,
         onCheckChange: (Boolean) -> Unit
     ): SwitchPreferenceCompat = (findPreference<SwitchPreferenceCompat>(preference) as SwitchPreferenceCompat).apply {
         this.isChecked = isChecked
         this.isEnabled = isEnabled
+        summary?.let {
+            this.summary = summary
+        }
         onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, any: Any ->
             onCheckChange(any as Boolean)
             true

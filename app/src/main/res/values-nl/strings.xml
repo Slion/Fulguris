@@ -47,7 +47,7 @@
     <string name="search_hint">Zoek</string>
     <string name="wideViewPort">Gebruik wijde viewport</string>
     <string name="overViewMode">Laad pagina\'s in overzichtsweergave</string>
-    <string name="restore">Herstel tabbladen bij opstart</string>
+    <string name="restore_tabs_on_startup">Herstel tabbladen bij opstart</string>
     <string name="supported_browsers_title">Ondersteunde browsers</string>
     <string name="stock_browser">Standaard browser</string>
     <string name="stock_browser_unavailable">Geen standaard browser gevonden</string>

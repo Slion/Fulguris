@@ -217,7 +217,7 @@
 	<string name="stock_browser_unavailable">Nie wykryto zainstalowanej systemowej przeglądarki internetowej</string>
 	<string name="stock_browser">Domyślna przeglądarka</string>
 	<string name="supported_browsers_title">Obsługiwane przeglądarki</string>
-	<string name="restore">Przywróć poprzednio otwarte karty przy uruchomieniu</string>
+	<string name="restore_tabs_on_startup">Przywróć poprzednio otwarte karty przy uruchomieniu</string>
 	<string name="overViewMode">Wyświetlaj strony nie-mobilne w pomniejszeniu</string>
 	<string name="wideViewPort">Dopasowywuj strony mobilne do ekranu</string>
 	<string name="search_hint">Wyszukaj</string>

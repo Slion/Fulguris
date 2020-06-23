@@ -31,7 +31,7 @@
     <string name="search_hint">Αναζήτηση</string>
     <string name="wideViewPort">Χρήση ευρύ παραθύρου</string>
     <string name="overViewMode">Φόρτωση σελίδων σε προεπισκόπηση</string>
-    <string name="restore">Επαναφορά χαμένων καρτελών στην εκκίνηση</string>
+    <string name="restore_tabs_on_startup">Επαναφορά χαμένων καρτελών στην εκκίνηση</string>
     <string name="stock_browser_unavailable">Δεν βρέθηκε προεπιλεγμένος browser</string>
     <string name="stock_browser_available">Βρέθηκε υποστηριζόμενος browser</string>
     <string name="fullScreenOption">Απόκρυψη της γραμμής κατάστασης κατα την χρήση</string>

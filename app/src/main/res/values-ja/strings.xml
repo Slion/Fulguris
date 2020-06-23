@@ -32,7 +32,7 @@
     <string name="search_hint">検索</string>
     <string name="wideViewPort">Wide view port を使用する</string>
     <string name="overViewMode">Overview mode でページを読み込む</string>
-    <string name="restore">前回終了時のタブをアプリ起動時に復元する</string>
+    <string name="restore_tabs_on_startup">前回終了時のタブをアプリ起動時に復元する</string>
     <string name="supported_browsers_title">サポートしているブラウザ</string>
     <string name="stock_browser">標準ブラウザ</string>
     <string name="stock_browser_unavailable">標準ブラウザが見つかりません</string>

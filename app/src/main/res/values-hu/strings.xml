@@ -47,7 +47,7 @@
     <string name="search_hint">Keresés</string>
     <string name="wideViewPort">Széles nézőport használata</string>
     <string name="overViewMode">Oldalak betöltése áttekinthető módban</string>
-    <string name="restore">Elvesztett lapok visszaállítása induláskor</string>
+    <string name="restore_tabs_on_startup">Elvesztett lapok visszaállítása induláskor</string>
     <string name="supported_browsers_title">Támogatott Böngészők</string>
     <string name="stock_browser">Gyári Böngésző</string>
     <string name="stock_browser_unavailable">Nincs gyári böngésző észlelve</string>

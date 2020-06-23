@@ -33,6 +33,7 @@
     <string name="pref_key_analytics">pref_key_analytics</string>
     <string name="pref_key_rendering_mode">pref_key_rendering_mode</string>
     <string name="pref_key_tool_bar_text_display">pref_key_tool_bar_text_display</string>
+    <string name="pref_key_restore_tabs_on_startup">pref_key_restore_tabs_on_startup</string>
 
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
