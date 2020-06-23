@@ -18,10 +18,6 @@
             android:defaultValue="false"
             android:key="incognito_cookies"
             android:title="@string/incognito_cookies" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_key_restore_tabs_on_startup"
-            android:title="@string/restore_tabs_on_startup" />
         <Preference
             android:key="text_encoding"
             android:title="@string/text_encoding" />

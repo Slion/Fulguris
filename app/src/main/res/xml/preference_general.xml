@@ -5,16 +5,24 @@
     <PreferenceCategory android:title="@string/tabs">
 
         <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_restore_tabs_on_startup"
+            android:title="@string/restore_tabs_on_startup"
+            app:icon="@drawable/ic_save" />
+
+        <SwitchPreferenceCompat
             app:key="@string/pref_key_search_in_new_tab"
             app:title="@string/search_in_new_tab"
             app:defaultValue="true"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_search" />
 
         <SwitchPreferenceCompat
             app:key="@string/pref_key_url_in_new_tab"
             app:title="@string/url_in_new_tab"
             app:defaultValue="true"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_web" />
 
         <ListPreference
             app:key="@string/pref_key_new_tab_position"
@@ -23,7 +31,8 @@
             app:useSimpleSummaryProvider="true"
             app:defaultValue="@string/new_tab_position_after_value"
             app:entries="@array/new_tab_positions"
-            app:entryValues="@array/new_tab_position_values"/>
+            app:entryValues="@array/new_tab_position_values"
+            app:icon="@drawable/ic_library_add" />
 
     </PreferenceCategory>
 
