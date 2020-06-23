@@ -35,11 +35,6 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
             onClick = this::showTextEncodingDialogPicker
         )
 
-        switchPreference(
-            preference = SETTINGS_NEW_WINDOW,
-            isChecked = userPreferences.popupsEnabled,
-            onCheckChange = { userPreferences.popupsEnabled = it }
-        )
 
         val incognitoCheckboxPreference = switchPreference(
             preference = SETTINGS_COOKIES_INCOGNITO,
@@ -95,7 +90,6 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
 
 
     companion object {
-        private const val SETTINGS_NEW_WINDOW = "allow_new_window"
         private const val SETTINGS_ENABLE_COOKIES = "allow_cookies"
         private const val SETTINGS_COOKIES_INCOGNITO = "incognito_cookies"
         private const val SETTINGS_TEXT_ENCODING = "text_encoding"

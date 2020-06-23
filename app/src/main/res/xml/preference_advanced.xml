@@ -6,11 +6,6 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:key="allow_new_window"
-            android:summary="@string/recommended"
-            android:title="@string/window" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
             android:key="allow_cookies"
             android:summary="@string/recommended"
             android:title="@string/cookies" />

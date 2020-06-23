@@ -149,7 +149,7 @@ class UserPreferences @Inject constructor(
     /**
      * True if the browser should allow websites to open new windows, false otherwise.
      */
-    var popupsEnabled by preferences.booleanPreference(POPUPS, true)
+    var popupsEnabled by preferences.booleanPreference(R.string.pref_key_support_multiple_window, true)
 
     /**
      * True if the app should remember which browser tabs were open and restore them if the browser
@@ -378,7 +378,6 @@ private const val HOMEPAGE = "home"
 private const val INCOGNITO_COOKIES = "incognitocookies"
 private const val JAVASCRIPT = "java"
 private const val LOCATION = "location"
-private const val POPUPS = "newwindows"
 private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
 private const val SEARCH_URL = "searchurl"
