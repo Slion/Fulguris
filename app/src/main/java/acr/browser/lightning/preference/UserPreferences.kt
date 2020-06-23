@@ -235,7 +235,7 @@ class UserPreferences @Inject constructor(
      *
      * @see SearchBoxModel
      */
-    var urlBoxContentChoice by preferences.enumPreference(URL_BOX_CONTENTS, SearchBoxDisplayChoice.DOMAIN)
+    var urlBoxContentChoice by preferences.enumPreference(R.string.pref_key_tool_bar_text_display, SearchBoxDisplayChoice.TITLE)
 
     /**
      * True if the browser should invert the display colors of the web page content, false
@@ -387,9 +387,7 @@ private const val USER_AGENT = "agentchoose"
 private const val USER_AGENT_STRING = "userAgentString"
 private const val CLEAR_HISTORY_EXIT = "clearHistoryExit"
 private const val CLEAR_COOKIES_EXIT = "clearCookiesExit"
-private const val RENDERING_MODE = "renderMode"
 private const val BLOCK_THIRD_PARTY = "thirdParty"
-private const val URL_BOX_CONTENTS = "urlContent"
 private const val INVERT_COLORS = "invertColors"
 private const val READING_TEXT_SIZE = "readingTextSize"
 private const val TEXT_ENCODING = "textEncoding"

@@ -35,12 +35,6 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
             onClick = this::showTextEncodingDialogPicker
         )
 
-        clickableDynamicPreference(
-            preference = SETTINGS_URL_CONTENT,
-            summary = userPreferences.urlBoxContentChoice.toDisplayString(),
-            onClick = this::showUrlBoxDialogPicker
-        )
-
         checkBoxPreference(
             preference = SETTINGS_NEW_WINDOW,
             isChecked = userPreferences.popupsEnabled,
@@ -104,47 +98,12 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    /**
-     * Shows the dialog which allows the user to choose the browser's URL box display options.
-     *
-     * @param summaryUpdater the command which allows the summary to be updated.
-     */
-    private fun showUrlBoxDialogPicker(summaryUpdater: SummaryUpdater) {
-        activity?.let { AlertDialog.Builder(it) }?.apply {
-            setTitle(resources.getString(R.string.url_contents))
-
-            val items = SearchBoxDisplayChoice.values().map { Pair(it, it.toDisplayString()) }
-
-            withSingleChoiceItems(items, userPreferences.urlBoxContentChoice) {
-                userPreferences.urlBoxContentChoice = it
-                summaryUpdater.updateSummary(it.toDisplayString())
-            }
-            setPositiveButton(resources.getString(R.string.action_ok), null)
-        }?.resizeAndShow()
-    }
-
-    private fun NewTabPosition.toDisplayString(): String {
-        val stringArray = resources.getStringArray(R.array.new_tab_positions)
-        return stringArray[this.value]
-    }
-
-
-    private fun SearchBoxDisplayChoice.toDisplayString(): String {
-        val stringArray = resources.getStringArray(R.array.url_content_array)
-        return when (this) {
-            SearchBoxDisplayChoice.DOMAIN -> stringArray[0]
-            SearchBoxDisplayChoice.URL -> stringArray[1]
-            SearchBoxDisplayChoice.TITLE -> stringArray[2]
-        }
-    }
-
 
     companion object {
         private const val SETTINGS_NEW_WINDOW = "allow_new_window"
         private const val SETTINGS_ENABLE_COOKIES = "allow_cookies"
         private const val SETTINGS_COOKIES_INCOGNITO = "incognito_cookies"
         private const val SETTINGS_RESTORE_TABS = "restore_tabs"
-        private const val SETTINGS_URL_CONTENT = "url_contents"
         private const val SETTINGS_TEXT_ENCODING = "text_encoding"
     }
 
