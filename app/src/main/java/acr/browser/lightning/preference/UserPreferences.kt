@@ -216,7 +216,7 @@ class UserPreferences @Inject constructor(
     /**
      * The index of the rendering mode that should be used by the browser.
      */
-    var renderingMode by preferences.enumPreference(RENDERING_MODE, RenderingMode.NORMAL)
+    var renderingMode by preferences.enumPreference(R.string.pref_key_rendering_mode, RenderingMode.NORMAL)
 
     /**
      * True if third party cookies should be disallowed by the browser, false if they should be

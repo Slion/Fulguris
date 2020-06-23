@@ -25,9 +25,7 @@
         <Preference
             android:key="text_encoding"
             android:title="@string/text_encoding" />
-        <Preference
-            android:key="rendering_mode"
-            android:title="@string/rendering_mode" />
+
         <Preference
             android:key="url_contents"
             android:title="@string/url_contents" />

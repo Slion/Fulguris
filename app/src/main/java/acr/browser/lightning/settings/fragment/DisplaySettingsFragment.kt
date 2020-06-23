@@ -10,6 +10,7 @@ import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.Utils
+import acr.browser.lightning.view.RenderingMode
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
@@ -48,8 +49,41 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             onClick = ::showTextSizePicker
         )
 
+        clickableDynamicPreference(
+                preference = getString(R.string.pref_key_rendering_mode),
+                summary = userPreferences.renderingMode.toDisplayString(),
+                onClick = this::showRenderingDialogPicker
+        )
+
 
     }
+
+    /**
+     * Shows the dialog which allows the user to choose the browser's rendering method.
+     *
+     * @param summaryUpdater the command which allows the summary to be updated.
+     */
+    private fun showRenderingDialogPicker(summaryUpdater: SummaryUpdater) {
+        activity?.let { AlertDialog.Builder(it) }?.apply {
+            setTitle(resources.getString(R.string.rendering_mode))
+
+            val values = RenderingMode.values().map { Pair(it, it.toDisplayString()) }
+            withSingleChoiceItems(values, userPreferences.renderingMode) {
+                userPreferences.renderingMode = it
+                summaryUpdater.updateSummary(it.toDisplayString())
+
+            }
+            setPositiveButton(resources.getString(R.string.action_ok), null)
+        }?.resizeAndShow()
+    }
+
+    private fun RenderingMode.toDisplayString(): String = getString(when (this) {
+        RenderingMode.NORMAL -> R.string.name_normal
+        RenderingMode.INVERTED -> R.string.name_inverted
+        RenderingMode.GRAYSCALE -> R.string.name_grayscale
+        RenderingMode.INVERTED_GRAYSCALE -> R.string.name_inverted_grayscale
+        RenderingMode.INCREASE_CONTRAST -> R.string.name_increase_contrast
+    })
 
     private fun showTextSizePicker(summaryUpdater: SummaryUpdater) {
         AlertDialog.Builder(activity as Activity).apply {

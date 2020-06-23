@@ -27,7 +27,6 @@ class EnumPreference<T>(
     override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
         backingValue = value.toString()
     }
-
 }
 
 /**
@@ -42,7 +41,6 @@ inline fun <reified T> SharedPreferences.enumPreference(
     T::class.java,
     this
 )
-
 
 /**
  * Creates a [T] enum from [SharedPreferences] with the provide arguments.

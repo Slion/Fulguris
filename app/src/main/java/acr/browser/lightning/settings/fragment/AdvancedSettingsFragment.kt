@@ -30,12 +30,6 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
         injector.inject(this)
 
         clickableDynamicPreference(
-            preference = SETTINGS_RENDERING_MODE,
-            summary = userPreferences.renderingMode.toDisplayString(),
-            onClick = this::showRenderingDialogPicker
-        )
-
-        clickableDynamicPreference(
             preference = SETTINGS_TEXT_ENCODING,
             summary = userPreferences.textEncoding,
             onClick = this::showTextEncodingDialogPicker
@@ -87,25 +81,7 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
         )
     }
 
-    /**
-     * Shows the dialog which allows the user to choose the browser's rendering method.
-     *
-     * @param summaryUpdater the command which allows the summary to be updated.
-     */
-    private fun showRenderingDialogPicker(summaryUpdater: SummaryUpdater) {
-        activity?.let { AlertDialog.Builder(it) }?.apply {
-            setTitle(resources.getString(R.string.rendering_mode))
 
-            val values = RenderingMode.values().map { Pair(it, it.toDisplayString()) }
-            withSingleChoiceItems(values, userPreferences.renderingMode) {
-                userPreferences.renderingMode = it
-                summaryUpdater.updateSummary(it.toDisplayString())
-
-            }
-            setPositiveButton(resources.getString(R.string.action_ok), null)
-        }?.resizeAndShow()
-
-    }
 
     /**
      * Shows the dialog which allows the user to choose the browser's text encoding.
@@ -162,20 +138,12 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    private fun RenderingMode.toDisplayString(): String = getString(when (this) {
-        RenderingMode.NORMAL -> R.string.name_normal
-        RenderingMode.INVERTED -> R.string.name_inverted
-        RenderingMode.GRAYSCALE -> R.string.name_grayscale
-        RenderingMode.INVERTED_GRAYSCALE -> R.string.name_inverted_grayscale
-        RenderingMode.INCREASE_CONTRAST -> R.string.name_increase_contrast
-    })
 
     companion object {
         private const val SETTINGS_NEW_WINDOW = "allow_new_window"
         private const val SETTINGS_ENABLE_COOKIES = "allow_cookies"
         private const val SETTINGS_COOKIES_INCOGNITO = "incognito_cookies"
         private const val SETTINGS_RESTORE_TABS = "restore_tabs"
-        private const val SETTINGS_RENDERING_MODE = "rendering_mode"
         private const val SETTINGS_URL_CONTENT = "url_contents"
         private const val SETTINGS_TEXT_ENCODING = "text_encoding"
     }

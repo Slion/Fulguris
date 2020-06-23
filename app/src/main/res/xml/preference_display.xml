@@ -12,6 +12,11 @@
         android:title="@string/title_text_size"
         app:icon="@drawable/ic_text_size" />
 
+    <Preference
+        android:key="@string/pref_key_rendering_mode"
+        android:title="@string/rendering_mode"
+        app:icon="@drawable/ic_rendering_mode" />
+
     <PreferenceCategory android:title="@string/pref_category_portrait"
         app:icon="@drawable/ic_portrait">
 
