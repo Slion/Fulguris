@@ -30,6 +30,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.net.MailTo
+import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
 import android.os.Message
@@ -315,7 +316,7 @@ class LightningWebClient(
         val intent = intentUtils.intentForUrl(view, url)
         intent?.let {
             // Check if that external app is already known
-            val prefKey = activity.getString(R.string.settings_app_prefix) + URL(url).host
+            val prefKey = activity.getString(R.string.settings_app_prefix) + Uri.parse(url).host
             if (preferences.contains(prefKey)) {
                 if (preferences.getBoolean(prefKey,false)) {
                     // Trusted app, just launch it on the stop and abort loading
