@@ -1,15 +1,15 @@
 package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.view.BackgroundDrawable
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.tab_list_item.view.*
 
 /**
  * The [RecyclerView.ViewHolder] for both vertical and horizontal tabs.
@@ -20,20 +20,19 @@ class TabViewHolder(
     private val uiController: UIController
 ) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemTouchHelperViewHolder {
 
-    val txtTitle: TextView = view.findViewById(R.id.textTab)
-    val favicon: ImageView = view.findViewById(R.id.faviconTab)
-    val exitButton: View = view.findViewById(R.id.deleteAction)
-    val layout: LinearLayout = view.findViewById(R.id.tab_item_background)
+    val txtTitle: TextView = view.textTab
+    val favicon: ImageView = view.faviconTab
+    val exitButton: View = view.deleteAction
+    val layout: LinearLayout = view.tab_item_background
 
-    var previousBackground: BackgroundDrawable? = null
+    private var previousBackground: BackgroundDrawable? = null
 
     init {
         exitButton.setOnClickListener(this)
         layout.setOnClickListener(this)
         layout.setOnLongClickListener(this)
-        // Not showing exit button for now
-        // Config that maybe at some point
-        exitButton.visibility = View.GONE
+        // Is that the best way to access our preferences?
+        exitButton.visibility = if ((view.context as BrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
     }
 
     override fun onClick(v: View) {

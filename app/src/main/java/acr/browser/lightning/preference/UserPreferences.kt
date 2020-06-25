@@ -363,6 +363,10 @@ class UserPreferences @Inject constructor(
      */
     var crashReport by preferences.booleanPreference(R.string.pref_key_crash_report, R.bool.pref_default_crash_report)
 
+    /**
+     * Toggle visibility of close tab button on drawer tab list items.
+     */
+    var showCloseTabButton by preferences.booleanPreference(R.string.pref_key_tab_list_item_show_close_button, R.bool.pref_default_tab_list_item_show_close_button)
 
 }
 

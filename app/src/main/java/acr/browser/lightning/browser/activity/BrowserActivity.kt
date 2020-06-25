@@ -202,6 +202,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     // Settings
     private var crashReport = true
     private var analytics = true
+    private var showCloseTabButton = false
 
     private val longPressBackRunnable = Runnable {
         showCloseDialog(tabsManager.positionOf(tabsManager.currentTab))
@@ -348,6 +349,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // TODO: disable those for incognito mode?
         analytics = userPreferences.analytics
         crashReport = userPreferences.crashReport
+        showCloseTabButton = userPreferences.showCloseTabButton
+
 
         if (!isIncognito()) {
             // For some reason that was crashing when incognito
@@ -1528,6 +1531,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         if (swapBookmarksAndTabs != userPreferences.bookmarksAndTabsSwapped
                 || analytics != userPreferences.analytics
                 || crashReport != userPreferences.crashReport
+                || showCloseTabButton != userPreferences.showCloseTabButton
         ) {
             restart()
         }
