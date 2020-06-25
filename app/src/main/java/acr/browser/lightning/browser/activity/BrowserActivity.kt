@@ -150,7 +150,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     private var originalOrientation: Int = 0
     private var currentUiColor = Color.BLACK
-    private var currentToolBarTextColor = Color.BLACK
+    var currentToolBarTextColor = Color.BLACK
     private var keyDownStartTime: Long = 0
     private var searchText: String? = null
     private var cameraPhotoPath: String? = null
@@ -1621,6 +1621,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Change tab counter color
         tabCountView?.textColor = currentToolBarTextColor
         tabCountView?.invalidate();
+        // Change tool bar home button color, needed when using desktop style tabs
+        homeImageView?.setColorFilter(currentToolBarTextColor)
         // Change reload icon color
         //setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
         // SSL status icon color
@@ -1664,7 +1666,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Then the color of the status bar itself
         setStatusBarColor(color,currentToolBarTextColor==Color.BLACK)
 
-
+        // Remove that if ever we re-enable color animation below
+        currentUiColor = color
+        // Needed for current tab color update in desktop style tabs
+        tabsView?.tabChanged(tabsManager.indexOfCurrentTab())
 
         /*
         // Define our color animation

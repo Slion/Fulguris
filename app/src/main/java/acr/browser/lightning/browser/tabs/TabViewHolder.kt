@@ -22,7 +22,9 @@ class TabViewHolder(
 
     val txtTitle: TextView = view.textTab
     val favicon: ImageView = view.faviconTab
-    val exitButton: View = view.deleteAction
+    // Need to keep findViewById to avoid crash when using desktop style tabs
+    // Maybe this could be fixed by unifying both layout?
+    val exitButton: View = view.findViewById(R.id.deleteAction)
     val layout: LinearLayout = view.tab_item_background
 
     private var previousBackground: BackgroundDrawable? = null

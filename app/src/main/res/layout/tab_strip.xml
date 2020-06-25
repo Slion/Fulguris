@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/desktop_tab_height"
-    android:background="@color/black"
+    android:background="?attr/colorPrimary"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
+    <!-- SL: requiresFadingEdge not working for some reason-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tabs_list"
         android:layout_width="0dp"
         android:layout_height="@dimen/desktop_tab_height"
-        android:fadingEdge="horizontal"
+        android:requiresFadingEdge="horizontal|vertical"
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_constraintEnd_toStartOf="@+id/new_tab_button"

@@ -1,6 +1,7 @@
 package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.*
 import acr.browser.lightning.utils.ThemeUtils
@@ -13,6 +14,7 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +31,7 @@ class TabsDesktopAdapter(
     private val backgroundTabDrawable: Drawable?
     private val foregroundTabBitmap: Bitmap?
     private var tabList: List<TabViewState> = emptyList()
+    private var textColor = Color.TRANSPARENT
 
     init {
         val backgroundColor = Utils.mixTwoColors(ThemeUtils.getPrimaryColor(context), Color.BLACK, 0.75f)
@@ -69,7 +72,7 @@ class TabsDesktopAdapter(
         val web = tabList[position]
 
         holder.txtTitle.text = web.title
-        updateViewHolderAppearance(holder, web.favicon, web.isForegroundTab)
+        updateViewHolderAppearance(holder, web.favicon, web.themeColor, web.isForegroundTab)
         updateViewHolderFavicon(holder, web.favicon, web.isForegroundTab)
     }
 
@@ -80,18 +83,30 @@ class TabsDesktopAdapter(
         ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
     }
 
-    private fun updateViewHolderAppearance(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
+    private fun updateViewHolderAppearance(viewHolder: TabViewHolder, favicon: Bitmap?, color: Int, isForeground: Boolean) {
+
+        // Just to init our default text color
+        if (textColor == Color.TRANSPARENT) {
+            textColor = viewHolder.txtTitle.currentTextColor
+        }
+
         if (isForeground) {
             val foregroundDrawable = BitmapDrawable(resources, foregroundTabBitmap)
+            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
+            val newTextColor = (uiController as BrowserActivity).currentToolBarTextColor
+            viewHolder.txtTitle.setTextColor(newTextColor)
+            viewHolder.exitButton.findViewById<ImageView>(R.id.deleteButton).setColorFilter(newTextColor)
+            uiController.changeToolbarBackground(favicon, color, foregroundDrawable)
             if (uiController.isColorMode()) {
                 foregroundDrawable.tint(uiController.getUiColor())
             }
-            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
             viewHolder.layout.background = foregroundDrawable
-            uiController.changeToolbarBackground(favicon, Color.TRANSPARENT, foregroundDrawable)
         } else {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.normalText)
             viewHolder.layout.background = backgroundTabDrawable
+            // Put back the color we stashed
+            viewHolder.txtTitle.setTextColor(textColor)
+            viewHolder.exitButton.findViewById<ImageView>(R.id.deleteButton).setColorFilter(textColor)
         }
     }
 

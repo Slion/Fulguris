@@ -53,6 +53,12 @@
 
     <PreferenceCategory android:title="@string/settings_advanced">
 
+        <Preference
+            android:key="download"
+            android:title="@string/download"
+            app:icon="@drawable/ic_file_download"
+            app:iconSpaceReserved="false"/>
+
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_key_load_images"
@@ -101,12 +107,6 @@
             android:key="agent"
             android:title="@string/agent"
             app:iconSpaceReserved="false" />
-
-        <Preference
-            android:key="download"
-            android:title="@string/download"
-            app:icon="@drawable/ic_file_download"
-            app:iconSpaceReserved="false"/>
 
         <Preference
             android:key="@string/pref_key_default_text_encoding"

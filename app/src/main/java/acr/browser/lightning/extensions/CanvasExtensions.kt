@@ -30,7 +30,8 @@ fun Canvas.drawTrapezoid(backgroundColor: Int, withShadow: Boolean) {
         }
     }
 
-    val radians = Math.PI / 3
+    // SL: use Math.PI / 3 to get our ugly trapezoid back
+    val radians = Math.PI / 2
     val base = (height / tan(radians)).toInt()
 
     val wallPath = Path().apply {

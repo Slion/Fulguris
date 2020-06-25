@@ -100,6 +100,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         val incognitoCheckboxPreference = switchPreference(
                 preference = getString(R.string.pref_key_cookies_incognito),
                 isEnabled = !Capabilities.FULL_INCOGNITO.isSupported,
+                isVisible = !Capabilities.FULL_INCOGNITO.isSupported,
                 isChecked = if (Capabilities.FULL_INCOGNITO.isSupported) {
                     userPreferences.cookiesEnabled
                 } else {
@@ -112,6 +113,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 },
                 onCheckChange = { userPreferences.incognitoCookiesEnabled = it }
         )
+
 
         switchPreference(
                 preference = getString(R.string.pref_key_cookies),

@@ -14,6 +14,7 @@ import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.lang.Exception
 
 /**
  * A view which displays browser tabs in a horizontal [RecyclerView].
@@ -74,6 +75,13 @@ class TabsDesktopView @JvmOverloads constructor(
 
     override fun tabChanged(position: Int) {
         displayTabs()
+        // Needed for the foreground tab color to update.
+        // However sometimes it throws an illegal state exception so make sure we catch it.
+        try {
+            tabsAdapter.notifyItemChanged(position)
+        } catch (e: Exception) {
+        }
+
     }
 
     private fun displayTabs() {

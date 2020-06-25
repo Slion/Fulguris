@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item android:top="5dp" android:left="5dp" android:right="0dp" android:bottom="0dp">
         <shape>
-            <solid android:color="#11000000"/>
+            <solid android:color="#10000000"/>
             <corners android:radius="@dimen/menu_corner_radius" />
         </shape>
     </item>
 
-    <item android:top="1dp" android:left="1dp" android:right="4dp" android:bottom="4dp">
+    <item android:top="5dp" android:left="5dp" android:right="1dp" android:bottom="1dp">
         <shape>
-            <solid android:color="#22000000"/>
-            <corners android:radius="@dimen/menu_corner_radius" />
-
-        </shape>
-    </item>
-
-    <item android:top="1dp" android:left="1dp" android:right="3dp" android:bottom="3dp">
-        <shape>
-            <solid android:color="#22000000"/>
+            <solid android:color="#20000000"/>
             <corners android:radius="@dimen/menu_corner_radius" />
 
         </shape>
     </item>
 
-    <item android:top="1dp" android:left="1dp" android:right="3dp" android:bottom="2dp">
+    <item android:top="5dp" android:left="5dp" android:right="2dp" android:bottom="2dp">
         <shape>
-            <solid android:color="#22000000"/>
+            <solid android:color="#30000000"/>
+            <corners android:radius="@dimen/menu_corner_radius" />
+
+        </shape>
+    </item>
+
+    <item android:top="5dp" android:left="5dp" android:right="3dp" android:bottom="3dp">
+        <shape>
+            <solid android:color="#40000000"/>
+            <corners android:radius="@dimen/menu_corner_radius" />
+
+        </shape>
+    </item>
+
+    <item android:top="5dp" android:left="5dp" android:right="4dp" android:bottom="4dp">
+        <shape>
+            <solid android:color="#50000000"/>
             <corners android:radius="@dimen/menu_corner_radius" />
 
         </shape>
     </item>
 
 
-    <item android:top="1dp" android:left="1dp" android:right="5dp" android:bottom="5dp">
+    <item android:top="0dp" android:left="0dp" android:right="5dp" android:bottom="5dp">
         <shape>
             <solid android:color="?attr/colorPrimary"/>
             <corners android:radius="@dimen/menu_corner_radius" />
