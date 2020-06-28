@@ -57,14 +57,15 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:contentDescription="@string/tabs"
-        app:tooltipText="@{@string/tabs}" >
+         >
 
     <ImageView
         android:id="@+id/home_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:contentDescription="@string/home"
+        app:tooltipText="@{@string/home}"
         />
 
     <acr.browser.lightning.icon.TabCountView
@@ -75,7 +76,10 @@
         app:tabIconBorderRadius="3dp"
         app:tabIconBorderWidth="2dp"
         app:tabIconColor="?attr/iconColor"
-        app:tabIconTextSize="10dp" />
+        app:tabIconTextSize="10dp"
+        android:contentDescription="@string/tabs"
+        app:tooltipText="@{@string/tabs}"
+        />
     </FrameLayout>
 
     <ImageView
@@ -91,8 +95,6 @@
         android:contentDescription="@string/action_more"
         app:tooltipText="@{@string/action_more}"
         android:nextFocusDown="@id/web_view" />
-
-
 
 </LinearLayout>
 

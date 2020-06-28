@@ -5,15 +5,12 @@ import acr.browser.lightning.browser.TabsView
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.list.HorizontalItemAnimator
 import acr.browser.lightning.controller.UIController
-import acr.browser.lightning.databinding.TabDrawerViewBinding
-import acr.browser.lightning.databinding.TabStripBinding
-import acr.browser.lightning.extensions.color
+import acr.browser.lightning.databinding.TabDesktopViewBinding
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.view.LightningView
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,7 +32,7 @@ class TabsDesktopView @JvmOverloads constructor(
 
     init {
         // Inflate our layout with binding support, provide UI controller
-        TabStripBinding.inflate(context.inflater,this, true).uiController = uiController
+        TabDesktopViewBinding.inflate(context.inflater,this, true).uiController = uiController
 
         val layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
