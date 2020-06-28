@@ -1609,8 +1609,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
 
-
-
+    /**
+     *
+     */
     private fun changeToolbarBackground(color: Int, tabBackground: Drawable?) {
 
         //Workout a foreground colour that will be working with our background color
@@ -1733,12 +1734,22 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 changeToolbarBackground(color, tabBackground);
             }
         }
-
     }
 
-    private fun getSearchBarColor(requestedColor: Int): Int =
-            DrawableUtils.mixColor(0.25f, requestedColor, Color.WHITE)
-
+    /**
+     *
+     */
+    private fun getSearchBarColor(requestedColor: Int): Int {
+        val luminance = ColorUtils.calculateLuminance(requestedColor)
+        return if (luminance>0.9) {
+            // Too bright, make it darker then
+            DrawableUtils.mixColor(0.20f, requestedColor, Color.BLACK)
+        }
+        else {
+            // Make search text field background lighter
+            DrawableUtils.mixColor(0.20f, requestedColor, Color.WHITE)
+        }
+    }
 
     @ColorInt
     override fun getUiColor(): Int = currentUiColor

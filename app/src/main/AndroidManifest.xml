@@ -39,8 +39,12 @@
         android:usesCleartextTraffic="true">
 
         <!-- Splash screen activity not sure exactly if we need MAIN and DEFAULT intent TBH -->
+        <!-- Make it resizable for Multi-Window mode support, such as Samsung Dex
+        Needed to be in the root activity which is our splash screen apparently.
+        -->
         <activity android:name=".SplashActivity"
-            android:theme="@style/Theme.BlackTheme">
+            android:theme="@style/Theme.DarkTheme"
+            android:resizeableActivity="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -60,10 +64,11 @@
             android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="false"
             android:colorMode="wideColorGamut"
+            android:resizeableActivity="true"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.LightTheme"
+            android:theme="@style/Theme.DarkTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

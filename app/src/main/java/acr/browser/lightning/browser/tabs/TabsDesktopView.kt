@@ -2,8 +2,11 @@ package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabsView
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.list.HorizontalItemAnimator
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.databinding.TabDrawerViewBinding
+import acr.browser.lightning.databinding.TabStripBinding
 import acr.browser.lightning.extensions.color
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.view.LightningView
@@ -14,6 +17,7 @@ import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.tab_drawer_view.view.*
 import java.lang.Exception
 
 /**
@@ -30,18 +34,8 @@ class TabsDesktopView @JvmOverloads constructor(
     private val tabList: RecyclerView
 
     init {
-        setBackgroundColor(context.color(R.color.black))
-        context.inflater.inflate(R.layout.tab_strip, this, true)
-        findViewById<ImageView>(R.id.new_tab_button).apply {
-            setColorFilter(context.color(R.color.icon_dark_theme))
-            setOnClickListener {
-                uiController.newTabButtonClicked()
-            }
-            setOnLongClickListener {
-                uiController.newTabButtonLongClicked()
-                true
-            }
-        }
+        // Inflate our layout with binding support, provide UI controller
+        TabStripBinding.inflate(context.inflater,this, true).uiController = uiController
 
         val layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
@@ -64,13 +58,28 @@ class TabsDesktopView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Enable tool bar buttons according to current state of things
+     */
+    private fun updateTabActionButtons() {
+        // If more than one tab, enable close all tabs button
+        action_close_all_tabs.isEnabled = uiController.getTabModel().allTabs.count()>1
+        // If we have more than one tab in our closed tabs list enable restore all pages button
+        action_restore_all_pages.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>1
+        // If we have at least one tab in our closed tabs list enable restore page button
+        action_restore_page.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>0
+    }
+
+
     override fun tabAdded() {
         displayTabs()
         tabList.postDelayed({ tabList.smoothScrollToPosition(tabsAdapter.itemCount - 1) }, 500)
+        updateTabActionButtons()
     }
 
     override fun tabRemoved(position: Int) {
         displayTabs()
+        updateTabActionButtons()
     }
 
     override fun tabChanged(position: Int) {
@@ -90,6 +99,7 @@ class TabsDesktopView @JvmOverloads constructor(
 
     override fun tabsInitialized() {
         tabsAdapter.notifyDataSetChanged()
+        updateTabActionButtons()
     }
 
     override fun setGoBackEnabled(isEnabled: Boolean) = Unit
