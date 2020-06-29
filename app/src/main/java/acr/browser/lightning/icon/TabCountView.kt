@@ -2,11 +2,13 @@ package acr.browser.lightning.icon
 
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.preferredLocale
+import acr.browser.lightning.extensions.scale
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.withStyledAttributes
+import androidx.core.graphics.toRectF
 import java.text.NumberFormat
 
 /**
@@ -59,15 +61,15 @@ class TabCountView @JvmOverloads constructor(
     {
         // Assuming the size will never change
         if (bitmap==null) {
-            val localBitmap = Bitmap.createBitmap(width * 2,
-                    height * 2,
+            val localBitmap = Bitmap.createBitmap(width ,
+                    height,
                     Bitmap.Config.ARGB_8888);
 
             bitmapCanvas = Canvas(localBitmap);
             bitmap = localBitmap
-            workingRect.set(width.toFloat() / 4, height.toFloat() / 4, width.toFloat(), height.toFloat())
+            workingRect.set( 0f, 0f, width.toFloat(), height.toFloat())
+            workingRect.scale(0.4f)
         }
-
     }
 
     /**
@@ -101,7 +103,7 @@ class TabCountView @JvmOverloads constructor(
         val localBitmap = bitmap;
         if (localBitmap!=null)
         {
-            canvas.drawBitmap(localBitmap, -width.toFloat()/8, -height.toFloat()/8, paint);
+            canvas.drawBitmap(localBitmap, 0f, 0f, paint);
         }
 
         // Now render our text

@@ -11,7 +11,7 @@ Slions flavor is making changes to search layout notably adjusting margins.
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_container"
-    android:layout_width="match_parent"
+    android:layout_width="1dp"
     android:layout_height="match_parent"
     android:layout_marginLeft="8dp"
     android:layout_marginTop="8dp"

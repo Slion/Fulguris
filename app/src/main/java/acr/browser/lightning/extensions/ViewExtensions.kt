@@ -4,6 +4,7 @@ import acr.browser.lightning.utils.getFilteredColor
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.ColorMatrixColorFilter
+import android.graphics.RectF
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -189,4 +190,16 @@ fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
 @BindingAdapter("app:tooltipText")
 fun View.bindTooltipText(tooltipText: String) {
     TooltipCompat.setTooltipText(this, tooltipText)
+}
+
+
+fun RectF.scale(factor: Float) {
+    val oldWidth = width()
+    val oldHeight = height()
+    val newWidth = width() * factor
+    val newHeight = height() * factor
+    left+= (oldWidth - newWidth) / 2f
+    right-= (oldWidth - newWidth) / 2f
+    top += (oldHeight - newHeight) / 2f
+    bottom -= (oldHeight - newHeight) / 2f
 }

@@ -121,8 +121,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     // Toolbar Views
     private var searchBackground: View? = null
     private var searchView: SearchView? = null
-    private var homeImageView: ImageView? = null
-    private var tabCountView: TabCountView? = null
+    private var homeButton: ImageButton? = null
+    private var tabsButton: TabCountView? = null
 
     // Current tab view being displayed
     private var currentTabView: View? = null
@@ -401,19 +401,21 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             button_more.setImageResource(R.drawable.ic_incognito)
         }
 
+        tabsButton = customView.findViewById(R.id.tabs_button)
+        tabsButton?.setOnClickListener(this)
 
-        tabCountView = customView.findViewById(R.id.tab_count_view)
-        homeImageView = customView.findViewById(R.id.home_image_view)
+        homeButton = customView.findViewById(R.id.home_button)
+        homeButton?.setOnClickListener(this)
+
         if (shouldShowTabsInDrawer) {
-            tabCountView?.visibility = VISIBLE
-            homeImageView?.visibility = GONE
+            tabsButton?.visibility = VISIBLE
+            homeButton?.visibility = GONE
         } else {
-            tabCountView?.visibility = GONE
-            homeImageView?.visibility = VISIBLE
-            homeImageView?.setImageResource(R.drawable.ic_action_home)
+            tabsButton?.visibility = GONE
+            homeButton?.visibility = VISIBLE
         }
 
-        customView.findViewById<View>(R.id.home_button).setOnClickListener(this)
+
 
         // create the search EditText in the ToolBar
         searchView = customView.findViewById<SearchView>(R.id.search).apply {
@@ -1620,10 +1622,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         searchView?.setTextColor(currentToolBarTextColor)
         searchView?.setHintTextColor(DrawableUtils.mixColor(0.5f, currentToolBarTextColor, color))
         // Change tab counter color
-        tabCountView?.textColor = currentToolBarTextColor
-        tabCountView?.invalidate();
+        tabsButton?.textColor = currentToolBarTextColor
+        tabsButton?.invalidate();
         // Change tool bar home button color, needed when using desktop style tabs
-        homeImageView?.setColorFilter(currentToolBarTextColor)
+        homeButton?.setColorFilter(currentToolBarTextColor)
         // Change reload icon color
         //setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
         // SSL status icon color
@@ -1768,7 +1770,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     override fun updateTabNumber(number: Int) {
         if (shouldShowTabsInDrawer) {
-            tabCountView?.updateCount(number)
+            tabsButton?.updateCount(number)
         }
     }
 
@@ -2398,11 +2400,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     override fun onClick(v: View) {
         val currentTab = tabsManager.currentTab ?: return
         when (v.id) {
-            R.id.home_button -> when {
-                searchView?.hasFocus() == true -> currentTab.requestFocus()
-                shouldShowTabsInDrawer -> openTabs()
-                else -> currentTab.loadHomePage()
-            }
+            R.id.home_button -> currentTab.apply { requestFocus(); loadHomePage() }
+            R.id.tabs_button -> openTabs()
             R.id.button_reload -> refreshOrStop()
             R.id.button_next -> findResult?.nextResult()
             R.id.button_back -> findResult?.previousResult()

@@ -35,43 +35,34 @@
         />
 -->
 
-    <ImageView
+    <ImageButton
         android:id="@+id/button_reload"
         style="?android:attr/actionButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        app:srcCompat="@drawable/ic_action_refresh"
-        android:tint="?attr/iconColor"
         android:contentDescription="@string/action_reload"
         app:tooltipText="@{@string/action_reload}"
+        app:srcCompat="@drawable/ic_action_refresh"
         android:nextFocusDown="@id/web_view" />
 
-    <FrameLayout
+    <ImageButton
         android:id="@+id/home_button"
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height="match_parent"
-        android:background="?attr/actionBarItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-         >
-
-    <ImageView
-        android:id="@+id/home_image_view"
+        style="?android:attr/actionButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:contentDescription="@string/home"
         app:tooltipText="@{@string/home}"
+        app:srcCompat="@drawable/ic_action_home"
+        android:nextFocusDown="@id/web_view"
         />
 
     <acr.browser.lightning.icon.TabCountView
-        android:id="@+id/tab_count_view"
-        android:layout_width="@dimen/material_grid_small_icon"
-        android:layout_height="@dimen/material_grid_small_icon"
+        android:id="@+id/tabs_button"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="@dimen/material_grid_touch_medium"
+        android:layout_height="@dimen/material_grid_touch_medium"
         android:layout_gravity="center"
         app:tabIconBorderRadius="3dp"
         app:tabIconBorderWidth="2dp"
@@ -79,22 +70,20 @@
         app:tabIconTextSize="10dp"
         android:contentDescription="@string/tabs"
         app:tooltipText="@{@string/tabs}"
+        android:nextFocusDown="@id/web_view"
         />
-    </FrameLayout>
 
-    <ImageView
+    <ImageButton
         android:id="@+id/button_more"
         style="?android:attr/actionButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true"
         app:srcCompat="@drawable/ic_lightning"
-        android:tint="?attr/iconColor"
         android:contentDescription="@string/action_more"
         app:tooltipText="@{@string/action_more}"
-        android:nextFocusDown="@id/web_view" />
+        android:nextFocusDown="@id/web_view"
+        />
 
 </LinearLayout>
 
