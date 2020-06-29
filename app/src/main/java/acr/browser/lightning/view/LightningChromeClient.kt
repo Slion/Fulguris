@@ -20,6 +20,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.webkit.*
@@ -243,5 +244,15 @@ class LightningChromeClient(
     override fun onShowCustomView(view: View, requestedOrientation: Int,
                                   callback: CustomViewCallback) =
         uiController.onShowCustomView(view, callback, requestedOrientation)
+
+    /**
+     * Needed to display javascript console message in logcat.
+     */
+    override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+        consoleMessage?.apply {
+            Log.d("Chrome Console", "${messageLevel()} - ${message()} -- from line ${lineNumber()} of ${sourceId()}")
+        }
+        return true
+    }
 
 }

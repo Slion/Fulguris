@@ -1,6 +1,7 @@
 package acr.browser.lightning.preference
 
 import acr.browser.lightning.AppTheme
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.browser.SearchBoxDisplayChoice
@@ -367,6 +368,17 @@ class UserPreferences @Inject constructor(
      * Toggle visibility of close tab button on drawer tab list items.
      */
     var showCloseTabButton by preferences.booleanPreference(R.string.pref_key_tab_list_item_show_close_button, R.bool.pref_default_tab_list_item_show_close_button)
+
+    /**
+     * Define viewport width for desktop mode in portrait
+     */
+    var desktopWidthInPortrait by preferences.intPreference(R.string.pref_key_portrait_desktop_width, BrowserApp.instance.resources.getInteger(R.integer.pref_default_portrait_desktop_width))
+
+    /**
+     * Define viewport width for desktop mode in landscape
+     */
+    var desktopWidthInLandscape by preferences.intPreference(R.string.pref_key_landscape_desktop_width, BrowserApp.instance.resources.getInteger(R.integer.pref_default_landscape_desktop_width))
+
 
 }
 

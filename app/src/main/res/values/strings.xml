@@ -256,6 +256,8 @@
     <string name="pref_title_pull_to_refresh">Pull to refresh</string>
     <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
     <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
+    <string name="pref_title_desktop_width">Desktop width</string>
+    <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
     <string name="settings_about_explain">Details about version, update, author and license.</string>
     <string name="close_tab">Close current tab</string>
     <string name="close_all_tabs">Close all tabs</string>

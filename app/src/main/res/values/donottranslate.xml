@@ -17,6 +17,9 @@
     <string name="pref_key_portrait_show_tool_bar_on_page_top">pref_key_portrait_show_tool_bar_on_page_top</string>
     <string name="pref_key_landscape_show_tool_bar_on_page_top">pref_key_landscape_show_tool_bar_on_page_top</string>
 
+    <string name="pref_key_portrait_desktop_width">pref_key_portrait_desktop_width</string>
+    <string name="pref_key_landscape_desktop_width">pref_key_landscape_desktop_width</string>
+
     <string name="pref_key_portrait_pull_to_refresh">pref_key_portrait_pull_to_refresh</string>
     <string name="pref_key_landscape_pull_to_refresh">pref_key_landscape_pull_to_refresh</string>
 

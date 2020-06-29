@@ -12,6 +12,7 @@ import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.js.InvertPage
+import acr.browser.lightning.js.SetMetaViewport
 import acr.browser.lightning.js.TextReflow
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.preference.UserPreferences
@@ -28,6 +29,8 @@ import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.net.MailTo
 import android.net.Uri
@@ -68,6 +71,7 @@ class LightningWebClient(
     @Inject internal lateinit var logger: Logger
     @Inject internal lateinit var textReflowJs: TextReflow
     @Inject internal lateinit var invertPageJs: InvertPage
+    @Inject internal lateinit var setMetaViewport: SetMetaViewport
 
     private var adBlock: AdBlocker
 
@@ -134,7 +138,10 @@ class LightningWebClient(
             // See: https://stackoverflow.com/a/39642318/3969362
             // Note how we compute our initial scale to be zoomed out and fit the page
             // TODO: Check if we really need this here in onLoadResource
-            view.evaluateJavascript("document.querySelector('meta[name=\"viewport\"]').setAttribute('content', 'width=1024px, initial-scale=' + (window.screen.width / 1024));", null)
+            // Pick the proper settings desktop width according to current orientation
+            (Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT).let{portrait ->
+                view.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$",(if (portrait) userPreferences.desktopWidthInPortrait else userPreferences.desktopWidthInLandscape).toString()),null)
+            }
         }
     }
 

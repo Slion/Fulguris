@@ -33,7 +33,7 @@ fun SharedPreferences.intPreference(
 
 
 /**
- * Creates a [Boolean] from [SharedPreferences] with the provide arguments.
+ * Creates a [Int] from [SharedPreferences] with the provide arguments.
  */
 fun SharedPreferences.intPreference(
         @StringRes stringRes: Int,

@@ -8,6 +8,7 @@ import acr.browser.lightning.html.homepage.HomePageReader
 import acr.browser.lightning.js.InvertPage
 import acr.browser.lightning.js.TextReflow
 import acr.browser.lightning.js.ThemeColor
+import acr.browser.lightning.js.SetMetaViewport
 import acr.browser.lightning.log.AndroidLogger
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.log.NoOpLogger
@@ -191,6 +192,9 @@ class AppModule {
 
     @Provides
     fun providesInvertPage(): InvertPage = MezzanineGenerator.InvertPage()
+
+    @Provides
+    fun providesSetMetaViewport(): SetMetaViewport = MezzanineGenerator.SetMetaViewport()
 
 }
 

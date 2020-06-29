@@ -56,6 +56,19 @@
             app:defaultValue="false"
             app:iconSpaceReserved="false"
             />
+
+        <SeekBarPreference
+            app:key="@string/pref_key_portrait_desktop_width"
+            app:title="@string/pref_title_desktop_width"
+            app:summary="@string/pref_summary_desktop_width"
+            app:defaultValue="@integer/pref_default_portrait_desktop_width"
+            app:min="640"
+            android:max="3840"
+            app:showSeekBarValue="true"
+            app:iconSpaceReserved="false"
+            app:updatesContinuously="true"
+            />
+
     </PreferenceCategory>
 
 
@@ -93,6 +106,19 @@
             app:defaultValue="true"
             app:iconSpaceReserved="false"
             />
+
+        <SeekBarPreference
+            app:key="@string/pref_key_landscape_desktop_width"
+            app:title="@string/pref_title_desktop_width"
+            app:summary="@string/pref_summary_desktop_width"
+            app:defaultValue="@integer/pref_default_landscape_desktop_width"
+            app:min="640"
+            android:max="3840"
+            app:showSeekBarValue="true"
+            app:iconSpaceReserved="false"
+            app:updatesContinuously="true"
+            />
+
     </PreferenceCategory>
 
 
