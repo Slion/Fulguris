@@ -47,6 +47,26 @@
         android:nextFocusDown="@id/web_view" />
 
     <ImageButton
+        android:id="@+id/button_action_back"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/action_back"
+        app:tooltipText="@{@string/action_back}"
+        app:srcCompat="@drawable/ic_action_back" />
+
+    <ImageButton
+        android:id="@+id/button_action_forward"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/action_forward"
+        app:tooltipText="@{@string/action_forward}"
+        app:srcCompat="@drawable/ic_action_forward" />
+
+    <ImageButton
         android:id="@+id/home_button"
         style="?android:attr/actionButtonStyle"
         android:layout_width="wrap_content"

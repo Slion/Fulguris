@@ -85,6 +85,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
@@ -122,6 +123,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private var searchBackground: View? = null
     private var searchView: SearchView? = null
     private var homeButton: ImageButton? = null
+    private var buttonBack: ImageButton? = null
+    private var buttonForward: ImageButton? = null
     private var tabsButton: TabCountView? = null
 
     // Current tab view being displayed
@@ -310,7 +313,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     private fun showPopupMenu() {
-
         popupMenu.show(coordinator_layout,button_more)
     }
 
@@ -406,6 +408,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         homeButton = customView.findViewById(R.id.home_button)
         homeButton?.setOnClickListener(this)
+
+        buttonBack = customView.findViewById(R.id.button_action_back)
+        buttonBack?.setOnClickListener{executeAction(R.id.action_back)}
+        buttonForward = customView.findViewById(R.id.button_action_forward)
+        buttonForward?.setOnClickListener{executeAction(R.id.action_forward)}
 
         if (shouldShowTabsInDrawer) {
             tabsButton?.visibility = VISIBLE
@@ -1276,6 +1283,23 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         //initializePreferences()
     }
 
+    private fun setupToolBarButtons() {
+        // Manage back and forward buttons state
+        tabsManager.currentTab?.apply {
+            buttonBack?.apply {
+                isEnabled = canGoBack()
+                // Since we set buttons color ourselves we need this to show it is disabled
+                alpha = if (isEnabled) 1.0f else 0.25f
+            }
+
+            buttonForward?.apply {
+                isEnabled = canGoForward()
+                // Since we set buttons color ourselves we need this to show it is disabled
+                alpha = if (isEnabled) 1.0f else 0.25f
+            }
+        }
+    }
+
     override fun removeTabView() {
 
         logger.log(TAG, "Remove the tab view")
@@ -1626,6 +1650,20 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         tabsButton?.invalidate();
         // Change tool bar home button color, needed when using desktop style tabs
         homeButton?.setColorFilter(currentToolBarTextColor)
+        buttonBack?.setColorFilter(currentToolBarTextColor)
+        buttonForward?.setColorFilter(currentToolBarTextColor)
+
+        // Check if our tool bar is long enough to display extra buttons
+        val threshold = (buttonBack?.width?:3840)*10
+        // If our tool bar is longer than 10 action buttons then we show extra buttons
+        (toolbar.width>threshold).let{
+            buttonBack?.isVisible = it
+            buttonForward?.isVisible = it
+        }
+
+        // Needed to delay that as otherwise disabled alpha state didn't get applied
+        mainHandler.postDelayed({setupToolBarButtons()},500)
+
         // Change reload icon color
         //setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
         // SSL status icon color
