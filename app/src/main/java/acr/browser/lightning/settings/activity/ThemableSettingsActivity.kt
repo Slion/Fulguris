@@ -64,7 +64,7 @@ abstract class ThemableSettingsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // Make sure icons have the right color
-        setStatusBarIconsColor(foregroundColorFromBackgroundColor(ThemeUtils.getPrimaryColor(this))==Color.BLACK)
+        setStatusBarIconsColor(foregroundColorFromBackgroundColor(ThemeUtils.getPrimaryColor(this))==Color.BLACK && !userPreferences.useBlackStatusBar)
         resetPreferences()
         if (userPreferences.useTheme != themeId) {
             recreate()

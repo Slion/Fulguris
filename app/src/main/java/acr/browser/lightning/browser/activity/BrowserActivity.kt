@@ -701,7 +701,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     drawerOpening = true
                     // Make sure icons on status bar remain visible
                     // We should really check the primary theme color and work out its luminance but that should do for now
-                    setStatusBarIconsColor(!isDarkTheme)
+                    setStatusBarIconsColor(!isDarkTheme && !userPreferences.useBlackStatusBar)
                 }
                 else {
                     drawerClosing = true
@@ -1606,7 +1606,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         if (drawerClosing || !drawerOpened) // Do not update icons color if drawer is opened
         {
             // Make sure the status bar icons are still readable
-            setStatusBarIconsColor(darkIcons)
+            setStatusBarIconsColor(darkIcons && !userPreferences.useBlackStatusBar)
         }
     }
 
