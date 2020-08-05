@@ -66,6 +66,64 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:589942124652:android:b2ee7050156b9d28a3a849",
+        "android_client_info": {
+          "package_name": "net.slions.fulguris.full.fdroid.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589942124652-f8tm45g01qnmqrefl8gqc1483nv3s0bl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK0tfamcq3uNHCyvYUpfJh9nWXisB9gjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589942124652-f8tm45g01qnmqrefl8gqc1483nv3s0bl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589942124652:android:60686704cbd8336da3a849",
+        "android_client_info": {
+          "package_name": "net.slions.fulguris.full.fdroid.release"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589942124652-f8tm45g01qnmqrefl8gqc1483nv3s0bl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK0tfamcq3uNHCyvYUpfJh9nWXisB9gjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589942124652-f8tm45g01qnmqrefl8gqc1483nv3s0bl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:589942124652:android:2b978f5b62763d38a3a849",
         "android_client_info": {
           "package_name": "net.slions.fulguris.full.playstore"
