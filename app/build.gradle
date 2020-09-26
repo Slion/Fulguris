@@ -102,6 +102,11 @@ android {
             applicationIdSuffix ".download"
         }
 
+        fdroid {
+            dimension "publisher"
+            applicationIdSuffix ".fdroid"
+        }
+
     }
 
     lintOptions {
