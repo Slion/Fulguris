@@ -816,6 +816,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
 
+        /*
+        if (event.action == KeyEvent.ACTION_UP && event.keyCode==KeyEvent.KEYCODE_TAB) {
+            logger.log(TAG,"Tab: up not discarded")
+            return true
+        }
+         */
+
         if (event.action == KeyEvent.ACTION_UP && (event.keyCode==KeyEvent.KEYCODE_CTRL_LEFT||event.keyCode==KeyEvent.KEYCODE_CTRL_RIGHT)) {
             // Exiting CTRL+TAB mode
             iCapturedRecentTabsIndices?.let {
@@ -896,7 +903,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             }
 
             // CTRL+TAB for tab cycling logic
-            if (event.isCtrlPressed && event.keyCode == KeyEvent.KEYCODE_TAB) {
+            // We could not find a fix our issue where we go back to top of the page after ALT+TAB
+            // See: https://github.com/Slion/Fulguris/issues/82
+            // As a workaround we added tab cycling capabilities using CTRL+GRAVE and CTRL+BACKSLASH
+            // While that works really well on FxTec Pro1 it may not work so well on other keyboards
+            if (event.isCtrlPressed && (event.keyCode == KeyEvent.KEYCODE_TAB || event.keyCode == KeyEvent.KEYCODE_GRAVE || event.keyCode == KeyEvent.KEYCODE_BACKSLASH)) {
 
                 tabsManager.let { it ->
 
@@ -912,7 +923,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     iCapturedRecentTabsIndices?.let{
 
                         // Reversing can be done with those three modifiers notably to make it easier with two thumbs on F(x)tec Pro1
-                        if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
+                        if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed || event.keyCode == KeyEvent.KEYCODE_BACKSLASH) {
                             // Go forward one tab
                             iRecentTabIndex++
                             if (iRecentTabIndex>=it.size) iRecentTabIndex=0
@@ -928,15 +939,16 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                         if (iRecentTabIndex >= 0) {
                             // We worked out which tab to switch to, just do it now
                             presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))
+                            //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
                         }
                     }
 
 
                 }
 
+                //logger.log(TAG,"Tab: down discarded")
                 return true
             }
-
 
             when {
                 isCtrlOnly -> when (event.keyCode) {
@@ -1010,6 +1022,14 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 }
             }
         }
+
+/*
+        if (event.keyCode == KeyEvent.KEYCODE_TAB) {
+            logger.log(TAG,"Tab: NOT GOOD")
+            //return true
+        }
+*/
+
         return super.dispatchKeyEvent(event)
     }
 

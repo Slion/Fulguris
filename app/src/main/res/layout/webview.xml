@@ -12,7 +12,7 @@ android:defaultFocusHighlightEnabled="false"
     This is needed to remove the focus highlight filtering on the whole web page whenever it is focused
     Not sure what happens then with version
 -->
-<WebView xmlns:android="http://schemas.android.com/apk/res/android"
+<acr.browser.lightning.view.WebViewEx xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scrollbar"
