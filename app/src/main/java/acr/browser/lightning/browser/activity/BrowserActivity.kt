@@ -259,22 +259,22 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
 
         presenter = BrowserPresenter(
-            this,
-            isIncognito(),
-            userPreferences,
-            tabsManager,
-            mainScheduler,
-            homePageFactory,
-            bookmarkPageFactory,
-            RecentTabsModel(),
-            logger
+                this,
+                isIncognito(),
+                userPreferences,
+                tabsManager,
+                mainScheduler,
+                homePageFactory,
+                bookmarkPageFactory,
+                RecentTabsModel(),
+                logger
         )
 
         initialize(savedInstanceState)
 
         if (BuildConfig.FLAVOR.contains("slionsFullDownload")) {
             // Check for update after a short delay, hoping user engagement is better and message more visible
-            mainHandler.postDelayed({checkForUpdates()},3000)
+            mainHandler.postDelayed({ checkForUpdates() }, 3000)
         }
 
         // Hook in buttons with onClick handler
@@ -313,7 +313,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     private fun showPopupMenu() {
-        popupMenu.show(coordinator_layout,button_more)
+        popupMenu.show(coordinator_layout, button_more)
     }
 
     /**
@@ -345,7 +345,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         //initializeToolbarHeight(resources.configuration)
         //setSupportActionBar(toolbar)
-        ToolbarContentBinding.inflate(layoutInflater,toolbar,true)
+        ToolbarContentBinding.inflate(layoutInflater, toolbar, true)
         //val actionBar = requireNotNull(supportActionBar)
 
         // TODO: disable those for incognito mode?
@@ -483,7 +483,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Enable swipe to refresh
         content_frame.setOnRefreshListener {
             tabsManager.currentTab?.reload()
-            mainHandler.postDelayed({content_frame.isRefreshing = false}, 1000)   // Stop the loading spinner after one second
+            mainHandler.postDelayed({ content_frame.isRefreshing = false }, 1000)   // Stop the loading spinner after one second
         }
 
         // TODO: define custom transitions to make flying in and out of the tool bar nicer
@@ -499,7 +499,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             // Check if virtual keyboard is showing
             if (inputMethodManager.isActive) {
                 // Open our menu with a slight delay giving enough time for our virtual keyboard to close
-                mainHandler.postDelayed({showPopupMenu()},100)
+                mainHandler.postDelayed({ showPopupMenu() }, 100)
 
             } else {
                 //Display our popup menu instantly
@@ -560,12 +560,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             when (keyCode) {
                 KeyEvent.KEYCODE_ENTER -> {
                     searchView?.let {
-                        if (it.listSelection==ListView.INVALID_POSITION) {
+                        if (it.listSelection == ListView.INVALID_POSITION) {
                             // No suggestion pop up item selected, just trigger a search then
                             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
                             searchTheWeb(it.text.toString())
-                        }
-                        else {
+                        } else {
                             // An item in our selection pop up is selected, just action it
                             doSearchSuggestionAction(it, it.listSelection)
                         }
@@ -850,7 +849,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             when (event.keyCode) {
                 // Toggle status bar visibility
                 KeyEvent.KEYCODE_F10 -> {
-                    setFullscreen(!statusBarHidden,false)
+                    setFullscreen(!statusBarHidden, false)
                     return true
                 }
                 // Toggle tool bar visibility
@@ -903,11 +902,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             }
 
             // CTRL+TAB for tab cycling logic
-            // We could not find a fix our issue where we go back to top of the page after ALT+TAB
-            // See: https://github.com/Slion/Fulguris/issues/82
-            // As a workaround we added tab cycling capabilities using CTRL+GRAVE and CTRL+BACKSLASH
-            // While that works really well on FxTec Pro1 it may not work so well on other keyboards
-            if (event.isCtrlPressed && (event.keyCode == KeyEvent.KEYCODE_TAB || event.keyCode == KeyEvent.KEYCODE_GRAVE || event.keyCode == KeyEvent.KEYCODE_BACKSLASH)) {
+            if (event.isCtrlPressed && event.keyCode == KeyEvent.KEYCODE_TAB) {
 
                 tabsManager.let { it ->
 
@@ -923,7 +918,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     iCapturedRecentTabsIndices?.let{
 
                         // Reversing can be done with those three modifiers notably to make it easier with two thumbs on F(x)tec Pro1
-                        if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed || event.keyCode == KeyEvent.KEYCODE_BACKSLASH) {
+                        if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
                             // Go forward one tab
                             iRecentTabIndex++
                             if (iRecentTabIndex>=it.size) iRecentTabIndex=0
@@ -959,7 +954,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     }
                     KeyEvent.KEYCODE_T -> {
                         // Open new tab
-                        presenter?.newTab(homePageInitializer,true)
+                        presenter?.newTab(homePageInitializer, true)
                         return true
                     }
                     KeyEvent.KEYCODE_W -> {
@@ -987,11 +982,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     // Text zoom in and out
                     // TODO: persist that setting per tab?
                     KeyEvent.KEYCODE_MINUS -> tabsManager.currentTab?.webView?.apply {
-                        settings.textZoom=Math.max(settings.textZoom-5, MIN_BROWSER_TEXT_SIZE)
+                        settings.textZoom = Math.max(settings.textZoom - 5, MIN_BROWSER_TEXT_SIZE)
                         application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
                     }
-                    KeyEvent.KEYCODE_EQUALS -> tabsManager.currentTab?.webView?.apply{
-                        settings.textZoom=Math.min(settings.textZoom+5, MAX_BROWSER_TEXT_SIZE)
+                    KeyEvent.KEYCODE_EQUALS -> tabsManager.currentTab?.webView?.apply {
+                        settings.textZoom = Math.min(settings.textZoom + 5, MAX_BROWSER_TEXT_SIZE)
                         application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
                     }
                 }
@@ -1006,11 +1001,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     // Text zoom in and out
                     // TODO: persist that setting per tab?
                     KeyEvent.KEYCODE_MINUS -> tabsManager.currentTab?.webView?.apply {
-                        settings.textZoom=Math.max(settings.textZoom-1, MIN_BROWSER_TEXT_SIZE)
+                        settings.textZoom = Math.max(settings.textZoom - 1, MIN_BROWSER_TEXT_SIZE)
                         application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
                     }
-                    KeyEvent.KEYCODE_EQUALS -> tabsManager.currentTab?.webView?.apply{
-                        settings.textZoom=Math.min(settings.textZoom+1, MAX_BROWSER_TEXT_SIZE)
+                    KeyEvent.KEYCODE_EQUALS -> tabsManager.currentTab?.webView?.apply {
+                        settings.textZoom = Math.min(settings.textZoom + 1, MAX_BROWSER_TEXT_SIZE)
                         application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
                     }
                 }
@@ -1197,10 +1192,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      * for. It highlights the text entered.
      */
     private fun findInPage() = BrowserDialog.showEditText(
-        this,
-        R.string.action_find,
-        R.string.search_hint,
-        R.string.search_hint
+            this,
+            R.string.action_find,
+            R.string.search_hint,
+            R.string.search_hint
     ) { text ->
         if (text.isNotEmpty()) {
             findResult = presenter?.findInPage(text)
@@ -1252,13 +1247,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             return
         }
         BrowserDialog.show(this, R.string.dialog_title_close_browser,
-            DialogItem(title = R.string.close_tab) {
-                presenter?.deleteTab(position)
-            },
-            DialogItem(title = R.string.close_other_tabs) {
-                presenter?.closeAllOtherTabs()
-            },
-            DialogItem(title = R.string.close_all_tabs, onClick = this::closeBrowser))
+                DialogItem(title = R.string.close_tab) {
+                    presenter?.deleteTab(position)
+                },
+                DialogItem(title = R.string.close_other_tabs) {
+                    presenter?.closeAllOtherTabs()
+                },
+                DialogItem(title = R.string.close_all_tabs, onClick = this::closeBrowser))
     }
 
     override fun notifyTabViewRemoved(position: Int) {
@@ -1335,27 +1330,36 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     }
 
-    override fun setTabView(view: View) {
+    /**
+     * This function is central to browser tab switching.
+     * It swaps our previous WebView with our new WebView.
+     *
+     * @param aView Input is in fact a WebViewEx.
+     */
+    override fun setTabView(aView: View) {
         // SL: Hide any drawers first, thus making sure we close our tab drawer even when user taps current tab
         // Use a delayed handler to make the transition smooth
         // otherwise it will get caught up with the showTab code
         // and cause a janky motion
         mainHandler.postDelayed(drawer_layout::closeDrawers, 200)
 
-        if (currentTabView == view) {
+        if (currentTabView == aView) {
             return
         }
 
         logger.log(TAG, "Setting the tab view")
-        view.removeFromParent()
+        aView.removeFromParent()
         currentTabView.removeFromParent()
+
+
         content_frame.resetTarget() // Needed to make it work together with swipe to refresh
-        content_frame.addView(view, 0, MATCH_PARENT)
-        view.requestFocus()
+        content_frame.addView(aView, 0, MATCH_PARENT)
+        aView.requestFocus()
+
         // Remove existing focus change observer before we change our tab
         currentTabView?.onFocusChangeListener = null
         // Change our tab
-        currentTabView = view
+        currentTabView = aView
         // Close virtual keyboard if we loose focus
         currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(ui_layout.windowToken, 0) }
         showActionBar()
@@ -1386,10 +1390,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // First close drawer
         closeDrawers(null)
         // Then slightly delay page loading to give enough time for the drawer to close without stutter
-        mainHandler.postDelayed({presenter?.newTab(
-            homePageInitializer,
-            true
-        )}, 300)
+        mainHandler.postDelayed({
+            presenter?.newTab(
+                    homePageInitializer,
+                    true
+            )
+        }, 300)
     }
 
     override fun newTabButtonLongClicked() {
@@ -1448,7 +1454,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         setFullscreenIfNeeded(newConfig)
         setupToolBar(newConfig)
         // Can't find a proper event to do that after the configuration changes were applied so we just delay it
-        mainHandler.postDelayed({setupPullToRefresh(newConfig)} ,300)
+        mainHandler.postDelayed({ setupPullToRefresh(newConfig) }, 300)
         popupMenu.dismiss() // As it wont update somehow
         // Make sure our drawers adjust accordingly
         drawer_layout.requestLayout()
@@ -1623,7 +1629,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
         val searchUrl = "$searchText$QUERY_PLACE_HOLDER"
 
-        val (url,isSearch) = smartUrlFilter(query.trim(), true, searchUrl)
+        val (url, isSearch) = smartUrlFilter(query.trim(), true, searchUrl)
 
         if ((userPreferences.searchInNewTab && isSearch) or (userPreferences.urlInNewTab && !isSearch)) {
             // Create a new tab according to user preferences
@@ -1682,7 +1688,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
 
         // Needed to delay that as otherwise disabled alpha state didn't get applied
-        mainHandler.postDelayed({setupToolBarButtons()},500)
+        mainHandler.postDelayed({ setupToolBarButtons() }, 500)
 
         // Change reload icon color
         //setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
@@ -1701,7 +1707,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         content_frame.setBackgroundColor(color)
         // This one is going to be a problem as it will break some websites such as bbc.com
         // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color
-        currentTabView?.setBackgroundColor(if (progress_view.progress>=100) Color.WHITE else color)
+        currentTabView?.setBackgroundColor(if (progress_view.progress >= 100) Color.WHITE else color)
         currentTabView?.invalidate()
 
         // No animation for now
@@ -1725,7 +1731,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
 
         // Then the color of the status bar itself
-        setStatusBarColor(color,currentToolBarTextColor==Color.BLACK)
+        setStatusBarColor(color, currentToolBarTextColor == Color.BLACK)
 
         // Remove that if ever we re-enable color animation below
         currentUiColor = color
@@ -1775,17 +1781,17 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         if (!isColorMode()) {
             // Put back the theme color then
-            changeToolbarBackground(defaultColor,tabBackground);
+            changeToolbarBackground(defaultColor, tabBackground);
         }
         else if (color != Color.TRANSPARENT)
         {
             // We have a meta theme color specified in our page HTML, use it
-            changeToolbarBackground(color,tabBackground);
+            changeToolbarBackground(color, tabBackground);
         }
         else if (favicon==null)
         {
             // No HTML meta theme color and no favicon, use app theme color then
-            changeToolbarBackground(defaultColor,tabBackground);
+            changeToolbarBackground(defaultColor, tabBackground);
         }
         else {
             Palette.from(favicon).generate { palette ->
@@ -1863,7 +1869,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             }
         }
         getUrl.onItemClickListener = OnItemClickListener { _, _, position, _ ->
-            doSearchSuggestionAction(getUrl,position)
+            doSearchSuggestionAction(getUrl, position)
         }
         getUrl.setAdapter(suggestionsAdapter)
     }
@@ -1887,8 +1893,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      */
     private fun openHistory() {
         presenter?.newTab(
-            historyPageInitializer,
-            true
+                historyPageInitializer,
+                true
         )
     }
 
@@ -2077,10 +2083,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             arrayOf(Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
                 putExtra("PhotoPath", cameraPhotoPath)
                 putExtra(
-                    MediaStore.EXTRA_OUTPUT,
-                    Uri.fromFile(Utils.createImageFile().also { file ->
-                        cameraPhotoPath = "file:${file.absolutePath}"
-                    })
+                        MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(Utils.createImageFile().also { file ->
+                            cameraPhotoPath = "file:${file.absolutePath}"
+                        })
                 )
             })
         } catch (ex: IOException) {
@@ -2249,10 +2255,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      */
     private fun setFullscreenIfNeeded(configuration: Configuration) {
         if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setFullscreen( userPreferences.hideStatusBarInPortrait, false)
+            setFullscreen(userPreferences.hideStatusBarInPortrait, false)
         }
         else {
-            setFullscreen( userPreferences.hideStatusBarInLandscape, false)
+            setFullscreen(userPreferences.hideStatusBarInLandscape, false)
         }
     }
 
@@ -2282,7 +2288,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 decor.systemUiVisibility = decor.systemUiVisibility and fullScreenFlags.inv()
             }
             window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN)
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN)
             statusBarHidden = true
         } else {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -2502,11 +2508,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private fun checkForUpdates() {
         val url = getString(R.string.slions_update_check_url)
         // Request a JSON object response from the provided URL.
-        val request = object: JsonObjectRequest(Request.Method.GET,url,null,
+        val request = object: JsonObjectRequest(Request.Method.GET, url, null,
                 Response.Listener<JSONObject> { response ->
 
                     val latestVersion = response.getJSONArray("versions").getJSONObject(0).getString("version_string")
-                    if ( latestVersion != BuildConfig.VERSION_NAME) {
+                    if (latestVersion != BuildConfig.VERSION_NAME) {
                         // We have an update available, tell our user about it
                         val view = findViewById<View>(android.R.id.content)
                         Snackbar.make(view,
@@ -2524,10 +2530,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     //Log.d(TAG,response.toString())
                 },
                 Response.ErrorListener { error: VolleyError ->
-                        // Just ignore error for background update check
-                        // Use the following for network status code
-                        // Though networkResponse can be null in flight mode for instance
-                        // error.networkResponse.statusCode.toString()
+                    // Just ignore error for background update check
+                    // Use the following for network status code
+                    // Though networkResponse can be null in flight mode for instance
+                    // error.networkResponse.statusCode.toString()
 
                 }
         ){

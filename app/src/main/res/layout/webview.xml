@@ -18,6 +18,7 @@ android:defaultFocusHighlightEnabled="false"
     android:scrollbarThumbVertical="@drawable/scrollbar"
     android:scrollbarThumbHorizontal="@drawable/scrollbar"
     android:focusable="true"
+    android:focusableInTouchMode="true"
     android:defaultFocusHighlightEnabled="false"
     android:id="@+id/web_view"
     />
