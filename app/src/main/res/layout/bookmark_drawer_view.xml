@@ -20,7 +20,7 @@
             android:id="@+id/bookmark_title_layout"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/dividerColor"
+            android:background="?attr/colorPrimary"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 

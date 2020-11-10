@@ -25,8 +25,8 @@
     <color name="primary_color_dark">#424242</color>
     <color name="accent_color_dark">#7986CB</color>
 
-    <color name="divider_dark">#424242</color>
-    <color name="divider_light">#1F000000</color>
+    <color name="divider_dark">#B2B2B2</color>
+    <color name="divider_light">#2F2F2F</color>
 
     <color name="selected_dark">#55000000</color>
     <color name="selected_light">#0F000000</color>

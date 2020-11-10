@@ -38,6 +38,7 @@ class BrowserApp : Application() {
 
     lateinit var applicationComponent: AppComponent
 
+
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         if (BuildConfig.DEBUG && Build.VERSION.SDK_INT < 21) {
@@ -116,6 +117,16 @@ class BrowserApp : Application() {
                 logger.log(TAG, "Cleaning up after the Android framework")
                 MemoryLeakUtils.clearNextServedView(activity, this@BrowserApp)
             }
+
+            // Track current activity
+            override fun onActivityResumed(activity: Activity) {
+                resumedActivity = activity
+            }
+
+            // Track current activity
+            override fun onActivityPaused(activity: Activity) {
+                resumedActivity = null
+            }
         })
     }
 
@@ -130,6 +141,23 @@ class BrowserApp : Application() {
     companion object {
         private const val TAG = "BrowserApp"
         lateinit var instance: BrowserApp
+        // Used to track current activity
+        var resumedActivity: Activity? = null
+
+        /**
+         * Used to get current activity context in order to access current theme.
+         */
+        fun currentContext() : Context {
+            val act = resumedActivity
+            if (act!=null)
+            {
+                return act
+            }
+            else
+            {
+                return instance.applicationContext
+            }
+        }
 
         init {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT)

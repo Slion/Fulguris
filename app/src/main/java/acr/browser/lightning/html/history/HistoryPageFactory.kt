@@ -1,11 +1,14 @@
 package acr.browser.lightning.html.history
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.database.history.HistoryRepository
 import acr.browser.lightning.html.HtmlPageFactory
 import acr.browser.lightning.html.ListPageReader
 import acr.browser.lightning.html.jsoup.*
+import acr.browser.lightning.utils.ThemeUtils
+import acr.browser.lightning.utils.htmlColor
 import android.app.Application
 import dagger.Reusable
 import io.reactivex.Completable
@@ -29,7 +32,13 @@ class HistoryPageFactory @Inject constructor(
     override fun buildPage(): Single<String> = historyRepository
         .lastHundredVisitedHistoryEntries()
         .map { list ->
-            parse(listPageReader.provideHtml()) andBuild {
+            parse(listPageReader.provideHtml()
+                    // Theme our page first
+                    .replace("\${backgroundColor}", htmlColor(ThemeUtils.getPrimaryColor(BrowserApp.currentContext())))
+                    .replace("\${textColor}", htmlColor(ThemeUtils.getTextColor(BrowserApp.currentContext())))
+                    .replace("\${secondaryTextColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorAccent)))
+                    .replace("\${dividerColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.dividerColor)))
+            ) andBuild {
                 title { title }
                 body {
                     val repeatedElement = id("repeated").removeElement()

@@ -19,7 +19,7 @@ fun foregroundColorFromBackgroundColor(color: Int) :Int {
 
     //val c: Color = Color.argb(a,r,g,b);
 
-    val luminance = computeLuminance(r,g,b);
+    val luminance = computeLuminance(r, g, b);
 
     // Mix with original color?
     //return (luminance<140?0xFFFFFFFF:0xFF000000)
@@ -40,4 +40,12 @@ fun getFilteredColor(bitmap: Bitmap?): Int {
     val color = newBitmap.getPixel(0, 0)
     newBitmap.recycle()
     return color
+}
+
+/**
+ *
+ */
+fun htmlColor(aColor: Int) : String {
+    // Not sure why that ain't working the same with alpha, probably bits offset issues
+    return java.lang.String.format("#%06X", 0xFFFFFF and aColor)
 }
