@@ -208,7 +208,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private var showCloseTabButton = false
 
     private val longPressBackRunnable = Runnable {
-        showCloseDialog(tabsManager.positionOf(tabsManager.currentTab))
+        // Disable this for now as it is popping up when exiting full screen video mode.
+        // See: https://github.com/Slion/Fulguris/issues/81
+        //showCloseDialog(tabsManager.positionOf(tabsManager.currentTab))
     }
 
     /**
@@ -792,7 +794,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             if (searchView?.hasFocus() == true) {
                 searchView?.let { searchTheWeb(it.text.toString()) }
             }
-        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
+        }
+        else if (keyCode == KeyEvent.KEYCODE_BACK) {
             keyDownStartTime = System.currentTimeMillis()
             mainHandler.postDelayed(longPressBackRunnable, ViewConfiguration.getLongPressTimeout().toLong())
         }
@@ -2167,6 +2170,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
         logger.log(TAG, "onHideCustomView")
         currentTab.setVisibility(VISIBLE)
+        currentTab.requestFocus()
         try {
             customView?.keepScreenOn = false
         } catch (e: SecurityException) {
