@@ -789,6 +789,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         super.onWindowVisibleToUserAfterResume()
     }
 
+    fun actionFocusTextField() {
+        if (!isToolBarVisible()) {
+            showActionBar()
+        }
+        searchView?.requestFocus()
+    }
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             if (searchView?.hasFocus() == true) {
@@ -857,16 +864,19 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                 }
                 // Toggle tool bar visibility
                 KeyEvent.KEYCODE_F11 -> {
-                    if (toggleToolBar()) {
-                        // Highlight search field
-                        searchView?.requestFocus()
-                    }
+                    toggleToolBar()
                     return true
                 }
                 // Reload current tab
                 KeyEvent.KEYCODE_F5 -> {
                     // Refresh current tab
                     tabsManager.currentTab?.reload()
+                    return true
+                }
+
+                // Shortcut to focus text field
+                KeyEvent.KEYCODE_F6 -> {
+                    actionFocusTextField()
                     return true
                 }
 
@@ -940,8 +950,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                             //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
                         }
                     }
-
-
                 }
 
                 //logger.log(TAG,"Tab: down discarded")
@@ -976,30 +984,42 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                         tabsManager.currentTab?.reload()
                         return true
                     }
-                    KeyEvent.KEYCODE_L -> {
+                    // Show tab drawer displaying all pages
+                    KeyEvent.KEYCODE_P -> {
                         toggleTabs()
+                        return true
+                    }
+                    // Meritless shortcut matching Chrome's default
+                    KeyEvent.KEYCODE_L -> {
+                        actionFocusTextField()
+                        return true
                     }
                     KeyEvent.KEYCODE_B -> {
                         toggleBookmarks()
+                        return true
                     }
                     // Text zoom in and out
                     // TODO: persist that setting per tab?
                     KeyEvent.KEYCODE_MINUS -> tabsManager.currentTab?.webView?.apply {
                         settings.textZoom = Math.max(settings.textZoom - 5, MIN_BROWSER_TEXT_SIZE)
                         application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
+                        return true
                     }
                     KeyEvent.KEYCODE_EQUALS -> tabsManager.currentTab?.webView?.apply {
                         settings.textZoom = Math.min(settings.textZoom + 5, MAX_BROWSER_TEXT_SIZE)
                         application.toast(getText(R.string.size).toString() + ": " + settings.textZoom + "%")
+                        return true
                     }
                 }
 
                 isCtrlShiftOnly -> when (event.keyCode) {
                     KeyEvent.KEYCODE_T -> {
                         toggleTabs()
+                        return true
                     }
                     KeyEvent.KEYCODE_B -> {
                         toggleBookmarks()
+                        return true
                     }
                     // Text zoom in and out
                     // TODO: persist that setting per tab?
@@ -1975,7 +1995,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     /**
-     *
+     * Toggle tab list visibility
      */
     private fun toggleTabs() {
         if (showingTabs()) {
@@ -1984,11 +2004,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             openTabs()
         }
     }
-
-
-
-
-
 
 
     /**
@@ -2349,9 +2364,11 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     {
         return if (isToolBarVisible()) {
             doHideToolBar()
+            currentTabView?.requestFocus()
             false
         } else {
             showActionBar()
+            button_more.requestFocus()
             true
         }
     }
