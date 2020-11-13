@@ -30,6 +30,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import acr.browser.lightning.BrowserApp;
 import acr.browser.lightning.R;
 import acr.browser.lightning.constant.Constants;
 import acr.browser.lightning.database.HistoryEntry;
@@ -195,8 +196,7 @@ public final class Utils {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + '_';
-        File storageDir = Environment
-            .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File storageDir = BrowserApp.instance.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(imageFileName, /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
