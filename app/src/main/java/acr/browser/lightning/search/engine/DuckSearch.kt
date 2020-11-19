@@ -9,6 +9,6 @@ import acr.browser.lightning.R
  */
 class DuckSearch : BaseSearchEngine(
     "file:///android_asset/duckduckgo.png",
-    "https://duckduckgo.com/?t=lightning&q=",
+    "https://duckduckgo.com/?t=fulguris&q=",
     R.string.search_engine_duckduckgo
 )
