@@ -823,29 +823,66 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     var iRecentTabIndex = -1;
     var iCapturedRecentTabsIndices : Set<LightningView>? = null
 
-    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
 
-        /*
-        if (event.action == KeyEvent.ACTION_UP && event.keyCode==KeyEvent.KEYCODE_TAB) {
-            logger.log(TAG,"Tab: up not discarded")
-            return true
+    private fun copyRecentTabsList()
+    {
+        // Fetch snapshot of our recent tab list
+        iCapturedRecentTabsIndices = tabsManager.iRecentTabs.toSet()
+        iRecentTabIndex = iCapturedRecentTabsIndices?.size?.minus(1) ?: -1
+        //logger.log(TAG, "Recent indices snapshot: iCapturedRecentTabsIndices")
+    }
+
+    /**
+     * Initiate Ctrl + Tab session if one is not already started.
+     */
+    private fun startCtrlTab()
+    {
+        if (iCapturedRecentTabsIndices==null)
+        {
+            copyRecentTabsList()
         }
-         */
+    }
+
+    /**
+     * Reset ctrl + tab session if one was started.
+     * Typically used when creating or deleting tabs.
+     */
+    private fun resetCtrlTab()
+    {
+        if (iCapturedRecentTabsIndices!=null)
+        {
+            copyRecentTabsList()
+        }
+    }
+
+    /**
+     * Stop ctrl + tab session.
+     * Typically when the ctrl key is released.
+     */
+    private fun stopCtrlTab()
+    {
+        iCapturedRecentTabsIndices?.let {
+            // Replace our recent tabs list by putting our captured one back in place making sure the selected tab is going back on top
+            // See: https://github.com/Slion/Fulguris/issues/56
+            tabsManager.iRecentTabs = it.toMutableSet()
+            val tab = tabsManager.iRecentTabs.elementAt(iRecentTabIndex)
+            tabsManager.iRecentTabs.remove(tab)
+            tabsManager.iRecentTabs.add(tab)
+        }
+
+        iRecentTabIndex = -1;
+        iCapturedRecentTabsIndices = null;
+        //logger.log(TAG,"CTRL+TAB: Reset")
+    }
+
+    /**
+     * Manage our key events.
+     */
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
 
         if (event.action == KeyEvent.ACTION_UP && (event.keyCode==KeyEvent.KEYCODE_CTRL_LEFT||event.keyCode==KeyEvent.KEYCODE_CTRL_RIGHT)) {
             // Exiting CTRL+TAB mode
-            iCapturedRecentTabsIndices?.let {
-                // Replace our recent tabs list by putting our captured one back in place making sure the selected tab is going back on top
-                // See: https://github.com/Slion/Fulguris/issues/56
-                tabsManager.iRecentTabs = it.toMutableSet()
-                val tab = tabsManager.iRecentTabs.elementAt(iRecentTabIndex)
-                tabsManager.iRecentTabs.remove(tab)
-                tabsManager.iRecentTabs.add(tab)
-            }
-
-            iRecentTabIndex = -1;
-            iCapturedRecentTabsIndices = null;
-            //logger.log(TAG,"CTRL+TAB: Reset")
+            stopCtrlTab()
         }
 
         // Keyboard shortcuts
@@ -917,38 +954,29 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             // CTRL+TAB for tab cycling logic
             if (event.isCtrlPressed && event.keyCode == KeyEvent.KEYCODE_TAB) {
 
-                tabsManager.let { it ->
+                // Entering CTRL+TAB mode
+                startCtrlTab()
 
-                    if (iCapturedRecentTabsIndices==null)
-                    {
-                        // Entering CTRL+TAB mode
-                        // Fetch snapshot of our recent tab list
-                        iCapturedRecentTabsIndices = it.iRecentTabs.toSet()
-                        iRecentTabIndex = iCapturedRecentTabsIndices?.size?.minus(1) ?: -1
-                        //logger.log(TAG, "Recent indices snapshot: iCapturedRecentTabsIndices")
+                iCapturedRecentTabsIndices?.let{
+
+                    // Reversing can be done with those three modifiers notably to make it easier with two thumbs on F(x)tec Pro1
+                    if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
+                        // Go forward one tab
+                        iRecentTabIndex++
+                        if (iRecentTabIndex>=it.size) iRecentTabIndex=0
+
+                    } else {
+                        // Go back one tab
+                        iRecentTabIndex--
+                        if (iRecentTabIndex<0) iRecentTabIndex=iCapturedRecentTabsIndices?.size?.minus(1) ?: -1
                     }
 
-                    iCapturedRecentTabsIndices?.let{
+                    //logger.log(TAG, "Switching to $iRecentTabIndex : $iCapturedRecentTabsIndices")
 
-                        // Reversing can be done with those three modifiers notably to make it easier with two thumbs on F(x)tec Pro1
-                        if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
-                            // Go forward one tab
-                            iRecentTabIndex++
-                            if (iRecentTabIndex>=it.size) iRecentTabIndex=0
-
-                        } else {
-                            // Go back one tab
-                            iRecentTabIndex--
-                            if (iRecentTabIndex<0) iRecentTabIndex=iCapturedRecentTabsIndices?.size?.minus(1) ?: -1
-                        }
-
-                        //logger.log(TAG, "Switching to $iRecentTabIndex : $iCapturedRecentTabsIndices")
-
-                        if (iRecentTabIndex >= 0) {
-                            // We worked out which tab to switch to, just do it now
-                            presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))
-                            //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
-                        }
+                    if (iRecentTabIndex >= 0) {
+                        // We worked out which tab to switch to, just do it now
+                        presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))
+                        //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
                     }
                 }
 
@@ -966,11 +994,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     KeyEvent.KEYCODE_T -> {
                         // Open new tab
                         presenter?.newTab(homePageInitializer, true)
+                        resetCtrlTab()
                         return true
                     }
                     KeyEvent.KEYCODE_W -> {
                         // Close current tab
                         tabsManager.let { presenter?.deleteTab(it.indexOfCurrentTab()) }
+                        resetCtrlTab()
                         return true
                     }
                     KeyEvent.KEYCODE_Q -> {
@@ -1041,15 +1071,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             }
         }
 
-/*
-        if (event.keyCode == KeyEvent.KEYCODE_TAB) {
-            logger.log(TAG,"Tab: NOT GOOD")
-            //return true
-        }
-*/
-
         return super.dispatchKeyEvent(event)
     }
+
 
     /**
      *
