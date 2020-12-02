@@ -167,7 +167,7 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     // Play Store billing
-    playstoreImplementation 'com.android.billingclient:billing:3.0.1'
+    playstoreImplementation 'com.android.billingclient:billing:3.0.2'
 
     // html parsing for reading mode
     implementation 'org.jsoup:jsoup:1.11.3'
@@ -214,13 +214,12 @@ dependencies {
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation 'androidx.core:core-ktx:1.5.0-alpha04'
 
     // Firebase
     // Recommended: Add the Firebase SDK for Google Analytics.
     implementation 'com.google.firebase:firebase-analytics:18.0.0'
     // Add the Firebase SDK for Crashlytics.
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
 
     // Volley HTTP request
     implementation 'com.android.volley:volley:1.1.1'
