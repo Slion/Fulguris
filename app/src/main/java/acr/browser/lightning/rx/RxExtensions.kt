@@ -16,6 +16,11 @@ import org.reactivestreams.Publisher
  * type.
  * @see Observable.join
  */
+
+//SL: We are now getting compile error here
+// Do we really need this?
+
+/*
 inline fun <T, R, Selector_T, Selector_R, S> Flowable<T>.join(
     other: Flowable<R>,
     crossinline selectorLeft: (T) -> Publisher<Selector_T>,
@@ -27,3 +32,4 @@ inline fun <T, R, Selector_T, Selector_R, S> Flowable<T>.join(
     io.reactivex.functions.Function { selectorRight(it) },
     BiFunction { t1, t2 -> join(t1, t2) }
 )
+*/

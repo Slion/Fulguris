@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlinVersion = '1.4.10'
+    ext.kotlinVersion = '1.4.21'
     repositories {
         google()
         jcenter()
@@ -14,7 +14,7 @@ buildscript {
         // (if not, add it).
         classpath 'com.google.gms:google-services:4.3.4'
         // Add the Crashlytics Gradle plugin.
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
     }
 }
 

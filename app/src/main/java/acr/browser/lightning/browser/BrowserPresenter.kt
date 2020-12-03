@@ -1,8 +1,8 @@
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.BuildConfig
+import acr.browser.lightning.Entitlement
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.TabModel.Companion.URL_KEY
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.INTENT_ORIGIN
 import acr.browser.lightning.constant.SCHEME_BOOKMARKS
@@ -327,8 +327,8 @@ class BrowserPresenter(
      * @return true if we successfully created the tab, false if we have hit max tabs.
      */
     fun newTab(tabInitializer: TabInitializer, show: Boolean): Boolean {
-        // Limit number of tabs for limited version of app
-        if (!BuildConfig.FULL_VERSION && tabsModel.size() >= 10) {
+        // Limit number of tabs according to sponsorship level
+        if (tabsModel.size() >= Entitlement.maxTabCount(userPreferences.sponsorship)) {
             view.showSnackbar(R.string.max_tabs)
             return false
         }

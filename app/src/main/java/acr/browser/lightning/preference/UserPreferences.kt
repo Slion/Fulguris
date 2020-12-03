@@ -2,6 +2,7 @@ package acr.browser.lightning.preference
 
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BrowserApp
+import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.browser.SearchBoxDisplayChoice
@@ -379,7 +380,11 @@ class UserPreferences @Inject constructor(
      */
     var desktopWidthInLandscape by preferences.intPreference(R.string.pref_key_landscape_desktop_width, BrowserApp.instance.resources.getInteger(R.integer.pref_default_landscape_desktop_width))
 
-
+    /**
+     * Save sponsorship level.
+     * Default level is defined by our build configuration.
+     */
+    var sponsorship by preferences.enumPreference(R.string.pref_key_sponsorship, BuildConfig.SPONSORSHIP)
 }
 
 // SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML
