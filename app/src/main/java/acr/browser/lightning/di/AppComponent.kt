@@ -86,6 +86,8 @@ interface AppComponent {
 
     fun inject(appsSettingsFragment: AppsSettingsFragment)
 
+    fun inject(sponsorshipSettingsFragment: SponsorshipSettingsFragment)
+
     fun provideBloomFilterAdBlocker(): BloomFilterAdBlocker
 
     fun provideNoOpAdBlocker(): NoOpAdBlocker

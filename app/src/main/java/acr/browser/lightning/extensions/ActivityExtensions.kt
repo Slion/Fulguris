@@ -19,7 +19,7 @@ import com.google.android.material.snackbar.Snackbar
  */
 fun Activity.snackbar(@StringRes resource: Int) {
     val view = findViewById<View>(android.R.id.content)
-    Snackbar.make(view, resource, Snackbar.LENGTH_SHORT).show()
+    Snackbar.make(view, resource, Snackbar.LENGTH_LONG).show()
 }
 
 /**
@@ -30,7 +30,7 @@ fun Activity.snackbar(@StringRes resource: Int) {
  */
 fun Activity.snackbar(message: String) {
     val view = findViewById<View>(android.R.id.content)
-    Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+    Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
 }
 
 

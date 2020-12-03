@@ -36,7 +36,7 @@ class AppsSettingsFragment : AbstractSettingsFragment() {
 
         val intentUtils = IntentUtils(activity as Activity)
 
-        // Get all our preferences for external app on populate our settings page with theme
+        // Get all our preferences for external apps and populate our settings page with them
         val allEntries: Map<String, *> = preferences.all
         for ((key, value) in allEntries) {
 

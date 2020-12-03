@@ -21,6 +21,7 @@ import android.os.Debug
 import android.os.StrictMode
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.leakcanary.LeakCanary
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -49,8 +50,8 @@ class BrowserApp : Application() {
     override fun onCreate() {
         // SL: Use this to debug when launched from another app for instance
         //Debug.waitForDebugger()
-
         super.onCreate()
+        AndroidThreeTen.init(this);
         instance = this
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()

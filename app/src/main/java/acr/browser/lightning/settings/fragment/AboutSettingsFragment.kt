@@ -19,8 +19,6 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource() = R.xml.preference_about
 
-
-
     private lateinit var queue: RequestQueue
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

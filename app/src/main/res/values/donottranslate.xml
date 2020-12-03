@@ -50,7 +50,7 @@
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>
     <string name="pref_key_new_tab_position">pref_key_new_tab_position</string>
     <string name="pref_key_theme">pref_key_theme</string>
-
+    <string name="pref_key_sponsorship">pref_key_sponsorship</string>
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>
