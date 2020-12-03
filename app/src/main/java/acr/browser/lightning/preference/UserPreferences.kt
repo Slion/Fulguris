@@ -367,7 +367,7 @@ class UserPreferences @Inject constructor(
     /**
      * Toggle visibility of close tab button on drawer tab list items.
      */
-    var showCloseTabButton by preferences.booleanPreference(R.string.pref_key_tab_list_item_show_close_button, R.bool.pref_default_tab_list_item_show_close_button)
+    var showCloseTabButton by preferences.booleanPreference(R.string.pref_key_tab_list_item_show_close_button, if (screenSize.isTablet())  R.bool.const_true else R.bool.pref_default_tab_list_item_show_close_button)
 
     /**
      * Define viewport width for desktop mode in portrait
