@@ -61,19 +61,19 @@ android {
         }
     }
 
-    flavorDimensions "brand", "version", "publisher"
+    flavorDimensions "BRAND", "VERSION", "PUBLISHER"
 
     productFlavors {
 
         lightning {
-            dimension "brand"
+            dimension "BRAND"
             applicationId "acr.browser.lightning"
             versionCode 101
             versionName "5.1.0"
         }
 
         slions {
-            dimension "brand"
+            dimension "BRAND"
             applicationId "net.slions.fulguris"
             versionCode 65
             versionName "1.0.19"
@@ -81,31 +81,31 @@ android {
         }
 
         lite {
-            dimension "version"
+            dimension "VERSION"
             buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
             applicationIdSuffix ".lite"
         }
 
         full {
-            dimension "version"
+            dimension "VERSION"
             buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
             applicationIdSuffix ".full"
         }
 
         playstore {
-            dimension "publisher"
+            dimension "PUBLISHER"
             applicationIdSuffix ".playstore"
             buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.TIN"
         }
 
         download {
-            dimension "publisher"
+            dimension "PUBLISHER"
             applicationIdSuffix ".download"
             buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
         }
 
         fdroid {
-            dimension "publisher"
+            dimension "PUBLISHER"
             applicationIdSuffix ".fdroid"
             buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.TIN"
         }
