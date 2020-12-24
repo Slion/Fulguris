@@ -145,17 +145,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
     private fun populateSubscriptions() {
         if (!isSubscriptionSupported()) {
             // Subscription is not supported meaning this probably is not a proper Google Play Store installation
-            // We invite user to installer our Google Play Store release
-            val pref = Preference(context)
-            pref.title = resources.getString(R.string.pref_title_no_sponsorship)
-            pref.summary = resources.getString(R.string.pref_summary_no_sponsorship)
-            pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_play_arrow, activity?.theme)
-            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                // Open up Fulguris play store page
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore")))
-                true
-            }
-            preferenceScreen.addPreference(pref)
+            addPreferenceLinkToGooglePlayStore()
             return
         }
         // Ask servers for our product list AKA SKUs
@@ -212,19 +202,15 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                             }
                             preferenceScreen.addPreference(pref)
                         }
-                    }
 
-                    // Add preference with link to Fulguris download page
-                    val pref = Preference(context)
-                    pref.title = resources.getString(R.string.pref_title_free_download)
-                    pref.summary = resources.getString(R.string.pref_summary_free_download)
-                    pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_free_breakfast, activity?.theme)
-                    pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                        // Open Fulguris home page
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_app_home_page))))
-                        true
+                        // On Google Play Store variant we also show a link to our free download
+                        // Add preference with link to Fulguris download page
+                        addPreferenceLinkToFulgurisHome()
+                    } else {
+                        // No SKU we are not running a Google Play Store variant
+                        // Show link to Play Store then
+                        addPreferenceLinkToGooglePlayStore()
                     }
-                    preferenceScreen.addPreference(pref)
                 }
                 else -> {
                     Log.e(LOG_TAG, billingResult.debugMessage)
@@ -244,6 +230,38 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         }
     }
 
+    /**
+     *
+     */
+    private fun addPreferenceLinkToGooglePlayStore() {
+        // We invite user to installer our Google Play Store release
+        val pref = Preference(context)
+        pref.title = resources.getString(R.string.pref_title_no_sponsorship)
+        pref.summary = resources.getString(R.string.pref_summary_no_sponsorship)
+        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_play_arrow, activity?.theme)
+        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            // Open up Fulguris play store page
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore")))
+            true
+        }
+        preferenceScreen.addPreference(pref)
+    }
+
+    /**
+     *
+     */
+    private fun addPreferenceLinkToFulgurisHome() {
+        val pref = Preference(context)
+        pref.title = resources.getString(R.string.pref_title_free_download)
+        pref.summary = resources.getString(R.string.pref_summary_free_download)
+        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_free_breakfast, activity?.theme)
+        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            // Open Fulguris home page
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_app_home_page))))
+            true
+        }
+        preferenceScreen.addPreference(pref)
+    }
 
     /**
      * TODO: Improve that I guess
