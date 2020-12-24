@@ -21,6 +21,8 @@
     <style name="Theme.SettingsTheme.Black" parent="Theme.BlackTheme">
         <item name="android:windowBackground">@null</item>
         <item name="toolbarSettingsBackground">@color/black</item>
+        <!-- Needed otherwise we get funny transparency issue during transition to settings activity -->
+        <item name="colorPrimaryDark">@color/black</item>
         <!-- Notably applies to settings icons -->
         <item name="android:tint">#fff</item>
     </style>
