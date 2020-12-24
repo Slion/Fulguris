@@ -294,7 +294,7 @@ class LightningDialogBuilder @Inject constructor(
                 .subscribe(uiController::handleHistoryChange)
         })
 
-    // TODO There should be a way in which we do not need an activity reference to dowload a file
+    // TODO There should be a way in which we do not need an activity reference to download a file
     fun showLongPressImageDialog(
         activity: Activity,
         uiController: UIController,
@@ -326,25 +326,30 @@ class LightningDialogBuilder @Inject constructor(
     fun showLongPressLinkDialog(
         activity: Activity,
         uiController: UIController,
-        url: String
+        url: String,
+        text: String?,
     ) = BrowserDialog.show(activity, url,
-        DialogItem(title = R.string.dialog_open_new_tab) {
-            uiController.handleNewTab(NewTab.FOREGROUND, url)
-        },
-        DialogItem(title = R.string.dialog_open_background_tab) {
-            uiController.handleNewTab(NewTab.BACKGROUND, url)
-        },
-        DialogItem(
-            title = R.string.dialog_open_incognito_tab,
-            isConditionMet = activity is MainActivity
-        ) {
-            uiController.handleNewTab(NewTab.INCOGNITO, url)
-        },
-        DialogItem(title = R.string.action_share) {
-            IntentUtils(activity).shareUrl(url, null)
-        },
-        DialogItem(title = R.string.dialog_copy_link) {
-            clipboardManager.copyToClipboard(url)
-        })
-
+            DialogItem(title = R.string.dialog_open_new_tab) {
+                uiController.handleNewTab(NewTab.FOREGROUND, url)
+            },
+            DialogItem(title = R.string.dialog_open_background_tab) {
+                uiController.handleNewTab(NewTab.BACKGROUND, url)
+            },
+            DialogItem(
+                title = R.string.dialog_open_incognito_tab,
+                isConditionMet = activity is MainActivity
+            ) {
+                uiController.handleNewTab(NewTab.INCOGNITO, url)
+            },
+            DialogItem(title = R.string.action_share) {
+                IntentUtils(activity).shareUrl(url, null)
+            },
+            DialogItem(title = R.string.dialog_copy_link) {
+                clipboardManager.copyToClipboard(url)
+            },
+            // Show copy text dialog item if we have some text
+            DialogItem(title = R.string.dialog_copy_text, isConditionMet = !text.isNullOrEmpty()) {
+                if (!text.isNullOrEmpty()) clipboardManager.copyToClipboard(text)
+            }
+        )
 }
