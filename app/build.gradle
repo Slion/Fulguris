@@ -23,6 +23,9 @@ android {
 
     dexOptions {
         javaMaxHeapSize "8g"
+        // Added to try and fix crashes on Android 5.
+        // See: https://stackoverflow.com/a/42436796/3969362
+        preDexLibraries false
     }
 
     buildTypes {
