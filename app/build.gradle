@@ -25,6 +25,7 @@ android {
         javaMaxHeapSize "8g"
         // Added to try and fix crashes on Android 5.
         // See: https://stackoverflow.com/a/42436796/3969362
+        // Better: https://stackoverflow.com/a/47890503/3969362
         preDexLibraries false
     }
 
@@ -78,8 +79,8 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 68
-            versionName "1.1.2"
+            versionCode 69
+            versionName "1.1.3"
             archivesBaseName = "Fulguris-v$versionName"
         }
 
