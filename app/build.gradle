@@ -170,8 +170,7 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     // Play Store billing
-    //playstoreImplementation 'com.android.billingclient:billing:3.0.2'
-    implementation 'com.android.billingclient:billing:3.0.2'
+    playstoreImplementation 'com.android.billingclient:billing:3.0.2'
 
     // html parsing for reading mode
     implementation 'org.jsoup:jsoup:1.11.3'
