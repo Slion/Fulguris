@@ -9,14 +9,10 @@
             type="acr.browser.lightning.controller.UIController"/>
     </data>
 
-<merge
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:clickable="true"
-    android:focusable="true"
-    tools:parentTag="android.widget.LinearLayout">
-
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,8 +83,11 @@
         android:divider="@null"
         android:dividerHeight="0dp"
         android:overScrollMode="ifContentScrolls"
-        android:requiresFadingEdge="vertical" />
+        android:requiresFadingEdge="vertical"
+        android:focusable="true"
+        android:clickable="true"
+        android:descendantFocusability="afterDescendants"/>
 
 
-</merge>
+</LinearLayout>
 </layout>

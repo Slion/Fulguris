@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+android:focusableInTouchMode="true"
+    Makes it so that you need to double tap an item to select it
+    Could be an interesting settings option
+    Keep it single tap for now.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="56dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="false"
     android:background="?attr/listBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal">

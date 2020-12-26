@@ -58,6 +58,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.StateListDrawable
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
@@ -448,10 +449,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
 
 
-        searchBackground = customView.findViewById<View>(R.id.search_container).apply {
-            // initialize search background color
-            background.tint(getSearchBarColor(primaryColor))
-        }
+        searchBackground = customView.findViewById<View>(R.id.search_container)
+        // initialize search background color
+        setSearchBarColors(primaryColor)
 
         drawer_layout.setDrawerShadow(R.drawable.drawer_right_shadow, GravityCompat.END)
         drawer_layout.setDrawerShadow(R.drawable.drawer_left_shadow, GravityCompat.START)
@@ -497,7 +497,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
         button_more.setOnClickListener(OnClickListener {
             // Web page is loosing focus as we open our menu
-            currentTabView?.clearFocus()
+            // Actually this was causing our search field to gain focus on HTC One M8 - Android 6
+            //currentTabView?.clearFocus()
             // Check if virtual keyboard is showing
             if (inputMethodManager.isActive) {
                 // Open our menu with a slight delay giving enough time for our virtual keyboard to close
@@ -659,7 +660,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             // Trying to sort out our issue with touch input reaching through drawer into address bar
             //toolbar_layout.isEnabled = true
 
-            currentTabView?.requestFocus()
+            // This was causing focus problems when switching directly from tabs drawer to bookmarks drawer
+            //currentTabView?.requestFocus()
 
             if (userPreferences.lockedDrawers) return; // Drawers remain locked
             val tabsDrawer = getTabDrawer()
@@ -1762,7 +1764,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         toolbar_layout.setBackgroundColor(color)
         progress_view.mProgressColor = color
         // Search text field color
-        searchBackground?.background?.tint(getSearchBarColor(color))
+        setSearchBarColors(color)
 
         // Progress bar background color
         DrawableUtils.mixColor(0.5f, color, Color.WHITE).let {
@@ -1849,6 +1851,20 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
+
+    /**
+     * Set our search bar color for focused and non focused state
+     */
+    private fun setSearchBarColors(aColor: Int) {
+        searchBackground?.apply {
+            val stateListDrawable = background as StateListDrawable
+            // Order may matter depending of states declared in our background drawable
+            // See: [R.drawable.card_bg_elevate]
+            stateListDrawable.drawableForState(android.R.attr.state_focused).tint(getSearchBarFocusedColor(aColor))
+            stateListDrawable.drawableForState(android.R.attr.state_enabled).tint(getSearchBarColor(aColor))
+        }
+    }
+
     /**
      *
      */
@@ -1863,6 +1879,23 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             DrawableUtils.mixColor(0.20f, requestedColor, Color.WHITE)
         }
     }
+
+    /**
+     *
+     */
+    private fun getSearchBarFocusedColor(requestedColor: Int): Int {
+        val luminance = ColorUtils.calculateLuminance(requestedColor)
+        return if (luminance>0.9) {
+            // Too bright, make it darker then
+            DrawableUtils.mixColor(0.35f, requestedColor, Color.BLACK)
+        }
+        else {
+            // Make search text field background lighter
+            DrawableUtils.mixColor(0.35f, requestedColor, Color.WHITE)
+        }
+    }
+
+
 
     @ColorInt
     override fun getUiColor(): Int = currentUiColor
@@ -1965,6 +1998,14 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         if (showingTabs()) {
             drawer_layout.closeDrawers()
         }
+        // Define what to do once our drawer it opened
+        //drawer_layout.onceOnDrawerOpened {
+            drawer_layout.findViewById<RecyclerView>(R.id.bookmark_list_view)?.apply {
+                // Focus first item in our list
+                findViewHolderForAdapterPosition(0)?.itemView?.requestFocus()
+            }
+        //}
+        // Open bookmarks drawer
         drawer_layout.openDrawer(getBookmarkDrawer())
     }
 
@@ -1988,14 +2029,18 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
 
         // Loose focus on current tab web page
-        currentTabView?.clearFocus()
+        // Actually this was causing our search field to gain focus on HTC One M8 - Android 6
+        // currentTabView?.clearFocus()
+        // That's needed for focus issue when opening with tap on button
+        val tabListView = drawer_layout.findViewById<RecyclerView>(R.id.tabs_list)
+        tabListView?.requestFocus()
 
         // Define what to do once our list drawer it opened
         // Item focus won't work sometimes when not using keyboard, I'm guessing that's somehow a feature
         drawer_layout.onceOnDrawerOpened {
             // Set focus
             // Find our recycler list view
-            drawer_layout.findViewById<RecyclerView>(R.id.tabs_list)?.apply {
+            tabListView?.apply {
                 // Get current tab index and layout manager
                 val index = tabsManager.indexOfCurrentTab()
                 val lm = layoutManager as LinearLayoutManager

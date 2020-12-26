@@ -12,6 +12,7 @@ android:focusableInTouchMode="true"
     android:layout_height="@dimen/material_grid_touch_large"
     android:clickable="true"
     android:focusable="true"
+    android:focusableInTouchMode="false"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:weightSum="1">

@@ -7,10 +7,16 @@ android:background="@drawable/card_bg_elevate"
 
 Slions flavor is making changes to search layout notably adjusting margins.
 
+Make sure search_container remains focusable otherwise we get funny issues
+with the search field gaining focus while scrolling through tabs in drawer.
+This being focusable serves as a workaround as it gets focus before the search view
+and thus the auto complete popup won't come up out of the blue.
 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_container"
+    android:orientation="horizontal"
+    android:layout_weight="1"
     android:layout_width="1dp"
     android:layout_height="match_parent"
     android:layout_marginLeft="8dp"
@@ -20,12 +26,12 @@ Slions flavor is making changes to search layout notably adjusting margins.
     android:background="@drawable/card_bg_elevate"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:descendantFocusability="beforeDescendants"
     android:elevation="2dp"
-    android:focusableInTouchMode="false"
     android:gravity="center"
-    android:layout_weight="1"
-    android:orientation="horizontal">
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="false"
+    android:focusable="true"
+    >
 
     <ImageView
         android:id="@+id/search_ssl_status"
@@ -34,7 +40,9 @@ Slions flavor is making changes to search layout notably adjusting margins.
         android:background="@color/transparent"
         android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="false"
+        />
 
     <!-- Apparently ellipsis won't work with AppCompatAutoCompleteTextView -->
     <acr.browser.lightning.view.SearchView
@@ -62,6 +70,9 @@ Slions flavor is making changes to search layout notably adjusting margins.
         android:ellipsize="middle"
         android:scrollHorizontally="true"
         android:singleLine="true"
+        android:focusableInTouchMode="false"
+        android:clickable="true"
+        android:focusable="true"
          />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
