@@ -29,7 +29,7 @@ and thus the auto complete popup won't come up out of the blue.
     android:elevation="2dp"
     android:gravity="center"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="false"
+    android:focusableInTouchMode="true"
     android:focusable="true"
     >
 
@@ -70,7 +70,7 @@ and thus the auto complete popup won't come up out of the blue.
         android:ellipsize="middle"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:focusableInTouchMode="false"
+        android:focusableInTouchMode="true"
         android:clickable="true"
         android:focusable="true"
          />
