@@ -89,6 +89,8 @@ class FetchUrlMimeType {
                     connection.disconnect();
             }
 
+            Result res = new Result();
+
             if (mimeType != null) {
                 if (mimeType.equalsIgnoreCase("text/plain")
                     || mimeType.equalsIgnoreCase("application/octet-stream")) {
@@ -98,29 +100,42 @@ class FetchUrlMimeType {
                         mRequest.setMimeType(newMimeType);
                     }
                 }
-                final String filename = guessFileName(mUri, contentDisposition, mimeType);
-                mRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                res.iFilename = guessFileName(mUri, contentDisposition, mimeType);
+                mRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, res.iFilename);
             }
 
             // Start the download
             try {
-                mDownloadManager.enqueue(mRequest);
-                emitter.onSuccess(Result.SUCCESS);
+                res.iDownloadId = mDownloadManager.enqueue(mRequest);
+                res.iCode = ResultCode.SUCCESS;
+                emitter.onSuccess(res);
             } catch (IllegalArgumentException e) {
                 // Probably got a bad URL or something
                 Log.e(TAG, "Unable to enqueue request", e);
-                emitter.onSuccess(Result.FAILURE_ENQUEUE);
+                res.iCode = ResultCode.FAILURE_ENQUEUE;
+                emitter.onSuccess(res);
             } catch (SecurityException e) {
                 // TODO write a download utility that downloads files rather than rely on the system
                 // because the system can only handle Environment.getExternal... as a path
-                emitter.onSuccess(Result.FAILURE_LOCATION);
+                res.iCode = ResultCode.FAILURE_LOCATION;
+                emitter.onSuccess(res);
             }
         });
     }
 
-    enum Result {
+    enum ResultCode {
         FAILURE_ENQUEUE,
         FAILURE_LOCATION,
         SUCCESS
     }
+
+    /**
+     * Our download results providing filename, response code and download ID if any.
+     */
+    class Result {
+        String iFilename;
+        ResultCode iCode = ResultCode.FAILURE_ENQUEUE;
+        long iDownloadId = 0;
+    }
+
 }

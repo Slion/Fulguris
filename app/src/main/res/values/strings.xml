@@ -98,7 +98,7 @@
     <string name="action_find">Find in page</string>
     <string name="downloads">Downloads</string>
     <string name="downloads_notification_description">Triggers upon download completion</string>
-    <string name="download_pending">Starting download\u2026</string>
+    <string name="download_pending">Downloading:</string>
     <string name="cannot_download">Can only download \"http\" or \"https\" URLs.</string>
     <string name="problem_download">Invalid URL encountered, cannot download</string>
     <string name="problem_location_download">Cannot download to the specified location</string>

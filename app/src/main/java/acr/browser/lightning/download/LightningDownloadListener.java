@@ -13,15 +13,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.text.format.Formatter;
 import android.view.View;
 import android.webkit.DownloadListener;
-import android.webkit.URLUtil;
 
 import com.anthonycr.grant.PermissionsManager;
 import com.anthonycr.grant.PermissionsResultAction;
-import com.google.android.material.snackbar.Snackbar;
 
 import javax.inject.Inject;
 
@@ -30,13 +27,13 @@ import acr.browser.lightning.browser.activity.BrowserActivity;
 import acr.browser.lightning.database.downloads.DownloadsRepository;
 import acr.browser.lightning.di.Injector;
 import acr.browser.lightning.dialog.BrowserDialog;
+import acr.browser.lightning.extensions.ActivityExtensions;
 import acr.browser.lightning.log.Logger;
 import acr.browser.lightning.preference.UserPreferences;
 import acr.browser.lightning.utils.Utils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -132,9 +129,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                 //Show a snackbar with a link to open the downloaded file
                 if (success) {
                     final Intent i = downloadsIntent;
-                    View view = ((AppCompatActivity) mActivity).findViewById(android.R.id.content);
-                    Snackbar.make(view,contentTitle, Snackbar.LENGTH_LONG)
-                            .setAction(R.string.show, new View.OnClickListener() {
+                    ActivityExtensions.makeSnackbar(mActivity,contentTitle).setAction(R.string.show, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     context.startActivity(i);
@@ -142,8 +137,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                             }).show();
                 }
                 else {
-                    View view = ((AppCompatActivity) mActivity).findViewById(android.R.id.content);
-                    Snackbar.make(view,contentTitle, Snackbar.LENGTH_LONG).show();
+                    ActivityExtensions.snackbar(mActivity,contentTitle);
                 }
             }
         }

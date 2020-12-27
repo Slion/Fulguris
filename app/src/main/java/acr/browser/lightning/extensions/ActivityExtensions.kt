@@ -2,6 +2,7 @@
 
 package acr.browser.lightning.extensions
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Build
 import android.view.View
@@ -18,8 +19,7 @@ import com.google.android.material.snackbar.Snackbar
  * @param resource the string resource to display to the user.
  */
 fun Activity.snackbar(@StringRes resource: Int) {
-    val view = findViewById<View>(android.R.id.content)
-    Snackbar.make(view, resource, Snackbar.LENGTH_LONG).show()
+    makeSnackbar(getString(resource)).show()
 }
 
 /**
@@ -29,11 +29,24 @@ fun Activity.snackbar(@StringRes resource: Int) {
  * @see snackbar
  */
 fun Activity.snackbar(message: String) {
-    val view = findViewById<View>(android.R.id.content)
-    Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
+    makeSnackbar(message).show()
 }
 
+// Define our snackbar popup duration
+const val KDuration: Int = 4000; // Snackbar.LENGTH_LONG
 
+/**
+ *
+ */
+@SuppressLint("WrongConstant")
+fun Activity.makeSnackbar(message: String): Snackbar {
+    val view = findViewById<View>(android.R.id.content)
+    return Snackbar.make(view, message, KDuration)
+}
+
+/**
+ *
+ */
 fun Activity.setStatusBarIconsColor(dark: Boolean)
 {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
