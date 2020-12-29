@@ -23,29 +23,33 @@ android {
 
     dexOptions {
         javaMaxHeapSize "8g"
-        // Added to try and fix crashes on Android 5.
-        // See: https://stackoverflow.com/a/42436796/3969362
-        // Better: https://stackoverflow.com/a/47890503/3969362
-        preDexLibraries false
+        preDexLibraries true
     }
 
     buildTypes {
         debug {
+            debuggable true
+            // See: https://github.com/Slion/Fulguris/issues/116
+            // If we disable minify then we need multi DEX.
             multiDexEnabled true
             minifyEnabled false
             shrinkResources false
-            proguardFiles 'proguard-project.txt'
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-project.txt'
             testCoverageEnabled true
             applicationIdSuffix ".debug"
         }
 
         release {
             debuggable false
-            multiDexEnabled true
-            // Minify breaks settings since we migrated them to androidx
-            minifyEnabled false
-            shrinkResources false
-            proguardFiles 'proguard-project.txt'
+            multiDexEnabled false
+            // If you disable minify you need to make sure multi DEX library is loaded in release or you will get crashed on Android 5 devices and below
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-project.txt'
             testCoverageEnabled false
             // Use debug signing for now
             //signingConfig debug.signingConfig
@@ -148,7 +152,10 @@ dexcount {
 }
 
 dependencies {
-    // multidex debug
+    // Multi DEX is only needed in debug and on older devices from Android 5 and below.
+    // If you disable minify in release mode you also need to load and install that library in release for those devices.
+    // See [BrowserApp.attachBaseContext]
+    // See: https://github.com/Slion/Fulguris/issues/116
     debugImplementation 'androidx.multidex:multidex:2.0.1'
 
     // test dependencies

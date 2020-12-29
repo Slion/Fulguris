@@ -42,6 +42,10 @@ class BrowserApp : Application() {
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
+        // We only need to install that multi DEX library when not doing minify code optimization, typically in debug, and on devices below API level 21.
+        // In fact from API level 21 and above Android Runtime (ART) is used rather than deprecated Dalvik.
+        // Since ART has multi DEX support built-in we don't need to install that DEX library from API level 21 and above.
+        // See: https://github.com/Slion/Fulguris/issues/116
         if (BuildConfig.DEBUG && Build.VERSION.SDK_INT < 21) {
             installMultiDex(context = base)
         }
