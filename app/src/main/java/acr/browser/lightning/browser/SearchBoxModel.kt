@@ -36,20 +36,25 @@ class SearchBoxModel @Inject constructor(
      */
     fun getDisplayContent(url: String, title: String?, isLoading: Boolean): String =
         when {
-            url.isSpecialUrl() -> ""
+            url.isSpecialUrl() -> titleToDisplay(title)
             isLoading -> url
             else -> when (userPreferences.urlBoxContentChoice) {
                 SearchBoxDisplayChoice.DOMAIN -> safeDomain(url)
                 SearchBoxDisplayChoice.URL -> url
-                SearchBoxDisplayChoice.TITLE ->
-                    if (title?.isEmpty() == false) {
-                        title
-                    } else {
-                        untitledTitle
-                    }
+                SearchBoxDisplayChoice.TITLE -> titleToDisplay(title)
             }
         }
 
     private fun safeDomain(url: String) = Utils.getDisplayDomainName(url)
+
+    /**
+     * Provide title the display from given title
+     */
+    private fun titleToDisplay(title: String?) =
+        if (title?.isEmpty() == false) {
+            title
+        } else {
+            untitledTitle
+        }
 
 }

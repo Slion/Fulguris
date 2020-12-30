@@ -25,6 +25,8 @@ import javax.inject.Inject
 
 /**
  * Created by anthonycr on 9/23/18.
+ *
+ * Are we still using this?
  */
 @Reusable
 class BookmarkPageFactory @Inject constructor(

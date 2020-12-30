@@ -33,6 +33,8 @@ class HistoryPageFactory @Inject constructor(
         .lastHundredVisitedHistoryEntries()
         .map { list ->
             parse(listPageReader.provideHtml()
+                    // Show localized page title
+                    .replace("\${pageTitle}", application.getString(R.string.action_history))
                     // Theme our page first
                     .replace("\${backgroundColor}", htmlColor(ThemeUtils.getPrimaryColor(BrowserApp.currentContext())))
                     .replace("\${textColor}", htmlColor(ThemeUtils.getTextColor(BrowserApp.currentContext())))

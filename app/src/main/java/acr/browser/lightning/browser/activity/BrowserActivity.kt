@@ -646,11 +646,18 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         }
     }
 
+    /**
+     * Called when search view gains focus
+     */
     private fun showUrl() {
         val currentView = tabsManager.currentTab ?: return
         val url = currentView.url
         if (!url.isSpecialUrl()) {
                 searchView?.setText(url)
+        }
+        else {
+            // Special URLs like home page and history just show search field then
+            searchView?.setText("")
         }
     }
 
@@ -1487,6 +1494,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         mainHandler.postDelayed({ closeDrawers(null) }, 150)
     }
 
+    /**
+     * Is that supposed to reload our history page if it changes?
+     * Are we rebuilding our history page every time our history is changing?
+     * Meaning every time we load a web page?
+     * Thankfully not, apparently.
+     */
     override fun handleHistoryChange() {
         historyPageFactory
             .buildPage()
