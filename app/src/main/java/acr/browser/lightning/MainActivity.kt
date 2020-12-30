@@ -4,7 +4,6 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import android.content.Intent
 import android.os.Build
 import android.view.KeyEvent
-import android.view.Menu
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
 import io.reactivex.Completable
@@ -31,13 +30,27 @@ class MainActivity : BrowserActivity() {
 
     override fun onPause() {
         super.onPause()
-        saveOpenTabs()
     }
+
+    /**
+     * This is called once our activity is not visible anymore.
+     * That's where we should save our data according to the docs.
+     * https://developer.android.com/guide/components/activities/activity-lifecycle#onstop
+     * Saving data can't wait for onDestroy as there is no guarantee onDestroy will ever be called.
+     * In fact even when user closes our Task from recent Task list our activity is just terminated without getting any notifications.
+     */
+    override fun onStop() {
+        super.onStop()
+        saveOpenTabsIfNeeded()
+    }
+
+
 
     override fun updateHistory(title: String?, url: String) = addItemToHistory(title, url)
 
     override fun isIncognito() = false
 
+    // TODO: review how this is used and get rid of it
     override fun closeActivity() = closeDrawers {
         performExitCleanUp()
         moveTaskToBack(true)

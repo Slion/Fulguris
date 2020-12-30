@@ -5,6 +5,7 @@
 package acr.browser.lightning.browser.activity
 
 import acr.browser.lightning.AppTheme
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.IncognitoActivity
 import acr.browser.lightning.R
@@ -238,11 +239,18 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     protected abstract fun updateCookiePreference(): Completable
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         super.onCreate(savedInstanceState)
         injector.inject(this)
+
+        if (BrowserApp.instance.justStarted) {
+            BrowserApp.instance.justStarted = false
+            // Since amazingly on Android you can't tell when your app is closed we do exit cleanup on start-up, go figure
+            // See: https://github.com/Slion/Fulguris/issues/106
+            performExitCleanUp()
+        }
+
+
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
@@ -1584,7 +1592,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     }
 
-    protected fun saveOpenTabs() {
+    protected fun saveOpenTabsIfNeeded() {
         if (userPreferences.restoreTabsOnStartup) {
             tabsManager.saveState()
         }
@@ -1598,11 +1606,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         proxyUtils.onStop()
     }
 
+    /**
+     * Amazingly this is not called when closing our app from Task list.
+     * See: https://developer.android.com/reference/android/app/Activity.html#onDestroy()
+     */
     override fun onDestroy() {
         logger.log(TAG, "onDestroy")
-        // Should we remove saveOpenTabs from MainActivity.onPause then?
-        // Make sure we save our tabs before we are destroyed
-        saveOpenTabs()
 
         queue.cancelAll(TAG)
 

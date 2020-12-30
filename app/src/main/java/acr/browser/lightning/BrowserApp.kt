@@ -39,6 +39,8 @@ class BrowserApp : Application() {
 
     lateinit var applicationComponent: AppComponent
 
+    // Used to be able to tell when our application was just started
+    var justStarted: Boolean = true;
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
@@ -116,6 +118,8 @@ class BrowserApp : Application() {
         if (buildInfo.buildType == BuildType.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true)
         }
+
+
 
         registerActivityLifecycleCallbacks(object : MemoryLeakUtils.LifecycleAdapter() {
             override fun onActivityDestroyed(activity: Activity) {
