@@ -39,8 +39,9 @@ class TabsDrawerView @JvmOverloads constructor(
         isClickable = true
         isFocusable = true
 
-        // Inflate our layout with binding support, provide UI controller
+        // Inflate our layout with binding support
         iBinding = TabDrawerViewBinding.inflate(context.inflater,this, true)
+        // Provide UI controller for data binding to work
         iBinding.uiController = uiController
 
 

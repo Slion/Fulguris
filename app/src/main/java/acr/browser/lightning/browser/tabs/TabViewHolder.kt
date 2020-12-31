@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.tab_list_item.view.*
 
 /**
  * The [RecyclerView.ViewHolder] for both vertical and horizontal tabs.
@@ -20,12 +19,11 @@ class TabViewHolder(
     private val uiController: UIController
 ) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemTouchHelperViewHolder {
 
-    val txtTitle: TextView = view.textTab
-    val favicon: ImageView = view.faviconTab
-    // Need to keep findViewById to avoid crash when using desktop style tabs
-    // Maybe this could be fixed by unifying both layout?
+    // Using view binding won't give us much
+    val txtTitle: TextView = view.findViewById(R.id.textTab)
+    val favicon: ImageView = view.findViewById(R.id.faviconTab)
     val exitButton: View = view.findViewById(R.id.deleteAction)
-    val layout: LinearLayout = view.tab_item_background
+    val layout: LinearLayout = view.findViewById(R.id.tab_item_background)
 
     private var previousBackground: BackgroundDrawable? = null
 
