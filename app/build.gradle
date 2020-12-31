@@ -132,10 +132,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    // Disabling this now breaks our runtime, go figure
-    // Maybe we somehow used it before implicitly
-    dataBinding {
-        enabled true
+    buildFeatures {
+        // That should give us both view and data binding
+        dataBinding true
     }
 }
 

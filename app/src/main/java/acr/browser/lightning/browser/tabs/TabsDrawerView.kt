@@ -16,7 +16,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.tab_drawer_view.view.*
+
 
 /**
  * A view which displays tabs in a vertical [RecyclerView].
@@ -32,13 +32,16 @@ class TabsDrawerView @JvmOverloads constructor(
 
     private var mItemTouchHelper: ItemTouchHelper? = null
 
+    private var iBinding: TabDrawerViewBinding
+
     init {
         orientation = VERTICAL
         isClickable = true
         isFocusable = true
 
         // Inflate our layout with binding support, provide UI controller
-        TabDrawerViewBinding.inflate(context.inflater,this, true).uiController = uiController
+        iBinding = TabDrawerViewBinding.inflate(context.inflater,this, true)
+        iBinding.uiController = uiController
 
 
         val animator = VerticalItemAnimator().apply {
@@ -49,7 +52,7 @@ class TabsDrawerView @JvmOverloads constructor(
             moveDuration = 200
         }
 
-        tabs_list.apply {
+        iBinding.tabsList.apply {
             //setLayerType(View.LAYER_TYPE_NONE, null)
             itemAnimator = animator
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -60,7 +63,7 @@ class TabsDrawerView @JvmOverloads constructor(
         val callback: ItemTouchHelper.Callback = TabTouchHelperCallback(tabsAdapter)
 
         mItemTouchHelper = ItemTouchHelper(callback)
-        mItemTouchHelper?.attachToRecyclerView(tabs_list)
+        mItemTouchHelper?.attachToRecyclerView(iBinding.tabsList)
 
     }
 
@@ -69,16 +72,16 @@ class TabsDrawerView @JvmOverloads constructor(
      */
     private fun updateTabActionButtons() {
         // If more than one tab, enable close all tabs button
-        action_close_all_tabs.isEnabled = uiController.getTabModel().allTabs.count()>1
+        iBinding.actionCloseAllTabs.isEnabled = uiController.getTabModel().allTabs.count()>1
         // If we have more than one tab in our closed tabs list enable restore all pages button
-        action_restore_all_pages.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>1
+        iBinding.actionRestoreAllPages.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>1
         // If we have at least one tab in our closed tabs list enable restore page button
-        action_restore_page.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>0
+        iBinding.actionRestorePage.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>0
     }
 
     override fun tabAdded() {
         displayTabs()
-        tabs_list.postDelayed({ tabs_list.smoothScrollToPosition(tabsAdapter.itemCount - 1) }, 500)
+        iBinding.tabsList.postDelayed({ iBinding.tabsList.smoothScrollToPosition(tabsAdapter.itemCount - 1) }, 500)
         updateTabActionButtons()
     }
 
