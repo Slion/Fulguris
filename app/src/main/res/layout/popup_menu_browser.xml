@@ -97,6 +97,12 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/menuItemSessions"
+                    style="@style/BrowserTextMenuItem"
+                    android:drawableStart="@drawable/ic_sessions"
+                    android:text="@string/action_sessions" />
+
+                <Button
                     android:id="@+id/menuItemNewTab"
                     style="@style/BrowserTextMenuItem"
                     android:drawableStart="@drawable/ic_action_plus"

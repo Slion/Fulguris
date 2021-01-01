@@ -11,6 +11,8 @@
     <string name="action_add_bookmark">Add bookmark</string>
     <string name="action_copy">Copy link</string>
     <string name="action_forward">Forward</string>
+    <string name="action_sessions">Sessions</string>
+    <string name="action_new_session">New session</string>
     <string name="settings">Settings</string>
     <string name="location">Location access</string>
     <string name="password">Save your passwords</string>
@@ -403,5 +405,7 @@
 
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
+    <string name="session_default">\"Default\"</string>
+    <string name="session_name_prompt">Enter session name:</string>
 
 </resources>

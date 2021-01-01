@@ -1,4 +1,4 @@
-package acr.browser.lightning.browser.tabs
+package acr.browser.lightning.utils
 
 import androidx.recyclerview.widget.ItemTouchHelper
 

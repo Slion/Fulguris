@@ -12,6 +12,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.*
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
 import acr.browser.lightning.browser.cleanup.ExitCleanup
+import acr.browser.lightning.browser.sessions.SessionsPopupWindow
 import acr.browser.lightning.browser.tabs.TabsDesktopView
 import acr.browser.lightning.browser.tabs.TabsDrawerView
 import acr.browser.lightning.controller.UIController
@@ -203,6 +204,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     // Menu
     private lateinit var popupMenu: BrowserPopupMenu
+    private lateinit var sessionsMenu: SessionsPopupWindow
+
 
     // Settings
     private var crashReport = true
@@ -255,6 +258,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
         createPopupMenu()
+        createSessionsMenu()
 
         if (isIncognito()) {
             incognitoNotification = IncognitoNotification(this, notificationManager)
@@ -293,6 +297,43 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
 
+    private fun createSessionsMenu() {
+        sessionsMenu = SessionsPopupWindow(layoutInflater)
+
+        /*
+        val view = sessionsMenu.contentView
+        // TODO: could use data binding instead
+        popupMenu.apply {
+            // Bind our actions
+            onMenuItemClicked(view.menuItemNewTab) { executeAction(R.id.action_sessions) }
+            onMenuItemClicked(view.menuItemNewTab) { executeAction(R.id.action_new_tab) }
+            onMenuItemClicked(view.menuItemIncognito) { executeAction(R.id.action_incognito) }
+            onMenuItemClicked(view.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
+            onMenuItemClicked(view.menuItemHistory) { executeAction(R.id.action_history) }
+            onMenuItemClicked(view.menuItemDownloads) { executeAction(R.id.action_downloads) }
+            onMenuItemClicked(view.menuItemShare) { executeAction(R.id.action_share) }
+            onMenuItemClicked(view.menuItemFind) { executeAction(R.id.action_find) }
+            onMenuItemClicked(view.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
+            onMenuItemClicked(view.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
+            onMenuItemClicked(view.menuItemSettings) { executeAction(R.id.action_settings) }
+            onMenuItemClicked(view.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
+
+            // Popup menu action shortcut icons
+            onMenuItemClicked(view.menuShortcutRefresh) { executeAction(R.id.action_reload) }
+            onMenuItemClicked(view.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
+            onMenuItemClicked(view.menuShortcutForward) { executeAction(R.id.action_forward) }
+            onMenuItemClicked(view.menuShortcutBack) { executeAction(R.id.action_back) }
+            onMenuItemClicked(view.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+        }
+        */
+    }
+
+    private fun showSessions() {
+        sessionsMenu.show(coordinator_layout)
+    }
+
+
+
 
     private fun createPopupMenu() {
         popupMenu = BrowserPopupMenu(layoutInflater)
@@ -300,6 +341,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // TODO: could use data binding instead
         popupMenu.apply {
             // Bind our actions
+            onMenuItemClicked(view.menuItemSessions) { executeAction(R.id.action_sessions) }
             onMenuItemClicked(view.menuItemNewTab) { executeAction(R.id.action_new_tab) }
             onMenuItemClicked(view.menuItemIncognito) { executeAction(R.id.action_incognito) }
             onMenuItemClicked(view.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
@@ -1220,6 +1262,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     toggleDesktopUA()
                     reload()
                 }
+                return true
+            }
+
+            R.id.action_sessions -> {
+                // Show sessions menu
+                showSessions()
                 return true
             }
 

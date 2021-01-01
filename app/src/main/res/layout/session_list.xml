@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="uiController"
+            type="acr.browser.lightning.controller.UIController"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="300dp"
+        android:minHeight="300dp"
+        android:orientation="vertical"
+        android:background="@drawable/menu_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/action_sessions"
+                android:maxLines="1"
+                android:gravity="center"
+                />
+
+
+            <ImageButton
+                android:id="@+id/action_new_session"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_new_session"
+                app:tooltipText="@{@string/action_new_session}"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_action_plus"
+                />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/session_list"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:overScrollMode="ifContentScrolls"
+            android:requiresFadingEdge="vertical"
+            android:focusable="true"
+            android:clickable="true"
+            android:descendantFocusability="afterDescendants"/>
+
+
+    </LinearLayout>
+</layout>

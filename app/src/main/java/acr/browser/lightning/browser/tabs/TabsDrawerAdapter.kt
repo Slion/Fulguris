@@ -5,6 +5,7 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.extensions.setImageForTheme
+import acr.browser.lightning.utils.ItemTouchHelperAdapter
 import acr.browser.lightning.view.BackgroundDrawable
 import android.graphics.Bitmap
 import android.view.ViewGroup

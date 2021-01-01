@@ -20,4 +20,5 @@
     <item name="action_copy" type="id" />
     <item name="action_toggle_desktop_mode" type="id" />
     <item name="action_add_bookmark" type="id" />
+    <item name="action_sessions" type="id" />
 </resources>

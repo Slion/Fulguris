@@ -7,9 +7,6 @@ import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isSpecialUrl
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Build.VERSION.SDK_INT
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View

@@ -1,8 +1,7 @@
 
-import acr.browser.lightning.browser.tabs.ItemTouchHelperAdapter
-import acr.browser.lightning.browser.tabs.ItemTouchHelperViewHolder
+import acr.browser.lightning.utils.ItemTouchHelperAdapter
+import acr.browser.lightning.utils.ItemTouchHelperViewHolder
 import android.graphics.Canvas
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
@@ -12,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
  *
  * Expects the `RecyclerView.Adapter` to listen for [ ] callbacks and the `RecyclerView.ViewHolder` to implement
  * [ItemTouchHelperViewHolder].
+ *
+ * SL: Is that specific to our tab
  *
  * @author Paul Burke (ipaulpro)
  */

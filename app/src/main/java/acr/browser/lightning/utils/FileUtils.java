@@ -100,7 +100,7 @@ public final class FileUtils {
             inputStream.read(data, 0, data.length);
             parcel.unmarshall(data, 0, data.length);
             parcel.setDataPosition(0);
-            Bundle out = parcel.readBundle(ClassLoader.getSystemClassLoader());
+            Bundle out = parcel.readBundle(app.getClassLoader());
             out.putAll(out);
             parcel.recycle();
             return out;
