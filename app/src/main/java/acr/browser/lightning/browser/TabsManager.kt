@@ -216,6 +216,60 @@ class TabsManager @Inject constructor(
                 }
     }
 
+    /**
+     * Rename the session at [aIndex] to [aNewName].
+     * Takes care of checking parameters validity before proceeding.
+     * Changes current session name if needed.
+     * Rename matching session data file too.
+     * Commit session list changes to persistent storage.
+     *
+     * @param [aIndex] Index of the session to rename in our session list.
+     * @param [aNewName] New name to be assumed by our session at the given index.
+     */
+    fun renameSession(aIndex: Int, aNewName: String) {
+        // Check if we can indeed rename that session
+        if (iSessions.isNullOrEmpty() // Check if we have sessions at all
+                or !isValidSessionName(aNewName) // Check if new session name is valid
+                or !(aIndex>=0 && aIndex<iSessions!!.count())) { // Check if index is in range
+            return
+        }
+
+        // Proceed with rename then
+        val oldName = iSessions!![aIndex].name
+        // Renamed session is the current session
+        if (iCurrentSessionName == oldName) {
+            iCurrentSessionName = aNewName
+        }
+        // Change session name
+        iSessions!![aIndex].name = aNewName
+
+        // Rename our session file
+        FileUtils.renameBundleInStorage(application,fileNameFromSessionName(oldName),fileNameFromSessionName(aNewName))
+
+        // I guess it makes sense to persist our changes
+        saveSessions()
+    }
+
+    /**
+     * Check if the given string is a valid session name
+     */
+    fun isValidSessionName(aName: String): Boolean {
+        // Empty strings are not valid names
+        if (aName.isNullOrBlank()) {
+            return false
+        }
+
+        if (iSessions.isNullOrEmpty()) {
+            // Null or empty session list so that name is valid
+            return true
+        } else {
+            // That name is valid if not already in use
+            return iSessions!!.filter { s -> s.name == aName }.isNullOrEmpty()
+        }
+    }
+
+
+
 
     /**
      * Returns an observable that emits the [TabInitializer] for each previously opened tab as
@@ -231,7 +285,7 @@ class TabsManager @Inject constructor(
             loadSession(FILENAME_SESSION_DEFAULT)
         } else {
             // Load current session then
-            loadSession(FILENAME_SESSION_PREFIX + iCurrentSessionName)
+            loadSession(fileNameFromSessionName(iCurrentSessionName!!) )
         }
     }
 
@@ -423,14 +477,14 @@ class TabsManager @Inject constructor(
         if (iCurrentSessionName.isNullOrBlank()) {
             saveCurrentSession(FILENAME_SESSION_DEFAULT)
         } else {
-            saveCurrentSession(FILENAME_SESSION_PREFIX + iCurrentSessionName)
+            saveCurrentSession(fileNameFromSessionName( iCurrentSessionName!!))
         }
     }
 
     /**
      * Save current session including WebView tab states and recent tab list in the specified file.
      */
-    fun saveCurrentSession(aFilename: String) {
+    private fun saveCurrentSession(aFilename: String) {
         val outState = Bundle(ClassLoader.getSystemClassLoader())
         logger.log(TAG, "Saving tab state")
         tabList
@@ -454,10 +508,26 @@ class TabsManager @Inject constructor(
     }
 
     /**
+     * Provide session file name from session name
+     */
+    private fun fileNameFromSessionName(aSessionName: String) : String {
+        return FILENAME_SESSION_PREFIX + aSessionName
+    }
+
+    /**
      * Use this method to clear the saved state if you do not wish it to be restored when the
      * browser next starts.
      */
     fun clearSavedState() = FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
+
+    /**
+     *
+     */
+    fun deleteSession(aIndex: Int) {
+        // TODO: handle case where we delete current session
+        FileUtils.deleteBundleInStorage(application, fileNameFromSessionName(iSessions!![aIndex].name))
+    }
+
 
     /**
      * Save our session list and current session name to disk.

@@ -32,9 +32,8 @@
                 android:gravity="center"
                 />
 
-
             <ImageButton
-                android:id="@+id/action_new_session"
+                android:id="@+id/button_new_session"
                 style="?android:attr/actionButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

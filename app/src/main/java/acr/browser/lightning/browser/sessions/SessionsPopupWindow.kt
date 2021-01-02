@@ -6,6 +6,7 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.databinding.SessionListBinding
 import acr.browser.lightning.dialog.BrowserDialog
+import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.list.VerticalItemAnimator
 import acr.browser.lightning.settings.fragment.GeneralSettingsFragment
 import acr.browser.lightning.settings.fragment.SummaryUpdater
@@ -49,7 +50,7 @@ class SessionsPopupWindow : PopupWindow {
         }
 
         // Handle click on add session button
-        aBinding.actionNewSession.setOnClickListener {
+        aBinding.buttonNewSession.setOnClickListener {
                 val dialogView = LayoutInflater.from(aBinding.root.context).inflate(R.layout.dialog_edit_text, null)
                 val textView = dialogView.findViewById<EditText>(R.id.dialog_edit_text)
 
@@ -59,14 +60,17 @@ class SessionsPopupWindow : PopupWindow {
                     setPositiveButton(R.string.action_ok) { _, _ ->
                         var name = textView.text.toString()
                         // Check if session exists already
-                        if (iUiController.getTabModel().iSessions?.filter { s -> s.name == name }.isNullOrEmpty()) {
+                        if (iUiController.getTabModel().isValidSessionName(name)) {
                             // That session dos not exist yet, add it then
-                            iUiController.getTabModel().iSessions?.add(Session(name,0))
-                            // Update our session list
-                            iUiController.getTabModel().iSessions?.let{iAdapter.showSessions(it)}
-
+                            iUiController.getTabModel().iSessions?.let {
+                                it.add(Session(name, 0))
+                                // Update our session list
+                                iAdapter.showSessions(it)
+                                aBinding.root.invalidate()
+                            }
                         } else {
-                            // TODO: show toast error message
+                            // We already have a session with that name, display an error message
+                            context.toast(R.string.session_already_exists)
                         }
                     }
                 }
@@ -128,7 +132,7 @@ class SessionsPopupWindow : PopupWindow {
     }
 
     /**
-     *  TODO: Make this an extension
+     *  TODO: Make this a View extension
      *  See: https://stackoverflow.com/a/46711174/3969362
      */
     private fun dimBehind(popupWindow: PopupWindow) {

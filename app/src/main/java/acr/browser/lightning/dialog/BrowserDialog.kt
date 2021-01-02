@@ -200,13 +200,11 @@ object BrowserDialog {
     /**
      * Show the custom dialog with the custom builder arguments applied.
      */
-    fun showCustomDialog(activity: Activity?, block: AlertDialog.Builder.(Activity) -> Unit) {
-        activity?.let {
+    fun showCustomDialog(activity: Activity, block: AlertDialog.Builder.(Activity) -> Unit) : Dialog {
             AlertDialog.Builder(activity).apply {
-                block(it)
-                resizeAndShow()
+                block(activity)
+                return resizeAndShow()
             }
-        }
     }
 
 }

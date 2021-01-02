@@ -407,5 +407,6 @@
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">\"Default\"</string>
     <string name="session_name_prompt">Enter session name:</string>
+    <string name="session_already_exists">A session with that name already exists!</string>
 
 </resources>

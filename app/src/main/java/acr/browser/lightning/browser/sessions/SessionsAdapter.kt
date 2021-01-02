@@ -22,13 +22,17 @@ class SessionsAdapter(
         private val uiController: UIController
 ) : RecyclerView.Adapter<SessionViewHolder>(), ItemTouchHelperAdapter {
 
+    // Current sessions shown in our dialog
+    private var iSessions: ArrayList<Session> = arrayListOf<Session>()
 
-    private var iSessions: List<Session> = emptyList()
-
-    fun showSessions(tabs: List<Session>) {
-        val oldList = iSessions
-        iSessions = tabs
-        DiffUtil.calculateDiff(SessionsDiffCallback(oldList, iSessions)).dispatchUpdatesTo(this)
+    /**
+     * Display the given list of session in our recycler view.
+     * Possibly updating an existing list.
+     */
+    fun showSessions(aSessions: List<Session>) {
+        DiffUtil.calculateDiff(SessionsDiffCallback(iSessions, aSessions)).dispatchUpdatesTo(this)
+        iSessions.clear()
+        iSessions.addAll(aSessions)
     }
 
 
@@ -39,11 +43,9 @@ class SessionsAdapter(
     }
 
     override fun onBindViewHolder(holder: SessionViewHolder, position: Int) {
-        holder.imageDelete.tag = position
-
-        val web = iSessions[position]
-
-        holder.textName.text = web.name
+        val session = iSessions[position]
+        holder.textName.text = session.name
+        holder.textName.tag = position
         //updateViewHolderAppearance(holder, web.favicon, web.themeColor, web.isForegroundTab)
         //updateViewHolderFavicon(holder, web.favicon, web.isForegroundTab)
         //updateViewHolderBackground(holder, web.isForegroundTab)
