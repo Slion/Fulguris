@@ -55,7 +55,7 @@ class SessionViewHolder(
             val dialogView = LayoutInflater.from(it.context).inflate(R.layout.dialog_edit_text, null)
             val textView = dialogView.findViewById<EditText>(R.id.dialog_edit_text)
             // Init our text field with current name
-            textView.setText(textName.text)
+            textView.setText(session()?.name)
             textView.selectAll()
             //textView.requestFocus()
 
@@ -80,7 +80,7 @@ class SessionViewHolder(
                         // Proceed with session rename
                         iUiController.getTabModel().renameSession(textName.tag as Int,newName)
                         // Change name on our item view
-                        textName.text = newName
+                        textName.text = sessionLabel()
                     } else {
                         // We already have a session with that name, display an error message
                         context.toast(R.string.session_already_exists)
@@ -106,7 +106,7 @@ class SessionViewHolder(
 
         }
 
-        // Item click
+        // Session item click
         layout.setOnClickListener{
             // User wants to switch session
             //TODO: turn this into a switch session method of our presenter?
@@ -114,18 +114,34 @@ class SessionViewHolder(
                 // Save current states
                 saveState()
                 // Change current session
-                iCurrentSessionName = textName.text.toString()
-                // Save it again
+                iCurrentSessionName = session()?.name
+                // Save it again to preserve new current session name
                 saveSessions()
             }
             // Then reload our tabs
-            (it.context as BrowserActivity).presenter?.setupTabs(null)
+            (it.context as BrowserActivity).apply {
+                presenter?.setupTabs(null)
+                // Dismiss sessions menu if edit mode is disabled
+                if (!isEditModeEnabled()) {
+                    sessionsMenu.dismiss()
+                }
+            }
         }
 
         layout.setOnLongClickListener(this)
         // Is that the best way to access our preferences?
         //imageDelete.visibility = if ((view.context as BrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
     }
+
+
+    private fun session() = iUiController.getTabModel().iSessions?.get(textName.tag as Int)
+
+    /**
+     * Provide the session label as shown to the user.
+     * It includes session name and tab count.
+     */
+    fun sessionLabel() = session()?.name + " - " + session()?.tabCount
+
 
 
     //TODO: should we have dedicated click handlers instead of a switch?
@@ -178,5 +194,10 @@ class SessionViewHolder(
                     }
                 }
     }
+
+    /**
+     * Tell if edit mode is currently enabled
+     */
+    fun isEditModeEnabled() = buttonEdit.visibility == View.VISIBLE
 
 }

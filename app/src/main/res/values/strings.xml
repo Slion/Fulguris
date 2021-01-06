@@ -13,7 +13,7 @@
     <string name="action_forward">Forward</string>
     <string name="action_sessions">Sessions</string>
     <string name="action_new_session">New session</string>
-    <string name="action_save_session">New session</string>
+    <string name="action_save_session">Save session as</string>
     <string name="action_edit_sessions">Edit sessions</string>
     <string name="settings">Settings</string>
     <string name="location">Location access</string>

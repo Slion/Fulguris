@@ -204,7 +204,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     // Menu
     private lateinit var popupMenu: BrowserPopupMenu
-    private lateinit var sessionsMenu: SessionsPopupWindow
+    lateinit var sessionsMenu: SessionsPopupWindow
 
 
     // Settings

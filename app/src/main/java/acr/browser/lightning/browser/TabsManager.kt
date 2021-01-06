@@ -44,6 +44,7 @@ class TabsManager @Inject constructor(
     val savedRecentTabsIndices = mutableSetOf<Int>()
 
     // Our persisted list of sessions
+    // TODO: Consider using a map instead of an array
     var iSessions: ArrayList<Session>? = arrayListOf<Session>()
     var iCurrentSessionName: String? = application.getString(R.string.session_default)
 
@@ -59,6 +60,20 @@ class TabsManager @Inject constructor(
 
     private var isInitialized = false
     private var postInitializationWorkList = emptyList<() -> Unit>()
+
+    init {
+        addTabNumberChangedListener {
+            // Update current session tab count
+            //TODO: Have a getCurrentSession function
+            //TODO: during shutdown initiated by session switch we get stray events here not matching the proper session since it current session name was changed
+            //TODO: it's no big deal and does no harm at all but still not consistent, we may want to fix it at some point
+            //TODO: after shutdown our tab counts are fixed by [loadSessions]
+            var session=iSessions!!.filter { s -> s.name == iCurrentSessionName }
+            if (!session.isNullOrEmpty()) {
+                session[0].tabCount = it
+            }
+        }
+    }
 
     /**
      * Adds a listener to be notified when the number of tabs changes.

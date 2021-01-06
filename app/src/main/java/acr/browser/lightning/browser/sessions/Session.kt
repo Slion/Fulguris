@@ -19,7 +19,7 @@ data class Session (
         else {
             name = n
         }
-        parcel.readInt()
+        tabCount = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

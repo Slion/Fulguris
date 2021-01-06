@@ -39,7 +39,9 @@ class SessionsAdapter(
     fun showSessions(aSessions: List<Session>) {
         DiffUtil.calculateDiff(SessionsDiffCallback(iSessions, aSessions)).dispatchUpdatesTo(this)
         iSessions.clear()
-        iSessions.addAll(aSessions)
+        // Do a deep copy for our diff to work
+        // TODO: Surely there must be a way to manage a recycler view without doing a copy of our data set
+        aSessions.forEach { s -> iSessions.add(Session(s.name,s.tabCount)) }
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
@@ -62,8 +64,8 @@ class SessionsAdapter(
 
     override fun onBindViewHolder(holder: SessionViewHolder, position: Int) {
         val session = iSessions[position]
-        holder.textName.text = session.name
         holder.textName.tag = position
+        holder.textName.text = holder.sessionLabel()
         //updateViewHolderAppearance(holder, web.favicon, web.themeColor, web.isForegroundTab)
         //updateViewHolderFavicon(holder, web.favicon, web.isForegroundTab)
         //updateViewHolderBackground(holder, web.isForegroundTab)
@@ -146,5 +148,5 @@ class SessionsDiffCallback(
             oldList[oldItemPosition].name == newList[newItemPosition].name
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldList[oldItemPosition] == newList[newItemPosition]
+            oldList[oldItemPosition].tabCount == newList[newItemPosition].tabCount
 }
