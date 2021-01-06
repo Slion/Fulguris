@@ -19,19 +19,6 @@
         android:weightSum="1">
 
 
-        <ImageButton
-            android:id="@+id/button_edit"
-            style="?android:attr/actionButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/material_grid_margin"
-            android:layout_marginRight="@dimen/material_grid_margin"
-            android:contentDescription="@string/action_edit"
-            app:tooltipText="@{@string/action_edit}"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_edit"
-            />
-
         <TextView
             android:id="@+id/text_name"
             android:layout_width="0dp"
@@ -48,12 +35,21 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
         <ImageButton
+            android:id="@+id/button_edit"
+            style="?android:attr/actionButtonStyle"
+            android:layout_width="@dimen/material_grid_touch_large"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/action_edit"
+            app:tooltipText="@{@string/action_edit}"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_edit"
+            />
+
+        <ImageButton
             android:id="@+id/button_delete"
             style="?android:attr/actionButtonStyle"
-            android:layout_width="@dimen/material_grid_touch_medium"
+            android:layout_width="@dimen/material_grid_touch_large"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/material_grid_margin"
-            android:layout_marginRight="@dimen/material_grid_margin"
             android:contentDescription="@string/action_delete"
             app:tooltipText="@{@string/action_delete}"
             android:scaleType="center"

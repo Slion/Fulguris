@@ -76,6 +76,20 @@ class SessionsPopupWindow : PopupWindow {
                 }
             }
 
+        aBinding.buttonEditSessions.setOnClickListener {
+            // Toggle edit mode
+            iAdapter.iEditModeEnabledObservable.value?.let { editModeEnabled ->
+                // Change button icon
+                // TODO: change the text too?
+                if (!editModeEnabled) {
+                    aBinding.buttonEditSessions.setImageResource(R.drawable.ic_secured);
+                } else {
+                    aBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit);
+                }
+                // Notify our observers off edit mode change
+                iAdapter.iEditModeEnabledObservable.onNext(!editModeEnabled)
+            }
+        }
 
         val animator = VerticalItemAnimator().apply {
             supportsChangeAnimations = false

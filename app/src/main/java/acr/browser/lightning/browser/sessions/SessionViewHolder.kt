@@ -1,4 +1,4 @@
-package acr.browser.lightning.browser.session
+package acr.browser.lightning.browser.sessions
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
@@ -22,6 +22,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 
 
 /**
@@ -94,6 +97,7 @@ class SessionViewHolder(
              */
 
             //TODO: use on show listener?
+            // TODO: we need to review our dialog APIs
             // See: https://stackoverflow.com/a/12997855/3969362
             // Trying to make it so that virtual keyboard opens up as the dialog opens
             val imm = it.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -122,6 +126,7 @@ class SessionViewHolder(
         // Is that the best way to access our preferences?
         //imageDelete.visibility = if ((view.context as BrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
     }
+
 
     //TODO: should we have dedicated click handlers instead of a switch?
     override fun onClick(v: View) {
@@ -154,5 +159,24 @@ class SessionViewHolder(
         layout.background = previousBackground
     }
 
+    /**
+     * Tell this view holder to start observing edit mode changes.
+     */
+    fun observeEditMode(observable: Observable<Boolean>): Disposable {
+        return observable
+                //.debounce(SEARCH_TYPING_INTERVAL, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                // TODO: Is that needed? Is it not the default somehow?
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { editMode ->
+                    if (editMode) {
+                        buttonEdit.visibility = View.VISIBLE
+                        buttonDelete.visibility = View.VISIBLE
+                    } else {
+                        buttonEdit.visibility = View.GONE
+                        buttonDelete.visibility = View.GONE
+                    }
+                }
+    }
 
 }
