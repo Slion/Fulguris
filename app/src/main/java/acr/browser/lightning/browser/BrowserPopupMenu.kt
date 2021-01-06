@@ -31,6 +31,8 @@ class BrowserPopupMenu : PopupWindow {
         // Hide incognito menu item if we are already incognito
         if ((view.context as BrowserActivity).isIncognito()) {
             view.menuItemIncognito.visibility = View.GONE
+            // No sessions in incognito mode
+            view.menuItemSessions.visibility = View.GONE
         }
 
     }
