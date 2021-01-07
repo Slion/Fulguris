@@ -4,6 +4,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.dialog.BrowserDialog
+import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.utils.ItemTouchHelperViewHolder
 import acr.browser.lightning.view.BackgroundDrawable
@@ -20,6 +21,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
@@ -39,15 +41,36 @@ class SessionViewHolder(
 
     // Using view binding won't give us much
     val textName: TextView = view.findViewById(R.id.text_name)
-    val buttonEdit: ImageView = view.findViewById(R.id.button_edit)
+    private val buttonEdit: ImageView = view.findViewById(R.id.button_edit)
     val buttonDelete: View = view.findViewById(R.id.button_delete)
     val layout: LinearLayout = view.findViewById(R.id.layout_background)
 
     private var previousBackground: BackgroundDrawable? = null
 
     init {
-        buttonDelete.setOnClickListener{
-
+        buttonDelete.setOnClickListener {
+            // Just don't delete current session for now
+            // TODO: implement a solution to indeed delete current session
+            if (iUiController.getTabModel().iCurrentSessionName == session()?.name) {
+                it.context.toast(R.string.session_cant_delete_current)
+            } else {
+                AlertDialog.Builder(it.context)
+                        .setCancelable(true)
+                        .setTitle(R.string.session_prompt_confirm_deletion_title)
+                        .setMessage(it.context.getString(R.string.session_prompt_confirm_deletion_message,session()?.name))
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok) { _, _ ->
+                            // User confirmed deletion, go ahead then
+                            iUiController.getTabModel().deleteSession(textName.tag as Int)
+                            // Persist our session list after removing one
+                            iUiController.getTabModel().saveSessions()
+                            // Refresh our list
+                            (it.context as BrowserActivity).apply {
+                                sessionsMenu.updateSessions()
+                            }
+                        }
+                        .resizeAndShow()
+            }
         }
 
         // Edit session name

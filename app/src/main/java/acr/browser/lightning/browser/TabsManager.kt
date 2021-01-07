@@ -540,7 +540,15 @@ class TabsManager @Inject constructor(
      */
     fun deleteSession(aIndex: Int) {
         // TODO: handle case where we delete current session
+        if (iSessions!![aIndex].name == iCurrentSessionName) {
+            // Can't do that for now
+            return
+        }
+
+        // Delete session file
         FileUtils.deleteBundleInStorage(application, fileNameFromSessionName(iSessions!![aIndex].name))
+        // Remove session from our list
+        iSessions!!.removeAt(aIndex)
     }
 
 

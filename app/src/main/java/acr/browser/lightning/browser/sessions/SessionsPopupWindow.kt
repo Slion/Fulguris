@@ -31,6 +31,7 @@ class SessionsPopupWindow : PopupWindow {
 
     var iUiController: UIController
     var iAdapter: SessionsAdapter
+    var iBinding: SessionListBinding
 
     constructor(layoutInflater: LayoutInflater,
                 aBinding: SessionListBinding = SessionListBinding.inflate(layoutInflater))
@@ -38,6 +39,7 @@ class SessionsPopupWindow : PopupWindow {
 
         //view.context.injector.inject(this)
 
+        iBinding = aBinding
         iUiController = aBinding.root.context as UIController
         iAdapter = SessionsAdapter(iUiController)
 
@@ -63,7 +65,7 @@ class SessionsPopupWindow : PopupWindow {
                         if (iUiController.getTabModel().isValidSessionName(name)) {
                             // That session dos not exist yet, add it then
                             iUiController.getTabModel().iSessions?.let {
-                                it.add(Session(name, 0))
+                                it.add(Session(name, 1))
                                 // Update our session list
                                 iAdapter.showSessions(it)
                                 aBinding.root.invalidate()
@@ -126,22 +128,17 @@ class SessionsPopupWindow : PopupWindow {
 
     fun show(rootView: View) {
 
-        (contentView.context as BrowserActivity).tabsManager.let {
-            // Set desktop mode checkbox according to current tab
-            //contentView.menuItemDesktopMode.isChecked = it.currentTab?.toggleDesktop ?: false
-
-            it.currentTab?.let { tab ->
-                // Let user add multiple times the same URL I guess, for now anyway
-                // Blocking it is not nice and subscription is more involved I guess
-                // See BookmarksDrawerView.updateBookmarkIndicator
-                //contentView.menuItemAddBookmark.visibility = if (bookmarkModel.isBookmark(tab.url).blockingGet() || tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
-                //contentView.menuItemAddBookmark.visibility = if (tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
-            }
-        }
+        // Disable edit mode when showing our menu
+        iAdapter.iEditModeEnabledObservable.onNext(false)
+        iBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit);
 
         showAtLocation(rootView, Gravity.CENTER, 0, 0);
         dimBehind(this)
         // Show our sessions
+        updateSessions()
+    }
+
+    fun updateSessions() {
         iUiController.getTabModel().iSessions?.let{iAdapter.showSessions(it)}
     }
 

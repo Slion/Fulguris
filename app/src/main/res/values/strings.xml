@@ -410,5 +410,8 @@
     <string name="session_default">\"Default\"</string>
     <string name="session_name_prompt">Enter session name:</string>
     <string name="session_already_exists">A session with that name already exists!</string>
+    <string name="session_cant_delete_current">Can\'t delete current session!</string>
+    <string name="session_prompt_confirm_deletion_title">Confirm deletion</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
 
 </resources>
