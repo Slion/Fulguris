@@ -1,5 +1,6 @@
 package acr.browser.lightning.browser.sessions
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
@@ -46,13 +47,8 @@ class SessionsPopupWindow : PopupWindow {
         animationStyle = R.style.AnimationMenu
         //animationStyle = android.R.style.Animation_Dialog
 
-        // Hide incognito menu item if we are already incognito
-        if ((aBinding.root.context as BrowserActivity).isIncognito()) {
-            //view.menuItemIncognito.visibility = View.GONE
-        }
-
-        // Handle click on add session button
-        aBinding.buttonNewSession.setOnClickListener {
+        // Handle click on "add session" button
+        aBinding.buttonNewSession.setOnClickListener { view ->
                 val dialogView = LayoutInflater.from(aBinding.root.context).inflate(R.layout.dialog_edit_text, null)
                 val textView = dialogView.findViewById<EditText>(R.id.dialog_edit_text)
 
@@ -66,9 +62,14 @@ class SessionsPopupWindow : PopupWindow {
                             // That session dos not exist yet, add it then
                             iUiController.getTabModel().iSessions?.let {
                                 it.add(Session(name, 1))
+                                // Switch to our newly added session
+                                (view.context as BrowserActivity).apply {
+                                    presenter?.switchToSession(name)
+                                    // Close session dialog after creating and switching to new session
+                                    sessionsMenu.dismiss()
+                                }
                                 // Update our session list
-                                iAdapter.showSessions(it)
-                                aBinding.root.invalidate()
+                                //iAdapter.showSessions(it)
                             }
                         } else {
                             // We already have a session with that name, display an error message
@@ -116,15 +117,6 @@ class SessionsPopupWindow : PopupWindow {
         //mItemTouchHelper?.attachToRecyclerView(iBinding.tabsList)
     }
 
-
-
-
-    fun onMenuItemClicked(menuView: View, onClick: () -> Unit) {
-        menuView.setOnClickListener {
-            onClick()
-            dismiss()
-        }
-    }
 
     fun show(rootView: View) {
 

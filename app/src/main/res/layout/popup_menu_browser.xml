@@ -97,29 +97,16 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/menuItemSessions"
-                    style="@style/BrowserTextMenuItem"
-                    android:drawableStart="@drawable/ic_sessions"
-                    android:text="@string/action_sessions" />
-
-                <Button
                     android:id="@+id/menuItemNewTab"
                     style="@style/BrowserTextMenuItem"
                     android:drawableStart="@drawable/ic_action_plus"
                     android:text="@string/action_new_tab" />
 
-                <!--
-                            <Button
-                                android:id="@+id/menuItemBookmarks"
-                                style="@style/BrowserTextMenuItem"
-                                android:drawableStart="@drawable/ic_action_star"
-                                android:text="@string/action_bookmarks" />
-                -->
                 <Button
-                    android:id="@+id/menuItemAddBookmark"
+                    android:id="@+id/menuItemSessions"
                     style="@style/BrowserTextMenuItem"
-                    android:drawableStart="@drawable/ic_bookmark_border"
-                    android:text="@string/action_add_bookmark" />
+                    android:drawableStart="@drawable/ic_sessions"
+                    android:text="@string/action_sessions" />
 
                 <Button
                     android:id="@+id/menuItemHistory"
@@ -132,6 +119,12 @@
                     style="@style/BrowserTextMenuItem"
                     android:drawableStart="@drawable/ic_file_download"
                     android:text="@string/action_downloads" />
+
+                <Button
+                    android:id="@+id/menuItemAddBookmark"
+                    style="@style/BrowserTextMenuItem"
+                    android:drawableStart="@drawable/ic_bookmark_border"
+                    android:text="@string/action_add_bookmark" />
 
                 <Button
                     android:id="@+id/menuItemShare"

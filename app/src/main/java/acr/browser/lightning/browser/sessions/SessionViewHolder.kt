@@ -123,30 +123,21 @@ class SessionViewHolder(
             // TODO: we need to review our dialog APIs
             // See: https://stackoverflow.com/a/12997855/3969362
             // Trying to make it so that virtual keyboard opens up as the dialog opens
-            val imm = it.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            //imm.showSoftInput(textView, InputMethodManager.SHOW_FORCED);
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+            //val imm = it.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            ////imm.showSoftInput(textView, InputMethodManager.SHOW_FORCED);
+            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 
         }
 
         // Session item click
         layout.setOnClickListener{
             // User wants to switch session
-            //TODO: turn this into a switch session method of our presenter?
-            iUiController.getTabModel().apply {
-                // Save current states
-                saveState()
-                // Change current session
-                iCurrentSessionName = session()?.name
-                // Save it again to preserve new current session name
-                saveSessions()
-            }
-            // Then reload our tabs
-            (it.context as BrowserActivity).apply {
-                presenter?.setupTabs(null)
-                // Dismiss sessions menu if edit mode is disabled
-                if (!isEditModeEnabled()) {
-                    sessionsMenu.dismiss()
+            session()?.name?.let { sessionName ->
+                (it.context as BrowserActivity).apply {
+                    presenter?.switchToSession(sessionName)
+                    if (!isEditModeEnabled()) {
+                        sessionsMenu.dismiss()
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package acr.browser.lightning.browser
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.Entitlement
 import acr.browser.lightning.R
@@ -8,6 +9,7 @@ import acr.browser.lightning.constant.INTENT_ORIGIN
 import acr.browser.lightning.constant.SCHEME_BOOKMARKS
 import acr.browser.lightning.constant.SCHEME_HOMEPAGE
 import acr.browser.lightning.di.MainScheduler
+import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.log.Logger
@@ -47,6 +49,31 @@ class BrowserPresenter(
 
     init {
         tabsModel.addTabNumberChangedListener(view::updateTabNumber)
+    }
+
+    /**
+     * Switch to the session with the given name
+     */
+    fun switchToSession(aSessionName: String) {
+        // Don't do anything if given session name is already the current one or if such session does not exists
+        if (tabsModel.iCurrentSessionName==aSessionName
+                || tabsModel.iSessions?.filter { s -> s.name == aSessionName }.isNullOrEmpty()) {
+            return
+        }
+
+        // Save current states
+        tabsModel.saveState()
+        // Change current session
+        tabsModel.iCurrentSessionName = aSessionName
+        // Save it again to preserve new current session name
+        tabsModel.saveSessions()
+        // Then reload our tabs
+        setupTabs(null)
+        //
+        BrowserApp.instance.applicationContext.apply {
+            toast(getString(R.string.session_switched,aSessionName))
+        }
+
     }
 
     /**

@@ -1604,6 +1604,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         logger.log(TAG, "onPause")
         tabsManager.pauseAll()
 
+        // Dismiss any popup menu
+        popupMenu.dismiss()
+        sessionsMenu.dismiss()
+
         if (isIncognito() && isFinishing) {
             overridePendingTransition(R.anim.fade_in_scale, R.anim.slide_down_out)
         }
