@@ -6,12 +6,14 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
+import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.ItemTouchHelperViewHolder
 import acr.browser.lightning.view.BackgroundDrawable
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -77,6 +79,9 @@ class SessionViewHolder(
         buttonEdit.setOnClickListener{
             val dialogView = LayoutInflater.from(it.context).inflate(R.layout.dialog_edit_text, null)
             val textView = dialogView.findViewById<EditText>(R.id.dialog_edit_text)
+            // Make sure user can only enter valid filename characters
+            textView.filters = arrayOf<InputFilter>(FileNameInputFilter())
+
             // Init our text field with current name
             textView.setText(session()?.name)
             textView.selectAll()

@@ -11,10 +11,12 @@ import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.list.VerticalItemAnimator
 import acr.browser.lightning.settings.fragment.GeneralSettingsFragment
 import acr.browser.lightning.settings.fragment.SummaryUpdater
+import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.utils.ThemeUtils
 import android.app.Activity
 import android.content.Context
+import android.text.InputFilter
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +53,8 @@ class SessionsPopupWindow : PopupWindow {
         aBinding.buttonNewSession.setOnClickListener { view ->
                 val dialogView = LayoutInflater.from(aBinding.root.context).inflate(R.layout.dialog_edit_text, null)
                 val textView = dialogView.findViewById<EditText>(R.id.dialog_edit_text)
+                // Make sure user can only enter valid filename characters
+                textView.filters = arrayOf<InputFilter>(FileNameInputFilter())
 
                 BrowserDialog.showCustomDialog(aBinding.root.context as Activity) {
                     setTitle(R.string.session_name_prompt)
