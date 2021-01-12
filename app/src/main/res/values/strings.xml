@@ -11,6 +11,10 @@
     <string name="action_add_bookmark">Add bookmark</string>
     <string name="action_copy">Copy link</string>
     <string name="action_forward">Forward</string>
+    <string name="action_sessions">Sessions</string>
+    <string name="action_new_session">New session</string>
+    <string name="action_save_session">Save session as</string>
+    <string name="action_edit_sessions">Edit sessions</string>
     <string name="settings">Settings</string>
     <string name="location">Location access</string>
     <string name="password">Save your passwords</string>
@@ -403,5 +407,16 @@
 
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
+    <string name="session_default">Default</string>
+    <string name="session_name_prompt">Enter session name:</string>
+    <string name="session_already_exists">A session with that name already exists!</string>
+    <string name="session_cant_delete_current">Can\'t delete current session!</string>
+    <string name="session_prompt_confirm_deletion_title">Confirm deletion</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
+    <string name="session_switched">Switched to \"%s\"</string>
+    <string name="busy">Busy, try again shortly."</string>
+
+    <string name="invalid_character_removed">Invalid character removed!</string>
+    <string name="invalid_characters_removed">Invalid characters removed!</string>
 
 </resources>

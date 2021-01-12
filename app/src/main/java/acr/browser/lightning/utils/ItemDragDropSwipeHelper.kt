@@ -1,8 +1,5 @@
-
-import acr.browser.lightning.browser.tabs.ItemTouchHelperAdapter
-import acr.browser.lightning.browser.tabs.ItemTouchHelperViewHolder
+package acr.browser.lightning.utils
 import android.graphics.Canvas
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
@@ -11,18 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
  * swipe-to-dismiss. Drag events are automatically started by an item long-press.<br></br>
  *
  * Expects the `RecyclerView.Adapter` to listen for [ ] callbacks and the `RecyclerView.ViewHolder` to implement
- * [ItemTouchHelperViewHolder].
+ * [ItemOperationListener].
  *
  * @author Paul Burke (ipaulpro)
  */
-class TabTouchHelperCallback(adapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {
-    private val mAdapter: ItemTouchHelperAdapter = adapter
+class ItemDragDropSwipeHelper(adapter: ItemDragDropSwipeListener, aLongPressDragEnabled: Boolean = true, aSwipeEnabled: Boolean = true) : ItemTouchHelper.Callback() {
+    private val mAdapter: ItemDragDropSwipeListener = adapter
+    private val iLongPressDragEnabled = aLongPressDragEnabled
+    private val iSwipeEnabled = aSwipeEnabled
+
     override fun isLongPressDragEnabled(): Boolean {
-        return true
+        return iLongPressDragEnabled
     }
 
     override fun isItemViewSwipeEnabled(): Boolean {
-        return true
+        return iSwipeEnabled
     }
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
@@ -63,10 +63,10 @@ class TabTouchHelperCallback(adapter: ItemTouchHelperAdapter) : ItemTouchHelper.
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         // We only want the active item to change
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-            if (viewHolder is ItemTouchHelperViewHolder) {
+            if (viewHolder is ItemOperationListener) {
                 // Let the view holder know that this item is being moved or dragged
-                val itemViewHolder: ItemTouchHelperViewHolder? = viewHolder as ItemTouchHelperViewHolder?
-                itemViewHolder?.onItemSelected()
+                val itemViewHolder: ItemOperationListener? = viewHolder as ItemOperationListener?
+                itemViewHolder?.onItemOperationStart()
             }
         }
         super.onSelectedChanged(viewHolder, actionState)
@@ -75,10 +75,10 @@ class TabTouchHelperCallback(adapter: ItemTouchHelperAdapter) : ItemTouchHelper.
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
         viewHolder.itemView.alpha = ALPHA_FULL
-        if (viewHolder is ItemTouchHelperViewHolder) {
+        if (viewHolder is ItemOperationListener) {
             // Tell the view holder it's time to restore the idle state
-            val itemViewHolder: ItemTouchHelperViewHolder = viewHolder as ItemTouchHelperViewHolder
-            itemViewHolder.onItemClear()
+            val itemViewHolder: ItemOperationListener = viewHolder as ItemOperationListener
+            itemViewHolder.onItemOperationStop()
         }
     }
 

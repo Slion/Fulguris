@@ -1,6 +1,7 @@
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
+import acr.browser.lightning.browser.sessions.Session
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.DiskScheduler
 import acr.browser.lightning.di.MainScheduler
@@ -19,28 +20,40 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
+import java.io.File
 import javax.inject.Inject
 
 /**
  * A manager singleton that holds all the [LightningView] and tracks the current tab. It handles
- * creation, deletion, restoration, state saving, and switching of tabs.
+ * creation, deletion, restoration, state saving, and switching of tabs and sessions.
  */
 class TabsManager @Inject constructor(
-    private val application: Application,
-    private val searchEngineProvider: SearchEngineProvider,
-    @DatabaseScheduler private val databaseScheduler: Scheduler,
-    @DiskScheduler private val diskScheduler: Scheduler,
-    @MainScheduler private val mainScheduler: Scheduler,
-    private val homePageInitializer: HomePageInitializer,
-    private val bookmarkPageInitializer: BookmarkPageInitializer,
-    private val historyPageInitializer: HistoryPageInitializer,
-    private val downloadPageInitializer: DownloadPageInitializer,
-    private val logger: Logger
+        private val application: Application,
+        private val searchEngineProvider: SearchEngineProvider,
+        @DatabaseScheduler private val databaseScheduler: Scheduler,
+        @DiskScheduler private val diskScheduler: Scheduler,
+        @MainScheduler private val mainScheduler: Scheduler,
+        private val homePageInitializer: HomePageInitializer,
+        private val bookmarkPageInitializer: BookmarkPageInitializer,
+        private val historyPageInitializer: HistoryPageInitializer,
+        private val downloadPageInitializer: DownloadPageInitializer,
+        private val logger: Logger
 ) {
 
     private val tabList = arrayListOf<LightningView>()
     var iRecentTabs = mutableSetOf<LightningView>()
     val savedRecentTabsIndices = mutableSetOf<Int>()
+
+    // Our persisted list of sessions
+    // TODO: Consider using a map instead of an array
+    var iSessions: ArrayList<Session> = arrayListOf<Session>()
+    var iCurrentSessionName: String = ""
+        set(value) {
+            // Most unoptimized way to maintain our current item but that should do for now
+            iSessions.forEach { s -> s.isCurrent = false }
+            iSessions.filter { s -> s.name == value}.apply {if (count()>0) get(0).isCurrent = true }
+            field = value
+        }
 
     /**
      * Return the current [LightningView] or null if no current tab has been set.
@@ -52,8 +65,48 @@ class TabsManager @Inject constructor(
 
     private var tabNumberListeners = emptySet<(Int) -> Unit>()
 
-    private var isInitialized = false
+    var isInitialized = false
     private var postInitializationWorkList = emptyList<() -> Unit>()
+
+    init {
+        addTabNumberChangedListener {
+            // Update current session tab count
+            //TODO: Have a getCurrentSession function
+            //TODO: during shutdown initiated by session switch we get stray events here not matching the proper session since it current session name was changed
+            //TODO: it's no big deal and does no harm at all but still not consistent, we may want to fix it at some point
+            //TODO: after shutdown our tab counts are fixed by [loadSessions]
+            var session=iSessions.filter { s -> s.name == iCurrentSessionName }
+            if (!session.isNullOrEmpty()) {
+                session[0].tabCount = it
+            }
+        }
+    }
+
+    /**
+     */
+    fun currentSession() : Session {
+        return session(iCurrentSessionName!!)
+    }
+
+    /**
+     * TODO: have a better implementation
+     */
+    fun session(aName: String) : Session {
+        if (iSessions.isNullOrEmpty()) {
+            // TODO: Return session with Default name
+            return Session()
+        }
+
+        val list = iSessions.filter { s -> s.name == aName }
+        if (list.isNullOrEmpty()) {
+            // TODO: Return session with Default name
+            return Session()
+        }
+
+        // Should only be one session item in that list
+        return list[0]
+    }
+
 
     /**
      * Adds a listener to be notified when the number of tabs changes.
@@ -129,11 +182,11 @@ class TabsManager @Inject constructor(
     fun initializeTabs(activity: Activity, intent: Intent?, incognito: Boolean): Single<LightningView> =
         Single
             .just(Option.fromNullable(
-                if (intent?.action == Intent.ACTION_WEB_SEARCH) {
-                    extractSearchFromIntent(intent)
-                } else {
-                    intent?.dataString
-                }
+                    if (intent?.action == Intent.ACTION_WEB_SEARCH) {
+                        extractSearchFromIntent(intent)
+                    } else {
+                        intent?.dataString
+                    }
             ))
             .doOnSuccess { shutdown() }
             .subscribeOn(mainScheduler)
@@ -146,7 +199,7 @@ class TabsManager @Inject constructor(
                 }
             }.observeOn(mainScheduler)
             .map {
-                newTab(activity, it, incognito,NewTabPosition.END_OF_TAB_LIST)
+                newTab(activity, it, incognito, NewTabPosition.END_OF_TAB_LIST)
             }
             .lastOrError()
             .doAfterSuccess { finishInitialization() }
@@ -189,12 +242,11 @@ class TabsManager @Inject constructor(
     }
 
     /**
-     * Returns an observable that emits the [TabInitializer] for each previously opened tab as
-     * saved on disk. Can potentially be empty.
+     * Load tabs from the given file
      */
-    private fun restorePreviousTabs(): Observable<TabInitializer>
+    private fun loadSession(aFilename: String): Observable<TabInitializer>
     {
-        val bundle = FileUtils.readBundleFromStorage(application, BUNDLE_STORAGE)
+        val bundle = FileUtils.readBundleFromStorage(application, aFilename)
 
 	    // Read saved current tab index if any
         bundle?.let{
@@ -207,10 +259,94 @@ class TabsManager @Inject constructor(
                     return@map if (tabModel.url.isSpecialUrl()) {
                         tabInitializerForSpecialUrl(tabModel.url)
                     } else {
-                        FreezableBundleInitializer(tabModel.webView?:Bundle(), tabModel.title ?: application.getString(R.string.tab_frozen), tabModel.favicon)
+                        FreezableBundleInitializer(tabModel.webView ?: Bundle(), tabModel.title
+                                ?: application.getString(R.string.tab_frozen), tabModel.favicon)
                     }
                 }
     }
+
+    /**
+     * Rename the session at [aIndex] to [aNewName].
+     * Takes care of checking parameters validity before proceeding.
+     * Changes current session name if needed.
+     * Rename matching session data file too.
+     * Commit session list changes to persistent storage.
+     *
+     * @param [aIndex] Index of the session to rename in our session list.
+     * @param [aNewName] New name to be assumed by our session at the given index.
+     */
+    fun renameSession(aOldName: String, aNewName: String) {
+
+        val index = iSessions.indexOf(session(aOldName))
+
+        // Check if we can indeed rename that session
+        if (iSessions.isNullOrEmpty() // Check if we have sessions at all
+                or !isValidSessionName(aNewName) // Check if new session name is valid
+                or !(index>=0 && index<iSessions.count())) { // Check if index is in range
+            return
+        }
+
+        // Proceed with rename then
+        val oldName = iSessions[index].name
+        // Renamed session is the current session
+        if (iCurrentSessionName == oldName) {
+            iCurrentSessionName = aNewName
+        }
+        // Change session name
+        iSessions[index].name = aNewName
+
+        // Rename our session file
+        FileUtils.renameBundleInStorage(application, fileNameFromSessionName(oldName), fileNameFromSessionName(aNewName))
+
+        // I guess it makes sense to persist our changes
+        saveSessions()
+    }
+
+    /**
+     * Check if the given string is a valid session name
+     */
+    fun isValidSessionName(aName: String): Boolean {
+        // Empty strings are not valid names
+        if (aName.isNullOrBlank()) {
+            return false
+        }
+
+        if (iSessions.isNullOrEmpty()) {
+            // Null or empty session list so that name is valid
+            return true
+        } else {
+            // That name is valid if not already in use
+            return iSessions.filter { s -> s.name == aName }.isNullOrEmpty()
+        }
+    }
+
+
+
+
+    /**
+     * Returns an observable that emits the [TabInitializer] for each previously opened tab as
+     * saved on disk. Can potentially be empty.
+     */
+    private fun restorePreviousTabs(): Observable<TabInitializer>
+    {
+        // First load our sessions
+        loadSessions()
+        // Check if we have a current session
+        return if (iCurrentSessionName.isNullOrBlank()) {
+            // No current session name meaning first load with version support
+            // Add our default session
+            iCurrentSessionName = application.getString(R.string.session_default)
+            // At this stage we must have at least an empty list
+            iSessions.add(Session(iCurrentSessionName!!))
+            // Than load legacy session file to make sure tabs from earlier version are preserved
+            loadSession(FILENAME_SESSION_DEFAULT)
+            // TODO: delete legacy session file at some point
+        } else {
+            // Load current session then
+            loadSession(fileNameFromSessionName(iCurrentSessionName!!))
+        }
+    }
+
 
     /**
      * Provide a tab initializer for the given special URL
@@ -306,27 +442,27 @@ class TabsManager @Inject constructor(
      * @return a valid initialized tab.
      */
     fun newTab(
-        activity: Activity,
-        tabInitializer: TabInitializer,
-        isIncognito: Boolean,
-        newTabPosition: NewTabPosition
+            activity: Activity,
+            tabInitializer: TabInitializer,
+            isIncognito: Boolean,
+            newTabPosition: NewTabPosition
     ): LightningView {
         logger.log(TAG, "New tab")
         val tab = LightningView(
-            activity,
-            tabInitializer,
-            isIncognito,
-            homePageInitializer,
-            bookmarkPageInitializer,
-            downloadPageInitializer,
-            logger
+                activity,
+                tabInitializer,
+                isIncognito,
+                homePageInitializer,
+                bookmarkPageInitializer,
+                downloadPageInitializer,
+                logger
         )
 
         // Add our new tab at the specified position
         when(newTabPosition){
-            NewTabPosition.BEFORE_CURRENT_TAB -> tabList.add(indexOfCurrentTab(),tab)
-            NewTabPosition.AFTER_CURRENT_TAB -> tabList.add(indexOfCurrentTab()+1,tab)
-            NewTabPosition.START_OF_TAB_LIST -> tabList.add(0,tab)
+            NewTabPosition.BEFORE_CURRENT_TAB -> tabList.add(indexOfCurrentTab(), tab)
+            NewTabPosition.AFTER_CURRENT_TAB -> tabList.add(indexOfCurrentTab() + 1, tab)
+            NewTabPosition.START_OF_TAB_LIST -> tabList.add(0, tab)
             NewTabPosition.END_OF_TAB_LIST -> tabList.add(tab)
         }
 
@@ -369,7 +505,7 @@ class TabsManager @Inject constructor(
             when {
                 size() == 1 -> this.currentTab = null
                 // Switch to previous tab
-                else -> switchToTab(indexOfTab(iRecentTabs.elementAt(iRecentTabs.size-2)))
+                else -> switchToTab(indexOfTab(iRecentTabs.elementAt(iRecentTabs.size - 2)))
             }
         }
 
@@ -386,11 +522,26 @@ class TabsManager @Inject constructor(
      */
     fun positionOf(tab: LightningView?): Int = tabList.indexOf(tab)
 
+
+
     /**
      * Saves the state of the current WebViews, to a bundle which is then stored in persistent
      * storage and can be unparceled.
      */
     fun saveState() {
+        // Save sessions info
+        saveSessions()
+        // Delete legacy session file if any, could not think of a better place to do that
+        // TODO: Just remove that a few version down the road I guess
+        FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
+        // Save our session
+        saveCurrentSession(fileNameFromSessionName(iCurrentSessionName!!))
+    }
+
+    /**
+     * Save current session including WebView tab states and recent tab list in the specified file.
+     */
+    private fun saveCurrentSession(aFilename: String) {
         val outState = Bundle(ClassLoader.getSystemClassLoader())
         logger.log(TAG, "Saving tab state")
         tabList
@@ -398,26 +549,93 @@ class TabsManager @Inject constructor(
             .forEach { (index, tab) ->
                     // Index padding with zero to make sure they are restored in the correct order
                     // That gives us proper sorting up to 99999 tabs which should be more than enough :)
-                    outState.putBundle(TAB_KEY_PREFIX +  String.format("%05d", index), tab.saveState())
+                    outState.putBundle(TAB_KEY_PREFIX + String.format("%05d", index), tab.saveState())
                 }
 
         //Now save our recent tabs
         // Create an array of tab indices from our recent tab list to be persisted
         savedRecentTabsIndices.clear()
         iRecentTabs.forEach { savedRecentTabsIndices.add(indexOfTab(it))}
-        outState.putIntArray(RECENT_TAB_INDICES,savedRecentTabsIndices.toIntArray())
+        outState.putIntArray(RECENT_TAB_INDICES, savedRecentTabsIndices.toIntArray())
 
         // Write our bundle to disk
-        FileUtils.writeBundleToStorage(application, outState, BUNDLE_STORAGE)
+        FileUtils.writeBundleToStorage(application, outState, aFilename)
             .subscribeOn(diskScheduler)
             .subscribe()
+    }
+
+    /**
+     * Provide session file name from session name
+     */
+    private fun fileNameFromSessionName(aSessionName: String) : String {
+        return FILENAME_SESSION_PREFIX + aSessionName
     }
 
     /**
      * Use this method to clear the saved state if you do not wish it to be restored when the
      * browser next starts.
      */
-    fun clearSavedState() = FileUtils.deleteBundleInStorage(application, BUNDLE_STORAGE)
+    fun clearSavedState() = FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
+
+    /**
+     *
+     */
+    fun deleteSession(aSessionName: String) {
+
+        // TODO: handle case where we delete current session
+        if (aSessionName == iCurrentSessionName) {
+            // Can't do that for now
+            return
+        }
+
+        val index = iSessions.indexOf(session(aSessionName))
+        // Delete session file
+        FileUtils.deleteBundleInStorage(application, fileNameFromSessionName(iSessions[index].name))
+        // Remove session from our list
+        iSessions.removeAt(index)
+    }
+
+
+    /**
+     * Save our session list and current session name to disk.
+     */
+    fun saveSessions() {
+        val bundle = Bundle(javaClass.classLoader)
+        bundle.putString(KEY_CURRENT_SESSION, iCurrentSessionName)
+        bundle.putParcelableArrayList(KEY_SESSIONS, iSessions)
+        // Write our bundle to disk
+        FileUtils.writeBundleToStorage(application, bundle, FILENAME_SESSIONS)
+                .subscribeOn(diskScheduler)
+                .subscribe()
+    }
+
+    /**
+     * Load our session list and current session name from disk.
+     */
+    private fun loadSessions() {
+        val bundle = FileUtils.readBundleFromStorage(application, FILENAME_SESSIONS)
+
+        bundle?.apply{
+            getParcelableArrayList<Session>(KEY_SESSIONS)?.let { iSessions = it}
+            // Sessions must have been loaded when we load that guys
+            getString(KEY_CURRENT_SESSION)?.let {iCurrentSessionName = it}
+        }
+
+        // Somehow we lost that file again :)
+        // That crazy bug we keep chasing after
+        // TODO: consider running recovery even when our session list was loaded
+        if (iSessions.isNullOrEmpty()) {
+            // Search for session files
+            val files = application.filesDir?.let{it.listFiles { d, name -> name.startsWith(FILENAME_SESSION_PREFIX) }}
+            // Add recovered sessions to our collection
+            files?.forEach { f -> iSessions.add(Session(f.name.substring(FILENAME_SESSION_PREFIX.length),-1)) }
+            // Set the first one as current one
+            if (!iSessions.isNullOrEmpty()) {
+                iCurrentSessionName = iSessions[0].name
+            }
+        }
+    }
+
 
     /**
      * Creates an [Observable] that emits the [Bundle] state stored for each previously opened tab
@@ -487,7 +705,13 @@ class TabsManager @Inject constructor(
 
         private const val TAG = "TabsManager"
         private const val TAB_KEY_PREFIX = "TAB_"
-        private const val BUNDLE_STORAGE = "SAVED_TABS.parcel"
+        // Preserve this file name for compatibility
+        private const val FILENAME_SESSION_DEFAULT = "SAVED_TABS.parcel"
+        private const val KEY_CURRENT_SESSION = "KEY_CURRENT_SESSION"
+        private const val KEY_SESSIONS = "KEY_SESSIONS"
+        private const val FILENAME_SESSIONS = "SESSIONS"
+        private const val FILENAME_SESSION_PREFIX = "SESSION_"
+
         private const val RECENT_TAB_INDICES = "RECENT_TAB_INDICES"
 
     }

@@ -72,6 +72,7 @@
             app:srcCompat="@drawable/ic_action_plus"
             android:onClick="@{(view) -> uiController.executeAction(view.id)}"
             />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

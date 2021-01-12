@@ -77,6 +77,23 @@ public final class FileUtils {
     }
 
     /**
+     * Rename a file from given application storage.
+     *
+     * @param app  the application object needed to get the file.
+     * @param name the name of the file to rename.
+     * @param aNewName New file name.
+     */
+    public static void renameBundleInStorage(final @NonNull Application app, final @NonNull String name, final @NonNull String aNewName) {
+        File srcFile = new File(app.getFilesDir(), name);
+        if (srcFile.exists()) {
+            File destFile = new File(app.getFilesDir(), aNewName);
+            srcFile.renameTo(destFile);
+        }
+    }
+
+
+
+    /**
      * Reads a bundle from the file with the specified
      * name in the peristent storage files directory.
      * This method is a blocking operation.
@@ -100,7 +117,7 @@ public final class FileUtils {
             inputStream.read(data, 0, data.length);
             parcel.unmarshall(data, 0, data.length);
             parcel.setDataPosition(0);
-            Bundle out = parcel.readBundle(ClassLoader.getSystemClassLoader());
+            Bundle out = parcel.readBundle(app.getClassLoader());
             out.putAll(out);
             parcel.recycle();
             return out;

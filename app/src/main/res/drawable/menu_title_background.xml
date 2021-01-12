@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:top="0dp" android:left="0dp" android:right="5dp" android:bottom="0dp">
+        <shape>
+            <solid android:color="?attr/colorPrimary"/>
+            <corners android:topLeftRadius="@dimen/menu_corner_radius" android:topRightRadius="@dimen/menu_corner_radius"
+                android:bottomLeftRadius="0dp" android:bottomRightRadius="0dp"/>
+
+        </shape>
+    </item>
+
+
+</layer-list>
+
+    <!--
+        <padding
+            android:left="10dp"
+            android:top="5dp"
+            android:right="10dp"
+            android:bottom="5dp" />
+    -->

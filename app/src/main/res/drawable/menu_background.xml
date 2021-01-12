@@ -39,14 +39,25 @@
         </shape>
     </item>
 
-
     <item android:top="0dp" android:left="0dp" android:right="5dp" android:bottom="5dp">
         <shape>
+            <!--
+            Those android:attr apparently need API level 21 or above
+            <solid android:color="?android:attr/colorBackground"/>
+            Therefore we use ?attr/colorSurface instead which is defined as the same color in material components
+            See: https://stackoverflow.com/a/65569549/3969362
+            See: https://github.com/material-components/material-components-android/blob/master/lib/java/com/google/android/material/color/res/values/colors.xml
+             -->
+            <!--
+            TODO: use this once we migrate our themes to material components
+            <solid android:color="?attr/colorSurface"/>
+            See: https://github.com/Slion/Fulguris/issues/119
+            Use the following until we migrate to material components
+            -->
             <solid android:color="?attr/colorPrimary"/>
             <corners android:radius="@dimen/menu_corner_radius" />
         </shape>
     </item>
-
 
 </layer-list>
 
