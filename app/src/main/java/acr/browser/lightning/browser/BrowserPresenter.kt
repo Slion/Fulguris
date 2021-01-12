@@ -56,10 +56,13 @@ class BrowserPresenter(
      */
     fun switchToSession(aSessionName: String) {
         // Don't do anything if given session name is already the current one or if such session does not exists
-        if (tabsModel.iCurrentSessionName==aSessionName
+        if (!tabsModel.isInitialized
+                || tabsModel.iCurrentSessionName==aSessionName
                 || tabsModel.iSessions?.filter { s -> s.name == aSessionName }.isNullOrEmpty()) {
             return
         }
+
+        tabsModel.isInitialized = false
 
         // Save current states
         tabsModel.saveState()

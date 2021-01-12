@@ -5,6 +5,13 @@
     android:focusableInTouchMode="true"
         Makes it so that you need to double tap an item to select it
         Could be an interesting settings option
+
+    android:background="@drawable/background_session_item"
+        TODO: We could use a custom background and define our own state or reuse one to visualize current session
+        See: https://stackoverflow.com/a/21969864/3969362
+
+    android:background="?attr/selectableItemBackground"
+        Make sure we show ripples when touched
     -->
     <LinearLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,9 +21,11 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="false"
+        android:descendantFocusability="beforeDescendants"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="?attr/selectableItemBackground">
 
 
         <TextView

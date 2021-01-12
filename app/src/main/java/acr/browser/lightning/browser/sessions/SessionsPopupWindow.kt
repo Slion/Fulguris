@@ -135,7 +135,12 @@ class SessionsPopupWindow : PopupWindow {
     }
 
     fun updateSessions() {
-        iUiController.getTabModel().iSessions?.let{iAdapter.showSessions(it)}
+        //See: https://stackoverflow.com/q/43221847/3969362
+        // I'm guessing isComputingLayout is not needed anymore since we moved our update after tab manager initialization
+        // TODO: remove it and switch quickly between sessions to see if that still works
+        if (!iBinding.sessionList.isComputingLayout) {
+            iUiController.getTabModel().iSessions?.let { iAdapter.showSessions(it) }
+        }
     }
 
     /**

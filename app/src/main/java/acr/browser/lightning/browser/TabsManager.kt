@@ -47,6 +47,12 @@ class TabsManager @Inject constructor(
     // TODO: Consider using a map instead of an array
     var iSessions: ArrayList<Session>? = arrayListOf<Session>()
     var iCurrentSessionName: String? = application.getString(R.string.session_default)
+        set(value) {
+            // Most unoptimized way to maintain our current item but that should do for now
+            iSessions?.forEach { s -> s.isCurrent = false }
+            iSessions?.filter { s -> s.name == value}?.apply {if (count()>0) get(0).isCurrent = true }
+            field = value
+        }
 
     /**
      * Return the current [LightningView] or null if no current tab has been set.
@@ -58,7 +64,7 @@ class TabsManager @Inject constructor(
 
     private var tabNumberListeners = emptySet<(Int) -> Unit>()
 
-    private var isInitialized = false
+    var isInitialized = false
     private var postInitializationWorkList = emptyList<() -> Unit>()
 
     init {
@@ -572,8 +578,9 @@ class TabsManager @Inject constructor(
         val bundle = FileUtils.readBundleFromStorage(application, FILENAME_SESSIONS)
 
         bundle?.apply{
-            iCurrentSessionName = getString(KEY_CURRENT_SESSION)
             iSessions = getParcelableArrayList<Session>(KEY_SESSIONS)
+            // Sessions must have been loaded when we load that guys
+            iCurrentSessionName = getString(KEY_CURRENT_SESSION)
         }
     }
 

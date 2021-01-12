@@ -134,14 +134,24 @@ class SessionViewHolder(
 
         }
 
-        // Session item click
+        // Session item clicked
         layout.setOnClickListener{
+
+            if (!iUiController.getTabModel().isInitialized) {
+                // We are still busy loading a session
+                it.context.toast(R.string.busy)
+                return@setOnClickListener
+            }
+
             // User wants to switch session
             session()?.name?.let { sessionName ->
                 (it.context as BrowserActivity).apply {
                     presenter?.switchToSession(sessionName)
                     if (!isEditModeEnabled()) {
                         sessionsMenu.dismiss()
+                    } else {
+                        // Update our list, notably current item
+                        iUiController.getTabModel().doAfterInitialization { sessionsMenu.updateSessions() }
                     }
                 }
             }

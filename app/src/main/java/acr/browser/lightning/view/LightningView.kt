@@ -217,6 +217,16 @@ class LightningView(
     val url: String
         get() = webView?.url ?: ""
 
+    /**
+     * We had forgotten to unregisterReceiver our download listener thus leaking them all whenever we switched between sessions.
+     * It turns out android as a hardcoded limit of 1000 [BroadcastReceiver] per application.
+     * So after a while switching between sessions with many tabs we would get an exception saying:
+     * "Too many receivers, total of 1000, registered for pid"
+     * See: https://stackoverflow.com/q/58179733/3969362
+     * TODO: Do we really need one of those per tab/WebView?
+     */
+    private val iDownloadListener = LightningDownloadListener(activity)
+
     init {
         activity.injector.inject(this)
         uiController = activity as UIController
@@ -248,7 +258,7 @@ class LightningView(
             webChromeClient = LightningChromeClient(activity, this@LightningView)
             webViewClient = lightningWebClient
             // We want to receive download complete notifications
-            setDownloadListener(LightningDownloadListener(activity).also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
+            setDownloadListener(iDownloadListener.also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
             val tl = TouchListener()
             setOnTouchListener(tl)
             // For older devices show Tool Bar On Page Top won't work after fling to top.
@@ -706,6 +716,7 @@ class LightningView(
     // is removed and would cause a memory leak if the parent check
     // was not in place.
     fun onDestroy() {
+        activity.unregisterReceiver(iDownloadListener)
         networkDisposable.dispose()
         webView?.let { tab ->
             // Check to make sure the WebView has been removed

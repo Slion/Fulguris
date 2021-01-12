@@ -328,7 +328,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         */
     }
 
-    private fun showSessions() {
+    public fun showSessions() {
         sessionsMenu.show(coordinator_layout)
     }
 

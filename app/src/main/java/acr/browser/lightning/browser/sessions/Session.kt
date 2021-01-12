@@ -9,7 +9,8 @@ import android.os.Parcelable
  */
 data class Session (
     var name: String = "",
-    var tabCount: Int = 1
+    var tabCount: Int = 1,
+    var isCurrent: Boolean = false
 ) : Parcelable {
     constructor(parcel: Parcel) : this() {
         val n = parcel.readString();

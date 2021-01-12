@@ -7,6 +7,7 @@ import acr.browser.lightning.utils.ItemTouchHelperAdapter
 import acr.browser.lightning.view.BackgroundDrawable
 import android.graphics.Bitmap
 import android.view.ViewGroup
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -41,7 +42,7 @@ class SessionsAdapter(
         iSessions.clear()
         // Do a deep copy for our diff to work
         // TODO: Surely there must be a way to manage a recycler view without doing a copy of our data set
-        aSessions.forEach { s -> iSessions.add(Session(s.name,s.tabCount)) }
+        aSessions.forEach { s -> iSessions.add(Session(s.name,s.tabCount,s.isCurrent)) }
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
@@ -54,7 +55,7 @@ class SessionsAdapter(
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): SessionViewHolder {
         val view = viewGroup.context.inflater.inflate(R.layout.session_list_item, viewGroup, false)
-        view.background = BackgroundDrawable(view.context)
+        //view.background = BackgroundDrawable(view.context)
         return SessionViewHolder(view, uiController).apply {
             // Ask our newly created view holder to observe our edit mode status
             // Thus buttons on our items will be shown or hidden
@@ -66,6 +67,14 @@ class SessionsAdapter(
         val session = iSessions[position]
         holder.textName.tag = position
         holder.textName.text = holder.sessionLabel()
+
+        // Set item font style according to current session
+        if (session.isCurrent) {
+            TextViewCompat.setTextAppearance(holder.textName, R.style.boldText)
+        } else {
+            TextViewCompat.setTextAppearance(holder.textName, R.style.normalText)
+        }
+
         //updateViewHolderAppearance(holder, web.favicon, web.themeColor, web.isForegroundTab)
         //updateViewHolderFavicon(holder, web.favicon, web.isForegroundTab)
         //updateViewHolderBackground(holder, web.isForegroundTab)
@@ -148,5 +157,6 @@ class SessionsDiffCallback(
             oldList[oldItemPosition].name == newList[newItemPosition].name
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldList[oldItemPosition].tabCount == newList[newItemPosition].tabCount
+            oldList[oldItemPosition].tabCount == newList[newItemPosition].tabCount &&
+            oldList[oldItemPosition].isCurrent == newList[newItemPosition].isCurrent
 }
