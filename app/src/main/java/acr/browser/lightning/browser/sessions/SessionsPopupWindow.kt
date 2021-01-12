@@ -1,19 +1,14 @@
 package acr.browser.lightning.browser.sessions
 
-import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
-import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.databinding.SessionListBinding
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.list.VerticalItemAnimator
-import acr.browser.lightning.settings.fragment.GeneralSettingsFragment
-import acr.browser.lightning.settings.fragment.SummaryUpdater
 import acr.browser.lightning.utils.FileNameInputFilter
-import acr.browser.lightning.utils.FileUtils
-import acr.browser.lightning.utils.ThemeUtils
+import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import android.app.Activity
 import android.content.Context
 import android.text.InputFilter
@@ -24,7 +19,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.PopupWindow
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +29,7 @@ class SessionsPopupWindow : PopupWindow {
     var iUiController: UIController
     var iAdapter: SessionsAdapter
     var iBinding: SessionListBinding
+    private var iItemTouchHelper: ItemTouchHelper? = null
 
     constructor(layoutInflater: LayoutInflater,
                 aBinding: SessionListBinding = SessionListBinding.inflate(layoutInflater))
@@ -158,7 +153,7 @@ class SessionsPopupWindow : PopupWindow {
         }
 
         // Setup our recycler view
-        aBinding.sessionList.apply {
+        aBinding.recyclerViewSessions.apply {
             //setLayerType(View.LAYER_TYPE_NONE, null)
             itemAnimator = animator
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -166,10 +161,10 @@ class SessionsPopupWindow : PopupWindow {
             setHasFixedSize(true)
         }
 
-        // TODO: enable drag & drop
-        //val callback: ItemTouchHelper.Callback = TabTouchHelperCallback(tabsAdapter)
-        //mItemTouchHelper = ItemTouchHelper(callback)
-        //mItemTouchHelper?.attachToRecyclerView(iBinding.tabsList)
+        // Enable drag & drop and swipe
+        val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(iAdapter,true,false)
+        iItemTouchHelper = ItemTouchHelper(callback)
+        iItemTouchHelper?.attachToRecyclerView(iBinding.recyclerViewSessions)
     }
 
 
@@ -189,7 +184,7 @@ class SessionsPopupWindow : PopupWindow {
         //See: https://stackoverflow.com/q/43221847/3969362
         // I'm guessing isComputingLayout is not needed anymore since we moved our update after tab manager initialization
         // TODO: remove it and switch quickly between sessions to see if that still works
-        if (!iBinding.sessionList.isComputingLayout) {
+        if (!iBinding.recyclerViewSessions.isComputingLayout) {
             iUiController.getTabModel().iSessions?.let { iAdapter.showSessions(it) }
         }
     }

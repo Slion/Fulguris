@@ -3,7 +3,7 @@ package acr.browser.lightning.browser.tabs
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
-import acr.browser.lightning.utils.ItemTouchHelperViewHolder
+import acr.browser.lightning.utils.ItemOperationListener
 import acr.browser.lightning.view.BackgroundDrawable
 import android.view.View
 import android.widget.ImageView
@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 class TabViewHolder(
     view: View,
     private val uiController: UIController
-) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemTouchHelperViewHolder {
+) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemOperationListener {
 
     // Using view binding won't give us much
     val txtTitle: TextView = view.findViewById(R.id.textTab)
@@ -52,7 +52,7 @@ class TabViewHolder(
 
     // From ItemTouchHelperViewHolder
     // Start dragging
-    override fun onItemSelected() {
+    override fun onItemOperationStart() {
         // Do some fancy for smoother transition
         previousBackground = layout.background as BackgroundDrawable
         previousBackground?.let {
@@ -62,7 +62,7 @@ class TabViewHolder(
 
     // From ItemTouchHelperViewHolder
     // Stopped dragging
-    override fun onItemClear() {
+    override fun onItemOperationStop() {
         // Here sadly no transition
         layout.background = previousBackground
     }

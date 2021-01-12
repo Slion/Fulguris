@@ -1,7 +1,6 @@
 package acr.browser.lightning.browser.tabs
 
-import TabTouchHelperCallback
-import acr.browser.lightning.R
+import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.browser.TabsView
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
@@ -11,7 +10,6 @@ import acr.browser.lightning.list.VerticalItemAnimator
 import acr.browser.lightning.view.LightningView
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,7 +59,7 @@ class TabsDrawerView @JvmOverloads constructor(
             setHasFixedSize(true)
         }
 
-        val callback: ItemTouchHelper.Callback = TabTouchHelperCallback(tabsAdapter)
+        val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(tabsAdapter)
 
         mItemTouchHelper = ItemTouchHelper(callback)
         mItemTouchHelper?.attachToRecyclerView(iBinding.tabsList)

@@ -7,24 +7,19 @@ import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.utils.FileNameInputFilter
-import acr.browser.lightning.utils.ItemTouchHelperViewHolder
+import acr.browser.lightning.utils.ItemOperationListener
 import acr.browser.lightning.view.BackgroundDrawable
 import android.app.Activity
 import android.app.Dialog
-import android.content.Context
-import android.content.Context.INPUT_METHOD_SERVICE
+import android.graphics.drawable.Drawable
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
-import android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,7 +33,7 @@ import io.reactivex.disposables.Disposable
 class SessionViewHolder(
         view: View,
         private val iUiController: UIController
-) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemTouchHelperViewHolder {
+) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemOperationListener {
 
 
     // Using view binding won't give us much
@@ -47,7 +42,7 @@ class SessionViewHolder(
     val buttonDelete: View = view.findViewById(R.id.button_delete)
     val layout: LinearLayout = view.findViewById(R.id.layout_background)
 
-    private var previousBackground: BackgroundDrawable? = null
+    private var previousBackground: Drawable? = null
 
     init {
         buttonDelete.setOnClickListener {
@@ -63,7 +58,7 @@ class SessionViewHolder(
                         .setNegativeButton(android.R.string.cancel, null)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             // User confirmed deletion, go ahead then
-                            iUiController.getTabModel().deleteSession(textName.tag as Int)
+                            iUiController.getTabModel().deleteSession(textName.tag as String)
                             // Persist our session list after removing one
                             iUiController.getTabModel().saveSessions()
                             // Refresh our list
@@ -106,7 +101,7 @@ class SessionViewHolder(
                     // Check if session exists already to display proper error message
                     if (iUiController.getTabModel().isValidSessionName(newName)) {
                         // Proceed with session rename
-                        iUiController.getTabModel().renameSession(textName.tag as Int,newName)
+                        iUiController.getTabModel().renameSession(textName.tag as String,newName)
                         // Change name on our item view
                         textName.text = sessionLabel()
                     } else {
@@ -163,13 +158,22 @@ class SessionViewHolder(
     }
 
 
-    private fun session() = iUiController.getTabModel().iSessions?.get(textName.tag as Int)
+    private fun session() = iUiController.getTabModel().session(textName.tag as String)
 
     /**
      * Provide the session label as shown to the user.
-     * It includes session name and tab count.
+     * It includes session name and tab count if available.
      */
-    fun sessionLabel() = session()?.name + " - " + session()?.tabCount
+    fun sessionLabel(): String? {
+        return if (session()?.tabCount!! > 0) {
+            // Tab count is available, show it then
+            session()?.name + " - " + session()?.tabCount
+        } else {
+            // No tab count available, just show the name
+            // That can happen for recovered sessions for instance
+            session()?.name
+        }
+    }
 
 
 
@@ -189,17 +193,17 @@ class SessionViewHolder(
 
     // From ItemTouchHelperViewHolder
     // Start dragging
-    override fun onItemSelected() {
+    override fun onItemOperationStart() {
         // Do some fancy for smoother transition
-        previousBackground = layout.background as BackgroundDrawable
+        previousBackground = layout.background
         previousBackground?.let {
-            layout.background = BackgroundDrawable(itemView.context, if (it.isSelected) R.attr.selectedBackground else R.attr.colorPrimaryDark, R.attr.colorControlHighlight).apply{startTransition(300)}
+            layout.background = BackgroundDrawable(itemView.context, R.attr.selectedBackground, R.attr.colorControlHighlight).apply{startTransition(300)}
         }
     }
 
     // From ItemTouchHelperViewHolder
     // Stopped dragging
-    override fun onItemClear() {
+    override fun onItemOperationStop() {
         // Here sadly no transition
         layout.background = previousBackground
     }

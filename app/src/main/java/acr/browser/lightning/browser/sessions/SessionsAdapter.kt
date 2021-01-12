@@ -3,7 +3,7 @@ package acr.browser.lightning.browser.sessions
 import acr.browser.lightning.R
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.inflater
-import acr.browser.lightning.utils.ItemTouchHelperAdapter
+import acr.browser.lightning.utils.ItemDragDropSwipeListener
 import acr.browser.lightning.view.BackgroundDrawable
 import android.graphics.Bitmap
 import android.view.ViewGroup
@@ -22,7 +22,7 @@ import java.util.*
  */
 class SessionsAdapter(
         private val uiController: UIController
-) : RecyclerView.Adapter<SessionViewHolder>(), ItemTouchHelperAdapter {
+) : RecyclerView.Adapter<SessionViewHolder>(), ItemDragDropSwipeListener {
 
     // Current sessions shown in our dialog
     private var iSessions: ArrayList<Session> = arrayListOf<Session>()
@@ -65,7 +65,7 @@ class SessionsAdapter(
 
     override fun onBindViewHolder(holder: SessionViewHolder, position: Int) {
         val session = iSessions[position]
-        holder.textName.tag = position
+        holder.textName.tag = session.name
         holder.textName.text = holder.sessionLabel()
 
         // Set item font style according to current session
@@ -124,16 +124,18 @@ class SessionsAdapter(
         // Swap local list position
         Collections.swap(iSessions, fromPosition, toPosition)
         // Swap model list position
-        Collections.swap(uiController.getTabModel().allTabs, fromPosition, toPosition)
+        Collections.swap(uiController.getTabModel().iSessions!!, fromPosition, toPosition)
         // Tell base class an item was moved
         notifyItemMoved(fromPosition, toPosition)
+        // Persist our changes
+        uiController.getTabModel().saveSessions()
         return true
     }
 
     // From ItemTouchHelperAdapter
     override fun onItemDismiss(position: Int)
     {
-        uiController.tabCloseClicked(position)
+
     }
 
 }

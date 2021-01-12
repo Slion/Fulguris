@@ -84,7 +84,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/session_list"
+            android:id="@+id/recycler_view_sessions"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scrollbars="vertical"
