@@ -1106,6 +1106,10 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                         toggleTabs()
                         return true
                     }
+                    KeyEvent.KEYCODE_S -> {
+                        toggleSessions()
+                        return true
+                    }
                     KeyEvent.KEYCODE_B -> {
                         toggleBookmarks()
                         return true
@@ -2145,6 +2149,20 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             drawer_layout.closeDrawers()
         } else {
             openTabs()
+        }
+    }
+
+    /**
+     * Toggle tab list visibility
+     */
+    private fun toggleSessions() {
+        // isShowing always return false for some reason
+        // Therefore toggle is not working however one can use Esc to close menu.
+        // TODO: Fix that at some point
+        if (sessionsMenu.isShowing) {
+            sessionsMenu.dismiss()
+        } else {
+            showSessions()
         }
     }
 
