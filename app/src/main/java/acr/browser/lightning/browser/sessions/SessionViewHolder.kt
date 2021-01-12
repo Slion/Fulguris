@@ -78,7 +78,7 @@ class SessionViewHolder(
             textView.filters = arrayOf<InputFilter>(FileNameInputFilter())
 
             // Init our text field with current name
-            textView.setText(session()?.name)
+            textView.setText(session().name)
             textView.selectAll()
             //textView.requestFocus()
 
@@ -164,14 +164,14 @@ class SessionViewHolder(
      * Provide the session label as shown to the user.
      * It includes session name and tab count if available.
      */
-    fun sessionLabel(): String? {
-        return if (session()?.tabCount!! > 0) {
+    fun sessionLabel(): String {
+        return if (session().tabCount > 0) {
             // Tab count is available, show it then
-            session()?.name + " - " + session()?.tabCount
+            session().name + " - " + session().tabCount
         } else {
             // No tab count available, just show the name
             // That can happen for recovered sessions for instance
-            session()?.name
+            session().name
         }
     }
 

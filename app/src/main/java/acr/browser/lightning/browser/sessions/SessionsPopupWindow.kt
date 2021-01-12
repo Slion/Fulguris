@@ -55,11 +55,11 @@ class SessionsPopupWindow : PopupWindow {
                     setTitle(R.string.session_name_prompt)
                     setView(dialogView)
                     setPositiveButton(R.string.action_ok) { _, _ ->
-                        var name = textView.text.toString()
+                        val name = textView.text.toString()
                         // Check if session exists already
                         if (iUiController.getTabModel().isValidSessionName(name)) {
                             // That session does not exist yet, add it then
-                            iUiController.getTabModel().iSessions?.let {
+                            iUiController.getTabModel().iSessions.let {
                                 it.add(Session(name, 1))
                                 // Switch to our newly added session
                                 (view.context as BrowserActivity).apply {
@@ -185,7 +185,7 @@ class SessionsPopupWindow : PopupWindow {
         // I'm guessing isComputingLayout is not needed anymore since we moved our update after tab manager initialization
         // TODO: remove it and switch quickly between sessions to see if that still works
         if (!iBinding.recyclerViewSessions.isComputingLayout) {
-            iUiController.getTabModel().iSessions?.let { iAdapter.showSessions(it) }
+            iUiController.getTabModel().iSessions.let { iAdapter.showSessions(it) }
         }
     }
 

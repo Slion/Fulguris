@@ -46,12 +46,12 @@ class TabsManager @Inject constructor(
 
     // Our persisted list of sessions
     // TODO: Consider using a map instead of an array
-    var iSessions: ArrayList<Session>? = arrayListOf<Session>()
-    var iCurrentSessionName: String? = ""
+    var iSessions: ArrayList<Session> = arrayListOf<Session>()
+    var iCurrentSessionName: String = ""
         set(value) {
             // Most unoptimized way to maintain our current item but that should do for now
-            iSessions?.forEach { s -> s.isCurrent = false }
-            iSessions?.filter { s -> s.name == value}?.apply {if (count()>0) get(0).isCurrent = true }
+            iSessions.forEach { s -> s.isCurrent = false }
+            iSessions.filter { s -> s.name == value}.apply {if (count()>0) get(0).isCurrent = true }
             field = value
         }
 
@@ -75,7 +75,7 @@ class TabsManager @Inject constructor(
             //TODO: during shutdown initiated by session switch we get stray events here not matching the proper session since it current session name was changed
             //TODO: it's no big deal and does no harm at all but still not consistent, we may want to fix it at some point
             //TODO: after shutdown our tab counts are fixed by [loadSessions]
-            var session=iSessions!!.filter { s -> s.name == iCurrentSessionName }
+            var session=iSessions.filter { s -> s.name == iCurrentSessionName }
             if (!session.isNullOrEmpty()) {
                 session[0].tabCount = it
             }
@@ -97,7 +97,7 @@ class TabsManager @Inject constructor(
             return Session()
         }
 
-        val list = iSessions!!.filter { s -> s.name == aName }
+        val list = iSessions.filter { s -> s.name == aName }
         if (list.isNullOrEmpty()) {
             // TODO: Return session with Default name
             return Session()
@@ -277,23 +277,23 @@ class TabsManager @Inject constructor(
      */
     fun renameSession(aOldName: String, aNewName: String) {
 
-        val index = iSessions!!.indexOf(session(aOldName))
+        val index = iSessions.indexOf(session(aOldName))
 
         // Check if we can indeed rename that session
         if (iSessions.isNullOrEmpty() // Check if we have sessions at all
                 or !isValidSessionName(aNewName) // Check if new session name is valid
-                or !(index>=0 && index<iSessions!!.count())) { // Check if index is in range
+                or !(index>=0 && index<iSessions.count())) { // Check if index is in range
             return
         }
 
         // Proceed with rename then
-        val oldName = iSessions!![index].name
+        val oldName = iSessions[index].name
         // Renamed session is the current session
         if (iCurrentSessionName == oldName) {
             iCurrentSessionName = aNewName
         }
         // Change session name
-        iSessions!![index].name = aNewName
+        iSessions[index].name = aNewName
 
         // Rename our session file
         FileUtils.renameBundleInStorage(application, fileNameFromSessionName(oldName), fileNameFromSessionName(aNewName))
@@ -316,7 +316,7 @@ class TabsManager @Inject constructor(
             return true
         } else {
             // That name is valid if not already in use
-            return iSessions!!.filter { s -> s.name == aName }.isNullOrEmpty()
+            return iSessions.filter { s -> s.name == aName }.isNullOrEmpty()
         }
     }
 
@@ -337,7 +337,7 @@ class TabsManager @Inject constructor(
             // Add our default session
             iCurrentSessionName = application.getString(R.string.session_default)
             // At this stage we must have at least an empty list
-            iSessions!!.add(Session(iCurrentSessionName!!))
+            iSessions.add(Session(iCurrentSessionName!!))
             // Than load legacy session file to make sure tabs from earlier version are preserved
             loadSession(FILENAME_SESSION_DEFAULT)
             // TODO: delete legacy session file at some point
@@ -588,11 +588,11 @@ class TabsManager @Inject constructor(
             return
         }
 
-        val index = iSessions!!.indexOf(session(aSessionName))
+        val index = iSessions.indexOf(session(aSessionName))
         // Delete session file
-        FileUtils.deleteBundleInStorage(application, fileNameFromSessionName(iSessions!![index].name))
+        FileUtils.deleteBundleInStorage(application, fileNameFromSessionName(iSessions[index].name))
         // Remove session from our list
-        iSessions!!.removeAt(index)
+        iSessions.removeAt(index)
     }
 
 
@@ -616,24 +616,22 @@ class TabsManager @Inject constructor(
         val bundle = FileUtils.readBundleFromStorage(application, FILENAME_SESSIONS)
 
         bundle?.apply{
-            iSessions = getParcelableArrayList<Session>(KEY_SESSIONS)
+            getParcelableArrayList<Session>(KEY_SESSIONS)?.let { iSessions = it}
             // Sessions must have been loaded when we load that guys
-            iCurrentSessionName = getString(KEY_CURRENT_SESSION)
+            getString(KEY_CURRENT_SESSION)?.let {iCurrentSessionName = it}
         }
 
         // Somehow we lost that file again :)
         // That crazy bug we keep chasing after
         // TODO: consider running recovery even when our session list was loaded
         if (iSessions.isNullOrEmpty()) {
-            // Implement session recovery process
-            iSessions = arrayListOf<Session>()
             // Search for session files
             val files = application.filesDir?.let{it.listFiles { d, name -> name.startsWith(FILENAME_SESSION_PREFIX) }}
             // Add recovered sessions to our collection
-            files?.forEach { f -> iSessions?.add(Session(f.name.substring(FILENAME_SESSION_PREFIX.length),-1)) }
+            files?.forEach { f -> iSessions.add(Session(f.name.substring(FILENAME_SESSION_PREFIX.length),-1)) }
             // Set the first one as current one
             if (!iSessions.isNullOrEmpty()) {
-                iCurrentSessionName = iSessions!![0].name
+                iCurrentSessionName = iSessions[0].name
             }
         }
     }
