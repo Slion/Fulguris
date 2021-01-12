@@ -82,6 +82,13 @@ class TabsManager @Inject constructor(
     }
 
     /**
+     * TODO: have a better implementation
+     */
+    fun currentSession() : Session {
+        return iSessions!!.filter { s -> s.name == iCurrentSessionName }[0]
+    }
+
+    /**
      * Adds a listener to be notified when the number of tabs changes.
      */
     fun addTabNumberChangedListener(listener: ((Int) -> Unit)) {

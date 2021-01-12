@@ -55,9 +55,7 @@
                 app:srcCompat="@drawable/ic_edit"
                 />
 
-            <!--
-            Save as button feature was postponed
-            TODO: Maybe add that functionality later on
+            <!-- Save as button -->
             <ImageButton
                 android:id="@+id/button_save_session"
                 style="?android:attr/actionButtonStyle"
@@ -69,7 +67,7 @@
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_save"
                 />
-            -->
+
 
             <ImageButton
                 android:id="@+id/button_new_session"

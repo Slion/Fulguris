@@ -63,7 +63,7 @@ class SessionsPopupWindow : PopupWindow {
                         var name = textView.text.toString()
                         // Check if session exists already
                         if (iUiController.getTabModel().isValidSessionName(name)) {
-                            // That session dos not exist yet, add it then
+                            // That session does not exist yet, add it then
                             iUiController.getTabModel().iSessions?.let {
                                 it.add(Session(name, 1))
                                 // Switch to our newly added session
@@ -82,6 +82,57 @@ class SessionsPopupWindow : PopupWindow {
                     }
                 }
             }
+
+        // Handle save as button
+        // TODO: reuse code between, new, save as and edit dialog
+        aBinding.buttonSaveSession.setOnClickListener { view ->
+            val dialogView = LayoutInflater.from(aBinding.root.context).inflate(R.layout.dialog_edit_text, null)
+            val textView = dialogView.findViewById<EditText>(R.id.dialog_edit_text)
+            // Make sure user can only enter valid filename characters
+            textView.filters = arrayOf<InputFilter>(FileNameInputFilter())
+
+            iUiController.getTabModel().let { tabs ->
+                BrowserDialog.showCustomDialog(aBinding.root.context as Activity) {
+                    setTitle(R.string.session_name_prompt)
+                    setView(dialogView)
+                    setPositiveButton(R.string.action_ok) { _, _ ->
+                        var name = textView.text.toString()
+                        // Check if session exists already
+                        if (tabs.isValidSessionName(name)) {
+                            // That session does not exist yet, add it then
+                            tabs.iSessions?.let {
+                                // Save current session session first
+                                tabs.saveState()
+                                // Add new session
+                                it.add(Session(name, tabs.currentSession().tabCount))
+                                // Set it as current session
+                                tabs.iCurrentSessionName = name
+                                // Save current tabs that our newly added session
+                                tabs.saveState()
+                                // Switch to our newly added session
+                                (view.context as BrowserActivity).apply {
+                                    // Close session dialog after creating and switching to new session
+                                    // TODO: not in edit mode?
+                                    sessionsMenu.dismiss()
+                                }
+
+                                // Show user we did switch session
+                                view.context.apply {
+                                    toast(getString(R.string.session_switched, name))
+                                }
+
+                                // Update our session list
+                                //iAdapter.showSessions(it)
+                            }
+                        } else {
+                            // We already have a session with that name, display an error message
+                            context.toast(R.string.session_already_exists)
+                        }
+                    }
+                }
+            }
+        }
+
 
         aBinding.buttonEditSessions.setOnClickListener {
             // Toggle edit mode
