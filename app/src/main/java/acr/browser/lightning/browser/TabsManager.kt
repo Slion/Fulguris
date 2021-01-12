@@ -47,7 +47,7 @@ class TabsManager @Inject constructor(
     // Our persisted list of sessions
     // TODO: Consider using a map instead of an array
     var iSessions: ArrayList<Session>? = arrayListOf<Session>()
-    var iCurrentSessionName: String? = application.getString(R.string.session_default)
+    var iCurrentSessionName: String? = ""
         set(value) {
             // Most unoptimized way to maintain our current item but that should do for now
             iSessions?.forEach { s -> s.isCurrent = false }
@@ -333,8 +333,14 @@ class TabsManager @Inject constructor(
         loadSessions()
         // Check if we have a current session
         return if (iCurrentSessionName.isNullOrBlank()) {
-            // No sessions probably transition from older version
+            // No current session name meaning first load with version support
+            // Add our default session
+            iCurrentSessionName = application.getString(R.string.session_default)
+            // At this stage we must have at least an empty list
+            iSessions!!.add(Session(iCurrentSessionName!!))
+            // Than load legacy session file to make sure tabs from earlier version are preserved
             loadSession(FILENAME_SESSION_DEFAULT)
+            // TODO: delete legacy session file at some point
         } else {
             // Load current session then
             loadSession(fileNameFromSessionName(iCurrentSessionName!!))
@@ -525,12 +531,11 @@ class TabsManager @Inject constructor(
     fun saveState() {
         // Save sessions info
         saveSessions()
-        // Save
-        if (iCurrentSessionName.isNullOrBlank()) {
-            saveCurrentSession(FILENAME_SESSION_DEFAULT)
-        } else {
-            saveCurrentSession(fileNameFromSessionName(iCurrentSessionName!!))
-        }
+        // Delete legacy session file if any, could not think of a better place to do that
+        // TODO: Just remove that a few version down the road I guess
+        FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
+        // Save our session
+        saveCurrentSession(fileNameFromSessionName(iCurrentSessionName!!))
     }
 
     /**
