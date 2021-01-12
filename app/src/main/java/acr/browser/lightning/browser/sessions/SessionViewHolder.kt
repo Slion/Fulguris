@@ -102,8 +102,11 @@ class SessionViewHolder(
                     if (iUiController.getTabModel().isValidSessionName(newName)) {
                         // Proceed with session rename
                         iUiController.getTabModel().renameSession(textName.tag as String,newName)
+                        textName.tag = newName
                         // Change name on our item view
                         textName.text = sessionLabel()
+                        //
+                        //(iUiController as BrowserActivity).sessionsMenu.updateSessions()
                     } else {
                         // We already have a session with that name, display an error message
                         context.toast(R.string.session_already_exists)

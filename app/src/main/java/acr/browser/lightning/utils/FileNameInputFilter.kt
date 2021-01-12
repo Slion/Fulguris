@@ -18,7 +18,7 @@ class FileNameInputFilter: InputFilter
         }
 
         // See: https://stackoverflow.com/a/2703882/3969362
-        val reservedChars = "?:\"*|/\\<>\\u0000"
+        val reservedChars = "?:\"*|/\\<>\u0000"
         // Extract actual source
         val actualSource = source.subSequence(start, end)
         // Filter out unsupported characters
