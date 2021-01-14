@@ -225,7 +225,7 @@ class LightningView(
      * See: https://stackoverflow.com/q/58179733/3969362
      * TODO: Do we really need one of those per tab/WebView?
      */
-    private val iDownloadListener = LightningDownloadListener(activity)
+    private var iDownloadListener: LightningDownloadListener? = null
 
     init {
         activity.injector.inject(this)
@@ -258,6 +258,7 @@ class LightningView(
             webChromeClient = LightningChromeClient(activity, this@LightningView)
             webViewClient = lightningWebClient
             // We want to receive download complete notifications
+            iDownloadListener = LightningDownloadListener(activity)
             setDownloadListener(iDownloadListener.also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
             val tl = TouchListener()
             setOnTouchListener(tl)
@@ -716,7 +717,11 @@ class LightningView(
     // is removed and would cause a memory leak if the parent check
     // was not in place.
     fun onDestroy() {
-        activity.unregisterReceiver(iDownloadListener)
+        //See: https://console.firebase.google.com/project/fulguris-b1f69/crashlytics/app/android:net.slions.fulguris.full.playstore/issues/ea99c7ea0c57f66eae6e95532a16859d
+        if (iDownloadListener!=null) {
+            activity.unregisterReceiver(iDownloadListener)
+            iDownloadListener = null
+        }
         networkDisposable.dispose()
         webView?.let { tab ->
             // Check to make sure the WebView has been removed
