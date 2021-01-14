@@ -1438,12 +1438,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         currentTabView.removeFromParent()
         currentTabView?.onFocusChangeListener = null
         currentTabView = null
-
-        // Use a delayed handler to make the transition smooth
-        // otherwise it will get caught up with the showTab code
-        // and cause a janky motion
-        mainHandler.postDelayed(drawer_layout::closeDrawers, 200)
-
     }
 
     /**
@@ -1453,15 +1447,13 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
      * @param aView Input is in fact a WebViewEx.
      */
     override fun setTabView(aView: View) {
-        // SL: Hide any drawers first, thus making sure we close our tab drawer even when user taps current tab
-        // Use a delayed handler to make the transition smooth
-        // otherwise it will get caught up with the showTab code
-        // and cause a janky motion
-        mainHandler.postDelayed(drawer_layout::closeDrawers, 200)
 
         if (currentTabView == aView) {
             return
         }
+
+        // Make sure current tab is visible in tab list
+        scrollToCurrentTab()
 
         logger.log(TAG, "Setting the tab view")
         aView.removeFromParent()
@@ -1498,6 +1490,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     override fun tabClicked(position: Int) {
+        // SL: Hide any drawers first, thus making sure we close our tab drawer even when user taps current tab
+        // Use a delayed handler to make the transition smooth
+        // otherwise it will get caught up with the showTab code
+        // and cause a janky motion
+        mainHandler.postDelayed(drawer_layout::closeDrawers, 200)
+
         presenter?.tabChanged(position)
     }
 
@@ -2112,33 +2110,41 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // That's needed for focus issue when opening with tap on button
         val tabListView = drawer_layout.findViewById<RecyclerView>(R.id.tabs_list)
         tabListView?.requestFocus()
-
         // Define what to do once our list drawer it opened
         // Item focus won't work sometimes when not using keyboard, I'm guessing that's somehow a feature
         drawer_layout.onceOnDrawerOpened {
-            // Set focus
-            // Find our recycler list view
-            tabListView?.apply {
-                // Get current tab index and layout manager
-                val index = tabsManager.indexOfCurrentTab()
-                val lm = layoutManager as LinearLayoutManager
-                // Check if current item is currently visible
-                if (lm.findFirstCompletelyVisibleItemPosition() <= index && index <= lm.findLastCompletelyVisibleItemPosition()) {
-                    // We don't need to scroll as current item is already visible
-                    // Just focus our current item then for best keyboard navigation experience
-                    findViewHolderForAdapterPosition(tabsManager.indexOfCurrentTab())?.itemView?.requestFocus()
-                } else {
-                    // Our current item is not completely visible, we need to scroll then
-                    // Once scroll is complete we will focus our current item
-                    onceOnScrollStateIdle { findViewHolderForAdapterPosition(tabsManager.indexOfCurrentTab())?.itemView?.requestFocus() }
-                    // Trigger scroll
-                    smoothScrollToPosition(index)
-                }
-            }
+            scrollToCurrentTab()
         }
 
         // Open our tab list drawer
         drawer_layout.openDrawer(getTabDrawer())
+    }
+
+    /**
+     * Scroll to current tab.
+     */
+    private fun scrollToCurrentTab() {
+        val tabListView = drawer_layout.findViewById<RecyclerView>(R.id.tabs_list)
+        // Set focus
+        // Find our recycler list view
+        tabListView?.apply {
+            // Get current tab index and layout manager
+            val index = tabsManager.indexOfCurrentTab()
+            val lm = layoutManager as LinearLayoutManager
+            // Check if current item is currently visible
+            if (lm.findFirstCompletelyVisibleItemPosition() <= index && index <= lm.findLastCompletelyVisibleItemPosition()) {
+                // We don't need to scroll as current item is already visible
+                // Just focus our current item then for best keyboard navigation experience
+                findViewHolderForAdapterPosition(tabsManager.indexOfCurrentTab())?.itemView?.requestFocus()
+            } else {
+                // Our current item is not completely visible, we need to scroll then
+                // Once scroll is complete we will focus our current item
+                onceOnScrollStateIdle { findViewHolderForAdapterPosition(tabsManager.indexOfCurrentTab())?.itemView?.requestFocus() }
+                // Trigger scroll
+                smoothScrollToPosition(index)
+            }
+        }
+
     }
 
     /**

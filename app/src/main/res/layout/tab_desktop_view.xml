@@ -78,7 +78,20 @@
             android:onClick="@{(view) -> uiController.executeAction(view.id)}"
             />
 
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/action_sessions"
+            style="?android:attr/actionButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_sessions"
+            app:tooltipText="@{@string/action_sessions}"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_sessions"
+            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+            />
+
+
+    </LinearLayout>
 </merge>
 </layout>
 

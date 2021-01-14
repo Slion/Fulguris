@@ -10,10 +10,12 @@ import acr.browser.lightning.list.VerticalItemAnimator
 import acr.browser.lightning.view.LightningView
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.tab_drawer_view.view.*
 
 
 /**
@@ -68,6 +70,7 @@ class TabsDrawerView @JvmOverloads constructor(
 
     /**
      * Enable tool bar buttons according to current state of things
+     * TODO: Find a way to share that code with TabsDesktopView
      */
     private fun updateTabActionButtons() {
         // If more than one tab, enable close all tabs button
@@ -76,6 +79,11 @@ class TabsDrawerView @JvmOverloads constructor(
         iBinding.actionRestoreAllPages.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>1
         // If we have at least one tab in our closed tabs list enable restore page button
         iBinding.actionRestorePage.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>0
+        // No sessions in incognito mode
+        if (uiController.isIncognito()) {
+            action_sessions.visibility = View.GONE
+        }
+
     }
 
     override fun tabAdded() {
