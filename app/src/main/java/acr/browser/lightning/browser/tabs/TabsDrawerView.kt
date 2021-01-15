@@ -88,7 +88,6 @@ class TabsDrawerView @JvmOverloads constructor(
 
     override fun tabAdded() {
         displayTabs()
-        iBinding.tabsList.postDelayed({ iBinding.tabsList.smoothScrollToPosition(tabsAdapter.itemCount - 1) }, 500)
         updateTabActionButtons()
     }
 

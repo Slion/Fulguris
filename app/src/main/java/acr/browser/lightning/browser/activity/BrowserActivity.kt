@@ -1452,9 +1452,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             return
         }
 
-        // Make sure current tab is visible in tab list
-        scrollToCurrentTab()
-
         logger.log(TAG, "Setting the tab view")
         aView.removeFromParent()
         currentTabView.removeFromParent()
@@ -1471,6 +1468,8 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         // Close virtual keyboard if we loose focus
         currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(ui_layout.windowToken, 0) }
         showActionBar()
+        // Make sure current tab is visible in tab list
+        scrollToCurrentTab()
     }
 
     override fun showBlockedLocalFileDialog(onPositiveClick: Function0<Unit>) {

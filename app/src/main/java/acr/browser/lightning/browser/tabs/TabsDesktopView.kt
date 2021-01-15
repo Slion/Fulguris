@@ -76,7 +76,6 @@ class TabsDesktopView @JvmOverloads constructor(
 
     override fun tabAdded() {
         displayTabs()
-        tabList.postDelayed({ tabList.smoothScrollToPosition(tabsAdapter.itemCount - 1) }, 500)
         updateTabActionButtons()
     }
 
