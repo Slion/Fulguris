@@ -7,6 +7,7 @@ import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isSpecialUrl
+import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.PopupWindow
 import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import javax.inject.Inject
+
 
 class BrowserPopupMenu : PopupWindow {
 
@@ -27,6 +29,10 @@ class BrowserPopupMenu : PopupWindow {
 
         animationStyle = R.style.AnimationMenu
         //animationStyle = android.R.style.Animation_Dialog
+
+        // Needed on Android 5 to make sure our pop-up can be dismissed by tapping outside and back button
+        // See: https://stackoverflow.com/questions/46872634/close-popupwindow-upon-tapping-outside-or-back-button
+        setBackgroundDrawable(ColorDrawable())
 
         // Hide incognito menu item if we are already incognito
         if ((view.context as BrowserActivity).isIncognito()) {
@@ -51,7 +57,7 @@ class BrowserPopupMenu : PopupWindow {
             // Set desktop mode checkbox according to current tab
             contentView.menuItemDesktopMode.isChecked = it.currentTab?.toggleDesktop ?: false
 
-            it.currentTab?.let {tab ->
+            it.currentTab?.let { tab ->
                 // Let user add multiple times the same URL I guess, for now anyway
                 // Blocking it is not nice and subscription is more involved I guess
                 // See BookmarksDrawerView.updateBookmarkIndicator

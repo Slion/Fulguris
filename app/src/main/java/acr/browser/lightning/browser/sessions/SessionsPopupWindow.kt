@@ -11,6 +11,7 @@ import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -43,6 +44,11 @@ class SessionsPopupWindow : PopupWindow {
 
         animationStyle = R.style.AnimationMenu
         //animationStyle = android.R.style.Animation_Dialog
+
+        // Needed on Android 5 to make sure our pop-up can be dismissed by tapping outside and back button
+        // See: https://stackoverflow.com/questions/46872634/close-popupwindow-upon-tapping-outside-or-back-button
+        setBackgroundDrawable(ColorDrawable())
+
 
         // Handle click on "add session" button
         aBinding.buttonNewSession.setOnClickListener { view ->
