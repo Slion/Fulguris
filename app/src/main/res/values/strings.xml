@@ -267,6 +267,10 @@
     <string name="pref_summary_no_sponsorship">Use Fulguris Google Play Store release to sponsor that project.</string>
     <string name="pref_title_free_download">Free download</string>
     <string name="pref_summary_free_download">Fulguris is Open Source Software. You can download our free edition including full feature set and unlimited tabs.</string>
+    <string name="pref_title_sponsorship_github">Sponsor us on GitHub</string>
+    <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
+    <string name="pref_title_sponsorship_five_stars">Five stars review</string>
+    <string name="pref_summary_sponsorship_five_stars">Giving us a five stars review on Google Play is a great way to help this project.</string>
     <string name="settings_about_explain">Details about version, update, author and license.</string>
     <string name="close_tab">Close current tab</string>
     <string name="close_all_tabs">Close all tabs</string>

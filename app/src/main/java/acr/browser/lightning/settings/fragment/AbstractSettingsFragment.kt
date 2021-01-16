@@ -1,7 +1,11 @@
 package acr.browser.lightning.settings.fragment
 
+import acr.browser.lightning.R
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.annotation.XmlRes
+import androidx.core.content.res.ResourcesCompat
 import androidx.preference.*
 
 /**
@@ -147,5 +151,38 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    /**
+     * Add a preference that links to GitHub sponsor.
+     */
+    protected fun addPreferenceLinkToGitHubSponsor() {
+        // We invite user to installer our Google Play Store release
+        val pref = Preference(context)
+        pref.title = resources.getString(R.string.pref_title_sponsorship_github)
+        pref.summary = resources.getString(R.string.pref_summary_sponsorship_github)
+        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_github_mark, activity?.theme)
+        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            // Open up Fulguris play store page
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sponsors/Slion")))
+            true
+        }
+        preferenceScreen.addPreference(pref)
+    }
+
+    /**
+     * Add a preference that opens up our play store page.
+     */
+    protected fun addPreferenceLinkToGooglePlayStoreFiveStarsReview() {
+        // We invite user to installer our Google Play Store release
+        val pref = Preference(context)
+        pref.title = resources.getString(R.string.pref_title_sponsorship_five_stars)
+        pref.summary = resources.getString(R.string.pref_summary_sponsorship_five_stars)
+        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_full, activity?.theme)
+        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            // Open up Fulguris play store page
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore")))
+            true
+        }
+        preferenceScreen.addPreference(pref)
+    }
 
 }

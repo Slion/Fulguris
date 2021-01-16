@@ -18,6 +18,8 @@ abstract class RedirectSponsorshipSettingsFragment : AbstractSettingsFragment() 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
+        addPreferenceLinkToGitHubSponsor()
+        addPreferenceLinkToGooglePlayStoreFiveStarsReview()
         addPreferenceLinkToGooglePlayStore()
     }
 
@@ -37,4 +39,10 @@ abstract class RedirectSponsorshipSettingsFragment : AbstractSettingsFragment() 
         }
         preferenceScreen.addPreference(pref)
     }
+
+
+
+
+
+
 }

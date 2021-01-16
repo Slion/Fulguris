@@ -200,11 +200,15 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                             }
                             preferenceScreen.addPreference(pref)
                         }
-
-                        // On Google Play Store variant we also show a link to our free download
-                        // Add preference with link to Fulguris download page
-                        addPreferenceLinkToFulgurisHome()
                     }
+
+                    // Show link to five stars review
+                    addPreferenceLinkToGooglePlayStoreFiveStarsReview()
+                    // On Google Play Store variant we also show a link to our free download and GitHub sponsor
+                    // Show GitHub sponsorship option
+                    addPreferenceLinkToGitHubSponsor()
+                    // Add preference with link to Fulguris download page
+                    addPreferenceLinkToFulgurisHome()
                 }
                 else -> {
                     Log.e(LOG_TAG, billingResult.debugMessage)
