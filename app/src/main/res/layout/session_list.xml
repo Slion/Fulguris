@@ -9,7 +9,7 @@
             type="acr.browser.lightning.controller.UIController"/>
     </data>
 
-    <!-- Added outer layout with no background as a convenient to offset our menu from the screen edge
+    <!-- Added outer layout with no background as a convenient way to offset our menu from the screen edge
          android:paddingRight="5dp"
             Make sure we are not too close from the screen edge.
     -->

@@ -344,7 +344,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     private fun showPopupMenu() {
-        popupMenu.show(coordinator_layout, button_more)
+        popupMenu.show(button_more)
     }
 
     /**
@@ -2719,6 +2719,9 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     var iLastTouchUpPosition: Point = Point()
 
+    /**
+     * TODO: Unused
+     */
     override fun dispatchTouchEvent(anEvent: MotionEvent?): Boolean {
 
         when (anEvent?.action) {
@@ -2728,7 +2731,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
             }
         }
-
         return super.dispatchTouchEvent(anEvent)
     }
 

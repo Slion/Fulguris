@@ -51,7 +51,7 @@ class BrowserPopupMenu : PopupWindow {
         }
     }
 
-    fun show(rootView: View, anchorView: View) {
+    fun show(aAnchor: View) {
 
         (contentView.context as BrowserActivity).tabsManager.let {
             // Set desktop mode checkbox according to current tab
@@ -64,15 +64,9 @@ class BrowserPopupMenu : PopupWindow {
                 //contentView.menuItemAddBookmark.visibility = if (bookmarkModel.isBookmark(tab.url).blockingGet() || tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
                 contentView.menuItemAddBookmark.visibility = if (tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
             }
-
-
         }
-        // Assuming top right for now
-        //val anchorLocation = IntArray(2)
-        //anchorView.getLocationOnScreen(anchorLocation)
-        val x = Utils.dpToPx(5f) //anchorLocation[0] margin
-        val y =  Utils.dpToPx(5f) //anchorLocation[1] //+ margin
-        showAtLocation(rootView, Gravity.TOP or Gravity.RIGHT, x, y)
+
+        showAsDropDown(aAnchor, 0,-aAnchor.height)
     }
 
     companion object {
