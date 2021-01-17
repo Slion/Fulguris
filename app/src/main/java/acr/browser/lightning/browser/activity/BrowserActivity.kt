@@ -58,6 +58,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
@@ -116,6 +117,7 @@ import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.system.exitProcess
+
 
 abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIController, OnClickListener {
 
@@ -299,42 +301,17 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
 
     private fun createSessionsMenu() {
         sessionsMenu = SessionsPopupWindow(layoutInflater)
-
-        /*
-        val view = sessionsMenu.contentView
-        // TODO: could use data binding instead
-        popupMenu.apply {
-            // Bind our actions
-            onMenuItemClicked(view.menuItemNewTab) { executeAction(R.id.action_sessions) }
-            onMenuItemClicked(view.menuItemNewTab) { executeAction(R.id.action_new_tab) }
-            onMenuItemClicked(view.menuItemIncognito) { executeAction(R.id.action_incognito) }
-            onMenuItemClicked(view.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
-            onMenuItemClicked(view.menuItemHistory) { executeAction(R.id.action_history) }
-            onMenuItemClicked(view.menuItemDownloads) { executeAction(R.id.action_downloads) }
-            onMenuItemClicked(view.menuItemShare) { executeAction(R.id.action_share) }
-            onMenuItemClicked(view.menuItemFind) { executeAction(R.id.action_find) }
-            onMenuItemClicked(view.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
-            onMenuItemClicked(view.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
-            onMenuItemClicked(view.menuItemSettings) { executeAction(R.id.action_settings) }
-            onMenuItemClicked(view.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
-
-            // Popup menu action shortcut icons
-            onMenuItemClicked(view.menuShortcutRefresh) { executeAction(R.id.action_reload) }
-            onMenuItemClicked(view.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
-            onMenuItemClicked(view.menuShortcutForward) { executeAction(R.id.action_forward) }
-            onMenuItemClicked(view.menuShortcutBack) { executeAction(R.id.action_back) }
-            onMenuItemClicked(view.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
-        }
-        */
     }
 
     public fun showSessions() {
-        sessionsMenu.show(coordinator_layout)
+        //sessionsMenu.show(coordinator_layout, Gravity.CENTER, 0,0)
+        //sessionsMenu.show(coordinator_layout, Gravity.TOP or Gravity.LEFT, iLastTouchUpPosition.x, iLastTouchUpPosition.y)
+        sessionsMenu.show(button_more)
     }
 
-
-
-
+    /**
+     *
+     */
     private fun createPopupMenu() {
         popupMenu = BrowserPopupMenu(layoutInflater)
         val view = popupMenu.contentView
@@ -2738,6 +2715,20 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         queue.add(request)
     }
 
+    var iLastTouchUpPosition: Point = Point()
+
+    override fun dispatchTouchEvent(anEvent: MotionEvent?): Boolean {
+
+        when (anEvent?.action) {
+            MotionEvent.ACTION_UP -> {
+                iLastTouchUpPosition.x = anEvent.x.toInt()
+                iLastTouchUpPosition.y = anEvent.y.toInt()
+
+            }
+        }
+
+        return super.dispatchTouchEvent(anEvent)
+    }
 
     companion object {
 

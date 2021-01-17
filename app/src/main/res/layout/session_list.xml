@@ -9,97 +9,107 @@
             type="acr.browser.lightning.controller.UIController"/>
     </data>
 
+    <!-- Added outer layout with no background as a convenient to offset our menu from the screen edge
+         android:paddingRight="5dp"
+            Make sure we are not too close from the screen edge.
+    -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="300dp"
-        android:minHeight="300dp"
         android:orientation="vertical"
-        android:background="@drawable/menu_background"
-        >
+        android:paddingRight="5dp"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:background="@drawable/menu_title_background"
-            >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="300dp"
+            android:minHeight="300dp"
+            android:orientation="vertical"
+            android:background="@drawable/menu_background"
+            tools:ignore="UselessParent">
 
-            <!--
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                Results in small font in landscape, consider using something else
-            -->
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="@string/action_sessions"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/menu_title_background"
+                >
+
+                <!--
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:gravity="left|center"
-                android:textAlignment="gravity"
-                android:ellipsize="marquee"
-                android:singleLine="true" />
+                    Results in small font in landscape, consider using something else
+                -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="@string/action_sessions"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:gravity="left|center"
+                    android:textAlignment="gravity"
+                    android:ellipsize="marquee"
+                    android:singleLine="true" />
 
-            <ImageButton
-                android:id="@+id/button_edit_sessions"
-                style="?android:attr/actionButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                <ImageButton
+                    android:id="@+id/button_edit_sessions"
+                    style="?android:attr/actionButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/action_new_session"
+                    app:tooltipText="@{@string/action_edit_sessions}"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_edit"
+                    />
+
+                <!-- Save as button -->
+                <ImageButton
+                    android:id="@+id/button_save_session"
+                    style="?android:attr/actionButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/action_save_session"
+                    app:tooltipText="@{@string/action_save_session}"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_save"
+                    />
+
+
+                <ImageButton
+                    android:id="@+id/button_new_session"
+                    style="?android:attr/actionButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/action_new_session"
+                    app:tooltipText="@{@string/action_new_session}"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_action_plus"
+                    />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_sessions"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scrollbars="vertical"
                 android:layout_weight="1"
-                android:contentDescription="@string/action_new_session"
-                app:tooltipText="@{@string/action_edit_sessions}"
-                android:scaleType="center"
-                app:srcCompat="@drawable/ic_edit"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:overScrollMode="always"
+                android:requiresFadingEdge="vertical"
+                android:focusable="true"
+                android:clickable="true"
+                android:descendantFocusability="afterDescendants"
+                android:layout_marginBottom="12dp"
+                android:layout_marginRight="5dp"
                 />
-
-            <!-- Save as button -->
-            <ImageButton
-                android:id="@+id/button_save_session"
-                style="?android:attr/actionButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/action_save_session"
-                app:tooltipText="@{@string/action_save_session}"
-                android:scaleType="center"
-                app:srcCompat="@drawable/ic_save"
-                />
-
-
-            <ImageButton
-                android:id="@+id/button_new_session"
-                style="?android:attr/actionButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/action_new_session"
-                app:tooltipText="@{@string/action_new_session}"
-                android:scaleType="center"
-                app:srcCompat="@drawable/ic_action_plus"
-                />
-
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_sessions"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scrollbars="vertical"
-            android:layout_weight="1"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:overScrollMode="always"
-            android:requiresFadingEdge="vertical"
-            android:focusable="true"
-            android:clickable="true"
-            android:descendantFocusability="afterDescendants"
-            android:layout_marginBottom="12dp"
-            android:layout_marginRight="5dp"
-            />
-
-
     </LinearLayout>
 </layout>

@@ -5,19 +5,16 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.SessionListBinding
 import acr.browser.lightning.dialog.BrowserDialog
+import acr.browser.lightning.extensions.dimBehind
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.list.VerticalItemAnimator
 import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import android.app.Activity
-import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.text.InputFilter
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.view.WindowManager
 import android.widget.EditText
 import android.widget.PopupWindow
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -150,6 +147,21 @@ class SessionsPopupWindow : PopupWindow {
             }
         }
 
+        // Make sure Ctrl + Shift + S closes our menu so that toggle is working
+        // TODO: Somehow still not working
+        /*
+        contentView.isFocusableInTouchMode = true
+        contentView.setOnKeyListener { _, keyCode, event ->
+            val isCtrlShiftOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON or KeyEvent.META_SHIFT_ON)
+            //(isCtrlShiftOnly && keyCode == KeyEvent.KEYCODE_S).also { if (it) dismiss() }
+            if (isCtrlShiftOnly && keyCode == KeyEvent.KEYCODE_S) {
+                dismiss()
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
+        }
+        */
+
         val animator = VerticalItemAnimator().apply {
             supportsChangeAnimations = false
             addDuration = 200
@@ -168,23 +180,28 @@ class SessionsPopupWindow : PopupWindow {
         }
 
         // Enable drag & drop and swipe
-        val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(iAdapter,true,false)
+        val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(iAdapter, true, false)
         iItemTouchHelper = ItemTouchHelper(callback)
         iItemTouchHelper?.attachToRecyclerView(iBinding.recyclerViewSessions)
     }
 
 
-    fun show(rootView: View) {
-
+    /**
+     *
+     */
+    fun show(aAnchor: View) {
         // Disable edit mode when showing our menu
         iAdapter.iEditModeEnabledObservable.onNext(false)
         iBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit);
 
-        showAtLocation(rootView, Gravity.CENTER, 0, 0);
-        dimBehind(this)
+        //showAsDropDown(aAnchor, 0,-aAnchor.height)
+        showAsDropDown(aAnchor, 0, 0)
+
+        dimBehind()
         // Show our sessions
         updateSessions()
     }
+
 
     fun updateSessions() {
         //See: https://stackoverflow.com/q/43221847/3969362
@@ -195,19 +212,7 @@ class SessionsPopupWindow : PopupWindow {
         }
     }
 
-    /**
-     *  TODO: Make this a View extension
-     *  See: https://stackoverflow.com/a/46711174/3969362
-     */
-    private fun dimBehind(popupWindow: PopupWindow) {
-        val container = popupWindow.contentView.rootView
-        val context: Context = popupWindow.contentView.context
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val p = container.layoutParams as WindowManager.LayoutParams
-        p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
-        p.dimAmount = 0.3f
-        wm.updateViewLayout(container, p)
-    }
+
 
 
 }

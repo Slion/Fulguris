@@ -1,6 +1,7 @@
 package acr.browser.lightning.extensions
 
 import acr.browser.lightning.utils.getFilteredColor
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.ColorMatrixColorFilter
@@ -8,7 +9,9 @@ import android.graphics.RectF
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.PopupWindow
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.graphics.ColorUtils
 import androidx.databinding.BindingAdapter
@@ -202,4 +205,18 @@ fun RectF.scale(factor: Float) {
     right-= (oldWidth - newWidth) / 2f
     top += (oldHeight - newHeight) / 2f
     bottom -= (oldHeight - newHeight) / 2f
+}
+
+/**
+ *  Dim screen behind a pop-up by the given [aDimAmout].
+ *  See: https://stackoverflow.com/a/46711174/3969362
+ */
+fun PopupWindow.dimBehind(aDimAmout: Float = 0.3f) {
+    val container = contentView.rootView
+    val context: Context = contentView.context
+    val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val p = container.layoutParams as WindowManager.LayoutParams
+    p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+    p.dimAmount = aDimAmout
+    wm.updateViewLayout(container, p)
 }
