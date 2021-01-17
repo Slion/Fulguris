@@ -1,7 +1,6 @@
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.BrowserApp
-import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.Entitlement
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
@@ -20,7 +19,6 @@ import acr.browser.lightning.view.*
 import acr.browser.lightning.view.find.FindResults
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.webkit.URLUtil
 import io.reactivex.Scheduler
@@ -144,12 +142,12 @@ class BrowserPresenter(
                     // TODO: Restore this when Google fixes the bug where the WebView is
                     // blank after calling onPause followed by onResume.
                     // currentTab.onPause();
-                    it?.isForegroundTab = false
+                    it?.isForeground = false
                 }
 
                 newTab.resumeTimers()
                 newTab.onResume()
-                newTab.isForegroundTab = true
+                newTab.isForeground = true
 
                 view.updateProgress(newTab.progress)
                 view.setBackButtonEnabled(newTab.canGoBack())

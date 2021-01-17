@@ -42,8 +42,8 @@ class TabsDrawerAdapter(
 
         holder.txtTitle.text = web.title
         updateViewHolderAppearance(holder, web)
-        updateViewHolderFavicon(holder, web.favicon, web.isForegroundTab)
-        updateViewHolderBackground(holder, web.isForegroundTab)
+        updateViewHolderFavicon(holder, web.favicon, web.isForeground)
+        updateViewHolderBackground(holder, web.isForeground)
     }
 
 
@@ -66,7 +66,7 @@ class TabsDrawerAdapter(
     }
 
     private fun updateViewHolderAppearance(viewHolder: TabViewHolder, tab: TabViewState) {
-        if (tab.isForegroundTab) {
+        if (tab.isForeground) {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
             uiController.changeToolbarBackground(tab.favicon, tab.themeColor, null)
         } else if (tab.isFrozen) {

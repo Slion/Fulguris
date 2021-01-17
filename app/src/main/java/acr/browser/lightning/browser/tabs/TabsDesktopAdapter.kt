@@ -73,7 +73,7 @@ class TabsDesktopAdapter(
 
         holder.txtTitle.text = web.title
         updateViewHolderAppearance(holder, web)
-        updateViewHolderFavicon(holder, web.favicon, web.isForegroundTab)
+        updateViewHolderFavicon(holder, web.favicon, web.isForeground)
     }
 
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
@@ -90,7 +90,7 @@ class TabsDesktopAdapter(
             textColor = viewHolder.txtTitle.currentTextColor
         }
 
-        if (tab.isForegroundTab) {
+        if (tab.isForeground) {
             val foregroundDrawable = BitmapDrawable(resources, foregroundTabBitmap)
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
             val newTextColor = (uiController as BrowserActivity).currentToolBarTextColor

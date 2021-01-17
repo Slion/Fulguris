@@ -116,9 +116,9 @@ class LightningView(
     /**
      * This method sets the tab as the foreground tab or the background tab.
      */
-    var isForegroundTab: Boolean = false
-        set(isForeground) {
-            field = isForeground
+    var isForeground: Boolean = false
+        set(aIsForeground) {
+            field = aIsForeground
             if (isForeground) {
                 webView?.let {
                     latentTabInitializer?.initialize(it, requestHeaders)
