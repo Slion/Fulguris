@@ -219,6 +219,13 @@ class LightningView(
         get() = webView?.url ?: ""
 
     /**
+     * Return true if this tab is frozen, meaning it was not yet loaded from its bundle
+     */
+    val isFrozen : Boolean
+        get() = latentTabInitializer?.bundle != null
+
+
+    /**
      * We had forgotten to unregisterReceiver our download listener thus leaking them all whenever we switched between sessions.
      * It turns out android as a hardcoded limit of 1000 [BroadcastReceiver] per application.
      * So after a while switching between sessions with many tabs we would get an exception saying:
@@ -478,9 +485,6 @@ class LightningView(
         } else {
             setUserAgentForPreference(userPreferences)
         }
-
-
-
 
         toggleDesktop = !toggleDesktop
     }

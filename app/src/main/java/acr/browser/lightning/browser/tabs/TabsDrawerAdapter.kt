@@ -41,7 +41,7 @@ class TabsDrawerAdapter(
         val web = tabList[position]
 
         holder.txtTitle.text = web.title
-        updateViewHolderAppearance(holder, web.favicon, web.themeColor, web.isForegroundTab)
+        updateViewHolderAppearance(holder, web)
         updateViewHolderFavicon(holder, web.favicon, web.isForegroundTab)
         updateViewHolderBackground(holder, web.isForegroundTab)
     }
@@ -65,11 +65,14 @@ class TabsDrawerAdapter(
         }
     }
 
-    private fun updateViewHolderAppearance(viewHolder: TabViewHolder, favicon: Bitmap?, color: Int, isForeground: Boolean) {
-        if (isForeground) {
+    private fun updateViewHolderAppearance(viewHolder: TabViewHolder, tab: TabViewState) {
+        if (tab.isForegroundTab) {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
-            uiController.changeToolbarBackground(favicon, color, null)
-        } else {
+            uiController.changeToolbarBackground(tab.favicon, tab.themeColor, null)
+        } else if (tab.isFrozen) {
+            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.italicText)
+        }
+        else {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.normalText)
         }
     }

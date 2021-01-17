@@ -72,7 +72,7 @@ class TabsDesktopAdapter(
         val web = tabList[position]
 
         holder.txtTitle.text = web.title
-        updateViewHolderAppearance(holder, web.favicon, web.themeColor, web.isForegroundTab)
+        updateViewHolderAppearance(holder, web)
         updateViewHolderFavicon(holder, web.favicon, web.isForegroundTab)
     }
 
@@ -83,26 +83,26 @@ class TabsDesktopAdapter(
         ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
     }
 
-    private fun updateViewHolderAppearance(viewHolder: TabViewHolder, favicon: Bitmap?, color: Int, isForeground: Boolean) {
+    private fun updateViewHolderAppearance(viewHolder: TabViewHolder, tab: TabViewState) {
 
         // Just to init our default text color
         if (textColor == Color.TRANSPARENT) {
             textColor = viewHolder.txtTitle.currentTextColor
         }
 
-        if (isForeground) {
+        if (tab.isForegroundTab) {
             val foregroundDrawable = BitmapDrawable(resources, foregroundTabBitmap)
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
             val newTextColor = (uiController as BrowserActivity).currentToolBarTextColor
             viewHolder.txtTitle.setTextColor(newTextColor)
             viewHolder.exitButton.findViewById<ImageView>(R.id.deleteButton).setColorFilter(newTextColor)
-            uiController.changeToolbarBackground(favicon, color, foregroundDrawable)
+            uiController.changeToolbarBackground(tab.favicon, tab.themeColor, foregroundDrawable)
             if (uiController.isColorMode()) {
                 foregroundDrawable.tint(uiController.getUiColor())
             }
             viewHolder.layout.background = foregroundDrawable
         } else {
-            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.normalText)
+            TextViewCompat.setTextAppearance(viewHolder.txtTitle, if (tab.isFrozen) R.style.italicText else R.style.normalText)
             viewHolder.layout.background = backgroundTabDrawable
             // Put back the color we stashed
             viewHolder.txtTitle.setTextColor(textColor)

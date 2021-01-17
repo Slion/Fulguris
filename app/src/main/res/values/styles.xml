@@ -154,6 +154,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="italicText">
+        <item name="android:textStyle">italic</item>
+    </style>
+
     <style name="normalText">
         <item name="android:textStyle">normal</item>
     </style>
