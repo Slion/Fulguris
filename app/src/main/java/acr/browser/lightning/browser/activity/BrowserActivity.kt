@@ -111,7 +111,6 @@ import kotlinx.android.synthetic.main.browser_content.*
 import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import kotlinx.android.synthetic.main.search.*
 import kotlinx.android.synthetic.main.search_interface.*
-import kotlinx.android.synthetic.main.tab_drawer_view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.slions.toolbar_content.*
 import org.json.JSONObject
@@ -132,6 +131,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     private var buttonBack: ImageButton? = null
     private var buttonForward: ImageButton? = null
     private var tabsButton: TabCountView? = null
+    private var buttonSessions: ImageButton? = null
 
     // Current tab view being displayed
     private var currentTabView: View? = null
@@ -307,7 +307,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     public fun showSessions() {
         //sessionsMenu.show(coordinator_layout, Gravity.CENTER, 0,0)
         //sessionsMenu.show(coordinator_layout, Gravity.TOP or Gravity.LEFT, iLastTouchUpPosition.x, iLastTouchUpPosition.y)
-        sessionsMenu.show(action_sessions)
+        buttonSessions?.let { sessionsMenu.show(it) }
     }
 
     /**
@@ -415,6 +415,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         } else {
             TabsDesktopView(this).also(findViewById<FrameLayout>(getTabsContainerId())::addView)
         }
+        buttonSessions = (tabsView as View).findViewById(R.id.action_sessions)
 
         bookmarksView = BookmarksDrawerView(this).also(findViewById<FrameLayout>(getBookmarksContainerId())::addView)
 
