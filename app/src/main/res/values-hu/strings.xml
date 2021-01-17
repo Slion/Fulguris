@@ -226,7 +226,7 @@
     <string name="message_web_storage_cleared">Webtárhely törölve</string>
     <string name="hosts_source">Reklámblokkoló hosztfájl forrása</string>
     <string name="settings_adblock">Reklámblokkoló beállítások</string>
-    <string name="tabs_in_drawer">Oldalak mutatása a navigációs fiókban</string>
+    <string name="settings_title_vertical_tab_bar">Oldalak mutatása a navigációs fiókban</string>
     <string name="do_not_track">\'Ne kövessen nyomon\' kérése</string>
     <string name="remove_identifying_headers">Azonosító fejléc eltávolítása</string>
     <string name="action_add_to_homescreen">Hozzáadás a kezdőképernyőhöz</string>

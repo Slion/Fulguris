@@ -41,7 +41,7 @@
 	<string name="remove_identifying_headers">Usuwaj śledzące nagłówki</string>
 	<string name="do_not_track">Żądaj nieśledzenia</string>
 	<string name="swap_bookmarks_and_tabs">Zamień miejscami ekran kart i zakładek</string>
-	<string name="tabs_in_drawer">Pokazuj karty w bocznym menu</string>
+	<string name="settings_title_vertical_tab_bar">Pokazuj karty w bocznym menu</string>
 	<string name="settings_adblock">Ustawienia blokowania reklam</string>
 	<string name="hosts_source">Źródło filtrów blokujących reklamy</string>
 	<string name="message_web_storage_cleared">Dane i ustawienia witryn zostały wyczyszczone</string>

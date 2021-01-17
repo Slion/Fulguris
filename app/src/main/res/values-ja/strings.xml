@@ -218,7 +218,7 @@
     <string name="message_web_storage_cleared">Web storage を消去しました</string>
     <string name="hosts_source">広告ブロック用の Hosts ファイルの取得元</string>
     <string name="settings_adblock">広告ブロック</string>
-    <string name="tabs_in_drawer">タブをドロワーで表示する</string>
+    <string name="settings_title_vertical_tab_bar">タブをドロワーで表示する</string>
     <string name="swap_bookmarks_and_tabs">ブックマークとタブのドロワーを入れ替える</string>
     <string name="do_not_track">\'Do Not Track\' を有効にする</string>
     <string name="remove_identifying_headers">Identifying Header を削除する</string>

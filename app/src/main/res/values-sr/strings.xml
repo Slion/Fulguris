@@ -226,7 +226,7 @@
     <string name="message_web_storage_cleared">Веб складиште је очишћено</string>
     <string name="hosts_source">Извор hosts фајла за блокирање реклама</string>
     <string name="settings_adblock">Поставке Адблока</string>
-    <string name="tabs_in_drawer">Језичци у фиоци навигације</string>
+    <string name="settings_title_vertical_tab_bar">Језичци у фиоци навигације</string>
     <string name="do_not_track">Захтевај „Не прати ме“</string>
     <string name="remove_identifying_headers">Уклони идентификујућа заглавља</string>
     <string name="action_add_to_homescreen">Додај на почетни екран</string>

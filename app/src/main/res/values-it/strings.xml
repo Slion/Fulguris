@@ -228,7 +228,7 @@
     <string name="message_web_storage_cleared">Memoria siti cancellata</string>
     <string name="hosts_source">Fonte file host</string>    
     <string name="settings_adblock">Impostazioni del blocco annunci</string>
-    <string name="tabs_in_drawer">Mostra le schede nel menù</string>
+    <string name="settings_title_vertical_tab_bar">Mostra le schede nel menù</string>
     <string name="do_not_track">\"Non tenere traccia\"</string>
     <string name="remove_identifying_headers">Rimuovi header di identificazione</string>
     <string name="action_add_to_homescreen">Aggiungi a schermata Home</string>

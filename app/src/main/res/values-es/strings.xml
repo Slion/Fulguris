@@ -198,7 +198,7 @@
     <string name="message_web_storage_cleared">Almacenamiento web borrado</string>
     <string name="hosts_source">Fuente de bloqueo de anuncios del archivo hosts</string>
     <string name="settings_adblock">Ajustes de bloqueo de anuncios</string>
-    <string name="tabs_in_drawer">Mostrar pestañas en el cajón de navegación</string>
+    <string name="settings_title_vertical_tab_bar">Barra de pestañas vertical</string>
     <string name="swap_bookmarks_and_tabs">Cambiar marcador y tabuladores</string>
     <string name="do_not_track">Solicitar \'Do Not Track\'</string>
     <string name="remove_identifying_headers">Remover encabezados de identificación</string>

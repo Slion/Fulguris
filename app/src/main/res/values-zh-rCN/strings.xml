@@ -249,7 +249,7 @@
     <string name="message_web_storage_cleared">Web 存储已清除</string>
     <string name="hosts_source">广告屏蔽 Hosts 来源</string>
     <string name="settings_adblock">广告屏蔽设置</string>
-    <string name="tabs_in_drawer">在导航抽屉中显示标签页</string>
+    <string name="settings_title_vertical_tab_bar">在导航抽屉中显示标签页</string>
     <string name="swap_bookmarks_and_tabs">交换书签和标签页抽屉</string>
     <string name="do_not_track">请求“Do Not Track”</string>
     <string name="save_data">请求“Save-Data”</string>

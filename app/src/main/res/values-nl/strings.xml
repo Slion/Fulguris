@@ -225,7 +225,7 @@
     <string name="message_web_storage_cleared">Web opslag gewist</string>
     <string name="hosts_source">Bron hosts bestand om advertenties te blokkeren</string>
     <string name="settings_adblock">Advertentie blokkeer instellingen</string>
-    <string name="tabs_in_drawer">Toon tabbladen in navigatie lade</string>
+    <string name="settings_title_vertical_tab_bar">Toon tabbladen in navigatie lade</string>
     <string name="do_not_track">Vraag \'Niet Volgen\'</string>
     <string name="remove_identifying_headers">Verwijder identificatie hoofden</string>
     <string name="action_add_to_homescreen">Voeg aan startscherm toe</string>

@@ -227,7 +227,7 @@
     <string name="message_web_storage_cleared">Armazenamento web removido</string>
     <string name="hosts_source">Fonte do ficheiro hosts para Ad Blocking</string>
     <string name="settings_adblock">Definições AdBlock</string>
-    <string name="tabs_in_drawer">Mostrar separadores no menu de navegação</string>
+    <string name="settings_title_vertical_tab_bar">Mostrar separadores no menu de navegação</string>
     <string name="swap_bookmarks_and_tabs">Trocar menus de marcadores e separadores</string>
     <string name="do_not_track">Pedidos \'Do Not Track\'</string>
     <string name="remove_identifying_headers">Remover cabeçalhos de identificação</string>

@@ -314,7 +314,8 @@
     <string name="message_web_storage_cleared">Web storage cleared</string>
     <string name="hosts_source">Hosts file ad blocking source</string>
     <string name="settings_adblock">Ad Block</string>
-    <string name="tabs_in_drawer">Show tabs in navigation drawer</string>
+    <string name="settings_title_vertical_tab_bar">Vertical tab bar</string>
+    <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
     <string name="swap_bookmarks_and_tabs">Swap bookmark and tab drawers</string>
     <string name="do_not_track">Request \'Do Not Track\'</string>
     <string name="save_data">Request \'Save-Data\'</string>

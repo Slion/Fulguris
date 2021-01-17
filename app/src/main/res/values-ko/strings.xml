@@ -244,6 +244,6 @@
     <string name="message_insecure_connection">이 사이트는 안전하지 않습니다: %1$s 계속할까요?</string>
     <string name="message_certificate_not_yet_valid">인증서가 아직 유효하지 않습니다</string>
     <string name="message_permission_request">%1$s  다음 권한을 사용하려 합니다:  %2$s</string>
-    <string name="tabs_in_drawer">탭을 탐색 창에 표시</string>
+    <string name="settings_title_vertical_tab_bar">탭을 탐색 창에 표시</string>
     <string name="swap_bookmarks_and_tabs">즐겨찾기와 탭 창 위치 바꾸기</string>
 </resources>

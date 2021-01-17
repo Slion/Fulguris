@@ -226,7 +226,8 @@
     <string name="message_web_storage_cleared">Webinhalte gelöscht</string>
     <string name="hosts_source">Quelle für Werbeblocker</string>
     <string name="settings_adblock">Werbeblocker</string>
-    <string name="tabs_in_drawer">Tabs in Drawer anzeigen</string>
+    <string name="settings_title_vertical_tab_bar">Vertikale Tab-Leiste</string>
+    <string name="settings_summary_vertical_tab_bar">Ausschalten um die horizontale Tab-Leiste zu nutzen</string>
     <string name="swap_bookmarks_and_tabs">Lesezeichen und Tab-Drawer wechseln</string>
     <string name="do_not_track">\"Nicht verfolgen\"-Funktion anfordern</string>
     <string name="remove_identifying_headers">Identifizierbare Header entfernen</string>
