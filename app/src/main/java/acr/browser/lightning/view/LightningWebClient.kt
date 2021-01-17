@@ -340,7 +340,7 @@ class LightningWebClient(
             (activity as BrowserActivity).mainHandler.postDelayed({
                 if (exAppLaunchDialog==null) {
                 exAppLaunchDialog = AlertDialog.Builder(activity).setTitle(R.string.dialog_title_third_party_app).setMessage(R.string.dialog_message_third_party_app)
-                    .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
+                    .setPositiveButton(activity.getText(R.string.yes), DialogInterface.OnClickListener { dialog, id ->
                         // Handle Ok
                         intentUtils.startActivityForIntent(intent)
                         dialog.dismiss()
@@ -348,7 +348,7 @@ class LightningWebClient(
                         // Remember user choice
                         preferences.edit().putBoolean(prefKey,true).apply()
                     })
-                    .setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
+                    .setNegativeButton(activity.getText(R.string.no), DialogInterface.OnClickListener { dialog, id ->
                         // Handle Cancel
                         dialog.dismiss()
                         exAppLaunchDialog = null
