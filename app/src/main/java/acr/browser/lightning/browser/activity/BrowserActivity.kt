@@ -304,10 +304,18 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
         sessionsMenu = SessionsPopupWindow(layoutInflater)
     }
 
-    public fun showSessions() {
-        //sessionsMenu.show(coordinator_layout, Gravity.CENTER, 0,0)
-        //sessionsMenu.show(coordinator_layout, Gravity.TOP or Gravity.LEFT, iLastTouchUpPosition.x, iLastTouchUpPosition.y)
-        buttonSessions?.let { sessionsMenu.show(it) }
+    /**
+     * Open our sessions pop-up menu.
+     */
+    fun showSessions() {
+        // If using horizontal tab bar or if our tab drawer is open
+        if (!shouldShowTabsInDrawer || drawer_layout.isDrawerOpen(getTabDrawer())) {
+            // Use sessions button as anchor
+            buttonSessions?.let { sessionsMenu.show(it) }
+        } else {
+            // Otherwise use main menu button as anchor
+            button_more?.let { sessionsMenu.show(it) }
+        }
     }
 
     /**
