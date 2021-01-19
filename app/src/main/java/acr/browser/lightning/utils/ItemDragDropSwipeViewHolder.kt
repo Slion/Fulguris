@@ -1,13 +1,16 @@
 package acr.browser.lightning.utils
 
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 
 /**
- * Interface to notify an item ViewHolder of relevant callbacks from [ ].
+ * Intended to be implemented by your [RecyclerView.ViewHolder] implementation.
+ * Provide start and stop notifications whenever this item is moved or swiped.
+ * Typically used to change this item view background.
  *
- * @author Paul Burke (ipaulpro)
+ * See: https://github.com/iPaulPro/Android-ItemTouchHelper-Demo
  */
-interface ItemOperationListener {
+interface ItemDragDropSwipeViewHolder {
     /**
      * Called when the [ItemTouchHelper] first registers an item as being moved or swiped.
      * Implementations should update the item view to indicate it's active state.

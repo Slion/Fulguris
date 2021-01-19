@@ -5,7 +5,8 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.extensions.setImageForTheme
-import acr.browser.lightning.utils.ItemDragDropSwipeListener
+import acr.browser.lightning.extensions.toast
+import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import acr.browser.lightning.view.BackgroundDrawable
 import android.graphics.Bitmap
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ import java.util.*
  */
 class TabsDrawerAdapter(
     private val uiController: UIController
-) : RecyclerView.Adapter<TabViewHolder>(), ItemDragDropSwipeListener {
+) : RecyclerView.Adapter<TabViewHolder>(), ItemDragDropSwipeAdapter {
 
     private var tabList: List<TabViewState> = emptyList()
 
@@ -29,21 +30,39 @@ class TabsDrawerAdapter(
         DiffUtil.calculateDiff(TabViewStateDiffCallback(oldList, tabList)).dispatchUpdatesTo(this)
     }
 
+    /**
+     * From [RecyclerView.Adapter]
+     */
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TabViewHolder {
         val view = viewGroup.context.inflater.inflate(R.layout.tab_list_item, viewGroup, false)
         view.background = BackgroundDrawable(view.context)
         return TabViewHolder(view, uiController)
     }
 
+    /**
+     * From [RecyclerView.Adapter]
+     */
     override fun onBindViewHolder(holder: TabViewHolder, position: Int) {
         holder.exitButton.tag = position
 
-        val web = tabList[position]
+        val tab = tabList[position]
 
-        holder.txtTitle.text = web.title
-        updateViewHolderAppearance(holder, web)
-        updateViewHolderFavicon(holder, web.favicon, web.isForeground)
-        updateViewHolderBackground(holder, web.isForeground)
+        holder.txtTitle.text = tab.title
+        updateViewHolderAppearance(holder, tab)
+        updateViewHolderFavicon(holder, tab.favicon, tab.isForeground)
+        updateViewHolderBackground(holder, tab.isForeground)
+        // Update our copy so that we can check for changes then
+        holder.tab = tab.copy();
+    }
+
+    /**
+     * From [RecyclerView.Adapter]
+     */
+    override fun onViewRecycled(holder: TabViewHolder) {
+        super.onViewRecycled(holder)
+        // I'm not convinced that's needed
+        //(uiController as BrowserActivity).toast("Recycled: " + holder.tab.title)
+        holder.tab = TabViewState()
     }
 
 

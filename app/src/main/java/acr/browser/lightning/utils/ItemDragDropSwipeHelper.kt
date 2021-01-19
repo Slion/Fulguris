@@ -8,14 +8,23 @@ import androidx.recyclerview.widget.RecyclerView
  * swipe-to-dismiss. Drag events are automatically started by an item long-press.<br></br>
  *
  * Expects the `RecyclerView.Adapter` to listen for [ ] callbacks and the `RecyclerView.ViewHolder` to implement
- * [ItemOperationListener].
+ * [ItemDragDropSwipeViewHolder].
  *
- * @author Paul Burke (ipaulpro)
+ * See: https://github.com/iPaulPro/Android-ItemTouchHelper-Demo
  */
-class ItemDragDropSwipeHelper(adapter: ItemDragDropSwipeListener, aLongPressDragEnabled: Boolean = true, aSwipeEnabled: Boolean = true) : ItemTouchHelper.Callback() {
-    private val mAdapter: ItemDragDropSwipeListener = adapter
+class ItemDragDropSwipeHelper(adapter: ItemDragDropSwipeAdapter,
+                              aLongPressDragEnabled: Boolean = true,
+                              aSwipeEnabled: Boolean = true,
+                                // Define which movements trigger drag
+                              aDragFlags: Int = ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                                // Define which movements trigger swipe
+                              aSwipeFlags: Int = ItemTouchHelper.END) : ItemTouchHelper.Callback() {
+    private val mAdapter: ItemDragDropSwipeAdapter = adapter
     private val iLongPressDragEnabled = aLongPressDragEnabled
     private val iSwipeEnabled = aSwipeEnabled
+    private val iDragFlags = aDragFlags
+    private val iSwipeFlags = aSwipeFlags
+
 
     override fun isLongPressDragEnabled(): Boolean {
         return iLongPressDragEnabled
@@ -27,11 +36,7 @@ class ItemDragDropSwipeHelper(adapter: ItemDragDropSwipeListener, aLongPressDrag
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         // Define which movement trigger swipe or drag
-        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        //val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-        // Only swipe right
-        val swipeFlags = ItemTouchHelper.END
-        return makeMovementFlags(dragFlags, swipeFlags)
+        return makeMovementFlags(iDragFlags, iSwipeFlags)
     }
 
     override fun onMove(recyclerView: RecyclerView, source: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
@@ -63,9 +68,9 @@ class ItemDragDropSwipeHelper(adapter: ItemDragDropSwipeListener, aLongPressDrag
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         // We only want the active item to change
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-            if (viewHolder is ItemOperationListener) {
+            if (viewHolder is ItemDragDropSwipeViewHolder) {
                 // Let the view holder know that this item is being moved or dragged
-                val itemViewHolder: ItemOperationListener? = viewHolder as ItemOperationListener?
+                val itemViewHolder: ItemDragDropSwipeViewHolder? = viewHolder as ItemDragDropSwipeViewHolder?
                 itemViewHolder?.onItemOperationStart()
             }
         }
@@ -75,9 +80,9 @@ class ItemDragDropSwipeHelper(adapter: ItemDragDropSwipeListener, aLongPressDrag
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
         viewHolder.itemView.alpha = ALPHA_FULL
-        if (viewHolder is ItemOperationListener) {
+        if (viewHolder is ItemDragDropSwipeViewHolder) {
             // Tell the view holder it's time to restore the idle state
-            val itemViewHolder: ItemOperationListener = viewHolder as ItemOperationListener
+            val itemViewHolder: ItemDragDropSwipeViewHolder = viewHolder as ItemDragDropSwipeViewHolder
             itemViewHolder.onItemOperationStop()
         }
     }

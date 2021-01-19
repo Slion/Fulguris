@@ -7,11 +7,13 @@ import acr.browser.lightning.list.HorizontalItemAnimator
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.TabDesktopViewBinding
 import acr.browser.lightning.extensions.inflater
+import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.view.LightningView
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.lang.Exception
@@ -28,6 +30,7 @@ class TabsDesktopView @JvmOverloads constructor(
     private val uiController = context as UIController
     private val tabsAdapter: TabsDesktopAdapter
     private val tabList: RecyclerView
+    private var iItemTouchHelper: ItemTouchHelper? = null
     // Inflate our layout with binding support
     private val iBinding: TabDesktopViewBinding = TabDesktopViewBinding.inflate(context.inflater,this, true)
 
@@ -54,6 +57,11 @@ class TabsDesktopView @JvmOverloads constructor(
             adapter = tabsAdapter
             setHasFixedSize(true)
         }
+
+        // Enable drag & drop but not swipe
+        val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(tabsAdapter, true, false, ItemTouchHelper.END or ItemTouchHelper.START)
+        iItemTouchHelper = ItemTouchHelper(callback)
+        iItemTouchHelper?.attachToRecyclerView(iBinding.tabsList)
     }
 
     /**

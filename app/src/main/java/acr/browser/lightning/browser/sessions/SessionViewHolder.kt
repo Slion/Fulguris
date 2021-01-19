@@ -7,7 +7,7 @@ import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.utils.FileNameInputFilter
-import acr.browser.lightning.utils.ItemOperationListener
+import acr.browser.lightning.utils.ItemDragDropSwipeViewHolder
 import acr.browser.lightning.view.BackgroundDrawable
 import android.app.Activity
 import android.app.Dialog
@@ -33,18 +33,19 @@ import io.reactivex.disposables.Disposable
 class SessionViewHolder(
         view: View,
         private val iUiController: UIController
-) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemOperationListener {
+) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemDragDropSwipeViewHolder {
 
 
     // Using view binding won't give us much
     val textName: TextView = view.findViewById(R.id.text_name)
     private val buttonEdit: ImageView = view.findViewById(R.id.button_edit)
-    val buttonDelete: View = view.findViewById(R.id.button_delete)
+    private val buttonDelete: View = view.findViewById(R.id.button_delete)
     val layout: LinearLayout = view.findViewById(R.id.layout_background)
 
     private var previousBackground: Drawable? = null
 
     init {
+        // Delete a session
         buttonDelete.setOnClickListener {
             // Just don't delete current session for now
             // TODO: implement a solution to indeed delete current session
@@ -156,8 +157,6 @@ class SessionViewHolder(
         }
 
         layout.setOnLongClickListener(this)
-        // Is that the best way to access our preferences?
-        //imageDelete.visibility = if ((view.context as BrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
     }
 
 

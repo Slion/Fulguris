@@ -179,7 +179,7 @@ class SessionsPopupWindow : PopupWindow {
             setHasFixedSize(true)
         }
 
-        // Enable drag & drop and swipe
+        // Enable drag & drop but not swipe
         val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(iAdapter, true, false)
         iItemTouchHelper = ItemTouchHelper(callback)
         iItemTouchHelper?.attachToRecyclerView(iBinding.recyclerViewSessions)

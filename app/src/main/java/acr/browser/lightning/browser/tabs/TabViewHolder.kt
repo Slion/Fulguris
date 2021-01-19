@@ -3,7 +3,7 @@ package acr.browser.lightning.browser.tabs
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
-import acr.browser.lightning.utils.ItemOperationListener
+import acr.browser.lightning.utils.ItemDragDropSwipeViewHolder
 import acr.browser.lightning.view.BackgroundDrawable
 import android.view.View
 import android.widget.ImageView
@@ -18,13 +18,16 @@ import androidx.recyclerview.widget.RecyclerView
 class TabViewHolder(
     view: View,
     private val uiController: UIController
-) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemOperationListener {
+) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemDragDropSwipeViewHolder {
 
     // Using view binding won't give us much
     val txtTitle: TextView = view.findViewById(R.id.textTab)
     val favicon: ImageView = view.findViewById(R.id.faviconTab)
     val exitButton: View = view.findViewById(R.id.deleteAction)
     val layout: LinearLayout = view.findViewById(R.id.tab_item_background)
+    // Keep a copy of our tab data to be able to understand what was changed on update
+    // TODO: Is that how we should do things?
+    var tab: TabViewState = TabViewState()
 
     private var previousBackground: BackgroundDrawable? = null
 
@@ -54,10 +57,13 @@ class TabViewHolder(
     // Start dragging
     override fun onItemOperationStart() {
         // Do some fancy for smoother transition
+
         previousBackground = layout.background as BackgroundDrawable
         previousBackground?.let {
                 layout.background = BackgroundDrawable(itemView.context, if (it.isSelected)  R.attr.selectedBackground else R.attr.colorPrimaryDark, R.attr.colorControlHighlight).apply{startTransition(300)}
             }
+
+
         }
 
     // From ItemTouchHelperViewHolder
