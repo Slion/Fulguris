@@ -6,6 +6,8 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.extensions.setImageForTheme
 import acr.browser.lightning.extensions.toast
+import acr.browser.lightning.list.HorizontalItemAnimator
+import acr.browser.lightning.list.VerticalItemAnimator
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import acr.browser.lightning.view.BackgroundDrawable
 import android.graphics.Bitmap
@@ -19,16 +21,9 @@ import java.util.*
  * The adapter for vertical mobile style browser tabs.
  */
 class TabsDrawerAdapter(
-    private val uiController: UIController
-) : RecyclerView.Adapter<TabViewHolder>(), ItemDragDropSwipeAdapter {
-
-    private var tabList: List<TabViewState> = emptyList()
-
-    fun showTabs(tabs: List<TabViewState>) {
-        val oldList = tabList
-        tabList = tabs
-        DiffUtil.calculateDiff(TabViewStateDiffCallback(oldList, tabList)).dispatchUpdatesTo(this)
-    }
+    uiController: UIController,
+    animator: VerticalItemAnimator
+) : TabsAdapter(uiController,animator) {
 
     /**
      * From [RecyclerView.Adapter]
@@ -36,7 +31,7 @@ class TabsDrawerAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TabViewHolder {
         val view = viewGroup.context.inflater.inflate(R.layout.tab_list_item, viewGroup, false)
         view.background = BackgroundDrawable(view.context)
-        return TabViewHolder(view, uiController)
+        return TabViewHolder(view, uiController) //.apply { setIsRecyclable(false) }
     }
 
     /**
@@ -54,17 +49,6 @@ class TabsDrawerAdapter(
         // Update our copy so that we can check for changes then
         holder.tab = tab.copy();
     }
-
-    /**
-     * From [RecyclerView.Adapter]
-     */
-    override fun onViewRecycled(holder: TabViewHolder) {
-        super.onViewRecycled(holder)
-        // I'm not convinced that's needed
-        //(uiController as BrowserActivity).toast("Recycled: " + holder.tab.title)
-        holder.tab = TabViewState()
-    }
-
 
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
         // Apply filter to favicon if needed
@@ -95,29 +79,5 @@ class TabsDrawerAdapter(
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.normalText)
         }
     }
-
-    override fun getItemCount() = tabList.size
-
-    // From ItemTouchHelperAdapter
-    // An item was was moved through drag & drop
-    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
-    {
-        // Note: recent tab list is not affected
-        // Swap local list position
-        Collections.swap(tabList, fromPosition, toPosition)
-        // Swap model list position
-        Collections.swap(uiController.getTabModel().allTabs, fromPosition, toPosition)
-        // Tell base class an item was moved
-        notifyItemMoved(fromPosition, toPosition)
-        return true
-    }
-
-    // From ItemTouchHelperAdapter
-    override fun onItemDismiss(position: Int)
-    {
-        uiController.tabCloseClicked(position)
-    }
-
-
 
 }

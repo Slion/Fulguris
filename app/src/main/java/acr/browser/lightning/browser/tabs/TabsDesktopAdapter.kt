@@ -4,6 +4,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.*
+import acr.browser.lightning.list.HorizontalItemAnimator
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.view.BackgroundDrawable
@@ -25,22 +26,16 @@ import java.util.*
 class TabsDesktopAdapter(
     context: Context,
     private val resources: Resources,
-    private val uiController: UIController
-) : RecyclerView.Adapter<TabViewHolder>(), ItemDragDropSwipeAdapter {
+    uiController: UIController,
+    animator: HorizontalItemAnimator
+) : TabsAdapter(uiController, animator), ItemDragDropSwipeAdapter {
 
-    private var tabList: List<TabViewState> = emptyList()
+
     private var textColor = Color.TRANSPARENT
 
     init {
         //val backgroundColor = Utils.mixTwoColors(ThemeUtils.getPrimaryColor(context), Color.BLACK, 0.75f)
         //val foregroundColor = ThemeUtils.getPrimaryColor(context)
-    }
-
-    fun showTabs(tabs: List<TabViewState>) {
-        val oldList = tabList
-        tabList = tabs
-
-        DiffUtil.calculateDiff(TabViewStateDiffCallback(oldList, tabList)).dispatchUpdatesTo(this)
     }
 
     /**
@@ -68,15 +63,6 @@ class TabsDesktopAdapter(
         holder.tab = tab.copy();
     }
 
-    /**
-     * From [RecyclerView.Adapter]
-     */
-    override fun onViewRecycled(holder: TabViewHolder) {
-        super.onViewRecycled(holder)
-        // I'm not convinced that's needed
-        //(uiController as BrowserActivity).toast("Recycled: " + holder.tab.title)
-        holder.tab = TabViewState()
-    }
 
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
         favicon?.let {
@@ -145,27 +131,5 @@ class TabsDesktopAdapter(
 
     }
 
-    override fun getItemCount() = tabList.size
-
-    /**
-     * From [ItemDragDropSwipeAdapter]
-     */
-    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
-        // Note: recent tab list is not affected
-        // Swap local list position
-        Collections.swap(tabList, fromPosition, toPosition)
-        // Swap model list position
-        Collections.swap(uiController.getTabModel().allTabs, fromPosition, toPosition)
-        // Tell base class an item was moved
-        notifyItemMoved(fromPosition, toPosition)
-        return true
-    }
-
-    /**
-     * From [ItemDragDropSwipeAdapter]
-     */
-    override fun onItemDismiss(position: Int) {
-        // Not used
-    }
 
 }
