@@ -12,7 +12,7 @@ import java.util.*
  * Abstract base tabs adapter.
  * Implement functionality common to our concrete tabs adapters.
  */
-abstract class TabsAdapter(val uiController: UIController, private val animator: SimpleItemAnimator): RecyclerView.Adapter<TabViewHolder>(), ItemDragDropSwipeAdapter {
+abstract class TabsAdapter(val uiController: UIController): RecyclerView.Adapter<TabViewHolder>(), ItemDragDropSwipeAdapter {
 
     protected var tabList: List<TabViewState> = emptyList()
 
@@ -39,26 +39,6 @@ abstract class TabsAdapter(val uiController: UIController, private val animator:
         // I'm not convinced that's needed
         //(uiController as BrowserActivity).toast("Recycled: " + holder.tab.title)
         holder.tab = TabViewState()
-    }
-
-    /**
-     * From [RecyclerView.Adapter]
-     */
-    override fun onViewDetachedFromWindow(holder: TabViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        // Prevent items getting stuck on fast scroll
-        // See: https://stackoverflow.com/a/26748274/3969362
-        //ViewCompat.animate(holder.itemView).cancel()
-        //holder.itemView.clearAnimation()
-        //animator.endAnimation(holder)
-    }
-
-    /**
-     * From [RecyclerView.Adapter]
-     */
-    override fun onViewAttachedToWindow(holder: TabViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        //animator.endAnimation(holder)
     }
 
     /**

@@ -4,7 +4,6 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.*
-import acr.browser.lightning.list.HorizontalItemAnimator
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.view.BackgroundDrawable
@@ -16,9 +15,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.widget.TextViewCompat
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 
 /**
  * The adapter for horizontal desktop style browser tabs.
@@ -26,9 +23,8 @@ import java.util.*
 class TabsDesktopAdapter(
     context: Context,
     private val resources: Resources,
-    uiController: UIController,
-    animator: HorizontalItemAnimator
-) : TabsAdapter(uiController, animator), ItemDragDropSwipeAdapter {
+    uiController: UIController
+) : TabsAdapter(uiController), ItemDragDropSwipeAdapter {
 
 
     private var textColor = Color.TRANSPARENT

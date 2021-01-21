@@ -5,25 +5,18 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.extensions.setImageForTheme
-import acr.browser.lightning.extensions.toast
-import acr.browser.lightning.list.HorizontalItemAnimator
-import acr.browser.lightning.list.VerticalItemAnimator
-import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import acr.browser.lightning.view.BackgroundDrawable
 import android.graphics.Bitmap
 import android.view.ViewGroup
 import androidx.core.widget.TextViewCompat
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 
 /**
  * The adapter for vertical mobile style browser tabs.
  */
 class TabsDrawerAdapter(
-    uiController: UIController,
-    animator: VerticalItemAnimator
-) : TabsAdapter(uiController,animator) {
+    uiController: UIController
+) : TabsAdapter(uiController) {
 
     /**
      * From [RecyclerView.Adapter]
