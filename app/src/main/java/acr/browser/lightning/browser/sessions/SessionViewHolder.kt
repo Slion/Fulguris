@@ -224,8 +224,8 @@ class SessionViewHolder(
                         buttonEdit.visibility = View.VISIBLE
                         buttonDelete.visibility = View.VISIBLE
                     } else {
-                        buttonEdit.visibility = View.GONE
-                        buttonDelete.visibility = View.GONE
+                        buttonEdit.visibility = View.INVISIBLE
+                        buttonDelete.visibility = View.INVISIBLE
                     }
                 }
     }
