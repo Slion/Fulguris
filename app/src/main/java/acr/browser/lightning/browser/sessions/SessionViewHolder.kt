@@ -38,8 +38,9 @@ class SessionViewHolder(
 
     // Using view binding won't give us much
     val textName: TextView = view.findViewById(R.id.text_name)
-    private val buttonEdit: ImageView = view.findViewById(R.id.button_edit)
-    private val buttonDelete: View = view.findViewById(R.id.button_delete)
+    val textTabCount: TextView = view.findViewById(R.id.text_tab_count)
+    val buttonEdit: ImageView = view.findViewById(R.id.button_edit)
+    val buttonDelete: View = view.findViewById(R.id.button_delete)
     val layout: LinearLayout = view.findViewById(R.id.layout_background)
 
     private var previousBackground: Drawable? = null
@@ -105,7 +106,9 @@ class SessionViewHolder(
                         iUiController.getTabModel().renameSession(textName.tag as String,newName)
                         textName.tag = newName
                         // Change name on our item view
-                        textName.text = sessionLabel()
+                        textName.text = session().name
+                        // Change tab count
+                        textTabCount.text = tabCountLabel()
                         //
                         //(iUiController as BrowserActivity).sessionsMenu.updateSessions()
                     } else {
@@ -162,22 +165,6 @@ class SessionViewHolder(
 
     private fun session() = iUiController.getTabModel().session(textName.tag as String)
 
-    /**
-     * Provide the session label as shown to the user.
-     * It includes session name and tab count if available.
-     */
-    fun sessionLabel(): String {
-        return if (session().tabCount > 0) {
-            // Tab count is available, show it then
-            session().name + " - " + session().tabCount
-        } else {
-            // No tab count available, just show the name
-            // That can happen for recovered sessions for instance
-            session().name
-        }
-    }
-
-
 
     //TODO: should we have dedicated click handlers instead of a switch?
     override fun onClick(v: View) {
@@ -220,15 +207,23 @@ class SessionViewHolder(
                 // TODO: Is that needed? Is it not the default somehow?
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { editMode ->
+
                     if (editMode) {
                         buttonEdit.visibility = View.VISIBLE
                         buttonDelete.visibility = View.VISIBLE
                     } else {
-                        buttonEdit.visibility = View.INVISIBLE
-                        buttonDelete.visibility = View.INVISIBLE
+                        buttonEdit.visibility = View.GONE
+                        buttonDelete.visibility = View.GONE
                     }
+
                 }
     }
+
+    /**
+     * Provide a string representation of our tab count. Return an empty string if tab count is not available.
+     * Tab count may not be available for recovered sessions for instance.
+     */
+    fun tabCountLabel() = if (session().tabCount>0) session().tabCount.toString() else ""
 
     /**
      * Tell if edit mode is currently enabled

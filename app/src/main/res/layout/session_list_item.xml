@@ -18,6 +18,7 @@
         android:id="@+id/layout_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/material_grid_touch_large"
+        android:animateLayoutChanges="true"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="false"
@@ -32,6 +33,28 @@
             android:id="@+id/text_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/material_grid_margin"
+            android:layout_marginRight="@dimen/material_grid_margin"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:minHeight="?android:attr/listPreferredItemHeightSmall"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+        <!-- Needed to push following views to the right end side -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_tab_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
             android:layout_marginLeft="@dimen/material_grid_margin"
             android:layout_marginRight="@dimen/material_grid_margin"
             android:layout_weight="1"

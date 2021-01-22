@@ -4,6 +4,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -30,6 +31,7 @@ class SessionsAdapter(
     // See: https://medium.com/@MiguelSesma/update-recycler-view-content-without-refreshing-the-data-bb79d768bde8
     // See: https://stackoverflow.com/a/49433976/3969362
     var iEditModeEnabledObservable = BehaviorSubject.createDefault(false)
+
 
     /**
      * Display the given list of session in our recycler view.
@@ -64,7 +66,16 @@ class SessionsAdapter(
     override fun onBindViewHolder(holder: SessionViewHolder, position: Int) {
         val session = iSessions[position]
         holder.textName.tag = session.name
-        holder.textName.text = holder.sessionLabel()
+        holder.textName.text = session.name
+        holder.textTabCount.text = holder.tabCountLabel()
+
+        if (iEditModeEnabledObservable.value == true) {
+                holder.buttonEdit.visibility = View.VISIBLE
+                holder.buttonDelete.visibility = View.VISIBLE
+            } else {
+                holder.buttonEdit.visibility = View.GONE
+                holder.buttonDelete.visibility = View.GONE
+            }
 
         // Set item font style according to current session
         if (session.isCurrent) {
@@ -84,7 +95,7 @@ class SessionsAdapter(
         // Swap local list position
         Collections.swap(iSessions, fromPosition, toPosition)
         // Swap model list position
-        Collections.swap(uiController.getTabModel().iSessions!!, fromPosition, toPosition)
+        Collections.swap(uiController.getTabModel().iSessions, fromPosition, toPosition)
         // Tell base class an item was moved
         notifyItemMoved(fromPosition, toPosition)
         // Persist our changes

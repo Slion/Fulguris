@@ -142,7 +142,7 @@ class SessionsPopupWindow : PopupWindow {
                 } else {
                     aBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit);
                 }
-                // Notify our observers off edit mode change
+                // Notify our observers of edit mode change
                 iAdapter.iEditModeEnabledObservable.onNext(!editModeEnabled)
             }
         }
