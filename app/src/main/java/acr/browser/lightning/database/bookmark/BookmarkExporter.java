@@ -1,6 +1,5 @@
 package acr.browser.lightning.database.bookmark;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
@@ -18,7 +17,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import acr.browser.lightning.BrowserApp;
 import acr.browser.lightning.R;
 import acr.browser.lightning.database.Bookmark;
 import acr.browser.lightning.database.WebPageKt;
@@ -169,18 +167,14 @@ public final class BookmarkExporter {
     @WorkerThread
     @NonNull
     public static File createNewExportFile() {
-        // SL: Environment.getExternalStoragePublicDirectory has been deprecated
-        // While it still returns a valid path on Android 10/Q apps can't read/write from there anymore
-        // The following gives us a path we can write into
-        File folder = BrowserApp.instance.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         File bookmarksExport = new File(
-            folder,
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
             "BookmarksExport.txt");
         int counter = 0;
         while (bookmarksExport.exists()) {
             counter++;
             bookmarksExport = new File(
-                folder,
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                 "BookmarksExport-" + counter + ".txt");
         }
 
