@@ -1,26 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Primary -->
-
-    <color name="primaryLightColor">#6d6d6D</color>
-    <color name="primaryColor">#424242</color>
-    <color name="primaryDarkColor">#1d1d1d</color>
-
-    <!-- Secondary -->
-    <color name="secondaryLightColor">#c7a4ff</color>
-    <color name="secondaryColor">#9575cd</color>
-    <color name="secondaryDarkColor">#65499c</color>
-
-    <!--
-    <color name="primaryLightColor">#5e92f3</color>
-    <color name="primaryColor">#1565c0</color>
-    <color name="primaryDarkColor">#003c8f</color>
-    -->
-
+    
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
-
 
     <color name="black">#ff000000</color>
     <color name="gray_dark">#222222</color>
@@ -69,6 +51,11 @@
 
     <color name="ssl_secured">#4CAF50</color>
     <color name="ssl_unsecured">#F44336</color>
+
+    <!-- Fulguris brand colours -->
+    <color name="app_blue_light">#69ABFF</color>
+    <color name="app_blue">#007DFF</color>
+    <color name="app_blue_dark">#0052CB</color>
 
     <!-- Material design palette -->
     <!--reds-->

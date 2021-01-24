@@ -64,8 +64,8 @@ colorSecondary:
         <item name="colorPrimary">@color/md_grey_300</item>
         <item name="colorPrimaryVariant">@color/md_grey_500</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="colorSecondary">@color/md_deep_purple_300</item>
-        <item name="colorSecondaryVariant">@color/md_deep_purple_800</item>
+        <item name="colorSecondary">@color/app_blue</item>
+        <item name="colorSecondaryVariant">@color/app_blue_dark</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Additional colors -->
         <item name="android:colorBackground">@color/md_grey_200</item>
@@ -108,8 +108,8 @@ colorSecondary:
         <item name="colorPrimary">@color/md_grey_800</item>
         <item name="colorPrimaryVariant">@color/md_grey_900</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/md_deep_purple_300</item>
-        <item name="colorSecondaryVariant">@color/md_deep_purple_800</item>
+        <item name="colorSecondary">@color/app_blue_light</item>
+        <item name="colorSecondaryVariant">@color/app_blue</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Additional colors -->
         <item name="android:colorBackground">@color/md_grey_900</item>
@@ -150,8 +150,8 @@ colorSecondary:
         <item name="colorPrimary">@color/md_grey_900</item>
         <item name="colorPrimaryVariant">@color/md_black_1000</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/md_deep_purple_300</item>
-        <item name="colorSecondaryVariant">@color/md_deep_purple_800</item>
+        <item name="colorSecondary">@color/app_blue_light</item>
+        <item name="colorSecondaryVariant">@color/app_blue</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Additional colors -->
         <item name="android:colorBackground">@color/md_black_1000</item>
@@ -241,7 +241,7 @@ colorSecondary:
         <!-- Override button text color
             Should be the same as you colorSecondary really
         -->
-        <item name="colorPrimary">@color/md_deep_purple_300</item>
+        <item name="colorPrimary">?attr/colorSecondary</item>
     </style>
 
 </resources>
