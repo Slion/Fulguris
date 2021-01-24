@@ -8,9 +8,12 @@ import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.ItemDragDropSwipeViewHolder
+import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.view.BackgroundDrawable
 import android.app.Activity
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.text.InputFilter
 import android.view.LayoutInflater
@@ -45,6 +48,7 @@ class SessionViewHolder(
     val layout: LinearLayout = view.findViewById(R.id.layout_background)
 
     private var previousBackground: Drawable? = null
+    private var previousAlpha: Int = 256
 
     init {
         // Delete a session
@@ -184,11 +188,9 @@ class SessionViewHolder(
     // From ItemTouchHelperViewHolder
     // Start dragging
     override fun onItemOperationStart() {
-        // Do some fancy for smoother transition
         previousBackground = layout.background
-        previousBackground?.let {
-            layout.background = BackgroundDrawable(itemView.context, R.attr.colorSurface, R.attr.colorControlHighlight).apply{startTransition(300)}
-        }
+        // Just set transparent background
+        layout.background = ColorDrawable(ThemeUtils.getColor(itemView.context,R.attr.colorControlHighlight)).apply{alpha=128}
     }
 
     // From ItemTouchHelperViewHolder

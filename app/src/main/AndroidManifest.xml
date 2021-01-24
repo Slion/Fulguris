@@ -174,7 +174,7 @@
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
             android:label="@string/settings"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.App.Dark">
+            android:theme="@style/Theme.App.Dark.Settings">
             <intent-filter>
                 <action android:name="android.intent.action.SETTINGS" />
 
@@ -186,7 +186,7 @@
             android:colorMode="wideColorGamut"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
             android:label="@string/reading_mode"
-            android:theme="@style/Theme.App.Dark">
+            android:theme="@style/Theme.App.Dark.Settings">
             <intent-filter>
                 <action android:name="android.intent.action.READING" />
 

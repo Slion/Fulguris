@@ -29,7 +29,6 @@ class BackgroundDrawable : TransitionDrawable
     )
 
     constructor(
-            context: Context,
             aFirst: Drawable,
             aSecond: Drawable
     ) : super (

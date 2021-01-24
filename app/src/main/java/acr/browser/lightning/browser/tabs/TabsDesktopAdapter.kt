@@ -96,7 +96,7 @@ class TabsDesktopAdapter(
                 // Transition from background tab color to foreground tab color
                 // That's just running a fancy animation
                 viewHolder.layout.background =
-                    BackgroundDrawable(context,
+                    BackgroundDrawable(
                             ColorDrawable(backgroundColor),
                             ColorDrawable(
                                     //If color mode activated
