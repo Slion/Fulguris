@@ -108,58 +108,58 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/menuItemNewTab"
-                        style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_action_plus"
-                        android:text="@string/action_new_tab" />
-
-                    <Button
+                    <TextView
                         android:id="@+id/menuItemSessions"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_sessions"
+                        app:drawableStartCompat="@drawable/ic_sessions"
                         android:text="@string/action_sessions" />
 
-                    <Button
+                    <TextView
+                        android:id="@+id/menuItemNewTab"
+                        style="@style/BrowserTextMenuItem"
+                        app:drawableStartCompat="@drawable/ic_action_plus"
+                        android:text="@string/action_new_tab" />
+
+                    <TextView
                         android:id="@+id/menuItemHistory"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_history"
+                        app:drawableStartCompat="@drawable/ic_history"
                         android:text="@string/action_history" />
 
-                    <Button
+                    <TextView
                         android:id="@+id/menuItemDownloads"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_file_download"
+                        app:drawableStartCompat="@drawable/ic_file_download"
                         android:text="@string/action_downloads" />
 
-                    <Button
+                    <TextView
                         android:id="@+id/menuItemAddBookmark"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_bookmark_border"
+                        app:drawableStartCompat="@drawable/ic_bookmark_border"
                         android:text="@string/action_add_bookmark" />
 
-                    <Button
+                    <TextView
                         android:id="@+id/menuItemShare"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_share"
+                        app:drawableStartCompat="@drawable/ic_share"
                         android:text="@string/action_share" />
 
-                    <Button
+                    <TextView
                         android:id="@+id/menuItemFind"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_find_in_page"
+                        app:drawableStartCompat="@drawable/ic_find_in_page"
                         android:text="@string/action_find" />
 
-                    <Button
+                    <TextView
                         android:id="@+id/menuItemAddToHome"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_add_to_home_screen"
+                        app:drawableStartCompat="@drawable/ic_add_to_home_screen"
                         android:text="@string/action_add_to_homescreen" />
 
-                    <Button
+                    <TextView
                         android:id="@+id/menuItemReaderMode"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_action_reading"
+                        app:drawableStartCompat="@drawable/ic_action_reading"
                         android:text="@string/reading_mode" />
 
                     <CheckBox
@@ -168,23 +168,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-                        android:drawableStart="@drawable/ic_desktop"
                         android:text="@string/agent_desktop"
                         android:gravity="center_vertical"
-                        android:enabled="true" />
+                        android:enabled="true"
+                        app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
+                        app:drawableStartCompat="@drawable/ic_desktop" />
 
-                    <Button
+                    <TextView
                         android:id="@+id/menuItemIncognito"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_incognito"
+                        app:drawableStartCompat="@drawable/ic_incognito"
                         android:text="@string/action_incognito"
                         android:enabled="true" />
 
-                    <Button
+                    <TextView
                         android:id="@+id/menuItemSettings"
                         style="@style/BrowserTextMenuItem"
-                        app:icon="@drawable/ic_settings"
+                        app:drawableStartCompat="@drawable/ic_settings"
                         android:text="@string/settings" />
                 </LinearLayout>
             </ScrollView>

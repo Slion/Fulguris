@@ -93,8 +93,6 @@ colorSecondary:
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
-        <item name="iconColor">@color/icon_light_theme</item>
-        <item name="iconColorState">@color/state_color_icons_light</item>
         <item name="dividerColor">@color/divider_light</item>
         <item name="autoCompleteTitleColor">@color/black</item>
         <item name="autoCompleteUrlColor">@color/hint_text_light_theme</item>
@@ -139,8 +137,6 @@ colorSecondary:
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
-        <item name="iconColor">@color/icon_dark_theme</item>
-        <item name="iconColorState">@color/state_color_icons_dark</item>
         <item name="dividerColor">@color/divider_dark</item>
         <item name="autoCompleteTitleColor">@color/white</item>
         <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
@@ -183,8 +179,6 @@ colorSecondary:
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
-        <item name="iconColor">@color/icon_dark_theme</item>
-        <item name="iconColorState">@color/state_color_icons_dark</item>
         <item name="dividerColor">@color/divider_light</item>
         <item name="autoCompleteTitleColor">@color/white</item>
         <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
@@ -227,9 +221,9 @@ colorSecondary:
         <item name="android:paddingLeft">12dp</item>
 
         <!--
-        <item name="android:textColor">?attr/iconColor</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
         <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="android:color">?attr/iconColor</item>
+        <item name="android:color">?attr/colorControlNormal</item>
         -->
     </style>
 
