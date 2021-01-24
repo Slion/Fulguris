@@ -42,6 +42,9 @@ import acr.browser.lightning.view.LightningView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 
@@ -199,7 +202,7 @@ public class DownloadHandler {
                 title = R.string.download_no_sdcard_dlg_title;
             }
 
-            Dialog dialog = new AlertDialog.Builder(context).setTitle(title)
+            Dialog dialog = new MaterialAlertDialogBuilder(context).setTitle(title)
                 .setIcon(android.R.drawable.ic_dialog_alert).setMessage(msg)
                 .setPositiveButton(R.string.action_ok, null).show();
             BrowserDialog.setDialogSize(context, dialog);

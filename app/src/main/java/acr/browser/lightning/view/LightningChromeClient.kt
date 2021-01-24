@@ -27,6 +27,7 @@ import android.webkit.*
 import androidx.appcompat.app.AlertDialog
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Scheduler
 import javax.inject.Inject
 
@@ -168,7 +169,7 @@ class LightningChromeClient(
         PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, geoLocationPermissions, object : PermissionsResultAction() {
             override fun onGranted() {
                 val remember = true
-                AlertDialog.Builder(activity).apply {
+                MaterialAlertDialogBuilder(activity).apply {
                     setTitle(activity.getString(R.string.location))
                     val org = if (origin.length > 50) {
                         "${origin.subSequence(0, 50)}..."

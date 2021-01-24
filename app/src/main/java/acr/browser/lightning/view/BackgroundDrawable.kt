@@ -19,7 +19,7 @@ class BackgroundDrawable : TransitionDrawable
 
     constructor(
             context: Context,
-            @AttrRes first: Int = R.attr.selectedBackground,
+            @AttrRes first: Int = R.attr.colorSurface,
             @AttrRes second: Int = R.attr.colorPrimary
     ) : super (
             arrayOf<Drawable>(

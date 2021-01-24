@@ -2,23 +2,21 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Settings themes -->
-    <style name="Theme.SettingsTheme" parent="Theme.LightTheme">
+    <style name="Theme.App.Light.Settings" parent="Theme.App.Light">
         <item name="android:windowBackground">@null</item>
         <item name="toolbarSettingsBackground">@color/primary_color</item>
     </style>
 
-    <style name="Theme.SettingsTheme.Dark" parent="Theme.DarkTheme">
-        <item name="android:windowBackground">@null</item>
-        <item name="toolbarSettingsBackground">@color/primary_color_dark</item>
-
-        <!-- Dark settings has a special primary dark color-->
-        <item name="colorPrimaryDark">@color/secondary_color_settings_dark</item>
-
+    <style name="Theme.App.Dark.Settings" parent="Theme.App.Dark">
+        <!-- Should be the same android:colorBackground -->
+        <item name="android:windowBackground">@color/md_grey_900</item>
+        <!-- That's the status bar background color -->
+        <item name="colorPrimaryDark">@color/md_grey_900</item>
         <!-- Notably applies to settings icons -->
-        <item name="android:tint">#fff</item>
+        <!-- <item name="android:tint">#fff</item> -->
     </style>
 
-    <style name="Theme.SettingsTheme.Black" parent="Theme.BlackTheme">
+    <style name="Theme.App.Black.Settings" parent="Theme.App.Black">
         <item name="android:windowBackground">@null</item>
         <item name="toolbarSettingsBackground">@color/black</item>
         <!-- Needed otherwise we get funny transparency issue during transition to settings activity -->
@@ -26,8 +24,6 @@
         <!-- Notably applies to settings icons -->
         <item name="android:tint">#fff</item>
     </style>
-
-
     <!-- Regular themes
    Removed the following from themes to make status bar transparent
    <item name="android:statusBarColor">@color/secondary_color</item>
@@ -35,7 +31,7 @@
    So it looks like themes are overridden rather than merged which makes sense.
    Therefore you need specify every item of the theme you need.
     -->
-    <style name="Theme.LightTheme" parent="Theme.BaseLightTheme">
+    <style name="Theme.App.Light" parent="Theme.BaseLightTheme">
         <item name="searchBackground">@drawable/card_bg</item>
         <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
         <item name="progressBackgroundColor">@color/transparent</item>
@@ -43,15 +39,8 @@
         <item name="android:windowTranslucentStatus">false</item>
     </style>
 
-    <style name="Theme.DarkTheme" parent="Theme.BaseDarkTheme">
-        <item name="searchBackground">@drawable/card_bg</item>
-        <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
-        <item name="progressBackgroundColor">@color/transparent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-    </style>
 
-    <style name="Theme.BlackTheme" parent="Theme.BaseBlackTheme">
+    <style name="Theme.App.Black" parent="Theme.BaseBlackTheme">
         <item name="searchBackground">@drawable/card_bg</item>
         <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
         <item name="progressBackgroundColor">@color/transparent</item>
@@ -60,14 +49,13 @@
     </style>
 
     <!-- Base Themes -->
-    <style name="Theme.BaseLightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.BaseLightTheme" parent="Theme.MaterialComponents.Light">
         <item name="android:windowDisablePreview">false</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Theme Colors -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryDark">@color/transparent</item>
         <item name="colorAccent">@color/accent_color</item>
-        <item name="drawerBackground">@color/drawer_background</item>
         <item name="dividerColor">@color/divider_light</item>
 
         <item name="iconColor">@color/icon_light_theme</item>
@@ -76,66 +64,105 @@
         <item name="autoCompleteTitleColor">@color/black</item>
         <item name="autoCompleteUrlColor">@color/hint_text_light_theme</item>
 
-        <item name="selectedBackground">@color/selected_light</item>
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
-
-        <!-- Alert dialogs -->
-        <item name="alertDialogTheme">@style/AppCompatDialogStyle.Light</item>
-
-        <!-- Make sure popup menu opens over overflow button -->
-        <item name="popupMenuStyle">@style/OverflowPopupMenu</item>
 
     </style>
 
-    <style name="Theme.BaseDarkTheme" parent="Theme.AppCompat.NoActionBar">
+    <!--
+    Here is a recap of where some colors are usually used:
+
+    android:colorBackground:
+        Fading edge on our lists/recycler views
+
+    android:windowBackground:
+        Splash screen
+        Settings background
+
+    colorSurface:
+        List items and menu backgrounds.
+        TODO: Should we use android:colorBackground instead
+        Should really be the same color as android:colorBackground
+
+    colorPrimary:
+        Title bars background.
+
+    colorPrimaryDark:
+        Status bar background color
+
+    colorSecondary:
+        Settings and dialogs widgets highlights including:
+            - Settings enabled toggle.
+            - Dialogs text edit field cursor and underline.
+        Settings category title.
+
+    -->
+
+
+    <style name="Theme.App.Dark" parent="Theme.MaterialComponents">
+
+        <!-- Theme colors
+        See: https://material.io/develop/android/theming/color
+        -->
+        <!-- Primary & secondary colors -->
+        <item name="colorPrimary">@color/md_grey_800</item>
+        <item name="colorPrimaryVariant">@color/md_grey_900</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/md_deep_purple_300</item>
+        <item name="colorSecondaryVariant">@color/md_deep_purple_800</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Additional colors -->
+        <item name="android:colorBackground">@color/md_grey_900</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorSurface">@color/md_grey_900</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorError">@color/md_red_500</item>
+        <item name="colorOnError">@color/white</item>
+        <!-- Fix dialog issues -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+
+        <!-- Legacy -->
+        <item name="searchBackground">@drawable/card_bg</item>
+        <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
+        <item name="progressBackgroundColor">@color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:windowDisablePreview">false</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
-        <!-- Theme colors -->
-        <item name="colorPrimary">@color/primary_color_dark</item>
+
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
-        <item name="colorAccent">@color/accent_color_dark</item>
-        <item name="drawerBackground">@color/drawer_background_dark</item>
-        <item name="dividerColor">@color/divider_dark</item>
-
+        <!-- Needed until we remove them from our icons SVG -->
         <item name="iconColor">@color/icon_dark_theme</item>
         <item name="iconColorState">@color/state_color_icons_dark</item>
-
+        <item name="dividerColor">@color/divider_dark</item>
         <item name="autoCompleteTitleColor">@color/white</item>
         <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
-
-        <item name="selectedBackground">@color/selected_dark</item>
-
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
 
-        <!-- Alert dialogs -->
-        <item name="alertDialogTheme">@style/AppCompatDialogStyle.Dark</item>
-
-        <!-- Make sure popup menu opens over overflow button -->
-        <item name="popupMenuStyle">@style/OverflowPopupMenu</item>
-
+        <!--
+        -->
         <!-- Why is this not working
         <item name="swipeRefreshLayoutProgressSpinnerBackgroundColor">#FF808080</item>
         -->
 
     </style>
 
-    <style name="Theme.BaseBlackTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.BaseBlackTheme" parent="Theme.MaterialComponents">
 
         <item name="android:windowDisablePreview">false</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Theme Colors -->
         <item name="colorPrimary">@color/black</item>
         <!-- This for some reason overrides the status bar color, leave it transparent for the runtime to decide -->
+
         <item name="colorPrimaryDark">@color/transparent</item>
         <item name="colorAccent">@color/accent_color_dark</item>
-        <item name="drawerBackground">@color/black</item>
         <item name="dividerColor">@color/divider_light</item>
 
         <item name="iconColor">@color/icon_dark_theme</item>
@@ -144,31 +171,13 @@
         <item name="autoCompleteTitleColor">@color/white</item>
         <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
 
-        <item name="selectedBackground">@color/selected_black</item>
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
 
-        <!-- Alert dialogs -->
-        <item name="alertDialogTheme">@style/AppCompatDialogStyle.Black</item>
-
-        <!-- Make sure popup menu opens over overflow button -->
-        <item name="popupMenuStyle">@style/OverflowPopupMenu</item>
     </style>
 
-    <!-- AlertDialog Theme -->
-    <style name="AppCompatDialogStyle.Light" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/accent_color</item>
-    </style>
-
-    <style name="AppCompatDialogStyle.Dark" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">@color/accent_color_dark</item>
-    </style>
-
-    <style name="AppCompatDialogStyle.Black" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">@color/accent_color_dark</item>
-    </style>
 
     <!-- Text Customization -->
     <style name="boldText">
@@ -183,29 +192,11 @@
         <item name="android:textStyle">normal</item>
     </style>
 
-    <!-- See: https://stackoverflow.com/a/46557131/3969362 -->
-    <!-- Make sure popup menu opens over overflow button -->
-    <style name="OverflowPopupMenu" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
-    </style>
-
-
-    <style name="BrowserIconMenuItem">
-        <item name="android:paddingTop">6dp</item>
-        <item name="android:paddingBottom">6dp</item>
-        <!--
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:tint">?attr/iconColor</item>
-        -->
-    </style>
-
-
-    <style name="AppActionButton" parent="@style/Widget.AppCompat.ActionButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
 
     <style name="BrowserTextMenuItem" parent="@style/Widget.AppCompat.ActionButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
         <item name="android:paddingEnd">30dp</item>
         <item name="android:paddingStart">30dp</item>
         <item name="android:paddingTop">14dp</item>
@@ -213,8 +204,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+
         <item name="android:gravity">left</item>
         <item name="android:textAlignment">gravity</item>
         <item name="android:drawablePadding">8dp</item>
@@ -237,5 +227,15 @@
         <item name="android:windowExitAnimation">@anim/menu_close</item>
     </style>
 
+    <!--
+    Override dialog theme otherwise buttons' text is not visible in dark mode notably
+    See: https://material.io/components/dialogs/android#theming-dialogs
+    -->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Override button text color
+            Should be the same as you colorSecondary really
+        -->
+        <item name="colorPrimary">@color/md_deep_purple_300</item>
+    </style>
 
 </resources>

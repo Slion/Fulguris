@@ -111,55 +111,55 @@
                     <Button
                         android:id="@+id/menuItemNewTab"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_action_plus"
+                        app:icon="@drawable/ic_action_plus"
                         android:text="@string/action_new_tab" />
 
                     <Button
                         android:id="@+id/menuItemSessions"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_sessions"
+                        app:icon="@drawable/ic_sessions"
                         android:text="@string/action_sessions" />
 
                     <Button
                         android:id="@+id/menuItemHistory"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_history"
+                        app:icon="@drawable/ic_history"
                         android:text="@string/action_history" />
 
                     <Button
                         android:id="@+id/menuItemDownloads"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_file_download"
+                        app:icon="@drawable/ic_file_download"
                         android:text="@string/action_downloads" />
 
                     <Button
                         android:id="@+id/menuItemAddBookmark"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_bookmark_border"
+                        app:icon="@drawable/ic_bookmark_border"
                         android:text="@string/action_add_bookmark" />
 
                     <Button
                         android:id="@+id/menuItemShare"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_share"
+                        app:icon="@drawable/ic_share"
                         android:text="@string/action_share" />
 
                     <Button
                         android:id="@+id/menuItemFind"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_find_in_page"
+                        app:icon="@drawable/ic_find_in_page"
                         android:text="@string/action_find" />
 
                     <Button
                         android:id="@+id/menuItemAddToHome"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_add_to_home_screen"
+                        app:icon="@drawable/ic_add_to_home_screen"
                         android:text="@string/action_add_to_homescreen" />
 
                     <Button
                         android:id="@+id/menuItemReaderMode"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_action_reading"
+                        app:icon="@drawable/ic_action_reading"
                         android:text="@string/reading_mode" />
 
                     <CheckBox
@@ -177,14 +177,14 @@
                     <Button
                         android:id="@+id/menuItemIncognito"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_incognito"
+                        app:icon="@drawable/ic_incognito"
                         android:text="@string/action_incognito"
                         android:enabled="true" />
 
                     <Button
                         android:id="@+id/menuItemSettings"
                         style="@style/BrowserTextMenuItem"
-                        android:drawableStart="@drawable/ic_settings"
+                        app:icon="@drawable/ic_settings"
                         android:text="@string/settings" />
                 </LinearLayout>
             </ScrollView>

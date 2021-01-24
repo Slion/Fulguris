@@ -18,6 +18,7 @@ import android.os.Bundle
 import android.os.Message
 import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Reusable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -184,7 +185,7 @@ class PermissionInitializer(
 ) : TabInitializer {
 
     override fun initialize(webView: WebView, headers: Map<String, String>) {
-        AlertDialog.Builder(activity).apply {
+        MaterialAlertDialogBuilder(activity).apply {
             setTitle(R.string.title_warning)
             setMessage(R.string.message_blocked_local)
             setCancelable(false)

@@ -54,7 +54,7 @@
             See: https://github.com/Slion/Fulguris/issues/119
             Use the following until we migrate to material components
             -->
-            <solid android:color="?attr/colorPrimary"/>
+            <solid android:color="?attr/colorSurface"/>
             <corners android:radius="@dimen/menu_corner_radius" />
         </shape>
     </item>

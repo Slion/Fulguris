@@ -90,7 +90,7 @@ class TabsDesktopAdapter(
                     // or if our theme color is different than our UI color, i.e. using favicon color instead of meta theme
                     || tab.themeColor!=uiController.getUiColor())
             {
-                val backgroundColor = ThemeUtils.getColor(context, R.attr.selectedBackground)
+                val backgroundColor = ThemeUtils.getColor(context, R.attr.colorSurface)
                 val foregroundColor = ThemeUtils.getColor(context, R.attr.colorPrimary)
 
                 // Transition from background tab color to foreground tab color

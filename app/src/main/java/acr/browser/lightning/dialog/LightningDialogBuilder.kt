@@ -30,6 +30,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Reusable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -149,7 +150,7 @@ class LightningDialogBuilder @Inject constructor(
             uiController: UIController,
             entry: Bookmark.Entry
     ) {
-        val editBookmarkDialog = AlertDialog.Builder(activity)
+        val editBookmarkDialog = MaterialAlertDialogBuilder(activity)
         editBookmarkDialog.setTitle(R.string.action_add_bookmark)
         val dialogLayout = View.inflate(activity, R.layout.dialog_edit_bookmark, null)
         val getTitle = dialogLayout.findViewById<EditText>(R.id.bookmark_title)
@@ -196,7 +197,7 @@ class LightningDialogBuilder @Inject constructor(
             uiController: UIController,
             entry: Bookmark.Entry
     ) {
-        val editBookmarkDialog = AlertDialog.Builder(activity)
+        val editBookmarkDialog = MaterialAlertDialogBuilder(activity)
         editBookmarkDialog.setTitle(R.string.title_edit_bookmark)
         val dialogLayout = View.inflate(activity, R.layout.dialog_edit_bookmark, null)
         val getTitle = dialogLayout.findViewById<EditText>(R.id.bookmark_title)

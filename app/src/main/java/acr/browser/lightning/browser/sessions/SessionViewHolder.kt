@@ -21,6 +21,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -53,7 +54,7 @@ class SessionViewHolder(
             if (iUiController.getTabModel().iCurrentSessionName == session()?.name) {
                 it.context.toast(R.string.session_cant_delete_current)
             } else {
-                AlertDialog.Builder(it.context)
+                MaterialAlertDialogBuilder(it.context)
                         .setCancelable(true)
                         .setTitle(R.string.session_prompt_confirm_deletion_title)
                         .setMessage(it.context.getString(R.string.session_prompt_confirm_deletion_message,session()?.name))
@@ -186,7 +187,7 @@ class SessionViewHolder(
         // Do some fancy for smoother transition
         previousBackground = layout.background
         previousBackground?.let {
-            layout.background = BackgroundDrawable(itemView.context, R.attr.selectedBackground, R.attr.colorControlHighlight).apply{startTransition(300)}
+            layout.background = BackgroundDrawable(itemView.context, R.attr.colorSurface, R.attr.colorControlHighlight).apply{startTransition(300)}
         }
     }
 

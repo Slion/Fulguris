@@ -19,6 +19,7 @@ import android.webkit.DownloadListener;
 
 import com.anthonycr.grant.PermissionsManager;
 import com.anthonycr.grant.PermissionsResultAction;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import javax.inject.Inject;
 
@@ -206,7 +207,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
             }
         };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity); // dialog
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mActivity); // dialog
         String message = mActivity.getString(R.string.dialog_download, downloadSize);
         Dialog dialog = builder.setTitle(fileName)
                 .setMessage(message)

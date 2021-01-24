@@ -34,6 +34,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import javax.inject.Inject
 
 /**
@@ -134,7 +135,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
      */
     private fun showTextEncodingDialogPicker(summaryUpdater: SummaryUpdater) {
         activity?.let {
-            AlertDialog.Builder(it).apply {
+            MaterialAlertDialogBuilder(it).apply {
                 setTitle(resources.getString(R.string.text_encoding))
 
                 val currentChoice = TEXT_ENCODINGS.indexOf(userPreferences.textEncoding)

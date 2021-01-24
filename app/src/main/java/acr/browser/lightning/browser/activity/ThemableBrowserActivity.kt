@@ -40,9 +40,9 @@ abstract class ThemableBrowserActivity : AppCompatActivity() {
 
         // set the theme
         setTheme(provideThemeOverride() ?: when (userPreferences.useTheme) {
-            AppTheme.LIGHT -> R.style.Theme_LightTheme
-            AppTheme.DARK -> R.style.Theme_DarkTheme
-            AppTheme.BLACK -> R.style.Theme_BlackTheme
+            AppTheme.LIGHT -> R.style.Theme_App_Light
+            AppTheme.DARK -> R.style.Theme_App_Dark
+            AppTheme.BLACK -> R.style.Theme_App_Black
         })
         super.onCreate(savedInstanceState)
 

@@ -100,6 +100,7 @@ import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.anthonycr.grant.PermissionsManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -1460,7 +1461,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     }
 
     override fun showBlockedLocalFileDialog(onPositiveClick: Function0<Unit>) {
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setCancelable(true)
             .setTitle(R.string.title_warning)
             .setMessage(R.string.message_blocked_local)

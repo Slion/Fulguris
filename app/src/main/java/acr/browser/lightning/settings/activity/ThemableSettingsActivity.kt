@@ -36,16 +36,16 @@ abstract class ThemableSettingsActivity : AppCompatActivity() {
     protected fun applyTheme(themeId: AppTheme) {
         when (themeId) {
             AppTheme.LIGHT -> {
-                setTheme(R.style.Theme_SettingsTheme)
-                window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColor(this)))
+                setTheme(R.style.Theme_App_Light_Settings)
+                //window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColor(this)))
             }
             AppTheme.DARK -> {
-                setTheme(R.style.Theme_SettingsTheme_Dark)
-                window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColorDark(this)))
+                setTheme(R.style.Theme_App_Dark_Settings)
+                //window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColorDark(this)))
             }
             AppTheme.BLACK -> {
-                setTheme(R.style.Theme_SettingsTheme_Black)
-                window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColorDark(this)))
+                setTheme(R.style.Theme_App_Black_Settings)
+                //window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColorDark(this)))
             }
         }
     }

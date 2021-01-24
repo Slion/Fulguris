@@ -28,6 +28,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -195,7 +196,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
     }
 
     private fun showImportBookmarkDialog(path: File?) {
-        val builder = AlertDialog.Builder(activity as Activity)
+        val builder = MaterialAlertDialogBuilder(activity as Activity)
 
         val title = getString(R.string.title_chooser)
         builder.setTitle(title + ": " + Environment.getExternalStorageDirectory())
