@@ -12,7 +12,7 @@ import io.reactivex.Completable
 
 class IncognitoActivity : BrowserActivity() {
 
-    override fun provideThemeOverride(): Int? = R.style.Theme_DarkTheme
+    override fun provideThemeOverride(): Int? = R.style.Theme_App_Dark
 
     @Suppress("DEPRECATION")
     public override fun updateCookiePreference(): Completable = Completable.fromAction {

@@ -57,13 +57,10 @@ class TabViewHolder(
     // Start dragging
     override fun onItemOperationStart() {
         // Do some fancy for smoother transition
-
         previousBackground = layout.background as BackgroundDrawable
         previousBackground?.let {
-                layout.background = BackgroundDrawable(itemView.context, if (it.isSelected)  R.attr.selectedBackground else R.attr.colorPrimaryDark, R.attr.colorControlHighlight).apply{startTransition(300)}
+                layout.background = BackgroundDrawable(itemView.context, if (it.isSelected)  R.attr.colorSurface else R.attr.colorPrimaryDark, R.attr.colorControlHighlight).apply{startTransition(300);alpha=128}
             }
-
-
         }
 
     // From ItemTouchHelperViewHolder

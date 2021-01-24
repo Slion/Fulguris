@@ -86,7 +86,7 @@
         android:layout_gravity="center"
         app:tabIconBorderRadius="3dp"
         app:tabIconBorderWidth="2dp"
-        app:tabIconColor="?attr/iconColor"
+        app:tabIconColor="?attr/colorControlNormal"
         app:tabIconTextSize="10dp"
         android:contentDescription="@string/tabs"
         app:tooltipText="@{@string/tabs}"

@@ -8,7 +8,6 @@ import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.utils.foregroundColorFromBackgroundColor
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -36,16 +35,13 @@ abstract class ThemableSettingsActivity : AppCompatActivity() {
     protected fun applyTheme(themeId: AppTheme) {
         when (themeId) {
             AppTheme.LIGHT -> {
-                setTheme(R.style.Theme_SettingsTheme)
-                window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColor(this)))
+                setTheme(R.style.Theme_App_Light_Settings)
             }
             AppTheme.DARK -> {
-                setTheme(R.style.Theme_SettingsTheme_Dark)
-                window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColorDark(this)))
+                setTheme(R.style.Theme_App_Dark_Settings)
             }
             AppTheme.BLACK -> {
-                setTheme(R.style.Theme_SettingsTheme_Black)
-                window.setBackgroundDrawable(ColorDrawable(ThemeUtils.getPrimaryColorDark(this)))
+                setTheme(R.style.Theme_App_Black_Settings)
             }
         }
     }

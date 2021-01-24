@@ -8,6 +8,7 @@ import android.net.http.SslCertificate
 import android.text.format.DateFormat
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Shows an informative dialog with the provided [SslCertificate] information.
@@ -30,7 +31,7 @@ fun Context.showSslDialog(sslCertificate: SslCertificate, sslState: SslState) {
 
     val icon = createSslDrawableForState(sslState)
 
-    AlertDialog.Builder(this)
+    MaterialAlertDialogBuilder(this)
         .setIcon(icon)
         .setTitle(to.cName)
         .setView(contentView)

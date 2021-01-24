@@ -24,6 +24,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import javax.inject.Inject
 
 class DisplaySettingsFragment : AbstractSettingsFragment() {
@@ -74,7 +75,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
      * @param summaryUpdater the command which allows the summary to be updated.
      */
     private fun showUrlBoxDialogPicker(summaryUpdater: SummaryUpdater) {
-        activity?.let { AlertDialog.Builder(it) }?.apply {
+        activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
             setTitle(resources.getString(R.string.url_contents))
 
             val items = SearchBoxDisplayChoice.values().map { Pair(it, it.toDisplayString()) }
@@ -104,7 +105,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
      * @param summaryUpdater the command which allows the summary to be updated.
      */
     private fun showRenderingDialogPicker(summaryUpdater: SummaryUpdater) {
-        activity?.let { AlertDialog.Builder(it) }?.apply {
+        activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
             setTitle(resources.getString(R.string.rendering_mode))
 
             val values = RenderingMode.values().map { Pair(it, it.toDisplayString()) }
@@ -126,7 +127,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
     })
 
     private fun showTextSizePicker(summaryUpdater: SummaryUpdater) {
-        AlertDialog.Builder(activity as Activity).apply {
+        MaterialAlertDialogBuilder(activity as Activity).apply {
             val layoutInflater = (activity as Activity).layoutInflater
             val customView = (layoutInflater.inflate(R.layout.dialog_seek_bar, null) as LinearLayout).apply {
                 val text = TextView(activity).apply {
@@ -155,7 +156,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     private fun showThemePicker(summaryUpdater: SummaryUpdater) {
         val currentTheme = userPreferences.useTheme
-        AlertDialog.Builder(activity as Activity).apply {
+        MaterialAlertDialogBuilder(activity as Activity).apply {
             setTitle(resources.getString(R.string.theme))
             val values = AppTheme.values().map { Pair(it, it.toDisplayString()) }
             withSingleChoiceItems(values, userPreferences.useTheme) {

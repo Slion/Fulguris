@@ -28,7 +28,7 @@
             android:layout_gravity="center"
             app:tabIconBorderRadius="2dp"
             app:tabIconBorderWidth="3dp"
-            app:tabIconColor="?attr/iconColor"
+            app:tabIconColor="?attr/colorControlNormal"
             app:tabIconTextSize="14dp" />
     </FrameLayout>
 

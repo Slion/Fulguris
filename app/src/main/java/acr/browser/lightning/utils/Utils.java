@@ -40,6 +40,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 public final class Utils {
 
     private static final String TAG = "Utils";
@@ -77,7 +79,7 @@ public final class Utils {
      * @param message  the message of the dialog.
      */
     public static void createInformativeDialog(@NonNull Activity activity, @StringRes int title, @StringRes int message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
         builder.setTitle(title);
         builder.setMessage(message)
             .setCancelable(true)

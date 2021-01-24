@@ -24,7 +24,7 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="?attr/iconColor"
+        android:tint="?attr/colorControlNormal"
         android:nextFocusDown="@id/web_view"
         android:contentDescription="@{myText}" />
 

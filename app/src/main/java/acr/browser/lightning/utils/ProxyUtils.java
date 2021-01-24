@@ -24,6 +24,9 @@ import acr.browser.lightning.preference.DeveloperPreferences;
 import acr.browser.lightning.preference.UserPreferences;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 import info.guardianproject.netcipher.webkit.WebkitProxy;
 import kotlin.Pair;
@@ -74,7 +77,7 @@ public final class ProxyUtils {
             if (i2p) {
                 developerPreferences.setCheckedForI2P(true);
             }
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
 
             if (orbotInstalled && i2pInstalled) {
                 String[] proxyChoices = activity.getResources().getStringArray(R.array.proxy_choices_array);
