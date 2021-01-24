@@ -34,27 +34,23 @@ colorSecondary:
     <!-- Settings themes -->
     <style name="Theme.App.Light.Settings" parent="Theme.App.Light">
         <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">@color/md_grey_200</item>
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
         <!-- That's the status bar background color -->
-        <item name="colorPrimaryDark">@color/md_grey_200</item>
+        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
     </style>
 
     <style name="Theme.App.Dark.Settings" parent="Theme.App.Dark">
         <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">@color/md_grey_900</item>
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
         <!-- That's the status bar background color -->
-        <item name="colorPrimaryDark">@color/md_grey_900</item>
-        <!-- Notably applies to settings icons -->
-        <!-- <item name="android:tint">#fff</item> -->
+        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
     </style>
 
     <style name="Theme.App.Black.Settings" parent="Theme.App.Black">
         <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">@color/md_black_1000</item>
-        <!-- Needed otherwise we get funny transparency issue during transition to settings activity -->
-        <item name="colorPrimaryDark">@color/md_black_1000</item>
-        <!-- Notably applies to settings icons -->
-        <!--<item name="android:tint">#fff</item>-->
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
+        <!-- That's the status bar background color -->
+        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
     </style>
 
 
