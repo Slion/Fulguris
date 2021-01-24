@@ -17,12 +17,12 @@
     </style>
 
     <style name="Theme.App.Black.Settings" parent="Theme.App.Black">
-        <item name="android:windowBackground">@null</item>
-        <item name="toolbarSettingsBackground">@color/black</item>
+        <!-- Should be the same android:colorBackground -->
+        <item name="android:windowBackground">@color/md_black_1000</item>
         <!-- Needed otherwise we get funny transparency issue during transition to settings activity -->
-        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorPrimaryDark">@color/md_black_1000</item>
         <!-- Notably applies to settings icons -->
-        <item name="android:tint">#fff</item>
+<!--        <item name="android:tint">#fff</item>-->
     </style>
     <!-- Regular themes
    Removed the following from themes to make status bar transparent
@@ -39,14 +39,6 @@
         <item name="android:windowTranslucentStatus">false</item>
     </style>
 
-
-    <style name="Theme.App.Black" parent="Theme.BaseBlackTheme">
-        <item name="searchBackground">@drawable/card_bg</item>
-        <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
-        <item name="progressBackgroundColor">@color/transparent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-    </style>
 
     <!-- Base Themes -->
     <style name="Theme.BaseLightTheme" parent="Theme.MaterialComponents.Light">
@@ -75,22 +67,23 @@
     Here is a recap of where some colors are usually used:
 
     android:colorBackground:
-        Fading edge on our lists/recycler views
+        Fading edge on our lists/recycler views.
+        Scrolling area background.
+        In browser theme that' also the color taking by our status bar when not using web site theme or other override.
 
     android:windowBackground:
         Splash screen
         Settings background
 
     colorSurface:
-        List items and menu backgrounds.
-        TODO: Should we use android:colorBackground instead
-        Should really be the same color as android:colorBackground
+        List items, cards and menu backgrounds.
+        Should be lighter than android:colorBackground but making it the same makes our list fading edge look better.
 
     colorPrimary:
         Title bars background.
 
     colorPrimaryDark:
-        Status bar background color
+        Status bar background color.
 
     colorSecondary:
         Settings and dialogs widgets highlights including:
@@ -132,7 +125,6 @@
 
         <item name="android:windowDisablePreview">false</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
-
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
@@ -153,25 +145,44 @@
 
     </style>
 
-    <style name="Theme.BaseBlackTheme" parent="Theme.MaterialComponents">
+    <style name="Theme.App.Black" parent="Theme.MaterialComponents">
+        <!-- Theme colors
+        See: https://material.io/develop/android/theming/color
+        -->
+        <!-- Primary & secondary colors -->
+        <item name="colorPrimary">@color/md_grey_900</item>
+        <item name="colorPrimaryVariant">@color/md_black_1000</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/md_deep_purple_300</item>
+        <item name="colorSecondaryVariant">@color/md_deep_purple_800</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Additional colors -->
+        <item name="android:colorBackground">@color/md_black_1000</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorSurface">@color/md_black_1000</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorError">@color/md_red_500</item>
+        <item name="colorOnError">@color/white</item>
+        <!-- Fix dialog issues -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+
+        <!-- Legacy -->
+        <item name="searchBackground">@drawable/card_bg</item>
+        <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
+        <item name="progressBackgroundColor">@color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:windowDisablePreview">false</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
-        <!-- Theme Colors -->
-        <item name="colorPrimary">@color/black</item>
-        <!-- This for some reason overrides the status bar color, leave it transparent for the runtime to decide -->
-
+        <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
-        <item name="colorAccent">@color/accent_color_dark</item>
-        <item name="dividerColor">@color/divider_light</item>
-
+        <!-- Needed until we remove them from our icons SVG -->
         <item name="iconColor">@color/icon_dark_theme</item>
         <item name="iconColorState">@color/state_color_icons_dark</item>
-
+        <item name="dividerColor">@color/divider_light</item>
         <item name="autoCompleteTitleColor">@color/white</item>
         <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
-
-
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
