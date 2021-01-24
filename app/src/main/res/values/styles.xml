@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
-Here is a recap of where some colors are usually used:
+Here is a recap of where some color attributes are usually used:
 
 android:colorBackground:
     Fading edge on our lists/recycler views.
@@ -28,6 +28,10 @@ colorSecondary:
         - Settings enabled toggle.
         - Dialogs text edit field cursor and underline.
     Settings category title.
+
+colorControlNormal:
+    Icon drawables as shown in settings, popup menu, text field auto complete popup and tool bars, though browser tool bar overrides that at runtime.
+    Scroll bars in recycle views.
 
 -->
 
@@ -74,6 +78,8 @@ colorSecondary:
         <item name="colorOnSurface">@color/black</item>
         <item name="colorError">@color/md_red_500</item>
         <item name="colorOnError">@color/white</item>
+        <!-- Icons color -->
+        <item name="colorControlNormal">@color/md_grey_650</item>
         <!-- Fix dialog issues -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
 
@@ -118,6 +124,8 @@ colorSecondary:
         <item name="colorOnSurface">@color/white</item>
         <item name="colorError">@color/md_red_500</item>
         <item name="colorOnError">@color/white</item>
+        <!-- Icons color -->
+        <item name="colorControlNormal">@color/md_grey_350</item>
         <!-- Fix dialog issues -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
 
@@ -160,6 +168,8 @@ colorSecondary:
         <item name="colorOnSurface">@color/white</item>
         <item name="colorError">@color/md_red_500</item>
         <item name="colorOnError">@color/white</item>
+        <!-- Icons color -->
+        <item name="colorControlNormal">@color/md_grey_350</item>
         <!-- Fix dialog issues -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
 
