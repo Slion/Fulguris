@@ -356,7 +356,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
                                 viewModel.icon = bitmap
                                 if (holder.favicon.tag == url) {
                                     val ba = context as BrowserActivity
-                                    holder.favicon.setImageForTheme(bitmap, ba.isDarkTheme)
+                                    holder.favicon.setImageForTheme(bitmap, ba.useDarkTheme)
                                 }
                             }
                         )

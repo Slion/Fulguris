@@ -82,7 +82,6 @@ import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -120,7 +119,7 @@ import javax.inject.Inject
 import kotlin.system.exitProcess
 
 
-abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIController, OnClickListener {
+abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIController, OnClickListener {
 
     // Notifications
     lateinit var CHANNEL_ID: String
@@ -153,7 +152,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
     // Primitives
     private var isFullScreen: Boolean = false
     private var hideStatusBar: Boolean = false
-    public var isDarkTheme: Boolean = false
+
     private var isImmersiveMode = false
     private var shouldShowTabsInDrawer: Boolean = false
     private var swapBookmarksAndTabs: Boolean = false
@@ -401,12 +400,6 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(userPreferences.crashReport)
         }
 
-        // Check if we have a dark theme
-        val mode = resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
-        isDarkTheme = userPreferences.useTheme == AppTheme.BLACK // Black qualifies as dark theme
-                || userPreferences.useTheme == AppTheme.DARK // Dark is indeed a dark theme
-                // Check if we are using system default theme and it is currently set to dark
-                || (userPreferences.useTheme == AppTheme.DEFAULT && mode == Configuration.UI_MODE_NIGHT_YES)
         shouldShowTabsInDrawer = userPreferences.showTabsInDrawer
         swapBookmarksAndTabs = userPreferences.bookmarksAndTabsSwapped
 
@@ -760,7 +753,7 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
                     drawerOpening = true
                     // Make sure icons on status bar remain visible
                     // We should really check the primary theme color and work out its luminance but that should do for now
-                    setStatusBarIconsColor(!isDarkTheme && !userPreferences.useBlackStatusBar)
+                    setStatusBarIconsColor(!useDarkTheme && !userPreferences.useBlackStatusBar)
                 }
                 else {
                     drawerClosing = true

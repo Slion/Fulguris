@@ -1,12 +1,13 @@
 package acr.browser.lightning.di
 
 import acr.browser.lightning.BrowserApp
+import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.adblock.BloomFilterAdBlocker
 import acr.browser.lightning.adblock.NoOpAdBlocker
 import acr.browser.lightning.browser.BrowserPopupMenu
 import acr.browser.lightning.browser.SearchBoxModel
 import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.browser.activity.ThemableBrowserActivity
+import acr.browser.lightning.browser.activity.ThemedBrowserActivity
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.dialog.LightningDialogBuilder
@@ -14,7 +15,7 @@ import acr.browser.lightning.download.LightningDownloadListener
 import acr.browser.lightning.reading.activity.ReadingActivity
 import acr.browser.lightning.search.SuggestionsAdapter
 import acr.browser.lightning.settings.activity.SettingsActivity
-import acr.browser.lightning.settings.activity.ThemableSettingsActivity
+import acr.browser.lightning.settings.activity.ThemedSettingsActivity
 import acr.browser.lightning.settings.fragment.*
 import acr.browser.lightning.view.LightningChromeClient
 import acr.browser.lightning.view.LightningView
@@ -48,7 +49,7 @@ interface AppComponent {
 
     fun inject(lightningView: LightningView)
 
-    fun inject(activity: ThemableBrowserActivity)
+    fun inject(activity: ThemedBrowserActivity)
 
     fun inject(advancedSettingsFragment: AdvancedSettingsFragment)
 
@@ -60,7 +61,7 @@ interface AppComponent {
 
     fun inject(activity: SettingsActivity)
 
-    fun inject(activity: ThemableSettingsActivity)
+    fun inject(activity: ThemedSettingsActivity)
 
     fun inject(listener: LightningDownloadListener)
 
@@ -87,6 +88,8 @@ interface AppComponent {
     fun inject(appsSettingsFragment: AppsSettingsFragment)
 
     fun inject(sponsorshipSettingsFragment: SponsorshipSettingsFragment)
+
+    fun inject(themedActivity: ThemedActivity)
 
     fun provideBloomFilterAdBlocker(): BloomFilterAdBlocker
 

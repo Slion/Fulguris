@@ -25,7 +25,7 @@ import acr.browser.lightning.dialog.BrowserDialog;
 import acr.browser.lightning.preference.UserPreferences;
 import acr.browser.lightning.reading.HtmlFetcher;
 import acr.browser.lightning.reading.JResult;
-import acr.browser.lightning.settings.activity.ThemableSettingsActivity;
+import acr.browser.lightning.settings.activity.ThemedSettingsActivity;
 import acr.browser.lightning.utils.Utils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +40,7 @@ import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
-public class ReadingActivity extends ThemableSettingsActivity {
+public class ReadingActivity extends ThemedSettingsActivity {
 
     private static final String LOAD_READING_URL = "ReadingUrl";
 
@@ -89,10 +89,10 @@ public class ReadingActivity extends ThemableSettingsActivity {
 
         // Change our theme if inverted
         if (mInvert) {
-            if (getThemeId() == AppTheme.LIGHT) {
-                applyTheme(AppTheme.BLACK);
-            } else {
+            if (getUseDarkTheme()) {
                 applyTheme(AppTheme.LIGHT);
+            } else {
+                applyTheme(AppTheme.BLACK);
             }
         }
 

@@ -47,7 +47,7 @@ class TabsDrawerAdapter(
         // Apply filter to favicon if needed
         favicon?.let {
                 val ba = uiController as BrowserActivity
-                viewHolder.favicon.setImageForTheme(it,ba.isDarkTheme)
+                viewHolder.favicon.setImageForTheme(it,ba.useDarkTheme)
         } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
     }
 

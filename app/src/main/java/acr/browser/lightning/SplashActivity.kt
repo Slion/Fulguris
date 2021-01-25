@@ -1,12 +1,11 @@
 package acr.browser.lightning
 
-import acr.browser.lightning.browser.activity.ThemableBrowserActivity
+import acr.browser.lightning.browser.activity.ThemedBrowserActivity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 
-class SplashActivity : ThemableBrowserActivity() {
+class SplashActivity : ThemedBrowserActivity() {
 
     val mHandler = Handler()
 

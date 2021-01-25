@@ -11,7 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 
 private const val TITLE_TAG = "settingsActivityTitle"
 
-class SettingsActivity : ThemableSettingsActivity(),
+class SettingsActivity : ThemedSettingsActivity(),
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
