@@ -304,6 +304,7 @@
     <string name="light_theme">Light</string>
     <string name="dark_theme">Dark</string>
     <string name="black_theme">Black</string>
+    <string name="default_theme">@string/agent_default</string>
     <string name="folder">Folder name</string>
     <string name="action_folder">Folder</string>
     <string name="action_rename">Rename</string>
@@ -412,7 +413,7 @@
 
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
-    <string name="session_default">Default</string>
+    <string name="session_default">@string/agent_default</string>
     <string name="session_name_prompt">Enter session name:</string>
     <string name="session_already_exists">A session with that name already exists!</string>
     <string name="session_cant_delete_current">Can\'t delete current session!</string>

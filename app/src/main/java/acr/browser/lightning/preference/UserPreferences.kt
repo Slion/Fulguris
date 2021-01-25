@@ -253,7 +253,7 @@ class UserPreferences @Inject constructor(
     /**
      * The index of the theme used by the application.
      */
-    var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.DARK)
+    var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.DEFAULT)
 
     /**
      * The text encoding used by the browser.

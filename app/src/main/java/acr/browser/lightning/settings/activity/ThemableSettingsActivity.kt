@@ -34,15 +34,10 @@ abstract class ThemableSettingsActivity : AppCompatActivity() {
 
     protected fun applyTheme(themeId: AppTheme) {
         when (themeId) {
-            AppTheme.LIGHT -> {
-                setTheme(R.style.Theme_App_Light_Settings)
-            }
-            AppTheme.DARK -> {
-                setTheme(R.style.Theme_App_Dark_Settings)
-            }
-            AppTheme.BLACK -> {
-                setTheme(R.style.Theme_App_Black_Settings)
-            }
+            AppTheme.LIGHT -> setTheme(R.style.Theme_App_Light_Settings)
+            AppTheme.DARK ->  setTheme(R.style.Theme_App_Dark_Settings)
+            AppTheme.BLACK -> setTheme(R.style.Theme_App_Black_Settings)
+            AppTheme.DEFAULT -> setTheme(R.style.Theme_App_DayNight_Settings)
         }
     }
 

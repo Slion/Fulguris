@@ -401,8 +401,12 @@ abstract class BrowserActivity : ThemableBrowserActivity(), BrowserView, UIContr
             FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(userPreferences.crashReport)
         }
 
-        //TODO make sure dark theme flag gets set correctly
-        isDarkTheme = userPreferences.useTheme != AppTheme.LIGHT
+        // Check if we have a dark theme
+        val mode = resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
+        isDarkTheme = userPreferences.useTheme == AppTheme.BLACK // Black qualifies as dark theme
+                || userPreferences.useTheme == AppTheme.DARK // Dark is indeed a dark theme
+                // Check if we are using system default theme and it is currently set to dark
+                || (userPreferences.useTheme == AppTheme.DEFAULT && mode == Configuration.UI_MODE_NIGHT_YES)
         shouldShowTabsInDrawer = userPreferences.showTabsInDrawer
         swapBookmarksAndTabs = userPreferences.bookmarksAndTabsSwapped
 

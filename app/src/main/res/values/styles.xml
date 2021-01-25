@@ -57,6 +57,13 @@ colorControlNormal:
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
     </style>
 
+    <style name="Theme.App.DayNight.Settings" parent="Theme.App.DayNight">
+        <!-- Should be the same android:colorBackground -->
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
+        <!-- That's the status bar background color -->
+        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
+    </style>
+
 
     <!-- Light theme -->
     <style name="Theme.App.Light" parent="Theme.MaterialComponents.Light">
@@ -203,6 +210,8 @@ colorControlNormal:
 
     </style>
 
+    <!-- Day theme to be used when following system default dark theme -->
+    <style name="Theme.App.DayNight" parent="Theme.App.Light" />
 
     <!-- Text Customization -->
     <style name="boldText">
