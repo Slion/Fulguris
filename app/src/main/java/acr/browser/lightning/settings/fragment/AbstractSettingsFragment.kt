@@ -4,9 +4,11 @@ import acr.browser.lightning.R
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.XmlRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.preference.*
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * An abstract settings fragment which performs wiring for an instance of [PreferenceFragment].
@@ -21,6 +23,18 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(providePreferencesXmlResource(),rootKey)
+    }
+
+    /**
+     * Called by the framework once our view has been created from its XML definition.
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Enable fading edge when scrolling settings, looks much better
+        view.findViewById<RecyclerView>(R.id.recycler_view)?.apply{
+            isVerticalFadingEdgeEnabled = true
+        }
     }
 
     /**
