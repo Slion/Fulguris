@@ -10,12 +10,10 @@ import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.preference.UserPreferences
-import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.view.RenderingMode
 import android.app.Activity
 import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -23,7 +21,6 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import javax.inject.Inject
 
@@ -40,16 +37,16 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
         // Setup theme selection
         clickableDynamicPreference(
-            preference = getString(R.string.pref_key_theme),
-            summary = userPreferences.useTheme.toDisplayString(),
-            onClick = ::showThemePicker
+                preference = getString(R.string.pref_key_theme),
+                summary = userPreferences.useTheme.toDisplayString(),
+                onClick = ::showThemePicker
         )
 
         // Setup web browser font size selector
         clickableDynamicPreference(
-            preference = getString(R.string.pref_key_browser_text_size),
-            summary = (userPreferences.browserTextSize + MIN_BROWSER_TEXT_SIZE).toString() +  "%",
-            onClick = ::showTextSizePicker
+                preference = getString(R.string.pref_key_browser_text_size),
+                summary = (userPreferences.browserTextSize + MIN_BROWSER_TEXT_SIZE).toString() + "%",
+                onClick = ::showTextSizePicker
         )
 
         // Setup rendering mode selection
@@ -136,7 +133,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                     gravity = Gravity.CENTER
                     height = Utils.dpToPx(100f)
                 }
-                addView(text,0)
+                addView(text, 0)
                 findViewById<SeekBar>(R.id.text_size_seekbar).apply {
                     setOnSeekBarChangeListener(TextSeekBarListener(text))
                     max = MAX_BROWSER_TEXT_SIZE - MIN_BROWSER_TEXT_SIZE
@@ -165,7 +162,8 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             }
             setPositiveButton(resources.getString(R.string.action_ok)) { _, _ ->
                 if (currentTheme != userPreferences.useTheme) {
-                    (activity as Activity).onBackPressed()
+                    // Restart our activity so that new theme is applied
+                    requireActivity().recreate()
                 }
             }
             setOnCancelListener {
@@ -183,12 +181,12 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
     })
 
     private class TextSeekBarListener(
-        private val sampleText: TextView
+            private val sampleText: TextView
     ) : SeekBar.OnSeekBarChangeListener {
 
         override fun onProgressChanged(view: SeekBar, size: Int, user: Boolean) {
             this.sampleText.textSize = getTextSize(size)
-            this.sampleText.text = getTextDemo(view.context,size)
+            this.sampleText.text = getTextDemo(view.context, size)
         }
 
         override fun onStartTrackingTouch(arg0: SeekBar) {}
