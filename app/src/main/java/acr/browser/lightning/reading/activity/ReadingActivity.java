@@ -2,7 +2,6 @@ package acr.browser.lightning.reading.activity;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -69,7 +68,7 @@ public class ReadingActivity extends ThemableSettingsActivity {
     private boolean mInvert;
     @Nullable private String mUrl = null;
     private int mTextSize;
-    @Nullable private ProgressDialog mProgressDialog;
+    @Nullable private AlertDialog mProgressDialog;
     private Disposable mPageLoaderSubscription;
 
     private static final float XXLARGE = 30.0f;
@@ -157,12 +156,17 @@ public class ReadingActivity extends ThemableSettingsActivity {
             getSupportActionBar().setTitle(Utils.getDisplayDomainName(mUrl));
         }
 
-        mProgressDialog = new ProgressDialog(ReadingActivity.this);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage(getString(R.string.loading));
+        // Build progress dialog
+        View progressView = LayoutInflater.from(this).inflate(R.layout.dialog_progress, null);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+                .setView(progressView)
+                .setCancelable(false);
+        mProgressDialog = builder.create();
+        TextView tv=progressView.findViewById(R.id.text_progress_bar);
+        tv.setText(R.string.loading);
         mProgressDialog.show();
+
+
         BrowserDialog.setDialogSize(ReadingActivity.this, mProgressDialog);
 
         mPageLoaderSubscription = loadPage(mUrl)
