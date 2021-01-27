@@ -50,6 +50,18 @@ public final class ThemeUtils {
     }
 
     /**
+     * Gets the surface color of the current theme.
+     *
+     * @param context the context to get the theme from.
+     * @return the surface color of the current theme.
+     */
+    @ColorInt
+    public static int getSurfaceColor(@NonNull Context context) {
+        return getColor(context, R.attr.colorSurface);
+    }
+
+
+    /**
      * Gets the accent color of the current theme.
      *
      * @param context the context to get the theme from.

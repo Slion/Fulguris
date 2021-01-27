@@ -8,10 +8,10 @@ import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.view.BackgroundDrawable
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.widget.TextViewCompat
@@ -73,59 +73,58 @@ class TabsDesktopAdapter(
         if (textColor == Color.TRANSPARENT) {
             textColor = viewHolder.txtTitle.currentTextColor
         }
-
-        val context = viewHolder.layout.context
-
-        if (tab.isForeground) {
-            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
+	
+        if (tab.isForeground) {            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
             val newTextColor = (uiController as BrowserActivity).currentToolBarTextColor
             viewHolder.txtTitle.setTextColor(newTextColor)
             viewHolder.exitButton.findViewById<ImageView>(R.id.deleteButton).setColorFilter(newTextColor)
-            //uiController.changeToolbarBackground(tab.favicon, tab.themeColor, viewHolder.layout.background)
-
             // If we just got to the foreground
             if (tab.isForeground!=viewHolder.tab.isForeground
                     // or if our theme color changed
                     || tab.themeColor!=viewHolder.tab.themeColor
                     // or if our theme color is different than our UI color, i.e. using favicon color instead of meta theme
-                    || tab.themeColor!=uiController.getUiColor())
-            {
-                val backgroundColor = ThemeUtils.getColor(context, R.attr.colorSurface)
-                val foregroundColor = ThemeUtils.getColor(context, R.attr.colorPrimary)
+                    || tab.themeColor!=uiController.getUiColor()) {
 
-                // Transition from background tab color to foreground tab color
-                // That's just running a fancy animation
-                viewHolder.layout.background =
-                    BackgroundDrawable(
-                            ColorDrawable(backgroundColor),
-                            ColorDrawable(
-                                    //If color mode activated
-                                    if (uiController.isColorMode())
-                                        if (tab.themeColor!=Color.TRANSPARENT)
-                                            // Use meta theme color if we have one
-                                            tab.themeColor
-                                        else
-                                            if (uiController.getUiColor()!=backgroundColor)
-                                            // Use favicon extracted color if there is one
-                                                uiController.getUiColor()
-                                            else
-                                                // Otherwise use default foreground color
-                                                foregroundColor
-                                    else // No color mode just use our theme default background then
-                                        foregroundColor))
-                            .apply { startTransition(250) }
+                val backgroundColor = ThemeUtils.getColor(viewHolder.iCardView.context, R.attr.colorSurface)
+
+                // Pick our color according to settings and states
+                val color = if (uiController.isColorMode())
+                    if (tab.themeColor!=Color.TRANSPARENT)
+                    // Use meta theme color if we have one
+                        tab.themeColor
+                    else
+                        if (uiController.getUiColor()!=backgroundColor)
+                        // Use favicon extracted color if there is one
+                            uiController.getUiColor()
+                        else
+                        // Otherwise use default theme color
+                            backgroundColor
+                else // No color mode just use our theme default background then
+                    backgroundColor
+
+                // Apply proper color then
+                viewHolder.iCardView.backgroundTintList = ColorStateList.valueOf(color)
+
+                if (color==backgroundColor) {
+                    // Make sure we can tell which tab is the current one when not using color mode
+                    viewHolder.iCardView.isCheckable = true
+                    viewHolder.iCardView.isChecked = true
+                } else {
+                    viewHolder.iCardView.isChecked = false
+                    viewHolder.iCardView.isCheckable = false
+                }
+
             }
-
-        } else {
+        }
+        else {
+            // Reset background color, we did not have to make a backup of it since it's null anyway
+            viewHolder.iCardView.backgroundTintList = null
+            viewHolder.iCardView.isChecked = false
+            viewHolder.iCardView.isCheckable = false
             // Background tab
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, if (tab.isFrozen) R.style.italicText else R.style.normalText)
             viewHolder.txtTitle.setTextColor(textColor)
             viewHolder.exitButton.findViewById<ImageView>(R.id.deleteButton).setColorFilter(textColor)
-            // Set background appropriate for background tab
-            viewHolder.layout.background = BackgroundDrawable(viewHolder.layout.context)
         }
-
     }
-
-
 }

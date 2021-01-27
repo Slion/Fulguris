@@ -6,7 +6,6 @@
     <attr name="listBackground" format="reference|color" />
     <attr name="progressBackgroundColor" format="color" />
     <attr name="searchBackground" format="reference|color" />
-    <attr name="dividerColor" format="reference|color" />
     <!-- Control color when enabled -->
     <attr name="appColorControlEnabled" format="reference|color" />
     <!-- Control color when disabled -->

@@ -9,6 +9,7 @@
     <dimen name="material_grid_touch_medium">48dp</dimen>
     <dimen name="material_grid_touch_large">56dp</dimen>
     <dimen name="material_grid_touch_xlarge">72dp</dimen>
+    <dimen name="material_grid_touch_xxlarge">88dp</dimen>
 
     <dimen name="dialog_max_size">350dp</dimen>
     <dimen name="dialog_padding">24dp</dimen>

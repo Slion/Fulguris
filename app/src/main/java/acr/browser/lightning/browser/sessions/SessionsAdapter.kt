@@ -55,7 +55,6 @@ class SessionsAdapter(
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): SessionViewHolder {
         val view = viewGroup.context.inflater.inflate(R.layout.session_list_item, viewGroup, false)
-        //view.background = BackgroundDrawable(view.context)
         return SessionViewHolder(view, uiController).apply {
             // Ask our newly created view holder to observe our edit mode status
             // Thus buttons on our items will be shown or hidden
@@ -80,8 +79,10 @@ class SessionsAdapter(
         // Set item font style according to current session
         if (session.isCurrent) {
             TextViewCompat.setTextAppearance(holder.textName, R.style.boldText)
+            holder.iCardView.isChecked = true
         } else {
             TextViewCompat.setTextAppearance(holder.textName, R.style.normalText)
+            holder.iCardView.isChecked = false
         }
     }
 

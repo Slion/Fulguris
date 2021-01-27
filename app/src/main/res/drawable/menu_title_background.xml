@@ -4,7 +4,7 @@
 
     <item android:top="0dp" android:left="0dp" android:right="5dp" android:bottom="0dp">
         <shape>
-            <solid android:color="?attr/colorPrimary"/>
+            <solid android:color="?attr/colorSurface"/>
             <corners android:topLeftRadius="@dimen/menu_corner_radius" android:topRightRadius="@dimen/menu_corner_radius"
                 android:bottomLeftRadius="0dp" android:bottomRightRadius="0dp"/>
 

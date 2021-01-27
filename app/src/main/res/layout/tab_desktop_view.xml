@@ -7,91 +7,95 @@
             name="uiController"
             type="acr.browser.lightning.controller.UIController"/>
     </data>
-<merge
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/desktop_tab_height"
-    android:background="?attr/colorPrimary"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
-
-    <LinearLayout android:orientation="horizontal"
+    <merge
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/colorPrimary">
+        android:layout_height="@dimen/desktop_tab_height"
+        tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <!-- SL: requiresFadingEdge not working for some reason-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tabs_list"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:requiresFadingEdge="horizontal|vertical"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-         />
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/action_close_all_tabs"
-            style="?android:attr/actionButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/action_close_all_other_tabs"
-            app:tooltipText="@{@string/action_close_all_other_tabs}"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_delete_sweep"
-            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-            />
-
-        <ImageButton
-            android:id="@+id/action_restore_all_pages"
-            style="?android:attr/actionButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/action_restore_all_tabs"
-            app:tooltipText="@{@string/action_restore_all_tabs}"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_restore_from_trash"
-            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-            />
-
-        <ImageButton
-            android:id="@+id/action_restore_page"
-            style="?android:attr/actionButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/action_restore_tab"
-            app:tooltipText="@{@string/action_restore_tab}"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_restore_page"
-            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-            />
-
-        <ImageButton
-            android:id="@+id/action_new_tab"
-            style="?android:attr/actionButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/action_new_tab"
-            app:tooltipText="@{@string/action_new_tab}"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_action_plus"
-            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-            />
-
-        <ImageButton
-            android:id="@+id/action_sessions"
-            style="?android:attr/actionButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/action_sessions"
-            app:tooltipText="@{@string/action_sessions}"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_sessions"
-            android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-            />
+                <!-- SL: requiresFadingEdge not working for some reason-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tabs_list"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:requiresFadingEdge="horizontal|vertical"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    />
 
 
-    </LinearLayout>
-</merge>
+                <ImageButton
+                    android:id="@+id/action_close_all_tabs"
+                    style="?android:attr/actionButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_close_all_other_tabs"
+                    app:tooltipText="@{@string/action_close_all_other_tabs}"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_delete_sweep"
+                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                    />
+
+                <ImageButton
+                    android:id="@+id/action_restore_all_pages"
+                    style="?android:attr/actionButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_restore_all_tabs"
+                    app:tooltipText="@{@string/action_restore_all_tabs}"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_restore_from_trash"
+                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                    />
+
+                <ImageButton
+                    android:id="@+id/action_restore_page"
+                    style="?android:attr/actionButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_restore_tab"
+                    app:tooltipText="@{@string/action_restore_tab}"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_restore_page"
+                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                    />
+
+                <ImageButton
+                    android:id="@+id/action_new_tab"
+                    style="?android:attr/actionButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_new_tab"
+                    app:tooltipText="@{@string/action_new_tab}"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_action_plus"
+                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                    />
+
+                <ImageButton
+                    android:id="@+id/action_sessions"
+                    style="?android:attr/actionButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_sessions"
+                    app:tooltipText="@{@string/action_sessions}"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_sessions"
+                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                    />
+
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </merge>
 </layout>
 

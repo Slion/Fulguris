@@ -41,6 +41,13 @@ colorControlNormal:
         <item name="android:windowBackground">?android:attr/colorBackground</item>
         <!-- That's the status bar background color -->
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
+
+        <!-- Dark actionbar -->
+        <item name="colorPrimary">?android:attr/colorBackground</item>
+        <item name="actionBarWidgetTheme">@null</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <!-- Panel attributes -->
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
     </style>
 
     <style name="Theme.App.Dark.Settings" parent="Theme.App.Dark">
@@ -48,6 +55,13 @@ colorControlNormal:
         <item name="android:windowBackground">?android:attr/colorBackground</item>
         <!-- That's the status bar background color -->
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
+        <!-- Dark actionbar -->
+        <item name="colorPrimary">?android:attr/colorBackground</item>
+        <item name="actionBarWidgetTheme">@null</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <!-- Panel attributes -->
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
+
     </style>
 
     <style name="Theme.App.Black.Settings" parent="Theme.App.Black">
@@ -55,6 +69,12 @@ colorControlNormal:
         <item name="android:windowBackground">?android:attr/colorBackground</item>
         <!-- That's the status bar background color -->
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
+        <!-- Dark actionbar -->
+        <item name="colorPrimary">?android:attr/colorBackground</item>
+        <item name="actionBarWidgetTheme">@null</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <!-- Panel attributes -->
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
     </style>
 
     <style name="Theme.App.DayNight.Settings" parent="Theme.App.DayNight">
@@ -62,6 +82,12 @@ colorControlNormal:
         <item name="android:windowBackground">?android:attr/colorBackground</item>
         <!-- That's the status bar background color -->
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
+        <!-- Dark actionbar -->
+        <item name="colorPrimary">?android:attr/colorBackground</item>
+        <item name="actionBarWidgetTheme">@null</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <!-- Panel attributes -->
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
     </style>
 
 
@@ -72,8 +98,8 @@ colorControlNormal:
         See: https://material.io/develop/android/theming/color
         -->
         <!-- Primary & secondary colors -->
-        <item name="colorPrimary">@color/md_grey_300</item>
-        <item name="colorPrimaryVariant">@color/md_grey_500</item>
+        <item name="colorPrimary">@color/app_blue</item>
+        <item name="colorPrimaryVariant">@color/app_blue_dark</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="colorSecondary">@color/app_blue</item>
         <item name="colorSecondaryVariant">@color/app_blue_dark</item>
@@ -92,6 +118,10 @@ colorControlNormal:
         <item name="colorControlNormal">@color/state_color_control</item>
         <!-- Fix dialog issues -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <!-- Override AppBarLayout background color -->
+        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout.Light</item>
+        <!-- Override MaterialCardView styles -->
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
 
         <!-- Legacy -->
         <item name="searchBackground">@drawable/card_bg</item>
@@ -105,7 +135,6 @@ colorControlNormal:
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
-        <item name="dividerColor">@color/divider_light</item>
         <item name="autoCompleteTitleColor">@color/black</item>
         <item name="autoCompleteUrlColor">@color/hint_text_light_theme</item>
         <item name="windowNoTitle">true</item>
@@ -121,8 +150,8 @@ colorControlNormal:
         See: https://material.io/develop/android/theming/color
         -->
         <!-- Primary & secondary colors -->
-        <item name="colorPrimary">@color/md_grey_800</item>
-        <item name="colorPrimaryVariant">@color/md_grey_900</item>
+        <item name="colorPrimary">@color/app_blue_light</item>
+        <item name="colorPrimaryVariant">@color/app_blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/app_blue_light</item>
         <item name="colorSecondaryVariant">@color/app_blue</item>
@@ -141,6 +170,8 @@ colorControlNormal:
         <item name="colorControlNormal">@color/state_color_control</item>
         <!-- Fix dialog issues -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <!-- Override MaterialCardView styles -->
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
 
         <!-- Legacy -->
         <item name="searchBackground">@drawable/card_bg</item>
@@ -154,7 +185,6 @@ colorControlNormal:
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
-        <item name="dividerColor">@color/divider_dark</item>
         <item name="autoCompleteTitleColor">@color/white</item>
         <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
         <item name="windowNoTitle">true</item>
@@ -168,8 +198,8 @@ colorControlNormal:
         See: https://material.io/develop/android/theming/color
         -->
         <!-- Primary & secondary colors -->
-        <item name="colorPrimary">@color/md_grey_900</item>
-        <item name="colorPrimaryVariant">@color/md_black_1000</item>
+        <item name="colorPrimary">@color/app_blue_light</item>
+        <item name="colorPrimaryVariant">@color/app_blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/app_blue_light</item>
         <item name="colorSecondaryVariant">@color/app_blue</item>
@@ -188,6 +218,8 @@ colorControlNormal:
         <item name="colorControlNormal">@color/state_color_control</item>
         <!-- Fix dialog issues -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <!-- Override MaterialCardView styles -->
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
 
         <!-- Legacy -->
         <item name="searchBackground">@drawable/card_bg</item>
@@ -201,7 +233,6 @@ colorControlNormal:
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
-        <item name="dividerColor">@color/divider_light</item>
         <item name="autoCompleteTitleColor">@color/white</item>
         <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
         <item name="windowNoTitle">true</item>
@@ -271,5 +302,24 @@ colorControlNormal:
         -->
         <item name="colorPrimary">?attr/colorSecondary</item>
     </style>
+
+    <!--
+    Override AppBarLayout color for our light theme as we don't want primary or surface color there
+    -->
+    <style name="Widget.App.AppBarLayout.Light" parent="Widget.Design.AppBarLayout">
+        <item name="android:background">@color/md_grey_300</item>
+    </style>
+
+    <!--
+    Override MaterialCardView style to position our checked icon properly
+    -->
+    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="checkedIconMargin">4dp</item>
+        <item name="checkedIconSize">6dp</item>
+        <item name="checkedIcon">@drawable/ic_circle</item>
+    </style>
+
+
+
 
 </resources>

@@ -378,6 +378,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
 
+    private var primaryColor = Color.WHITE
+
     private fun initialize(savedInstanceState: Bundle?) {
 
         createNotificationChannel()
@@ -404,7 +406,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         swapBookmarksAndTabs = userPreferences.bookmarksAndTabsSwapped
 
         // initialize background ColorDrawable
-        val primaryColor = ThemeUtils.getPrimaryColor(this)
+        primaryColor = ThemeUtils.getSurfaceColor(this)
         backgroundDrawable.color = primaryColor
 
         // Drawer stutters otherwise
@@ -793,7 +795,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             changeToolbarBackground(currentView.favicon, Color.TRANSPARENT, null)
         } else {
             // That should be the primary color from current theme
-            mainHandler.post {changeToolbarBackground(ThemeUtils.getPrimaryColor(this), null)}
+            mainHandler.post {changeToolbarBackground(primaryColor, null)}
         }
     }
 
@@ -1474,13 +1476,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     override fun tabClicked(position: Int) {
-        // SL: Hide any drawers first, thus making sure we close our tab drawer even when user taps current tab
-        // Use a delayed handler to make the transition smooth
-        // otherwise it will get caught up with the showTab code
-        // and cause a janky motion
-        mainHandler.postDelayed(drawer_layout::closeDrawers, 200)
-
+        // Switch tab
         presenter?.tabChanged(position)
+        // Keep the drawer open while the tab change animation in running
+        // Has the added advantage that closing of the drawer itself should be smoother as the webview had a bit of time to load
+        mainHandler.postDelayed(drawer_layout::closeDrawers, 350)
     }
 
     // This is the callback from 'new tab' button on page drawer
@@ -1886,7 +1886,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     override fun changeToolbarBackground(favicon: Bitmap?, color: Int, tabBackground: Drawable?) {
 
-        val defaultColor = ThemeUtils.getPrimaryColor(this)
+        val defaultColor = primaryColor
 
         if (!isColorMode()) {
             // Put back the theme color then

@@ -36,10 +36,10 @@ class HistoryPageFactory @Inject constructor(
                     // Show localized page title
                     .replace("\${pageTitle}", application.getString(R.string.action_history))
                     // Theme our page first
-                    .replace("\${backgroundColor}", htmlColor(ThemeUtils.getPrimaryColor(BrowserApp.currentContext())))
-                    .replace("\${textColor}", htmlColor(ThemeUtils.getTextColor(BrowserApp.currentContext())))
-                    .replace("\${secondaryTextColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorAccent)))
-                    .replace("\${dividerColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.dividerColor)))
+                    .replace("\${backgroundColor}", htmlColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext())))
+                    .replace("\${textColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnBackground)))
+                    .replace("\${secondaryTextColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorSecondary)))
+                    .replace("\${dividerColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.appColorControlDisabled)))
             ) andBuild {
                 title { title }
                 body {
