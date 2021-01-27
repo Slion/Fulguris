@@ -130,6 +130,7 @@
             android:key="@string/pref_key_web_page_theme"
             android:title="@string/color_mode"
             android:summary="@string/pref_summary_color_mode"
+            app:icon="@drawable/ic_brush"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
