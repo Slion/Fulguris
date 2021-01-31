@@ -394,7 +394,9 @@
     <string name="ssl_info_expires_on">Expires on</string>
 
     <!-- Search in page -->
-    <string name="search_in_page_query">\'%1$s\'</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="close">Close</string>
 
     <!-- Frozen tabs -->
     <string name="tab_frozen">Frozen…</string>

@@ -110,7 +110,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.browser_content.*
 import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import kotlinx.android.synthetic.main.search.*
-import kotlinx.android.synthetic.main.search_interface.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.slions.toolbar_content.*
 import org.json.JSONObject
@@ -1307,9 +1306,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     private fun showFindInPageControls(text: String) {
-        search_bar.visibility = VISIBLE
-
-        findViewById<TextView>(R.id.search_query).text = resources.getString(R.string.search_in_page_query, text)
+        findViewById<View>(R.id.search_bar).visibility = VISIBLE
+        findViewById<TextView>(R.id.search_query).text = text
         findViewById<ImageButton>(R.id.button_next).setOnClickListener(this)
         findViewById<ImageButton>(R.id.button_back).setOnClickListener(this)
         findViewById<ImageButton>(R.id.button_quit).setOnClickListener(this)
@@ -2644,7 +2642,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             R.id.button_quit -> {
                 findResult?.clearResults()
                 findResult = null
-                search_bar.visibility = GONE
+                findViewById<View>(R.id.search_bar).visibility = GONE
             }
         }
     }
