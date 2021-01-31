@@ -28,6 +28,7 @@ class SessionsPopupWindow : PopupWindow {
     var iAdapter: SessionsAdapter
     var iBinding: SessionListBinding
     private var iItemTouchHelper: ItemTouchHelper? = null
+    var iAnchor: View? = null
 
     constructor(layoutInflater: LayoutInflater,
                 aBinding: SessionListBinding = SessionListBinding.inflate(layoutInflater))
@@ -133,6 +134,7 @@ class SessionsPopupWindow : PopupWindow {
 
 
         aBinding.buttonEditSessions.setOnClickListener {
+
             // Toggle edit mode
             iAdapter.iEditModeEnabledObservable.value?.let { editModeEnabled ->
                 // Change button icon
@@ -144,6 +146,12 @@ class SessionsPopupWindow : PopupWindow {
                 }
                 // Notify our observers of edit mode change
                 iAdapter.iEditModeEnabledObservable.onNext(!editModeEnabled)
+
+                // Just close and reopen our menu as our layout change animation is really ugly
+                dismiss()
+                (iUiController as BrowserActivity).mainHandler.post { show(iAnchor,!editModeEnabled,false) }
+                // We still broadcast the change above and do a post to avoid getting some items caught not fully animated, even though animations are disabled.
+                // Android layout animation crap, just don't ask, sometimes it's a blessing other times it's a nightmare...
             }
         }
 
@@ -181,31 +189,39 @@ class SessionsPopupWindow : PopupWindow {
     /**
      *
      */
-    fun show(aAnchor: View) {
+    fun show(aAnchor: View?, aEdit: Boolean = false, aShowCurrent: Boolean = true) {
         // Disable edit mode when showing our menu
-        iAdapter.iEditModeEnabledObservable.onNext(false)
-        iBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit);
+        iAdapter.iEditModeEnabledObservable.onNext(aEdit)
+        if (aEdit) {
+            iBinding.buttonEditSessions.setImageResource(R.drawable.ic_secured);
+        } else {
+            iBinding.buttonEditSessions.setImageResource(R.drawable.ic_edit);
+        }
 
+        iAnchor = aAnchor
         //showAsDropDown(aAnchor, 0,-aAnchor.height)
         showAsDropDown(aAnchor, 0, 0)
 
         dimBehind()
         // Show our sessions
         updateSessions()
+
+        if (aShowCurrent) {
+            // Make sure current session is on the screen
+            iBinding.recyclerViewSessions.smoothScrollToPosition(iUiController.getTabModel().currentSessionIndex())
+        }
     }
 
-
+    /**
+     *
+     */
     fun updateSessions() {
         //See: https://stackoverflow.com/q/43221847/3969362
         // I'm guessing isComputingLayout is not needed anymore since we moved our update after tab manager initialization
         // TODO: remove it and switch quickly between sessions to see if that still works
         if (!iBinding.recyclerViewSessions.isComputingLayout) {
-            iUiController.getTabModel().iSessions.let { iAdapter.showSessions(it) }
+            iAdapter.showSessions(iUiController.getTabModel().iSessions)
         }
     }
-
-
-
-
 }
 

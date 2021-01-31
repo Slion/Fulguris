@@ -106,7 +106,7 @@ class SessionViewHolder(
                         // Change tab count
                         textTabCount.text = tabCountLabel()
                         //
-                        //(iUiController as BrowserActivity).sessionsMenu.updateSessions()
+                        (iUiController as BrowserActivity).sessionsMenu.updateSessions()
                     } else {
                         // We already have a session with that name, display an error message
                         context.toast(R.string.session_already_exists)

@@ -23,7 +23,6 @@
                 android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/material_grid_margin"
-                android:textAppearance="?android:attr/textAppearanceListItem"
                 android:maxLines="1"/>
 
             <ImageButton

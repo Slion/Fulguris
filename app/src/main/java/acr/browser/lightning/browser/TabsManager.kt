@@ -82,13 +82,21 @@ class TabsManager @Inject constructor(
         }
     }
 
+
     /**
      */
-    fun currentSession() : Session {
-        return session(iCurrentSessionName!!)
+    fun currentSessionIndex() : Int {
+        return iSessions.indexOfFirst { s -> s.name == iCurrentSessionName }
     }
 
     /**
+     */
+    fun currentSession() : Session {
+        return session(iCurrentSessionName)
+    }
+
+    /**
+     * Provide the session matching the given name
      * TODO: have a better implementation
      */
     fun session(aName: String) : Session {
@@ -535,7 +543,7 @@ class TabsManager @Inject constructor(
         // TODO: Just remove that a few version down the road I guess
         FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
         // Save our session
-        saveCurrentSession(fileNameFromSessionName(iCurrentSessionName!!))
+        saveCurrentSession(fileNameFromSessionName(iCurrentSessionName))
     }
 
     /**
