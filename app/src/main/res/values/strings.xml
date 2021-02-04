@@ -317,8 +317,8 @@
     <string name="settings_adblock">Ad Block</string>
     <string name="settings_title_vertical_tab_bar">Vertical tab bar</string>
     <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
-    <string name="settings_title_desktop_mode_default">Desktop mode default</string>
-    <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode</string>
+    <string name="settings_title_desktop_mode_default">Desktop mode</string>
+    <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
     <string name="swap_bookmarks_and_tabs">Swap bookmark and tab drawers</string>
     <string name="do_not_track">Request \'Do Not Track\'</string>
     <string name="save_data">Request \'Save-Data\'</string>
