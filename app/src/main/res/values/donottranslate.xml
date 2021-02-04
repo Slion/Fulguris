@@ -45,6 +45,7 @@
     <string name="pref_key_javascript">pref_key_javascript</string>
     <string name="pref_key_request_save_data">pref_key_request_save_data</string>
     <string name="pref_key_load_images">pref_key_load_images</string>
+    <string name="pref_key_desktop_mode_default">pref_key_desktop_mode_default</string>
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>

@@ -49,6 +49,14 @@
             app:entryValues="@array/new_tab_position_values"
             app:icon="@drawable/ic_library_add" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_desktop_mode_default"
+            android:title="@string/settings_title_desktop_mode_default"
+            android:summary="@string/settings_summary_desktop_mode_default"
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_desktop" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_advanced">
