@@ -9,38 +9,24 @@
             type="acr.browser.lightning.controller.UIController"/>
     </data>
 
-    <!-- Added outer layout with no background as a convenient way to offset our menu from the screen edge
-         android:paddingRight="5dp"
-            Make sure we are not too close from the screen edge.
-    -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingRight="5dp"
-        tools:ignore="RtlHardcoded,RtlSymmetry">
-
         <LinearLayout
+            style="?attr/popupMenuStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="300dp"
             android:minHeight="300dp"
             android:orientation="vertical"
-            android:background="@drawable/menu_background"
-            tools:ignore="UselessParent">
+            android:background="?attr/popupMenuBackground"
+            android:elevation="4dp">
 
-<!--            <com.google.android.material.appbar.AppBarLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:background="@drawable/menu_title_background"
-                    >
+                    android:orientation="horizontal">
                     <!--
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                         Results in small font in landscape, consider using something else
@@ -95,7 +81,7 @@
                         />
 
                 </LinearLayout>
-<!--            </com.google.android.material.appbar.AppBarLayout>-->
+            </com.google.android.material.appbar.MaterialToolbar>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_sessions"
@@ -103,7 +89,6 @@
                 android:layout_height="0dp"
                 android:scrollbars="vertical"
                 android:layout_weight="1"
-                android:paddingVertical="4dp"
                 android:divider="@null"
                 android:dividerHeight="0dp"
                 android:overScrollMode="always"
@@ -111,9 +96,8 @@
                 android:focusable="true"
                 android:clickable="true"
                 android:descendantFocusability="afterDescendants"
-                android:layout_marginBottom="12dp"
-                android:layout_marginRight="5dp"
+                tools:listitem="@layout/session_list_item"
                 />
         </LinearLayout>
-    </LinearLayout>
+<!--    </LinearLayout>-->
 </layout>

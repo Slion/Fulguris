@@ -9,6 +9,7 @@ import acr.browser.lightning.extensions.dimBehind
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
+import acr.browser.lightning.utils.Utils
 import android.app.Activity
 import android.graphics.drawable.ColorDrawable
 import android.text.InputFilter
@@ -35,6 +36,9 @@ class SessionsPopupWindow : PopupWindow {
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
         //view.context.injector.inject(this)
+
+        // Elevation just need to be high enough not to cut the effect defined in our layout
+        elevation = 100F
 
         iBinding = aBinding
         iUiController = aBinding.root.context as UIController
@@ -199,10 +203,19 @@ class SessionsPopupWindow : PopupWindow {
         }
 
         iAnchor = aAnchor
-        //showAsDropDown(aAnchor, 0,-aAnchor.height)
-        showAsDropDown(aAnchor, 0, 0)
+        //showAsDropDown(aAnchor, 0, 0)
 
-        dimBehind()
+        // Get our anchor location
+        val anchorLoc = IntArray(2)
+        aAnchor?.getLocationInWindow(anchorLoc)
+        // Show our popup menu from the right side of the screen below our anchor
+        showAtLocation(aAnchor, Gravity.TOP or Gravity.RIGHT,
+                // Offset from the right screen edge
+                Utils.dpToPx(10F),
+                // Below our anchor
+                anchorLoc[1]+aAnchor?.height!!)
+
+        //dimBehind()
         // Show our sessions
         updateSessions()
 

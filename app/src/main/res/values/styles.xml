@@ -122,6 +122,12 @@ colorControlNormal:
         <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout.Light</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <!-- Shapes -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+        <!-- Menu background -->
+        <item name="popupMenuBackground">@drawable/popup_menu_background</item>
 
         <!-- Legacy -->
         <item name="searchBackground">@drawable/card_bg</item>
@@ -172,6 +178,12 @@ colorControlNormal:
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <!-- Shapes -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+        <!-- Menu background -->
+        <item name="popupMenuBackground">@drawable/popup_menu_background</item>
 
         <!-- Legacy -->
         <item name="searchBackground">@drawable/card_bg</item>
@@ -220,6 +232,12 @@ colorControlNormal:
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <!-- Shapes -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+        <!-- Menu background -->
+        <item name="popupMenuBackground">@drawable/popup_menu_background</item>
 
         <!-- Legacy -->
         <item name="searchBackground">@drawable/card_bg</item>
@@ -316,9 +334,32 @@ colorControlNormal:
     <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="checkedIconMargin">4dp</item>
         <item name="checkedIconSize">6dp</item>
+<!--        <item name="elevation">24dp</item>-->
         <item name="checkedIcon">@drawable/ic_circle</item>
     </style>
 
+    <!--
+    TODO: explore this to improve our toolbar in popup menu
+    <style name="Widget.App.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Primary">
+        <item name="background">@</item>
+    </style>
+    -->
+
+    <!-- Shapes -->
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 
 
 
