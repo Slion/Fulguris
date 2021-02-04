@@ -995,6 +995,23 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 }
             }
 
+            if (isCtrlShiftOnly) {
+                // Ctrl + Shift + session number for direct session access
+                tabsManager.let {
+                    if (KeyEvent.KEYCODE_0 <= event.keyCode && event.keyCode <= KeyEvent.KEYCODE_9) {
+                        val nextIndex = if (event.keyCode > it.iSessions.count() + KeyEvent.KEYCODE_1 || event.keyCode == KeyEvent.KEYCODE_0) {
+                            // Go to the last session if not enough sessions or KEYCODE_0
+                            it.iSessions.count()-1
+                        } else {
+                            // Otherwise access any of the first nine sessions
+                            event.keyCode - KeyEvent.KEYCODE_1
+                        }
+                        presenter?.switchToSession(it.iSessions[nextIndex].name)
+                        return true
+                    }
+                }
+            }
+
             // CTRL+TAB for tab cycling logic
             if (event.isCtrlPressed && event.keyCode == KeyEvent.KEYCODE_TAB) {
 
