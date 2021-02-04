@@ -5,10 +5,8 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.di.injector
-import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isSpecialUrl
 import android.graphics.drawable.ColorDrawable
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -55,7 +53,7 @@ class BrowserPopupMenu : PopupWindow {
 
         (contentView.context as BrowserActivity).tabsManager.let {
             // Set desktop mode checkbox according to current tab
-            contentView.menuItemDesktopMode.isChecked = it.currentTab?.toggleDesktop ?: false
+            contentView.menuItemDesktopMode.isChecked = it.currentTab?.desktopMode ?: false
 
             it.currentTab?.let { tab ->
                 // Let user add multiple times the same URL I guess, for now anyway

@@ -50,7 +50,6 @@ import io.reactivex.subjects.PublishSubject
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.net.URISyntaxException
-import java.net.URL
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
@@ -133,7 +132,7 @@ class LightningWebClient(
 
     override fun onLoadResource(view: WebView, url: String?) {
         super.onLoadResource(view, url)
-        if (lightningView.toggleDesktop) {
+        if (lightningView.desktopMode) {
             // That's needed for desktop mode support
             // See: https://stackoverflow.com/a/60621350/3969362
             // See: https://stackoverflow.com/a/39642318/3969362

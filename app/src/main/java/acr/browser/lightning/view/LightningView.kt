@@ -136,7 +136,15 @@ class LightningView(
      */
     var invertPage = false
         private set
-    var toggleDesktop = false
+
+    /**
+     * True if desktop mode is enabled for this tab.
+     */
+    var desktopMode = false
+
+    /**
+     *
+     */
     private val webViewHandler = WebViewHandler(this)
 
     /**
@@ -222,7 +230,7 @@ class LightningView(
      * Return true if this tab is frozen, meaning it was not yet loaded from its bundle
      */
     val isFrozen : Boolean
-        get() = latentTabInitializer?.bundle != null
+        get() = latentTabInitializer?.tabModel?.webView != null
 
 
     /**
@@ -291,8 +299,9 @@ class LightningView(
             tabInitializer.initialize(tab, requestHeaders)
         } else {
             latentTabInitializer = tabInitializer
-            titleInfo.setTitle(tabInitializer.initialTitle)
-            titleInfo.setFavicon(tabInitializer.favicon)
+            titleInfo.setTitle(tabInitializer.tabModel.title)
+            titleInfo.setFavicon(tabInitializer.tabModel.favicon)
+            desktopMode = tabInitializer.tabModel.desktopMode
         }
 
         networkDisposable = networkConnectivityModel.connectivity()
@@ -479,14 +488,15 @@ class LightningView(
      * This method is used to toggle the user agent between desktop and the current preference of
      * the user.
      */
-    fun toggleDesktopUA() {
-        if (!toggleDesktop) {
+    fun toggleDesktopUserAgent() {
+        // Toggle desktop mode
+        desktopMode = !desktopMode
+        // Set our user agent accordingly
+        if (desktopMode) {
             webView?.settings?.userAgentString = DESKTOP_USER_AGENT
         } else {
             setUserAgentForPreference(userPreferences)
         }
-
-        toggleDesktop = !toggleDesktop
     }
 
     /**
@@ -501,7 +511,7 @@ class LightningView(
      * We get that state bundle either directly from our Web View,
      * or from our frozen tab initializer if ever our Web View was never loaded.
      */
-    private fun webViewState(): Bundle = latentTabInitializer?.bundle
+    private fun webViewState(): Bundle = latentTabInitializer?.tabModel?.webView
         ?: Bundle(ClassLoader.getSystemClassLoader()).also {
             webView?.saveState(it)
         }
@@ -510,7 +520,7 @@ class LightningView(
      * Save the state of this tab and return it as a [Bundle].
      */
     fun saveState(): Bundle {
-         return TabModel(url,title,favicon,webViewState()).toBundle()
+         return TabModel(url,title,desktopMode,favicon,webViewState()).toBundle()
     }
     /**
      * Pause the current WebView instance.

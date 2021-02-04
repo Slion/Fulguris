@@ -1,6 +1,7 @@
 package acr.browser.lightning.view
 
 import acr.browser.lightning.R
+import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.SCHEME_BOOKMARKS
 import acr.browser.lightning.constant.SCHEME_HOMEPAGE
 import acr.browser.lightning.di.DiskScheduler
@@ -146,7 +147,7 @@ class ResultMessageInitializer(private val resultMessage: Message) : TabInitiali
 /**
  * An initializer that restores the [WebView] state using the [bundle].
  */
-open class BundleInitializer(private val bundle: Bundle) : TabInitializer {
+open class BundleInitializer(private val bundle: Bundle?) : TabInitializer {
 
     override fun initialize(webView: WebView, headers: Map<String, String>) {
         webView.restoreState(bundle)
@@ -159,10 +160,8 @@ open class BundleInitializer(private val bundle: Bundle) : TabInitializer {
  * should be initially set on the tab.
  */
 class FreezableBundleInitializer(
-    val bundle: Bundle,
-    val initialTitle: String,
-    val favicon: Bitmap?
-) : BundleInitializer(bundle)
+    val tabModel: TabModel
+) : BundleInitializer(tabModel.webView)
 
 /**
  * An initializer that does not load anything into the [WebView].

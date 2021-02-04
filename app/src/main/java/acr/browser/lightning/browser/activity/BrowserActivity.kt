@@ -4,7 +4,6 @@
 
 package acr.browser.lightning.browser.activity
 
-import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.IncognitoActivity
@@ -1249,7 +1248,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
             R.id.action_toggle_desktop_mode -> {
                 tabsManager.currentTab?.apply {
-                    toggleDesktopUA()
+                    toggleDesktopUserAgent()
                     reload()
                 }
                 return true

@@ -267,8 +267,7 @@ class TabsManager @Inject constructor(
                     return@map if (tabModel.url.isSpecialUrl()) {
                         tabInitializerForSpecialUrl(tabModel.url)
                     } else {
-                        FreezableBundleInitializer(tabModel.webView ?: Bundle(), tabModel.title
-                                ?: application.getString(R.string.tab_frozen), tabModel.favicon)
+                        FreezableBundleInitializer(tabModel)
                     }
                 }
     }

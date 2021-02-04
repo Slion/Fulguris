@@ -295,7 +295,7 @@ class BrowserPresenter(
                     newTab(tabsModel.tabInitializerForSpecialUrl(it.url), show)
                 } else {
                     // That's an actual WebView bundle
-                    newTab(FreezableBundleInitializer(it.webView?: Bundle() , it.title, it.favicon), show)
+                    newTab(FreezableBundleInitializer(it), show)
                 }
             }
             view.showSnackbar(R.string.reopening_recent_tab)

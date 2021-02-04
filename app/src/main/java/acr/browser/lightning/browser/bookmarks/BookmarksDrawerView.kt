@@ -10,7 +10,6 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.BookmarkDrawerViewBinding
-import acr.browser.lightning.databinding.TabDrawerViewBinding
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
@@ -23,7 +22,6 @@ import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.extensions.setImageForTheme
 import acr.browser.lightning.favicon.FaviconModel
-import acr.browser.lightning.reading.activity.ReadingActivity
 import acr.browser.lightning.utils.isSpecialUrl
 import android.app.Activity
 import android.content.Context
@@ -211,7 +209,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
                 title = R.string.dialog_toggle_desktop
             ) {
                 getTabsManager().currentTab?.apply {
-                    toggleDesktopUA()
+                    toggleDesktopUserAgent()
                     reload()
                     // TODO add back drawer closing
                 }
