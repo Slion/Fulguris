@@ -46,13 +46,13 @@ class SessionViewHolder(
         buttonDelete.setOnClickListener {
             // Just don't delete current session for now
             // TODO: implement a solution to indeed delete current session
-            if (iUiController.getTabModel().iCurrentSessionName == session()?.name) {
+            if (iUiController.getTabModel().iCurrentSessionName == session().name) {
                 it.context.toast(R.string.session_cant_delete_current)
             } else {
                 MaterialAlertDialogBuilder(it.context)
                         .setCancelable(true)
                         .setTitle(R.string.session_prompt_confirm_deletion_title)
-                        .setMessage(it.context.getString(R.string.session_prompt_confirm_deletion_message,session()?.name))
+                        .setMessage(it.context.getString(R.string.session_prompt_confirm_deletion_message,session().name))
                         .setNegativeButton(android.R.string.cancel, null)
                         .setPositiveButton(android.R.string.ok) { _, _ ->
                             // User confirmed deletion, go ahead then
@@ -100,12 +100,7 @@ class SessionViewHolder(
                     if (iUiController.getTabModel().isValidSessionName(newName)) {
                         // Proceed with session rename
                         iUiController.getTabModel().renameSession(textName.tag as String,newName)
-                        textName.tag = newName
-                        // Change name on our item view
-                        textName.text = session().name
-                        // Change tab count
-                        textTabCount.text = tabCountLabel()
-                        //
+                        // Make sure we update adapter list and thus edited item too
                         (iUiController as BrowserActivity).sessionsMenu.updateSessions()
                     } else {
                         // We already have a session with that name, display an error message

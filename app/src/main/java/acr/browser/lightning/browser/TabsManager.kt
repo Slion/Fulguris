@@ -273,14 +273,14 @@ class TabsManager @Inject constructor(
     }
 
     /**
-     * Rename the session at [aIndex] to [aNewName].
+     * Rename the session [aOldName] to [aNewName].
      * Takes care of checking parameters validity before proceeding.
      * Changes current session name if needed.
      * Rename matching session data file too.
      * Commit session list changes to persistent storage.
      *
-     * @param [aIndex] Index of the session to rename in our session list.
-     * @param [aNewName] New name to be assumed by our session at the given index.
+     * @param [aOldName] Name of the session to rename in our session list.
+     * @param [aNewName] New name to be assumed by specified session.
      */
     fun renameSession(aOldName: String, aNewName: String) {
 
@@ -295,12 +295,12 @@ class TabsManager @Inject constructor(
 
         // Proceed with rename then
         val oldName = iSessions[index].name
+        // Change session name
+        iSessions[index].name = aNewName
         // Renamed session is the current session
         if (iCurrentSessionName == oldName) {
             iCurrentSessionName = aNewName
         }
-        // Change session name
-        iSessions[index].name = aNewName
 
         // Rename our session file
         FileUtils.renameBundleInStorage(application, fileNameFromSessionName(oldName), fileNameFromSessionName(aNewName))
