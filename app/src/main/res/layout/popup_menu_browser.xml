@@ -8,28 +8,26 @@
 
     </data>
 
-    <!-- Added outer layout with no background as a convenient way to offset our menu from the screen edge
-     android:paddingRight="5dp"
-        Make sure we are not too close from the screen edge.
-    -->
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="?attr/popupMenuStyle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingRight="5dp"
-        tools:ignore="RtlHardcoded,RtlSymmetry">
+        android:background="?attr/popupMenuBackground"
+        android:elevation="4dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/menu_background"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+<!-- TODO: could not get this working with rounded corner
+    <com.google.android.material.appbar.AppBarLayout-->
+<!--            android:id="@+id/header"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent">-->
 
             <LinearLayout
                 android:id="@+id/header"
                 android:layout_width="0dp"
-                android:layout_height="?actionBarSize"
+                android:layout_height="?attr/actionBarSize"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
@@ -88,106 +86,108 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                app:layout_constraintBottom_toBottomOf="@id/header" />
+<!--        </com.google.android.material.appbar.AppBarLayout>-->
 
-            <!-- paddingBottom to make sure fading edge is working with our fancy background -->
-            <ScrollView
-                android:layout_width="match_parent"
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="@id/header" />
+
+        <!-- paddingBottom to make sure fading edge is working with our fancy background -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            android:paddingBottom="10dp"
+            android:requiresFadingEdge="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/header"
-                android:paddingBottom="10dp"
-                android:requiresFadingEdge="vertical">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/menuItemSessions"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_sessions"
+                    android:text="@string/action_sessions" />
+
+                <TextView
+                    android:id="@+id/menuItemNewTab"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_action_plus"
+                    android:text="@string/action_new_tab" />
+
+                <TextView
+                    android:id="@+id/menuItemHistory"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_history"
+                    android:text="@string/action_history" />
+
+                <TextView
+                    android:id="@+id/menuItemDownloads"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_file_download"
+                    android:text="@string/action_downloads" />
+
+                <TextView
+                    android:id="@+id/menuItemAddBookmark"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_bookmark_border"
+                    android:text="@string/action_add_bookmark" />
+
+                <TextView
+                    android:id="@+id/menuItemShare"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_share"
+                    android:text="@string/action_share" />
+
+                <TextView
+                    android:id="@+id/menuItemFind"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_find_in_page"
+                    android:text="@string/action_find" />
+
+                <TextView
+                    android:id="@+id/menuItemAddToHome"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_add_to_home_screen"
+                    android:text="@string/action_add_to_homescreen" />
+
+                <TextView
+                    android:id="@+id/menuItemReaderMode"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_action_reading"
+                    android:text="@string/reading_mode" />
+
+                <CheckBox
+                    android:id="@+id/menuItemDesktopMode"
+                    style="@style/BrowserTextMenuItem"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:button="@null"
+                    android:text="@string/agent_desktop"
+                    android:gravity="center_vertical"
+                    android:enabled="true"
+                    app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
+                    app:drawableStartCompat="@drawable/ic_desktop" />
 
-                    <TextView
-                        android:id="@+id/menuItemSessions"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_sessions"
-                        android:text="@string/action_sessions" />
+                <TextView
+                    android:id="@+id/menuItemIncognito"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_incognito"
+                    android:text="@string/action_incognito"
+                    android:enabled="true" />
 
-                    <TextView
-                        android:id="@+id/menuItemNewTab"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_action_plus"
-                        android:text="@string/action_new_tab" />
-
-                    <TextView
-                        android:id="@+id/menuItemHistory"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_history"
-                        android:text="@string/action_history" />
-
-                    <TextView
-                        android:id="@+id/menuItemDownloads"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_file_download"
-                        android:text="@string/action_downloads" />
-
-                    <TextView
-                        android:id="@+id/menuItemAddBookmark"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_bookmark_border"
-                        android:text="@string/action_add_bookmark" />
-
-                    <TextView
-                        android:id="@+id/menuItemShare"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_share"
-                        android:text="@string/action_share" />
-
-                    <TextView
-                        android:id="@+id/menuItemFind"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_find_in_page"
-                        android:text="@string/action_find" />
-
-                    <TextView
-                        android:id="@+id/menuItemAddToHome"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_add_to_home_screen"
-                        android:text="@string/action_add_to_homescreen" />
-
-                    <TextView
-                        android:id="@+id/menuItemReaderMode"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_action_reading"
-                        android:text="@string/reading_mode" />
-
-                    <CheckBox
-                        android:id="@+id/menuItemDesktopMode"
-                        style="@style/BrowserTextMenuItem"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:button="@null"
-                        android:text="@string/agent_desktop"
-                        android:gravity="center_vertical"
-                        android:enabled="true"
-                        app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
-                        app:drawableStartCompat="@drawable/ic_desktop" />
-
-                    <TextView
-                        android:id="@+id/menuItemIncognito"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_incognito"
-                        android:text="@string/action_incognito"
-                        android:enabled="true" />
-
-                    <TextView
-                        android:id="@+id/menuItemSettings"
-                        style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_settings"
-                        android:text="@string/settings" />
-                </LinearLayout>
-            </ScrollView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/menuItemSettings"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_settings"
+                    android:text="@string/settings" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
