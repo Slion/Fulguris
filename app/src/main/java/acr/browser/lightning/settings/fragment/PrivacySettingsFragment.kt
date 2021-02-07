@@ -14,7 +14,9 @@ import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.WebUtils
 import acr.browser.lightning.view.LightningView
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebView
 import androidx.fragment.app.FragmentActivity
 import io.reactivex.Completable
@@ -56,7 +58,8 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
             preference = SETTINGS_SAVEPASSWORD,
             isChecked = userPreferences.savePasswordsEnabled,
             onCheckChange = { userPreferences.savePasswordsEnabled = it }
-        )
+        // From Android O auto-fill framework is used instead
+        ).isVisible = Build.VERSION.SDK_INT < Build.VERSION_CODES.O
 
         checkBoxPreference(
             preference = SETTINGS_CACHEEXIT,
