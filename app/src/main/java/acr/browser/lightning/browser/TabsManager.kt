@@ -66,7 +66,7 @@ class TabsManager @Inject constructor(
     private var tabNumberListeners = emptySet<(Int) -> Unit>()
 
     var isInitialized = false
-    private var postInitializationWorkList = emptyList<() -> Unit>()
+    private var postInitializationWorkList = mutableListOf<() -> Unit>()
 
     init {
         addTabNumberChangedListener {
@@ -127,18 +127,30 @@ class TabsManager @Inject constructor(
      * Cancels any pending work that was scheduled to run after initialization.
      */
     fun cancelPendingWork() {
-        postInitializationWorkList = emptyList()
+        postInitializationWorkList.clear()
+    }
+
+
+    /**
+     * Executes the [runnable] once after the next time this manager has been initialized.
+     */
+    fun doOnceAfterInitialization(runnable: () -> Unit) {
+        if (isInitialized) {
+            runnable()
+        } else {
+            val index = postInitializationWorkList.count()
+            postInitializationWorkList.add { runnable();postInitializationWorkList.removeAt(index) }
+        }
     }
 
     /**
-     * Executes the [runnable] after the manager has been initialized.
+     * Executes the [runnable] every time after this manager has been initialized.
      */
     fun doAfterInitialization(runnable: () -> Unit) {
         if (isInitialized) {
             runnable()
-        } else {
-            postInitializationWorkList += runnable
         }
+        postInitializationWorkList.add(runnable)
     }
 
     private fun finishInitialization() {

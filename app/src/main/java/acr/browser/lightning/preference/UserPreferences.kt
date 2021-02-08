@@ -390,6 +390,11 @@ class UserPreferences @Inject constructor(
      * Default level is defined by our build configuration.
      */
     var sponsorship by preferences.enumPreference(R.string.pref_key_sponsorship, BuildConfig.SPONSORSHIP)
+
+    /**
+     * Used to store version code to enable version update check and first run detection.
+     */
+    var versionCode by preferences.intPreference(R.string.pref_key_version_code, 0)
 }
 
 // SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML

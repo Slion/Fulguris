@@ -289,8 +289,29 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         initialize(savedInstanceState)
 
         if (BuildConfig.FLAVOR.contains("slionsFullDownload")) {
-            // Check for update after a short delay, hoping user engagement is better and message more visible
-            mainHandler.postDelayed({ checkForUpdates() }, 3000)
+            tabsManager.doOnceAfterInitialization {
+                // Check for update after a short delay, hoping user engagement is better and message more visible
+                mainHandler.postDelayed({ checkForUpdates() }, 3000)
+            }
+        }
+
+        // Welcome new users or notify of updates
+        tabsManager.doOnceAfterInitialization {
+            // If our version code was changed
+            if (userPreferences.versionCode != BuildConfig.VERSION_CODE) {
+                if (userPreferences.versionCode==0
+                        // Added this check to avoid show welcome message to existing installation
+                        // TODO: Remove that a few versions down the road
+                        && tabsManager.iSessions.count()==1 && tabsManager.allTabs.count()==1) {
+                    // First run
+                    welcomeToFulguris()
+                } else {
+                    // Version was updated
+                    notifyVersionUpdate()
+                }
+                // Persist our current version so that we don't kick in next time
+                userPreferences.versionCode = BuildConfig.VERSION_CODE
+            }
         }
 
         // Hook in buttons with onClick handler
@@ -2687,6 +2708,45 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         } else {
             false
         }
+
+    /**
+     * Welcome user after first installation.
+     */
+    private fun welcomeToFulguris() {
+        MaterialAlertDialogBuilder(this)
+                .setCancelable(true)
+                .setTitle(R.string.title_welcome)
+                .setMessage(R.string.message_welcome)
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.yes) { _, _ -> val url = getString(R.string.url_app_home_page)
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(url)
+                    // Not sure that does anything
+                    i.putExtra("SOURCE", "SELF")
+                    startActivity(i)}
+                .resizeAndShow()
+    }
+
+
+    /**
+     * Notify user about application update.
+     */
+    private fun notifyVersionUpdate() {
+        // TODO: Consider using snackbar instead to be less intrusive, make it a settings option?
+        MaterialAlertDialogBuilder(this)
+                .setCancelable(true)
+                .setTitle(R.string.title_updated)
+                .setMessage(getString(R.string.message_updated,BuildConfig.VERSION_NAME))
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.yes) { _, _ -> val url = getString(R.string.url_app_updates)
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(url)
+                    // Not sure that does anything
+                    i.putExtra("SOURCE", "SELF")
+                    startActivity(i)}
+                .resizeAndShow()
+    }
+
 
     /**
      * Check for update on slions.net.

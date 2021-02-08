@@ -144,7 +144,7 @@ class SessionViewHolder(
                         sessionsMenu.dismiss()
                     } else {
                         // Update our list, notably current item
-                        iUiController.getTabModel().doAfterInitialization { sessionsMenu.updateSessions() }
+                        iUiController.getTabModel().doOnceAfterInitialization { sessionsMenu.updateSessions() }
                     }
                 }
             }

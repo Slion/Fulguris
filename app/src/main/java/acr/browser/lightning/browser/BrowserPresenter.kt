@@ -258,7 +258,7 @@ class BrowserPresenter(
      *
      * @param intent the intent to handle, may be null.
      */
-    fun onNewIntent(intent: Intent?) = tabsModel.doAfterInitialization {
+    fun onNewIntent(intent: Intent?) = tabsModel.doOnceAfterInitialization {
         val url = if (intent?.action == Intent.ACTION_WEB_SEARCH) {
             tabsModel.extractSearchFromIntent(intent)
         } else {

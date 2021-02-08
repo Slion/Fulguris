@@ -52,6 +52,7 @@
     <string name="pref_key_new_tab_position">pref_key_new_tab_position</string>
     <string name="pref_key_theme">pref_key_theme</string>
     <string name="pref_key_sponsorship">pref_key_sponsorship</string>
+    <string name="pref_key_version_code">pref_key_version_code</string>
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>
