@@ -20,7 +20,6 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
-import java.io.File
 import javax.inject.Inject
 
 /**
@@ -66,7 +65,7 @@ class TabsManager @Inject constructor(
     private var tabNumberListeners = emptySet<(Int) -> Unit>()
 
     var isInitialized = false
-    private var postInitializationWorkList = mutableListOf<() -> Unit>()
+    private var postInitializationWorkList = mutableListOf<InitializationListener>()
 
     init {
         addTabNumberChangedListener {
@@ -138,8 +137,12 @@ class TabsManager @Inject constructor(
         if (isInitialized) {
             runnable()
         } else {
-            val index = postInitializationWorkList.count()
-            postInitializationWorkList.add { runnable();postInitializationWorkList.removeAt(index) }
+            postInitializationWorkList.add(object : InitializationListener {
+                override fun onInitializationComplete() {
+                    runnable()
+                    postInitializationWorkList.remove(this)
+                }
+            })
         }
     }
 
@@ -149,8 +152,13 @@ class TabsManager @Inject constructor(
     fun doAfterInitialization(runnable: () -> Unit) {
         if (isInitialized) {
             runnable()
+        } else {
+            postInitializationWorkList.add(object : InitializationListener {
+                override fun onInitializationComplete() {
+                    runnable()
+                }
+            })
         }
-        postInitializationWorkList.add(runnable)
     }
 
     private fun finishInitialization() {
@@ -174,8 +182,12 @@ class TabsManager @Inject constructor(
         }
 
         isInitialized = true
-        for (runnable in postInitializationWorkList) {
-            runnable()
+
+        // Iterate through our collection while allowing item to be removed and avoid ConcurrentModificationException
+        // To do that we need to make a copy of our list
+        val listCopy = postInitializationWorkList.toList()
+        for (listener in listCopy) {
+            listener.onInitializationComplete()
         }
     }
 
@@ -647,7 +659,7 @@ class TabsManager @Inject constructor(
             // Search for session files
             val files = application.filesDir?.let{it.listFiles { d, name -> name.startsWith(FILENAME_SESSION_PREFIX) }}
             // Add recovered sessions to our collection
-            files?.forEach { f -> iSessions.add(Session(f.name.substring(FILENAME_SESSION_PREFIX.length),-1)) }
+            files?.forEach { f -> iSessions.add(Session(f.name.substring(FILENAME_SESSION_PREFIX.length), -1)) }
             // Set the first one as current one
             if (!iSessions.isNullOrEmpty()) {
                 iCurrentSessionName = iSessions[0].name
@@ -719,6 +731,14 @@ class TabsManager @Inject constructor(
                 }
             }
         }
+
+    /**
+     * Was needed instead of simple runnable to be able to implement run once after init function
+     */
+    interface InitializationListener {
+        fun onInitializationComplete()
+    }
+
 
     companion object {
 
