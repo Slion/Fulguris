@@ -160,6 +160,7 @@ class LightningChromeClient(
         if (userPreferences.webRtcEnabled) {
             webRtcPermissionsModel.requestPermission(request, this)
         } else {
+            //TODO: display warning message as snackbar I guess
             request.deny()
         }
     }
