@@ -68,7 +68,7 @@ class TabCountView @JvmOverloads constructor(
             bitmapCanvas = Canvas(localBitmap);
             bitmap = localBitmap
             workingRect.set( 0f, 0f, width.toFloat(), height.toFloat())
-            workingRect.scale(0.4f)
+            workingRect.scale(0.45f)
         }
     }
 
@@ -117,7 +117,7 @@ class TabCountView @JvmOverloads constructor(
     }
 
     companion object {
-        private const val MAX_DISPLAYABLE_NUMBER = 99
+        private const val MAX_DISPLAYABLE_NUMBER = 999
     }
 
 }
