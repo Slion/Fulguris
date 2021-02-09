@@ -439,7 +439,8 @@ class LightningView(
     @SuppressLint("NewApi")
     private fun WebView.initializeSettings() {
         settings.apply {
-            mediaPlaybackRequiresUserGesture = true
+            // That needs to be false for WebRTC to work at all, don't ask me why
+            mediaPlaybackRequiresUserGesture = false
 
             if (API >= Build.VERSION_CODES.LOLLIPOP && !isIncognito) {
                 mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE

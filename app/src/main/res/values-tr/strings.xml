@@ -264,7 +264,7 @@
     <string name="do_not_track">\'İzleme isteği\' gönder</string>
     <string name="save_data">İstek \'Veri-Kaydet\'</string>
     <string name="remove_identifying_headers">Tanımlayıcı başlıkları kaldır</string>
-    <string name="webrtc_support">WebRTC desteği</string>
+    <string name="pref_title_webrtc">WebRTC desteği</string>
     <string name="action_add_to_homescreen">Ana ekrana ekle</string>
     <string name="message_added_to_homescreen">Ana ekrana kısayol eklendi</string>
     <string name="shortcut_message_failed_to_add">Üzgünüz, başlatıcınız kısayolları desteklemiyor.</string>

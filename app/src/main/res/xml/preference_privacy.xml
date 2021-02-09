@@ -3,18 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
+        android:defaultValue="@bool/pref_default_webrtc"
+        android:key="@string/pref_key_webrtc"
+        android:title="@string/pref_title_webrtc"
+        android:summary="@string/pref_summary_webrtc"
+        app:icon="@drawable/ic_videocam"/>
+
+    <SwitchPreferenceCompat
         android:defaultValue="@bool/pref_default_crash_report"
         android:key="@string/pref_key_crash_report"
         android:title="@string/pref_title_crash_report"
         android:summary="@string/pref_summary_recommended_anonymous"
-        app:iconSpaceReserved="false"/>
+        app:iconSpaceReserved="false"
+        app:icon="@drawable/ic_bug"/>
 
     <SwitchPreferenceCompat
         android:defaultValue="@bool/pref_default_analytics"
         android:key="@string/pref_key_analytics"
         android:title="@string/pref_title_analytics"
         android:summary="@string/pref_summary_recommended_anonymous"
-        app:iconSpaceReserved="false"/>
+        app:iconSpaceReserved="false"
+        app:icon="@drawable/ic_query_stats"/>
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -37,10 +46,6 @@
         android:defaultValue="false"
         android:key="remove_identifying_headers"
         android:title="@string/remove_identifying_headers"/>
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="webrtc_support"
-        android:title="@string/webrtc_support"/>
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="clear_cache_exit"

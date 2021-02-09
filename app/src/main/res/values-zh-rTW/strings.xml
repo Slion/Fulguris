@@ -232,7 +232,7 @@
     <string name="swap_bookmarks_and_tabs">交換書籤與分頁側邊選單的位置</string>
     <string name="do_not_track">要求不追蹤（Do Not Track）</string>
     <string name="remove_identifying_headers">移除識別標頭</string>
-    <string name="webrtc_support">WebRTC 支援</string>
+    <string name="pref_title_webrtc">WebRTC 支援</string>
     <string name="action_add_to_homescreen">新增至主畫面</string>
     <string name="message_added_to_homescreen">捷徑已新增至主畫面</string>
     <string name="shortcut_message_failed_to_add">很抱歉，您的啟動器不支援捷徑功能。</string>

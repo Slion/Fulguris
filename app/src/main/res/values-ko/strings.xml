@@ -226,7 +226,7 @@
     <string name="shortcut_message_failed_to_add">죄송합니다, 홈 화면이 바로가기를 지원하지 않습니다.</string>
     <string name="message_added_to_homescreen">홈 화면에 바로가기를 추가했습니다</string>
     <string name="action_add_to_homescreen">홈 화면에 추가</string>
-    <string name="webrtc_support">WebRTC 지원</string>
+    <string name="pref_title_webrtc">WebRTC 지원</string>
     <string name="do_not_track">\'추적 금지\' 요청</string>
     <string name="remove_identifying_headers">개인 식별 헤더 제거</string>
     <string name="settings_adblock">광고 차단 설정</string>

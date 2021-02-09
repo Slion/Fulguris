@@ -254,7 +254,7 @@
     <string name="do_not_track">请求“Do Not Track”</string>
     <string name="save_data">请求“Save-Data”</string>
     <string name="remove_identifying_headers">移除可用于识别的头部信息</string>
-    <string name="webrtc_support">WebRTC 支持</string>
+    <string name="pref_title_webrtc">WebRTC 支持</string>
     <string name="action_add_to_homescreen">添加到桌面</string>
     <string name="message_added_to_homescreen">快捷方式已添加到桌面</string>
     <string name="shortcut_message_failed_to_add">抱歉，你的桌面应用不支持快捷方式</string>

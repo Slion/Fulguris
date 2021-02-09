@@ -231,7 +231,7 @@
     <string name="swap_bookmarks_and_tabs">Lesezeichen und Tab-Drawer wechseln</string>
     <string name="do_not_track">\"Nicht verfolgen\"-Funktion anfordern</string>
     <string name="remove_identifying_headers">Identifizierbare Header entfernen</string>
-    <string name="webrtc_support">WebRTC Unterstützung</string>
+    <string name="pref_title_webrtc">WebRTC Unterstützung</string>
     <string name="action_add_to_homescreen">Auf Startbildschirm legen</string>
     <string name="message_added_to_homescreen">Verknüpfung wurde zum Startbildschirm hinzugefügt</string>
     <string name="shortcut_message_failed_to_add">Ihr Launcher unterstützt keine Verknüpfungen!</string>

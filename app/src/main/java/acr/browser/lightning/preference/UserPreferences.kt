@@ -33,7 +33,7 @@ class UserPreferences @Inject constructor(
     /**
      * True if Web RTC is enabled in the browser, false otherwise.
      */
-    var webRtcEnabled by preferences.booleanPreference(WEB_RTC, false)
+    var webRtcEnabled by preferences.booleanPreference(R.string.pref_key_webrtc, R.bool.pref_default_webrtc)
 
     /**
      * True if the browser should block ads, false otherwise.
@@ -399,7 +399,6 @@ class UserPreferences @Inject constructor(
 
 // SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML
 // TODO: That does not make sense, we need to sort this out
-private const val WEB_RTC = "webRtc"
 private const val BLOCK_ADS = "AdBlock"
 private const val CLEAR_CACHE_EXIT = "cache"
 private const val DOWNLOAD_DIRECTORY = "downloadLocation"
