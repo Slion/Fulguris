@@ -1,37 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="@dimen/toolbar_height_portrait"
+    android:orientation="horizontal"
+    android:layout_marginRight="5dp"
+    android:animateLayoutChanges="true">
 
-    <FrameLayout
-        android:id="@+id/home_button"
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height="match_parent"
-        android:background="?attr/actionBarItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/home_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/home" />
-
-        <acr.browser.lightning.icon.TabCountView
-            android:id="@+id/tabs_button"
-            android:layout_width="@dimen/material_grid_small_icon"
-            android:layout_height="@dimen/material_grid_small_icon"
-            android:layout_gravity="center"
-            app:tabIconBorderRadius="2dp"
-            app:tabIconBorderWidth="3dp"
-            app:tabIconColor="?attr/colorControlNormal"
-            app:tabIconTextSize="14dp" />
-    </FrameLayout>
 
     <include layout="@layout/search" />
 
+    <!--
+
+        android:layout_width="?attr/actionBarSize"
+            Not using this anymore for now
+
+        android:background="?attr/actionBarItemBackground"
+            Background is needed to have nice round focus highlight and tap animation
+
+        style="?android:attr/actionButtonStyle"
+            Interesting style for our toolbar buttons it includes the above background
+    -->
+
+
+    <!--
+    // Can't get data binding to work just duplicate code for now
+    <include layout="@layout/toolbar_button"
+        android:id="@+id/button_more"
+        app:mySrc="@{@drawable/ic_more_vertical}"
+        app:myText="@{`my text`}"
+        />
+-->
+
+    <ImageButton
+        android:id="@+id/button_reload"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/action_reload"
+        app:tooltipText="@{@string/action_reload}"
+        app:srcCompat="@drawable/ic_action_refresh"
+        android:nextFocusDown="@id/web_view" />
+
+    <ImageButton
+        android:id="@+id/button_action_back"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/action_back"
+        app:tooltipText="@{@string/action_back}"
+        app:srcCompat="@drawable/ic_action_back" />
+
+    <ImageButton
+        android:id="@+id/button_action_forward"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/action_forward"
+        app:tooltipText="@{@string/action_forward}"
+        app:srcCompat="@drawable/ic_action_forward" />
+
+    <ImageButton
+        android:id="@+id/home_button"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/home"
+        app:tooltipText="@{@string/home}"
+        app:srcCompat="@drawable/ic_action_home"
+        android:nextFocusDown="@id/web_view"
+        />
+
+    <acr.browser.lightning.icon.TabCountView
+        android:id="@+id/tabs_button"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="@dimen/material_grid_touch_medium"
+        android:layout_height="@dimen/material_grid_touch_medium"
+        android:layout_gravity="center"
+        app:tabIconBorderRadius="3dp"
+        app:tabIconBorderWidth="2dp"
+        app:tabIconColor="?attr/colorControlNormal"
+        app:tabIconTextSize="10dp"
+        android:contentDescription="@string/tabs"
+        app:tooltipText="@{@string/tabs}"
+        android:nextFocusDown="@id/web_view"
+        />
+
+    <ImageButton
+        android:id="@+id/button_more"
+        style="?android:attr/actionButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_lightning"
+        android:contentDescription="@string/action_more"
+        app:tooltipText="@{@string/action_more}"
+        android:nextFocusDown="@id/web_view"
+        />
+
 </LinearLayout>
+
+</layout>

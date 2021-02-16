@@ -110,7 +110,7 @@ import kotlinx.android.synthetic.main.browser_content.*
 import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import kotlinx.android.synthetic.main.search.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.slions.toolbar_content.*
+import kotlinx.android.synthetic.main.toolbar_content.*
 import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject

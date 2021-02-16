@@ -130,7 +130,6 @@ colorControlNormal:
         <item name="popupMenuBackground">@drawable/popup_menu_background</item>
 
         <!-- Legacy -->
-        <item name="searchBackground">@drawable/card_bg</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
 
@@ -184,7 +183,6 @@ colorControlNormal:
         <item name="popupMenuBackground">@drawable/popup_menu_background</item>
 
         <!-- Legacy -->
-        <item name="searchBackground">@drawable/card_bg</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
 
@@ -236,7 +234,6 @@ colorControlNormal:
         <item name="popupMenuBackground">@drawable/popup_menu_background</item>
 
         <!-- Legacy -->
-        <item name="searchBackground">@drawable/card_bg</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
 
