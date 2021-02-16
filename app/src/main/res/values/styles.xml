@@ -131,7 +131,6 @@ colorControlNormal:
 
         <!-- Legacy -->
         <item name="searchBackground">@drawable/card_bg</item>
-        <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
         <item name="progressBackgroundColor">@color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -187,7 +186,6 @@ colorControlNormal:
 
         <!-- Legacy -->
         <item name="searchBackground">@drawable/card_bg</item>
-        <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
         <item name="progressBackgroundColor">@color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
@@ -241,7 +239,6 @@ colorControlNormal:
 
         <!-- Legacy -->
         <item name="searchBackground">@drawable/card_bg</item>
-        <item name="listBackground">?attr/listChoiceBackgroundIndicator</item>
         <item name="progressBackgroundColor">@color/transparent</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
