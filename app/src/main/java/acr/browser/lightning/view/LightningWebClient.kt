@@ -320,6 +320,11 @@ class LightningWebClient(
             return true
         }
 
+        if (isTel(url, view)) {
+            // If it was a tel: link, or an intent, or could be launched elsewhere, do that
+            return true
+        }
+
         val intent = intentUtils.intentForUrl(view, url)
         intent?.let {
             // Check if that external app is already known
@@ -379,6 +384,19 @@ class LightningWebClient(
                 webView.loadUrl(url, headers)
                 true
             }
+        }
+    }
+
+    private fun isTel(url: String, view: WebView): Boolean {
+        return if (url.startsWith("tel:")) {
+            val i = Intent(Intent.ACTION_DIAL)
+            i.data = Uri.parse(url)
+            activity.startActivity(i)
+            view.reload()
+            true
+        } else {
+            view.loadUrl(url)
+            true
         }
     }
 
