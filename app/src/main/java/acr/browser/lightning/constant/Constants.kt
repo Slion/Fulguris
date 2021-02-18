@@ -6,8 +6,8 @@
 package acr.browser.lightning.constant
 
 // Hardcoded user agents
-const val DESKTOP_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36"
-const val MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; Android 10; Pixel Build/QP1A.190711.019; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Mobile Safari/537.36"
+const val DESKTOP_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
+const val MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; Android 11; Pixel 5 Build/RQ1A.210205.004; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36"
 
 // URL Schemes
 const val HTTP = "http://"
