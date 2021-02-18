@@ -31,7 +31,7 @@ class BaiduSuggestionsModel(
     override fun createQueryUrl(query: String, language: String): HttpUrl = HttpUrl.Builder()
         .scheme("http")
         .host("suggestion.baidu.com")
-        .encodedPath("/s")
+        .encodedPath("/su")
         .addEncodedQueryParameter("wd", query)
         .addQueryParameter("action", "opensearch")
         .build()
