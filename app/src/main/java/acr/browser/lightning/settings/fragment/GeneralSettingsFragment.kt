@@ -482,7 +482,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 Suggestions.DUCK -> 1
                 Suggestions.BAIDU -> 2
                 Suggestions.NAVER -> 3
-                Suggestions.NONE -> 3
+                Suggestions.NONE -> 4
             }
 
             setSingleChoiceItems(R.array.suggestions, currentChoice) { _, which ->
