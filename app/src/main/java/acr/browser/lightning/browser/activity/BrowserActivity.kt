@@ -509,9 +509,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // initialize search background color
         setSearchBarColors(primaryColor)
 
-        drawer_layout.setDrawerShadow(R.drawable.drawer_right_shadow, GravityCompat.END)
-        drawer_layout.setDrawerShadow(R.drawable.drawer_left_shadow, GravityCompat.START)
-
         var intent: Intent? = if (savedInstanceState == null) {
             intent
         } else {
