@@ -39,7 +39,6 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.bookmark_drawer_view.view.*
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 
@@ -72,18 +71,19 @@ class BookmarksDrawerView @JvmOverloads constructor(
     private var bookmarkUpdateSubscription: Disposable? = null
 
     private val uiModel = BookmarkUiModel()
-
+    private var iBinding: BookmarkDrawerViewBinding
 
     init {
         context.injector.inject(this)
         uiController = context as UIController
-        BookmarkDrawerViewBinding.inflate(context.inflater,this, true).uiController = uiController
+        iBinding = BookmarkDrawerViewBinding.inflate(context.inflater,this, true)
+        iBinding.uiController = uiController
 
 
-        rootView.bookmark_back_button.setOnClickListener {
+        iBinding.bookmarkBackButton.setOnClickListener {
             if (!uiModel.isCurrentFolderRoot()) {
                 setBookmarksShown(null, true)
-                rootView.bookmark_list_view.layoutManager?.scrollToPosition(scrollIndex)
+                iBinding.bookmarkListView.layoutManager?.scrollToPosition(scrollIndex)
             }
         }
 
@@ -96,7 +96,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
             ::handleItemClick
         )
 
-        rootView.bookmark_list_view.let {
+        iBinding.bookmarkListView.let {
             it.layoutManager = LinearLayoutManager(context)
             it.adapter = bookmarkAdapter
         }
@@ -163,12 +163,12 @@ class BookmarksDrawerView @JvmOverloads constructor(
         }
 
         if (animate) {
-            rootView.bookmark_back_button.let {
+            iBinding.bookmarkBackButton.let {
                 val transition = AnimationUtils.createRotationTransitionAnimation(it, resource)
                 it.startAnimation(transition)
             }
         } else {
-            rootView.bookmark_back_button.setImageResource(resource)
+            iBinding.bookmarkBackButton.setImageResource(resource)
         }
     }
 
@@ -184,7 +184,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
 
     private fun handleItemClick(bookmark: Bookmark) = when (bookmark) {
         is Bookmark.Folder -> {
-            scrollIndex = (rootView.bookmark_list_view.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            scrollIndex = (iBinding.bookmarkListView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             setBookmarksShown(bookmark.title, true)
         }
         is Bookmark.Entry -> uiController.bookmarkItemClicked(bookmark)
@@ -235,7 +235,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
             uiController.onBackButtonPressed()
         } else {
             setBookmarksShown(null, true)
-            rootView.bookmark_list_view.layoutManager?.scrollToPosition(scrollIndex)
+            iBinding.bookmarkListView.layoutManager?.scrollToPosition(scrollIndex)
         }
     }
 
