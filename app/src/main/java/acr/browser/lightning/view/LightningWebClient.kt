@@ -315,13 +315,8 @@ class LightningWebClient(
             return continueLoadingUrl(view, url, headers)
         }
 
-        if (isMailOrIntent(url, view)) {
+        if (isMailOrTelOrIntent(url, view)) {
             // If it was a mailto: link, or an intent, or could be launched elsewhere, do that
-            return true
-        }
-
-        if (isTel(url, view)) {
-            // If it was a tel: link, or an intent, or could be launched elsewhere, do that
             return true
         }
 
@@ -387,23 +382,16 @@ class LightningWebClient(
         }
     }
 
-    private fun isTel(url: String, view: WebView): Boolean {
-        return if (url.startsWith("tel:")) {
-            val i = Intent(Intent.ACTION_DIAL)
-            i.data = Uri.parse(url)
-            activity.startActivity(i)
-            view.reload()
-            true
-        } else {
-            view.loadUrl(url)
-            true
-        }
-    }
-
-    private fun isMailOrIntent(url: String, view: WebView): Boolean {
+    private fun isMailOrTelOrIntent(url: String, view: WebView): Boolean {
         if (url.startsWith("mailto:")) {
             val mailTo = MailTo.parse(url)
             val i = Utils.newEmailIntent(mailTo.to, mailTo.subject, mailTo.body, mailTo.cc)
+            activity.startActivity(i)
+            view.reload()
+            return true
+        } else if (url.startsWith("tel:")) {
+            val i = Intent(Intent.ACTION_DIAL)
+            i.data = Uri.parse(url)
             activity.startActivity(i)
             view.reload()
             return true
