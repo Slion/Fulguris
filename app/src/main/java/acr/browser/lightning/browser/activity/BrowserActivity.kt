@@ -106,7 +106,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
@@ -346,25 +345,25 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // TODO: could use data binding instead
         popupMenu.apply {
             // Bind our actions
-            onMenuItemClicked(view.menuItemSessions) { executeAction(R.id.action_sessions) }
-            onMenuItemClicked(view.menuItemNewTab) { executeAction(R.id.action_new_tab) }
-            onMenuItemClicked(view.menuItemIncognito) { executeAction(R.id.action_incognito) }
-            onMenuItemClicked(view.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
-            onMenuItemClicked(view.menuItemHistory) { executeAction(R.id.action_history) }
-            onMenuItemClicked(view.menuItemDownloads) { executeAction(R.id.action_downloads) }
-            onMenuItemClicked(view.menuItemShare) { executeAction(R.id.action_share) }
-            onMenuItemClicked(view.menuItemFind) { executeAction(R.id.action_find) }
-            onMenuItemClicked(view.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
-            onMenuItemClicked(view.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
-            onMenuItemClicked(view.menuItemSettings) { executeAction(R.id.action_settings) }
-            onMenuItemClicked(view.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
+            onMenuItemClicked(iBinding.menuItemSessions) { executeAction(R.id.action_sessions) }
+            onMenuItemClicked(iBinding.menuItemNewTab) { executeAction(R.id.action_new_tab) }
+            onMenuItemClicked(iBinding.menuItemIncognito) { executeAction(R.id.action_incognito) }
+            onMenuItemClicked(iBinding.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
+            onMenuItemClicked(iBinding.menuItemHistory) { executeAction(R.id.action_history) }
+            onMenuItemClicked(iBinding.menuItemDownloads) { executeAction(R.id.action_downloads) }
+            onMenuItemClicked(iBinding.menuItemShare) { executeAction(R.id.action_share) }
+            onMenuItemClicked(iBinding.menuItemFind) { executeAction(R.id.action_find) }
+            onMenuItemClicked(iBinding.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
+            onMenuItemClicked(iBinding.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
+            onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
+            onMenuItemClicked(iBinding.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
 
             // Popup menu action shortcut icons
-            onMenuItemClicked(view.menuShortcutRefresh) { executeAction(R.id.action_reload) }
-            onMenuItemClicked(view.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
-            onMenuItemClicked(view.menuShortcutForward) { executeAction(R.id.action_forward) }
-            onMenuItemClicked(view.menuShortcutBack) { executeAction(R.id.action_back) }
-            onMenuItemClicked(view.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+            onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
+            onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
+            onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
+            onMenuItemClicked(iBinding.menuShortcutBack) { executeAction(R.id.action_back) }
+            onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
 
 
         }
@@ -2216,12 +2215,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     override fun setForwardButtonEnabled(enabled: Boolean) {
-        popupMenu.contentView.menuShortcutForward.isEnabled = enabled
+        popupMenu.iBinding.menuShortcutForward.isEnabled = enabled
         tabsView?.setGoForwardEnabled(enabled)
     }
 
     override fun setBackButtonEnabled(enabled: Boolean) {
-        popupMenu.contentView.menuShortcutBack.isEnabled = enabled
+        popupMenu.iBinding.menuShortcutBack.isEnabled = enabled
         tabsView?.setGoBackEnabled(enabled)
     }
 
