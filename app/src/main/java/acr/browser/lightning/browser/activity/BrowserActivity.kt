@@ -109,7 +109,6 @@ import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import kotlinx.android.synthetic.main.search.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar_content.*
 import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
@@ -208,6 +207,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     // Binding
     lateinit var iBinding: ActivityMainBinding
+    lateinit var iBindingToolbarContent: ToolbarContentBinding
 
 
     // Settings
@@ -318,7 +318,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // Hook in buttons with onClick handler
-        button_reload.setOnClickListener(this)
+        iBindingToolbarContent.buttonReload.setOnClickListener(this)
     }
 
 
@@ -336,7 +336,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             buttonSessions?.let { sessionsMenu.show(it) }
         } else {
             // Otherwise use main menu button as anchor
-            button_more?.let { sessionsMenu.show(it) }
+            iBindingToolbarContent.buttonMore?.let { sessionsMenu.show(it) }
         }
     }
 
@@ -374,7 +374,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     private fun showPopupMenu() {
-        popupMenu.show(button_more)
+        popupMenu.show(iBindingToolbarContent.buttonMore)
     }
 
     /**
@@ -408,7 +408,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         //initializeToolbarHeight(resources.configuration)
         //setSupportActionBar(toolbar)
-        ToolbarContentBinding.inflate(layoutInflater, toolbar, true)
+        iBindingToolbarContent = ToolbarContentBinding.inflate(layoutInflater, toolbar, true)
         //val actionBar = requireNotNull(supportActionBar)
 
         // TODO: disable those for incognito mode?
@@ -462,7 +462,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // Show incognito icon in more menu button
         if (isIncognito()) {
-            button_more.setImageResource(R.drawable.ic_incognito)
+            iBindingToolbarContent.buttonMore.setImageResource(R.drawable.ic_incognito)
         }
 
         tabsButton = customView.findViewById(R.id.tabs_button)
@@ -551,7 +551,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding.uiLayout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
 
 
-        button_more.setOnClickListener(OnClickListener {
+        iBindingToolbarContent.buttonMore.setOnClickListener(OnClickListener {
             // Web page is loosing focus as we open our menu
             // Actually this was causing our search field to gain focus on HTC One M8 - Android 6
             //currentTabView?.clearFocus()
@@ -1361,7 +1361,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 || !userPreferences.pullToRefreshInLandscape && configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // User does not want to use pull to refresh
             iBinding.contentFrame.isEnabled = false
-            button_reload.visibility = View.VISIBLE
+            iBindingToolbarContent.buttonReload.visibility = View.VISIBLE
             return
         }
 
@@ -1369,7 +1369,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // See: https://github.com/Slion/Lightning-Browser/projects/1
         iBinding.contentFrame.isEnabled = currentTabView?.canScrollVertically()?:false
         // Don't show reload button if pull-to-refresh is enabled and once we are not loading
-        button_reload.visibility = if (iBinding.contentFrame.isEnabled && !isLoading()) View.GONE else View.VISIBLE
+        iBindingToolbarContent.buttonReload.visibility = if (iBinding.contentFrame.isEnabled && !isLoading()) View.GONE else View.VISIBLE
     }
 
     /**
@@ -1839,8 +1839,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // SSL status icon color
         search_ssl_status.setColorFilter(currentToolBarTextColor)
         // Toolbar buttons filter
-        button_more.setColorFilter(currentToolBarTextColor)
-        button_reload.setColorFilter(currentToolBarTextColor)
+        iBindingToolbarContent.buttonMore.setColorFilter(currentToolBarTextColor)
+        iBindingToolbarContent.buttonReload.setColorFilter(currentToolBarTextColor)
 
         // Pull to refresh spinner color also follow current theme
         iBinding.contentFrame.setProgressBackgroundColorSchemeColor(color)
@@ -2554,7 +2554,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             false
         } else {
             showActionBar()
-            button_more.requestFocus()
+            iBindingToolbarContent.buttonMore.requestFocus()
             true
         }
     }
@@ -2618,7 +2618,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // Set stop or reload icon according to current load status
         //setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
-        button_reload.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
+        iBindingToolbarContent.buttonReload.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
 
         // That fancy animation would be great but somehow it looks like it is causing issues making the button unresponsive.
         // I'm guessing it is conflicting with animations from layout change.
