@@ -11,7 +11,7 @@
     android:animateLayoutChanges="true">
 
 
-    <include layout="@layout/search" />
+    <include android:id="@+id/address_bar_include" layout="@layout/search" />
 
     <!--
 

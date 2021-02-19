@@ -107,7 +107,6 @@ import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.popup_menu_browser.view.*
-import kotlinx.android.synthetic.main.search.*
 import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
@@ -120,7 +119,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     lateinit var CHANNEL_ID: String
 
     // Toolbar Views
-    private var searchBackground: View? = null
     private var searchView: SearchView? = null
     private var homeButton: ImageButton? = null
     private var buttonBack: ImageButton? = null
@@ -487,12 +485,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // create the search EditText in the ToolBar
         searchView = customView.findViewById<SearchView>(R.id.search).apply {
-            search_ssl_status.setOnClickListener {
+            iBindingToolbarContent.addressBarInclude.searchSslStatus.setOnClickListener {
                 tabsManager.currentTab?.let { tab ->
                     tab.sslCertificate?.let { showSslDialog(it, tab.currentSslState()) }
                 }
             }
-            search_ssl_status.updateVisibilityForContent()
+            iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
             //setMenuItemIcon(R.id.action_reload, R.drawable.ic_action_refresh)
             //toolbar?.menu?.findItem(R.id.action_reload)?.let { it.icon = ContextCompat.getDrawable(this@BrowserActivity, R.drawable.ic_action_refresh) }
 
@@ -506,8 +504,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             initializeSearchSuggestions(this)
         }
 
-
-        searchBackground = customView.findViewById<View>(R.id.search_container)
         // initialize search background color
         setSearchBarColors(primaryColor)
 
@@ -668,12 +664,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     showUrl()
                     // Select all text so that user conveniently start typing or copy current URL
                     (v as SearchView).selectAll()
-                    search_ssl_status.visibility = GONE
+                    iBindingToolbarContent.addressBarInclude.searchSslStatus.visibility = GONE
                 }
             }
 
             if (!hasFocus) {
-                search_ssl_status.updateVisibilityForContent()
+                iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
                 searchView?.let {
                     inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
                 }
@@ -1416,10 +1412,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     override fun updateSslState(sslState: SslState) {
-        search_ssl_status.setImageDrawable(createSslDrawableForState(sslState))
+        iBindingToolbarContent.addressBarInclude.searchSslStatus.setImageDrawable(createSslDrawableForState(sslState))
 
         if (searchView?.hasFocus() == false) {
-            search_ssl_status.updateVisibilityForContent()
+            iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
         }
     }
 
@@ -1836,7 +1832,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Change reload icon color
         //setMenuItemColor(R.id.action_reload, currentToolBarTextColor)
         // SSL status icon color
-        search_ssl_status.setColorFilter(currentToolBarTextColor)
+        iBindingToolbarContent.addressBarInclude.searchSslStatus.setColorFilter(currentToolBarTextColor)
         // Toolbar buttons filter
         iBindingToolbarContent.buttonMore.setColorFilter(currentToolBarTextColor)
         iBindingToolbarContent.buttonReload.setColorFilter(currentToolBarTextColor)
@@ -1950,7 +1946,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Set our search bar color for focused and non focused state
      */
     private fun setSearchBarColors(aColor: Int) {
-        searchBackground?.apply {
+        iBindingToolbarContent.addressBarInclude.root.apply {
             val stateListDrawable = background as StateListDrawable
             // Order may matter depending of states declared in our background drawable
             // See: [R.drawable.card_bg_elevate]
@@ -2612,7 +2608,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun setIsLoading(isLoading: Boolean) {
         if (searchView?.hasFocus() == false) {
-            search_ssl_status.updateVisibilityForContent()
+            iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
         }
 
         // Set stop or reload icon according to current load status
