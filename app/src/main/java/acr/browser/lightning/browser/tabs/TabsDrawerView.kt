@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.tab_drawer_view.view.*
+
 
 
 /**
@@ -74,7 +74,7 @@ class TabsDrawerView @JvmOverloads constructor(
         iBinding.actionRestorePage.isEnabled = (uiController as BrowserActivity).presenter?.closedTabs?.bundleStack?.count()?:0>0
         // No sessions in incognito mode
         if (uiController.isIncognito()) {
-            action_sessions.visibility = View.GONE
+            iBinding.actionSessions.visibility = View.GONE
         }
 
     }
