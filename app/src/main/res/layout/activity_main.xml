@@ -24,7 +24,14 @@
 
                 <include layout="@layout/toolbar"/>
 
-                <include layout="@layout/browser_content"/>
+                <acr.browser.lightning.view.PullRefreshLayout
+                    android:id="@+id/content_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="?attr/colorPrimary"
+                    android:clipChildren="true"
+                    android:animateLayoutChanges="true" />
 
                 <include layout="@layout/search_interface"/>
             </LinearLayout>

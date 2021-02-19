@@ -87,7 +87,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.customview.widget.ViewDragHelper
 import androidx.databinding.DataBindingUtil
@@ -107,7 +106,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.browser_content.*
 import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import kotlinx.android.synthetic.main.search.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -541,9 +539,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // Enable swipe to refresh
-        content_frame.setOnRefreshListener {
+        iBinding.contentFrame.setOnRefreshListener {
             tabsManager.currentTab?.reload()
-            mainHandler.postDelayed({ content_frame.isRefreshing = false }, 1000)   // Stop the loading spinner after one second
+            mainHandler.postDelayed({ iBinding.contentFrame.isRefreshing = false }, 1000)   // Stop the loading spinner after one second
         }
 
         // TODO: define custom transitions to make flying in and out of the tool bar nicer
@@ -843,7 +841,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private fun initializePreferences() {
 
         // TODO layout transition causing memory leak
-        //        content_frame.setLayoutTransition(new LayoutTransition());
+        //        iBinding.contentFrame.setLayoutTransition(new LayoutTransition());
 
         val currentSearchEngine = searchEngineProvider.provideSearchEngine()
         searchText = currentSearchEngine.queryUrl
@@ -1362,16 +1360,16 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         if (!userPreferences.pullToRefreshInPortrait && configuration.orientation == Configuration.ORIENTATION_PORTRAIT
                 || !userPreferences.pullToRefreshInLandscape && configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // User does not want to use pull to refresh
-            content_frame.isEnabled = false
+            iBinding.contentFrame.isEnabled = false
             button_reload.visibility = View.VISIBLE
             return
         }
 
         // Disable pull to refresh if no vertical scroll as it bugs with frame internal scroll
         // See: https://github.com/Slion/Lightning-Browser/projects/1
-        content_frame.isEnabled = currentTabView?.canScrollVertically()?:false
+        iBinding.contentFrame.isEnabled = currentTabView?.canScrollVertically()?:false
         // Don't show reload button if pull-to-refresh is enabled and once we are not loading
-        button_reload.visibility = if (content_frame.isEnabled && !isLoading()) View.GONE else View.VISIBLE
+        button_reload.visibility = if (iBinding.contentFrame.isEnabled && !isLoading()) View.GONE else View.VISIBLE
     }
 
     /**
@@ -1481,8 +1479,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         currentTabView.removeFromParent()
 
 
-        content_frame.resetTarget() // Needed to make it work together with swipe to refresh
-        content_frame.addView(aView, 0, MATCH_PARENT)
+        iBinding.contentFrame.resetTarget() // Needed to make it work together with swipe to refresh
+        iBinding.contentFrame.addView(aView, 0, MATCH_PARENT)
         aView.requestFocus()
 
         // Remove existing focus change observer before we change our tab
@@ -1845,12 +1843,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         button_reload.setColorFilter(currentToolBarTextColor)
 
         // Pull to refresh spinner color also follow current theme
-        content_frame.setProgressBackgroundColorSchemeColor(color)
-        content_frame.setColorSchemeColors(currentToolBarTextColor)
+        iBinding.contentFrame.setProgressBackgroundColorSchemeColor(color)
+        iBinding.contentFrame.setColorSchemeColors(currentToolBarTextColor)
 
         // Color also applies to the following backgrounds as they show during tool bar show/hide animation
         iBinding.uiLayout.setBackgroundColor(color)
-        content_frame.setBackgroundColor(color)
+        iBinding.contentFrame.setBackgroundColor(color)
         // This one is going to be a problem as it will break some websites such as bbc.com
         // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color
         currentTabView?.setBackgroundColor(if (progress_view.progress >= 100) Color.WHITE else color)
