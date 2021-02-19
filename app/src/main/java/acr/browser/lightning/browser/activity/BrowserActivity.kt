@@ -21,6 +21,7 @@ import acr.browser.lightning.database.SearchSuggestion
 import acr.browser.lightning.database.WebPage
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.database.history.HistoryRepository
+import acr.browser.lightning.databinding.ActivityMainBinding
 import acr.browser.lightning.databinding.ToolbarContentBinding
 import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
@@ -89,6 +90,7 @@ import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.customview.widget.ViewDragHelper
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -105,7 +107,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.browser_content.*
 import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import kotlinx.android.synthetic.main.search.*
@@ -207,6 +208,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private lateinit var popupMenu: BrowserPopupMenu
     lateinit var sessionsMenu: SessionsPopupWindow
 
+    // Binding
+    lateinit var iBinding: ActivityMainBinding
+
 
     // Settings
     private var crashReport = true
@@ -254,8 +258,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             performExitCleanUp()
         }
 
+        iBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        setContentView(R.layout.activity_main)
+
         ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
         createPopupMenu()
@@ -328,7 +333,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     fun showSessions() {
         // If using horizontal tab bar or if our tab drawer is open
-        if (!shouldShowTabsInDrawer || drawer_layout.isDrawerOpen(getTabDrawer())) {
+        if (!shouldShowTabsInDrawer || iBinding.drawerLayout.isDrawerOpen(getTabDrawer())) {
             // Use sessions button as anchor
             buttonSessions?.let { sessionsMenu.show(it) }
         } else {
@@ -433,7 +438,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         //right_drawer.setLayerType(LAYER_TYPE_NONE, null)
 
 
-        drawer_layout.addDrawerListener(DrawerLocker())
+        iBinding.drawerLayout.addDrawerListener(DrawerLocker())
 
         webPageBitmap = drawable(R.drawable.ic_webpage).toBitmap()
 
@@ -544,8 +549,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // TODO: define custom transitions to make flying in and out of the tool bar nicer
         //ui_layout.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, ui_layout.layoutTransition.getAnimator(LayoutTransition.CHANGE_DISAPPEARING))
         // Disabling animations which are not so nice
-        ui_layout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING)
-        ui_layout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
+        iBinding.uiLayout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING)
+        iBinding.uiLayout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
 
 
         button_more.setOnClickListener(OnClickListener {
@@ -582,15 +587,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     private fun getBookmarkDrawer(): View = if (swapBookmarksAndTabs) {
-        left_drawer
+        iBinding.leftDrawer
     } else {
-        right_drawer
+        iBinding.rightDrawer
     }
 
     private fun getTabDrawer(): View = if (swapBookmarksAndTabs) {
-        right_drawer
+        iBinding.rightDrawer
     } else {
-        left_drawer
+        iBinding.leftDrawer
     }
 
     protected fun panicClean() {
@@ -728,9 +733,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             val bookmarksDrawer = getBookmarkDrawer()
 
             if (v === tabsDrawer) {
-                drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, bookmarksDrawer)
+                iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, bookmarksDrawer)
             } else if (shouldShowTabsInDrawer) {
-                drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, tabsDrawer)
+                iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, tabsDrawer)
             }
 
         }
@@ -750,9 +755,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             val bookmarksDrawer = getBookmarkDrawer()
 
             if (v === tabsDrawer) {
-                drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, bookmarksDrawer)
+                iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, bookmarksDrawer)
             } else {
-                drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, tabsDrawer)
+                iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, tabsDrawer)
             }
         }
 
@@ -787,14 +792,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     private fun lockDrawers()
     {
-        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
-        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getBookmarkDrawer())
+        iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
+        iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getBookmarkDrawer())
     }
 
     private fun unlockDrawers()
     {
-        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getTabDrawer())
-        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getBookmarkDrawer())
+        iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getTabDrawer())
+        iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, getBookmarkDrawer())
     }
 
 
@@ -1168,8 +1173,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         when (id) {
             android.R.id.home -> {
-                if (drawer_layout.isDrawerOpen(getBookmarkDrawer())) {
-                    drawer_layout.closeDrawer(getBookmarkDrawer())
+                if (iBinding.drawerLayout.isDrawerOpen(getBookmarkDrawer())) {
+                    iBinding.drawerLayout.closeDrawer(getBookmarkDrawer())
                 }
                 return true
             }
@@ -1485,7 +1490,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Change our tab
         currentTabView = aView
         // Close virtual keyboard if we loose focus
-        currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(ui_layout.windowToken, 0) }
+        currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(iBinding.uiLayout.windowToken, 0) }
         showActionBar()
         // Make sure current tab is visible in tab list
         scrollToCurrentTab()
@@ -1512,7 +1517,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         presenter?.tabChanged(position)
         // Keep the drawer open while the tab change animation in running
         // Has the added advantage that closing of the drawer itself should be smoother as the webview had a bit of time to load
-        mainHandler.postDelayed(drawer_layout::closeDrawers, 350)
+        mainHandler.postDelayed(iBinding.drawerLayout::closeDrawers, 350)
     }
 
     // This is the callback from 'new tab' button on page drawer
@@ -1593,11 +1598,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         mainHandler.postDelayed({ setupPullToRefresh(newConfig) }, 300)
         popupMenu.dismiss() // As it wont update somehow
         // Make sure our drawers adjust accordingly
-        drawer_layout.requestLayout()
+        iBinding.drawerLayout.requestLayout()
     }
 
     private fun initializeToolbarHeight(configuration: Configuration) =
-        ui_layout.doOnLayout {
+            iBinding.uiLayout.doOnLayout {
             // TODO externalize the dimensions
             val toolbarSize = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 R.dimen.toolbar_height_portrait
@@ -1637,9 +1642,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     private fun doBackAction() {
         val currentTab = tabsManager.currentTab
-        if (drawer_layout.isDrawerOpen(getTabDrawer())) {
-            drawer_layout.closeDrawer(getTabDrawer())
-        } else if (drawer_layout.isDrawerOpen(getBookmarkDrawer())) {
+        if (iBinding.drawerLayout.isDrawerOpen(getTabDrawer())) {
+            iBinding.drawerLayout.closeDrawer(getTabDrawer())
+        } else if (iBinding.drawerLayout.isDrawerOpen(getBookmarkDrawer())) {
             bookmarksView?.navigateBack()
         } else {
             if (currentTab != null) {
@@ -1754,7 +1759,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setupPullToRefresh(resources.configuration)
 
         // We think that's needed in case there was a rotation while in the background
-        drawer_layout.requestLayout()
+        iBinding.drawerLayout.requestLayout()
 
         //intent?.let {logger.log(TAG, it.toString())}
     }
@@ -1844,7 +1849,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         content_frame.setColorSchemeColors(currentToolBarTextColor)
 
         // Color also applies to the following backgrounds as they show during tool bar show/hide animation
-        ui_layout.setBackgroundColor(color)
+        iBinding.uiLayout.setBackgroundColor(color)
         content_frame.setBackgroundColor(color)
         // This one is going to be a problem as it will break some websites such as bbc.com
         // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color
@@ -2080,25 +2085,25 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         //presenter?.newTab(downloadPageInitializer,true)
     }
 
-    private fun showingBookmarks() = drawer_layout.isDrawerOpen(getBookmarkDrawer())
-    private fun showingTabs() = drawer_layout.isDrawerOpen(getTabDrawer())
+    private fun showingBookmarks() = iBinding.drawerLayout.isDrawerOpen(getBookmarkDrawer())
+    private fun showingTabs() = iBinding.drawerLayout.isDrawerOpen(getTabDrawer())
 
     /**
      * helper function that opens the bookmark drawer
      */
     private fun openBookmarks() {
         if (showingTabs()) {
-            drawer_layout.closeDrawers()
+            iBinding.drawerLayout.closeDrawers()
         }
         // Define what to do once our drawer it opened
-        //drawer_layout.onceOnDrawerOpened {
-            drawer_layout.findViewById<RecyclerView>(R.id.bookmark_list_view)?.apply {
+        //iBinding.drawerLayout.onceOnDrawerOpened {
+        iBinding.drawerLayout.findViewById<RecyclerView>(R.id.bookmark_list_view)?.apply {
                 // Focus first item in our list
                 findViewHolderForAdapterPosition(0)?.itemView?.requestFocus()
             }
         //}
         // Open bookmarks drawer
-        drawer_layout.openDrawer(getBookmarkDrawer())
+        iBinding.drawerLayout.openDrawer(getBookmarkDrawer())
     }
 
     /**
@@ -2106,7 +2111,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun toggleBookmarks() {
         if (showingBookmarks()) {
-            drawer_layout.closeDrawers()
+            iBinding.drawerLayout.closeDrawers()
         } else {
             openBookmarks()
         }
@@ -2117,30 +2122,30 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun openTabs() {
         if (showingBookmarks()) {
-            drawer_layout.closeDrawers()
+            iBinding.drawerLayout.closeDrawers()
         }
 
         // Loose focus on current tab web page
         // Actually this was causing our search field to gain focus on HTC One M8 - Android 6
         // currentTabView?.clearFocus()
         // That's needed for focus issue when opening with tap on button
-        val tabListView = drawer_layout.findViewById<RecyclerView>(R.id.tabs_list)
+        val tabListView = iBinding.drawerLayout.findViewById<RecyclerView>(R.id.tabs_list)
         tabListView?.requestFocus()
         // Define what to do once our list drawer it opened
         // Item focus won't work sometimes when not using keyboard, I'm guessing that's somehow a feature
-        drawer_layout.onceOnDrawerOpened {
+        iBinding.drawerLayout.onceOnDrawerOpened {
             scrollToCurrentTab()
         }
 
         // Open our tab list drawer
-        drawer_layout.openDrawer(getTabDrawer())
+        iBinding.drawerLayout.openDrawer(getTabDrawer())
     }
 
     /**
      * Scroll to current tab.
      */
     private fun scrollToCurrentTab() {
-        val tabListView = drawer_layout.findViewById<RecyclerView>(R.id.tabs_list)
+        val tabListView = iBinding.drawerLayout.findViewById<RecyclerView>(R.id.tabs_list)
         // Set focus
         // Find our recycler list view
         tabListView?.apply {
@@ -2168,7 +2173,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun toggleTabs() {
         if (showingTabs()) {
-            drawer_layout.closeDrawers()
+            iBinding.drawerLayout.closeDrawers()
         } else {
             openTabs()
         }
@@ -2195,22 +2200,22 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * @param runnable an optional runnable to run after the drawers are closed.
      */
     protected fun closeDrawers(runnable: (() -> Unit)?) {
-        if (!drawer_layout.isDrawerOpen(left_drawer) && !drawer_layout.isDrawerOpen(right_drawer)) {
+        if (!iBinding.drawerLayout.isDrawerOpen(iBinding.leftDrawer) && !iBinding.drawerLayout.isDrawerOpen(iBinding.rightDrawer)) {
             if (runnable != null) {
                 runnable()
                 return
             }
         }
-        drawer_layout.closeDrawers()
+        iBinding.drawerLayout.closeDrawers()
 
-        drawer_layout.addDrawerListener(object : DrawerLayout.DrawerListener {
+        iBinding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
 
             override fun onDrawerOpened(drawerView: View) = Unit
 
             override fun onDrawerClosed(drawerView: View) {
                 runnable?.invoke()
-                drawer_layout.removeDrawerListener(this)
+                iBinding.drawerLayout.removeDrawerListener(this)
             }
 
             override fun onDrawerStateChanged(newState: Int) = Unit
@@ -2418,14 +2423,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     override fun onBackButtonPressed() {
-        if (drawer_layout.closeDrawerIfOpen(getTabDrawer())) {
+        if (iBinding.drawerLayout.closeDrawerIfOpen(getTabDrawer())) {
             val currentTab = tabsManager.currentTab
             if (currentTab?.canGoBack() == true) {
                 currentTab.goBack()
             } else if (currentTab != null) {
                 tabsManager.let { presenter?.deleteTab(it.positionOf(currentTab)) }
             }
-        } else if (drawer_layout.closeDrawerIfOpen(getBookmarkDrawer())) {
+        } else if (iBinding.drawerLayout.closeDrawerIfOpen(getBookmarkDrawer())) {
             // Don't do anything other than close the bookmarks drawer when the activity is being
             // delegated to.
         }
@@ -2589,7 +2594,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             LightningDialogBuilder.NewTab.FOREGROUND -> presenter?.newTab(urlInitializer, true)
             LightningDialogBuilder.NewTab.BACKGROUND -> presenter?.newTab(urlInitializer, false)
             LightningDialogBuilder.NewTab.INCOGNITO -> {
-                drawer_layout.closeDrawers()
+                iBinding.drawerLayout.closeDrawers()
                 val intent = IncognitoActivity.createIntent(this, url.toUri())
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_up_in, R.anim.fade_out_scale)
