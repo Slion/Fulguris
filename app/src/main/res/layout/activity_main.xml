@@ -22,7 +22,8 @@
                 android:background="?attr/colorPrimary"
                 android:animateLayoutChanges="true">
 
-                <include layout="@layout/toolbar"/>
+                <include android:id="@+id/toolbar_include"
+                    layout="@layout/toolbar"/>
 
                 <acr.browser.lightning.view.PullRefreshLayout
                     android:id="@+id/content_frame"

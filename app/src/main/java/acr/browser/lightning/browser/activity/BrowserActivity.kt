@@ -108,7 +108,6 @@ import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.popup_menu_browser.view.*
 import kotlinx.android.synthetic.main.search.*
-import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
@@ -408,7 +407,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         //initializeToolbarHeight(resources.configuration)
         //setSupportActionBar(toolbar)
-        iBindingToolbarContent = ToolbarContentBinding.inflate(layoutInflater, toolbar, true)
+        iBindingToolbarContent = ToolbarContentBinding.inflate(layoutInflater, iBinding.toolbarInclude.toolbar, true)
         //val actionBar = requireNotNull(supportActionBar)
 
         // TODO: disable those for incognito mode?
@@ -450,11 +449,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         bookmarksView = BookmarksDrawerView(this).also(findViewById<FrameLayout>(getBookmarksContainerId())::addView)
 
         if (shouldShowTabsInDrawer) {
-            tabs_toolbar_container.visibility = GONE
+            iBinding.toolbarInclude.tabsToolbarContainer.visibility = GONE
         }
 
         // Is that still needed
-        val customView = toolbar
+        val customView = iBinding.toolbarInclude.toolbar
         customView.layoutParams = customView.layoutParams.apply {
             width = LayoutParams.MATCH_PARENT
             height = LayoutParams.MATCH_PARENT
@@ -1607,11 +1606,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             } else {
                 R.dimen.toolbar_height_landscape
             }
-            toolbar.layoutParams = (toolbar.layoutParams as ConstraintLayout.LayoutParams).apply {
+                iBinding.toolbarInclude.toolbar.layoutParams = (iBinding.toolbarInclude.toolbar.layoutParams as ConstraintLayout.LayoutParams).apply {
                 height = dimen(toolbarSize)
             }
-            toolbar.minimumHeight = toolbarSize
-            toolbar.requestLayout()
+                iBinding.toolbarInclude.toolbar.minimumHeight = toolbarSize
+                iBinding.toolbarInclude.toolbar.requestLayout()
         }
 
     override fun closeBrowser() {
@@ -1826,7 +1825,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Check if our tool bar is long enough to display extra buttons
         val threshold = (buttonBack?.width?:3840)*10
         // If our tool bar is longer than 10 action buttons then we show extra buttons
-        (toolbar.width>threshold).let{
+        (iBinding.toolbarInclude.toolbar.width>threshold).let{
             buttonBack?.isVisible = it
             buttonForward?.isVisible = it
         }
@@ -1851,13 +1850,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding.contentFrame.setBackgroundColor(color)
         // This one is going to be a problem as it will break some websites such as bbc.com
         // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color
-        currentTabView?.setBackgroundColor(if (progress_view.progress >= 100) Color.WHITE else color)
+        currentTabView?.setBackgroundColor(if (iBinding.toolbarInclude.progressView.progress >= 100) Color.WHITE else color)
         currentTabView?.invalidate()
 
         // No animation for now
         // Toolbar background color
-        toolbar_layout.setBackgroundColor(color)
-        progress_view.mProgressColor = color
+        iBinding.toolbarInclude.toolbarLayout.setBackgroundColor(color)
+        iBinding.toolbarInclude.progressView.mProgressColor = color
         // Search text field color
         setSearchBarColors(color)
 
@@ -1867,10 +1866,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // That's notably making it more visible on lequipe.fr and bbc.com/sport
             // We hope this is going to work with most white themed website too
             if (ColorUtils.calculateLuminance(it)>0.75) {
-                progress_view.setBackgroundColor(Color.BLACK)
+                iBinding.toolbarInclude.progressView.setBackgroundColor(Color.BLACK)
             }
             else {
-                progress_view.setBackgroundColor(it)
+                iBinding.toolbarInclude.progressView.setBackgroundColor(it)
             }
         }
 
@@ -2015,7 +2014,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     override fun updateProgress(progress: Int) {
         setIsLoading(progress < 100)
-        progress_view.progress = progress
+        iBinding.toolbarInclude.progressView.progress = progress
     }
 
     protected fun addItemToHistory(title: String?, url: String) {
@@ -2540,11 +2539,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     override fun showActionBar() {
         logger.log(TAG, "showActionBar")
-        toolbar_layout.visibility = View.VISIBLE
+        iBinding.toolbarInclude.toolbarLayout.visibility = View.VISIBLE
     }
 
-    private fun doHideToolBar() { toolbar_layout.visibility = View.GONE }
-    private fun isToolBarVisible() = toolbar_layout.visibility == View.VISIBLE
+    private fun doHideToolBar() { iBinding.toolbarInclude.toolbarLayout.visibility = View.GONE }
+    private fun isToolBarVisible() = iBinding.toolbarInclude.toolbarLayout.visibility == View.VISIBLE
 
     private fun toggleToolBar() : Boolean
     {
