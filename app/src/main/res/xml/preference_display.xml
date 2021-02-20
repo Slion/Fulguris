@@ -22,6 +22,23 @@
         android:title="@string/url_contents"
         app:icon="@drawable/ic_short_text" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="@string/pref_key_tabs_in_drawer"
+        android:title="@string/settings_title_vertical_tab_bar"
+        android:summary="@string/settings_summary_vertical_tab_bar"
+        app:icon="@drawable/ic_more_vertical"
+        app:iconSpaceReserved="false" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/pref_default_tab_list_item_show_close_button"
+        android:key="@string/pref_key_tab_list_item_show_close_button"
+        android:dependency="@string/pref_key_tabs_in_drawer"
+        android:title="@string/pref_title_tab_list_item_show_close_button"
+        android:summary="@string/pref_summary_tab_list_item_show_close_button"
+        app:icon="@drawable/ic_action_delete"
+        app:iconSpaceReserved="false"/>
+
     <PreferenceCategory android:title="@string/pref_category_portrait"
         app:icon="@drawable/ic_portrait">
 
@@ -145,22 +162,6 @@
             android:title="@string/pref_title_locked_drawers"
             android:summary="@string/pref_summary_locked_drawers"
             app:iconSpaceReserved="false"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/pref_default_tab_list_item_show_close_button"
-            android:key="@string/pref_key_tab_list_item_show_close_button"
-            android:title="@string/pref_title_tab_list_item_show_close_button"
-            android:summary="@string/pref_summary_tab_list_item_show_close_button"
-            app:icon="@drawable/ic_action_delete"
-            app:iconSpaceReserved="false"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_key_tabs_in_drawer"
-            android:title="@string/settings_title_vertical_tab_bar"
-            android:summary="@string/settings_summary_vertical_tab_bar"
-            app:icon="@drawable/ic_more_vertical"
-            app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
