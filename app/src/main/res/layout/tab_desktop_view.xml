@@ -19,82 +19,99 @@
             <LinearLayout android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <!--
+                See: https://stackoverflow.com/questions/35681433/previewing-horizontal-recyclerview-in-android-studio/55128308
+                Apparently tools namespace is only for design time, cool stuff
+                TODO: consider defining layout manager here rather than in code, you would need to switch namespace from tools to app I guess?
 
-                <!-- SL: requiresFadingEdge not working for some reason-->
+                android:layout_height="@dimen/desktop_tab_height"
+                    Most important here as using match_parent would result in 0 height when the action buttons are hidden
+                    Weird stuff again with Android layout, wasted hours on that somehow.
+                -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tabs_list"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/desktop_tab_height"
                     android:requiresFadingEdge="horizontal|vertical"
                     android:overScrollMode="never"
                     android:scrollbars="none"
+                    tools:listitem="@layout/tab_list_item_horizontal"
+                    tools:orientation="horizontal"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     />
 
-
-                <ImageButton
-                    android:id="@+id/action_close_all_tabs"
-                    style="?android:attr/actionButtonStyle"
+                <!--
+                That layout is used to hide all action buttons when we have no room for them.
+                -->
+                <LinearLayout
+                    android:id="@+id/action_buttons"
+                    android:visibility="visible"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/action_close_all_other_tabs"
-                    app:tooltipText="@{@string/action_close_all_other_tabs}"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/ic_delete_sweep"
-                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-                    />
+                    android:layout_height="match_parent">
 
-                <ImageButton
-                    android:id="@+id/action_restore_all_pages"
-                    style="?android:attr/actionButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/action_restore_all_tabs"
-                    app:tooltipText="@{@string/action_restore_all_tabs}"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/ic_restore_from_trash"
-                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-                    />
+                    <ImageButton
+                        android:id="@+id/action_close_all_tabs"
+                        style="?android:attr/actionButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/action_close_all_other_tabs"
+                        app:tooltipText="@{@string/action_close_all_other_tabs}"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_delete_sweep"
+                        android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                        />
 
-                <ImageButton
-                    android:id="@+id/action_restore_page"
-                    style="?android:attr/actionButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/action_restore_tab"
-                    app:tooltipText="@{@string/action_restore_tab}"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/ic_restore_page"
-                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-                    />
+                    <ImageButton
+                        android:id="@+id/action_restore_all_pages"
+                        style="?android:attr/actionButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/action_restore_all_tabs"
+                        app:tooltipText="@{@string/action_restore_all_tabs}"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_restore_from_trash"
+                        android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                        />
 
-                <ImageButton
-                    android:id="@+id/action_new_tab"
-                    style="?android:attr/actionButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/action_new_tab"
-                    app:tooltipText="@{@string/action_new_tab}"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/ic_action_plus"
-                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-                    />
+                    <ImageButton
+                        android:id="@+id/action_restore_page"
+                        style="?android:attr/actionButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/action_restore_tab"
+                        app:tooltipText="@{@string/action_restore_tab}"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_restore_page"
+                        android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                        />
 
-                <ImageButton
-                    android:id="@+id/action_sessions"
-                    style="?android:attr/actionButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/action_sessions"
-                    app:tooltipText="@{@string/action_sessions}"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/ic_sessions"
-                    android:onClick="@{(view) -> uiController.executeAction(view.id)}"
-                    />
+                    <ImageButton
+                        android:id="@+id/action_new_tab"
+                        style="?android:attr/actionButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/action_new_tab"
+                        app:tooltipText="@{@string/action_new_tab}"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_action_plus"
+                        android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                        />
 
-
+                    <ImageButton
+                        android:id="@+id/action_sessions"
+                        style="?android:attr/actionButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/action_sessions"
+                        app:tooltipText="@{@string/action_sessions}"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_sessions"
+                        android:onClick="@{(view) -> uiController.executeAction(view.id)}"
+                        />
+                </LinearLayout>
             </LinearLayout>
-
         </com.google.android.material.appbar.AppBarLayout>
     </merge>
 </layout>

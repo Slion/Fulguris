@@ -1823,6 +1823,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         (iBinding.toolbarInclude.toolbar.width>threshold).let{
             buttonBack?.isVisible = it
             buttonForward?.isVisible = it
+	    // Hide tab bar action buttons if no room for them
+            if (tabsView is TabsDesktopView) {
+                (tabsView as TabsDesktopView).iBinding.actionButtons.isVisible = it
+            }
         }
 
         // Needed to delay that as otherwise disabled alpha state didn't get applied

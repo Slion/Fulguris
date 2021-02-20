@@ -32,7 +32,7 @@ class TabsDesktopView @JvmOverloads constructor(
     private val tabList: RecyclerView
     private var iItemTouchHelper: ItemTouchHelper? = null
     // Inflate our layout with binding support
-    private val iBinding: TabDesktopViewBinding = TabDesktopViewBinding.inflate(context.inflater,this, true)
+    val iBinding: TabDesktopViewBinding = TabDesktopViewBinding.inflate(context.inflater,this, true)
 
     init {
         // Provide UI controller
