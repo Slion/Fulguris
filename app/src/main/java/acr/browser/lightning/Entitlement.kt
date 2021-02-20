@@ -15,7 +15,7 @@ class Entitlement {
                 Sponsorship.PLATINUM -> kMaxTabCount
                 Sponsorship.DIAMOND -> kMaxTabCount
                 // Defensive
-                else -> kMaxTabCount
+                //else -> kMaxTabCount
             }
         }
     }
