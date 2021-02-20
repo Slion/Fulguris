@@ -46,7 +46,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:completionThreshold="1"
-            android:dropDownAnchor="@+id/toolbar_layout"
+            android:dropDownAnchor="@id/toolbar_include"
             android:dropDownWidth="match_parent"
             android:gravity="start|center_vertical"
             android:hint="@string/search_hint"

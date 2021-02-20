@@ -5,6 +5,9 @@
 
 
     <!--
+    As this is included from another layout our toolbar_layout id will be overridden by the include id.
+    Though it is still needed to reference the binding object.
+
     Elevation defines the shadow being cast by our tool bar
     -->
     <androidx.constraintlayout.widget.ConstraintLayout
