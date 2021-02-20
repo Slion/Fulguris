@@ -14,6 +14,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.graphics.ColorUtils
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 
@@ -28,6 +29,7 @@ class TabsDesktopAdapter(
 
 
     private var textColor = Color.TRANSPARENT
+    private var foregroundTabColor: Int = Color.TRANSPARENT
 
     init {
         //val backgroundColor = Utils.mixTwoColors(ThemeUtils.getPrimaryColor(context), Color.BLACK, 0.75f)
@@ -54,17 +56,24 @@ class TabsDesktopAdapter(
 
         holder.txtTitle.text = tab.title
         updateViewHolderAppearance(holder, tab)
-        updateViewHolderFavicon(holder, tab.favicon, tab.isForeground)
+        updateViewHolderFavicon(holder, tab)
         // Update our copy so that we can check for changes then
         holder.tab = tab.copy();
     }
 
 
-    private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
-        favicon?.let {
-                viewHolder.favicon.setImageBitmap(it)
+    private fun updateViewHolderFavicon(viewHolder: TabViewHolder, tab: TabViewState) {
+        // Apply filter to favicon if needed
+        tab.favicon?.let {
+            val ba = uiController as BrowserActivity
+            if (tab.isForeground) {
+                // Make sure that on light theme with dark tab background because color mode we still inverse favicon color if needed, see github.com
+                viewHolder.favicon.setImageForTheme(it, ColorUtils.calculateLuminance(foregroundTabColor)<0.2)
             }
-        ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
+            else {
+                viewHolder.favicon.setImageForTheme(it, ba.useDarkTheme)
+            }
+        } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
     }
 
     private fun updateViewHolderAppearance(viewHolder: TabViewHolder, tab: TabViewState) {
@@ -74,7 +83,8 @@ class TabsDesktopAdapter(
             textColor = viewHolder.txtTitle.currentTextColor
         }
 	
-        if (tab.isForeground) {            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
+        if (tab.isForeground) {
+            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
             val newTextColor = (uiController as BrowserActivity).currentToolBarTextColor
             viewHolder.txtTitle.setTextColor(newTextColor)
             viewHolder.exitButton.findViewById<ImageView>(R.id.deleteButton).setColorFilter(newTextColor)
@@ -88,7 +98,7 @@ class TabsDesktopAdapter(
                 val backgroundColor = ThemeUtils.getColor(viewHolder.iCardView.context, R.attr.colorSurface)
 
                 // Pick our color according to settings and states
-                val color = if (uiController.isColorMode())
+                foregroundTabColor = if (uiController.isColorMode())
                     if (tab.themeColor!=Color.TRANSPARENT)
                     // Use meta theme color if we have one
                         tab.themeColor
@@ -103,9 +113,9 @@ class TabsDesktopAdapter(
                     backgroundColor
 
                 // Apply proper color then
-                viewHolder.iCardView.backgroundTintList = ColorStateList.valueOf(color)
+                viewHolder.iCardView.backgroundTintList = ColorStateList.valueOf(foregroundTabColor)
 
-                if (color==backgroundColor) {
+                if (foregroundTabColor==backgroundColor) {
                     // Make sure we can tell which tab is the current one when not using color mode
                     viewHolder.iCardView.isCheckable = true
                     viewHolder.iCardView.isChecked = true
