@@ -33,7 +33,10 @@ class TabViewHolder(
         iCardView.setOnClickListener(this)
         iCardView.setOnLongClickListener(this)
         // Is that the best way to access our preferences?
-        exitButton.visibility = if ((view.context as BrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
+        // If not showing horizontal desktop tab bar, this one always shows close button.
+        // Apply settings preference for showing close button on tabs.
+        exitButton.visibility = if (!(view.context as BrowserActivity).userPreferences.showTabsInDrawer
+                || (view.context as BrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
     }
 
     override fun onClick(v: View) {
