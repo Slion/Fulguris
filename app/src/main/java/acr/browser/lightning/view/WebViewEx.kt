@@ -1,8 +1,11 @@
 package acr.browser.lightning.view
 
 import android.content.Context
+import android.print.PrintAttributes
+import android.print.PrintDocumentAdapter
+import android.print.PrintJob
+import android.print.PrintManager
 import android.util.AttributeSet
-import android.util.Log
 import android.view.KeyEvent
 import android.webkit.WebView
 
@@ -29,6 +32,18 @@ class WebViewEx : WebView {
         */
 
         return super.dispatchKeyEvent(event)
+    }
+
+    /**
+     * Start a print job, thus notably enabling saving a web page as PDF.
+     */
+    fun print() : PrintJob {
+        val printManager: PrintManager = context.getSystemService(Context.PRINT_SERVICE) as PrintManager
+        val printAdapter: PrintDocumentAdapter = createPrintDocumentAdapter(title)
+        val jobName = title
+        val builder: PrintAttributes.Builder = PrintAttributes.Builder()
+        builder.setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+        return printManager.print(jobName, printAdapter, builder.build())
     }
 
 }

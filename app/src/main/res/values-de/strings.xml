@@ -87,6 +87,7 @@
     <string name="action_homepage">Standard</string>
     <string name="action_back">Zurück</string>
     <string name="action_find">Auf Seite suchen</string>
+    <string name="action_print">Drucken</string>
     <string name="download_pending">Herunterladen läuft\\u2026</string>
     <string name="cannot_download">Herunterladen nur bei \"http\" oder \"https\" URLs möglich!</string>
     <string name="problem_download">Ungültige URL, Download nicht möglich!</string>

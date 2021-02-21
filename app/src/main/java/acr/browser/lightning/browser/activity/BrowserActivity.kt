@@ -353,6 +353,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemDownloads) { executeAction(R.id.action_downloads) }
             onMenuItemClicked(iBinding.menuItemShare) { executeAction(R.id.action_share) }
             onMenuItemClicked(iBinding.menuItemFind) { executeAction(R.id.action_find) }
+            onMenuItemClicked(iBinding.menuItemPrint) { executeAction(R.id.action_print) }
             onMenuItemClicked(iBinding.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
             onMenuItemClicked(iBinding.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
             onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
@@ -1248,6 +1249,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 findInPage()
                 return true
             }
+            R.id.action_print -> {
+                (currentTabView as WebViewEx).print()
+                return true
+            }
             R.id.action_reading_mode -> {
                 if (currentUrl != null) {
                     ReadingActivity.launch(this, currentUrl)
@@ -1460,7 +1465,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * This function is central to browser tab switching.
      * It swaps our previous WebView with our new WebView.
      *
-     * @param aView Input is in fact a WebViewEx.
+     * @param aView Input is in fact a [WebViewEx].
      */
     override fun setTabView(aView: View) {
 

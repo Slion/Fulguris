@@ -101,6 +101,7 @@
     <string name="action_homepage">Par défaut</string>
     <string name="action_back">Retour</string>
     <string name="action_find">Rechercher dans la page</string>
+    <string name="action_print">Imprimer</string>
     <string name="download_pending">Démarrage du téléchargement\u2026</string>
     <string name="cannot_download">Téléchargement d\'adresses \"http\" ou \"https\" uniquement.</string>
     <string name="problem_download">Adresse invalide, impossible de télécharger</string>

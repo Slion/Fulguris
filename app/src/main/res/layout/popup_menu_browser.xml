@@ -152,6 +152,12 @@
                     android:text="@string/action_find" />
 
                 <TextView
+                    android:id="@+id/menuItemPrint"
+                    style="@style/BrowserTextMenuItem"
+                    app:drawableStartCompat="@drawable/ic_action_print"
+                    android:text="@string/action_print" />
+
+                <TextView
                     android:id="@+id/menuItemAddToHome"
                     style="@style/BrowserTextMenuItem"
                     app:drawableStartCompat="@drawable/ic_add_to_home_screen"
