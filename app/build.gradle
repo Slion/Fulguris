@@ -184,6 +184,9 @@ dependencies {
     // html parsing for reading mode
     implementation 'org.jsoup:jsoup:1.13.1'
 
+    // reading mode
+    implementation 'net.dankito.readability4j:readability4j:1.0.3'
+
     // file reading
     final def mezzanineVersion = '1.1.1'
     implementation "com.anthonycr.mezzanine:mezzanine:$mezzanineVersion"

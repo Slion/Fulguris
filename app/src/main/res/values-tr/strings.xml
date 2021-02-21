@@ -328,4 +328,8 @@
     <string name="ad_block_load_failure">Ana bilgisayarlar reklam engelleme kaynağından yüklenemedi.</string>
 
     <string name="infinity">∞</string>
+
+    <string name="reading_mode_image_copyright">Resim ile ilişkilendirildi</string>
+    <string name="reading_mode_image_caption">Başlıklı resim</string>
+
 </resources>

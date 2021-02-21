@@ -1255,7 +1255,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
             R.id.action_reading_mode -> {
                 if (currentUrl != null) {
-                    ReadingActivity.launch(this, currentUrl)
+                    ReadingActivity.launch(this, currentUrl,false)
                 }
                 return true
             }

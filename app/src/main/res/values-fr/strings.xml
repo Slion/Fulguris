@@ -261,4 +261,11 @@
     <string name="dialog_rename_folder">Renommer de dossier</string>
     <string name="dialog_remove_folder">Supprimer le dossier</string>
     <string name="dialog_title_close_browser">Fermer le navigateur</string>
+
+    <string name="reading_mode_image_copyright">Image attribuée à</string>
+    <string name="reading_mode_image_caption">Image avec légende</string>
+    <string name="tts">Lire la page</string>
+    <string name="stop_tts">Arrêter la lecture</string>
+
+
 </resources>

@@ -285,4 +285,10 @@
     </plurals>
     <string name="notification_incognito_running_message">Inkognito-Tab anzeigen</string>
     <string name="notification_incognito_running_description">Dauerhafte Inkognito-Benachrichtigung</string>
+
+    <string name="reading_mode_image_copyright">Bild Copyright</string>
+    <string name="reading_mode_image_caption">Bild mit Beschriftung</string>
+    <string name="tts">Seite lesen</string>
+    <string name="stop_tts">Lesen beenden</string>
+
 </resources>
