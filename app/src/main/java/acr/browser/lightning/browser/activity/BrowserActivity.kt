@@ -1958,40 +1958,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             val stateListDrawable = background as StateListDrawable
             // Order may matter depending of states declared in our background drawable
             // See: [R.drawable.card_bg_elevate]
-            stateListDrawable.drawableForState(android.R.attr.state_focused).tint(getSearchBarFocusedColor(aColor))
-            stateListDrawable.drawableForState(android.R.attr.state_enabled).tint(getSearchBarColor(aColor))
+            stateListDrawable.drawableForState(android.R.attr.state_focused).tint(ThemeUtils.getSearchBarFocusedColor(aColor))
+            stateListDrawable.drawableForState(android.R.attr.state_enabled).tint(ThemeUtils.getSearchBarColor(aColor))
         }
     }
 
-    /**
-     *
-     */
-    private fun getSearchBarColor(requestedColor: Int): Int {
-        val luminance = ColorUtils.calculateLuminance(requestedColor)
-        return if (luminance>0.9) {
-            // Too bright, make it darker then
-            DrawableUtils.mixColor(0.20f, requestedColor, Color.BLACK)
-        }
-        else {
-            // Make search text field background lighter
-            DrawableUtils.mixColor(0.20f, requestedColor, Color.WHITE)
-        }
-    }
-
-    /**
-     *
-     */
-    private fun getSearchBarFocusedColor(requestedColor: Int): Int {
-        val luminance = ColorUtils.calculateLuminance(requestedColor)
-        return if (luminance>0.9) {
-            // Too bright, make it darker then
-            DrawableUtils.mixColor(0.35f, requestedColor, Color.BLACK)
-        }
-        else {
-            // Make search text field background lighter
-            DrawableUtils.mixColor(0.35f, requestedColor, Color.WHITE)
-        }
-    }
 
 
 

@@ -46,6 +46,7 @@
     <string name="recommended">Recommandé</string>
     <string name="search">Moteur de recherche</string>
     <string name="search_hint">Rechercher</string>
+    <!--<string name="search_action">Rechercher</string>-->
     <string name="wideViewPort">Utiliser large fenêtre d\'affichage</string>
     <string name="overViewMode">Charger les pages en mode aperçu</string>
     <string name="restore_tabs_on_startup">Restaurer les onglets perdus au démarrage</string>
