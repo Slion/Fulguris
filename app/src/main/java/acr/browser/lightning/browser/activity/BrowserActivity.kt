@@ -348,23 +348,26 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemSessions) { executeAction(R.id.action_sessions) }
             onMenuItemClicked(iBinding.menuItemNewTab) { executeAction(R.id.action_new_tab) }
             onMenuItemClicked(iBinding.menuItemIncognito) { executeAction(R.id.action_incognito) }
-            onMenuItemClicked(iBinding.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
             onMenuItemClicked(iBinding.menuItemHistory) { executeAction(R.id.action_history) }
             onMenuItemClicked(iBinding.menuItemDownloads) { executeAction(R.id.action_downloads) }
+            onMenuItemClicked(iBinding.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
+            // Web page actions
             onMenuItemClicked(iBinding.menuItemShare) { executeAction(R.id.action_share) }
+            onMenuItemClicked(iBinding.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
             onMenuItemClicked(iBinding.menuItemFind) { executeAction(R.id.action_find) }
             onMenuItemClicked(iBinding.menuItemPrint) { executeAction(R.id.action_print) }
             onMenuItemClicked(iBinding.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
             onMenuItemClicked(iBinding.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
-            onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
             onMenuItemClicked(iBinding.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
+            //
+            onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
 
             // Popup menu action shortcut icons
             onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
             onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
             onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
             onMenuItemClicked(iBinding.menuShortcutBack) { executeAction(R.id.action_back) }
-            onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+            //onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
 
 
         }

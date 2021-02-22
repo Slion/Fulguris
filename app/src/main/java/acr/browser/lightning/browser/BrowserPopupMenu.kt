@@ -7,12 +7,16 @@ import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isSpecialUrl
+import android.animation.AnimatorInflater
+import android.animation.LayoutTransition
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.animation.AnimationUtils
 import android.widget.PopupWindow
+import androidx.core.view.isVisible
 import javax.inject.Inject
 
 
@@ -48,6 +52,25 @@ class BrowserPopupMenu : PopupWindow {
 
         //val radius: Float = getResources().getDimension(R.dimen.default_corner_radius) //32dp
 
+        val animator = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_appearing)
+        iBinding.layoutMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animator)
+        iBinding.layoutMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animator.duration)
+
+        val animatorDisappearing = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_disappearing)
+        iBinding.layoutMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearing)
+        iBinding.layoutMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearing.duration)
+
+        //iBinding.layoutMenuItems.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING)
+        //iBinding.layoutMenuItems.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
+        //iBinding.layoutMenuItems.layoutTransition.disableTransitionType(LayoutTransition.CHANGING)
+
+
+        //iBinding.layoutMenuItems.layoutTransition.setAnimator(LayoutTransition.CHANGE_APPEARING, animator)
+        //iBinding.layoutMenuItems.layoutTransition.setDuration(LayoutTransition.CHANGE_APPEARING, animator.duration)
+        //iBinding.layoutMenuItems.layoutTransition.setAnimator(LayoutTransition.CHANGING, animator)
+        //iBinding.layoutMenuItems.layoutTransition.setDuration(LayoutTransition.CHANGING, animator.duration)
+
+
         /*
         // TODO: That fixes the corner but leaves a square shadow behind
         val toolbar: AppBarLayout = view.findViewById(R.id.header)
@@ -58,6 +81,38 @@ class BrowserPopupMenu : PopupWindow {
                 .build()
          */
 
+        iBinding.menuItemWebPage.setOnClickListener {
+            // Toggle web page actions visibility
+            val willBeVisible = !iBinding.menuItemFind.isVisible
+
+            // Rotate icon using animations
+            if (willBeVisible) {
+                iBinding.imageExpandable.startAnimation(AnimationUtils.loadAnimation(contentView.context, R.anim.rotate_clockwise_90));
+            } else {
+                iBinding.imageExpandable.startAnimation(AnimationUtils.loadAnimation(contentView.context, R.anim.rotate_counterclockwise_90));
+            }
+
+            // Those menu items are always on even for special URLs
+            iBinding.menuItemFind.isVisible = willBeVisible
+            iBinding.menuItemPrint.isVisible = willBeVisible
+            iBinding.menuItemReaderMode.isVisible = willBeVisible
+            //
+            (contentView.context as BrowserActivity).tabsManager.let { tm ->
+                tm.currentTab?.let { tab ->
+                    // Let user add multiple times the same URL I guess, for now anyway
+                    // Blocking it is not nice and subscription is more involved I guess
+                    // See BookmarksDrawerView.updateBookmarkIndicator
+                    //contentView.menuItemAddBookmark.visibility = if (bookmarkModel.isBookmark(tab.url).blockingGet() || tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
+                    (!tab.url.isSpecialUrl() && willBeVisible).let {
+                        // Those menu items won't be displayed for special URLs
+                        iBinding.menuItemDesktopMode.isVisible = it
+                        iBinding.menuItemAddToHome.isVisible = it
+                        iBinding.menuItemAddBookmark.isVisible = it
+                        iBinding.menuItemShare.isVisible = it
+                    }
+                }
+            }
+        }
     }
 
 
@@ -70,18 +125,23 @@ class BrowserPopupMenu : PopupWindow {
 
     fun show(aAnchor: View) {
 
+        // Reset items visibility
+        iBinding.menuItemShare.isVisible = false
+        iBinding.menuItemAddBookmark.isVisible = false
+        iBinding.menuItemFind.isVisible = false
+        iBinding.menuItemPrint.isVisible = false
+        iBinding.menuItemReaderMode.isVisible = false
+        iBinding.menuItemDesktopMode.isVisible = false
+        iBinding.menuItemAddToHome.isVisible = false
+        iBinding.menuItemWebPage.isVisible = true
+
+
         (contentView.context as BrowserActivity).tabsManager.let {
             // Set desktop mode checkbox according to current tab
             iBinding.menuItemDesktopMode.isChecked = it.currentTab?.desktopMode ?: false
 
-            it.currentTab?.let { tab ->
-                // Let user add multiple times the same URL I guess, for now anyway
-                // Blocking it is not nice and subscription is more involved I guess
-                // See BookmarksDrawerView.updateBookmarkIndicator
-                //contentView.menuItemAddBookmark.visibility = if (bookmarkModel.isBookmark(tab.url).blockingGet() || tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
-                iBinding.menuItemAddBookmark.visibility = if (tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
-            }
         }
+
 
         //showAsDropDown(aAnchor, 0,-aAnchor.height)
 
