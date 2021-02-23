@@ -19,8 +19,13 @@
 
     <PreferenceCategory android:title="@string/tabs">
 
+        <!-- This option is broken since we introduced sessions.
+             Just hide it until we sort this out.
+             See: https://github.com/Slion/Fulguris/issues/147
+        -->
         <SwitchPreferenceCompat
             android:defaultValue="true"
+            app:isPreferenceVisible="false"
             android:key="@string/pref_key_restore_tabs_on_startup"
             android:title="@string/restore_tabs_on_startup"
             app:icon="@drawable/ic_save" />
@@ -28,16 +33,31 @@
         <SwitchPreferenceCompat
             app:key="@string/pref_key_search_in_new_tab"
             app:title="@string/search_in_new_tab"
-            app:defaultValue="true"
+            app:defaultValue="@bool/pref_default_search_in_new_tab"
             app:iconSpaceReserved="false"
             app:icon="@drawable/ic_search" />
 
         <SwitchPreferenceCompat
             app:key="@string/pref_key_url_in_new_tab"
             app:title="@string/url_in_new_tab"
-            app:defaultValue="true"
+            app:defaultValue="@bool/pref_default_url_in_new_tab"
             app:iconSpaceReserved="false"
             app:icon="@drawable/ic_web" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_homepage_in_new_tab"
+            app:title="@string/homepage_in_new_tab"
+            app:defaultValue="@bool/pref_default_homepage_in_new_tab"
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_action_home" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_bookmark_in_new_tab"
+            app:title="@string/bookmark_in_new_tab"
+            app:defaultValue="@bool/pref_default_bookmark_in_new_tab"
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_bookmark" />
+
 
         <ListPreference
             app:key="@string/pref_key_new_tab_position"

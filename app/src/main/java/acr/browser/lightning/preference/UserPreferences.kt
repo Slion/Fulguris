@@ -110,12 +110,22 @@ class UserPreferences @Inject constructor(
     /**
      * Defines if a new tab should be opened when user is doing a new search.
      */
-    var searchInNewTab by preferences.booleanPreference(R.string.pref_key_search_in_new_tab, true)
+    var searchInNewTab by preferences.booleanPreference(R.string.pref_key_search_in_new_tab, R.bool.pref_default_search_in_new_tab)
 
     /**
      * Defines if a new tab should be opened when user provided a new URL.
      */
-    var urlInNewTab by preferences.booleanPreference(R.string.pref_key_url_in_new_tab, true)
+    var urlInNewTab by preferences.booleanPreference(R.string.pref_key_url_in_new_tab, R.bool.pref_default_url_in_new_tab)
+
+    /**
+     * Defines if a new tab should be opened when user taps on homepage button.
+     */
+    var homepageInNewTab by preferences.booleanPreference(R.string.pref_key_homepage_in_new_tab, R.bool.pref_default_homepage_in_new_tab)
+
+    /**
+     * Defines if a new tab should be opened when user selects a bookmark.
+     */
+    var bookmarkInNewTab by preferences.booleanPreference(R.string.pref_key_bookmark_in_new_tab, R.bool.pref_default_bookmark_in_new_tab)
 
     /**
      * Value of our new tab position enum.

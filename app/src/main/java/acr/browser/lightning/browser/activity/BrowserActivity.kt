@@ -1286,7 +1286,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
 
             R.id.action_show_homepage -> {
-                tabsManager.currentTab?.loadHomePage()
+                if (userPreferences.homepageInNewTab) {
+                    presenter?.newTab(homePageInitializer, true)
+                } else {
+                    // Why not through presenter? We need some serious refactoring at some point
+                    tabsManager.currentTab?.loadHomePage()
+                }
                 closeDrawers(null)
                 return true
             }
@@ -1565,7 +1570,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     override fun bookmarkItemClicked(entry: Bookmark.Entry) {
-        presenter?.loadUrlInCurrentView(entry.url)
+        if (userPreferences.bookmarkInNewTab) {
+            presenter?.newTab(UrlInitializer(entry.url), true)
+        } else {
+            presenter?.loadUrlInCurrentView(entry.url)
+        }
         // keep any jank from happening when the drawer is closed after the URL starts to load
         mainHandler.postDelayed({ closeDrawers(null) }, 150)
     }

@@ -297,6 +297,8 @@
     <string name="url_contents">Tool bar shows</string>
     <string name="search_in_new_tab">Search in new tab</string>
     <string name="url_in_new_tab">URL in new tab</string>
+    <string name="homepage_in_new_tab">Homepage in new tab</string>
+    <string name="bookmark_in_new_tab">Bookmark in new tab</string>
     <string name="new_tab_position">New tab position</string>
     <string name="new_tab_position_before">Before current tab</string>
     <string name="new_tab_position_after">After current tab</string>
