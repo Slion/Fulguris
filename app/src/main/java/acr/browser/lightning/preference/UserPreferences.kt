@@ -395,6 +395,17 @@ class UserPreferences @Inject constructor(
      * Used to store version code to enable version update check and first run detection.
      */
     var versionCode by preferences.intPreference(R.string.pref_key_version_code, 0)
+
+    /**
+     * Define if user wants to show exit option in menu
+     */
+    var menuShowExit by preferences.booleanPreference(R.string.pref_key_menu_show_exit, R.bool.pref_default_menu_show_exit)
+
+    /**
+     * Define if user wants to show exit option in menu
+     */
+    var menuShowNewTab by preferences.booleanPreference(R.string.pref_key_menu_show_new_tab, R.bool.pref_default_menu_show_new_tab)
+
 }
 
 // SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML

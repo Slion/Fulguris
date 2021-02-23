@@ -104,7 +104,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:background="?android:attr/listDivider"
                 />
 
@@ -166,11 +166,16 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         app:drawableStartCompat="@drawable/ic_settings"
                         android:text="@string/settings" />
 
+                    <TextView
+                        android:id="@+id/menuItemExit"
+                        style="@style/BrowserTextMenuItem"
+                        app:drawableStartCompat="@drawable/ic_action_delete"
+                        android:text="@string/exit" />
 
                     <!-- Divider -->
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="2dp"
                         android:layout_marginStart="15dp"
                         android:layout_marginEnd="15dp"
                         android:background="?android:attr/listDivider"
@@ -275,7 +280,6 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             android:layout_marginStart="10dp" />
 
                     </LinearLayout>
-
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

@@ -351,6 +351,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemHistory) { executeAction(R.id.action_history) }
             onMenuItemClicked(iBinding.menuItemDownloads) { executeAction(R.id.action_downloads) }
             onMenuItemClicked(iBinding.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
+            onMenuItemClicked(iBinding.menuItemExit) { executeAction(R.id.action_exit) }
             // Web page actions
             onMenuItemClicked(iBinding.menuItemShare) { executeAction(R.id.action_share) }
             onMenuItemClicked(iBinding.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
@@ -1221,6 +1222,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
             R.id.action_bookmarks -> {
                 openBookmarks()
+                return true
+            }
+            R.id.action_exit -> {
+                closeBrowser()
                 return true
             }
             R.id.action_copy -> {

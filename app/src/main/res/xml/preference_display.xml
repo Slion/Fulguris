@@ -27,7 +27,7 @@
         android:key="@string/pref_key_tabs_in_drawer"
         android:title="@string/settings_title_vertical_tab_bar"
         android:summary="@string/settings_summary_vertical_tab_bar"
-        app:icon="@drawable/ic_more_vertical"
+        app:icon="@drawable/ic_action_tabs"
         app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
@@ -36,8 +36,29 @@
         android:dependency="@string/pref_key_tabs_in_drawer"
         android:title="@string/pref_title_tab_list_item_show_close_button"
         android:summary="@string/pref_summary_tab_list_item_show_close_button"
-        app:icon="@drawable/ic_action_delete"
+        app:icon="@drawable/ic_tab_close"
         app:iconSpaceReserved="false"/>
+
+    <PreferenceCategory android:title="@string/pref_category_menu"
+        app:icon="@drawable/ic_menu">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_menu_show_exit"
+            android:key="@string/pref_key_menu_show_exit"
+            android:title="@string/pref_title_menu_show_exit"
+            android:summary="@string/pref_summary_menu_show_exit"
+            app:icon="@drawable/ic_action_delete"
+            app:iconSpaceReserved="false"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_menu_show_new_tab"
+            android:key="@string/pref_key_menu_show_new_tab"
+            android:title="@string/pref_title_menu_new_tab"
+            android:summary="@string/pref_summary_menu_new_tab"
+            app:icon="@drawable/ic_action_plus"
+            app:iconSpaceReserved="false"/>
+
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_portrait"
         app:icon="@drawable/ic_portrait">

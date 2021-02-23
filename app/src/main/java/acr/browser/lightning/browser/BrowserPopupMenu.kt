@@ -5,6 +5,7 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.di.injector
+import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isSpecialUrl
 import android.animation.AnimatorInflater
@@ -24,7 +25,11 @@ class BrowserPopupMenu : PopupWindow {
 
     @Inject
     internal lateinit var bookmarkModel: BookmarkRepository
+    @Inject
+    lateinit var iUserPreferences: UserPreferences
+
     var iBinding: PopupMenuBrowserBinding
+    var iIsIncognito = false
 
     constructor(layoutInflater: LayoutInflater, aBinding: PopupMenuBrowserBinding = BrowserPopupMenu.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
@@ -32,6 +37,7 @@ class BrowserPopupMenu : PopupWindow {
         aBinding.root.context.injector.inject(this)
 
         iBinding = aBinding
+
 
         // Elevation just need to be high enough not to cut the effect defined in our layout
         elevation = 100F
@@ -44,10 +50,11 @@ class BrowserPopupMenu : PopupWindow {
         setBackgroundDrawable(ColorDrawable())
 
         // Hide incognito menu item if we are already incognito
-        if ((aBinding.root.context as BrowserActivity).isIncognito()) {
-            aBinding.menuItemIncognito.visibility = View.GONE
+        iIsIncognito = (aBinding.root.context as BrowserActivity).isIncognito()
+        if (iIsIncognito) {
+            aBinding.menuItemIncognito.isVisible = false
             // No sessions in incognito mode
-            aBinding.menuItemSessions.visibility = View.GONE
+            aBinding.menuItemSessions.isVisible = false
         }
 
         //val radius: Float = getResources().getDimension(R.dimen.default_corner_radius) //32dp
@@ -134,6 +141,9 @@ class BrowserPopupMenu : PopupWindow {
         iBinding.menuItemDesktopMode.isVisible = false
         iBinding.menuItemAddToHome.isVisible = false
         iBinding.menuItemWebPage.isVisible = true
+
+        iBinding.menuItemExit.isVisible = iUserPreferences.menuShowExit || iIsIncognito
+        iBinding.menuItemNewTab.isVisible = iUserPreferences.menuShowNewTab
 
 
         (contentView.context as BrowserActivity).tabsManager.let {
