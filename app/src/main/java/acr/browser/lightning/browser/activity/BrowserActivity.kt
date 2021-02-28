@@ -1845,7 +1845,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         (iBinding.toolbarInclude.toolbar.width>threshold).let{
             buttonBack?.isVisible = it
             buttonForward?.isVisible = it
-	    // Hide tab bar action buttons if no room for them
+            // Hide tab bar action buttons if no room for them
             if (tabsView is TabsDesktopView) {
                 (tabsView as TabsDesktopView).iBinding.actionButtons.isVisible = it
             }
@@ -1869,10 +1869,21 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Color also applies to the following backgrounds as they show during tool bar show/hide animation
         iBinding.uiLayout.setBackgroundColor(color)
         iBinding.contentFrame.setBackgroundColor(color)
-        // This one is going to be a problem as it will break some websites such as bbc.com
-        // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color
-        currentTabView?.setBackgroundColor(if (iBinding.toolbarInclude.progressView.progress >= 100) Color.WHITE else color)
-        currentTabView?.invalidate()
+        // Now also set WebView background color otherwise it is just white and we don't want that.
+        // This one is going to be a problem as it will break some websites such as bbc.com.
+        // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color.
+        // TODO: Do we really need to invalidate here?
+        if (iBinding.toolbarInclude.progressView.progress >= 100) {
+            // We delay that to avoid some web sites including default startup page to flash white on app startup
+            mainHandler.postDelayed({
+                currentTabView?.setBackgroundColor(Color.WHITE)
+                currentTabView?.invalidate()
+            },500);
+        } else {
+            currentTabView?.setBackgroundColor(color)
+            currentTabView?.invalidate()
+        }
+
 
         // No animation for now
         // Toolbar background color
@@ -1926,6 +1937,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         toolbar_layout.startAnimation(animation)
 
          */
+
 
     }
 

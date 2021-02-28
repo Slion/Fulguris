@@ -272,7 +272,11 @@ class LightningView(
                 isAnimationCacheEnabled = false
                 isAlwaysDrawnWithCacheEnabled = false
             }
-            setBackgroundColor(Color.WHITE)
+
+            // Some web sites are broken if the background color is not white, thanks bbc.com and bbc.com/news for not defining background color.
+            // However whatever we set here should be irrelevant as this is being taken care of in [BrowserActivity.changeToolbarBackground]
+            // Though strictly speaking in a perfect world where web sites always define their background color themselves this should be our theme background color.
+            setBackgroundColor(ThemeUtils.getBackgroundColor(activity))
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_YES

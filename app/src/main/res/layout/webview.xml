@@ -11,8 +11,14 @@ android:focusableInTouchMode="true"
 android:defaultFocusHighlightEnabled="false"
     This is needed to remove the focus highlight filtering on the whole web page whenever it is focused
     Not sure what happens then with version
+
+android:background="?android:attr/colorBackground"
+        We don't need to set our background here as we do it at runtime, on multiple occasions too.
+        Also people reported it ain't working anyway.
+        See: https://stackoverflow.com/a/7617734/3969362
 -->
 <acr.browser.lightning.view.WebViewEx xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/web_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scrollbar"
@@ -20,6 +26,5 @@ android:defaultFocusHighlightEnabled="false"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:defaultFocusHighlightEnabled="false"
-    android:id="@+id/web_view"
     />
 
