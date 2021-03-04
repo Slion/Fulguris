@@ -2,8 +2,7 @@ package acr.browser.lightning.view
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabModel
-import acr.browser.lightning.constant.SCHEME_BOOKMARKS
-import acr.browser.lightning.constant.SCHEME_HOMEPAGE
+import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.di.DiskScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.extensions.resizeAndShow
@@ -14,11 +13,9 @@ import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.preference.UserPreferences
 import android.app.Activity
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Message
 import android.webkit.WebView
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Reusable
 import io.reactivex.Scheduler
@@ -36,6 +33,11 @@ interface TabInitializer {
      */
     fun initialize(webView: WebView, headers: Map<String, String>)
 
+    /**
+     * Tab can't be initialized without a URL.
+     * That's just how browsers work: one tab, one URL.
+     */
+    fun url(): String
 }
 
 /**
@@ -47,6 +49,9 @@ class UrlInitializer(private val url: String) : TabInitializer {
         webView.loadUrl(url, headers)
     }
 
+    override fun url(): String {
+        return url
+    }
 }
 
 /**
@@ -63,12 +68,15 @@ class HomePageInitializer @Inject constructor(
         val homepage = userPreferences.homepage
 
         when (homepage) {
-            SCHEME_HOMEPAGE -> startPageInitializer
-            SCHEME_BOOKMARKS -> bookmarkPageInitializer
+            Uris.AboutHome -> startPageInitializer
+            Uris.AboutBookmarks -> bookmarkPageInitializer
             else -> UrlInitializer(homepage)
         }.initialize(webView, headers)
     }
 
+    override fun url(): String {
+        return Uris.FulgurisHome
+    }
 }
 
 /**
@@ -79,7 +87,11 @@ class StartPageInitializer @Inject constructor(
     homePageFactory: HomePageFactory,
     @DiskScheduler diskScheduler: Scheduler,
     @MainScheduler foregroundScheduler: Scheduler
-) : HtmlPageFactoryInitializer(homePageFactory, diskScheduler, foregroundScheduler)
+) : HtmlPageFactoryInitializer(homePageFactory, diskScheduler, foregroundScheduler) {
+    override fun url(): String {
+        return Uris.FulgurisStart
+    }
+}
 
 /**
  * An initializer that displays the bookmark page.
@@ -89,7 +101,11 @@ class BookmarkPageInitializer @Inject constructor(
     bookmarkPageFactory: BookmarkPageFactory,
     @DiskScheduler diskScheduler: Scheduler,
     @MainScheduler foregroundScheduler: Scheduler
-) : HtmlPageFactoryInitializer(bookmarkPageFactory, diskScheduler, foregroundScheduler)
+) : HtmlPageFactoryInitializer(bookmarkPageFactory, diskScheduler, foregroundScheduler) {
+    override fun url(): String {
+        return Uris.FulgurisBookmarks
+    }
+}
 
 /**
  * An initializer that displays the download page.
@@ -99,7 +115,11 @@ class DownloadPageInitializer @Inject constructor(
     downloadPageFactory: DownloadPageFactory,
     @DiskScheduler diskScheduler: Scheduler,
     @MainScheduler foregroundScheduler: Scheduler
-) : HtmlPageFactoryInitializer(downloadPageFactory, diskScheduler, foregroundScheduler)
+) : HtmlPageFactoryInitializer(downloadPageFactory, diskScheduler, foregroundScheduler) {
+    override fun url(): String {
+        return Uris.FulgurisDownloads
+    }
+}
 
 /**
  * An initializer that displays the history page.
@@ -109,7 +129,11 @@ class HistoryPageInitializer @Inject constructor(
     historyPageFactory: HistoryPageFactory,
     @DiskScheduler diskScheduler: Scheduler,
     @MainScheduler foregroundScheduler: Scheduler
-) : HtmlPageFactoryInitializer(historyPageFactory, diskScheduler, foregroundScheduler)
+) : HtmlPageFactoryInitializer(historyPageFactory, diskScheduler, foregroundScheduler) {
+    override fun url(): String {
+        return Uris.FulgurisHistory
+    }
+}
 
 /**
  * An initializer that loads the url built by the [HtmlPageFactory].
@@ -133,6 +157,8 @@ abstract class HtmlPageFactoryInitializer(
 /**
  * An initializer that sets the [WebView] as the target of the [resultMessage]. Used for
  * `target="_blank"` links.
+ *
+ * Used when creating a new tab in response from [WebChromeClient.onCreateWindow].
  */
 class ResultMessageInitializer(private val resultMessage: Message) : TabInitializer {
 
@@ -142,12 +168,18 @@ class ResultMessageInitializer(private val resultMessage: Message) : TabInitiali
         }.sendToTarget()
     }
 
+    override fun url(): String {
+        /** We don't know our URL at this stage, it will only be loaded in the WebView by whatever is handling the message sent above.
+         * That's ok though as we implemented a special case to handle this situation in [LightningView.initializeContent]
+         */
+        return ""
+    }
 }
 
 /**
  * An initializer that restores the [WebView] state using the [bundle].
  */
-open class BundleInitializer(private val bundle: Bundle?) : TabInitializer {
+abstract class BundleInitializer(private val bundle: Bundle?) : TabInitializer {
 
     override fun initialize(webView: WebView, headers: Map<String, String>) {
         webView.restoreState(bundle)
@@ -161,7 +193,11 @@ open class BundleInitializer(private val bundle: Bundle?) : TabInitializer {
  */
 class FreezableBundleInitializer(
     val tabModel: TabModel
-) : BundleInitializer(tabModel.webView)
+) : BundleInitializer(tabModel.webView) {
+    override fun url(): String {
+        return tabModel.url
+    }
+}
 
 /**
  * An initializer that does not load anything into the [WebView].
@@ -169,6 +205,10 @@ class FreezableBundleInitializer(
 class NoOpInitializer : TabInitializer {
 
     override fun initialize(webView: WebView, headers: Map<String, String>) = Unit
+
+    override fun url(): String {
+        return Uris.FulgurisNoop
+    }
 
 }
 
@@ -196,6 +236,10 @@ class PermissionInitializer(
                 UrlInitializer(url).initialize(webView, headers)
             }
         }.resizeAndShow()
+    }
+
+    override fun url(): String {
+        return url
     }
 
 }

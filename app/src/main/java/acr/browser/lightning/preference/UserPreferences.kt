@@ -8,7 +8,7 @@ import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.browser.SearchBoxDisplayChoice
 import acr.browser.lightning.browser.SearchBoxModel
 import acr.browser.lightning.constant.DEFAULT_ENCODING
-import acr.browser.lightning.constant.SCHEME_HOMEPAGE
+import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.device.ScreenSize
 import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.preference.delegates.*
@@ -143,7 +143,7 @@ class UserPreferences @Inject constructor(
     /**
      * The URL of the selected homepage.
      */
-    var homepage by preferences.stringPreference(HOMEPAGE, SCHEME_HOMEPAGE)
+    var homepage by preferences.stringPreference(HOMEPAGE, Uris.AboutHome)
 
     /**
      * True if the browser should allow execution of javascript, false otherwise.

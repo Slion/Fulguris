@@ -99,6 +99,7 @@
                 <data android:scheme="http" />
                 <data android:scheme="https" />
                 <data android:scheme="about" />
+                <data android:scheme="fulguris" />
                 <data android:scheme="javascript" />
             </intent-filter>
             <!--

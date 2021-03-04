@@ -5,8 +5,7 @@ import acr.browser.lightning.Entitlement
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.INTENT_ORIGIN
-import acr.browser.lightning.constant.SCHEME_BOOKMARKS
-import acr.browser.lightning.constant.SCHEME_HOMEPAGE
+import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
@@ -19,7 +18,6 @@ import acr.browser.lightning.view.*
 import acr.browser.lightning.view.find.FindResults
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.webkit.URLUtil
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
@@ -122,7 +120,7 @@ class BrowserPresenter(
             view.removeTabView()
             currentTab?.let {
                 it.pauseTimers()
-                it.onDestroy()
+                it.destroy()
             }
         }  else {
 
@@ -192,8 +190,8 @@ class BrowserPresenter(
     }
 
     private fun mapHomepageToCurrentUrl(): String = when (val homepage = userPreferences.homepage) {
-        SCHEME_HOMEPAGE -> "$FILE${homePageFactory.createHomePage()}"
-        SCHEME_BOOKMARKS -> "$FILE${bookmarkPageFactory.createBookmarkPage(null)}"
+        Uris.AboutHome -> "$FILE${homePageFactory.createHomePage()}"
+        Uris.AboutBookmarks -> "$FILE${bookmarkPageFactory.createBookmarkPage(null)}"
         else -> homepage
     }
 

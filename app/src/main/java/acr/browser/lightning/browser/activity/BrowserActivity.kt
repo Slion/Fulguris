@@ -179,6 +179,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     @Inject lateinit var historyPageInitializer: HistoryPageInitializer
     @Inject lateinit var downloadPageInitializer: DownloadPageInitializer
     @Inject lateinit var homePageInitializer: HomePageInitializer
+    @Inject lateinit var bookmarkPageInitializer: BookmarkPageInitializer
     @Inject @field:MainHandler lateinit var mainHandler: Handler
     @Inject lateinit var proxyUtils: ProxyUtils
     @Inject lateinit var logger: Logger
@@ -1792,8 +1793,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         val (url, isSearch) = smartUrlFilter(query.trim(), true, searchUrl)
 
         if ((userPreferences.searchInNewTab && isSearch) or (userPreferences.urlInNewTab && !isSearch)) {
-            // Create a new tab according to user preferences
-            presenter?.newTab(UrlInitializer(url), true)
+            // Create a new tab according to user preference
+            // TODO: URI resolution should not be here really
+            // That's also done in LightningView.loadURL
+            if (url.isHomeUri()) {
+                presenter?.newTab(homePageInitializer, true)
+            } else if (url.isBookmarkUri()) {
+                presenter?.newTab(bookmarkPageInitializer, true)
+            } else if (url.isHistoryUri()) {
+                presenter?.newTab(historyPageInitializer, true)
+            } else {
+                presenter?.newTab(UrlInitializer(url), true)
+            }
         }
         else if (currentTab != null) {
             // User don't want us the create a new tab

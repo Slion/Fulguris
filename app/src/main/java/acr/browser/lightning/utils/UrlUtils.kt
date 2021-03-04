@@ -17,7 +17,9 @@
 
 package acr.browser.lightning.utils
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.constant.FILE
+import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.download.DownloadPageFactory
 import acr.browser.lightning.html.history.HistoryPageFactory
@@ -70,13 +72,37 @@ fun smartUrlFilter(url: String, canBeSearch: Boolean, searchUrl: String): Pair<S
     }
 }
 
+/**
+ * Determines if the url is a url for the bookmark page.
+ *
+ * @return true if the url is a bookmark url, false otherwise.
+ */
+fun String?.isBookmarkUri(): Boolean =
+        this == Uris.FulgurisBookmarks || this == Uris.AboutBookmarks
+
+/**
+ * Determines if the url is a url for the bookmark page.
+ *
+ * @return true if the url is a bookmark url, false otherwise.
+ */
+fun String?.isHomeUri(): Boolean =
+        this == Uris.FulgurisHome || this == Uris.AboutHome
+
+/**
+ * Determines if the url is a url for the bookmark page.
+ *
+ * @return true if the url is a bookmark url, false otherwise.
+ */
+fun String?.isHistoryUri(): Boolean =
+        this == Uris.FulgurisHistory || this == Uris.AboutHistory
+
 
 /**
  * Returns whether the given url is the bookmarks/history page or a normal website
  */
 fun String?.isSpecialUrl(): Boolean =
     this != null
-        && this.startsWith(FILE)
+        && this.startsWith(FILE + BrowserApp.instance.filesDir)
         && (this.endsWith(BookmarkPageFactory.FILENAME)
         || this.endsWith(DownloadPageFactory.FILENAME)
         || this.endsWith(HistoryPageFactory.FILENAME)
@@ -114,7 +140,7 @@ fun String?.isHistoryUrl(): Boolean =
 fun String?.isStartPageUrl(): Boolean =
     this != null && this.startsWith(FILE) && this.endsWith(HomePageFactory.FILENAME)
 
-private val ACCEPTED_URI_SCHEMA = Pattern.compile("(?i)((?:http|https|file)://|(?:inline|data|about|javascript):|(?:.*:.*@))(.*)")
+private val ACCEPTED_URI_SCHEMA = Pattern.compile("(?i)((?:http|https|file)://|(?:inline|data|about|javascript|fulguris):|(?:.*:.*@))(.*)")
 const val QUERY_PLACE_HOLDER = "%s"
 private const val URL_ENCODED_SPACE = "%20"
 

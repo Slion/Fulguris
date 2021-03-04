@@ -486,6 +486,7 @@ class TabsManager @Inject constructor(
                 homePageInitializer,
                 bookmarkPageInitializer,
                 downloadPageInitializer,
+                historyPageInitializer,
                 logger
         )
 
@@ -517,7 +518,7 @@ class TabsManager @Inject constructor(
         if (currentTab == tab) {
             currentTab = null
         }
-        tab.onDestroy()
+        tab.destroy()
     }
 
     /**

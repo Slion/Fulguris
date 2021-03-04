@@ -11,6 +11,7 @@ import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.snackbar
+import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.js.InvertPage
 import acr.browser.lightning.js.SetMetaViewport
 import acr.browser.lightning.js.TextReflow
@@ -18,12 +19,8 @@ import acr.browser.lightning.log.Logger
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.SslWarningPreferences
-import acr.browser.lightning.utils.IntentUtils
-import acr.browser.lightning.utils.ProxyUtils
-import acr.browser.lightning.utils.Utils
-import acr.browser.lightning.utils.isSpecialUrl
+import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTries
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
@@ -35,8 +32,8 @@ import android.graphics.Bitmap
 import android.net.MailTo
 import android.net.Uri
 import android.net.http.SslError
-import android.os.Build
 import android.os.Message
+import android.util.Base64
 import android.view.LayoutInflater
 import android.webkit.*
 import android.widget.CheckBox
@@ -44,19 +41,23 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URISyntaxException
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
 
+
 class LightningWebClient(
-    private val activity: Activity,
-    private val lightningView: LightningView
+        private val activity: Activity,
+        private val lightningView: LightningView
 ) : WebViewClient() {
 
     private val uiController: UIController
@@ -72,6 +73,7 @@ class LightningWebClient(
     @Inject internal lateinit var textReflowJs: TextReflow
     @Inject internal lateinit var invertPageJs: InvertPage
     @Inject internal lateinit var setMetaViewport: SetMetaViewport
+    @Inject internal lateinit var homePageFactory: HomePageFactory
 
     private var adBlock: AdBlocker
 
@@ -87,6 +89,7 @@ class LightningWebClient(
             sslStateSubject.onNext(value)
             field = value
         }
+
 
     private val sslStateSubject: PublishSubject<SslState> = PublishSubject.create()
 
@@ -111,23 +114,16 @@ class LightningWebClient(
     private fun shouldRequestBeBlocked(pageUrl: String, requestUrl: String) =
         !whitelistModel.isUrlAllowedAds(pageUrl) && adBlock.isAd(requestUrl)
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    /**
+     * Overrides [WebViewClient.shouldInterceptRequest].
+     * Looks like we need to intercept our custom URLs here to implement support for fulguris and about scheme.
+     */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
         if (shouldRequestBeBlocked(currentUrl, request.url.toString())) {
             val empty = ByteArrayInputStream(emptyResponseByteArray)
             return WebResourceResponse("text/plain", "utf-8", empty)
         }
         return super.shouldInterceptRequest(view, request)
-    }
-
-    @Suppress("OverridingDeprecatedMember")
-    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
-    override fun shouldInterceptRequest(view: WebView, url: String): WebResourceResponse? {
-        if (shouldRequestBeBlocked(currentUrl, url)) {
-            val empty = ByteArrayInputStream(emptyResponseByteArray)
-            return WebResourceResponse("text/plain", "utf-8", empty)
-        }
-        return null
     }
 
     override fun onLoadResource(view: WebView, url: String?) {
@@ -139,15 +135,28 @@ class LightningWebClient(
             // Note how we compute our initial scale to be zoomed out and fit the page
             // TODO: Check if we really need this here in onLoadResource
             // Pick the proper settings desktop width according to current orientation
-            (Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT).let{portrait ->
-                view.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$",(if (portrait) userPreferences.desktopWidthInPortrait else userPreferences.desktopWidthInLandscape).toString()),null)
+            (Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT).let{ portrait ->
+                view.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$", (if (portrait) userPreferences.desktopWidthInPortrait else userPreferences.desktopWidthInLandscape).toString()), null)
             }
         }
     }
 
+    /**
+     *
+     */
+    private fun updateUrlIfNeeded(url: String, isLoading: Boolean) {
+        // Update URL unless we are dealing with our special internal URL
+        (lightningView.iHideActualUrl). let { dontDoUpdate ->
+            uiController.updateUrl(if (dontDoUpdate) lightningView.url else url, isLoading)
+        }
+    }
+
+    /**
+     * Overrides [WebViewClient.onPageFinished]
+     */
     override fun onPageFinished(view: WebView, url: String) {
         if (view.isShown) {
-            uiController.updateUrl(url, false)
+            updateUrlIfNeeded(url, false)
             uiController.setBackButtonEnabled(view.canGoBack())
             uiController.setForwardButtonEnabled(view.canGoForward())
             view.postInvalidate()
@@ -164,6 +173,9 @@ class LightningWebClient(
         uiController.tabChanged(lightningView)
     }
 
+    /**
+     * Overrides [WebViewClient.onPageStarted]
+     */
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         currentUrl = url
         // Only set the SSL state if there isn't an error for the current URL.
@@ -176,7 +188,7 @@ class LightningWebClient(
         }
         lightningView.titleInfo.setFavicon(null)
         if (lightningView.isShown) {
-            uiController.updateUrl(url, true)
+            updateUrlIfNeeded(url, true)
             uiController.showActionBar()
         }
 
@@ -186,11 +198,14 @@ class LightningWebClient(
         uiController.tabChanged(lightningView)
     }
 
+    /**
+     *
+     */
     override fun onReceivedHttpAuthRequest(
-        view: WebView,
-        handler: HttpAuthHandler,
-        host: String,
-        realm: String
+            view: WebView,
+            handler: HttpAuthHandler,
+            host: String,
+            realm: String
     ) {
         MaterialAlertDialogBuilder(activity).apply {
             val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_auth_request, null)
@@ -215,6 +230,50 @@ class LightningWebClient(
             }
         }.resizeAndShow()
     }
+
+    /**
+     * Overrides [WebViewClient.onReceivedError].
+     * This deprecated callback is still in use and conveniently called only when the error affect the page main frame.
+     */
+    override fun onReceivedError(webview: WebView, errorCode: Int, error: String, failingUrl: String) {
+
+        // Not sure that's still needed then, sigh...
+        lightningView.iHideActualUrl = true
+
+        //Encode image to base64 string
+        val output = ByteArrayOutputStream()
+        val bitmap = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_about, activity.theme)?.toBitmap()
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, output)
+        val imageBytes: ByteArray = output.toByteArray()
+        val imageString = "data:image/png;base64,"+Base64.encodeToString(imageBytes, Base64.NO_WRAP)
+
+        // Generate a JavaScript that's going to modify the standard WebView error page for us.
+        // It saves us from making up our own error texts and having to manage the translations ourselves.
+        // Thus we simply use the standard and localized error messages from WebView.
+        // The down side is that it makes a bunch of assumptions about WebView's error page that could fail us on some device or in case it gets changed at some point.
+        val script = """(function() {
+        document.getElementsByTagName('style')[0].innerHTML += "body { margin: 10px; background-color: ${htmlColor(ThemeUtils.getSurfaceColor(activity))}; color: ${htmlColor(ThemeUtils.getOnSurfaceColor(activity))};}"
+        //document.getElementsByTagName('body')[0].innerHTML += "Nice mod"
+        var img = document.getElementsByTagName('img')[0]
+        img.src = "$imageString"
+        img.width = ${bitmap?.width}
+        img.height = ${bitmap?.height}
+        })()"""
+
+        // Doing a post otherwise it would somehow fail every three tries for some reason
+        webview.post {
+            webview.evaluateJavascript(script) {
+                logger.log(TAG, it)
+
+            }
+        }
+
+        // None of those were working so we did Base64 encoding instead
+        //"file:///android_asset/ask.png"
+        //"android.resource://${BuildConfig.APPLICATION_ID}/${R.drawable.ic_about}"
+        //"file:///android_res/drawable/ic_about"
+    }
+
 
     override fun onScaleChanged(view: WebView, oldScale: Float, newScale: Float) {
         if (view.isShown && lightningView.userPreferences.textReflowEnabled) {
@@ -286,30 +345,27 @@ class LightningWebClient(
         }.resizeAndShow()
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean =
-        shouldOverrideLoading(view, request.url.toString()) || super.shouldOverrideUrlLoading(view, request)
-
-    @Suppress("OverridingDeprecatedMember", "DEPRECATION")
-    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean =
-        shouldOverrideLoading(view, url) || super.shouldOverrideUrlLoading(view, url)
-
     // We use this to prevent opening such dialogs multiple times
     var exAppLaunchDialog: AlertDialog? = null
 
-    private fun shouldOverrideLoading(view: WebView, url: String): Boolean {
+    /**
+     * Overrides [WebViewClient.shouldOverrideUrlLoading].
+     */
+    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
         // Check if configured proxy is available
         if (!proxyUtils.isProxyReady(activity)) {
             // User has been notified
             return true
         }
 
+        val url = request.url.toString()
         val headers = lightningView.requestHeaders
 
         if (lightningView.isIncognito) {
             // If we are in incognito, immediately load, we don't want the url to leave the app
             return continueLoadingUrl(view, url, headers)
         }
+
         if (URLUtil.isAboutUrl(url)) {
             // If this is an about page, immediately load, we don't need to leave the app
             return continueLoadingUrl(view, url, headers)
@@ -320,12 +376,13 @@ class LightningWebClient(
             return true
         }
 
+
         val intent = intentUtils.intentForUrl(view, url)
         intent?.let {
             // Check if that external app is already known
             val prefKey = activity.getString(R.string.settings_app_prefix) + Uri.parse(url).host
             if (preferences.contains(prefKey)) {
-                if (preferences.getBoolean(prefKey,false)) {
+                if (preferences.getBoolean(prefKey, false)) {
                     // Trusted app, just launch it on the stop and abort loading
                     intentUtils.startActivityForIntent(intent)
                     return true
@@ -338,32 +395,39 @@ class LightningWebClient(
             // We first encounter that app ask user if we should use it?
             // We will keep loading even if an external app is available the first time we encounter it.
             (activity as BrowserActivity).mainHandler.postDelayed({
-                if (exAppLaunchDialog==null) {
-                exAppLaunchDialog = MaterialAlertDialogBuilder(activity).setTitle(R.string.dialog_title_third_party_app).setMessage(R.string.dialog_message_third_party_app)
-                    .setPositiveButton(activity.getText(R.string.yes), DialogInterface.OnClickListener { dialog, id ->
-                        // Handle Ok
-                        intentUtils.startActivityForIntent(intent)
-                        dialog.dismiss()
-                        exAppLaunchDialog = null
-                        // Remember user choice
-                        preferences.edit().putBoolean(prefKey,true).apply()
-                    })
-                    .setNegativeButton(activity.getText(R.string.no), DialogInterface.OnClickListener { dialog, id ->
-                        // Handle Cancel
-                        dialog.dismiss()
-                        exAppLaunchDialog = null
-                        // Remember user choice
-                        preferences.edit().putBoolean(prefKey,false).apply()
-                    })
-                    .create()
-                exAppLaunchDialog?.show()
-                }},1000)
+                if (exAppLaunchDialog == null) {
+                    exAppLaunchDialog = MaterialAlertDialogBuilder(activity).setTitle(R.string.dialog_title_third_party_app).setMessage(R.string.dialog_message_third_party_app)
+                            .setPositiveButton(activity.getText(R.string.yes), DialogInterface.OnClickListener { dialog, id ->
+                                // Handle Ok
+                                intentUtils.startActivityForIntent(intent)
+                                dialog.dismiss()
+                                exAppLaunchDialog = null
+                                // Remember user choice
+                                preferences.edit().putBoolean(prefKey, true).apply()
+                            })
+                            .setNegativeButton(activity.getText(R.string.no), DialogInterface.OnClickListener { dialog, id ->
+                                // Handle Cancel
+                                dialog.dismiss()
+                                exAppLaunchDialog = null
+                                // Remember user choice
+                                preferences.edit().putBoolean(prefKey, false).apply()
+                            })
+                            .create()
+                    exAppLaunchDialog?.show()
+                }
+            }, 1000)
         }
 
         // If none of the special conditions was met, continue with loading the url
         return continueLoadingUrl(view, url, headers)
+
+        // Don't override, keep on loading that page
+        //return false
     }
 
+    /**
+     * SL: Looks like this does the opposite of what it looks like.
+     */
     private fun continueLoadingUrl(webView: WebView, url: String, headers: Map<String, String>): Boolean {
         if (!URLUtil.isNetworkUrl(url)
             && !URLUtil.isFileUrl(url)

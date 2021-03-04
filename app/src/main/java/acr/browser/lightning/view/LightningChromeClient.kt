@@ -204,8 +204,11 @@ class LightningChromeClient(
 
     override fun onCreateWindow(view: WebView, isDialog: Boolean, isUserGesture: Boolean,
                                 resultMsg: Message): Boolean {
+        // TODO: redo that
         uiController.onCreateWindow(resultMsg)
+        //TODO: surely that can't be right,
         return true
+        //return false
     }
 
     override fun onCloseWindow(window: WebView) = uiController.onCloseWindow(lightningView)
