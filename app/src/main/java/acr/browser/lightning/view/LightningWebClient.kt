@@ -240,6 +240,12 @@ class LightningWebClient(
         // Not sure that's still needed then, sigh...
         lightningView.iHideActualUrl = true
 
+
+        // None of those were working so we did Base64 encoding instead
+        //"file:///android_asset/ask.png"
+        //"android.resource://${BuildConfig.APPLICATION_ID}/${R.drawable.ic_about}"
+        //"file:///android_res/drawable/ic_about"
+
         //Encode image to base64 string
         val output = ByteArrayOutputStream()
         val bitmap = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_about, activity.theme)?.toBitmap()
@@ -253,25 +259,19 @@ class LightningWebClient(
         // The down side is that it makes a bunch of assumptions about WebView's error page that could fail us on some device or in case it gets changed at some point.
         val script = """(function() {
         document.getElementsByTagName('style')[0].innerHTML += "body { margin: 10px; background-color: ${htmlColor(ThemeUtils.getSurfaceColor(activity))}; color: ${htmlColor(ThemeUtils.getOnSurfaceColor(activity))};}"
-        //document.getElementsByTagName('body')[0].innerHTML += "Nice mod"
         var img = document.getElementsByTagName('img')[0]
         img.src = "$imageString"
         img.width = ${bitmap?.width}
         img.height = ${bitmap?.height}
         })()"""
 
-        // Doing a post otherwise it would somehow fail every three tries for some reason
-        webview.post {
-            webview.evaluateJavascript(script) {
-                logger.log(TAG, it)
-
-            }
-        }
-
-        // None of those were working so we did Base64 encoding instead
-        //"file:///android_asset/ask.png"
-        //"android.resource://${BuildConfig.APPLICATION_ID}/${R.drawable.ic_about}"
-        //"file:///android_res/drawable/ic_about"
+        // Run our script once, did not help anything apparently
+        //webview.evaluateJavascript(script) {}
+        // Stall our thread to workaround issues were our JavaScript would not apply to our error page for some reason
+        // That works better than post or post delayed
+        Thread.sleep(100)
+        // Just run that script now
+        webview.evaluateJavascript(script) {}
     }
 
 
