@@ -23,12 +23,14 @@
     <string name="pref_key_portrait_pull_to_refresh">pref_key_portrait_pull_to_refresh</string>
     <string name="pref_key_landscape_pull_to_refresh">pref_key_landscape_pull_to_refresh</string>
 
+    <string name="pref_key_portrait_tab_bar_vertical">pref_key_portrait_tab_bar_vertical</string>
+    <string name="pref_key_landscape_tab_bar_vertical">pref_key_landscape_tab_bar_vertical</string>
+
     <string name="pref_key_wide_viewport">pref_key_wide_viewport</string>
     <string name="pref_key_browser_text_size">pref_key_browser_text_size</string>
     <string name="pref_key_overview_mode">pref_key_overview_mode</string>
     <string name="pref_key_text_reflow">pref_key_text_reflow</string>
     <string name="pref_key_black_status_bar">pref_key_black_status_bar</string>
-    <string name="pref_key_tabs_in_drawer">pref_key_tabs_in_drawer</string>
     <string name="pref_key_web_page_theme">pref_key_web_page_theme</string>
     <string name="pref_key_swap_tabs_and_bookmarks">pref_key_swap_tabs_and_bookmarks</string>
     <string name="pref_key_locked_drawers">pref_key_locked_drawers</string>

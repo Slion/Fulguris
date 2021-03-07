@@ -555,7 +555,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun createTabView() {
 
-        shouldShowTabsInDrawer = userPreferences.showTabsInDrawer
+        shouldShowTabsInDrawer = userPreferences.verticalTabBar
 
         // Remove existing tab view if any
         tabsView?.let {
@@ -849,6 +849,25 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         showActionBar()
         setToolbarColor()
         setFullscreenIfNeeded(configuration)
+
+    }
+
+    /**
+     *
+     */
+    private fun setupToolBar() {
+        // Check if our tool bar is long enough to display extra buttons
+        val threshold = (buttonBack?.width?:3840)*10
+        // If our tool bar is longer than 10 action buttons then we show extra buttons
+        (iBinding.toolbarInclude.toolbar.width>threshold).let{
+            buttonBack?.isVisible = it
+            buttonForward?.isVisible = it
+            // Hide tab bar action buttons if no room for them
+            if (tabsView is TabsDesktopView) {
+                (tabsView as TabsDesktopView).iBinding.actionButtons.isVisible = it
+            }
+        }
+
     }
 
     private fun initializePreferences() {
@@ -1399,6 +1418,20 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
+     * Reset our tab bar if needed.
+     * Notably used after configuration change.
+     */
+    private fun setupTabBar() {
+        // Check if our tab bar style changed
+        if (shouldShowTabsInDrawer!=userPreferences.verticalTabBar) {
+            // Tab bar style changed recreate our tab bar then
+            createTabView()
+            tabsView?.tabsInitialized()
+            mainHandler.postDelayed({scrollToCurrentTab()},1000)
+        }
+    }
+
+    /**
      * Tells if web page color should be applied to tool and status bar
      */
     override fun isColorMode(): Boolean = userPreferences.colorModeEnabled
@@ -1462,6 +1495,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         //initializePreferences()
     }
 
+    /**
+     *
+     */
     private fun setupToolBarButtons() {
         // Manage back and forward buttons state
         tabsManager.currentTab?.apply {
@@ -1621,9 +1657,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         logger.log(TAG, "onConfigurationChanged")
 
         setFullscreenIfNeeded(newConfig)
+        setupTabBar()
         setupToolBar(newConfig)
+
         // Can't find a proper event to do that after the configuration changes were applied so we just delay it
-        mainHandler.postDelayed({ setupPullToRefresh(newConfig) }, 300)
+        mainHandler.postDelayed({ setupToolBar(); setupPullToRefresh(newConfig) }, 300)
         popupMenu.dismiss() // As it wont update somehow
         // Make sure our drawers adjust accordingly
         iBinding.drawerLayout.requestLayout()
@@ -1783,16 +1821,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.resumeAll()
         initializePreferences()
 
+        setupTabBar()
         setupToolBar(resources.configuration)
+        mainHandler.postDelayed({ setupToolBar() }, 500)
         setupPullToRefresh(resources.configuration)
-
-        // Check if our tab bar style changed
-        if (shouldShowTabsInDrawer!=userPreferences.showTabsInDrawer) {
-            // Tab bar style changed recreate our tab bar then
-            createTabView()
-            tabsView?.tabsInitialized()
-            mainHandler.postDelayed({scrollToCurrentTab()},1000)
-        }
 
         // We think that's needed in case there was a rotation while in the background
         iBinding.drawerLayout.requestLayout()
@@ -1870,18 +1902,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         homeButton?.setColorFilter(currentToolBarTextColor)
         buttonBack?.setColorFilter(currentToolBarTextColor)
         buttonForward?.setColorFilter(currentToolBarTextColor)
-
-        // Check if our tool bar is long enough to display extra buttons
-        val threshold = (buttonBack?.width?:3840)*10
-        // If our tool bar is longer than 10 action buttons then we show extra buttons
-        (iBinding.toolbarInclude.toolbar.width>threshold).let{
-            buttonBack?.isVisible = it
-            buttonForward?.isVisible = it
-            // Hide tab bar action buttons if no room for them
-            if (tabsView is TabsDesktopView) {
-                (tabsView as TabsDesktopView).iBinding.actionButtons.isVisible = it
-            }
-        }
 
         // Needed to delay that as otherwise disabled alpha state didn't get applied
         mainHandler.postDelayed({ setupToolBarButtons() }, 500)

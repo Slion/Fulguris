@@ -18,6 +18,8 @@ import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.view.RenderingMode
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.content.res.Resources
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -281,12 +283,6 @@ class UserPreferences @Inject constructor(
     var clearWebStorageExitEnabled by preferences.booleanPreference(CLEAR_WEB_STORAGE_EXIT, false)
 
     /**
-     * True if the app should use the navigation drawer UI, false if it should use the traditional
-     * desktop browser tabs UI.
-     */
-    var showTabsInDrawer by preferences.booleanPreference(R.string.pref_key_tabs_in_drawer, !screenSize.isTablet())
-
-    /**
      * True if the browser should send a do not track (DNT) header with every GET request, false
      * otherwise.
      */
@@ -320,6 +316,17 @@ class UserPreferences @Inject constructor(
      */
     var pullToRefreshInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_pull_to_refresh, R.bool.pref_default_portrait_pull_to_refresh)
     var pullToRefreshInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_pull_to_refresh, R.bool.pref_default_landscape_pull_to_refresh)
+
+    /**
+     * True if the app should use the navigation drawer UI, false if it should use the traditional
+     * desktop browser tabs UI.
+     */
+    var verticalTabBarInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_tab_bar_vertical, !screenSize.isTablet())
+    var verticalTabBarInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_tab_bar_vertical, !screenSize.isTablet())
+
+    var verticalTabBar : Boolean = false
+        get() = if (Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT) verticalTabBarInPortrait else verticalTabBarInLandscape
+        private set
 
     /**
      * Not an actual user preference. Just used to communicate between settings and browser activity.

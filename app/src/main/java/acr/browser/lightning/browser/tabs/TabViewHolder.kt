@@ -35,7 +35,7 @@ class TabViewHolder(
         // Is that the best way to access our preferences?
         // If not showing horizontal desktop tab bar, this one always shows close button.
         // Apply settings preference for showing close button on tabs.
-        exitButton.visibility = if (!(view.context as BrowserActivity).userPreferences.showTabsInDrawer
+        exitButton.visibility = if (!(view.context as BrowserActivity).userPreferences.verticalTabBar
                 || (view.context as BrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
     }
 

@@ -6,6 +6,14 @@
         app:icon="@drawable/ic_portrait">
 
         <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_portrait_tab_bar_vertical"
+            android:title="@string/settings_title_vertical_tab_bar"
+            android:summary="@string/settings_summary_vertical_tab_bar"
+            app:icon="@drawable/ic_action_tabs"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/pref_default_portrait_pull_to_refresh"
             android:key="@string/pref_key_portrait_pull_to_refresh"
             android:title="@string/pref_title_pull_to_refresh"
@@ -54,6 +62,14 @@
 
     <PreferenceCategory android:title="@string/pref_category_landscape"
         app:icon="@drawable/ic_landscape">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_landscape_tab_bar_vertical"
+            android:title="@string/settings_title_vertical_tab_bar"
+            android:summary="@string/settings_summary_vertical_tab_bar"
+            app:icon="@drawable/ic_action_tabs"
+            app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="@bool/pref_default_landscape_pull_to_refresh"
