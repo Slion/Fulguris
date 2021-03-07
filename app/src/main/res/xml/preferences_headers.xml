@@ -15,6 +15,12 @@
         app:icon="@drawable/ic_palette"/>
 
     <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.ConfigurationSettingsFragment"
+        app:title="@string/settings_title_configuration"
+        app:summary="@string/settings_summary_configuration"
+        app:icon="@drawable/ic_conf_settings"/>
+
+    <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AdBlockSettingsFragment"
         app:title="@string/settings_adblock"
         app:icon="@drawable/ic_block" />

@@ -53,6 +53,8 @@ interface AppComponent {
 
     fun inject(advancedSettingsFragment: AdvancedSettingsFragment)
 
+    fun inject(configurationSettingsFragment: ConfigurationSettingsFragment)
+
     fun inject(app: BrowserApp)
 
     fun inject(activity: ReadingActivity)
