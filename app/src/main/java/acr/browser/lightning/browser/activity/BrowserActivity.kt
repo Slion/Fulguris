@@ -118,6 +118,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     lateinit var CHANNEL_ID: String
 
     // Toolbar Views
+    // TODO: Can we not use view binding to get those?
     private var searchView: SearchView? = null
     private var homeButton: ImageButton? = null
     private var buttonBack: ImageButton? = null
@@ -426,7 +427,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(userPreferences.crashReport)
         }
 
-        shouldShowTabsInDrawer = userPreferences.showTabsInDrawer
         swapBookmarksAndTabs = userPreferences.bookmarksAndTabsSwapped
 
         // initialize background ColorDrawable
@@ -442,29 +442,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         webPageBitmap = drawable(R.drawable.ic_webpage).toBitmap()
 
-        tabsView = if (shouldShowTabsInDrawer) {
-            TabsDrawerView(this).also(findViewById<FrameLayout>(getTabsContainerId())::addView)
-        } else {
-            TabsDesktopView(this).also(findViewById<FrameLayout>(getTabsContainerId())::addView)
+        // Show incognito icon in more menu button
+        if (isIncognito()) {
+            iBindingToolbarContent.buttonMore.setImageResource(R.drawable.ic_incognito)
         }
-        buttonSessions = (tabsView as View).findViewById(R.id.action_sessions)
 
-        bookmarksView = BookmarksDrawerView(this).also(findViewById<FrameLayout>(getBookmarksContainerId())::addView)
-
-        if (shouldShowTabsInDrawer) {
-            iBinding.toolbarInclude.tabsToolbarContainer.visibility = GONE
-        }
 
         // Is that still needed
         val customView = iBinding.toolbarInclude.toolbar
         customView.layoutParams = customView.layoutParams.apply {
             width = LayoutParams.MATCH_PARENT
             height = LayoutParams.MATCH_PARENT
-        }
-
-        // Show incognito icon in more menu button
-        if (isIncognito()) {
-            iBindingToolbarContent.buttonMore.setImageResource(R.drawable.ic_incognito)
         }
 
         tabsButton = customView.findViewById(R.id.tabs_button)
@@ -478,15 +466,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         buttonForward = customView.findViewById(R.id.button_action_forward)
         buttonForward?.setOnClickListener{executeAction(R.id.action_forward)}
 
-        if (shouldShowTabsInDrawer) {
-            tabsButton?.visibility = VISIBLE
-            homeButton?.visibility = GONE
-        } else {
-            tabsButton?.visibility = GONE
-            homeButton?.visibility = VISIBLE
-        }
+        createTabView()
 
-
+        bookmarksView = BookmarksDrawerView(this).also(findViewById<FrameLayout>(getBookmarksContainerId())::addView)
 
         // create the search EditText in the ToolBar
         searchView = customView.findViewById<SearchView>(R.id.search).apply {
@@ -565,6 +547,37 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 showPopupMenu()
             }
         })
+
+    }
+
+    /**
+     * Used to create or recreate our tab view according to current settings.
+     */
+    private fun createTabView() {
+
+        shouldShowTabsInDrawer = userPreferences.showTabsInDrawer
+
+        // Remove existing tab view if any
+        tabsView?.let {
+            (it as View).removeFromParent()
+        }
+
+        tabsView = if (shouldShowTabsInDrawer) {
+            TabsDrawerView(this).also(findViewById<FrameLayout>(getTabsContainerId())::addView)
+        } else {
+            TabsDesktopView(this).also(findViewById<FrameLayout>(getTabsContainerId())::addView)
+        }
+        buttonSessions = (tabsView as View).findViewById(R.id.action_sessions)
+
+        if (shouldShowTabsInDrawer) {
+            tabsButton?.isVisible = true
+            homeButton?.isVisible = false
+            iBinding.toolbarInclude.tabsToolbarContainer.isVisible = false
+        } else {
+            tabsButton?.isVisible = false
+            homeButton?.isVisible = true
+            iBinding.toolbarInclude.tabsToolbarContainer.isVisible = true
+        }
 
     }
 
@@ -1773,6 +1786,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setupToolBar(resources.configuration)
         setupPullToRefresh(resources.configuration)
 
+        // Check if our tab bar style changed
+        if (shouldShowTabsInDrawer!=userPreferences.showTabsInDrawer) {
+            // Tab bar style changed recreate our tab bar then
+            createTabView()
+            tabsView?.tabsInitialized()
+            mainHandler.postDelayed({scrollToCurrentTab()},1000)
+        }
+
         // We think that's needed in case there was a rotation while in the background
         iBinding.drawerLayout.requestLayout()
 
@@ -2021,10 +2042,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         searchView?.setText(searchBoxModel.getDisplayContent(url, currentTitle, isLoading))
     }
 
-    override fun updateTabNumber(number: Int) {
-        if (shouldShowTabsInDrawer) {
+    override fun updateTabNumber(number: Int) {		
             tabsButton?.updateCount(number)
-        }
     }
 
     override fun updateProgress(progress: Int) {
@@ -2177,7 +2196,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 smoothScrollToPosition(index)
             }
         }
-
     }
 
     /**

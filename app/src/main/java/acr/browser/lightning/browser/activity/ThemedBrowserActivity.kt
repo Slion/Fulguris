@@ -10,16 +10,12 @@ import android.os.Bundle
 
 abstract class ThemedBrowserActivity : ThemedActivity() {
 
-    private var showTabsInDrawer: Boolean = false
     private var shouldRunOnResumeActions = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injector.inject(this)
-        showTabsInDrawer = userPreferences.showTabsInDrawer
         super.onCreate(savedInstanceState)
     }
-
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -29,13 +25,11 @@ abstract class ThemedBrowserActivity : ThemedActivity() {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         resetPreferences()
         shouldRunOnResumeActions = true
-        val drawerTabs = userPreferences.showTabsInDrawer
-        if (themeId != userPreferences.useTheme || showTabsInDrawer != drawerTabs) {
+        if (themeId != userPreferences.useTheme) {
             restart()
         }
     }
