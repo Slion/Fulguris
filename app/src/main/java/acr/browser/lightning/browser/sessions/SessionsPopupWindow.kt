@@ -4,9 +4,11 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.SessionListBinding
+import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.dimBehind
 import acr.browser.lightning.extensions.toast
+import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.utils.Utils
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import javax.inject.Inject
 
 
 class SessionsPopupWindow : PopupWindow {
@@ -31,11 +34,15 @@ class SessionsPopupWindow : PopupWindow {
     private var iItemTouchHelper: ItemTouchHelper? = null
     var iAnchor: View? = null
 
+    @Inject
+    lateinit var iUserPreferences: UserPreferences
+
+
     constructor(layoutInflater: LayoutInflater,
                 aBinding: SessionListBinding = SessionListBinding.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
-        //view.context.injector.inject(this)
+        aBinding.root.context.injector.inject(this)
 
         // Elevation just need to be high enough not to cut the effect defined in our layout
         elevation = 100F
@@ -153,7 +160,10 @@ class SessionsPopupWindow : PopupWindow {
 
                 // Just close and reopen our menu as our layout change animation is really ugly
                 dismiss()
-                (iUiController as BrowserActivity).mainHandler.post { show(iAnchor,!editModeEnabled,false) }
+                iAnchor?.let {
+                    (iUiController as BrowserActivity).mainHandler.post { show(it,!editModeEnabled,false) }
+                }
+
                 // We still broadcast the change above and do a post to avoid getting some items caught not fully animated, even though animations are disabled.
                 // Android layout animation crap, just don't ask, sometimes it's a blessing other times it's a nightmare...
             }
@@ -193,7 +203,7 @@ class SessionsPopupWindow : PopupWindow {
     /**
      *
      */
-    fun show(aAnchor: View?, aEdit: Boolean = false, aShowCurrent: Boolean = true) {
+    fun show(aAnchor: View, aEdit: Boolean = false, aShowCurrent: Boolean = true) {
         // Disable edit mode when showing our menu
         iAdapter.iEditModeEnabledObservable.onNext(aEdit)
         if (aEdit) {
@@ -207,13 +217,16 @@ class SessionsPopupWindow : PopupWindow {
 
         // Get our anchor location
         val anchorLoc = IntArray(2)
-        aAnchor?.getLocationInWindow(anchorLoc)
+        aAnchor.getLocationInWindow(anchorLoc)
+        //
+        val gravity = if (iUserPreferences.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
+        val yOffset = if (iUserPreferences.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] else anchorLoc[1]+aAnchor.height
         // Show our popup menu from the right side of the screen below our anchor
-        showAtLocation(aAnchor, Gravity.TOP or Gravity.RIGHT,
+        showAtLocation(aAnchor, gravity,
                 // Offset from the right screen edge
                 Utils.dpToPx(10F),
                 // Below our anchor
-                anchorLoc[1]+aAnchor?.height!!)
+                yOffset)
 
         //dimBehind()
         // Show our sessions

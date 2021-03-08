@@ -35,7 +35,7 @@
                     android:clipChildren="true"
                     android:animateLayoutChanges="true" />
 
-                <include layout="@layout/search_interface"/>
+                <include android:id="@+id/findInPageInclude" layout="@layout/search_interface"/>
             </LinearLayout>
 
 

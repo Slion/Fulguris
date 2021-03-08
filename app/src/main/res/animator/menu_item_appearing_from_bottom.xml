@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--<set xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:ordering="together"-->
+<!--    android:duration="300">-->
+
+<!--    <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:propertyName="translationX"-->
+<!--        android:duration="300"-->
+<!--        android:valueFrom="250dp"-->
+<!--        android:valueTo="0dp"-->
+<!--        android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>-->
+
+<!--    <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:propertyName="translationY"-->
+<!--        android:duration="300"-->
+<!--        android:valueFrom="-300dp"-->
+<!--        android:valueTo="0dp"-->
+<!--        android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>-->
+
+
+<!--</set>-->
+
+
+    <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+        android:propertyName="translationY"
+        android:duration="300"
+        android:valueFrom="600dp"
+        android:valueTo="0dp"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>

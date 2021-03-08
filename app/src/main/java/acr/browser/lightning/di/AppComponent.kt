@@ -9,6 +9,7 @@ import acr.browser.lightning.browser.SearchBoxModel
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.browser.activity.ThemedBrowserActivity
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
+import acr.browser.lightning.browser.sessions.SessionsPopupWindow
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
@@ -86,6 +87,8 @@ interface AppComponent {
     fun inject(bookmarksView: BookmarksDrawerView)
 
     fun inject(popupMenu: BrowserPopupMenu)
+
+    fun inject(popupMenu: SessionsPopupWindow)
 
     fun inject(appsSettingsFragment: AppsSettingsFragment)
 

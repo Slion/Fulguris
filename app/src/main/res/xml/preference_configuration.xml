@@ -14,6 +14,13 @@
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
+            android:key="@string/pref_key_portrait_toolbars_bottom"
+            android:title="@string/settings_title_toolbars_bottom"
+            app:icon="@drawable/ic_vertical_align_bottom"
+            android:defaultValue="@bool/pref_default_toolbars_bottom"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/pref_default_portrait_pull_to_refresh"
             android:key="@string/pref_key_portrait_pull_to_refresh"
             android:title="@string/pref_title_pull_to_refresh"
@@ -69,6 +76,13 @@
             android:title="@string/settings_title_vertical_tab_bar"
             android:summary="@string/settings_summary_vertical_tab_bar"
             app:icon="@drawable/ic_action_tabs"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:key="@string/pref_key_landscape_toolbars_bottom"
+            android:title="@string/settings_title_toolbars_bottom"
+            app:icon="@drawable/ic_vertical_align_bottom"
+            android:defaultValue="@bool/pref_default_toolbars_bottom"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat

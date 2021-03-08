@@ -8,8 +8,9 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         style="?attr/popupMenuStyle"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?attr/popupMenuBackground"
@@ -29,10 +30,7 @@
             android:layout_width="250dp"
             android:layout_height="?attr/actionBarSize"
             android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/menuShortcutRefresh"
@@ -92,15 +90,14 @@
 TODO: Find a way not to scroll that guy without breaking our layout
 -->
 
+        <!--
+        layout_weight needed to prevent our header/toolbar being pushed out in reversed mode with toolbars at bottom
+        -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constrainedHeight="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header"
-            >
-
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <View
                 android:layout_width="match_parent"
@@ -108,16 +105,19 @@ TODO: Find a way not to scroll that guy without breaking our layout
                 android:background="?android:attr/listDivider"
                 />
 
-
-
-            <!-- paddingBottom to make sure fading edge is working with our fancy background -->
+            <!-- paddingBottom to make sure fading edge is working with our fancy background
+            layout_weight needed to prevent the divider above being pushed out in reversed mode with toolbars at bottom
+            -->
             <ScrollView
+                android:id="@+id/scrollViewItems"
                 android:layout_width="250dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:paddingBottom="10dp"
                 android:requiresFadingEdge="vertical">
 
                 <LinearLayout
+                    android:id="@+id/layoutMenuItems"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -202,7 +202,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/layoutMenuItems"
+                        android:id="@+id/layoutTabMenuItems"
                         android:animateLayoutChanges="true"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
@@ -283,5 +283,5 @@ TODO: Find a way not to scroll that guy without breaking our layout
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

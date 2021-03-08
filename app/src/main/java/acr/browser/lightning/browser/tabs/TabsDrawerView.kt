@@ -32,7 +32,7 @@ class TabsDrawerView @JvmOverloads constructor(
 
     private var mItemTouchHelper: ItemTouchHelper? = null
 
-    private var iBinding: TabDrawerViewBinding
+    var iBinding: TabDrawerViewBinding
 
     init {
         orientation = VERTICAL

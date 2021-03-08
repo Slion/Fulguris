@@ -31,7 +31,6 @@ import acr.browser.lightning.extensions.*
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
-import acr.browser.lightning.icon.TabCountView
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.notifications.IncognitoNotification
 import acr.browser.lightning.reading.activity.ReadingActivity
@@ -82,11 +81,12 @@ import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
+import androidx.core.view.children
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.customview.widget.ViewDragHelper
 import androidx.databinding.DataBindingUtil
@@ -116,15 +116,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     // Notifications
     lateinit var CHANNEL_ID: String
-
-    // Toolbar Views
-    // TODO: Can we not use view binding to get those?
-    private var searchView: SearchView? = null
-    private var homeButton: ImageButton? = null
-    private var buttonBack: ImageButton? = null
-    private var buttonForward: ImageButton? = null
-    private var tabsButton: TabCountView? = null
-    private var buttonSessions: ImageButton? = null
 
     // Current tab view being displayed
     private var currentTabView: View? = null
@@ -158,9 +149,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private var cameraPhotoPath: String? = null
 
     private var findResult: FindResults? = null
-
-    // Flavors
-    private val isFlavorSlions = BuildConfig.FLAVOR.contains("slions")
 
     // The singleton BookmarkManager
     @Inject lateinit var bookmarkManager: BookmarkRepository
@@ -207,6 +195,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     lateinit var iBinding: ActivityMainBinding
     lateinit var iBindingToolbarContent: ToolbarContentBinding
 
+    // Toolbar Views
+    private lateinit var searchView: SearchView
+    private lateinit var buttonSessions: ImageButton
 
     // Settings
     private var crashReport = true
@@ -334,7 +325,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             buttonSessions?.let { sessionsMenu.show(it) }
         } else {
             // Otherwise use main menu button as anchor
-            iBindingToolbarContent.buttonMore?.let { sessionsMenu.show(it) }
+            iBindingToolbarContent.buttonMore.let { sessionsMenu.show(it) }
         }
     }
 
@@ -409,10 +400,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         createNotificationChannel()
 
-        //initializeToolbarHeight(resources.configuration)
-        //setSupportActionBar(toolbar)
+        // Create our toolbar and hook it to its parent
         iBindingToolbarContent = ToolbarContentBinding.inflate(layoutInflater, iBinding.toolbarInclude.toolbar, true)
-        //val actionBar = requireNotNull(supportActionBar)
 
         // TODO: disable those for incognito mode?
         analytics = userPreferences.analytics
@@ -455,23 +444,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             height = LayoutParams.MATCH_PARENT
         }
 
-        tabsButton = customView.findViewById(R.id.tabs_button)
-        tabsButton?.setOnClickListener(this)
+        iBindingToolbarContent.tabsButton.setOnClickListener(this)
+        iBindingToolbarContent.homeButton.setOnClickListener(this)
+        iBindingToolbarContent.buttonActionBack.setOnClickListener{executeAction(R.id.action_back)}
+        iBindingToolbarContent.buttonActionForward.setOnClickListener{executeAction(R.id.action_forward)}
 
-        homeButton = customView.findViewById(R.id.home_button)
-        homeButton?.setOnClickListener(this)
-
-        buttonBack = customView.findViewById(R.id.button_action_back)
-        buttonBack?.setOnClickListener{executeAction(R.id.action_back)}
-        buttonForward = customView.findViewById(R.id.button_action_forward)
-        buttonForward?.setOnClickListener{executeAction(R.id.action_forward)}
-
-        createTabView()
+        createTabsView()
 
         bookmarksView = BookmarksDrawerView(this).also(findViewById<FrameLayout>(getBookmarksContainerId())::addView)
 
         // create the search EditText in the ToolBar
-        searchView = customView.findViewById<SearchView>(R.id.search).apply {
+        searchView = iBindingToolbarContent.addressBarInclude.search.apply {
             iBindingToolbarContent.addressBarInclude.searchSslStatus.setOnClickListener {
                 tabsManager.currentTab?.let { tab ->
                     tab.sslCertificate?.let { showSslDialog(it, tab.currentSslState()) }
@@ -551,11 +534,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * Used to create or recreate our tab view according to current settings.
+     * Used to create or recreate our tabs view according to current settings.
      */
-    private fun createTabView() {
+    private fun createTabsView() {
 
         shouldShowTabsInDrawer = userPreferences.verticalTabBar
+
+        // Close tab drawer if we are switching to a configuration that's not using it
+        if (tabsView!=null && !shouldShowTabsInDrawer && iBinding.drawerLayout.isDrawerOpen(getTabDrawer()) /*&& tabsView is TabsDrawerView*/) {
+            // That's done to prevent user staring at an empty open drawer after changing configuration
+            iBinding.drawerLayout.closeDrawer(getTabDrawer())
+        }
 
         // Remove existing tab view if any
         tabsView?.let {
@@ -563,22 +552,22 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         tabsView = if (shouldShowTabsInDrawer) {
-            TabsDrawerView(this).also(findViewById<FrameLayout>(getTabsContainerId())::addView)
+            TabsDrawerView(this)
         } else {
-            TabsDesktopView(this).also(findViewById<FrameLayout>(getTabsContainerId())::addView)
-        }
+            TabsDesktopView(this)
+        }.also(getTabBarContainer()::addView) // Kotlin is fun and pointless at times
+
         buttonSessions = (tabsView as View).findViewById(R.id.action_sessions)
 
         if (shouldShowTabsInDrawer) {
-            tabsButton?.isVisible = true
-            homeButton?.isVisible = false
-            iBinding.toolbarInclude.tabsToolbarContainer.isVisible = false
+            iBindingToolbarContent.tabsButton.isVisible = true
+            iBindingToolbarContent.homeButton.isVisible = false
+            iBinding.toolbarInclude.tabBarContainer.isVisible = false
         } else {
-            tabsButton?.isVisible = false
-            homeButton?.isVisible = true
-            iBinding.toolbarInclude.tabsToolbarContainer.isVisible = true
+            iBindingToolbarContent.tabsButton.isVisible = false
+            iBindingToolbarContent.homeButton.isVisible = true
+            iBinding.toolbarInclude.tabBarContainer.isVisible = true
         }
-
     }
 
     private fun getBookmarksContainerId(): Int = if (swapBookmarksAndTabs) {
@@ -587,14 +576,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         R.id.right_drawer
     }
 
-    private fun getTabsContainerId(): Int = if (shouldShowTabsInDrawer) {
+    private fun getTabBarContainer(): ViewGroup = if (shouldShowTabsInDrawer) {
         if (swapBookmarksAndTabs) {
-            R.id.right_drawer
+            iBinding.rightDrawer
         } else {
-            R.id.left_drawer
+            iBinding.leftDrawer
         }
     } else {
-        R.id.tabs_toolbar_container
+        iBinding.toolbarInclude.tabBarContainer
     }
 
     private fun getBookmarkDrawer(): View = if (swapBookmarksAndTabs) {
@@ -631,7 +620,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         override fun onKey(view: View, keyCode: Int, keyEvent: KeyEvent): Boolean {
             when (keyCode) {
                 KeyEvent.KEYCODE_ENTER -> {
-                    searchView?.let {
+                    searchView.let {
                         if (it.listSelection == ListView.INVALID_POSITION) {
                             // No suggestion pop up item selected, just trigger a search then
                             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
@@ -659,7 +648,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 || actionId == EditorInfo.IME_ACTION_SEND
                 || actionId == EditorInfo.IME_ACTION_SEARCH
                 || arg2?.action == KeyEvent.KEYCODE_ENTER) {
-                searchView?.let {
+                searchView.let {
                     inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
                     searchTheWeb(it.text.toString())
                 }
@@ -688,7 +677,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
             if (!hasFocus) {
                 iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
-                searchView?.let {
+                searchView.let {
                     inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
                 }
             }
@@ -700,8 +689,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             //val currentView = tabsManager.currentTab ?: return
             //val url = currentView.url
             //if (!url.isSpecialUrl()) {
-            //    if (searchView?.hasFocus() == false) {
-            //        searchView?.setText(url)
+            //    if (searchView.hasFocus() == false) {
+            //        searchView.setText(url)
             //    }
             //}
         }
@@ -714,11 +703,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         val currentView = tabsManager.currentTab ?: return
         val url = currentView.url
         if (!url.isSpecialUrl()) {
-                searchView?.setText(url)
+                searchView.setText(url)
         }
         else {
             // Special URLs like home page and history just show search field then
-            searchView?.setText("")
+            searchView.setText("")
         }
     }
 
@@ -794,10 +783,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // Restore previous system UI visibility flag
                     setToolbarColor()
                 }
-
             }
         }
-
     }
 
 
@@ -840,6 +827,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+
+    var wasToolbarsBottom = false;
+
     /**
      * Setup our tool bar as collapsible or always on according to orientation and user preferences
      */
@@ -850,6 +840,83 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setToolbarColor()
         setFullscreenIfNeeded(configuration)
 
+        // Put our toolbar where it belongs, top or bottom according to user preferences
+        iBinding.toolbarInclude.apply {
+            if (userPreferences.toolbarsBottom) {
+                // Move toolbar to the bottom
+                root.removeFromParent()?.addView(root)
+                // Move search in page to top
+                iBinding.findInPageInclude.root.let {
+                    it.removeFromParent()?.addView(it,0)
+                }
+
+                // Rearrange it so that it is upside down
+                // Put tab bar at the bottom
+                tabBarContainer.removeFromParent()?.addView(tabBarContainer)
+                // Put progress bar at the top
+                progressView.removeFromParent()?.addView(progressView,0)
+                // Take care of tab drawer toolbar if any
+                (tabsView as? TabsDrawerView)?.apply {
+                    // Put our tab list on top then to push toolbar to the bottom
+                    iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList,0)
+                }
+
+                // Set popup menu animations
+                popupMenu.animationStyle = R.style.AnimationMenuBottom
+                // Move popup menu toolbar to the bottom
+                popupMenu.iBinding.header.apply{removeFromParent()?.addView(this)}
+                // Move items above our toolbar separator
+                popupMenu.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this, 0)}
+                // Reverse menu items if needed
+                if (!wasToolbarsBottom) {
+                    val children = popupMenu.iBinding.layoutMenuItems.children.toList()
+                    children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
+                    val webPageChildren = popupMenu.iBinding.layoutTabMenuItems.children.toList()
+                    webPageChildren.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
+                }
+
+                // Set search dropdown anchor to avoid gap
+                searchView.dropDownAnchor = R.id.address_bar_include
+
+            } else {
+                // Move toolbar to the top
+                root.removeFromParent()?.addView(root, 0)
+                //iBinding.uiLayout.addView(root, 0)
+                // Move search in page to bottom
+                iBinding.findInPageInclude.root.let {
+                    it.removeFromParent()?.addView(it)
+                    //iBinding.uiLayout.addView(it)
+                }
+                // Rearrange it so that it is the right way up
+                // Put tab bar at the bottom
+                tabBarContainer.removeFromParent()?.addView(tabBarContainer,0)
+                // Put progress bar at the top
+                progressView.removeFromParent()?.addView(progressView)
+                // Take care of tab drawer toolbar if any
+                (tabsView as? TabsDrawerView)?.apply {
+                    // Put our tab list at the bottom
+                    iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList)
+                }
+
+                // Set popup menu animations
+                popupMenu.animationStyle = R.style.AnimationMenu
+                // Move popup menu toolbar to the top
+                popupMenu.iBinding.header.apply{removeFromParent()?.addView(this, 0)}
+                // Move items below our toolbar separator
+                popupMenu.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this)}
+                // Reverse menu items if needed
+                if (wasToolbarsBottom) {
+                    val children = popupMenu.iBinding.layoutMenuItems.children.toList()
+                    children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
+                    val webPageChildren = popupMenu.iBinding.layoutTabMenuItems.children.toList()
+                    webPageChildren.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
+                }
+                // Set search dropdown anchor to avoid gap
+                searchView.dropDownAnchor = R.id.toolbar_include
+            }
+        }
+
+        wasToolbarsBottom = userPreferences.toolbarsBottom
     }
 
     /**
@@ -857,11 +924,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun setupToolBar() {
         // Check if our tool bar is long enough to display extra buttons
-        val threshold = (buttonBack?.width?:3840)*10
+        val threshold = (iBindingToolbarContent.buttonActionBack.width?:3840)*10
         // If our tool bar is longer than 10 action buttons then we show extra buttons
         (iBinding.toolbarInclude.toolbar.width>threshold).let{
-            buttonBack?.isVisible = it
-            buttonForward?.isVisible = it
+            iBindingToolbarContent.buttonActionBack.isVisible = it
+            iBindingToolbarContent.buttonActionForward.isVisible = it
             // Hide tab bar action buttons if no room for them
             if (tabsView is TabsDesktopView) {
                 (tabsView as TabsDesktopView).iBinding.actionButtons.isVisible = it
@@ -890,13 +957,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         if (!isToolBarVisible()) {
             showActionBar()
         }
-        searchView?.requestFocus()
+        searchView.requestFocus()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
-            if (searchView?.hasFocus() == true) {
-                searchView?.let { searchTheWeb(it.text.toString()) }
+            if (searchView.hasFocus() == true) {
+                searchView.let { searchTheWeb(it.text.toString()) }
             }
         }
         else if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -1183,7 +1250,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
                 event.keyCode == KeyEvent.KEYCODE_SEARCH -> {
                     // Highlight search field
-                    searchView?.requestFocus()
+                    searchView.requestFocus()
                     return true
                 }
             }
@@ -1236,9 +1303,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 return true
             }
             R.id.action_reload -> {
-                if (searchView?.hasFocus() == true) {
+                if (searchView.hasFocus() == true) {
                     // SL: Not sure why?
-                    searchView?.setText("")
+                    searchView.setText("")
                 } else {
                     refreshOrStop()
                 }
@@ -1388,7 +1455,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     private fun showFindInPageControls(text: String) {
-        findViewById<View>(R.id.search_bar).visibility = VISIBLE
+        findViewById<View>(R.id.findInPageInclude).visibility = VISIBLE
         findViewById<TextView>(R.id.search_query).text = text
         findViewById<ImageButton>(R.id.button_next).setOnClickListener(this)
         findViewById<ImageButton>(R.id.button_back).setOnClickListener(this)
@@ -1425,7 +1492,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Check if our tab bar style changed
         if (shouldShowTabsInDrawer!=userPreferences.verticalTabBar) {
             // Tab bar style changed recreate our tab bar then
-            createTabView()
+            createTabsView()
             tabsView?.tabsInitialized()
             mainHandler.postDelayed({scrollToCurrentTab()},1000)
         }
@@ -1478,7 +1545,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun updateSslState(sslState: SslState) {
         iBindingToolbarContent.addressBarInclude.searchSslStatus.setImageDrawable(createSslDrawableForState(sslState))
 
-        if (searchView?.hasFocus() == false) {
+        if (searchView.hasFocus() == false) {
             iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
         }
     }
@@ -1501,13 +1568,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private fun setupToolBarButtons() {
         // Manage back and forward buttons state
         tabsManager.currentTab?.apply {
-            buttonBack?.apply {
+            iBindingToolbarContent.buttonActionBack.apply {
                 isEnabled = canGoBack()
                 // Since we set buttons color ourselves we need this to show it is disabled
                 alpha = if (isEnabled) 1.0f else 0.25f
             }
 
-            buttonForward?.apply {
+            iBindingToolbarContent.buttonActionForward.apply {
                 isEnabled = canGoForward()
                 // Since we set buttons color ourselves we need this to show it is disabled
                 alpha = if (isEnabled) 1.0f else 0.25f
@@ -1671,16 +1738,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBinding.uiLayout.doOnLayout {
             // TODO externalize the dimensions
             val toolbarSize = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                R.dimen.toolbar_height_portrait
-            } else {
-                R.dimen.toolbar_height_landscape
-            }
-                iBinding.toolbarInclude.toolbar.layoutParams = (iBinding.toolbarInclude.toolbar.layoutParams as ConstraintLayout.LayoutParams).apply {
-                height = dimen(toolbarSize)
-            }
+                    R.dimen.toolbar_height_portrait
+                } else {
+                    R.dimen.toolbar_height_landscape
+                }
+
+                iBinding.toolbarInclude.toolbar.layoutParams.height = dimen(toolbarSize)
                 iBinding.toolbarInclude.toolbar.minimumHeight = toolbarSize
                 iBinding.toolbarInclude.toolbar.requestLayout()
-        }
+            }
 
     override fun closeBrowser() {
         currentTabView.removeFromParent()
@@ -1715,7 +1781,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         } else {
             if (currentTab != null) {
                 logger.log(TAG, "onBackPressed")
-                if (searchView?.hasFocus() == true) {
+                if (searchView.hasFocus() == true) {
                     currentTab.requestFocus()
                 } else if (currentTab.canGoBack()) {
                     if (!currentTab.isShown) {
@@ -1893,15 +1959,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         //Workout a foreground colour that will be working with our background color
         currentToolBarTextColor = foregroundColorFromBackgroundColor(color)
         // Change search view text color
-        searchView?.setTextColor(currentToolBarTextColor)
-        searchView?.setHintTextColor(DrawableUtils.mixColor(0.5f, currentToolBarTextColor, color))
+        searchView.setTextColor(currentToolBarTextColor)
+        searchView.setHintTextColor(DrawableUtils.mixColor(0.5f, currentToolBarTextColor, color))
         // Change tab counter color
-        tabsButton?.textColor = currentToolBarTextColor
-        tabsButton?.invalidate();
+        iBindingToolbarContent.tabsButton.apply {
+            textColor = currentToolBarTextColor
+            invalidate();
+        }
         // Change tool bar home button color, needed when using desktop style tabs
-        homeButton?.setColorFilter(currentToolBarTextColor)
-        buttonBack?.setColorFilter(currentToolBarTextColor)
-        buttonForward?.setColorFilter(currentToolBarTextColor)
+        iBindingToolbarContent.homeButton.setColorFilter(currentToolBarTextColor)
+        iBindingToolbarContent.buttonActionBack.setColorFilter(currentToolBarTextColor)
+        iBindingToolbarContent.buttonActionForward.setColorFilter(currentToolBarTextColor)
 
         // Needed to delay that as otherwise disabled alpha state didn't get applied
         mainHandler.postDelayed({ setupToolBarButtons() }, 500)
@@ -1990,7 +2058,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
          */
 
-
     }
 
 
@@ -2051,7 +2118,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun getUiColor(): Int = currentUiColor
 
     override fun updateUrl(url: String?, isLoading: Boolean) {
-        if (url == null || searchView?.hasFocus() != false) {
+        if (url == null || searchView.hasFocus() != false) {
             return
         }
         val currentTab = tabsManager.currentTab
@@ -2059,11 +2126,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         val currentTitle = currentTab?.title
 
-        searchView?.setText(searchBoxModel.getDisplayContent(url, currentTitle, isLoading))
+        searchView.setText(searchBoxModel.getDisplayContent(url, currentTitle, isLoading))
     }
 
-    override fun updateTabNumber(number: Int) {		
-            tabsButton?.updateCount(number)
+    override fun updateTabNumber(number: Int) {
+            iBindingToolbarContent.tabsButton.updateCount(number)
     }
 
     override fun updateProgress(progress: Int) {
@@ -2664,7 +2731,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *  That should also animate the transition I guess.
      */
     private fun setIsLoading(isLoading: Boolean) {
-        if (searchView?.hasFocus() == false) {
+        if (searchView.hasFocus() == false) {
             iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
         }
 
@@ -2731,7 +2798,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             R.id.button_quit -> {
                 findResult?.clearResults()
                 findResult = null
-                findViewById<View>(R.id.search_bar).visibility = GONE
+                findViewById<View>(R.id.findInPageInclude).visibility = GONE
             }
         }
     }

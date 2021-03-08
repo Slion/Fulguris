@@ -10,6 +10,7 @@ import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isSpecialUrl
 import android.animation.AnimatorInflater
 import android.animation.LayoutTransition
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -60,12 +61,10 @@ class BrowserPopupMenu : PopupWindow {
         //val radius: Float = getResources().getDimension(R.dimen.default_corner_radius) //32dp
 
         val animator = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_appearing)
-        iBinding.layoutMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animator)
-        iBinding.layoutMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animator.duration)
+        val animatorFromBottom = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_appearing_from_bottom)
 
         val animatorDisappearing = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_disappearing)
-        iBinding.layoutMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearing)
-        iBinding.layoutMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearing.duration)
+        val animatorDisappearingFromBottom = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_disappearing_from_bottom)
 
         //iBinding.layoutMenuItems.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING)
         //iBinding.layoutMenuItems.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
@@ -89,10 +88,25 @@ class BrowserPopupMenu : PopupWindow {
          */
 
         iBinding.menuItemWebPage.setOnClickListener {
+
+            // Set animations according to menu position
+            if (!iUserPreferences.toolbarsBottom) {
+                iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animator)
+                iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animator.duration)
+                iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearing)
+                iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearing.duration)
+            } else {
+                iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animatorFromBottom)
+                iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animatorFromBottom.duration)
+                iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearingFromBottom)
+                iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearingFromBottom.duration)
+            }
+
             // Toggle web page actions visibility
             val willBeVisible = !iBinding.menuItemFind.isVisible
 
             // Rotate icon using animations
+            // TODO: We could bother to adjust that for bottom toolbars, or not :)
             if (willBeVisible) {
                 iBinding.imageExpandable.startAnimation(AnimationUtils.loadAnimation(contentView.context, R.anim.rotate_clockwise_90));
             } else {
@@ -152,19 +166,17 @@ class BrowserPopupMenu : PopupWindow {
 
         }
 
-
-        //showAsDropDown(aAnchor, 0,-aAnchor.height)
-
         // Get our anchor location
         val anchorLoc = IntArray(2)
         aAnchor.getLocationInWindow(anchorLoc)
         // Show our popup menu from the right side of the screen below our anchor
-        showAtLocation(aAnchor, Gravity.TOP or Gravity.RIGHT,
+        val gravity = if (iUserPreferences.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
+        val yOffset = if (iUserPreferences.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] - aAnchor.height else anchorLoc[1]
+        showAtLocation(aAnchor, gravity,
                 // Offset from the right screen edge
                 Utils.dpToPx(10F),
                 // Above our anchor
-                anchorLoc[1])
-
+                yOffset)
     }
 
     companion object {

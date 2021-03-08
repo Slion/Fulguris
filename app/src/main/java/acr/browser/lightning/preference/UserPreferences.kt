@@ -321,12 +321,28 @@ class UserPreferences @Inject constructor(
      * True if the app should use the navigation drawer UI, false if it should use the traditional
      * desktop browser tabs UI.
      */
-    var verticalTabBarInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_tab_bar_vertical, !screenSize.isTablet())
-    var verticalTabBarInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_tab_bar_vertical, !screenSize.isTablet())
+    private var verticalTabBarInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_tab_bar_vertical, !screenSize.isTablet())
+    private var verticalTabBarInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_tab_bar_vertical, !screenSize.isTablet())
 
     var verticalTabBar : Boolean = false
         get() = if (Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT) verticalTabBarInPortrait else verticalTabBarInLandscape
         private set
+
+
+    /**
+     *
+     */
+    private var toolbarsBottomInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_toolbars_bottom, R.bool.pref_default_toolbars_bottom)
+    private var toolbarsBottomInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_toolbars_bottom, R.bool.pref_default_toolbars_bottom)
+
+    var toolbarsBottom : Boolean = false
+        get() = toolbarsBottom()
+        private set
+
+    fun toolbarsBottom(aConf: Configuration=Resources.getSystem().configuration) : Boolean {
+        return if (aConf.orientation == Configuration.ORIENTATION_PORTRAIT) toolbarsBottomInPortrait else toolbarsBottomInLandscape
+    }
+
 
     /**
      * Not an actual user preference. Just used to communicate between settings and browser activity.
