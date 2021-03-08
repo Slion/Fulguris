@@ -284,6 +284,8 @@ colorControlNormal:
         <item name="android:drawablePadding">8dp</item>
         <item name="android:paddingLeft">12dp</item>
 
+        <item name="android:background">?attr/selectableItemBackground</item>
+
         <!--
         <item name="android:textColor">?attr/colorControlNormal</item>
         <item name="android:background">?attr/selectableItemBackground</item>
