@@ -1635,7 +1635,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             .resizeAndShow()
     }
 
-    override fun showSnackbar(@StringRes resource: Int) = snackbar(resource)
+    override fun showSnackbar(@StringRes resource: Int) = snackbar(resource, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+
+    fun showSnackbar(aMessage: String) = snackbar(aMessage, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
 
     override fun tabCloseClicked(position: Int) {
         presenter?.deleteTab(position)
@@ -2881,9 +2883,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     val latestVersion = response.getJSONArray("versions").getJSONObject(0).getString("version_string")
                     if (latestVersion != BuildConfig.VERSION_NAME) {
                         // We have an update available, tell our user about it
-                        val view = findViewById<View>(android.R.id.content)
-                        Snackbar.make(view,
-                                getString(R.string.update_available) + " - v" + latestVersion, 5000) //Snackbar.LENGTH_LONG
+                        makeSnackbar(
+                                getString(R.string.update_available) + " - v" + latestVersion, 5000, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
                                 .setAction(R.string.show, OnClickListener {
                                     val url = getString(R.string.url_app_home_page)
                                     val i = Intent(Intent.ACTION_VIEW)

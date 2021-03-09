@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.util.Log;
+import android.view.Gravity;
 
 import net.i2p.android.ui.I2PAndroidHelper;
 
@@ -165,10 +166,10 @@ public final class ProxyUtils {
     public boolean isProxyReady(@NonNull Activity activity) {
         if (userPreferences.getProxyChoice() == ProxyChoice.I2P) {
             if (!i2PAndroidHelper.isI2PAndroidRunning()) {
-                ActivityExtensions.snackbar(activity, R.string.i2p_not_running);
+                ActivityExtensions.snackbar(activity, R.string.i2p_not_running,userPreferences.getToolbarsBottom()? Gravity.TOP: Gravity.BOTTOM);
                 return false;
             } else if (!i2PAndroidHelper.areTunnelsActive()) {
-                ActivityExtensions.snackbar(activity, R.string.i2p_tunnels_not_ready);
+                ActivityExtensions.snackbar(activity, R.string.i2p_tunnels_not_ready,userPreferences.getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM);
                 return false;
             }
         }
@@ -211,7 +212,7 @@ public final class ProxyUtils {
             case ORBOT:
                 if (!OrbotHelper.isOrbotInstalled(activity)) {
                     choice = ProxyChoice.NONE;
-                    ActivityExtensions.snackbar(activity, R.string.install_orbot);
+                    ActivityExtensions.snackbar(activity, R.string.install_orbot,Gravity.BOTTOM);
                 }
                 break;
             case I2P:

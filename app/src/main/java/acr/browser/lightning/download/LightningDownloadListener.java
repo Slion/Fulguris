@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.text.format.Formatter;
+import android.view.Gravity;
 import android.view.View;
 import android.webkit.DownloadListener;
 
@@ -130,7 +131,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                 //Show a snackbar with a link to open the downloaded file
                 if (success) {
                     final Intent i = downloadsIntent;
-                    ActivityExtensions.makeSnackbar(mActivity,contentTitle).setAction(R.string.show, new View.OnClickListener() {
+                    ActivityExtensions.makeSnackbar(mActivity,contentTitle, ActivityExtensions.KDuration, userPreferences.getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM).setAction(R.string.show, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     context.startActivity(i);
@@ -138,7 +139,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                             }).show();
                 }
                 else {
-                    ActivityExtensions.snackbar(mActivity,contentTitle);
+                    ActivityExtensions.snackbar(mActivity,contentTitle,userPreferences.getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM);
                 }
             }
         }

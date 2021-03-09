@@ -20,6 +20,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.webkit.URLUtil;
 
 import java.io.Closeable;
@@ -247,7 +248,7 @@ public final class Utils {
             addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, favicon);
             addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
             activity.sendBroadcast(addIntent);
-            ActivityExtensions.snackbar(activity, R.string.message_added_to_homescreen);
+            ActivityExtensions.snackbar(activity, R.string.message_added_to_homescreen,Gravity.BOTTOM);
         } else {
             ShortcutManager shortcutManager = activity.getSystemService(ShortcutManager.class);
             if (shortcutManager.isRequestPinShortcutSupported()) {
@@ -259,9 +260,9 @@ public final class Utils {
                         .build();
 
                 shortcutManager.requestPinShortcut(pinShortcutInfo, null);
-                ActivityExtensions.snackbar(activity, R.string.message_added_to_homescreen);
+                ActivityExtensions.snackbar(activity, R.string.message_added_to_homescreen, Gravity.BOTTOM);
             } else {
-                ActivityExtensions.snackbar(activity, R.string.shortcut_message_failed_to_add);
+                ActivityExtensions.snackbar(activity, R.string.shortcut_message_failed_to_add,Gravity.BOTTOM);
             }
         }
     }

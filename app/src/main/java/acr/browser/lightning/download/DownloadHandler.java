@@ -25,6 +25,7 @@ import javax.inject.Singleton;
 import acr.browser.lightning.BuildConfig;
 import acr.browser.lightning.MainActivity;
 import acr.browser.lightning.R;
+import acr.browser.lightning.browser.activity.BrowserActivity;
 import acr.browser.lightning.constant.Constants;
 import acr.browser.lightning.controller.UIController;
 import acr.browser.lightning.database.downloads.DownloadEntry;
@@ -187,6 +188,8 @@ public class DownloadHandler {
                                          String contentDisposition, @Nullable String mimetype, @NonNull String contentSize) {
         iFilename = guessFileName(url, contentDisposition, mimetype);
 
+        BrowserActivity ba = (BrowserActivity)context;
+
         // Check to see if we have an SDCard
         String status = Environment.getExternalStorageState();
         if (!status.equals(Environment.MEDIA_MOUNTED)) {
@@ -219,7 +222,7 @@ public class DownloadHandler {
             // This only happens for very bad urls, we want to catch the
             // exception here
             logger.log(TAG, "Exception while trying to parse url '" + url + '\'', e);
-            ActivityExtensions.snackbar(context, R.string.problem_download);
+            ba.showSnackbar( R.string.problem_download);
             return;
         }
 
@@ -229,7 +232,7 @@ public class DownloadHandler {
         try {
             request = new DownloadManager.Request(uri);
         } catch (IllegalArgumentException e) {
-            ActivityExtensions.snackbar(context, R.string.cannot_download);
+            ba.showSnackbar( R.string.cannot_download);
             return;
         }
 
@@ -242,7 +245,7 @@ public class DownloadHandler {
         Uri downloadFolder = Uri.parse(location);
 
         if (!isWriteAccessAvailable(downloadFolder)) {
-            ActivityExtensions.snackbar(context, R.string.problem_location_download);
+            ba.showSnackbar( R.string.problem_location_download);
             return;
         }
         String newMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(Utils.guessFileExtension(iFilename));
@@ -276,15 +279,15 @@ public class DownloadHandler {
                 .subscribe(result -> {
                     switch (result.iCode) {
                         case FAILURE_ENQUEUE:
-                            ActivityExtensions.snackbar(context, R.string.cannot_download);
+                            ba.showSnackbar(R.string.cannot_download);
                             break;
                         case FAILURE_LOCATION:
-                            ActivityExtensions.snackbar(context, R.string.problem_location_download);
+                            ba.showSnackbar( R.string.problem_location_download);
                             break;
                         case SUCCESS:
                             iDownloadId = result.iDownloadId;
                             iFilename = result.iFilename;
-                            ActivityExtensions.snackbar(context, context.getString(R.string.download_pending)  + '\n' + iFilename);
+                            ba.showSnackbar( context.getString(R.string.download_pending)  + '\n' + iFilename);
                             break;
                     }
                 });
@@ -295,13 +298,13 @@ public class DownloadHandler {
             } catch (IllegalArgumentException e) {
                 // Probably got a bad URL or something
                 logger.log(TAG, "Unable to enqueue request", e);
-                ActivityExtensions.snackbar(context, R.string.cannot_download);
+                ba.showSnackbar( R.string.cannot_download);
             } catch (SecurityException e) {
                 // TODO write a download utility that downloads files rather than rely on the system
                 // because the system can only handle Environment.getExternal... as a path
-                ActivityExtensions.snackbar(context, R.string.problem_location_download);
+                ba.showSnackbar( R.string.problem_location_download);
             }
-            ActivityExtensions.snackbar(context, context.getString(R.string.download_pending) + '\n' + iFilename);
+            ba.showSnackbar( context.getString(R.string.download_pending) + '\n' + iFilename);
         }
 
         // save download in database
