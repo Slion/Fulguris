@@ -861,8 +861,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList,0)
                 }
 
-                // Set popup menu animations
+                // Set popup menus animations
                 popupMenu.animationStyle = R.style.AnimationMenuBottom
+                sessionsMenu.animationStyle = R.style.AnimationMenuBottom
                 // Move popup menu toolbar to the bottom
                 popupMenu.iBinding.header.apply{removeFromParent()?.addView(this)}
                 // Move items above our toolbar separator
@@ -898,8 +899,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList)
                 }
 
-                // Set popup menu animations
+                // Set popup menus animations
                 popupMenu.animationStyle = R.style.AnimationMenu
+                sessionsMenu.animationStyle = R.style.AnimationMenu
                 // Move popup menu toolbar to the top
                 popupMenu.iBinding.header.apply{removeFromParent()?.addView(this, 0)}
                 // Move items below our toolbar separator
