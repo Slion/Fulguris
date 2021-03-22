@@ -146,7 +146,7 @@ class LightningWebClient(
      */
     private fun updateUrlIfNeeded(url: String, isLoading: Boolean) {
         // Update URL unless we are dealing with our special internal URL
-        (lightningView.iHideActualUrl). let { dontDoUpdate ->
+        (url.isSpecialUrl()). let { dontDoUpdate ->
             uiController.updateUrl(if (dontDoUpdate) lightningView.url else url, isLoading)
         }
     }
@@ -236,10 +236,6 @@ class LightningWebClient(
      * This deprecated callback is still in use and conveniently called only when the error affect the page main frame.
      */
     override fun onReceivedError(webview: WebView, errorCode: Int, error: String, failingUrl: String) {
-
-        // Not sure that's still needed then, sigh...
-        lightningView.iHideActualUrl = true
-
 
         // None of those were working so we did Base64 encoding instead
         //"file:///android_asset/ask.png"

@@ -249,18 +249,12 @@ class LightningView(
     val url: String
         get() {
             //TODO: One day find a way to write this expression without !! and without duplicating iTargetUrl.toString(), Kotlin is so weird
-            return if (iHideActualUrl || webView == null || webView!!.url.isNullOrBlank()) {
+            return if (webView == null || webView!!.url.isNullOrBlank() || webView!!.url.isSpecialUrl()) {
                 iTargetUrl.toString()
             } else  {
                 webView!!.url
             }
         }
-
-    /**
-     * Set that flag when the displayed URL differs from the actual URL loaded in our webView?.
-     * That's notably the case for error pages.
-     */
-    var iHideActualUrl = false
 
     /**
      * Return true if this tab is frozen, meaning it was not yet loaded from its bundle
@@ -399,14 +393,6 @@ class LightningView(
      */
     private fun initializeContent(tabInitializer: TabInitializer) {
         webView?.let { tabInitializer.initialize(it, requestHeaders) }
-        // Now that something was potentially loaded in our WebView...
-        if (iTargetUrl.toString().isNullOrBlank()) {
-            // Unknown URL, don't hide it when it eventually becomes available
-            iHideActualUrl = false
-        } else {
-            // ...check if we should hide our actual URL
-            iHideActualUrl = iTargetUrl.toString() != webView?.url
-        }
     }
 
 
@@ -936,7 +922,6 @@ class LightningView(
             return
         }
 
-        iHideActualUrl = false
         iTargetUrl = Uri.parse(aUrl)
 
         if (iTargetUrl.scheme == Schemes.Fulguris || iTargetUrl.scheme == Schemes.About) {
