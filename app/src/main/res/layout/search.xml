@@ -39,7 +39,13 @@
             android:focusable="false"
             />
 
-        <!-- Apparently ellipsis won't work with AppCompatAutoCompleteTextView -->
+        <!--
+        Apparently ellipsis won't work with AppCompatAutoCompleteTextView.
+
+        While that ID is referred to in bitwarden it seems it can workout the URL without it.
+        That make sense cause that field does not actually contains the URL if it displays the page title.
+        I'm guessing bitwarden is simply using AssistStructure.ViewNode.getWebDomain instead.
+         -->
         <acr.browser.lightning.view.SearchView
             android:id="@+id/search"
             android:layout_width="0dp"
