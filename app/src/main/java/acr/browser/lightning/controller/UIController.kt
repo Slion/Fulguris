@@ -89,7 +89,7 @@ interface UIController {
     fun onShowCustomView(
         view: View,
         callback: CustomViewCallback,
-        requestedOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        requestedOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_SENSOR
     )
 
     /**
