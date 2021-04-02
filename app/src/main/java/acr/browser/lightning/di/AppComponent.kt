@@ -10,6 +10,7 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.browser.activity.ThemedBrowserActivity
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
 import acr.browser.lightning.browser.sessions.SessionsPopupWindow
+import acr.browser.lightning.browser.tabs.TabsDrawerView
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
@@ -26,6 +27,9 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
+/**
+ * SL: Add inject function for your class if it needs injection.
+ */
 @Singleton
 @Component(modules = [(AppModule::class), (AppBindsModule::class)])
 interface AppComponent {
@@ -95,6 +99,8 @@ interface AppComponent {
     fun inject(sponsorshipSettingsFragment: SponsorshipSettingsFragment)
 
     fun inject(themedActivity: ThemedActivity)
+
+    fun inject(tabsDrawerView: TabsDrawerView)
 
     fun provideBloomFilterAdBlocker(): BloomFilterAdBlocker
 

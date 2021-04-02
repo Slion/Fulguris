@@ -5,7 +5,9 @@ import acr.browser.lightning.browser.TabsView
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.TabDrawerViewBinding
+import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.inflater
+import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.view.LightningView
 import android.content.Context
 import android.util.AttributeSet
@@ -15,7 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
+import javax.inject.Inject
 
 
 /**
@@ -27,6 +29,10 @@ class TabsDrawerView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), TabsView {
 
+
+    @Inject
+    lateinit var iUserPreferences: UserPreferences
+
     private val uiController = context as UIController
     private val tabsAdapter: TabsDrawerAdapter
 
@@ -35,6 +41,9 @@ class TabsDrawerView @JvmOverloads constructor(
     var iBinding: TabDrawerViewBinding
 
     init {
+
+        context.injector.inject(this)
+
         orientation = VERTICAL
         isClickable = true
         isFocusable = true
@@ -50,7 +59,9 @@ class TabsDrawerView @JvmOverloads constructor(
             //setLayerType(View.LAYER_TYPE_NONE, null)
             // We don't want that morphing animation for now
             (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            // Reverse layout if using bottom tool bars
+            // LinearLayoutManager.setReverseLayout is also adjusted from BrowserActivity.setupToolBar
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
             adapter = tabsAdapter
             setHasFixedSize(true)
         }

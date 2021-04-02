@@ -91,6 +91,12 @@
     </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!--
+        Those are set at runtime:
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:reverseLayout="false"
+    -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tabs_list"
         android:layout_width="match_parent"
@@ -104,7 +110,9 @@
         android:requiresFadingEdge="vertical"
         android:focusable="true"
         android:clickable="true"
-        android:descendantFocusability="afterDescendants"/>
+        android:descendantFocusability="afterDescendants"
+        tools:listitem="@layout/tab_list_item"
+        />
 
 
 </LinearLayout>

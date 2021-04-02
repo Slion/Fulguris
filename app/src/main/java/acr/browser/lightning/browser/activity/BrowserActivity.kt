@@ -859,6 +859,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 (tabsView as? TabsDrawerView)?.apply {
                     // Put our tab list on top then to push toolbar to the bottom
                     iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList,0)
+                    // Use reversed layout from bottom to top
+                    (iBinding.tabsList.layoutManager as? LinearLayoutManager)?.reverseLayout = true
                 }
 
                 // Set popup menus animations
@@ -897,6 +899,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 (tabsView as? TabsDrawerView)?.apply {
                     // Put our tab list at the bottom
                     iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList)
+                    // Use straight layout from top to bottom
+                    (iBinding.tabsList.layoutManager as? LinearLayoutManager)?.reverseLayout = false
                 }
 
                 // Set popup menus animations
