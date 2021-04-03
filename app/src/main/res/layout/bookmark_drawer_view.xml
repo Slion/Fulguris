@@ -55,7 +55,8 @@
             android:paddingVertical="4dp"
             android:divider="@null"
             android:dividerHeight="0dp"
-            android:requiresFadingEdge="vertical" />
+            android:requiresFadingEdge="vertical"
+            tools:listitem="@layout/bookmark_list_item" />
 
     </LinearLayout>
 </layout>
