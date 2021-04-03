@@ -10,10 +10,14 @@ import android.webkit.WebSettings
  */
 fun UserPreferences.userAgent(application: Application): String =
     when (val choice = userAgentChoice) {
-        // WebSettings default identifies us as WebView and as WebView Google is preventing use to login to its services.
+        // WebSettings default identifies us as WebView and as WebView Google is preventing us to login to its services.
         // Clearly we don't want that so we just modify default user agent by removing the WebView specific parts.
         // That should make us look like Chrome, which we are really.
-        1 -> Regex(" Build/.+; wv").replace(WebSettings.getDefaultUserAgent(application),"")
+        1 -> {
+                var userAgent = Regex(" Build/.+; wv").replace(WebSettings.getDefaultUserAgent(application),"")
+                userAgent = Regex("Version/.+? ").replace(userAgent,"")
+                userAgent
+        }
         2 -> DESKTOP_USER_AGENT
         3 -> MOBILE_USER_AGENT
         4 -> userAgentString.takeIf(String::isNotEmpty) ?: " "
