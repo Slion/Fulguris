@@ -335,6 +335,8 @@
     <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
     <string name="settings_title_desktop_mode_default">Desktop mode</string>
     <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
+    <string name="settings_title_dark_mode_default">Force dark mode</string>
+    <string name="settings_summary_dark_mode_default">Define if new tabs use force dark mode by default</string>
     <string name="swap_bookmarks_and_tabs">Swap bookmark and tab drawers</string>
     <string name="do_not_track">Request \'Do Not Track\'</string>
     <string name="save_data">Request \'Save-Data\'</string>

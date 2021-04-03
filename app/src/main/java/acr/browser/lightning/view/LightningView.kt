@@ -43,10 +43,13 @@ import android.view.View.OnScrollChangeListener
 import android.view.View.OnTouchListener
 import android.webkit.CookieManager
 import android.webkit.WebSettings
+import android.webkit.WebSettings.FORCE_DARK_ON
 import android.webkit.WebSettings.LayoutAlgorithm
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -165,6 +168,15 @@ class LightningView(
             } else {
                 setUserAgentForPreference(userPreferences)
             }
+        }
+
+    /**
+     *
+     */
+    var darkMode = false
+        set(aDarkMode) {
+            field = aDarkMode
+            applyDarkMode();
         }
 
     /**
@@ -291,12 +303,14 @@ class LightningView(
             createWebView()
             initializeContent(tabInitializer)
             desktopMode = userPreferences.desktopModeDefault
+            darkMode = userPreferences.darkModeDefault
         } else {
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer
             titleInfo.setTitle(tabInitializer.tabModel.title)
             titleInfo.setFavicon(tabInitializer.tabModel.favicon)
             desktopMode = tabInitializer.tabModel.desktopMode
+            darkMode = tabInitializer.tabModel.darkMode
         }
 
         networkDisposable = networkConnectivityModel.connectivity()
@@ -477,6 +491,31 @@ class LightningView(
             CookieManager.getInstance().setAcceptThirdPartyCookies(webView,
                 !userPreferences.blockThirdPartyCookiesEnabled)
         }
+
+        applyDarkMode();
+    }
+
+    /**
+     *
+     */
+    private fun applyDarkMode() {
+        val settings = webView?.settings ?: return
+
+        // TODO: Have a settings option to have dark mode use specified render mode instead of WebView dark mode
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+            if (darkMode) {
+                WebSettingsCompat.setForceDark(settings,WebSettingsCompat.FORCE_DARK_ON)
+            } else {
+                WebSettingsCompat.setForceDark(settings,WebSettingsCompat.FORCE_DARK_OFF)
+            }
+        } else {
+            // Fallback to that then
+            if (darkMode) {
+                setColorMode(RenderingMode.INVERTED_GRAYSCALE)
+            } else {
+                setColorMode(userPreferences.renderingMode)
+            }
+        }
     }
 
     /**
@@ -536,6 +575,11 @@ class LightningView(
             }
         }
 
+        // I guess that should do
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
+            WebSettingsCompat.setForceDarkStrategy(settings,WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING)
+        }
+
     }
 
     private fun getPathObservable(subFolder: String) = Single.fromCallable {
@@ -550,6 +594,15 @@ class LightningView(
         // Toggle desktop mode
         desktopMode = !desktopMode
     }
+
+    /**
+     *
+     */
+    fun toggleDarkMode() {
+        // Toggle dark mode
+        darkMode = !darkMode
+    }
+
 
     /**
      * This method sets the user agent of the current tab based on the user's preference
@@ -572,7 +625,7 @@ class LightningView(
      * Save the state of this tab and return it as a [Bundle].
      */
     fun saveState(): Bundle {
-         return TabModel(url,title,desktopMode,favicon,webViewState()).toBundle()
+         return TabModel(url, title, desktopMode, darkMode, favicon, webViewState()).toBundle()
     }
     /**
      * Pause the current WebView instance.
@@ -647,7 +700,6 @@ class LightningView(
                 // SL: enabled that and the performance gain is very noticeable on  F(x)tec Pro1
                 // Notably on: https://www.bbc.com/worklife
                 setHardwareRendering()
-                invertPage = false
             }
             RenderingMode.INVERTED -> {
                 val filterInvert = ColorMatrixColorFilter(

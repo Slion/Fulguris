@@ -2,11 +2,14 @@ package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.Utils
+import acr.browser.lightning.utils.isAppScheme
+import acr.browser.lightning.utils.isScheme
 import acr.browser.lightning.utils.isSpecialUrl
 import android.animation.AnimatorInflater
 import android.animation.LayoutTransition
@@ -124,9 +127,10 @@ class BrowserPopupMenu : PopupWindow {
                     // Blocking it is not nice and subscription is more involved I guess
                     // See BookmarksDrawerView.updateBookmarkIndicator
                     //contentView.menuItemAddBookmark.visibility = if (bookmarkModel.isBookmark(tab.url).blockingGet() || tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
-                    (!tab.url.isSpecialUrl() && willBeVisible).let {
+                    (!(tab.url.isSpecialUrl() || tab.url.isAppScheme()) && willBeVisible).let {
                         // Those menu items won't be displayed for special URLs
                         iBinding.menuItemDesktopMode.isVisible = it
+                        iBinding.menuItemDarkMode.isVisible = it
                         iBinding.menuItemAddToHome.isVisible = it
                         iBinding.menuItemAddBookmark.isVisible = it
                         iBinding.menuItemShare.isVisible = it
@@ -153,6 +157,7 @@ class BrowserPopupMenu : PopupWindow {
         iBinding.menuItemPrint.isVisible = false
         iBinding.menuItemReaderMode.isVisible = false
         iBinding.menuItemDesktopMode.isVisible = false
+        iBinding.menuItemDarkMode.isVisible = false
         iBinding.menuItemAddToHome.isVisible = false
         iBinding.menuItemWebPage.isVisible = true
 
@@ -163,7 +168,8 @@ class BrowserPopupMenu : PopupWindow {
         (contentView.context as BrowserActivity).tabsManager.let {
             // Set desktop mode checkbox according to current tab
             iBinding.menuItemDesktopMode.isChecked = it.currentTab?.desktopMode ?: false
-
+            // Same with dark mode
+            iBinding.menuItemDarkMode.isChecked = it.currentTab?.darkMode ?: false
         }
 
         // Get our anchor location

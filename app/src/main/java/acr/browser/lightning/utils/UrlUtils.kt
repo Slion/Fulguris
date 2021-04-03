@@ -19,6 +19,7 @@ package acr.browser.lightning.utils
 
 import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.constant.FILE
+import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.download.DownloadPageFactory
@@ -99,14 +100,32 @@ fun String?.isHistoryUri(): Boolean =
 
 /**
  * Returns whether the given url is the bookmarks/history page or a normal website
+ * TODO: Review every usage of that one
  */
 fun String?.isSpecialUrl(): Boolean =
     this != null
-        && this.startsWith(FILE + BrowserApp.instance.filesDir)
+        && (this.startsWith(FILE + BrowserApp.instance.filesDir)
         && (this.endsWith(BookmarkPageFactory.FILENAME)
         || this.endsWith(DownloadPageFactory.FILENAME)
         || this.endsWith(HistoryPageFactory.FILENAME)
         || this.endsWith(HomePageFactory.FILENAME))
+        // TODO: That's somehow causing History page to be restored as Home page
+        /*|| this.startsWith(Schemes.Fulguris + "://")*/)
+
+/**
+ * Check if this URL is using the specified scheme.
+ */
+fun String?.isScheme(aScheme: String): Boolean =
+                this != null
+                && this.startsWith("$aScheme:")
+
+
+/**
+ * Check if this URL is using any application specific schemes.
+ */
+fun String?.isAppScheme(): Boolean =
+        isScheme(Schemes.Fulguris)
+        || isScheme(Schemes.About)
 
 /**
  * Determines if the url is a url for the bookmark page.

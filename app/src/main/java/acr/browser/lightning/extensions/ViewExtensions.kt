@@ -174,7 +174,7 @@ fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
             // At 0.015 it does not kick in for GitHub
             val threshold = 0.02
             // Use white filter on darkest favicons
-            // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.c.uk
+            // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.co.uk
             // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
             if (luminance < threshold && filteredLuminance < threshold) {
                 // Mostly black icon

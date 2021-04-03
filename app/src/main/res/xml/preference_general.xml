@@ -77,6 +77,14 @@
             app:iconSpaceReserved="false"
             app:icon="@drawable/ic_desktop" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_dark_mode_default"
+            android:title="@string/settings_title_dark_mode_default"
+            android:summary="@string/settings_summary_dark_mode_default"
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_dark_mode" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_advanced">

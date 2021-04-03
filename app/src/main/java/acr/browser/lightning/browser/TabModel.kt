@@ -11,6 +11,7 @@ open class TabModel (
     var url : String,
     var title : String,
     var desktopMode: Boolean,
+    var darkMode: Boolean,
     var favicon : Bitmap?,
     var webView : Bundle?
 )
@@ -21,6 +22,7 @@ open class TabModel (
                 it.putString(TAB_TITLE_KEY, title)
                 it.putBundle(WEB_VIEW_KEY, webView)
                 it.putBoolean(KEY_DESKTOP_MODE, desktopMode)
+                it.putBoolean(KEY_DARK_MODE, darkMode)
                 favicon?.apply {
                     // Using PNG instead of WEBP as it is hopefully lossless
                     // Using WEBP results in the quality degrading reload after reload
@@ -35,6 +37,7 @@ open class TabModel (
         }
 
     companion object {
+        const val KEY_DARK_MODE = "DARK_MODE"
         const val KEY_DESKTOP_MODE = "DESKTOP_MODE"
         const val URL_KEY = "URL"
         const val TAB_TITLE_KEY = "TITLE"
@@ -52,6 +55,7 @@ class TabModelFromBundle (
         bundle.getString(URL_KEY)?:"",
         bundle.getString(TAB_TITLE_KEY)?:"",
         bundle.getBoolean(KEY_DESKTOP_MODE)?:false,
+        bundle.getBoolean(KEY_DARK_MODE)?:false,
         bundle.getByteArray(TAB_FAVICON_KEY)?.let{BitmapFactory.decodeByteArray(it, 0, it.size)},
         bundle.getBundle(WEB_VIEW_KEY)
 )

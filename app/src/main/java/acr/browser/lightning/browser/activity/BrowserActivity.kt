@@ -86,7 +86,6 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.children
-import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.customview.widget.ViewDragHelper
 import androidx.databinding.DataBindingUtil
@@ -100,7 +99,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.anthonycr.grant.PermissionsManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Completable
@@ -353,6 +351,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
             onMenuItemClicked(iBinding.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
             onMenuItemClicked(iBinding.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
+            onMenuItemClicked(iBinding.menuItemDarkMode) { executeAction(R.id.action_toggle_dark_mode) }
             //
             onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
 
@@ -393,9 +392,24 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    /**
+     * Provide primary color, typically used as default toolbar color.
+     */
+    private val primaryColor: Int
+        get() {
+            // If current tab is using forced dark mode and we do not use a dark theme…
+            return if (tabsManager.currentTab?.darkMode == true && !useDarkTheme) {
+                // …then override primary color…
+                Color.BLACK
+            } else {
+                // …otherwise just use current theme surface color.
+                ThemeUtils.getSurfaceColor(this)
+            }
+        }
 
-    private var primaryColor = Color.WHITE
-
+    /**
+     *
+     */
     private fun initialize(savedInstanceState: Bundle?) {
 
         createNotificationChannel()
@@ -419,7 +433,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         swapBookmarksAndTabs = userPreferences.bookmarksAndTabsSwapped
 
         // initialize background ColorDrawable
-        primaryColor = ThemeUtils.getSurfaceColor(this)
         backgroundDrawable.color = primaryColor
 
         // Drawer stutters otherwise
@@ -801,23 +814,28 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
 
-    // Set tool bar color corresponding to the current tab
+    /**
+     * Set toolbar color corresponding to the current tab
+     */
     private fun setToolbarColor()
     {
         val currentView = tabsManager.currentTab
-        if (isColorMode() && currentView != null && currentView.htmlMetaThemeColor!=Color.TRANSPARENT) {
+        if (isColorMode() && currentView != null && currentView.htmlMetaThemeColor!=Color.TRANSPARENT && !currentView.darkMode) {
             // Web page does specify theme color, use it much like Google Chrome does
-            mainHandler.post {changeToolbarBackground(currentView.htmlMetaThemeColor, null)}
+            mainHandler.post {applyToolbarColor(currentView.htmlMetaThemeColor)}
         }
-        else if (isColorMode() && currentView?.favicon != null) {
-            // Web page as favicon, use it to extract page theme color
+        else if (isColorMode() && currentView?.favicon != null && !currentView.darkMode) {
+            // Web page has favicon, use it to extract page theme color
             changeToolbarBackground(currentView.favicon, Color.TRANSPARENT, null)
         } else {
             // That should be the primary color from current theme
-            mainHandler.post {changeToolbarBackground(primaryColor, null)}
+            mainHandler.post {applyToolbarColor(primaryColor)}
         }
     }
 
+    /**
+     *
+     */
     private fun initFullScreen(configuration: Configuration) {
         isFullScreen = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             userPreferences.hideToolBarInPortrait
@@ -828,10 +846,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
 
-    var wasToolbarsBottom = false;
+    private var wasToolbarsBottom = false;
 
     /**
-     * Setup our tool bar as collapsible or always on according to orientation and user preferences
+     * Setup our tool bar as collapsible or always-on according to orientation and user preferences.
+     * Also manipulate our layout according to toolbars-at-bottom user preferences.
      */
     private fun setupToolBar(configuration: Configuration) {
         initFullScreen(configuration)
@@ -1410,6 +1429,16 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 return true
             }
 
+            R.id.action_toggle_dark_mode -> {
+                tabsManager.currentTab?.apply {
+                    toggleDarkMode()
+                    // Calling setToolbarColor directly from here causes that old bug with WebView not resizing when hiding toolbar and not showing newly loaded WebView to resurface.
+                    // Even doing a post does not fix it. However doing a long enough postDelayed does the trick.
+                    mainHandler.postDelayed({setToolbarColor()},100)
+                }
+                return true
+            }
+
             R.id.action_sessions -> {
                 // Show sessions menu
                 showSessions()
@@ -1940,7 +1969,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
-
+    /**
+     *
+     */
     private fun setStatusBarColor(color: Int, darkIcons: Boolean) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -1958,13 +1989,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
-
     /**
-     *
+     * Apply given color and derivative to our toolbar, its components and status bar too.
      */
-    private fun changeToolbarBackground(color: Int, tabBackground: Drawable?) {
-
-        //Workout a foreground colour that will be working with our background color
+    private fun applyToolbarColor(color: Int) {
+        //Workout a foreground color that will be working with our background color
         currentToolBarTextColor = foregroundColorFromBackgroundColor(color)
         // Change search view text color
         searchView.setTextColor(currentToolBarTextColor)
@@ -2070,6 +2099,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
 
     /**
+     * Overrides [UIController.changeToolbarBackground]
+     *
      * Animates the color of the toolbar from one color to another. Optionally animates
      * the color of the tab background, for use when the tabs are displayed on the top
      * of the screen.
@@ -2084,23 +2115,27 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         if (!isColorMode()) {
             // Put back the theme color then
-            changeToolbarBackground(defaultColor, tabBackground);
+            applyToolbarColor(defaultColor);
         }
-        else if (color != Color.TRANSPARENT)
+        else if (color != Color.TRANSPARENT
+                // Do not apply meta color if forced dark mode
+                && tabsManager.currentTab?.darkMode != true)
         {
             // We have a meta theme color specified in our page HTML, use it
-            changeToolbarBackground(color, tabBackground);
+            applyToolbarColor(color);
         }
-        else if (favicon==null)
+        else if (favicon==null
+                // Use default color if forced dark mode
+                || tabsManager.currentTab?.darkMode == true)
         {
             // No HTML meta theme color and no favicon, use app theme color then
-            changeToolbarBackground(defaultColor, tabBackground);
+            applyToolbarColor(defaultColor);
         }
         else {
             Palette.from(favicon).generate { palette ->
                 // OR with opaque black to remove transparency glitches
                 val color = Color.BLACK or (palette?.getVibrantColor(defaultColor) ?: defaultColor)
-                changeToolbarBackground(color, tabBackground);
+                applyToolbarColor(color);
             }
         }
     }
