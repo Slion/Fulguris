@@ -188,9 +188,13 @@ class LightningDialogBuilder @Inject constructor(
                                             .subscribeOn(databaseScheduler)
                                             .observeOn(mainScheduler)
                                             .subscribeBy(
-                                                    onSuccess = {
-                                                        uiController.handleBookmarksChange()
-                                                        activity.toast(R.string.message_bookmark_added)
+                                                    onSuccess = { success ->
+                                                        if (success) {
+                                                            uiController.handleBookmarksChange()
+                                                            activity.toast(R.string.message_bookmark_added)
+                                                        } else {
+                                                            activity.toast(R.string.message_bookmark_not_added)
+                                                        }
                                                     }
                                             )
                                 }
@@ -217,7 +221,7 @@ class LightningDialogBuilder @Inject constructor(
         getFolder.setHint(R.string.folder)
         getFolder.setText(entry.folder.title)
 
-        val subscription = bookmarkManager.getFolderNames()
+        val ignored = bookmarkManager.getFolderNames()
                 .subscribeOn(databaseScheduler)
                 .observeOn(mainScheduler)
                 .subscribe { folders ->

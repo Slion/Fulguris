@@ -245,6 +245,7 @@
     <string name="bookmark_settings">Bookmarks</string>
     <string name="import_bookmark_error">Could not import bookmarks from file</string>
     <string name="message_bookmark_added">Bookmark added.</string>
+    <string name="message_bookmark_not_added">Bookmark already exists.</string>
     <string name="title_chooser">Choose a file</string>
     <string name="settings_general">General</string>
     <string name="settings_display">Look &amp; feel</string>
