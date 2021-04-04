@@ -47,16 +47,28 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+    <!--
+    Those are set at runtime:
+    android:orientation="vertical"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    app:reverseLayout="false"
+    -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_bookmarks"
             android:layout_width="match_parent"
+            android:scrollbars="vertical"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:paddingVertical="4dp"
             android:divider="@null"
             android:dividerHeight="0dp"
+            android:overScrollMode="ifContentScrolls"
             android:requiresFadingEdge="vertical"
-            tools:listitem="@layout/bookmark_list_item" />
+            android:focusable="true"
+            android:clickable="true"
+            android:descendantFocusability="afterDescendants"
+            tools:listitem="@layout/bookmark_list_item"
+            />
 
     </LinearLayout>
 </layout>

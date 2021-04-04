@@ -874,12 +874,20 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 tabBarContainer.removeFromParent()?.addView(tabBarContainer)
                 // Put progress bar at the top
                 progressView.removeFromParent()?.addView(progressView,0)
-                // Take care of tab drawer toolbar if any
+                // Take care of tab drawer if any
                 (tabsView as? TabsDrawerView)?.apply {
                     // Put our tab list on top then to push toolbar to the bottom
                     iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList,0)
                     // Use reversed layout from bottom to top
                     (iBinding.tabsList.layoutManager as? LinearLayoutManager)?.reverseLayout = true
+                }
+
+                // Take care of bookmarks drawer
+                (bookmarksView as? BookmarksDrawerView)?.apply {
+                    // Put our list on top then to push toolbar to the bottom
+                    iBinding.recyclerViewBookmarks.removeFromParent()?.addView(iBinding.recyclerViewBookmarks,0)
+                    // Use reversed layout from bottom to top
+                    (iBinding.recyclerViewBookmarks.layoutManager as? LinearLayoutManager)?.reverseLayout = true
                 }
 
                 // Set popup menus animations
@@ -914,12 +922,20 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 tabBarContainer.removeFromParent()?.addView(tabBarContainer,0)
                 // Put progress bar at the top
                 progressView.removeFromParent()?.addView(progressView)
-                // Take care of tab drawer toolbar if any
+                // Take care of tab drawer if any
                 (tabsView as? TabsDrawerView)?.apply {
                     // Put our tab list at the bottom
                     iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList)
                     // Use straight layout from top to bottom
                     (iBinding.tabsList.layoutManager as? LinearLayoutManager)?.reverseLayout = false
+                }
+
+                // Take care of bookmarks drawer
+                (bookmarksView as? BookmarksDrawerView)?.apply {
+                    // Put our list at the bottom
+                    iBinding.recyclerViewBookmarks.removeFromParent()?.addView(iBinding.recyclerViewBookmarks)
+                    // Use reversed layout from bottom to top
+                    (iBinding.recyclerViewBookmarks.layoutManager as? LinearLayoutManager)?.reverseLayout = false
                 }
 
                 // Set popup menus animations

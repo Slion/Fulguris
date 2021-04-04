@@ -20,6 +20,7 @@ import acr.browser.lightning.extensions.color
 import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.favicon.FaviconModel
+import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.utils.isSpecialUrl
 import android.app.Activity
@@ -28,6 +29,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -49,6 +51,8 @@ class BookmarksDrawerView @JvmOverloads constructor(
     @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
     @Inject @field:NetworkScheduler internal lateinit var networkScheduler: Scheduler
     @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
+    @Inject
+    lateinit var iUserPreferences: UserPreferences
 
     private val uiController: UIController
 
@@ -64,7 +68,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
     private var bookmarkUpdateSubscription: Disposable? = null
 
     private val uiModel = BookmarkUiModel()
-    private var iBinding: BookmarkDrawerViewBinding
+    var iBinding: BookmarkDrawerViewBinding
 
     init {
         context.injector.inject(this)
@@ -90,9 +94,11 @@ class BookmarksDrawerView @JvmOverloads constructor(
                 ::openBookmark
             )
 
-        iBinding.recyclerViewBookmarks.let {
-            it.layoutManager = LinearLayoutManager(context)
-            it.adapter = iAdapter
+        iBinding.recyclerViewBookmarks.apply {
+            // Reverse layout if using bottom tool bars
+            // LinearLayoutManager.setReverseLayout is also adjusted from BrowserActivity.setupToolBar
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
+            adapter = iAdapter
         }
 
         // Enable drag & drop but not swipe
