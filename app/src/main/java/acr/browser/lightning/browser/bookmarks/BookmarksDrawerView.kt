@@ -80,7 +80,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
         iBinding.bookmarkBackButton.setOnClickListener {
             if (!uiModel.isCurrentFolderRoot()) {
                 setBookmarksShown(null, true)
-                iBinding.recyclerViewBookmarks.layoutManager?.scrollToPosition(scrollIndex)
+                iBinding.listBookmarks.layoutManager?.scrollToPosition(scrollIndex)
             }
         }
 
@@ -94,7 +94,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
                 ::openBookmark
             )
 
-        iBinding.recyclerViewBookmarks.apply {
+        iBinding.listBookmarks.apply {
             // Reverse layout if using bottom tool bars
             // LinearLayoutManager.setReverseLayout is also adjusted from BrowserActivity.setupToolBar
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
@@ -104,7 +104,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
         // Enable drag & drop but not swipe
         val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(iAdapter, true, false)
         iItemTouchHelper = ItemTouchHelper(callback)
-        iItemTouchHelper?.attachToRecyclerView(iBinding.recyclerViewBookmarks)
+        iItemTouchHelper?.attachToRecyclerView(iBinding.listBookmarks)
 
         setBookmarksShown(null, true)
     }
@@ -167,7 +167,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
      *
      */
     private fun setBookmarkDataSet(items: List<Bookmark>, animate: Boolean) {
-        iAdapter?.updateItems(items.map { BookmarksViewModel(it) })
+        iAdapter.updateItems(items.map { BookmarksViewModel(it) })
         val resource = if (uiModel.isCurrentFolderRoot()) {
             R.drawable.ic_bookmarks
         } else {
@@ -202,7 +202,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
      */
     private fun openBookmark(bookmark: Bookmark) = when (bookmark) {
         is Bookmark.Folder -> {
-            scrollIndex = (iBinding.recyclerViewBookmarks.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            scrollIndex = (iBinding.listBookmarks.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             setBookmarksShown(bookmark.title, true)
         }
         is Bookmark.Entry -> uiController.bookmarkItemClicked(bookmark)
@@ -253,7 +253,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
             uiController.onBackButtonPressed()
         } else {
             setBookmarksShown(null, true)
-            iBinding.recyclerViewBookmarks.layoutManager?.scrollToPosition(scrollIndex)
+            iBinding.listBookmarks.layoutManager?.scrollToPosition(scrollIndex)
         }
     }
 

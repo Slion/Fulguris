@@ -885,9 +885,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // Take care of bookmarks drawer
                 (bookmarksView as? BookmarksDrawerView)?.apply {
                     // Put our list on top then to push toolbar to the bottom
-                    iBinding.recyclerViewBookmarks.removeFromParent()?.addView(iBinding.recyclerViewBookmarks,0)
+                    iBinding.listBookmarks.removeFromParent()?.addView(iBinding.listBookmarks,0)
                     // Use reversed layout from bottom to top
-                    (iBinding.recyclerViewBookmarks.layoutManager as? LinearLayoutManager)?.reverseLayout = true
+                    (iBinding.listBookmarks.layoutManager as? LinearLayoutManager)?.reverseLayout = true
                 }
 
                 // Set popup menus animations
@@ -933,9 +933,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // Take care of bookmarks drawer
                 (bookmarksView as? BookmarksDrawerView)?.apply {
                     // Put our list at the bottom
-                    iBinding.recyclerViewBookmarks.removeFromParent()?.addView(iBinding.recyclerViewBookmarks)
+                    iBinding.listBookmarks.removeFromParent()?.addView(iBinding.listBookmarks)
                     // Use reversed layout from bottom to top
-                    (iBinding.recyclerViewBookmarks.layoutManager as? LinearLayoutManager)?.reverseLayout = false
+                    (iBinding.listBookmarks.layoutManager as? LinearLayoutManager)?.reverseLayout = false
                 }
 
                 // Set popup menus animations
@@ -2274,7 +2274,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
         // Define what to do once our drawer it opened
         //iBinding.drawerLayout.onceOnDrawerOpened {
-        iBinding.drawerLayout.findViewById<RecyclerView>(R.id.recycler_view_bookmarks)?.apply {
+        iBinding.drawerLayout.findViewById<RecyclerView>(R.id.list_bookmarks)?.apply {
                 // Focus first item in our list
                 findViewHolderForAdapterPosition(0)?.itemView?.requestFocus()
             }
