@@ -159,9 +159,13 @@ class BookmarksDrawerView @JvmOverloads constructor(
             .subscribe { bookmarksAndFolders ->
                 uiModel.currentFolder = folder
                 setBookmarkDataSet(bookmarksAndFolders, animate)
+                iBinding.textTitle.text = if (folder.isNullOrBlank()) resources.getString(R.string.action_bookmarks) else folder
             }
     }
 
+    /**
+     *
+     */
     private fun setBookmarkDataSet(items: List<Bookmark>, animate: Boolean) {
         iAdapter?.updateItems(items.map { BookmarksViewModel(it) })
         val resource = if (uiModel.isCurrentFolderRoot()) {
