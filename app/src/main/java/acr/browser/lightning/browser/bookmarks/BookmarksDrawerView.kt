@@ -20,11 +20,13 @@ import acr.browser.lightning.extensions.color
 import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.favicon.FaviconModel
+import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.utils.isSpecialUrl
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -51,7 +53,9 @@ class BookmarksDrawerView @JvmOverloads constructor(
     private val uiController: UIController
 
     // Adapter
-    private var bookmarkAdapter: BookmarksAdapter? = null
+    private var iAdapter: BookmarksAdapter
+    // Drag & drop support
+    private var iItemTouchHelper: ItemTouchHelper? = null
 
     // Colors
     private var scrollIndex: Int = 0
@@ -72,23 +76,29 @@ class BookmarksDrawerView @JvmOverloads constructor(
         iBinding.bookmarkBackButton.setOnClickListener {
             if (!uiModel.isCurrentFolderRoot()) {
                 setBookmarksShown(null, true)
-                iBinding.bookmarkListView.layoutManager?.scrollToPosition(scrollIndex)
+                iBinding.recyclerViewBookmarks.layoutManager?.scrollToPosition(scrollIndex)
             }
         }
 
-        bookmarkAdapter = BookmarksAdapter(
-            context,
-            faviconModel,
-            networkScheduler,
-            mainScheduler,
-            ::handleItemLongPress,
-            ::handleItemClick
-        )
+        iAdapter = BookmarksAdapter(
+                context,
+                uiController,
+                faviconModel,
+                networkScheduler,
+                mainScheduler,
+                ::showBookmarkMenu,
+                ::openBookmark
+            )
 
-        iBinding.bookmarkListView.let {
+        iBinding.recyclerViewBookmarks.let {
             it.layoutManager = LinearLayoutManager(context)
-            it.adapter = bookmarkAdapter
+            it.adapter = iAdapter
         }
+
+        // Enable drag & drop but not swipe
+        val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(iAdapter, true, false)
+        iItemTouchHelper = ItemTouchHelper(callback)
+        iItemTouchHelper?.attachToRecyclerView(iBinding.recyclerViewBookmarks)
 
         setBookmarksShown(null, true)
     }
@@ -99,7 +109,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
         bookmarksSubscription?.dispose()
         bookmarkUpdateSubscription?.dispose()
 
-        bookmarkAdapter?.cleanupSubscriptions()
+        iAdapter?.cleanupSubscriptions()
     }
 
     private fun getTabsManager(): TabsManager = uiController.getTabModel()
@@ -120,9 +130,12 @@ class BookmarksDrawerView @JvmOverloads constructor(
 
     override fun handleBookmarkDeleted(bookmark: Bookmark) = when (bookmark) {
         is Bookmark.Folder -> setBookmarksShown(null, false)
-        is Bookmark.Entry -> bookmarkAdapter?.deleteItem(BookmarksViewModel(bookmark)) ?: Unit
+        is Bookmark.Entry -> iAdapter?.deleteItem(BookmarksViewModel(bookmark)) ?: Unit
     }
 
+    /**
+     *
+     */
     private fun setBookmarksShown(folder: String?, animate: Boolean) {
         bookmarksSubscription?.dispose()
         bookmarksSubscription = bookmarkModel.getBookmarksFromFolderSorted(folder)
@@ -144,7 +157,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
     }
 
     private fun setBookmarkDataSet(items: List<Bookmark>, animate: Boolean) {
-        bookmarkAdapter?.updateItems(items.map { BookmarksViewModel(it) })
+        iAdapter?.updateItems(items.map { BookmarksViewModel(it) })
         val resource = if (uiModel.isCurrentFolderRoot()) {
             R.drawable.ic_bookmarks
         } else {
@@ -161,7 +174,10 @@ class BookmarksDrawerView @JvmOverloads constructor(
         }
     }
 
-    private fun handleItemLongPress(bookmark: Bookmark): Boolean {
+    /**
+     *
+     */
+    private fun showBookmarkMenu(bookmark: Bookmark): Boolean {
         (context as Activity?)?.let {
             when (bookmark) {
                 is Bookmark.Folder -> bookmarksDialogBuilder.showBookmarkFolderLongPressedDialog(it, uiController, bookmark)
@@ -171,9 +187,12 @@ class BookmarksDrawerView @JvmOverloads constructor(
         return true
     }
 
-    private fun handleItemClick(bookmark: Bookmark) = when (bookmark) {
+    /**
+     *
+     */
+    private fun openBookmark(bookmark: Bookmark) = when (bookmark) {
         is Bookmark.Folder -> {
-            scrollIndex = (iBinding.bookmarkListView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            scrollIndex = (iBinding.recyclerViewBookmarks.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             setBookmarksShown(bookmark.title, true)
         }
         is Bookmark.Entry -> uiController.bookmarkItemClicked(bookmark)
@@ -224,7 +243,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
             uiController.onBackButtonPressed()
         } else {
             setBookmarksShown(null, true)
-            iBinding.bookmarkListView.layoutManager?.scrollToPosition(scrollIndex)
+            iBinding.recyclerViewBookmarks.layoutManager?.scrollToPosition(scrollIndex)
         }
     }
 

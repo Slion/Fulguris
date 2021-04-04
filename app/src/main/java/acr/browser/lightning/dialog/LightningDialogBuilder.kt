@@ -13,6 +13,7 @@ import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.download.DownloadHandler
 import acr.browser.lightning.extensions.copyToClipboard
+import acr.browser.lightning.extensions.onFocusGained
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
@@ -162,34 +163,42 @@ class LightningDialogBuilder @Inject constructor(
         getFolder.setText(entry.folder.title)
 
         val ignored = bookmarkManager.getFolderNames()
-            .subscribeOn(databaseScheduler)
-            .observeOn(mainScheduler)
-            .subscribe { folders ->
-                val suggestionsAdapter = ArrayAdapter(activity,
-                        android.R.layout.simple_dropdown_item_1line, folders)
-                getFolder.threshold = 1
-                getFolder.setAdapter(suggestionsAdapter)
-                editBookmarkDialog.setView(dialogLayout)
-                editBookmarkDialog.setPositiveButton(activity.getString(R.string.action_ok)) { _, _ ->
-                    val editedItem = Bookmark.Entry(
-                            title = getTitle.text.toString(),
-                            url = getUrl.text.toString(),
-                            folder = getFolder.text.toString().asFolder(),
-                            position = entry.position
-                    )
-                    bookmarkManager.addBookmarkIfNotExists(editedItem)
-                        .subscribeOn(databaseScheduler)
-                        .observeOn(mainScheduler)
-                        .subscribeBy(
+                .subscribeOn(databaseScheduler)
+                .observeOn(mainScheduler)
+                .subscribe { folders ->
+                    val suggestionsAdapter = ArrayAdapter(activity,
+                            android.R.layout.simple_dropdown_item_1line, folders)
+                    getFolder.threshold = 1
+                    getFolder.onFocusGained { getFolder.showDropDown(); mainScheduler.scheduleDirect{getFolder.selectAll()} }
+                    getFolder.setAdapter(suggestionsAdapter)
+                    editBookmarkDialog.setView(dialogLayout)
+                    editBookmarkDialog.setPositiveButton(activity.getString(R.string.action_ok)) { _, _ ->
+                        val folder = getFolder.text.toString().asFolder()
+                        // We need to query bookmarks in destination folder to be able to count them and set our new bookmark position
+                        bookmarkManager.getBookmarksFromFolderSorted(folder.title).subscribeBy(
                                 onSuccess = {
-                                    uiController.handleBookmarksChange()
-                                    activity.toast(R.string.message_bookmark_added)
+                                    val editedItem = Bookmark.Entry(
+                                            title = getTitle.text.toString(),
+                                            url = getUrl.text.toString(),
+                                            folder = folder,
+                                            // Append new bookmark to existing ones by setting its position properly
+                                            position = it.count()
+                                    )
+                                    bookmarkManager.addBookmarkIfNotExists(editedItem)
+                                            .subscribeOn(databaseScheduler)
+                                            .observeOn(mainScheduler)
+                                            .subscribeBy(
+                                                    onSuccess = {
+                                                        uiController.handleBookmarksChange()
+                                                        activity.toast(R.string.message_bookmark_added)
+                                                    }
+                                            )
                                 }
                         )
+                    }
+                    editBookmarkDialog.setNegativeButton(R.string.action_cancel) { _, _ -> }
+                    editBookmarkDialog.resizeAndShow()
                 }
-                editBookmarkDialog.setNegativeButton(R.string.action_cancel) { _, _ -> }
-                editBookmarkDialog.resizeAndShow()
-            }
     }
 
     private fun showEditBookmarkDialog(
@@ -208,29 +217,50 @@ class LightningDialogBuilder @Inject constructor(
         getFolder.setHint(R.string.folder)
         getFolder.setText(entry.folder.title)
 
-        bookmarkManager.getFolderNames()
-            .subscribeOn(databaseScheduler)
-            .observeOn(mainScheduler)
-            .subscribe { folders ->
-                val suggestionsAdapter = ArrayAdapter(activity,
-                        android.R.layout.simple_dropdown_item_1line, folders)
-                getFolder.threshold = 1
-                getFolder.setAdapter(suggestionsAdapter)
-                editBookmarkDialog.setView(dialogLayout)
-                editBookmarkDialog.setPositiveButton(activity.getString(R.string.action_ok)) { _, _ ->
-                    val editedItem = Bookmark.Entry(
-                            title = getTitle.text.toString(),
-                            url = getUrl.text.toString(),
-                            folder = getFolder.text.toString().asFolder(),
-                            position = entry.position
-                    )
-                    bookmarkManager.editBookmark(entry, editedItem)
-                        .subscribeOn(databaseScheduler)
-                        .observeOn(mainScheduler)
-                        .subscribe(uiController::handleBookmarksChange)
+        val subscription = bookmarkManager.getFolderNames()
+                .subscribeOn(databaseScheduler)
+                .observeOn(mainScheduler)
+                .subscribe { folders ->
+                    val suggestionsAdapter = ArrayAdapter(activity,
+                            android.R.layout.simple_dropdown_item_1line, folders)
+                    getFolder.threshold = 1
+                    getFolder.onFocusGained { getFolder.showDropDown(); mainScheduler.scheduleDirect{getFolder.selectAll()} }
+                    getFolder.setAdapter(suggestionsAdapter)
+                    editBookmarkDialog.setView(dialogLayout)
+                    editBookmarkDialog.setPositiveButton(activity.getString(R.string.action_ok)) { _, _ ->
+                        val folder = getFolder.text.toString().asFolder()
+                        if (folder.title != entry.folder.title) {
+                            // We moved to a new folder we need to adjust our position then
+                            bookmarkManager.getBookmarksFromFolderSorted(folder.title).subscribeBy(
+                                    onSuccess = {
+                                        val editedItem = Bookmark.Entry(
+                                                title = getTitle.text.toString(),
+                                                url = getUrl.text.toString(),
+                                                folder = folder,
+                                                position = it.count()
+                                        )
+                                        bookmarkManager.editBookmark(entry, editedItem)
+                                                .subscribeOn(databaseScheduler)
+                                                .observeOn(mainScheduler)
+                                                .subscribe(uiController::handleBookmarksChange)
+                                    }
+                            )
+                        } else {
+                            // We remain in the same folder just use existing position then
+                            val editedItem = Bookmark.Entry(
+                                    title = getTitle.text.toString(),
+                                    url = getUrl.text.toString(),
+                                    folder = folder,
+                                    position = entry.position
+                            )
+                            bookmarkManager.editBookmark(entry, editedItem)
+                                    .subscribeOn(databaseScheduler)
+                                    .observeOn(mainScheduler)
+                                    .subscribe(uiController::handleBookmarksChange)
+                        }
+                    }
+                    editBookmarkDialog.resizeAndShow()
                 }
-                editBookmarkDialog.resizeAndShow()
-            }
     }
 
     fun showBookmarkFolderLongPressedDialog(

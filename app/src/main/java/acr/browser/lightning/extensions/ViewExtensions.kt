@@ -84,6 +84,19 @@ inline fun View?.onFocusLost(crossinline runnable: () -> Unit) = this?.let {
     }
 }
 
+/**
+ * Performs an action whenever this view is loosing focus.
+ *
+ * @param runnable the runnable to run.
+ */
+inline fun View?.onFocusGained(crossinline runnable: () -> Unit) = this?.let {
+    it.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+        if (hasFocus) {
+            runnable()
+        }
+    }
+}
+
 
 /**
  * Performs an action once next time this view layout is changing.

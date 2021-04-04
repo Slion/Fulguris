@@ -8,6 +8,7 @@ import acr.browser.lightning.browser.BrowserPopupMenu
 import acr.browser.lightning.browser.SearchBoxModel
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.browser.activity.ThemedBrowserActivity
+import acr.browser.lightning.browser.bookmarks.BookmarksAdapter
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
 import acr.browser.lightning.browser.sessions.SessionsPopupWindow
 import acr.browser.lightning.browser.tabs.TabsDrawerView
@@ -101,6 +102,8 @@ interface AppComponent {
     fun inject(themedActivity: ThemedActivity)
 
     fun inject(tabsDrawerView: TabsDrawerView)
+
+    fun inject(bookmarksAdapter: BookmarksAdapter)
 
     fun provideBloomFilterAdBlocker(): BloomFilterAdBlocker
 

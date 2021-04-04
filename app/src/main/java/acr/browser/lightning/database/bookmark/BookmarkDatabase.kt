@@ -188,6 +188,9 @@ class BookmarkDatabase @Inject constructor(
         updateWithOptionalEndSlash(oldBookmark.url, contentValues)
     }
 
+    /**
+     * Notably used for suggestions search.
+     */
     override fun getAllBookmarksSorted(): Single<List<Bookmark.Entry>> = Single.fromCallable {
         return@fromCallable database.query(
             TABLE_BOOKMARK,
@@ -200,6 +203,9 @@ class BookmarkDatabase @Inject constructor(
         ).useMap { it.bindToBookmarkEntry() }
     }
 
+    /**
+     *
+     */
     override fun getBookmarksFromFolderSorted(folder: String?): Single<List<Bookmark>> = Single.fromCallable {
         val finalFolder = folder ?: ""
         return@fromCallable database.query(
