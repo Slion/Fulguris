@@ -1,4 +1,5 @@
 /*
+ * Copyright © 2020-2021 Stéphane Lenclud
  * Copyright 2015 Anthony Restaino
  */
 
@@ -98,6 +99,8 @@ import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.anthonycr.grant.PermissionsManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -136,7 +139,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private var hideStatusBar: Boolean = false
 
     private var isImmersiveMode = false
-    private var shouldShowTabsInDrawer: Boolean = false
+    private var verticalTabBar: Boolean = false
     private var swapBookmarksAndTabs: Boolean = false
 
     private var originalOrientation: Int = 0
@@ -183,11 +186,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     var presenter: BrowserPresenter? = null
     private var tabsView: TabsView? = null
-    private var bookmarksView: BookmarksView? = null
+    private var bookmarksView: BookmarksDrawerView? = null
 
     // Menu
     private lateinit var popupMenu: BrowserPopupMenu
     lateinit var sessionsMenu: SessionsPopupWindow
+    //TODO: put that in settings
+    private lateinit var tabsDialog: BottomSheetDialog
+    private lateinit var bookmarksDialog: BottomSheetDialog
 
     // Binding
     lateinit var iBinding: ActivityMainBinding
@@ -250,6 +256,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         queue = Volley.newRequestQueue(this)
         createPopupMenu()
         createSessionsMenu()
+        tabsDialog = createBottomSheetDialog()
+        bookmarksDialog = createBottomSheetDialog()
+
 
         if (isIncognito()) {
             incognitoNotification = IncognitoNotification(this, notificationManager)
@@ -304,6 +313,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
         }
 
+        tabsManager.doAfterInitialization {
+            if (userPreferences.useBottomSheets) {
+                if (tabsDialog.isShowing) {
+                    // Upon session switch we need to do that otherwise our status bar padding could be wrong
+                    mainHandler.postDelayed({
+                        adjustBottomSheet(tabsDialog)
+                    }, 100 )
+                }
+            }
+        }
+
+
         // Hook in buttons with onClick handler
         iBindingToolbarContent.buttonReload.setOnClickListener(this)
     }
@@ -314,11 +335,103 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
+     *
+     */
+    private fun createBottomSheetDialog() : BottomSheetDialog {
+        val dialog = BottomSheetDialog(this)
+        dialog.setOnCancelListener {
+            // Make sure status bar icons have the proper color after closing dialog
+            //setToolbarColor()
+        }
+        dialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState != BottomSheetBehavior.STATE_EXPANDED) {
+                    //tabsDialog.window?.setStatusBarIconsColor(false)
+                    /*
+                    mainHandler.postDelayed({
+                        tabsDialog.window?.setStatusBarIconsColor(!useDarkTheme)
+                                            },1000)*/
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        }
+        )
+
+        return dialog;
+    }
+
+
+    /**
+     *
+     */
+    private fun createTabsDialog()
+    {
+        // Workaround issue with black icons during transition after first use
+        // See: https://github.com/material-components/material-components-android/issues/2168
+        tabsDialog = createBottomSheetDialog()
+
+        // Set up BottomSheetDialog
+        tabsDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
+        tabsDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        //tabsDialog.window?.setFlags(tabsDialog.window?.attributes!!.flags, WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        //tabsDialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+
+        // Needed to make sure our bottom sheet shows below our session pop-up
+        // TODO: that breaks status bar icon color with our light theme somehow
+        //tabsDialog.window?.attributes?.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        //
+
+        // We need to set private data member edgeToEdgeEnabled to true to get full screen effect
+        // That won't be needed past material:1.4.0-alpha02
+        val field = BottomSheetDialog::class.java.getDeclaredField("edgeToEdgeEnabled")
+        field.isAccessible = true
+        field.setBoolean(tabsDialog, true)
+        //
+        (tabsView as View).removeFromParent()
+        tabsDialog.setContentView(tabsView as View)
+        tabsDialog.behavior.skipCollapsed = true
+    }
+
+    /**
+     *
+     */
+    private fun createBookmarksDialog()
+    {
+        // Workaround issue with black icons during transition after first use.
+        // See: https://github.com/material-components/material-components-android/issues/2168
+        bookmarksDialog = createBottomSheetDialog()
+
+        // Define what to do once our drawer it opened
+        //iBinding.drawerLayout.onceOnDrawerOpened {
+        bookmarksView?.iBinding?.listBookmarks?.findViewHolderForAdapterPosition(0)?.itemView?.requestFocus()
+        //}
+        // Open bookmarks drawer
+        // Set up BottomSheetDialog
+        bookmarksDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
+        bookmarksDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        // Needed to make sure our bottom sheet shows below our session pop-up
+        //bookmarksDialog.window?.attributes?.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        //
+
+        // We need to set private data member edgeToEdgeEnabled to true to get full screen effect
+        // That won't be needed past material:1.4.0-alpha02
+        val field = BottomSheetDialog::class.java.getDeclaredField("edgeToEdgeEnabled")
+        field.isAccessible = true
+        field.setBoolean(bookmarksDialog, true)
+        //
+        bookmarksView.removeFromParent()
+        bookmarksDialog.setContentView(bookmarksView as View)
+        bookmarksDialog.behavior.skipCollapsed = true
+    }
+
+    /**
      * Open our sessions pop-up menu.
      */
-    fun showSessions() {
+    private fun showSessions() {
         // If using horizontal tab bar or if our tab drawer is open
-        if (!shouldShowTabsInDrawer || iBinding.drawerLayout.isDrawerOpen(getTabDrawer())) {
+        if (!verticalTabBar || tabsDialog.isShowing) {
             // Use sessions button as anchor
             buttonSessions?.let { sessionsMenu.show(it) }
         } else {
@@ -422,7 +535,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         crashReport = userPreferences.crashReport
         showCloseTabButton = userPreferences.showCloseTabButton
 
-
         if (!isIncognito()) {
             // For some reason that was crashing when incognito
             // I'm guessing somehow that's already disabled when incognito
@@ -463,8 +575,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.buttonActionForward.setOnClickListener{executeAction(R.id.action_forward)}
 
         createTabsView()
-
-        bookmarksView = BookmarksDrawerView(this).also(findViewById<FrameLayout>(getBookmarksContainerId())::addView)
+        //createTabsDialog()
+        bookmarksView = BookmarksDrawerView(this)
+        //createBookmarksDialog()
 
         // create the search EditText in the ToolBar
         searchView = iBindingToolbarContent.addressBarInclude.search.apply {
@@ -515,7 +628,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // Drawers are full screen and locked for this flavor so as to avoid closing them when scrolling through tabs
             lockDrawers()
         }
-
         // Enable swipe to refresh
         iBinding.contentFrame.setOnRefreshListener {
             tabsManager.currentTab?.reload()
@@ -546,17 +658,34 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     }
 
+
+    /**
+     *
+     */
+    private fun closePanelTabs() {
+        iBinding.drawerLayout.closeDrawer(getTabDrawer())
+        tabsDialog.dismiss()
+    }
+
+    /**
+     *
+     */
+    private fun closePanelBookmarks() {
+        iBinding.drawerLayout.closeDrawer(getBookmarkDrawer())
+        bookmarksDialog.dismiss()
+    }
+
     /**
      * Used to create or recreate our tabs view according to current settings.
      */
     private fun createTabsView() {
 
-        shouldShowTabsInDrawer = userPreferences.verticalTabBar
+        verticalTabBar = userPreferences.verticalTabBar
 
         // Close tab drawer if we are switching to a configuration that's not using it
-        if (tabsView!=null && !shouldShowTabsInDrawer && iBinding.drawerLayout.isDrawerOpen(getTabDrawer()) /*&& tabsView is TabsDrawerView*/) {
+        if (tabsView!=null && !verticalTabBar && showingTabs() /*&& tabsView is TabsDrawerView*/) {
             // That's done to prevent user staring at an empty open drawer after changing configuration
-            iBinding.drawerLayout.closeDrawer(getTabDrawer())
+            closePanelTabs()
         }
 
         // Remove existing tab view if any
@@ -564,15 +693,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             (it as View).removeFromParent()
         }
 
-        tabsView = if (shouldShowTabsInDrawer) {
+        tabsView = if (verticalTabBar) {
             TabsDrawerView(this)
         } else {
             TabsDesktopView(this)
-        }.also(getTabBarContainer()::addView) // Kotlin is fun and pointless at times
+        }.also {
+            // Case of bottom sheet is taken care of in createTabsDialog
+            getTabBarContainer().addView(it)
+        }
 
         buttonSessions = (tabsView as View).findViewById(R.id.action_sessions)
 
-        if (shouldShowTabsInDrawer) {
+        if (verticalTabBar) {
             iBindingToolbarContent.tabsButton.isVisible = true
             iBindingToolbarContent.homeButton.isVisible = false
             iBinding.toolbarInclude.tabBarContainer.isVisible = false
@@ -583,13 +715,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
-    private fun getBookmarksContainerId(): Int = if (swapBookmarksAndTabs) {
-        R.id.left_drawer
+    private fun getBookmarksContainer(): ViewGroup = if (swapBookmarksAndTabs) {
+        iBinding.leftDrawer
     } else {
-        R.id.right_drawer
+        iBinding.rightDrawer
     }
 
-    private fun getTabBarContainer(): ViewGroup = if (shouldShowTabsInDrawer) {
+    private fun getTabBarContainer(): ViewGroup = if (verticalTabBar) {
         if (swapBookmarksAndTabs) {
             iBinding.rightDrawer
         } else {
@@ -747,7 +879,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
             if (v === tabsDrawer) {
                 iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, bookmarksDrawer)
-            } else if (shouldShowTabsInDrawer) {
+            } else if (verticalTabBar) {
                 iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, tabsDrawer)
             }
 
@@ -789,7 +921,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     drawerOpening = true
                     // Make sure icons on status bar remain visible
                     // We should really check the primary theme color and work out its luminance but that should do for now
-                    setStatusBarIconsColor(!useDarkTheme && !userPreferences.useBlackStatusBar)
+                    window.setStatusBarIconsColor(!useDarkTheme && !userPreferences.useBlackStatusBar)
                 }
                 else {
                     drawerClosing = true
@@ -866,18 +998,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 root.removeFromParent()?.addView(root)
                 // Move search in page to top
                 iBinding.findInPageInclude.root.let {
-                    it.removeFromParent()?.addView(it,0)
+                    it.removeFromParent()?.addView(it, 0)
                 }
 
                 // Rearrange it so that it is upside down
                 // Put tab bar at the bottom
                 tabBarContainer.removeFromParent()?.addView(tabBarContainer)
                 // Put progress bar at the top
-                progressView.removeFromParent()?.addView(progressView,0)
+                progressView.removeFromParent()?.addView(progressView, 0)
                 // Take care of tab drawer if any
                 (tabsView as? TabsDrawerView)?.apply {
                     // Put our tab list on top then to push toolbar to the bottom
-                    iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList,0)
+                    iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList, 0)
                     // Use reversed layout from bottom to top
                     (iBinding.tabsList.layoutManager as? LinearLayoutManager)?.reverseLayout = true
                 }
@@ -885,7 +1017,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // Take care of bookmarks drawer
                 (bookmarksView as? BookmarksDrawerView)?.apply {
                     // Put our list on top then to push toolbar to the bottom
-                    iBinding.listBookmarks.removeFromParent()?.addView(iBinding.listBookmarks,0)
+                    iBinding.listBookmarks.removeFromParent()?.addView(iBinding.listBookmarks, 0)
                     // Use reversed layout from bottom to top
                     (iBinding.listBookmarks.layoutManager as? LinearLayoutManager)?.reverseLayout = true
                 }
@@ -919,7 +1051,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 }
                 // Rearrange it so that it is the right way up
                 // Put tab bar at the bottom
-                tabBarContainer.removeFromParent()?.addView(tabBarContainer,0)
+                tabBarContainer.removeFromParent()?.addView(tabBarContainer, 0)
                 // Put progress bar at the top
                 progressView.removeFromParent()?.addView(progressView)
                 // Take care of tab drawer if any
@@ -1311,8 +1443,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         when (id) {
             android.R.id.home -> {
-                if (iBinding.drawerLayout.isDrawerOpen(getBookmarkDrawer())) {
-                    iBinding.drawerLayout.closeDrawer(getBookmarkDrawer())
+                if (showingBookmarks()) {
+                    closePanelBookmarks()
                 }
                 return true
             }
@@ -1404,7 +1536,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
             R.id.action_reading_mode -> {
                 if (currentUrl != null) {
-                    ReadingActivity.launch(this, currentUrl,false)
+                    ReadingActivity.launch(this, currentUrl, false)
                 }
                 return true
             }
@@ -1433,7 +1565,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // Why not through presenter? We need some serious refactoring at some point
                     tabsManager.currentTab?.loadHomePage()
                 }
-                closeDrawers(null)
+                closePanels(null)
                 return true
             }
 
@@ -1450,7 +1582,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     toggleDarkMode()
                     // Calling setToolbarColor directly from here causes that old bug with WebView not resizing when hiding toolbar and not showing newly loaded WebView to resurface.
                     // Even doing a post does not fix it. However doing a long enough postDelayed does the trick.
-                    mainHandler.postDelayed({setToolbarColor()},100)
+                    mainHandler.postDelayed({ setToolbarColor() }, 100)
                 }
                 return true
             }
@@ -1541,11 +1673,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun setupTabBar() {
         // Check if our tab bar style changed
-        if (shouldShowTabsInDrawer!=userPreferences.verticalTabBar) {
+        if (verticalTabBar!=userPreferences.verticalTabBar) {
             // Tab bar style changed recreate our tab bar then
             createTabsView()
             tabsView?.tabsInitialized()
-            mainHandler.postDelayed({scrollToCurrentTab()},1000)
+            mainHandler.postDelayed({ scrollToCurrentTab() }, 1000)
         }
     }
 
@@ -1697,13 +1829,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         presenter?.tabChanged(position)
         // Keep the drawer open while the tab change animation in running
         // Has the added advantage that closing of the drawer itself should be smoother as the webview had a bit of time to load
-        mainHandler.postDelayed(iBinding.drawerLayout::closeDrawers, 350)
+        mainHandler.postDelayed({ closePanels(null) }, 350)
     }
 
     // This is the callback from 'new tab' button on page drawer
     override fun newTabButtonClicked() {
         // First close drawer
-        closeDrawers(null)
+        closePanels(null)
         // Then slightly delay page loading to give enough time for the drawer to close without stutter
         mainHandler.postDelayed({
             presenter?.newTab(
@@ -1746,7 +1878,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             presenter?.loadUrlInCurrentView(entry.url)
         }
         // keep any jank from happening when the drawer is closed after the URL starts to load
-        mainHandler.postDelayed({ closeDrawers(null) }, 150)
+        mainHandler.postDelayed({ closePanels(null) }, 150)
     }
 
     /**
@@ -1827,9 +1959,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     private fun doBackAction() {
         val currentTab = tabsManager.currentTab
-        if (iBinding.drawerLayout.isDrawerOpen(getTabDrawer())) {
-            iBinding.drawerLayout.closeDrawer(getTabDrawer())
-        } else if (iBinding.drawerLayout.isDrawerOpen(getBookmarkDrawer())) {
+        if (showingTabs()) {
+            closePanelTabs()
+        } else if (showingBookmarks()) {
             bookmarksView?.navigateBack()
         } else {
             if (currentTab != null) {
@@ -1907,6 +2039,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.shutdown()
     }
 
+    /**
+     *
+     */
     override fun onResume() {
         super.onResume()
         logger.log(TAG, "onResume")
@@ -1926,7 +2061,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             unlockDrawers()
         }
 
-
         if (userPreferences.bookmarksChanged)
         {
             handleBookmarksChange()
@@ -1939,6 +2073,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
         tabsManager.resumeAll()
         initializePreferences()
+
+        if (!userPreferences.useBottomSheets) {
+            // We need to make sure both bookmarks are tabs are shown at the right place
+            // Potentially moving them from the bottom sheets back to the drawers or tab bar
+            bookmarksView.removeFromParent()
+            getBookmarksContainer().addView(bookmarksView)
+            //
+            (tabsView as View).let {
+                it.removeFromParent()
+                getTabBarContainer().addView(it)
+            }
+        }
 
         setupTabBar()
         setupToolBar(resources.configuration)
@@ -1998,10 +2144,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         window.setBackgroundDrawable(backgroundDrawable)
         // That if statement is preventing us to change the icons color while a drawer is showing
         // That's typically the case when user open a drawer before the HTML meta theme color was delivered
-        if (drawerClosing || !drawerOpened) // Do not update icons color if drawer is opened
-        {
+
+	//if (!tabsDialog.isShowing && !bookmarksDialog.isShowing)
+	if (drawerClosing || !drawerOpened) // Do not update icons color if drawer is opened
+	{
             // Make sure the status bar icons are still readable
-            setStatusBarIconsColor(darkIcons && !userPreferences.useBlackStatusBar)
+            window.setStatusBarIconsColor(darkIcons && !userPreferences.useBlackStatusBar)
         }
     }
 
@@ -2051,7 +2199,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             mainHandler.postDelayed({
                 currentTabView?.setBackgroundColor(Color.WHITE)
                 currentTabView?.invalidate()
-            },500);
+            }, 500);
         } else {
             currentTabView?.setBackgroundColor(color)
             currentTabView?.invalidate()
@@ -2262,25 +2410,49 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         //presenter?.newTab(downloadPageInitializer,true)
     }
 
-    private fun showingBookmarks() = iBinding.drawerLayout.isDrawerOpen(getBookmarkDrawer())
-    private fun showingTabs() = iBinding.drawerLayout.isDrawerOpen(getTabDrawer())
+    /**
+     *
+     */
+    private fun showingBookmarks() : Boolean {
+        return bookmarksDialog.isShowing || iBinding.drawerLayout.isDrawerOpen(getBookmarkDrawer())
+    }
+
+    /**
+     *
+     */
+    private fun showingTabs() : Boolean {
+        return tabsDialog.isShowing || iBinding.drawerLayout.isDrawerOpen(getTabDrawer())
+    }
+
 
     /**
      * helper function that opens the bookmark drawer
      */
     private fun openBookmarks() {
         if (showingTabs()) {
-            iBinding.drawerLayout.closeDrawers()
+            closePanelTabs()
         }
-        // Define what to do once our drawer it opened
-        //iBinding.drawerLayout.onceOnDrawerOpened {
-        iBinding.drawerLayout.findViewById<RecyclerView>(R.id.list_bookmarks)?.apply {
+
+        if (userPreferences.useBottomSheets) {
+            createBookmarksDialog()
+            bookmarksDialog.show()
+
+            // See: https://github.com/material-components/material-components-android/issues/2165
+            mainHandler.postDelayed({
+                bookmarksDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }, 100)
+        } else {
+            // Define what to do once our drawer it opened
+            //iBinding.drawerLayout.onceOnDrawerOpened {
+            iBinding.drawerLayout.findViewById<RecyclerView>(R.id.list_bookmarks)?.apply {
                 // Focus first item in our list
                 findViewHolderForAdapterPosition(0)?.itemView?.requestFocus()
             }
-        //}
-        // Open bookmarks drawer
-        iBinding.drawerLayout.openDrawer(getBookmarkDrawer())
+            //}
+            // Open bookmarks drawer
+            iBinding.drawerLayout.openDrawer(getBookmarkDrawer())
+        }
+
     }
 
     /**
@@ -2288,41 +2460,56 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun toggleBookmarks() {
         if (showingBookmarks()) {
-            iBinding.drawerLayout.closeDrawers()
+            closePanelBookmarks()
         } else {
             openBookmarks()
         }
     }
+
+
 
     /**
      * Open our tab list drawer
      */
     private fun openTabs() {
         if (showingBookmarks()) {
-            iBinding.drawerLayout.closeDrawers()
+            closePanelBookmarks()
         }
 
         // Loose focus on current tab web page
         // Actually this was causing our search field to gain focus on HTC One M8 - Android 6
         // currentTabView?.clearFocus()
         // That's needed for focus issue when opening with tap on button
-        val tabListView = iBinding.drawerLayout.findViewById<RecyclerView>(R.id.tabs_list)
+        val tabListView = (tabsView as ViewGroup).findViewById<RecyclerView>(R.id.tabs_list)
         tabListView?.requestFocus()
         // Define what to do once our list drawer it opened
         // Item focus won't work sometimes when not using keyboard, I'm guessing that's somehow a feature
-        iBinding.drawerLayout.onceOnDrawerOpened {
+        //iBinding.drawerLayout.onceOnDrawerOpened {
+        //TODO: delay that?
+        // Yes it needs to be delayed, at least for the bottom sheets
             scrollToCurrentTab()
+        //}
+
+        if (userPreferences.useBottomSheets) {
+            createTabsDialog()
+            tabsDialog.show()
+
+            // See: https://github.com/material-components/material-components-android/issues/2165
+            mainHandler.postDelayed({
+                tabsDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }, 100)
+        } else {
+            // Open our tab list drawer
+            iBinding.drawerLayout.openDrawer(getTabDrawer())
         }
 
-        // Open our tab list drawer
-        iBinding.drawerLayout.openDrawer(getTabDrawer())
     }
 
     /**
      * Scroll to current tab.
      */
     private fun scrollToCurrentTab() {
-        val tabListView = iBinding.drawerLayout.findViewById<RecyclerView>(R.id.tabs_list)
+        val tabListView = (tabsView as ViewGroup).findViewById<RecyclerView>(R.id.tabs_list)
         // Set focus
         // Find our recycler list view
         tabListView?.apply {
@@ -2349,7 +2536,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun toggleTabs() {
         if (showingTabs()) {
-            iBinding.drawerLayout.closeDrawers()
+            closePanelTabs()
         } else {
             openTabs()
         }
@@ -2375,27 +2562,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      * @param runnable an optional runnable to run after the drawers are closed.
      */
-    protected fun closeDrawers(runnable: (() -> Unit)?) {
-        if (!iBinding.drawerLayout.isDrawerOpen(iBinding.leftDrawer) && !iBinding.drawerLayout.isDrawerOpen(iBinding.rightDrawer)) {
-            if (runnable != null) {
-                runnable()
-                return
-            }
-        }
-        iBinding.drawerLayout.closeDrawers()
-
-        iBinding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
-
-            override fun onDrawerOpened(drawerView: View) = Unit
-
-            override fun onDrawerClosed(drawerView: View) {
-                runnable?.invoke()
-                iBinding.drawerLayout.removeDrawerListener(this)
-            }
-
-            override fun onDrawerStateChanged(newState: Int) = Unit
-        })
+    protected fun closePanels(runnable: (() -> Unit)?) {
+        closePanelTabs()
+        closePanelBookmarks()
+        //TODO: delay?
+        // Yeah looks like delay are not needed we could even get rid of that functionality
+        runnable?.invoke()
     }
 
     override fun setForwardButtonEnabled(enabled: Boolean) {
@@ -2598,15 +2770,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    /**
+     * TODO: Is that being used?
+     */
     override fun onBackButtonPressed() {
-        if (iBinding.drawerLayout.closeDrawerIfOpen(getTabDrawer())) {
+        if (closeTabsPanelIfOpen()) {
             val currentTab = tabsManager.currentTab
             if (currentTab?.canGoBack() == true) {
                 currentTab.goBack()
             } else if (currentTab != null) {
                 tabsManager.let { presenter?.deleteTab(it.positionOf(currentTab)) }
             }
-        } else if (iBinding.drawerLayout.closeDrawerIfOpen(getBookmarkDrawer())) {
+        } else if (closeBookmarksPanelIfOpen()) {
             // Don't do anything other than close the bookmarks drawer when the activity is being
             // delegated to.
         }
@@ -2616,7 +2791,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         val currentTab = tabsManager.currentTab
         if (currentTab?.canGoForward() == true) {
             currentTab.goForward()
-            closeDrawers(null)
+            closePanels(null)
         }
     }
 
@@ -2770,7 +2945,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             LightningDialogBuilder.NewTab.FOREGROUND -> presenter?.newTab(urlInitializer, true)
             LightningDialogBuilder.NewTab.BACKGROUND -> presenter?.newTab(urlInitializer, false)
             LightningDialogBuilder.NewTab.INCOGNITO -> {
-                iBinding.drawerLayout.closeDrawers()
+                closePanels { }
                 val intent = IncognitoActivity.createIntent(this, url.toUri())
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_up_in, R.anim.fade_out_scale)
@@ -2879,13 +3054,25 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      * If the [drawer] is open, close it and return true. Return false otherwise.
      */
-    private fun DrawerLayout.closeDrawerIfOpen(drawer: View): Boolean =
-        if (isDrawerOpen(drawer)) {
-            closeDrawer(drawer)
+    private fun closeTabsPanelIfOpen(): Boolean =
+        if (showingTabs()) {
+            closePanelTabs()
             true
         } else {
             false
         }
+
+    /**
+     * If the [drawer] is open, close it and return true. Return false otherwise.
+     */
+    private fun closeBookmarksPanelIfOpen(): Boolean =
+            if (showingBookmarks()) {
+                closePanelBookmarks()
+                true
+            } else {
+                false
+            }
+
 
     /**
      * Welcome user after first installation.
@@ -2914,7 +3101,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         MaterialAlertDialogBuilder(this)
                 .setCancelable(true)
                 .setTitle(R.string.title_updated)
-                .setMessage(getString(R.string.message_updated,BuildConfig.VERSION_NAME))
+                .setMessage(getString(R.string.message_updated, BuildConfig.VERSION_NAME))
                 .setNegativeButton(R.string.no, null)
                 .setPositiveButton(R.string.yes) { _, _ -> val url = getString(R.string.url_app_updates)
                     val i = Intent(Intent.ACTION_VIEW)
@@ -3006,3 +3193,4 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
 }
+

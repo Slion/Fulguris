@@ -264,6 +264,8 @@
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
     <string name="pref_title_locked_drawers">Locked drawers</string>
     <string name="pref_summary_locked_drawers">Tabs and Bookmarks drawers are locked</string>
+    <string name="pref_title_use_bottom_sheets">Use bottom sheets</string>
+    <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
     <string name="pref_title_tab_list_item_show_close_button">Show close tab button</string>
     <string name="pref_summary_tab_list_item_show_close_button">Display close tab buttons on tab list items</string>
     <string name="pref_title_menu_show_exit">Exit menu item</string>

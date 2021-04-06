@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="pref_default_locked_drawers">true</bool>
+    <bool name="pref_default_use_bottom_sheets">true</bool>
     <bool name="pref_default_tab_list_item_show_close_button">false</bool>
     <bool name="pref_default_menu_show_exit">false</bool>
     <bool name="pref_default_menu_show_new_tab">false</bool>

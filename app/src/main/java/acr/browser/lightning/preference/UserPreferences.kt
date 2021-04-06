@@ -312,9 +312,14 @@ class UserPreferences @Inject constructor(
     var bookmarksAndTabsSwapped by preferences.booleanPreference(R.string.pref_key_swap_tabs_and_bookmarks, false)
 
     /**
-     *
+     * Disable gesture actions on drawer.
      */
     var lockedDrawers by preferences.booleanPreference(R.string.pref_key_locked_drawers, R.bool.pref_default_locked_drawers)
+
+    /**
+     * Use bottom sheets instead of drawers to display tabs and bookmarks.
+     */
+    var useBottomSheets by preferences.booleanPreference(R.string.pref_key_use_bottom_sheets, R.bool.pref_default_use_bottom_sheets)
 
     /**
      *

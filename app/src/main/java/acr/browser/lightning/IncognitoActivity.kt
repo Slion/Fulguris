@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.view.Menu
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
 import io.reactivex.Completable
@@ -40,7 +39,7 @@ class IncognitoActivity : BrowserActivity() {
 
     override fun isIncognito() = true
 
-    override fun closeActivity() = closeDrawers(::closeBrowser)
+    override fun closeActivity() = closePanels(::closeBrowser)
 
     companion object {
         /**

@@ -19,6 +19,7 @@ import android.view.*
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import android.widget.PopupWindow
+import androidx.core.widget.PopupWindowCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +44,8 @@ class SessionsPopupWindow : PopupWindow {
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
         aBinding.root.context.injector.inject(this)
+        // Needed to make sure our bottom sheet shows below our session pop-up
+        PopupWindowCompat.setWindowLayoutType(this, WindowManager.LayoutParams.FIRST_SUB_WINDOW + 5);
 
         // Elevation just need to be high enough not to cut the effect defined in our layout
         elevation = 100F

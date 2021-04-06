@@ -143,7 +143,9 @@ colorControlNormal:
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
-
+        <!-- Needed for full screen material design bottom sheets -->
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="enableEdgeToEdge">true</item>
     </style>
 
     <!-- Dark theme -->
@@ -196,7 +198,9 @@ colorControlNormal:
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
-
+        <!-- Needed for full screen material design bottom sheets -->
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="enableEdgeToEdge">true</item>
     </style>
 
     <style name="Theme.App.Black" parent="Theme.MaterialComponents">
@@ -247,7 +251,9 @@ colorControlNormal:
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
-
+        <!-- Needed for full screen material design bottom sheets -->
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="enableEdgeToEdge">true</item>
     </style>
 
     <!-- Day theme to be used when following system default dark theme -->

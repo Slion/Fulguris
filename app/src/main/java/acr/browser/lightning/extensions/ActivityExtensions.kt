@@ -9,6 +9,8 @@ import android.app.Activity
 import android.os.Build
 import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -75,13 +77,13 @@ fun Activity.makeSnackbar(message: String, aDuration: Int, aGravity: Int): Snack
 /**
  *
  */
-fun Activity.setStatusBarIconsColor(dark: Boolean)
+fun Window.setStatusBarIconsColor(dark: Boolean)
 {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         if (dark) {
-            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            decorView.systemUiVisibility = decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         } else {
-            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+            decorView.systemUiVisibility = decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
         }
     }
 }
