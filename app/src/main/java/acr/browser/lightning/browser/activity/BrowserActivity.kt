@@ -345,12 +345,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
         dialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState != BottomSheetBehavior.STATE_EXPANDED) {
-                    //tabsDialog.window?.setStatusBarIconsColor(false)
-                    /*
-                    mainHandler.postDelayed({
-                        tabsDialog.window?.setStatusBarIconsColor(!useDarkTheme)
-                                            },1000)*/
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    //adjustBottomSheet(dialog)
                 }
             }
 
@@ -371,6 +367,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Workaround issue with black icons during transition after first use
         // See: https://github.com/material-components/material-components-android/issues/2168
         tabsDialog = createBottomSheetDialog()
+        // Once our bottom sheet is open we want it to scroll to current tab
+        tabsDialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    scrollToCurrentTab()
+                }
+            }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        }
+        )
 
         // Set up BottomSheetDialog
         tabsDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
@@ -2469,7 +2476,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
 
     /**
-     * Open our tab list drawer
+     * Open our tab list, works for both drawers and bottom sheets.
      */
     private fun openTabs() {
         if (showingBookmarks()) {
@@ -2482,18 +2489,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // That's needed for focus issue when opening with tap on button
         val tabListView = (tabsView as ViewGroup).findViewById<RecyclerView>(R.id.tabs_list)
         tabListView?.requestFocus()
-        // Define what to do once our list drawer it opened
-        // Item focus won't work sometimes when not using keyboard, I'm guessing that's somehow a feature
-        //iBinding.drawerLayout.onceOnDrawerOpened {
-        //TODO: delay that?
-        // Yes it needs to be delayed, at least for the bottom sheets
-            scrollToCurrentTab()
-        //}
 
         if (userPreferences.useBottomSheets) {
             createTabsDialog()
             tabsDialog.show()
-
             // See: https://github.com/material-components/material-components-android/issues/2165
             mainHandler.postDelayed({
                 tabsDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -2501,6 +2500,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         } else {
             // Open our tab list drawer
             iBinding.drawerLayout.openDrawer(getTabDrawer())
+            //iBinding.drawerLayout.onceOnDrawerOpened {
+            // Looks like we can do that without delays for drawers
+            scrollToCurrentTab()
+            //}
+
         }
 
     }
