@@ -219,7 +219,7 @@
     <string name="hosts_source">広告ブロック用の Hosts ファイルの取得元</string>
     <string name="settings_adblock">広告ブロック</string>
     <string name="settings_title_vertical_tab_bar">タブをドロワーで表示する</string>
-    <string name="swap_bookmarks_and_tabs">ブックマークとタブのドロワーを入れ替える</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">ブックマークとタブのドロワーを入れ替える</string>
     <string name="do_not_track">\'Do Not Track\' を有効にする</string>
     <string name="remove_identifying_headers">Identifying Header を削除する</string>
     <string name="action_add_to_homescreen">ホーム画面に追加</string>

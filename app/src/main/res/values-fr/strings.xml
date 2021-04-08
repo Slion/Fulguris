@@ -234,7 +234,7 @@
     <string name="settings_adblock">Blocage des publicités</string>
     <string name="settings_title_vertical_tab_bar">Barre d\'onglets verticale</string>
     <string name="settings_summary_vertical_tab_bar">Désactiver pour utiliser la barre d\'onglets horizontale</string>
-    <string name="swap_bookmarks_and_tabs">Échanger les favoris et les onglets</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">Échanger les favoris et les onglets</string>
     <string name="do_not_track">Demander de \'Ne pas pister\'</string>
     <string name="remove_identifying_headers">Supprimer les en-têtes d\'dentification</string>
     <string name="action_add_to_homescreen">Ajouter à l\'écran d\'accueil</string>

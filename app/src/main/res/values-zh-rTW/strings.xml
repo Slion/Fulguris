@@ -229,7 +229,7 @@
     <string name="hosts_source">Hosts 檔案廣告封鎖來源</string>
     <string name="settings_adblock">廣告封鎖設定</string>
     <string name="settings_title_vertical_tab_bar">在側邊選單顯示分頁</string>
-    <string name="swap_bookmarks_and_tabs">交換書籤與分頁側邊選單的位置</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">交換書籤與分頁側邊選單的位置</string>
     <string name="do_not_track">要求不追蹤（Do Not Track）</string>
     <string name="remove_identifying_headers">移除識別標頭</string>
     <string name="pref_title_webrtc">WebRTC 支援</string>

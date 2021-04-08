@@ -255,6 +255,8 @@
     <string name="settings_about">About</string>
     <string name="settings_sponsorship">Sponsorship</string>
     <string name="pref_category_general">General</string>
+    <string name="pref_category_panels">Panels</string>
+    <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landscape</string>
     <string name="pref_category_portrait">Portrait</string>
     <string name="pref_category_menu">Menu</string>
@@ -263,7 +265,7 @@
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
     <string name="pref_title_locked_drawers">Locked drawers</string>
-    <string name="pref_summary_locked_drawers">Tabs and Bookmarks drawers are locked</string>
+    <string name="pref_summary_locked_drawers">Tabs and Bookmarks drawers will not respond to slide gestures</string>
     <string name="pref_title_use_bottom_sheets">Use bottom sheets</string>
     <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
     <string name="pref_title_tab_list_item_show_close_button">Show close tab button</string>
@@ -340,7 +342,8 @@
     <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
     <string name="settings_title_dark_mode_default">Force dark mode</string>
     <string name="settings_summary_dark_mode_default">Define if new tabs use force dark mode by default</string>
-    <string name="swap_bookmarks_and_tabs">Swap bookmark and tab drawers</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">Swap drawers</string>
+    <string name="settings_summary_swap_bookmarks_and_tabs">Tabs and Bookmarks drawers will swap places</string>
     <string name="do_not_track">Request \'Do Not Track\'</string>
     <string name="save_data">Request \'Save-Data\'</string>
     <string name="remove_identifying_headers">Remove identifying headers</string>

@@ -260,7 +260,7 @@
     <string name="hosts_source">Hosts dosyası, reklam engelleme kaynağını barındırır</string>
     <string name="settings_adblock">Reklam engelleme ayarları</string>
     <string name="settings_title_vertical_tab_bar">Gezinme sekmelerini göster</string>
-    <string name="swap_bookmarks_and_tabs">Yer işareti ve sekme çekmecelerini değiştir</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">Yer işareti ve sekme çekmecelerini değiştir</string>
     <string name="do_not_track">\'İzleme isteği\' gönder</string>
     <string name="save_data">İstek \'Veri-Kaydet\'</string>
     <string name="remove_identifying_headers">Tanımlayıcı başlıkları kaldır</string>
