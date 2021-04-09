@@ -15,6 +15,11 @@
 -keep public class acr.browser.lightning.reading.*
 -keep public class acr.browser.lightning.settings.fragment.*
 
+# Needed for now to fix our bottom sheet issue from com.google.android.material:material:1.4.0-alpha02
+-keep class com.google.android.material.bottomsheet.BottomSheetDialog$EdgeToEdgeCallback {
+    private void setPaddingForPosition(android.view.View);
+}
+
 -assumenosideeffects class android.util.Log {
     public static *** d(...);
     public static *** v(...);
