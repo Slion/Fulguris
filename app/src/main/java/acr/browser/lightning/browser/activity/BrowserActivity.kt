@@ -325,29 +325,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         sessionsMenu = SessionsPopupWindow(layoutInflater)
     }
 
+    // Used to avoid running that too many times, by keeping a reference to it we can cancel that runnable
+    //  That works around graphical glitches happening when run too many times
+    var onSizeChangeRunnable : Runnable = Runnable {};
+
     /**
      * Used for both tabs and bookmarks.
      */
-    private fun createBottomSheetDialog(aContentView : View) : BottomSheetDialog {
+    private fun createBottomSheetDialog(aContentView: View) : BottomSheetDialog {
         val dialog = BottomSheetDialog(this)
-        // We don't actually use those callbacks ATM
-        /*
-        dialog.setOnCancelListener {
-            // Make sure status bar icons have the proper color after closing dialog
-            //setToolbarColor()
-        }
-        dialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    //adjustBottomSheet(dialog)
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            }
-        }
-        )
-        */
 
         // Set up BottomSheetDialog
         dialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
@@ -374,9 +360,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Make sure dialog top padding and status bar icons color are updated whenever our dialog is resized
         // Since we keep recreating our dialogs every time we open them we should not accumulate observers here
         (aContentView.parent as View).onSizeChange {
-            mainHandler.post {
-                adjustBottomSheet(dialog)
-            }
+            // This is designed so that callbacks are cancelled unless our timeout expires
+            // That avoids spamming adjustBottomSheet while our view is animated our dragged
+            mainHandler.removeCallbacks(onSizeChangeRunnable)
+            onSizeChangeRunnable = Runnable {adjustBottomSheet(dialog)};
+            mainHandler.postDelayed(onSizeChangeRunnable, 100)
         }
 
         return dialog;
@@ -398,6 +386,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     scrollToCurrentTab()
                 }
             }
+
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         }
