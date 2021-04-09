@@ -256,8 +256,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         queue = Volley.newRequestQueue(this)
         createPopupMenu()
         createSessionsMenu()
-        tabsDialog = createBottomSheetDialog()
-        bookmarksDialog = createBottomSheetDialog()
+        tabsDialog = BottomSheetDialog(this)
+        bookmarksDialog = BottomSheetDialog(this)
 
 
         if (isIncognito()) {
@@ -313,17 +313,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
         }
 
-        tabsManager.doAfterInitialization {
-            if (userPreferences.useBottomSheets) {
-                if (tabsDialog.isShowing) {
-                    // Upon session switch we need to do that otherwise our status bar padding could be wrong
-                    mainHandler.postDelayed({
-                        adjustBottomSheet(tabsDialog)
-                    }, 100 )
-                }
-            }
-        }
-
+        // This callback is trigger after we switch session, Could be useful at some point
+        //tabsManager.doAfterInitialization {}
 
         // Hook in buttons with onClick handler
         iBindingToolbarContent.buttonReload.setOnClickListener(this)
@@ -335,10 +326,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     *
+     * Used for both tabs and bookmarks.
      */
-    private fun createBottomSheetDialog() : BottomSheetDialog {
+    private fun createBottomSheetDialog(aContentView : View) : BottomSheetDialog {
         val dialog = BottomSheetDialog(this)
+        // We don't actually use those callbacks ATM
+        /*
         dialog.setOnCancelListener {
             // Make sure status bar icons have the proper color after closing dialog
             //setToolbarColor()
@@ -354,6 +347,37 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
         }
         )
+        */
+
+        // Set up BottomSheetDialog
+        dialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
+        dialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        //dialog.window?.setFlags(dialog.window?.attributes!!.flags, WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        //dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+
+        // Needed to make sure our bottom sheet shows below our session pop-up
+        // TODO: that breaks status bar icon color with our light theme somehow
+        //dialog.window?.attributes?.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        //
+
+        // We need to set private data member edgeToEdgeEnabled to true to get full screen effect
+        // That won't be needed past material:1.4.0-alpha02
+        val field = BottomSheetDialog::class.java.getDeclaredField("edgeToEdgeEnabled")
+        field.isAccessible = true
+        field.setBoolean(dialog, true)
+        //
+        aContentView.removeFromParent()
+        dialog.setContentView(aContentView)
+        dialog.behavior.skipCollapsed = true
+        dialog.behavior.isDraggable = !userPreferences.lockedDrawers
+
+        // Make sure dialog top padding and status bar icons color are updated whenever our dialog is resized
+        // Since we keep recreating our dialogs every time we open them we should not accumulate observers here
+        (aContentView.parent as View).onSizeChange {
+            mainHandler.post {
+                adjustBottomSheet(dialog)
+            }
+        }
 
         return dialog;
     }
@@ -366,7 +390,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     {
         // Workaround issue with black icons during transition after first use
         // See: https://github.com/material-components/material-components-android/issues/2168
-        tabsDialog = createBottomSheetDialog()
+        tabsDialog = createBottomSheetDialog(tabsView as View)
         // Once our bottom sheet is open we want it to scroll to current tab
         tabsDialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -379,26 +403,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
         )
 
-        // Set up BottomSheetDialog
-        tabsDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
-        tabsDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        //tabsDialog.window?.setFlags(tabsDialog.window?.attributes!!.flags, WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        //tabsDialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-
-        // Needed to make sure our bottom sheet shows below our session pop-up
-        // TODO: that breaks status bar icon color with our light theme somehow
-        //tabsDialog.window?.attributes?.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
-        //
-
-        // We need to set private data member edgeToEdgeEnabled to true to get full screen effect
-        // That won't be needed past material:1.4.0-alpha02
-        val field = BottomSheetDialog::class.java.getDeclaredField("edgeToEdgeEnabled")
-        field.isAccessible = true
-        field.setBoolean(tabsDialog, true)
-        //
-        (tabsView as View).removeFromParent()
-        tabsDialog.setContentView(tabsView as View)
-        tabsDialog.behavior.skipCollapsed = true
     }
 
     /**
@@ -408,29 +412,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     {
         // Workaround issue with black icons during transition after first use.
         // See: https://github.com/material-components/material-components-android/issues/2168
-        bookmarksDialog = createBottomSheetDialog()
+        bookmarksDialog = createBottomSheetDialog(bookmarksView as View)
 
-        // Define what to do once our drawer it opened
-        //iBinding.drawerLayout.onceOnDrawerOpened {
-        bookmarksView?.iBinding?.listBookmarks?.findViewHolderForAdapterPosition(0)?.itemView?.requestFocus()
-        //}
-        // Open bookmarks drawer
-        // Set up BottomSheetDialog
-        bookmarksDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
-        bookmarksDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        // Needed to make sure our bottom sheet shows below our session pop-up
-        //bookmarksDialog.window?.attributes?.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
-        //
-
-        // We need to set private data member edgeToEdgeEnabled to true to get full screen effect
-        // That won't be needed past material:1.4.0-alpha02
-        val field = BottomSheetDialog::class.java.getDeclaredField("edgeToEdgeEnabled")
-        field.isAccessible = true
-        field.setBoolean(bookmarksDialog, true)
-        //
-        bookmarksView.removeFromParent()
-        bookmarksDialog.setContentView(bookmarksView as View)
-        bookmarksDialog.behavior.skipCollapsed = true
     }
 
     /**
@@ -2460,6 +2443,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBinding.drawerLayout.openDrawer(getBookmarkDrawer())
         }
 
+        // Define what to do once our drawer it opened
+        //iBinding.drawerLayout.onceOnDrawerOpened {
+        bookmarksView?.iBinding?.listBookmarks?.findViewHolderForAdapterPosition(0)?.itemView?.requestFocus()
+        //}
     }
 
     /**
