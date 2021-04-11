@@ -193,7 +193,7 @@ class SessionsPopupWindow : PopupWindow {
             //(itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = iAdapter
-            setHasFixedSize(true)
+            setHasFixedSize(false)
         }
 
         // Enable drag & drop but not swipe

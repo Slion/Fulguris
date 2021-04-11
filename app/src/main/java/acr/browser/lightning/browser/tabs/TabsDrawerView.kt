@@ -63,7 +63,8 @@ class TabsDrawerView @JvmOverloads constructor(
             // LinearLayoutManager.setReverseLayout is also adjusted from BrowserActivity.setupToolBar
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
             adapter = tabsAdapter
-            setHasFixedSize(true)
+            // That would prevent our recycler to resize as needed with bottom sheets
+            setHasFixedSize(false)
         }
 
         val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(tabsAdapter)
