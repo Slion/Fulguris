@@ -380,17 +380,20 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // See: https://github.com/material-components/material-components-android/issues/2168
         tabsDialog = createBottomSheetDialog(tabsView as View)
         // Once our bottom sheet is open we want it to scroll to current tab
+        tabsDialog.setOnShowListener { scrollToCurrentTab() }
+        /*
         tabsDialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
+                // State change is not called if we don't recreate our dialog or actually change the state, which makes sense
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    scrollToCurrentTab()
+                    mainHandler.postDelayed({scrollToCurrentTab()},1000)
                 }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         }
-        )
+        )*/
 
     }
 
@@ -668,18 +671,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // Remove existing tab view if any
-        tabsView?.let {
-            (it as View).removeFromParent()
-        }
-
+        (tabsView as View?)?.removeFromParent()
+        // Instantiate our view
         tabsView = if (verticalTabBar) {
             TabsDrawerView(this)
         } else {
             TabsDesktopView(this)
-        }.also {
-            // Case of bottom sheet is taken care of in createTabsDialog
-            getTabBarContainer().addView(it)
         }
+        // Add it to proper parent
+        addTabsViewToParent()
 
         buttonSessions = (tabsView as View).findViewById(R.id.action_sessions)
 
@@ -692,6 +692,19 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBindingToolbarContent.homeButton.isVisible = true
             iBinding.toolbarInclude.tabBarContainer.isVisible = true
         }
+    }
+
+    /**
+     *
+     */
+    private fun addTabsViewToParent() {
+        if (verticalTabBar && userPreferences.useBottomSheets) {
+                createTabsDialog()
+        } else {
+            (tabsView as View).removeFromParent()
+            getTabBarContainer().addView(tabsView as View)
+        }
+
     }
 
     private fun getBookmarksContainer(): ViewGroup = if (swapBookmarksAndTabs) {
@@ -1650,14 +1663,19 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Reset our tab bar if needed.
      * Notably used after configuration change.
      */
-    private fun setupTabBar() {
+    private fun setupTabBar(): Boolean {
         // Check if our tab bar style changed
         if (verticalTabBar!=userPreferences.verticalTabBar) {
+            // We either coming or going to desktop like horizontal tab bar, tabs panel should be closed then
+            mainHandler.post {closePanelTabs()}
             // Tab bar style changed recreate our tab bar then
             createTabsView()
             tabsView?.tabsInitialized()
             mainHandler.postDelayed({ scrollToCurrentTab() }, 1000)
+            return true
         }
+
+        return false
     }
 
     /**
@@ -2053,19 +2071,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.resumeAll()
         initializePreferences()
 
-        if (!userPreferences.useBottomSheets) {
-            // We need to make sure both bookmarks are tabs are shown at the right place
-            // Potentially moving them from the bottom sheets back to the drawers or tab bar
-            bookmarksView.removeFromParent()
-            getBookmarksContainer().addView(bookmarksView)
-            //
-            (tabsView as View).let {
-                it.removeFromParent()
-                getTabBarContainer().addView(it)
-            }
+        if (!setupTabBar()) {
+            // useBottomsheets settings could have changed
+            addTabsViewToParent()
         }
-
-        setupTabBar()
+        setupBookmarksView()
         setupToolBar(resources.configuration)
         mainHandler.postDelayed({ setupToolBar() }, 500)
         setupPullToRefresh(resources.configuration)
@@ -2075,6 +2085,21 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         //intent?.let {logger.log(TAG, it.toString())}
     }
+
+    /**
+     * We need to make sure bookmarks are shown at the right place
+     * Potentially moving them from the bottom sheets back to the drawers
+     */
+    private fun setupBookmarksView() {
+        if (userPreferences.useBottomSheets) {
+            createBookmarksDialog()
+        } else {
+            bookmarksView.removeFromParent()
+            getBookmarksContainer().addView(bookmarksView)
+        }
+
+    }
+
 
     /**
      * searches the web for the query fixing any and all problems with the input
@@ -2413,7 +2438,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         if (userPreferences.useBottomSheets) {
-            createBookmarksDialog()
+            //createBookmarksDialog()
             bookmarksDialog.show()
 
             // See: https://github.com/material-components/material-components-android/issues/2165
@@ -2467,7 +2492,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabListView?.requestFocus()
 
         if (userPreferences.useBottomSheets) {
-            createTabsDialog()
+            //createTabsDialog()
             tabsDialog.show()
             // See: https://github.com/material-components/material-components-android/issues/2165
             mainHandler.postDelayed({
@@ -2489,6 +2514,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Scroll to current tab.
      */
     private fun scrollToCurrentTab() {
+
+        /*if (userPreferences.useBottomSheets && tabsView is TabsDrawerView && !(tabsDialog.isShowing && tabsDialog.behavior.state == BottomSheetBehavior.STATE_EXPANDED)) {
+            return
+        }*/
+
         val tabListView = (tabsView as ViewGroup).findViewById<RecyclerView>(R.id.tabs_list)
         // Set focus
         // Find our recycler list view
