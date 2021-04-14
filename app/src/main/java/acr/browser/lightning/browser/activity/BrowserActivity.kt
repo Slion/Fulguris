@@ -376,6 +376,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun createTabsDialog()
     {
+        tabsDialog.dismiss() // Defensive
         // Workaround issue with black icons during transition after first use
         // See: https://github.com/material-components/material-components-android/issues/2168
         tabsDialog = createBottomSheetDialog(tabsView as View)
@@ -402,6 +403,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun createBookmarksDialog()
     {
+        bookmarksDialog.dismiss() // Defensive
         // Workaround issue with black icons during transition after first use.
         // See: https://github.com/material-components/material-components-android/issues/2168
         bookmarksDialog = createBottomSheetDialog(bookmarksView as View)
@@ -678,6 +680,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         } else {
             TabsDesktopView(this)
         }
+        createTabsDialog()
         // Add it to proper parent
         addTabsViewToParent()
 
@@ -695,16 +698,28 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     *
+     * Add our tabs view to proper parent according to current configuration and settings.
+     * Parent can be the bottom sheet dialog, one of our side drawers, or the tab bar container.
+     * We are also taking care of checking which parent is currently the current to make sure we do not take action if not needed.
      */
     private fun addTabsViewToParent() {
+        val v = (tabsView as View)
         if (verticalTabBar && userPreferences.useBottomSheets) {
-                createTabsDialog()
+            // Check if our tabs list already belongs to our bottom sheet
+            if (tabsDialog.findViewById<ViewGroup>(R.id.tabs_list) != v.findViewById<ViewGroup>(R.id.tabs_list)) {
+                // It was not found, just put it there then
+                v.removeFromParent()
+                tabsDialog.setContentView(v)
+            }
         } else {
-            (tabsView as View).removeFromParent()
-            getTabBarContainer().addView(tabsView as View)
-        }
+            // Check if our tab view is already in place
+            if (v.parent != getTabBarContainer()) {
+                // It was not, lets put it there then
+                v.removeFromParent()
+                getTabBarContainer().addView(v)
+            }
 
+        }
     }
 
     private fun getBookmarksContainer(): ViewGroup = if (swapBookmarksAndTabs) {
