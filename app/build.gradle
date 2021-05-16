@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.getkeepsafe.dexcount'
+//apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.ben-manes.versions'
 // Firebase
@@ -141,6 +141,7 @@ jacoco {
     toolVersion = '0.7.9' // See http://www.eclemma.org/jacoco/
 }
 
+/*
 dexcount {
     includeClasses = false
     includeFieldCount = false
@@ -148,6 +149,7 @@ dexcount {
     orderByMethodCount = true
     verbose = false
 }
+*/
 
 dependencies {
     // Multi DEX is only needed in debug and on older devices from Android 5 and below.
