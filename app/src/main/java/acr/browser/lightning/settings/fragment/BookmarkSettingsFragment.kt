@@ -22,6 +22,7 @@ import acr.browser.lightning.utils.Utils
 import android.Manifest
 import android.app.Activity
 import android.app.Application
+import android.content.ContentResolver
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
@@ -224,16 +225,14 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
     val bookmarkImportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
-            // Using a regular expression to remove the first segment from our path
-            // In fact on Huawei P30 Pro Android DocumentsUI which is in fact the default file manager our path looks like: /document//storage/…
-            // On the same device when using File Manager+ it looks like: /root/storage/…
-            // After our regex treatment it looks like: storage/…
-            // We just need to prepend '/' to get our proper file path
-            result.data?.data?.path?.replace(Regex("^/+[^/]*/+"),"").let{ filePath ->
-                val file = File("/$filePath")
-                Single.fromCallable(file::inputStream)
+            // Using content resolver to get an input stream from selected URI
+            // See:  https://commonsware.com/blog/2016/03/15/how-consume-content-uri.html
+            result.data?.data?.let{ uri ->
+                context?.contentResolver?.openInputStream(uri).let { inputStream ->
+                    val mimeType = context?.contentResolver?.getType(uri)
+                Single.just(inputStream)
                     .map {
-                        if (file.extension == EXTENSION_HTML) {
+                        if (mimeType == "text/html") {
                             netscapeBookmarkFormatImporter.importBookmarks(it)
                         } else {
                             legacyBookmarkImporter.importBookmarks(it)
@@ -262,6 +261,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                             }
                         }
                     )
+                }
             }
         }
     }
