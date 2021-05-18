@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import acr.browser.lightning.BrowserApp;
 import io.reactivex.Completable;
 
 /**
@@ -25,6 +26,8 @@ public final class FileUtils {
 
     private static final String TAG = "FileUtils";
 
+    // SL: Is this still ok even with scope storage?
+    // We think so since system download manager is doing our download for us.
     public static final String DEFAULT_DOWNLOAD_PATH =
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
 
@@ -139,7 +142,7 @@ public final class FileUtils {
      */
     public static void writeCrashToStorage(@NonNull Throwable throwable) {
         String fileName = throwable.getClass().getSimpleName() + '_' + System.currentTimeMillis() + ".txt";
-        File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+        File outputFile = new File(BrowserApp.instance.getApplicationContext().getExternalFilesDir("CrashLogs"), fileName);
 
         FileOutputStream outputStream = null;
         try {

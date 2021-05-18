@@ -2653,6 +2653,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    /**
+     * SL: This implementation is really strange.
+     * It looks like that's being called from LightningChromeClient.onShowFileChooser.
+     * My understanding is that this is a WebView callback from web forms asking user to pick a file.
+     * So why do we create an image file in there? That does not make sense to me.
+     */
     override fun showFileChooser(filePathCallback: ValueCallback<Array<Uri>>) {
         this.filePathCallback?.onReceiveValue(null)
         this.filePathCallback = filePathCallback

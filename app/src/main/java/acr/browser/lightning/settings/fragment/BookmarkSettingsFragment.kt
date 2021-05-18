@@ -22,10 +22,11 @@ import acr.browser.lightning.utils.Utils
 import android.Manifest
 import android.app.Activity
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.FragmentActivity
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -36,6 +37,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import java.io.File
 import java.util.*
 import javax.inject.Inject
+
 
 class BookmarkSettingsFragment : AbstractSettingsFragment() {
 
@@ -63,6 +65,9 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
         clickablePreference(preference = SETTINGS_EXPORT, onClick = this::exportBookmarks)
         clickablePreference(preference = SETTINGS_IMPORT, onClick = this::importBookmarks)
         clickablePreference(preference = SETTINGS_DELETE_BOOKMARKS, onClick = this::deleteAllBookmarks)
+
+
+
     }
 
     override fun onDestroyView() {
@@ -99,6 +104,8 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                                     onComplete = {
                                         activity?.apply {
                                             snackbar("${getString(R.string.bookmark_export_path)} ${exportFile.path}")
+                                            // Open file browser to show export folder
+                                            Utils.startActivityForFolder(activity,exportFile.parent)
                                         }
                                     },
                                     onError = { throwable ->
@@ -195,22 +202,38 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
+    /**
+     *
+     */
     private fun showImportBookmarkDialog(path: File?) {
-        val builder = MaterialAlertDialogBuilder(activity as Activity)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(
+                Intent.EXTRA_MIME_TYPES, arrayOf(
+                    "text/html", // .html
+                    "text/plain" // .txt
+                )
+            )
+        }
+        bookmarkImportFilePicker.launch(intent)
+        // See bookmarkImportFilePicker declaration below for result handler
+    }
 
-        val title = getString(R.string.title_chooser)
-        builder.setTitle(title + ": " + Environment.getExternalStorageDirectory())
-
-        val fileList = loadFileList(path)
-        val fileNames = fileList.map(File::getName).toTypedArray()
-
-        builder.setItems(fileNames) { _, which ->
-            if (fileList[which].isDirectory) {
-                showImportBookmarkDialog(fileList[which])
-            } else {
-                Single.fromCallable(fileList[which]::inputStream)
+    //
+    val bookmarkImportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // Using a regular expression to remove the first segment from our path
+            // In fact on Huawei P30 Pro Android DocumentsUI which is in fact the default file manager our path looks like: /document//storage/…
+            // On the same device when using File Manager+ it looks like: /root/storage/…
+            // After our regex treatment it looks like: storage/…
+            // We just need to prepend '/' to get our proper file path
+            result.data?.data?.path?.replace(Regex("^/+[^/]*/+"),"").let{ filePath ->
+                val file = File("/$filePath")
+                Single.fromCallable(file::inputStream)
                     .map {
-                        if (fileList[which].extension == EXTENSION_HTML) {
+                        if (file.extension == EXTENSION_HTML) {
                             netscapeBookmarkFormatImporter.importBookmarks(it)
                         } else {
                             legacyBookmarkImporter.importBookmarks(it)
@@ -241,7 +264,6 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                     )
             }
         }
-        builder.resizeAndShow()
     }
 
     companion object {

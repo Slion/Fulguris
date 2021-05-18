@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import acr.browser.lightning.BrowserApp;
 import acr.browser.lightning.R;
 import acr.browser.lightning.database.Bookmark;
 import acr.browser.lightning.database.WebPageKt;
@@ -167,15 +168,13 @@ public final class BookmarkExporter {
     @WorkerThread
     @NonNull
     public static File createNewExportFile() {
-        File bookmarksExport = new File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            "BookmarksExport.txt");
+        File folder = BrowserApp.instance.getApplicationContext().getExternalFilesDir(null);
+        File bookmarksExport = new File(folder, "BookmarksExport.txt");
         int counter = 0;
+        // Use an export file name that does not exist yet
         while (bookmarksExport.exists()) {
             counter++;
-            bookmarksExport = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                "BookmarksExport-" + counter + ".txt");
+            bookmarksExport = new File(folder, "BookmarksExport-" + counter + ".txt");
         }
 
         return bookmarksExport;

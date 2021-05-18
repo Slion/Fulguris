@@ -17,6 +17,7 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -31,6 +32,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import acr.browser.lightning.BrowserApp;
 import acr.browser.lightning.R;
 import acr.browser.lightning.constant.Constants;
 import acr.browser.lightning.database.HistoryEntry;
@@ -40,6 +42,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -193,13 +196,18 @@ public final class Utils {
         return 0xff << ALPHA_CHANNEL | r << RED_CHANNEL | g << GREEN_CHANNEL | b;
     }
 
+    /**
+     * SL: Do we really need this function? Consider removing it.
+     *
+     * @return
+     * @throws IOException
+     */
     @SuppressLint("SimpleDateFormat")
     public static File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + '_';
-        File storageDir = Environment
-            .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File storageDir = BrowserApp.instance.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(imageFileName, /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
@@ -315,7 +323,7 @@ public final class Utils {
         intent.setDataAndType(Uri.parse(aDownloadFolder), "resource/folder");
         // Check that there is an app activity handling that intent on our system
         if (intent.resolveActivityInfo(aContext.getPackageManager(), 0) != null) {
-            // Yes there is one use it
+            // Yes, there is one, use it then
             return intent;
         } else {
             // Just launch system download manager activity if no custom file explorer found
@@ -323,5 +331,67 @@ public final class Utils {
         }
     }
 
+    /**
+     * Start file browser application to show the given folder.
+     * Only working with most third-party file explorers.
+     * It's not working with Files by Google.
+     * It's not working with DocumentsUI which is Android built-in file explorer.
+     * See: https://android.googlesource.com/platform/packages/apps/DocumentsUI/
+     * We are guessing that to get DocumentsUI to work we need to implement a DocumentProvider.
+     * See:
+     * https://developer.android.com/training/data-storage/shared/documents-files
+     * https://developer.android.com/reference/android/provider/DocumentsProvider
+     * https://developer.android.com/guide/topics/providers/create-document-provider
+     *
+     * @param aContext
+     * @param aFolder
+     * @return
+     */
+    public static void startActivityForFolder(Context aContext, String aFolder) {
+        // This is the solution from there: https://stackoverflow.com/a/26651827/3969362
+        // Build an intent to open our download folder in a file explorer app
+        Intent intent = new Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setDataAndType(Uri.parse(aFolder), "resource/folder");
+        // Check that there is an app activity handling that intent on our system
+        if (intent.resolveActivityInfo(aContext.getPackageManager(), 0) != null) {
+            // Yes, there is one, use it then
+            aContext.startActivity(intent);
+        }
+    }
 
+
+    /**
+        Below is our attempt to open DocumentsUI to a specified folder using FileProvider without joy.
+        Content scheme did not work, File scheme did not work.
+     TODO: try with authority com.crypho.localstorage.documents
+     content://com.crypho.localstorage.documents/document/%2Fstorage%2Femulated%2F0%2FAndroid%2Fdata%2Fnet.slions.fulguris.full.download.debug%2Ffiles%2FBookmarksExport-1.txt
+     */
+/*
+    public static void startActivityForFolder(Context aContext, String aFolder) {
+        // This is the solution from there: https://stackoverflow.com/a/26651827/3969362
+        // Build an intent to open our download folder in a file explorer app
+        Intent intent = new Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        //intent.setDataAndType(Uri.parse(aFolder), "resource/folder");
+
+        //FileProvider.getUriForFile(context, context.applicationContext.packageName + ".provider", File(location))
+        // Try file scheme:
+        //Uri uri = Uri.fromFile(new File(aFolder));
+
+        // Try content scheme:
+        Uri uri = FileProvider.getUriForFile(aContext, aContext.getApplicationContext().getPackageName() + ".provider", new File(aFolder));
+        //Uri uri = FileProvider.getUriForFile(aContext, "com.crypho.localstorage.documents", new File(aFolder));
+        //String path = uri.toString();
+        //String folderUri = path.substring(0,path.lastIndexOf('/'));
+        //intent.setDataAndType(Uri.parse(folderUri), DocumentsContract.Document.MIME_TYPE_DIR);
+        //intent.setData(uri);
+        intent.setDataAndType(uri, DocumentsContract.Document.MIME_TYPE_DIR);
+        //intent.setDataAndType(uri,"vnd.android.document/root");
+        //intent.setData(Uri.parse(aFolder));
+        if (intent.resolveActivityInfo(aContext.getPackageManager(), 0) != null) {
+            // Yes there is one use it
+            aContext.startActivity(intent);
+        }
+    }
+*/
 }
