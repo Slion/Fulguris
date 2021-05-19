@@ -13,7 +13,7 @@ import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
-import acr.browser.lightning.extensions.resizeAndShow
+import acr.browser.lightning.extensions.fileName
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
@@ -22,15 +22,15 @@ import acr.browser.lightning.utils.Utils
 import android.Manifest
 import android.app.Activity
 import android.app.Application
-import android.content.ContentResolver
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -38,7 +38,6 @@ import io.reactivex.rxkotlin.subscribeBy
 import java.io.File
 import java.util.*
 import javax.inject.Inject
-
 
 class BookmarkSettingsFragment : AbstractSettingsFragment() {
 
@@ -52,6 +51,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
 
     private var importSubscription: Disposable? = null
     private var exportSubscription: Disposable? = null
+    private var bookmarksSortSubscription: Disposable? = null
 
     override fun providePreferencesXmlResource() = R.xml.preference_bookmarks
 
@@ -76,6 +76,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
 
         exportSubscription?.dispose()
         importSubscription?.dispose()
+        bookmarksSortSubscription?.dispose()
     }
 
     override fun onDestroy() {
@@ -83,43 +84,14 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
 
         exportSubscription?.dispose()
         importSubscription?.dispose()
+        bookmarksSortSubscription?.dispose()
     }
 
     private fun exportBookmarks() {
         PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS,
             object : PermissionsResultAction() {
                 override fun onGranted() {
-                    bookmarkRepository.getAllBookmarksSorted()
-                        .subscribeOn(databaseScheduler)
-                        .subscribe { list ->
-                            if (!isAdded) {
-                                return@subscribe
-                            }
-
-                            val exportFile = BookmarkExporter.createNewExportFile()
-                            exportSubscription?.dispose()
-                            exportSubscription = BookmarkExporter.exportBookmarksToFile(list, exportFile)
-                                .subscribeOn(databaseScheduler)
-                                .observeOn(mainScheduler)
-                                .subscribeBy(
-                                    onComplete = {
-                                        activity?.apply {
-                                            snackbar("${getString(R.string.bookmark_export_path)} ${exportFile.path}")
-                                            // Open file browser to show export folder
-                                            Utils.startActivityForFolder(activity,exportFile.parent)
-                                        }
-                                    },
-                                    onError = { throwable ->
-                                        logger.log(TAG, "onError: exporting bookmarks", throwable)
-                                        val activity = activity
-                                        if (activity != null && !activity.isFinishing && isAdded) {
-                                            Utils.createInformativeDialog(activity, R.string.title_error, R.string.bookmark_export_failure)
-                                        } else {
-                                            application.toast(R.string.bookmark_export_failure)
-                                        }
-                                    }
-                                )
-                        }
+                    showExportBookmarksDialog()
                 }
 
                 override fun onDenied(permission: String) {
@@ -137,7 +109,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
         PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS,
             object : PermissionsResultAction() {
                 override fun onGranted() {
-                    showImportBookmarkDialog(null)
+                    showImportBookmarksDialog(null)
                 }
 
                 override fun onDenied(permission: String) {
@@ -204,9 +176,133 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
     }
 
     /**
+     * Start bookmarks export workflow by showing file creation dialog.
+     */
+    private fun showExportBookmarksDialog() {
+        //TODO: specify default path
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain" // Specify type of newly created document
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                // Those magic constants were taken from: https://android.googlesource.com/platform/packages/apps/DocumentsUI/+/refs/heads/master/src/com/android/documentsui/base/Providers.java
+                val AUTHORITY_DOWNLOADS = "com.android.providers.downloads.documents";
+                val ROOT_ID_DOWNLOADS = "downloads";
+                val AUTHORITY_STORAGE = "com.android.externalstorage.documents";
+                val ROOT_ID_DEVICE = "primary";
+                val ROOT_ID_HOME = "home";
+
+                val AUTHORITY_MEDIA = "com.android.providers.media.documents";
+                val ROOT_ID_IMAGES = "images_root";
+                val ROOT_ID_VIDEOS = "videos_root";
+                val ROOT_ID_AUDIO = "audio_root";
+                val ROOT_ID_DOCUMENTS = "documents_root";
+
+                //content://com.android.externalstorage.documents/document/primary%3AAndroid%2Fdata%2Fnet.slions.fulguris.full.fdroid.debug%2Ffiles%2Fbookm
+                // Docs URI looks like: content://com.android.externalstorage.documents/document/primary%3AFulgurisBookmarksExport.txt
+
+                //val uri = DocumentsContract.buildRootUri(AUTHORITY_STORAGE, ROOT_ID_DEVICE)
+
+                //Not really working for whatever reason: content://com.android.externalstorage.documents/document/primary
+                //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_STORAGE, ROOT_ID_DEVICE)
+
+                // No better I guess
+                //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_STORAGE, ROOT_ID_HOME)
+
+                // Working: content://com.android.providers.downloads.documents/document/downloads
+                // Downloads seems to be the only folder we can reliably open and write into across Android version
+                //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_DOWNLOADS, ROOT_ID_DOWNLOADS)
+
+                // Not working on Huawei P30 Pro which makes sense cause we could not find it
+                //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_MEDIA, ROOT_ID_DOCUMENTS)
+
+
+                // Not working:
+                //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_DOWNLOADS,  "/FulgurisBookmarksExport.txt")
+
+                // Not working:
+                //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_DOWNLOADS, ROOT_ID_DOWNLOADS + ":FulgurisBookmarksExport.txt")
+
+                // Not working: content://com.android.providers.downloads.documents/document/downloads%2FFulgurisBookmarksExport.txt
+                //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_DOWNLOADS, ROOT_ID_DOWNLOADS + "/FulgurisBookmarksExport.txt")
+
+                // Not working
+                //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_DOWNLOADS, "raw:FulgurisBookmarksExport.txt")
+
+                //DocumentsContract.createDocument()
+
+                // URIs from downloads looks like that, note the 'raw' element
+                //content://com.android.providers.downloads.documents/document/raw%3A%2Fstorage%2Femulated%2F0%2FDownload%2FBookmarksExport-4.txt
+
+
+                //val uri = Uri.fromFile(File(context?.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/FulgurisBookmarksExport.txt") )
+
+                // It's actually best not to specify the initial URI it seems as it then uses the last one used
+                // Specifying anything other than download would not really work anyway
+                //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_DOWNLOADS, ROOT_ID_DOWNLOADS)
+                //putExtra(DocumentsContract.EXTRA_INITIAL_URI, uri)
+
+                //val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd-(HH:mm:ss)", Locale.US)
+                val timeStamp: String = dateFormat.format(Date())
+
+                putExtra(Intent.EXTRA_TITLE, "FulgurisBookmarks-$timeStamp.txt")
+
+            }
+        }
+        bookmarkExportFilePicker.launch(intent)
+        // See bookmarkExportFilePicker declaration below for result handler
+    }
+
+    //
+    val bookmarkExportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+
+            // Using content resolver to get an input stream from selected URI
+            // See:  https://commonsware.com/blog/2016/03/15/how-consume-content-uri.html
+            result.data?.data?.let{ uri ->
+                context?.contentResolver?.openOutputStream(uri)?.let { outputStream ->
+                    //val mimeType = context?.contentResolver?.getType(uri)
+
+                    bookmarksSortSubscription = bookmarkRepository.getAllBookmarksSorted()
+                        .subscribeOn(databaseScheduler)
+                        .subscribe { list ->
+                            if (!isAdded) {
+                                return@subscribe
+                            }
+
+                            exportSubscription?.dispose()
+                            exportSubscription = BookmarkExporter.exportBookmarksToFile(list, outputStream)
+                                .subscribeOn(databaseScheduler)
+                                .observeOn(mainScheduler)
+                                .subscribeBy(
+                                    onComplete = {
+                                        activity?.apply {
+                                            snackbar("${getString(R.string.bookmark_export_path)} ${uri.fileName}")
+                                        }
+                                    },
+                                    onError = { throwable ->
+                                        logger.log(TAG, "onError: exporting bookmarks", throwable)
+                                        val activity = activity
+                                        if (activity != null && !activity.isFinishing && isAdded) {
+                                            Utils.createInformativeDialog(activity, R.string.title_error, R.string.bookmark_export_failure)
+                                        } else {
+                                            application.toast(R.string.bookmark_export_failure)
+                                        }
+                                    }
+                                )
+                        }
+                }
+            }
+        }
+    }
+
+    /**
      *
      */
-    private fun showImportBookmarkDialog(path: File?) {
+    private fun showImportBookmarksDialog(path: File?) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "*/*"
@@ -230,7 +326,8 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
             result.data?.data?.let{ uri ->
                 context?.contentResolver?.openInputStream(uri).let { inputStream ->
                     val mimeType = context?.contentResolver?.getType(uri)
-                Single.just(inputStream)
+                    importSubscription?.dispose()
+                    importSubscription = Single.just(inputStream)
                     .map {
                         if (mimeType == "text/html") {
                             netscapeBookmarkFormatImporter.importBookmarks(it)
@@ -269,8 +366,6 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
     companion object {
 
         private const val TAG = "BookmarkSettingsFrag"
-
-        private const val EXTENSION_HTML = "html"
 
         private const val SETTINGS_EXPORT = "export_bookmark"
         private const val SETTINGS_IMPORT = "import_bookmark"
