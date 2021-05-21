@@ -11,7 +11,7 @@
 * History.
 * Google search suggestions.
 * Keyboard support.
-* Lanscape and portrait configurations.
+* Landscape and portrait configurations.
 * Web page theming.
 * Desktop rendering.
 * Android desktop support (Samsung Dex, EMUI Desktop). 

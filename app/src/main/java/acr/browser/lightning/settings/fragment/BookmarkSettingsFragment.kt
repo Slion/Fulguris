@@ -27,6 +27,7 @@ import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.DocumentsContract
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.anthonycr.grant.PermissionsManager
@@ -109,7 +110,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
         PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS,
             object : PermissionsResultAction() {
                 override fun onGranted() {
-                    showImportBookmarksDialog(null)
+                    showImportBookmarksDialog()
                 }
 
                 override fun onDenied(permission: String) {
@@ -242,14 +243,17 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                 // Specifying anything other than download would not really work anyway
                 //val uri = DocumentsContract.buildDocumentUri(AUTHORITY_DOWNLOADS, ROOT_ID_DOWNLOADS)
                 //putExtra(DocumentsContract.EXTRA_INITIAL_URI, uri)
-
-                //val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd-(HH:mm:ss)", Locale.US)
-                val timeStamp: String = dateFormat.format(Date())
-
-                putExtra(Intent.EXTRA_TITLE, "FulgurisBookmarks-$timeStamp.txt")
-
             }
+
+            var timeStamp = ""
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val dateFormat = SimpleDateFormat("-yyyy-MM-dd-(HH:mm:ss)", Locale.US)
+                timeStamp = dateFormat.format(Date())
+            }
+        // Specify default file name, user can change it.
+        // If that file already exists a numbered suffix is automatically generated and appended to the file name between brackets.
+        // That is a neat feature as it guarantee no file will be overwritten.
+        putExtra(Intent.EXTRA_TITLE, "FulgurisBookmarks$timeStamp.txt")
         }
         bookmarkExportFilePicker.launch(intent)
         // See bookmarkExportFilePicker declaration below for result handler
@@ -300,13 +304,14 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
     }
 
     /**
-     *
+     * Starts bookmarks import workflow by showing file selection dialog.
      */
-    private fun showImportBookmarksDialog(path: File?) {
+    private fun showImportBookmarksDialog() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = "*/*"
+            type = "*/*" // That's needed for some reason, crashes otherwise
             putExtra(
+                // List all file types you want the user to be able to select
                 Intent.EXTRA_MIME_TYPES, arrayOf(
                     "text/html", // .html
                     "text/plain" // .txt
