@@ -191,7 +191,7 @@ class SessionsPopupWindow : PopupWindow {
         aBinding.recyclerViewSessions.apply {
             //setLayerType(View.LAYER_TYPE_NONE, null)
             //(itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
             adapter = iAdapter
             setHasFixedSize(false)
         }

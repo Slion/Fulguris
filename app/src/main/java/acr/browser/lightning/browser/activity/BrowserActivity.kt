@@ -320,7 +320,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.buttonReload.setOnClickListener(this)
     }
 
-
+    /**
+     *
+     */
     private fun createSessionsMenu() {
         sessionsMenu = SessionsPopupWindow(layoutInflater)
     }
@@ -417,7 +419,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // If using horizontal tab bar or if our tab drawer is open
         if (!verticalTabBar || tabsDialog.isShowing) {
             // Use sessions button as anchor
-            buttonSessions?.let { sessionsMenu.show(it) }
+            buttonSessions.let { sessionsMenu.show(it) }
         } else {
             // Otherwise use main menu button as anchor
             iBindingToolbarContent.buttonMore.let { sessionsMenu.show(it) }
@@ -1029,9 +1031,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     (iBinding.listBookmarks.layoutManager as? LinearLayoutManager)?.reverseLayout = true
                 }
 
+                // Deal with session menu
+                sessionsMenu.animationStyle = R.style.AnimationMenuBottom
+                (sessionsMenu.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.reverseLayout = true
+                // Move sessions menu toolbar to the bottom
+                sessionsMenu.iBinding.toolbar.apply{removeFromParent()?.addView(this)}
+
                 // Set popup menus animations
                 popupMenu.animationStyle = R.style.AnimationMenuBottom
-                sessionsMenu.animationStyle = R.style.AnimationMenuBottom
                 // Move popup menu toolbar to the bottom
                 popupMenu.iBinding.header.apply{removeFromParent()?.addView(this)}
                 // Move items above our toolbar separator
@@ -1077,9 +1084,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     (iBinding.listBookmarks.layoutManager as? LinearLayoutManager)?.reverseLayout = false
                 }
 
+                // Deal with session menu
+                sessionsMenu.animationStyle = R.style.AnimationMenu
+                (sessionsMenu.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.reverseLayout = false
+                // Move sessions menu toolbar to the top
+                sessionsMenu.iBinding.toolbar.apply{removeFromParent()?.addView(this, 0)}
+
                 // Set popup menus animations
                 popupMenu.animationStyle = R.style.AnimationMenu
-                sessionsMenu.animationStyle = R.style.AnimationMenu
                 // Move popup menu toolbar to the top
                 popupMenu.iBinding.header.apply{removeFromParent()?.addView(this, 0)}
                 // Move items below our toolbar separator
