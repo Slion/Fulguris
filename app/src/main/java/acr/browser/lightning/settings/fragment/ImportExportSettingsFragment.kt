@@ -15,32 +15,38 @@ import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.fileName
 import acr.browser.lightning.extensions.snackbar
-import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.utils.Utils
 import android.Manifest
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.Application
+import android.content.Context.ACTIVITY_SERVICE
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.DocumentsContract
+import android.os.Handler
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.preference.PreferenceManager
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
-import java.io.File
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.*
 import java.util.*
 import javax.inject.Inject
 
-class BookmarkSettingsFragment : AbstractSettingsFragment() {
+class ImportExportSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var bookmarkRepository: BookmarkRepository
     @Inject internal lateinit var application: Application
@@ -54,21 +60,20 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
     private var exportSubscription: Disposable? = null
     private var bookmarksSortSubscription: Disposable? = null
 
-    override fun providePreferencesXmlResource() = R.xml.preference_bookmarks
+    override fun providePreferencesXmlResource() = R.xml.preference_import_export
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
         injector.inject(this)
 
-        PermissionsManager
-            .getInstance()
-            .requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS, null)
+        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS, null)
 
         clickablePreference(preference = SETTINGS_EXPORT, onClick = this::exportBookmarks)
         clickablePreference(preference = SETTINGS_IMPORT, onClick = this::importBookmarks)
         clickablePreference(preference = SETTINGS_DELETE_BOOKMARKS, onClick = this::deleteAllBookmarks)
-
-
+        clickablePreference(preference = SETTINGS_SETTINGS_EXPORT, onClick = this::requestSettingsExport)
+        clickablePreference(preference = SETTINGS_SETTINGS_IMPORT, onClick = this::requestSettingsImport)
+        clickablePreference(preference = SETTINGS_DELETE_SETTINGS, onClick = this::clearSettings)
 
     }
 
@@ -88,6 +93,30 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
         bookmarksSortSubscription?.dispose()
     }
 
+    private fun requestSettingsImport(){
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain"
+        }
+        startActivityForResult(intent, IMPORT_SETTINGS)
+    }
+
+    private fun requestSettingsExport(){
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain"
+            var timeStamp = ""
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val dateFormat = SimpleDateFormat("-yyyy-MM-dd-(HH:mm:ss)", Locale.US)
+                timeStamp = dateFormat.format(Date())
+            }
+            // That is a neat feature as it guarantee no file will be overwritten.
+            putExtra(Intent.EXTRA_TITLE, "FulgurisSettings$timeStamp.txt")
+        }
+        startActivityForResult(intent, EXPORT_SETTINGS)
+    }
+
+
     private fun exportBookmarks() {
         PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS,
             object : PermissionsResultAction() {
@@ -100,7 +129,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                     if (activity != null && !activity.isFinishing && isAdded) {
                         Utils.createInformativeDialog(activity, R.string.title_error, R.string.bookmark_export_failure)
                     } else {
-                        application.toast(R.string.bookmark_export_failure)
+                        activity?.snackbar(R.string.bookmark_export_failure)
                     }
                 }
             })
@@ -139,41 +168,6 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
             negativeButton = DialogItem(title = R.string.no) {},
             onCancel = {}
         )
-    }
-
-    private fun loadFileList(path: File?): Array<File> {
-        val file: File = path ?: File(Environment.getExternalStorageDirectory().toString())
-
-        try {
-            file.mkdirs()
-        } catch (e: SecurityException) {
-            logger.log(TAG, "Unable to make directory", e)
-        }
-
-        return (if (file.exists()) {
-            file.listFiles()
-        } else {
-            arrayOf()
-        }).apply {
-            sortWith(SortName())
-        }
-    }
-
-    private class SortName : Comparator<File> {
-
-        override fun compare(a: File, b: File): Int {
-            return if (a.isDirectory && b.isDirectory) {
-                a.name.compareTo(b.name)
-            } else if (a.isDirectory) {
-                -1
-            } else if (b.isDirectory) {
-                1
-            } else if (a.isFile && b.isFile) {
-                a.name.compareTo(b.name)
-            } else {
-                1
-            }
-        }
     }
 
     /**
@@ -293,7 +287,7 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                                         if (activity != null && !activity.isFinishing && isAdded) {
                                             Utils.createInformativeDialog(activity, R.string.title_error, R.string.bookmark_export_failure)
                                         } else {
-                                            application.toast(R.string.bookmark_export_failure)
+                                            activity?.snackbar(R.string.bookmark_export_failure)
                                         }
                                     }
                                 )
@@ -359,11 +353,108 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                             if (activity != null && !activity.isFinishing && isAdded) {
                                 Utils.createInformativeDialog(activity, R.string.title_error, R.string.import_bookmark_error)
                             } else {
-                                application.toast(R.string.import_bookmark_error)
+                                activity?.snackbar(R.string.import_bookmark_error)
                             }
                         }
                     )
                 }
+            }
+        }
+    }
+
+    private fun importSettings(uri: Uri) {
+        val input: InputStream? = requireActivity().contentResolver.openInputStream(uri)
+
+        val bufferSize = 1024
+        val buffer = CharArray(bufferSize)
+        val out = StringBuilder()
+        val `in`: Reader = InputStreamReader(input, "UTF-8")
+        while (true) {
+            val rsz = `in`.read(buffer, 0, buffer.size)
+            if (rsz < 0) break
+            out.append(buffer, 0, rsz)
+        }
+
+        val content = out.toString()
+
+        val answer = JSONObject(content)
+        val keys: JSONArray? = answer.names()
+        val userPref = PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
+        for (i in 0 until keys!!.length()) {
+            val key: String = keys.getString(i)
+            val value: String = answer.getString(key)
+            with (userPref.edit()) {
+                if(value.matches("-?\\d+".toRegex())){
+                    putInt(key, value.toInt())
+                }
+                else if(value == "true" || value == "false"){
+                    putBoolean(key, value.toBoolean())
+                }
+                else{
+                    putString(key, value)
+                }
+                apply()
+            }
+
+        }
+        activity?.snackbar(R.string.settings_reseted)
+    }
+
+    private fun exportSettings(uri: Uri) {
+        val userPref = PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
+        val allEntries: Map<String, *> = userPref!!.all
+        var string = "{"
+        for (entry in allEntries.entries) {
+            string += "\"${entry.key}\"=\"${entry.value}\","
+        }
+
+        string = string.substring(0, string.length - 1) + "}"
+
+        try {
+            val output: OutputStream? = requireActivity().contentResolver.openOutputStream(uri)
+
+            output?.write(string.toByteArray())
+            output?.flush()
+            output?.close()
+            activity?.snackbar("${getString(R.string.settings_exported)} ${uri.fileName}")
+        } catch (e: IOException) {
+            activity?.snackbar(R.string.settings_export_failure)
+        }
+    }
+
+    private fun clearSettings() {
+        val builder = MaterialAlertDialogBuilder(activity as Activity)
+        builder.setTitle(getString(R.string.action_delete))
+        builder.setMessage(getString(R.string.clean_settings))
+
+
+        builder.setPositiveButton(resources.getString(R.string.action_ok)){ _, _ ->
+            activity?.snackbar(R.string.settings_reseted)
+
+            val handler = Handler()
+            handler.postDelayed({
+                (activity?.getSystemService(ACTIVITY_SERVICE) as ActivityManager)
+                    .clearApplicationUserData()
+            }, 500)
+        }
+        builder.setNegativeButton(resources.getString(R.string.action_cancel)){ _, _ ->
+
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(true)
+        alertDialog.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val uri: Uri? = data?.data
+        if(requestCode == EXPORT_SETTINGS && resultCode == Activity.RESULT_OK) {
+            if(uri != null){
+                exportSettings(uri)
+            }
+        }
+        else if(requestCode == IMPORT_SETTINGS && resultCode == Activity.RESULT_OK) {
+            if(uri != null){
+                importSettings(uri)
             }
         }
     }
@@ -375,6 +466,12 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_EXPORT = "export_bookmark"
         private const val SETTINGS_IMPORT = "import_bookmark"
         private const val SETTINGS_DELETE_BOOKMARKS = "delete_bookmarks"
+        private const val SETTINGS_SETTINGS_EXPORT = "export_settings"
+        private const val SETTINGS_SETTINGS_IMPORT = "import_settings"
+        private const val SETTINGS_DELETE_SETTINGS = "clear_settings"
+
+        const val EXPORT_SETTINGS = 0
+        const val IMPORT_SETTINGS = 1
 
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }

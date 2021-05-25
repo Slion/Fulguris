@@ -115,7 +115,6 @@
     <string name="licenses">Open Source Lizenzen</string>
     <string name="suggestion">Suche nach</string>
     <string name="block_ads">Werbung blockieren</string>
-
     <string name="ssl_warning_dont_ask_again">Während dieser Sitzung nicht mehr nachfragen</string>
     <string name="message_insecure_connection">Die Verbindung zu dieser Seite ist nicht sicher:\n%1$s\nTrotzdem fortfahren?</string>
     <string name="message_certificate_date_invalid">Datum des Zertifikats ungültig</string>
@@ -124,6 +123,16 @@
     <string name="message_certificate_invalid">Zertifikat ungültig</string>
     <string name="message_certificate_not_yet_valid">Zertifikat noch nicht gültig</string>
     <string name="message_certificate_untrusted">Zertifikat nicht vertrauenswürdig</string>
+    <string name="import_export_settings">Importieren &amp; Exportieren</string>
+    <string name="reset_settings">Einstellungen zurücksetzen</string>
+    <string name="export_bookmarks">Lesezeichen exportieren</string>
+    <string name="import_backup">Lesezeichen importieren</string>
+    <string name="export_settings">Einstellungen exportieren</string>
+    <string name="import_settings">Einstellungen importieren</string>
+    <string name="settings_exported">Einstellungen exportiert:</string>
+    <string name="settings_reseted">Alle Einstellungen wiederhergestellt</string>
+    <string name="settings_export_failure">Einstellungen konnten nicht exportiert werden</string>
+    <string name="clean_settings">Hiermit werden alle Daten gelöscht, die Fulguris auf Ihrem Gerät gespeichert hat! Die App wird nach der Bestätigung beendet.</string>
 
     <!-- permissions request -->
     <string name="title_permission_request">Berechtigungs-Anfrage</string>
@@ -180,9 +189,7 @@
     <string name="title_file_chooser">Dateiauswahl</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
-    <string name="export_bookmarks">Exportiere Lesezeichen</string>
-    <string name="import_backup">Importiere Lesezeichen</string>
-    <string name="bookmark_export_path">Lesezeichen exportiert nach</string>
+    <string name="bookmark_export_path">Lesezeichen exportiert:</string>
     <string name="bookmark_export_failure">Lesezeichen konnten nicht exportiert werden</string>
     <string name="bookmark_settings">Lesezeichen</string>
     <string name="import_bookmark_error">Lesezeichen konnten nicht importiert werden</string>
@@ -237,7 +244,7 @@
     <string name="action_add_to_homescreen">Auf Startbildschirm legen</string>
     <string name="message_added_to_homescreen">Verknüpfung wurde zum Startbildschirm hinzugefügt</string>
     <string name="shortcut_message_failed_to_add">Ihr Launcher unterstützt keine Verknüpfungen!</string>
-    <string name="action_delete_all_bookmarks">Alle Lesezeichen löschen</string>
+    <string name="action_delete_all_bookmarks">Lesezeichen zurücksetzen</string>
     <string name="flash_not_supported">Flash Player wird von Ihrem System nicht unterstützt!</string>
     <string name="upsell_plus_version">Upgrade auf Lightning Plus um Werbung zu blockieren!</string>
     <string name="message_open_download_fail">Diese Datei existiert nicht mehr</string>

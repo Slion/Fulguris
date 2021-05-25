@@ -12,4 +12,18 @@
             android:key="delete_bookmarks"
             android:title="@string/action_delete_all_bookmarks"/>
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings">
+        <Preference
+            android:key="export_settings"
+            android:title="@string/export_settings"/>
+
+        <Preference
+            android:key="import_settings"
+            android:title="@string/import_settings"/>
+
+        <Preference
+            android:key="clear_settings"
+            android:title="@string/reset_settings"/>
+    </PreferenceCategory>
 </PreferenceScreen>
