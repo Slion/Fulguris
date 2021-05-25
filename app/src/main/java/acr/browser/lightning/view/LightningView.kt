@@ -351,7 +351,7 @@ class LightningView(
             webViewClient = lightningWebClient
             // We want to receive download complete notifications
             iDownloadListener = LightningDownloadListener(activity)
-            setDownloadListener(iDownloadListener.also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
+            setDownloadListener(LightningDownloadListener(activity))
             // For older devices show Tool Bar On Page Top won't work after fling to top.
             // Who cares? I mean those devices are probably from 2014 or older.
             val tl = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) TouchListener().also { setOnScrollChangeListener(it) } else TouchListenerLollipop()
@@ -837,11 +837,6 @@ class LightningView(
     // is removed and would cause a memory leak if the parent check
     // was not in place.
     fun destroy() {
-        //See: https://console.firebase.google.com/project/fulguris-b1f69/crashlytics/app/android:net.slions.fulguris.full.playstore/issues/ea99c7ea0c57f66eae6e95532a16859d
-        if (iDownloadListener!=null) {
-            activity.unregisterReceiver(iDownloadListener)
-            iDownloadListener = null
-        }
         networkDisposable.dispose()
         webView?.let {
             // Check to make sure the WebView has been removed
@@ -924,7 +919,7 @@ class LightningView(
             if (url != null) {
                 if (result != null) {
                     if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE || result.type == WebView.HitTestResult.IMAGE_TYPE) {
-                        dialogBuilder.showLongPressImageDialog(activity, uiController, url, userAgent)
+                        dialogBuilder.showLongPressImageDialog(activity, uiController, url, result.extra!!, userAgent)
                     } else {
                         dialogBuilder.showLongPressLinkDialog(activity, uiController, url, text)
                     }
@@ -933,7 +928,7 @@ class LightningView(
                 }
             } else if (newUrl != null) {
                 if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE || result.type == WebView.HitTestResult.IMAGE_TYPE) {
-                    dialogBuilder.showLongPressImageDialog(activity, uiController, newUrl, userAgent)
+                    dialogBuilder.showLongPressImageDialog(activity, uiController, newUrl, result.extra!!, userAgent)
                 } else {
                     dialogBuilder.showLongPressLinkDialog(activity, uiController, newUrl, text)
                 }

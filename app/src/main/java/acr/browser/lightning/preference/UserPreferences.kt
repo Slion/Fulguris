@@ -449,6 +449,11 @@ class UserPreferences @Inject constructor(
      */
     var menuShowNewTab by preferences.booleanPreference(R.string.pref_key_menu_show_new_tab, R.bool.pref_default_menu_show_new_tab)
 
+    /**
+     * Show download dialog before downloading a file
+     */
+    var showDownloadConfirmation by preferences.booleanPreference(R.string.pref_key_show_download_confirmation, R.bool.pref_default_show_download_confirmation)
+
 }
 
 // SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML
