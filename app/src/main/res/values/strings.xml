@@ -139,6 +139,14 @@
     <string name="message_updated">You are now running v%s. Do you want to check release notes online?</string>
     <string name="title_welcome">Welcome to Fulguris</string>
     <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
+    <string name="import_export_settings">Import &amp; Export</string>
+    <string name="settings_exported">Settings exported:</string>
+    <string name="settings_export_failure">Sorry, settings could not be exported!</string>
+    <string name="clean_settings">This will delete all data that Fulguris has stored on your device! The app will exit when you confirm it.</string>
+    <string name="settings_reseted">All settings restored</string>
+    <string name="import_settings">Import settings from backup</string>
+    <string name="export_settings">Export settings to backup</string>
+    <string name="reset_settings">Reset settings</string>
 
     <!-- Ad block -->
     <string name="block_ads">Block ads</string>
@@ -241,7 +249,7 @@
     <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="export_bookmarks">Export bookmarks to backup</string>
     <string name="import_backup">Import bookmarks from backup</string>
-    <string name="bookmark_export_path">Bookmarks exported to</string>
+    <string name="bookmark_export_path">Bookmarks exported:</string>
     <string name="bookmark_export_failure">Sorry, bookmarks could not be exported!</string>
     <string name="bookmark_settings">Bookmarks</string>
     <string name="import_bookmark_error">Could not import bookmarks from file</string>

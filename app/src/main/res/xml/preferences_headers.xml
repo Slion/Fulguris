@@ -26,9 +26,9 @@
         app:icon="@drawable/ic_block" />
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.BookmarkSettingsFragment"
-        app:title="@string/bookmark_settings"
-        app:icon="@drawable/ic_bookmarks" />
+        app:fragment="acr.browser.lightning.settings.fragment.ImportExportSettingsFragment"
+        app:title="@string/import_export_settings"
+        app:icon="@drawable/ic_import_export" />
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.PrivacySettingsFragment"
