@@ -695,6 +695,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBindingToolbarContent.homeButton.isVisible = true
             iBinding.toolbarInclude.tabBarContainer.isVisible = true
         }
+
+        iBindingToolbarContent.tabsButton.setOnLongClickListener {
+            presenter?.newTab(homePageInitializer, true)
+            true
+        }
     }
 
     /**
