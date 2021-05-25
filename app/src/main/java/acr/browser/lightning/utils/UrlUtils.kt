@@ -26,11 +26,14 @@ import acr.browser.lightning.html.download.DownloadPageFactory
 import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import android.net.Uri
+import android.os.Environment
 import android.util.Patterns
 import android.webkit.MimeTypeMap
 import android.webkit.URLUtil
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.UnsupportedEncodingException
 import java.util.*
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 /**
@@ -51,7 +54,7 @@ fun smartUrlFilter(url: String, canBeSearch: Boolean, searchUrl: String): Pair<S
     if (matcher.matches()) {
         // force scheme to lowercase
         val scheme = requireNotNull(matcher.group(1)) { "matches() implies this is non null" }
-        val lcScheme = scheme.toLowerCase(Locale.getDefault())
+        val lcScheme = scheme.lowercase(Locale.getDefault())
         if (lcScheme != scheme) {
             inUrl = lcScheme + matcher.group(2)
         }
@@ -163,127 +166,222 @@ private val ACCEPTED_URI_SCHEMA = Pattern.compile("(?i)((?:http|https|file)://|(
 const val QUERY_PLACE_HOLDER = "%s"
 private const val URL_ENCODED_SPACE = "%20"
 
-/**
- * SL: Copied from WebKit URLUtil.java
- *
- * Guesses canonical filename that a download would have, using
- * the URL and contentDisposition. File extension, if not defined,
- * is added based on the mimetype
- * @param url Url to the content
- * @param contentDisposition Content-Disposition HTTP header or {@code null}
- * @param mimeType Mime-type of the content or {@code null}
- *
- * @return suggested filename
- */
-fun guessFileName(
-        url: String?,
-        contentDisposition: String?,
-        mimeType: String?): String {
-    var filename: String? = null
-    var extension: String? = null
+private const val contentDispositionType = "(inline|attachment)\\s*;"
+private const val contentDispositionFileNameAsterisk = "\\s*filename\\*\\s*=\\s*(utf-8|iso-8859-1)'[^']*'(\\S*)"
+private val contentDispositionPattern = Pattern.compile("$contentDispositionType\\s*filename\\s*=\\s*(\"((?:\\\\.|[^\"\\\\])*)\"|[^;]*)\\s*(?:;$contentDispositionFileNameAsterisk)?", Pattern.CASE_INSENSITIVE)
+private val fileNameAsteriskContentDispositionPattern = Pattern.compile(contentDispositionType + contentDispositionFileNameAsterisk, Pattern.CASE_INSENSITIVE)
+private const val ENCODED_FILE_NAME_GROUP = 5
+private const val ENCODING_GROUP = 4
+private const val QUOTED_FILE_NAME_GROUP = 3
+private const val UNQUOTED_FILE_NAME = 2
+private const val ALTERNATIVE_FILE_NAME_GROUP = 3
+private const val ALTERNATIVE_ENCODING_GROUP = 2
+private val encodedSymbolPattern = Pattern.compile("%[0-9a-f]{2}|[0-9a-z!#$&+-.^_`|~]", Pattern.CASE_INSENSITIVE)
 
-    // If we couldn't do anything with the hint, move toward the content disposition
-    if (filename == null && contentDisposition != null) {
-        filename = parseContentDisposition(contentDisposition)
-        if (filename != null) {
-            val index = filename.lastIndexOf('/') + 1
-            if (index > 0) {
-                filename = filename.substring(index)
-            }
+private val GENERIC_CONTENT_TYPES = arrayOf(
+    "application/octet-stream",
+    "binary/octet-stream",
+    "application/unknown"
+)
+
+@Suppress("DEPRECATION")
+fun guessFileName(
+    contentDisposition: String?,
+    destinationDirectory: String?,
+    url: String?,
+    mimeType: String?
+): String {
+    // Split fileName between base and extension
+    // Add an extension if filename does not have one
+    val extractedFileName = extractFileNameFromUrl(contentDisposition, url)
+    val sanitizedMimeType = sanitizeMimeType(mimeType)
+
+    val fileName = if (extractedFileName.contains('.')) {
+        if (GENERIC_CONTENT_TYPES.contains(mimeType)) {
+            extractedFileName
+        } else {
+            changeExtension(extractedFileName, sanitizedMimeType)
         }
+    } else {
+        extractedFileName + createExtension(sanitizedMimeType)
+    }
+
+    return destinationDirectory?.let {
+        uniqueFileName(Environment.getExternalStoragePublicDirectory(destinationDirectory), fileName)
+    } ?: fileName
+}
+
+// Some site add extra information after the mimetype, for example 'application/pdf; qs=0.001'
+// we just want to extract the mimeType and ignore the rest.
+fun sanitizeMimeType(mimeType: String?): String? {
+    return (if (mimeType != null) {
+        if (mimeType.contains(";")) {
+            mimeType.substringBefore(";")
+        } else {
+            mimeType
+        }
+    } else {
+        null
+    })?.trim()
+}
+
+/**
+ * Checks if the file exists so as not to overwrite one already in the destination directory
+ */
+fun uniqueFileName(directory: File, fileName: String): String {
+    var fileExtension = ".${fileName.substringAfterLast(".")}"
+
+    // Check if an extension was found or not
+    if (fileExtension == ".$fileName") { fileExtension = "" }
+
+    val baseFileName = fileName.replace(fileExtension, "")
+
+    var potentialFileName = File(directory, fileName)
+    var copyVersionNumber = 1
+
+    while (potentialFileName.exists()) {
+        potentialFileName = File(directory, "$baseFileName($copyVersionNumber)$fileExtension")
+        copyVersionNumber += 1
+    }
+
+    return potentialFileName.name
+}
+
+private fun extractFileNameFromUrl(contentDisposition: String?, url: String?): String {
+    var filename: String? = null
+
+    // Extract file name from content disposition header field
+    if (contentDisposition != null) {
+        filename = parseContentDisposition(contentDisposition)?.substringAfterLast('/')
     }
 
     // If all the other http-related approaches failed, use the plain uri
     if (filename == null) {
-        var decodedUrl = Uri.decode(url)
-        if (decodedUrl != null) {
-            val queryIndex = decodedUrl.indexOf('?')
-            // If there is a query string strip it, same as desktop browsers
-            if (queryIndex > 0) {
-                decodedUrl = decodedUrl.substring(0, queryIndex)
-            }
-            if (!decodedUrl.endsWith("/")) {
-                val index = decodedUrl.lastIndexOf('/') + 1
-                if (index > 0) {
-                    filename = decodedUrl.substring(index)
-                }
-            }
+        // If there is a query string strip it, same as desktop browsers
+        val decodedUrl: String? = Uri.decode(url)?.substringBefore('?')
+        if (decodedUrl?.endsWith('/') == false) {
+            filename = decodedUrl.substringAfterLast('/')
         }
     }
 
     // Finally, if couldn't get filename from URI, get a generic filename
     if (filename == null) {
-        filename = "downloadfile"
+        filename = "unknown"
     }
 
-    // Split filename between base and extension
-    // Add an extension if filename does not have one
-    val dotIndex = filename.lastIndexOf('.')
-    if (dotIndex < 0) {
-        if (mimeType != null) {
-            extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
-            if (extension != null) {
-                extension = ".$extension"
-            }
-        }
-        if (extension == null) {
-            extension = if (mimeType != null && mimeType.toLowerCase(Locale.ROOT).startsWith("text/")) {
-                if (mimeType.equals("text/html", ignoreCase = true)) {
-                    ".html"
-                } else {
-                    ".txt"
-                }
-            } else {
-                ".bin"
-            }
-        }
-    } else {
-        if (mimeType != null) {
-            // Compare the last segment of the extension against the mime type.
-            // If there's a mismatch, discard the entire extension.
-            val lastDotIndex = filename.lastIndexOf('.')
-            val typeFromExt = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                    filename.substring(lastDotIndex + 1))
-            if (typeFromExt != null && !typeFromExt.equals(mimeType, ignoreCase = true) && !"application/octet-stream".equals(mimeType, ignoreCase = true)) {
-                extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
-                if (extension != null) {
-                    extension = ".$extension"
-                }
-            }
-        }
-        if (extension == null) {
-            extension = filename.substring(dotIndex)
-        }
-        filename = filename.substring(0, dotIndex)
-    }
-    return filename + extension
+    return filename
 }
 
-/** Regex used to parse content-disposition headers  */
-private val CONTENT_DISPOSITION_PATTERN = Pattern.compile("attachment;\\s*filename\\s*=\\s*(\"?)([^\"]*)\\1\\s*$",
-        Pattern.CASE_INSENSITIVE)
-
-
-/**
- * SL: Copied from WebKit URLUtil.java
- *
- * Parse the Content-Disposition HTTP Header. The format of the header
- * is defined here: http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html
- * This header provides a filename for content that is going to be
- * downloaded to the file system. We only support the attachment type.
- * Note that RFC 2616 specifies the filename value must be double-quoted.
- * Unfortunately some servers do not quote the value so to maintain
- * consistent behaviour with other browsers, we allow unquoted values too.
- */
-fun parseContentDisposition(contentDisposition: String?): String? {
-    try {
-        val m: Matcher = CONTENT_DISPOSITION_PATTERN.matcher(contentDisposition)
-        if (m.find()) {
-            return m.group(2)
-        }
+private fun parseContentDisposition(contentDisposition: String): String? {
+    return try {
+        parseContentDispositionWithFileName(contentDisposition)
+            ?: parseContentDispositionWithFileNameAsterisk(contentDisposition)
     } catch (ex: IllegalStateException) {
         // This function is defined as returning null when it can't parse the header
+        null
+    } catch (ex: UnsupportedEncodingException) {
+        // Do nothing
+        null
     }
-    return null
 }
 
+private fun parseContentDispositionWithFileName(contentDisposition: String): String? {
+    val m = contentDispositionPattern.matcher(contentDisposition)
+    return if (m.find()) {
+        val encodedFileName = m.group(ENCODED_FILE_NAME_GROUP)
+        val encoding = m.group(ENCODING_GROUP)
+        if (encodedFileName != null && encoding != null) {
+            decodeHeaderField(encodedFileName, encoding)
+        } else {
+            // Return quoted string if available and replace escaped characters.
+            val quotedFileName = m.group(QUOTED_FILE_NAME_GROUP)
+            quotedFileName?.replace("\\\\(.)".toRegex(), "$1")
+                ?: m.group(UNQUOTED_FILE_NAME)
+        }
+    } else {
+        null
+    }
+}
+
+private fun parseContentDispositionWithFileNameAsterisk(contentDisposition: String): String? {
+    val alternative = fileNameAsteriskContentDispositionPattern.matcher(contentDisposition)
+
+    return if (alternative.find()) {
+        val encoding = alternative.group(ALTERNATIVE_ENCODING_GROUP) ?: return null
+        val fileName = alternative.group(ALTERNATIVE_FILE_NAME_GROUP) ?: return null
+        decodeHeaderField(fileName, encoding)
+    } else {
+        null
+    }
+}
+
+private fun decodeHeaderField(field: String, encoding: String): String {
+    val m = encodedSymbolPattern.matcher(field)
+    val stream = ByteArrayOutputStream()
+
+    while (m.find()) {
+        val symbol = m.group()
+
+        if (symbol.startsWith("%")) {
+            stream.write(symbol.substring(1).toInt(radix = 16))
+        } else {
+            stream.write(symbol[0].code)
+        }
+    }
+
+    return stream.toString(encoding)
+}
+
+/**
+ * Compare the filename extension with the mime type and change it if necessary.
+ */
+private fun changeExtension(filename: String, mimeType: String?): String {
+    var extension: String? = null
+    val dotIndex = filename.lastIndexOf('.')
+
+    if (mimeType != null) {
+        val mimeTypeMap = MimeTypeMap.getSingleton()
+        // Compare the last segment of the extension against the mime type.
+        // If there's a mismatch, discard the entire extension.
+        val typeFromExt = mimeTypeMap.getMimeTypeFromExtension(filename.substringAfterLast('.'))
+        if (typeFromExt?.equals(mimeType, ignoreCase = true) != false) {
+            extension = mimeTypeMap.getExtensionFromMimeType(mimeType)?.let { ".$it" }
+            // Check if the extension needs to be changed
+            if (extension != null && filename.endsWith(extension, ignoreCase = true)) {
+                return filename
+            }
+        }
+    }
+
+    return if (extension != null) {
+        filename.substring(0, dotIndex) + extension
+    } else {
+        filename
+    }
+}
+
+/**
+ * Guess the extension for a file using the mime type.
+ */
+private fun createExtension(mimeType: String?): String {
+    var extension: String? = null
+
+    if (mimeType != null) {
+        extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)?.let { ".$it" }
+    }
+    if (extension == null) {
+        extension = if (mimeType?.startsWith("text/", ignoreCase = true) == true) {
+            // checking startsWith to ignoring encoding value such as "text/html; charset=utf-8"
+            if (mimeType.startsWith("text/html", ignoreCase = true)) {
+                ".html"
+            } else {
+                ".txt"
+            }
+        } else {
+            // If there's no mime type assume binary data
+            ".bin"
+        }
+    }
+
+    return extension
+}

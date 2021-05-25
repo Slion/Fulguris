@@ -24,6 +24,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.ClipboardManager
 import android.view.View
+import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
@@ -35,6 +36,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Reusable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -337,6 +339,7 @@ class LightningDialogBuilder @Inject constructor(
             activity: Activity,
             uiController: UIController,
             url: String,
+            imageUrl: String,
             userAgent: String
     ) = BrowserDialog.show(activity, url.replace(HTTP, ""),
             DialogItem(title = R.string.dialog_open_new_tab) {
@@ -358,17 +361,14 @@ class LightningDialogBuilder @Inject constructor(
                 clipboardManager.copyToClipboard(url)
             },
             DialogItem(title = R.string.dialog_download_image) {
-                // Ask for required permissions before starting our download
-                PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        object : PermissionsResultAction() {
-                            override fun onGranted() {
-                                downloadHandler.onDownloadStart(activity, userPreferences, url, userAgent, "attachment", null, "")
-                            }
-                            override fun onDenied(permission: String) {
-                                //TODO show message
-                            }
-                        })
-            })
+                val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(imageUrl).lowercase(Locale.ROOT))
+
+                if (mimeType != null) {
+                downloadHandler.onDownloadStartNoStream(activity, userPreferences, imageUrl, userAgent, "attachment", mimeType)
+                } else {
+                downloadHandler.onDownloadStartNoStream(activity, userPreferences, imageUrl, userAgent, "attachment", "image/png")
+            }
+        })
 
     fun showLongPressLinkDialog(
             activity: Activity,

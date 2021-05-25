@@ -114,6 +114,7 @@
     <string name="download_sdcard_busy_dlg_msg">The storage is busy. To allow downloads, touch \'Turn Off USB Storage\' in the notification.</string>
     <string name="download_complete">Download complete</string>
     <string name="download_failed">Download failed</string>
+    <string name="dont_ask_again">Don\'t ask again</string>
     <string name="incognito_cookies">Enable cookies in incognito mode</string>
     <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
     <string name="title_flash">Adobe Flash</string>
