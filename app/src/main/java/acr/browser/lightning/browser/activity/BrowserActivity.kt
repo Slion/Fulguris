@@ -609,11 +609,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             proxyUtils.checkForProxy(this)
         }
 
-        if (userPreferences.lockedDrawers) {
-            //TODO: make this a settings option?
-            // Drawers are full screen and locked for this flavor so as to avoid closing them when scrolling through tabs
-            lockDrawers()
-        }
         // Enable swipe to refresh
         iBinding.contentFrame.setOnRefreshListener {
             tabsManager.currentTab?.reload()
@@ -2078,7 +2073,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             restart()
         }
 
-        if (userPreferences.lockedDrawers) {
+        if (userPreferences.lockedDrawers
+            // We need to lock our drawers when using bottom sheets
+            // See: https://github.com/Slion/Fulguris/issues/192
+            || userPreferences.useBottomSheets) {
             lockDrawers()
         }
         else {
