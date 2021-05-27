@@ -9,6 +9,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.database.HostsList
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.injector
@@ -170,6 +171,8 @@ class LightningView(
             }
         }
 
+    val desktopModeList = HostsList(activity.applicationContext, HostsList.DESKTOP_MODE)
+
     /**
      *
      */
@@ -178,6 +181,8 @@ class LightningView(
             field = aDarkMode
             applyDarkMode();
         }
+
+    val darkModeList = HostsList(activity.applicationContext, HostsList.DARK_MODE)
 
     /**
      *
@@ -302,8 +307,8 @@ class LightningView(
             //TODO: it looks like our special URLs don't get frozen for some reason
             createWebView()
             initializeContent(tabInitializer)
-            desktopMode = userPreferences.desktopModeDefault
-            darkMode = userPreferences.darkModeDefault
+            desktopMode = desktopModeList.get(tabInitializer.url(), userPreferences.desktopModeDefault)
+            darkMode = darkModeList.get(tabInitializer.url(), userPreferences.darkModeDefault)
         } else {
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer
@@ -593,6 +598,16 @@ class LightningView(
     fun toggleDesktopUserAgent() {
         // Toggle desktop mode
         desktopMode = !desktopMode
+        if (desktopMode != userPreferences.desktopModeDefault)
+            desktopModeList.add(url, desktopMode)
+        else
+            desktopModeList.remove(url)
+    }
+
+    fun updateDesktopMode() {
+        val newDesktopMode = desktopModeList.get(url, userPreferences.desktopModeDefault)
+        if (newDesktopMode != desktopMode)
+            desktopMode = newDesktopMode
     }
 
     /**
@@ -601,8 +616,17 @@ class LightningView(
     fun toggleDarkMode() {
         // Toggle dark mode
         darkMode = !darkMode
+        if (darkMode != userPreferences.darkModeDefault)
+            darkModeList.add(url, darkMode)
+        else
+            darkModeList.remove(url)
     }
 
+    fun updateDarkMode() {
+        val newDarkMode = darkModeList.get(url, userPreferences.darkModeDefault)
+        if (newDarkMode != darkMode)
+            darkMode = newDarkMode
+    }
 
     /**
      * This method sets the user agent of the current tab based on the user's preference

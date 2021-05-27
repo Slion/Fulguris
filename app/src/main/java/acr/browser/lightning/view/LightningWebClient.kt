@@ -178,6 +178,8 @@ class LightningWebClient(
      */
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         currentUrl = url
+        lightningView.updateDarkMode()
+        lightningView.updateDesktopMode()
         // Only set the SSL state if there isn't an error for the current URL.
         if (urlWithSslError != url) {
             sslState = if (URLUtil.isHttpsUrl(url)) {
