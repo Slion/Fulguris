@@ -189,7 +189,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
     private void doDownloadStart(@NonNull final String url, final String userAgent,
                                  final String contentDisposition, final String mimetype, final long contentLength)
     {
-        final String fileName = guessFileName(url, contentDisposition, mimetype);
+        final String fileName = guessFileName(url, contentDisposition, mimetype, null);
         final String downloadSize;
 
         if (contentLength > 0) {

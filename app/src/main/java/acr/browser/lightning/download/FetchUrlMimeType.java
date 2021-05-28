@@ -100,7 +100,7 @@ class FetchUrlMimeType {
                         mRequest.setMimeType(newMimeType);
                     }
                 }
-                res.iFilename = guessFileName(mUri, contentDisposition, mimeType);
+                res.iFilename = guessFileName(mUri, contentDisposition, mimeType, null);
                 mRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, res.iFilename);
             }
 

@@ -186,7 +186,7 @@ public class DownloadHandler {
     private void onDownloadStartNoStream(@NonNull final Activity context, @NonNull UserPreferences preferences,
                                          @NonNull String url, String userAgent,
                                          String contentDisposition, @Nullable String mimetype, @NonNull String contentSize) {
-        iFilename = guessFileName(url, contentDisposition, mimetype);
+        iFilename = guessFileName(url, contentDisposition, mimetype, null);
 
         BrowserActivity ba = (BrowserActivity)context;
 
