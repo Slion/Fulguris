@@ -9,7 +9,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
-import acr.browser.lightning.database.HostsList
+import acr.browser.lightning.database.DomainSettings
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.injector
@@ -171,8 +171,6 @@ class LightningView(
             }
         }
 
-    val desktopModeList = HostsList(activity.applicationContext, HostsList.DESKTOP_MODE)
-
     /**
      *
      */
@@ -182,7 +180,8 @@ class LightningView(
             applyDarkMode();
         }
 
-    val darkModeList = HostsList(activity.applicationContext, HostsList.DARK_MODE)
+    val domainSettings: DomainSettings
+	get() = DomainSettings(activity.applicationContext, url) // url or iTargetUrl?
 
     /**
      *
@@ -307,8 +306,8 @@ class LightningView(
             //TODO: it looks like our special URLs don't get frozen for some reason
             createWebView()
             initializeContent(tabInitializer)
-            desktopMode = desktopModeList.get(tabInitializer.url(), userPreferences.desktopModeDefault)
-            darkMode = darkModeList.get(tabInitializer.url(), userPreferences.darkModeDefault)
+            desktopMode = domainSettings.get(DomainSettings.DESKTOP_MODE, userPreferences.desktopModeDefault)
+            darkMode = domainSettings.get(DomainSettings.DARK_MODE, userPreferences.darkModeDefault)
         } else {
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer
@@ -599,13 +598,13 @@ class LightningView(
         // Toggle desktop mode
         desktopMode = !desktopMode
         if (desktopMode != userPreferences.desktopModeDefault)
-            desktopModeList.add(url, desktopMode)
+            domainSettings.set(DomainSettings.DESKTOP_MODE, desktopMode)
         else
-            desktopModeList.remove(url)
+            domainSettings.remove(DomainSettings.DESKTOP_MODE)
     }
 
     fun updateDesktopMode() {
-        val newDesktopMode = desktopModeList.get(url, userPreferences.desktopModeDefault)
+        val newDesktopMode = domainSettings.get(DomainSettings.DESKTOP_MODE, userPreferences.darkModeDefault)
         if (newDesktopMode != desktopMode)
             desktopMode = newDesktopMode
     }
@@ -617,13 +616,13 @@ class LightningView(
         // Toggle dark mode
         darkMode = !darkMode
         if (darkMode != userPreferences.darkModeDefault)
-            darkModeList.add(url, darkMode)
+            domainSettings.set(DomainSettings.DARK_MODE, darkMode)
         else
-            darkModeList.remove(url)
+            domainSettings.remove(DomainSettings.DARK_MODE)
     }
 
     fun updateDarkMode() {
-        val newDarkMode = darkModeList.get(url, userPreferences.darkModeDefault)
+        val newDarkMode = domainSettings.get(DomainSettings.DARK_MODE, userPreferences.darkModeDefault)
         if (newDarkMode != darkMode)
             darkMode = newDarkMode
     }
