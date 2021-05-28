@@ -24,6 +24,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.ClipboardManager
 import android.view.View
+import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
@@ -35,6 +36,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Reusable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -362,7 +364,10 @@ class LightningDialogBuilder @Inject constructor(
                 PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
                         object : PermissionsResultAction() {
                             override fun onGranted() {
-                                downloadHandler.onDownloadStart(activity, userPreferences, url, userAgent, "attachment", null, "")
+                                val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(url).lowercase(Locale.ROOT))
+                                // Not sure why we should use PNG by default though.
+                                // TODO: I think we have some code somewhere that can download something and then check its mime type from its content.
+                                downloadHandler.onDownloadStart(activity, userPreferences, url, userAgent, "attachment", mimeType?:"image/png", "")
                             }
                             override fun onDenied(permission: String) {
                                 //TODO show message
