@@ -100,8 +100,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:srcCompat="@drawable/ic_lightning"
-        android:contentDescription="@string/action_more"
-        app:tooltipText="@{@string/action_more}"
+        android:contentDescription="@string/action_menu"
+        app:tooltipText="@{@string/action_menu}"
         android:nextFocusDown="@id/web_view"
         />
 
