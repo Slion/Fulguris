@@ -330,6 +330,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     // Used to avoid running that too many times, by keeping a reference to it we can cancel that runnable
     //  That works around graphical glitches happening when run too many times
     var onSizeChangeRunnable : Runnable = Runnable {};
+    // Used to cancel that runnable as needed
+    private var resetBackgroundColorRunnable : Runnable = Runnable {};
 
     /**
      * Used for both tabs and bookmarks.
@@ -363,7 +365,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Since we keep recreating our dialogs every time we open them we should not accumulate observers here
         (aContentView.parent as View).onSizeChange {
             // This is designed so that callbacks are cancelled unless our timeout expires
-            // That avoids spamming adjustBottomSheet while our view is animated our dragged
+            // That avoids spamming adjustBottomSheet while our view is animated or dragged
             mainHandler.removeCallbacks(onSizeChangeRunnable)
             onSizeChangeRunnable = Runnable {adjustBottomSheet(dialog)};
             mainHandler.postDelayed(onSizeChangeRunnable, 100)
@@ -2219,21 +2221,36 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Color also applies to the following backgrounds as they show during tool bar show/hide animation
         iBinding.uiLayout.setBackgroundColor(color)
         iBinding.contentFrame.setBackgroundColor(color)
-        // Now also set WebView background color otherwise it is just white and we don't want that.
-        // This one is going to be a problem as it will break some websites such as bbc.com.
-        // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color.
-        // TODO: Do we really need to invalidate here?
-        if (iBinding.toolbarInclude.progressView.progress >= 100) {
-            // We delay that to avoid some web sites including default startup page to flash white on app startup
-            mainHandler.postDelayed({
-                currentTabView?.setBackgroundColor(Color.WHITE)
-                currentTabView?.invalidate()
-            }, 500);
-        } else {
-            currentTabView?.setBackgroundColor(color)
-            currentTabView?.invalidate()
-        }
 
+
+        val webViewEx: WebViewEx? = currentTabView as? WebViewEx
+
+        webViewEx?.let {
+            // Now also set WebView background color otherwise it is just white and we don't want that.
+            // This one is going to be a problem as it will break some websites such as bbc.com.
+            // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color.
+            if (iBinding.toolbarInclude.progressView.progress >= 100
+                // Don't reset background color back to white on empty urls, that prevents displaying large empty white pages and blinding users in dark mode.
+                // When opening some download links a tab is spawned first with the download URL and later that URL is set back to null.
+                // Luckily our delayed call and the absence of invalidate prevents a flicker to white screen.
+                && !webViewEx.url.isNullOrBlank()) {
+                // We delay that to avoid some web sites including default startup page to flash white on app startup
+                mainHandler.removeCallbacks(resetBackgroundColorRunnable)
+                resetBackgroundColorRunnable = Runnable {
+                    webViewEx.setBackgroundColor(Color.WHITE)
+                    // We do not want to apply that color on the spot though.
+                    // It does not make sense anyway since it is a delayed call.
+                    // It also still causes a flicker notably when a tab is spawned by a download link.
+                    //webViewEx.invalidate()
+                }
+                mainHandler.postDelayed(resetBackgroundColorRunnable, 500);
+            } else {
+                mainHandler.removeCallbacks(resetBackgroundColorRunnable)
+                webViewEx.setBackgroundColor(color)
+                // Make sure that color is applied on the spot for earlier color change when loading tabs
+                webViewEx.invalidate()
+            }
+        }
 
         // No animation for now
         // Toolbar background color

@@ -1,6 +1,7 @@
 package acr.browser.lightning.view
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
 import android.print.PrintJob
@@ -8,6 +9,7 @@ import android.print.PrintManager
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.webkit.WebView
+import androidx.annotation.ColorInt
 
 /**
  * Specialising  WebView could be useful at some point.
@@ -33,6 +35,14 @@ class WebViewEx : WebView {
 
         return super.dispatchKeyEvent(event)
     }
+
+    /**
+     * We use that to debug our beautiful color mess.
+     */
+    override fun setBackgroundColor(@ColorInt color: Int) {
+        super<WebView>.setBackgroundColor(color)
+    }
+
 
     /**
      * Start a print job, thus notably enabling saving a web page as PDF.
