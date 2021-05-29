@@ -184,6 +184,12 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                     //TODO show message
                 }
             });
+
+        // Some download link spawn an empty tab, just close it then
+        if (mActivity instanceof BrowserActivity) {
+            ((BrowserActivity)mActivity).closeCurrentTabIfEmpty();
+        }
+
     }
 
     private void doDownloadStart(@NonNull final String url, final String userAgent,
