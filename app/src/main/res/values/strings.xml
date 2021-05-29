@@ -259,7 +259,7 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landscape</string>
     <string name="pref_category_portrait">Portrait</string>
-    <string name="pref_category_menu">Menu</string>
+    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_title_hide_status_bar">Hide status bar</string>
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
