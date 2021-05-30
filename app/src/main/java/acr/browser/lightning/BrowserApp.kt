@@ -8,6 +8,7 @@ import acr.browser.lightning.di.AppComponent
 import acr.browser.lightning.di.DaggerAppComponent
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.injector
+import acr.browser.lightning.locale.LocaleAwareApplication
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.preference.DeveloperPreferences
 import acr.browser.lightning.utils.FileUtils
@@ -29,7 +30,7 @@ import io.reactivex.plugins.RxJavaPlugins
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
-class BrowserApp : Application() {
+class BrowserApp : LocaleAwareApplication() {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
     @Inject internal lateinit var bookmarkModel: BookmarkRepository

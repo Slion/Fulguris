@@ -10,6 +10,8 @@ import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.isSupported
+import acr.browser.lightning.locale.LocaleManager
+import acr.browser.lightning.locale.Locales
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.preference.userAgent
 import acr.browser.lightning.search.SearchEngineProvider
@@ -25,13 +27,17 @@ import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
 import android.text.InputFilter
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.webkit.URLUtil
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.preference.ListPreference
+import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -123,6 +129,33 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     }
                 }
         )
+
+        // Handle locale language selection
+        findPreference<ListPreference>(getString(R.string.pref_key_locale))?.apply {
+            onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { _, aNewLocale: Any ->
+                    // User selected a new locale
+                    val newLocaleId = aNewLocale as String
+                    LocaleManager.getInstance().apply {
+                        val newLocale: Locale?
+                        if (TextUtils.isEmpty(newLocaleId)) {
+                            // Reset back to system default
+                            resetToSystemLocale(activity)
+                            newLocale = getCurrentLocale(activity)
+                        } else {
+                            // Apply selected locale
+                            newLocale = Locales.parseLocaleCode(newLocaleId)
+                            setSelectedLocale(activity, newLocaleId)
+                        }
+                        // Update app configuration with selected locale
+                        updateConfiguration(activity, newLocale)
+                    }
+
+                    // Reload our activity
+                    requireActivity().recreate()
+                    true
+                }
+        }
     }
 
     /**

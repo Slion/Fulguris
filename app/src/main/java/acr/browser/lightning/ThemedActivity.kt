@@ -4,6 +4,7 @@ import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.setStatusBarIconsColor
+import acr.browser.lightning.locale.LocaleAwareAppCompatActivity
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.utils.foregroundColorFromBackgroundColor
@@ -20,7 +21,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.iterator
 import javax.inject.Inject
 
-abstract class ThemedActivity : AppCompatActivity() {
+abstract class ThemedActivity : LocaleAwareAppCompatActivity() {
 
     // TODO reduce protected visibility
     @Inject lateinit var userPreferences: UserPreferences
@@ -86,4 +87,18 @@ abstract class ThemedActivity : AppCompatActivity() {
                 || (themeId == AppTheme.DEFAULT && mode == Configuration.UI_MODE_NIGHT_YES)
     }
 
+    /**
+     * Using this instead of recreate() because it does not work when handling resource changes I guess.
+     */
+    protected fun restart() {
+        finish()
+        startActivity(Intent(this, javaClass))
+    }
+
+    /**
+     * From LocaleAwareAppCompatActivity
+     */
+    override fun applyLocale() {
+        restart()
+    }
 }

@@ -34,13 +34,6 @@ abstract class ThemedBrowserActivity : ThemedActivity() {
         }
     }
 
-    /**
-     * Using this instead of recreate() because it does not work when handling resource changes I guess.
-     */
-    protected fun restart() {
-        finish()
-        startActivity(Intent(this, javaClass))
-    }
 
     /**
      * From ThemedActivity

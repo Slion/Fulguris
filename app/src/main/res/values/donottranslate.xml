@@ -67,6 +67,10 @@
     <string name="pref_key_sponsorship">pref_key_sponsorship</string>
     <string name="pref_key_version_code">pref_key_version_code</string>
 
+
+    <string name="pref_key_locale">pref_key_locale</string>
+
+
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>
     <string name="new_tab_position_after_value">AFTER_CURRENT_TAB</string>

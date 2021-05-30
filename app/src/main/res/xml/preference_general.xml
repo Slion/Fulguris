@@ -2,6 +2,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Empty default: we use an empty string to indicate "system default" language being selected -->
+    <!--suppress AndroidDomInspection -->
+    <acr.browser.lightning.preference.LocaleListPreference
+        android:defaultValue=""
+        android:key="@string/pref_key_locale"
+        android:title="@string/pref_title_language"
+        app:icon="@drawable/ic_translate" />
+
     <Preference
         android:key="home"
         android:title="@string/home"
