@@ -123,11 +123,7 @@
     <string name="block_remote_frequency_weekly">每周</string>
     <string name="block_remote_frequency_monthly">每月</string>
 
-    <string-array name="block_ad_frequency_list">
-        <item>@string/block_remote_frequency_daily</item>
-        <item>@string/block_remote_frequency_weekly</item>
-        <item>@string/block_remote_frequency_monthly</item>
-    </string-array>
+
 
     <string name="block_source_default">默认 Hosts</string>
     <string name="block_source_local">本地 Hosts 文件</string>
@@ -135,13 +131,7 @@
     <string name="block_source_remote">远程 Hosts 文件</string>
     <string name="block_source_remote_description">URL: %1$s</string>
 
-    <string-array name="block_ad_source_list">
-        <item>@string/block_source_default</item>
-        <item>@string/block_source_local</item>
-        <item>@string/block_source_remote</item>
-    </string-array>
-
-    <!-- Common actions -->
+<!-- Common actions -->
     <string name="action_message_canceled">操作已取消</string>
 
     <!-- SSL warnings -->

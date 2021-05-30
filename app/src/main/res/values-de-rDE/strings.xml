@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-
+    <string name="action_reload">Neu laden</string>
+    <string name="action_menu">Menü</string>
     <string name="action_new_tab">Neuer Tab</string>
     <string name="action_share">Teilen</string>
     <string name="action_history">Verlauf</string>
@@ -9,6 +10,10 @@
     <string name="action_add_bookmark">Lesezeichen hinzufügen</string>
     <string name="action_copy">Link kopieren</string>
     <string name="action_forward">Weiter</string>
+    <string name="action_sessions">Sitzungen</string>
+    <string name="action_new_session">Neue Sitzung</string>
+    <string name="action_save_session">Sitzung speichern als</string>
+    <string name="action_edit_sessions">Sitzungen bearbeiten</string>
     <string name="settings">Einstellungen</string>
     <string name="location">Standortzugriff erlauben</string>
     <string name="password">Passwörter speichern</string>
@@ -20,10 +25,15 @@
     <string name="download">Download-Verzeichnis</string>
     <string name="settings_advanced">Erweitert</string>
     <string name="apache">Apache License 2.0</string>
-    <string name="version">Programmversion</string>
+    <string name="version">App-Version</string>
+    <string name="update_available">Aktualisierung verfügbar</string>
+    <string name="update_check_error">Aktualisierungs-Prüffehler, versuche es später erneut</string>
+    <string name="up_to_date">Dies ist die neueste Version</string>
+    <string name="show">Zeigen</string>
     <string name="cache">Cache beim Beenden löschen</string>
     <string name="reflow">Textfluss anpassen</string>
     <string name="block">Bilder blockieren</string>
+    <string name="load_images">Bilder laden</string>
     <string name="window">Seiten erlauben einen neuen Tab zu öffnen</string>
     <string name="cookies">Cookies erlauben</string>
     <string name="size">Textgröße</string>
@@ -54,14 +64,15 @@
     <string name="agent_desktop">Desktop</string>
     <string name="agent_mobile">Mobile</string>
     <string name="agent_custom">Benutzerdefiniert</string>
+    <string name="agent_system">System</string>
+    <string name="agent_web_view">WebView</string>
     <string name="title_search_engine">Suchmaschine</string>
-    <string name="action_ok">Ok</string>
+    <string name="action_ok">OK</string>
     <string name="dialog_download">Möchten Sie diese Datei herunterladen? (%1$s)</string>
     <string name="unknown_size">Unbekannte Größe</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="title_warning">Warnung</string>
-    <string name="dialog_adobe_not_installed">Adobe Flash Player wurde nicht erkannt.\n
-   Bitte installieren Sie den Flash Player.</string>
+    <string name="dialog_adobe_not_installed">Adobe Flash Player wurde nicht erkannt.\nBitte installieren Sie den Flash Player.</string>
     <string name="title_user_agent">User-Agent</string>
     <string name="title_download_location">Download-Verzeichnis festlegen</string>
     <string name="title_custom_homepage">Benutzerdefinierte Startseite</string>
@@ -86,10 +97,13 @@
     <string name="action_edit">Bearbeiten</string>
     <string name="action_incognito">Neuer Inkognito-Tab</string>
     <string name="action_homepage">Standard</string>
+    <string name="action_show_homepage">Startseite</string>
     <string name="action_back">Zurück</string>
     <string name="action_find">Auf Seite suchen</string>
     <string name="action_print">Drucken</string>
-    <string name="download_pending">Herunterladen läuft\\u2026</string>
+    <string name="downloads">Downloads</string>
+    <string name="downloads_notification_description">Nach Fertigstellung des Downloads auslösen</string>
+    <string name="download_pending">Herunterladen:</string>
     <string name="cannot_download">Herunterladen nur bei \"http\" oder \"https\" URLs möglich!</string>
     <string name="problem_download">Ungültige URL, Download nicht möglich!</string>
     <string name="problem_location_download">Download in dieses Verzeichns nicht möglich!</string>
@@ -97,12 +111,16 @@
     <string name="download_no_sdcard_dlg_msg">USB-Speicher ist für das Herunterladen der Datei notwendig!</string>
     <string name="download_sdcard_busy_dlg_title">USB-Speicher nicht verfügbar</string>
     <string name="download_sdcard_busy_dlg_msg">Speicher in Benutzung. Um das Herunterladen zu ermöglichen, schalten Sie den USB-Speicher in der Benachrichtigung aus.</string>
+    <string name="download_complete">Herunterladen abgeschlossen</string>
+    <string name="download_failed">Herunterladen fehlgeschlagen</string>
     <string name="incognito_cookies">Cookies im Inkognito-Modus aktivieren</string>
+    <string name="incognito_cookies_pie">Der Inkognito-Modus läuft in einem separaten Prozess, der nach jeder Sitzung zurückgesetzt wird. Die Incognito-Cookie-Einstellungen werden jetzt durch die regulären Cookie-Einstellungen gesteuert.</string>
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Manuell</string>
-    <string name="action_auto">Auto</string>
+    <string name="action_auto">Automatisch</string>
     <string name="action_follow_me">Kontakt</string>
     <string name="url_twitter">twitter.com/RestainoAnthony</string>
+    <string name="full_url_twitter">http://twitter.com/RestainoAnthony</string>
     <string name="clear_cache">Cache löschen</string>
     <string name="message_cache_cleared">Cache gelöscht</string>
     <string name="message_import">Lesezeichen wurden importiert</string>
@@ -114,8 +132,29 @@
     <string name="message_blocked_local">Lokale Datei wurde beim Laden blockiert</string>
     <string name="licenses">Open Source Lizenzen</string>
     <string name="suggestion">Suche nach</string>
+    <string name="checking_for_updates">Suche nach Updates…</string>
+    <string name="title_updated">Fulguris wurde aktualisiert</string>
+    <string name="message_updated">Es wird jetzt v%s genutzt. Versionshinweise prüfen?</string>
+    <string name="title_welcome">Willkommen bei Fulguris</string>
+    <string name="message_welcome">Besuche unsere Webseite um mehr über diesen leistungsstarken Webbrowser zu erfahren.</string>
+    <!-- Ad block -->
     <string name="block_ads">Werbung blockieren</string>
+    <string name="block_ad_source">Hosts-Datei Quelle</string>
+    <string name="block_ad_remote_refresh_frequency_description">(Online-Hosts Datei)</string>
+    <string name="block_ad_refresh_now">Hosts aktualisieren</string>
+    <string name="block_ads_upsell_source">Auf Lightning Plus upgraden, um auszuwählen</string>
+    <string name="block_remote_frequency_daily">Täglich</string>
+    <string name="block_remote_frequency_weekly">Wöchentlich</string>
+    <string name="block_remote_frequency_monthly">Monatlich</string>
 
+    <string name="block_source_default">Standard Hosts-Datei</string>
+    <string name="block_source_local">Lokale Hosts-Datei</string>
+    <string name="block_source_local_description">Datei: %1$s</string>
+    <string name="block_source_remote">Online Hosts-Datei</string>
+    <string name="block_source_remote_description">URL: %1$s</string>
+<!-- Common actions -->
+    <string name="action_message_canceled">Aktion abgebrochen.</string>
+    <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">Während dieser Sitzung nicht mehr nachfragen</string>
     <string name="message_insecure_connection">Die Verbindung zu dieser Seite ist nicht sicher:\n%1$s\nTrotzdem fortfahren?</string>
     <string name="message_certificate_date_invalid">Datum des Zertifikats ungültig</string>
@@ -124,11 +163,9 @@
     <string name="message_certificate_invalid">Zertifikat ungültig</string>
     <string name="message_certificate_not_yet_valid">Zertifikat noch nicht gültig</string>
     <string name="message_certificate_untrusted">Zertifikat nicht vertrauenswürdig</string>
-
     <!-- permissions request -->
     <string name="title_permission_request">Berechtigungs-Anfrage</string>
     <string name="message_permission_request">%1$s\n\nwürde gerne benutzen:\n\n%2$s</string>
-
     <string name="title_form_resubmission">Formularneuzustellung</string>
     <string name="message_form_resubmission">Daten erneut senden?</string>
     <string name="message_location">Meine Position verwenden?</string>
@@ -142,6 +179,7 @@
     <string name="powered_by_google">Unterstützt durch Google</string>
     <string name="powered_by_duck">Unterstützt durch DuckDuckGo</string>
     <string name="powered_by_baidu">Unterstützt durch Baidu</string>
+    <string name="powered_by_naver">Unterstützt durch Naver</string>
     <string name="search_suggestions_off">Keine Suchvorschläge</string>
     <string name="http_proxy">HTTP Proxy</string>
     <string-array name="proxy_choices_array">
@@ -163,9 +201,9 @@
     <string name="clear_cookies_exit">Cookies beim Beenden löschen</string>
     <string name="clear_history_exit">Verlauf beim Beenden löschen</string>
     <string name="folder_default">Standard</string>
-    <string name="folder_custom">Andere</string>
+    <string name="folder_custom">Benutzerdefiniert</string>
     <string name="untitled">Ohne Titel</string>
-    <string name="mpl_license">Mozilla Public License v. 2.0</string>
+    <string name="mpl_license">Mozilla Public License v2.0</string>
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server Liste</string>
@@ -180,18 +218,57 @@
     <string name="title_file_chooser">Dateiauswahl</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
-    <string name="export_bookmarks">Exportiere Lesezeichen</string>
-    <string name="import_backup">Importiere Lesezeichen</string>
-    <string name="bookmark_export_path">Lesezeichen exportiert nach</string>
+    <string name="export_bookmarks">Lesezeichen exportieren</string>
+    <string name="import_backup">Lesezeichen importieren</string>
+    <string name="bookmark_export_path">Lesezeichen exportiert:</string>
     <string name="bookmark_export_failure">Lesezeichen konnten nicht exportiert werden</string>
     <string name="bookmark_settings">Lesezeichen</string>
     <string name="import_bookmark_error">Lesezeichen konnten nicht importiert werden</string>
-    <string name="message_bookmark_added">Lesezeichen gespeichert</string>
-    <string name="title_chooser">Wähle Datei aus</string>
+    <string name="message_bookmark_added">Lesezeichen gespeichert.</string>
+    <string name="message_bookmark_not_added">Lesezeichen bereits vorhanden.</string>
+    <string name="title_chooser">Wähle eine Datei aus</string>
     <string name="settings_general">Allgemein</string>
     <string name="settings_display">Darstellung</string>
+    <string name="settings_title_configuration">Konfiguration</string>
+    <string name="settings_summary_configuration">Hoch- und Querformat Einstellungen</string>
     <string name="settings_privacy">Privatsphäre</string>
     <string name="settings_about">Über</string>
+    <string name="settings_contribute">Beitragen</string>
+    <string name="pref_category_general">Allgemein</string>
+    <string name="pref_category_panels">Panels</string>
+    <string name="pref_category_webpage">@string/action_webpage</string>
+    <string name="pref_category_landscape">Querformat</string>
+    <string name="pref_category_portrait">Hochformat</string>
+    <string name="pref_category_menu">@string/action_menu</string>
+    <string name="pref_title_hide_status_bar">Statusleiste ausblenden</string>
+    <string name="pref_title_hide_tool_bar">Suchleiste beim Scrollen ausblenden</string>
+    <string name="pref_title_show_tool_bar_when_scroll_up">Suchleiste beim Scrollen nach oben anzeigen</string>
+    <string name="pref_title_show_tool_bar_on_page_top">Suchleiste oben auf der Seite anzeigen</string>
+    <string name="pref_title_locked_drawers">Panels sperren</string>
+    <string name="pref_summary_locked_drawers">Tabs- und Lesezeichen-Panels sperren</string>
+    <string name="pref_title_use_bottom_sheets">Bottom Sheets verwenden</string>
+    <string name="pref_summary_use_bottom_sheets">Tabs und Lesezeichen werden unten anstatt in den seitlichen Drawern angezeigt</string>
+    <string name="pref_title_tab_list_item_show_close_button">Tab schließen Schaltfläche anzeigen</string>
+    <string name="pref_summary_tab_list_item_show_close_button">Schaltfläche zum Schließen von Tabs im Tab-Drawer anzeigen</string>
+    <string name="pref_title_menu_show_exit">Menüpunkt verlassen</string>
+    <string name="pref_summary_menu_show_exit">Beenden Option im Menü anzeigen. Der Inkognito-Modus zeigt ihn immer an.</string>
+    <string name="pref_title_menu_new_tab">Neuer Tab-Menüpunkt</string>
+    <string name="pref_summary_menu_new_tab">Neue Tab-Option im Menü anzeigen</string>
+    <string name="pref_title_crash_report">Fehlerbericht</string>
+    <string name="pref_title_analytics">Analyse</string>
+    <string name="pref_title_pull_to_refresh">Pull-to-Refresh</string>
+    <string name="pref_summary_recommended_anonymous">Empfohlen, gesammelte Daten sind Anonym</string>
+    <string name="pref_summary_color_mode">Farbmodus der Webseite auf der Suchleiste und Statusleiste anwenden</string>
+    <string name="pref_title_desktop_width">Desktop-Breite</string>
+    <string name="pref_summary_desktop_width">Breite des Desktop-Modus, für kleinere Inhalte höher einstellen</string>
+    <string name="pref_title_no_sponsorship">In-App-Sponsoring nicht verfügbar</string>
+    <string name="pref_summary_no_sponsorship">Verwende Fulguris aus dem Google Play Store, um dieses Projekt zu unterstützen.</string>
+    <string name="pref_title_free_download">Kostenloser Download</string>
+    <string name="pref_summary_free_download">Fulguris ist Open-Source. Die kostenlose Version mit vollem Funktionsumfang und unbegrenzten Tabs kann man hier herunterladen.</string>
+    <string name="pref_title_sponsorship_github">Sponsor uns auf GitHub</string>
+    <string name="pref_summary_sponsorship_github">Sie können unsere Arbeit auf GitHub unterstützen, um dieses Projekt zu einem Erfolg zu machen.</string>
+    <string name="pref_title_sponsorship_five_stars">Fünf-Sterne Bewertung</string>
+    <string name="pref_summary_sponsorship_five_stars">Gib uns eine Fünf-Sterne Bewertung im Google Play Store. Es ist eine großartige Möglichkeit, dieses Projekt zu unterstützen.</string>
     <string name="settings_about_explain">Details über Version, Autor und Lizenz</string>
     <string name="close_tab">Aktuellen Tab schließen</string>
     <string name="close_all_tabs">Alle Tabs schließen</string>
@@ -205,6 +282,15 @@
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT Lizenz</string>
     <string name="url_contents">URL-Box Inhalt</string>
+    <string name="search_in_new_tab">Suche im neuen Tab öffnen</string>
+    <string name="url_in_new_tab">URL in neuem Tab öffnen</string>
+    <string name="homepage_in_new_tab">Startseite in neuem Tab öffnen</string>
+    <string name="bookmark_in_new_tab">Lesezeichen in neuem Tab öffnen</string>
+    <string name="new_tab_position">Neue Tab-Position</string>
+    <string name="new_tab_position_before">Vor dem aktuellen Tab</string>
+    <string name="new_tab_position_after">Nach dem aktuellen Tab</string>
+    <string name="new_tab_position_start">Am Start der Tabliste</string>
+    <string name="new_tab_position_end">Am Ende der Tabliste</string>
     <string name="text_encoding">Text Enkodierung</string>
     <string-array name="url_content_array">
         <item>Domain (Standard)</item>
@@ -212,12 +298,13 @@
         <item>Titel</item>
     </string-array>
     <string name="invert_color">Farben invertieren</string>
-    <string name="dark_theme">Dunkles Design</string>
     <string name="settings_black_status_bar">Schwarze Statusleiste</string>
     <string name="tabs">Tabs</string>
     <string name="theme">App-Design</string>
     <string name="light_theme">Helles Design</string>
+    <string name="dark_theme">Dunkles Design</string>
     <string name="black_theme">Schwarzes Design (AMOLED)</string>
+    <string name="default_theme">@string/agent_default</string>
     <string name="folder">Ordnername</string>
     <string name="action_folder">Ordner</string>
     <string name="action_rename">Umbenennen</string>
@@ -230,10 +317,18 @@
     <string name="settings_adblock">Werbeblocker</string>
     <string name="settings_title_vertical_tab_bar">Vertikale Tab-Leiste</string>
     <string name="settings_summary_vertical_tab_bar">Ausschalten um die horizontale Tab-Leiste zu nutzen</string>
-    <string name="settings_title_swap_bookmarks_and_tabs">Lesezeichen und Tab-Drawer wechseln</string>
+    <string name="settings_title_toolbars_bottom">Suchleiste nach unten</string>
+    <string name="settings_title_desktop_mode_default">Desktop-Modus</string>
+    <string name="settings_summary_desktop_mode_default">Neue Tabs standardmäßig im Desktop-Modus verwenden</string>
+    <string name="settings_title_dark_mode_default">Dunkel-Modus für Webseiten</string>
+    <string name="settings_summary_dark_mode_default">Neue Tabs standardmäßig im Dunkel Modus verwenden</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">Tabs- und Lesezeichen-Panels tauschen</string>
+    <string name="settings_summary_swap_bookmarks_and_tabs">Tabs- und Lesezeichen-Panels werden getauscht</string>
     <string name="do_not_track">\"Nicht verfolgen\"-Funktion anfordern</string>
+    <string name="save_data">\"Daten sparen\" anfordern</string>
     <string name="remove_identifying_headers">Identifizierbare Header entfernen</string>
     <string name="pref_title_webrtc">WebRTC Unterstützung</string>
+    <string name="pref_summary_webrtc">Ermöglicht die Kommunikation in Echtzeit über das Web mithilfe der Kamera und des Mikrofons Ihres Geräts</string>
     <string name="action_add_to_homescreen">Auf Startbildschirm legen</string>
     <string name="message_added_to_homescreen">Verknüpfung wurde zum Startbildschirm hinzugefügt</string>
     <string name="shortcut_message_failed_to_add">Ihr Launcher unterstützt keine Verknüpfungen!</string>
@@ -241,16 +336,13 @@
     <string name="flash_not_supported">Flash Player wird von Ihrem System nicht unterstützt!</string>
     <string name="upsell_plus_version">Upgrade auf Lightning Plus um Werbung zu blockieren!</string>
     <string name="message_open_download_fail">Diese Datei existiert nicht mehr</string>
-	
     <string name="faq">FAQ</string>
     <string name="faq_description">Häufig gestellte Fragen</string>
-
-    <!-- Debug strings -->
+    <!-- debug strings -->
     <string name="debug_title">Debug Einstellungen</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Bitte schließen Sie die App um die Änderungen anzuwenden.</string>
-
-	<!-- Dialogs -->
+    <string name="app_restart">Bitte schließe die App um die Änderungen anzuwenden.</string>
+    <!-- Dialogs -->
     <string name="dialog_open_new_tab">In neuem Tab öffnen</string>
     <string name="dialog_open_background_tab">In Hintergrund-Tab öffnen</string>
     <string name="dialog_open_incognito_tab">In Inkognito-Tab öffnen</string>
@@ -259,12 +351,17 @@
     <string name="dialog_remove_from_history">Aus dem Verlauf entfernen</string>
     <string name="dialog_download_image">Bild herunterladen</string>
     <string name="dialog_copy_link">Link kopieren</string>
+    <string name="dialog_copy_text">Text kopieren</string>
     <string name="dialog_rename_folder">Ordner umbenennen</string>
     <string name="dialog_remove_folder">Ordner löschen</string>
     <string name="dialog_title_close_browser">Browser schließen</string>
     <string name="dialog_delete_download">Download löschen</string>
     <string name="dialog_delete_all_downloads">Alle Downloads löschen</string>
-	
+    <!-- Tools dialog -->
+    <string name="dialog_tools_title">Seiten-Tools</string>
+    <string name="dialog_toggle_desktop">Auf Desktop-Modus User-Agent wechseln</string>
+    <string name="dialog_adblock_enable_for_site">Werbeblocker für diese Webseite aktivieren</string>
+    <string name="dialog_adblock_disable_for_site">Werbeblocker für diese Webseite deaktivieren</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Benutzerdefinierte URL</string>
     <string name="search_engine_google">Google</string>
@@ -277,18 +374,54 @@
     <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
     <string name="search_engine_baidu">Baidu</string>
     <string name="search_engine_yandex">Yandex</string>
-
-	<!-- Notifications -->
+    <string name="search_engine_naver">Naver</string>
+    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d Inkognito-Tab geöffnet</item>
         <item quantity="other">%1$d Inkognito-Tabs geöffnet</item>
     </plurals>
     <string name="notification_incognito_running_message">Inkognito-Tab anzeigen</string>
     <string name="notification_incognito_running_description">Dauerhafte Inkognito-Benachrichtigung</string>
-
+    <!--Ad block -->
+    <string name="ad_block_load_failure">Das Laden der Online-Hosts ist fehlgeschlagen.</string>
+    <string name="infinity">∞</string>
+    <!-- SSL -->
+    <string name="ssl_info_issued_by">Ausgestellt von:</string>
+    <string name="ssl_info_issued_to">Ausgestellt für:</string>
+    <string name="ssl_info_issued_on">Ausgegeben am:</string>
+    <string name="ssl_info_expires_on">Verfällt am:</string>
+    <!-- Search in page -->
+    <string name="next">Weiter</string>
+    <string name="previous">Zurück</string>
+    <string name="close">Schließen</string>
+    <string name="exit">Beenden</string>
+    <!-- Frozen tabs -->
+    <string name="tab_frozen">Eingefroren…</string>
+    <!-- Search -->
+    <string name="search_insert_suggestion">Vorschlag einfügen</string>
+    <string name="action_close_all_other_tabs">Alle anderen Tabs schließen</string>
+    <string name="action_restore_all_tabs">Alle Tabs wiederherstellen</string>
+    <string name="action_restore_tab">Tab wiederherstellen</string>
+    <string name="settings_summary_apps">Anwendungen von Drittanbietern</string>
+    <string name="settings_title_apps">Apps</string>
+    <string name="settings_app_prefix">app_for_</string>
+    <string name="dialog_title_third_party_app">App von Drittanbietern verfügbar</string>
+    <string name="dialog_message_third_party_app">Möchten Sie die mit dieser Website verbundene Anwendung starten?</string>
+    <string name="per_month">\u0020/ Monat</string>
+    <string name="per_year">\u0020/ Jahr</string>
+    <string name="session_default">@string/agent_default</string>
+    <string name="session_name_prompt">Name der Sitzung:</string>
+    <string name="session_already_exists">Es existiert bereits eine Sitzung mit diesem Namen!</string>
+    <string name="session_cant_delete_current">Die aktuelle Sitzung kann nicht gelöscht werden!</string>
+    <string name="session_prompt_confirm_deletion_title">Löschen bestätigen</string>
+    <string name="session_prompt_confirm_deletion_message">Sind Sie sicher, dass Sie die Sitzung \"%s\" löschen möchten?</string>
+    <string name="session_switched">Zu \"%s\" gewechselt</string>
+    <string name="busy">Beschäftigt, versuche es in Kürze wieder</string>
+    <string name="invalid_character_removed">Ungültiges Zeichen entfernt!</string>
+    <string name="invalid_characters_removed">Ungültige Zeichen entfernt!</string>
     <string name="reading_mode_image_copyright">Bild Copyright</string>
     <string name="reading_mode_image_caption">Bild mit Beschriftung</string>
+    <!-- text-to-speech -->
     <string name="tts">Seite lesen</string>
     <string name="stop_tts">Lesen beenden</string>
-
 </resources>
