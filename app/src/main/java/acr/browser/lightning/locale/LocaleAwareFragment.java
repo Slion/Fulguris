@@ -18,6 +18,9 @@ import android.view.animation.AnimationUtils;
 
 import java.util.Locale;
 
+/**
+ * SL: Should we use this too?
+ */
 public abstract class LocaleAwareFragment extends Fragment {
     private Locale cachedLocale = null;
     private AnimationSet animationSet;

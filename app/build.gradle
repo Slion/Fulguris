@@ -10,6 +10,9 @@ apply plugin: 'com.google.gms.google-services'
 // Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'
 
+// TODO: Find a way to put it the variant/type folder such as: generated/source/locale/slionsFullDownload/debug/acr/browser/lightning/locale
+def generatedLocaleListDir = layout.buildDirectory.dir('generated/source/locale/acr/browser/lightning/locale')
+
 android {
     compileSdkVersion project.targetSdkVersion
     buildToolsVersion project.buildToolsVersion
@@ -23,6 +26,14 @@ android {
     dexOptions {
         javaMaxHeapSize "8g"
         preDexLibraries true
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDirs += generatedLocaleListDir
+            }
+        }
     }
 
     buildTypes {
@@ -318,19 +329,19 @@ def getEnabledLocales() {
     return langs.sort { it }
 }
 
-// TODO: This should go under the generated directory: C:\Dev\GitHub\Slion\Fulguris\app\build\generated\source
-def generatedLocaleListDir = 'src/main/java/acr/browser/lightning/generated'
 def generatedLocaleListFilename = 'LocaleList.java'
 
 task generateLocaleList {
     doLast {
         def dir = file(generatedLocaleListDir)
-        dir.mkdir()
+        dir.mkdirs()
         def localeList = file(new File(dir, generatedLocaleListFilename))
+
+        project.logger.lifecycle(localeList.path)
 
         localeList.delete()
         localeList.createNewFile()
-        localeList << "package acr.browser.lightning.generated;" << "\n" << "\n"
+        localeList << "package acr.browser.lightning.locale;" << "\n" << "\n"
         localeList << "import java.util.Arrays;" << "\n"
         localeList << "import java.util.Collections;" << "\n"
         localeList << "import java.util.List;" << "\n"
@@ -352,3 +363,4 @@ tasks.whenTaskAdded { task ->
 clean.doLast {
     file(generatedLocaleListDir).deleteDir()
 }
+

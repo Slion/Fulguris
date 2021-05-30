@@ -22,7 +22,6 @@ import android.util.Log;
 import androidx.preference.PreferenceManager;
 
 import acr.browser.lightning.R;
-import acr.browser.lightning.generated.LocaleList;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -336,7 +335,7 @@ public class LocaleManager {
      * Returns a list of supported locale codes
      */
     public static Collection<String> getPackagedLocaleTags(final Context context) {
-        return LocaleList.BUNDLED_LOCALES;
+        return acr.browser.lightning.locale.LocaleList.BUNDLED_LOCALES;
     }
 
     public static String getFallbackLocaleTag() {
