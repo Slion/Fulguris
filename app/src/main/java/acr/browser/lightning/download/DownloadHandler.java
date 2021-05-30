@@ -60,6 +60,8 @@ public class DownloadHandler {
     private static final String TAG = "DownloadHandler";
 
     private static final String COOKIE_REQUEST_HEADER = "Cookie";
+    private static final String REFERER_REQUEST_HEADER = "Referer";
+    private static final String USERAGENT_REQUEST_HEADER = "User-Agent";
 
     private final DownloadsRepository downloadsRepository;
     private final DownloadManager downloadManager;
@@ -261,6 +263,8 @@ public class DownloadHandler {
         // old percent-encoded url.
         String cookies = CookieManager.getInstance().getCookie(url);
         request.addRequestHeader(COOKIE_REQUEST_HEADER, cookies);
+        request.addRequestHeader(REFERER_REQUEST_HEADER, url);
+        request.addRequestHeader(USERAGENT_REQUEST_HEADER, userAgent);
         // We don't want to show the default download complete notification as it just opens our app when you click it
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
 
