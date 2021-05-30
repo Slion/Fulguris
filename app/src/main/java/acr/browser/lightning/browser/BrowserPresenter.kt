@@ -354,7 +354,9 @@ class BrowserPresenter(
         // Limit number of tabs according to sponsorship level
         if (tabsModel.size() >= Entitlement.maxTabCount(userPreferences.sponsorship)) {
             view.showSnackbar(R.string.max_tabs)
-            return false
+            // Still allow spawning more tabs for the time being.
+            // That means not having a valid subscription will only spawn that annoying message above.
+            //return false
         }
 
         logger.log(TAG, "New tab, show: $show")

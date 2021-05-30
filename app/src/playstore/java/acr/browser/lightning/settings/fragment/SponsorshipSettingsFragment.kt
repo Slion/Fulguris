@@ -204,7 +204,10 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
 
                     // Show link to five stars review
                     addPreferenceLinkToGooglePlayStoreFiveStarsReview()
-                    // On Google Play Store variant we also show a link to our free download and GitHub sponsor
+                    //
+                    addPreferenceShareLink()
+                    // Crowdin link
+                    addPreferenceLinkToCrowdin()
                     // Show GitHub sponsorship option
                     addPreferenceLinkToGitHubSponsor()
                     // Add preference with link to Fulguris download page

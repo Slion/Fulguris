@@ -65,8 +65,9 @@
     <!-- About is traditionally last -->
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.SponsorshipSettingsFragment"
-        app:title="@string/settings_sponsorship"
-        app:icon="@drawable/ic_monetization_on" />
+        app:title="@string/settings_contribute"
+        app:summary="@string/settings_summary_contribute"
+        app:icon="@drawable/ic_giftcard" />
 
     <!-- About is traditionally last -->
     <Preference

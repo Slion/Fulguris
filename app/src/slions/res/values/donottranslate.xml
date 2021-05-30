@@ -3,6 +3,6 @@
     <string name="app_name">Fulguris</string>
     <string name="url_twitter">twitter.com/LencludStephane</string>
     <string name="full_url_twitter">http://twitter.com/LencludStephane</string>
-    <string name="url_app_home_page">https://slions.net/resources/fulguris.10/</string>
+    <string name="url_app_home_page">http://fulguris.slions.net</string>
     <string name="url_app_updates">https://slions.net/resources/fulguris.10/updates</string>
 </resources>

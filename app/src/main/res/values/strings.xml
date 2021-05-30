@@ -127,7 +127,7 @@
     <string name="message_import">Bookmarks were imported</string>
     <string name="message_clear_history">History cleared</string>
     <string name="message_cookies_cleared">Cookies cleared</string>
-    <string name="max_tabs">Max tabs reached. Unlock more from Settings > Sponsorship.</string>
+    <string name="max_tabs">Max tabs reached. Unlock more from Settings > Contribute.</string>
     <string name="message_text_copied">Text copied to clipboard</string>
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
@@ -253,7 +253,8 @@
     <string name="settings_summary_configuration">Portrait and landscape settings</string>
     <string name="settings_privacy">Privacy</string>
     <string name="settings_about">About</string>
-    <string name="settings_sponsorship">Sponsorship</string>
+    <string name="settings_contribute">Contribute</string>
+    <string name="settings_summary_contribute">Help Fulguris grow and succeed</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_panels">Panels</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -282,13 +283,17 @@
     <string name="pref_title_desktop_width">Desktop width</string>
     <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
     <string name="pref_title_no_sponsorship">In-app sponsorship not available</string>
-    <string name="pref_summary_no_sponsorship">Use Fulguris Google Play Store release to sponsor that project.</string>
+    <string name="pref_summary_no_sponsorship">Use Fulguris from Google Play to sponsor us.</string>
     <string name="pref_title_free_download">Free download</string>
     <string name="pref_summary_free_download">Fulguris is Open Source Software. You can download our free edition including full feature set and unlimited tabs.</string>
     <string name="pref_title_sponsorship_github">Sponsor us on GitHub</string>
     <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
     <string name="pref_title_sponsorship_five_stars">Five stars review</string>
     <string name="pref_summary_sponsorship_five_stars">Giving us a five stars review on Google Play is a great way to help this project.</string>
+    <string name="pref_title_contribute_translations">Translations</string>
+    <string name="pref_summary_contribute_translations">You can help translate Fulguris to your locale language on Crowdin.</string>
+    <string name="pref_title_contribute_share">Spread the word</string>
+    <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
     <string name="pref_title_language">Language</string>
     <string name="language_system_default">System default</string>
     <string name="settings_about_explain">Details about version, update, author and license.</string>
@@ -464,6 +469,9 @@
     <!-- text-to-speech -->
     <string name="tts">Read page</string>
     <string name="stop_tts">Stop reading</string>
+
+    <!-- Application name which can be translated -->
+    <string name="locale_app_name">Fulguris Web Browser</string>
 
 
 </resources>
