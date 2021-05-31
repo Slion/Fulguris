@@ -5,7 +5,6 @@ package acr.browser.lightning.settings.activity
 
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.findPreference
-import acr.browser.lightning.settings.fragment.GeneralSettingsFragment
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.StringRes
@@ -18,10 +17,13 @@ const val SETTINGS_CLASS_NAME = "ClassName"
 class SettingsActivity : ThemedSettingsActivity(),
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
-    val iRootFragment = HeaderFragment()
+        lateinit var iRootFragment: HeaderFragment;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Needed to recreate/language change to be able to update title to new locale
+        /** When not instantiating this anew iRootFragment.preferenceScreen was null and we need it to fetch the title on [onResume] */
+        iRootFragment = HeaderFragment()
         setContentView(R.layout.activity_settings)
         if (savedInstanceState == null) {
             supportFragmentManager
@@ -29,7 +31,8 @@ class SettingsActivity : ThemedSettingsActivity(),
                     .replace(R.id.settings, iRootFragment)
                     .commit()
         } else {
-            title = savedInstanceState.getCharSequence(TITLE_TAG)
+            // We don't do that anymore as it won't work if language was changed
+            //title = savedInstanceState.getCharSequence(TITLE_TAG)
         }
         supportFragmentManager.addOnBackStackChangedListener {
             if (supportFragmentManager.backStackEntryCount == 0) {
@@ -66,6 +69,23 @@ class SettingsActivity : ThemedSettingsActivity(),
         //startFragment<GeneralSettingsFragment>()
         // Start a fragment when class is not known at compile time
         //startFragment(GeneralSettingsFragment::class.java)
+
+        try {
+            // Needed to update title after language change
+            // TODO: Though I'm guessing that won't work for second level fragments, if ever we get to use those.
+            val f = supportFragmentManager.findFragmentById(R.id.settings)
+            val pref = iRootFragment.preferenceScreen.findPreference(f?.javaClass!!)
+            // Make sure we don't override the root title
+            if (!pref?.title.isNullOrBlank()) {
+                // Reset our title in proper locale
+                title = pref?.title;
+            }
+        }
+        catch(ex: Exception) {
+            // Just ignore
+        }
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -83,7 +103,7 @@ class SettingsActivity : ThemedSettingsActivity(),
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         // Save current activity title so we can set it again after a configuration change
-        outState.putCharSequence(TITLE_TAG, title)
+        //outState.putCharSequence(TITLE_TAG, title)
     }
 
     override fun onSupportNavigateUp(): Boolean {

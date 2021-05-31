@@ -280,7 +280,7 @@ public class LocaleManager {
 
         final String current = getPersistedLocale(context);
         if (current == null) {
-            return null;
+            return systemLocale;
         }
         return currentLocale = Locales.parseLocaleCode(current);
     }
