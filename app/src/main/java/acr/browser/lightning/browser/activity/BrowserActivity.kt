@@ -38,9 +38,11 @@ import acr.browser.lightning.reading.activity.ReadingActivity
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.SuggestionsAdapter
 import acr.browser.lightning.settings.NewTabPosition
+import acr.browser.lightning.settings.activity.SETTINGS_CLASS_NAME
 import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
+import acr.browser.lightning.settings.fragment.SponsorshipSettingsFragment
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.createSslDrawableForState
 import acr.browser.lightning.ssl.showSslDialog
@@ -1539,6 +1541,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
             R.id.action_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
+                // Was there just for testing it
+                //onMaxTabReached()
                 return true
             }
             R.id.action_history -> {
@@ -3247,6 +3251,24 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
         }
         return super.dispatchTouchEvent(anEvent)
+    }
+
+    /**
+     * Implement [BrowserView.onMaxTabReached]
+     */
+    override fun onMaxTabReached() {
+        // Show a message telling the user to contribute.
+        // It provides a link to our settings Contribute section.
+        makeSnackbar(
+            getString(R.string.max_tabs), 10000, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
+            .setAction(R.string.show, OnClickListener {
+                // We want to launch our settings activity
+                val i = Intent(this, SettingsActivity::class.java)
+                /** See [SettingsActivity.onResume] for details of how this is handled on the other side */
+                // Tell our settings activity to load our Contrubite/Sponsorship fragment
+                i.putExtra(SETTINGS_CLASS_NAME, SponsorshipSettingsFragment::class.java.name)
+                startActivity(i)
+            }).show()
     }
 
     companion object {

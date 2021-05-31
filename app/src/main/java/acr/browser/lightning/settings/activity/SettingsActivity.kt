@@ -4,15 +4,21 @@
 package acr.browser.lightning.settings.activity
 
 import acr.browser.lightning.R
+import acr.browser.lightning.extensions.findPreference
+import acr.browser.lightning.settings.fragment.GeneralSettingsFragment
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 
 private const val TITLE_TAG = "settingsActivityTitle"
+const val SETTINGS_CLASS_NAME = "ClassName"
 
 class SettingsActivity : ThemedSettingsActivity(),
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+
+    val iRootFragment = HeaderFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +26,7 @@ class SettingsActivity : ThemedSettingsActivity(),
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.settings, HeaderFragment())
+                    .replace(R.id.settings, iRootFragment)
                     .commit()
         } else {
             title = savedInstanceState.getCharSequence(TITLE_TAG)
@@ -37,6 +43,29 @@ class SettingsActivity : ThemedSettingsActivity(),
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         //supportActionBar?.setDisplayShowTitleEnabled(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // At this stage our preferences have been created
+        try {
+            // Check if we were asked to launch a fragment
+            val className = intent.extras!!.getString(SETTINGS_CLASS_NAME)
+            //val className = GeneralSettingsFragment::class.java.name
+            val classType = Class.forName(className!!)
+            //val myInstance = classType.newInstance()
+            startFragment(classType)
+
+        }
+        catch(ex: Exception) {
+            // Just ignore
+        }
+
+        // Just leaving some code sample here as those could be useful at some point
+        // Start a fragment when class is known at compile time
+        //startFragment<GeneralSettingsFragment>()
+        // Start a fragment when class is not known at compile time
+        //startFragment(GeneralSettingsFragment::class.java)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -64,10 +93,7 @@ class SettingsActivity : ThemedSettingsActivity(),
         return super.onSupportNavigateUp()
     }
 
-    override fun onPreferenceStartFragment(
-            caller: PreferenceFragmentCompat,
-            pref: Preference
-    ): Boolean {
+    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat, pref: Preference): Boolean {
         // Instantiate the new Fragment
         val args = pref.extras
         val fragment = supportFragmentManager.fragmentFactory.instantiate(
@@ -85,6 +111,59 @@ class SettingsActivity : ThemedSettingsActivity(),
         title = pref.title
         return true
     }
+
+    /**
+     *
+     */
+    fun startFragment(@StringRes aPrefId: Int) {
+        startFragment(getString(aPrefId))
+    }
+
+    /**
+     *
+     */
+    fun startFragment(aPrefId: String) {
+        startFragment(iRootFragment.preferenceScreen.findPreference<Preference>(aPrefId)!!)
+    }
+
+    /**
+     * Start fragment matching the given type.
+     */
+    inline fun <reified T : PreferenceFragmentCompat?> startFragment() {
+        // We need to find the preference that's associated with that fragment, before we can start it.
+        startFragment(iRootFragment.preferenceScreen.findPreference<T>()!!)
+    }
+
+    /**
+     * Start fragment matching the given type.
+     */
+    fun startFragment(aClass: Class<*>) {
+        // We need to find the preference that's associated with that fragment, before we can start it.
+        startFragment(iRootFragment.preferenceScreen.findPreference(aClass)!!)
+    }
+
+    /**
+     * Start the fragment associated with the given [Preference].
+     * Boiler plate code taken from [onPreferenceStartFragment], the framework function it overrides as well as its caller.
+     */
+    fun startFragment(pref: Preference) {
+        // Instantiate the new Fragment
+        val args = pref.extras
+        val fragment = supportFragmentManager.fragmentFactory.instantiate(
+            classLoader,
+            pref.fragment
+        ).apply {
+            arguments = args
+            setTargetFragment(iRootFragment, 0)
+        }
+        // Replace the existing Fragment with the new Fragment
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.settings, fragment)
+            .addToBackStack(null)
+            .commit()
+        title = pref.title
+    }
+
 
     class HeaderFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

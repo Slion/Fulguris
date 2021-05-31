@@ -38,4 +38,10 @@ interface BrowserView {
 
     fun notifyTabViewInitialized()
 
+    /**
+     * Triggered whenever user reaches the maximum amount of tabs allowed by her license.
+     * Should typically display a message warning the user about it.
+     */
+    fun onMaxTabReached()
+
 }
