@@ -83,9 +83,9 @@ public class LocaleUtils {
      */
     public static String updateLocale(Context context, final Locale locale) {
         // Fast path.
-        if (Locale.getDefault().equals(locale)) {
-            return null;
-        }
+        //if (Locale.getDefault().equals(locale)) {
+        //    return null;
+        //}
 
         Locale.setDefault(locale);
         // Update resources.

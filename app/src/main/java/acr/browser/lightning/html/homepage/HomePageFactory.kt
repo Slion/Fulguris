@@ -29,6 +29,7 @@ class HomePageFactory @Inject constructor(
     override fun buildPage(): Single<String> = Single
             .just(searchEngineProvider.provideSearchEngine())
             .map { (iconUrl, queryUrl, _) ->
+                BrowserApp.setLocale() // Make sure locale is set as user specified
                 parse(homePageReader.provideHtml()
                         .replace("\${TITLE}", application.getString(R.string.home))
                         .replace("\${backgroundColor}", htmlColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext())))

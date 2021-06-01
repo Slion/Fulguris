@@ -8,8 +8,10 @@ import acr.browser.lightning.di.AppComponent
 import acr.browser.lightning.di.DaggerAppComponent
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.injector
+import acr.browser.lightning.locale.LocaleUtils
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.preference.DeveloperPreferences
+import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.utils.MemoryLeakUtils
 import acr.browser.lightning.utils.installMultiDex
@@ -17,7 +19,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Build
-import android.os.Debug
 import android.os.StrictMode
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
@@ -32,6 +33,7 @@ import kotlin.system.exitProcess
 class BrowserApp : Application() {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
+    @Inject internal lateinit var userPreferences: UserPreferences
     @Inject internal lateinit var bookmarkModel: BookmarkRepository
     @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
     @Inject internal lateinit var logger: Logger
@@ -57,6 +59,7 @@ class BrowserApp : Application() {
         // SL: Use this to debug when launched from another app for instance
         //Debug.waitForDebugger()
         super.onCreate()
+
         AndroidThreeTen.init(this);
         instance = this
         if (BuildConfig.DEBUG) {
@@ -102,6 +105,10 @@ class BrowserApp : Application() {
             .buildInfo(createBuildInfo())
             .build()
         injector.inject(this)
+
+        // Apply locale
+        var requestLocale = LocaleUtils.requestedLocale(userPreferences.locale)
+        LocaleUtils.updateLocale(this, requestLocale)
 
         Single.fromCallable(bookmarkModel::count)
             .filter { it == 0L }
@@ -166,6 +173,14 @@ class BrowserApp : Application() {
             {
                 return instance.applicationContext
             }
+        }
+
+        /**
+         * Was needed to patch issue with Homepage displaying system language when user selected another language
+         */
+        fun setLocale() {
+            var requestLocale = LocaleUtils.requestedLocale(instance.userPreferences.locale)
+            LocaleUtils.updateLocale(instance, requestLocale)
         }
 
         init {
