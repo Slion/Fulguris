@@ -22,6 +22,7 @@ class SettingsActivity : ThemedSettingsActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        setTitle(R.string.settings)
 
         if (savedInstanceState == null) {
             supportFragmentManager
