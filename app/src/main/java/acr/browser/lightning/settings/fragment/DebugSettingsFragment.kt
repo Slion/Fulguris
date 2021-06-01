@@ -11,6 +11,13 @@ class DebugSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
 
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.debug_title
+    }
+
     override fun providePreferencesXmlResource() = R.xml.preference_debug
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

@@ -50,6 +50,13 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
     private lateinit var proxyChoices: Array<String>
 
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.settings_general
+    }
+
     override fun providePreferencesXmlResource() = R.xml.preference_general
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

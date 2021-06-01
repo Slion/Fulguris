@@ -48,6 +48,13 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     private val compositeDisposable = CompositeDisposable()
     private var forceRefreshHostsPreference: Preference? = null
 
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.settings_adblock
+    }
+
     override fun providePreferencesXmlResource(): Int = R.xml.preference_ad_block
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

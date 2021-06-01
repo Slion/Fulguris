@@ -13,6 +13,13 @@ import androidx.preference.Preference
  */
 abstract class RedirectSponsorshipSettingsFragment : AbstractSettingsFragment() {
 
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.settings_contribute
+    }
+
     override fun providePreferencesXmlResource() = R.xml.preference_sponsorship
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

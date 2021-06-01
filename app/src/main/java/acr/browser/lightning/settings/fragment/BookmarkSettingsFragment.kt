@@ -54,6 +54,14 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
     private var exportSubscription: Disposable? = null
     private var bookmarksSortSubscription: Disposable? = null
 
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.bookmark_settings
+    }
+
+
     override fun providePreferencesXmlResource() = R.xml.preference_bookmarks
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

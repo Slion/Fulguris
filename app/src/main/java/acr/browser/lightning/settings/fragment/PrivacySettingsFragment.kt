@@ -30,6 +30,13 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
     @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
     @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
 
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.settings_privacy
+    }
+
     override fun providePreferencesXmlResource() = R.xml.preference_privacy
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

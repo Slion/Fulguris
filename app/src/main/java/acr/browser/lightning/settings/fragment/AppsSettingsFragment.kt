@@ -27,6 +27,14 @@ class AppsSettingsFragment : AbstractSettingsFragment() {
     @UserPrefs
     internal lateinit var preferences: SharedPreferences
 
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.settings_title_apps
+    }
+
+
     override fun providePreferencesXmlResource() = R.xml.preference_apps
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

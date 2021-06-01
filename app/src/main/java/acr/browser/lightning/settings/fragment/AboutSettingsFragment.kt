@@ -39,6 +39,13 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
 
     }
 
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.settings_about
+    }
+
 
     fun versionString() = BuildConfig.APPLICATION_ID + " - v" + BuildConfig.VERSION_NAME
 

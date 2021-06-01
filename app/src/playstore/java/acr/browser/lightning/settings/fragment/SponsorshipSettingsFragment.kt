@@ -38,6 +38,12 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
     // Google Play Store billing client
     private lateinit var playStoreBillingClient: BillingClient
 
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.settings_contribute
+    }
 
     override fun providePreferencesXmlResource() = R.xml.preference_sponsorship
 
