@@ -20,7 +20,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import acr.browser.lightning.R;
-//import org.mozilla.focus.locale.LocaleManager;
+//import org.mozilla.focus.locale.LocaleUtils;
 //import org.mozilla.focus.locale.Locales;
 
 import java.lang.ref.WeakReference;
@@ -34,8 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import acr.browser.lightning.locale.LocaleManager;
-import acr.browser.lightning.locale.Locales;
+import acr.browser.lightning.locale.LocaleUtils;
 import kotlin.Pair;
 
 public class LocaleListPreference extends ListPreference {
@@ -196,7 +195,7 @@ public class LocaleListPreference extends ListPreference {
 
         String defaultLanguage = getContext().getString(R.string.language_system_default);
         this.buildLocaleListTask = new BuildLocaleListTask(this, defaultLanguage,
-                characterValidator, LocaleManager.getPackagedLocaleTags(getContext()));
+                characterValidator, LocaleUtils.getPackagedLocaleTags(getContext()));
         this.buildLocaleListTask.execute();
     }
 
@@ -219,7 +218,7 @@ public class LocaleListPreference extends ListPreference {
         private final String nativeName;
 
         public LocaleDescriptor(String tag) {
-            this(Locales.parseLocaleCode(tag), tag);
+            this(LocaleUtils.parseLocaleCode(tag), tag);
         }
 
         public LocaleDescriptor(Locale locale, String tag) {
@@ -334,9 +333,9 @@ public class LocaleListPreference extends ListPreference {
         // Use this hook to try to fix up the environment ASAP.
         // Do this so that the redisplayed fragment is inflated
         // with the right locale.
-        final Locale selectedLocale = getSelectedLocale();
-        final Context context = getContext();
-        LocaleManager.getInstance().updateConfiguration(context, selectedLocale);
+        //final Locale selectedLocale = getSelectedLocale();
+        //final Context context = getContext();
+        //LocaleUtils.getInstance().updateConfiguration(context, selectedLocale);
     }
 
     private Locale getSelectedLocale() {
@@ -344,7 +343,7 @@ public class LocaleListPreference extends ListPreference {
         if (tag == null || tag.equals("")) {
             return Locale.getDefault();
         }
-        return Locales.parseLocaleCode(tag);
+        return LocaleUtils.parseLocaleCode(tag);
     }
 
     @Override

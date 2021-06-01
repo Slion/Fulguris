@@ -449,6 +449,12 @@ class UserPreferences @Inject constructor(
      */
     var menuShowNewTab by preferences.booleanPreference(R.string.pref_key_menu_show_new_tab, R.bool.pref_default_menu_show_new_tab)
 
+    /**
+     * Define the locale language the user want us to use.
+     * Empty string means use system default locale.
+     */
+    var locale by preferences.stringPreference(R.string.pref_key_locale, "")
+
 }
 
 // SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML
