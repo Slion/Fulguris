@@ -96,7 +96,7 @@ abstract class ThemedActivity : LocaleAwareAppCompatActivity() {
     }
 
     /**
-     * From LocaleAwareAppCompatActivity
+     * See [LocaleAwareAppCompatActivity.applyLocale]
      */
     override fun applyLocale() {
         restart()

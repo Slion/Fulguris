@@ -1,6 +1,8 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
+import acr.browser.lightning.locale.LocaleAwareAppCompatActivity
+import acr.browser.lightning.locale.LocaleAwarePreferenceFragment
 import acr.browser.lightning.utils.IntentUtils
 import android.content.Intent
 import android.net.Uri
@@ -15,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * An abstract settings fragment which performs wiring for an instance of [PreferenceFragment].
  */
-abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
+abstract class AbstractSettingsFragment : LocaleAwarePreferenceFragment() {
 
     /**
      * Provide the XML resource which holds the preferences.
@@ -38,6 +40,15 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
             isVerticalFadingEdgeEnabled = true
         }
     }
+
+    /**
+     * See [LocaleAwarePreferenceFragment.applyLocale]
+     */
+    override fun applyLocale() {
+        requireActivity().recreate()
+    }
+
+
 
     /**
      * Creates a [CheckBoxPreference] with the provided options and listener.
