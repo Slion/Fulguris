@@ -155,6 +155,37 @@
     <string name="block_source_local_description">File: %1$s</string>
     <string name="block_source_remote">Remote hosts file</string>
     <string name="block_source_remote_description">URL: %1$s</string>
+    <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
+
+    <!-- new ad blocker -->
+    <string name="page_blocked">The following page was blocked:</string>
+    <string name="page_blocked_reason">because of:</string>
+    <string name="page_blocked_list_ad">%s on ad blocklist</string>
+    <string name="page_blocked_list_user">%s blocked by user rule</string>
+    <string name="page_blocked_list_malware">%s on malware blocklist</string>
+    <string name="request_blocked">Request blocked</string>
+
+    <!-- settings for new ad blocker -->
+    <string name="abp_update_mode">Auto-update mode</string>
+    <string name="abp_update_on">Auto-update on</string>
+    <string name="abp_update_off">Auto-update off</string>
+    <string name="abp_update_wifi">Only on non-metered connections</string>
+    <string name="blocklist_update">Update blocklists</string>
+    <string name="blocklist_update_frequency">Auto-update frequency</string>
+    <string name="blocklist_update_now">Update lists now</string>
+    <string name="blocklist_last_update">Last update: %s</string>
+    <string name="add_blocklist">Add new blocklist</string>
+    <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
+    <string name="enable_blocklist">Enable this list</string>
+    <string name="invalid_title">Invalid title</string>
+    <string name="invalid_url">Invalid URL</string>
+    <string name="blocklist_built_in">Built-in blocklist</string>
+    <string name="blocklist_remove">Remove blocklist</string>
+    <string name="blocklist_remove_confirm">Really remove blocklist %s?</string>
+    <string name="local_file">Local blocklist</string>
+    <string name="local_file_replace">Replace blocklist</string>
+    <string name="local_file_chosen">file selected</string>
+    <string name="remote_file">Remote blocklist</string>
 
 <!-- Common actions -->
     <string name="action_message_canceled">Action canceled.</string>
@@ -404,9 +435,6 @@
     </plurals>
     <string name="notification_incognito_running_message">Touch to open</string>
     <string name="notification_incognito_running_description">Ongoing incognito notification</string>
-
-    <!--Ad block -->
-    <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
 
     <string name="infinity">∞</string>
 
