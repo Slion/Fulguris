@@ -11,4 +11,5 @@ class NoOpAdBlocker @Inject constructor() : AdBlocker {
 
     override fun isAd(url: String) = false
 
+    override fun isAd(url: String, site: String) = false
 }

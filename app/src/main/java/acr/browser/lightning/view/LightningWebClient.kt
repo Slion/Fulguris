@@ -33,6 +33,7 @@ import android.net.MailTo
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Message
+import android.os.SystemClock
 import android.util.Base64
 import android.view.LayoutInflater
 import android.webkit.*
@@ -108,11 +109,11 @@ class LightningWebClient(
     private fun chooseAdBlocker(): AdBlocker = if (userPreferences.adBlockEnabled) {
         activity.injector.provideBloomFilterAdBlocker()
     } else {
-        activity.injector.provideNoOpAdBlocker()
+        activity.injector.provideEasyListAdBlocker()
     }
 
     private fun shouldRequestBeBlocked(pageUrl: String, requestUrl: String) =
-        !whitelistModel.isUrlAllowedAds(pageUrl) && adBlock.isAd(requestUrl)
+        !whitelistModel.isUrlAllowedAds(pageUrl) && adBlock.isAd(requestUrl, pageUrl)
 
     /**
      * Overrides [WebViewClient.shouldInterceptRequest].

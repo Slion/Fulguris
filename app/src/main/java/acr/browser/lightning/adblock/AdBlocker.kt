@@ -14,4 +14,6 @@ interface AdBlocker {
      */
     fun isAd(url: String): Boolean
 
+    fun isAd(url: String, site: String): Boolean
+
 }
