@@ -83,32 +83,36 @@ android {
 
     productFlavors {
 
+        slions {
+            dimension "BRAND"
+            applicationId "net.slions.fulguris"
+            versionCode 131
+            versionName "1.6.3"
+            archivesBaseName = "Fulguris-v$versionName"
+        }
+
+        /*
         lightning {
             dimension "BRAND"
             applicationId "acr.browser.lightning"
             versionCode 101
             versionName "5.1.0"
         }
-
-        slions {
-            dimension "BRAND"
-            applicationId "net.slions.fulguris"
-            versionCode 130
-            versionName "1.6.2"
-            archivesBaseName = "Fulguris-v$versionName"
-        }
-
-        lite {
-            dimension "VERSION"
-            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
-            applicationIdSuffix ".lite"
-        }
+         */
 
         full {
             dimension "VERSION"
             buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
             applicationIdSuffix ".full"
         }
+
+        /*
+        lite {
+            dimension "VERSION"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
+            applicationIdSuffix ".lite"
+        }
+        */
 
         playstore {
             dimension "PUBLISHER"
@@ -125,7 +129,7 @@ android {
         fdroid {
             dimension "PUBLISHER"
             applicationIdSuffix ".fdroid"
-            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.TIN"
+            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
         }
 
     }
