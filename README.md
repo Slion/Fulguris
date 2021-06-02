@@ -23,7 +23,7 @@ If you don't think it is worth five stars yet then just [open an issue](https://
 
 You can engage with us on [our forums], on [GitHub](https://github.com/slion/fulguris/issues), on [Discord] or any other social media you can track us down to.
 
-## Translations
+## Translate
 
 Please go ahead and translate on [CrowdIn](https://crowdin.com/project/fulguris-web-browser).
 
