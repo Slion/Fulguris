@@ -1,5 +1,6 @@
 package acr.browser.lightning.adblock
 
+import android.net.Uri
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -11,7 +12,9 @@ class NoOpAdBlockerTest {
     @Test
     fun `isAd no-ops`() {
         val noOpAdBlocker = NoOpAdBlocker()
+        val request = TestWebResourceRequest(Uri.parse("https://ads.google.com"), false, mapOf())
 
-        assertThat(noOpAdBlocker.isAd("https://ads.google.com")).isFalse()
+        assertThat(noOpAdBlocker.shouldBlock(request, "https://google.com")).isNull()
     }
+
 }

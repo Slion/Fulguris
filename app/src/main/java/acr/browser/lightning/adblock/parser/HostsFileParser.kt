@@ -3,6 +3,7 @@ package acr.browser.lightning.adblock.parser
 import acr.browser.lightning.database.adblock.Host
 import acr.browser.lightning.extensions.*
 import acr.browser.lightning.log.Logger
+import java.io.BufferedReader
 import java.io.InputStreamReader
 
 /**
@@ -18,7 +19,7 @@ class HostsFileParser(
      * Parse the lines of the [input] from a hosts file and return the list of [String] domains held
      * in that file.
      */
-    fun parseInput(input: InputStreamReader): List<Host> {
+    fun parseInput(input: BufferedReader): List<Host> {
         val time = System.currentTimeMillis()
 
         val domains = ArrayList<Host>(100)
@@ -32,6 +33,11 @@ class HostsFileParser(
         logger.log(TAG, "Parsed ad list in: ${(System.currentTimeMillis() - time)} ms")
 
         return domains
+    }
+
+    // not really necessary, can be removed once the "source" part of old ad blocker is removed
+    fun parseInput(input: InputStreamReader): List<Host> {
+        return parseInput(input.buffered())
     }
 
     /**

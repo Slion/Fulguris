@@ -3,6 +3,7 @@ package acr.browser.lightning.settings.preferences
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpUpdateMode
 import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.browser.SearchBoxDisplayChoice
 import acr.browser.lightning.browser.SearchBoxModel
@@ -368,6 +369,14 @@ class UserPreferences @Inject constructor(
      * Empty string means use system default locale.
      */
     var locale by preferences.stringPreference(R.string.pref_key_locale, "")
+
+
+    /**
+     * Define behavior for blocklist updates (on, off, only on non-metered connections).
+     * Update check is only happening at browser start.
+     */
+    var blockListAutoUpdate by preferences.enumPreference(R.string.pref_key_blocklist_auto_update, AbpUpdateMode.WIFI_ONLY)
+    var blockListAutoUpdateFrequency by preferences.intPreference(R.string.pref_key_blocklist_auto_update_frequency, 7)
 
 }
 
