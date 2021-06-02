@@ -126,7 +126,7 @@
     <string name="message_import">Lesezeichen wurden importiert</string>
     <string name="message_clear_history">Verlauf gelöscht</string>
     <string name="message_cookies_cleared">Cookies gelöscht</string>
-    <string name="max_tabs">Maximale Tab-Anzahl erreicht!</string>
+    <string name="max_tabs">Maximale Tab-Anzahl erreicht. Entsperre noch mehr Tabs in den Einstellungen unter Unterstützen.</string>
     <string name="message_text_copied">Text in Zwischenablage kopiert</string>
     <string name="message_link_copied">Link in Zwischenablage kopiert</string>
     <string name="message_blocked_local">Lokale Datei wurde beim Laden blockiert</string>
@@ -146,13 +146,12 @@
     <string name="block_remote_frequency_daily">Täglich</string>
     <string name="block_remote_frequency_weekly">Wöchentlich</string>
     <string name="block_remote_frequency_monthly">Monatlich</string>
-
     <string name="block_source_default">Standard Hosts-Datei</string>
     <string name="block_source_local">Lokale Hosts-Datei</string>
     <string name="block_source_local_description">Datei: %1$s</string>
     <string name="block_source_remote">Online Hosts-Datei</string>
     <string name="block_source_remote_description">URL: %1$s</string>
-<!-- Common actions -->
+    <!-- Common actions -->
     <string name="action_message_canceled">Aktion abgebrochen.</string>
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">Während dieser Sitzung nicht mehr nachfragen</string>
@@ -233,7 +232,8 @@
     <string name="settings_summary_configuration">Hoch- und Querformat Einstellungen</string>
     <string name="settings_privacy">Privatsphäre</string>
     <string name="settings_about">Über</string>
-    <string name="settings_contribute">Beitragen</string>
+    <string name="settings_contribute">Unterstützen</string>
+    <string name="settings_summary_contribute">Hilf Fulguris, um zu wachsen und erfolgreich zu sein</string>
     <string name="pref_category_general">Allgemein</string>
     <string name="pref_category_panels">Panels</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -262,13 +262,19 @@
     <string name="pref_title_desktop_width">Desktop-Breite</string>
     <string name="pref_summary_desktop_width">Breite des Desktop-Modus, für kleinere Inhalte höher einstellen</string>
     <string name="pref_title_no_sponsorship">In-App-Sponsoring nicht verfügbar</string>
-    <string name="pref_summary_no_sponsorship">Verwende Fulguris aus dem Google Play Store, um dieses Projekt zu unterstützen.</string>
+    <string name="pref_summary_no_sponsorship">Verwende Fulguris aus dem Google Play Store, um uns zu Unterstützen.</string>
     <string name="pref_title_free_download">Kostenloser Download</string>
     <string name="pref_summary_free_download">Fulguris ist Open-Source. Die kostenlose Version mit vollem Funktionsumfang und unbegrenzten Tabs kann man hier herunterladen.</string>
     <string name="pref_title_sponsorship_github">Sponsor uns auf GitHub</string>
     <string name="pref_summary_sponsorship_github">Sie können unsere Arbeit auf GitHub unterstützen, um dieses Projekt zu einem Erfolg zu machen.</string>
     <string name="pref_title_sponsorship_five_stars">Fünf-Sterne Bewertung</string>
     <string name="pref_summary_sponsorship_five_stars">Gib uns eine Fünf-Sterne Bewertung im Google Play Store. Es ist eine großartige Möglichkeit, dieses Projekt zu unterstützen.</string>
+    <string name="pref_title_contribute_translations">Übersetzungen</string>
+    <string name="pref_summary_contribute_translations">Auf Crowdin helfen, Fulguris auf deine Sprache zu übersetzen.</string>
+    <string name="pref_title_contribute_share">Verarbeite das Wort</string>
+    <string name="pref_summary_contribute_share">Verblüffe deine Freunde, indem du Fulguris mit ihnen teilst.</string>
+    <string name="pref_title_language">Sprache</string>
+    <string name="language_system_default">System (Standard)</string>
     <string name="settings_about_explain">Details über Version, Autor und Lizenz</string>
     <string name="close_tab">Aktuellen Tab schließen</string>
     <string name="close_all_tabs">Alle Tabs schließen</string>
@@ -424,4 +430,6 @@
     <!-- text-to-speech -->
     <string name="tts">Seite lesen</string>
     <string name="stop_tts">Lesen beenden</string>
+    <!-- Application name which can be translated -->
+    <string name="locale_app_name">Fulguris Web Browser</string>
 </resources>
