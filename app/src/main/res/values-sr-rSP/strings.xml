@@ -113,7 +113,6 @@
     <string name="action_manual">Ручно</string>
     <string name="action_auto">Аутоматски</string>
     <string name="action_follow_me">Контактирајте ме</string>
-    <string name="url_twitter">twitter.com/ACRDevelopment</string>
     <string name="clear_cache">Очисти кеш</string>
     <string name="message_cache_cleared">Кеш је очишћен</string>
     <string name="message_import">Обележивачи су увезени</string>

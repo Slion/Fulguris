@@ -150,7 +150,6 @@
 	<string name="message_import">Zakładki zostały zaimportowane</string>
 	<string name="message_cache_cleared">Pamięć podręczna została wyczyszczona</string>
 	<string name="clear_cache">Wyczyść pamięć podręczną</string>
-	<string name="url_twitter">twitter.com/ACRDevelopment</string>
 	<string name="action_follow_me">Skontaktuj się z autorem</string>
 	<string name="action_auto">Automatycznie</string>
 	<string name="action_manual">Ręcznie</string>

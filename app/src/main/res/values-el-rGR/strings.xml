@@ -92,7 +92,6 @@
     <string name="action_manual">Χειροκίνητα</string>
     <string name="action_auto">Αυτόματα</string>
     <string name="action_follow_me">Επικοινωνήστε μαζί μου</string>
-    <string name="url_twitter">twitter.com/ACRDevelopment</string>
     <string name="clear_cache">Καθαρισμός cache</string>
     <string name="message_cache_cleared">Cache καθαρίστηκε</string>
     <string name="message_import">Εισήχθησαν οι σελιδοδείκτες</string>
