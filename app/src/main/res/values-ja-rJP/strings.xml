@@ -99,7 +99,7 @@
     <string name="action_manual">手動</string>
     <string name="action_auto">自動</string>
     <string name="action_follow_me">問い合わせ先</string>
-    <string name="url_twitter">twitter.com/RestainoAnthony</string>
+
     <string name="clear_cache">キャッシュを消去する</string>
     <string name="message_cache_cleared">キャッシュを消去しました</string>
     <string name="message_import">ブックマークをインポートしました</string>

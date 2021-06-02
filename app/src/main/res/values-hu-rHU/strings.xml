@@ -113,7 +113,7 @@
     <string name="action_manual">Kézi</string>
     <string name="action_auto">Automata</string>
     <string name="action_follow_me">Vedd fel velem a kapcsolatot</string>
-    <string name="url_twitter">twitter.com/RestainoAnthony</string>
+
     <string name="clear_cache">Gyorsítótár törlése</string>
     <string name="message_cache_cleared">Gyorsítótár törölve</string>
     <string name="message_import">Könyvjelzők importálva</string>

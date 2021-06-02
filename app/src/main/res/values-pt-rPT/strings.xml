@@ -112,7 +112,7 @@
     <string name="action_manual">Manual</string>
     <string name="action_auto">Automático</string>
     <string name="action_follow_me">Contactos</string>
-    <string name="url_twitter">twitter.com/RestainoAnthony</string>
+
     <string name="clear_cache">Limpar cache</string>
     <string name="message_cache_cleared">Cache limpa</string>
     <string name="message_import">Marcadores importados</string>

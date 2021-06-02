@@ -97,7 +97,7 @@
     <string name="action_manual">Вручную</string>
     <string name="action_auto">Автоматически</string>
     <string name="action_follow_me">Связаться с разработчиками</string>
-    <string name="url_twitter">twitter.com/RestainoAnthony</string>
+
     <string name="clear_cache">Очистить кэш</string>
     <string name="message_cache_cleared">Кэш очищен</string>
     <string name="message_import">Закладки импортированы</string>

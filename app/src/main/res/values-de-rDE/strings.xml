@@ -119,8 +119,8 @@
     <string name="action_manual">Manuell</string>
     <string name="action_auto">Automatisch</string>
     <string name="action_follow_me">Kontakt</string>
-    <string name="url_twitter">twitter.com/RestainoAnthony</string>
-    <string name="full_url_twitter">http://twitter.com/RestainoAnthony</string>
+
+
     <string name="clear_cache">Cache löschen</string>
     <string name="message_cache_cleared">Cache gelöscht</string>
     <string name="message_import">Lesezeichen wurden importiert</string>
