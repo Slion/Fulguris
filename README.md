@@ -3,41 +3,41 @@
 
 ![example workflow](https://github.com/slion/fulguris/actions/workflows/build-main.yml/badge.svg)
 
-## Download
+# Download
 [<img width="25%" height="25%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>](https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)<br />
 [Get it on Slions.net.](http://fulguris.slions.net)
 
-## Contribute
+# Contribute
 
-### Test
+## Test
 
 The best way to contribute is to actually use Fulguris. There is no beta test program yet. However releases tend to be published more often on [Slions.net] and it is easy to switch back to an [earlier version] if needed.
 Please report issues on [GitHub](https://github.com/slion/fulguris/issues).
 
-### Rate
+## Rate
 
 Give us ⭐⭐⭐⭐⭐ on [Google Play].  
 If you don't think it is worth five stars yet then just [open an issue](https://github.com/slion/fulguris/issues) instead. 
 
-### Engage
+## Engage
 
 You can engage with us on [our forums], on [GitHub](https://github.com/slion/fulguris/issues), on [Discord] or any other social media you can track us down to.
 
-### Translations
+## Translations
 
 Please go ahead and translate on [CrowdIn](https://crowdin.com/project/fulguris-web-browser).
 
-### Code
+## Code
 Code contributions are of course welcome, both bug fix and features.
 Please understand that code quality, design and architecture are extremely important as the foremost priority of this project is to deliver a premium browsing experience.
 We do our best to avoid treating users as beta testers. Therefore if you want to deliver a new feature expect it to take several iterations before it reaches maturity and is ready for production.
 
-### Finance
+## Finance
 
 Please consider [sponsoring us on GitHub](https://github.com/sponsors/Slion) or through in-apps on [Google Play].
 The ability of this project to finance itself is what will ultimately determine its long term success.
 
-## Features
+# Features
 📑Sessions  
 🌍 Address bar  
 🚦Vertical tab panel  
@@ -60,14 +60,14 @@ The ability of this project to finance itself is what will ultimately determine 
 🔧Settings – lots  
 📶 Orbot Proxy support and I2P support – Beta
 
-## Permissions
+# Permissions
 
-### Automatically granted
+## Automatically granted
 * `INTERNET`: necessary to access the internet.
 * `ACCESS_NETWORK_STATE`: used by the browser to stop loading resources when network access is lost.
 * `INSTALL_SHORTCUT`: used to add shortcuts with the "Add to home screen" option.
 
-### Requested only when needed
+## Requested only when needed
 * `WRITE_EXTERNAL_STORAGE`: needed to download files and export bookmarks.
 * `READ_EXTERNAL_STORAGE`: needed to download files and import bookmarks.
 * `ACCESS_FINE_LOCATION`: needed for sites like Google Maps, requires "Location access" option to be enabled (default disabled).
