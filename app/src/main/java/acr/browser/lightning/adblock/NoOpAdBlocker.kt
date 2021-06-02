@@ -1,5 +1,8 @@
 package acr.browser.lightning.adblock
 
+import android.net.Uri
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import dagger.Reusable
 import javax.inject.Inject
 
@@ -11,4 +14,7 @@ class NoOpAdBlocker @Inject constructor() : AdBlocker {
 
     override fun isAd(url: String) = false
 
+    override fun loadScript(uri: Uri): String? = null
+
+    override fun shouldBlock(request: WebResourceRequest, pageUrl: String): WebResourceResponse? = null
 }

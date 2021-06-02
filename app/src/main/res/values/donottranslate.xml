@@ -55,6 +55,8 @@
 
     <string name="pref_key_locale">pref_key_locale</string>
 
+    <string name="pref_key_blocklist_auto_update">pref_key_blocklist_auto_update</string>
+
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>

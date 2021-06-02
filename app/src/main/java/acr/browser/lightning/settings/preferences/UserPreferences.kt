@@ -3,6 +3,7 @@ package acr.browser.lightning.settings.preferences
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpUpdateMode
 import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.browser.SearchBoxDisplayChoice
 import acr.browser.lightning.browser.SearchBoxModel
@@ -330,12 +331,12 @@ class UserPreferences @Inject constructor(
     /**
      * User can disable Firebase Google Analytics.
      */
-    var analytics by preferences.booleanPreference(R.string.pref_key_analytics, R.bool.pref_default_analytics)
+    var analytics by preferences.booleanPreference(R.string.pref_key_analytics, true)
 
     /**
      * User can disable Firebase Crash Report AKA Crashlytics.
      */
-    var crashReport by preferences.booleanPreference(R.string.pref_key_crash_report, R.bool.pref_default_crash_report)
+    var crashReport by preferences.booleanPreference(R.string.pref_key_crash_report, true)
 
     /**
      * Toggle visibility of close tab button on drawer tab list items.
@@ -368,6 +369,9 @@ class UserPreferences @Inject constructor(
      * Empty string means use system default locale.
      */
     var locale by preferences.stringPreference(R.string.pref_key_locale, "")
+
+
+    var blockListAutoUpdate by preferences.enumPreference(R.string.pref_key_blocklist_auto_update, AbpUpdateMode.WIFI_ONLY)
 
 }
 

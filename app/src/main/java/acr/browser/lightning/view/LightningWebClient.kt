@@ -3,7 +3,6 @@ package acr.browser.lightning.view
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AdBlocker
-import acr.browser.lightning.adblock.allowlist.AllowListModel
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
@@ -45,13 +44,13 @@ import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URISyntaxException
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
+import jp.hazuki.yuzubrowser.adblock.*
 
 
 class LightningWebClient(
@@ -61,13 +60,11 @@ class LightningWebClient(
 
     private val uiController: UIController
     private val intentUtils = IntentUtils(activity)
-    private val emptyResponseByteArray: ByteArray = byteArrayOf()
 
     @Inject internal lateinit var proxyUtils: ProxyUtils
     @Inject internal lateinit var userPreferences: UserPreferences
     @Inject @UserPrefs internal lateinit var preferences: SharedPreferences
     @Inject internal lateinit var sslWarningPreferences: SslWarningPreferences
-    @Inject internal lateinit var whitelistModel: AllowListModel
     @Inject internal lateinit var logger: Logger
     @Inject internal lateinit var textReflowJs: TextReflow
     @Inject internal lateinit var invertPageJs: InvertPage
@@ -82,6 +79,8 @@ class LightningWebClient(
     private var zoomScale = 0.0f
 
     private var currentUrl: String = ""
+
+//    private var elementHide = userPreferences.elementHide
 
     var sslState: SslState = SslState.None
         private set(value) {
@@ -105,23 +104,22 @@ class LightningWebClient(
     }
 
     private fun chooseAdBlocker(): AdBlocker = if (userPreferences.adBlockEnabled) {
-        activity.injector.provideBloomFilterAdBlocker()
+        activity.injector.provideAbpAdBlocker()
     } else {
         activity.injector.provideNoOpAdBlocker()
     }
-
-    private fun shouldRequestBeBlocked(pageUrl: String, requestUrl: String) =
-        !whitelistModel.isUrlAllowedAds(pageUrl) && adBlock.isAd(requestUrl)
 
     /**
      * Overrides [WebViewClient.shouldInterceptRequest].
      * Looks like we need to intercept our custom URLs here to implement support for fulguris and about scheme.
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-        if (shouldRequestBeBlocked(currentUrl, request.url.toString())) {
-            val empty = ByteArrayInputStream(emptyResponseByteArray)
-            return WebResourceResponse("text/plain", "utf-8", empty)
-        }
+        // maybe adjust to always return response... null means allow anyway. what is the "super" actually doing? same as null?
+        // adBlock should probably be renamed once mining and malware block is implemented
+        val response = adBlock.shouldBlock(request, currentUrl)
+        if (response != null)
+            return response
+
         return super.shouldInterceptRequest(view, request)
     }
 
@@ -166,7 +164,15 @@ class LightningWebClient(
         if (lightningView.invertPage) {
             view.evaluateJavascript(invertPageJs.provideJs(), null)
         }
-
+/*        // TODO: element hiding does not work
+        //  maybe because of the late injection?
+        //  copy onDomContentLoaded callback from yuzu and use this to inject JS (used in yuzu also for invert and userJS)
+        if (elementHide) {
+            adBlock.loadScript(Uri.parse(currentUrl))?.let {
+                view.evaluateJavascript(it, null)
+            }
+            // takes around half a second, but not sure what that tells me
+        }*/
         uiController.tabChanged(lightningView)
     }
 

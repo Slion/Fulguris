@@ -8,6 +8,7 @@ package acr.browser.lightning.browser.activity
 import acr.browser.lightning.*
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.browser.*
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
 import acr.browser.lightning.browser.cleanup.ExitCleanup
@@ -176,6 +177,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     @Inject lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject lateinit var exitCleanup: ExitCleanup
 
+    @Inject lateinit var abpUserRules: AbpUserRules
     // HTTP
     private lateinit var queue: RequestQueue
 
@@ -453,6 +455,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
             onMenuItemClicked(iBinding.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
             onMenuItemClicked(iBinding.menuItemDarkMode) { executeAction(R.id.action_toggle_dark_mode) }
+            onMenuItemClicked(iBinding.menuItemAdBlock) { executeAction(R.id.action_block) }
             //
             onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
 
@@ -1625,6 +1628,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // Even doing a post does not fix it. However doing a long enough postDelayed does the trick.
                     mainHandler.postDelayed({ setToolbarColor() }, 100)
                 }
+                return true
+            }
+
+            R.id.action_block -> {
+
+                abpUserRules.whitelist(Uri.parse(tabsManager.currentTab?.url), !popupMenu.iBinding.menuItemAdBlock.isChecked)
+                tabsManager.currentTab?.reload()
                 return true
             }
 
