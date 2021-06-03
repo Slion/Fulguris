@@ -459,5 +459,13 @@
     <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris Web Browser</string>
 
+    <!--
+    Long press on image link disambiguation:
+        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
+     -->
+    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
+    <string name="button_link">Link</string>
+    <string name="button_image">Image</string>
+
 
 </resources>

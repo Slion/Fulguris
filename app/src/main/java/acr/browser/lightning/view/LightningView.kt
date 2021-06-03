@@ -14,7 +14,7 @@ import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
-import acr.browser.lightning.extensions.canScrollVertically
+import acr.browser.lightning.extensions.*
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.network.NetworkConnectivityModel
@@ -43,13 +43,13 @@ import android.view.View.OnScrollChangeListener
 import android.view.View.OnTouchListener
 import android.webkit.CookieManager
 import android.webkit.WebSettings
-import android.webkit.WebSettings.FORCE_DARK_ON
 import android.webkit.WebSettings.LayoutAlgorithm
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -923,9 +923,20 @@ class LightningView(
         } else {
             if (url != null) {
                 if (result != null) {
-                    if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE || result.type == WebView.HitTestResult.IMAGE_TYPE) {
+                    if (result.type == WebView.HitTestResult.IMAGE_TYPE) {
+                        /** Should we just use [url] for images or is [result.extra] actually useful here? */
                         dialogBuilder.showLongPressImageDialog(activity, uiController, result.extra ?: url, userAgent)
-
+                    } else if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE){
+                        // Ask user if she want to use the link or the image
+                        activity.makeSnackbar(
+                            activity.getString(R.string.question_what_do_you_want_to_use), Snackbar.LENGTH_LONG, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
+                            .setAction(R.string.button_link) {
+                                // Use the link then
+                                dialogBuilder.showLongPressLinkDialog(activity,uiController,url,userAgent)
+                            }.addAction(R.layout.snackbar_extra_button, R.string.button_image){
+                                /** Use the image then. That [result.extra] ?: [url] selection is probably not consistent here but it is convenient and safe */
+                                dialogBuilder.showLongPressImageDialog(activity, uiController, result.extra ?: url, userAgent)
+                            }.show()
                     } else {
                         dialogBuilder.showLongPressLinkDialog(activity, uiController, url, text)
                     }
