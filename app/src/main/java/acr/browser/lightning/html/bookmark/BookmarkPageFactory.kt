@@ -1,5 +1,6 @@
 package acr.browser.lightning.html.bookmark
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.database.Bookmark
@@ -12,6 +13,7 @@ import acr.browser.lightning.favicon.toValidUri
 import acr.browser.lightning.html.HtmlPageFactory
 import acr.browser.lightning.html.jsoup.*
 import acr.browser.lightning.utils.ThemeUtils
+import acr.browser.lightning.utils.htmlColor
 import android.app.Application
 import android.graphics.Bitmap
 import androidx.core.net.toUri
@@ -84,7 +86,13 @@ class BookmarkPageFactory @Inject constructor(
     }
 
     private fun construct(list: List<BookmarkViewModel>): String {
-        return parse(bookmarkPageReader.provideHtml()) andBuild {
+        return parse(bookmarkPageReader.provideHtml()
+            // Theme our page first
+            .replace("\${colorBackground}", htmlColor(ThemeUtils.getBackgroundColor(BrowserApp.currentContext())))
+            .replace("\${colorOnBackground}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnBackground)))
+            .replace("\${colorControl}", htmlColor(ThemeUtils.getSearchBarColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext()))))
+            .replace("\${colorBorder}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.appColorControlDisabled)))
+        ) andBuild {
             title { title }
             body {
                 val repeatableElement = id("repeated").removeElement()
