@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Copyright 2013 The Android Open Source Project
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
--->
-
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-
+    <string name="action_reload">Reload</string>
+    <string name="action_menu">Menu</string>
     <string name="action_new_tab">Nieuw Tabblad</string>
     <string name="action_share">Deel</string>
     <string name="action_history">Geschiedenis</string>
     <string name="action_bookmarks">Bladwijzers</string>
+    <string name="action_downloads">Downloads</string>
     <string name="action_add_bookmark">Bladwijzer toevoegen</string>
     <string name="action_copy">Kopieer link</string>
     <string name="action_forward">Voorwaarts</string>
+    <string name="action_sessions">Sessions</string>
+    <string name="action_new_session">New session</string>
+    <string name="action_save_session">Save session as</string>
+    <string name="action_edit_sessions">Edit sessions</string>
     <string name="settings">Instellingen</string>
     <string name="location">Locatie toegang</string>
     <string name="password">Bewaar jouw paswoord</string>
@@ -36,15 +26,21 @@
     <string name="settings_advanced">Geavanceerde instellingen</string>
     <string name="apache">Apache License 2.0</string>
     <string name="version">Application versie</string>
+    <string name="update_available">Update available</string>
+    <string name="update_check_error">Update check error, try again later</string>
+    <string name="up_to_date">This is the newest version</string>
+    <string name="show">Show</string>
     <string name="cache">Wis cache bij beëindigen</string>
     <string name="reflow">Text herschikking activeren</string>
     <string name="block">Blokkeer afbeeldingen</string>
+    <string name="load_images">Load images</string>
     <string name="window">Sta sites toe om in een nieuwe pagina te openen</string>
     <string name="cookies">Cookies activeren</string>
     <string name="size">Tekst grootte</string>
     <string name="recommended">Aanbevolen</string>
     <string name="search">Zoekmachine</string>
     <string name="search_hint">Zoek</string>
+    <string name="search_action">@string/search_hint</string>
     <string name="wideViewPort">Gebruik wijde viewport</string>
     <string name="overViewMode">Laad pagina\'s in overzichtsweergave</string>
     <string name="restore_tabs_on_startup">Herstel tabbladen bij opstart</string>
@@ -68,9 +64,12 @@
     <string name="agent_desktop">Desktop</string>
     <string name="agent_mobile">Mobile</string>
     <string name="agent_custom">Aangepast</string>
+    <string name="agent_system">System</string>
+    <string name="agent_web_view">Web View</string>
     <string name="title_search_engine">Zoekmachine</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Wil je dit bestand downloaden? (%1$s)</string>
+    <string name="unknown_size">Unknown size</string>
     <string name="action_cancel">Annuleer</string>
     <string name="title_warning">Waarschuwing</string>
     <string name="dialog_adobe_not_installed">Adobe Flash Player werd niet gevonden.\nGelieve Flash Player te installeren.</string>
@@ -98,8 +97,12 @@
     <string name="action_edit">Wijzig</string>
     <string name="action_incognito">Nieuw incognito tabblad</string>
     <string name="action_homepage">Standaard</string>
+    <string name="action_show_homepage">Show homepage</string>
     <string name="action_back">Terug</string>
     <string name="action_find">Vind in pagina</string>
+    <string name="action_print">Print</string>
+    <string name="downloads">Downloads</string>
+    <string name="downloads_notification_description">Triggers upon download completion</string>
     <string name="download_pending">Download starten\u2026</string>
     <string name="cannot_download">Kan alleen \"http\" of \"https\" URLs downloaden.</string>
     <string name="problem_download">ongeldige URL gevonden, kan niet downloaden</string>
@@ -108,12 +111,14 @@
     <string name="download_no_sdcard_dlg_msg">USB opslag is vereist om bestand te downloaden.</string>
     <string name="download_sdcard_busy_dlg_title">USB opslag niet beschikbaar</string>
     <string name="download_sdcard_busy_dlg_msg">Opslag is bezet. Om downloads toe te laten, gelieve USB opslag uit te zetten in het notificatiecentrum.</string>
+    <string name="download_complete">Download complete</string>
+    <string name="download_failed">Download failed</string>
     <string name="incognito_cookies">Cookies activeren in incognito modus</string>
+    <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Manueel</string>
     <string name="action_auto">Auto</string>
     <string name="action_follow_me">Contacteer Mij</string>
-
     <string name="clear_cache">Wis cache</string>
     <string name="message_cache_cleared">Cache gewist</string>
     <string name="message_import">Bladwijzers zijn geïmporteerd</string>
@@ -122,11 +127,32 @@
     <string name="max_tabs">Maximum aantal tabbladen bereikt</string>
     <string name="message_text_copied">Tekst gekopieerd naar klembord</string>
     <string name="message_link_copied">Link gekopieerd naar klembord</string>
-    <string name="search_engine_custom">Aangepaste URL</string>
     <string name="message_blocked_local">Lokaal bestand werd geblokkeerd</string>
     <string name="licenses">Open Source Licenses</string>
     <string name="suggestion">Zoek voor</string>
+    <string name="checking_for_updates">Checking for updates…</string>
+    <string name="title_updated">Fulguris was updated</string>
+    <string name="message_updated">You are now running v%s. Do you want to check release notes online?</string>
+    <string name="title_welcome">Welcome to Fulguris</string>
+    <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
+    <!-- Ad block -->
     <string name="block_ads">Blokkeer advertenties</string>
+    <string name="block_ad_source">Hosts file source</string>
+    <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
+    <string name="block_ad_refresh_now">Refresh hosts now</string>
+    <string name="block_ads_upsell_source">Upgrade to Lightning Plus to choose</string>
+    <string name="block_remote_frequency_daily">Daily</string>
+    <string name="block_remote_frequency_weekly">Weekly</string>
+    <string name="block_remote_frequency_monthly">Monthly</string>
+    <string name="block_source_default">Default hosts</string>
+    <string name="block_source_local">Local hosts file</string>
+    <string name="block_source_local_description">File: %1$s</string>
+    <string name="block_source_remote">Remote hosts file</string>
+    <string name="block_source_remote_description">URL: %1$s</string>
+    <!-- Common actions -->
+    <string name="action_message_canceled">Action canceled.</string>
+    <!-- SSL warnings -->
+    <string name="ssl_warning_dont_ask_again">Don\'t ask again for this browsing session.</string>
     <string name="message_insecure_connection">Verbinding met deze site is niet veilig :\n%1$s\nToch doorgaan?</string>
     <string name="message_certificate_date_invalid">datum van certificaat is ongeldig</string>
     <string name="message_certificate_expired">certificaat is vervallen</string>
@@ -134,15 +160,24 @@
     <string name="message_certificate_invalid">certificaat is ongeldig</string>
     <string name="message_certificate_not_yet_valid">certificaat is nog niet geldig</string>
     <string name="message_certificate_untrusted">certificaat wordt niet vertrouwd</string>
+    <!-- permissions request -->
+    <string name="title_permission_request">Permission request</string>
+    <string name="message_permission_request">%1$s\n\nwould like to use:\n\n%2$s</string>
     <string name="title_form_resubmission">Formulier herverzending</string>
     <string name="message_form_resubmission">Wil je de gegevens opnieuw verzenden?</string>
     <string name="message_location">\nWil jouw locatie gebruiken</string>
     <string name="action_allow">Toestaan</string>
     <string name="action_dont_allow">Niet toestaan</string>
     <string name="title_sign_in">Inloggen</string>
+    <string name="label_realm">Server message: %s</string>
     <string name="hint_username">Gebruiksnaam</string>
     <string name="hint_password">Paswoord</string>
+    <string name="search_suggestions">Search suggestions</string>
     <string name="powered_by_google">Ondersteund door Google</string>
+    <string name="powered_by_duck">Powered by DuckDuckGo</string>
+    <string name="powered_by_baidu">Powered by Baidu</string>
+    <string name="powered_by_naver">Powered by Naver</string>
+    <string name="search_suggestions_off">No search suggestions</string>
     <string name="http_proxy">HTTP Proxy</string>
     <string-array name="proxy_choices_array">
         <item>None</item>
@@ -183,13 +218,61 @@
     <string name="export_bookmarks">Exporteer bladwijzers naar backup</string>
     <string name="import_backup">Importeer bladwijzers van backup</string>
     <string name="bookmark_export_path">Bladwijzers geëxporteerd naar</string>
+    <string name="bookmark_export_failure">Sorry, bookmarks could not be exported!</string>
     <string name="bookmark_settings">Bladwijzer instellingen</string>
     <string name="import_bookmark_error">Kon bladwijzers niet van bestand laden</string>
+    <string name="message_bookmark_added">Bookmark added.</string>
+    <string name="message_bookmark_not_added">Bookmark already exists.</string>
     <string name="title_chooser">Kies een bestand</string>
     <string name="settings_general">Algemene instellingen</string>
     <string name="settings_display">Scherm instellingen</string>
+    <string name="settings_title_configuration">Configuration</string>
+    <string name="settings_summary_configuration">Portrait and landscape settings</string>
     <string name="settings_privacy">Privacy instellingen</string>
     <string name="settings_about">Over</string>
+    <string name="settings_contribute">Contribute</string>
+    <string name="settings_summary_contribute">Help Fulguris grow and succeed</string>
+    <string name="pref_category_general">General</string>
+    <string name="pref_category_panels">Panels</string>
+    <string name="pref_category_webpage">@string/action_webpage</string>
+    <string name="pref_category_landscape">Landscape</string>
+    <string name="pref_category_portrait">Portrait</string>
+    <string name="pref_category_menu">@string/action_menu</string>
+    <string name="pref_title_hide_status_bar">Hide status bar</string>
+    <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
+    <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
+    <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
+    <string name="pref_title_locked_drawers">Locked panels</string>
+    <string name="pref_summary_locked_drawers">Tabs and Bookmarks panels can\'t be dragged</string>
+    <string name="pref_title_use_bottom_sheets">Use bottom sheets</string>
+    <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
+    <string name="pref_title_tab_list_item_show_close_button">Show close tab button</string>
+    <string name="pref_summary_tab_list_item_show_close_button">Display close tab buttons on tab list items</string>
+    <string name="pref_title_menu_show_exit">Exit menu item</string>
+    <string name="pref_summary_menu_show_exit">Show Exit app option in menu. Incognito mode always displays it regardless.</string>
+    <string name="pref_title_menu_new_tab">New tab menu item</string>
+    <string name="pref_summary_menu_new_tab">Show New tab option in menu</string>
+    <string name="pref_title_crash_report">Crash report</string>
+    <string name="pref_title_analytics">Analytics</string>
+    <string name="pref_title_pull_to_refresh">Pull to refresh</string>
+    <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
+    <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
+    <string name="pref_title_desktop_width">Desktop width</string>
+    <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
+    <string name="pref_title_no_sponsorship">In-app sponsorship not available</string>
+    <string name="pref_summary_no_sponsorship">Use Fulguris from Google Play to sponsor us.</string>
+    <string name="pref_title_free_download">Free download</string>
+    <string name="pref_summary_free_download">Fulguris is Open Source Software. You can download our free edition including full feature set and unlimited tabs.</string>
+    <string name="pref_title_sponsorship_github">Sponsor us on GitHub</string>
+    <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
+    <string name="pref_title_sponsorship_five_stars">Five stars review</string>
+    <string name="pref_summary_sponsorship_five_stars">Giving us a five stars review on Google Play is a great way to help this project.</string>
+    <string name="pref_title_contribute_translations">Translations</string>
+    <string name="pref_summary_contribute_translations">You can help translate Fulguris to your locale language on Crowdin.</string>
+    <string name="pref_title_contribute_share">Spread the word</string>
+    <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
+    <string name="pref_title_language">Language</string>
+    <string name="language_system_default">System default</string>
     <string name="settings_about_explain">Details over versie, auteur en licensie.</string>
     <string name="close_tab">Sluit tabblad</string>
     <string name="close_all_tabs">Alle tabbladen sluiten</string>
@@ -203,6 +286,15 @@
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT licensie</string>
     <string name="url_contents">URL box inhoud</string>
+    <string name="search_in_new_tab">Search in new tab</string>
+    <string name="url_in_new_tab">URL in new tab</string>
+    <string name="homepage_in_new_tab">Homepage in new tab</string>
+    <string name="bookmark_in_new_tab">Bookmark in new tab</string>
+    <string name="new_tab_position">New tab position</string>
+    <string name="new_tab_position_before">Before current tab</string>
+    <string name="new_tab_position_after">After current tab</string>
+    <string name="new_tab_position_start">Start of tab list</string>
+    <string name="new_tab_position_end">End of tab list</string>
     <string name="text_encoding">Tekst codering</string>
     <string-array name="url_content_array">
         <item>Domein (standaard)</item>
@@ -210,11 +302,13 @@
         <item>Titel</item>
     </string-array>
     <string name="invert_color">Keer kleur om</string>
-    <string name="dark_theme">Donker thema</string>
+    <string name="settings_black_status_bar">Black status bar</string>
     <string name="tabs">Tabbladen</string>
     <string name="theme">App thema</string>
     <string name="light_theme">Licht thema</string>
+    <string name="dark_theme">Donker thema</string>
     <string name="black_theme">Zwart Thema (AMOLED)</string>
+    <string name="default_theme">@string/agent_default</string>
     <string name="folder">Map naam</string>
     <string name="action_folder">Map</string>
     <string name="action_rename">Geef nieuwe naam</string>
@@ -226,9 +320,124 @@
     <string name="hosts_source">Bron hosts bestand om advertenties te blokkeren</string>
     <string name="settings_adblock">Advertentie blokkeer instellingen</string>
     <string name="settings_title_vertical_tab_bar">Toon tabbladen in navigatie lade</string>
+    <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
+    <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
+    <string name="settings_title_desktop_mode_default">Desktop mode</string>
+    <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
+    <string name="settings_title_dark_mode_default">Force dark mode</string>
+    <string name="settings_summary_dark_mode_default">Define if new tabs use force dark mode by default</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">Swap drawers</string>
+    <string name="settings_summary_swap_bookmarks_and_tabs">Tabs and Bookmarks drawers will swap places</string>
     <string name="do_not_track">Vraag \'Niet Volgen\'</string>
+    <string name="save_data">Request \'Save-Data\'</string>
     <string name="remove_identifying_headers">Verwijder identificatie hoofden</string>
+    <string name="pref_title_webrtc">WebRTC Support</string>
+    <string name="pref_summary_webrtc">Allows Real Time Communication over the Web using your device camera and microphone</string>
     <string name="action_add_to_homescreen">Voeg aan startscherm toe</string>
     <string name="message_added_to_homescreen">Snelkoppeling aan startscherm toegevoegd</string>
+    <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Verwijder alle bladwijzers</string>
+    <string name="flash_not_supported">Flash Player is not supported by your system</string>
+    <string name="upsell_plus_version">Upgrade to Lightning Plus to block ads</string>
+    <string name="message_open_download_fail">This file doesn\'t exist anymore</string>
+    <string name="faq">FAQ</string>
+    <string name="faq_description">Frequently asked questions</string>
+    <!-- debug strings -->
+    <string name="debug_title">Debug</string>
+    <string name="debug_leak_canary">LeakCanary</string>
+    <string name="app_restart">Please restart the app for the change to take effect.</string>
+    <!-- Dialogs -->
+    <string name="dialog_open_new_tab">Open in new tab</string>
+    <string name="dialog_open_background_tab">Open in background tab</string>
+    <string name="dialog_open_incognito_tab">Open in incognito tab</string>
+    <string name="dialog_remove_bookmark">Remove bookmark</string>
+    <string name="dialog_edit_bookmark">Edit bookmark</string>
+    <string name="dialog_remove_from_history">Remove from history</string>
+    <string name="dialog_download_image">Download image</string>
+    <string name="dialog_copy_link">Copy link</string>
+    <string name="dialog_copy_text">Copy text</string>
+    <string name="dialog_rename_folder">Rename folder</string>
+    <string name="dialog_remove_folder">Remove folder</string>
+    <string name="dialog_title_close_browser">Close browser</string>
+    <string name="dialog_delete_download">Delete download</string>
+    <string name="dialog_delete_all_downloads">Delete all downloads</string>
+    <!-- Tools dialog -->
+    <string name="dialog_tools_title">Page tools</string>
+    <string name="dialog_toggle_desktop">Toggle desktop user agent</string>
+    <string name="dialog_adblock_enable_for_site">Enable ad block for site</string>
+    <string name="dialog_adblock_disable_for_site">Disable ad block for site</string>
+    <!-- Search Engines -->
+    <string name="search_engine_custom">Aangepaste URL</string>
+    <string name="search_engine_google">Google</string>
+    <string name="search_engine_ask">Ask</string>
+    <string name="search_engine_bing">Bing</string>
+    <string name="search_engine_yahoo">Yahoo</string>
+    <string name="search_engine_startpage">StartPage</string>
+    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
+    <string name="search_engine_duckduckgo">DuckDuckGo</string>
+    <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
+    <string name="search_engine_baidu">Baidu</string>
+    <string name="search_engine_yandex">Yandex</string>
+    <string name="search_engine_naver">Naver</string>
+    <!-- Notifications -->
+    <plurals name="notification_incognito_running_title">
+        <item quantity="one">%1$d incognito tab open</item>
+        <item quantity="other">%1$d incognito tabs open</item>
+    </plurals>
+    <string name="notification_incognito_running_message">Touch to open</string>
+    <string name="notification_incognito_running_description">Ongoing incognito notification</string>
+    <!--Ad block -->
+    <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
+    <string name="infinity">∞</string>
+    <!-- SSL -->
+    <string name="ssl_info_issued_by">Issued by</string>
+    <string name="ssl_info_issued_to">Issued to</string>
+    <string name="ssl_info_issued_on">Issued on</string>
+    <string name="ssl_info_expires_on">Expires on</string>
+    <!-- Search in page -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="close">Close</string>
+    <string name="exit">Exit</string>
+    <!-- Frozen tabs -->
+    <string name="tab_frozen">Frozen…</string>
+    <!-- Search -->
+    <string name="search_insert_suggestion">Insert suggestion</string>
+    <string name="action_close_all_other_tabs">Close all other tabs</string>
+    <string name="action_restore_all_tabs">Restore all tabs</string>
+    <string name="action_restore_tab">Restore tab</string>
+    <string name="settings_summary_apps">Enable third-party apps</string>
+    <string name="settings_title_apps">Apps</string>
+    <string name="settings_app_prefix">app_for_</string>
+    <string name="dialog_title_third_party_app">Third-party app available</string>
+    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
+    <string name="per_month">\u0020/ month</string>
+    <string name="per_year">\u0020/ year</string>
+    <string name="session_default">@string/agent_default</string>
+    <string name="session_name_prompt">Enter session name:</string>
+    <string name="session_already_exists">A session with that name already exists!</string>
+    <string name="session_cant_delete_current">Can\'t delete current session!</string>
+    <string name="session_prompt_confirm_deletion_title">Confirm deletion</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
+    <string name="session_switched">Switched to \"%s\"</string>
+    <string name="busy">Busy, try again shortly.\"</string>
+    <string name="invalid_character_removed">Invalid character removed!</string>
+    <string name="invalid_characters_removed">Invalid characters removed!</string>
+    <string name="reading_mode_image_copyright">Image attributed to</string>
+    <string name="reading_mode_image_caption">Image with caption</string>
+    <!-- text-to-speech -->
+    <string name="tts">Read page</string>
+    <string name="stop_tts">Stop reading</string>
+    <!-- Application name which can be translated -->
+    <string name="locale_app_name">Fulguris Web Browser</string>
+    <!--
+    Long press on image link disambiguation:
+        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
+     -->
+    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
+    <string name="button_link">Link</string>
+    <string name="button_image">Image</string>
+    <!-- Displayed in snackbar to notify user a tab was closed -->
+    <string name="notify_tab_closed">Tab closed</string>
+    <string name="button_undo">Undo</string>
 </resources>

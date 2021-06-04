@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="action_reload">Reload</string>
+    <string name="action_menu">Menu</string>
     <string name="action_new_tab">Создать вкладку</string>
     <string name="action_share">Отправить ссылку</string>
     <string name="action_history">История</string>
     <string name="action_bookmarks">Закладки</string>
+    <string name="action_downloads">Загрузки</string>
     <string name="action_add_bookmark">Добавить закладку</string>
     <string name="action_copy">Копировать ссылку</string>
     <string name="action_forward">Вперёд</string>
+    <string name="action_sessions">Sessions</string>
+    <string name="action_new_session">New session</string>
+    <string name="action_save_session">Save session as</string>
+    <string name="action_edit_sessions">Edit sessions</string>
     <string name="settings">Настройки</string>
     <string name="location">Местоположение</string>
     <string name="password">Сохранять пароли</string>
@@ -20,15 +26,21 @@
     <string name="settings_advanced">Дополнительно</string>
     <string name="apache">Apache License 2.0</string>
     <string name="version">Версия</string>
+    <string name="update_available">Update available</string>
+    <string name="update_check_error">Update check error, try again later</string>
+    <string name="up_to_date">This is the newest version</string>
+    <string name="show">Show</string>
     <string name="cache">Очищать кэш при выходе</string>
     <string name="reflow">Перекомпоновка</string>
     <string name="block">Без изображений</string>
+    <string name="load_images">Load images</string>
     <string name="window">Разрешить всплывающие окна</string>
     <string name="cookies">Включить куки</string>
     <string name="size">Размер текста</string>
     <string name="recommended">Рекомендуется</string>
     <string name="search">Поисковая система</string>
     <string name="search_hint">Поиск</string>
+    <string name="search_action">@string/search_hint</string>
     <string name="wideViewPort">Широкий вид</string>
     <string name="overViewMode">Загружать обзор</string>
     <string name="restore_tabs_on_startup">Восстановление предыдущей сессии</string>
@@ -52,12 +64,15 @@
     <string name="agent_desktop">Стандартный</string>
     <string name="agent_mobile">Мобильный</string>
     <string name="agent_custom">Выбрать</string>
+    <string name="agent_system">System</string>
+    <string name="agent_web_view">Web View</string>
     <string name="title_search_engine">Поисковая система</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Загрузить файл? (%1$s)</string>
+    <string name="unknown_size">Неизвестный размер</string>
     <string name="action_cancel">Отмена</string>
     <string name="title_warning">Внимание</string>
-    <string name="dialog_adobe_not_installed">"Adobe Flash Player не найден.\nУстановите Flash Player"</string>
+    <string name="dialog_adobe_not_installed">Adobe Flash Player не найден.\nУстановите Flash Player</string>
     <string name="title_user_agent">User Agent</string>
     <string name="title_download_location">Путь загрузки</string>
     <string name="title_custom_homepage">Введите адрес</string>
@@ -82,8 +97,12 @@
     <string name="action_edit">Правка</string>
     <string name="action_incognito">Инкогнито-вкладка</string>
     <string name="action_homepage">Домой</string>
+    <string name="action_show_homepage">Show homepage</string>
     <string name="action_back">Назад</string>
     <string name="action_find">Найти на странице</string>
+    <string name="action_print">Print</string>
+    <string name="downloads">Downloads</string>
+    <string name="downloads_notification_description">Triggers upon download completion</string>
     <string name="download_pending">Загрузка\u2026</string>
     <string name="cannot_download">Загрузка возможна только с \"http\" или \"https\" адресов</string>
     <string name="problem_download">Некорректный URL, загрузка невозможна</string>
@@ -92,12 +111,14 @@
     <string name="download_no_sdcard_dlg_msg">Для загрузки файла необходима карта памяти</string>
     <string name="download_sdcard_busy_dlg_title">Карта памяти недоступна</string>
     <string name="download_sdcard_busy_dlg_msg">Карта памяти подключена к ПК. Для начала загрузки отключите её от ПК, нажав на уведомление.</string>
+    <string name="download_complete">Download complete</string>
+    <string name="download_failed">Download failed</string>
     <string name="incognito_cookies">Включить куки в режиме инкогнито</string>
+    <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Вручную</string>
     <string name="action_auto">Автоматически</string>
     <string name="action_follow_me">Связаться с разработчиками</string>
-
     <string name="clear_cache">Очистить кэш</string>
     <string name="message_cache_cleared">Кэш очищен</string>
     <string name="message_import">Закладки импортированы</string>
@@ -106,11 +127,32 @@
     <string name="max_tabs">Достигнуто максимальное число вкладок</string>
     <string name="message_text_copied">Текст скопирован в буфер обмена</string>
     <string name="message_link_copied">Ссылка скопирована в буфер обмена</string>
-    <string name="search_engine_custom">Пользовательский URL</string>
     <string name="message_blocked_local">Локальный файл недоступен для загрузки</string>
     <string name="licenses">Open Source Licenses</string>
     <string name="suggestion">Искать</string>
+    <string name="checking_for_updates">Checking for updates…</string>
+    <string name="title_updated">Fulguris was updated</string>
+    <string name="message_updated">You are now running v%s. Do you want to check release notes online?</string>
+    <string name="title_welcome">Welcome to Fulguris</string>
+    <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
+    <!-- Ad block -->
     <string name="block_ads">Блокировать рекламу</string>
+    <string name="block_ad_source">Hosts file source</string>
+    <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
+    <string name="block_ad_refresh_now">Refresh hosts now</string>
+    <string name="block_ads_upsell_source">Upgrade to Lightning Plus to choose</string>
+    <string name="block_remote_frequency_daily">Daily</string>
+    <string name="block_remote_frequency_weekly">Weekly</string>
+    <string name="block_remote_frequency_monthly">Monthly</string>
+    <string name="block_source_default">Default hosts</string>
+    <string name="block_source_local">Local hosts file</string>
+    <string name="block_source_local_description">File: %1$s</string>
+    <string name="block_source_remote">Remote hosts file</string>
+    <string name="block_source_remote_description">URL: %1$s</string>
+    <!-- Common actions -->
+    <string name="action_message_canceled">Action canceled.</string>
+    <!-- SSL warnings -->
+    <string name="ssl_warning_dont_ask_again">Don\'t ask again for this browsing session.</string>
     <string name="message_insecure_connection">Соединение не защищено:\n%1$s\nВсё равно продолжить?</string>
     <string name="message_certificate_date_invalid">дата сертификата недействительна</string>
     <string name="message_certificate_expired">истёк срок действия сертификата</string>
@@ -118,16 +160,24 @@
     <string name="message_certificate_invalid">сертификат недействителен</string>
     <string name="message_certificate_not_yet_valid">сертикат ещё не действителен</string>
     <string name="message_certificate_untrusted">сертификат не является доверенным</string>
+    <!-- permissions request -->
+    <string name="title_permission_request">Permission request</string>
+    <string name="message_permission_request">%1$s\n\nwould like to use:\n\n%2$s</string>
     <string name="title_form_resubmission">Отправка формы</string>
     <string name="message_form_resubmission">Вы действительно хотите повторно отправить данные?</string>
     <string name="message_location">\nХотите использовать своё местоположение?</string>
     <string name="action_allow">Разрешить</string>
     <string name="action_dont_allow">Не разрешать</string>
     <string name="title_sign_in">Вход</string>
+    <string name="label_realm">Серверное сообщение: %s</string>
     <string name="hint_username">Имя пользователя</string>
     <string name="hint_password">Пароль</string>
     <string name="search_suggestions">Подсказки поиска</string>
     <string name="powered_by_google">Используя Google</string>
+    <string name="powered_by_duck">Используя DuckDuckGo</string>
+    <string name="powered_by_baidu">Используя Baidu</string>
+    <string name="powered_by_naver">Powered by Naver</string>
+    <string name="search_suggestions_off">Нет поисковых подсказок</string>
     <string name="http_proxy">HTTP прокси</string>
     <string-array name="proxy_choices_array">
         <item>Нет</item>
@@ -168,13 +218,61 @@
     <string name="export_bookmarks">Сделать резервную копию закладок</string>
     <string name="import_backup">Восстановить закладки из резервной копии</string>
     <string name="bookmark_export_path">Экспортировать закладки в </string>
+    <string name="bookmark_export_failure">Извините, закладки не удалось экспортировать!</string>
     <string name="bookmark_settings">Настройки закладок</string>
     <string name="import_bookmark_error">Не удалось импортировать закладки из файла</string>
+    <string name="message_bookmark_added">Закладка добавлена</string>
+    <string name="message_bookmark_not_added">Bookmark already exists.</string>
     <string name="title_chooser">Выберите файл</string>
     <string name="settings_general">Основные настройки</string>
     <string name="settings_display">Настройки отображения</string>
+    <string name="settings_title_configuration">Configuration</string>
+    <string name="settings_summary_configuration">Portrait and landscape settings</string>
     <string name="settings_privacy">Настройки приватности</string>
     <string name="settings_about">О программе</string>
+    <string name="settings_contribute">Contribute</string>
+    <string name="settings_summary_contribute">Help Fulguris grow and succeed</string>
+    <string name="pref_category_general">General</string>
+    <string name="pref_category_panels">Panels</string>
+    <string name="pref_category_webpage">@string/action_webpage</string>
+    <string name="pref_category_landscape">Landscape</string>
+    <string name="pref_category_portrait">Portrait</string>
+    <string name="pref_category_menu">@string/action_menu</string>
+    <string name="pref_title_hide_status_bar">Hide status bar</string>
+    <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
+    <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
+    <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
+    <string name="pref_title_locked_drawers">Locked panels</string>
+    <string name="pref_summary_locked_drawers">Tabs and Bookmarks panels can\'t be dragged</string>
+    <string name="pref_title_use_bottom_sheets">Use bottom sheets</string>
+    <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
+    <string name="pref_title_tab_list_item_show_close_button">Show close tab button</string>
+    <string name="pref_summary_tab_list_item_show_close_button">Display close tab buttons on tab list items</string>
+    <string name="pref_title_menu_show_exit">Exit menu item</string>
+    <string name="pref_summary_menu_show_exit">Show Exit app option in menu. Incognito mode always displays it regardless.</string>
+    <string name="pref_title_menu_new_tab">New tab menu item</string>
+    <string name="pref_summary_menu_new_tab">Show New tab option in menu</string>
+    <string name="pref_title_crash_report">Crash report</string>
+    <string name="pref_title_analytics">Analytics</string>
+    <string name="pref_title_pull_to_refresh">Pull to refresh</string>
+    <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
+    <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
+    <string name="pref_title_desktop_width">Desktop width</string>
+    <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
+    <string name="pref_title_no_sponsorship">In-app sponsorship not available</string>
+    <string name="pref_summary_no_sponsorship">Use Fulguris from Google Play to sponsor us.</string>
+    <string name="pref_title_free_download">Free download</string>
+    <string name="pref_summary_free_download">Fulguris is Open Source Software. You can download our free edition including full feature set and unlimited tabs.</string>
+    <string name="pref_title_sponsorship_github">Sponsor us on GitHub</string>
+    <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
+    <string name="pref_title_sponsorship_five_stars">Five stars review</string>
+    <string name="pref_summary_sponsorship_five_stars">Giving us a five stars review on Google Play is a great way to help this project.</string>
+    <string name="pref_title_contribute_translations">Translations</string>
+    <string name="pref_summary_contribute_translations">You can help translate Fulguris to your locale language on Crowdin.</string>
+    <string name="pref_title_contribute_share">Spread the word</string>
+    <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
+    <string name="pref_title_language">Language</string>
+    <string name="language_system_default">System default</string>
     <string name="settings_about_explain">Информация о версии, авторах и лицензиях</string>
     <string name="close_tab">Закрыть вкладку</string>
     <string name="close_all_tabs">Закрыть все вкладки</string>
@@ -188,6 +286,15 @@
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT License</string>
     <string name="url_contents">Содержимое поля URL</string>
+    <string name="search_in_new_tab">Search in new tab</string>
+    <string name="url_in_new_tab">URL in new tab</string>
+    <string name="homepage_in_new_tab">Homepage in new tab</string>
+    <string name="bookmark_in_new_tab">Bookmark in new tab</string>
+    <string name="new_tab_position">New tab position</string>
+    <string name="new_tab_position_before">Before current tab</string>
+    <string name="new_tab_position_after">After current tab</string>
+    <string name="new_tab_position_start">Start of tab list</string>
+    <string name="new_tab_position_end">End of tab list</string>
     <string name="text_encoding">Кодировка текста</string>
     <string-array name="url_content_array">
         <item>Доменное имя (по умолчанию)</item>
@@ -195,11 +302,13 @@
         <item>Заголовок</item>
     </string-array>
     <string name="invert_color">Инвертировать цвета</string>
-    <string name="dark_theme">Тёмная тема</string>
+    <string name="settings_black_status_bar">Тёмная строка состояния</string>
     <string name="tabs">Вкладки</string>
     <string name="theme">Тема приложения</string>
     <string name="light_theme">Светлая тема</string>
+    <string name="dark_theme">Тёмная тема</string>
     <string name="black_theme">Чёрная тема (AMOLED)</string>
+    <string name="default_theme">@string/agent_default</string>
     <string name="folder">Имя директории</string>
     <string name="action_folder">Директория</string>
     <string name="action_rename">Переименовать</string>
@@ -208,56 +317,129 @@
     <string name="clear_web_storage">Очистить интернет-хранилище</string>
     <string name="clear_web_storage_exit">Очищать интернет-хранилище при выходе</string>
     <string name="message_web_storage_cleared">Интернет-хранилище очищено</string>
+    <string name="hosts_source">Файл списка заблокированной рекламы</string>
+    <string name="settings_adblock">Настройки блокировки рекламы</string>
     <string name="settings_title_vertical_tab_bar">Показывать владки в боковом меню</string>
+    <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
+    <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
+    <string name="settings_title_desktop_mode_default">Desktop mode</string>
+    <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
+    <string name="settings_title_dark_mode_default">Force dark mode</string>
+    <string name="settings_summary_dark_mode_default">Define if new tabs use force dark mode by default</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">Отобразить закладки в табах</string>
+    <string name="settings_summary_swap_bookmarks_and_tabs">Tabs and Bookmarks drawers will swap places</string>
     <string name="do_not_track">Запрашивать \'Do Not Track\'</string>
+    <string name="save_data">Request \'Save-Data\'</string>
     <string name="remove_identifying_headers">Удалять идентифиц. заголовки</string>
+    <string name="pref_title_webrtc">WebRTC Support</string>
+    <string name="pref_summary_webrtc">Allows Real Time Communication over the Web using your device camera and microphone</string>
     <string name="action_add_to_homescreen">Добавить на дом. экран</string>
     <string name="message_added_to_homescreen">Ярлык добавлен на домашний экран</string>
+    <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Удалить все закладки</string>
-
+    <string name="flash_not_supported">Flash Player не поддерживается системой</string>
+    <string name="upsell_plus_version">Обновите до Lightning Plus для блокировки рекламы</string>
+    <string name="message_open_download_fail">Файл не доступен</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">Часто задаваемые вопросы</string>
-
     <!-- debug strings -->
     <string name="debug_title">Настройки отладки</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Чтобы изменения вступили в силу, необходимо перезапустить приложение.</string>
-    <string name="settings_adblock">Настройки блокировки рекламы</string>
-    <string name="action_downloads">Загрузки</string>
-    <string name="bookmark_export_failure">Извините, закладки не удалось экспортировать!</string>
-    <string name="dialog_copy_link">Скопировать ссылку</string>
-    <string name="dialog_delete_all_downloads">Удалить все загрузки</string>
-    <string name="dialog_delete_download">Удалить загруженный файл</string>
-    <string name="dialog_download_image">Загрузить картинку</string>
-    <string name="dialog_edit_bookmark">Редактировать закладки</string>
+    <!-- Dialogs -->
+    <string name="dialog_open_new_tab">Открыть в новой вкладке</string>
     <string name="dialog_open_background_tab">Открыть вкладку в фоне</string>
     <string name="dialog_open_incognito_tab">Открыть в инкогнито-вкладе</string>
-    <string name="dialog_open_new_tab">Открыть в новой вкладке</string>
     <string name="dialog_remove_bookmark">Удалить закладку</string>
-    <string name="dialog_remove_folder">Удалить папку</string>
+    <string name="dialog_edit_bookmark">Редактировать закладки</string>
     <string name="dialog_remove_from_history">Удалить из истории</string>
+    <string name="dialog_download_image">Загрузить картинку</string>
+    <string name="dialog_copy_link">Скопировать ссылку</string>
+    <string name="dialog_copy_text">Copy text</string>
     <string name="dialog_rename_folder">Переименовать папку</string>
+    <string name="dialog_remove_folder">Удалить папку</string>
     <string name="dialog_title_close_browser">Закрыть браузер</string>
-    <string name="flash_not_supported">Flash Player не поддерживается системой</string>
-    <string name="hosts_source">Файл списка заблокированной рекламы</string>
-    <string name="label_realm">Серверное сообщение: %s</string>
-    <string name="message_bookmark_added">Закладка добавлена</string>
-    <string name="message_open_download_fail">Файл не доступен</string>
-    <string name="powered_by_baidu">Используя Baidu</string>
-    <string name="powered_by_duck">Используя DuckDuckGo</string>
-    <string name="search_suggestions_off">Нет поисковых подсказок</string>
-    <string name="settings_black_status_bar">Тёмная строка состояния</string>
-    <string name="settings_title_swap_bookmarks_and_tabs">Отобразить закладки в табах</string>
-    <string name="unknown_size">Неизвестный размер</string>
-    <string name="upsell_plus_version">Обновите до Lightning Plus для блокировки рекламы</string>
-    <string name="search_engine_yandex">Яндекс</string>
-    <string name="search_engine_yahoo">Yahoo</string>
-    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
-    <string name="search_engine_startpage">StartPage</string>
+    <string name="dialog_delete_download">Удалить загруженный файл</string>
+    <string name="dialog_delete_all_downloads">Удалить все загрузки</string>
+    <!-- Tools dialog -->
+    <string name="dialog_tools_title">Page tools</string>
+    <string name="dialog_toggle_desktop">Toggle desktop user agent</string>
+    <string name="dialog_adblock_enable_for_site">Enable ad block for site</string>
+    <string name="dialog_adblock_disable_for_site">Disable ad block for site</string>
+    <!-- Search Engines -->
+    <string name="search_engine_custom">Пользовательский URL</string>
     <string name="search_engine_google">Google</string>
-    <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
-    <string name="search_engine_duckduckgo">DuckDuckGo</string>
-    <string name="search_engine_bing">Bing</string>
-    <string name="search_engine_baidu">Baidu</string>
     <string name="search_engine_ask">Ask</string>
+    <string name="search_engine_bing">Bing</string>
+    <string name="search_engine_yahoo">Yahoo</string>
+    <string name="search_engine_startpage">StartPage</string>
+    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
+    <string name="search_engine_duckduckgo">DuckDuckGo</string>
+    <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
+    <string name="search_engine_baidu">Baidu</string>
+    <string name="search_engine_yandex">Яндекс</string>
+    <string name="search_engine_naver">Naver</string>
+    <!-- Notifications -->
+    <plurals name="notification_incognito_running_title">
+        <item quantity="one">%1$d incognito tab open</item>
+        <item quantity="few">%1$d incognito tabs open</item>
+        <item quantity="many">%1$d incognito tabs open</item>
+        <item quantity="other">%1$d incognito tabs open</item>
+    </plurals>
+    <string name="notification_incognito_running_message">Touch to open</string>
+    <string name="notification_incognito_running_description">Ongoing incognito notification</string>
+    <!--Ad block -->
+    <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
+    <string name="infinity">∞</string>
+    <!-- SSL -->
+    <string name="ssl_info_issued_by">Issued by</string>
+    <string name="ssl_info_issued_to">Issued to</string>
+    <string name="ssl_info_issued_on">Issued on</string>
+    <string name="ssl_info_expires_on">Expires on</string>
+    <!-- Search in page -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="close">Close</string>
+    <string name="exit">Exit</string>
+    <!-- Frozen tabs -->
+    <string name="tab_frozen">Frozen…</string>
+    <!-- Search -->
+    <string name="search_insert_suggestion">Insert suggestion</string>
+    <string name="action_close_all_other_tabs">Close all other tabs</string>
+    <string name="action_restore_all_tabs">Restore all tabs</string>
+    <string name="action_restore_tab">Restore tab</string>
+    <string name="settings_summary_apps">Enable third-party apps</string>
+    <string name="settings_title_apps">Apps</string>
+    <string name="settings_app_prefix">app_for_</string>
+    <string name="dialog_title_third_party_app">Third-party app available</string>
+    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
+    <string name="per_month">\u0020/ month</string>
+    <string name="per_year">\u0020/ year</string>
+    <string name="session_default">@string/agent_default</string>
+    <string name="session_name_prompt">Enter session name:</string>
+    <string name="session_already_exists">A session with that name already exists!</string>
+    <string name="session_cant_delete_current">Can\'t delete current session!</string>
+    <string name="session_prompt_confirm_deletion_title">Confirm deletion</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
+    <string name="session_switched">Switched to \"%s\"</string>
+    <string name="busy">Busy, try again shortly.\"</string>
+    <string name="invalid_character_removed">Invalid character removed!</string>
+    <string name="invalid_characters_removed">Invalid characters removed!</string>
+    <string name="reading_mode_image_copyright">Image attributed to</string>
+    <string name="reading_mode_image_caption">Image with caption</string>
+    <!-- text-to-speech -->
+    <string name="tts">Read page</string>
+    <string name="stop_tts">Stop reading</string>
+    <!-- Application name which can be translated -->
+    <string name="locale_app_name">Fulguris Web Browser</string>
+    <!--
+    Long press on image link disambiguation:
+        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
+     -->
+    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
+    <string name="button_link">Link</string>
+    <string name="button_image">Image</string>
+    <!-- Displayed in snackbar to notify user a tab was closed -->
+    <string name="notify_tab_closed">Tab closed</string>
+    <string name="button_undo">Undo</string>
 </resources>

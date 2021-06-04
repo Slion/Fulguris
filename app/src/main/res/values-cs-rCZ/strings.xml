@@ -119,8 +119,6 @@
     <string name="action_manual">Manual</string>
     <string name="action_auto">Auto</string>
     <string name="action_follow_me">Contact me</string>
-
-
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
     <string name="message_import">Bookmarks were imported</string>
@@ -146,13 +144,12 @@
     <string name="block_remote_frequency_daily">Daily</string>
     <string name="block_remote_frequency_weekly">Weekly</string>
     <string name="block_remote_frequency_monthly">Monthly</string>
-
     <string name="block_source_default">Default hosts</string>
     <string name="block_source_local">Local hosts file</string>
     <string name="block_source_local_description">File: %1$s</string>
     <string name="block_source_remote">Remote hosts file</string>
     <string name="block_source_remote_description">URL: %1$s</string>
-<!-- Common actions -->
+    <!-- Common actions -->
     <string name="action_message_canceled">Action canceled.</string>
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">Don\'t ask again for this browsing session.</string>
@@ -234,6 +231,7 @@
     <string name="settings_privacy">Privacy</string>
     <string name="settings_about">About</string>
     <string name="settings_contribute">Contribute</string>
+    <string name="settings_summary_contribute">Help Fulguris grow and succeed</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_panels">Panels</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -269,6 +267,12 @@
     <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
     <string name="pref_title_sponsorship_five_stars">Five stars review</string>
     <string name="pref_summary_sponsorship_five_stars">Giving us a five stars review on Google Play is a great way to help this project.</string>
+    <string name="pref_title_contribute_translations">Translations</string>
+    <string name="pref_summary_contribute_translations">You can help translate Fulguris to your locale language on Crowdin.</string>
+    <string name="pref_title_contribute_share">Spread the word</string>
+    <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
+    <string name="pref_title_language">Language</string>
+    <string name="language_system_default">System default</string>
     <string name="settings_about_explain">Details about version, update, author and license.</string>
     <string name="close_tab">Close current tab</string>
     <string name="close_all_tabs">Close all tabs</string>
@@ -426,4 +430,16 @@
     <!-- text-to-speech -->
     <string name="tts">Read page</string>
     <string name="stop_tts">Stop reading</string>
+    <!-- Application name which can be translated -->
+    <string name="locale_app_name">Fulguris Web Browser</string>
+    <!--
+    Long press on image link disambiguation:
+        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
+     -->
+    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
+    <string name="button_link">Link</string>
+    <string name="button_image">Image</string>
+    <!-- Displayed in snackbar to notify user a tab was closed -->
+    <string name="notify_tab_closed">Tab closed</string>
+    <string name="button_undo">Undo</string>
 </resources>
