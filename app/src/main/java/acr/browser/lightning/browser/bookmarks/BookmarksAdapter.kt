@@ -110,7 +110,8 @@ class BookmarksAdapter(
             is Bookmark.Entry -> webpageIcon.also {
                 faviconFetchSubscriptions[url]?.dispose()
                 faviconFetchSubscriptions[url] = faviconModel
-                        .faviconForUrl(url, viewModel.bookmark.title)
+                        // TODO: could we fetch the cached icon for dark theme and remove the inversion below?
+                        .faviconForUrl(url, viewModel.bookmark.title, false)
                         .subscribeOn(networkScheduler)
                         .observeOn(mainScheduler)
                         .subscribeBy(

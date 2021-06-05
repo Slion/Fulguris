@@ -1,18 +1,23 @@
 package acr.browser.lightning.favicon
 
 import acr.browser.lightning.R
+import acr.browser.lightning.extensions.invert
 import acr.browser.lightning.extensions.pad
 import acr.browser.lightning.extensions.safeUse
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.utils.DrawableUtils
 import acr.browser.lightning.utils.FileUtils
+import acr.browser.lightning.utils.getFilteredColor
 import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.util.LruCache
 import androidx.annotation.ColorInt
 import androidx.annotation.WorkerThread
+import androidx.core.graphics.ColorUtils
 import androidx.core.net.toUri
+import androidx.palette.graphics.Palette
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import java.io.File
@@ -80,7 +85,7 @@ class FaviconModel @Inject constructor(
      * @param url   The URL that we should retrieve the favicon for.
      * @param title The title for the web page.
      */
-    fun faviconForUrl(url: String, title: String): Maybe<Bitmap> = Maybe.create {
+    fun faviconForUrl(url: String, title: String, aOnDark: Boolean): Maybe<Bitmap> = Maybe.create {
         val uri = url.toUri().toValidUri()
             ?: return@create it.onSuccess(createDefaultBitmapForTitle(title).pad())
 
@@ -90,7 +95,9 @@ class FaviconModel @Inject constructor(
             return@create it.onSuccess(cachedFavicon.pad())
         }
 
-        val faviconCacheFile = getFaviconCacheFile(application, uri)
+        // TODO: That would not work on dark theme for favicons that do not have dark variant
+        // We don't care for now as this function is never used to fetch on dark icons anyway
+        val faviconCacheFile = getFaviconCacheFile(application, uri, aOnDark)
 
         if (faviconCacheFile.exists()) {
             val storedFavicon = BitmapFactory.decodeFile(faviconCacheFile.path, loaderOptions)
@@ -115,7 +122,32 @@ class FaviconModel @Inject constructor(
         val uri = url.toUri().toValidUri() ?: return@create emitter.onComplete()
 
         logger.log(TAG, "Caching icon for ${uri.host}")
-        FileOutputStream(getFaviconCacheFile(application, uri)).safeUse {
+
+        /** TODO: This code was duplicated from [ImageView.setImageForTheme] fix it, somehow */
+        // Check if that favicon is dark enough that it needs an inverted variant to be used on dark theme
+        val palette = Palette.from(favicon).generate()
+        val filteredColor = Color.BLACK or getFilteredColor(favicon) // OR with opaque black to remove transparency glitches
+        val filteredLuminance = ColorUtils.calculateLuminance(filteredColor)
+        //val color = Color.BLACK or (it.getVibrantColor(it.getLightVibrantColor(it.getDominantColor(Color.BLACK))))
+        val color = palette.getDominantColor(Color.BLACK)
+        val luminance = ColorUtils.calculateLuminance(color)
+        // Lowered threshold from 0.025 to 0.02 for it to work with bbc.com/future
+        // At 0.015 it does not kick in for GitHub
+        val threshold = 0.02
+        // Use white filter on darkest favicons
+        // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.co.uk
+        // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
+        if (luminance < threshold && filteredLuminance < threshold)
+        {
+            // Yes, that favicon needs an inverted variant
+            FileOutputStream(getFaviconCacheFile(application, uri, true)).safeUse {
+                favicon.invert().compress(Bitmap.CompressFormat.PNG, 100, it)
+                it.flush()
+                emitter.onComplete()
+            }
+        }
+
+        FileOutputStream(getFaviconCacheFile(application, uri, false)).safeUse {
             favicon.compress(Bitmap.CompressFormat.PNG, 100, it)
             it.flush()
             emitter.onComplete()
@@ -134,10 +166,10 @@ class FaviconModel @Inject constructor(
          * @return a valid cache file.
          */
         @WorkerThread
-        fun getFaviconCacheFile(app: Application, validUri: ValidUri): File {
+        fun getFaviconCacheFile(app: Application, validUri: ValidUri, aOnDark: Boolean): File {
             val hash = validUri.host.hashCode().toString()
 
-            return File(app.cacheDir, "$hash.png")
+            return File(app.cacheDir, if (aOnDark) "ondark-" else {""} + "$hash.png")
         }
     }
 
