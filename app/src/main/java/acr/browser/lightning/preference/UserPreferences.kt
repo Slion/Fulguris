@@ -150,7 +150,7 @@ class UserPreferences @Inject constructor(
     /**
      * The URL of the selected homepage.
      */
-    var homepage by preferences.stringPreference(HOMEPAGE, Uris.AboutHome)
+    var homepage by preferences.stringPreference(HOMEPAGE, Uris.AboutBookmarks)
 
     /**
      * True if the browser should allow execution of javascript, false otherwise.

@@ -377,27 +377,27 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             BrowserDialog.showCustomDialog(it) {
             setTitle(R.string.home)
             val n = when (userPreferences.homepage) {
-                Uris.AboutHome -> 0
-                Uris.AboutBlank -> 1
-                Uris.AboutBookmarks -> 2
-                else -> 3
+                Uris.AboutHome -> 2
+                Uris.AboutBlank -> 3
+                Uris.AboutBookmarks -> 0
+                else -> 1
             }
 
             setSingleChoiceItems(R.array.homepage, n) { _, which ->
                 when (which) {
-                    0 -> {
+                    2 -> {
                         userPreferences.homepage = Uris.AboutHome
-                        summaryUpdater.updateSummary(resources.getString(R.string.action_homepage))
+                        summaryUpdater.updateSummary(resources.getString(R.string.search_action))
                     }
-                    1 -> {
+                    3 -> {
                         userPreferences.homepage = Uris.AboutBlank
                         summaryUpdater.updateSummary(resources.getString(R.string.action_blank))
                     }
-                    2 -> {
+                    0 -> {
                         userPreferences.homepage = Uris.AboutBookmarks
                         summaryUpdater.updateSummary(resources.getString(R.string.action_bookmarks))
                     }
-                    3 -> {
+                    1 -> {
                         showCustomHomePagePicker(summaryUpdater)
                     }
                 }

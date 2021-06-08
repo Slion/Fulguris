@@ -205,6 +205,7 @@ fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
     clearColorFilter()
 
     if (isDarkTheme) {
+        /**TODO: That code was duplicated in [FaviconModel.cacheFaviconForUrl] fix it, somehow */
         Palette.from(bitmap).generate { palette ->
             // OR with opaque black to remove transparency glitches
             val filteredColor = Color.BLACK or getFilteredColor(bitmap) // OR with opaque black to remove transparency glitches

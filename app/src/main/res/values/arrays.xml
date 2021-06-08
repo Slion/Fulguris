@@ -15,10 +15,10 @@
     </string-array>
 
     <string-array name="homepage">
-        <item>@string/action_homepage</item>
-        <item>@string/action_blank</item>
         <item>@string/action_bookmarks</item>
         <item>@string/action_webpage</item>
+        <item>@string/search_action</item>
+        <item>@string/action_blank</item>
     </string-array>
 
     <string-array name="suggestions">
