@@ -5,9 +5,8 @@
 
 package acr.browser.lightning.browser.activity
 
-import acr.browser.lightning.BrowserApp
+import acr.browser.lightning.*
 import acr.browser.lightning.BuildConfig
-import acr.browser.lightning.IncognitoActivity
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.*
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
@@ -105,8 +104,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -529,8 +526,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         if (!isIncognito()) {
             // For some reason that was crashing when incognito
             // I'm guessing somehow that's already disabled when incognito
-            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(userPreferences.analytics)
-            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(userPreferences.crashReport)
+            setAnalyticsCollectionEnabled(this, userPreferences.analytics)
+            setCrashlyticsCollectionEnabled(userPreferences.crashReport)
         }
 
         swapBookmarksAndTabs = userPreferences.bookmarksAndTabsSwapped

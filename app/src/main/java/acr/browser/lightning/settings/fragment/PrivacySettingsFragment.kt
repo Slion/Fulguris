@@ -1,5 +1,6 @@
 package acr.browser.lightning.settings.fragment
 
+import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
 import acr.browser.lightning.database.history.HistoryRepository
@@ -19,6 +20,7 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import androidx.fragment.app.FragmentActivity
+import androidx.preference.Preference
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import javax.inject.Inject
@@ -42,6 +44,12 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
         injector.inject(this)
+
+        if (BuildConfig.FLAVOR_PUBLISHER=="fdroid") {
+            // Hide firebase preferences for fdroid
+            findPreference<Preference>(getString(R.string.pref_key_crash_report))?.isVisible = false
+            findPreference<Preference>(getString(R.string.pref_key_analytics))?.isVisible = false
+        }
 
         clickablePreference(preference = SETTINGS_CLEARCACHE, onClick = this::clearCache)
         clickablePreference(preference = SETTINGS_CLEARHISTORY, onClick = this::clearHistoryDialog)

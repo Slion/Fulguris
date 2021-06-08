@@ -4,11 +4,17 @@ apply plugin: 'kotlin-kapt'
 //apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.ben-manes.versions'
-// Firebase
-// Google Services Gradle plugin
-apply plugin: 'com.google.gms.google-services'
-// Apply the Crashlytics Gradle plugin
-apply plugin: 'com.google.firebase.crashlytics'
+
+// See: https://stackoverflow.com/a/53408667/3969362
+android.productFlavors.each { flavor ->
+    if (getGradle().getStartParameter().getTaskRequests().toString().toLowerCase().contains(flavor.name) && flavor.ext.useFirebase) {
+        println("Building flavor with Firebase [${flavor.name}] - applying plugin")
+        // Google Services Gradle plugin
+        apply plugin: 'com.google.gms.google-services'
+        // Apply the Crashlytics Gradle plugin
+        apply plugin: 'com.google.firebase.crashlytics'
+    }
+}
 
 // TODO: Find a way to put it the variant/type folder such as: generated/source/locale/slionsFullDownload/debug/acr/browser/lightning/locale
 def generatedLocaleListDir = layout.buildDirectory.dir('generated/source/locale/acr/browser/lightning/locale')
@@ -86,8 +92,8 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 133
-            versionName "1.6.5"
+            versionCode 134
+            versionName "1.6.6"
             archivesBaseName = "Fulguris-v$versionName"
         }
 
@@ -118,12 +124,14 @@ android {
             dimension "PUBLISHER"
             applicationIdSuffix ".playstore"
             buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.TIN"
+            ext.useFirebase = true
         }
 
         download {
             dimension "PUBLISHER"
             applicationIdSuffix ".download"
             buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
+            ext.useFirebase = true
         }
 
         fdroid {
@@ -254,9 +262,12 @@ dependencies {
 
     // Firebase
     // Recommended: Add the Firebase SDK for Google Analytics.
-    implementation 'com.google.firebase:firebase-analytics:19.0.0'
+    playstoreImplementation 'com.google.firebase:firebase-analytics:19.0.0'
+    downloadImplementation 'com.google.firebase:firebase-analytics:19.0.0'
     // Add the Firebase SDK for Crashlytics.
-    implementation 'com.google.firebase:firebase-crashlytics:18.0.0'
+    playstoreImplementation 'com.google.firebase:firebase-crashlytics:18.0.1'
+    downloadImplementation 'com.google.firebase:firebase-crashlytics:18.0.1'
+
 
     // Volley HTTP request
     implementation 'com.android.volley:volley:1.2.0'
