@@ -13,6 +13,7 @@ import acr.browser.lightning.favicon.FaviconModel
 import acr.browser.lightning.favicon.toValidUri
 import acr.browser.lightning.html.HtmlPageFactory
 import acr.browser.lightning.html.jsoup.*
+import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.utils.htmlColor
 import android.app.Application
@@ -38,7 +39,8 @@ class BookmarkPageFactory @Inject constructor(
     private val faviconModel: FaviconModel,
     @DatabaseScheduler private val databaseScheduler: Scheduler,
     @DiskScheduler private val diskScheduler: Scheduler,
-    private val bookmarkPageReader: BookmarkPageReader
+    private val bookmarkPageReader: BookmarkPageReader,
+    private val userPreferences: UserPreferences,
 ) : HtmlPageFactory {
 
     private val title = application.getString(R.string.action_bookmarks)
@@ -103,12 +105,18 @@ class BookmarkPageFactory @Inject constructor(
                 val repeatableElement = id("repeated").removeElement()
                 id("content") {
                     list.forEach {
-                        appendChild(repeatableElement.clone {
+                        val newElement = repeatableElement.clone {
                             tag("a") { attr("href", it.url) }
                             // Make sure we use proper icon for dark themes
                             tag("img") { attr("src", if (useDarkTheme && it.iconUrlOnDark.isNotEmpty()) it.iconUrlOnDark else it.iconUrl) }
                             id("title") { appendText(it.title) }
-                        })
+                        }
+                        if (userPreferences.toolbarsBottom) {
+                            prependChild(newElement)
+                        } else {
+                            appendChild(newElement)
+                        }
+
                     }
                 }
             }
