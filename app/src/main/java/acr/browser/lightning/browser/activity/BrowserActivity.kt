@@ -663,7 +663,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun createTabsView() {
 
-        verticalTabBar = userPreferences.verticalTabBar
+        verticalTabBar = configPrefs.verticalTabBar
 
         // Close tab drawer if we are switching to a configuration that's not using it
         if (tabsView!=null && !verticalTabBar && showingTabs() /*&& tabsView is TabsDrawerView*/) {
@@ -975,12 +975,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      */
     private fun initFullScreen(configuration: Configuration) {
-        isFullScreen = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            userPreferences.hideToolBarInPortrait
-        }
-        else {
-            userPreferences.hideToolBarInLandscape
-        }
+        isFullScreen = configPrefs(configuration).hideToolBar
     }
 
 
@@ -999,7 +994,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // Put our toolbar where it belongs, top or bottom according to user preferences
         iBinding.toolbarInclude.apply {
-            if (userPreferences.toolbarsBottom) {
+            if (configPrefs.toolbarsBottom) {
                 // Move toolbar to the bottom
                 root.removeFromParent()?.addView(root)
                 // Move search in page to top
@@ -1105,7 +1100,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
         }
 
-        wasToolbarsBottom = userPreferences.toolbarsBottom
+        wasToolbarsBottom = configPrefs.toolbarsBottom
     }
 
     /**
@@ -1683,8 +1678,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Enable or disable pull-to-refresh according to user preferences and state
      */
     private fun setupPullToRefresh(configuration: Configuration) {
-        if (!userPreferences.pullToRefreshInPortrait && configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-                || !userPreferences.pullToRefreshInLandscape && configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (!configPrefs(configuration).pullToRefresh) {
             // User does not want to use pull to refresh
             iBinding.contentFrame.isEnabled = false
             iBindingToolbarContent.buttonReload.visibility = View.VISIBLE
@@ -1704,7 +1698,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun setupTabBar(): Boolean {
         // Check if our tab bar style changed
-        if (verticalTabBar!=userPreferences.verticalTabBar) {
+        if (verticalTabBar!=configPrefs.verticalTabBar) {
             // We either coming or going to desktop like horizontal tab bar, tabs panel should be closed then
             mainHandler.post {closePanelTabs()}
             // Tab bar style changed recreate our tab bar then
@@ -1744,7 +1738,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsView?.tabRemoved(position)
         // Notify user a tab was closed with an option to recover it
         makeSnackbar(
-            getString(R.string.notify_tab_closed), Snackbar.LENGTH_SHORT, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+            getString(R.string.notify_tab_closed), Snackbar.LENGTH_SHORT, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
             .setAction(R.string.button_undo) {
                 presenter?.recoverClosedTab()
             }.show()
@@ -1858,9 +1852,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             .resizeAndShow()
     }
 
-    override fun showSnackbar(@StringRes resource: Int) = snackbar(resource, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+    override fun showSnackbar(@StringRes resource: Int) = snackbar(resource, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
 
-    fun showSnackbar(aMessage: String) = snackbar(aMessage, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+    fun showSnackbar(aMessage: String) = snackbar(aMessage, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
 
     override fun tabCloseClicked(position: Int) {
         presenter?.deleteTab(position)
@@ -2891,12 +2885,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Hide the status bar according to orientation and user preferences
      */
     private fun setFullscreenIfNeeded(configuration: Configuration) {
-        if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setFullscreen(userPreferences.hideStatusBarInPortrait, false)
-        }
-        else {
-            setFullscreen(userPreferences.hideStatusBarInLandscape, false)
-        }
+        setFullscreen(configPrefs(configuration).hideStatusBar, false)
     }
 
 
@@ -3205,7 +3194,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     if (latestVersion != BuildConfig.VERSION_NAME) {
                         // We have an update available, tell our user about it
                         makeSnackbar(
-                                getString(R.string.update_available) + " - v" + latestVersion, 5000, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
+                                getString(R.string.update_available) + " - v" + latestVersion, 5000, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
                                 .setAction(R.string.show, OnClickListener {
                                     val url = getString(R.string.url_app_home_page)
                                     val i = Intent(Intent.ACTION_VIEW)
@@ -3264,7 +3253,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Show a message telling the user to contribute.
         // It provides a link to our settings Contribute section.
         makeSnackbar(
-            getString(R.string.max_tabs), 10000, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
+            getString(R.string.max_tabs), 10000, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
             .setAction(R.string.show, OnClickListener {
                 // We want to launch our settings activity
                 val i = Intent(this, SettingsActivity::class.java)

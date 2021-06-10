@@ -12,6 +12,7 @@ import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.utils.Utils
+import acr.browser.lightning.di.configPrefs
 import android.app.Activity
 import android.graphics.drawable.ColorDrawable
 import android.text.InputFilter
@@ -191,7 +192,7 @@ class SessionsPopupWindow : PopupWindow {
         aBinding.recyclerViewSessions.apply {
             //setLayerType(View.LAYER_TYPE_NONE, null)
             //(itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, context.configPrefs.toolbarsBottom)
             adapter = iAdapter
             setHasFixedSize(false)
         }
@@ -222,8 +223,8 @@ class SessionsPopupWindow : PopupWindow {
         val anchorLoc = IntArray(2)
         aAnchor.getLocationInWindow(anchorLoc)
         //
-        val gravity = if (iUserPreferences.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
-        val yOffset = if (iUserPreferences.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] else anchorLoc[1]+aAnchor.height
+        val gravity = if (contentView.context.configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
+        val yOffset = if (contentView.context.configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] else anchorLoc[1]+aAnchor.height
         // Show our popup menu from the right side of the screen below our anchor
         showAtLocation(aAnchor, gravity,
                 // Offset from the right screen edge

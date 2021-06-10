@@ -11,6 +11,8 @@ import acr.browser.lightning.di.injector
 import acr.browser.lightning.locale.LocaleUtils
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.preference.DeveloperPreferences
+import acr.browser.lightning.preference.LandscapePreferences
+import acr.browser.lightning.preference.PortraitPreferences
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.utils.MemoryLeakUtils
@@ -34,6 +36,8 @@ class BrowserApp : Application() {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
     @Inject internal lateinit var userPreferences: UserPreferences
+    @Inject internal lateinit var portraitPreferences: PortraitPreferences
+    @Inject internal lateinit var landscapePreferences: LandscapePreferences
     @Inject internal lateinit var bookmarkModel: BookmarkRepository
     @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
     @Inject internal lateinit var logger: Logger
@@ -54,6 +58,7 @@ class BrowserApp : Application() {
             installMultiDex(context = base)
         }
     }
+
 
     override fun onCreate() {
         // SL: Use this to debug when launched from another app for instance
@@ -107,7 +112,7 @@ class BrowserApp : Application() {
         injector.inject(this)
 
         // Apply locale
-        var requestLocale = LocaleUtils.requestedLocale(userPreferences.locale)
+        val requestLocale = LocaleUtils.requestedLocale(userPreferences.locale)
         LocaleUtils.updateLocale(this, requestLocale)
 
         Single.fromCallable(bookmarkModel::count)
@@ -179,7 +184,7 @@ class BrowserApp : Application() {
          * Was needed to patch issue with Homepage displaying system language when user selected another language
          */
         fun setLocale() {
-            var requestLocale = LocaleUtils.requestedLocale(instance.userPreferences.locale)
+            val requestLocale = LocaleUtils.requestedLocale(instance.userPreferences.locale)
             LocaleUtils.updateLocale(instance, requestLocale)
         }
 

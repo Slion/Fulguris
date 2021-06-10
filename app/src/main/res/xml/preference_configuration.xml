@@ -2,133 +2,57 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/pref_category_portrait"
-        app:icon="@drawable/ic_portrait">
+    <SwitchPreferenceCompat
+        android:key="@string/pref_key_tab_bar_vertical"
+        android:title="@string/settings_title_vertical_tab_bar"
+        android:summary="@string/settings_summary_vertical_tab_bar"
+        app:icon="@drawable/ic_action_tabs"
+        app:iconSpaceReserved="false" />
 
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_key_portrait_tab_bar_vertical"
-            android:title="@string/settings_title_vertical_tab_bar"
-            android:summary="@string/settings_summary_vertical_tab_bar"
-            app:icon="@drawable/ic_action_tabs"
-            app:iconSpaceReserved="false" />
+    <SwitchPreferenceCompat
+        android:key="@string/pref_key_toolbars_bottom"
+        android:title="@string/settings_title_toolbars_bottom"
+        app:icon="@drawable/ic_vertical_align_bottom"
+        app:iconSpaceReserved="false" />
 
-        <SwitchPreferenceCompat
-            android:key="@string/pref_key_portrait_toolbars_bottom"
-            android:title="@string/settings_title_toolbars_bottom"
-            app:icon="@drawable/ic_vertical_align_bottom"
-            android:defaultValue="@bool/pref_default_toolbars_bottom"
-            app:iconSpaceReserved="false" />
+    <SwitchPreferenceCompat
+        android:key="@string/pref_key_pull_to_refresh"
+        android:title="@string/pref_title_pull_to_refresh"
+        app:icon="@drawable/ic_action_refresh"
+        app:iconSpaceReserved="false" />
 
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/pref_default_portrait_pull_to_refresh"
-            android:key="@string/pref_key_portrait_pull_to_refresh"
-            android:title="@string/pref_title_pull_to_refresh"
-            app:icon="@drawable/ic_action_refresh"
-            app:iconSpaceReserved="false" />
+    <SwitchPreferenceCompat
+        app:key="@string/pref_key_hide_status_bar"
+        app:title="@string/pref_title_hide_status_bar"
+        app:iconSpaceReserved="false"
+        />
+    <SwitchPreferenceCompat
+        app:key="@string/pref_key_hide_tool_bar"
+        app:title="@string/pref_title_hide_tool_bar"
+        app:iconSpaceReserved="false"
+        />
+    <SwitchPreferenceCompat
+        app:key="@string/pref_key_show_tool_bar_on_scroll_up"
+        app:title="@string/pref_title_show_tool_bar_when_scroll_up"
+        app:iconSpaceReserved="false"
+        />
+    <SwitchPreferenceCompat
+        app:key="@string/pref_key_show_tool_bar_on_page_top"
+        app:title="@string/pref_title_show_tool_bar_on_page_top"
+        app:iconSpaceReserved="false"
+        />
 
-        <SwitchPreferenceCompat
-            app:key="@string/pref_key_portrait_hide_status_bar"
-            app:title="@string/pref_title_hide_status_bar"
-            app:defaultValue="false"
-            app:iconSpaceReserved="false"
-            />
-        <SwitchPreferenceCompat
-            app:key="@string/pref_key_portrait_hide_tool_bar"
-            app:title="@string/pref_title_hide_tool_bar"
-            app:defaultValue="false"
-            app:iconSpaceReserved="false"
-            />
-        <SwitchPreferenceCompat
-            app:key="@string/pref_key_portrait_show_tool_bar_on_scroll_up"
-            app:title="@string/pref_title_show_tool_bar_when_scroll_up"
-            app:defaultValue="true"
-            app:iconSpaceReserved="false"
-            />
-        <SwitchPreferenceCompat
-            app:key="@string/pref_key_portrait_show_tool_bar_on_page_top"
-            app:title="@string/pref_title_show_tool_bar_on_page_top"
-            app:defaultValue="false"
-            app:iconSpaceReserved="false"
-            />
-
-        <SeekBarPreference
-            app:key="@string/pref_key_portrait_desktop_width"
-            app:title="@string/pref_title_desktop_width"
-            app:summary="@string/pref_summary_desktop_width"
-            app:defaultValue="@integer/pref_default_portrait_desktop_width"
-            app:min="640"
-            android:max="3840"
-            app:showSeekBarValue="true"
-            app:iconSpaceReserved="false"
-            app:updatesContinuously="true"
-            />
-
-    </PreferenceCategory>
+    <SeekBarPreference
+        app:key="@string/pref_key_desktop_width"
+        app:title="@string/pref_title_desktop_width"
+        app:summary="@string/pref_summary_desktop_width"
+        app:min="640"
+        android:max="3840"
+        app:showSeekBarValue="true"
+        app:iconSpaceReserved="false"
+        app:updatesContinuously="true"
+        />
 
 
-    <PreferenceCategory android:title="@string/pref_category_landscape"
-        app:icon="@drawable/ic_landscape">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_key_landscape_tab_bar_vertical"
-            android:title="@string/settings_title_vertical_tab_bar"
-            android:summary="@string/settings_summary_vertical_tab_bar"
-            app:icon="@drawable/ic_action_tabs"
-            app:iconSpaceReserved="false" />
-
-        <SwitchPreferenceCompat
-            android:key="@string/pref_key_landscape_toolbars_bottom"
-            android:title="@string/settings_title_toolbars_bottom"
-            app:icon="@drawable/ic_vertical_align_bottom"
-            android:defaultValue="@bool/pref_default_toolbars_bottom"
-            app:iconSpaceReserved="false" />
-
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/pref_default_landscape_pull_to_refresh"
-            android:key="@string/pref_key_landscape_pull_to_refresh"
-            android:title="@string/pref_title_pull_to_refresh"
-            app:icon="@drawable/ic_action_refresh"
-            app:iconSpaceReserved="false" />
-
-        <SwitchPreferenceCompat
-            app:key="@string/pref_key_landscape_hide_status_bar"
-            app:title="@string/pref_title_hide_status_bar"
-            app:defaultValue="true"
-            app:iconSpaceReserved="false"
-            />
-        <SwitchPreferenceCompat
-            app:key="@string/pref_key_landscape_hide_tool_bar"
-            app:title="@string/pref_title_hide_tool_bar"
-            app:defaultValue="true"
-            app:iconSpaceReserved="false"
-            />
-        <SwitchPreferenceCompat
-            app:key="@string/pref_key_landscape_show_tool_bar_on_scroll_up"
-            app:title="@string/pref_title_show_tool_bar_when_scroll_up"
-            app:defaultValue="false"
-            app:iconSpaceReserved="false"
-            />
-        <SwitchPreferenceCompat
-            app:key="@string/pref_key_landscape_show_tool_bar_on_page_top"
-            app:title="@string/pref_title_show_tool_bar_on_page_top"
-            app:defaultValue="true"
-            app:iconSpaceReserved="false"
-            />
-
-        <SeekBarPreference
-            app:key="@string/pref_key_landscape_desktop_width"
-            app:title="@string/pref_title_desktop_width"
-            app:summary="@string/pref_summary_desktop_width"
-            app:defaultValue="@integer/pref_default_landscape_desktop_width"
-            app:min="640"
-            android:max="3840"
-            app:showSeekBarValue="true"
-            app:iconSpaceReserved="false"
-            app:updatesContinuously="true"
-            />
-
-    </PreferenceCategory>
 
 </PreferenceScreen>

@@ -8,6 +8,7 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.di.UserPrefs
+import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.snackbar
@@ -135,9 +136,7 @@ class LightningWebClient(
             // Note how we compute our initial scale to be zoomed out and fit the page
             // TODO: Check if we really need this here in onLoadResource
             // Pick the proper settings desktop width according to current orientation
-            (Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT).let{ portrait ->
-                view.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$", (if (portrait) userPreferences.desktopWidthInPortrait else userPreferences.desktopWidthInLandscape).toString()), null)
-            }
+            view.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$", (view.context.configPrefs.desktopWidth).toString()), null)
         }
     }
 

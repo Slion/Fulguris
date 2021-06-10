@@ -18,6 +18,7 @@ import javax.inject.Singleton;
 import acr.browser.lightning.BrowserApp;
 import acr.browser.lightning.R;
 import acr.browser.lightning.browser.ProxyChoice;
+import acr.browser.lightning.di.Injector;
 import acr.browser.lightning.dialog.BrowserDialog;
 import acr.browser.lightning.extensions.ActivityExtensions;
 import acr.browser.lightning.extensions.AlertDialogExtensionsKt;
@@ -166,10 +167,10 @@ public final class ProxyUtils {
     public boolean isProxyReady(@NonNull Activity activity) {
         if (userPreferences.getProxyChoice() == ProxyChoice.I2P) {
             if (!i2PAndroidHelper.isI2PAndroidRunning()) {
-                ActivityExtensions.snackbar(activity, R.string.i2p_not_running,userPreferences.getToolbarsBottom()? Gravity.TOP: Gravity.BOTTOM);
+                ActivityExtensions.snackbar(activity, R.string.i2p_not_running, Injector.getConfigPrefs(activity).getToolbarsBottom()? Gravity.TOP: Gravity.BOTTOM);
                 return false;
             } else if (!i2PAndroidHelper.areTunnelsActive()) {
-                ActivityExtensions.snackbar(activity, R.string.i2p_tunnels_not_ready,userPreferences.getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM);
+                ActivityExtensions.snackbar(activity, R.string.i2p_tunnels_not_ready,Injector.getConfigPrefs(activity).getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM);
                 return false;
             }
         }

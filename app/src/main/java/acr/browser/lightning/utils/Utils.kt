@@ -1,5 +1,6 @@
 package acr.browser.lightning.utils
 
+import android.content.Context
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.lang.reflect.Method
@@ -23,4 +24,13 @@ fun adjustBottomSheet(aDialog : BottomSheetDialog) {
     fieldBottomField.isAccessible = true
     // Eventually call setPaddingForPosition from EdgeToEdgeCallback instance passing bottom sheet view as parameter
     methodSetPaddingForPosition.invoke(fieldEdgeToEdgeCallback.get(aDialog),fieldBottomField.get(aDialog))
+}
+
+
+fun portraitSharedPreferencesName(context: Context): String {
+    return context.packageName + "_preferences_portrait"
+}
+
+fun landscapeSharedPreferencesName(context: Context): String {
+    return context.packageName + "_preferences_landscape"
 }

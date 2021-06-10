@@ -8,6 +8,7 @@ import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.DiskScheduler
+import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.extensions.safeUse
 import acr.browser.lightning.favicon.FaviconModel
 import acr.browser.lightning.favicon.toValidUri
@@ -111,7 +112,7 @@ class BookmarkPageFactory @Inject constructor(
                             tag("img") { attr("src", if (useDarkTheme && it.iconUrlOnDark.isNotEmpty()) it.iconUrlOnDark else it.iconUrl) }
                             id("title") { appendText(it.title) }
                         }
-                        if (userPreferences.toolbarsBottom) {
+                        if (application.configPrefs.toolbarsBottom) {
                             prependChild(newElement)
                         } else {
                             appendChild(newElement)

@@ -34,6 +34,10 @@ class SettingsActivity : ThemedSettingsActivity(),
         supportFragmentManager.addOnBackStackChangedListener {
             if (supportFragmentManager.backStackEntryCount == 0) {
                 setTitle(R.string.settings)
+            } else {
+                // Make sure title is also set properly when coming back from second level preference screen
+                // Notably needed for portrait and landscape configuration settings
+                updateTitle()
             }
         }
 

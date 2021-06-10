@@ -14,6 +14,8 @@ import acr.browser.lightning.log.Logger
 import acr.browser.lightning.log.NoOpLogger
 import acr.browser.lightning.search.suggestions.RequestFactory
 import acr.browser.lightning.utils.FileUtils
+import acr.browser.lightning.utils.landscapeSharedPreferencesName
+import acr.browser.lightning.utils.portraitSharedPreferencesName
 import android.app.Application
 import android.app.DownloadManager
 import android.app.NotificationManager
@@ -62,6 +64,14 @@ class AppModule {
     @UserPrefs
     // Access default shared preferences to make sure preferences framework binding is working from XML
     fun provideUserPreferences(application: Application): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
+
+    @Provides
+    @PrefsPortrait
+    fun providePreferencesPortrait(application: Application): SharedPreferences = application.getSharedPreferences(portraitSharedPreferencesName(application), 0)
+
+    @Provides
+    @PrefsLandscape
+    fun providePreferencesLandscape(application: Application): SharedPreferences = application.getSharedPreferences(landscapeSharedPreferencesName(application), 0)
 
     @Provides
     @DevPrefs
@@ -213,6 +223,14 @@ annotation class MainHandler
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)
 annotation class UserPrefs
+
+@Qualifier
+@Retention(AnnotationRetention.SOURCE)
+annotation class PrefsPortrait
+
+@Qualifier
+@Retention(AnnotationRetention.SOURCE)
+annotation class PrefsLandscape
 
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)

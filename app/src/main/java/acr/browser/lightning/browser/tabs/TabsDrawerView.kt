@@ -5,6 +5,7 @@ import acr.browser.lightning.browser.TabsView
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.TabDrawerViewBinding
+import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.preference.UserPreferences
@@ -61,7 +62,7 @@ class TabsDrawerView @JvmOverloads constructor(
             (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
             // Reverse layout if using bottom tool bars
             // LinearLayoutManager.setReverseLayout is also adjusted from BrowserActivity.setupToolBar
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, context.configPrefs.toolbarsBottom)
             adapter = tabsAdapter
             // That would prevent our recycler to resize as needed with bottom sheets
             setHasFixedSize(false)

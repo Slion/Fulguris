@@ -5,29 +5,14 @@
     <string name="url_app_home_page">https://github.com/anthonycr/Lightning-Browser</string>
 
     <!-- Settings keys -->
-    <string name="pref_key_portrait_hide_status_bar">pref_key_portrait_hide_status_bar</string>
-    <string name="pref_key_landscape_hide_status_bar">pref_key_landscape_hide_status_bar</string>
-
-    <string name="pref_key_portrait_hide_tool_bar">pref_key_portrait_hide_tool_bar</string>
-    <string name="pref_key_landscape_hide_tool_bar">pref_key_landscape_hide_tool_bar</string>
-
-    <string name="pref_key_portrait_show_tool_bar_on_scroll_up">pref_key_portrait_show_tool_bar_when_scroll_up</string>
-    <string name="pref_key_landscape_show_tool_bar_on_scroll_up">pref_key_landscape_show_tool_bar_when_scroll_up</string>
-
-    <string name="pref_key_portrait_show_tool_bar_on_page_top">pref_key_portrait_show_tool_bar_on_page_top</string>
-    <string name="pref_key_landscape_show_tool_bar_on_page_top">pref_key_landscape_show_tool_bar_on_page_top</string>
-
-    <string name="pref_key_portrait_desktop_width">pref_key_portrait_desktop_width</string>
-    <string name="pref_key_landscape_desktop_width">pref_key_landscape_desktop_width</string>
-
-    <string name="pref_key_portrait_pull_to_refresh">pref_key_portrait_pull_to_refresh</string>
-    <string name="pref_key_landscape_pull_to_refresh">pref_key_landscape_pull_to_refresh</string>
-
-    <string name="pref_key_portrait_tab_bar_vertical">pref_key_portrait_tab_bar_vertical</string>
-    <string name="pref_key_landscape_tab_bar_vertical">pref_key_landscape_tab_bar_vertical</string>
-
-    <string name="pref_key_portrait_toolbars_bottom">pref_key_portrait_toolbars_bottom</string>
-    <string name="pref_key_landscape_toolbars_bottom">pref_key_landscape_toolbars_bottom</string>
+    <string name="pref_key_hide_status_bar">pref_key_hide_status_bar</string>
+    <string name="pref_key_hide_tool_bar">pref_key_hide_tool_bar</string>
+    <string name="pref_key_show_tool_bar_on_scroll_up">pref_key_show_tool_bar_when_scroll_up</string>
+    <string name="pref_key_show_tool_bar_on_page_top">pref_key_show_tool_bar_on_page_top</string>
+    <string name="pref_key_desktop_width">pref_key_desktop_width</string>
+    <string name="pref_key_pull_to_refresh">pref_key_pull_to_refresh</string>
+    <string name="pref_key_tab_bar_vertical">pref_key_tab_bar_vertical</string>
+    <string name="pref_key_toolbars_bottom">pref_key_toolbars_bottom</string>
 
 
     <string name="pref_key_wide_viewport">pref_key_wide_viewport</string>

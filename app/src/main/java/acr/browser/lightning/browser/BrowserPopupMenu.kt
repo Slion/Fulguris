@@ -5,6 +5,7 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.PopupMenuBrowserBinding
+import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.utils.Utils
@@ -93,7 +94,7 @@ class BrowserPopupMenu : PopupWindow {
         iBinding.menuItemWebPage.setOnClickListener {
 
             // Set animations according to menu position
-            if (!iUserPreferences.toolbarsBottom) {
+            if (!contentView.context.configPrefs.toolbarsBottom) {
                 iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animator)
                 iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animator.duration)
                 iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearing)
@@ -176,8 +177,8 @@ class BrowserPopupMenu : PopupWindow {
         val anchorLoc = IntArray(2)
         aAnchor.getLocationInWindow(anchorLoc)
         // Show our popup menu from the right side of the screen below our anchor
-        val gravity = if (iUserPreferences.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
-        val yOffset = if (iUserPreferences.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] - aAnchor.height else anchorLoc[1]
+        val gravity = if (contentView.context.configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
+        val yOffset = if (contentView.context.configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] - aAnchor.height else anchorLoc[1]
         showAtLocation(aAnchor, gravity,
                 // Offset from the right screen edge
                 Utils.dpToPx(10F),

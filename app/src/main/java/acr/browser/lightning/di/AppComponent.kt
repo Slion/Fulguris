@@ -51,6 +51,10 @@ interface AppComponent {
 
     fun inject(fragment: BookmarkSettingsFragment)
 
+    fun inject(fragment: PortraitSettingsFragment)
+
+    fun inject(fragment: LandscapeSettingsFragment)
+
     fun inject(builder: LightningDialogBuilder)
 
     fun inject(lightningView: LightningView)

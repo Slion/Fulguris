@@ -28,6 +28,7 @@ import acr.browser.lightning.R;
 import acr.browser.lightning.browser.activity.BrowserActivity;
 import acr.browser.lightning.database.downloads.DownloadsRepository;
 import acr.browser.lightning.di.Injector;
+//import acr.browser.lightning.di.ConfigPrefs;
 import acr.browser.lightning.dialog.BrowserDialog;
 import acr.browser.lightning.extensions.ActivityExtensions;
 import acr.browser.lightning.log.Logger;
@@ -131,7 +132,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                 //Show a snackbar with a link to open the downloaded file
                 if (success) {
                     final Intent i = downloadsIntent;
-                    ActivityExtensions.makeSnackbar(mActivity,contentTitle, ActivityExtensions.KDuration, userPreferences.getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM).setAction(R.string.show, new View.OnClickListener() {
+                    ActivityExtensions.makeSnackbar(mActivity,contentTitle, ActivityExtensions.KDuration, Injector.getConfigPrefs(mActivity).getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM).setAction(R.string.show, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     context.startActivity(i);
@@ -139,7 +140,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                             }).show();
                 }
                 else {
-                    ActivityExtensions.snackbar(mActivity,contentTitle,userPreferences.getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM);
+                    ActivityExtensions.snackbar(mActivity,contentTitle,Injector.getConfigPrefs(mActivity).getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM);
                 }
             }
         }

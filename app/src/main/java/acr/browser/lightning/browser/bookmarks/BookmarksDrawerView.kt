@@ -9,10 +9,7 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.BookmarkDrawerViewBinding
-import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.NetworkScheduler
-import acr.browser.lightning.di.injector
+import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.dialog.LightningDialogBuilder
@@ -97,7 +94,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
         iBinding.listBookmarks.apply {
             // Reverse layout if using bottom tool bars
             // LinearLayoutManager.setReverseLayout is also adjusted from BrowserActivity.setupToolBar
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, context.configPrefs.toolbarsBottom)
             adapter = iAdapter
         }
 

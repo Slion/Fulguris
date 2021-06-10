@@ -11,6 +11,7 @@ import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
+import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
@@ -929,7 +930,7 @@ class LightningView(
                     } else if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE){
                         // Ask user if she want to use the link or the image
                         activity.makeSnackbar(
-                            activity.getString(R.string.question_what_do_you_want_to_use), Snackbar.LENGTH_LONG, if (userPreferences.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
+                            activity.getString(R.string.question_what_do_you_want_to_use), Snackbar.LENGTH_LONG, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
                             .setAction(R.string.button_link) {
                                 // Use the link then
                                 dialogBuilder.showLongPressLinkDialog(activity,uiController,url,userAgent)
@@ -1002,8 +1003,7 @@ class LightningView(
      * Check relevant user preferences and configuration before showing the tool bar if needed
      */
     fun showToolBarOnScrollUpIfNeeded() {
-        if (userPreferences.showToolBarOnScrollUpInPortrait && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-                || userPreferences.showToolBarOnScrollUpInLandscape && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (webView?.context?.configPrefs?.showToolBarOnScrollUp == true) {
             uiController.showActionBar()
         }
     }
@@ -1012,8 +1012,7 @@ class LightningView(
      * Check relevant user preferences and configuration before showing the tool bar if needed
      */
     fun showToolBarOnPageTopIfNeeded() {
-        if (userPreferences.showToolBarOnPageTopInPortrait && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-                || userPreferences.showToolBarOnPageTopInLandscape && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (webView?.context?.configPrefs?.showToolBarOnPageTop == true) {
             uiController.showActionBar()
         }
     }

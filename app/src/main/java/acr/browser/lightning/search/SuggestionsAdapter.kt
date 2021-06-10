@@ -7,10 +7,7 @@ import acr.browser.lightning.database.SearchSuggestion
 import acr.browser.lightning.database.WebPage
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.database.history.HistoryRepository
-import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.NetworkScheduler
-import acr.browser.lightning.di.injector
+import acr.browser.lightning.di.*
 import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.preference.UserPreferences
 import acr.browser.lightning.search.suggestions.NoOpSuggestionsRepository
@@ -50,6 +47,8 @@ class SuggestionsAdapter(
     private val webPageIcon = context.drawable(R.drawable.ic_history)
     private val bookmarkIcon = context.drawable(R.drawable.ic_bookmark)
     private var suggestionsRepository: SuggestionsRepository
+
+    val iContext: Context = context;
 
     /**
      * The listener that is fired when the insert button on a [SearchSuggestion] is clicked.
@@ -211,7 +210,7 @@ class SuggestionsAdapter(
             val searchCount = MAX_SUGGESTIONS - bookmarkCount.coerceAtMost(bookmarks.size) - historyCount.coerceAtMost(history.size)
             val results = bookmarks.take(bookmarkCount) + history.take(historyCount) + searches.take(searchCount)
             // Reverse results if needed
-            if (userPreferences.toolbarsBottom) results.reversed() else results
+            if (iContext.configPrefs.toolbarsBottom) results.reversed() else results
         }
 
     companion object {

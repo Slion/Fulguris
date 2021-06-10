@@ -12,15 +12,34 @@
         android:title="@string/title_text_size"
         app:icon="@drawable/ic_text_size" />
 
-    <Preference
-        android:key="@string/pref_key_rendering_mode"
-        android:title="@string/rendering_mode"
-        app:icon="@drawable/ic_rendering_mode" />
+    <PreferenceCategory android:title="@string/settings_title_configuration"
+        android:summary="@string/settings_summary_configuration"
+        app:icon="@drawable/ic_conf_settings">
+
+        <Preference
+            app:fragment="acr.browser.lightning.settings.fragment.PortraitSettingsFragment"
+            app:title="@string/settings_title_portrait"
+            app:icon="@drawable/ic_portrait"/>
+
+        <Preference
+            app:fragment="acr.browser.lightning.settings.fragment.LandscapeSettingsFragment"
+            app:title="@string/settings_title_landscape"
+            app:icon="@drawable/ic_landscape"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_general">
 
     <Preference
         android:key="@string/pref_key_tool_bar_text_display"
         android:title="@string/url_contents"
         app:icon="@drawable/ic_short_text" />
+
+
+        <Preference
+        android:key="@string/pref_key_rendering_mode"
+        android:title="@string/rendering_mode"
+        app:icon="@drawable/ic_rendering_mode" />
 
     <SwitchPreferenceCompat
         android:defaultValue="@bool/pref_default_tab_list_item_show_close_button"
@@ -43,6 +62,8 @@
         android:key="@string/pref_key_black_status_bar"
         android:title="@string/settings_black_status_bar"
         app:iconSpaceReserved="true"/>
+
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_menu"
         app:icon="@drawable/ic_menu">

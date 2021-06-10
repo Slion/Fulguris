@@ -70,46 +70,6 @@ class UserPreferences @Inject constructor(
     var downloadDirectory by preferences.stringPreference(DOWNLOAD_DIRECTORY, FileUtils.DEFAULT_DOWNLOAD_PATH)
 
     /**
-     * True if the browser should hide the navigation bar when scrolling, false if it should be
-     * immobile.
-     */
-    var hideToolBarInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_hide_tool_bar, false)
-
-    /**
-     * True if the browser should hide the navigation bar when scrolling, false if it should be
-     * immobile.
-     */
-    var hideToolBarInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_hide_tool_bar, true)
-
-    /**
-     */
-    var showToolBarOnScrollUpInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_show_tool_bar_on_scroll_up, true)
-
-    /**
-     */
-    var showToolBarOnScrollUpInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_show_tool_bar_on_scroll_up, false)
-
-    /**
-     */
-    var showToolBarOnPageTopInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_show_tool_bar_on_page_top, false)
-
-    /**
-     */
-    var showToolBarOnPageTopInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_show_tool_bar_on_page_top, true)
-
-    /**
-     * True if the system status bar should be hidden throughout the app, false if it should be
-     * visible.
-     */
-    var hideStatusBarInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_hide_status_bar, false)
-
-    /**
-     * True if the system status bar should be hidden throughout the app, false if it should be
-     * visible.
-     */
-    var hideStatusBarInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_hide_status_bar, true)
-
-    /**
      * Defines if a new tab should be opened when user is doing a new search.
      */
     var searchInNewTab by preferences.booleanPreference(R.string.pref_key_search_in_new_tab, R.bool.pref_default_search_in_new_tab)
@@ -322,39 +282,6 @@ class UserPreferences @Inject constructor(
     var useBottomSheets by preferences.booleanPreference(R.string.pref_key_use_bottom_sheets, R.bool.pref_default_use_bottom_sheets)
 
     /**
-     *
-     */
-    var pullToRefreshInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_pull_to_refresh, R.bool.pref_default_portrait_pull_to_refresh)
-    var pullToRefreshInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_pull_to_refresh, R.bool.pref_default_landscape_pull_to_refresh)
-
-    /**
-     * True if the app should use the navigation drawer UI, false if it should use the traditional
-     * desktop browser tabs UI.
-     */
-    private var verticalTabBarInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_tab_bar_vertical, !screenSize.isTablet())
-    private var verticalTabBarInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_tab_bar_vertical, !screenSize.isTablet())
-
-    var verticalTabBar : Boolean = false
-        get() = if (Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT) verticalTabBarInPortrait else verticalTabBarInLandscape
-        private set
-
-
-    /**
-     *
-     */
-    private var toolbarsBottomInPortrait by preferences.booleanPreference(R.string.pref_key_portrait_toolbars_bottom, R.bool.pref_default_toolbars_bottom)
-    private var toolbarsBottomInLandscape by preferences.booleanPreference(R.string.pref_key_landscape_toolbars_bottom, R.bool.pref_default_toolbars_bottom)
-
-    var toolbarsBottom : Boolean = false
-        get() = toolbarsBottom()
-        private set
-
-    fun toolbarsBottom(aConf: Configuration=Resources.getSystem().configuration) : Boolean {
-        return if (aConf.orientation == Configuration.ORIENTATION_PORTRAIT) toolbarsBottomInPortrait else toolbarsBottomInLandscape
-    }
-
-
-    /**
      * Not an actual user preference. Just used to communicate between settings and browser activity.
      * Don't ask :)
      */
@@ -417,16 +344,6 @@ class UserPreferences @Inject constructor(
      * Toggle visibility of close tab button on drawer tab list items.
      */
     var showCloseTabButton by preferences.booleanPreference(R.string.pref_key_tab_list_item_show_close_button, if (screenSize.isTablet())  R.bool.const_true else R.bool.pref_default_tab_list_item_show_close_button)
-
-    /**
-     * Define viewport width for desktop mode in portrait
-     */
-    var desktopWidthInPortrait by preferences.intPreference(R.string.pref_key_portrait_desktop_width, BrowserApp.instance.resources.getInteger(R.integer.pref_default_portrait_desktop_width))
-
-    /**
-     * Define viewport width for desktop mode in landscape
-     */
-    var desktopWidthInLandscape by preferences.intPreference(R.string.pref_key_landscape_desktop_width, BrowserApp.instance.resources.getInteger(R.integer.pref_default_landscape_desktop_width))
 
     /**
      * Save sponsorship level.
