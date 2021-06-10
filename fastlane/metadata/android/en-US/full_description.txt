@@ -1,4 +1,3 @@
-⚡Sparkling Android Web Browser⚡
 Features include:
 📑Sessions
 All your tabs belong to a session. You can have multiple named sessions to help you stay focused and organized. Switching between sessions is lightning fast. You can pack hundreds of tabs in every sessions.
