@@ -2,8 +2,8 @@ package acr.browser.lightning.di
 
 import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.ThemedActivity
+import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.BloomFilterAdBlocker
-import acr.browser.lightning.adblock.EasyListBlocker
 import acr.browser.lightning.adblock.NoOpAdBlocker
 import acr.browser.lightning.browser.BrowserPopupMenu
 import acr.browser.lightning.browser.SearchBoxModel
@@ -107,7 +107,7 @@ interface AppComponent {
     fun inject(bookmarksAdapter: BookmarksAdapter)
 
     fun provideBloomFilterAdBlocker(): BloomFilterAdBlocker
-    fun provideEasyListAdBlocker(): EasyListBlocker
+    fun provideAbpAdBlocker(): AbpBlocker
 
     fun provideNoOpAdBlocker(): NoOpAdBlocker
 

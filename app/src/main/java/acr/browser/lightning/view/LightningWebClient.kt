@@ -33,7 +33,6 @@ import android.net.MailTo
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Message
-import android.os.SystemClock
 import android.util.Base64
 import android.view.LayoutInflater
 import android.webkit.*
@@ -47,13 +46,13 @@ import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URISyntaxException
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
+import jp.hazuki.yuzubrowser.adblock.*
 
 
 class LightningWebClient(
@@ -63,7 +62,6 @@ class LightningWebClient(
 
     private val uiController: UIController
     private val intentUtils = IntentUtils(activity)
-    private val emptyResponseByteArray: ByteArray = byteArrayOf()
 
     @Inject internal lateinit var proxyUtils: ProxyUtils
     @Inject internal lateinit var userPreferences: UserPreferences
@@ -84,6 +82,8 @@ class LightningWebClient(
     private var zoomScale = 0.0f
 
     private var currentUrl: String = ""
+
+    private var elementHide = true // better get from preferences once I'm sure it works
 
     var sslState: SslState = SslState.None
         private set(value) {
@@ -107,23 +107,31 @@ class LightningWebClient(
     }
 
     private fun chooseAdBlocker(): AdBlocker = if (userPreferences.adBlockEnabled) {
-        activity.injector.provideBloomFilterAdBlocker()
+        activity.injector.provideAbpAdBlocker()
     } else {
-        activity.injector.provideEasyListAdBlocker()
+        activity.injector.provideNoOpAdBlocker()
     }
 
     private fun shouldRequestBeBlocked(pageUrl: String, requestUrl: String) =
-        !whitelistModel.isUrlAllowedAds(pageUrl) && adBlock.isAd(requestUrl, pageUrl)
+        !whitelistModel.isUrlAllowedAds(pageUrl) && adBlock.isAd(requestUrl)
 
     /**
      * Overrides [WebViewClient.shouldInterceptRequest].
      * Looks like we need to intercept our custom URLs here to implement support for fulguris and about scheme.
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-        if (shouldRequestBeBlocked(currentUrl, request.url.toString())) {
-            val empty = ByteArrayInputStream(emptyResponseByteArray)
-            return WebResourceResponse("text/plain", "utf-8", empty)
+        // maybe adjust to always return response... null means allow anyway. what is the "super" actually doing? same as null?
+        // adBlock should probably be renamed
+        // adBlock should probably be renamed
+        val response = adBlock.shouldBlock(request, currentUrl)
+        if (response != null) {
+            return response
         }
+
+//        if (shouldRequestBeBlocked(currentUrl, request.url.toString())) {
+//            val empty = ByteArrayInputStream(emptyResponseByteArray)
+//            return WebResourceResponse("text/plain", "utf-8", empty)
+//        }
         return super.shouldInterceptRequest(view, request)
     }
 
@@ -170,7 +178,15 @@ class LightningWebClient(
         if (lightningView.invertPage) {
             view.evaluateJavascript(invertPageJs.provideJs(), null)
         }
-
+        // TODO: copy onDomContentLoaded callback from yuzu and use this to inject JS (used in yuzu also for invert and userJS)
+        //  this should really not happen on finished... better onCommitVisible?
+        // so far it seems to have no effect... maybe because of the late injection?
+        if (elementHide) {
+            adBlock.loadScript(Uri.parse(currentUrl))?.let {
+                view.evaluateJavascript(it, null)
+            }
+            // takes around half a second, but not sure what that tells me
+        }
         uiController.tabChanged(lightningView)
     }
 

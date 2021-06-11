@@ -1,5 +1,9 @@
 package acr.browser.lightning.adblock
 
+import android.net.Uri
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+
 /**
  * The ad blocking interface.
  */
@@ -14,6 +18,7 @@ interface AdBlocker {
      */
     fun isAd(url: String): Boolean
 
-    fun isAd(url: String, site: String): Boolean
+    fun loadScript(uri: Uri): String?
 
+    fun shouldBlock(request: WebResourceRequest, pageUrl: String): WebResourceResponse?
 }
