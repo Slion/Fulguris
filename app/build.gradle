@@ -9,6 +9,8 @@ apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.google.gms.google-services'
 // Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'
+// parcelize for AbpEntity
+apply plugin: 'kotlin-parcelize'
 
 // TODO: Find a way to put it the variant/type folder such as: generated/source/locale/slionsFullDownload/debug/acr/browser/lightning/locale
 def generatedLocaleListDir = layout.buildDirectory.dir('generated/source/locale/acr/browser/lightning/locale')
