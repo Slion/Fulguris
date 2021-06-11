@@ -6,13 +6,17 @@ apply plugin: 'jacoco'
 apply plugin: 'com.github.ben-manes.versions'
 
 // See: https://stackoverflow.com/a/53408667/3969362
-android.productFlavors.each { flavor ->
-    if (getGradle().getStartParameter().getTaskRequests().toString().toLowerCase().contains(flavor.name) && flavor.ext.useFirebase) {
-        println("Building flavor with Firebase [${flavor.name}] - applying plugin")
-        // Google Services Gradle plugin
-        apply plugin: 'com.google.gms.google-services'
-        // Apply the Crashlytics Gradle plugin
-        apply plugin: 'com.google.firebase.crashlytics'
+// Conditionally apply Firebase Google Plugins to flavors that needs it
+android.productFlavors.all { flavor ->
+    if (getGradle().getStartParameter().getTaskRequests().toString().toLowerCase().contains(flavor.name)) {
+        // Only download and playstore flavor need Firebase
+        if (flavor.name == "download" || flavor.name == "playstore") {
+            println("Building flavor with Firebase [${flavor.name}] - applying plugin")
+            // Google Services Gradle plugin
+            apply plugin: 'com.google.gms.google-services'
+            // Apply the Crashlytics Gradle plugin
+            apply plugin: 'com.google.firebase.crashlytics'
+        }
     }
 }
 
@@ -124,14 +128,12 @@ android {
             dimension "PUBLISHER"
             applicationIdSuffix ".playstore"
             buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.TIN"
-            ext.useFirebase = true
         }
 
         download {
             dimension "PUBLISHER"
             applicationIdSuffix ".download"
             buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
-            ext.useFirebase = true
         }
 
         fdroid {
