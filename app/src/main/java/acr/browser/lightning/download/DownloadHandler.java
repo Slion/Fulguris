@@ -34,15 +34,13 @@ import acr.browser.lightning.di.DatabaseScheduler;
 import acr.browser.lightning.di.MainScheduler;
 import acr.browser.lightning.di.NetworkScheduler;
 import acr.browser.lightning.dialog.BrowserDialog;
-import acr.browser.lightning.extensions.ActivityExtensions;
 import acr.browser.lightning.log.Logger;
-import acr.browser.lightning.preference.UserPreferences;
+import acr.browser.lightning.settings.preferences.UserPreferences;
 import acr.browser.lightning.utils.FileUtils;
 import acr.browser.lightning.utils.Utils;
 import acr.browser.lightning.view.LightningView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 

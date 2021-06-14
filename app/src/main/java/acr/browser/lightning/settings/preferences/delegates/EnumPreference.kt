@@ -1,7 +1,7 @@
-package acr.browser.lightning.preference.delegates
+package acr.browser.lightning.settings.preferences.delegates
 
 import acr.browser.lightning.BrowserApp
-import acr.browser.lightning.preference.IntEnum
+import acr.browser.lightning.settings.preferences.IntEnum
 import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import kotlin.properties.ReadWriteProperty

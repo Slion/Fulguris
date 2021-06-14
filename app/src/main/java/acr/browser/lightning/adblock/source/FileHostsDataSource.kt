@@ -4,7 +4,7 @@ import acr.browser.lightning.adblock.parser.HostsFileParser
 import acr.browser.lightning.adblock.util.hash.computeMD5
 import acr.browser.lightning.extensions.onIOExceptionResumeNext
 import acr.browser.lightning.log.Logger
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import io.reactivex.Single
 import java.io.File
 import java.io.InputStreamReader

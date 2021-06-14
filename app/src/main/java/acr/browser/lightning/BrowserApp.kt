@@ -10,10 +10,10 @@ import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.locale.LocaleUtils
 import acr.browser.lightning.log.Logger
-import acr.browser.lightning.preference.DeveloperPreferences
-import acr.browser.lightning.preference.LandscapePreferences
-import acr.browser.lightning.preference.PortraitPreferences
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.DeveloperPreferences
+import acr.browser.lightning.settings.preferences.LandscapePreferences
+import acr.browser.lightning.settings.preferences.PortraitPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.utils.MemoryLeakUtils
 import acr.browser.lightning.utils.installMultiDex

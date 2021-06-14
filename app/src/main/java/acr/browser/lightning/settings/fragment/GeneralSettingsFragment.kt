@@ -11,8 +11,8 @@ import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.locale.LocaleUtils
-import acr.browser.lightning.preference.UserPreferences
-import acr.browser.lightning.preference.userAgent
+import acr.browser.lightning.settings.preferences.UserPreferences
+import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.Suggestions
 import acr.browser.lightning.search.engine.BaseSearchEngine

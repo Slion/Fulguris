@@ -9,7 +9,7 @@ import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.database.history.HistoryRepository
 import acr.browser.lightning.di.*
 import acr.browser.lightning.extensions.drawable
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.search.suggestions.NoOpSuggestionsRepository
 import acr.browser.lightning.search.suggestions.SuggestionsRepository
 import android.content.Context

@@ -1,7 +1,6 @@
-package acr.browser.lightning.preference
+package acr.browser.lightning.settings.preferences
 
 import acr.browser.lightning.AppTheme
-import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.ProxyChoice
@@ -11,15 +10,13 @@ import acr.browser.lightning.constant.DEFAULT_ENCODING
 import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.device.ScreenSize
 import acr.browser.lightning.di.UserPrefs
-import acr.browser.lightning.preference.delegates.*
+import acr.browser.lightning.settings.preferences.delegates.*
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.engine.GoogleSearch
 import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.view.RenderingMode
 import android.content.SharedPreferences
-import android.content.res.Configuration
-import android.content.res.Resources
 import javax.inject.Inject
 import javax.inject.Singleton
 

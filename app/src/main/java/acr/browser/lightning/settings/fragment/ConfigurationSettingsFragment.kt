@@ -5,10 +5,9 @@ import acr.browser.lightning.constant.PrefKeys
 import acr.browser.lightning.device.ScreenSize
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.log.Logger
-import acr.browser.lightning.preference.ConfigurationPreferences
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.ConfigurationPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import android.os.Bundle
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.TwoStatePreference

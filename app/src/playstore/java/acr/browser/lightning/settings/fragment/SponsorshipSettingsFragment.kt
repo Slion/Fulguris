@@ -4,7 +4,7 @@ import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.Sponsorship
 import acr.browser.lightning.di.injector
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri

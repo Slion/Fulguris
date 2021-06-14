@@ -11,7 +11,7 @@ import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.log.Logger
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.isSpecialUrl
 import acr.browser.lightning.view.*

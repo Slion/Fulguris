@@ -3,8 +3,8 @@ package acr.browser.lightning.adblock.source
 import acr.browser.lightning.adblock.parser.HostsFileParser
 import acr.browser.lightning.extensions.onIOExceptionResumeNext
 import acr.browser.lightning.log.Logger
-import acr.browser.lightning.preference.UserPreferences
-import acr.browser.lightning.preference.userAgent
+import acr.browser.lightning.settings.preferences.UserPreferences
+import acr.browser.lightning.settings.preferences.userAgent
 import android.app.Application
 import io.reactivex.Single
 import okhttp3.*

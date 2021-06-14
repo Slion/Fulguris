@@ -11,15 +11,13 @@ import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.isSupported
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.WebUtils
 import acr.browser.lightning.view.LightningView
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.webkit.WebView
-import androidx.fragment.app.FragmentActivity
 import androidx.preference.Preference
 import io.reactivex.Completable
 import io.reactivex.Scheduler

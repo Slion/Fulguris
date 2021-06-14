@@ -14,7 +14,7 @@ import acr.browser.lightning.favicon.FaviconModel
 import acr.browser.lightning.favicon.toValidUri
 import acr.browser.lightning.html.HtmlPageFactory
 import acr.browser.lightning.html.jsoup.*
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.utils.htmlColor
 import android.app.Application

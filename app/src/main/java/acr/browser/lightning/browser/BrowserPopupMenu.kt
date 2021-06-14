@@ -2,19 +2,16 @@ package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.PopupMenuBrowserBinding
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isAppScheme
-import acr.browser.lightning.utils.isScheme
 import acr.browser.lightning.utils.isSpecialUrl
 import android.animation.AnimatorInflater
 import android.animation.LayoutTransition
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.LayoutInflater

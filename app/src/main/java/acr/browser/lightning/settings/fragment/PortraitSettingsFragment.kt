@@ -2,10 +2,8 @@ package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
 import acr.browser.lightning.di.injector
-import acr.browser.lightning.preference.ConfigurationPreferences
-import acr.browser.lightning.preference.PortraitPreferences
-import acr.browser.lightning.preference.UserPreferences
-import acr.browser.lightning.utils.landscapeSharedPreferencesName
+import acr.browser.lightning.settings.preferences.ConfigurationPreferences
+import acr.browser.lightning.settings.preferences.PortraitPreferences
 import acr.browser.lightning.utils.portraitSharedPreferencesName
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle

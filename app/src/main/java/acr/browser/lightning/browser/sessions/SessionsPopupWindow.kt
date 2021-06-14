@@ -6,9 +6,8 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.SessionListBinding
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
-import acr.browser.lightning.extensions.dimBehind
 import acr.browser.lightning.extensions.toast
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.utils.Utils
@@ -21,7 +20,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import android.widget.PopupWindow
 import androidx.core.widget.PopupWindowCompat
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

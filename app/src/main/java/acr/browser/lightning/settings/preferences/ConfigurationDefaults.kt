@@ -1,4 +1,4 @@
-package acr.browser.lightning.preference
+package acr.browser.lightning.settings.preferences
 
 /**
  * Provide access to settings default values.

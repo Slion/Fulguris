@@ -8,7 +8,7 @@ import acr.browser.lightning.databinding.TabDrawerViewBinding
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.inflater
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.view.LightningView
 import android.content.Context
 import android.util.AttributeSet

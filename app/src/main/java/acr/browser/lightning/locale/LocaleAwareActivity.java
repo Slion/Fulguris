@@ -20,7 +20,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import acr.browser.lightning.preference.UserPreferences;
+import acr.browser.lightning.settings.preferences.UserPreferences;
 
 public abstract class LocaleAwareActivity extends AppCompatActivity {
 

@@ -8,7 +8,7 @@ import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.favicon.FaviconModel
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.view.webrtc.WebRtcPermissionsModel
 import acr.browser.lightning.view.webrtc.WebRtcPermissionsView
 import android.Manifest
@@ -24,7 +24,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.webkit.*
-import androidx.appcompat.app.AlertDialog
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

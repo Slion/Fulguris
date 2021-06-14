@@ -1,9 +1,9 @@
-package acr.browser.lightning.preference
+package acr.browser.lightning.settings.preferences
 
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.PrefKeys
 import acr.browser.lightning.device.ScreenSize
-import acr.browser.lightning.preference.delegates.*
+import acr.browser.lightning.settings.preferences.delegates.*
 import android.content.SharedPreferences
 
 /**

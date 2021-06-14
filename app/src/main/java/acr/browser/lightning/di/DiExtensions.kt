@@ -3,10 +3,9 @@
 package acr.browser.lightning.di
 
 import acr.browser.lightning.BrowserApp
-import acr.browser.lightning.preference.ConfigurationPreferences
+import acr.browser.lightning.settings.preferences.ConfigurationPreferences
 import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Resources
 import androidx.fragment.app.Fragment
 
 /**

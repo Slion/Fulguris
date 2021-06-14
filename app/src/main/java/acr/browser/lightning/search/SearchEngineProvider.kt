@@ -2,7 +2,7 @@ package acr.browser.lightning.search
 
 import acr.browser.lightning.di.SuggestionsClient
 import acr.browser.lightning.log.Logger
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.search.engine.*
 import acr.browser.lightning.search.suggestions.*
 import android.app.Application

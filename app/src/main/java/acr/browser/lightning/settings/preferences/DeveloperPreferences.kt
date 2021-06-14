@@ -1,7 +1,7 @@
-package acr.browser.lightning.preference
+package acr.browser.lightning.settings.preferences
 
 import acr.browser.lightning.di.DevPrefs
-import acr.browser.lightning.preference.delegates.booleanPreference
+import acr.browser.lightning.settings.preferences.delegates.booleanPreference
 import android.content.SharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton

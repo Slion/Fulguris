@@ -1,4 +1,4 @@
-package acr.browser.lightning.preference
+package acr.browser.lightning.settings.preferences
 
 /**
  * An enum value that has an integer representation.

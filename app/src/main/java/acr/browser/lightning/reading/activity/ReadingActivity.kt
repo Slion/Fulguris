@@ -6,7 +6,7 @@ import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog.setDialogSize
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.settings.activity.ThemedSettingsActivity
 import acr.browser.lightning.utils.Utils
 import android.annotation.SuppressLint
@@ -27,7 +27,6 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
@@ -40,7 +39,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
 import net.dankito.readability4j.Readability4J
-import okhttp3.*
 import org.jsoup.Jsoup
 import java.io.*
 import java.net.URL

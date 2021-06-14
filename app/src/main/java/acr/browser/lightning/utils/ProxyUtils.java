@@ -22,10 +22,9 @@ import acr.browser.lightning.di.Injector;
 import acr.browser.lightning.dialog.BrowserDialog;
 import acr.browser.lightning.extensions.ActivityExtensions;
 import acr.browser.lightning.extensions.AlertDialogExtensionsKt;
-import acr.browser.lightning.preference.DeveloperPreferences;
-import acr.browser.lightning.preference.UserPreferences;
+import acr.browser.lightning.settings.preferences.DeveloperPreferences;
+import acr.browser.lightning.settings.preferences.UserPreferences;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 

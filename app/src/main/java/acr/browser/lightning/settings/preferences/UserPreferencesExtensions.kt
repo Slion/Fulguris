@@ -1,4 +1,4 @@
-package acr.browser.lightning.preference
+package acr.browser.lightning.settings.preferences
 
 import acr.browser.lightning.constant.DESKTOP_USER_AGENT
 import acr.browser.lightning.constant.MOBILE_USER_AGENT

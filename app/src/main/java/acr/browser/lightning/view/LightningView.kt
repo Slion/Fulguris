@@ -19,8 +19,8 @@ import acr.browser.lightning.extensions.*
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.network.NetworkConnectivityModel
-import acr.browser.lightning.preference.UserPreferences
-import acr.browser.lightning.preference.userAgent
+import acr.browser.lightning.settings.preferences.UserPreferences
+import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.*
@@ -29,8 +29,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.IntentFilter
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.*
 import android.net.Uri
 import android.net.http.SslCertificate

@@ -17,7 +17,7 @@ import acr.browser.lightning.js.InvertPage
 import acr.browser.lightning.js.SetMetaViewport
 import acr.browser.lightning.js.TextReflow
 import acr.browser.lightning.log.Logger
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.*
@@ -27,8 +27,6 @@ import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.net.MailTo
 import android.net.Uri

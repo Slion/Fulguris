@@ -1,4 +1,4 @@
-package acr.browser.lightning.preference.delegates
+package acr.browser.lightning.settings.preferences.delegates
 
 import acr.browser.lightning.BrowserApp
 import android.content.SharedPreferences

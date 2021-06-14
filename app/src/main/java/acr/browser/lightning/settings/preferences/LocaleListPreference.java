@@ -7,7 +7,7 @@
  * https://github.com/mozilla-mobile/focus-android
  */
 
-package acr.browser.lightning.preference;
+package acr.browser.lightning.settings.preferences;
 
 import android.content.Context;
 import android.graphics.Bitmap;

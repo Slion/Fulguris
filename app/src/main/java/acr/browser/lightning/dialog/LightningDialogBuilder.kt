@@ -17,7 +17,7 @@ import acr.browser.lightning.extensions.onFocusGained
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.IntentUtils
 import acr.browser.lightning.utils.isBookmarkUrl
 import android.Manifest
@@ -28,7 +28,6 @@ import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
