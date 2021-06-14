@@ -83,7 +83,7 @@ class LightningWebClient(
 
     private var currentUrl: String = ""
 
-    private var elementHide = true // better get from preferences once I'm sure it works
+    private var elementHide = true // TODO: better get from preferences
 
     var sslState: SslState = SslState.None
         private set(value) {

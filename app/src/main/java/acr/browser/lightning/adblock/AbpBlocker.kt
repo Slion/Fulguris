@@ -1,5 +1,6 @@
 package acr.browser.lightning.adblock
 
+import acr.browser.lightning.R
 import android.app.Application
 import android.net.Uri
 import android.webkit.MimeTypeMap
@@ -43,12 +44,13 @@ class AbpBlocker @Inject constructor(
     private var malwareList: FilterContainer? = null // copy from smartcookieweb/styx?
 
     // TODO: element hiding
-    //  not sure if this actually works (did not in a test), maybe it's crucial to inject the js at the right point
+    //  not sure if this actually works (did not in a test - I think?), maybe it's crucial to inject the js at the right point
     //  tried onPageFinished, might be too late (try to implement onDomFinished from yuzu?)
-    private var elementHideExclusionList: FilterContainer? = null
-    private var elementHideList: ElementContainer? = null
+//    private var elementHideExclusionList: FilterContainer? = null
+//    private var elementHideList: ElementContainer? = null
+    // both lists are actually inside the elementBlocker
     private var elementBlocker: CosmeticFiltering? = null
-    var useElementHide = true // should load from preferences
+    var useElementHide = true // TODO: load from preferences (if it really works)
 
     // cache for 3rd party check, allows significantly faster checks
     private val thirdPartyCache = mutableMapOf<String, Boolean>()
@@ -57,7 +59,8 @@ class AbpBlocker @Inject constructor(
     private val dummyImage: ByteArray = readByte(application.applicationContext.resources.assets.open("blank.png"))
     private val dummy = WebResourceResponse("text/plain", "UTF-8", EmptyInputStream())
 
-    private var isAbpIgnoreGenericElement = false // TODO: just copied, what is this?
+    // TODO: does this actually do anything? even in yuzu it is only set, and never read
+//    private var isAbpIgnoreGenericElement = false
 
     private var waitForLoading: CountDownLatch? = null
 
@@ -70,6 +73,7 @@ class AbpBlocker @Inject constructor(
         // maybe do it in a different way using this reactivex stuff?
         update()
         runBlocking {
+            // TODO: use of globalscope was discouraged somewhere... check and adjust if necessary
             GlobalScope.launch(Dispatchers.IO) {
                 // necessary because updateAll might download new lists
                 // maybe make better? and allow some auto-update settings, like update on wifi only
@@ -96,7 +100,7 @@ class AbpBlocker @Inject constructor(
                         abpLoader.loadAll(ABP_PREFIX_ALLOW).forEach(it::plusAssign)
                     }
                 }
-                if (useElementHide) { // TODO: add preference and get from userPreferences
+                if (useElementHide) {
                     val disableCosmetic = async {
                         FilterContainer().also {
                             abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign)
@@ -115,8 +119,7 @@ class AbpBlocker @Inject constructor(
                 exclusionList = exclusions.await()
                 //adBlocker = Blocker(exclusions.await(), block.await())
 
-                // does this actually do anything? even in yuzu it appears to be never read
-                isAbpIgnoreGenericElement = false //AppPrefs.isAbpIgnoreGenericElement.get()
+//                isAbpIgnoreGenericElement = false //AppPrefs.isAbpIgnoreGenericElement.get()
             } finally {
                 waitForLoading?.countDown()
                 waitForLoading = null
@@ -135,7 +138,7 @@ class AbpBlocker @Inject constructor(
             val elementFilter = ElementContainer().also { abpLoader.loadAllElementFilter().forEach(it::plusAssign) }
             elementBlocker = CosmeticFiltering(disableCosmetic, elementFilter)
         }
-        isAbpIgnoreGenericElement = false //AppPrefs.isAbpIgnoreGenericElement.get()
+//        isAbpIgnoreGenericElement = false //AppPrefs.isAbpIgnoreGenericElement.get()
     }
 
     fun createDummy(uri: Uri): WebResourceResponse {
@@ -147,19 +150,18 @@ class AbpBlocker @Inject constructor(
         }
     }
 
-    // TODO: replace the quoted resource strings by something "real"
     fun createMainFrameDummy(uri: Uri, pattern: String): WebResourceResponse {
         val builder = StringBuilder("<meta charset=utf-8>" +
                 "<meta content=\"width=device-width,initial-scale=1,minimum-scale=1\"name=viewport>" +
                 "<style>body{padding:5px 15px;background:#fafafa}body,p{text-align:center}p{margin:20px 0 0}" +
                 "pre{margin:5px 0;padding:5px;background:#ddd}</style><title>")
-            .append("application.applicationContext.getText(R.string.pref_ad_block)")
+            .append(application.applicationContext.getText(R.string.request_blocked))
             .append("</title><p>")
-            .append("application.applicationContext.getText(R.string.ad_block_blocked_page)")
+            .append(application.applicationContext.getText(R.string.page_blocked))
             .append("<pre>")
             .append(uri)
             .append("</pre><p>")
-            .append("application.applicationContext.getText(R.string.ad_block_blocked_filter)")
+            .append(application.applicationContext.getText(R.string.page_blocked_reason))
             .append("<pre>")
             .append(pattern)
             .append("</pre>")
@@ -215,38 +217,49 @@ class AbpBlocker @Inject constructor(
         //  this is blocked for some domains, and apparently no domain also means it's blocked
         //  so some workaround here (maybe do something else?)
         val contentRequest = request.getContentRequest(if (pageUrl == "") request.url else Uri.parse(pageUrl))
-
+        userBlockList?.get(contentRequest)?.pattern
         // check user lists
         // then mining/malware
         // then ads
-        when {
-            userWhitelist?.get(contentRequest) != null -> {
-                return null
-            }
-            userBlockList?.get(contentRequest) != null -> {
-                return getBlockResponse(request)
-            }
-            miningList?.get(contentRequest) != null -> {
-                return getBlockResponse(request)
-            }
-            malwareList?.get(contentRequest) != null -> {
-                return getBlockResponse(request)
-            }
-            exclusionList?.get(contentRequest) != null -> {
-                return null
-            }
-            blockList?.get(contentRequest) != null -> {
-                return getBlockResponse(request)
-            }
-        }
+
+        /* replace by rather ugly if-stuff, because result of check is used
+        return when {
+            userWhitelist?.get(contentRequest) != null -> null
+            userBlockList?.get(contentRequest) != null -> getBlockResponse(request)
+            miningList?.get(contentRequest) != null -> getBlockResponse(request)
+            malwareList?.get(contentRequest) != null -> getBlockResponse(request)
+            exclusionList?.get(contentRequest) != null -> null
+            blockList?.get(contentRequest) != null -> getBlockResponse(request)
+            else -> null
+        }*/
+        if (userWhitelist?.get(contentRequest) != null)
+            return null
+
+        var filter = userBlockList?.get(contentRequest)
+        if (filter != null)
+            return getBlockResponse(request, "User blocklist: ${filter.pattern}")
+
+        filter = miningList?.get(contentRequest)
+        if (filter != null)
+            return getBlockResponse(request, "Mining blocklist: ${filter.pattern}")
+
+        filter = malwareList?.get(contentRequest)
+        if (filter != null)
+            return getBlockResponse(request, "Malware blocklist: ${filter.pattern}")
+
+        if (exclusionList?.get(contentRequest) != null)
+            return null
+
+        filter = blockList?.get(contentRequest)
+        if (filter != null)
+            return getBlockResponse(request, "Ad blocklist: ${filter.pattern}")
+
         return null
     }
 
-    // TODO: change to forward some string
-    //  maybe just a reason (which list), maybe also get the pattern?
-    private fun getBlockResponse(request: WebResourceRequest): WebResourceResponse {
+    private fun getBlockResponse(request: WebResourceRequest, pattern: String): WebResourceResponse {
         return if (request.isForMainFrame)
-            createMainFrameDummy(request.url, "just ignore the filter/pattern for now, maybe add later")
+            createMainFrameDummy(request.url, pattern)
         else
             createDummy(request.url)
     }

@@ -44,7 +44,7 @@ class AbpListUpdater(val context: Context) {
 
 //    @Inject
 //    internal lateinit var okHttpClient: OkHttpClient
-    val okHttpClient = OkHttpClient() // does this work?
+    val okHttpClient = OkHttpClient() // any problems if not injecting?
 
 //    @Inject
 //    internal lateinit var abpDatabase: AbpDatabase
