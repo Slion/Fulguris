@@ -2,6 +2,7 @@ package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.BloomFilterAdBlocker
 import acr.browser.lightning.adblock.source.HostsSourceType
 import acr.browser.lightning.adblock.source.selectedHostsSource
@@ -14,16 +15,23 @@ import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.preference.UserPreferences
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
+import android.text.InputType
+import android.widget.*
+import androidx.appcompat.widget.SwitchCompat
 import androidx.preference.Preference
 import io.reactivex.Maybe
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
+import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
+import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okio.Okio
@@ -48,6 +56,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     private val compositeDisposable = CompositeDisposable()
     private var forceRefreshHostsPreference: Preference? = null
 
+    private var abpDao: AbpDao? = null
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
@@ -86,6 +95,71 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 bloomFilterAdBlocker.populateAdBlockerFromDataSource(forceRefresh = true)
             }
         )
+
+        if (context != null) {
+            abpDao = AbpDao(requireContext())
+            for (entity in abpDao!!.getAll()) {
+                val pref = Preference(context)
+                pref.title = entity.title
+                pref.summary = "Last update: ${entity.lastUpdate}"
+                pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                    showBlockist(entity)
+                    true
+                }
+                this.preferenceScreen.addPreference(pref)
+            }
+            val pref = Preference(context)
+            pref.title = "add list"
+            pref.summary = "click to add"
+            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                showBlockist(AbpEntity())
+                true
+            }
+            this.preferenceScreen.addPreference(pref)
+        }
+    }
+
+    private fun showBlockist(entity: AbpEntity) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("edit blocklist")
+        val name = EditText(context)
+        name.inputType = InputType.TYPE_CLASS_TEXT
+        name.setText(entity.title)
+        name.hint = "name"
+        val url = EditText(context)
+        url.inputType = InputType.TYPE_TEXT_VARIATION_URI
+        url.setText(entity.url)
+        url.hint = "url"
+        // allow from file!
+        val enabled = SwitchCompat(requireContext())
+        enabled.text = "enabled"
+        enabled.isChecked = entity.enabled
+
+        val ll = LinearLayout(context)
+        ll.orientation = LinearLayout.VERTICAL
+        ll.addView(name)
+        ll.addView(url)
+        ll.addView(enabled)
+        ll.setPadding(30,10,30,10)
+        builder.setView(ll)
+        builder.setNegativeButton("cancel", null)
+        builder.setPositiveButton("ok") { _,_ ->
+            entity.enabled = enabled.isChecked
+            entity.title = name.text.toString()
+            entity.url = url.text.toString() // better check validity?
+            abpDao?.update(entity)
+            // download updates immediately? should do, but i need the correct id in case a new list was added)
+            // and actually update screen (title and new list!)
+        }
+        // one more button: "from file"
+        // and another for delete?
+//        builder.show()
+        // need to adjust button colors, they are same as background by default (why?)
+        val dialog = builder.create()
+        dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY)
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GRAY)
+
     }
 
     private fun updateRefreshHostsEnabledStatus() {
