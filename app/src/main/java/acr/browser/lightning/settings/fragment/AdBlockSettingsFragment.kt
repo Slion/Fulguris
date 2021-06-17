@@ -7,6 +7,7 @@ import acr.browser.lightning.adblock.BloomFilterAdBlocker
 import acr.browser.lightning.adblock.source.HostsSourceType
 import acr.browser.lightning.adblock.source.selectedHostsSource
 import acr.browser.lightning.adblock.source.toPreferenceIndex
+import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.di.DiskScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.injector
@@ -24,6 +25,7 @@ import androidx.fragment.app.FragmentActivity
 import android.text.InputType
 import android.widget.*
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.preference.Preference
 import io.reactivex.Maybe
 import io.reactivex.Scheduler
@@ -57,6 +59,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     private var forceRefreshHostsPreference: Preference? = null
 
     private var abpDao: AbpDao? = null
+    private val entitiyPrefs = mutableMapOf<Int, Preference>()
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
@@ -98,67 +101,165 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         if (context != null) {
             abpDao = AbpDao(requireContext())
+
+            // "new list" button
+            val pref = Preference(context)
+            pref.title = "add new blocklist"
+            pref.icon = resources.getDrawable(R.drawable.ic_action_plus)
+            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                val dialog = AlertDialog.Builder(context)
+                    .setNeutralButton("cancel", null) // actually the negative button, but looks nicer this way
+                    .setNegativeButton("from file") { _,_ -> showBlockist(AbpEntity(url = "file")) }
+                    .setPositiveButton("from url") { _,_ -> showBlockist(AbpEntity(url = "")) }
+                    .setTitle("add new blocklist")
+                    .create()
+                dialog.show()
+                // TODO: avoid manually setting button color, but how to do it correctly?
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY)
+                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.GRAY)
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GRAY)
+                true
+            }
+            this.preferenceScreen.addPreference(pref)
+
             for (entity in abpDao!!.getAll()) {
+                val entityPref = Preference(context)
+//                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
+//                pref.isChecked = entity.enabled
+                entityPref.title = entity.title
+                entityPref.summary = "Last update: ${entity.lastUpdate}"
+                entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                    showBlockist(entity)
+                    true
+                }
+                entitiyPrefs[entity.entityId] = entityPref
+                this.preferenceScreen.addPreference(entitiyPrefs[entity.entityId])
+            }
+        }
+    }
+
+    // TODO: this is getting too large, and has duplicates -> clean up
+    private fun showBlockist(entity: AbpEntity) {
+        val builder = AlertDialog.Builder(context)
+        var dialog: AlertDialog? = null
+        builder.setTitle("edit blocklist")
+        val ll = LinearLayout(context)
+        ll.orientation = LinearLayout.VERTICAL
+
+        val name = EditText(context)
+        name.inputType = InputType.TYPE_CLASS_TEXT
+        name.setText(entity.title)
+        name.hint = "name"
+        ll.addView(name)
+        // some listener that checks for §§? or do when clicking ok?
+
+        when {
+            entity.url.startsWith(Schemes.Fulguris) -> {
+                val text = TextView(context)
+                text.text = "internal list"
+                ll.addView(text)
+            }
+            entity.url.startsWith("file") -> {
+                val updateButton = Button(context)
+                updateButton.text = "update blocklist file"
+                updateButton.setOnClickListener {
+                    // TODO: choose file -> check host file chooser and original implementation in yuzu
+                    //  and: if no valid file provided, ok button should not be visible
+                    }
+                ll.addView(updateButton)
+            }
+            entity.url.toHttpUrlOrNull() != null || entity.url == "" -> {
+                val url = EditText(context)
+                url.inputType = InputType.TYPE_TEXT_VARIATION_URI
+                url.setText(entity.url)
+                url.hint = "url"
+                url.addTextChangedListener {
+                    entity.homePage = it.toString()
+                    // disable ok button if url not valid
+                    dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = it.toString().toHttpUrlOrNull() != null
+                    dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.text = if (it.toString().toHttpUrlOrNull() != null)
+                        "ok"
+                    else
+                        "invalid url"
+                }
+                ll.addView(url)
+            }
+        }
+
+        val enabled = SwitchCompat(requireContext())
+        enabled.text = "enabled"
+        enabled.isChecked = entity.enabled
+        ll.addView(enabled)
+
+        // only show if not creating a new entity
+        if (entity.entityId != 0) {
+            val delete = Button(context) // looks ugly, but works
+            delete.text = "delete list"
+            delete.setOnClickListener {
+                // confirm delete!
+                val really = AlertDialog.Builder(context)
+                    .setNegativeButton("no", null)
+                    .setPositiveButton("delete") { _, _ ->
+                        abpDao?.delete(entity)
+                        dialog?.dismiss()
+                        // TODO: sometimes not deleting -> why?
+                        //  probably problem in AbpDao
+                        preferenceScreen.removePreference(entitiyPrefs[entity.entityId]) // working?
+                    }
+                    .setTitle("really delete list ${entity.title}?")
+                    .create()
+                really.show()
+                really.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY)
+                really.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GRAY)
+            }
+            ll.addView(delete)
+        }
+
+        // arbitrary numbers that look ok on my phone -> ok for other phones?
+        //  what unit is this? dp? px?
+        ll.setPadding(30,10,30,10)
+        builder.setView(ll)
+        builder.setNegativeButton("cancel", null)
+        builder.setPositiveButton("ok") { _,_ ->
+            if (name.text.toString().contains("§§") || entity.url.contains("§§"))
+                AlertDialog.Builder(context) // how to not accept click on ok? menu dialog should remain open
+            // so better disable the ok button as long as §§ is found? but needs some kind of text change listener
+            // -> https://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
+            //  or add another addTextChangedListener for the name text?
+            //  but then take care that always both texts are ok!
+
+            entity.enabled = enabled.isChecked
+
+            entity.title = name.text.toString()
+            val newId = abpDao?.update(entity) // new id if new entity was added
+            // download updates immediately? should do, but i need the correct id in case a new list was added
+
+            // maybe only update if title changed? depends how i get it working...
+            if (newId != null && entitiyPrefs[newId] == null) { // not in entityPrefs if new
                 val pref = Preference(context)
+                entity.entityId = newId
                 pref.title = entity.title
                 pref.summary = "Last update: ${entity.lastUpdate}"
                 pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockist(entity)
                     true
                 }
-                this.preferenceScreen.addPreference(pref)
+                entitiyPrefs[newId] = pref
+                preferenceScreen.addPreference(entitiyPrefs[newId])
             }
-            val pref = Preference(context)
-            pref.title = "add list"
-            pref.summary = "click to add"
-            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                showBlockist(AbpEntity())
-                true
-            }
-            this.preferenceScreen.addPreference(pref)
-        }
-    }
 
-    private fun showBlockist(entity: AbpEntity) {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("edit blocklist")
-        val name = EditText(context)
-        name.inputType = InputType.TYPE_CLASS_TEXT
-        name.setText(entity.title)
-        name.hint = "name"
-        val url = EditText(context)
-        url.inputType = InputType.TYPE_TEXT_VARIATION_URI
-        url.setText(entity.url)
-        url.hint = "url"
-        // allow from file!
-        val enabled = SwitchCompat(requireContext())
-        enabled.text = "enabled"
-        enabled.isChecked = entity.enabled
+            // is this enough to update title?
+            entitiyPrefs[entity.entityId]?.title = entity.title
 
-        val ll = LinearLayout(context)
-        ll.orientation = LinearLayout.VERTICAL
-        ll.addView(name)
-        ll.addView(url)
-        ll.addView(enabled)
-        ll.setPadding(30,10,30,10)
-        builder.setView(ll)
-        builder.setNegativeButton("cancel", null)
-        builder.setPositiveButton("ok") { _,_ ->
-            entity.enabled = enabled.isChecked
-            entity.title = name.text.toString()
-            entity.url = url.text.toString() // better check validity?
-            abpDao?.update(entity)
-            // download updates immediately? should do, but i need the correct id in case a new list was added)
-            // and actually update screen (title and new list!)
         }
-        // one more button: "from file"
-        // and another for delete?
-//        builder.show()
-        // need to adjust button colors, they are same as background by default (why?)
-        val dialog = builder.create()
+        dialog = builder.create()
         dialog.show()
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY)
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GRAY)
+        if (entity.url == "") { // editText field is not checked on start
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).text = "invalid url"
+        }
 
     }
 

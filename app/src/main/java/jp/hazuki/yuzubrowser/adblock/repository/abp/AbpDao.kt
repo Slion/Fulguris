@@ -67,13 +67,13 @@ class AbpDao(val context: Context) {
     }
 
     // update also handles new entities, they should have index 0 to avoid duplicates (can't happen in a db...)
-    fun update(abpEntity: AbpEntity) {
+    fun update(abpEntity: AbpEntity): Int {
         val list = getAll() as MutableList
         for (index in list.indices) {
             if (list[index].equals(abpEntity)) { // compares id only
                 list[index] = abpEntity
                 prefs.edit().putStringSet(ABP_ENTITIES, list.map { it.toString() }.toSet()).apply()
-                return
+                return abpEntity.entityId
             }
         }
         // if entity has index 0, find a new one
@@ -87,6 +87,7 @@ class AbpDao(val context: Context) {
         }
         list.add(abpEntity)
         prefs.edit().putStringSet(ABP_ENTITIES, list.map { it.toString() }.toSet()).apply()
+        return abpEntity.entityId
     }
 
     fun delete(abpEntity: AbpEntity) {
@@ -98,6 +99,7 @@ class AbpDao(val context: Context) {
             ++i
         }
         prefs.edit().putStringSet(ABP_ENTITIES, list.map { it.toString() }.toSet()).apply()
+        // TODO: delete related files
     }
 
 
