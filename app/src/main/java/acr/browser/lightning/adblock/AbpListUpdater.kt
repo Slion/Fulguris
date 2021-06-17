@@ -16,11 +16,15 @@
 
 package acr.browser.lightning.adblock
 
+import acr.browser.lightning.R
+import acr.browser.lightning.preference.UserPreferences
 import android.content.Context
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.ResultReceiver
+import androidx.preference.PreferenceManager
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_DIR
 import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
@@ -38,16 +42,19 @@ import java.io.IOException
 import java.nio.charset.Charset
 import javax.inject.Inject
 
-// this is basically the update service from yuzu blocker with some stuff removed
-//class FillList(val context: Context) {
-class AbpListUpdater(val context: Context) {
 
-//    @Inject
+// this is basically the update service from yuzu blocker with some stuff removed
+class AbpListUpdater(val context: Context) {
+//class AbpListUpdater @Inject constructor(val context: Context, val userPreferences: UserPreferences) {
+
+    //    @Inject
 //    internal lateinit var okHttpClient: OkHttpClient
     val okHttpClient = OkHttpClient() // any problems if not injecting?
 
 //    @Inject
 //    internal lateinit var abpDatabase: AbpDatabase
+    @Inject internal lateinit var userPreferences: UserPreferences
+    // TODO: i don't understand this inject stuff... using the same code works in other classes?
 
     val abpDao = AbpDao(context)
 
@@ -76,6 +83,21 @@ class AbpListUpdater(val context: Context) {
         }*/
     }
 
+    fun removeFiles(entity: AbpEntity) {
+        val dir = getFilterDir()
+        val writer = FilterWriter()
+        writer.write(dir.getAbpBlackListFile(entity), listOf())
+        writer.write(dir.getAbpWhiteListFile(entity), listOf())
+        writer.write(dir.getAbpWhitePageListFile(entity), listOf())
+
+        val elementWriter = ElementWriter()
+        elementWriter.write(dir.getAbpElementListFile(entity), listOf())
+    }
+
+    fun updateAbpEntity(entity: AbpEntity) = runBlocking {
+        updateInternal(entity)
+    }
+
     private fun updateAbpEntity(entity: AbpEntity, result: ResultReceiver?) = runBlocking {
         if (updateInternal(entity)) {
             result?.send(RESULT_CODE_UPDATED, Bundle().apply { putParcelable(EXTRA_ABP_ENTRY, entity) })
@@ -97,6 +119,13 @@ class AbpListUpdater(val context: Context) {
     private fun getFilterDir() = context.getDir(FILTER_DIR, Context.MODE_PRIVATE)
 
     private suspend fun updateHttp(entity: AbpEntity, forceUpdate: Boolean): Boolean {
+        // don't update if auto-update settings don't allow
+        // TODO: how to get userPreferences
+/*        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (!forceUpdate
+            && ((userPreferences.blockListAutoUpdate == AbpUpdateMode.WIFI_ONLY && cm.isActiveNetworkMetered)
+                    || userPreferences.blockListAutoUpdate == AbpUpdateMode.NONE))
+            return false*/
 
         val request = try {
             Request.Builder()

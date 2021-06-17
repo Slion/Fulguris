@@ -16,6 +16,7 @@
 
 package jp.hazuki.yuzubrowser.adblock.repository.abp
 
+import acr.browser.lightning.adblock.AbpListUpdater
 import android.content.Context
 
 /*
@@ -98,8 +99,12 @@ class AbpDao(val context: Context) {
                 list.removeAt(i)
             ++i
         }
-        prefs.edit().putStringSet(ABP_ENTITIES, list.map { it.toString() }.toSet()).apply()
-        // TODO: delete related files
+        AbpListUpdater(context).removeFiles(abpEntity)
+
+        if (list.isEmpty())
+            prefs.edit().remove(ABP_ENTITIES).apply()
+        else
+            prefs.edit().putStringSet(ABP_ENTITIES, list.map { it.toString() }.toSet()).apply()
     }
 
 
@@ -107,7 +112,7 @@ class AbpDao(val context: Context) {
 
 // pre-fill some stuff, currently only built-in easylist enabled (enable others by manipulating preferences xml)
 const val ABP_ENTITIES = "abpEntities"
-val ABP_ENTITY_EASYLIST_BUILTIN = AbpEntity(title = "EasyListLocal", entityId = 1, url = "fulguris://easylist", homePage = "https://easylist.to")
-val ABP_ENTITY_EASYLIST = AbpEntity(title = "EasyList", entityId = 2, url = "https://easylist.to/easylist/easylist.txt", homePage = "https://easylist.to", enabled = false)
-val ABP_ENTITY_EASYPRIVACY = AbpEntity(title = "EasyPrivacy", entityId = 3, url = "https://easylist.to/easylist/easyprivacy.txt", homePage = "https://easylist.to", enabled = false)
+val ABP_ENTITY_EASYLIST_BUILTIN = AbpEntity(title = "Internal List", entityId = 1, url = "fulguris://easylist", homePage = "https://easylist.to", enabled = true)
+val ABP_ENTITY_EASYLIST = AbpEntity(title = "EasyList", entityId = 2, url = "https://easylist.to/easylist/easylist.txt", homePage = "https://easylist.to")
+val ABP_ENTITY_EASYPRIVACY = AbpEntity(title = "EasyPrivacy", entityId = 3, url = "https://easylist.to/easylist/easyprivacy.txt", homePage = "https://easylist.to")
 val ABP_DEFAULT_ENTITIES = setOf(ABP_ENTITY_EASYLIST_BUILTIN.toString(), ABP_ENTITY_EASYLIST.toString(), ABP_ENTITY_EASYPRIVACY.toString())

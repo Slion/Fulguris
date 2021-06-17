@@ -409,6 +409,11 @@
     <string name="page_blocked">The following page was blocked:</string>
     <string name="page_blocked_reason">because of:</string>
     <string name="request_blocked">Request blocked</string>
+    <string name="abp_update_on">Auto-update on</string>
+    <string name="abp_update_off">Auto-update off</string>
+    <string name="abp_update_wifi">Auto-update only on WiFi</string>
+    <string name="add_blocklist">Add new blocklist</string>
+    <string name="update_blocklist">Update blocklists</string>
 
     <string name="infinity">∞</string>
 

@@ -43,7 +43,7 @@ class AbpEntity(
 
         var lastModified: String? = null,
 
-        var enabled: Boolean = true
+        var enabled: Boolean = false
 ) : Parcelable {
 
     constructor() : this(0)

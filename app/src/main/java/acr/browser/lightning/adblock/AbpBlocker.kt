@@ -1,6 +1,7 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.R
+import acr.browser.lightning.preference.UserPreferences
 import android.app.Application
 import android.net.Uri
 import android.webkit.MimeTypeMap
@@ -27,9 +28,9 @@ import kotlin.collections.HashMap
 
 @Singleton
 class AbpBlocker @Inject constructor(
-    private val application: Application
+    private val application: Application,
+    private val userPreferences: UserPreferences
     ) : AdBlocker {
-//    @Inject internal lateinit var userPreferences: UserPreferences
 
     // filter lists
     private var exclusionList: FilterContainer? = null

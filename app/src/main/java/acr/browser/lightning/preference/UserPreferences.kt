@@ -4,6 +4,7 @@ import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpUpdateMode
 import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.browser.SearchBoxDisplayChoice
 import acr.browser.lightning.browser.SearchBoxModel
@@ -454,6 +455,8 @@ class UserPreferences @Inject constructor(
      * Empty string means use system default locale.
      */
     var locale by preferences.stringPreference(R.string.pref_key_locale, "")
+
+    var blockListAutoUpdate by preferences.enumPreference(R.string.pref_key_blocklist_auto_update, AbpUpdateMode.WIFI_ONLY)
 
 }
 
