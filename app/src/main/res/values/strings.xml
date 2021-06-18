@@ -412,8 +412,12 @@
     <string name="abp_update_on">Auto-update on</string>
     <string name="abp_update_off">Auto-update off</string>
     <string name="abp_update_wifi">Only on non-metered connections</string>
+    <string name="blocklist_update">Update blocklists</string>
+    <string name="blocklist_update_now">Update lists now</string>
     <string name="add_blocklist">Add new blocklist</string>
-    <string name="update_blocklist">Update blocklists</string>
+    <string name="enable_blocklist">Enable this list</string>
+    <string name="invalid_title">Invalid title</string>
+    <string name="invalid_url">Invalid URL</string>
 
     <string name="infinity">∞</string>
 

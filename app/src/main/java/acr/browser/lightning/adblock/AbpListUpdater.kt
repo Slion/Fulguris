@@ -209,7 +209,8 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         val set = decoder.decode(reader, entity.url)
 
         val info = set.filterInfo
-        entity.title = info.title
+        if (entity.title == null) // only update title if there is none
+            entity.title = info.title
         entity.expires = info.expires ?: -1
         entity.homePage = info.homePage
         entity.version = info.version

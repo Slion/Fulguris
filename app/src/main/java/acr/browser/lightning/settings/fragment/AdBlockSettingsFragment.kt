@@ -19,14 +19,13 @@ import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.preference.UserPreferences
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
 import android.text.InputType
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.preference.Preference
@@ -41,14 +40,14 @@ import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import okio.Okio
 import okio.buffer
 import okio.sink
 import okio.source
 import java.io.File
 import java.io.IOException
+import java.text.DateFormat
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -110,21 +109,19 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         if (context != null) {
             abpDao = AbpDao(requireContext())
 
-            // TODO: does it work?
             clickableDynamicPreference(
                 preference = getString(R.string.pref_key_blocklist_auto_update),
                 summary = userPreferences.blockListAutoUpdate.toDisplayString(),
                 onClick = { summaryUpdater ->
                         activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
-                            setTitle("update mode")
+                            setTitle(R.string.blocklist_update)
                             val values = AbpUpdateMode.values().map { Pair(it, it.toDisplayString()) }
                             withSingleChoiceItems(values, userPreferences.blockListAutoUpdate) {
                                 userPreferences.blockListAutoUpdate = it
                                 summaryUpdater.updateSummary(it.toDisplayString())
                             }
                             setPositiveButton(resources.getString(R.string.action_ok), null)
-                            setNeutralButton("update all now") {_,_ ->
-                                // TODO: background! (or is it?)
+                            setNeutralButton(R.string.blocklist_update_now) {_,_ ->
                                 GlobalScope.launch(Dispatchers.IO) {
                                     abpListUpdater.updateAll(true)
                                 }
@@ -138,17 +135,13 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             newList.title = resources.getString(R.string.add_blocklist)
             newList.icon = resources.getDrawable(R.drawable.ic_action_plus)
             newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val dialog = AlertDialog.Builder(context)
+                val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
                     .setNegativeButton("from file") { _,_ -> showBlockist(AbpEntity(url = "file")) }
                     .setPositiveButton("from url") { _,_ -> showBlockist(AbpEntity(url = "")) }
                     .setTitle(R.string.add_blocklist)
                     .create()
                 dialog.show()
-                // TODO: avoid manually setting button color, but how to do it correctly?
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY)
-                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.GRAY)
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GRAY)
                 true
             }
             this.preferenceScreen.addPreference(newList)
@@ -159,8 +152,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 //                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
 //                pref.isChecked = entity.enabled
                 entityPref.title = entity.title
-                if (!entity.url.startsWith(Schemes.Fulguris))
-                    entityPref.summary = "Last update: ${entity.lastModified}" // this is local file update date, last update is taken from the list
+                if (!entity.url.startsWith(Schemes.Fulguris) && entity.lastLocalUpdate > 0)
+                    entityPref.summary = "Last update: ${DateFormat.getDateInstance().format(Date(entity.lastLocalUpdate))}"
                 entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockist(entity)
                     true
@@ -171,32 +164,31 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    private fun AbpUpdateMode.toDisplayString(): String = getString(when (this) {
-        AbpUpdateMode.NONE -> R.string.abp_update_off
-        AbpUpdateMode.WIFI_ONLY -> R.string.abp_update_wifi
-        AbpUpdateMode.ALWAYS -> R.string.abp_update_on
-    })
-
     // TODO: this is getting too large, and has duplicates -> clean up
     private fun showBlockist(entity: AbpEntity) {
-        val builder = AlertDialog.Builder(context)
+        val builder = MaterialAlertDialogBuilder(requireContext())
         var dialog: AlertDialog? = null
         builder.setTitle("edit blocklist")
-        val ll = LinearLayout(context)
-        ll.orientation = LinearLayout.VERTICAL
+        val linearLayout = LinearLayout(context)
+        linearLayout.orientation = LinearLayout.VERTICAL
 
-        val name = EditText(context)
-        name.inputType = InputType.TYPE_CLASS_TEXT
-        name.setText(entity.title)
-        name.hint = getString(R.string.hint_title)
-        ll.addView(name)
-        // some listener that checks for §§? or do when clicking ok?
+        // edit field for blocklist title
+        val title = EditText(context)
+        title.inputType = InputType.TYPE_CLASS_TEXT
+        title.setText(entity.title)
+        title.hint = getString(R.string.hint_title)
+        title.addTextChangedListener {
+            entity.title = it.toString()
+            updateButton(dialog?.getButton(AlertDialog.BUTTON_POSITIVE), entity.url, entity.title)
+        }
+        linearLayout.addView(title)
 
+        // field for choosing file or url
         when {
             entity.url.startsWith(Schemes.Fulguris) -> {
                 val text = TextView(context)
                 text.text = "internal list"
-                ll.addView(text)
+                linearLayout.addView(text)
             }
             entity.url.startsWith("file") -> {
                 val updateButton = Button(context)
@@ -205,7 +197,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     // TODO: choose file -> check host file chooser and original implementation in yuzu
                     //  and: if no valid file provided, ok button should not be visible
                     }
-                ll.addView(updateButton)
+                linearLayout.addView(updateButton)
             }
             entity.url.toHttpUrlOrNull() != null || entity.url == "" -> {
                 val url = EditText(context)
@@ -214,61 +206,50 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 url.hint = getString(R.string.hint_url)
                 url.addTextChangedListener {
                     entity.url = it.toString()
-                    // disable ok button if url not valid
-                    dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = it.toString().toHttpUrlOrNull() != null
-                    dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.text = if (it.toString().toHttpUrlOrNull() != null)
-                        resources.getString(R.string.action_ok)
-                    else
-                        "invalid url"
+                    updateButton(dialog?.getButton(AlertDialog.BUTTON_POSITIVE), entity.url, entity.title)
                 }
-                ll.addView(url)
+                linearLayout.addView(url)
             }
         }
 
+        // enabled switch
         val enabled = SwitchCompat(requireContext())
-        enabled.text = "enabled"
+        enabled.text = resources.getString(R.string.enable_blocklist)
         enabled.isChecked = entity.enabled
-        ll.addView(enabled)
+        linearLayout.addView(enabled)
 
-        // only show if not creating a new entity
+        // delete button
+        // don't show for internal list or when creating a new entity
         if (entity.entityId != 0 && !entity.url.startsWith(Schemes.Fulguris)) {
             val delete = Button(context) // looks ugly, but works
             delete.text = "delete list"
+            // confirm deletion!
             delete.setOnClickListener {
-                // confirm delete!
-                val really = AlertDialog.Builder(context)
+//                val confirmDialog = AlertDialog.Builder(context)
+                val confirmDialog = MaterialAlertDialogBuilder(requireContext())
                     .setNegativeButton(R.string.action_cancel, null)
-                    .setPositiveButton("delete") { _, _ ->
+                    .setPositiveButton(R.string.action_delete) { _, _ ->
                         abpDao?.delete(entity)
                         dialog?.dismiss()
                         preferenceScreen.removePreference(entitiyPrefs[entity.entityId])
                     }
                     .setTitle("really delete list ${entity.title}?")
                     .create()
-                really.show()
-                really.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY)
-                really.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GRAY)
+                confirmDialog.show()
             }
-            ll.addView(delete)
+            linearLayout.addView(delete)
         }
 
         // arbitrary numbers that look ok on my phone -> ok for other phones?
-        //  what unit is this? dp? px?
-        ll.setPadding(30,10,30,10)
-        builder.setView(ll)
+        linearLayout.setPadding(30,10,30,10)
+
+        builder.setView(linearLayout)
         builder.setNegativeButton(R.string.action_cancel, null)
         builder.setPositiveButton(R.string.action_ok) { _,_ ->
-            if (name.text.toString().contains("§§") || entity.url.contains("§§"))
-                AlertDialog.Builder(context) // how to not accept click on ok? menu dialog should remain open
-            // so better disable the ok button as long as §§ is found? but needs some kind of text change listener
-            // -> https://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
-            //  or add another addTextChangedListener for the name text?
-            //  but then take care that always both texts are ok!
-
             val wasEnabled = entity.enabled
             entity.enabled = enabled.isChecked
 
-            entity.title = name.text.toString()
+            entity.title = title.text.toString()
             val newId = abpDao?.update(entity) // new id if new entity was added
 
             // set new id for newly added list
@@ -285,8 +266,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 val pref = Preference(context)
                 entity.entityId = newId
                 pref.title = entity.title
-                if (!entity.url.startsWith(Schemes.Fulguris))
-                    pref.summary = "Last update: ${entity.lastModified}"
+                if (!entity.url.startsWith(Schemes.Fulguris) && entity.lastLocalUpdate > 0)
+                    pref.summary = "Last update: ${DateFormat.getDateInstance().format(Date(entity.lastLocalUpdate))}"
                 pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockist(entity)
                     true
@@ -295,18 +276,33 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 preferenceScreen.addPreference(entitiyPrefs[newId])
             } else
                 entitiyPrefs[entity.entityId]?.title = entity.title
-
         }
         dialog = builder.create()
         dialog.show()
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY)
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GRAY)
-        if (entity.url == "") { // editText field is not checked on start
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).text = "invalid url"
-        }
-
+        updateButton(dialog.getButton(AlertDialog.BUTTON_POSITIVE), entity.url, entity.title)
     }
+
+    // disable ok button if url or title not valid
+    private fun updateButton(button: Button?, url: String, title: String?) {
+        if (title?.contains("§§") == true) {
+            button?.text = resources.getText(R.string.invalid_title)
+            button?.isEnabled = false
+            return
+        }
+        if ((url.toHttpUrlOrNull() == null || url.contains("§§")) && !url.startsWith(Schemes.Fulguris) && !url.startsWith("file")) {
+            button?.text = resources.getText(R.string.invalid_url)
+            button?.isEnabled = false
+            return
+        }
+        button?.text = resources.getString(R.string.action_ok)
+        button?.isEnabled = true
+    }
+
+    private fun AbpUpdateMode.toDisplayString(): String = getString(when (this) {
+        AbpUpdateMode.NONE -> R.string.abp_update_off
+        AbpUpdateMode.WIFI_ONLY -> R.string.abp_update_wifi
+        AbpUpdateMode.ALWAYS -> R.string.abp_update_on
+    })
 
     private fun updateRefreshHostsEnabledStatus() {
         forceRefreshHostsPreference?.isEnabled = isRefreshHostsEnabled()
