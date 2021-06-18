@@ -53,24 +53,25 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 //    @Inject
 //    internal lateinit var abpDatabase: AbpDatabase
     @Inject internal lateinit var userPreferences: UserPreferences
-    // TODO: i don't understand this inject stuff... using the same code works in other classes?
 
     val abpDao = AbpDao(context)
 
-    fun updateAll(forceUpdate: Boolean) = runBlocking {
+    fun updateAll(forceUpdate: Boolean): Boolean {
         var result = false
-        var nextUpdateTime = Long.MAX_VALUE
-        val now = System.currentTimeMillis()
-        abpDao.getAll().forEach {
-            if (forceUpdate || (it.isNeedUpdate() && it.enabled)) {
-                val localResult = updateInternal(it, forceUpdate)
-                if (localResult && it.expires > 0) {
-                    val nextTime = it.expires * AN_HOUR + now
-                    if (nextTime < nextUpdateTime) nextUpdateTime = nextTime
+        runBlocking {
+
+            var nextUpdateTime = Long.MAX_VALUE
+            val now = System.currentTimeMillis()
+            abpDao.getAll().forEach {
+                if (forceUpdate || (it.isNeedUpdate() && it.enabled)) {
+                    val localResult = updateInternal(it, forceUpdate)
+                    if (localResult && it.expires > 0) {
+                        val nextTime = it.expires * AN_HOUR + now
+                        if (nextTime < nextUpdateTime) nextUpdateTime = nextTime
+                    }
+                    result = result or localResult
                 }
-                result = result or localResult
             }
-        }
 
 /*        AdBlockPref.get(applicationContext).abpNextUpdateTime = if (nextUpdateTime != Long.MAX_VALUE) {
             nextUpdateTime
@@ -80,6 +81,8 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         if (result) {
             LocalEventBus.getDefault().notify(BROADCAST_ACTION_UPDATE_AD_BLOCK_DATA)
         }*/
+        }
+        return result
     }
 
     fun removeFiles(entity: AbpEntity) {

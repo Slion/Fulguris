@@ -83,7 +83,7 @@ class LightningWebClient(
 
     private var currentUrl: String = ""
 
-    private var elementHide = true // TODO: better get from preferences
+//    private var elementHide = true // TODO: better get from preferences
 
     var sslState: SslState = SslState.None
         private set(value) {
@@ -178,15 +178,15 @@ class LightningWebClient(
         if (lightningView.invertPage) {
             view.evaluateJavascript(invertPageJs.provideJs(), null)
         }
-        // TODO: copy onDomContentLoaded callback from yuzu and use this to inject JS (used in yuzu also for invert and userJS)
-        //  this should really not happen on finished... better onCommitVisible?
-        // so far it seems to have no effect... maybe because of the late injection?
+/*        // TODO: element hiding does not work
+        //  maybe because of the late injection?
+        //  copy onDomContentLoaded callback from yuzu and use this to inject JS (used in yuzu also for invert and userJS)
         if (elementHide) {
             adBlock.loadScript(Uri.parse(currentUrl))?.let {
                 view.evaluateJavascript(it, null)
             }
             // takes around half a second, but not sure what that tells me
-        }
+        }*/
         uiController.tabChanged(lightningView)
     }
 

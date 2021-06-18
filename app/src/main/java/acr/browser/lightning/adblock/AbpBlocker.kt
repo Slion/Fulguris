@@ -1,7 +1,6 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.R
-import acr.browser.lightning.preference.UserPreferences
 import android.app.Application
 import android.net.Uri
 import android.webkit.MimeTypeMap
@@ -14,14 +13,11 @@ import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.element.ElementContainer
 import jp.hazuki.yuzubrowser.adblock.filter.unified.getFilterDir
 import jp.hazuki.yuzubrowser.adblock.getContentType
-import jp.hazuki.yuzubrowser.adblock.getFilterType
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import kotlinx.coroutines.*
 import okhttp3.internal.publicsuffix.PublicSuffix
 import java.io.*
 import java.nio.charset.StandardCharsets
-import java.util.*
-import java.util.concurrent.CountDownLatch
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.collections.HashMap
@@ -37,18 +33,18 @@ class AbpBlocker @Inject constructor(
     // no... not initialized -> bah
 
     // filter lists
-    private var exclusionList: FilterContainer? = null
-    private var blockList: FilterContainer? = null
+//    private var exclusionList: FilterContainer? = null
+    private var exclusionList = FilterContainer()
+//    private var blockList: FilterContainer? = null
+    private var blockList = FilterContainer()
     private var userWhitelist: FilterContainer? = null
     private var userBlockList: FilterContainer? = null
 
     // if i want mining/malware block, it should be separate lists so they don't get disabled when not blocking ads
-    // or actually... i could just fill the blockList with all that is desired, and disable filling with adblock lists if ad blocking is there
-    // no. then exclusions would come before malware/mining detection. not good.
     private var miningList: FilterContainer? = null // copy from yuzu?
     private var malwareList: FilterContainer? = null // copy from smartcookieweb/styx?
 
-    // TODO: element hiding
+/*    // TODO: element hiding
     //  not sure if this actually works (did not in a test - I think?), maybe it's crucial to inject the js at the right point
     //  tried onPageFinished, might be too late (try to implement onDomFinished from yuzu?)
 //    private var elementHideExclusionList: FilterContainer? = null
@@ -56,95 +52,49 @@ class AbpBlocker @Inject constructor(
     // both lists are actually inside the elementBlocker
     private var elementBlocker: CosmeticFiltering? = null
     var useElementHide = true // TODO: load from preferences (if it really works)
-
+*/
     // cache for 3rd party check, allows significantly faster checks
     private val thirdPartyCache = mutableMapOf<String, Boolean>()
     private val thirdPartyCacheSize = 100
 
     private val dummyImage: ByteArray = readByte(application.applicationContext.resources.assets.open("blank.png"))
-    private val dummy = WebResourceResponse("text/plain", "UTF-8", EmptyInputStream())
-
-    // TODO: does this actually do anything? even in yuzu it is only set, and never read
-//    private var isAbpIgnoreGenericElement = false
-
-    private var waitForLoading: CountDownLatch? = null
-
-
+    private val dummyResponse = WebResourceResponse("text/plain", "UTF-8", EmptyInputStream())
 
     override fun isAd(url: String) = false // for now...
 
+    // TODO: decide when to load lists
+    //  just loadLists() takes ca 1 second on S4 mini for easylist and delays browser start
+    //   but then blocklists are loaded before the first request
+    //  loading after updates are done may delay loading of adblocker for some 5-30 seconds, depending on phone speed and internet connection
+    //  loading before fetching updates still leaves the first 3-5 seconds without blocker...
+    //  nothing is really good here -> best way would be ton find a way to accelerate blocklist loading
+    //   2nd best: have a setting
+    //  hmm... there was this blocker.await in yuzu, maybe that's connected? but this made blocking 50% slower...
     init {
-        // load lists. this takes about a second on S4 mini for easylist alone... probably worse with more lists
-        // maybe do it in a different way using this reactivex stuff?
-        update()
-        runBlocking {
+        loadLists() // takes ca 1 second on S4 mini for easylist
+
             // TODO: use of globalscope was discouraged somewhere... check and adjust if necessary
             GlobalScope.launch(Dispatchers.IO) {
-                // necessary because updateAll might download new lists
-                // maybe make better? and allow some auto-update settings, like update on wifi only
-//                AbpListUpdater(application.applicationContext).updateAll(false) // updates all entities in AbpDao
-                abpListUpdater.updateAll(false) // updates all entities in AbpDao
+                //loadLists() // takes about 3-5 seconds on S4 mini for easylist
+                // updates all entities in AbpDao, may take a while depending on how many lists need update, and internet connection
+                if (abpListUpdater.updateAll(false)) // returns true if any was updated
+                    loadLists() // update again if files have changed
             }
-            update() // again? should be done only if anything updated -> use the broadcast from FillList (old updater)?
-        }
     }
 
 //----------------------- from yuzu adblocker (mostly AdBlockController) --------------------//
-    // slightly adjusted, currently not used
-    fun updateAsync() {
-        waitForLoading = CountDownLatch(1)
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val abpLoader = AbpLoader(application.applicationContext.getFilterDir(), AbpDao(application.applicationContext).getAll())
-                val block = async {
-                    FilterContainer().also {
-                        abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::plusAssign)
-                    }
-                }
-                val exclusions = async {
-                    FilterContainer().also {
-                        abpLoader.loadAll(ABP_PREFIX_ALLOW).forEach(it::plusAssign)
-                    }
-                }
-                if (useElementHide) {
-                    val disableCosmetic = async {
-                        FilterContainer().also {
-                            abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign)
-                        }
-                    }
-                    val elementFilter = async {
-                        ElementContainer().also {
-                            abpLoader.loadAllElementFilter().forEach(it::plusAssign)
-                        }
-                    }
-
-                    elementBlocker = CosmeticFiltering(disableCosmetic.await(), elementFilter.await())
-                }
-
-                blockList = block.await()
-                exclusionList = exclusions.await()
-                //adBlocker = Blocker(exclusions.await(), block.await())
-
-//                isAbpIgnoreGenericElement = false //AppPrefs.isAbpIgnoreGenericElement.get()
-            } finally {
-                waitForLoading?.countDown()
-                waitForLoading = null
-            }
-        }
-    } // use once i understand what is going on...
-
-    // more adjusted
-    fun update() {
+    fun loadLists() {
         val abpLoader = AbpLoader(application.applicationContext.getFilterDir(), AbpDao(application.applicationContext).getAll())
         blockList = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::plusAssign) }
+//        blockList.also { abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::plusAssign) } // TODO: if i do it like this, there is even more reason to remove duplicate entries!
         exclusionList = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_ALLOW).forEach(it::plusAssign) }
+//        exclusionList.also { abpLoader.loadAll(ABP_PREFIX_ALLOW).forEach(it::plusAssign) }
 
-        if (useElementHide) {
+/*        if (useElementHide) {
             val disableCosmetic = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign) }
             val elementFilter = ElementContainer().also { abpLoader.loadAllElementFilter().forEach(it::plusAssign) }
             elementBlocker = CosmeticFiltering(disableCosmetic, elementFilter)
-        }
-//        isAbpIgnoreGenericElement = false //AppPrefs.isAbpIgnoreGenericElement.get()
+        }*/
     }
 
     fun createDummy(uri: Uri): WebResourceResponse {
@@ -152,7 +102,7 @@ class AbpBlocker @Inject constructor(
         return if (mimeType.startsWith("image/")) {
             WebResourceResponse("image/png", null, ByteArrayInputStream(dummyImage))
         } else {
-            dummy
+            dummyResponse
         }
     }
 
@@ -176,9 +126,9 @@ class AbpBlocker @Inject constructor(
     }
 
     override fun loadScript(uri: Uri): String? {
-        val cosmetic = elementBlocker ?: return null
-
-        return cosmetic.loadScript(uri)
+//        val cosmetic = elementBlocker ?: return null
+//        return cosmetic.loadScript(uri)
+        return null // TODO: remove if element hiding does not work
     }
 
     // copied here to allow modified 3rd party detection
