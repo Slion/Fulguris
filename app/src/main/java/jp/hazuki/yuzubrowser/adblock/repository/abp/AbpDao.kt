@@ -41,23 +41,9 @@ interface AbpDao {
     suspend fun update(abpEntity: AbpEntity)
 }
 */
-/*
-interface AbpDao {
-
-    suspend fun getAll(): List<AbpEntity>
-
-    suspend fun inset(abpEntity: AbpEntity): Long
-
-    suspend fun inset(entities: List<AbpEntity>)
-
-    suspend fun delete(abpEntity: AbpEntity)
-
-    suspend fun update(abpEntity: AbpEntity)
-}*/
 
 // (bad?) replacement for the db:
 class AbpDao(val context: Context) {
-    //val prefs = PreferenceManager.getDefaultSharedPreferences(context)
     val prefs = context.getSharedPreferences("ad_block_settings", Context.MODE_PRIVATE)
 
     fun getAll(): List<AbpEntity> {
@@ -70,6 +56,8 @@ class AbpDao(val context: Context) {
     // update also handles new entities, they should have index 0 to avoid duplicates (can't happen in a db...)
     fun update(abpEntity: AbpEntity): Int {
         val list = getAll() as MutableList
+
+        // check whether entity exists
         for (index in list.indices) {
             if (list[index].equals(abpEntity)) { // compares id only
                 list[index] = abpEntity
@@ -77,7 +65,8 @@ class AbpDao(val context: Context) {
                 return abpEntity.entityId
             }
         }
-        // if entity has index 0, find a new one
+
+        // if entity has index 0, find a valid unique ne id
         if (abpEntity.entityId == 0) {
             val ids =  list.map { it.entityId }
             var i = 1

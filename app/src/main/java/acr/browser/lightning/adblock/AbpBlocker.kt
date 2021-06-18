@@ -29,8 +29,12 @@ import kotlin.collections.HashMap
 @Singleton
 class AbpBlocker @Inject constructor(
     private val application: Application,
-    private val userPreferences: UserPreferences
+    abpListUpdater: AbpListUpdater,
+    //private val userPreferences: UserPreferences // TODO: relevant only for element hiding
     ) : AdBlocker {
+    // necessary to do it like this; userPreferences not injected when using AbpListUpdater(application.applicationContext).updateAll(false)
+    //@Inject internal lateinit var abpListUpdater: AbpListUpdater
+    // no... not initialized -> bah
 
     // filter lists
     private var exclusionList: FilterContainer? = null
@@ -78,7 +82,8 @@ class AbpBlocker @Inject constructor(
             GlobalScope.launch(Dispatchers.IO) {
                 // necessary because updateAll might download new lists
                 // maybe make better? and allow some auto-update settings, like update on wifi only
-                AbpListUpdater(application.applicationContext).updateAll(false) // updates all entities in AbpDao
+//                AbpListUpdater(application.applicationContext).updateAll(false) // updates all entities in AbpDao
+                abpListUpdater.updateAll(false) // updates all entities in AbpDao
             }
             update() // again? should be done only if anything updated -> use the broadcast from FillList (old updater)?
         }

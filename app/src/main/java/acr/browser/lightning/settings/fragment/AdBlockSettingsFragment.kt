@@ -60,6 +60,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
     @Inject @field:DiskScheduler internal lateinit var diskScheduler: Scheduler
     @Inject internal lateinit var bloomFilterAdBlocker: BloomFilterAdBlocker
+    @Inject internal lateinit var abpListUpdater: AbpListUpdater
 
     private var recentSummaryUpdater: SummaryUpdater? = null
     private val compositeDisposable = CompositeDisposable()
@@ -122,10 +123,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                                 summaryUpdater.updateSummary(it.toDisplayString())
                             }
                             setPositiveButton(resources.getString(R.string.action_ok), null)
-                            setNeutralButton("update now") {_,_ ->
+                            setNeutralButton("update all now") {_,_ ->
                                 // TODO: background! (or is it?)
                                 GlobalScope.launch(Dispatchers.IO) {
-                                    AbpListUpdater(context).updateAll(true)
+                                    abpListUpdater.updateAll(true)
                                 }
                             }
                         }?.resizeAndShow()
@@ -152,12 +153,14 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             }
             this.preferenceScreen.addPreference(newList)
 
+            // list of blocklists/entities
             for (entity in abpDao!!.getAll()) {
                 val entityPref = Preference(context)
 //                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
 //                pref.isChecked = entity.enabled
                 entityPref.title = entity.title
-                // entityPref.summary = "Last update: ${entity.lastUpdate}" // TODO: re-add if i understand when "last update" is filled, or maybe use sth else
+                if (!entity.url.startsWith(Schemes.Fulguris))
+                    entityPref.summary = "Last update: ${entity.lastModified}" // this is local file update date, last update is taken from the list
                 entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockist(entity)
                     true
@@ -210,7 +213,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 url.setText(entity.url)
                 url.hint = getString(R.string.hint_url)
                 url.addTextChangedListener {
-                    entity.homePage = it.toString()
+                    entity.url = it.toString()
                     // disable ok button if url not valid
                     dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = it.toString().toHttpUrlOrNull() != null
                     dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.text = if (it.toString().toHttpUrlOrNull() != null)
@@ -275,23 +278,23 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             // check for update (necessary to have correct id!)
             if (enabled.isChecked && !wasEnabled)
                 GlobalScope.launch(Dispatchers.IO) {
-                    AbpListUpdater(requireContext()).updateAbpEntity(entity)
+                    abpListUpdater.updateAbpEntity(entity)
                 }
 
             if (newId != null && entitiyPrefs[newId] == null) { // not in entityPrefs if new
                 val pref = Preference(context)
                 entity.entityId = newId
                 pref.title = entity.title
-//                pref.summary = "Last update: ${entity.lastUpdate}" // TODO: add when it's working
+                if (!entity.url.startsWith(Schemes.Fulguris))
+                    pref.summary = "Last update: ${entity.lastModified}"
                 pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockist(entity)
                     true
                 }
                 entitiyPrefs[newId] = pref
                 preferenceScreen.addPreference(entitiyPrefs[newId])
-            }
-
-            entitiyPrefs[entity.entityId]?.title = entity.title
+            } else
+                entitiyPrefs[entity.entityId]?.title = entity.title
 
         }
         dialog = builder.create()

@@ -44,11 +44,10 @@ import javax.inject.Inject
 
 
 // this is basically the update service from yuzu blocker with some stuff removed
-class AbpListUpdater(val context: Context) {
+class AbpListUpdater @Inject constructor(val context: Context) {
 //class AbpListUpdater @Inject constructor(val context: Context, val userPreferences: UserPreferences) {
 
-    //    @Inject
-//    internal lateinit var okHttpClient: OkHttpClient
+    //@Inject internal lateinit var okHttpClient: OkHttpClient
     val okHttpClient = OkHttpClient() // any problems if not injecting?
 
 //    @Inject
@@ -63,7 +62,7 @@ class AbpListUpdater(val context: Context) {
         var nextUpdateTime = Long.MAX_VALUE
         val now = System.currentTimeMillis()
         abpDao.getAll().forEach {
-            if (forceUpdate || it.isNeedUpdate()) {
+            if (forceUpdate || (it.isNeedUpdate() && it.enabled)) {
                 val localResult = updateInternal(it, forceUpdate)
                 if (localResult && it.expires > 0) {
                     val nextTime = it.expires * AN_HOUR + now
@@ -121,11 +120,11 @@ class AbpListUpdater(val context: Context) {
     private suspend fun updateHttp(entity: AbpEntity, forceUpdate: Boolean): Boolean {
         // don't update if auto-update settings don't allow
         // TODO: how to get userPreferences
-/*        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (!forceUpdate
             && ((userPreferences.blockListAutoUpdate == AbpUpdateMode.WIFI_ONLY && cm.isActiveNetworkMetered)
                     || userPreferences.blockListAutoUpdate == AbpUpdateMode.NONE))
-            return false*/
+            return false
 
         val request = try {
             Request.Builder()
