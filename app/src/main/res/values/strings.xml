@@ -414,10 +414,16 @@
     <string name="abp_update_wifi">Only on non-metered connections</string>
     <string name="blocklist_update">Update blocklists</string>
     <string name="blocklist_update_now">Update lists now</string>
+    <string name="blocklist_last_update">Last update: %s</string>
     <string name="add_blocklist">Add new blocklist</string>
     <string name="enable_blocklist">Enable this list</string>
     <string name="invalid_title">Invalid title</string>
     <string name="invalid_url">Invalid URL</string>
+    <string name="blocklist_built_in">Built-in blocklist</string>
+    <string name="blocklist_remove">Remove blocklist</string>
+    <string name="blocklist_remove_confirm">Really remove blocklist %s?</string>
+    <string name="local_file">Local blocklist</string>
+    <string name="remote_file">Remote blocklist</string>
 
     <string name="infinity">∞</string>
 

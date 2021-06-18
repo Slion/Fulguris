@@ -20,7 +20,6 @@ import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.preference.UserPreferences
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
@@ -137,8 +136,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
-                    .setNegativeButton("from file") { _,_ -> showBlockist(AbpEntity(url = "file")) }
-                    .setPositiveButton("from url") { _,_ -> showBlockist(AbpEntity(url = "")) }
+                    .setNegativeButton(R.string.local_file) { _,_ -> showBlockist(AbpEntity(url = "file")) }
+                    .setPositiveButton(R.string.remote_file) { _,_ -> showBlockist(AbpEntity(url = "")) }
                     .setTitle(R.string.add_blocklist)
                     .create()
                 dialog.show()
@@ -153,7 +152,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 //                pref.isChecked = entity.enabled
                 entityPref.title = entity.title
                 if (!entity.url.startsWith(Schemes.Fulguris) && entity.lastLocalUpdate > 0)
-                    entityPref.summary = "Last update: ${DateFormat.getDateInstance().format(Date(entity.lastLocalUpdate))}"
+                    entityPref.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateInstance().format(Date(entity.lastLocalUpdate)))
                 entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockist(entity)
                     true
@@ -164,11 +163,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    // TODO: this is getting too large, and has duplicates -> clean up
     private fun showBlockist(entity: AbpEntity) {
         val builder = MaterialAlertDialogBuilder(requireContext())
         var dialog: AlertDialog? = null
-        builder.setTitle("edit blocklist")
+        builder.setTitle(R.string.action_edit)
         val linearLayout = LinearLayout(context)
         linearLayout.orientation = LinearLayout.VERTICAL
 
@@ -187,7 +185,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         when {
             entity.url.startsWith(Schemes.Fulguris) -> {
                 val text = TextView(context)
-                text.text = "internal list"
+                text.text = resources.getString(R.string.blocklist_built_in)
                 linearLayout.addView(text)
             }
             entity.url.startsWith("file") -> {
@@ -196,7 +194,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 updateButton.setOnClickListener {
                     // TODO: choose file -> check host file chooser and original implementation in yuzu
                     //  and: if no valid file provided, ok button should not be visible
-                    }
+                }
                 linearLayout.addView(updateButton)
             }
             entity.url.toHttpUrlOrNull() != null || entity.url == "" -> {
@@ -222,10 +220,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         // don't show for internal list or when creating a new entity
         if (entity.entityId != 0 && !entity.url.startsWith(Schemes.Fulguris)) {
             val delete = Button(context) // looks ugly, but works
-            delete.text = "delete list"
+            delete.text = resources.getString(R.string.blocklist_remove)
             // confirm deletion!
             delete.setOnClickListener {
-//                val confirmDialog = AlertDialog.Builder(context)
                 val confirmDialog = MaterialAlertDialogBuilder(requireContext())
                     .setNegativeButton(R.string.action_cancel, null)
                     .setPositiveButton(R.string.action_delete) { _, _ ->
@@ -233,7 +230,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                         dialog?.dismiss()
                         preferenceScreen.removePreference(entitiyPrefs[entity.entityId])
                     }
-                    .setTitle("really delete list ${entity.title}?")
+                    .setTitle(resources.getString(R.string.blocklist_remove_confirm, entity.title))
                     .create()
                 confirmDialog.show()
             }
@@ -257,7 +254,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 entity.entityId = newId
 
             // check for update (necessary to have correct id!)
-            if (enabled.isChecked && !wasEnabled)
+            if (entity.url.startsWith("http") && enabled.isChecked && !wasEnabled)
                 GlobalScope.launch(Dispatchers.IO) {
                     abpListUpdater.updateAbpEntity(entity)
                 }
@@ -267,7 +264,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 entity.entityId = newId
                 pref.title = entity.title
                 if (!entity.url.startsWith(Schemes.Fulguris) && entity.lastLocalUpdate > 0)
-                    pref.summary = "Last update: ${DateFormat.getDateInstance().format(Date(entity.lastLocalUpdate))}"
+                    pref.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateInstance().format(Date(entity.lastLocalUpdate)))
                 pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockist(entity)
                     true
@@ -284,7 +281,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     // disable ok button if url or title not valid
     private fun updateButton(button: Button?, url: String, title: String?) {
-        if (title?.contains("§§") == true) {
+        if (title?.contains("§§") == true || title.isNullOrBlank()) {
             button?.text = resources.getText(R.string.invalid_title)
             button?.isEnabled = false
             return
