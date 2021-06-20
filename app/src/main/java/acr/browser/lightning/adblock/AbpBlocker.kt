@@ -1,6 +1,7 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.allowlist.SessionAllowListModel
 import android.app.Application
 import android.net.Uri
 import android.webkit.MimeTypeMap
@@ -26,6 +27,7 @@ import kotlin.collections.HashMap
 class AbpBlocker @Inject constructor(
     private val application: Application,
     abpListUpdater: AbpListUpdater,
+    private val whitelistModel: SessionAllowListModel
     //private val userPreferences: UserPreferences // TODO: relevant only for element hiding
     ) : AdBlocker {
     // necessary to do it like this; userPreferences not injected when using AbpListUpdater(application.applicationContext).updateAll(false)
@@ -62,33 +64,31 @@ class AbpBlocker @Inject constructor(
 
     override fun isAd(url: String) = false // for now...
 
-    // TODO: decide when to load lists
-    //  just loadLists() takes ca 1 second on S4 mini for easylist and delays browser start
-    //   but then blocklists are loaded before the first request
-    //  loading after updates are done may delay loading of adblocker for some 5-30 seconds, depending on phone speed and internet connection
-    //  loading before fetching updates still leaves the first 3-5 seconds without blocker...
-    //  nothing is really good here -> best way would be ton find a way to accelerate blocklist loading
-    //   2nd best: have a setting
-    //  hmm... there was this blocker.await in yuzu, maybe that's connected? but this made blocking 50% slower...
     init {
-        loadLists() // takes ca 1 second on S4 mini for easylist
-
-            // TODO: use of globalscope was discouraged somewhere... check and adjust if necessary
-            GlobalScope.launch(Dispatchers.IO) {
-                //loadLists() // takes about 3-5 seconds on S4 mini for easylist
-                // updates all entities in AbpDao, may take a while depending on how many lists need update, and internet connection
-                if (abpListUpdater.updateAll(false)) // returns true if any was updated
-                    loadLists() // update again if files have changed
-            }
+        // loading lists takes ca 0.5-1 second on S4 mini for easylist, and blocks ui
+        // but loading in background is significantly slower
+        //  and worse: during loading, blocking is not (fully) possible
+        //  so loading in background could lead to bad links not being blocked (where the browser is opened from some other app)
+        //  ideal would be: load in background but wait until loaded before processing the first web request
+        //   tried doing this using .await(), this makes normal blocking significantly slower...
+        //   some way of lazy loading for the FilterContainer? not really due to tag creation -> need to store i some other way
+        loadLists()
+        GlobalScope.launch(Dispatchers.Default) { // IO for io-intensive stuff, but here we do some IO and are mostly limited by CPU... so Default should be better?
+            //loadLists() // takes about 3-5 seconds on S4 mini for easylist
+            // updates all entities in AbpDao, may take a while depending on how many lists need update, and internet connection
+            if (abpListUpdater.updateAll(false)) // returns true if anything was updated
+                loadLists() // update again if files have changed
+        }
     }
 
 //----------------------- from yuzu adblocker (mostly AdBlockController) --------------------//
+    // for some reason this is ca 20-30% faster than loading both lists in parallel, so for now it's serial loading
     fun loadLists() {
         val abpLoader = AbpLoader(application.applicationContext.getFilterDir(), AbpDao(application.applicationContext).getAll())
-        blockList = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::plusAssign) }
-//        blockList.also { abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::plusAssign) } // TODO: if i do it like this, there is even more reason to remove duplicate entries!
         exclusionList = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_ALLOW).forEach(it::plusAssign) }
 //        exclusionList.also { abpLoader.loadAll(ABP_PREFIX_ALLOW).forEach(it::plusAssign) }
+        blockList = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::plusAssign) }
+//        blockList.also { abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::plusAssign) } // TODO: if i do it like this, there is even more reason to remove duplicate entries!
 
 /*        if (useElementHide) {
             val disableCosmetic = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign) }
@@ -168,29 +168,26 @@ class AbpBlocker @Inject constructor(
 
     // return null if not blocked, else some WebResourceResponse
     override fun shouldBlock(request: WebResourceRequest, pageUrl: String): WebResourceResponse? {
-        // pageUrl might be "" (usually when opening something in a new tab)
+        // TODO: replace by more suitable whitelist (which can be extended using content filters)
+        //  then there needs to be a way of removing filters from FilterContainer -> how?
+        //  simply remove all with that specific tag and reload all with that tag? then there is one more reason to always store the tag
+        if (!whitelistModel.isUrlAllowedAds(pageUrl))
+            return null
+
+        // pageUrl can be "" (usually when opening something in a new tab)
         //  in this case everything gets blocked because of the pattern "|https://"
         //  this is blocked for some domains, and apparently no domain also means it's blocked
         //  so some workaround here (maybe do something else?)
         val contentRequest = request.getContentRequest(if (pageUrl == "") request.url else Uri.parse(pageUrl))
-        userBlockList?.get(contentRequest)?.pattern
         // check user lists
         // then mining/malware
         // then ads
 
-        /* replace by rather ugly if-stuff, because result of check is used
-        return when {
-            userWhitelist?.get(contentRequest) != null -> null
-            userBlockList?.get(contentRequest) != null -> getBlockResponse(request)
-            miningList?.get(contentRequest) != null -> getBlockResponse(request)
-            malwareList?.get(contentRequest) != null -> getBlockResponse(request)
-            exclusionList?.get(contentRequest) != null -> null
-            blockList?.get(contentRequest) != null -> getBlockResponse(request)
-            else -> null
-        }*/
-        if (userWhitelist?.get(contentRequest) != null)
+        // uncomment if lists are actually used
+/*        if (userWhitelist?.get(contentRequest) != null)
             return null
 
+        // TODO: replace text here by strings.xml
         var filter = userBlockList?.get(contentRequest)
         if (filter != null)
             return getBlockResponse(request, "User blocklist: ${filter.pattern}")
@@ -202,11 +199,11 @@ class AbpBlocker @Inject constructor(
         filter = malwareList?.get(contentRequest)
         if (filter != null)
             return getBlockResponse(request, "Malware blocklist: ${filter.pattern}")
-
-        if (exclusionList?.get(contentRequest) != null)
+*/
+        if (exclusionList[contentRequest] != null)
             return null
 
-        filter = blockList?.get(contentRequest)
+        val filter = blockList[contentRequest]
         if (filter != null)
             return getBlockResponse(request, "Ad blocklist: ${filter.pattern}")
 

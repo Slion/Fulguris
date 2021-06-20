@@ -121,12 +121,10 @@ class LightningWebClient(
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
         // maybe adjust to always return response... null means allow anyway. what is the "super" actually doing? same as null?
-        // adBlock should probably be renamed
-        // adBlock should probably be renamed
+        // adBlock should probably be renamed once mining and malware block is implemented
         val response = adBlock.shouldBlock(request, currentUrl)
-        if (response != null) {
+        if (response != null)
             return response
-        }
 
 //        if (shouldRequestBeBlocked(currentUrl, request.url.toString())) {
 //            val empty = ByteArrayInputStream(emptyResponseByteArray)
