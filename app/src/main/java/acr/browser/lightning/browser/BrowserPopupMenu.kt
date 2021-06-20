@@ -61,12 +61,6 @@ class BrowserPopupMenu : PopupWindow {
 
         //val radius: Float = getResources().getDimension(R.dimen.default_corner_radius) //32dp
 
-        val animator = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_appearing)
-        val animatorFromBottom = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_appearing_from_bottom)
-
-        val animatorDisappearing = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_disappearing)
-        val animatorDisappearingFromBottom = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_disappearing_from_bottom)
-
         //iBinding.layoutMenuItems.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING)
         //iBinding.layoutMenuItems.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
         //iBinding.layoutMenuItems.layoutTransition.disableTransitionType(LayoutTransition.CHANGING)
@@ -88,44 +82,43 @@ class BrowserPopupMenu : PopupWindow {
                 .build()
          */
 
+
+        iBinding.menuItemMainMenu.setOnClickListener {
+            //applyMenuItemAnimations()
+            applyMainMenuItemVisibility()
+            scrollToStart()
+        }
+
+
         iBinding.menuItemWebPage.setOnClickListener {
 
-            // Set animations according to menu position
-            if (!contentView.context.configPrefs.toolbarsBottom) {
-                iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animator)
-                iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animator.duration)
-                iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearing)
-                iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearing.duration)
-            } else {
-                iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animatorFromBottom)
-                iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animatorFromBottom.duration)
-                iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearingFromBottom)
-                iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearingFromBottom.duration)
-            }
-
-            // Toggle web page actions visibility
-            val willBeVisible = !iBinding.menuItemFind.isVisible
-
-            // Rotate icon using animations
-            // TODO: We could bother to adjust that for bottom toolbars, or not :)
-            if (willBeVisible) {
-                iBinding.imageExpandable.startAnimation(AnimationUtils.loadAnimation(contentView.context, R.anim.rotate_clockwise_90));
-            } else {
-                iBinding.imageExpandable.startAnimation(AnimationUtils.loadAnimation(contentView.context, R.anim.rotate_counterclockwise_90));
-            }
+            //applyMenuItemAnimations()
 
             // Those menu items are always on even for special URLs
-            iBinding.menuItemFind.isVisible = willBeVisible
-            iBinding.menuItemPrint.isVisible = willBeVisible
-            iBinding.menuItemReaderMode.isVisible = willBeVisible
-            //
+            iBinding.menuItemFind.isVisible = true
+            iBinding.menuItemPrint.isVisible = true
+            iBinding.menuItemReaderMode.isVisible = true
+            // Show option to go back to main menu
+            iBinding.menuItemMainMenu.isVisible = true
+            // Hide app menu items
+            iBinding.menuItemWebPage.isVisible = false
+            iBinding.menuItemSessions.isVisible = false
+            iBinding.menuItemBookmarks.isVisible = false
+            iBinding.menuItemHistory.isVisible = false
+            iBinding.menuItemDownloads.isVisible = false
+            iBinding.menuItemNewTab.isVisible = false
+            iBinding.menuItemIncognito.isVisible = false
+            iBinding.menuItemSettings.isVisible = false
+            iBinding.menuItemExit.isVisible = false
+
+
             (contentView.context as BrowserActivity).tabsManager.let { tm ->
                 tm.currentTab?.let { tab ->
                     // Let user add multiple times the same URL I guess, for now anyway
                     // Blocking it is not nice and subscription is more involved I guess
                     // See BookmarksDrawerView.updateBookmarkIndicator
                     //contentView.menuItemAddBookmark.visibility = if (bookmarkModel.isBookmark(tab.url).blockingGet() || tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
-                    (!(tab.url.isSpecialUrl() || tab.url.isAppScheme()) && willBeVisible).let {
+                    (!(tab.url.isSpecialUrl() || tab.url.isAppScheme())).let {
                         // Those menu items won't be displayed for special URLs
                         iBinding.menuItemDesktopMode.isVisible = it
                         iBinding.menuItemDarkMode.isVisible = it
@@ -135,7 +128,26 @@ class BrowserPopupMenu : PopupWindow {
                     }
                 }
             }
+
+            scrollToStart()
         }
+    }
+
+    /**
+     * Scroll to the start of our menu.
+     * Could be the bottom or the top depending if we are using bottom toolbars.
+     * Default delay matches items animation.
+     */
+    private fun scrollToStart(aDelay: Long = 300) {
+        iBinding.scrollViewItems.postDelayed(
+            {
+                if (contentView.context.configPrefs.toolbarsBottom) {
+                    iBinding.scrollViewItems.smoothScrollTo(0, iBinding.scrollViewItems.height);
+                } else {
+                    iBinding.scrollViewItems.smoothScrollTo(0, 0);
+                }
+            }, aDelay
+        )
     }
 
 
@@ -146,9 +158,40 @@ class BrowserPopupMenu : PopupWindow {
         }
     }
 
-    fun show(aAnchor: View) {
+    /**
+     * Was needed when we were using our extending menu.
+     * It's now unused.
+     */
+    private fun applyMenuItemAnimations() {
 
+        val animator = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_appearing)
+        val animatorFromBottom = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_appearing_from_bottom)
+
+        val animatorDisappearing = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_disappearing)
+        val animatorDisappearingFromBottom = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_disappearing_from_bottom)
+
+        // Set animations according to menu position
+        if (!contentView.context.configPrefs.toolbarsBottom) {
+            iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animator)
+            iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animator.duration)
+            iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearing)
+            iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearing.duration)
+        } else {
+            iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animatorFromBottom)
+            iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animatorFromBottom.duration)
+            iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearingFromBottom)
+            iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearingFromBottom.duration)
+        }
+    }
+
+    /**
+     * Show menu items corresponding to our main menu.
+     */
+    private fun applyMainMenuItemVisibility() {
         // Reset items visibility
+        iBinding.menuItemWebPage.isVisible = true
+        iBinding.menuItemMainMenu.isVisible = false
+        //
         iBinding.menuItemShare.isVisible = false
         iBinding.menuItemAddBookmark.isVisible = false
         iBinding.menuItemFind.isVisible = false
@@ -157,10 +200,25 @@ class BrowserPopupMenu : PopupWindow {
         iBinding.menuItemDesktopMode.isVisible = false
         iBinding.menuItemDarkMode.isVisible = false
         iBinding.menuItemAddToHome.isVisible = false
-        iBinding.menuItemWebPage.isVisible = true
+        // Basic items
+        iBinding.menuItemSessions.isVisible = !iIsIncognito
+        iBinding.menuItemBookmarks.isVisible = true
+        iBinding.menuItemHistory.isVisible = true
+        iBinding.menuItemDownloads.isVisible = true
+        iBinding.menuItemNewTab.isVisible = true
+        iBinding.menuItemIncognito.isVisible = !iIsIncognito
+        iBinding.menuItemSettings.isVisible = true
 
         iBinding.menuItemExit.isVisible = iUserPreferences.menuShowExit || iIsIncognito
         iBinding.menuItemNewTab.isVisible = iUserPreferences.menuShowNewTab
+    }
+
+    /**
+     * Open up this popup menu
+     */
+    fun show(aAnchor: View) {
+
+        applyMainMenuItemVisibility()
 
 
         (contentView.context as BrowserActivity).tabsManager.let {
@@ -181,6 +239,8 @@ class BrowserPopupMenu : PopupWindow {
                 Utils.dpToPx(10F),
                 // Above our anchor
                 yOffset)
+
+        scrollToStart(0)
     }
 
     companion object {

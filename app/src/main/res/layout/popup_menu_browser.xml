@@ -124,6 +124,24 @@ TODO: Find a way not to scroll that guy without breaking our layout
                     android:animateLayoutChanges="true">
 
                     <TextView
+                        android:id="@+id/menuItemWebPage"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_web"
+                        android:text="@string/action_webpage"
+                        />
+
+                    <TextView
+                        android:id="@+id/menuItemMainMenu"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_menu"
+                        android:text="@string/action_main_menu"
+                        />
+
+                    <TextView
                         android:id="@+id/menuItemSessions"
                         style="@style/BrowserTextMenuItem"
                         app:drawableStartCompat="@drawable/ic_sessions"
@@ -173,6 +191,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         android:text="@string/exit" />
 
                     <!-- Divider -->
+                    <!--
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
@@ -180,26 +199,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         android:layout_marginEnd="15dp"
                         android:background="?android:attr/listDivider"
                         />
-
-                    <!-- We needed to split image from text to be able to animate it -->
-                    <LinearLayout
-                        android:id="@+id/menuItemWebPage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fadingEdge="none">
-                        <ImageView
-                            android:id="@+id/imageExpandable"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="12dp"
-                            app:srcCompat="@drawable/ic_web" />
-                        <TextView
-                            style="@style/BrowserTextMenuItem"
-                            android:paddingLeft="8dp"
-                            android:text="@string/action_webpage"
-                            />
-                    </LinearLayout>
+                    -->
 
                     <LinearLayout
                         android:id="@+id/layoutTabMenuItems"
@@ -217,7 +217,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             tools:visibility="visible"
                             app:drawableStartCompat="@drawable/ic_share"
                             android:text="@string/action_share"
-                            android:layout_marginStart="10dp" />
+                             />
 
                         <TextView
                             android:id="@+id/menuItemAddBookmark"
@@ -226,7 +226,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             tools:visibility="visible"
                             app:drawableStartCompat="@drawable/ic_bookmark_add"
                             android:text="@string/action_add_bookmark"
-                            android:layout_marginStart="10dp" />
+                            />
 
                         <TextView
                             android:id="@+id/menuItemFind"
@@ -235,7 +235,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             tools:visibility="visible"
                             app:drawableStartCompat="@drawable/ic_find_in_page"
                             android:text="@string/action_find"
-                            android:layout_marginStart="10dp" />
+                             />
 
                         <CheckBox
                             android:id="@+id/menuItemDesktopMode"
@@ -250,7 +250,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             android:enabled="true"
                             app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
                             app:drawableStartCompat="@drawable/ic_desktop"
-                            android:layout_marginStart="10dp" />
+                             />
 
                         <CheckBox
                             android:id="@+id/menuItemDarkMode"
@@ -265,7 +265,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             android:enabled="true"
                             app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
                             app:drawableStartCompat="@drawable/ic_dark_mode"
-                            android:layout_marginStart="10dp" />
+                             />
 
                         <TextView
                             android:id="@+id/menuItemPrint"
@@ -274,7 +274,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             tools:visibility="visible"
                             app:drawableStartCompat="@drawable/ic_action_print"
                             android:text="@string/action_print"
-                            android:layout_marginStart="10dp" />
+                             />
 
                         <TextView
                             android:id="@+id/menuItemReaderMode"
@@ -283,7 +283,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             tools:visibility="visible"
                             app:drawableStartCompat="@drawable/ic_action_reading"
                             android:text="@string/reading_mode"
-                            android:layout_marginStart="10dp" />
+                             />
 
                         <TextView
                             android:id="@+id/menuItemAddToHome"
@@ -292,7 +292,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             tools:visibility="visible"
                             app:drawableStartCompat="@drawable/ic_add_to_home_screen"
                             android:text="@string/action_add_to_homescreen"
-                            android:layout_marginStart="10dp" />
+                            />
 
                     </LinearLayout>
                 </LinearLayout>
