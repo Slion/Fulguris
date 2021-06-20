@@ -17,7 +17,8 @@
             android:minHeight="300dp"
             android:orientation="vertical"
             android:background="?attr/popupMenuBackground"
-            android:elevation="4dp">
+            android:elevation="4dp"
+            android:paddingVertical="5dp">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"

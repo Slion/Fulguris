@@ -25,8 +25,8 @@ import io.reactivex.disposables.Disposable
 
 
 /**
- * The [RecyclerView.ViewHolder] for both vertical and horizontal tabs.
- * That represents an item in our list, basically one tab.
+ * The [RecyclerView.ViewHolder] for our session list.
+ * That represents an item in our list, basically one session.
  */
 class SessionViewHolder(
         view: View,
@@ -137,14 +137,17 @@ class SessionViewHolder(
             }
 
             // User wants to switch session
-            session()?.name?.let { sessionName ->
+            session().name.let { sessionName ->
                 (it.context as BrowserActivity).apply {
                     presenter?.switchToSession(sessionName)
                     if (!isEditModeEnabled()) {
                         sessionsMenu.dismiss()
                     } else {
                         // Update our list, notably current item
-                        iUiController.getTabModel().doOnceAfterInitialization { sessionsMenu.updateSessions() }
+                        iUiController.getTabModel().doOnceAfterInitialization {
+                            sessionsMenu.updateSessions()
+                            sessionsMenu.scrollToCurrentSession()
+                        }
                     }
                 }
             }

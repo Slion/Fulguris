@@ -1,6 +1,5 @@
 package acr.browser.lightning.browser.tabs
 
-import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.browser.TabsView
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
@@ -9,6 +8,8 @@ import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.settings.preferences.UserPreferences
+import acr.browser.lightning.utils.ItemDragDropSwipeHelper
+import acr.browser.lightning.utils.fixScrollBug
 import acr.browser.lightning.view.LightningView
 import android.content.Context
 import android.util.AttributeSet
@@ -62,11 +63,17 @@ class TabsDrawerView @JvmOverloads constructor(
             (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
             // Reverse layout if using bottom tool bars
             // LinearLayoutManager.setReverseLayout is also adjusted from BrowserActivity.setupToolBar
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, context.configPrefs.toolbarsBottom)
+            val lm = LinearLayoutManager(context, RecyclerView.VERTICAL, context.configPrefs.toolbarsBottom)
+            // Though that should not be needed as it is taken care of by [fixScrollBug]
+            // See: https://github.com/Slion/Fulguris/issues/212
+            lm.stackFromEnd = context.configPrefs.toolbarsBottom
+            layoutManager = lm
             adapter = tabsAdapter
             // That would prevent our recycler to resize as needed with bottom sheets
             setHasFixedSize(false)
         }
+
+
 
         val callback: ItemTouchHelper.Callback = ItemDragDropSwipeHelper(tabsAdapter)
 
@@ -108,8 +115,18 @@ class TabsDrawerView @JvmOverloads constructor(
         //tabsAdapter.notifyItemChanged(position)
     }
 
+    /**
+     * TODO: this is called way to often for my taste and should be optimized somehow.
+     */
     private fun displayTabs() {
         tabsAdapter.showTabs(uiController.getTabModel().allTabs.map(LightningView::asTabViewState))
+
+        if (fixScrollBug(iBinding.tabsList)) {
+            // Scroll bug was fixed trigger a scroll to current item then
+            (context as BrowserActivity).apply {
+                mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
+            }
+        }
     }
 
     override fun tabsInitialized() {

@@ -1,7 +1,11 @@
 package acr.browser.lightning.utils
 
+import acr.browser.lightning.di.configPrefs
+import acr.browser.lightning.extensions.canScrollVertically
 import android.content.Context
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.lang.reflect.Method
 
@@ -33,4 +37,27 @@ fun portraitSharedPreferencesName(context: Context): String {
 
 fun landscapeSharedPreferencesName(context: Context): String {
     return context.packageName + "_preferences_landscape"
+}
+
+/**
+ * Workaround reversed layout bug: https://github.com/Slion/Fulguris/issues/212
+ */
+fun fixScrollBug(aList : RecyclerView): Boolean {
+    val lm = (aList.layoutManager as LinearLayoutManager)
+    // Can't change stackFromEnd when computing layout or scrolling otherwise it throws an exception
+    if (!aList.isComputingLayout) {
+        if (aList.context.configPrefs.toolbarsBottom) {
+            // Workaround reversed layout bug: https://github.com/Slion/Fulguris/issues/212
+            if (lm.stackFromEnd != aList.canScrollVertically()) {
+                lm.stackFromEnd = !lm.stackFromEnd
+                return true
+            }
+        } else {
+            // Make sure this is set properly when not using bottom toolbars
+            // No need to check if the value is already set properly as this is already done internally
+            lm.stackFromEnd = false
+        }
+    }
+
+    return false
 }

@@ -1012,7 +1012,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // Put our tab list on top then to push toolbar to the bottom
                     iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList, 0)
                     // Use reversed layout from bottom to top
-                    (iBinding.tabsList.layoutManager as? LinearLayoutManager)?.reverseLayout = true
+                    (iBinding.tabsList.layoutManager as? LinearLayoutManager)?.apply {
+                        reverseLayout = true
+                        // Fix broken scroll to item
+                        //stackFromEnd = true
+                        }
                 }
 
                 // Take care of bookmarks drawer
@@ -1025,7 +1029,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
                 // Deal with session menu
                 sessionsMenu.animationStyle = R.style.AnimationMenuBottom
-                (sessionsMenu.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.reverseLayout = true
+                (sessionsMenu.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.apply {
+                    reverseLayout = true
+                    stackFromEnd = true
+                }
                 // Move sessions menu toolbar to the bottom
                 sessionsMenu.iBinding.toolbar.apply{removeFromParent()?.addView(this)}
 
@@ -1065,7 +1072,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // Put our tab list at the bottom
                     iBinding.tabsList.removeFromParent()?.addView(iBinding.tabsList)
                     // Use straight layout from top to bottom
-                    (iBinding.tabsList.layoutManager as? LinearLayoutManager)?.reverseLayout = false
+                    (iBinding.tabsList.layoutManager as? LinearLayoutManager)?.apply {
+                        reverseLayout = false
+                        //stackFromEnd = false
+                    }
+                    // We don't need that spacer now
+                    //iBinding.tabsListSpacer.isVisible = false
                 }
 
                 // Take care of bookmarks drawer
@@ -1078,7 +1090,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
                 // Deal with session menu
                 sessionsMenu.animationStyle = R.style.AnimationMenu
-                (sessionsMenu.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.reverseLayout = false
+                (sessionsMenu.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.apply {
+                    reverseLayout = false
+                    stackFromEnd = false
+                }
                 // Move sessions menu toolbar to the top
                 sessionsMenu.iBinding.toolbar.apply{removeFromParent()?.addView(this, 0)}
 
@@ -1840,6 +1855,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         showActionBar()
         // Make sure current tab is visible in tab list
         scrollToCurrentTab()
+        //mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
     }
 
     override fun showBlockedLocalFileDialog(onPositiveClick: Function0<Unit>) {
@@ -1949,7 +1965,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setupToolBar(newConfig)
 
         // Can't find a proper event to do that after the configuration changes were applied so we just delay it
-        mainHandler.postDelayed({ setupToolBar(); setupPullToRefresh(newConfig) }, 300)
+        mainHandler.postDelayed({
+            setupToolBar()
+            setupPullToRefresh(newConfig)
+            // Do we really need that?
+            scrollToCurrentTab()
+        }, 300)
         popupMenu.dismiss() // As it wont update somehow
         // Make sure our drawers adjust accordingly
         iBinding.drawerLayout.requestLayout()
@@ -2570,7 +2591,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      * Scroll to current tab.
      */
-    private fun scrollToCurrentTab() {
+    fun scrollToCurrentTab() {
 
         /*if (userPreferences.useBottomSheets && tabsView is TabsDrawerView && !(tabsDialog.isShowing && tabsDialog.behavior.state == BottomSheetBehavior.STATE_EXPANDED)) {
             return
