@@ -17,8 +17,7 @@
             android:minHeight="300dp"
             android:orientation="vertical"
             android:background="?attr/popupMenuBackground"
-            android:elevation="4dp"
-            android:paddingVertical="5dp">
+            android:elevation="4dp">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"
@@ -99,6 +98,7 @@
                 android:clickable="true"
                 android:descendantFocusability="afterDescendants"
                 tools:listitem="@layout/session_list_item"
+                android:paddingVertical="5dp"
                 />
         </LinearLayout>
 <!--    </LinearLayout>-->
