@@ -69,6 +69,15 @@ class AbpUserRules @Inject constructor(
         userRulesRepository.removeRule(filter)
     }
 
+/*
+        some examples
+        entire page: <page domain>, "", 0xffff, false
+        everything from youtube.com: "", "youtube.com", 0xffff, false
+        everything 3rd party from youtube.com: "", "youtube.com", 0xffff, true
+        all 3rd party frames: "", "", ContentRequest.TYPE_SUB_DOCUMENT, true //TODO: should be sub_document, not checked
+
+        find content types in ContentRequest, and how to get it from request in AdBlock -> WebResourceRequest.getContentType
+ */
     fun createUserFilter(pageDomain: String, requestDomain: String, contentType: Int, thirdParty: Boolean): UnifiedFilter {
         // 'domains' contains (usually 3rd party) domains, but can also be same as pageDomain (or subdomain of pageDomain)
         // include is always set to true (filter valid only on this domain, and any subdomain if there is no more specific rule)
@@ -78,6 +87,7 @@ class AbpUserRules @Inject constructor(
 
         // thirdParty true means filter only applied to 3rd party content, translates to 1 in the filter
         //  0 would be only first party, -1 is for both
+        //  maybe implement 0 as well, but I think it's not used in ublock (any why would i want to block 1st, but not 3rd party stuff?)
         val thirdPartyInt = if (thirdParty) 1 else -1
 
         // ContainsFilter for global rules (empty pattern), HostFilter for local rules
@@ -85,6 +95,14 @@ class AbpUserRules @Inject constructor(
             ContainsFilter(pageDomain, contentType, domains, thirdPartyInt)
         else
             HostFilter(pageDomain, contentType, false, domains, thirdPartyInt)
+    }
+
+    fun addUserRule(pageDomain: String, requestDomain: String, contentType: Int, thirdParty: Boolean, response: Boolean?) {
+        addUserRule(UnifiedFilterResponse(createUserFilter(pageDomain, requestDomain, contentType, thirdParty), response))
+    }
+
+    fun removeUserRule(pageDomain: String, requestDomain: String, contentType: Int, thirdParty: Boolean, response: Boolean?) {
+        removeUserRule(UnifiedFilterResponse(createUserFilter(pageDomain, requestDomain, contentType, thirdParty), response))
     }
 
 }
