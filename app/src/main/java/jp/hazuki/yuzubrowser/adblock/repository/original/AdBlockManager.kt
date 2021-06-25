@@ -149,7 +149,8 @@ class AdBlockManager internal constructor(private val context: Context) {
         db.delete(table, null, null)
     }
 
-    fun getCachedMatcherList(table: String): Sequence<UnifiedFilter> {
+    // commented because of attempt to use Sequence<Pair<String, UnifiedFilter>>
+/*    fun getCachedMatcherList(table: String): Sequence<UnifiedFilter> {
         val listTime = getListUpdateTime(table)
         val cacheTime = getCacheUpdateTime(table)
         if (listTime <= cacheTime) {
@@ -170,7 +171,7 @@ class AdBlockManager internal constructor(private val context: Context) {
             updateCacheTime(table)
         }
         return list.asSequence()
-    }
+    }*/
 
     private fun getMatcherList(table: String): List<UnifiedFilter> {
         val list = arrayListOf<UnifiedFilter>()

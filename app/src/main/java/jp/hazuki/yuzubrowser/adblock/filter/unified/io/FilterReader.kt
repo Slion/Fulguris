@@ -36,6 +36,7 @@ class FilterReader(private val input: InputStream) {
         input.read(intBuf)
         val size = intBuf.toInt()
         var patternBuffer = ByteArray(32)
+        var tagBuffer = ByteArray(32)
 
         loop@ for (loop in 0 until size) {
             val type = input.read()
@@ -64,6 +65,14 @@ class FilterReader(private val input: InputStream) {
             }
             if (input.read(patternBuffer, 0, patternSize) != patternSize) break
             val pattern = String(patternBuffer, 0, patternSize)
+
+            val tagSize = input.readVariableInt(shortBuf, intBuf)
+            if (tagSize == -1) break
+            if (tagBuffer.size < tagSize) {
+                tagBuffer = ByteArray(tagSize)
+            }
+            if (input.read(tagBuffer, 0, tagSize) != tagSize) break
+            val tag = String(tagBuffer, 0, tagSize)
 
             val domainsSize = input.read()
             if (domainsSize == -1) break
@@ -133,7 +142,7 @@ class FilterReader(private val input: InputStream) {
                 FILTER_TYPE_PATTERN -> PatternMatchFilter(pattern, contentType, ignoreCase, domains, thirdParty)
                 else -> break@loop
             }
-            yield(filter)
+            yield(Pair(tag,filter))
         }
     }
 }

@@ -30,13 +30,32 @@ class FilterContainer {
         this[key] = filter
     }
 
+    // not having to create best tag accelerates loading by some 20-50%
+    fun addWithTag(p: Pair<String, ContentFilter>) {
+        this[p.first] = p.second
+    }
+
+    fun removeTag(tag: String) {
+        filters.remove(tag)
+    }
+
     private operator fun set(tag: String, filter: ContentFilter) {
+        // added: ignore duplicate filters
+        //  no noticeable slowdown
+        var f = filters[tag]
+        while (f != null) {
+            if (f == filter)
+                return
+            f = f.next
+        }
+
         filter.next = filters[tag]
         filters[tag] = filter
     }
 
     operator fun get(request: ContentRequest): ContentFilter? {
-        Tag.create(request.url.toString()).forEach {
+//        Tag.create(request.url.toString()).forEach {
+        request.tags.forEach {
             var filter = filters[it]
             while (filter != null) {
                 if (filter.isMatch(request)) {

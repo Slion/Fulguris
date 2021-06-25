@@ -16,11 +16,14 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.unified.io
 
+import jp.hazuki.yuzubrowser.adblock.filter.LengthException
 import jp.hazuki.yuzubrowser.adblock.filter.toByteArray
 import jp.hazuki.yuzubrowser.adblock.filter.toShortByteArray
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_CACHE_HEADER
+import jp.hazuki.yuzubrowser.adblock.filter.unified.Tag
 import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
 import jp.hazuki.yuzubrowser.adblock.filter.unified.writeVariableInt
+import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import kotlin.math.min
 
@@ -48,6 +51,15 @@ class FilterWriter {
             val patternBytes = it.pattern.toByteArray()
             os.writeVariableInt(patternBytes.size, shortBuf, intBuf)
             os.write(patternBytes)
+
+            // also write best tag
+            //  no need to create tags when loading -> loading is ca 20% faster
+            //  drawback: increased file size, up to 50% for easylist blocks (but 300 kb, so whatever)
+            val tagBytes = if (it.isRegex) "".toByteArray()
+                else Tag.createBest(it.pattern).toByteArray()
+            os.writeVariableInt(tagBytes.size, shortBuf, intBuf)
+            os.write(tagBytes)
+
             os.write(min(it.domains?.size ?: 0, 255))
             it.domains?.let { map ->
                 os.write(if (map.include) 1 else 0)
