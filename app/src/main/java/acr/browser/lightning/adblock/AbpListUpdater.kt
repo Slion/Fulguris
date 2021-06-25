@@ -36,6 +36,7 @@ import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okio.source
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -190,17 +191,22 @@ class AbpListUpdater @Inject constructor(val context: Context) {
     }
 
     private suspend fun updateAssets(entity: AbpEntity): Boolean {
-        if (entity.version == "2") {
-            val dir = getFilterDir()
+        val dir = getFilterDir()
 
-            // there was some reason i removed those lines... why exactly?
-//            if (dir.getAbpBlackListFile(entity).exists() &&
-//                dir.getAbpWhiteListFile(entity).exists() &&
-//                dir.getAbpWhitePageListFile(entity).exists()) return false
-            if (dir.getAbpBlackListFile(entity).exists()) return false // sth seems wrong here, apparently not all files are created or found?
-        }
+        // changed to not update if any file exists, as the list does not need to have all kinds of filters
+        if (dir.getAbpBlackListFile(entity).exists() ||
+            dir.getAbpWhiteListFile(entity).exists() ||
+            dir.getAbpWhitePageListFile(entity).exists()) return false
 
-        context.assets.open("easylist.txt").bufferedReader().use {
+        // lastModified is only used for HTTP and file
+        //  can't get file date for assets, so assume that size changes when blocklist changes
+        //  and (ab)use lastModified to store file size, so update is triggered when file is changed
+        val fileSize = context.assets.openFd(ASSETS_BLOCKLIST).length.toString()
+        if (fileSize == entity.lastModified)
+            return false
+
+        entity.lastModified = fileSize // file size set now, but written to entity only at the end of decode -> should be safe
+        context.assets.open(ASSETS_BLOCKLIST).bufferedReader().use {
             return decode(it, Charsets.UTF_8, entity)
         }
     }
@@ -278,6 +284,8 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
         private const val JOB_ID = 10
 
+        const val ASSETS_BLOCKLIST = "easylist.txt"
+
 /*        fun updateAll(context: Context, forceUpdate: Boolean = false, result: UpdateResult? = null) {
             if (!forceUpdate) {
                 val prefs = AdBlockPref.get(context.applicationContext)
@@ -325,4 +333,5 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
         abstract fun onUpdateAll()
     }
+
 }
