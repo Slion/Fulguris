@@ -18,12 +18,12 @@ class UserFilterContainer {
 
     fun add(filter: UnifiedFilterResponse) {
         val tag = filter.filter.pattern // no need for explicit tag, it's either pageUrl.host or empty
-        val list = filters[tag] as MutableList
+        // TODO: i think it was more efficient before that fucking android studio decided to save only some modifications to disk
+        val list = filters[tag]
         if (list.isNullOrEmpty())
             filters[tag] = listOf(filter)
-        else { // TODO: i think it was more efficient before that fucking android studio decided to save only some modifications to disk
-            list.add(filter)
-            filters[tag] = list
+        else {
+            filters[tag] = list + filter
         }
     }
 

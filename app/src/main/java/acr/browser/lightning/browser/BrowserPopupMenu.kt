@@ -1,6 +1,7 @@
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.database.bookmark.BookmarkRepository
@@ -15,6 +16,7 @@ import android.animation.AnimatorInflater
 import android.animation.LayoutTransition
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +33,8 @@ class BrowserPopupMenu : PopupWindow {
     internal lateinit var bookmarkModel: BookmarkRepository
     @Inject
     lateinit var iUserPreferences: UserPreferences
+    @Inject
+    lateinit var abpUserRules: AbpUserRules
 
     var iBinding: PopupMenuBrowserBinding
     var iIsIncognito = false
@@ -134,6 +138,7 @@ class BrowserPopupMenu : PopupWindow {
                         iBinding.menuItemAddToHome.isVisible = it
                         iBinding.menuItemAddBookmark.isVisible = it
                         iBinding.menuItemShare.isVisible = it
+                        iBinding.menuItemAdBlock.isVisible = it && iUserPreferences.adBlockEnabled
                     }
                 }
             }
@@ -160,6 +165,7 @@ class BrowserPopupMenu : PopupWindow {
         iBinding.menuItemDarkMode.isVisible = false
         iBinding.menuItemAddToHome.isVisible = false
         iBinding.menuItemWebPage.isVisible = true
+        iBinding.menuItemAdBlock.isVisible = false
 
         iBinding.menuItemExit.isVisible = iUserPreferences.menuShowExit || iIsIncognito
         iBinding.menuItemNewTab.isVisible = iUserPreferences.menuShowNewTab
@@ -170,6 +176,8 @@ class BrowserPopupMenu : PopupWindow {
             iBinding.menuItemDesktopMode.isChecked = it.currentTab?.desktopMode ?: false
             // Same with dark mode
             iBinding.menuItemDarkMode.isChecked = it.currentTab?.darkMode ?: false
+            // And ad block
+            iBinding.menuItemAdBlock.isChecked = it.currentTab?.url?.let { url -> !abpUserRules.isWhitelisted(Uri.parse(url)) } ?: false
         }
 
         // Get our anchor location

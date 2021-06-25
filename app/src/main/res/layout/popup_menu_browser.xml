@@ -267,6 +267,21 @@ TODO: Find a way not to scroll that guy without breaking our layout
                             app:drawableStartCompat="@drawable/ic_dark_mode"
                             android:layout_marginStart="10dp" />
 
+                        <CheckBox
+                            android:id="@+id/menuItemAdBlock"
+                            style="@style/BrowserTextMenuItem"
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:button="@null"
+                            android:text="@string/block_ads"
+                            android:gravity="center_vertical"
+                            android:enabled="true"
+                            app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
+                            app:drawableStartCompat="@drawable/ic_security"
+                            android:layout_marginStart="10dp" />
+
                         <TextView
                             android:id="@+id/menuItemPrint"
                             style="@style/BrowserTextMenuItem"
