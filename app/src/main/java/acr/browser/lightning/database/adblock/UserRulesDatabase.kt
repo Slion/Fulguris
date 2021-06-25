@@ -98,7 +98,7 @@ class UserRulesDatabase @Inject constructor(
     override fun removeRule(rule: UnifiedFilterResponse) {
         database.run {
             delete(TABLE_RULES,
-                "$$KEY_RESPONSE = ? AND $KEY_PATTERN = ? AND $KEY_DOMAIN_MAP = ? AND $KEY_FILTER_TYPE = ? AND $KEY_CONTENT_TYPE = ? AND $KEY_THIRD_PARTY = ?",
+                "$KEY_RESPONSE = ? AND $KEY_PATTERN = ? AND $KEY_DOMAIN_MAP = ? AND $KEY_FILTER_TYPE = ? AND $KEY_CONTENT_TYPE = ? AND $KEY_THIRD_PARTY = ?",
                 arrayOf(rule.response.toInt().toString(), rule.filter.pattern, rule.filter.domains?.toDBString() ?: "", rule.filter.filterType.toString(), rule.filter.contentType.toString(), rule.filter.thirdParty.toString()))
         }
     }
