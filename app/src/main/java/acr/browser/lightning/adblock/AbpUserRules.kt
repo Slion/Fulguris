@@ -1,6 +1,7 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.database.adblock.UserRulesRepository
+import android.net.Uri
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import javax.inject.Inject
@@ -103,6 +104,18 @@ class AbpUserRules @Inject constructor(
 
     fun removeUserRule(pageDomain: String, requestDomain: String, contentType: Int, thirdParty: Boolean, response: Boolean?) {
         removeUserRule(UnifiedFilterResponse(createUserFilter(pageDomain, requestDomain, contentType, thirdParty), response))
+    }
+
+    fun isWhitelisted(pageUrl: Uri): Boolean {
+        return userRules.get(ContentRequest(pageUrl, pageUrl, 0xffff, false, listOf("")))?.response == false
+    }
+
+    fun whitelist(pageUrl: Uri, add: Boolean) {
+        val domain = pageUrl.host ?: return
+        if (add)
+            addUserRule(domain, "", 0xffff, false, false)
+        else
+            removeUserRule(domain, "", 0xffff, false, false)
     }
 
 }
