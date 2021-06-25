@@ -31,7 +31,7 @@ class UserFilterContainer {
         // TODO: it was quite different before that fucking android studio decided to save only some modifications to disk
         //  do probably this can be optimized
         val tag = filter.filter.pattern
-        val list = filters[tag] as MutableList
+        val list = filters[tag]?.toMutableList() ?: return
         list.removeAll { it == filter }
         if (list.isEmpty())
             filters.remove(tag)
