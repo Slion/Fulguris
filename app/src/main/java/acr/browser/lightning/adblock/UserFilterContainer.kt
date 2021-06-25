@@ -2,14 +2,16 @@ package acr.browser.lightning.adblock
 
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
-import java.nio.channels.Selector
 
 // UnifiedFilterResponse looks nicer than Pair<UnifiedFilter, Boolean?>
 // response: true -> block, false -> allow, null: noop
 data class UnifiedFilterResponse(val filter: UnifiedFilter, val response: Boolean?)
 
 /*
-    f
+    works somewhat similar to FilterContainer, but tailored for uBo-style dynamic filtering
+    the important part: specific rules should override general rules
+     so checking allow, then block (as done for ads) can't work here
+     -> get most specific matching filter and return the associated response
  */
 class UserFilterContainer {
     private val filters = hashMapOf<String, List<UnifiedFilterResponse>>()
@@ -53,8 +55,8 @@ class UserFilterContainer {
         // attempt:
         //  sort list according to ubo criteria and take the first one
         // TODO: test!
-        // TODO 2: it's a List<UnifiedFilterResponse>, why would I need to check whether the elements are null?
-        return list.maxOfWith({ f1, f2 ->
+        // TODO 2: list is a List<UnifiedFilterResponse>, why do I need to check whether the filters are null? (only in maxOfWith, not in sortWith)
+/*        return list.maxOfWith({ f1, f2 ->
             when {
                 // first: request (sub)domain matches (filter already matches -> if there is a domain, either domain or subdomain must match)
                     // using contentRequest.pageUrl because it's the actual request url (could also use request.url)
@@ -67,12 +69,14 @@ class UserFilterContainer {
                 f1.filter.contentType != f2.filter.contentType -> f2.filter.contentType - f1.filter.contentType
                 else -> 0
             }
-        }, {it})
+        }, {it})*/
 
         // if not working, try
-/*        list.sortWith { f1, f2 ->
+        // interestingly, the same code part as above can't have null filters here
+        list.sortWith { f1, f2 ->
             when {
                 // first: request (sub)domain matches (filter already matches -> if there is a domain, either domain or subdomain must match)
+                    // using contentRequest.pageUrl because it's the actual request url (could also use request.url)
                 f1.filter.domains != f2.filter.domains -> getBetterDomainMatch(contentRequest.pageUrl.host ?: "", f1, f2)
                 // then: page domain matches, here pattern = page domain (filter already matches -> if there is a non-empty pattern it must match)
                 f1.filter.pattern != f2.filter.pattern -> if (f1.filter.pattern.isEmpty()) -1 else 1
@@ -84,7 +88,7 @@ class UserFilterContainer {
             }
         }
         return list.first()
-*/
+
         // otherwise try stuff below
 
 

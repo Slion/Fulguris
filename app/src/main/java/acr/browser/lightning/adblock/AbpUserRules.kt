@@ -1,10 +1,9 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.database.adblock.UserRulesRepository
-import android.os.SystemClock
-import android.util.Log
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
+import javax.inject.Inject
 import javax.inject.Singleton
 
 /*
@@ -24,31 +23,39 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class AbpUserRules {
+class AbpUserRules @Inject constructor(
+    private val userRulesRepository: UserRulesRepository
+){
 
-    // inject, or how to do?
-    private lateinit var userRulesRepository: UserRulesRepository
+    private val userRules by lazy { UserFilterContainer().also{ userRulesRepository.getAllRules().forEach(it::add) } }
+//    private lateinit var userRules: UserFilterContainer
+//    private val userRules = UserFilterContainer()
 
-    private lateinit var userRules: UserFilterContainer
     init {
+        // TODO: maybe move to background?
+        //  try:
+        //   by lazy: may needlessly delay first request -> by how much?
+        //   load blocking: may block for too long -> how long?
+        //   load in background -> need to check every time whether it's already loaded
 //        loadUserLists()
     }
 
     private fun loadUserLists() {
-        val time = SystemClock.elapsedRealtime()
+        // on S4 mine: takes 150 ms for the first time, then 6 ms for empty db
         val ur = userRulesRepository.getAllRules()
-        Log.i("yuzu", "getting rules from db took ${SystemClock.elapsedRealtime() - time} ms")
 
-        // careful: the following line crashes android studio:
+        // careful: the following line crashes (my) android studio:
 //        userRules = UserFilterContainer().also { ur.forEach(it::add) } }
-        Log.i("yuzu", "loading user rules took ${SystemClock.elapsedRealtime() - time} ms")
+        // why? it's the same way used for 'normal' filter containers
+
+//        userRules = UserFilterContainer()
+        ur.forEach { userRules.add(it) }
     }
 
     // true: block
     // false: allow
     // null: nothing (relevant to supersede more general block/allow rules)
     fun getResponse(contentRequest: ContentRequest): Boolean? {
-        // maybe return filter too?
         return userRules.get(contentRequest)?.response
     }
 

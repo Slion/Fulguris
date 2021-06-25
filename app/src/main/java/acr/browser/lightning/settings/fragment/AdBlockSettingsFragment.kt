@@ -194,6 +194,15 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 updateButton.setOnClickListener {
                     // TODO: choose file -> check host file chooser and original implementation in yuzu
                     //  and: if no valid file provided, ok button should not be visible
+                    // so... i can show file chooser, and onActivityResult will we called when the file is chosen
+                    // but how to get the file to the button (in the dialog!)
+                    //  i need the uri, or the content
+                    //  uri would be nicer, then i can read it when i want
+                    //  and i can display the file name
+                    // not so great but should work:
+                    //  disable button if no valid name
+                    //  store entity properties in some temp variable accessible from onActivityResult
+                    //  on (valid!) file chosen, close dialog and immediately add entity
                 }
                 linearLayout.addView(updateButton)
             }
