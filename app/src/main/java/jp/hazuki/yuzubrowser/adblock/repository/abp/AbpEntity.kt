@@ -29,18 +29,27 @@ class AbpEntity(
 
         var url: String = "",
 
+        // shown in adblock settings
         var title: String? = null,
 
+        // same as last modified? read from header of the blocklist, but does not exist in easylist
         var lastUpdate: String? = null,
 
+        // when the local files were last updated
         var lastLocalUpdate: Long = 0,
 
+        // how long the list is valid
+        // check for updates if time since last local update longer than expires
         var expires: Int = -1,
 
+        // actually not used, except in a not so useful way for the internal list -> maybe remove
         var version: String? = null,
 
+        // in the header of the remote file, not actually used for anything -> maybe remove
+        // also, there seems to be some decoding problem. ends up as "https" for all entities
         var homePage: String? = null,
 
+        // last modified from header of the list (i.e. when file on server was last updated)
         var lastModified: String? = null,
 
         var enabled: Boolean = false
