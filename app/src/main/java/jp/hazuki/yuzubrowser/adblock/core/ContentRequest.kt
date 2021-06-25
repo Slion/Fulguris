@@ -17,12 +17,14 @@
 package jp.hazuki.yuzubrowser.adblock.core
 
 import android.net.Uri
+import jp.hazuki.yuzubrowser.adblock.filter.unified.Tag
 
 data class ContentRequest(
     val url: Uri,
     val pageUrl: Uri,
     val type: Int,
-    val isThirdParty: Boolean
+    val isThirdParty: Boolean,
+    val tags: List<String> = Tag.create(url.toString())
 ) {
     companion object {
         const val TYPE_OTHER = 0x01

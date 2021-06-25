@@ -3,7 +3,6 @@ package acr.browser.lightning.view
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AdBlocker
-import acr.browser.lightning.adblock.allowlist.AllowListModel
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
@@ -67,7 +66,6 @@ class LightningWebClient(
     @Inject internal lateinit var userPreferences: UserPreferences
     @Inject @UserPrefs internal lateinit var preferences: SharedPreferences
     @Inject internal lateinit var sslWarningPreferences: SslWarningPreferences
-    @Inject internal lateinit var whitelistModel: AllowListModel
     @Inject internal lateinit var logger: Logger
     @Inject internal lateinit var textReflowJs: TextReflow
     @Inject internal lateinit var invertPageJs: InvertPage
@@ -83,7 +81,7 @@ class LightningWebClient(
 
     private var currentUrl: String = ""
 
-//    private var elementHide = true // TODO: better get from preferences
+//    private var elementHide = userPreferences.elementHide
 
     var sslState: SslState = SslState.None
         private set(value) {
@@ -112,9 +110,6 @@ class LightningWebClient(
         activity.injector.provideNoOpAdBlocker()
     }
 
-    private fun shouldRequestBeBlocked(pageUrl: String, requestUrl: String) =
-        !whitelistModel.isUrlAllowedAds(pageUrl) && adBlock.isAd(requestUrl)
-
     /**
      * Overrides [WebViewClient.shouldInterceptRequest].
      * Looks like we need to intercept our custom URLs here to implement support for fulguris and about scheme.
@@ -126,10 +121,6 @@ class LightningWebClient(
         if (response != null)
             return response
 
-//        if (shouldRequestBeBlocked(currentUrl, request.url.toString())) {
-//            val empty = ByteArrayInputStream(emptyResponseByteArray)
-//            return WebResourceResponse("text/plain", "utf-8", empty)
-//        }
         return super.shouldInterceptRequest(view, request)
     }
 
