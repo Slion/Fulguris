@@ -21,7 +21,10 @@ class SingleDomainMap(override val include: Boolean, private val domain: String)
         get() = 1
 
     override fun get(domain: String): Boolean? {
-        return if (this.domain == domain) include else null
+//        return if (this.domain == domain) include else null
+        // see https://adblockplus.org/en/filter-cheatsheet: also matches subdomains
+        // so either domains equal or domain = *.(this.domain)
+        return if (this.domain == domain || domain.endsWith(".${this.domain}")) include else null
     }
 
     override fun getKey(index: Int): String {

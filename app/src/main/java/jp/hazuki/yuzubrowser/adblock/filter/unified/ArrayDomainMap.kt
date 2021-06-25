@@ -24,6 +24,12 @@ class ArrayDomainMap(size: Int) : SimpleArrayMap<String, Boolean>(size), DomainM
         get() = size()
 
     override fun get(domain: String): Boolean? {
+        // see https://adblockplus.org/en/filter-cheatsheet: also matches subdomains
+        var d = domain
+        while (d.contains('.')) {
+            getOrDefault(d, null)?.let { return it }
+            d = d.substringAfter('.')
+        }
         return getOrDefault(domain, null)
     }
 
