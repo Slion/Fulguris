@@ -86,7 +86,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             onCheckChange = { userPreferences.adBlockEnabled = it }
         )
 
-        clickableDynamicPreference(
+/*        clickableDynamicPreference(
             preference = "preference_hosts_source",
             isEnabled = BuildConfig.FULL_VERSION,
             summary = if (BuildConfig.FULL_VERSION) {
@@ -104,7 +104,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 bloomFilterAdBlocker.populateAdBlockerFromDataSource(forceRefresh = true)
             }
         )
-
+*/
         if (context != null) {
             abpDao = AbpDao(requireContext())
 
