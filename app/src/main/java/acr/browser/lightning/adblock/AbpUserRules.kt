@@ -2,8 +2,6 @@ package acr.browser.lightning.adblock
 
 import acr.browser.lightning.database.adblock.UserRulesRepository
 import android.net.Uri
-import android.os.SystemClock
-import android.util.Log
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import javax.inject.Inject
@@ -25,6 +23,7 @@ import javax.inject.Singleton
     TODO: improve loading speed
      slow load speed is why yuzu uses storage in files instead of DB (current db is 10 times slower!
      loading (in background) takes some 100 ms for few entries, 1.7 s for 2400 entries
+       ca half time if not loading at the same time as ad block lists
      -> it's not horrible, but still needs to be improved
       first step: check which part is slow (loading from db, or
  */
