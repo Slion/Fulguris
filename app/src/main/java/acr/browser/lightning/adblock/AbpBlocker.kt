@@ -41,6 +41,9 @@ class AbpBlocker @Inject constructor(
     // store whether lists are loaded (and delay any request if loading is not finished)
     private var listsLoaded = false
 
+    // store urls of entities, they will never be blocked
+    private val entityUrls = mutableListOf<String>()
+
 /*    // TODO: element hiding
     //  not sure if this actually works (did not in a test - I think?), maybe it's crucial to inject the js at the right point
     //  tried onPageFinished, might be too late (try to implement onDomFinished from yuzu?)
@@ -82,6 +85,8 @@ class AbpBlocker @Inject constructor(
     }
 
 //----------------------- from yuzu adblocker (mostly AdBlockController) --------------------//
+
+    // TODO: add info where exactly the code is taken from, should simplify handling in case yuzu code is updated
 
     fun createDummy(uri: Uri): WebResourceResponse {
         val mimeType = getMimeType(uri.toString())
@@ -161,7 +166,8 @@ class AbpBlocker @Inject constructor(
 
     fun loadLists() {
         listsLoaded = false
-        val abpLoader = AbpLoader(application.applicationContext.getFilterDir(), AbpDao(application.applicationContext).getAll())
+        val entities = AbpDao(application.applicationContext).getAll()
+        val abpLoader = AbpLoader(application.applicationContext.getFilterDir(), entities)
         exclusionList = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_ALLOW).forEach(it::addWithTag) }
         blockList = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::addWithTag) }
 
@@ -170,6 +176,8 @@ class AbpBlocker @Inject constructor(
             val elementFilter = ElementContainer().also { abpLoader.loadAllElementFilter().forEach(it::plusAssign) }
             elementBlocker = CosmeticFiltering(disableCosmetic, elementFilter)
         }*/
+        entityUrls.clear()
+        entities.forEach { if (it.url.startsWith("http")) entityUrls.add(it.url) }
 
         listsLoaded = true
     }
@@ -189,7 +197,7 @@ class AbpBlocker @Inject constructor(
         // then mining/malware (ad block allow should not override malware list)
         // then ads
 
-        if (request.url.toString().isSpecialUrl())
+        if (request.url.toString().isSpecialUrl() || entityUrls.contains(request.url.toString()))
             return null
 
         // create contentRequest
@@ -234,6 +242,7 @@ class AbpBlocker @Inject constructor(
     }
 
     // stuff from yuzu browser modules/core/.../utility
+    // TODO: add info where exactly the code is taken from, should simplify handling in case yuzu code is updated
     companion object {
         const val BUFFER_SIZE = 1024 * 8
 
