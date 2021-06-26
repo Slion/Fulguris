@@ -199,6 +199,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         // lastModified is only used for HTTP and file
         //  can't get file date for assets, so assume checksum changes when blocklist changes
         //  and (ab)use lastModified to store checksum, so update is triggered when file is changed
+        // TODO: maybe only check if app version changed
         val checksum = context.assets.open(ASSETS_BLOCKLIST).computeMD5()
         if (checksum == entity.lastModified)
             return false

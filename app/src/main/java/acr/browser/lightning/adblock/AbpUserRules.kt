@@ -2,6 +2,8 @@ package acr.browser.lightning.adblock
 
 import acr.browser.lightning.database.adblock.UserRulesRepository
 import android.net.Uri
+import android.os.SystemClock
+import android.util.Log
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import javax.inject.Inject
@@ -17,10 +19,14 @@ import javax.inject.Singleton
           but when adding/removing rules, it would be necessary to remove the filter, and add a new one with modified domainMap
           definitely possible, but is it worth the work?
           also content types could be joined
-    TODO:
-     test how long loading takes, if slow find some solution
-     could the db operations for add/remove introduce noticeable delays when done on the wrong thread?
-      probably safer to do on IO thread anyway...
+          first tests: no problem if all filters use different tags
+          -> try using a lot of global filters (empty tag), each with some domain
+            this is not yet implemented, but will be used for uBo style dynamic filtering
+    TODO: improve loading speed
+     slow load speed is why yuzu uses storage in files instead of DB (current db is 10 times slower!
+     loading (in background) takes some 100 ms for few entries, 1.7 s for 2400 entries
+     -> it's not horrible, but still needs to be improved
+      first step: check which part is slow (loading from db, or
  */
 
 @Singleton
@@ -35,8 +41,9 @@ class AbpUserRules @Inject constructor(
     init {
         // TODO: maybe move to background?
         //  try:
-        //   by lazy: may needlessly delay first request -> by how much?
-        //   load blocking: may block for too long -> how long?
+        //   by lazy: may needlessly delay first request -> by 1.7 s for 2400 entries on S4 mini
+        //    but: adblock list is loading parallel, so time loss not that bad
+        //   load blocking: may blocks for too long -> how long?
         //   load in background -> need to check every time whether it's already loaded
 //        loadUserLists()
     }
@@ -44,7 +51,6 @@ class AbpUserRules @Inject constructor(
     private fun loadUserLists() {
         // on S4 mine: takes 150 ms for the first time, then 6 ms for empty db
         val ur = userRulesRepository.getAllRules()
-
         // careful: the following line crashes (my) android studio:
 //        userRules = UserFilterContainer().also { ur.forEach(it::add) } }
         // why? it's the same way used for 'normal' filter containers
@@ -112,6 +118,7 @@ class AbpUserRules @Inject constructor(
     }
 
     fun whitelist(pageUrl: Uri, add: Boolean) {
+        // S4 mini speed test: 1.7 ms for 2nd entry, 26 ms for ~2400th entry -> fast enough, no need to move DB operation to different thread
         val domain = pageUrl.host ?: return
         if (add)
             addUserRule(domain, "", 0xffff, thirdParty = false, response = false)
