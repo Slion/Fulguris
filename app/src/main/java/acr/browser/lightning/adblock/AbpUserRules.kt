@@ -107,15 +107,16 @@ class AbpUserRules @Inject constructor(
     }
 
     fun isWhitelisted(pageUrl: Uri): Boolean {
+        // TODO: checking by using a fake request might be "slower than necessary"? but probably faster than DB query
         return userRules.get(ContentRequest(pageUrl, pageUrl, 0xffff, false, listOf("")))?.response == false
     }
 
     fun whitelist(pageUrl: Uri, add: Boolean) {
         val domain = pageUrl.host ?: return
         if (add)
-            addUserRule(domain, "", 0xffff, false, false)
+            addUserRule(domain, "", 0xffff, thirdParty = false, response = false)
         else
-            removeUserRule(domain, "", 0xffff, false, false)
+            removeUserRule(domain, "", 0xffff, thirdParty = false, response = false)
     }
 
 }

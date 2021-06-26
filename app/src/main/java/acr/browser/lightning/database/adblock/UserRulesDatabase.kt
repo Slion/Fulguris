@@ -105,6 +105,8 @@ class UserRulesDatabase @Inject constructor(
 
     // page in this context: what is in blocker as pageUrl.host
     // this is used as filter.pattern and as tag
+    // to be used for uBo style page settings, allows users to block/allow/noop requests to specific domains when on this page
+    //  (actually could be more powerful than that, could be used for something to create something like uMatrix)
     override fun getRulesForPage(page: String): List<UnifiedFilterResponse> {
         val cursor = database.query(
             TABLE_RULES,

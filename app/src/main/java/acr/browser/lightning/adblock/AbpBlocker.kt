@@ -65,6 +65,8 @@ class AbpBlocker @Inject constructor(
         //  but generally no need to block UI, better just delay the first web requests
         //loadLists() // 320-430 ms on S4 mini plus / 550-650 ms on S4 mini -> always the fastest, but blocking
 
+        // TODO: use of globalscope is discouraged, but all reasons I found were related to stuff that is no canceled if the related UI is closed
+        //  I don't see how this would apply, a) the operations end after a few seconds anyway without needing to cancel, and b) blocker runs as log as the app runs
         GlobalScope.launch(Dispatchers.Default) { // IO for io-intensive stuff, but here we do some IO and are mostly limited by CPU... so Default should be better?
             // load lists here if not loaded above
             //stufftest()
