@@ -16,7 +16,7 @@
 
 package acr.browser.lightning.adblock
 
-import acr.browser.lightning.R
+import acr.browser.lightning.adblock.util.hash.computeMD5
 import acr.browser.lightning.preference.UserPreferences
 import android.content.Context
 import android.net.ConnectivityManager
@@ -24,7 +24,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.ResultReceiver
-import androidx.preference.PreferenceManager
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_DIR
 import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
@@ -36,7 +35,6 @@ import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okio.source
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -199,13 +197,13 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             dir.getAbpWhitePageListFile(entity).exists()) return false
 
         // lastModified is only used for HTTP and file
-        //  can't get file date for assets, so assume that size changes when blocklist changes
-        //  and (ab)use lastModified to store file size, so update is triggered when file is changed
-        val fileSize = context.assets.openFd(ASSETS_BLOCKLIST).length.toString()
-        if (fileSize == entity.lastModified)
+        //  can't get file date for assets, so assume checksum changes when blocklist changes
+        //  and (ab)use lastModified to store checksum, so update is triggered when file is changed
+        val checksum = context.assets.open(ASSETS_BLOCKLIST).computeMD5()
+        if (checksum == entity.lastModified)
             return false
 
-        entity.lastModified = fileSize // file size set now, but written to entity only at the end of decode -> should be safe
+        entity.lastModified = checksum // checksum set now, but written to entity only at the end of decode -> should be safe
         context.assets.open(ASSETS_BLOCKLIST).bufferedReader().use {
             return decode(it, Charsets.UTF_8, entity)
         }
