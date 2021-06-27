@@ -183,10 +183,17 @@ class AbpBlocker @Inject constructor(
     }
 
     // cache 3rd party check result, and remove oldest entry if cache too large
+    // TODO: this can trigger concurrentModificationException
+    //   fix should not defeat purpose of cache (introduce slowdown)
+    //   simply use try and don't catch anything?
+    //    if something is not added to cache it doesn't matter
+    //    in worst case it takes another 1-2 ms to create the same result again
     private fun cache3rdPartyResult(is3rdParty: Boolean, cacheEntry: String): Boolean {
-        thirdPartyCache[cacheEntry] = is3rdParty
-        if (thirdPartyCache.size > thirdPartyCacheSize)
-            thirdPartyCache.remove(thirdPartyCache.keys.first())
+        runCatching {
+            thirdPartyCache[cacheEntry] = is3rdParty
+            if (thirdPartyCache.size > thirdPartyCacheSize)
+                thirdPartyCache.remove(thirdPartyCache.keys.first())
+        }
         return is3rdParty
     }
 
@@ -205,6 +212,8 @@ class AbpBlocker @Inject constructor(
         //  in this case everything gets blocked because of the pattern "|https://"
         //  this is blocked for some page domains, and apparently no page domain also means it's blocked
         //  so some workaround here (maybe do something else? check how UnifiedFilter handles domainMap stuff)
+        // TODO: check if pageUrl could be wrong but not empty in some cases
+        //  like opening bookmarks, or manually entering a url
         val contentRequest = request.getContentRequest(if (pageUrl == "") request.url else Uri.parse(pageUrl))
 
         // no need to supply pattern to block response
