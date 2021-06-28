@@ -371,6 +371,10 @@ class UserPreferences @Inject constructor(
     var locale by preferences.stringPreference(R.string.pref_key_locale, "")
 
 
+    /**
+     * Define behavior for blocklist updates (on, off, only on non-metered connections).
+     * Update check is only happening at browser start.
+     */
     var blockListAutoUpdate by preferences.enumPreference(R.string.pref_key_blocklist_auto_update, AbpUpdateMode.WIFI_ONLY)
 
 }
