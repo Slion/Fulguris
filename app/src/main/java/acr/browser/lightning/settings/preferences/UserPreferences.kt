@@ -331,12 +331,12 @@ class UserPreferences @Inject constructor(
     /**
      * User can disable Firebase Google Analytics.
      */
-    var analytics by preferences.booleanPreference(R.string.pref_key_analytics, true)
+    var analytics by preferences.booleanPreference(R.string.pref_key_analytics, R.bool.pref_default_analytics)
 
     /**
      * User can disable Firebase Crash Report AKA Crashlytics.
      */
-    var crashReport by preferences.booleanPreference(R.string.pref_key_crash_report, true)
+    var crashReport by preferences.booleanPreference(R.string.pref_key_crash_report, R.bool.pref_default_crash_report)
 
     /**
      * Toggle visibility of close tab button on drawer tab list items.
