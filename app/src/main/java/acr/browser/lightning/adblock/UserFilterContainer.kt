@@ -17,8 +17,9 @@ class UserFilterContainer {
     private val filters = hashMapOf<String, List<UnifiedFilterResponse>>()
 
     fun add(filter: UnifiedFilterResponse) {
-        val tag = filter.filter.pattern // no need for explicit tag, it's either pageUrl.host or empty
-        // TODO: i think it was more efficient before that fucking android studio decided to save only some modifications to disk
+        // no need for explicit tag, it's either pageUrl.host or empty
+        val tag = filter.filter.pattern
+        // maybe can be improved/optimized
         val list = filters[tag]
         if (list.isNullOrEmpty())
             filters[tag] = listOf(filter)
@@ -28,9 +29,8 @@ class UserFilterContainer {
     }
 
     fun remove(filter: UnifiedFilterResponse) {
-        // TODO: it was quite different before that fucking android studio decided to save only some modifications to disk
-        //  do probably this can be optimized
         val tag = filter.filter.pattern
+        // maybe can be improved/optimized
         val list = filters[tag]?.toMutableList() ?: return
         list.removeAll { it == filter }
         if (list.isEmpty())
@@ -137,7 +137,8 @@ class UserFilterContainer {
         val domains1 = f1.filter.domains ?: return -1
         val domains2 = f2.filter.domains ?: return 1
 
-        // domains SHOULD always have size 1, but better be sure
+        // domains SHOULD always have size 1
+        //  but better be sure (and might be extended later)
         var compare = 0
         for (i in 0..domains1.size) {
             if (domains1.getKey(i) == requestDomain) ++compare

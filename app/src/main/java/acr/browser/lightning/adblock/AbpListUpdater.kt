@@ -41,8 +41,8 @@ import java.io.IOException
 import java.nio.charset.Charset
 import javax.inject.Inject
 
-
-// this is basically the update service from yuzu blocker with some stuff removed
+// this is a slightly modified part of jp.hazuki.yuzubrowser.adblock.service/AbpUpdateService.kt
+// TODO: still a bunch of unused code -> check and remove what is not needed
 class AbpListUpdater @Inject constructor(val context: Context) {
 //class AbpListUpdater @Inject constructor(val context: Context, val userPreferences: UserPreferences) {
 
