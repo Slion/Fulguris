@@ -188,9 +188,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private var tabsView: TabsView? = null
     private var bookmarksView: BookmarksDrawerView? = null
 
-    // Menu
-    private lateinit var popupMenu: BrowserPopupMenu
-    lateinit var sessionsMenu: SessionsPopupWindow
+    // Menus
+    private lateinit var iMenuMain: MenuMain
+    private lateinit var iMenuWebPage: MenuWebPage
+    lateinit var iMenuSessions: SessionsPopupWindow
     //TODO: put that in settings
     private lateinit var tabsDialog: BottomSheetDialog
     private lateinit var bookmarksDialog: BottomSheetDialog
@@ -255,6 +256,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
         createPopupMenu()
+        createMenuWebPage()
         createSessionsMenu()
         tabsDialog = BottomSheetDialog(this)
         bookmarksDialog = BottomSheetDialog(this)
@@ -324,7 +326,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      */
     private fun createSessionsMenu() {
-        sessionsMenu = SessionsPopupWindow(layoutInflater)
+        iMenuSessions = SessionsPopupWindow(layoutInflater)
     }
 
     // Used to avoid running that too many times, by keeping a reference to it we can cancel that runnable
@@ -421,10 +423,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // If using horizontal tab bar or if our tab drawer is open
         if (!verticalTabBar || tabsDialog.isShowing) {
             // Use sessions button as anchor
-            buttonSessions.let { sessionsMenu.show(it) }
+            buttonSessions.let { iMenuSessions.show(it) }
         } else {
             // Otherwise use main menu button as anchor
-            iBindingToolbarContent.buttonMore.let { sessionsMenu.show(it) }
+            iBindingToolbarContent.buttonMore.let { iMenuSessions.show(it) }
         }
     }
 
@@ -432,10 +434,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      */
     private fun createPopupMenu() {
-        popupMenu = BrowserPopupMenu(layoutInflater)
-        val view = popupMenu.contentView
+        iMenuMain = MenuMain(layoutInflater)
         // TODO: could use data binding instead
-        popupMenu.apply {
+        iMenuMain.apply {
+            // Menu
+            onMenuItemClicked(iBinding.menuItemWebPage) { iMenuMain.dismiss(); showMenuWebPage() }
             // Bind our actions
             onMenuItemClicked(iBinding.menuItemSessions) { executeAction(R.id.action_sessions) }
             onMenuItemClicked(iBinding.menuItemNewTab) { executeAction(R.id.action_new_tab) }
@@ -444,15 +447,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemDownloads) { executeAction(R.id.action_downloads) }
             onMenuItemClicked(iBinding.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
             onMenuItemClicked(iBinding.menuItemExit) { executeAction(R.id.action_exit) }
-            // Web page actions
-            onMenuItemClicked(iBinding.menuItemShare) { executeAction(R.id.action_share) }
-            onMenuItemClicked(iBinding.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
-            onMenuItemClicked(iBinding.menuItemFind) { executeAction(R.id.action_find) }
-            onMenuItemClicked(iBinding.menuItemPrint) { executeAction(R.id.action_print) }
-            onMenuItemClicked(iBinding.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
-            onMenuItemClicked(iBinding.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
-            onMenuItemClicked(iBinding.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
-            onMenuItemClicked(iBinding.menuItemDarkMode) { executeAction(R.id.action_toggle_dark_mode) }
             //
             onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
 
@@ -462,14 +456,49 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
             onMenuItemClicked(iBinding.menuShortcutBack) { executeAction(R.id.action_back) }
             //onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
-
-
         }
     }
 
-    private fun showPopupMenu() {
-        popupMenu.show(iBindingToolbarContent.buttonMore)
+    /**
+     *
+     */
+    fun showPopupMenu() {
+        iMenuMain.show(iBindingToolbarContent.buttonMore)
     }
+
+    /**
+     *
+     */
+    private fun createMenuWebPage() {
+        iMenuWebPage = MenuWebPage(layoutInflater)
+        // TODO: could use data binding instead
+        iMenuWebPage.apply {
+            onMenuItemClicked(iBinding.menuItemMainMenu) { iMenuWebPage.dismiss(); showPopupMenu() }
+            // Web page actions
+            onMenuItemClicked(iBinding.menuItemShare) { executeAction(R.id.action_share) }
+            onMenuItemClicked(iBinding.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
+            onMenuItemClicked(iBinding.menuItemFind) { executeAction(R.id.action_find) }
+            onMenuItemClicked(iBinding.menuItemPrint) { executeAction(R.id.action_print) }
+            onMenuItemClicked(iBinding.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
+            onMenuItemClicked(iBinding.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
+            onMenuItemClicked(iBinding.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
+            onMenuItemClicked(iBinding.menuItemDarkMode) { executeAction(R.id.action_toggle_dark_mode) }
+            // Popup menu action shortcut icons
+            onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
+            onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
+            onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
+            onMenuItemClicked(iBinding.menuShortcutBack) { executeAction(R.id.action_back) }
+            //onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+        }
+    }
+
+    /**
+     *
+     */
+    fun showMenuWebPage() {
+        iMenuWebPage.show(iBindingToolbarContent.buttonMore)
+    }
+
 
     /**
      * Needed to be able to display system notifications
@@ -1028,26 +1057,36 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 }
 
                 // Deal with session menu
-                sessionsMenu.animationStyle = R.style.AnimationMenuBottom
-                (sessionsMenu.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.apply {
+                iMenuSessions.animationStyle = R.style.AnimationMenuBottom
+                (iMenuSessions.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.apply {
                     reverseLayout = true
                     stackFromEnd = true
                 }
                 // Move sessions menu toolbar to the bottom
-                sessionsMenu.iBinding.toolbar.apply{removeFromParent()?.addView(this)}
+                iMenuSessions.iBinding.toolbar.apply{removeFromParent()?.addView(this)}
 
                 // Set popup menus animations
-                popupMenu.animationStyle = R.style.AnimationMenuBottom
+                iMenuMain.animationStyle = R.style.AnimationMenuBottom
                 // Move popup menu toolbar to the bottom
-                popupMenu.iBinding.header.apply{removeFromParent()?.addView(this)}
+                iMenuMain.iBinding.header.apply{removeFromParent()?.addView(this)}
                 // Move items above our toolbar separator
-                popupMenu.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this, 0)}
+                iMenuMain.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this, 0)}
                 // Reverse menu items if needed
                 if (!wasToolbarsBottom) {
-                    val children = popupMenu.iBinding.layoutMenuItems.children.toList()
+                    val children = iMenuMain.iBinding.layoutMenuItems.children.toList()
                     children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
-                    val webPageChildren = popupMenu.iBinding.layoutTabMenuItems.children.toList()
-                    webPageChildren.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
+                }
+
+                // Set popup menus animations
+                iMenuWebPage.animationStyle = R.style.AnimationMenuBottom
+                // Move popup menu toolbar to the bottom
+                iMenuWebPage.iBinding.header.apply{removeFromParent()?.addView(this)}
+                // Move items above our toolbar separator
+                iMenuWebPage.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this, 0)}
+                // Reverse menu items if needed
+                if (!wasToolbarsBottom) {
+                    val children = iMenuWebPage.iBinding.layoutMenuItems.children.toList()
+                    children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
                 }
 
                 // Set search dropdown anchor to avoid gap
@@ -1089,27 +1128,38 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 }
 
                 // Deal with session menu
-                sessionsMenu.animationStyle = R.style.AnimationMenu
-                (sessionsMenu.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.apply {
+                iMenuSessions.animationStyle = R.style.AnimationMenu
+                (iMenuSessions.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.apply {
                     reverseLayout = false
                     stackFromEnd = false
                 }
                 // Move sessions menu toolbar to the top
-                sessionsMenu.iBinding.toolbar.apply{removeFromParent()?.addView(this, 0)}
+                iMenuSessions.iBinding.toolbar.apply{removeFromParent()?.addView(this, 0)}
 
                 // Set popup menus animations
-                popupMenu.animationStyle = R.style.AnimationMenu
+                iMenuMain.animationStyle = R.style.AnimationMenu
                 // Move popup menu toolbar to the top
-                popupMenu.iBinding.header.apply{removeFromParent()?.addView(this, 0)}
+                iMenuMain.iBinding.header.apply{removeFromParent()?.addView(this, 0)}
                 // Move items below our toolbar separator
-                popupMenu.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this)}
+                iMenuMain.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this)}
                 // Reverse menu items if needed
                 if (wasToolbarsBottom) {
-                    val children = popupMenu.iBinding.layoutMenuItems.children.toList()
+                    val children = iMenuMain.iBinding.layoutMenuItems.children.toList()
                     children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
-                    val webPageChildren = popupMenu.iBinding.layoutTabMenuItems.children.toList()
-                    webPageChildren.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
                 }
+
+                // Set popup menus animations
+                iMenuWebPage.animationStyle = R.style.AnimationMenu
+                // Move popup menu toolbar to the top
+                iMenuWebPage.iBinding.header.apply{removeFromParent()?.addView(this, 0)}
+                // Move items below our toolbar separator
+                iMenuWebPage.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this)}
+                // Reverse menu items if needed
+                if (wasToolbarsBottom) {
+                    val children = iMenuWebPage.iBinding.layoutMenuItems.children.toList()
+                    children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
+                }
+
                 // Set search dropdown anchor to avoid gap
                 searchView.dropDownAnchor = R.id.toolbar_include
             }
@@ -1971,7 +2021,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // Do we really need that?
             scrollToCurrentTab()
         }, 300)
-        popupMenu.dismiss() // As it wont update somehow
+        iMenuMain.dismiss() // As it wont update somehow
+        iMenuWebPage.dismiss()
         // Make sure our drawers adjust accordingly
         iBinding.drawerLayout.requestLayout()
     }
@@ -2002,8 +2053,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.pauseAll()
 
         // Dismiss any popup menu
-        popupMenu.dismiss()
-        sessionsMenu.dismiss()
+        iMenuMain.dismiss()
+        iMenuWebPage.dismiss()
+        iMenuSessions.dismiss()
 
         if (isIncognito() && isFinishing) {
             overridePendingTransition(R.anim.fade_in_scale, R.anim.slide_down_out)
@@ -2637,8 +2689,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // isShowing always return false for some reason
         // Therefore toggle is not working however one can use Esc to close menu.
         // TODO: Fix that at some point
-        if (sessionsMenu.isShowing) {
-            sessionsMenu.dismiss()
+        if (iMenuSessions.isShowing) {
+            iMenuSessions.dismiss()
         } else {
             showSessions()
         }
@@ -2659,12 +2711,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     override fun setForwardButtonEnabled(enabled: Boolean) {
-        popupMenu.iBinding.menuShortcutForward.isEnabled = enabled
+        iMenuMain.iBinding.menuShortcutForward.isEnabled = enabled
+        iMenuWebPage.iBinding.menuShortcutForward.isEnabled = enabled
         tabsView?.setGoForwardEnabled(enabled)
     }
 
     override fun setBackButtonEnabled(enabled: Boolean) {
-        popupMenu.iBinding.menuShortcutBack.isEnabled = enabled
+        iMenuMain.iBinding.menuShortcutBack.isEnabled = enabled
+        iMenuWebPage.iBinding.menuShortcutBack.isEnabled = enabled
         tabsView?.setGoBackEnabled(enabled)
     }
 

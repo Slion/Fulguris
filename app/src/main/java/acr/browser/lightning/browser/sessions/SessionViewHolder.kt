@@ -61,7 +61,7 @@ class SessionViewHolder(
                             iUiController.getTabModel().saveSessions()
                             // Refresh our list
                             (it.context as BrowserActivity).apply {
-                                sessionsMenu.updateSessions()
+                                iMenuSessions.updateSessions()
                             }
                         }
                         .resizeAndShow()
@@ -101,7 +101,7 @@ class SessionViewHolder(
                         // Proceed with session rename
                         iUiController.getTabModel().renameSession(textName.tag as String,newName)
                         // Make sure we update adapter list and thus edited item too
-                        (iUiController as BrowserActivity).sessionsMenu.updateSessions()
+                        (iUiController as BrowserActivity).iMenuSessions.updateSessions()
                     } else {
                         // We already have a session with that name, display an error message
                         context.toast(R.string.session_already_exists)
@@ -141,12 +141,12 @@ class SessionViewHolder(
                 (it.context as BrowserActivity).apply {
                     presenter?.switchToSession(sessionName)
                     if (!isEditModeEnabled()) {
-                        sessionsMenu.dismiss()
+                        iMenuSessions.dismiss()
                     } else {
                         // Update our list, notably current item
                         iUiController.getTabModel().doOnceAfterInitialization {
-                            sessionsMenu.updateSessions()
-                            sessionsMenu.scrollToCurrentSession()
+                            iMenuSessions.updateSessions()
+                            iMenuSessions.scrollToCurrentSession()
                         }
                     }
                 }

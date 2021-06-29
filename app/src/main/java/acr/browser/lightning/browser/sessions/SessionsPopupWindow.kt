@@ -82,7 +82,7 @@ class SessionsPopupWindow : PopupWindow {
                                 (view.context as BrowserActivity).apply {
                                     presenter?.switchToSession(name)
                                     // Close session dialog after creating and switching to new session
-                                    sessionsMenu.dismiss()
+                                    iMenuSessions.dismiss()
                                 }
                                 // Update our session list
                                 //iAdapter.showSessions(it)
@@ -125,7 +125,7 @@ class SessionsPopupWindow : PopupWindow {
                                 (view.context as BrowserActivity).apply {
                                     // Close session dialog after creating and switching to new session
                                     // TODO: not in edit mode?
-                                    sessionsMenu.dismiss()
+                                    iMenuSessions.dismiss()
                                 }
 
                                 // Show user we did switch session

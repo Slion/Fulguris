@@ -133,15 +133,6 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         />
 
                     <TextView
-                        android:id="@+id/menuItemMainMenu"
-                        style="@style/BrowserTextMenuItem"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        app:drawableStartCompat="@drawable/ic_menu"
-                        android:text="@string/action_main_menu"
-                        />
-
-                    <TextView
                         android:id="@+id/menuItemSessions"
                         style="@style/BrowserTextMenuItem"
                         app:drawableStartCompat="@drawable/ic_sessions"
@@ -201,100 +192,6 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         />
                     -->
 
-                    <LinearLayout
-                        android:id="@+id/layoutTabMenuItems"
-                        android:animateLayoutChanges="true"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fadingEdge="none"
-                        android:clipChildren="true">
-
-                        <TextView
-                            android:id="@+id/menuItemShare"
-                            style="@style/BrowserTextMenuItem"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            app:drawableStartCompat="@drawable/ic_share"
-                            android:text="@string/action_share"
-                             />
-
-                        <TextView
-                            android:id="@+id/menuItemAddBookmark"
-                            style="@style/BrowserTextMenuItem"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            app:drawableStartCompat="@drawable/ic_bookmark_add"
-                            android:text="@string/action_add_bookmark"
-                            />
-
-                        <TextView
-                            android:id="@+id/menuItemFind"
-                            style="@style/BrowserTextMenuItem"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            app:drawableStartCompat="@drawable/ic_find_in_page"
-                            android:text="@string/action_find"
-                             />
-
-                        <CheckBox
-                            android:id="@+id/menuItemDesktopMode"
-                            style="@style/BrowserTextMenuItem"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:button="@null"
-                            android:text="@string/agent_desktop"
-                            android:gravity="center_vertical"
-                            android:enabled="true"
-                            app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
-                            app:drawableStartCompat="@drawable/ic_desktop"
-                             />
-
-                        <CheckBox
-                            android:id="@+id/menuItemDarkMode"
-                            style="@style/BrowserTextMenuItem"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:button="@null"
-                            android:text="@string/dark_theme"
-                            android:gravity="center_vertical"
-                            android:enabled="true"
-                            app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
-                            app:drawableStartCompat="@drawable/ic_dark_mode"
-                             />
-
-                        <TextView
-                            android:id="@+id/menuItemPrint"
-                            style="@style/BrowserTextMenuItem"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            app:drawableStartCompat="@drawable/ic_action_print"
-                            android:text="@string/action_print"
-                             />
-
-                        <TextView
-                            android:id="@+id/menuItemReaderMode"
-                            style="@style/BrowserTextMenuItem"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            app:drawableStartCompat="@drawable/ic_action_reading"
-                            android:text="@string/reading_mode"
-                             />
-
-                        <TextView
-                            android:id="@+id/menuItemAddToHome"
-                            style="@style/BrowserTextMenuItem"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            app:drawableStartCompat="@drawable/ic_add_to_home_screen"
-                            android:text="@string/action_add_to_homescreen"
-                            />
-
-                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

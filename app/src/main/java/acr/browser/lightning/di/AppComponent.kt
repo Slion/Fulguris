@@ -4,7 +4,8 @@ import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.adblock.BloomFilterAdBlocker
 import acr.browser.lightning.adblock.NoOpAdBlocker
-import acr.browser.lightning.browser.BrowserPopupMenu
+import acr.browser.lightning.browser.MenuMain
+import acr.browser.lightning.browser.MenuWebPage
 import acr.browser.lightning.browser.SearchBoxModel
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.browser.activity.ThemedBrowserActivity
@@ -95,7 +96,9 @@ interface AppComponent {
 
     fun inject(bookmarksView: BookmarksDrawerView)
 
-    fun inject(popupMenu: BrowserPopupMenu)
+    fun inject(popupMenuMain: MenuMain)
+
+    fun inject(popupMenu: MenuWebPage)
 
     fun inject(popupMenu: SessionsPopupWindow)
 

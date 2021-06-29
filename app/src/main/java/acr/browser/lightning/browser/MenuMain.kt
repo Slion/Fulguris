@@ -3,37 +3,34 @@ package acr.browser.lightning.browser
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
-import acr.browser.lightning.databinding.PopupMenuBrowserBinding
+import acr.browser.lightning.databinding.MenuMainBinding
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
-import acr.browser.lightning.utils.isAppScheme
-import acr.browser.lightning.utils.isSpecialUrl
-import android.animation.AnimatorInflater
-import android.animation.LayoutTransition
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.view.animation.AnimationUtils
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import javax.inject.Inject
 
-
-class BrowserPopupMenu : PopupWindow {
+/**
+ *
+ */
+class MenuMain : PopupWindow {
 
     @Inject
     internal lateinit var bookmarkModel: BookmarkRepository
     @Inject
     lateinit var iUserPreferences: UserPreferences
 
-    var iBinding: PopupMenuBrowserBinding
+    var iBinding: MenuMainBinding
     var iIsIncognito = false
 
-    constructor(layoutInflater: LayoutInflater, aBinding: PopupMenuBrowserBinding = BrowserPopupMenu.inflate(layoutInflater))
+    constructor(layoutInflater: LayoutInflater, aBinding: MenuMainBinding = MenuMain.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
         aBinding.root.context.injector.inject(this)
@@ -83,54 +80,6 @@ class BrowserPopupMenu : PopupWindow {
          */
 
 
-        iBinding.menuItemMainMenu.setOnClickListener {
-            //applyMenuItemAnimations()
-            applyMainMenuItemVisibility()
-            scrollToStart()
-        }
-
-
-        iBinding.menuItemWebPage.setOnClickListener {
-
-            //applyMenuItemAnimations()
-
-            // Those menu items are always on even for special URLs
-            iBinding.menuItemFind.isVisible = true
-            iBinding.menuItemPrint.isVisible = true
-            iBinding.menuItemReaderMode.isVisible = true
-            // Show option to go back to main menu
-            iBinding.menuItemMainMenu.isVisible = true
-            // Hide app menu items
-            iBinding.menuItemWebPage.isVisible = false
-            iBinding.menuItemSessions.isVisible = false
-            iBinding.menuItemBookmarks.isVisible = false
-            iBinding.menuItemHistory.isVisible = false
-            iBinding.menuItemDownloads.isVisible = false
-            iBinding.menuItemNewTab.isVisible = false
-            iBinding.menuItemIncognito.isVisible = false
-            iBinding.menuItemSettings.isVisible = false
-            iBinding.menuItemExit.isVisible = false
-
-
-            (contentView.context as BrowserActivity).tabsManager.let { tm ->
-                tm.currentTab?.let { tab ->
-                    // Let user add multiple times the same URL I guess, for now anyway
-                    // Blocking it is not nice and subscription is more involved I guess
-                    // See BookmarksDrawerView.updateBookmarkIndicator
-                    //contentView.menuItemAddBookmark.visibility = if (bookmarkModel.isBookmark(tab.url).blockingGet() || tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
-                    (!(tab.url.isSpecialUrl() || tab.url.isAppScheme())).let {
-                        // Those menu items won't be displayed for special URLs
-                        iBinding.menuItemDesktopMode.isVisible = it
-                        iBinding.menuItemDarkMode.isVisible = it
-                        iBinding.menuItemAddToHome.isVisible = it
-                        iBinding.menuItemAddBookmark.isVisible = it
-                        iBinding.menuItemShare.isVisible = it
-                    }
-                }
-            }
-
-            scrollToStart()
-        }
     }
 
     /**
@@ -158,31 +107,6 @@ class BrowserPopupMenu : PopupWindow {
         }
     }
 
-    /**
-     * Was needed when we were using our extending menu.
-     * It's now unused.
-     */
-    private fun applyMenuItemAnimations() {
-
-        val animator = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_appearing)
-        val animatorFromBottom = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_appearing_from_bottom)
-
-        val animatorDisappearing = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_disappearing)
-        val animatorDisappearingFromBottom = AnimatorInflater.loadAnimator(iBinding.root.context, R.animator.menu_item_disappearing_from_bottom)
-
-        // Set animations according to menu position
-        if (!contentView.context.configPrefs.toolbarsBottom) {
-            iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animator)
-            iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animator.duration)
-            iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearing)
-            iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearing.duration)
-        } else {
-            iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.APPEARING, animatorFromBottom)
-            iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.APPEARING, animatorFromBottom.duration)
-            iBinding.layoutTabMenuItems.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorDisappearingFromBottom)
-            iBinding.layoutTabMenuItems.layoutTransition.setDuration(LayoutTransition.DISAPPEARING, animatorDisappearingFromBottom.duration)
-        }
-    }
 
     /**
      * Show menu items corresponding to our main menu.
@@ -190,16 +114,6 @@ class BrowserPopupMenu : PopupWindow {
     private fun applyMainMenuItemVisibility() {
         // Reset items visibility
         iBinding.menuItemWebPage.isVisible = true
-        iBinding.menuItemMainMenu.isVisible = false
-        //
-        iBinding.menuItemShare.isVisible = false
-        iBinding.menuItemAddBookmark.isVisible = false
-        iBinding.menuItemFind.isVisible = false
-        iBinding.menuItemPrint.isVisible = false
-        iBinding.menuItemReaderMode.isVisible = false
-        iBinding.menuItemDesktopMode.isVisible = false
-        iBinding.menuItemDarkMode.isVisible = false
-        iBinding.menuItemAddToHome.isVisible = false
         // Basic items
         iBinding.menuItemSessions.isVisible = !iIsIncognito
         iBinding.menuItemBookmarks.isVisible = true
@@ -220,14 +134,6 @@ class BrowserPopupMenu : PopupWindow {
 
         applyMainMenuItemVisibility()
 
-
-        (contentView.context as BrowserActivity).tabsManager.let {
-            // Set desktop mode checkbox according to current tab
-            iBinding.menuItemDesktopMode.isChecked = it.currentTab?.desktopMode ?: false
-            // Same with dark mode
-            iBinding.menuItemDarkMode.isChecked = it.currentTab?.darkMode ?: false
-        }
-
         // Get our anchor location
         val anchorLoc = IntArray(2)
         aAnchor.getLocationInWindow(anchorLoc)
@@ -245,8 +151,8 @@ class BrowserPopupMenu : PopupWindow {
 
     companion object {
 
-        fun inflate(layoutInflater: LayoutInflater): PopupMenuBrowserBinding {
-            return PopupMenuBrowserBinding.inflate(layoutInflater)
+        fun inflate(layoutInflater: LayoutInflater): MenuMainBinding {
+            return MenuMainBinding.inflate(layoutInflater)
         }
 
     }

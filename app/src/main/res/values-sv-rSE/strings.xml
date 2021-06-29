@@ -76,7 +76,7 @@
     <string name="title_user_agent">User agent</string>
     <string name="title_download_location">Download location</string>
     <string name="title_custom_homepage">Custom homepage</string>
-    <string name="action_webpage">Webpage</string>
+    <string name="action_webpage">Web page</string>
     <string name="title_clear_history">Clear history</string>
     <string name="title_clear_cookies">Clear cookies</string>
     <string name="dialog_history">Would you like to clear all browser history?</string>
