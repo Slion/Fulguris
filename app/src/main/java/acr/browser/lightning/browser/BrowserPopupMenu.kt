@@ -233,7 +233,7 @@ class BrowserPopupMenu : PopupWindow {
             // Same with dark mode
             iBinding.menuItemDarkMode.isChecked = it.currentTab?.darkMode ?: false
             // And ad block
-            iBinding.menuItemAdBlock.isChecked = it.currentTab?.url?.let { url -> !abpUserRules.isWhitelisted(Uri.parse(url)) } ?: false
+            iBinding.menuItemAdBlock.isChecked = it.currentTab?.url?.let { url -> !abpUserRules.isAllowed(Uri.parse(url)) } ?: false
         }
 
         // Get our anchor location

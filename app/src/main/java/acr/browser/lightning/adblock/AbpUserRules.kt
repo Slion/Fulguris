@@ -111,12 +111,12 @@ class AbpUserRules @Inject constructor(
         removeUserRule(UnifiedFilterResponse(createUserFilter(pageDomain, requestDomain, contentType, thirdParty), response))
     }
 
-    fun isWhitelisted(pageUrl: Uri): Boolean {
+    fun isAllowed(pageUrl: Uri): Boolean {
         // TODO: checking by using a fake request might be "slower than necessary"? but probably faster than DB query
         return userRules.get(ContentRequest(pageUrl, pageUrl, 0xffff, false, listOf("")))?.response == false
     }
 
-    fun whitelist(pageUrl: Uri, add: Boolean) {
+    fun allowPage(pageUrl: Uri, add: Boolean) {
         // S4 mini speed test: 1.7 ms for 2nd entry, 26 ms for ~2400th entry -> fast enough, no need to move DB operation to different thread
         val domain = pageUrl.host ?: return
         if (add)

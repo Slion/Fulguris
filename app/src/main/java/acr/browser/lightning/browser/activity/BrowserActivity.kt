@@ -1633,7 +1633,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
             R.id.action_block -> {
 
-                abpUserRules.whitelist(Uri.parse(tabsManager.currentTab?.url), !popupMenu.iBinding.menuItemAdBlock.isChecked)
+                abpUserRules.allowPage(Uri.parse(tabsManager.currentTab?.url), !popupMenu.iBinding.menuItemAdBlock.isChecked)
                 tabsManager.currentTab?.reload()
                 return true
             }
