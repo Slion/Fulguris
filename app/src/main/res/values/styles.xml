@@ -122,6 +122,8 @@ colorControlNormal:
         <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout.Light</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <!-- Override BottomSheetDialog styles -->
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
         <!-- Shapes -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
@@ -177,6 +179,8 @@ colorControlNormal:
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <!-- Override BottomSheetDialog styles -->
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
         <!-- Shapes -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
@@ -230,6 +234,8 @@ colorControlNormal:
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <!-- Override BottomSheetDialog styles -->
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
         <!-- Shapes -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
@@ -314,6 +320,19 @@ colorControlNormal:
         <item name="android:windowExitAnimation">@anim/menu_close_bottom</item>
     </style>
 
+
+    <!--
+    Override bottom sheets dialog theme notably to make sure background and status bar have the proper background color.
+    -->
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
+    </style>
+
+    <style name="Widget.App.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">?attr/colorSurface</item>
+        <item name="android:elevation">0dp</item>
+<!--        <item name="elevation">0dp</item>-->
+    </style>
 
     <!--
     Override dialog theme otherwise buttons' text is not visible in dark mode notably
