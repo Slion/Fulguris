@@ -133,8 +133,10 @@ class BloomFilterAdBlocker @Inject constructor(
         bloomFilter
     }
 
-    override fun loadScript(uri: Uri): String? = null
+    // disabled unused element hiding
+    //override fun loadScript(uri: Uri): String? = null
 
+    // compatibility with the new blocking type
     override fun shouldBlock(request: WebResourceRequest, pageUrl: String): WebResourceResponse? {
         if (isAd(request.url.toString()))
             return WebResourceResponse("text/plain", "utf-8", ByteArrayInputStream(byteArrayOf()))
