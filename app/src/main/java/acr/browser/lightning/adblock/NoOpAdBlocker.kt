@@ -14,7 +14,8 @@ class NoOpAdBlocker @Inject constructor() : AdBlocker {
 
     override fun isAd(url: String) = false
 
-    override fun loadScript(uri: Uri): String? = null
+    // unused element hiding currently disabled
+    //override fun loadScript(uri: Uri): String? = null
 
     override fun shouldBlock(request: WebResourceRequest, pageUrl: String): WebResourceResponse? = null
 }

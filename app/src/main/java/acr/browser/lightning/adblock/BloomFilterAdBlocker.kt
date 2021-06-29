@@ -133,7 +133,7 @@ class BloomFilterAdBlocker @Inject constructor(
         bloomFilter
     }
 
-    // disabled unused element hiding
+    // unused element hiding currently disabled
     //override fun loadScript(uri: Uri): String? = null
 
     // compatibility with the new blocking type
