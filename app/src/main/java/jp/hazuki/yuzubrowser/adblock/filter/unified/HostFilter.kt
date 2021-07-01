@@ -28,7 +28,8 @@ internal class HostFilter(
     override val filterType: Int
         get() = FILTER_TYPE_HOST
 
+    // like domainMap: this is supposed to include subdomains -> adjusted accordingly
     override fun check(url: Uri): Boolean {
-        return pattern == url.host
+        url.host.let { return it == pattern || pattern.endsWith(".$it") }
     }
 }
