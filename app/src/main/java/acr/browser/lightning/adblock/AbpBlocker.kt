@@ -1,6 +1,7 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.R
+import acr.browser.lightning.utils.isAppScheme
 import acr.browser.lightning.utils.isSpecialUrl
 import android.app.Application
 import android.net.Uri
@@ -40,9 +41,6 @@ class AbpBlocker @Inject constructor(
 
     // store whether lists are loaded (and delay any request if loading is not finished)
     private var listsLoaded = false
-
-    // store urls of entities, they will never be blocked
-    private val entityUrls = mutableListOf<String>()
 
 /*    // TODO: element hiding
     //  not sure if this actually works (did not in a test - I think?), maybe it's crucial to inject the js at the right point
@@ -179,8 +177,6 @@ class AbpBlocker @Inject constructor(
             val elementFilter = ElementContainer().also { abpLoader.loadAllElementFilter().forEach(it::plusAssign) }
             elementBlocker = CosmeticFiltering(disableCosmetic, elementFilter)
         }*/
-        entityUrls.clear()
-        entities.forEach { if (it.url.startsWith("http")) entityUrls.add(it.url) }
 
         listsLoaded = true
     }
@@ -207,9 +203,7 @@ class AbpBlocker @Inject constructor(
         // then mining/malware (ad block allow should not override malware list)
         // then ads
 
-        // TODO: is it necessary to exclude entityUrls?
-        //  maybe not, request is probably not done by WebView -> check and (probably) remove
-        if (request.url.toString().isSpecialUrl() || entityUrls.contains(request.url.toString()))
+        if (request.url.toString().isSpecialUrl() || request.url.toString().isAppScheme())
             return null
 
         // create contentRequest
