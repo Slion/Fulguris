@@ -9,6 +9,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.database.DomainSettings
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.configPrefs
@@ -178,6 +179,9 @@ class LightningView(
             applyDarkMode();
         }
 
+    val domainSettings: DomainSettings
+	get() = DomainSettings(activity.applicationContext, url) // url or iTargetUrl?
+
     /**
      *
      */
@@ -301,8 +305,8 @@ class LightningView(
             //TODO: it looks like our special URLs don't get frozen for some reason
             createWebView()
             initializeContent(tabInitializer)
-            desktopMode = userPreferences.desktopModeDefault
-            darkMode = userPreferences.darkModeDefault
+            desktopMode = domainSettings.get(DomainSettings.DESKTOP_MODE, userPreferences.desktopModeDefault)
+            darkMode = domainSettings.get(DomainSettings.DARK_MODE, userPreferences.darkModeDefault)
         } else {
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer
@@ -592,6 +596,16 @@ class LightningView(
     fun toggleDesktopUserAgent() {
         // Toggle desktop mode
         desktopMode = !desktopMode
+        if (desktopMode != userPreferences.desktopModeDefault)
+            domainSettings.set(DomainSettings.DESKTOP_MODE, desktopMode)
+        else
+            domainSettings.remove(DomainSettings.DESKTOP_MODE)
+    }
+
+    fun updateDesktopMode() {
+        val newDesktopMode = domainSettings.get(DomainSettings.DESKTOP_MODE, userPreferences.desktopModeDefault)
+        if (newDesktopMode != desktopMode)
+            desktopMode = newDesktopMode
     }
 
     /**
@@ -600,8 +614,17 @@ class LightningView(
     fun toggleDarkMode() {
         // Toggle dark mode
         darkMode = !darkMode
+        if (darkMode != userPreferences.darkModeDefault)
+            domainSettings.set(DomainSettings.DARK_MODE, darkMode)
+        else
+            domainSettings.remove(DomainSettings.DARK_MODE)
     }
 
+    fun updateDarkMode() {
+        val newDarkMode = domainSettings.get(DomainSettings.DARK_MODE, userPreferences.darkModeDefault)
+        if (newDarkMode != darkMode)
+            darkMode = newDarkMode
+    }
 
     /**
      * This method sets the user agent of the current tab based on the user's preference
