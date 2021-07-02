@@ -21,9 +21,6 @@ import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Uri
-import android.os.Bundle
-import android.os.Handler
-import android.os.ResultReceiver
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_DIR
 import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
@@ -42,15 +39,11 @@ import java.nio.charset.Charset
 import javax.inject.Inject
 
 // this is a slightly modified part of jp.hazuki.yuzubrowser.adblock.service/AbpUpdateService.kt
-// TODO: still a bunch of unused code -> check and remove what is not needed
 class AbpListUpdater @Inject constructor(val context: Context) {
-//class AbpListUpdater @Inject constructor(val context: Context, val userPreferences: UserPreferences) {
 
     //@Inject internal lateinit var okHttpClient: OkHttpClient
     val okHttpClient = OkHttpClient() // any problems if not injecting?
 
-//    @Inject
-//    internal lateinit var abpDatabase: AbpDatabase
     @Inject internal lateinit var userPreferences: UserPreferences
 
     val abpDao = AbpDao(context)
@@ -71,15 +64,6 @@ class AbpListUpdater @Inject constructor(val context: Context) {
                     result = result or localResult
                 }
             }
-
-/*        AdBlockPref.get(applicationContext).abpNextUpdateTime = if (nextUpdateTime != Long.MAX_VALUE) {
-            nextUpdateTime
-        } else {
-            System.currentTimeMillis() + A_DAY
-        }
-        if (result) {
-            LocalEventBus.getDefault().notify(BROADCAST_ACTION_UPDATE_AD_BLOCK_DATA)
-        }*/
         }
         return result
     }
@@ -97,15 +81,6 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
     fun updateAbpEntity(entity: AbpEntity) = runBlocking {
         updateInternal(entity)
-    }
-
-    private fun updateAbpEntity(entity: AbpEntity, result: ResultReceiver?) = runBlocking {
-        if (updateInternal(entity)) {
-            result?.send(RESULT_CODE_UPDATED, Bundle().apply { putParcelable(EXTRA_ABP_ENTRY, entity) })
-            //LocalEventBus.getDefault().notify(BROADCAST_ACTION_UPDATE_AD_BLOCK_DATA)
-        } else {
-            result?.send(RESULT_CODE_FAILED, Bundle().apply { putParcelable(EXTRA_ABP_ENTRY, entity) })
-        }
     }
 
     private suspend fun updateInternal(entity: AbpEntity, forceUpdate: Boolean = false): Boolean {
@@ -267,70 +242,10 @@ class AbpListUpdater @Inject constructor(val context: Context) {
     }
 
     companion object {
-        private const val ACTION_UPDATE_ALL = "jp.hazuki.yuzubrowser.adblock.service.action.UpdateAll"
-        private const val ACTION_UPDATE_ABP = "jp.hazuki.yuzubrowser.adblock.service.action.UpdateAbp"
-
-        private const val EXTRA_ABP_ENTRY = "jp.hazuki.yuzubrowser.adblock.service.extra.entry"
-        private const val EXTRA_RESULT = "jp.hazuki.yuzubrowser.adblock.service.extra.result"
-        private const val EXTRA_FORCE_UPDATE = "jp.hazuki.yuzubrowser.adblock.service.extra.update.force"
-
-        private const val RESULT_CODE_UPDATED = 1
-        private const val RESULT_CODE_FAILED = 2
-        private const val RESULT_CODE_UPDATE_ALL = 3
-
         private const val AN_HOUR = 60 * 60 * 1000
-        private const val A_DAY = 24 * AN_HOUR
-
-        private const val JOB_ID = 10
 
         const val ASSETS_BLOCKLIST = "easylist.txt"
 
-/*        fun updateAll(context: Context, forceUpdate: Boolean = false, result: UpdateResult? = null) {
-            if (!forceUpdate) {
-                val prefs = AdBlockPref.get(context.applicationContext)
-                if (prefs.abpNextUpdateTime < System.currentTimeMillis()) return
-
-                if (AppPrefs.abpUpdateWifiOnly.get()) {
-                    val cm = context.getSystemService<ConnectivityManager>()!!
-                    if (!cm.isConnectedWifi()) return
-                }
-            }
-
-            val intent = Intent(context, AbpUpdateService::class.java).apply {
-                action = ACTION_UPDATE_ALL
-                putExtra(EXTRA_FORCE_UPDATE, forceUpdate)
-                putExtra(EXTRA_RESULT, result)
-            }
-
-            enqueueWork(context, AbpUpdateService::class.java, JOB_ID, intent)
-        }
-
-        fun update(context: Context, abpEntity: AbpEntity, result: UpdateResult? = null) {
-            val intent = Intent(context, AbpUpdateService::class.java).apply {
-                action = ACTION_UPDATE_ABP
-                putExtra(EXTRA_ABP_ENTRY, abpEntity)
-                putExtra(EXTRA_RESULT, result)
-            }
-
-            enqueueWork(context, AbpUpdateService::class.java, JOB_ID, intent)
-        }*/
-    }
-
-    abstract class UpdateResult(handler: Handler?) : ResultReceiver(handler) {
-
-        final override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
-            when (resultCode) {
-                RESULT_CODE_UPDATED -> onUpdated(resultData!!.getParcelable(EXTRA_ABP_ENTRY)!!)
-                RESULT_CODE_FAILED -> onFailedUpdate(resultData!!.getParcelable(EXTRA_ABP_ENTRY)!!)
-                RESULT_CODE_UPDATE_ALL -> onUpdateAll()
-            }
-        }
-
-        abstract fun onFailedUpdate(entity: AbpEntity)
-
-        abstract fun onUpdated(entity: AbpEntity)
-
-        abstract fun onUpdateAll()
     }
 
 }

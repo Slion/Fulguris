@@ -23,7 +23,8 @@ interface UserRulesRepository {
 
     fun removeRule(rule: UnifiedFilterResponse)
 
-    fun getRulesForPage(page: String): List<UnifiedFilterResponse>
+    // actually not needed, better done using only userFilterContainer
+    //fun getRulesForPage(page: String): List<UnifiedFilterResponse>
 
     fun getAllRules(): List<UnifiedFilterResponse>
 

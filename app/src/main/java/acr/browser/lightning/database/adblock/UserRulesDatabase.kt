@@ -107,7 +107,7 @@ class UserRulesDatabase @Inject constructor(
     // to be used for uBo style page settings, allows users to block/allow/noop requests to specific domains when on this page
     //  (actually could be more powerful than that, could be used for something to create something like uMatrix)
     // TODO: is this actually necessary? userRules need to be in UserFilterContainer anyway, so this should actually never be called
-    override fun getRulesForPage(page: String): List<UnifiedFilterResponse> {
+/*    override fun getRulesForPage(page: String): List<UnifiedFilterResponse> {
         val cursor = database.query(
             TABLE_RULES,
             arrayOf(KEY_PATTERN, KEY_FILTER_TYPE, KEY_CONTENT_TYPE, KEY_THIRD_PARTY, KEY_DOMAIN_MAP, KEY_RESPONSE),
@@ -125,6 +125,7 @@ class UserRulesDatabase @Inject constructor(
         cursor.close()
         return rules
     }
+*/
 
     // TODO: as sequence would probably be better
     //  tested: not faster -> any reason to switch

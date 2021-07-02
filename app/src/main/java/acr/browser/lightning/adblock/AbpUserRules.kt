@@ -42,12 +42,12 @@ class AbpUserRules @Inject constructor(
         //  try:
         //   by lazy: may needlessly delay first request -> by 1.7 s for 2400 entries on S4 mini
         //    but: adblock list is loading parallel, so time loss not that bad
-        //   load blocking: may blocks for too long -> how long?
+        //   load blocking: may block for too long -> how long?
         //   load in background -> need to check every time whether it's already loaded
 //        loadUserLists()
     }
 
-    private fun loadUserLists() {
+/*    private fun loadUserLists() {
         // on S4 mine: takes 150 ms for the first time, then 6 ms for empty db
         val ur = userRulesRepository.getAllRules()
         // careful: the following line crashes (my) android studio:
@@ -57,6 +57,7 @@ class AbpUserRules @Inject constructor(
 //        userRules = UserFilterContainer()
         ur.forEach { userRules.add(it) }
     }
+*/
 
     // true: block
     // false: allow
@@ -65,12 +66,12 @@ class AbpUserRules @Inject constructor(
         return userRules.get(contentRequest)?.response
     }
 
-    fun addUserRule(filter: UnifiedFilterResponse) {
+    private fun addUserRule(filter: UnifiedFilterResponse) {
         userRules.add(filter)
         userRulesRepository.addRules(listOf(filter))
     }
 
-    fun removeUserRule(filter: UnifiedFilterResponse) {
+    private fun removeUserRule(filter: UnifiedFilterResponse) {
         userRules.remove(filter)
         userRulesRepository.removeRule(filter)
     }
@@ -86,7 +87,7 @@ class AbpUserRules @Inject constructor(
  */
 
     // domains as returned by url.host -> should be valid, and not contains htto(s)
-    fun createUserFilter(pageDomain: String, requestDomain: String, contentType: Int, thirdParty: Boolean): UnifiedFilter {
+    private fun createUserFilter(pageDomain: String, requestDomain: String, contentType: Int, thirdParty: Boolean): UnifiedFilter {
         // 'domains' contains (usually 3rd party) domains, but can also be same as requestDomain (or subdomain of requestDomain)
         // include is always set to true (filter valid only on this domain, and any subdomain if there is no more specific rule)
         val domains = if (pageDomain.isNotEmpty())
