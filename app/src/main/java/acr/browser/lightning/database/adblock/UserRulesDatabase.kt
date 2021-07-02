@@ -104,14 +104,14 @@ class UserRulesDatabase @Inject constructor(
     }
 
     // page in this context: what is in blocker as pageUrl.host
-    // this is used as filter.pattern and as tag
     // to be used for uBo style page settings, allows users to block/allow/noop requests to specific domains when on this page
     //  (actually could be more powerful than that, could be used for something to create something like uMatrix)
+    // TODO: is this actually necessary? userRules need to be in UserFilterContainer anyway, so this should actually never be called
     override fun getRulesForPage(page: String): List<UnifiedFilterResponse> {
         val cursor = database.query(
             TABLE_RULES,
             arrayOf(KEY_PATTERN, KEY_FILTER_TYPE, KEY_CONTENT_TYPE, KEY_THIRD_PARTY, KEY_DOMAIN_MAP, KEY_RESPONSE),
-            "$KEY_PATTERN = ?",
+            "$KEY_DOMAIN_MAP = ?",
             arrayOf(page),
             null,
             null,
@@ -120,13 +120,14 @@ class UserRulesDatabase @Inject constructor(
         )
         val rules = mutableListOf<UnifiedFilterResponse>()
         while (cursor.moveToNext()) {
-            getRuleResponseTag(cursor)?.let { rules.add(it) }
+            getFilterResponse(cursor)?.let { rules.add(it) }
         }
         cursor.close()
         return rules
     }
 
     // TODO: as sequence would probably be better
+    //  tested: not faster -> any reason to switch
     override fun getAllRules(): List<UnifiedFilterResponse> {
         val cursor = database.query(
             TABLE_RULES,
@@ -140,13 +141,13 @@ class UserRulesDatabase @Inject constructor(
         )
         val rules = mutableListOf<UnifiedFilterResponse>()
         while (cursor.moveToNext()) {
-            getRuleResponseTag(cursor)?.let { rules.add(it) }
+            getFilterResponse(cursor)?.let { rules.add(it) }
         }
         cursor.close()
         return rules
     }
 
-    private fun getRuleResponseTag(cursor: Cursor): UnifiedFilterResponse? {
+    private fun getFilterResponse(cursor: Cursor): UnifiedFilterResponse? {
         val response = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_RESPONSE)).toResponse()
         val pattern = cursor.getString(cursor.getColumnIndexOrThrow(KEY_PATTERN))
         val filterType = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_FILTER_TYPE))
@@ -172,17 +173,22 @@ class UserRulesDatabase @Inject constructor(
     }
 
     private fun DomainMap.toDBString(): String {
-        // value actually not necessary, for user filters it should always be 1
-        var string = getKey(0) + "/" + (if (getValue(0)) "1" else "0")
+        // disable full domainMap support, user rules only have null or SingleDomainMap with include = true
+/*        var string = getKey(0) + "/" + (if (getValue(0)) "1" else "0")
         for (i in 1 until size) {
             string += "//" + getKey(i) + "/" + (if (getValue(i)) "1" else "0")
         }
-        return string
+        return string*/
+
+        // TODO: actually there should be an error thrown, also if getValue(0) != 1
+        return if (size == 1) getKey(0) else ""
     }
 
     private fun String.toDomainMap(): DomainMap? {
         if (isEmpty()) return null
-        val mapEntries = split("//")
+        // disable full domainMap support, user rules only have null or SingleDomainMap with include = true
+        return SingleDomainMap(true, this)
+/*        val mapEntries = split("//")
         when {
             mapEntries.size == 1 -> {
                 val pair = mapEntries.first().split("/")
@@ -201,7 +207,7 @@ class UserRulesDatabase @Inject constructor(
                 return domainMap
             }
             else -> return null
-        }
+        }*/
     }
 
     companion object {
