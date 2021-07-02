@@ -136,13 +136,15 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             newList.title = resources.getString(R.string.add_blocklist)
             newList.icon = resources.getDrawable(R.drawable.ic_action_plus)
             newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val dialog = MaterialAlertDialogBuilder(requireContext())
+                // show only blocklist from url, change to dialog once list from file is working
+                showBlockist(AbpEntity(url = ""))
+                /*val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
                     .setNegativeButton(R.string.local_file) { _,_ -> showBlockist(AbpEntity(url = "file")) }
                     .setPositiveButton(R.string.remote_file) { _,_ -> showBlockist(AbpEntity(url = "")) }
                     .setTitle(R.string.add_blocklist)
                     .create()
-                dialog.show()
+                dialog.show()*/
                 true
             }
             this.preferenceScreen.addPreference(newList)
