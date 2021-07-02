@@ -271,8 +271,11 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             if (entity.url.startsWith("http") && enabled.isChecked && !wasEnabled)
                 GlobalScope.launch(Dispatchers.IO) {
                     abpListUpdater.updateAbpEntity(entity)
-                    // TODO: now AbpBlocker.loadLists (async?) should be called
+                    // TODO: now AbpBlocker.loadLists (async?) should be called (if update returns true)
                 }
+            else if (enabled.isChecked != !wasEnabled) {
+                // TODO: now AbpBlocker.loadLists (async?) should be called, to actually enable/disabled the lists in the blocker without browser restart
+            }
 
             if (newId != null && entitiyPrefs[newId] == null) { // not in entityPrefs if new
                 val pref = Preference(context)
