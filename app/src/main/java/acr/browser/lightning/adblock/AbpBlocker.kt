@@ -42,15 +42,13 @@ class AbpBlocker @Inject constructor(
     // store whether lists are loaded (and delay any request if loading is not finished)
     private var listsLoaded = false
 
-/*    // TODO: element hiding
-    //  not sure if this actually works (did not in a test - I think?), maybe it's crucial to inject the js at the right point
+/*    // element hiding
+    //  doesn't work, but maybe it's crucial to inject the js at the right point
     //  tried onPageFinished, might be too late (try to implement onDomFinished from yuzu?)
-//    private var elementHideExclusionList: FilterContainer? = null
-//    private var elementHideList: ElementContainer? = null
-    // both lists are actually inside the elementBlocker
     private var elementBlocker: CosmeticFiltering? = null
     var elementHide = userPreferences.elementHide
 */
+
     // cache for 3rd party check, allows significantly faster checks
     private val thirdPartyCache = mutableMapOf<String, Boolean>()
     private val thirdPartyCacheSize = 100
@@ -70,19 +68,18 @@ class AbpBlocker @Inject constructor(
         //  I don't see how this would apply, a) the operations end after a few seconds anyway without needing to cancel, and b) blocker runs as log as the app runs
         GlobalScope.launch(Dispatchers.Default) { // IO for io-intensive stuff, but here we do some IO and are mostly limited by CPU... so Default should be better?
             // load lists here if not loaded above
-            //stufftest()
             loadLists() // 400-450 ms on S4 mini plus / 1200-1700 ms on S4 mini -> good on plus
-            //loadListsAsync() // 540-720 ms on S4 mini plus / 900-1200 ms on S4 mini -> best non-blocking on normal
+            //loadListsAsync() // 540-720 ms on S4 mini plus / 900-1200 ms on S4 mini -> best non-blocking on non-plus
             // why is async so much faster on a dual core phone? expectation is other way round
 
-            // update all entities in AbpDao
+            // update all enabled entities/blocklists
             // may take a while depending on how many lists need update, and on internet connection
             if (abpListUpdater.updateAll(false)) // returns true if anything was updated
                 loadLists() // update again if files have changed
         }
     }
 
-    // from yuzu: module/adblock/src/main/java/jp/hazuki/yuzubrowser/adblock/AdBlockController.kt
+    // from yuzu: jp.hazuki.yuzubrowser.adblock/AdBlockController.kt
     fun createDummy(uri: Uri): WebResourceResponse {
         val mimeType = getMimeType(uri.toString())
         return if (mimeType.startsWith("image/")) {
@@ -114,7 +111,7 @@ class AbpBlocker @Inject constructor(
     }
 
     /*
-    // TODO: remove if element hiding does not work
+    // element hiding
     override fun loadScript(uri: Uri): String? {
         val cosmetic = elementBlocker ?: return null
         return cosmetic.loadScript(uri)

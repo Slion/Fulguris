@@ -125,6 +125,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             setNeutralButton(R.string.blocklist_update_now) {_,_ ->
                                 GlobalScope.launch(Dispatchers.IO) {
                                     abpListUpdater.updateAll(true)
+                                    // TODO: now AbpBlocker.loadLists (async?) should be called
                                 }
                             }
                         }?.resizeAndShow()
@@ -270,6 +271,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             if (entity.url.startsWith("http") && enabled.isChecked && !wasEnabled)
                 GlobalScope.launch(Dispatchers.IO) {
                     abpListUpdater.updateAbpEntity(entity)
+                    // TODO: now AbpBlocker.loadLists (async?) should be called
                 }
 
             if (newId != null && entitiyPrefs[newId] == null) { // not in entityPrefs if new
