@@ -352,7 +352,6 @@ class LightningWebClient(
             // User has been notified
             return true
         }
-        Log.i("adblock", "shouldOverrideUrlLoading")
 
         val url = request.url.toString()
         val headers = lightningView.requestHeaders
