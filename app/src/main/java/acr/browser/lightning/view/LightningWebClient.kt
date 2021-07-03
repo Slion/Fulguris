@@ -112,15 +112,11 @@ class LightningWebClient(
     /**
      * Overrides [WebViewClient.shouldInterceptRequest].
      * Looks like we need to intercept our custom URLs here to implement support for fulguris and about scheme.
+     *   comment Helium314: adBLock.shouldBock always never blocks if url.isSpecialUrl() or url.isAppScheme(), could be moved here
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-        // maybe adjust to always return response... null means allow anyway. what is the "super" actually doing? same as null?
-        // adBlock should probably be renamed once mining and malware block is implemented
-        val response = adBlock.shouldBlock(request, currentUrl)
-        if (response != null)
-            return response
-
-        return super.shouldInterceptRequest(view, request)
+        // returns some dummy response if blocked, null if not blocked
+        return adBlock.shouldBlock(request, currentUrl)
     }
 
     override fun onLoadResource(view: WebView, url: String?) {
@@ -356,6 +352,7 @@ class LightningWebClient(
             // User has been notified
             return true
         }
+        Log.i("adblock", "shouldOverrideUrlLoading")
 
         val url = request.url.toString()
         val headers = lightningView.requestHeaders

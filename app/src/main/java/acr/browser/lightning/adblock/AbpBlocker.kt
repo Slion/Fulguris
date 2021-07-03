@@ -204,13 +204,15 @@ class AbpBlocker @Inject constructor(
             return null
 
         // create contentRequest
-        // pageUrl can be "" (usually when opening something in a new tab)
+        // pageUrl can be "" (when opening something in a new tab, or manually entering a URL)
         //  in this case everything gets blocked because of the pattern "|https://"
-        //  this is blocked for some page domains, and apparently no page domain also means it's blocked
-        //  so some workaround here (maybe do something else? check how UnifiedFilter handles domainMap stuff)
-        // TODO: check if pageUrl could be wrong but not empty in some cases
-        //  like opening bookmarks, or manually entering a url
-        val contentRequest = request.getContentRequest(if (pageUrl == "") request.url else Uri.parse(pageUrl))
+        //  this is blocked for some specific page domains
+        //   and if pageUrl.host == null, domain check return true (in UnifiedFilter.kt)
+        //   same for is3rdParty
+        // if switching pages (via link or pressing back), pageUrl is still the old url, messing up 3rd party checks
+        // -> fix both by setting pageUrl to requestUrl if request.isForMainFrame
+        //  is there any way a request for main frame can be a 3rd party request? then a different fix would be required
+        val contentRequest = request.getContentRequest(if (request.isForMainFrame) request.url else Uri.parse(pageUrl))
 
         // no need to supply pattern to getBlockResponse
         //  pattern only used if it's for main frame
@@ -222,11 +224,6 @@ class AbpBlocker @Inject constructor(
 
         // wait until blocklists are loaded
         //  web request stuff does not run on main thread, so thread.sleep should be ok
-        // possible reduction of wait time before lists have loaded:
-        //   load list with 'empty' tag first and check those
-        //   for the rest the bloom filter could be used, so requests without matching tags are allowed immediately
-        //   but: seems like a lot of work for maybe saving 0.5-2 seconds on browser start
-        //    'maybe' saving because ca 20-50% of all requests will have matching tags, so there will (probably) still be a delay
         while (!listsLoaded) {
             Thread.sleep(50)
         }
