@@ -2,6 +2,7 @@ package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.AbpUpdateMode
 import acr.browser.lightning.adblock.BloomFilterAdBlocker
@@ -61,6 +62,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     @Inject @field:DiskScheduler internal lateinit var diskScheduler: Scheduler
     @Inject internal lateinit var bloomFilterAdBlocker: BloomFilterAdBlocker
     @Inject internal lateinit var abpListUpdater: AbpListUpdater
+    @Inject internal lateinit var abpBlocker: AbpBlocker
 
     private var recentSummaryUpdater: SummaryUpdater? = null
     private val compositeDisposable = CompositeDisposable()
@@ -68,6 +70,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     private var abpDao: AbpDao? = null
     private val entitiyPrefs = mutableMapOf<Int, Preference>()
+    private var reloadLists = false
+
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
@@ -125,7 +129,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             setNeutralButton(R.string.blocklist_update_now) {_,_ ->
                                 GlobalScope.launch(Dispatchers.IO) {
                                     abpListUpdater.updateAll(true)
-                                    // TODO: now AbpBlocker.loadLists (async?) should be called
+                                    reloadLists = true
                                 }
                             }
                         }?.resizeAndShow()
@@ -270,12 +274,11 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             // check for update (necessary to have correct id!)
             if (entity.url.startsWith("http") && enabled.isChecked && !wasEnabled)
                 GlobalScope.launch(Dispatchers.IO) {
-                    abpListUpdater.updateAbpEntity(entity)
-                    // TODO: now AbpBlocker.loadLists (async?) should be called (if update returns true)
+                    if (abpListUpdater.updateAbpEntity(entity))
+                        reloadLists = true
                 }
-            else if (enabled.isChecked != !wasEnabled) {
-                // TODO: now AbpBlocker.loadLists (async?) should be called, to actually enable/disabled the lists in the blocker without browser restart
-            }
+            else if (enabled.isChecked != wasEnabled)
+                reloadLists = true
 
             if (newId != null && entitiyPrefs[newId] == null) { // not in entityPrefs if new
                 val pref = Preference(context)
@@ -327,6 +330,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        if (reloadLists) // TODO: does this work?
+            GlobalScope.launch { abpBlocker.loadLists() }
         compositeDisposable.clear()
     }
 
