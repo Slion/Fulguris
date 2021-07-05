@@ -16,7 +16,6 @@
 
 package jp.hazuki.yuzubrowser.adblock.core
 
-import acr.browser.lightning.adblock.AbpBlocker
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.unified.Tag
 
