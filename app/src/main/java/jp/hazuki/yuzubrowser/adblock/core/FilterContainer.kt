@@ -16,11 +16,15 @@
 
 package jp.hazuki.yuzubrowser.adblock.core
 
+import acr.browser.lightning.adblock.AbpBlocker
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.unified.Tag
 
 class FilterContainer {
     private val filters = hashMapOf<String, ContentFilter>()
+    // set to false if there is at least one pattern that is not a domain
+    //  of true, checking is much faster
+    private var domainOnly = true
 
     operator fun plusAssign(filter: ContentFilter) {
         val key = when {
@@ -28,10 +32,16 @@ class FilterContainer {
             else -> Tag.createBest(filter.pattern)
         }
         this[key] = filter
+        // using old way with tags, need to do full check
+        domainOnly = false
     }
 
     // not having to create best tag accelerates loading by some 20-50%
     fun addWithTag(p: Pair<String, ContentFilter>) {
+        if (!p.first.contains('.'))
+            // normally created tags will only consist of %, numbers and letters
+            // only tag specifically created for patterns consisting of domains contain '.'
+            domainOnly = false
         this[p.first] = p.second
     }
 
@@ -39,9 +49,26 @@ class FilterContainer {
         filters.remove(tag)
     }
 
+    // check whether any filters with the domain as pattern match
+    //  having this separate accelerates checks for easylist by 5-10%
+    //  and much more in case the filterContainer contains only domains
+    fun getDomain(request: ContentRequest): ContentFilter? {
+        var domain = request.url.host ?: return null
+        var filter: ContentFilter?
+        while (domain.lastIndexOf('.') != domain.indexOf('.')) {
+            filter = filters[domain]
+            while (filter != null) {
+                if (filter.isMatch(request))
+                    return filter
+                filter = filter.next
+            }
+            domain = domain.substringAfter('.')
+        }
+        return null
+    }
+
     private operator fun set(tag: String, filter: ContentFilter) {
         // added: ignore duplicate filters
-        //  no noticeable slowdown
         var f = filters[tag]
         while (f != null) {
             if (f == filter)
@@ -55,6 +82,10 @@ class FilterContainer {
 
     operator fun get(request: ContentRequest): ContentFilter? {
 //        Tag.create(request.url.toString()).forEach {
+        getDomain(request)?.let { return it }
+        // no need for further checks if list only contains domain filters
+        if (domainOnly) return null
+
         request.tags.forEach {
             var filter = filters[it]
             while (filter != null) {

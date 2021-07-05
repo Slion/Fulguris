@@ -19,9 +19,9 @@ package jp.hazuki.yuzubrowser.adblock.filter.unified.io
 import jp.hazuki.yuzubrowser.adblock.filter.LengthException
 import jp.hazuki.yuzubrowser.adblock.filter.toByteArray
 import jp.hazuki.yuzubrowser.adblock.filter.toShortByteArray
+import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_CACHE_HEADER
-import jp.hazuki.yuzubrowser.adblock.filter.unified.Tag
-import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
+import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_TYPE_START_END
 import jp.hazuki.yuzubrowser.adblock.filter.unified.writeVariableInt
 import java.io.ByteArrayOutputStream
 import java.io.OutputStream
@@ -53,10 +53,16 @@ class FilterWriter {
             os.write(patternBytes)
 
             // also write best tag
-            //  no need to create tags when loading -> loading is ca 20% faster
+            //  no need to create tags when loading -> loading is ca 20-50% faster
             //  drawback: increased file size, up to 50% for easylist blocks (but 300 kb, so whatever)
-            val tagBytes = if (it.isRegex) "".toByteArray()
-                else Tag.createBest(it.pattern).toByteArray()
+            // write domain if filter only contains a domain, allows considerable speedup in case of pure hosts lists
+            //  and 5-10% speedup for easylist
+            val tagBytes = when {
+                it.isRegex -> "".toByteArray()
+                (it.filterType == FILTER_TYPE_START_END || it.filterType == FILTER_TYPE_HOST)
+                        && !it.pattern.contains('/') && !it.pattern.endsWith('.') -> it.pattern.toByteArray()
+                else -> Tag.createBest(it.pattern).toByteArray()
+            }
             os.writeVariableInt(tagBytes.size, shortBuf, intBuf)
             os.write(tagBytes)
 
