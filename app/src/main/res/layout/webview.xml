@@ -26,5 +26,6 @@ android:background="?android:attr/colorBackground"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:defaultFocusHighlightEnabled="false"
+    android:forceDarkAllowed="true"
     />
 

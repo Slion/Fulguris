@@ -6,6 +6,7 @@ package acr.browser.lightning.view
 
 import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
+import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
@@ -495,24 +496,60 @@ class LightningView(
     }
 
     /**
+     * Apply dark mode as needed.
+     * We try to go dark when using app dark theme or when page is forced to dark mode.
      *
+     * To test that you can load:
+     * https://septatrix.github.io/prefers-color-scheme-test/
+     *
+     * See also:
+     * https://stackoverflow.com/questions/57449900/letting-webview-on-android-work-with-prefers-color-scheme-dark
      */
     private fun applyDarkMode() {
         val settings = webView?.settings ?: return
 
-        // TODO: Have a settings option to have dark mode use specified render mode instead of WebView dark mode
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-            if (darkMode) {
-                WebSettingsCompat.setForceDark(settings,WebSettingsCompat.FORCE_DARK_ON)
-            } else {
-                WebSettingsCompat.setForceDark(settings,WebSettingsCompat.FORCE_DARK_OFF)
+        // If forced dark mode is supported
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK) &&
+            // and we are in dark theme or forced dark mode
+            ((activity as ThemedActivity).useDarkTheme || darkMode)) {
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
+                if (darkMode) {
+                    // User requested forced dark mode from menu, we need to enable user agent dark mode then.
+                    WebSettingsCompat.setForceDarkStrategy(
+                        settings,
+                        // Looks like that flag it's not working and will just do user agent dark mode even if page supports dark web theme.
+                        // That means that when using app light theme you can't get dark web theme, you will just get user agent dark theme.
+                        // No big deal though, just use app dark theme if you want proper web dark theme.
+                        WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING
+                    )
+                } else {
+                    // We are in app dark theme but this page does not forces to dark mode
+                    // Just request dark web theme then.
+                    // That's actually the only way to dark web theme rather than user agent darkening, see above comment.
+                    WebSettingsCompat.setForceDarkStrategy(
+                        settings,
+                        WebSettingsCompat.DARK_STRATEGY_WEB_THEME_DARKENING_ONLY
+                    )
+                }
             }
+
+            // We are either in app dark theme or forced dark mode, just request dark theme without actually forcing it.
+            // Yes I know that flag's name is misleading to say the least.
+            WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
         } else {
-            // Fallback to that then
-            if (darkMode) {
-                setColorMode(RenderingMode.INVERTED_GRAYSCALE)
+            // We are neither app dark theme or force dark mode or force dark mode is not supported.
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+                // We are in app light theme and force dark mode is disabled therefore:
+                WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_OFF)
             } else {
-                setColorMode(userPreferences.renderingMode)
+                // WebView force dark mode is not supported.
+                if (darkMode) {
+                    // Fallback to our special rendering mode then if user requests dark mode
+                    // TODO: Have a setting option to make this the default behaviour?
+                    setColorMode(RenderingMode.INVERTED_GRAYSCALE)
+                } else {
+                    setColorMode(userPreferences.renderingMode)
+                }
             }
         }
     }
@@ -572,11 +609,6 @@ class LightningView(
                         setGeolocationDatabasePath(file.path)
                     }
             }
-        }
-
-        // I guess that should do
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
-            WebSettingsCompat.setForceDarkStrategy(settings,WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING)
         }
 
     }
