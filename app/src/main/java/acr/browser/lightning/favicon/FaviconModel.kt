@@ -137,7 +137,9 @@ class FaviconModel @Inject constructor(
         // Use white filter on darkest favicons
         // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.co.uk
         // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
-        if (luminance < threshold && filteredLuminance < threshold)
+        if (luminance < threshold && filteredLuminance < threshold
+            // Needed to exclude white favicon variant provided by GitHub dark web theme
+            && palette.dominantSwatch != null)
         {
             // Yes, that favicon needs an inverted variant
             FileOutputStream(getFaviconCacheFile(application, uri, true)).safeUse {
@@ -145,6 +147,10 @@ class FaviconModel @Inject constructor(
                 it.flush()
                 emitter.onComplete()
             }
+        } else {
+            // Dark favicon cache not needed anymore then, just delete that file if any.
+            // Notably the case after switching to app dark theme and using GitHub or other sites providing favicon for dark web theme.
+            getFaviconCacheFile(application, uri, true).delete()
         }
 
         FileOutputStream(getFaviconCacheFile(application, uri, false)).safeUse {

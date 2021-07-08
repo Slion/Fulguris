@@ -219,7 +219,9 @@ fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
             // Use white filter on darkest favicons
             // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.co.uk
             // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
-            if (luminance < threshold && filteredLuminance < threshold) {
+            if (luminance < threshold && filteredLuminance < threshold
+                // Needed to exclude white favicon variant provided by GitHub dark web theme
+                && palette?.dominantSwatch != null) {
                 // Mostly black icon
                 //setColorFilter(Color.WHITE)
                 // Invert its colors

@@ -31,7 +31,8 @@ import javax.inject.Inject
 /**
  * Created by anthonycr on 9/23/18.
  *
- * Are we still using this?
+ * Generates our bookmarks HTML page.
+ * We actually use it as our default home page these days.
  */
 @Reusable
 class BookmarkPageFactory @Inject constructor(
