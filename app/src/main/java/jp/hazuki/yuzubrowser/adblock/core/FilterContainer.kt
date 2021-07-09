@@ -50,7 +50,7 @@ class FilterContainer {
     private fun getDomain(request: ContentRequest): ContentFilter? {
         var domain = request.url.host ?: return null
         var filter: ContentFilter?
-        while (domain.lastIndexOf('.') != domain.indexOf('.')) {
+        while (domain.contains('.')) {
             filter = filters[domain]
             while (filter != null) {
                 if (filter.isMatch(request))
