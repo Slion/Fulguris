@@ -32,6 +32,7 @@ class FilterWriter {
     fun write(os: OutputStream, filters: List<UnifiedFilter>) {
         writeHeader(os)
         writeAll(os, filters)
+        writeHeader(os)
     }
 
     private fun writeHeader(os: OutputStream) {
