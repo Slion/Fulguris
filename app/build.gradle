@@ -6,6 +6,7 @@ apply plugin: 'kotlin-parcelize'
 //apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'de.mobilej.unmock'
 
 // See: https://stackoverflow.com/a/53408667/3969362
 // Conditionally apply Firebase Google Plugins to flavors that needs it
@@ -177,6 +178,12 @@ dexcount {
     verbose = false
 }
 */
+
+unMock {
+    keepStartingWith "libcore."
+    keep "android.net.Uri"
+    keepAndRename "java.nio.charset.Charsets" to "xjava.nio.charset.Charsets"
+}
 
 dependencies {
     // Multi DEX is only needed in debug and on older devices from Android 5 and below.
