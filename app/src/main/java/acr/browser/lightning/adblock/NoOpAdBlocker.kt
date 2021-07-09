@@ -12,7 +12,7 @@ import javax.inject.Inject
 @Reusable
 class NoOpAdBlocker @Inject constructor() : AdBlocker {
 
-    override fun isAd(url: String) = false
+    //override fun isAd(url: String) = false
 
     // unused element hiding currently disabled
     //override fun loadScript(uri: Uri): String? = null

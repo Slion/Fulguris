@@ -143,7 +143,7 @@ class BloomFilterAdBlocker @Inject constructor(
         return null
     }
 
-    override fun isAd(url: String): Boolean {
+    private fun isAd(url: String): Boolean {
         val domain = url.host() ?: return false
 
         val mightBeOnBlockList = bloomFilter.mightContain(domain)

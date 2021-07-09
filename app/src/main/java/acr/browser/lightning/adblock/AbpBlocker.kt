@@ -59,8 +59,6 @@ class AbpBlocker @Inject constructor(
     private val dummyImage: ByteArray by lazy { readByte(application.resources.assets.open("blank.png")) }
     private val dummyResponse by lazy { WebResourceResponse("text/plain", "UTF-8", EmptyInputStream()) }
 
-    override fun isAd(url: String) = false // for now...
-
     init {
         // TODO: ideally we should call loadLists here (blocking) if the url in current tab (on opening browser) is not special
         //  because loadLists() here is sometimes significantly faster than inside the GlobalScope
