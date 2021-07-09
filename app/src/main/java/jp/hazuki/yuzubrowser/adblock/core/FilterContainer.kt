@@ -25,7 +25,8 @@ class FilterContainer {
     //  of true, checking is much faster
     private var domainOnly = true
 
-    operator fun plusAssign(filter: ContentFilter) {
+    // not needed any more
+/*    operator fun plusAssign(filter: ContentFilter) {
         val key = when {
             filter.isRegex -> ""
             else -> Tag.createBest(filter.pattern)
@@ -34,8 +35,8 @@ class FilterContainer {
         // using old way with tags, need to do full check
         domainOnly = false
     }
-
-    // not having to create best tag accelerates loading by some 20-50%
+*/
+    // not having to create best tag accelerates loading lists and filling FilterContainer by 20-50%
     fun addWithTag(p: Pair<String, ContentFilter>) {
         if (!p.first.contains('.'))
             // normally created tags will only consist of %, numbers and letters
@@ -45,8 +46,9 @@ class FilterContainer {
     }
 
     // check whether any filters with the domain as pattern match
-    //  having this separate accelerates checks for easylist by 5-10%
-    //  and much more in case the filterContainer contains only domains
+    //  having this separate gives no clear advantage or disadvantage when using easylist
+    //  but for domain-only lists it helps a lot
+    //  plus, it allows for faster loading from files
     private fun getDomain(request: ContentRequest): ContentFilter? {
         var domain = request.url.host ?: return null
         var filter: ContentFilter?
@@ -68,7 +70,6 @@ class FilterContainer {
     }
 
     operator fun get(request: ContentRequest): ContentFilter? {
-//        Tag.create(request.url.toString()).forEach {
         getDomain(request)?.let { return it }
         // no need for further checks if list only contains domain filters
         if (domainOnly) return null
