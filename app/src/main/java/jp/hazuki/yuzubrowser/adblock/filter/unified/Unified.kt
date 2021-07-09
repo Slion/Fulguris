@@ -36,6 +36,7 @@ internal const val FILTER_TYPE_RE2_REGEX_HOST = 8
 internal const val FILTER_TYPE_JVM_REGEX = 9
 internal const val FILTER_TYPE_JVM_REGEX_HOST = 10
 internal const val FILTER_TYPE_PATTERN = 11
+internal const val FILTER_TYPE_START_END_DOMAIN = 12 // not uses as actual filter, only for simplified storage of some filters
 
 internal const val FILTER_DIR = "adblock_filter"
 internal const val FILTER_CACHE_HEADER = "YZBABPFI\u0000\u0001\u0001"

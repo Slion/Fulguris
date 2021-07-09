@@ -12,7 +12,10 @@ import androidx.core.util.PatternsCompat
 import jp.hazuki.yuzubrowser.adblock.EmptyInputStream
 import jp.hazuki.yuzubrowser.adblock.core.*
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
+import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.getFilterDir
+import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader
+import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
 import jp.hazuki.yuzubrowser.adblock.getContentType
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import kotlinx.coroutines.*
@@ -62,20 +65,91 @@ class AbpBlocker @Inject constructor(
         // TODO: ideally we should call loadLists here (blocking) if the url in current tab (on opening browser) is not special
         //  because loadLists() here is sometimes significantly faster than inside the GlobalScope
         //  but generally no need to block UI, better just delay the first web requests
-        //loadLists() // 320-430 ms on S4 mini plus / 550-650 ms on S4 mini -> always the fastest, but blocking
+        //  -> so, how to get current tab url?
+        //loadLists(false)
 
-        // TODO: use of globalscope is discouraged, but all reasons I found were related to stuff that is no canceled if the related UI is closed
-        //  I don't see how this would apply, a) the operations end after a few seconds anyway without needing to cancel, and b) blocker runs as log as the app runs
-        GlobalScope.launch(Dispatchers.Default) { // IO for io-intensive stuff, but here we do some IO and are mostly limited by CPU... so Default should be better?
+        GlobalScope.launch(Dispatchers.Default) {
             // load lists here if not loaded above
-            loadLists() // 400-450 ms on S4 mini plus / 1200-1700 ms on S4 mini -> good on plus
-            //loadListsAsync() // 540-720 ms on S4 mini plus / 900-1200 ms on S4 mini -> best non-blocking on non-plus
-            // why is async so much faster on a dual core phone? expectation is other way round
+            //  2-5x slower than blocking for some reason -> is there any reasonable compromise?
+            loadLists(false)
 
             // update all enabled entities/blocklists
             // may take a while depending on how many lists need update, and on internet connection
             if (abpListUpdater.updateAll(false)) // returns true if anything was updated
-                loadLists() // update again if files have changed
+                loadLists(true) // update again if files have changed
+        }
+    }
+
+    // load lists
+    //  and create files containing filters from all enabled entities (without duplicates)
+    fun loadLists(loadFromEntityFiles: Boolean) {
+        listsLoaded = false
+        val filterDir = application.applicationContext.getFilterDir()
+
+        val allowFile = File(filterDir, ABP_PREFIX_ALLOW)
+        val blockFile = File(filterDir, ABP_PREFIX_DENY)
+
+        // loadFromEntityFiles is true if enablement of some entities has changed or entities were updated
+        //  in this case joint lists need to be re-created
+        if (loadFromEntityFiles){
+            allowFile.delete()
+            blockFile.delete()
+        }
+
+        // for some reason reading allows first is faster then reading blocks first... but why?
+       if (loadFile(allowFile, false) && loadFile(blockFile, true)) {
+            listsLoaded = true
+            return
+        }
+        // loading failed or lists don't exist: load the normal way
+
+        val entities = AbpDao(application.applicationContext).getAll()
+        val abpLoader = AbpLoader(filterDir, entities)
+
+        // toSet() for removal of duplicate entries
+        val allowFilters = abpLoader.loadAll(ABP_PREFIX_ALLOW).toSet()
+        val blockFilters = abpLoader.loadAll(ABP_PREFIX_DENY).toSet()
+
+        blockList = FilterContainer().also { blockFilters.forEach(it::addWithTag) }
+        allowList = FilterContainer().also { allowFilters.forEach(it::addWithTag) }
+        listsLoaded = true
+
+        // create joint file
+        writeFile(blockFile, blockFilters.map {it.second})
+        writeFile(allowFile, allowFilters.map {it.second})
+
+        /*if (elementHide) {
+            val disableCosmetic = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign) }
+            val elementFilter = ElementContainer().also { abpLoader.loadAllElementFilter().forEach(it::plusAssign) }
+            elementBlocker = CosmeticFiltering(disableCosmetic, elementFilter)
+        }*/
+    }
+
+    private fun loadFile(file: File, blocks: Boolean): Boolean {
+        if (file.exists()) {
+            try {
+                file.inputStream().buffered().use { ins ->
+                    val reader = FilterReader(ins)
+                    if (reader.checkHeader()) {
+                        if (blocks)
+                            blockList =
+                                FilterContainer().also { reader.readAll().forEach(it::addWithTag) }
+                        else
+                            allowList =
+                                FilterContainer().also { reader.readAll().forEach(it::addWithTag) }
+                        return true
+                    }
+                }
+            } catch(e: IOException) {}
+        }
+        return false
+    }
+
+    private fun writeFile(file: File, filters: Collection<UnifiedFilter>) {
+        val writer = FilterWriter()
+        file.outputStream().buffered().use {
+            writer.write(it, filters.toList())
+            it.close()
         }
     }
 
@@ -143,39 +217,6 @@ class AbpBlocker @Inject constructor(
         val db = PublicSuffix.get()
 
         return cache3rdPartyResult(db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost), cacheEntry)
-    }
-
-    // TODO: on S4 mini this is ca 30% faster than running loadLists() in background
-    //  but on S4 mini plus, it's ca 30% slower than running loadLists() in background
-    // currently not used
-    //  maybe remove, or update to provide same things as loadLists()
-    //  or understand when which is faster and always call the faster version
-    fun loadListsAsync() {
-        listsLoaded = false
-        val abpLoader = AbpLoader(application.applicationContext.getFilterDir(), AbpDao(application.applicationContext).getAll())
-        GlobalScope.launch {
-            val el = async { FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_ALLOW).forEach(it::addWithTag) } }
-            val bl = async { FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::addWithTag) } }
-            allowList = el.await()
-            blockList = bl.await()
-            listsLoaded = true
-        }
-    }
-
-    fun loadLists() {
-        listsLoaded = false
-        val entities = AbpDao(application.applicationContext).getAll()
-        val abpLoader = AbpLoader(application.applicationContext.getFilterDir(), entities)
-        allowList = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_ALLOW).forEach(it::addWithTag) }
-        blockList = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DENY).forEach(it::addWithTag) }
-
-        /*if (elementHide) {
-            val disableCosmetic = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign) }
-            val elementFilter = ElementContainer().also { abpLoader.loadAllElementFilter().forEach(it::plusAssign) }
-            elementBlocker = CosmeticFiltering(disableCosmetic, elementFilter)
-        }*/
-
-        listsLoaded = true
     }
 
     // cache 3rd party check result, and remove oldest entry if cache too large

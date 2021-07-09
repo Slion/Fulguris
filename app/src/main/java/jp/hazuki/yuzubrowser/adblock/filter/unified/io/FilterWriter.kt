@@ -16,14 +16,12 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.unified.io
 
-import jp.hazuki.yuzubrowser.adblock.filter.LengthException
 import jp.hazuki.yuzubrowser.adblock.filter.toByteArray
 import jp.hazuki.yuzubrowser.adblock.filter.toShortByteArray
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_CACHE_HEADER
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_TYPE_START_END
 import jp.hazuki.yuzubrowser.adblock.filter.unified.writeVariableInt
-import java.io.ByteArrayOutputStream
 import java.io.OutputStream
 import kotlin.math.min
 
@@ -44,26 +42,36 @@ class FilterWriter {
         os.write(filters.size.toByteArray(intBuf))
 
         filters.forEach {
+            // write simplified for simple domain filters
+            //  increases write and read speeds
+            if (it.filterType == FILTER_TYPE_START_END && !it.pattern.contains('/')
+                && !it.pattern.endsWith('.') && it.domains == null && !it.ignoreCase) {
+                os.write(FILTER_TYPE_START_END_DOMAIN and 0xff)
+                os.write(it.contentType.toShortByteArray(shortBuf))
+                os.write(it.thirdParty and 0xff)
+                val patternBytes = it.pattern.toByteArray()
+                os.write(patternBytes.size.toShortByteArray(shortBuf))
+                os.write(patternBytes)
+                return@forEach
+            }
+
             os.write(it.filterType and 0xff)
             os.write(it.contentType.toShortByteArray(shortBuf))
-            os.write(if (it.ignoreCase) 1 else 0)
             os.write(it.thirdParty and 0xff)
+
             val patternBytes = it.pattern.toByteArray()
             os.writeVariableInt(patternBytes.size, shortBuf, intBuf)
             os.write(patternBytes)
 
+            os.write(if (it.ignoreCase) 1 else 0)
+
             // also write best tag
             //  no need to create tags when loading -> loading is ca 20-50% faster
-            //  drawback: increased file size, up to 50% for easylist blocks (but 300 kb, so whatever)
-            // write domain if filter only contains a domain, allows considerable speedup in case of pure hosts lists
-            //  and 5-10% speedup for easylist
             val tagBytes = when {
                 it.isRegex -> "".toByteArray()
-                (it.filterType == FILTER_TYPE_START_END || it.filterType == FILTER_TYPE_HOST)
-                        && !it.pattern.contains('/') && !it.pattern.endsWith('.') -> it.pattern.toByteArray()
                 else -> Tag.createBest(it.pattern).toByteArray()
             }
-            os.writeVariableInt(tagBytes.size, shortBuf, intBuf)
+            os.write(tagBytes.size.toShortByteArray(shortBuf))
             os.write(tagBytes)
 
             os.write(min(it.domains?.size ?: 0, 255))
@@ -71,7 +79,7 @@ class FilterWriter {
                 os.write(if (map.include) 1 else 0)
                 for (i in 0 until min(map.size, 255)) {
                     val key = map.getKey(i).toByteArray()
-                    os.writeVariableInt(key.size, shortBuf, intBuf)
+                    os.write(key.size.toShortByteArray(shortBuf))
                     os.write(key)
                     os.write(if (map.getValue(i)) 1 else 0)
                 }

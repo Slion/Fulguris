@@ -44,13 +44,6 @@ class FilterReader(private val input: InputStream) {
 
             if (input.read(shortBuf) != 2) break
             val contentType = shortBuf.toShortInt()
-
-            val ignoreCase = when (input.read()) {
-                0 -> false
-                1 -> true
-                else -> break@loop
-            }
-
             val thirdParty = when (input.read()) {
                 0 -> 0
                 1 -> 1
@@ -65,6 +58,18 @@ class FilterReader(private val input: InputStream) {
             }
             if (input.read(patternBuffer, 0, patternSize) != patternSize) break
             val pattern = String(patternBuffer, 0, patternSize)
+
+            // startEndFilter with domain as pattern, gets special treatment for accelerated read/write
+            if (type == FILTER_TYPE_START_END_DOMAIN) {
+                yield(Pair(pattern,StartEndFilter(pattern, contentType, false, null, thirdParty)))
+                continue@loop
+            }
+
+            val ignoreCase = when (input.read()) {
+                0 -> false
+                1 -> true
+                else -> break@loop
+            }
 
             val tagSize = input.readVariableInt(shortBuf, intBuf)
             if (tagSize == -1) break

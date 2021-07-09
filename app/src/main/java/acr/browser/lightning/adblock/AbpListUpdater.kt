@@ -96,7 +96,6 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
     private suspend fun updateHttp(entity: AbpEntity, forceUpdate: Boolean): Boolean {
         // don't update if auto-update settings don't allow
-        // TODO: how to get userPreferences
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (!forceUpdate
             && ((userPreferences.blockListAutoUpdate == AbpUpdateMode.WIFI_ONLY && cm.isActiveNetworkMetered)

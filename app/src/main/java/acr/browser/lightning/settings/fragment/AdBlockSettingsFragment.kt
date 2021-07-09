@@ -330,8 +330,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (reloadLists) // TODO: does this work?
-            GlobalScope.launch { abpBlocker.loadLists() }
+        if (reloadLists)
+            GlobalScope.launch { abpBlocker.loadLists(true) }
         compositeDisposable.clear()
     }
 

@@ -44,14 +44,10 @@ class FilterContainer {
         this[p.first] = p.second
     }
 
-    fun removeTag(tag: String) {
-        filters.remove(tag)
-    }
-
     // check whether any filters with the domain as pattern match
     //  having this separate accelerates checks for easylist by 5-10%
     //  and much more in case the filterContainer contains only domains
-    fun getDomain(request: ContentRequest): ContentFilter? {
+    private fun getDomain(request: ContentRequest): ContentFilter? {
         var domain = request.url.host ?: return null
         var filter: ContentFilter?
         while (domain.lastIndexOf('.') != domain.indexOf('.')) {
@@ -67,14 +63,6 @@ class FilterContainer {
     }
 
     private operator fun set(tag: String, filter: ContentFilter) {
-        // added: ignore duplicate filters
-        var f = filters[tag]
-        while (f != null) {
-            if (f == filter)
-                return
-            f = f.next
-        }
-
         filter.next = filters[tag]
         filters[tag] = filter
     }
