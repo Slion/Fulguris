@@ -41,6 +41,7 @@ import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.Dispatchers
 import okhttp3.HttpUrl
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okio.buffer
@@ -68,9 +69,16 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     private val compositeDisposable = CompositeDisposable()
     private var forceRefreshHostsPreference: Preference? = null
 
-    private var abpDao: AbpDao? = null
+    private lateinit var abpDao: AbpDao
     private val entitiyPrefs = mutableMapOf<Int, Preference>()
+
+    // if blocklist changed, they need to be reloaded, but this should happen only once
+    //  if reloadLists is true, list reload will be launched onDestroy
     private var reloadLists = false
+
+    // updater is launched in background, and lists should not be reloaded while updater is running
+    //  int since multiple lists could be updated at the same time
+    private var updatesRunning = 0
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
@@ -127,10 +135,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             }
                             setPositiveButton(resources.getString(R.string.action_ok), null)
                             setNeutralButton(R.string.blocklist_update_now) {_,_ ->
-                                GlobalScope.launch(Dispatchers.IO) {
-                                    abpListUpdater.updateAll(true)
-                                    reloadLists = true
-                                }
+                                updateEntity(null)
                             }
                         }?.resizeAndShow()
                 }
@@ -155,7 +160,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             this.preferenceScreen.addPreference(newList)
 
             // list of blocklists/entities
-            for (entity in abpDao!!.getAll()) {
+            for (entity in abpDao.getAll()) {
                 val entityPref = Preference(context)
 //                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
 //                pref.isChecked = entity.enabled
@@ -171,6 +176,32 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             }
         }
     }
+
+    // update entity and adjust displayed last update time
+    private fun updateEntity(abpEntity: AbpEntity?) {
+        GlobalScope.launch(Dispatchers.IO) {
+            ++updatesRunning
+            val updated = if (abpEntity == null) abpListUpdater.updateAll(true) else abpListUpdater.updateAbpEntity(abpEntity)
+            if (updated) {
+                // remove lists now
+                //  when it's done later there might be cases where old joint list is still used
+                abpBlocker.removeJointLists()
+                reloadLists = true
+
+                // update the "last updated" times
+                activity?.runOnUiThread {
+                    for (entity in abpDao.getAll())
+                        if (!entity.url.startsWith(Schemes.Fulguris) && entity.lastLocalUpdate > 0)
+                            entitiyPrefs[entity.entityId]?.summary = resources.getString(
+                                R.string.blocklist_last_update,
+                                DateFormat.getDateInstance().format(Date(entity.lastLocalUpdate))
+                            )
+                }
+            }
+            --updatesRunning
+        }
+    }
+
 
     private fun showBlockist(entity: AbpEntity) {
         val builder = MaterialAlertDialogBuilder(requireContext())
@@ -244,7 +275,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 val confirmDialog = MaterialAlertDialogBuilder(requireContext())
                     .setNegativeButton(R.string.action_cancel, null)
                     .setPositiveButton(R.string.action_delete) { _, _ ->
-                        abpDao?.delete(entity)
+                        abpDao.delete(entity)
                         dialog?.dismiss()
                         preferenceScreen.removePreference(entitiyPrefs[entity.entityId])
                     }
@@ -265,22 +296,19 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             entity.enabled = enabled.isChecked
 
             entity.title = title.text.toString()
-            val newId = abpDao?.update(entity) // new id if new entity was added
+            val newId = abpDao.update(entity) // new id if new entity was added, otherwise newId == entity.entityId
 
             // set new id for newly added list
-            if (entity.entityId == 0 && newId != null)
+            if (entity.entityId == 0)
                 entity.entityId = newId
 
             // check for update (necessary to have correct id!)
             if (entity.url.startsWith("http") && enabled.isChecked && !wasEnabled)
-                GlobalScope.launch(Dispatchers.IO) {
-                    if (abpListUpdater.updateAbpEntity(entity))
-                        reloadLists = true
-                }
+                updateEntity(entity)
             else if (enabled.isChecked != wasEnabled)
                 reloadLists = true
 
-            if (newId != null && entitiyPrefs[newId] == null) { // not in entityPrefs if new
+            if (entitiyPrefs[newId] == null) { // not in entityPrefs if new
                 val pref = Preference(context)
                 entity.entityId = newId
                 pref.title = entity.title
@@ -330,8 +358,15 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (reloadLists)
-            GlobalScope.launch { abpBlocker.loadLists(true) }
+        // reload lists after updates are done
+        if (reloadLists || updatesRunning > 0) {
+            GlobalScope.launch(Dispatchers.Default) {
+                while (updatesRunning > 0)
+                    delay(200)
+                if (reloadLists)
+                    abpBlocker.loadLists()
+            }
+        }
         compositeDisposable.clear()
     }
 

@@ -42,7 +42,7 @@ class AbpBlocker @Inject constructor(
     private var miningList = FilterContainer() // copy from yuzu?
     private var malwareList = FilterContainer() // copy from smartcookieweb/styx?
 
-    // store whether lists are loaded (and delay any request if loading is not finished)
+    // store whether lists are loaded (and delay any request until loading is done)
     private var listsLoaded = false
 
 /*    // element hiding
@@ -69,37 +69,37 @@ class AbpBlocker @Inject constructor(
         GlobalScope.launch(Dispatchers.Default) {
             // load lists here if not loaded above
             //  2-5x slower than blocking for some reason -> is there any reasonable compromise?
-            loadLists(false)
+            loadLists()
 
             // update all enabled entities/blocklists
             // may take a while depending on how many lists need update, and on internet connection
-            if (abpListUpdater.updateAll(false)) // returns true if anything was updated
-                loadLists(true) // update again if files have changed
+            if (abpListUpdater.updateAll(false)) { // returns true if anything was updated
+                removeJointLists()
+                loadLists() // update again if files have changed
+            }
         }
+    }
+
+    fun removeJointLists() {
+        val filterDir = application.applicationContext.getFilterDir()
+        File(filterDir, ABP_PREFIX_ALLOW).delete()
+        File(filterDir, ABP_PREFIX_DENY).delete()
     }
 
     // load lists
     //  and create files containing filters from all enabled entities (without duplicates)
-    fun loadLists(loadFromEntityFiles: Boolean) {
-        listsLoaded = false
+    fun loadLists() {
         val filterDir = application.applicationContext.getFilterDir()
 
         val allowFile = File(filterDir, ABP_PREFIX_ALLOW)
         val blockFile = File(filterDir, ABP_PREFIX_DENY)
-
-        // loadFromEntityFiles is true if enablement of some entities has changed or entities were updated
-        //  in this case joint lists need to be re-created
-        if (loadFromEntityFiles){
-            allowFile.delete()
-            blockFile.delete()
-        }
 
         // for some reason reading allows first is faster then reading blocks first... but why?
        if (loadFile(allowFile, false) && loadFile(blockFile, true)) {
             listsLoaded = true
             return
         }
-        // loading failed or lists don't exist: load the normal way
+        // loading failed or joint lists don't exist: load the normal way and create joint lists
 
         val entities = AbpDao(application.applicationContext).getAll()
         val abpLoader = AbpLoader(filterDir, entities)
