@@ -143,6 +143,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     .setNegativeButton(R.string.local_file) { _,_ -> showBlockList(AbpEntity(url = "file")) }
                     .setPositiveButton(R.string.remote_file) { _,_ -> showBlockList(AbpEntity(url = "")) }
                     .setTitle(R.string.add_blocklist)
+                    .setMessage(R.string.add_blocklist_hint)
                     .create()
                 dialog.show()
                 true

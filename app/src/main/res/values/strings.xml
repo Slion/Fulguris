@@ -175,6 +175,7 @@
     <string name="blocklist_update_now">Update lists now</string>
     <string name="blocklist_last_update">Last update: %s</string>
     <string name="add_blocklist">Add new blocklist</string>
+    <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
     <string name="enable_blocklist">Enable this list</string>
     <string name="invalid_title">Invalid title</string>
     <string name="invalid_url">Invalid URL</string>
