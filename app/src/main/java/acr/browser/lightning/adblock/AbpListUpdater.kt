@@ -16,13 +16,16 @@
 
 package acr.browser.lightning.adblock
 
+import acr.browser.lightning.adblock.parser.HostsFileParser
 import acr.browser.lightning.adblock.util.hash.computeMD5
+import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Uri
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_DIR
+import jp.hazuki.yuzubrowser.adblock.filter.unified.StartEndFilter
 import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
 import jp.hazuki.yuzubrowser.adblock.filter.unified.element.ElementFilter
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.ElementWriter
@@ -46,6 +49,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
     val okHttpClient = OkHttpClient() // any problems if not injecting?
 
     @Inject internal lateinit var userPreferences: UserPreferences
+    @Inject internal lateinit var logger: Logger
 
     val abpDao = AbpDao(context)
 
@@ -187,7 +191,27 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
     private suspend fun decode(reader: BufferedReader, charset: Charset, entity: AbpEntity): Boolean {
         val decoder = AbpFilterDecoder()
-        if (!decoder.checkHeader(reader, charset)) return false
+        val dir = getFilterDir()
+        val writer = FilterWriter()
+
+        if (!decoder.checkHeader(reader, charset)) {
+            // no adblock plus format, try hosts reader
+            //  TODO: adjust hosts parser? accepts really a lot of not really suitable lines as hosts
+            //   no real problem, but they clutter the list (mostly slows down loading)
+            val parser = HostsFileParser(logger)
+            // TODO: HostFilter or StartEndFilter?
+            //  HostFilter is exact host match, StartEndFilter also matches subdomains
+            //  if StartEndFilter is the choice, we could remove unnecessary subdomains (e.g. ads.example.com if example.com is on list)
+            //   or rather do it when loading / creating joint lists?
+            val hostsList = parser.parseInput(reader).map {StartEndFilter(it.name,0xffff, false, null, -1)}
+            if (hostsList.isEmpty())
+                return false
+            entity.lastLocalUpdate = System.currentTimeMillis()
+            writer.write(dir.getAbpBlackListFile(entity), hostsList)
+            abpDao.update(entity)
+
+            return true
+        }
 
         val set = decoder.decode(reader, entity.url)
 
@@ -199,9 +223,6 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         entity.version = info.version
         entity.lastUpdate = info.lastUpdate
         entity.lastLocalUpdate = System.currentTimeMillis()
-        val dir = getFilterDir()
-
-        val writer = FilterWriter()
         writer.write(dir.getAbpBlackListFile(entity), set.blackList)
         writer.write(dir.getAbpWhiteListFile(entity), set.whiteList)
         writer.write(dir.getAbpWhitePageListFile(entity), set.elementDisableFilter)
