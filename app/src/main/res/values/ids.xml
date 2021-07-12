@@ -24,5 +24,6 @@
     <item name="action_add_bookmark" type="id" />
     <item name="action_sessions" type="id" />
     <item name="action_exit" type="id" />
+    <item name="action_block" type="id" />
 
 </resources>

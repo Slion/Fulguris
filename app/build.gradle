@@ -1,9 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+// parcelize for AbpEntity
+apply plugin: 'kotlin-parcelize'
 //apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'de.mobilej.unmock'
 
 // See: https://stackoverflow.com/a/53408667/3969362
 // Conditionally apply Firebase Google Plugins to flavors that needs it
@@ -176,6 +179,12 @@ dexcount {
 }
 */
 
+unMock {
+    keepStartingWith "libcore."
+    keep "android.net.Uri"
+    keepAndRename "java.nio.charset.Charsets" to "xjava.nio.charset.Charsets"
+}
+
 dependencies {
     // Multi DEX is only needed in debug and on older devices from Android 5 and below.
     // If you disable minify in release mode you also need to load and install that library in release for those devices.
@@ -277,6 +286,8 @@ dependencies {
     // Since java.time need API 26 we use that backport instead
     // See: https://github.com/JakeWharton/ThreeTenABP
     implementation 'com.jakewharton.threetenabp:threetenabp:1.3.0'
+
+    implementation 'com.google.re2j:re2j:1.6'
 }
 
 kapt {
