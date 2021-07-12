@@ -37,6 +37,7 @@ import java.io.File
 import java.io.IOException
 import java.nio.charset.Charset
 import javax.inject.Inject
+import kotlin.math.max
 
 // this is a slightly modified part of jp.hazuki.yuzubrowser.adblock.service/AbpUpdateService.kt
 class AbpListUpdater @Inject constructor(val context: Context) {
@@ -240,8 +241,17 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         }
     }
 
+    private fun AbpEntity.isNeedUpdate(): Boolean {
+        val now = System.currentTimeMillis()
+        if (now - lastLocalUpdate >= max(expires * AN_HOUR, A_DAY * userPreferences.blockListAutoUpdateFrequency)) {
+            return true
+        }
+        return false
+    }
+
     companion object {
         private const val AN_HOUR = 60 * 60 * 1000
+        private const val A_DAY = 24 * AN_HOUR
 
         const val ASSETS_BLOCKLIST = "easylist.txt"
 

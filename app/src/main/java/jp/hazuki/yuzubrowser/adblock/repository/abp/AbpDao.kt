@@ -76,18 +76,15 @@ class AbpDao(val context: Context) {
             abpEntity.entityId = i
         }
         list.add(abpEntity)
+        // sort list to have consistent order shown in settings
+        list.sortedBy { it.entityId }
         prefs.edit().putStringSet(ABP_ENTITIES, list.map { it.toString() }.toSet()).apply()
         return abpEntity.entityId
     }
 
     fun delete(abpEntity: AbpEntity) {
         val list = getAll() as MutableList
-        var i = 1
-        while (i < list.size) {
-            if (list[i].equals(abpEntity))
-                list.removeAt(i)
-            ++i
-        }
+        list.removeAll { it.entityId == abpEntity.entityId }
         AbpListUpdater(context).removeFiles(abpEntity)
 
         if (list.isEmpty())

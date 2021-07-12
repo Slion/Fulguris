@@ -171,6 +171,7 @@
     <string name="abp_update_off">Auto-update off</string>
     <string name="abp_update_wifi">Only on non-metered connections</string>
     <string name="blocklist_update">Update blocklists</string>
+    <string name="blocklist_update_frequency">Auto-update frequency</string>
     <string name="blocklist_update_now">Update lists now</string>
     <string name="blocklist_last_update">Last update: %s</string>
     <string name="add_blocklist">Add new blocklist</string>
@@ -181,6 +182,8 @@
     <string name="blocklist_remove">Remove blocklist</string>
     <string name="blocklist_remove_confirm">Really remove blocklist %s?</string>
     <string name="local_file">Local blocklist</string>
+    <string name="local_file_replace">Replace blocklist</string>
+    <string name="local_file_chosen">file selected</string>
     <string name="remote_file">Remote blocklist</string>
 
 <!-- Common actions -->

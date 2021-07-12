@@ -376,6 +376,7 @@ class UserPreferences @Inject constructor(
      * Update check is only happening at browser start.
      */
     var blockListAutoUpdate by preferences.enumPreference(R.string.pref_key_blocklist_auto_update, AbpUpdateMode.WIFI_ONLY)
+    var blockListAutoUpdateFrequency by preferences.intPreference(R.string.pref_key_blocklist_auto_update_frequency, 7)
 
 }
 

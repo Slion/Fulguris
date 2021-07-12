@@ -39,26 +39,3 @@ internal fun File.getAbpWhitePageListFile(entity: AbpEntity): File {
 internal fun File.getAbpElementListFile(entity: AbpEntity): File {
     return File(this, ABP_PREFIX_ELEMENT + entity.entityId)
 }
-
-fun List<AbpEntity>.checkNeedUpdate(): Boolean {
-    val now = System.currentTimeMillis()
-    forEach {
-        if (it.isNeedUpdate()) return true
-        if (now - it.lastLocalUpdate >= (if (it.expires > 0) it.expires * AN_HOUR else A_DAY)) {
-            return true
-        }
-    }
-    return false
-}
-
-fun AbpEntity.isNeedUpdate(): Boolean {
-    val now = System.currentTimeMillis()
-    if (now - lastLocalUpdate >= (if (expires > 0) expires * AN_HOUR else A_DAY)) {
-        return true
-    }
-    return false
-}
-
-private const val AN_HOUR = 60 * 60 * 1000
-
-private const val A_DAY = 24 * AN_HOUR
