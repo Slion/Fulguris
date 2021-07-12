@@ -113,14 +113,27 @@ class AbpBlocker @Inject constructor(
         listsLoaded = true
 
         // create joint file
-        writeFile(blockFile, blockFilters.map {it.second})
-        writeFile(allowFile, allowFilters.map {it.second})
+        writeFile(blockFile, blockFilters.sanitize().map {it.second})
+        writeFile(allowFile, allowFilters.sanitize().map {it.second})
 
         /*if (elementHide) {
             val disableCosmetic = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign) }
             val elementFilter = ElementContainer().also { abpLoader.loadAllElementFilter().forEach(it::plusAssign) }
             elementBlocker = CosmeticFiltering(disableCosmetic, elementFilter)
         }*/
+    }
+
+    private fun Set<Pair<String, UnifiedFilter>>.sanitize(): Collection<Pair<String, UnifiedFilter>> {
+        return this.mapNotNull { when {
+            // WebResourceRequest.getContentType(pageUri: Uri) never returns TYPE_POPUP
+            //  so we can remove filters that act on popup-only
+            it.second.contentType == ContentRequest.TYPE_POPUP -> null
+            // remove other unnecessary filters?
+            //  more unsupported types?
+            //  relevant number of cases where there are filters "including" more specific filters?
+            //   e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
+            else -> it
+        } }
     }
 
     private fun loadFile(file: File, blocks: Boolean): Boolean {
