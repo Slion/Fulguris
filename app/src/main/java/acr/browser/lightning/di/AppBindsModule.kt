@@ -8,6 +8,8 @@ import acr.browser.lightning.adblock.source.HostsDataSourceProvider
 import acr.browser.lightning.adblock.source.PreferencesHostsDataSourceProvider
 import acr.browser.lightning.browser.cleanup.DelegatingExitCleanup
 import acr.browser.lightning.browser.cleanup.ExitCleanup
+import acr.browser.lightning.database.adblock.UserRulesDatabase
+import acr.browser.lightning.database.adblock.UserRulesRepository
 import acr.browser.lightning.database.adblock.HostsDatabase
 import acr.browser.lightning.database.adblock.HostsRepository
 import acr.browser.lightning.database.allowlist.AdBlockAllowListDatabase
@@ -55,6 +57,9 @@ interface AppBindsModule {
 
     @Binds
     fun bindsHostsRepository(hostsDatabase: HostsDatabase): HostsRepository
+
+    @Binds
+    fun bindsAbpRulesRepository(apbRulesDatabase: UserRulesDatabase): UserRulesRepository
 
     @Binds
     fun bindsHostsDataSourceProvider(preferencesHostsDataSourceProvider: PreferencesHostsDataSourceProvider): HostsDataSourceProvider

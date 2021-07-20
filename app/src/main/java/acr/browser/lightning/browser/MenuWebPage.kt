@@ -1,6 +1,7 @@
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.MenuWebPageBinding
@@ -13,6 +14,7 @@ import acr.browser.lightning.utils.isSpecialUrl
 import android.animation.AnimatorInflater
 import android.animation.LayoutTransition
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +31,8 @@ class MenuWebPage : PopupWindow {
     internal lateinit var bookmarkModel: BookmarkRepository
     @Inject
     lateinit var iUserPreferences: UserPreferences
+    @Inject
+    lateinit var abpUserRules: AbpUserRules
 
     var iBinding: MenuWebPageBinding
     var iIsIncognito = false
@@ -141,6 +145,7 @@ class MenuWebPage : PopupWindow {
                     iBinding.menuItemAddToHome.isVisible = it
                     iBinding.menuItemAddBookmark.isVisible = it
                     iBinding.menuItemShare.isVisible = it
+                    iBinding.menuItemAdBlock.isVisible = it && iUserPreferences.adBlockEnabled
                 }
             }
         }
@@ -162,6 +167,8 @@ class MenuWebPage : PopupWindow {
             iBinding.menuItemDesktopMode.isChecked = it.currentTab?.desktopMode ?: false
             // Same with dark mode
             iBinding.menuItemDarkMode.isChecked = it.currentTab?.darkMode ?: false
+            // And ad block
+            iBinding.menuItemAdBlock.isChecked = it.currentTab?.url?.let { url -> !abpUserRules.isAllowed(Uri.parse(url)) } ?: false
         }
 
         // Get our anchor location
