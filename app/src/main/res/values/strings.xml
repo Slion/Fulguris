@@ -166,12 +166,13 @@
     <string name="request_blocked">Request blocked</string>
 
     <!-- settings for new ad blocker -->
-    <string name="abp_update_mode">Auto-update mode</string>
-    <string name="abp_update_on">Auto-update on</string>
-    <string name="abp_update_off">Auto-update off</string>
-    <string name="abp_update_wifi">Only on non-metered connections</string>
+    <string name="blocklist_update_mode">Auto-update mode</string>
+    <string name="blocklist_update_on">Auto-update on</string>
+    <string name="blocklist_update_off">Auto-update off</string>
+    <string name="blocklist_update_wifi">Only on non-metered connections</string>
     <string name="blocklist_update">Update blocklists</string>
     <string name="blocklist_update_frequency">Auto-update frequency</string>
+    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the blocklist specifies a longer interval</string>
     <string name="blocklist_update_now">Update lists now</string>
     <string name="blocklist_last_update">Last update: %s</string>
     <string name="add_blocklist">Add new blocklist</string>
