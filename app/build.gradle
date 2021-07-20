@@ -179,6 +179,7 @@ dexcount {
 }
 */
 
+// unMock is required for tests that use android.net.Uri
 unMock {
     keepStartingWith "libcore."
     keep "android.net.Uri"
@@ -287,6 +288,7 @@ dependencies {
     // See: https://github.com/JakeWharton/ThreeTenABP
     implementation 'com.jakewharton.threetenabp:threetenabp:1.3.0'
 
+    // re2j is faster than normal java regex, used for content blocker
     implementation 'com.google.re2j:re2j:1.6'
 }
 
