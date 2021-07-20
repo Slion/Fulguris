@@ -103,19 +103,17 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                                 summaryUpdater.updateSummary(it.toDisplayString())
                             }
                             setPositiveButton(resources.getString(R.string.action_ok), null)
-                            setNeutralButton(R.string.blocklist_update_now) {_,_ ->
-                                updateEntity(null)
-                            }
                         }?.resizeAndShow()
                 }
             )
-            // TODO: where to put the update-now button?
+
             clickableDynamicPreference(
                 preference = getString(R.string.pref_key_blocklist_auto_update_frequency),
                 summary = userPreferences.blockListAutoUpdateFrequency.toUpdateFrequency(),
                 onClick = { summaryUpdater ->
                     activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
                         setTitle(R.string.blocklist_update_frequency)
+                        setMessage(R.string.blocklist_update_description)
                         val values = listOf(
                             Pair(1, resources.getString(R.string.block_remote_frequency_daily)),
                             Pair(7, resources.getString(R.string.block_remote_frequency_weekly)),
@@ -356,9 +354,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     }
 
     private fun AbpUpdateMode.toDisplayString(): String = getString(when (this) {
-        AbpUpdateMode.NONE -> R.string.abp_update_off
-        AbpUpdateMode.WIFI_ONLY -> R.string.abp_update_wifi
-        AbpUpdateMode.ALWAYS -> R.string.abp_update_on
+        AbpUpdateMode.NONE -> R.string.blocklist_update_off
+        AbpUpdateMode.WIFI_ONLY -> R.string.blocklist_update_wifi
+        AbpUpdateMode.ALWAYS -> R.string.blocklist_update_on
     })
 
     private fun Int.toUpdateFrequency() = when(this) {

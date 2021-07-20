@@ -7,7 +7,7 @@
             android:title="@string/block_ads"/>
         <Preference
             android:key="@string/pref_key_blocklist_auto_update"
-            android:title="@string/abp_update_mode"/>
+            android:title="@string/blocklist_update_mode"/>
         <Preference
             android:key="@string/pref_key_blocklist_auto_update_frequency"
             android:title="@string/blocklist_update_frequency"/>
