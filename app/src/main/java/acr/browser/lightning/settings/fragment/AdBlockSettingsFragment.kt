@@ -85,7 +85,11 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         checkBoxPreference(
             preference = "cb_block_ads",
             isChecked = userPreferences.adBlockEnabled,
-            onCheckChange = { userPreferences.adBlockEnabled = it }
+            onCheckChange = {
+                userPreferences.adBlockEnabled = it
+                // update enabled lists when enabling blocker
+                if (it) updateEntity(null, false)
+            }
         )
 
         if (context != null) {
@@ -125,7 +129,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                         }
                         setPositiveButton(resources.getString(R.string.action_ok), null)
                         setNeutralButton(R.string.blocklist_update_now) {_,_ ->
-                            updateEntity(null)
+                            updateEntity(null, true)
                         }
                     }?.resizeAndShow()
                 }
@@ -171,10 +175,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     }
 
     // update entity and adjust displayed last update time
-    private fun updateEntity(abpEntity: AbpEntity?) {
+    private fun updateEntity(abpEntity: AbpEntity?, forceUpdate: Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
             ++updatesRunning
-            val updated = if (abpEntity == null) abpListUpdater.updateAll(true) else abpListUpdater.updateAbpEntity(abpEntity)
+            val updated = if (abpEntity == null) abpListUpdater.updateAll(forceUpdate) else abpListUpdater.updateAbpEntity(abpEntity, forceUpdate)
             if (updated) {
                 reloadBlockLists()
 
@@ -305,7 +309,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
             // check for update (necessary to have correct id!)
             if ((entity.url.startsWith("http") && enabled.isChecked && !wasEnabled) || needsUpdate)
-                updateEntity(entity)
+                updateEntity(entity, false)
             if (enabled.isChecked != wasEnabled)
                 reloadBlockLists()
 

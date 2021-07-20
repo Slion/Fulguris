@@ -84,8 +84,8 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         elementWriter.write(dir.getAbpElementListFile(entity), listOf())
     }
 
-    fun updateAbpEntity(entity: AbpEntity) = runBlocking {
-        updateInternal(entity)
+    fun updateAbpEntity(entity: AbpEntity, forceUpdate: Boolean) = runBlocking {
+        updateInternal(entity, forceUpdate)
     }
 
     private suspend fun updateInternal(entity: AbpEntity, forceUpdate: Boolean = false): Boolean {
