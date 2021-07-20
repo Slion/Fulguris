@@ -117,7 +117,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 onClick = { summaryUpdater ->
                     activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
                         setTitle(R.string.blocklist_update_frequency)
-                        setMessage(R.string.blocklist_update_description)
+                        // TODO: can't show message and singleChoice at the same time -> what do?
+                        //setMessage(R.string.blocklist_update_description)
                         val values = listOf(
                             Pair(1, resources.getString(R.string.block_remote_frequency_daily)),
                             Pair(7, resources.getString(R.string.block_remote_frequency_weekly)),
