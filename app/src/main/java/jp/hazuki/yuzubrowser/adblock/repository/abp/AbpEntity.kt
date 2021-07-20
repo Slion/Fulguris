@@ -16,15 +16,7 @@
 
 package jp.hazuki.yuzubrowser.adblock.repository.abp
 
-import android.os.Parcelable
-//import androidx.room.Entity
-//import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
-
-//@Entity(tableName = "abp")
-@Parcelize
 class AbpEntity(
-//        @PrimaryKey(autoGenerate = true)
         var entityId: Int = 0,
 
         var url: String = "",
@@ -53,7 +45,7 @@ class AbpEntity(
         var lastModified: String? = null,
 
         var enabled: Boolean = false
-) : Parcelable {
+) {
 
     constructor() : this(0)
 
@@ -69,7 +61,7 @@ class AbpEntity(
         return entityId
     }
 
-    // not using the db because i have no idea how to get it to compile -> store as string
+    // store as string (in shared preferences)
     override fun toString(): String {
         return "$entityId§§$url§§$title§§$lastUpdate§§$lastLocalUpdate§§$expires§§$version§§$homePage§§$lastModified§§$enabled"
     }

@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-// parcelize for AbpEntity
-apply plugin: 'kotlin-parcelize'
 //apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.ben-manes.versions'
