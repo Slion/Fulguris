@@ -44,7 +44,7 @@ class AbpEntity(
         // last modified from header of the list (i.e. when file on server was last updated)
         var lastModified: String? = null,
 
-        var enabled: Boolean = false
+        var enabled: Boolean = true
 ) {
 
     constructor() : this(0)

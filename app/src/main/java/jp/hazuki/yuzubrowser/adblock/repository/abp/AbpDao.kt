@@ -19,30 +19,6 @@ package jp.hazuki.yuzubrowser.adblock.repository.abp
 import acr.browser.lightning.adblock.AbpListUpdater
 import android.content.Context
 
-/*
-import androidx.room.*
-
-@Dao
-interface AbpDao {
-
-    @Query("SELECT * from abp")
-    suspend fun getAll(): List<AbpEntity>
-
-    @Insert
-    suspend fun inset(abpEntity: AbpEntity): Long
-
-    @Insert
-    suspend fun inset(entities: List<AbpEntity>)
-
-    @Delete
-    suspend fun delete(abpEntity: AbpEntity)
-
-    @Update
-    suspend fun update(abpEntity: AbpEntity)
-}
-*/
-
-// (bad?) replacement for the db:
 class AbpDao(val context: Context) {
     val prefs = context.getSharedPreferences("ad_block_settings", Context.MODE_PRIVATE)
 
@@ -93,13 +69,12 @@ class AbpDao(val context: Context) {
             prefs.edit().putStringSet(ABP_ENTITIES, list.map { it.toString() }.toSet()).apply()
     }
 
-
 }
 
 // pre-fill some stuff, currently only built-in easylist enabled (enable others by manipulating preferences xml)
 const val ABP_ENTITIES = "abpEntities"
-val ABP_ENTITY_EASYLIST_BUILTIN = AbpEntity(title = "Internal List", entityId = 1, url = "fulguris://easylist", homePage = "https://easylist.to", enabled = true)
+val ABP_ENTITY_EASYLIST_BUILTIN = AbpEntity(title = "Internal List", entityId = 1, url = "fulguris://easylist", homePage = "https://easylist.to")
 val ABP_ENTITY_EASYLIST = AbpEntity(title = "EasyList", entityId = 2, url = "https://easylist.to/easylist/easylist.txt", homePage = "https://easylist.to")
 val ABP_ENTITY_EASYPRIVACY = AbpEntity(title = "EasyPrivacy", entityId = 3, url = "https://easylist.to/easylist/easyprivacy.txt", homePage = "https://easylist.to")
-val ABP_ENTITY_URLHAUS = AbpEntity(title = "Malicious URL Blocklist", entityId = 4, url = "https://curben.gitlab.io/malware-filter/urlhaus-filter-agh-online.txt", homePage = "https://gitlab.com/curben/urlhaus-filter", enabled = true)
-val ABP_DEFAULT_ENTITIES = setOf(ABP_ENTITY_EASYLIST_BUILTIN.toString(), ABP_ENTITY_EASYLIST.toString(), ABP_ENTITY_EASYPRIVACY.toString(), ABP_ENTITY_URLHAUS.toString())
+val ABP_ENTITY_URLHAUS = AbpEntity(title = "Malicious URL Blocklist", entityId = 4, url = "https://curben.gitlab.io/malware-filter/urlhaus-filter-agh-online.txt", homePage = "https://gitlab.com/curben/urlhaus-filter")
+val ABP_DEFAULT_ENTITIES = setOf(/*ABP_ENTITY_EASYLIST_BUILTIN.toString(), */ABP_ENTITY_EASYLIST.toString(), ABP_ENTITY_EASYPRIVACY.toString(), ABP_ENTITY_URLHAUS.toString())
