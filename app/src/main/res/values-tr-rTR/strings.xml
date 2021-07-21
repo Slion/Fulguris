@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="action_reload">Reload</string>
-    <string name="action_menu">Menu</string>
+    <string name="action_reload">Yeniden yükle</string>
+    <string name="action_menu">Menü</string>
     <string name="action_new_tab">Yeni sekme</string>
     <string name="action_share">Paylaş</string>
     <string name="action_history">Geçmiş</string>
@@ -10,10 +10,10 @@
     <string name="action_add_bookmark">Yer işareti ekle</string>
     <string name="action_copy">Bağlantıyı kopyala</string>
     <string name="action_forward">İleri</string>
-    <string name="action_sessions">Sessions</string>
-    <string name="action_new_session">New session</string>
-    <string name="action_save_session">Save session as</string>
-    <string name="action_edit_sessions">Edit sessions</string>
+    <string name="action_sessions">Oturumlar</string>
+    <string name="action_new_session">Yeni oturum</string>
+    <string name="action_save_session">Oturumu kaydet</string>
+    <string name="action_edit_sessions">Oturumları düzenle</string>
     <string name="settings">Ayarlar</string>
     <string name="location">Konum erişimi</string>
     <string name="password">Şifrelerinizi kaydedin</string>
@@ -26,14 +26,14 @@
     <string name="settings_advanced">Gelişmiş ayarlar</string>
     <string name="apache">Apache Lisans 2.0</string>
     <string name="version">Uygulama sürümü</string>
-    <string name="update_available">Update available</string>
-    <string name="update_check_error">Update check error, try again later</string>
+    <string name="update_available">Güncelleme mevcut</string>
+    <string name="update_check_error">Güncellemeleri kontrol ederken bir hata oluştu, daha sonra tekrar deneyin</string>
     <string name="up_to_date">This is the newest version</string>
-    <string name="show">Show</string>
+    <string name="show">Göster</string>
     <string name="cache">Çıkışta önbelleği temizle</string>
     <string name="reflow">Yazıyı sayfaya göre ayarla</string>
     <string name="block">Resimleri engelle</string>
-    <string name="load_images">Load images</string>
+    <string name="load_images">Resimleri yükle</string>
     <string name="window">Sitelerin yeni sekme açmasına izin ver</string>
     <string name="cookies">Çerezleri etkinleştir</string>
     <string name="size">Yazı boyutu</string>
@@ -64,8 +64,8 @@
     <string name="agent_desktop">Masaüstü</string>
     <string name="agent_mobile">Mobil</string>
     <string name="agent_custom">Özel</string>
-    <string name="agent_system">System</string>
-    <string name="agent_web_view">Web View</string>
+    <string name="agent_system">Sistem</string>
+    <string name="agent_web_view">Web Görünümü</string>
     <string name="title_search_engine">Arama motoru</string>
     <string name="action_ok">Tamam</string>
     <string name="dialog_download">Bu dosyayı indirmek ister misiniz? (%1$s)</string>
@@ -97,11 +97,11 @@
     <string name="action_edit">Düzenle</string>
     <string name="action_incognito">Yeni gizli sekme</string>
     <string name="action_homepage">Varsayılan</string>
-    <string name="action_show_homepage">Show homepage</string>
+    <string name="action_show_homepage">Ana sayfayı göster</string>
     <string name="action_back">Geri</string>
     <string name="action_find">Sayfada bul</string>
-    <string name="action_print">Print</string>
-    <string name="downloads">Downloads</string>
+    <string name="action_print">Yazdır</string>
+    <string name="downloads">İndirilenler</string>
     <string name="downloads_notification_description">Triggers upon download completion</string>
     <string name="download_pending">İndirme başlatılıyor\u2026</string>
     <string name="cannot_download">Yalnızca \"http\" veya \"https\" bağlantıları indirilebilir.</string>
@@ -111,8 +111,8 @@
     <string name="download_no_sdcard_dlg_msg">Bu dosyayı indirmek için USB depolaması gereklidir.</string>
     <string name="download_sdcard_busy_dlg_title">USB depolamasına erişilemez</string>
     <string name="download_sdcard_busy_dlg_msg">Depolama meşgul. İndirmeleri aktif etmek için bildirimler ekranından USB depolamasını kapatın.</string>
-    <string name="download_complete">Download complete</string>
-    <string name="download_failed">Download failed</string>
+    <string name="download_complete">İndirme tamamlandı</string>
+    <string name="download_failed">İndirme başarısız</string>
     <string name="incognito_cookies">Gizli modda çerezleri etkinleştir</string>
     <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
     <string name="title_flash">Adobe Flash</string>
@@ -130,10 +130,10 @@
     <string name="message_blocked_local">Yerel dosyanın yüklenmesi engellendi</string>
     <string name="licenses">Açık Kaynak Lisansları</string>
     <string name="suggestion">Ara</string>
-    <string name="checking_for_updates">Checking for updates…</string>
-    <string name="title_updated">Fulguris was updated</string>
+    <string name="checking_for_updates">Güncellemeler kontrol ediliyor…</string>
+    <string name="title_updated">Fulguris güncellendi</string>
     <string name="message_updated">You are now running v%s. Do you want to check release notes online?</string>
-    <string name="title_welcome">Welcome to Fulguris</string>
+    <string name="title_welcome">Fulguris\'e Hoş Geldiniz</string>
     <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
     <!-- Ad block -->
     <string name="block_ads">Reklamları engelle</string>
@@ -213,7 +213,7 @@
     <string name="name_normal">Normal</string>
     <string name="sync_history">Geçmişi Google ile eşitle</string>
     <string name="title_file_chooser">Dosya seçicisi</string>
-    <string name="library_netcipher">NetCipher</string>
+    <string name="library_netcipher">NetChiper</string>
     <string name="license_gnu">GNU Küçük Genel Kamu Lisansı</string>
     <string name="export_bookmarks">Yer işaretlerini yedekle</string>
     <string name="import_backup">Yer işaretlerini geri yükle</string>
@@ -222,23 +222,23 @@
     <string name="bookmark_settings">Yer işareti ayarları</string>
     <string name="import_bookmark_error">Yer işaretleri dosyadan yüklenemedi</string>
     <string name="message_bookmark_added">Yer işareti eklendi.</string>
-    <string name="message_bookmark_not_added">Bookmark already exists.</string>
+    <string name="message_bookmark_not_added">Yer imi zaten var.</string>
     <string name="title_chooser">Bir dosya seç</string>
     <string name="settings_general">Genel ayarlar</string>
     <string name="settings_display">Görüntü ayarları</string>
-    <string name="settings_title_configuration">Configuration</string>
+    <string name="settings_title_configuration">Yapılandırma</string>
     <string name="settings_summary_configuration">Portrait and landscape settings</string>
     <string name="settings_privacy">Gizlilik ayarları</string>
     <string name="settings_about">Hakkında</string>
     <string name="settings_contribute">Contribute</string>
     <string name="settings_summary_contribute">Help Fulguris grow and succeed</string>
-    <string name="pref_category_general">General</string>
+    <string name="pref_category_general">Genel</string>
     <string name="pref_category_panels">Panels</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
-    <string name="pref_category_landscape">Landscape</string>
-    <string name="pref_category_portrait">Portrait</string>
+    <string name="pref_category_landscape">Yatay</string>
+    <string name="pref_category_portrait">Dikey</string>
     <string name="pref_category_menu">@string/action_menu</string>
-    <string name="pref_title_hide_status_bar">Hide status bar</string>
+    <string name="pref_title_hide_status_bar">Durum çubuğunu gizle</string>
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
@@ -252,7 +252,7 @@
     <string name="pref_summary_menu_show_exit">Show Exit app option in menu. Incognito mode always displays it regardless.</string>
     <string name="pref_title_menu_new_tab">New tab menu item</string>
     <string name="pref_summary_menu_new_tab">Show New tab option in menu</string>
-    <string name="pref_title_crash_report">Crash report</string>
+    <string name="pref_title_crash_report">Çökme raporu</string>
     <string name="pref_title_analytics">Analytics</string>
     <string name="pref_title_pull_to_refresh">Pull to refresh</string>
     <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
@@ -261,18 +261,18 @@
     <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
     <string name="pref_title_no_sponsorship">In-app sponsorship not available</string>
     <string name="pref_summary_no_sponsorship">Use Fulguris from Google Play to sponsor us.</string>
-    <string name="pref_title_free_download">Free download</string>
+    <string name="pref_title_free_download">Ücretsiz indir</string>
     <string name="pref_summary_free_download">Fulguris is Open Source Software. You can download our free edition including full feature set and unlimited tabs.</string>
     <string name="pref_title_sponsorship_github">Sponsor us on GitHub</string>
     <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
     <string name="pref_title_sponsorship_five_stars">Five stars review</string>
     <string name="pref_summary_sponsorship_five_stars">Giving us a five stars review on Google Play is a great way to help this project.</string>
-    <string name="pref_title_contribute_translations">Translations</string>
+    <string name="pref_title_contribute_translations">Çeviriler</string>
     <string name="pref_summary_contribute_translations">You can help translate Fulguris to your locale language on Crowdin.</string>
     <string name="pref_title_contribute_share">Spread the word</string>
     <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
-    <string name="pref_title_language">Language</string>
-    <string name="language_system_default">System default</string>
+    <string name="pref_title_language">Dil</string>
+    <string name="language_system_default">Sistem varsayılanı</string>
     <string name="settings_about_explain">Sürüm, yazar ve lisansla ilgili ayrıntılar.</string>
     <string name="close_tab">Geçerli sekmeyi kapat</string>
     <string name="close_all_tabs">Tüm sekmeleri kapat</string>
@@ -286,11 +286,11 @@
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT Lisansı</string>
     <string name="url_contents">URL kutusu içeriği</string>
-    <string name="search_in_new_tab">Search in new tab</string>
+    <string name="search_in_new_tab">Yeni sekmede ara</string>
     <string name="url_in_new_tab">URL in new tab</string>
     <string name="homepage_in_new_tab">Homepage in new tab</string>
     <string name="bookmark_in_new_tab">Bookmark in new tab</string>
-    <string name="new_tab_position">New tab position</string>
+    <string name="new_tab_position">Yeni sekme konumu</string>
     <string name="new_tab_position_before">Before current tab</string>
     <string name="new_tab_position_after">After current tab</string>
     <string name="new_tab_position_start">Start of tab list</string>
@@ -322,7 +322,7 @@
     <string name="settings_title_vertical_tab_bar">Gezinme sekmelerini göster</string>
     <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
     <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
-    <string name="settings_title_desktop_mode_default">Desktop mode</string>
+    <string name="settings_title_desktop_mode_default">Masaüstü modu</string>
     <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
     <string name="settings_title_dark_mode_default">Force dark mode</string>
     <string name="settings_summary_dark_mode_default">Define if new tabs use force dark mode by default</string>
@@ -395,10 +395,10 @@
     <string name="ssl_info_issued_on">Issued on</string>
     <string name="ssl_info_expires_on">Expires on</string>
     <!-- Search in page -->
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next">Sonraki</string>
+    <string name="previous">Önceki</string>
     <string name="close">Close</string>
-    <string name="exit">Exit</string>
+    <string name="exit">Çıkış</string>
     <!-- Frozen tabs -->
     <string name="tab_frozen">Frozen…</string>
     <!-- Search -->
@@ -407,7 +407,7 @@
     <string name="action_restore_all_tabs">Restore all tabs</string>
     <string name="action_restore_tab">Restore tab</string>
     <string name="settings_summary_apps">Enable third-party apps</string>
-    <string name="settings_title_apps">Apps</string>
+    <string name="settings_title_apps">Uygulamalar</string>
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Third-party app available</string>
     <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
@@ -426,18 +426,18 @@
     <string name="reading_mode_image_copyright">Resim ile ilişkilendirildi</string>
     <string name="reading_mode_image_caption">Başlıklı resim</string>
     <!-- text-to-speech -->
-    <string name="tts">Read page</string>
-    <string name="stop_tts">Stop reading</string>
+    <string name="tts">Sayfayı oku</string>
+    <string name="stop_tts">Okumayı durdur</string>
     <!-- Application name which can be translated -->
-    <string name="locale_app_name">Fulguris Web Browser</string>
+    <string name="locale_app_name">Fulguris Web Tarayıcı</string>
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
     <string name="question_what_do_you_want_to_use">What do you want to use?</string>
     <string name="button_link">Link</string>
-    <string name="button_image">Image</string>
+    <string name="button_image">Resim</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
-    <string name="notify_tab_closed">Tab closed</string>
-    <string name="button_undo">Undo</string>
+    <string name="notify_tab_closed">Sekme kapatıldı</string>
+    <string name="button_undo">Geri al</string>
 </resources>
