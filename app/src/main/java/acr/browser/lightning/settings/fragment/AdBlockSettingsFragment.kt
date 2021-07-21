@@ -305,12 +305,14 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             val newId = abpDao.update(entity) // new id if new entity was added, otherwise newId == entity.entityId
 
             // set new id for newly added list
-            if (entity.entityId == 0)
+            if (entity.entityId == 0) {
                 entity.entityId = newId
+                needsUpdate = true
+            }
 
             // check for update (necessary to have correct id!)
             if ((entity.url.startsWith("http") && enabled.isChecked && !wasEnabled) || needsUpdate)
-                updateEntity(entity, false)
+                updateEntity(entity, needsUpdate)
             if (enabled.isChecked != wasEnabled)
                 reloadBlockLists()
 
