@@ -139,7 +139,7 @@
     <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
 
     <!-- Ad block -->
-    <string name="block_ads">Block ads</string>
+    <string name="block_ads">Content blocker</string>
     <string name="block_ad_source">Hosts file source</string>
     <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
     <string name="block_ad_refresh_now">Refresh hosts now</string>
