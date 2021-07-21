@@ -26,7 +26,8 @@ class AbpDao(val context: Context) {
         val set = prefs.getStringSet(ABP_ENTITIES, ABP_DEFAULT_ENTITIES)
         val list = mutableListOf<AbpEntity>()
         set!!.forEach { list.add(abpEntityFromString(it) ?: return@forEach) }
-        return list
+        // return sorted list to have consistent order shown in settings
+        return list.sortedBy { it.entityId }
     }
 
     // update also handles new entities, they should have index 0 to avoid duplicates (can't happen in a db...)
@@ -52,8 +53,6 @@ class AbpDao(val context: Context) {
             abpEntity.entityId = i
         }
         list.add(abpEntity)
-        // sort list to have consistent order shown in settings
-        list.sortedBy { it.entityId }
         prefs.edit().putStringSet(ABP_ENTITIES, list.map { it.toString() }.toSet()).apply()
         return abpEntity.entityId
     }
