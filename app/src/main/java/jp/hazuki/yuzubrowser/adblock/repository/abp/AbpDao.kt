@@ -75,6 +75,6 @@ const val ABP_ENTITIES = "abpEntities"
 val ABP_ENTITY_EASYLIST_BUILTIN = AbpEntity(title = "Internal List", entityId = 1, url = "fulguris://easylist", homePage = "https://easylist.to")
 val ABP_ENTITY_EASYLIST = AbpEntity(title = "EasyList", entityId = 2, url = "https://easylist.to/easylist/easylist.txt", homePage = "https://easylist.to")
 val ABP_ENTITY_EASYPRIVACY = AbpEntity(title = "EasyPrivacy", entityId = 3, url = "https://easylist.to/easylist/easyprivacy.txt", homePage = "https://easylist.to")
-val ABP_ENTITY_URLHAUS = AbpEntity(title = "Malicious URL Blocklist", entityId = 4, url = "https://curben.gitlab.io/malware-filter/urlhaus-filter-agh-online.txt", homePage = "https://gitlab.com/curben/urlhaus-filter")
+val ABP_ENTITY_URLHAUS = AbpEntity(title = "Urlhaus Malicious URL Blocklist", entityId = 4, url = "https://raw.githubusercontent.com/curbengh/urlhaus-filter/master/urlhaus-filter-agh-online.txt", homePage = "https://gitlab.com/curben/urlhaus-filter")
 val ABP_ENTITY_STEVEN_BLACK = AbpEntity(title = "StevenBlack hosts list", entityId = 5, url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts", homePage = "https://github.com/StevenBlack/hosts", enabled = false)
 val ABP_DEFAULT_ENTITIES = setOf(/*ABP_ENTITY_EASYLIST_BUILTIN.toString(), */ABP_ENTITY_EASYLIST.toString(), ABP_ENTITY_EASYPRIVACY.toString(), ABP_ENTITY_URLHAUS.toString(), ABP_ENTITY_STEVEN_BLACK.toString())
