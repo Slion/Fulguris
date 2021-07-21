@@ -27,7 +27,8 @@ class AbpDao(val context: Context) {
         val list = mutableListOf<AbpEntity>()
         set!!.forEach { list.add(abpEntityFromString(it) ?: return@forEach) }
         // return sorted list to have consistent order shown in settings
-        return list.sortedBy { it.entityId }
+        list.sortBy { it.entityId }
+        return list
     }
 
     // update also handles new entities, they should have index 0 to avoid duplicates (can't happen in a db...)
