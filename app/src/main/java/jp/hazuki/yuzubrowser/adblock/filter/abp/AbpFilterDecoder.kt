@@ -205,7 +205,8 @@ class AbpFilterDecoder {
                                 if (value == null) return
                                 domain = value
                             }
-                            "third-party" -> thirdParty = if (inverse) 0 else 1
+                            "third-party", "3p" -> thirdParty = if (inverse) 0 else 1
+                            "first-party", "1p" -> thirdParty = if (inverse) 1 else 0
                             "sitekey" -> Unit
                             else -> return
                         }
@@ -321,18 +322,18 @@ class AbpFilterDecoder {
             "other", "xbl", "dtd" -> ContentRequest.TYPE_OTHER
             "script" -> ContentRequest.TYPE_SCRIPT
             "image", "background" -> ContentRequest.TYPE_IMAGE
-            "stylesheet" -> ContentRequest.TYPE_STYLE_SHEET
-            "subdocument" -> ContentRequest.TYPE_SUB_DOCUMENT
+            "stylesheet", "css" -> ContentRequest.TYPE_STYLE_SHEET
+            "subdocument", "frame" -> ContentRequest.TYPE_SUB_DOCUMENT
             "document" -> ContentRequest.TYPE_DOCUMENT
             "websocket" -> ContentRequest.TYPE_WEB_SOCKET
             "media" -> ContentRequest.TYPE_MEDIA
             "font" -> ContentRequest.TYPE_FONT
             "popup" -> ContentRequest.TYPE_POPUP
-            "xmlhttprequest" -> ContentRequest.TYPE_XHR
+            "xmlhttprequest", "xhr" -> ContentRequest.TYPE_XHR
             "object", "webrtc", "csp", "ping",
             "object-subrequest", "genericblock" -> -1
             "elemhide", "ehide" -> ContentRequest.TYPE_ELEMENT_HIDE
-            "generichide" -> ContentRequest.TYPE_ELEMENT_GENERIC_HIDE
+            "generichide", "ghide" -> ContentRequest.TYPE_ELEMENT_GENERIC_HIDE
             else -> 0
         }
     }
