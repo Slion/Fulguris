@@ -14,4 +14,13 @@
             android:title="@string/blocklist_update_frequency"
             android:dependency="@string/pref_key_content_control"
             />
+
+        <acr.browser.lightning.settings.preferences.PreferenceCategoryEx
+            android:key="@string/pref_key_content_control_filters"
+            android:title="@string/pref_category_filters"
+            android:summary="@string/pref_category_summary_filters"
+            android:dependency="@string/pref_key_content_control">
+
+        </acr.browser.lightning.settings.preferences.PreferenceCategoryEx>
+
 </PreferenceScreen>

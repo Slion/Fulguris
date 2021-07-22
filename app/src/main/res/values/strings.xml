@@ -162,9 +162,9 @@
     <!-- new ad blocker -->
     <string name="page_blocked">The following page was blocked:</string>
     <string name="page_blocked_reason">because of:</string>
-    <string name="page_blocked_list_ad">%s on ad blocklist</string>
+    <string name="page_blocked_list_ad">%s on ad filters</string>
     <string name="page_blocked_list_user">%s blocked by user rule</string>
-    <string name="page_blocked_list_malware">%s on malware blocklist</string>
+    <string name="page_blocked_list_malware">%s on malware filters</string>
     <string name="request_blocked">Request blocked</string>
 
     <!-- settings for new ad blocker -->
@@ -172,23 +172,23 @@
     <string name="blocklist_update_on">Auto-update on</string>
     <string name="blocklist_update_off">Auto-update off</string>
     <string name="blocklist_update_wifi">Only on non-metered connections</string>
-    <string name="blocklist_update">Update blocklists</string>
+    <string name="blocklist_update">Update filters</string>
     <string name="blocklist_update_frequency">Auto-update frequency</string>
-    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the blocklist specifies a longer interval</string>
+    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
     <string name="blocklist_update_now">Update lists now</string>
     <string name="blocklist_last_update">Last update: %s</string>
-    <string name="add_blocklist">Add new blocklist</string>
+    <string name="add_blocklist">Add filters file</string>
     <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
     <string name="enable_blocklist">Enable this list</string>
     <string name="invalid_title">Invalid title</string>
     <string name="invalid_url">Invalid URL</string>
-    <string name="blocklist_built_in">Built-in blocklist</string>
-    <string name="blocklist_remove">Remove blocklist</string>
-    <string name="blocklist_remove_confirm">Really remove blocklist %s?</string>
-    <string name="local_file">Local blocklist</string>
-    <string name="local_file_replace">Replace blocklist</string>
+    <string name="blocklist_built_in">Built-in filters</string>
+    <string name="blocklist_remove">Remove filters file</string>
+    <string name="blocklist_remove_confirm">Really remove filters file %s?</string>
+    <string name="local_file">Local</string>
+    <string name="local_file_replace">Replace</string>
     <string name="local_file_chosen">file selected</string>
-    <string name="remote_file">Remote blocklist</string>
+    <string name="remote_file">Remote</string>
 
 <!-- Common actions -->
     <string name="action_message_canceled">Action canceled.</string>
@@ -284,6 +284,8 @@
     <string name="pref_category_landscape">Landscape</string>
     <string name="pref_category_portrait">Portrait</string>
     <string name="pref_category_menu">@string/action_menu</string>
+    <string name="pref_category_filters">Filters</string>
+    <string name="pref_category_summary_filters">Local or remote files defining your content control rules</string>
     <string name="pref_title_hide_status_bar">Hide status bar</string>
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>

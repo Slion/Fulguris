@@ -15,7 +15,6 @@ import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
@@ -26,6 +25,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
+import androidx.preference.PreferenceGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -70,6 +70,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     // uri of temporary blocklist file
     private var fileUri: Uri? = null
 
+    // Our preferences filters category, will contains our filters file entries
+    private lateinit var filtersCategory: PreferenceGroup
+
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
@@ -94,7 +97,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             }
         )
 
+        filtersCategory = findPreference<PreferenceGroup>(getString(R.string.pref_key_content_control_filters))!!
+
         if (context != null) {
+
             abpDao = AbpDao(requireContext())
 
             clickableDynamicPreference(
@@ -153,7 +159,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 dialog.show()
                 true
             }
-            this.preferenceScreen.addPreference(newList)
+            filtersCategory.addPreference(newList)
             newList.dependency = getString(R.string.pref_key_content_control)
 
             // list of blocklists/entities
@@ -168,7 +174,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 }
                 entitiyPrefs[entity.entityId] = entityPref
                 updateSummary(entity)
-                this.preferenceScreen.addPreference(entitiyPrefs[entity.entityId])
+                filtersCategory.addPreference(entitiyPrefs[entity.entityId])
                 entityPref.dependency = getString(R.string.pref_key_content_control)
             }
         }
@@ -330,7 +336,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 }
                 entitiyPrefs[newId] = pref
                 updateSummary(entity)
-                preferenceScreen.addPreference(pref)
+                filtersCategory.addPreference(pref)
                 pref.dependency = getString(R.string.pref_key_content_control)
             } else
                 entitiyPrefs[entity.entityId]?.title = entity.title
