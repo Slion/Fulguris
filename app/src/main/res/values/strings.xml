@@ -122,7 +122,7 @@
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Manual</string>
     <string name="action_auto">Auto</string>
-    <string name="action_follow_me">Contact me</string>
+    <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
     <string name="message_import">Bookmarks were imported</string>

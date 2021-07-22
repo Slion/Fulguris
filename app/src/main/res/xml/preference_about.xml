@@ -5,12 +5,12 @@
 
     <PreferenceCategory android:title="@string/settings_about">
         <Preference
-            android:summary="@string/url_twitter"
-            android:title="@string/action_follow_me"
+            android:title="@string/pref_title_contact_us"
+            android:summary="@string/pref_summary_contact_us"
             app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="@string/full_url_twitter">
+                android:data="@string/url_contact_us">
                 <extra
                     android:name="SOURCE"
                     android:value="SELF" />

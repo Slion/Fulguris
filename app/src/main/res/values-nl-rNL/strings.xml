@@ -118,7 +118,7 @@
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Manueel</string>
     <string name="action_auto">Auto</string>
-    <string name="action_follow_me">Contacteer Mij</string>
+    <string name="pref_title_contact_us">Contacteer Mij</string>
     <string name="clear_cache">Wis cache</string>
     <string name="message_cache_cleared">Cache gewist</string>
     <string name="message_import">Bladwijzers zijn geïmporteerd</string>

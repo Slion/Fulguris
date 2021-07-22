@@ -118,7 +118,7 @@
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">手動</string>
     <string name="action_auto">自動</string>
-    <string name="action_follow_me">聯絡作者</string>
+    <string name="pref_title_contact_us">聯絡作者</string>
     <string name="clear_cache">清除快取</string>
     <string name="message_cache_cleared">已清除快取</string>
     <string name="message_import">書籤已匯入</string>

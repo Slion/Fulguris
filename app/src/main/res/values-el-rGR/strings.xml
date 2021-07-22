@@ -118,7 +118,7 @@
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Χειροκίνητα</string>
     <string name="action_auto">Αυτόματα</string>
-    <string name="action_follow_me">Επικοινωνήστε μαζί μου</string>
+    <string name="pref_title_contact_us">Επικοινωνήστε μαζί μου</string>
     <string name="clear_cache">Καθαρισμός cache</string>
     <string name="message_cache_cleared">Cache καθαρίστηκε</string>
     <string name="message_import">Εισήχθησαν οι σελιδοδείκτες</string>
