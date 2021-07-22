@@ -182,7 +182,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     private fun updateSummary(entity: AbpEntity) {
         if (!entity.url.startsWith(Schemes.Fulguris) && entity.lastLocalUpdate > 0)
-            entitiyPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateInstance().format(Date(entity.lastLocalUpdate)))
+            entitiyPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance().format(Date(entity.lastLocalUpdate)))
     }
 
     // update entity and adjust displayed last update time
