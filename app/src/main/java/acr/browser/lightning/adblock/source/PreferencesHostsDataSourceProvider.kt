@@ -13,6 +13,7 @@ import javax.inject.Inject
 /**
  * A [HostsDataSourceProvider] backed by [UserPreferences].
  */
+/*
 @Reusable
 class PreferencesHostsDataSourceProvider @Inject constructor(
     private val userPreferences: UserPreferences,
@@ -30,3 +31,4 @@ class PreferencesHostsDataSourceProvider @Inject constructor(
         }
 
 }
+*/

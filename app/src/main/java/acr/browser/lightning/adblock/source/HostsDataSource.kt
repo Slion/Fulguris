@@ -5,7 +5,7 @@ import io.reactivex.Single
 /**
  * A data source that contains hosts.
  */
-interface HostsDataSource {
+/*interface HostsDataSource {
 
     /**
      * Load the hosts and emit them as a [Single] [HostsResult].
@@ -18,3 +18,4 @@ interface HostsDataSource {
     fun identifier(): String
 
 }
+*/

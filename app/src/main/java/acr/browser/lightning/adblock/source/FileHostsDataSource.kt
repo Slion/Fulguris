@@ -15,6 +15,7 @@ import java.io.InputStreamReader
  * @param logger The logger used to log information about the loading process.
  * @param file The file from which hosts will be loaded. Must have read access to the file.
  */
+/*
 class FileHostsDataSource constructor(
     private val logger: Logger,
     private val file: File
@@ -45,3 +46,4 @@ class FileHostsDataSource constructor(
     }
 
 }
+*/
