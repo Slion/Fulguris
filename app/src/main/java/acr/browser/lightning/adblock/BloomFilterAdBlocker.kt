@@ -1,5 +1,6 @@
 package acr.browser.lightning.adblock
 
+/*
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.source.HostsDataSourceProvider
 import acr.browser.lightning.adblock.source.HostsResult
@@ -180,3 +181,4 @@ class BloomFilterAdBlocker @Inject constructor(
     }
 
 }
+*/

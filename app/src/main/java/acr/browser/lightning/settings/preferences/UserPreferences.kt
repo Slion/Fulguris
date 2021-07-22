@@ -316,17 +316,17 @@ class UserPreferences @Inject constructor(
     /**
      * The index of the ad blocking hosts file source.
      */
-    var hostsSource by preferences.intPreference(HOSTS_SOURCE, 0)
+//    var hostsSource by preferences.intPreference(HOSTS_SOURCE, 0)
 
     /**
      * The local file from which ad blocking hosts should be read, depending on the [hostsSource].
      */
-    var hostsLocalFile by preferences.nullableStringPreference(HOSTS_LOCAL_FILE)
+//    var hostsLocalFile by preferences.nullableStringPreference(HOSTS_LOCAL_FILE)
 
     /**
      * The remote URL from which ad blocking hosts should be read, depending on the [hostsSource].
      */
-    var hostsRemoteFile by preferences.nullableStringPreference(HOSTS_REMOTE_FILE)
+//    var hostsRemoteFile by preferences.nullableStringPreference(HOSTS_REMOTE_FILE)
 
     /**
      * User can disable Firebase Google Analytics.
