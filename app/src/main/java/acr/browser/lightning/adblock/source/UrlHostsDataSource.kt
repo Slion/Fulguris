@@ -14,6 +14,7 @@ import java.io.InputStreamReader
 /**
  * A [HostsDataSource] that loads hosts from an [HttpUrl].
  */
+/*
 class UrlHostsDataSource(
     private val url: HttpUrl,
     private val okHttpClient: Single<OkHttpClient>,
@@ -60,3 +61,4 @@ class UrlHostsDataSource(
     }
 
 }
+*/

@@ -9,6 +9,7 @@ import java.io.File
 /**
  * The source from which hosts should be loaded.
  */
+/*
 sealed class HostsSourceType {
 
     /**
@@ -59,3 +60,4 @@ fun HostsSourceType.toPreferenceIndex(): Int = when (this) {
     is HostsSourceType.Local -> 1
     is HostsSourceType.Remote -> 2
 }
+*/

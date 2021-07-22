@@ -3,6 +3,7 @@ package acr.browser.lightning.adblock.source
 /**
  * The provider for the hosts data source.
  */
+/*
 interface HostsDataSourceProvider {
 
     /**
@@ -11,3 +12,4 @@ interface HostsDataSourceProvider {
     fun createHostsDataSource(): HostsDataSource
 
 }
+*/

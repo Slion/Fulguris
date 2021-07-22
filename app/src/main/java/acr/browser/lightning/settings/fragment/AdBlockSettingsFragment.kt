@@ -4,7 +4,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.AbpUpdateMode
-import acr.browser.lightning.adblock.BloomFilterAdBlocker
+//import acr.browser.lightning.adblock.BloomFilterAdBlocker
 import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.di.DiskScheduler
 import acr.browser.lightning.di.MainScheduler
@@ -50,7 +50,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     @Inject internal lateinit var userPreferences: UserPreferences
     @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
     @Inject @field:DiskScheduler internal lateinit var diskScheduler: Scheduler
-    @Inject internal lateinit var bloomFilterAdBlocker: BloomFilterAdBlocker
+//    @Inject internal lateinit var bloomFilterAdBlocker: BloomFilterAdBlocker
     @Inject internal lateinit var abpListUpdater: AbpListUpdater
     @Inject internal lateinit var abpBlocker: AbpBlocker
 

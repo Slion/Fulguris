@@ -13,6 +13,7 @@ import java.io.InputStreamReader
  * @param assetManager The store for application assets.
  * @param logger The logger used to log status.
  */
+/*
 class AssetsHostsDataSource constructor(
     private val assetManager: AssetManager,
     private val logger: Logger
@@ -44,3 +45,4 @@ class AssetsHostsDataSource constructor(
     }
 
 }
+*/

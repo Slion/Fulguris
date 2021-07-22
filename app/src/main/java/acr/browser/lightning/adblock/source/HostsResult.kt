@@ -5,6 +5,7 @@ import acr.browser.lightning.database.adblock.Host
 /**
  * The result of a request for the hosts to block.
  */
+/*
 sealed class HostsResult {
 
     /**
@@ -22,3 +23,4 @@ sealed class HostsResult {
     data class Failure(val cause: Exception) : HostsResult()
 
 }
+*/
