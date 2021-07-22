@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/settings_advanced">
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="cb_block_ads"
-            android:title="@string/block_ads"/>
+            android:key="@string/pref_key_content_control"
+            android:title="@string/enable"
+            android:summary="@string/settings_summary_content_control_toggle"/>
         <Preference
             android:key="@string/pref_key_blocklist_auto_update"
-            android:title="@string/blocklist_update_mode"/>
+            android:title="@string/blocklist_update_mode"
+            android:dependency="@string/pref_key_content_control"/>
         <Preference
             android:key="@string/pref_key_blocklist_auto_update_frequency"
-            android:title="@string/blocklist_update_frequency"/>
-    </PreferenceCategory>
+            android:title="@string/blocklist_update_frequency"
+            android:dependency="@string/pref_key_content_control"
+            />
 </PreferenceScreen>

@@ -15,12 +15,14 @@ import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
@@ -82,8 +84,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         injector.inject(this)
 
-        checkBoxPreference(
-            preference = "cb_block_ads",
+        switchPreference(
+            preference = getString(R.string.pref_key_content_control),
             isChecked = userPreferences.adBlockEnabled,
             onCheckChange = {
                 userPreferences.adBlockEnabled = it
@@ -139,7 +141,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             // "new list" button
             val newList = Preference(context)
             newList.title = resources.getString(R.string.add_blocklist)
-            newList.icon = resources.getDrawable(R.drawable.ic_action_plus)
+            newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_action_plus,requireActivity().theme)
             newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
@@ -152,6 +154,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 true
             }
             this.preferenceScreen.addPreference(newList)
+            newList.dependency = getString(R.string.pref_key_content_control)
 
             // list of blocklists/entities
             for (entity in abpDao.getAll()) {
@@ -166,6 +169,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 entitiyPrefs[entity.entityId] = entityPref
                 updateSummary(entity)
                 this.preferenceScreen.addPreference(entitiyPrefs[entity.entityId])
+                entityPref.dependency = getString(R.string.pref_key_content_control)
             }
         }
     }
@@ -326,7 +330,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 }
                 entitiyPrefs[newId] = pref
                 updateSummary(entity)
-                preferenceScreen.addPreference(entitiyPrefs[newId])
+                preferenceScreen.addPreference(pref)
+                pref.dependency = getString(R.string.pref_key_content_control)
             } else
                 entitiyPrefs[entity.entityId]?.title = entity.title
         }

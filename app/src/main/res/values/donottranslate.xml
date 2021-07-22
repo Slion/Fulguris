@@ -42,6 +42,7 @@
     <string name="pref_key_desktop_mode_default">pref_key_desktop_mode_default</string>
     <string name="pref_key_dark_mode_default">pref_key_dark_mode_default</string>
     <string name="pref_key_webrtc">pref_key_webrtc</string>
+    <string name="pref_key_content_control">pref_key_content_control</string>
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>
