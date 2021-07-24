@@ -314,21 +314,6 @@ class UserPreferences @Inject constructor(
     var searchSuggestionChoice by preferences.intPreference(SEARCH_SUGGESTIONS, 1)
 
     /**
-     * The index of the ad blocking hosts file source.
-     */
-//    var hostsSource by preferences.intPreference(HOSTS_SOURCE, 0)
-
-    /**
-     * The local file from which ad blocking hosts should be read, depending on the [hostsSource].
-     */
-//    var hostsLocalFile by preferences.nullableStringPreference(HOSTS_LOCAL_FILE)
-
-    /**
-     * The remote URL from which ad blocking hosts should be read, depending on the [hostsSource].
-     */
-//    var hostsRemoteFile by preferences.nullableStringPreference(HOSTS_REMOTE_FILE)
-
-    /**
      * User can disable Firebase Google Analytics.
      */
     var analytics by preferences.booleanPreference(R.string.pref_key_analytics, R.bool.pref_default_analytics)
@@ -405,6 +390,3 @@ private const val PROXY_CHOICE = "proxyChoice"
 private const val USE_PROXY_HOST = "useProxyHost"
 private const val USE_PROXY_PORT = "useProxyPort"
 private const val SEARCH_SUGGESTIONS = "searchSuggestionsChoice"
-private const val HOSTS_SOURCE = "hostsSource"
-private const val HOSTS_LOCAL_FILE = "hostsLocalFile"
-private const val HOSTS_REMOTE_FILE = "hostsRemoteFile"

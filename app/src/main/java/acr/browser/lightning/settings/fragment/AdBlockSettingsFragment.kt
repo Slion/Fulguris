@@ -4,10 +4,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.AbpUpdateMode
-//import acr.browser.lightning.adblock.BloomFilterAdBlocker
 import acr.browser.lightning.constant.Schemes
-import acr.browser.lightning.di.DiskScheduler
-import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
@@ -27,8 +24,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.reactivex.Scheduler
-import io.reactivex.disposables.CompositeDisposable
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.*
@@ -48,16 +43,11 @@ import javax.inject.Inject
 class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
-    @Inject @field:DiskScheduler internal lateinit var diskScheduler: Scheduler
-//    @Inject internal lateinit var bloomFilterAdBlocker: BloomFilterAdBlocker
     @Inject internal lateinit var abpListUpdater: AbpListUpdater
     @Inject internal lateinit var abpBlocker: AbpBlocker
 
-    private val compositeDisposable = CompositeDisposable()
-
     private lateinit var abpDao: AbpDao
-    private val entitiyPrefs = mutableMapOf<Int, Preference>()
+    private val entityPrefs = mutableMapOf<Int, Preference>()
 
     // if blocklist changed, they need to be reloaded, but this should happen only once
     //  if reloadLists is true, list reload will be launched onDestroy
@@ -172,9 +162,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     showBlockList(entity)
                     true
                 }
-                entitiyPrefs[entity.entityId] = entityPref
+                entityPrefs[entity.entityId] = entityPref
                 updateSummary(entity)
-                filtersCategory.addPreference(entitiyPrefs[entity.entityId])
+                filtersCategory.addPreference(entityPrefs[entity.entityId])
                 entityPref.dependency = getString(R.string.pref_key_content_control)
             }
         }
@@ -182,7 +172,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     private fun updateSummary(entity: AbpEntity) {
         if (!entity.url.startsWith(Schemes.Fulguris) && entity.lastLocalUpdate > 0)
-            entitiyPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance().format(Date(entity.lastLocalUpdate)))
+            entityPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance().format(Date(entity.lastLocalUpdate)))
     }
 
     // update entity and adjust displayed last update time
@@ -292,7 +282,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     .setPositiveButton(R.string.action_delete) { _, _ ->
                         abpDao.delete(entity)
                         dialog?.dismiss()
-                        preferenceScreen.removePreference(entitiyPrefs[entity.entityId])
+                        preferenceScreen.removePreference(entityPrefs[entity.entityId])
                         reloadBlockLists()
                     }
                     .setTitle(resources.getString(R.string.blocklist_remove_confirm, entity.title))
@@ -326,7 +316,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             if (enabled.isChecked != wasEnabled)
                 reloadBlockLists()
 
-            if (entitiyPrefs[newId] == null) { // not in entityPrefs if new
+            if (entityPrefs[newId] == null) { // not in entityPrefs if new
                 val pref = Preference(context)
                 entity.entityId = newId
                 pref.title = entity.title
@@ -334,12 +324,12 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     showBlockList(entity)
                     true
                 }
-                entitiyPrefs[newId] = pref
+                entityPrefs[newId] = pref
                 updateSummary(entity)
                 filtersCategory.addPreference(pref)
                 pref.dependency = getString(R.string.pref_key_content_control)
             } else
-                entitiyPrefs[entity.entityId]?.title = entity.title
+                entityPrefs[entity.entityId]?.title = entity.title
         }
         dialog = builder.create()
         dialog.show()
@@ -396,7 +386,6 @@ override fun onDestroy() {
                     abpBlocker.loadLists()
             }
         }
-        compositeDisposable.clear()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
