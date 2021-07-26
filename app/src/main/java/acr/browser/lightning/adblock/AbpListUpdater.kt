@@ -17,7 +17,6 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.adblock.parser.HostsFileParser
-import acr.browser.lightning.adblock.util.hash.computeMD5
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.Context
@@ -90,7 +89,6 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
     private suspend fun updateInternal(entity: AbpEntity, forceUpdate: Boolean = false): Boolean {
         return when {
-            entity.url == "fulguris://easylist" -> updateAssets(entity)
             entity.url.startsWith("http") -> updateHttp(entity, forceUpdate)
             entity.url.startsWith("file") -> updateFile(entity)
             else -> false
@@ -165,28 +163,6 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             e.printStackTrace()
         }
         return false
-    }
-
-    private suspend fun updateAssets(entity: AbpEntity): Boolean {
-        val dir = getFilterDir()
-
-        // changed to not update if any file exists, as the list does not need to have all kinds of filters
-        if (dir.getAbpBlackListFile(entity).exists() ||
-            dir.getAbpWhiteListFile(entity).exists() ||
-            dir.getAbpWhitePageListFile(entity).exists()) return false
-
-        // lastModified is only used for HTTP and file
-        //  can't get file date for assets, so assume checksum changes when blocklist changes
-        //  and (ab)use lastModified to store checksum, so update is triggered when file is changed
-        // TODO: maybe only check if app version changed
-        val checksum = context.assets.open(ASSETS_BLOCKLIST).computeMD5()
-        if (checksum == entity.lastModified)
-            return false
-
-        entity.lastModified = checksum // checksum set now, but written to entity only at the end of decode -> should be safe
-        context.assets.open(ASSETS_BLOCKLIST).bufferedReader().use {
-            return decode(it, Charsets.UTF_8, entity)
-        }
     }
 
     private suspend fun decode(reader: BufferedReader, charset: Charset, entity: AbpEntity): Boolean {
@@ -273,8 +249,6 @@ class AbpListUpdater @Inject constructor(val context: Context) {
     companion object {
         private const val AN_HOUR = 60 * 60 * 1000
         private const val A_DAY = 24 * AN_HOUR
-
-        const val ASSETS_BLOCKLIST = "easylist.txt"
 
     }
 

@@ -171,7 +171,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     }
 
     private fun updateSummary(entity: AbpEntity) {
-        if (!entity.url.startsWith(Schemes.Fulguris) && entity.lastLocalUpdate > 0)
+        if (entity.lastLocalUpdate > 0)
             entityPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance().format(Date(entity.lastLocalUpdate)))
     }
 
@@ -180,6 +180,12 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         GlobalScope.launch(Dispatchers.IO) {
             ++updatesRunning
             val updated = if (abpEntity == null) abpListUpdater.updateAll(forceUpdate) else abpListUpdater.updateAbpEntity(abpEntity, forceUpdate)
+
+            // delete temporary file
+            //  this is necessary because all local blocklists use the same temporary file (uri)
+            //  so it could happen that lists get mixed up via an old temporary blocklist file
+            activity?.externalCacheDir?.let { File(it, BLOCK_LIST_FILE).delete() }
+
             if (updated) {
                 reloadBlockLists()
 
@@ -216,11 +222,6 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         // field for choosing file or url
         when {
-            entity.url.startsWith(Schemes.Fulguris) -> {
-                val text = TextView(context)
-                text.text = resources.getString(R.string.blocklist_built_in)
-                linearLayout.addView(text)
-            }
             entity.url.startsWith("file") -> {
                 val fileChooseButton = Button(context)
                 fileChooseButton.text = if (entity.url == "file") getString(R.string.title_chooser)
@@ -272,7 +273,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         // delete button
         // don't show for internal list or when creating a new entity
-        if (entity.entityId != 0 && !entity.url.startsWith(Schemes.Fulguris)) {
+        if (entity.entityId != 0) {
             val delete = Button(context) // looks ugly, but works
             delete.text = resources.getString(R.string.blocklist_remove)
             // confirm deletion!
@@ -351,8 +352,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             button?.isEnabled = false
             return
         }
-        // TODO: if user enters 'file:' or 'fulguris' for a http url, ok button will be shown (of course update will fail)
-        if ((url.toHttpUrlOrNull() == null || url.contains("§§")) && !url.startsWith(Schemes.Fulguris) && !url.startsWith("file:")) {
+        // TODO: if user enters 'file:' for a http url, ok button will be shown (of course update will fail)
+        if ((url.toHttpUrlOrNull() == null || url.contains("§§")) && !url.startsWith("file:")) {
             button?.text = if (url.startsWith("file")) "no file chosen" else resources.getText(R.string.invalid_url)
             button?.isEnabled = false
             return
