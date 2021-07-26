@@ -116,7 +116,20 @@ class LightningWebClient(
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
         // returns some dummy response if blocked, null if not blocked
-        return adBlock.shouldBlock(request, currentUrl)
+
+        val response = adBlock.shouldBlock(request, currentUrl)
+
+        //SL: Use this when debugging
+        // TODO: We should really collect all intercepts to be able to display them to the user
+//        if (response!=null)
+//        {
+//            logger.log(TAG, "Request hijacked: " + request.url
+//                    + "\n Reason phrase:" + response.reasonPhrase
+//                    + "\n Status code:" + response.statusCode
+//            )
+//        }
+
+        return response
     }
 
     override fun onLoadResource(view: WebView, url: String?) {
