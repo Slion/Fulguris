@@ -367,8 +367,8 @@
     <string name="message_web_storage_cleared">Web storage cleared</string>
     <string name="hosts_source">Hosts file ad blocking source</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Ads blocker and content filtering</string>
-    <string name="settings_summary_content_control_toggle">Activate ads blocker and content filtering</string>
+    <string name="settings_summary_content_control">Ad blocker and content filtering</string>
+    <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
     <string name="settings_title_vertical_tab_bar">Vertical tab bar</string>
     <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
     <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
