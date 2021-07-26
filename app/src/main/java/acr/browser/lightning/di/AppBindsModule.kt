@@ -1,13 +1,9 @@
 package acr.browser.lightning.di
 
-import acr.browser.lightning.adblock.allowlist.AllowListModel
-import acr.browser.lightning.adblock.allowlist.SessionAllowListModel
 import acr.browser.lightning.browser.cleanup.DelegatingExitCleanup
 import acr.browser.lightning.browser.cleanup.ExitCleanup
 import acr.browser.lightning.database.adblock.UserRulesDatabase
 import acr.browser.lightning.database.adblock.UserRulesRepository
-import acr.browser.lightning.database.allowlist.AdBlockAllowListDatabase
-import acr.browser.lightning.database.allowlist.AdBlockAllowListRepository
 import acr.browser.lightning.database.bookmark.BookmarkDatabase
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.database.downloads.DownloadsDatabase
@@ -36,12 +32,6 @@ interface AppBindsModule {
 
     @Binds
     fun bindsHistoryModel(historyDatabase: HistoryDatabase): HistoryRepository
-
-    @Binds
-    fun bindsAdBlockAllowListModel(adBlockAllowListDatabase: AdBlockAllowListDatabase): AdBlockAllowListRepository
-
-    @Binds
-    fun bindsAllowListModel(sessionAllowListModel: SessionAllowListModel): AllowListModel
 
     @Binds
     fun bindsSslWarningPreferences(sessionSslWarningPreferences: SessionSslWarningPreferences): SslWarningPreferences
