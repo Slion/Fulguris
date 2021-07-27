@@ -4,7 +4,7 @@ import org.jsoup.nodes.Element;
 
 /**
  * Class which encapsulates the data from an image found under an element
- * 
+ *
  * @author Chris Alexander, chris@chris-alexander.co.uk
  */
 class ImageResult {

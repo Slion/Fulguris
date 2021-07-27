@@ -13,7 +13,7 @@
         app:fragment="acr.browser.lightning.settings.fragment.DisplaySettingsFragment"
         app:title="@string/settings_display"
         app:icon="@drawable/ic_palette"/>
-    
+
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AdBlockSettingsFragment"
         app:title="@string/settings_adblock"

@@ -84,7 +84,7 @@ public class OutputFormatter {
             str = topNode.text();
         }
 
-        // if jsoup failed to parse the whole html now parse this smaller 
+        // if jsoup failed to parse the whole html now parse this smaller
         // snippet again to avoid html tags disturbing our text:
         return Jsoup.parse(str).text();
     }

@@ -16,8 +16,8 @@ Please report issues on [GitHub](https://github.com/slion/fulguris/issues).
 
 ## Rate
 
-Give us ⭐⭐⭐⭐⭐ on [Google Play].  
-If you don't think it is worth five stars yet then just [open an issue](https://github.com/slion/fulguris/issues) instead. 
+Give us ⭐⭐⭐⭐⭐ on [Google Play].
+If you don't think it is worth five stars yet then just [open an issue](https://github.com/slion/fulguris/issues) instead.
 
 ## Engage
 
@@ -38,26 +38,26 @@ Please consider [sponsoring us on GitHub](https://github.com/sponsors/Slion) or 
 The ability of this project to finance itself is what will ultimately determine its long term success.
 
 # Features
-📑Sessions  
-🌍 Address bar  
-🚦Vertical tab panel  
-🚥Horizontal tab bar  
-⚙Tabs management  
-🏞Screen orientations  
-🔖Bookmarks  
-⌚History  
-🌗Force dark mode  
-🎨Themes for app and pages  
-⛔Ad blocker  
-🔒Privacy – Incognito mode  
-🔎Search & suggestions – Google, Bing, Yahoo, StartPage, DuckDuckGo…  
-♿Accessibility  
-⌨Keyboard support  
-⚡Hardware accelerated  
-🖥️ Desktop rendering  
-🖥️ Android desktop support – Samsung Dex, EMUI Desktop  
-🌐 Languages  
-🔧Settings – lots  
+📑Sessions
+🌍 Address bar
+🚦Vertical tab panel
+🚥Horizontal tab bar
+⚙Tabs management
+🏞Screen orientations
+🔖Bookmarks
+⌚History
+🌗Force dark mode
+🎨Themes for app and pages
+⛔Ad blocker
+🔒Privacy – Incognito mode
+🔎Search & suggestions – Google, Bing, Yahoo, StartPage, DuckDuckGo…
+♿Accessibility
+⌨Keyboard support
+⚡Hardware accelerated
+🖥️ Desktop rendering
+🖥️ Android desktop support – Samsung Dex, EMUI Desktop
+🌐 Languages
+🔧Settings – lots
 📶 Orbot Proxy support and I2P support – Beta
 
 # Permissions

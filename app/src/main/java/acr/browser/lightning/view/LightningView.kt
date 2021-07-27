@@ -293,7 +293,7 @@ class LightningView(
         uiController = activity as UIController
         titleInfo = LightningViewTitle(activity)
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()
-	
+
         // Mark our URL
         iTargetUrl = Uri.parse(tabInitializer.url())
 

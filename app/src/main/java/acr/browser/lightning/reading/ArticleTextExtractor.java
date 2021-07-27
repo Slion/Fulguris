@@ -128,26 +128,26 @@ public class ArticleTextExtractor {
 
                 /*
                 // NOTE: This optimization fails with large pages that
-                contains chunks of text that can be mistaken by articles, since we 
+                contains chunks of text that can be mistaken by articles, since we
                 want the best accuracy possible, I am disabling it for now. AP.
 
                 // The original code had a limit of 200, the intention was that
                 // if a node had a weight greater than it, then it most likely
                 // it was the main content.
-                // However this assumption fails when the amount of text in the 
+                // However this assumption fails when the amount of text in the
                 // children (or grandchildren) is too large. If we detect this
                 // case then the limit is ignored and we try all the nodes to select
                 // the one with the absolute maximum weight.
                 if (maxWeight > 500){
                     ignoreMaxWeightLimit = true;
                     continue;
-                } 
-                
+                }
+
                 // formerly 200, increased to 250 to account for the fact
                 // we are not adding the weights of the grand children to the
                 // tally.
-                
-                if (maxWeight > 250 && !ignoreMaxWeightLimit) 
+
+                if (maxWeight > 250 && !ignoreMaxWeightLimit)
                     break;
                 */
             }
@@ -208,7 +208,7 @@ public class ArticleTextExtractor {
             res.setDate(docdate);
         }
 
-        // now remove the clutter 
+        // now remove the clutter
         if (cleanScripts) {
             prepareDocument(doc);
         }
@@ -393,7 +393,7 @@ public class ArticleTextExtractor {
             }
         }
 
-        // rnews 
+        // rnews
         elems = doc.select("meta[property=dateCreated], span[property=dateCreated]");
         if (!elems.isEmpty()) {
             Element el = elems.get(0);
@@ -435,7 +435,7 @@ public class ArticleTextExtractor {
 
                         return DateUtils.parseDateStrictly((json \ "pub_date").extract[String], Array("yyyy-MM-dd'T'HH:mm:ssZ", "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd'T'HH:mm:ssZZ", "yyyy-MM-dd'T'HH:mm:ssz"))
                         }
-            } 
+            }
         */
 
         // BBC
@@ -813,7 +813,7 @@ public class ArticleTextExtractor {
         }
 
         //
-        // Visit grandchildren, This section visits the grandchildren 
+        // Visit grandchildren, This section visits the grandchildren
         // of the node and calculate their weights. Note that grandchildren
         // weights are only worth 1/3 of children's
         //
@@ -821,7 +821,7 @@ public class ArticleTextExtractor {
         for (Element child2 : rootEl.children()) {
 
             // If the node looks negative don't include it in the weights
-            // instead penalize the grandparent. This is done to try to 
+            // instead penalize the grandparent. This is done to try to
             // avoid giving weigths to navigation nodes, etc.
             if (NEGATIVE.matcher(child2.id()).find() ||
                 NEGATIVE.matcher(child2.className()).find()) {
