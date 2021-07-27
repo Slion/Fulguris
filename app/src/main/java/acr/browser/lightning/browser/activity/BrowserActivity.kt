@@ -50,7 +50,7 @@ import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
 import acr.browser.lightning.view.SearchView
 import acr.browser.lightning.view.find.FindResults
-import android.animation.LayoutTransition
+import android.animation.*
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -66,10 +66,8 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
+import android.os.*
+import android.os.VibrationEffect.EFFECT_DOUBLE_CLICK
 import android.provider.MediaStore
 import android.view.*
 import android.view.View.*
@@ -465,6 +463,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      */
     fun showPopupMenu() {
+        // Make sure back and forward buttons are in correct state
+        setForwardButtonEnabled(tabsManager.currentTab?.canGoForward()?:false)
+        setBackButtonEnabled(tabsManager.currentTab?.canGoBack()?:false)
+        // Open our menu
         iMenuMain.show(iBindingToolbarContent.buttonMore)
     }
 
@@ -1336,7 +1338,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // Move forward if WebView has focus
                 KeyEvent.KEYCODE_FORWARD -> {
                     if (tabsManager.currentTab?.webView?.hasFocus() == true && tabsManager.currentTab?.canGoForward() == true) {
-                        tabsManager.currentTab?.goForward()
+                        currentTabGoForward()
                         return true
                     }
                 }
@@ -1542,13 +1544,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
             R.id.action_back -> {
                 if (currentView?.canGoBack() == true) {
-                    currentView.goBack()
+                    currentTabGoBack()
                 }
                 return true
             }
             R.id.action_forward -> {
                 if (currentView?.canGoForward() == true) {
-                    currentView.goForward()
+                    currentTabGoForward()
                 }
                 return true
             }
@@ -1811,12 +1813,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun notifyTabViewRemoved(position: Int) {
         logger.log(TAG, "Notify Tab Removed: $position")
         tabsView?.tabRemoved(position)
-        // Notify user a tab was closed with an option to recover it
-        makeSnackbar(
-            getString(R.string.notify_tab_closed), Snackbar.LENGTH_SHORT, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
-            .setAction(R.string.button_undo) {
-                presenter?.recoverClosedTab()
-            }.show()
+
+        if (userPreferences.onTabCloseShowSnackbar) {
+            // Notify user a tab was closed with an option to recover it
+            makeSnackbar(
+                getString(R.string.notify_tab_closed), Snackbar.LENGTH_SHORT, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                .setAction(R.string.button_undo) {
+                    presenter?.recoverClosedTab()
+                }.show()
+        }
     }
 
     override fun notifyTabViewAdded() {
@@ -1880,10 +1885,39 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         logger.log(TAG, "Remove the tab view")
 
-        currentTabView.removeFromParent()
+        currentTabView?.removeFromParent()
         currentTabView?.onFocusChangeListener = null
+        val outgoingView = currentTabView
         currentTabView = null
+
+        if (userPreferences.onTabCloseShowAnimation) {
+            animateClosingTab(outgoingView)
+        }
+
+        if (userPreferences.onTabCloseVibrate) {
+            vibrate()
+        }
     }
+
+    /**
+     *
+     */
+    fun vibrate() {
+        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (vibrator.hasVibrator()) { // Vibrator availability checking
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                vibrator.vibrate(VibrationEffect.createPredefined(EFFECT_DOUBLE_CLICK))
+                //
+            } else*/ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(50,50,50), intArrayOf(10,0,10), -1))
+                //vibrator.vibrate(VibrationEffect.createOneShot(250, VibrationEffect.DEFAULT_AMPLITUDE))
+            }
+            else {
+                vibrator.vibrate(500) // Vibrate method for below API Level 26
+            }
+        }
+    }
+
 
     /**
      * This function is central to browser tab switching.
@@ -1898,8 +1932,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         logger.log(TAG, "Setting the tab view")
+
+        // To be on the safe side
         aView.removeFromParent()
-        currentTabView.removeFromParent()
+        currentTabView?.removeFromParent()
 
 
         iBinding.contentFrame.resetTarget() // Needed to make it work together with swipe to refresh
@@ -1909,6 +1945,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Remove existing focus change observer before we change our tab
         currentTabView?.onFocusChangeListener = null
         // Change our tab
+        val outgoingView = currentTabView
         currentTabView = aView
         // Close virtual keyboard if we loose focus
         currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(iBinding.uiLayout.windowToken, 0) }
@@ -1916,7 +1953,119 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Make sure current tab is visible in tab list
         scrollToCurrentTab()
         //mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
+
+        //
+        if (userPreferences.onTabChangeShowAnimation) {
+            animateOutgoingTab(outgoingView)
+        }
     }
+
+    /**
+     *
+     */
+    private fun animateOutgoingTab(aTab: View?) {
+        aTab?.let{
+            iBinding.webViewFrame.addView(it, MATCH_PARENT)
+            it.animate()
+                .translationX(-it.width.toFloat())
+                .setDuration(300)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        //it.visibility = View.GONE
+                        it.removeFromParent()
+                        // Reset our properties
+                        it.translationX = 0f
+                        //it.scaleY = 1.0f
+                        (it as WebViewEx).destroyIfNeeded()
+                    }
+                })
+        }
+    }
+
+    /**
+     *
+     */
+    private fun animateClosingTab(aTab: View?) {
+        aTab?.let{
+            iBinding.webViewFrame.addView(it, MATCH_PARENT)
+            it.animate()
+                .scaleY(0f)
+                .scaleX(0f)
+                .setDuration(300)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        //it.visibility = View.GONE
+                        it.removeFromParent()
+                        // Reset our properties
+                        it.scaleX = 1.0f
+                        it.scaleY = 1.0f
+                        (it as WebViewEx).destroyIfNeeded()
+                    }
+                })
+        }
+    }
+
+
+    /**
+     *
+     */
+    private fun animateForwardingTab(aTab: View?) {
+        aTab?.let{
+            // Adjust camera distance to avoid clipping
+            val scale = resources.displayMetrics.density
+            it.cameraDistance = it.width * scale * 2
+            it.animate()
+                .rotationY(360f)
+                .setDuration(userPreferences.onTabBackAnimationDuration.toLong()*10)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        it.rotationY = 0f
+                    }
+                })
+        }
+    }
+
+    /**
+     *
+     */
+    private fun animateBackingTab(aTab: View?) {
+
+
+        aTab?.let{
+            // Adjust camera distance to avoid clipping
+            val scale = resources.displayMetrics.density
+            it.cameraDistance = it.width * scale * 2
+
+            it.animate()
+                .rotationY(-360f)
+                .setDuration(userPreferences.onTabBackAnimationDuration.toLong()*10)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        it.rotationY = 0f
+                    }
+                })
+/*
+            val translationAnimator = ObjectAnimator
+                .ofFloat(aTab, View.ROTATION_X, 0f, 45f)
+                .setDuration(3000);
+
+            val alphaAnimator = ObjectAnimator
+                .ofFloat(aTab, View.ROTATION_X, 45f, 0f)
+                .setDuration(3000);
+
+
+
+            val animatorSet = AnimatorSet();
+            animatorSet.playSequentially(
+                translationAnimator,
+                alphaAnimator
+            );
+            animatorSet.start()
+*/
+
+        }
+    }
+
 
     override fun showBlockedLocalFileDialog(onPositiveClick: Function0<Unit>) {
         MaterialAlertDialogBuilder(this)
@@ -2052,7 +2201,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
 
     override fun closeBrowser() {
-        currentTabView.removeFromParent()
+        currentTabView?.removeFromParent()
         performExitCleanUp()
         finishAndRemoveTask()
     }
@@ -2076,6 +2225,33 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         doBackAction()
     }
 
+    /**
+     * Go back in current tab history.
+     * Perform animation as specified in settings.
+     */
+    private fun currentTabGoBack() {
+        tabsManager.currentTab?.let {
+            it.goBack()
+            if (userPreferences.onTabBackShowAnimation) {
+                animateBackingTab(iBinding.contentFrame)
+            }
+        }
+    }
+
+    /**
+     * Go forward in current tab history.
+     * Perform animation as specified in settings.
+     */
+    private fun currentTabGoForward() {
+        tabsManager.currentTab?.let {
+            it.goForward()
+            if (userPreferences.onTabBackShowAnimation) {
+                animateForwardingTab(iBinding.contentFrame)
+            }
+        }
+    }
+
+
     private fun doBackAction() {
         val currentTab = tabsManager.currentTab
         if (showingTabs()) {
@@ -2092,7 +2268,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         onHideCustomView()
                     } else {
                         if (isToolBarVisible()) {
-                            currentTab.goBack()
+                            currentTabGoBack()
                         } else {
                             showActionBar()
                         }
@@ -2219,7 +2395,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         if (userPreferences.useBottomSheets) {
             createBookmarksDialog()
         } else {
-            bookmarksView.removeFromParent()
+            bookmarksView?.removeFromParent()
             getBookmarksContainer().addView(bookmarksView)
         }
 
@@ -2935,7 +3111,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         if (closeTabsPanelIfOpen()) {
             val currentTab = tabsManager.currentTab
             if (currentTab?.canGoBack() == true) {
-                currentTab.goBack()
+                currentTabGoBack()
             } else if (currentTab != null) {
                 tabsManager.let { presenter?.deleteTab(it.positionOf(currentTab)) }
             }
@@ -2948,7 +3124,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun onForwardButtonPressed() {
         val currentTab = tabsManager.currentTab
         if (currentTab?.canGoForward() == true) {
-            currentTab.goForward()
+            currentTabGoForward()
             closePanels(null)
         }
     }

@@ -108,7 +108,7 @@ class LightningView(
      *
      * @return the WebView instance of the tab, which can be null.
      */
-    var webView: WebView? = null
+    var webView: WebViewEx? = null
         private set
 
     private lateinit var lightningWebClient: LightningWebClient
@@ -324,7 +324,7 @@ class LightningView(
     private fun createWebView() {
         lightningWebClient = LightningWebClient(activity, this)
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
-        webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebView;
+        webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebViewEx;
         webView?.apply {
             //id = this@LightningView.id
             gestureDetector = GestureDetector(activity, CustomGestureListener(this))
@@ -864,32 +864,15 @@ class LightningView(
      * the WebView cannot be recreated using the public
      * api.
      */
-    // TODO fix bug where webView?.destroy is being called before the tab
-    // is removed and would cause a memory leak if the parent check
-    // was not in place.
     fun destroy() {
+
         //See: https://console.firebase.google.com/project/fulguris-b1f69/crashlytics/app/android:net.slions.fulguris.full.playstore/issues/ea99c7ea0c57f66eae6e95532a16859d
         if (iDownloadListener!=null) {
             activity.unregisterReceiver(iDownloadListener)
             iDownloadListener = null
         }
         networkDisposable.dispose()
-        webView?.let {
-            // Check to make sure the WebView has been removed
-            // before calling destroy() so that a memory leak is not created
-            val parent = it.parent as? ViewGroup
-            if (parent != null) {
-                logger.log(TAG, "WebView was not detached from window before destroy")
-                parent.removeView(it)
-            }
-            it.stopLoading()
-            it.onPause()
-            it.clearHistory()
-            it.visibility = View.GONE
-            it.removeAllViews()
-            it.destroyDrawingCache()
-            it.destroy()
-        }
+        webView?.autoDestruction()
     }
 
     /**

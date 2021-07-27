@@ -26,14 +26,29 @@
                 <include android:id="@+id/toolbar_include"
                     layout="@layout/toolbar"/>
 
-                <acr.browser.lightning.view.PullRefreshLayout
-                    android:id="@+id/content_frame"
+                <!--
+                FrameLayout needed to animate our tabs.
+                The current tab is contained in our PullRefreshLayout.
+                The animated outgoing tab is a sibling of PullRefreshLayout.
+                -->
+                <FrameLayout
+                    android:id="@+id/web_view_frame"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="?android:attr/colorBackground"
-                    android:clipChildren="true"
-                    android:animateLayoutChanges="true" />
+                    android:layout_weight="1">
+
+                    <!-- Contains the current tab -->
+                    <acr.browser.lightning.view.PullRefreshLayout
+                        android:id="@+id/content_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/colorBackground"
+                        android:clipChildren="true"
+                        android:animateLayoutChanges="false" />
+
+                    <!-- Here we put at runtime the view from the outgoing tab while it is being animated -->
+
+                </FrameLayout>
 
                 <include android:id="@+id/findInPageInclude" layout="@layout/search_interface"/>
             </LinearLayout>

@@ -28,14 +28,12 @@ fun View.canScrollVertically() = this.let {
 
 /**
  * Removes a view from its parent if it has one.
+ * WARNING: This may not set this parent to null instantly if you are using animateLayoutChanges.
  */
-fun View?.removeFromParent() : ViewGroup? = this?.let {
-    val parent = it.parent
-    (parent as? ViewGroup)?.let { vg ->
-        vg.removeView(it)
+fun View.removeFromParent() : ViewGroup? {
+        val vg = (parent as? ViewGroup)
+        vg?.removeView(this)
         return vg
-    }
-    // Assuming you don't need to explicitly return null in Kotlin
 }
 
 /**

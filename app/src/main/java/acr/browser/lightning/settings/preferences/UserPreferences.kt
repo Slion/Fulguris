@@ -8,6 +8,7 @@ import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.browser.SearchBoxDisplayChoice
 import acr.browser.lightning.browser.SearchBoxModel
 import acr.browser.lightning.constant.DEFAULT_ENCODING
+import acr.browser.lightning.constant.PrefKeys
 import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.device.ScreenSize
 import acr.browser.lightning.di.UserPrefs
@@ -362,6 +363,17 @@ class UserPreferences @Inject constructor(
      */
     var blockListAutoUpdate by preferences.enumPreference(R.string.pref_key_blocklist_auto_update, AbpUpdateMode.WIFI_ONLY)
     var blockListAutoUpdateFrequency by preferences.intPreference(R.string.pref_key_blocklist_auto_update_frequency, 7)
+
+    ///
+    /// Various tab event actions
+    ///
+
+    var onTabCloseShowSnackbar by preferences.booleanPreference(R.string.pref_key_on_tab_close_show_snackbar, R.bool.pref_default_on_tab_close_show_snackbar)
+    var onTabCloseShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_close_show_animation, R.bool.pref_default_on_tab_close_show_animation)
+    var onTabCloseVibrate by preferences.booleanPreference(R.string.pref_key_on_tab_close_vibrate, R.bool.pref_default_on_tab_close_vibrate)
+    var onTabChangeShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_change_show_animation, R.bool.pref_default_on_tab_change_show_animation)
+    var onTabBackShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_back_show_animation, R.bool.pref_default_on_tab_back_show_animation)
+    var onTabBackAnimationDuration by preferences.intPreference(R.string.pref_key_on_tab_back_animation_duration, R.integer.pref_default_landscape_desktop_width)
 
 }
 

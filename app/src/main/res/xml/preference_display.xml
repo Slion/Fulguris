@@ -136,5 +136,57 @@
             android:key="@string/pref_key_text_reflow"
             android:title="@string/reflow"
             app:iconSpaceReserved="true" />
+
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_on_tab_close">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_close_show_snackbar"
+            android:title="@string/pref_title_show_snackbar"
+            app:iconSpaceReserved="true"/>
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_close_show_animation"
+            android:title="@string/pref_title_show_animation"
+            app:iconSpaceReserved="true"/>
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_on_tab_close_vibrate"
+            android:title="@string/pref_title_vibrate"
+            app:iconSpaceReserved="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_on_tab_change">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_change_show_animation"
+            android:title="@string/pref_title_show_animation"
+            app:iconSpaceReserved="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_on_tab_back_forward">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_back_show_animation"
+            android:title="@string/pref_title_show_animation"
+            app:iconSpaceReserved="true"/>
+
+        <SeekBarPreference
+            app:key="@string/pref_key_on_tab_back_animation_duration"
+            app:dependency="@string/pref_key_on_tab_back_show_animation"
+            app:title="@string/pref_title_duration"
+            app:summary="@string/pref_summary_duration"
+            app:defaultValue="@integer/pref_default_animation_duration_tab_back_forward"
+            app:min="10"
+            android:max="100"
+            app:seekBarIncrement="50"
+            app:showSeekBarValue="true"
+            app:iconSpaceReserved="true"
+            app:updatesContinuously="true"
+            />
+    </PreferenceCategory>
+
+
+
 </PreferenceScreen>
