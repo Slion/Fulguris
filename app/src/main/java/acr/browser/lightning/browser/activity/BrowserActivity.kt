@@ -67,7 +67,6 @@ import android.graphics.drawable.StateListDrawable
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
-import android.os.VibrationEffect.EFFECT_DOUBLE_CLICK
 import android.provider.MediaStore
 import android.view.*
 import android.view.View.*
@@ -78,6 +77,7 @@ import android.webkit.ValueCallback
 import android.webkit.WebChromeClient.CustomViewCallback
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.FrameLayout
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
@@ -344,6 +344,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Set up BottomSheetDialog
         dialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
         dialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        //dialog.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         //dialog.window?.setFlags(dialog.window?.attributes!!.flags, WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         //dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
@@ -353,15 +354,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         //
 
         // We need to set private data member edgeToEdgeEnabled to true to get full screen effect
-        // That won't be needed past material:1.4.0-alpha02
-        val field = BottomSheetDialog::class.java.getDeclaredField("edgeToEdgeEnabled")
-        field.isAccessible = true
-        field.setBoolean(dialog, true)
+        // That won't be needed past material:1.4.0-alpha02 as it is read from our theme definition from then on
+        //val field = BottomSheetDialog::class.java.getDeclaredField("edgeToEdgeEnabled")
+        //field.isAccessible = true
+        //field.setBoolean(dialog, true)
+
         //
         aContentView.removeFromParent()
         dialog.setContentView(aContentView)
         dialog.behavior.skipCollapsed = true
         dialog.behavior.isDraggable = !userPreferences.lockedDrawers
+        // Fix for https://github.com/Slion/Fulguris/issues/226
+        dialog.behavior.maxWidth = -1 // We want fullscreen width
 
         // Make sure dialog top padding and status bar icons color are updated whenever our dialog is resized
         // Since we keep recreating our dialogs every time we open them we should not accumulate observers here
@@ -596,6 +600,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.buttonActionBack.setOnClickListener{executeAction(R.id.action_back)}
         iBindingToolbarContent.buttonActionForward.setOnClickListener{executeAction(R.id.action_forward)}
 
+        //setFullscreenIfNeeded(resources.configuration) // As that's needed before bottom sheets creation
         createTabsView()
         //createTabsDialog()
         bookmarksView = BookmarksDrawerView(this)
@@ -1775,7 +1780,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun setupTabBar(): Boolean {
         // Check if our tab bar style changed
-        if (verticalTabBar!=configPrefs.verticalTabBar) {
+        if (verticalTabBar!=configPrefs.verticalTabBar
+            // Our bottom sheets dialog needs to be recreated with proper window decor state, with or without status bar that is.
+            // Looks like that was also needed for the bottom sheets top padding to be in sync? Go figure…
+            || userPreferences.useBottomSheets) {
             // We either coming or going to desktop like horizontal tab bar, tabs panel should be closed then
             mainHandler.post {closePanelTabs()}
             // Tab bar style changed recreate our tab bar then
@@ -2175,6 +2183,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setFullscreenIfNeeded(newConfig)
         setupTabBar()
         setupToolBar(newConfig)
+        setupBookmarksView()
 
         // Can't find a proper event to do that after the configuration changes were applied so we just delay it
         mainHandler.postDelayed({
@@ -3185,6 +3194,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             decor.systemUiVisibility = decor.systemUiVisibility and fullScreenFlags.inv()
             statusBarHidden = false
         }
+
+        // Keep our bottom sheets dialog in sync
+        tabsDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
+        tabsDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        bookmarksDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
+        bookmarksDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     /**
