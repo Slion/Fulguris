@@ -24,6 +24,12 @@ import javax.inject.Singleton
 
 /**
  * The user's preferences.
+ *
+ * Defaults specified here are only used while that settings entry has not been initialized.
+ * Settings entry are typically initialized the first time you access the settings page it belongs to.
+ * They also happen to be initialized with the default value specified in the preference XML rather than the default specified here.
+ * It should be the same but still that's really poor design.
+ * TODO: Fix that that at some point
  */
 @Singleton
 class UserPreferences @Inject constructor(
@@ -373,7 +379,7 @@ class UserPreferences @Inject constructor(
     var onTabCloseVibrate by preferences.booleanPreference(R.string.pref_key_on_tab_close_vibrate, R.bool.pref_default_on_tab_close_vibrate)
     var onTabChangeShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_change_show_animation, R.bool.pref_default_on_tab_change_show_animation)
     var onTabBackShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_back_show_animation, R.bool.pref_default_on_tab_back_show_animation)
-    var onTabBackAnimationDuration by preferences.intPreference(R.string.pref_key_on_tab_back_animation_duration, R.integer.pref_default_landscape_desktop_width)
+    var onTabBackAnimationDuration by preferences.intResPreference(R.string.pref_key_on_tab_back_animation_duration, R.integer.pref_default_animation_duration_tab_back_forward)
 
 }
 

@@ -347,6 +347,8 @@
     <string name="new_tab_position_start">Start of tab list</string>
     <string name="new_tab_position_end">End of tab list</string>
     <string name="text_encoding">Text encoding</string>
+    <string name="reset_settings">Reset settings</string>
+    <string name="reset_settings_confirmation">You will loose all your settings. Are you sure you want to proceed?</string>
     <string-array name="url_content_array">
         <item>Domain</item>
         <item>URL</item>

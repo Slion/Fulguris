@@ -1881,6 +1881,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    /**
+     * Notably called whenever the current tab is closed.
+     */
     override fun removeTabView() {
 
         logger.log(TAG, "Remove the tab view")
@@ -1913,7 +1916,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 //vibrator.vibrate(VibrationEffect.createOneShot(250, VibrationEffect.DEFAULT_AMPLITUDE))
             }
             else {
-                vibrator.vibrate(500) // Vibrate method for below API Level 26
+                vibrator.vibrate(200) // Vibrate method for below API Level 26
             }
         }
     }

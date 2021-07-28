@@ -158,5 +158,11 @@
             android:title="@string/text_encoding"
             app:iconSpaceReserved="false" />
 
+        <Preference
+            android:key="@string/pref_key_reset_settings"
+            android:title="@string/reset_settings"
+            android:icon="@drawable/ic_settings_backup_restore"
+            app:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 </PreferenceScreen>
