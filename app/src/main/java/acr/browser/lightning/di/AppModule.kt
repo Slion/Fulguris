@@ -160,19 +160,6 @@ class AppModule {
             .build()
     }.cache()
 
-    @Singleton
-    @Provides
-    @HostsClient
-    fun providesHostsHttpClient(application: Application): Single<OkHttpClient> = Single.fromCallable {
-        val intervalYear = TimeUnit.DAYS.toSeconds(365)
-        val suggestionsCache = File(application.cacheDir, "hosts_cache")
-
-        return@fromCallable OkHttpClient.Builder()
-            .cache(Cache(suggestionsCache, FileUtils.megabytesToBytes(5)))
-            .addNetworkInterceptor(createInterceptorWithMaxCacheAge(intervalYear))
-            .build()
-    }.cache()
-
     @Provides
     @Singleton
     fun provideLogger(buildInfo: BuildInfo): Logger = if (buildInfo.buildType == BuildType.DEBUG) {
@@ -211,10 +198,6 @@ class AppModule {
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)
 annotation class SuggestionsClient
-
-@Qualifier
-@Retention(AnnotationRetention.SOURCE)
-annotation class HostsClient
 
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)
