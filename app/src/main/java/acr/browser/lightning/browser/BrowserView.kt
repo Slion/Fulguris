@@ -6,8 +6,16 @@ import androidx.annotation.StringRes
 
 interface BrowserView {
 
-    fun setTabView(view: View)
+    /**
+     * Called when our tab view needs to be changed.
+     * Implementer typically will remove the currently bound tab view and hook the one provided here.
+     * [aView] is in fact a WebViewEx however this could change.
+     */
+    fun setTabView(aView: View, aWasTabAdded: Boolean)
 
+    /**
+     * Notably called when a user closes a tab.
+     */
     fun removeTabView()
 
     fun updateUrl(url: String?, isLoading: Boolean)

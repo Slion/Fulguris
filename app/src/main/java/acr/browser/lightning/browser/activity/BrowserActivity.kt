@@ -59,6 +59,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
@@ -1818,6 +1819,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 DialogItem(title = R.string.close_all_tabs, onClick = this::closeBrowser))
     }
 
+    /**
+     * From [BrowserView].
+     */
     override fun notifyTabViewRemoved(position: Int) {
         logger.log(TAG, "Notify Tab Removed: $position")
         tabsView?.tabRemoved(position)
@@ -1832,11 +1836,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    /**
+     * From [BrowserView].
+     */
     override fun notifyTabViewAdded() {
         logger.log(TAG, "Notify Tab Added")
         tabsView?.tabAdded()
     }
 
+    /**
+     * From [BrowserView].
+     */
     override fun notifyTabViewChanged(position: Int) {
         logger.log(TAG, "Notify Tab Changed: $position")
         tabsView?.tabChanged(position)
@@ -1844,6 +1854,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setupPullToRefresh(resources.configuration)
     }
 
+    /**
+     * From [BrowserView].
+     */
     override fun notifyTabViewInitialized() {
         logger.log(TAG, "Notify Tabs Initialized")
         tabsView?.tabsInitialized()
@@ -1931,12 +1944,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
 
     /**
+     * From [BrowserView].
      * This function is central to browser tab switching.
      * It swaps our previous WebView with our new WebView.
      *
      * @param aView Input is in fact a [WebViewEx].
      */
-    override fun setTabView(aView: View) {
+    override fun setTabView(aView: View, aWasTabAdded: Boolean) {
 
         if (currentTabView == aView) {
             return
@@ -1944,11 +1958,19 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         logger.log(TAG, "Setting the tab view")
 
+        // First create image of current tab for smooth transition
+        // We needed to do this to avoid flashing to background color while we modify our layout
+        currentTabView?.captureBitmap()?.let {
+            iBinding.imageAbove.setImageBitmap(it)
+            iBinding.imageAbove.isVisible = true
+            iBinding.imageBelow.setImageBitmap(it)
+            iBinding.imageBelow.isVisible = true
+        }
+
+        // Then modify our actual layout
         // To be on the safe side
         aView.removeFromParent()
         currentTabView?.removeFromParent()
-
-
         iBinding.contentFrame.resetTarget() // Needed to make it work together with swipe to refresh
         iBinding.contentFrame.addView(aView, 0, MATCH_PARENT)
         aView.requestFocus()
@@ -1956,7 +1978,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Remove existing focus change observer before we change our tab
         currentTabView?.onFocusChangeListener = null
         // Change our tab
-        val outgoingView = currentTabView
         currentTabView = aView
         // Close virtual keyboard if we loose focus
         currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(iBinding.uiLayout.windowToken, 0) }
@@ -1965,39 +1986,84 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         scrollToCurrentTab()
         //mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
 
-        //
+        // Now everything is ready below our image snapshot of current view
+        // Last perform our transitions
         if (userPreferences.onTabChangeShowAnimation) {
-            animateOutgoingTab(outgoingView)
+            if (aWasTabAdded) {
+                animateIncomingTab(iBinding.contentFrame)
+                iBinding.imageAbove.isVisible = false
+                animateOutgoingTab(iBinding.imageBelow,aWasTabAdded)
+            } else {
+                iBinding.imageBelow.isVisible = false // Won't be needed in this case
+                animateOutgoingTab(iBinding.imageAbove,aWasTabAdded)
+            }
         }
     }
 
     /**
-     *
+     * That's intended to show the user a new tab was created
      */
-    private fun animateOutgoingTab(aTab: View?) {
+    private fun animateIncomingTab(aTab: View?) {
         aTab?.let{
-            iBinding.webViewFrame.addView(it, MATCH_PARENT)
+            //iBinding.webViewFrame.addView(it, MATCH_PARENT)
+            // Set our properties
+            it.scaleX = 0f
+            it.scaleY = 0f
             it.animate()
+                    .scaleY(1f)
+                    .scaleX(1f)
+                    .setDuration(300)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            it.scaleX = 1f
+                            it.scaleY = 1f
+                        }
+                    })
+        }
+    }
+
+    /**
+     * Intended to show user a tab was sent to the background.
+     * Animate a tab that's being sent to the background.
+     */
+    private fun animateOutgoingTab(aTab: View?, aWasTabAdded: Boolean) {
+        aTab?.let{
+            if (aWasTabAdded) {
+                // Move our tab to a frame were we can animate it below of our new foreground tab
+                it.animate()
+                    // No actual animation needed there
+                    .setDuration(300)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            // Animation is complete unhook that tab then
+                            it.isVisible = false
+                        }
+                    })
+                }
+            else {
+            // Move our tab to a frame were we can animate it on top of our new foreground tab
+            it.animate()
+                // Move our tab outside of the screen to the left
                 .translationX(-it.width.toFloat())
                 .setDuration(300)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        //it.visibility = View.GONE
-                        it.removeFromParent()
+                        // Animation is complete unhook that tab then
+                        it.isVisible = false
                         // Reset our properties
                         it.translationX = 0f
-                        //it.scaleY = 1.0f
-                        (it as WebViewEx).destroyIfNeeded()
                     }
                 })
+            }
         }
     }
 
     /**
-     *
+     * Intended to show user a tab was closed.
      */
     private fun animateClosingTab(aTab: View?) {
         aTab?.let{
+            // Move our tab to a frame were we can animate it on top of our new foreground tab
             iBinding.webViewFrame.addView(it, MATCH_PARENT)
             it.animate()
                 .scaleY(0f)
