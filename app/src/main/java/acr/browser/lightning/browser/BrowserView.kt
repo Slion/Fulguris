@@ -4,17 +4,24 @@ import acr.browser.lightning.ssl.SslState
 import android.view.View
 import androidx.annotation.StringRes
 
+/**
+ * TODO: Find a proper name for that class
+ * Though I guess that would mean sorting out our so called BrowserPresenter too.
+ */
 interface BrowserView {
 
     /**
-     * Called when our tab view needs to be changed.
+     * Called when our current tab view needs to be changed.
      * Implementer typically will remove the currently bound tab view and hook the one provided here.
+     *
      * [aView] is in fact a WebViewEx however this could change.
+     * [aWasTabAdded] True if [aView] is a newly created tab.
+     * [aPreviousTabClosed] True if the current foreground tab [aView] will replaced was closed.
      */
-    fun setTabView(aView: View, aWasTabAdded: Boolean)
+    fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean)
 
     /**
-     * Notably called when a user closes a tab.
+     * Only called during application shutdown process.
      */
     fun removeTabView()
 

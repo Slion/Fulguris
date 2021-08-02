@@ -192,7 +192,7 @@ dependencies {
     debugImplementation 'androidx.multidex:multidex:2.0.1'
 
     // test dependencies
-    testImplementation 'junit:junit:4.13.2'
+    implementation 'junit:junit:4.13.2'
     testImplementation 'org.assertj:assertj-core:3.15.0'
     testImplementation 'org.mockito:mockito-core:3.8.0'
     testImplementation 'com.nhaarman:mockito-kotlin:1.6.0', {

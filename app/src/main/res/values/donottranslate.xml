@@ -16,7 +16,6 @@
 
     <!-- On tab close -->
     <string name="pref_key_on_tab_close_show_snackbar">pref_key_on_tab_close_show_snackbar</string>
-    <string name="pref_key_on_tab_close_show_animation">pref_key_on_tab_close_show_animation</string>
     <string name="pref_key_on_tab_close_vibrate">pref_key_on_tab_close_vibrate</string>
 
     <!-- On tab change -->

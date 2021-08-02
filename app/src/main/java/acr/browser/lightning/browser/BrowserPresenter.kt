@@ -89,12 +89,12 @@ class BrowserPresenter(
                     iBrowserView.updateTabNumber(tabsModel.size())
                     if (tabsModel.savedRecentTabsIndices.count() == tabsModel.allTabs.count()) {
                         // Switch to saved current tab if any, otherwise the last tab I guess
-                        tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(it))
+                        tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(it),false)
                     } else {
                         // Number of tabs does not match the number of recent tabs saved
                         // That means we were most certainly launched from another app opening a new tab
                         // Assuming our new tab is the last one we switch to it
-                        tabChanged(tabsModel.positionOf(it))
+                        tabChanged(tabsModel.positionOf(it),false)
                     }
                 }
             )
@@ -116,7 +116,7 @@ class BrowserPresenter(
      * [aTab] The tab we are switching to.
      * [aWasTabAdded] True if [aTab] wes just created.
      */
-    private fun onTabChanged(aTab: LightningView?, aWasTabAdded: Boolean) {
+    private fun onTabChanged(aTab: LightningView?, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean) {
         logger.log(TAG, "On tab changed")
 
         if (aTab == null) {
@@ -145,7 +145,7 @@ class BrowserPresenter(
             iBrowserView.setBackButtonEnabled(aTab.canGoBack())
             iBrowserView.setForwardButtonEnabled(aTab.canGoForward())
             iBrowserView.updateUrl(aTab.url, false)
-            iBrowserView.setTabView(aTab.webView!!,aWasTabAdded)
+            iBrowserView.setTabView(aTab.webView!!,aWasTabAdded,aPreviousTabClosed)
             val index = tabsModel.indexOfTab(aTab)
             if (index >= 0) {
                 iBrowserView.notifyTabViewChanged(tabsModel.indexOfTab(aTab))
@@ -212,25 +212,11 @@ class BrowserPresenter(
         val isShown = tabToDelete.isShown
         val shouldClose = shouldClose && isShown && tabToDelete.isNewTab
         val currentTab = tabsModel.currentTab
-        /*
-        // SL: That special case is apparently not needed
-        // It lead to an empty tab list after removing the last tab if it was the home page
-        if (tabsModel.size() == 1
-            && currentTab != null
-            && URLUtil.isFileUrl(currentTab.url)
-            && currentTab.url == mapHomepageToCurrentUrl()) {
-            view.closeActivity()
-            return
-        } else {
-        */
-            if (isShown) {
-                iBrowserView.removeTabView()
-            }
-            val currentDeleted = tabsModel.deleteTab(position)
-            if (currentDeleted) {
-                tabChanged(tabsModel.indexOfCurrentTab())
-            }
-        //}
+
+        val currentDeleted = tabsModel.deleteTab(position)
+        if (currentDeleted) {
+            tabChanged(tabsModel.indexOfCurrentTab(),isShown)
+        }
 
         val afterTab = tabsModel.currentTab
         iBrowserView.notifyTabViewRemoved(position)
@@ -324,7 +310,7 @@ class BrowserPresenter(
      * BrowserActivity is destroyed so that we don't leak any memory.
      */
     fun shutdown() {
-        onTabChanged(null,false)
+        onTabChanged(null,false, false)
         tabsModel.cancelPendingWork()
         sslStateSubscription?.dispose()
     }
@@ -335,14 +321,14 @@ class BrowserPresenter(
      *
      * @param position the position of the tab to switch to.
      */
-    fun tabChanged(position: Int) {
+    fun tabChanged(position: Int, aPreviousTabClosed: Boolean) {
         if (position < 0 || position >= tabsModel.size()) {
             logger.log(TAG, "tabChanged invalid position: $position")
             return
         }
 
         logger.log(TAG, "tabChanged: $position")
-        onTabChanged(tabsModel.switchToTab(position),false)
+        onTabChanged(tabsModel.switchToTab(position),false, aPreviousTabClosed)
     }
 
     /**
@@ -373,7 +359,7 @@ class BrowserPresenter(
         iBrowserView.updateTabNumber(tabsModel.size())
 
         if (show) {
-            onTabChanged(tabsModel.switchToTab(tabsModel.indexOfTab(startingTab)),true)
+            onTabChanged(tabsModel.switchToTab(tabsModel.indexOfTab(startingTab)),true, false)
         }
         else {
             // We still need to add it to our recent tabs

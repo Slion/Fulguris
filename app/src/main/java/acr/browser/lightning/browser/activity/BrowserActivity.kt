@@ -59,7 +59,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
@@ -107,6 +106,7 @@ import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
+import junit.framework.Assert.assertNull
 import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
@@ -119,7 +119,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     lateinit var CHANNEL_ID: String
 
     // Current tab view being displayed
+    // Should always be a [WebViewEx] but that could change
     private var currentTabView: View? = null
+    // Our tab view back and front containers
+    // We swap them as needed to make sure our view animations are performed smoothly and without flicker
+    private lateinit var iTabViewContainerBack: PullRefreshLayout
+    private lateinit var iTabViewContainerFront: PullRefreshLayout
+    // Points to current tab animator or null if no tab animation is running
+    private var iTabAnimator: ViewPropertyAnimator? = null
 
     // Full Screen Video Views
     private var fullscreenContainerView: FrameLayout? = null
@@ -252,7 +259,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         iBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
+        iTabViewContainerBack = iBinding.tabViewContainerOne
+        iTabViewContainerFront = iBinding.tabViewContainerTwo
 
         ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
@@ -652,10 +660,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // Enable swipe to refresh
-        iBinding.contentFrame.setOnRefreshListener {
+        iTabViewContainerFront.setOnRefreshListener {
             tabsManager.currentTab?.reload()
-            mainHandler.postDelayed({ iBinding.contentFrame.isRefreshing = false }, 1000)   // Stop the loading spinner after one second
+            mainHandler.postDelayed({ iTabViewContainerFront.isRefreshing = false }, 1000)   // Stop the loading spinner after one second
         }
+
+        iTabViewContainerBack.setOnRefreshListener {
+            tabsManager.currentTab?.reload()
+            // Assuming this guys will be in front when refreshing
+            mainHandler.postDelayed({ iTabViewContainerFront.isRefreshing = false }, 1000)   // Stop the loading spinner after one second
+        }
+
 
         // TODO: define custom transitions to make flying in and out of the tool bar nicer
         //ui_layout.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, ui_layout.layoutTransition.getAnimator(LayoutTransition.CHANGE_DISAPPEARING))
@@ -1369,7 +1384,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                             // Otherwise access any of the first nine tabs
                             event.keyCode - KeyEvent.KEYCODE_1
                         }
-                        presenter?.tabChanged(nextIndex)
+                        presenter?.tabChanged(nextIndex,false)
                         return true
                     }
                 }
@@ -1416,7 +1431,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
                     if (iRecentTabIndex >= 0) {
                         // We worked out which tab to switch to, just do it now
-                        presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))
+                        presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)),false)
                         //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
                     }
                 }
@@ -1763,16 +1778,16 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private fun setupPullToRefresh(configuration: Configuration) {
         if (!configPrefs(configuration).pullToRefresh) {
             // User does not want to use pull to refresh
-            iBinding.contentFrame.isEnabled = false
+            iTabViewContainerFront.isEnabled = false
             iBindingToolbarContent.buttonReload.visibility = View.VISIBLE
             return
         }
 
         // Disable pull to refresh if no vertical scroll as it bugs with frame internal scroll
         // See: https://github.com/Slion/Lightning-Browser/projects/1
-        iBinding.contentFrame.isEnabled = currentTabView?.canScrollVertically()?:false
+        iTabViewContainerFront.isEnabled = currentTabView?.canScrollVertically()?:false
         // Don't show reload button if pull-to-refresh is enabled and once we are not loading
-        iBindingToolbarContent.buttonReload.visibility = if (iBinding.contentFrame.isEnabled && !isLoading()) View.GONE else View.VISIBLE
+        iBindingToolbarContent.buttonReload.visibility = if (iTabViewContainerFront.isEnabled && !isLoading()) View.GONE else View.VISIBLE
     }
 
     /**
@@ -1903,7 +1918,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * Notably called whenever the current tab is closed.
+     * Only called during application shutdown process.
      */
     override fun removeTabView() {
 
@@ -1911,16 +1926,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         currentTabView?.removeFromParent()
         currentTabView?.onFocusChangeListener = null
-        val outgoingView = currentTabView
         currentTabView = null
 
-        if (userPreferences.onTabCloseShowAnimation) {
-            animateClosingTab(outgoingView)
-        }
-
-        if (userPreferences.onTabCloseVibrate) {
-            vibrate()
-        }
     }
 
     /**
@@ -1942,6 +1949,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    /**
+     *
+     */
+    private fun swapTabViewsFrontToBack() {
+        // Actually move our back frame below our front frame
+        iTabViewContainerBack.removeFromParent()?.addView(iTabViewContainerBack,0)
+    }
 
     /**
      * From [BrowserView].
@@ -1950,66 +1964,86 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      * @param aView Input is in fact a [WebViewEx].
      */
-    override fun setTabView(aView: View, aWasTabAdded: Boolean) {
+    override fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean) {
 
         if (currentTabView == aView) {
             return
         }
 
-        logger.log(TAG, "Setting the tab view")
+        logger.log(TAG, "setTabView")
 
-        // First create image of current tab for smooth transition
-        // We needed to do this to avoid flashing to background color while we modify our layout
-        currentTabView?.captureBitmap()?.let {
-            iBinding.imageAbove.setImageBitmap(it)
-            iBinding.imageAbove.isVisible = true
-            iBinding.imageBelow.setImageBitmap(it)
-            iBinding.imageBelow.isVisible = true
+        aView.removeFromParent() // Just to be safe
+
+        // Skip tab animation if user does not want it…
+        val skipAnimation = !userPreferences.onTabChangeShowAnimation
+                // …or if we already have a tab animation running
+                || iTabAnimator!=null
+
+
+        // If we have not swapped our views yet
+        if (skipAnimation) {
+            // Just perform our layout changes in our front view container then
+            iTabViewContainerFront.addView(aView)
+            currentTabView?.removeFromParent()
+            iTabViewContainerFront.resetTarget() // Needed to make it work together with swipe to refresh
+            aView.requestFocus()
+        } else {
+            // Prepare our back view container then
+            iTabViewContainerBack.resetTarget() // Needed to make it work together with swipe to refresh
+            iTabViewContainerBack.addView(aView)
+            aView.requestFocus()
         }
-
-        // Then modify our actual layout
-        // To be on the safe side
-        aView.removeFromParent()
-        currentTabView?.removeFromParent()
-        iBinding.contentFrame.resetTarget() // Needed to make it work together with swipe to refresh
-        iBinding.contentFrame.addView(aView, 0, MATCH_PARENT)
-        aView.requestFocus()
 
         // Remove existing focus change observer before we change our tab
         currentTabView?.onFocusChangeListener = null
-        // Change our tab
-        currentTabView = aView
         // Close virtual keyboard if we loose focus
         currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(iBinding.uiLayout.windowToken, 0) }
+        // Change our tab
+        currentTabView = aView
+
+        // Now everything is ready below our image snapshot of current view
+        // Last perform our transitions
+        if (!skipAnimation) {
+            // Swap our variables but not the views yet
+            val front = iTabViewContainerBack
+            iTabViewContainerBack = iTabViewContainerFront
+            iTabViewContainerFront = front
+            //
+            if (aWasTabAdded) {
+                animateIncomingTab(iTabViewContainerFront)
+            } else if (aPreviousTabClosed) {
+                animateClosingTab(iTabViewContainerBack)
+                if (userPreferences.onTabCloseVibrate) {
+                    vibrate()
+                }
+            }
+            else {
+                //iBinding.imageBelow.isVisible = false // Won't be needed in this case
+                animateOutgoingTab(iTabViewContainerBack)
+            }
+        }
+
         showActionBar()
         // Make sure current tab is visible in tab list
         scrollToCurrentTab()
         //mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
-
-        // Now everything is ready below our image snapshot of current view
-        // Last perform our transitions
-        if (userPreferences.onTabChangeShowAnimation) {
-            if (aWasTabAdded) {
-                animateIncomingTab(iBinding.contentFrame)
-                iBinding.imageAbove.isVisible = false
-                animateOutgoingTab(iBinding.imageBelow,aWasTabAdded)
-            } else {
-                iBinding.imageBelow.isVisible = false // Won't be needed in this case
-                animateOutgoingTab(iBinding.imageAbove,aWasTabAdded)
-            }
-        }
     }
 
     /**
      * That's intended to show the user a new tab was created
      */
     private fun animateIncomingTab(aTab: View?) {
+        assertNull(iTabAnimator)
         aTab?.let{
             //iBinding.webViewFrame.addView(it, MATCH_PARENT)
             // Set our properties
             it.scaleX = 0f
             it.scaleY = 0f
-            it.animate()
+            // Put our incoming frame on top
+            // This replaces swapTabViewsFrontToBack for this special case
+            it.removeFromParent()?.addView(it)
+            // Animate it
+            iTabAnimator = it.animate()
                     .scaleY(1f)
                     .scaleX(1f)
                     .setDuration(300)
@@ -2017,6 +2051,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         override fun onAnimationEnd(animation: Animator) {
                             it.scaleX = 1f
                             it.scaleY = 1f
+
+                            iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                removeFromParent()
+                                //destroyIfNeeded()
+                            }
+                            //
+                            iTabAnimator = null;
                         }
                     })
         }
@@ -2026,35 +2067,30 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Intended to show user a tab was sent to the background.
      * Animate a tab that's being sent to the background.
      */
-    private fun animateOutgoingTab(aTab: View?, aWasTabAdded: Boolean) {
+    private fun animateOutgoingTab(aTab: View?) {
+        assertNull(iTabAnimator)
         aTab?.let{
-            if (aWasTabAdded) {
-                // Move our tab to a frame were we can animate it below of our new foreground tab
-                it.animate()
-                    // No actual animation needed there
+            // Move our tab to a frame were we can animate it on top of our new foreground tab
+            iTabAnimator = it.animate()
+                    // Move our tab outside of the screen to the left
+                    .translationX(-it.width.toFloat())
                     .setDuration(300)
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
+                            // Put outgoing frame in the back
+                            swapTabViewsFrontToBack()
                             // Animation is complete unhook that tab then
-                            it.isVisible = false
+                            it.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                removeFromParent()
+                                //destroyIfNeeded()
+                            }
+                            // Reset our properties
+                            it.translationX = 0f
+                            //
+                            iTabAnimator = null;
                         }
                     })
-                }
-            else {
-            // Move our tab to a frame were we can animate it on top of our new foreground tab
-            it.animate()
-                // Move our tab outside of the screen to the left
-                .translationX(-it.width.toFloat())
-                .setDuration(300)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        // Animation is complete unhook that tab then
-                        it.isVisible = false
-                        // Reset our properties
-                        it.translationX = 0f
-                    }
-                })
-            }
+
         }
     }
 
@@ -2062,21 +2098,26 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Intended to show user a tab was closed.
      */
     private fun animateClosingTab(aTab: View?) {
+        assertNull(iTabAnimator)
         aTab?.let{
-            // Move our tab to a frame were we can animate it on top of our new foreground tab
-            iBinding.webViewFrame.addView(it, MATCH_PARENT)
-            it.animate()
+            iTabAnimator = it.animate()
                 .scaleY(0f)
                 .scaleX(0f)
                 .setDuration(300)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        //it.visibility = View.GONE
-                        it.removeFromParent()
+                        // Time to swap our frames
+                        swapTabViewsFrontToBack()
+                        // Now do the clean-up
+                        iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                            removeFromParent()
+                            destroyIfNeeded()
+                        }
                         // Reset our properties
                         it.scaleX = 1.0f
                         it.scaleY = 1.0f
-                        (it as WebViewEx).destroyIfNeeded()
+                        //
+                        iTabAnimator = null;
                     }
                 })
         }
@@ -2087,16 +2128,19 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      */
     private fun animateForwardingTab(aTab: View?) {
+        assertNull(iTabAnimator)
         aTab?.let{
             // Adjust camera distance to avoid clipping
             val scale = resources.displayMetrics.density
             it.cameraDistance = it.width * scale * 2
-            it.animate()
+            iTabAnimator = it.animate()
                 .rotationY(360f)
                 .setDuration(userPreferences.onTabBackAnimationDuration.toLong()*10)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         it.rotationY = 0f
+                        //
+                        iTabAnimator = null;
                     }
                 })
         }
@@ -2106,40 +2150,22 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      */
     private fun animateBackingTab(aTab: View?) {
-
-
+        assertNull(iTabAnimator)
         aTab?.let{
             // Adjust camera distance to avoid clipping
             val scale = resources.displayMetrics.density
             it.cameraDistance = it.width * scale * 2
 
-            it.animate()
+            iTabAnimator = it.animate()
                 .rotationY(-360f)
                 .setDuration(userPreferences.onTabBackAnimationDuration.toLong()*10)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         it.rotationY = 0f
+                        //
+                        iTabAnimator = null;
                     }
                 })
-/*
-            val translationAnimator = ObjectAnimator
-                .ofFloat(aTab, View.ROTATION_X, 0f, 45f)
-                .setDuration(3000);
-
-            val alphaAnimator = ObjectAnimator
-                .ofFloat(aTab, View.ROTATION_X, 45f, 0f)
-                .setDuration(3000);
-
-
-
-            val animatorSet = AnimatorSet();
-            animatorSet.playSequentially(
-                translationAnimator,
-                alphaAnimator
-            );
-            animatorSet.start()
-*/
-
         }
     }
 
@@ -2164,7 +2190,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     override fun tabClicked(position: Int) {
         // Switch tab
-        presenter?.tabChanged(position)
+        presenter?.tabChanged(position,false)
         // Keep the drawer open while the tab change animation in running
         // Has the added advantage that closing of the drawer itself should be smoother as the webview had a bit of time to load
         mainHandler.postDelayed({ closePanels(null) }, 350)
@@ -2310,8 +2336,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private fun currentTabGoBack() {
         tabsManager.currentTab?.let {
             it.goBack()
-            if (userPreferences.onTabBackShowAnimation) {
-                animateBackingTab(iBinding.contentFrame)
+            // If no animation running yet…
+            if (iTabAnimator==null &&
+                    //…and user wants animation
+                    userPreferences.onTabBackShowAnimation) {
+                animateBackingTab(iTabViewContainerFront)
             }
         }
     }
@@ -2323,8 +2352,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private fun currentTabGoForward() {
         tabsManager.currentTab?.let {
             it.goForward()
-            if (userPreferences.onTabBackShowAnimation) {
-                animateForwardingTab(iBinding.contentFrame)
+            // If no animation running yet…
+            if (iTabAnimator==null
+                    //…and user wants animation
+                    && userPreferences.onTabBackShowAnimation) {
+                animateForwardingTab(iTabViewContainerFront)
             }
         }
     }
@@ -2567,12 +2599,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.buttonReload.setColorFilter(currentToolBarTextColor)
 
         // Pull to refresh spinner color also follow current theme
-        iBinding.contentFrame.setProgressBackgroundColorSchemeColor(color)
-        iBinding.contentFrame.setColorSchemeColors(currentToolBarTextColor)
+        iTabViewContainerFront.setProgressBackgroundColorSchemeColor(color)
+        iTabViewContainerFront.setColorSchemeColors(currentToolBarTextColor)
 
         // Color also applies to the following backgrounds as they show during tool bar show/hide animation
         iBinding.uiLayout.setBackgroundColor(color)
-        iBinding.contentFrame.setBackgroundColor(color)
+        iTabViewContainerFront.setBackgroundColor(color)
 
 
         val webViewEx: WebViewEx? = currentTabView as? WebViewEx

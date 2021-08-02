@@ -17,7 +17,6 @@
     <bool name="pref_default_toolbars_bottom">false</bool>
 
     <bool name="pref_default_on_tab_close_show_snackbar">true</bool>
-    <bool name="pref_default_on_tab_close_show_animation">true</bool>
     <bool name="pref_default_on_tab_close_vibrate">false</bool>
     <bool name="pref_default_on_tab_change_show_animation">true</bool>
     <bool name="pref_default_on_tab_back_show_animation">true</bool>
