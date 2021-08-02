@@ -140,7 +140,7 @@
     <string name="block_ad_source">Fonte do ficheiro hosts</string>
     <string name="block_ad_remote_refresh_frequency_description">Para ficheiros remotos</string>
     <string name="block_ad_refresh_now">Recarregar listas agora</string>
-    <string name="block_ads_upsell_source">Upgrade to Lightning Plus to choose</string>
+
     <string name="block_remote_frequency_daily">Diariamente</string>
     <string name="block_remote_frequency_weekly">Semanalmente</string>
     <string name="block_remote_frequency_monthly">Mensalmente</string>
@@ -338,7 +338,7 @@
     <string name="shortcut_message_failed_to_add">Lamentamos mas o seu launcher não permite atalhos.</string>
     <string name="action_delete_all_bookmarks">Apagar todos os marcadores</string>
     <string name="flash_not_supported">Flash Player não é suportado pelo seu sistema</string>
-    <string name="upsell_plus_version">Upgrade to Lightning Plus to block ads</string>
+
     <string name="message_open_download_fail">Este ficheiro já não existe</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">Perguntas frequentes</string>

@@ -140,7 +140,7 @@
     <string name="block_ad_source">Sunucu dosya kaynağı</string>
     <string name="block_ad_remote_refresh_frequency_description">Uzak dosyalar için</string>
     <string name="block_ad_refresh_now">Sunucuyu şimdi yenile</string>
-    <string name="block_ads_upsell_source">Seçmek için Lightning Plus\'a yükseltin</string>
+
     <string name="block_remote_frequency_daily">Günlük</string>
     <string name="block_remote_frequency_weekly">Haftalık</string>
     <string name="block_remote_frequency_monthly">Aylık</string>
@@ -338,7 +338,7 @@
     <string name="shortcut_message_failed_to_add">Üzgünüz, başlatıcınız kısayolları desteklemiyor.</string>
     <string name="action_delete_all_bookmarks">Tüm yer işaretlerini sil</string>
     <string name="flash_not_supported">Flash Player, sisteminiz tarafından desteklenmiyor</string>
-    <string name="upsell_plus_version">Reklamları engellemek için Lightning Plus\'a geçin</string>
+
     <string name="message_open_download_fail">Bu dosya artık mevcut değil</string>
     <string name="faq">S.S.S</string>
     <string name="faq_description">Sık Sorulan Sorular</string>

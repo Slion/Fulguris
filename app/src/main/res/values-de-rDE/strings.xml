@@ -140,7 +140,7 @@
     <string name="block_ad_source">Hosts-Datei Quelle</string>
     <string name="block_ad_remote_refresh_frequency_description">(Online-Hosts Datei)</string>
     <string name="block_ad_refresh_now">Hosts aktualisieren</string>
-    <string name="block_ads_upsell_source">Auf Lightning Plus upgraden, um auszuwählen</string>
+
     <string name="block_remote_frequency_daily">Täglich</string>
     <string name="block_remote_frequency_weekly">Wöchentlich</string>
     <string name="block_remote_frequency_monthly">Monatlich</string>
@@ -338,7 +338,7 @@
     <string name="shortcut_message_failed_to_add">Ihr Launcher unterstützt keine Verknüpfungen!</string>
     <string name="action_delete_all_bookmarks">Alle Lesezeichen löschen</string>
     <string name="flash_not_supported">Flash Player wird von Ihrem System nicht unterstützt!</string>
-    <string name="upsell_plus_version">Upgrade auf Lightning Plus um Werbung zu blockieren!</string>
+
     <string name="message_open_download_fail">Diese Datei existiert nicht mehr</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">Häufig gestellte Fragen</string>

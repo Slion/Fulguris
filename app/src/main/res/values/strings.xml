@@ -146,7 +146,7 @@
     <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
     <string name="block_ad_refresh_now">Refresh hosts now</string>
 
-    <string name="block_ads_upsell_source">Upgrade to Lightning Plus to choose</string>
+
 
     <string name="block_remote_frequency_daily">Daily</string>
     <string name="block_remote_frequency_weekly">Weekly</string>
@@ -393,7 +393,7 @@
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
     <string name="flash_not_supported">Flash Player is not supported by your system</string>
-    <string name="upsell_plus_version">Upgrade to Lightning Plus to block ads</string>
+
     <string name="message_open_download_fail">This file doesn\'t exist anymore</string>
 
     <string name="faq">FAQ</string>

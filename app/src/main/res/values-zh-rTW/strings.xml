@@ -140,7 +140,7 @@
     <string name="block_ad_source">Hosts file source</string>
     <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
     <string name="block_ad_refresh_now">Refresh hosts now</string>
-    <string name="block_ads_upsell_source">Upgrade to Lightning Plus to choose</string>
+
     <string name="block_remote_frequency_daily">Daily</string>
     <string name="block_remote_frequency_weekly">Weekly</string>
     <string name="block_remote_frequency_monthly">Monthly</string>
@@ -338,7 +338,7 @@
     <string name="shortcut_message_failed_to_add">很抱歉，您的啟動器不支援捷徑功能。</string>
     <string name="action_delete_all_bookmarks">刪除所有書籤</string>
     <string name="flash_not_supported">Flash Player 不支援您的系統</string>
-    <string name="upsell_plus_version">升級至閃電瀏覽器 Plus 即可封鎖廣告</string>
+
     <string name="message_open_download_fail">此檔案不存在</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">常見問題集</string>

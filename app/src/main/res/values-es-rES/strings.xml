@@ -140,7 +140,7 @@
     <string name="block_ad_source">Fuente del archivo hosts</string>
     <string name="block_ad_remote_refresh_frequency_description">Para archivo hosts remoto</string>
     <string name="block_ad_refresh_now">Actualizar hosts ahora</string>
-    <string name="block_ads_upsell_source">Actualice a Lightning Plus para elegir</string>
+
     <string name="block_remote_frequency_daily">Diariamente</string>
     <string name="block_remote_frequency_weekly">Semanalmente</string>
     <string name="block_remote_frequency_monthly">Mensualmente</string>
@@ -338,7 +338,7 @@
     <string name="shortcut_message_failed_to_add">Lo sentimos, su lanzador no soporta atajos.</string>
     <string name="action_delete_all_bookmarks">Eliminar todos los marcadores</string>
     <string name="flash_not_supported">Su sistema no soporta Flash Player</string>
-    <string name="upsell_plus_version">Actualice a Lightning Plus para bloquear anuncios</string>
+
     <string name="message_open_download_fail">Este archivo ya no existe</string>
     <string name="faq">Preguntas frecuentes</string>
     <string name="faq_description">Preguntas frecuentes</string>

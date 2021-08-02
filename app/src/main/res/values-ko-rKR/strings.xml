@@ -140,7 +140,7 @@
     <string name="block_ad_source">Hosts file source</string>
     <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
     <string name="block_ad_refresh_now">Refresh hosts now</string>
-    <string name="block_ads_upsell_source">Upgrade to Lightning Plus to choose</string>
+
     <string name="block_remote_frequency_daily">Daily</string>
     <string name="block_remote_frequency_weekly">Weekly</string>
     <string name="block_remote_frequency_monthly">Monthly</string>
@@ -338,7 +338,7 @@
     <string name="shortcut_message_failed_to_add">죄송합니다, 홈 화면이 바로가기를 지원하지 않습니다.</string>
     <string name="action_delete_all_bookmarks">모든 즐겨찾기 삭제</string>
     <string name="flash_not_supported">기기에서 Flash Player가 지원되지 않습니다</string>
-    <string name="upsell_plus_version">광고 차단을 위해 라이트닝 플러스로 업그레이드하세요</string>
+
     <string name="message_open_download_fail">파일이 더 이상 존재하지 않습니다</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">자주 묻는 질문</string>
