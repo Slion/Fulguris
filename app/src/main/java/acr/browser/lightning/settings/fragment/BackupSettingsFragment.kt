@@ -98,7 +98,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         sessionsCategory = findPreference(getString(R.string.pref_key_session_export_category))!!
 
         // Populate our sessions
-        tabsManager.iSessions.forEach { s -> addPreferenceSessionExport(s.name,tabsManager.fileFromSessionName(s.name)) }
+        tabsManager.iSessions.forEach { s -> addPreferenceSessionExport(s) }
 
         // Handle reset settings option
         clickableDynamicPreference(
@@ -110,16 +110,23 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     /**
      * Add a preference corresponding to the give session.
      */
-    private fun addPreferenceSessionExport(aName: String, aFile: File) {
+    private fun addPreferenceSessionExport(aSession: Session) {
         // We invite user to installer our Google Play Store release
         val pref = Preference(context)
-        pref.title = aName
+
+        // Show tab count if any
+        if (aSession.tabCount>0) {
+            pref.title = aSession.name + " - " +  aSession.tabCount
+        } else {
+            pref.title = aSession.name
+        }
+
         //pref.summary = resources.getString(R.string.pref_summary_contribute_translations)
         //pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_translate, activity?.theme)
         pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             // Open up Fulguris Crowdin project page
             //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://crowdin.com/project/fulguris-web-browser")))
-            showSessionExportDialog(aName,aFile)
+            showSessionExportDialog(aSession.name, aSession.tabCount, tabsManager.fileFromSessionName(aSession.name))
             true
         }
         sessionsCategory.addPreference(pref)
@@ -450,7 +457,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     /**
      *
      */
-    private fun showSessionExportDialog(aName: String, aFile: File) {
+    private fun showSessionExportDialog(aName: String, aTabCount: Int, aFile: File) {
         //TODO: specify default path
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
@@ -464,7 +471,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
             // Specify default file name, user can change it.
             // If that file already exists a numbered suffix is automatically generated and appended to the file name between brackets.
             // That is a neat feature as it guarantee no file will be overwritten.
-            putExtra(Intent.EXTRA_TITLE, "$aName$timeStamp")
+            putExtra(Intent.EXTRA_TITLE, "$aName$timeStamp-[$aTabCount]")
         }
         iSessionFile = aFile
         iSessionName = aName
@@ -545,11 +552,12 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                     // Workout session name
                     val sessionName = file.name.substring(TabsManager.FILENAME_SESSION_PREFIX.length);
                     // Add imported session to our session collection in our tab manager
-                    tabsManager.iSessions.add(Session(sessionName))
+                    val session = Session(sessionName)
+                    tabsManager.iSessions.add(session)
                     // Make sure we persist our imported session
                     tabsManager.saveSessions()
                     // Add imported session to our preferences list
-                    addPreferenceSessionExport(sessionName,file)
+                    addPreferenceSessionExport(session)
 
                     activity?.snackbar(getString(R.string.message_session_imported,sessionName))
                 }
