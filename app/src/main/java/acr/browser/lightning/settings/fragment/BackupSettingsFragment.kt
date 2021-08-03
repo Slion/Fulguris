@@ -6,6 +6,8 @@ package acr.browser.lightning.settings.fragment
 import acr.browser.lightning.R
 import acr.browser.lightning.bookmark.LegacyBookmarkImporter
 import acr.browser.lightning.bookmark.NetscapeBookmarkFormatImporter
+import acr.browser.lightning.browser.TabsManager
+import acr.browser.lightning.browser.sessions.Session
 import acr.browser.lightning.database.bookmark.BookmarkExporter
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.di.*
@@ -29,6 +31,8 @@ import android.os.Bundle
 import android.os.Environment
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -36,7 +40,7 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
-import java.io.File
+import java.io.*
 import java.util.*
 import javax.inject.Inject
 
@@ -56,6 +60,8 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     @Inject @PrefsLandscape lateinit var prefsLandscape: SharedPreferences
     @Inject @PrefsPortrait lateinit var prefsPortrait: SharedPreferences
     @Inject @AdBlockPrefs lateinit var prefsAdBlock: SharedPreferences
+    //
+    @Inject lateinit var tabsManager: TabsManager
 
     private var importSubscription: Disposable? = null
     private var exportSubscription: Disposable? = null
@@ -68,6 +74,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         return R.string.settings_backup
     }
 
+    lateinit var sessionsCategory: PreferenceCategory
 
     override fun providePreferencesXmlResource() = R.xml.preference_backup
 
@@ -79,19 +86,48 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
             .getInstance()
             .requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS, null)
 
+        // Bookmarks
         clickablePreference(preference = SETTINGS_EXPORT, onClick = this::exportBookmarks)
         clickablePreference(preference = SETTINGS_IMPORT, onClick = this::importBookmarks)
         clickablePreference(preference = SETTINGS_DELETE_BOOKMARKS, onClick = this::deleteAllBookmarks)
+
+        // Sessions
+        clickablePreference(preference = getString(R.string.pref_key_sessions_import), onClick = this::showSessionImportDialog)
+        //clickablePreference(preference = getString(R.string.pref_key_sessions_reset), onClick = this::deleteAllBookmarks)
+
+        sessionsCategory = findPreference(getString(R.string.pref_key_session_export_category))!!
+
+        // Populate our sessions
+        // TODO: should use a function from our [TabsManager] really
+        // Though that has the added advantage of listing sessions which have not been persisted somehow, should not be useful to user however
+        val files = application.filesDir?.let{it.listFiles { d, name -> name.startsWith(TabsManager.FILENAME_SESSION_PREFIX) }}
+        files?.forEach { f -> addPreferenceSessionExport(f.name.substring(TabsManager.FILENAME_SESSION_PREFIX.length),f) }
 
         // Handle reset settings option
         clickableDynamicPreference(
                 preference = getString(R.string.pref_key_reset_settings),
                 onClick = this::resetSettings
         )
-
-
-
     }
+
+    /**
+     * Add a preference corresponding to the give session.
+     */
+    private fun addPreferenceSessionExport(aName: String, aFile: File) {
+        // We invite user to installer our Google Play Store release
+        val pref = Preference(context)
+        pref.title = aName
+        //pref.summary = resources.getString(R.string.pref_summary_contribute_translations)
+        //pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_translate, activity?.theme)
+        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            // Open up Fulguris Crowdin project page
+            //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://crowdin.com/project/fulguris-web-browser")))
+            showSessionExportDialog(aName,aFile)
+            true
+        }
+        sessionsCategory.addPreference(pref)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -344,7 +380,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     }
 
     //
-    val bookmarkImportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val bookmarkImportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
             // Using content resolver to get an input stream from selected URI
@@ -414,6 +450,119 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
 
     }
 
+    /**
+     *
+     */
+    private fun showSessionExportDialog(aName: String, aFile: File) {
+        //TODO: specify default path
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = KSessionMimeType // Specify type of newly created document
+
+            var timeStamp = ""
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val dateFormat = SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss", Locale.US)
+                timeStamp = dateFormat.format(Date())
+            }
+            // Specify default file name, user can change it.
+            // If that file already exists a numbered suffix is automatically generated and appended to the file name between brackets.
+            // That is a neat feature as it guarantee no file will be overwritten.
+            putExtra(Intent.EXTRA_TITLE, "$aName$timeStamp")
+        }
+        iSessionFile = aFile
+        iSessionName = aName
+        sessionExportFilePicker.launch(intent)
+        // TODO: Display wait dialog?
+    }
+
+    private var iSessionFile: File? = null
+    private var iSessionName: String = ""
+    private val sessionExportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+
+            // Using content resolver to get an input stream from selected URI
+            // See:  https://commonsware.com/blog/2016/03/15/how-consume-content-uri.html
+            result.data?.data?.let{ uri ->
+                // Copy our session file to user selected path
+                context?.contentResolver?.openOutputStream(uri)?.let { outputStream ->
+                    val input = FileInputStream(iSessionFile)
+                    outputStream.write(input.readBytes())
+                    input.close()
+                    outputStream.flush()
+                    outputStream.close()
+                    iSessionFile = null
+                }
+
+                activity?.snackbar(getString(R.string.message_session_exported,iSessionName))
+
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    private fun showSessionImportDialog() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*" // That's needed for some reason, crashes otherwise
+            putExtra(
+                    // List all file types you want the user to be able to select
+                    Intent.EXTRA_MIME_TYPES, arrayOf(
+                    KSessionMimeType
+                    )
+            )
+        }
+        sessionImportFilePicker.launch(intent)
+        // See bookmarkImportFilePicker declaration below for result handler
+    }
+
+    private val sessionImportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // Using content resolver to get an input stream from selected URI
+            // See:  https://commonsware.com/blog/2016/03/15/how-consume-content-uri.html
+            result.data?.data?.let{ uri ->
+                context?.contentResolver?.openInputStream(uri).let { input ->
+
+                    // Build up our session name
+                    val fileName = application.filesDir?.path + '/' + TabsManager.FILENAME_SESSION_PREFIX + uri.fileName
+                    //val file = File.createTempFile(TabsManager.FILENAME_SESSION_PREFIX + uri.fileName,"",application.filesDir)
+
+                    // Make sure our file name is unique and short
+                    // TODO: move this into an utility function somewhere
+                    var i = 0
+                    var file = File(fileName)
+                    while (file.exists()) {
+                        i++
+                        file = File(fileName + i.toString())
+                    }
+                    file.createNewFile()
+                    // Write our session file
+                    val output = FileOutputStream(file)
+                    output.write(input?.readBytes())
+                    input?.close()
+                    output.flush()
+                    output.close()
+                    // Workout session name
+                    val sessionName = file.name.substring(TabsManager.FILENAME_SESSION_PREFIX.length);
+                    // Add imported session to our session collection in our tab manager
+                    tabsManager.iSessions.add(Session(sessionName))
+                    // Make sure we persist our imported session
+                    tabsManager.saveSessions()
+                    // Add imported session to our preferences list
+                    addPreferenceSessionExport(sessionName,file)
+
+                    activity?.snackbar(getString(R.string.message_session_imported,sessionName))
+                }
+            }
+        }
+    }
+
+
+
+
     companion object {
 
         private const val TAG = "BookmarkSettingsFrag"
@@ -421,6 +570,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_EXPORT = "export_bookmark"
         private const val SETTINGS_IMPORT = "import_bookmark"
         private const val SETTINGS_DELETE_BOOKMARKS = "delete_bookmarks"
+        private const val KSessionMimeType = "application/octet-stream"
 
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }

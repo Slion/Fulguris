@@ -73,6 +73,12 @@
     <string name="pref_key_blocklist_auto_update_frequency">pref_key_blocklist_auto_update_frequency</string>
 
 
+    <string name="pref_key_session_export_category">pref_key_session_export_category</string>
+    <string name="pref_key_sessions_import">pref_key_sessions_import</string>
+<!--    <string name="pref_key_sessions_export">pref_key_sessions_export</string>
+    <string name="pref_key_sessions_reset">pref_key_sessions_reset</string>
+-->    
+
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>
     <string name="new_tab_position_after_value">AFTER_CURRENT_TAB</string>

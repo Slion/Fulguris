@@ -1,5 +1,6 @@
 package acr.browser.lightning.di
 
+import acr.browser.lightning.browser.TabsManager
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.device.BuildType
 import acr.browser.lightning.html.ListPageReader
@@ -192,6 +193,7 @@ class AppModule {
 
     @Provides
     fun providesSetMetaViewport(): SetMetaViewport = MezzanineGenerator.SetMetaViewport()
+
 
 }
 

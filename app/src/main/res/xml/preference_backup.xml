@@ -14,6 +14,27 @@
             android:title="@string/action_delete_all_bookmarks"/>
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/action_sessions">
+        <Preference
+            android:key="@string/pref_key_sessions_import"
+            android:title="@string/generic_import"/>
+        <!--
+        <Preference
+            android:key="@string/pref_key_sessions_reset"
+            android:title="@string/generic_reset"/>
+        -->
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/pref_key_session_export_category"
+        android:title="@string/pref_category_title_session_export"
+        android:summary="@string/pref_category_summary_session_export">
+    </PreferenceCategory>
+
+
+
+
     <PreferenceCategory android:title="@string/settings_advanced">
         <Preference
             android:key="@string/pref_key_reset_settings"

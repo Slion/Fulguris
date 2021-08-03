@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
 
     <string name="action_reload">Reload</string>
     <string name="action_menu">Menu</string>
@@ -259,6 +259,9 @@
     <string name="title_file_chooser">File chooser</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
+    <string name="generic_export">Export</string>
+    <string name="generic_import">Import</string>
+    <string name="generic_reset">Reset</string>
     <string name="export_bookmarks">Export bookmarks to backup</string>
     <string name="import_backup">Import bookmarks from backup</string>
     <string name="bookmark_export_path">Bookmarks exported to</string>
@@ -519,5 +522,12 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_title_duration">Duration</string>
     <string name="pref_summary_duration">Animation duration in centiseconds</string>
+
+    <string name="pref_category_title_session_export">Export session</string>
+    <string name="pref_category_summary_session_export">Pick the session you want to export</string>
+
+    <string name="error_session_file_corrupted">Error: corrupted session file!</string>
+    <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
+    <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
 
 </resources>
