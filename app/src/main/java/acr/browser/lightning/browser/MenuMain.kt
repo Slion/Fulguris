@@ -48,13 +48,8 @@ class MenuMain : PopupWindow {
         // See: https://stackoverflow.com/questions/46872634/close-popupwindow-upon-tapping-outside-or-back-button
         setBackgroundDrawable(ColorDrawable())
 
-        // Hide incognito menu item if we are already incognito
+        // Incognito status will be used to manage menu items visibility
         iIsIncognito = (aBinding.root.context as BrowserActivity).isIncognito()
-        if (iIsIncognito) {
-            aBinding.menuItemIncognito.isVisible = false
-            // No sessions in incognito mode
-            aBinding.menuItemSessions.isVisible = false
-        }
 
         //val radius: Float = getResources().getDimension(R.dimen.default_corner_radius) //32dp
 
@@ -121,7 +116,7 @@ class MenuMain : PopupWindow {
         iBinding.menuItemDownloads.isVisible = true
         iBinding.menuItemNewTab.isVisible = true
         iBinding.menuItemIncognito.isVisible = !iIsIncognito
-        iBinding.menuItemSettings.isVisible = true
+        iBinding.menuItemSettings.isVisible = !iIsIncognito
 
         iBinding.menuItemExit.isVisible = iUserPreferences.menuShowExit || iIsIncognito
         iBinding.menuItemNewTab.isVisible = iUserPreferences.menuShowNewTab
