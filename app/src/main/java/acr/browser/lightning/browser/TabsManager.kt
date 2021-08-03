@@ -21,6 +21,7 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -610,8 +611,15 @@ class TabsManager @Inject constructor(
     /**
      * Provide session file name from session name
      */
-    private fun fileNameFromSessionName(aSessionName: String) : String {
+    fun fileNameFromSessionName(aSessionName: String) : String {
         return FILENAME_SESSION_PREFIX + aSessionName
+    }
+
+    /**
+     * Provide session file from session name
+     */
+    fun fileFromSessionName(aName: String) : File {
+        return  File(application.filesDir, fileNameFromSessionName(aName))
     }
 
     /**

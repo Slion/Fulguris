@@ -98,10 +98,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         sessionsCategory = findPreference(getString(R.string.pref_key_session_export_category))!!
 
         // Populate our sessions
-        // TODO: should use a function from our [TabsManager] really
-        // Though that has the added advantage of listing sessions which have not been persisted somehow, should not be useful to user however
-        val files = application.filesDir?.let{it.listFiles { d, name -> name.startsWith(TabsManager.FILENAME_SESSION_PREFIX) }}
-        files?.forEach { f -> addPreferenceSessionExport(f.name.substring(TabsManager.FILENAME_SESSION_PREFIX.length),f) }
+        tabsManager.iSessions.forEach { s -> addPreferenceSessionExport(s.name,tabsManager.fileFromSessionName(s.name)) }
 
         // Handle reset settings option
         clickableDynamicPreference(
