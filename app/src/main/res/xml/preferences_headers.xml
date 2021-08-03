@@ -26,9 +26,9 @@
         app:icon="@drawable/ic_security" />
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.BookmarkSettingsFragment"
-        app:title="@string/bookmark_settings"
-        app:icon="@drawable/ic_bookmarks" />
+        app:fragment="acr.browser.lightning.settings.fragment.BackupSettingsFragment"
+        app:title="@string/settings_backup"
+        app:icon="@drawable/ic_backup" />
 
     <!-- Advanced settings are now empty, remove them at some point -->
     <Preference

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/bookmark_settings">
         <Preference
@@ -12,4 +13,15 @@
             android:key="delete_bookmarks"
             android:title="@string/action_delete_all_bookmarks"/>
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_advanced">
+        <Preference
+            android:key="@string/pref_key_reset_settings"
+            android:title="@string/reset_settings"
+            android:icon="@drawable/ic_settings_backup_restore"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+
+
 </PreferenceScreen>

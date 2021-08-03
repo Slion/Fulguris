@@ -8,12 +8,11 @@ import acr.browser.lightning.bookmark.LegacyBookmarkImporter
 import acr.browser.lightning.bookmark.NetscapeBookmarkFormatImporter
 import acr.browser.lightning.database.bookmark.BookmarkExporter
 import acr.browser.lightning.database.bookmark.BookmarkRepository
-import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.injector
+import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.fileName
+import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
@@ -23,15 +22,16 @@ import android.Manifest
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.content.SharedPreferences
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.DocumentsContract
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -40,7 +40,7 @@ import java.io.File
 import java.util.*
 import javax.inject.Inject
 
-class BookmarkSettingsFragment : AbstractSettingsFragment() {
+class BackupSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var bookmarkRepository: BookmarkRepository
     @Inject internal lateinit var application: Application
@@ -50,6 +50,13 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
     @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
     @Inject internal lateinit var logger: Logger
 
+    // Need those to implement settings reset
+    @Inject @UserPrefs lateinit var prefsUser: SharedPreferences
+    @Inject @DevPrefs lateinit var prefsDev: SharedPreferences
+    @Inject @PrefsLandscape lateinit var prefsLandscape: SharedPreferences
+    @Inject @PrefsPortrait lateinit var prefsPortrait: SharedPreferences
+    @Inject @AdBlockPrefs lateinit var prefsAdBlock: SharedPreferences
+
     private var importSubscription: Disposable? = null
     private var exportSubscription: Disposable? = null
     private var bookmarksSortSubscription: Disposable? = null
@@ -58,11 +65,11 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.bookmark_settings
+        return R.string.settings_backup
     }
 
 
-    override fun providePreferencesXmlResource() = R.xml.preference_bookmarks
+    override fun providePreferencesXmlResource() = R.xml.preference_backup
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
@@ -75,6 +82,12 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
         clickablePreference(preference = SETTINGS_EXPORT, onClick = this::exportBookmarks)
         clickablePreference(preference = SETTINGS_IMPORT, onClick = this::importBookmarks)
         clickablePreference(preference = SETTINGS_DELETE_BOOKMARKS, onClick = this::deleteAllBookmarks)
+
+        // Handle reset settings option
+        clickableDynamicPreference(
+                preference = getString(R.string.pref_key_reset_settings),
+                onClick = this::resetSettings
+        )
 
 
 
@@ -374,6 +387,31 @@ class BookmarkSettingsFragment : AbstractSettingsFragment() {
                 }
             }
         }
+    }
+
+    /**
+     * @param summaryUpdater the command which allows the summary to be updated.
+     */
+    private fun resetSettings(summaryUpdater: SummaryUpdater) {
+        // Show confirmation dialog and proceed if needed
+        MaterialAlertDialogBuilder(requireContext())
+                .setCancelable(true)
+                .setTitle(R.string.reset_settings)
+                .setMessage(R.string.reset_settings_confirmation)
+                .setNegativeButton(R.string.no, null)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    prefsUser.edit().clear().apply()
+                    prefsDev.edit().clear().apply()
+                    prefsLandscape.edit().clear().apply()
+                    prefsPortrait.edit().clear().apply()
+                    prefsAdBlock.edit().clear().apply()
+                    // That closes our settings activity and going back to our browser activity
+                    // On resume the browser activity will decide if it needs to restart
+                    activity?.finish()
+                    //activity?.supportFragmentManager?.popBackStackImmediate()
+                }
+                .resizeAndShow()
+
     }
 
     companion object {

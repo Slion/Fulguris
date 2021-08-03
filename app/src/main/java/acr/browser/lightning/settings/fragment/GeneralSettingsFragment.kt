@@ -48,12 +48,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
     @Inject lateinit var searchEngineProvider: SearchEngineProvider
     @Inject lateinit var userPreferences: UserPreferences
-    // Need those to implement settings reset
-    @Inject @UserPrefs lateinit var prefsUser: SharedPreferences
-    @Inject @DevPrefs lateinit var prefsDev: SharedPreferences
-    @Inject @PrefsLandscape lateinit var prefsLandscape: SharedPreferences
-    @Inject @PrefsPortrait lateinit var prefsPortrait: SharedPreferences
-    @Inject @AdBlockPrefs lateinit var prefsAdBlock: SharedPreferences
+
 
     private lateinit var proxyChoices: Array<String>
 
@@ -113,12 +108,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 preference = getString(R.string.pref_key_default_text_encoding),
                 summary = userPreferences.textEncoding,
                 onClick = this::showTextEncodingDialogPicker
-        )
-
-        // Handle reset settings option
-        clickableDynamicPreference(
-            preference = getString(R.string.pref_key_reset_settings),
-            onClick = this::resetSettings
         )
 
         val incognitoCheckboxPreference = switchPreference(
@@ -537,31 +526,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             setPositiveButton(resources.getString(R.string.action_ok), null)
         }
         }
-    }
-
-    /**
-     * @param summaryUpdater the command which allows the summary to be updated.
-     */
-    private fun resetSettings(summaryUpdater: SummaryUpdater) {
-        // Show confirmation dialog and proceed if needed
-        MaterialAlertDialogBuilder(requireContext())
-            .setCancelable(true)
-            .setTitle(R.string.reset_settings)
-            .setMessage(R.string.reset_settings_confirmation)
-            .setNegativeButton(R.string.no, null)
-            .setPositiveButton(R.string.yes) { _, _ ->
-                prefsUser.edit().clear().apply()
-                prefsDev.edit().clear().apply()
-                prefsLandscape.edit().clear().apply()
-                prefsPortrait.edit().clear().apply()
-                prefsAdBlock.edit().clear().apply()
-                // That closes our settings activity and going back to our browser activity
-                // On resume the browser activity will decide if it needs to restart
-                activity?.finish()
-                //activity?.supportFragmentManager?.popBackStackImmediate()
-            }
-            .resizeAndShow()
-
     }
 
     companion object {

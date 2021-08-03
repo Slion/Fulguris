@@ -50,7 +50,7 @@ interface AppComponent {
 
     fun inject(activity: BrowserActivity)
 
-    fun inject(fragment: BookmarkSettingsFragment)
+    fun inject(fragment: BackupSettingsFragment)
 
     fun inject(fragment: PortraitSettingsFragment)
 

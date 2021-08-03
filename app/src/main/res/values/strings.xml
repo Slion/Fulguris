@@ -270,6 +270,7 @@
     <string name="title_chooser">Choose a file</string>
     <string name="settings_general">General</string>
     <string name="settings_display">Look &amp; feel</string>
+    <string name="settings_backup">Backup</string>
     <string name="settings_title_configuration">Configuration</string>
     <string name="settings_summary_configuration">Portrait and landscape settings</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
@@ -518,6 +519,5 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_title_duration">Duration</string>
     <string name="pref_summary_duration">Animation duration in centiseconds</string>
-
 
 </resources>
