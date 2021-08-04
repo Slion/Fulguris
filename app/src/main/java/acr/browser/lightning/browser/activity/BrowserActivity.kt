@@ -2614,7 +2614,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Color also applies to the following backgrounds as they show during tool bar show/hide animation
         iBinding.uiLayout.setBackgroundColor(color)
         iTabViewContainerFront.setBackgroundColor(color)
-
+        // Somehow this was needed to make sure background colors are not swapped, most visible during page navigation animation
+        // TODO: Investigate what's going on here, as that should not be the case and could lead to other issues
+        iTabViewContainerBack.setBackgroundColor(color)
 
         val webViewEx: WebViewEx? = currentTabView as? WebViewEx
 
