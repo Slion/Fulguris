@@ -65,6 +65,8 @@ class AbpFilterDecoder {
         val white = mutableListOf<UnifiedFilter>()
         val elementDisableFilter = mutableListOf<UnifiedFilter>()
         val elementFilter = mutableListOf<ElementFilter>()
+        val modifyExceptionList = mutableListOf<Pair<UnifiedFilter, String>>()
+        val modifyList = mutableListOf<Pair<UnifiedFilter, String>>()
         reader.forEachLine { line ->
             if (line.isEmpty()) return@forEachLine
             val trimmedLine = line.trim()
@@ -82,12 +84,12 @@ class AbpFilterDecoder {
                             elementFilter,
                         )
                     } else {
-                        trimmedLine.decodeFilter(black, white, elementDisableFilter)
+                        trimmedLine.decodeFilter(black, white, elementDisableFilter, modifyList, modifyExceptionList)
                     }
                 }
             }
         }
-        return UnifiedFilterSet(info, black, white, elementDisableFilter, elementFilter)
+        return UnifiedFilterSet(info, black, white, elementDisableFilter, elementFilter, modifyList, modifyExceptionList)
     }
 
     private fun decodeContentFilter(
@@ -152,6 +154,8 @@ class AbpFilterDecoder {
         blackList: MutableList<UnifiedFilter>,
         whiteList: MutableList<UnifiedFilter>,
         elementFilterList: MutableList<UnifiedFilter>,
+        modifyList: MutableList<Pair<UnifiedFilter, String>>,
+        modifyExceptionList: MutableList<Pair<UnifiedFilter, String>>
     ) {
         var contentType = 0
         var ignoreCase = false
@@ -159,6 +163,7 @@ class AbpFilterDecoder {
         var thirdParty = -1
         var filter = this
         var elementFilter = false
+        var modify: String? = null
         val blocking = if (filter.startsWith("@@")) {
             filter = substring(2)
             false
@@ -208,6 +213,14 @@ class AbpFilterDecoder {
                             "third-party", "3p" -> thirdParty = if (inverse) 0 else 1
                             "first-party", "1p" -> thirdParty = if (inverse) 1 else 0
                             "sitekey" -> Unit
+                            "removeparam", "queryprune" -> modify = MODIFY_PREFIX_REMOVEPARAM + (value ?: "")
+                            "csp" -> modify = MODIFY_PREFIX_CSP + (value ?: "")
+                            "redirect" -> modify = MODIFY_PREFIX_REDIRECT + (value ?: "")
+                            "empty" -> modify = MODIFY_PREFIX_REDIRECT + "empty"
+                            "mp4" -> {
+                                modify = MODIFY_PREFIX_REDIRECT + "noopmp4-1s"
+                                contentType = ContentRequest.TYPE_MEDIA
+                            }
                             else -> return
                         }
                     }
@@ -278,7 +291,9 @@ class AbpFilterDecoder {
 
         when {
             elementFilter -> elementFilterList += abpFilter
+            modify != null && blocking -> modifyList += Pair(abpFilter, modify!!)
             blocking -> blackList += abpFilter
+            modify != null -> modifyExceptionList += Pair(abpFilter, modify!!)
             else -> whiteList += abpFilter
         }
     }
@@ -330,7 +345,7 @@ class AbpFilterDecoder {
             "font" -> ContentRequest.TYPE_FONT
             "popup" -> ContentRequest.TYPE_POPUP
             "xmlhttprequest", "xhr" -> ContentRequest.TYPE_XHR
-            "object", "webrtc", "csp", "ping",
+            "object", "webrtc", "ping",
             "object-subrequest", "genericblock" -> -1
             "elemhide", "ehide" -> ContentRequest.TYPE_ELEMENT_HIDE
             "generichide", "ghide" -> ContentRequest.TYPE_ELEMENT_GENERIC_HIDE

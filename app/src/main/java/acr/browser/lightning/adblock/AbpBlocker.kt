@@ -12,6 +12,7 @@ import android.webkit.WebResourceResponse
 import androidx.core.util.PatternsCompat
 import jp.hazuki.yuzubrowser.adblock.EmptyInputStream
 import jp.hazuki.yuzubrowser.adblock.core.*
+import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.getFilterDir
@@ -20,6 +21,9 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
 import jp.hazuki.yuzubrowser.adblock.getContentType
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import kotlinx.coroutines.*
+import okhttp3.Headers
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.internal.publicsuffix.PublicSuffix
 import java.io.*
 import java.nio.charset.StandardCharsets
@@ -41,6 +45,12 @@ class AbpBlocker @Inject constructor(
     // contains filters that should not be overridden by allowList
     //  like mining list, malware list or maybe later the 'important' filter rules from AdGuard/uBo
     private var importantBlockList = FilterContainer()
+
+    // modify filters should be kept separate, as modifications should only occur if request is not blocked
+    //  (other way would be to use some filter response like for user rules, maybe better in case number of lists goes up further)
+    // TODO: fill, and think whether i will need a separate type of filterContainer
+    private var modifyList = FilterContainer()
+    private var modifyExceptionList = FilterContainer()
 
     // store whether lists are loaded (and delay any request until loading is done)
     private var listsLoaded = false
@@ -295,6 +305,9 @@ class AbpBlocker @Inject constructor(
             //}
         }
 
+        modifyExceptionList[contentRequest]?.let { return null } // this blocks all modify-filters, not just a single type -> should be adjusted
+        modifyList[contentRequest]?.let { return getModifiedResponse(request, it) }
+
         return null
     }
 
@@ -311,6 +324,39 @@ class AbpBlocker @Inject constructor(
         // TODO: Though we should really set a status code TBH, could be 200 or 404 depending of our needs I guess
         //response.setStatusCodeAndReasonPhrase(404, pattern)
         return response
+    }
+
+    private fun getModifiedResponse(request: WebResourceRequest, filter: ContentFilter): WebResourceResponse? {
+        /* plan
+        can't simply modify the request
+        so do what the request wants, but modify
+        then deliver what we got as response
+        like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
+         */
+        val url = request.url.toString() // modify according to filter
+            // find parameters for removeparam: use getQueryParameterNames() and getQueryParameters(String key)
+            //  any problematic content? check parameters whether they can contain = or &
+            //  remove matching parameters, and remove ? if all are gone
+            //  helps? https://perishablepress.com/how-to-write-valid-url-query-string-parameters/
+            //   try using adguard or ubo code! -> ubo OPTTokenQueryprune
+            //   static-filtering-parser.js, parseQueryPruneValue
+
+            // and redirect
+        val headers = request.requestHeaders // modify according to filter... is there anything except csp?
+        val request2 = Request.Builder()
+            .url(url)
+            .headers(Headers.headersOf(headers)) // not working, how to set headers without having to do it one by one?
+                // anything missing?
+            .get()
+
+        val call = OkHttpClient().newCall(request2.build()) // maybe have one client like it's done in AbpListUpdater
+        try {
+            val response = call.execute()
+            response.body?.let { return WebResourceResponse("bla", "bla", it.byteStream())}
+        } catch (e: IOException) {
+        }
+
+        return null
     }
 
     companion object {

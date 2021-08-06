@@ -22,6 +22,9 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import java.io.InputStream
 
 class FilterReader(private val input: InputStream) {
+    val intBuf = ByteArray(4)
+    val shortBuf = ByteArray(2)
+    var stringBuffer = ByteArray(32)
 
     fun checkHeader(): Boolean {
         val header = FILTER_CACHE_HEADER.toByteArray()
@@ -31,56 +34,76 @@ class FilterReader(private val input: InputStream) {
     }
 
     fun readAll() = sequence {
-        val intBuf = ByteArray(4)
-        val shortBuf = ByteArray(2)
         input.read(intBuf)
         val size = intBuf.toInt()
-        var patternBuffer = ByteArray(32)
-        var tagBuffer = ByteArray(32)
 
+        loop@ for (loop in 0 until size)
+            readFilter()?.let { yield(it) } ?: break@loop
+    }
+
+    fun readAllModifyFilters() = sequence {
+        input.read(intBuf)
+        val size = intBuf.toInt()
+
+        // TODO: really yield triple<tag, filter, param>? might be confusing/hard to follow
         loop@ for (loop in 0 until size) {
-            val type = input.read()
-            if (type < 0) break
+            val filter = readFilter() ?: break@loop
+            val modify = readModify() ?: break@loop
+            yield(Triple(filter.first, filter.second, modify))
+        }
+    }
 
-            if (input.read(shortBuf) != 2) break
-            val contentType = shortBuf.toShortInt()
-            val thirdParty = when (input.read()) {
-                0 -> 0
-                1 -> 1
-                0xff -> -1
-                else -> break@loop
-            }
+    private fun readModify(): String? {
+        val modifySize = input.readVariableInt(shortBuf, intBuf)
+        if (modifySize == -1) return null
+        if (stringBuffer.size < modifySize) {
+            stringBuffer = ByteArray(modifySize)
+        }
+        if (input.read(stringBuffer, 0, modifySize) != modifySize) return null
+        return String(stringBuffer, 0, modifySize)
+    }
 
-            val patternSize = input.readVariableInt(shortBuf, intBuf)
-            if (patternSize == -1) break
-            if (patternBuffer.size < patternSize) {
-                patternBuffer = ByteArray(patternSize)
-            }
-            if (input.read(patternBuffer, 0, patternSize) != patternSize) break
-            val pattern = String(patternBuffer, 0, patternSize)
+    private fun readFilter(): Pair<String, UnifiedFilter>? {
+        val type = input.read()
+        if (type < 0) return null
 
-            // startEndFilter with domain as pattern, gets special treatment for accelerated read/write
-            if (type == FILTER_TYPE_START_END_DOMAIN) {
-                yield(Pair(pattern,StartEndFilter(pattern, contentType, false, null, thirdParty)))
-                continue@loop
-            }
+        if (input.read(shortBuf) != 2) return null
+        val contentType = shortBuf.toShortInt()
+        val thirdParty = when (input.read()) {
+            0 -> 0
+            1 -> 1
+            0xff -> -1
+            else -> return null
+        }
 
-            val ignoreCase = when (input.read()) {
-                0 -> false
-                1 -> true
-                else -> break@loop
-            }
+        val patternSize = input.readVariableInt(shortBuf, intBuf)
+        if (patternSize == -1) return null
+        if (stringBuffer.size < patternSize) {
+            stringBuffer = ByteArray(patternSize)
+        }
+        if (input.read(stringBuffer, 0, patternSize) != patternSize) return null
+        val pattern = String(stringBuffer, 0, patternSize)
 
-            val tagSize = input.readVariableInt(shortBuf, intBuf)
-            if (tagSize == -1) break
-            if (tagBuffer.size < tagSize) {
-                tagBuffer = ByteArray(tagSize)
-            }
-            if (input.read(tagBuffer, 0, tagSize) != tagSize) break
-            val tag = String(tagBuffer, 0, tagSize)
+        // startEndFilter with domain as pattern, gets special treatment for accelerated read/write
+        if (type == FILTER_TYPE_START_END_DOMAIN)
+            return(Pair(pattern,StartEndFilter(pattern, contentType, false, null, thirdParty)))
 
-            val domainsSize = input.read()
-            if (domainsSize == -1) break
+        val ignoreCase = when (input.read()) {
+            0 -> false
+            1 -> true
+            else -> return null
+        }
+
+        val tagSize = input.readVariableInt(shortBuf, intBuf)
+        if (tagSize == -1) return null
+        if (stringBuffer.size < tagSize) {
+            stringBuffer = ByteArray(tagSize)
+        }
+        if (input.read(stringBuffer, 0, tagSize) != tagSize) return null
+        val tag = String(stringBuffer, 0, tagSize)
+
+        val domainsSize = input.read()
+        if (domainsSize == -1) return null
 
             val domains = when (domainsSize) {
                 0 -> null
@@ -88,22 +111,22 @@ class FilterReader(private val input: InputStream) {
                     val containerInclude = when (input.read()) {
                         0 -> false
                         1 -> true
-                        else -> break@loop
+                        else -> return null
                     }
                     val textSize = input.readVariableInt(shortBuf, intBuf)
-                    if (textSize == -1) break@loop
-                    if (patternBuffer.size < textSize) {
-                        patternBuffer = ByteArray(textSize)
+                    if (textSize == -1) return null
+                    if (stringBuffer.size < textSize) {
+                        stringBuffer = ByteArray(textSize)
                     }
-                    if (input.read(patternBuffer, 0, textSize) != textSize) break@loop
-                    val domain = String(patternBuffer, 0, textSize)
+                    if (input.read(stringBuffer, 0, textSize) != textSize) return null
+                    val domain = String(stringBuffer, 0, textSize)
                     val include = when (input.read()) {
                         0 -> false
                         1 -> true
-                        else -> break@loop
+                        else -> return null
                     }
 
-                    if (containerInclude != include) break@loop
+                    if (containerInclude != include) return null
 
                     SingleDomainMap(include, domain)
                 }
@@ -112,20 +135,20 @@ class FilterReader(private val input: InputStream) {
                     map.include = when (input.read()) {
                         0 -> false
                         1 -> true
-                        else -> break@loop
+                        else -> return null
                     }
                     for (i in 0 until domainsSize) {
                         val textSize = input.readVariableInt(shortBuf, intBuf)
-                        if (textSize == -1) break@loop
-                        if (patternBuffer.size < textSize) {
-                            patternBuffer = ByteArray(textSize)
+                        if (textSize == -1) return null
+                        if (stringBuffer.size < textSize) {
+                            stringBuffer = ByteArray(textSize)
                         }
-                        if (input.read(patternBuffer, 0, textSize) != textSize) break@loop
-                        val domain = String(patternBuffer, 0, textSize)
+                        if (input.read(stringBuffer, 0, textSize) != textSize) return null
+                        val domain = String(stringBuffer, 0, textSize)
                         val include = when (input.read()) {
                             0 -> false
                             1 -> true
-                            else -> break@loop
+                            else -> return null
                         }
                         map[domain] = include
                     }
@@ -133,21 +156,20 @@ class FilterReader(private val input: InputStream) {
                 }
             }
 
-            val filter = when (type) {
-                FILTER_TYPE_CONTAINS -> ContainsFilter(pattern, contentType, domains, thirdParty)
-                FILTER_TYPE_HOST -> HostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-                FILTER_TYPE_CONTAINS_HOST -> ContainsHostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-                FILTER_TYPE_START -> StartsWithFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-                FILTER_TYPE_END -> EndWithFilter(pattern, contentType, domains, thirdParty)
-                FILTER_TYPE_START_END -> StartEndFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-                FILTER_TYPE_RE2_REGEX -> Re2Filter(pattern, contentType, ignoreCase, domains, thirdParty)
-                FILTER_TYPE_RE2_REGEX_HOST -> Re2HostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-                FILTER_TYPE_JVM_REGEX -> RegexFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-                FILTER_TYPE_JVM_REGEX_HOST -> RegexHostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-                FILTER_TYPE_PATTERN -> PatternMatchFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-                else -> break@loop
-            }
-            yield(Pair(tag,filter))
+        val filter = when (type) {
+            FILTER_TYPE_CONTAINS -> ContainsFilter(pattern, contentType, domains, thirdParty)
+            FILTER_TYPE_HOST -> HostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_CONTAINS_HOST -> ContainsHostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_START -> StartsWithFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_END -> EndWithFilter(pattern, contentType, domains, thirdParty)
+            FILTER_TYPE_START_END -> StartEndFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_RE2_REGEX -> Re2Filter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_RE2_REGEX_HOST -> Re2HostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_JVM_REGEX -> RegexFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_JVM_REGEX_HOST -> RegexHostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_PATTERN -> PatternMatchFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            else -> return null
         }
+        return Pair(tag, filter)
     }
 }

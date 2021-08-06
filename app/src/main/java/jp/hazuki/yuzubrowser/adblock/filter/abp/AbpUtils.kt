@@ -23,6 +23,11 @@ internal const val ABP_PREFIX_DENY = "b_"
 internal const val ABP_PREFIX_ALLOW = "w_"
 internal const val ABP_PREFIX_DISABLE_ELEMENT_PAGE = "wp_"
 internal const val ABP_PREFIX_ELEMENT = "e_"
+internal const val ABP_PREFIX_MODIFY_EXCEPTION = "me_"
+internal const val ABP_PREFIX_MODIFY = "m_"
+internal const val MODIFY_PREFIX_REDIRECT = "r"
+internal const val MODIFY_PREFIX_REMOVEPARAM = "p"
+internal const val MODIFY_PREFIX_CSP = "c"
 
 internal fun File.getAbpBlackListFile(entity: AbpEntity): File {
     return File(this, ABP_PREFIX_DENY + entity.entityId)
@@ -38,4 +43,12 @@ internal fun File.getAbpWhitePageListFile(entity: AbpEntity): File {
 
 internal fun File.getAbpElementListFile(entity: AbpEntity): File {
     return File(this, ABP_PREFIX_ELEMENT + entity.entityId)
+}
+
+internal fun File.getAbpModifyListFile(entity: AbpEntity): File {
+    return File(this, ABP_PREFIX_MODIFY + entity.entityId)
+}
+
+internal fun File.getAbpModifyExceptionListFile(entity: AbpEntity): File {
+    return File(this, ABP_PREFIX_MODIFY_EXCEPTION + entity.entityId)
 }

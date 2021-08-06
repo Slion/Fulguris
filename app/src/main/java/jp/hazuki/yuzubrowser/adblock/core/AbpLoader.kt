@@ -46,6 +46,27 @@ class AbpLoader(private val abpDir: File, private val entityList: List<AbpEntity
         }
     }
 
+    // TODO: can i somehow combine this with loadAll? it's almost exactly the same code
+    fun loadAllModifyFilter(prefix: String) = sequence {
+        entityList.forEach {
+            if (!it.enabled) return@forEach
+
+            try {
+                val file = File(abpDir, prefix + it.entityId)
+                if (!file.exists()) {
+                    return@forEach }
+                file.inputStream().buffered().use { ins ->
+                    val reader = FilterReader(ins)
+                    if (reader.checkHeader()) {
+                        yieldAll(reader.readAllModifyFilters())
+                    }
+                }
+            } catch (e: IOException) {
+//                ErrorReport.printAndWriteLog(e)
+            }
+        }
+    }
+
     fun loadAllElementFilter() = sequence {
         entityList.forEach {
             if (!it.enabled) return@forEach

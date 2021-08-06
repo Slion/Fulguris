@@ -78,6 +78,8 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         writer.write(dir.getAbpBlackListFile(entity), listOf())
         writer.write(dir.getAbpWhiteListFile(entity), listOf())
         writer.write(dir.getAbpWhitePageListFile(entity), listOf())
+        writer.write(dir.getAbpModifyListFile(entity), listOf())
+        writer.write(dir.getAbpModifyExceptionListFile(entity), listOf())
 
         val elementWriter = ElementWriter()
         elementWriter.write(dir.getAbpElementListFile(entity), listOf())
@@ -119,7 +121,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
                 if (dir.getAbpBlackListFile(entity).exists() ||
                     dir.getAbpWhiteListFile(entity).exists() ||
-                    dir.getAbpWhitePageListFile(entity).exists())
+                    dir.getAbpWhitePageListFile(entity).exists() ||
+                    dir.getAbpModifyListFile(entity).exists() ||
+                    dir.getAbpModifyExceptionListFile(entity).exists())
                     request.addHeader("If-Modified-Since", it)
             }
         }
@@ -202,6 +206,8 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         writer.write(dir.getAbpBlackListFile(entity), set.blackList)
         writer.write(dir.getAbpWhiteListFile(entity), set.whiteList)
         writer.write(dir.getAbpWhitePageListFile(entity), set.elementDisableFilter)
+        writer.writeModifyFilters(dir.getAbpModifyListFile(entity), set.modifyList)
+        writer.writeModifyFilters(dir.getAbpModifyExceptionListFile(entity), set.modifyExceptionList)
 
         val elementWriter = ElementWriter()
         elementWriter.write(dir.getAbpElementListFile(entity), set.elementList)
@@ -215,6 +221,20 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             try {
                 file.outputStream().buffered().use {
                     write(it, list)
+                }
+            } catch (e: IOException) {
+//                ErrorReport.printAndWriteLog(e)
+            }
+        } else {
+            if (file.exists()) file.delete()
+        }
+    }
+
+    private fun FilterWriter.writeModifyFilters(file: File, list: List<Pair<UnifiedFilter, String>>) {
+        if (list.isNotEmpty()) {
+            try {
+                file.outputStream().buffered().use {
+                    writeModifyFilters(it, list)
                 }
             } catch (e: IOException) {
 //                ErrorReport.printAndWriteLog(e)
