@@ -118,7 +118,7 @@
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Secara manual</string>
     <string name="action_auto">Secara otomatis</string>
-    <string name="action_follow_me">Hubungi Saya</string>
+    <string name="pref_title_contact_us">Hubungi Saya</string>
     <string name="clear_cache">Hapus cache</string>
     <string name="message_cache_cleared">Cache telah dihapus</string>
     <string name="message_import">Penanda telah dibawa masuk</string>

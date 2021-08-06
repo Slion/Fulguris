@@ -213,7 +213,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         android:gravity="center_vertical"
                         android:enabled="true"
                         app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
-                        app:drawableStartCompat="@drawable/ic_security"
+                        app:drawableStartCompat="@drawable/ic_block"
                         />
 
                     <TextView

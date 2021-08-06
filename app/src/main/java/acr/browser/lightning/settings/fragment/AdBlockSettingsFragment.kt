@@ -4,10 +4,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.AbpUpdateMode
-import acr.browser.lightning.adblock.BloomFilterAdBlocker
 import acr.browser.lightning.constant.Schemes
-import acr.browser.lightning.di.DiskScheduler
-import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
@@ -21,12 +18,12 @@ import android.text.InputType
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
+import androidx.preference.PreferenceGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.reactivex.Scheduler
-import io.reactivex.disposables.CompositeDisposable
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.*
@@ -46,16 +43,11 @@ import javax.inject.Inject
 class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
-    @Inject @field:DiskScheduler internal lateinit var diskScheduler: Scheduler
-    @Inject internal lateinit var bloomFilterAdBlocker: BloomFilterAdBlocker
     @Inject internal lateinit var abpListUpdater: AbpListUpdater
     @Inject internal lateinit var abpBlocker: AbpBlocker
 
-    private val compositeDisposable = CompositeDisposable()
-
     private lateinit var abpDao: AbpDao
-    private val entitiyPrefs = mutableMapOf<Int, Preference>()
+    private val entityPrefs = mutableMapOf<Int, Preference>()
 
     // if blocklist changed, they need to be reloaded, but this should happen only once
     //  if reloadLists is true, list reload will be launched onDestroy
@@ -67,6 +59,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     // uri of temporary blocklist file
     private var fileUri: Uri? = null
+
+    // Our preferences filters category, will contains our filters file entries
+    private lateinit var filtersCategory: PreferenceGroup
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
@@ -82,8 +77,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         injector.inject(this)
 
-        checkBoxPreference(
-            preference = "cb_block_ads",
+        switchPreference(
+            preference = getString(R.string.pref_key_content_control),
             isChecked = userPreferences.adBlockEnabled,
             onCheckChange = {
                 userPreferences.adBlockEnabled = it
@@ -92,7 +87,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             }
         )
 
+        filtersCategory = findPreference<PreferenceGroup>(getString(R.string.pref_key_content_control_filters))!!
+
         if (context != null) {
+
             abpDao = AbpDao(requireContext())
 
             clickableDynamicPreference(
@@ -139,7 +137,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             // "new list" button
             val newList = Preference(context)
             newList.title = resources.getString(R.string.add_blocklist)
-            newList.icon = resources.getDrawable(R.drawable.ic_action_plus)
+            newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_action_plus,requireActivity().theme)
             newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
@@ -151,7 +149,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 dialog.show()
                 true
             }
-            this.preferenceScreen.addPreference(newList)
+            filtersCategory.addPreference(newList)
+            newList.dependency = getString(R.string.pref_key_content_control)
 
             // list of blocklists/entities
             for (entity in abpDao.getAll()) {
@@ -163,16 +162,17 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     showBlockList(entity)
                     true
                 }
-                entitiyPrefs[entity.entityId] = entityPref
+                entityPrefs[entity.entityId] = entityPref
                 updateSummary(entity)
-                this.preferenceScreen.addPreference(entitiyPrefs[entity.entityId])
+                filtersCategory.addPreference(entityPrefs[entity.entityId])
+                entityPref.dependency = getString(R.string.pref_key_content_control)
             }
         }
     }
 
     private fun updateSummary(entity: AbpEntity) {
-        if (!entity.url.startsWith(Schemes.Fulguris) && entity.lastLocalUpdate > 0)
-            entitiyPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateInstance().format(Date(entity.lastLocalUpdate)))
+        if (entity.lastLocalUpdate > 0)
+            entityPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance().format(Date(entity.lastLocalUpdate)))
     }
 
     // update entity and adjust displayed last update time
@@ -180,6 +180,12 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         GlobalScope.launch(Dispatchers.IO) {
             ++updatesRunning
             val updated = if (abpEntity == null) abpListUpdater.updateAll(forceUpdate) else abpListUpdater.updateAbpEntity(abpEntity, forceUpdate)
+
+            // delete temporary file
+            //  this is necessary because all local blocklists use the same temporary file (uri)
+            //  so it could happen that lists get mixed up via an old temporary blocklist file
+            activity?.externalCacheDir?.let { File(it, BLOCK_LIST_FILE).delete() }
+
             if (updated) {
                 reloadBlockLists()
 
@@ -216,11 +222,6 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         // field for choosing file or url
         when {
-            entity.url.startsWith(Schemes.Fulguris) -> {
-                val text = TextView(context)
-                text.text = resources.getString(R.string.blocklist_built_in)
-                linearLayout.addView(text)
-            }
             entity.url.startsWith("file") -> {
                 val fileChooseButton = Button(context)
                 fileChooseButton.text = if (entity.url == "file") getString(R.string.title_chooser)
@@ -272,7 +273,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         // delete button
         // don't show for internal list or when creating a new entity
-        if (entity.entityId != 0 && !entity.url.startsWith(Schemes.Fulguris)) {
+        if (entity.entityId != 0) {
             val delete = Button(context) // looks ugly, but works
             delete.text = resources.getString(R.string.blocklist_remove)
             // confirm deletion!
@@ -282,7 +283,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     .setPositiveButton(R.string.action_delete) { _, _ ->
                         abpDao.delete(entity)
                         dialog?.dismiss()
-                        preferenceScreen.removePreference(entitiyPrefs[entity.entityId])
+                        preferenceScreen.removePreference(entityPrefs[entity.entityId])
                         reloadBlockLists()
                     }
                     .setTitle(resources.getString(R.string.blocklist_remove_confirm, entity.title))
@@ -316,7 +317,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             if (enabled.isChecked != wasEnabled)
                 reloadBlockLists()
 
-            if (entitiyPrefs[newId] == null) { // not in entityPrefs if new
+            if (entityPrefs[newId] == null) { // not in entityPrefs if new
                 val pref = Preference(context)
                 entity.entityId = newId
                 pref.title = entity.title
@@ -324,11 +325,12 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     showBlockList(entity)
                     true
                 }
-                entitiyPrefs[newId] = pref
+                entityPrefs[newId] = pref
                 updateSummary(entity)
-                preferenceScreen.addPreference(entitiyPrefs[newId])
+                filtersCategory.addPreference(pref)
+                pref.dependency = getString(R.string.pref_key_content_control)
             } else
-                entitiyPrefs[entity.entityId]?.title = entity.title
+                entityPrefs[entity.entityId]?.title = entity.title
         }
         dialog = builder.create()
         dialog.show()
@@ -350,8 +352,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             button?.isEnabled = false
             return
         }
-        // TODO: if user enters 'file:' or 'fulguris' for a http url, ok button will be shown (of course update will fail)
-        if ((url.toHttpUrlOrNull() == null || url.contains("§§")) && !url.startsWith(Schemes.Fulguris) && !url.startsWith("file:")) {
+        // TODO: if user enters 'file:' for a http url, ok button will be shown (of course update will fail)
+        if ((url.toHttpUrlOrNull() == null || url.contains("§§")) && !url.startsWith("file:")) {
             button?.text = if (url.startsWith("file")) "no file chosen" else resources.getText(R.string.invalid_url)
             button?.isEnabled = false
             return
@@ -385,7 +387,6 @@ override fun onDestroy() {
                     abpBlocker.loadLists()
             }
         }
-        compositeDisposable.clear()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
