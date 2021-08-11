@@ -345,7 +345,7 @@ class AbpBlocker @Inject constructor(
         val headers = request.requestHeaders // modify according to filter... is there anything except csp?
         val request2 = Request.Builder()
             .url(url)
-            .headers(Headers.headersOf(headers)) // not working, how to set headers without having to do it one by one?
+//            .headers(Headers.headersOf(headers)) // not working, how to set headers without having to do it one by one?
                 // anything missing?
             .get()
 
