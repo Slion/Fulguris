@@ -175,7 +175,7 @@ class AbpBlocker @Inject constructor(
     }
 
     // from yuzu: jp.hazuki.yuzubrowser.adblock/AdBlockController.kt
-    fun createDummy(uri: Uri): WebResourceResponse {
+    private fun createDummy(uri: Uri): WebResourceResponse {
         val mimeType = getMimeType(uri.toString())
         return if (mimeType.startsWith("image/")) {
             WebResourceResponse("image/png", null, ByteArrayInputStream(dummyImage))
@@ -186,7 +186,7 @@ class AbpBlocker @Inject constructor(
 
     // from yuzu: jp.hazuki.yuzubrowser.adblock/AdBlockController.kt
     // stings adjusted for Fulguris
-    fun createMainFrameDummy(uri: Uri, pattern: String): WebResourceResponse {
+    private fun createMainFrameDummy(uri: Uri, pattern: String): WebResourceResponse {
         val builder = StringBuilder("<meta charset=utf-8>" +
                 "<meta content=\"width=device-width,initial-scale=1,minimum-scale=1\"name=viewport>" +
                 "<style>body{padding:5px 15px;background:#fafafa}body,p{text-align:center}p{margin:20px 0 0}" +
@@ -215,12 +215,12 @@ class AbpBlocker @Inject constructor(
      */
 
     // moved from jp.hazuki.yuzubrowser.adblock/AdBlock.kt to allow modified 3rd party detection
-    fun WebResourceRequest.getContentRequest(pageUri: Uri) =
+    private fun WebResourceRequest.getContentRequest(pageUri: Uri) =
         ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri))
 
     // moved from jp.hazuki.yuzubrowser.adblock/AdBlock.kt
     // modified to use cache for the slow part, decreases average time by 50-70%
-    fun is3rdParty(url: Uri, pageUri: Uri): Boolean {
+    private fun is3rdParty(url: Uri, pageUri: Uri): Boolean {
         val hostName = url.host ?: return true
         val pageHost = pageUri.host ?: return true
 
@@ -360,7 +360,7 @@ class AbpBlocker @Inject constructor(
     }
 
     companion object {
-        const val BUFFER_SIZE = 1024 * 8
+        private const val BUFFER_SIZE = 1024 * 8
         private const val TAG = "AbpBlocker"
 
         // from jp.hazuki.yuzubrowser.core.utility.utils/IOUtils.java
@@ -376,7 +376,7 @@ class AbpBlocker @Inject constructor(
         }
 
         // from jp.hazuki.yuzubrowser.core.utility.utils/FileUtils.kt
-        const val MIME_TYPE_UNKNOWN = "application/octet-stream"
+        private const val MIME_TYPE_UNKNOWN = "application/octet-stream"
         fun getMimeType(fileName: String): String {
             val lastDot = fileName.lastIndexOf('.')
             if (lastDot >= 0) {
@@ -415,7 +415,7 @@ class AbpBlocker @Inject constructor(
         }
 
         // from jp.hazuki.yuzubrowser.core.utility.extensions/HtmlExtensions.kt
-        fun getNoCacheResponse(mimeType: String, stream: InputStream): WebResourceResponse {
+        private fun getNoCacheResponse(mimeType: String, stream: InputStream): WebResourceResponse {
             val response = WebResourceResponse(mimeType, "UTF-8", stream)
             response.responseHeaders =
                 HashMap<String, String>().apply { put("Cache-Control", "no-cache") }
