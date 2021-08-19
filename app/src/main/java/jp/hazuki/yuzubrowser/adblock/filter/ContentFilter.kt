@@ -36,5 +36,7 @@ interface ContentFilter {
 
     var next: ContentFilter?
 
+    var modify: String?
+
     fun isMatch(request: ContentRequest): Boolean
 }

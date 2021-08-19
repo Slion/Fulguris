@@ -230,7 +230,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         }
     }
 
-    private fun FilterWriter.writeModifyFilters(file: File, list: List<Pair<UnifiedFilter, String>>) {
+    private fun FilterWriter.writeModifyFilters(file: File, list: List<UnifiedFilter>) {
         if (list.isNotEmpty()) {
             try {
                 file.outputStream().buffered().use {

@@ -39,18 +39,10 @@ class AbpBlocker @Inject constructor(
     private val logger: Logger
     ) : AdBlocker {
 
-    private lateinit var allowList: FilterContainer
-    private lateinit var blockList: FilterContainer
-
-    // contains filters that should not be overridden by allowList
-    //  like mining list, malware list or maybe later the 'important' filter rules from AdGuard/uBo
-    private var importantBlockList = FilterContainer()
-
-    // modify filters should be kept separate, as modifications should only occur if request is not blocked
-    //  (other way would be to use some filter response like for user rules, maybe better in case number of lists goes up further)
-    // TODO: fill, and think whether i will need a separate type of filterContainer
-    private var modifyList = FilterContainer()
-    private var modifyExceptionList = FilterContainer()
+    // use a map of filterContainers instead of several separate containers
+    // could also use list and associate prefix with id, but only if it's considerably faster...
+    private val prefixes = listOf(ABP_PREFIX_ALLOW, ABP_PREFIX_DENY, ABP_PREFIX_IMPORTANT, ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
+    private val filterContainers = prefixes.map { it to FilterContainer() }.toMap()
 
     // store whether lists are loaded (and delay any request until loading is done)
     private var listsLoaded = false
@@ -91,8 +83,7 @@ class AbpBlocker @Inject constructor(
 
     fun removeJointLists() {
         val filterDir = application.applicationContext.getFilterDir()
-        File(filterDir, ABP_PREFIX_ALLOW).delete()
-        File(filterDir, ABP_PREFIX_DENY).delete()
+        prefixes.forEach { File(filterDir, it).delete() }
     }
 
     // load lists
@@ -100,11 +91,11 @@ class AbpBlocker @Inject constructor(
     fun loadLists() {
         val filterDir = application.applicationContext.getFilterDir()
 
-        val allowFile = File(filterDir, ABP_PREFIX_ALLOW)
-        val blockFile = File(filterDir, ABP_PREFIX_DENY)
-
-        // for some reason reading allows first is faster then reading blocks first... but why?
-       if (loadFile(allowFile, false) && loadFile(blockFile, true)) {
+        // call loadFile for all prefixes and be done if all return true
+        // asSequence() should not load all lists and then check, but fail faster if there is a problem
+        if (prefixes.asSequence().map {
+                    loadFile(File(filterDir, it), it) }.all { true }
+        ) {
             listsLoaded = true
             return
         }
@@ -114,16 +105,21 @@ class AbpBlocker @Inject constructor(
         val abpLoader = AbpLoader(filterDir, entities)
 
         // toSet() for removal of duplicate entries
-        val allowFilters = abpLoader.loadAll(ABP_PREFIX_ALLOW).toSet()
-        val blockFilters = abpLoader.loadAll(ABP_PREFIX_DENY).toSet()
+        val filters = prefixes.map {
+            if (isModify(it))
+                it to abpLoader.loadAllModifyFilter(it).toSet()
+            else
+                it to abpLoader.loadAll(it).toSet()
+        }.toMap()
 
-        blockList = FilterContainer().also { blockFilters.forEach(it::addWithTag) }
-        allowList = FilterContainer().also { allowFilters.forEach(it::addWithTag) }
+        // use !! to get error
+        prefixes.forEach { prefix ->
+            filterContainers[prefix]!!.also { filters[prefix]!!.forEach(it::addWithTag) }
+        }
         listsLoaded = true
 
-        // create joint file
-        writeFile(blockFile, blockFilters.sanitize().map {it.second})
-        writeFile(allowFile, allowFilters.sanitize().map {it.second})
+        // create joint files
+        prefixes.forEach { prefix -> writeFile(prefix, filters[prefix]!!.sanitize().map {it.second}) }
 
         /*if (elementHide) {
             val disableCosmetic = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign) }
@@ -141,22 +137,22 @@ class AbpBlocker @Inject constructor(
             //  more unsupported types?
             //  relevant number of cases where there are filters "including" more specific filters?
             //   e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
+            //TODO: badfilter should act here! (and thus should probably go to block filters)
             else -> it
         } }
     }
 
-    private fun loadFile(file: File, blocks: Boolean): Boolean {
+    private fun loadFile(file: File, prefix: String): Boolean {
         if (file.exists()) {
             try {
                 file.inputStream().buffered().use { ins ->
                     val reader = FilterReader(ins)
                     if (reader.checkHeader()) {
-                        if (blocks)
-                            blockList =
-                                FilterContainer().also { reader.readAll().forEach(it::addWithTag) }
+                        // use !! to get error
+                        if (isModify(prefix))
+                            filterContainers[prefix]!!.also { reader.readAllModifyFilters().forEach(it::addWithTag) }
                         else
-                            allowList =
-                                FilterContainer().also { reader.readAll().forEach(it::addWithTag) }
+                            filterContainers[prefix]!!.also { reader.readAll().forEach(it::addWithTag) }
                         // check 2nd "header" at end of the file, to avoid accepting partially written file
                         return reader.checkHeader()
                     }
@@ -166,10 +162,16 @@ class AbpBlocker @Inject constructor(
         return false
     }
 
-    private fun writeFile(file: File, filters: Collection<UnifiedFilter>) {
+    private fun writeFile(prefix: String, filters: Collection<UnifiedFilter>?) {
+        if (filters == null) return // better throw error, should not happen
+        val file = File(application.applicationContext.getFilterDir(), prefix)
         val writer = FilterWriter()
         file.outputStream().buffered().use {
-            writer.write(it, filters.toList())
+            if (isModify(prefix))
+                // use !! to get error if filter.modify is null
+                writer.writeModifyFilters(it, filters.toList())
+            else
+                writer.write(it, filters.toList())
             it.close()
         }
     }
@@ -294,9 +296,12 @@ class AbpBlocker @Inject constructor(
             Thread.sleep(50)
         }
 
-        importantBlockList[contentRequest]?.let { return getBlockResponse(request, application.resources.getString(R.string.page_blocked_list_malware, it.pattern)) }
-        allowList[contentRequest]?.let { return null }
-        blockList[contentRequest]?.let {
+        // use !! to get an error if sth is wrong
+        filterContainers[ABP_PREFIX_IMPORTANT]!![contentRequest]?.let {
+            return getBlockResponse(request, application.resources.getString(R.string.page_blocked_list_malware, it.pattern))
+        }
+        filterContainers[ABP_PREFIX_ALLOW]!![contentRequest]?.let { return null }
+        filterContainers[ABP_PREFIX_DENY]!![contentRequest]?.let {
             //if (it.pattern.isNotBlank()) {
                 return getBlockResponse(
                     request,
@@ -305,8 +310,8 @@ class AbpBlocker @Inject constructor(
             //}
         }
 
-        modifyExceptionList[contentRequest]?.let { return null } // this blocks all modify-filters, not just a single type -> should be adjusted
-        modifyList[contentRequest]?.let { return getModifiedResponse(request, it) }
+        filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!![contentRequest]?.let { return null } // this blocks all modify-filters, not just a single type -> should be adjusted
+        filterContainers[ABP_PREFIX_MODIFY]!![contentRequest]?.let { return getModifiedResponse(request, it) }
 
         return null
     }
@@ -421,5 +426,7 @@ class AbpBlocker @Inject constructor(
                 HashMap<String, String>().apply { put("Cache-Control", "no-cache") }
             return response
         }
+
+        private fun isModify(prefix: String) = prefix in listOf(ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
     }
 }

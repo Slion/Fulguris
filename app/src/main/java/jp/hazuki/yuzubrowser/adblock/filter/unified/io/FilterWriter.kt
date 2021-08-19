@@ -35,7 +35,8 @@ class FilterWriter {
         writeHeader(os)
     }
 
-    fun writeModifyFilters(os: OutputStream, filters: List<Pair<UnifiedFilter, String>>) {
+    // second part in pair is the modify filter
+    fun writeModifyFilters(os: OutputStream, filters: List<UnifiedFilter>) {
         writeHeader(os)
         writeAllModifyFilters(os, filters)
         writeHeader(os)
@@ -53,12 +54,13 @@ class FilterWriter {
         }
     }
 
-    private fun writeAllModifyFilters(os: OutputStream, filters: List<Pair<UnifiedFilter, String>>) {
+    private fun writeAllModifyFilters(os: OutputStream, filters: List<UnifiedFilter>) {
         os.write(filters.size.toByteArray(intBuf))
 
+        // catch and log error if modify is null?
         filters.forEach {
-            writeFilter(os, it.first)
-            writeModify(os, it.second)
+            writeFilter(os, it)
+            writeModify(os, it.modify!!)
         }
     }
 

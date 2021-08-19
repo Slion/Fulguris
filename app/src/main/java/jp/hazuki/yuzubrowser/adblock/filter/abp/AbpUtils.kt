@@ -19,12 +19,16 @@ package jp.hazuki.yuzubrowser.adblock.filter.abp
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import java.io.File
 
+// prefixes for files
 internal const val ABP_PREFIX_DENY = "b_"
 internal const val ABP_PREFIX_ALLOW = "w_"
 internal const val ABP_PREFIX_DISABLE_ELEMENT_PAGE = "wp_"
 internal const val ABP_PREFIX_ELEMENT = "e_"
 internal const val ABP_PREFIX_MODIFY_EXCEPTION = "me_"
 internal const val ABP_PREFIX_MODIFY = "m_"
+internal const val ABP_PREFIX_IMPORTANT = "i_"
+
+// prefixes for modify filters used inside the modify files
 internal const val MODIFY_PREFIX_REDIRECT = "r"
 internal const val MODIFY_PREFIX_REMOVEPARAM = "p"
 internal const val MODIFY_PREFIX_CSP = "c"
