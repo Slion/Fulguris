@@ -310,8 +310,27 @@ class AbpBlocker @Inject constructor(
             //}
         }
 
-        filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!![contentRequest]?.let { return null } // this blocks all modify-filters, not just a single type -> should be adjusted
-        filterContainers[ABP_PREFIX_MODIFY]!![contentRequest]?.let { return getModifiedResponse(request, it) }
+        // careful, i need to get ALL matching filters, not just one
+        val modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(contentRequest)
+        if (modifyFilters.isNotEmpty()) {
+            // there is a hit, but first check whether the exact filter has an exception
+            val modifyExceptions = filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getAll(contentRequest)
+            if (modifyExceptions.isNotEmpty()) {
+                /* how exceptions/negations work: (adguard removeparam documentation is useful)
+                 *  without parameter (i.e. empty), all filters of that type (removeparam, csp,...) are invalid
+                 *  with parameter, only same filter type and same parameter are considered invalid
+                 */
+
+                // how to do?
+                //  if exception modify is only prefix, remove all with same prefix from modifyFilters
+                //  else remove exact matches in modify from modifyFilters
+            }
+
+            // important: there can be multiple filters valid, and all should be applied if possible
+            //  just do one after the other
+            //  but since I can't change the WebResourceRequest it must all happen within getModifiedResponse()
+            return getModifiedResponse(request, pageUrl, modifyFilters)
+        }
 
         return null
     }
@@ -331,17 +350,70 @@ class AbpBlocker @Inject constructor(
         return response
     }
 
-    private fun getModifiedResponse(request: WebResourceRequest, filter: ContentFilter): WebResourceResponse? {
+    // this needs to be fast, the lists have quite a few options acting on all urls!
+    // idea: if there are no parameters, there is no need to check removeparam!
+    private fun getModifiedResponse(request: WebResourceRequest, pageUrl: String, filters: List<ContentFilter>): WebResourceResponse? {
         /* plan
         can't simply modify the request
         so do what the request wants, but modify
         then deliver what we got as response
         like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
          */
-        val url = request.url.toString() // modify according to filter
-            // find parameters for removeparam: use getQueryParameterNames() and getQueryParameters(String key)
-            //  any problematic content? check parameters whether they can contain = or &
-            //  remove matching parameters, and remove ? if all are gone
+
+        var newUrl: String? = null
+        var newHeaders: Map<String, String>? = null
+        val parameters = request.url.queryParameterNames
+        // current plan: they are only not null if modified
+
+        filters.forEach { filter ->
+            when(filter.modify!![0]) { // again, if it can be null there is something seriously wrong
+                MODIFY_PREFIX_REMOVEPARAM -> {
+                    if (parameters.isEmpty()) return@forEach // no need to check if there are no parameters
+
+                    if (filter.modify!!.length == 1) { // no further specification -> remove all parameters
+                        val url = (newUrl ?: request.url.toString())
+                        val parameterStart = url.indexOf('$')
+                        val parameterEnd = url.indexOf('#')
+                        newUrl = if (parameterEnd == -1)
+                            url.substringBefore('$')
+                        else
+                            url.replaceRange(parameterStart, parameterEnd-1, "")
+                        parameters.clear()
+                    }
+
+                    val negation = filter.modify!![1] == '~'
+                    val parameter = filter.modify!!.substring(if (negation) 2 else 1)
+
+                    if (parameter.startsWith('/')) {
+                        // it's a regex, start the matcher!
+                    } else {
+                        // no regex, match against the parameter name
+                        if (!parameters.contains(parameter))
+                            return@forEach // parameter does not exist, no work to do
+
+                        // parameter exists, remove this parameter (or all except this if negation)
+                        //  how to best to that? (fast!)
+                        //  remove ? if all are parameters are gone
+                    }
+
+                    // find parameters, and if found, remove them
+                    // is there something like sed available?
+                    // best thing would probably be regex and replace
+                    //  but regex is relatively slow!
+                    // if no regex, just find substring and replace if found?
+                    //  or always replace? then i don't know whether there was a change and always need to do the request here
+                    //  but would this have any negative implications?
+                }
+                //MODIFY_PREFIX_CSP -> addThoseHeaders // is it really headers that are added? don't understand it... try uBo documentation
+                //MODIFY_PREFIX_REDIRECT -> redirect // apparently this mostly redirects to some internal resources
+            }
+        }
+
+        // removeparam=xy removes xy=..
+        // removeparam removes all parameters
+        // removeparam=xy|yz removes xy=.. and yz=..
+        // removeparam=~xy removes all except xy=..
+
             //  helps? https://perishablepress.com/how-to-write-valid-url-query-string-parameters/
             //   try using adguard or ubo code! -> ubo OPTTokenQueryprune
             //   static-filtering-parser.js, parseQueryPruneValue
@@ -349,7 +421,7 @@ class AbpBlocker @Inject constructor(
             // and redirect
         val headers = request.requestHeaders // modify according to filter... is there anything except csp?
         val request2 = Request.Builder()
-            .url(url)
+            .url(newUrl ?: request.url.toString())
 //            .headers(Headers.headersOf(headers)) // not working, how to set headers without having to do it one by one?
                 // anything missing?
             .get()
@@ -361,6 +433,7 @@ class AbpBlocker @Inject constructor(
         } catch (e: IOException) {
         }
 
+        // still return null if the the thing to modify was not found (e.g. parameter in case of removeparam)
         return null
     }
 

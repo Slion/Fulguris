@@ -85,4 +85,38 @@ class FilterContainer {
         }
         return null
     }
+
+    fun getAll(request: ContentRequest): List<ContentFilter> {
+        val list = mutableListOf<ContentFilter>()
+        list += getAllDomain(request)
+        // no need for further checks if list only contains domain filters
+        if (domainOnly) return list
+
+        request.tags.forEach {
+            var filter = filters[it]
+            while (filter != null) {
+                if (filter.isMatch(request)) {
+                    list.add(filter)
+                }
+                filter = filter.next
+            }
+        }
+        return list
+    }
+
+    private fun getAllDomain(request: ContentRequest): List<ContentFilter> {
+        var domain = request.url.host ?: return listOf()
+        val list = mutableListOf<ContentFilter>()
+        var filter: ContentFilter?
+        while (domain.contains('.')) {
+            filter = filters[domain]
+            while (filter != null) {
+                if (filter.isMatch(request))
+                    list.add(filter)
+                filter = filter.next
+            }
+            domain = domain.substringAfter('.')
+        }
+        return list
+    }
 }

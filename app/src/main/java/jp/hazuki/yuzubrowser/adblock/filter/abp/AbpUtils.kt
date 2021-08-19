@@ -29,9 +29,9 @@ internal const val ABP_PREFIX_MODIFY = "m_"
 internal const val ABP_PREFIX_IMPORTANT = "i_"
 
 // prefixes for modify filters used inside the modify files
-internal const val MODIFY_PREFIX_REDIRECT = "r"
-internal const val MODIFY_PREFIX_REMOVEPARAM = "p"
-internal const val MODIFY_PREFIX_CSP = "c"
+internal const val MODIFY_PREFIX_REDIRECT = 'r'
+internal const val MODIFY_PREFIX_REMOVEPARAM = 'p'
+internal const val MODIFY_PREFIX_CSP = 'c'
 
 internal fun File.getAbpBlackListFile(entity: AbpEntity): File {
     return File(this, ABP_PREFIX_DENY + entity.entityId)
