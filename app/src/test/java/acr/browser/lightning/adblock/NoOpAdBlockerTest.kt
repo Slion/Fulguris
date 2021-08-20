@@ -1,5 +1,6 @@
 package acr.browser.lightning.adblock
 
+import acr.browser.lightning.adblock.AbpBlocker.Companion.getQueryParameterMap
 import android.net.Uri
 import androidx.core.net.toUri
 import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
@@ -95,7 +96,14 @@ class NoOpAdBlockerTest {
         Assert.assertNull(container[TestWebResourceRequest(Uri.parse("https://orf.at/"), false, mapOf(
                 "User-Agent" to "Mozilla/5.0 (Linux; Android 9; SM-I9195I) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.204 Mobile Safari/537.36",
                 "Origin" to "https://orf.at", "Referer" to "https://orf.at/", "Accept" to "application/json, text/javascript, */*; q=0.01")).getContentRequest("https://orf.at".toUri())])
+    }
 
+    @Test
+    fun getQueryParameterMap() {
+        // add some filter and make sure (only) the correct parameters are removed
+        val url = Uri.parse("http://g.doubleclick.net/ads?a=1&b=4#bla")
+        val parameters = mapOf( "a" to "1", "b" to "4")
+        Assert.assertEquals(parameters, url.getQueryParameterMap())
     }
 
 }
