@@ -15,13 +15,11 @@ import jp.hazuki.yuzubrowser.adblock.core.*
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
-import jp.hazuki.yuzubrowser.adblock.filter.unified.getFilterDir
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
 import jp.hazuki.yuzubrowser.adblock.getContentType
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import kotlinx.coroutines.*
-import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.internal.publicsuffix.PublicSuffix
@@ -29,7 +27,6 @@ import java.io.*
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.HashMap
 
 @Singleton
 class AbpBlocker @Inject constructor(
@@ -39,18 +36,10 @@ class AbpBlocker @Inject constructor(
     private val logger: Logger
     ) : AdBlocker {
 
-    private lateinit var allowList: FilterContainer
-    private lateinit var blockList: FilterContainer
-
-    // contains filters that should not be overridden by allowList
-    //  like mining list, malware list or maybe later the 'important' filter rules from AdGuard/uBo
-    private var importantBlockList = FilterContainer()
-
-    // modify filters should be kept separate, as modifications should only occur if request is not blocked
-    //  (other way would be to use some filter response like for user rules, maybe better in case number of lists goes up further)
-    // TODO: fill, and think whether i will need a separate type of filterContainer
-    private var modifyList = FilterContainer()
-    private var modifyExceptionList = FilterContainer()
+    // use a map of filterContainers instead of several separate containers
+    // could also use list and associate prefix with id, but only if it's considerably faster...
+    private val prefixes = listOf(ABP_PREFIX_ALLOW, ABP_PREFIX_DENY, ABP_PREFIX_IMPORTANT, ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
+    private val filterContainers = prefixes.map { it to FilterContainer() }.toMap()
 
     // store whether lists are loaded (and delay any request until loading is done)
     private var listsLoaded = false
@@ -91,8 +80,7 @@ class AbpBlocker @Inject constructor(
 
     fun removeJointLists() {
         val filterDir = application.applicationContext.getFilterDir()
-        File(filterDir, ABP_PREFIX_ALLOW).delete()
-        File(filterDir, ABP_PREFIX_DENY).delete()
+        prefixes.forEach { File(filterDir, it).delete() }
     }
 
     // load lists
@@ -100,11 +88,11 @@ class AbpBlocker @Inject constructor(
     fun loadLists() {
         val filterDir = application.applicationContext.getFilterDir()
 
-        val allowFile = File(filterDir, ABP_PREFIX_ALLOW)
-        val blockFile = File(filterDir, ABP_PREFIX_DENY)
-
-        // for some reason reading allows first is faster then reading blocks first... but why?
-       if (loadFile(allowFile, false) && loadFile(blockFile, true)) {
+        // call loadFile for all prefixes and be done if all return true
+        // asSequence() should not load all lists and then check, but fail faster if there is a problem
+        if (prefixes.asSequence().map {
+                    loadFile(File(filterDir, it), it) }.all { true }
+        ) {
             listsLoaded = true
             return
         }
@@ -114,16 +102,21 @@ class AbpBlocker @Inject constructor(
         val abpLoader = AbpLoader(filterDir, entities)
 
         // toSet() for removal of duplicate entries
-        val allowFilters = abpLoader.loadAll(ABP_PREFIX_ALLOW).toSet()
-        val blockFilters = abpLoader.loadAll(ABP_PREFIX_DENY).toSet()
+        val filters = prefixes.map {
+            if (isModify(it))
+                it to abpLoader.loadAllModifyFilter(it).toSet()
+            else
+                it to abpLoader.loadAll(it).toSet()
+        }.toMap()
 
-        blockList = FilterContainer().also { blockFilters.forEach(it::addWithTag) }
-        allowList = FilterContainer().also { allowFilters.forEach(it::addWithTag) }
+        // use !! to get error
+        prefixes.forEach { prefix ->
+            filterContainers[prefix]!!.also { filters[prefix]!!.forEach(it::addWithTag) }
+        }
         listsLoaded = true
 
-        // create joint file
-        writeFile(blockFile, blockFilters.sanitize().map {it.second})
-        writeFile(allowFile, allowFilters.sanitize().map {it.second})
+        // create joint files
+        prefixes.forEach { prefix -> writeFile(prefix, filters[prefix]!!.sanitize().map {it.second}) }
 
         /*if (elementHide) {
             val disableCosmetic = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign) }
@@ -141,22 +134,22 @@ class AbpBlocker @Inject constructor(
             //  more unsupported types?
             //  relevant number of cases where there are filters "including" more specific filters?
             //   e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
+            //TODO: badfilter should act here! (and thus should probably go to block filters)
             else -> it
         } }
     }
 
-    private fun loadFile(file: File, blocks: Boolean): Boolean {
+    private fun loadFile(file: File, prefix: String): Boolean {
         if (file.exists()) {
             try {
                 file.inputStream().buffered().use { ins ->
                     val reader = FilterReader(ins)
                     if (reader.checkHeader()) {
-                        if (blocks)
-                            blockList =
-                                FilterContainer().also { reader.readAll().forEach(it::addWithTag) }
+                        // use !! to get error
+                        if (isModify(prefix))
+                            filterContainers[prefix]!!.also { reader.readAllModifyFilters().forEach(it::addWithTag) }
                         else
-                            allowList =
-                                FilterContainer().also { reader.readAll().forEach(it::addWithTag) }
+                            filterContainers[prefix]!!.also { reader.readAll().forEach(it::addWithTag) }
                         // check 2nd "header" at end of the file, to avoid accepting partially written file
                         return reader.checkHeader()
                     }
@@ -166,10 +159,16 @@ class AbpBlocker @Inject constructor(
         return false
     }
 
-    private fun writeFile(file: File, filters: Collection<UnifiedFilter>) {
+    private fun writeFile(prefix: String, filters: Collection<UnifiedFilter>?) {
+        if (filters == null) return // better throw error, should not happen
+        val file = File(application.applicationContext.getFilterDir(), prefix)
         val writer = FilterWriter()
         file.outputStream().buffered().use {
-            writer.write(it, filters.toList())
+            if (isModify(prefix))
+                // use !! to get error if filter.modify is null
+                writer.writeModifyFilters(it, filters.toList())
+            else
+                writer.write(it, filters.toList())
             it.close()
         }
     }
@@ -294,9 +293,12 @@ class AbpBlocker @Inject constructor(
             Thread.sleep(50)
         }
 
-        importantBlockList[contentRequest]?.let { return getBlockResponse(request, application.resources.getString(R.string.page_blocked_list_malware, it.pattern)) }
-        allowList[contentRequest]?.let { return null }
-        blockList[contentRequest]?.let {
+        // use !! to get an error if sth is wrong
+        filterContainers[ABP_PREFIX_IMPORTANT]!![contentRequest]?.let {
+            return getBlockResponse(request, application.resources.getString(R.string.page_blocked_list_malware, it.pattern))
+        }
+        filterContainers[ABP_PREFIX_ALLOW]!![contentRequest]?.let { return null }
+        filterContainers[ABP_PREFIX_DENY]!![contentRequest]?.let {
             //if (it.pattern.isNotBlank()) {
                 return getBlockResponse(
                     request,
@@ -305,8 +307,27 @@ class AbpBlocker @Inject constructor(
             //}
         }
 
-        modifyExceptionList[contentRequest]?.let { return null } // this blocks all modify-filters, not just a single type -> should be adjusted
-        modifyList[contentRequest]?.let { return getModifiedResponse(request, it) }
+        // careful, i need to get ALL matching filters, not just one
+        val modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(contentRequest)
+        if (modifyFilters.isNotEmpty()) {
+            // there is a hit, but first check whether the exact filter has an exception
+            val modifyExceptions = filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getAll(contentRequest)
+            if (modifyExceptions.isNotEmpty()) {
+                /* how exceptions/negations work: (adguard removeparam documentation is useful)
+                 *  without parameter (i.e. empty), all filters of that type (removeparam, csp,...) are invalid
+                 *  with parameter, only same filter type and same parameter are considered invalid
+                 */
+
+                // how to do?
+                //  if exception modify is only prefix, remove all with same prefix from modifyFilters
+                //  else remove exact matches in modify from modifyFilters
+            }
+
+            // important: there can be multiple filters valid, and all should be applied if possible
+            //  just do one after the other
+            //  but since I can't change the WebResourceRequest it must all happen within getModifiedResponse()
+            return getModifiedResponse(request, pageUrl, modifyFilters)
+        }
 
         return null
     }
@@ -326,25 +347,55 @@ class AbpBlocker @Inject constructor(
         return response
     }
 
-    private fun getModifiedResponse(request: WebResourceRequest, filter: ContentFilter): WebResourceResponse? {
+    // this needs to be fast, the lists have quite a few options acting on all urls!
+    // idea: if there are no parameters, there is no need to check removeparam!
+    private fun getModifiedResponse(request: WebResourceRequest, pageUrl: String, filters: List<ContentFilter>): WebResourceResponse? {
         /* plan
         can't simply modify the request
         so do what the request wants, but modify
         then deliver what we got as response
         like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
          */
-        val url = request.url.toString() // modify according to filter
-            // find parameters for removeparam: use getQueryParameterNames() and getQueryParameters(String key)
-            //  any problematic content? check parameters whether they can contain = or &
-            //  remove matching parameters, and remove ? if all are gone
-            //  helps? https://perishablepress.com/how-to-write-valid-url-query-string-parameters/
-            //   try using adguard or ubo code! -> ubo OPTTokenQueryprune
-            //   static-filtering-parser.js, parseQueryPruneValue
 
-            // and redirect
-        val headers = request.requestHeaders // modify according to filter... is there anything except csp?
+        // it it necessary to get all this every time? if not here is a potential time save
+        var url = request.url.toString().substringBefore('?').substringBefore('#') // url without query and fragment
+        var headers = request.requestHeaders
+        val parameters = request.url.getQueryParameterMap() as MutableMap
+
+        // current plan: they are only not null if modified
+
+        filters.forEach { filter ->
+            when(filter.modify!![0]) {
+                MODIFY_PREFIX_REMOVEPARAM -> {
+                    if (parameters.isEmpty()) return@forEach // no need to check if there are no parameters
+                    if (filter.modify!!.length == 1) { // no removeParameter means remove all parameters
+                        parameters.clear()
+                        return@forEach
+                    }
+                    val negation = filter.modify!![1] == '~'
+                    val removeParameter = filter.modify!!.substring(if (negation) 2 else 1)
+
+                    if (removeParameter.startsWith('/')) {
+                        // it's a regex, start the matcher!
+                    } else {
+                        if (negation)
+                            parameters.entries.retainAll { it.key == removeParameter }
+                        else
+                            parameters.entries.removeAll { it.key == removeParameter }
+                    }
+                }
+                //MODIFY_PREFIX_CSP -> addThoseHeaders // is it really headers that are added? don't understand it... try uBo documentation
+                //MODIFY_PREFIX_REDIRECT -> redirect // apparently this mostly redirects to some internal resources -> mostly or always?
+            }
+        }
+
+        val fullUrl = url +
+                (if (parameters.isNotEmpty())
+                    "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
+                else "") +
+                (request.url.fragment ?: "")
         val request2 = Request.Builder()
-            .url(url)
+            .url(fullUrl)
 //            .headers(Headers.headersOf(headers)) // not working, how to set headers without having to do it one by one?
                 // anything missing?
             .get()
@@ -356,6 +407,7 @@ class AbpBlocker @Inject constructor(
         } catch (e: IOException) {
         }
 
+        // still return null if nothing was changed? (e.g. parameters not found)
         return null
     }
 
@@ -421,5 +473,29 @@ class AbpBlocker @Inject constructor(
                 HashMap<String, String>().apply { put("Cache-Control", "no-cache") }
             return response
         }
+
+        private fun isModify(prefix: String) = prefix in listOf(ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
+
+        // is encoded query and decode necessary?
+        //  is it slower than using decoded query?
+        fun Uri.getQueryParameterMap(): Map<String, String> {
+            // using some code from android.net.uri.getQueryParameters()
+            val query = encodedQuery ?: return emptyMap()
+            val parameters = mutableMapOf<String, String>()
+            var start = 0
+            do {
+                val next = query.indexOf('&', start)
+                val end = if (next == -1) query.length else next
+                var separator = query.indexOf('=', start)
+                if (separator > end || separator == -1) {
+                    separator = end
+                }
+                parameters[Uri.decode(query.substring(start, separator))] = // parameter name
+                        Uri.decode(query.substring(if (separator < end) separator + 1 else end, end)) // parameter value
+                start = end + 1
+            } while (start < query.length)
+            return parameters
+        }
+
     }
 }

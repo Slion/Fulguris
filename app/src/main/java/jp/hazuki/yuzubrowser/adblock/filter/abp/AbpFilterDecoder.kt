@@ -65,8 +65,8 @@ class AbpFilterDecoder {
         val white = mutableListOf<UnifiedFilter>()
         val elementDisableFilter = mutableListOf<UnifiedFilter>()
         val elementFilter = mutableListOf<ElementFilter>()
-        val modifyExceptionList = mutableListOf<Pair<UnifiedFilter, String>>()
-        val modifyList = mutableListOf<Pair<UnifiedFilter, String>>()
+        val modifyExceptionList = mutableListOf<UnifiedFilter>()
+        val modifyList = mutableListOf<UnifiedFilter>()
         reader.forEachLine { line ->
             if (line.isEmpty()) return@forEachLine
             val trimmedLine = line.trim()
@@ -154,8 +154,8 @@ class AbpFilterDecoder {
         blackList: MutableList<UnifiedFilter>,
         whiteList: MutableList<UnifiedFilter>,
         elementFilterList: MutableList<UnifiedFilter>,
-        modifyList: MutableList<Pair<UnifiedFilter, String>>,
-        modifyExceptionList: MutableList<Pair<UnifiedFilter, String>>
+        modifyList: MutableList<UnifiedFilter>,
+        modifyExceptionList: MutableList<UnifiedFilter>
     ) {
         var contentType = 0
         var ignoreCase = false
@@ -291,9 +291,15 @@ class AbpFilterDecoder {
 
         when {
             elementFilter -> elementFilterList += abpFilter
-            modify != null && blocking -> modifyList += Pair(abpFilter, modify!!)
+            modify != null && blocking -> {
+                abpFilter.modify = modify
+                modifyList += abpFilter
+            }
             blocking -> blackList += abpFilter
-            modify != null -> modifyExceptionList += Pair(abpFilter, modify!!)
+            modify != null ->  {
+                abpFilter.modify = modify
+                modifyExceptionList += abpFilter
+            }
             else -> whiteList += abpFilter
         }
     }

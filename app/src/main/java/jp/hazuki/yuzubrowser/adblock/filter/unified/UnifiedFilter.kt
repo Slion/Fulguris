@@ -82,6 +82,8 @@ abstract class UnifiedFilter(
 
     override var next: ContentFilter? = null
 
+    override var modify: String? = null
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

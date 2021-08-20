@@ -45,11 +45,11 @@ class FilterReader(private val input: InputStream) {
         input.read(intBuf)
         val size = intBuf.toInt()
 
-        // TODO: really yield triple<tag, filter, param>? might be confusing/hard to follow
         loop@ for (loop in 0 until size) {
             val filter = readFilter() ?: break@loop
             val modify = readModify() ?: break@loop
-            yield(Triple(filter.first, filter.second, modify))
+            filter.second.modify = modify
+            yield(Pair(filter.first, filter.second))
         }
     }
 
