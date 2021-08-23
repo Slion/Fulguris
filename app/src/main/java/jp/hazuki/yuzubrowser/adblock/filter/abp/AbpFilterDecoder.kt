@@ -214,12 +214,21 @@ class AbpFilterDecoder {
                             "first-party", "1p" -> thirdParty = if (inverse) 1 else 0
                             "sitekey" -> Unit
                             "removeparam", "queryprune" -> modify = MODIFY_PREFIX_REMOVEPARAM + (value ?: "")
-                            "csp" -> modify = MODIFY_PREFIX_CSP + (value ?: "")
-                            "redirect" -> modify = MODIFY_PREFIX_REDIRECT + (value ?: "")
+                            "csp" -> {
+                                modify = MODIFY_PREFIX_CSP + (value ?: "")
+                                contentType = ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT // uBo documentation: It can be applied to main document and documents in frames
+                            }
+                            // currently no difference between redirect and redirect-rule
+                            // actually: redirect-rule does only redirect if target is blocked by some other filter
+                            //  more work to implement, currently blocking is completely independent from redirecting
+                            //  and redirect will never be checked if request is blocked
+                            // TODO: have redirect-rule separate and put it in a different filter container
+                            //  to be checked if request is blocked
+                            "redirect", "redirect-rule" -> modify = MODIFY_PREFIX_REDIRECT + (value ?: "")
                             "empty" -> modify = MODIFY_PREFIX_REDIRECT + "empty"
                             "mp4" -> {
                                 modify = MODIFY_PREFIX_REDIRECT + "noopmp4-1s"
-                                contentType = ContentRequest.TYPE_MEDIA
+                                contentType = ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
                             else -> return
                         }

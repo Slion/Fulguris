@@ -308,25 +308,29 @@ class AbpBlocker @Inject constructor(
         }
 
         // careful, i need to get ALL matching filters, not just one
-        val modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(contentRequest)
+        var modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(contentRequest)
         if (modifyFilters.isNotEmpty()) {
             // there is a hit, but first check whether the exact filter has an exception
             val modifyExceptions = filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getAll(contentRequest)
             if (modifyExceptions.isNotEmpty()) {
+                modifyFilters = modifyFilters.toMutableList() // better always to mutable list or like this?
                 /* how exceptions/negations work: (adguard removeparam documentation is useful)
                  *  without parameter (i.e. empty), all filters of that type (removeparam, csp,...) are invalid
-                 *  with parameter, only same filter type and same parameter are considered invalid
+                 *  with parameter, only same filter type (i.e. same prefix) and same parameter are considered invalid
                  */
 
-                // how to do?
-                //  if exception modify is only prefix, remove all with same prefix from modifyFilters
-                //  else remove exact matches in modify from modifyFilters
+                modifyExceptions.forEach { exception ->
+                    if (exception.modify!!.length == 1) // only prefix -> remove all modify with same prefix
+                        modifyFilters.removeAll { it.modify!!.startsWith(exception.modify!!) }
+                    else // else remove exact matches in modify
+                        modifyFilters.removeAll { it.modify == exception.modify }
+                }
             }
 
             // important: there can be multiple filters valid, and all should be applied if possible
             //  just do one after the other
             //  but since I can't change the WebResourceRequest it must all happen within getModifiedResponse()
-            return getModifiedResponse(request, pageUrl, modifyFilters)
+            return getModifiedResponse(request, modifyFilters)
         }
 
         return null
@@ -347,9 +351,9 @@ class AbpBlocker @Inject constructor(
         return response
     }
 
-    // this needs to be fast, the lists have quite a few options acting on all urls!
-    // idea: if there are no parameters, there is no need to check removeparam!
-    private fun getModifiedResponse(request: WebResourceRequest, pageUrl: String, filters: List<ContentFilter>): WebResourceResponse? {
+    // this needs to be fast, the adguard url tracking list has quite a few options acting on all urls!
+    //  e.g. removing the fbclid parameter added by facebook
+    private fun getModifiedResponse(request: WebResourceRequest, filters: List<ContentFilter>): WebResourceResponse? {
         /* plan
         can't simply modify the request
         so do what the request wants, but modify
@@ -357,12 +361,10 @@ class AbpBlocker @Inject constructor(
         like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
          */
 
-        // it it necessary to get all this every time? if not here is a potential time save
-        var url = request.url.toString().substringBefore('?').substringBefore('#') // url without query and fragment
-        var headers = request.requestHeaders
+        val url = request.url.toString().substringBefore('?').substringBefore('#') // url without query and fragment
+        var headers = request.requestHeaders // do i actually need them? looks like they aren't modified anyway
+        // getting this map needs to be done for every request if some generic parameters are removed -> should be as fast as possible
         val parameters = request.url.getQueryParameterMap() as MutableMap
-
-        // current plan: they are only not null if modified
 
         filters.forEach { filter ->
             when(filter.modify!![0]) {
@@ -376,7 +378,7 @@ class AbpBlocker @Inject constructor(
                     val removeParameter = filter.modify!!.substring(if (negation) 2 else 1)
 
                     if (removeParameter.startsWith('/')) {
-                        // it's a regex, start the matcher!
+                        // TODO: it's a regex, start the matcher!
                     } else {
                         if (negation)
                             parameters.entries.retainAll { it.key == removeParameter }
@@ -384,8 +386,22 @@ class AbpBlocker @Inject constructor(
                             parameters.entries.removeAll { it.key == removeParameter }
                     }
                 }
-                //MODIFY_PREFIX_CSP -> addThoseHeaders // is it really headers that are added? don't understand it... try uBo documentation
-                //MODIFY_PREFIX_REDIRECT -> redirect // apparently this mostly redirects to some internal resources -> mostly or always?
+                MODIFY_PREFIX_CSP -> {
+                    // from uBo documentation https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#modifier-filters:
+                    //   This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames.
+                    //  -> add 'Content-Security-Policy' header entry, but apparently not to the request!
+                    //   wikipedia: If the Content-Security-Policy header is present in the server response -> need to add to the response, not request!!
+                    //   -> understand what needs to be done
+                    //   probably modify the bytestream from response
+                    //    gather csp stuff here in some list and use it in some InputStream.injectCSP(list) function
+                    //    this may help: https://stackoverflow.com/questions/61825334/convert-inputstream-to-flow
+                    //   best: simply check how uBo does it, this should at least give an idea
+                }
+                MODIFY_PREFIX_REDIRECT -> {
+                    // apparently this always redirects to some internal resources! see uBo documentation
+                    //  need to get the resources library from uBo
+                    // and this means the other 2 can be ignored if a redirect filter exists
+                }
             }
         }
 
@@ -403,6 +419,7 @@ class AbpBlocker @Inject constructor(
         val call = OkHttpClient().newCall(request2.build()) // maybe have one client like it's done in AbpListUpdater
         try {
             val response = call.execute()
+            // i guess i should get mimetype and encoding from the response?
             response.body?.let { return WebResourceResponse("bla", "bla", it.byteStream())}
         } catch (e: IOException) {
         }
