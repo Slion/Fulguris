@@ -118,6 +118,7 @@ colorControlNormal:
         <item name="colorControlNormal">@color/state_color_control</item>
         <!-- Fix dialog issues -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <!-- Override AppBarLayout background color -->
         <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout.Light</item>
         <!-- Override MaterialCardView styles -->
@@ -177,6 +178,7 @@ colorControlNormal:
         <item name="colorControlNormal">@color/state_color_control</item>
         <!-- Fix dialog issues -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <!-- Override BottomSheetDialog styles -->
@@ -232,6 +234,7 @@ colorControlNormal:
         <item name="colorControlNormal">@color/state_color_control</item>
         <!-- Fix dialog issues -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <!-- Override BottomSheetDialog styles -->

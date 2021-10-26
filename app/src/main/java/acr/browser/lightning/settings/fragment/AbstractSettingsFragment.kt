@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020-2021 Stéphane Lenclud
+ */
+
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
@@ -236,5 +240,13 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
     }
 
     abstract fun titleResourceId() : Int
+
+    override fun onDisplayPreferenceDialog(preference: Preference) {
+        if (preference is ListPreference) {
+            showListPreferenceDialog(preference)
+        } else {
+            super.onDisplayPreferenceDialog(preference)
+        }
+    }
 
 }
