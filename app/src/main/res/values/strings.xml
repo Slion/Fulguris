@@ -516,6 +516,10 @@
     <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Tab closed</string>
     <string name="button_undo">Undo</string>
+    <string name="button_dismiss">Dismiss</string>
+    <!-- Find in page -->
+    <string name="no_match_found">No match found!</string>
+    <string name="match_x_of_n">Match %d of %d</string>
 
     <string name="pref_title_show_snackbar">Show snackbar</string>
     <string name="pref_title_show_animation">Show animation</string>

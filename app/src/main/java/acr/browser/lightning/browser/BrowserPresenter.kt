@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020-2021 Stéphane Lenclud
+ */
+
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.BrowserApp
@@ -15,7 +19,6 @@ import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.isSpecialUrl
 import acr.browser.lightning.view.*
-import acr.browser.lightning.view.find.FindResults
 import android.app.Activity
 import android.content.Intent
 import android.webkit.URLUtil
@@ -375,10 +378,6 @@ class BrowserPresenter(
 
     fun onAutoCompleteItemPressed() {
         tabsModel.currentTab?.requestFocus()
-    }
-
-    fun findInPage(query: String): FindResults? {
-        return tabsModel.currentTab?.find(query)
     }
 
     companion object {

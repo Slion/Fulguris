@@ -49,7 +49,7 @@ import acr.browser.lightning.ssl.showSslDialog
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
 import acr.browser.lightning.view.SearchView
-import acr.browser.lightning.view.find.FindResults
+
 import android.animation.*
 import android.app.Activity
 import android.app.NotificationChannel
@@ -111,8 +111,13 @@ import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.system.exitProcess
+import android.text.Editable
 
+import android.text.TextWatcher
 
+/**
+ *
+ */
 abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIController, OnClickListener {
 
     // Notifications
@@ -156,7 +161,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private var searchText: String? = null
     private var cameraPhotoPath: String? = null
 
-    private var findResult: FindResults? = null
 
     // The singleton BookmarkManager
     @Inject lateinit var bookmarkManager: BookmarkRepository
@@ -261,6 +265,25 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         iTabViewContainerBack = iBinding.tabViewContainerOne
         iTabViewContainerFront = iBinding.tabViewContainerTwo
+
+        // Setup our find in page bindings
+        iBinding.findInPageInclude.searchQuery.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    // Trigger on setText
+                }
+                override fun afterTextChanged(s: Editable) {
+                    if (!iSkipNextSearchQueryUpdate) {
+                        tabsManager.currentTab?.find(s.toString())
+                    }
+                    iSkipNextSearchQueryUpdate = false
+                }
+            })
+        iBinding.findInPageInclude.buttonNext.setOnClickListener(this)
+        iBinding.findInPageInclude.buttonBack.setOnClickListener(this)
+        iBinding.findInPageInclude.buttonQuit.setOnClickListener(this)
+
+
 
         ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
@@ -1048,12 +1071,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Put our toolbar where it belongs, top or bottom according to user preferences
         iBinding.toolbarInclude.apply {
             if (configPrefs.toolbarsBottom) {
+
+                // Move search bar to the bottom
+                iBinding.findInPageInclude.root.let {
+                    it.removeFromParent()?.addView(it)
+                }
+
                 // Move toolbar to the bottom
                 root.removeFromParent()?.addView(root)
-                // Move search in page to top
-                iBinding.findInPageInclude.root.let {
-                    it.removeFromParent()?.addView(it, 0)
-                }
 
                 // Rearrange it so that it is upside down
                 // Put tab bar at the bottom
@@ -1117,14 +1142,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 searchView.dropDownAnchor = R.id.address_bar_include
 
             } else {
+                // Move search in page to top
+                iBinding.findInPageInclude.root.let {
+                    it.removeFromParent()?.addView(it, 0)
+                }
                 // Move toolbar to the top
                 root.removeFromParent()?.addView(root, 0)
                 //iBinding.uiLayout.addView(root, 0)
-                // Move search in page to bottom
-                iBinding.findInPageInclude.root.let {
-                    it.removeFromParent()?.addView(it)
-                    //iBinding.uiLayout.addView(it)
-                }
                 // Rearrange it so that it is the right way up
                 // Put tab bar at the bottom
                 tabBarContainer.removeFromParent()?.addView(tabBarContainer, 0)
@@ -1744,28 +1768,29 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
 
     /**
-     * method that shows a dialog asking what string the user wishes to search
-     * for. It highlights the text entered.
+     *
      */
-    private fun findInPage() = BrowserDialog.showEditText(
-            this,
-            R.string.action_find,
-            R.string.search_hint,
-            R.string.search_hint
-    ) { text ->
-        if (text.isNotEmpty()) {
-            findResult = presenter?.findInPage(text)
-            showFindInPageControls(text)
+    private fun findInPage()  {
+        iBinding.findInPageInclude.searchQuery.let{
+            it.doOnLayout {
+                it.requestFocus()
+                // Crazy workaround to get the virtual keyboard to show, Android FFS
+                // See: https://stackoverflow.com/a/7784904/3969362
+                mainHandler.postDelayed({
+                    // Emulate tap to open up soft keyboard if needed
+                    it.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , 0F, 0F, 0))
+                    it.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP , 0F, 0F, 0))
+                    // That will trigger our search, see addTextChangedListener
+                    it.setText(tabsManager.currentTab?.searchQuery)
+                    // Move cursor to the end of our text
+                    it.setSelection(it.length())
+                }, 100)
+            }
         }
+
+        iBinding.findInPageInclude.root.isVisible = true
     }
 
-    private fun showFindInPageControls(text: String) {
-        findViewById<View>(R.id.findInPageInclude).visibility = VISIBLE
-        findViewById<TextView>(R.id.search_query).text = text
-        findViewById<ImageButton>(R.id.button_next).setOnClickListener(this)
-        findViewById<ImageButton>(R.id.button_back).setOnClickListener(this)
-        findViewById<ImageButton>(R.id.button_quit).setOnClickListener(this)
-    }
 
 
     private fun isLoading() : Boolean = tabsManager.currentTab?.let{it.progress < 100} ?: false
@@ -1956,6 +1981,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iTabViewContainerBack.removeFromParent()?.addView(iTabViewContainerBack,0)
     }
 
+
+    var iSkipNextSearchQueryUpdate = false
+
     /**
      * From [BrowserView].
      * This function is central to browser tab switching.
@@ -2029,7 +2057,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         scrollToCurrentTab()
         //mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
 
-
+        // Current tab was already set by the time we get here
+        tabsManager.currentTab?.let {
+            // Update our find in page UI as needed
+            iSkipNextSearchQueryUpdate = true // Make sure we don't redo a search as our UI text is changed
+            iBinding.findInPageInclude.searchQuery.setText(it.searchQuery)
+            // Set find in page UI visibility
+            iBinding.findInPageInclude.root.isVisible = it.searchActive
+        }
     }
 
 
@@ -3483,12 +3518,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             R.id.home_button -> currentTab.apply { requestFocus(); loadHomePage() }
             R.id.tabs_button -> openTabs()
             R.id.button_reload -> refreshOrStop()
-            R.id.button_next -> findResult?.nextResult()
-            R.id.button_back -> findResult?.previousResult()
+            R.id.button_next -> currentTab.findNext()
+            R.id.button_back -> currentTab.findPrevious()
             R.id.button_quit -> {
-                findResult?.clearResults()
-                findResult = null
-                findViewById<View>(R.id.findInPageInclude).visibility = GONE
+                currentTab.clearFind()
+                iBinding.findInPageInclude.root.isVisible = false
+                // Hide software keyboard
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(iBinding.findInPageInclude.searchQuery.windowToken, 0)
+                //tabsManager.currentTab?.requestFocus()
             }
         }
     }

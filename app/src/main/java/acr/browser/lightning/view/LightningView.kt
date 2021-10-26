@@ -1,4 +1,5 @@
 /*
+ * Copyright © 2020-2021 Stéphane Lenclud
  * Copyright 2014 A.C.R. Development
  */
 
@@ -25,7 +26,6 @@ import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.*
-import acr.browser.lightning.view.find.FindResults
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
@@ -72,7 +72,7 @@ class LightningView(
     private val downloadPageInitializer: DownloadPageInitializer,
     private val historyPageInitializer: HistoryPageInitializer,
     private val logger: Logger
-) {
+): WebView.FindListener {
 
     /**
      * The unique ID of the view.
@@ -180,6 +180,23 @@ class LightningView(
         }
 
     /**
+     * Get our find in page search query.
+     *
+     * @return The find in page search query or an empty string.
+     */
+    var searchQuery: String = ""
+        set(aSearchQuery) {
+            field = aSearchQuery
+            //find(searchQuery)
+        }
+
+    /**
+     * Define if this tab has an active find in page search.
+     */
+    var searchActive = false
+
+
+    /**
      *
      */
     private val webViewHandler = WebViewHandler(this)
@@ -219,6 +236,12 @@ class LightningView(
      */
     val progress: Int
         get() = webView?.progress ?: 100
+
+    /**
+     * Tells if a web page is currently loading.
+     */
+    val isLoading
+        get() = progress != 100
 
     /**
      * Get the current user agent used by the WebView.
@@ -311,6 +334,8 @@ class LightningView(
             titleInfo.setFavicon(tabInitializer.tabModel.favicon)
             desktopMode = tabInitializer.tabModel.desktopMode
             darkMode = tabInitializer.tabModel.darkMode
+            searchQuery = tabInitializer.tabModel.searchQuery
+            searchActive = tabInitializer.tabModel.searchActive
         }
 
         networkDisposable = networkConnectivityModel.connectivity()
@@ -326,6 +351,7 @@ class LightningView(
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
         webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebViewEx;
         webView?.apply {
+            setFindListener(this@LightningView)
             //id = this@LightningView.id
             gestureDetector = GestureDetector(activity, CustomGestureListener(this))
 
@@ -361,6 +387,11 @@ class LightningView(
         }
 
         initializePreferences()
+
+        // If search was active enable it again
+        if (searchActive) {
+            find(searchQuery)
+        }
     }
 
     fun currentSslState(): SslState = lightningWebClient.sslState
@@ -656,7 +687,7 @@ class LightningView(
      * Save the state of this tab and return it as a [Bundle].
      */
     fun saveState(): Bundle {
-         return TabModel(url, title, desktopMode, darkMode, favicon, webViewState()).toBundle()
+         return TabModel(url, title, desktopMode, darkMode, favicon, searchQuery, searchActive, webViewState()).toBundle()
     }
     /**
      * Pause the current WebView instance.
@@ -838,21 +869,88 @@ class LightningView(
      * @param text the text to search for.
      */
     @SuppressLint("NewApi")
-    fun find(text: String): FindResults {
+    fun find(text: String) {
+        resetFind()
+        searchQuery = text
+        searchActive = true
+        // Kick off our search
         webView?.findAllAsync(text)
+    }
 
-        return object : FindResults {
-            override fun nextResult() {
-                webView?.findNext(true)
-            }
+    fun findNext() {
+        webView?.findNext(true)
+    }
 
-            override fun previousResult() {
-                webView?.findNext(false)
-            }
+    fun findPrevious() {
+        webView?.findNext(false)
+    }
 
-            override fun clearResults() {
-                webView?.clearMatches()
+    fun clearFind() {
+        webView?.clearMatches()
+        searchActive = false
+        resetFind()
+    }
+
+    // Used to implement find in page
+    private var iActiveMatchOrdinal: Int = 0
+    private var iNumberOfMatches: Int = 0
+    private var iSnackbar: Snackbar? = null
+
+    /**
+     *
+     */
+    fun resetFind() {
+        iActiveMatchOrdinal = 0
+        iNumberOfMatches = 0
+    }
+
+    /**
+     * That's where find in page results are being reported by our WebView.
+     */
+    override fun onFindResultReceived(activeMatchOrdinal: Int, numberOfMatches: Int, isDoneCounting: Boolean) {
+
+        // If our page is still loading or if our find in page search is not complete
+        if (isLoading || !isDoneCounting) {
+            // Just don't report intermediary results
+            return
+        }
+        // Only display message if something was changed
+        if (iActiveMatchOrdinal != activeMatchOrdinal || iNumberOfMatches != numberOfMatches) {
+
+            // Remember what we last reported
+            iActiveMatchOrdinal = activeMatchOrdinal
+            iNumberOfMatches = numberOfMatches
+
+            // Check if our search is reporting any match
+            if (iNumberOfMatches==0) {
+                // Don't display 'no match found' for empty search query. Could be caught earlier I guess?
+                if (searchQuery.isNotEmpty()) {
+                    // Find in page did not find any match, tell our user about it
+                    iSnackbar = activity.makeSnackbar(
+                            activity.getString(R.string.no_match_found),
+                            Snackbar.LENGTH_SHORT, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                            .setAction(R.string.button_dismiss) {
+                                iSnackbar?.dismiss()
+                            }
+
+                    iSnackbar?.show()
+                }
+            } else {
+                // Show our user how many matches we have and which one is currently focused
+                val currentMatch = iActiveMatchOrdinal + 1
+                iSnackbar = activity.makeSnackbar(
+                        activity.getString(R.string.match_x_of_n,currentMatch,iNumberOfMatches) ,
+                        Snackbar.LENGTH_SHORT, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                        .setAction(R.string.button_dismiss) {
+                            iSnackbar?.dismiss()
+                        }
+
+                iSnackbar?.show()
             }
+        } else if (searchQuery.isEmpty()) {
+            // Hide last snackbar to avoid having outdated stats lingering
+            // Notably useful when doing backspace on the search field until no characters are left
+            iSnackbar?.dismiss()
         }
     }
 
