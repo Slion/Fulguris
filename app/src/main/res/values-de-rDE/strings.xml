@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Neu laden</string>
     <string name="action_menu">Menü</string>
     <string name="action_new_tab">Neuer Tab</string>
@@ -14,6 +14,8 @@
     <string name="action_new_session">Neue Sitzung</string>
     <string name="action_save_session">Sitzung speichern als</string>
     <string name="action_edit_sessions">Sitzungen bearbeiten</string>
+    <string name="enable">Aktivieren</string>
+    <string name="disable">Deaktivieren</string>
     <string name="settings">Einstellungen</string>
     <string name="location">Standortzugriff erlauben</string>
     <string name="password">Passwörter speichern</string>
@@ -77,6 +79,7 @@
     <string name="title_download_location">Download-Verzeichnis festlegen</string>
     <string name="title_custom_homepage">Benutzerdefinierte Startseite</string>
     <string name="action_webpage">Webseite</string>
+    <string name="action_main_menu">Hauptmenü</string>
     <string name="title_clear_history">Verlauf löschen</string>
     <string name="title_clear_cookies">Cookies löschen</string>
     <string name="dialog_history">Möchten Sie den gesamten Verlauf löschen?</string>
@@ -136,11 +139,10 @@
     <string name="title_welcome">Willkommen bei Fulguris</string>
     <string name="message_welcome">Besuche unsere Webseite um mehr über diesen leistungsstarken Webbrowser zu erfahren.</string>
     <!-- Ad block -->
-    <string name="block_ads">Werbung blockieren</string>
+    <string name="block_ads">Inhaltskontrolle</string>
     <string name="block_ad_source">Hosts-Datei Quelle</string>
     <string name="block_ad_remote_refresh_frequency_description">(Online-Hosts Datei)</string>
     <string name="block_ad_refresh_now">Hosts aktualisieren</string>
-
     <string name="block_remote_frequency_daily">Täglich</string>
     <string name="block_remote_frequency_weekly">Wöchentlich</string>
     <string name="block_remote_frequency_monthly">Monatlich</string>
@@ -149,6 +151,36 @@
     <string name="block_source_local_description">Datei: %1$s</string>
     <string name="block_source_remote">Online Hosts-Datei</string>
     <string name="block_source_remote_description">URL: %1$s</string>
+    <string name="ad_block_load_failure">Das Laden der Online-Hosts ist fehlgeschlagen.</string>
+    <!-- new ad blocker -->
+    <string name="page_blocked">Die folgende Seite wurde blockiert:</string>
+    <string name="page_blocked_reason">weil:</string>
+    <string name="page_blocked_list_ad">%s in der Werbeblocker Filterliste</string>
+    <string name="page_blocked_list_user">%s blockiert durch Benutzerregel</string>
+    <string name="page_blocked_list_malware">%s in der Malware Filterliste</string>
+    <string name="request_blocked">Anfrage blockiert</string>
+    <!-- settings for new ad blocker -->
+    <string name="blocklist_update_mode">Automatischer Aktualisierungsmodus</string>
+    <string name="blocklist_update_on">An</string>
+    <string name="blocklist_update_off">Aus</string>
+    <string name="blocklist_update_wifi">Nur über WLAN</string>
+    <string name="blocklist_update">Filter aktualisieren</string>
+    <string name="blocklist_update_frequency">Automatisches aktualisieren (Häufigkeit)</string>
+    <string name="blocklist_update_description">Die Aktualisierung erfolgt mit der gewählten Häufigkeit, es sei denn, in der Filterliste ist ein längeres Intervall angegeben.</string>
+    <string name="blocklist_update_now">Listen aktualisieren</string>
+    <string name="blocklist_last_update">Letzte Aktualisierung: %s</string>
+    <string name="add_blocklist">Filterdatei hinzufügen</string>
+    <string name="add_blocklist_hint">Es können Host-Listen oder jede Liste gewählt werden, die mit AdBlockPlus-Regeln arbeiten</string>
+    <string name="enable_blocklist">Diese Liste aktivieren</string>
+    <string name="invalid_title">Ungültiger Titel</string>
+    <string name="invalid_url">Ungültige URL</string>
+    <string name="blocklist_built_in">Integrierte Filter</string>
+    <string name="blocklist_remove">Filterdatei entfernen</string>
+    <string name="blocklist_remove_confirm">Filterdatei: %s wirklich entfernen?</string>
+    <string name="local_file">Lokal</string>
+    <string name="local_file_replace">Ersetzen</string>
+    <string name="local_file_chosen">Datei ausgewählt</string>
+    <string name="remote_file">Online</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Aktion abgebrochen.</string>
     <!-- SSL warnings -->
@@ -215,6 +247,9 @@
     <string name="title_file_chooser">Dateiauswahl</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
+    <string name="generic_export">Exportieren</string>
+    <string name="generic_import">Importieren</string>
+    <string name="generic_reset">Zurücksetzen</string>
     <string name="export_bookmarks">Lesezeichen exportieren</string>
     <string name="import_backup">Lesezeichen importieren</string>
     <string name="bookmark_export_path">Lesezeichen exportiert:</string>
@@ -226,8 +261,11 @@
     <string name="title_chooser">Wähle eine Datei aus</string>
     <string name="settings_general">Allgemein</string>
     <string name="settings_display">Darstellung</string>
+    <string name="settings_backup">Sicherung</string>
     <string name="settings_title_configuration">Konfiguration</string>
     <string name="settings_summary_configuration">Hoch- und Querformat Einstellungen</string>
+    <string name="settings_title_portrait">@string/pref_category_portrait</string>
+    <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_privacy">Privatsphäre</string>
     <string name="settings_about">Über</string>
     <string name="settings_contribute">Unterstützen</string>
@@ -238,6 +276,11 @@
     <string name="pref_category_landscape">Querformat</string>
     <string name="pref_category_portrait">Hochformat</string>
     <string name="pref_category_menu">@string/action_menu</string>
+    <string name="pref_category_filters">Filter</string>
+    <string name="pref_category_summary_filters">Lokale oder Online-Dateien, die deine Regeln zur Inhaltskontrolle definieren</string>
+    <string name="pref_category_on_tab_close">Beim Schließen des Tab</string>
+    <string name="pref_category_on_tab_change">Beim Wechseln des Tab</string>
+    <string name="pref_category_on_tab_back_forward">Beim Zurück- oder Weitergehen</string>
     <string name="pref_title_hide_status_bar">Statusleiste ausblenden</string>
     <string name="pref_title_hide_tool_bar">Suchleiste beim Scrollen ausblenden</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Suchleiste beim Scrollen nach oben anzeigen</string>
@@ -296,6 +339,8 @@
     <string name="new_tab_position_start">Am Start der Tabliste</string>
     <string name="new_tab_position_end">Am Ende der Tabliste</string>
     <string name="text_encoding">Text Enkodierung</string>
+    <string name="reset_settings">Einstellungen zurücksetzen</string>
+    <string name="reset_settings_confirmation">Vorsicht! Dies wird alle deine individuellen Einstellungen entfernen. Bist du sicher, dass du fortfahren willst?</string>
     <string-array name="url_content_array">
         <item>Domain (Standard)</item>
         <item>URL</item>
@@ -318,7 +363,9 @@
     <string name="clear_web_storage_exit">Webinhalte beim Beenden löschen</string>
     <string name="message_web_storage_cleared">Webinhalte gelöscht</string>
     <string name="hosts_source">Quelle für Werbeblocker</string>
-    <string name="settings_adblock">Werbeblocker</string>
+    <string name="settings_adblock">@string/block_ads</string>
+    <string name="settings_summary_content_control">Werbeblocker und Inhaltsfilterung</string>
+    <string name="settings_summary_content_control_toggle">Werbeblocker und Inhaltsfilterung aktivieren</string>
     <string name="settings_title_vertical_tab_bar">Vertikale Tab-Leiste</string>
     <string name="settings_summary_vertical_tab_bar">Ausschalten um die horizontale Tab-Leiste zu nutzen</string>
     <string name="settings_title_toolbars_bottom">Suchleiste nach unten</string>
@@ -338,7 +385,6 @@
     <string name="shortcut_message_failed_to_add">Ihr Launcher unterstützt keine Verknüpfungen!</string>
     <string name="action_delete_all_bookmarks">Alle Lesezeichen löschen</string>
     <string name="flash_not_supported">Flash Player wird von Ihrem System nicht unterstützt!</string>
-
     <string name="message_open_download_fail">Diese Datei existiert nicht mehr</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">Häufig gestellte Fragen</string>
@@ -386,8 +432,6 @@
     </plurals>
     <string name="notification_incognito_running_message">Inkognito-Tab anzeigen</string>
     <string name="notification_incognito_running_description">Dauerhafte Inkognito-Benachrichtigung</string>
-    <!--Ad block -->
-    <string name="ad_block_load_failure">Das Laden der Online-Hosts ist fehlgeschlagen.</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Ausgestellt von:</string>
@@ -434,10 +478,24 @@
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
+    <string name="question_what_do_you_want_to_use">Was soll verwendet werden?</string>
     <string name="button_link">Link</string>
-    <string name="button_image">Image</string>
+    <string name="button_image">Bild</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
-    <string name="notify_tab_closed">Tab closed</string>
-    <string name="button_undo">Undo</string>
+    <string name="notify_tab_closed">Tab geschlossen</string>
+    <string name="button_undo">Rückgängig machen</string>
+    <string name="button_dismiss">Dismiss</string>
+    <!-- Find in page -->
+    <string name="no_match_found">No match found!</string>
+    <string name="match_x_of_n">Match %d of %d</string>
+    <string name="pref_title_show_snackbar">Snackbar anzeigen</string>
+    <string name="pref_title_show_animation">Animation anzeigen</string>
+    <string name="pref_title_vibrate">Vibrieren</string>
+    <string name="pref_title_duration">Dauer</string>
+    <string name="pref_summary_duration">Dauer der Animation in Zentisekunden</string>
+    <string name="pref_category_title_session_export">Sitzungen exportieren</string>
+    <string name="pref_category_summary_session_export">Wähle eine Sitzung, die exportiert werden soll</string>
+    <string name="error_session_file_corrupted">Fehler: Beschädigte Sitzungsdatei!</string>
+    <string name="message_session_imported">Importierte Sitzung: <xliff:g id="session_name" example="News">%s</xliff:g></string>
+    <string name="message_session_exported">Exportierte Sitzung: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
 </resources>
