@@ -892,16 +892,16 @@ class LightningView(
     }
 
     // Used to implement find in page
-    private var iActiveMatchOrdinal: Int = 0
-    private var iNumberOfMatches: Int = 0
+    private var iActiveMatchOrdinal: Int = -1
+    private var iNumberOfMatches: Int = -1
     private var iSnackbar: Snackbar? = null
 
     /**
      *
      */
-    fun resetFind() {
-        iActiveMatchOrdinal = 0
-        iNumberOfMatches = 0
+    private fun resetFind() {
+        iActiveMatchOrdinal = -1
+        iNumberOfMatches = -1
     }
 
     /**
@@ -921,20 +921,23 @@ class LightningView(
             iActiveMatchOrdinal = activeMatchOrdinal
             iNumberOfMatches = numberOfMatches
 
+            // Empty search query just dismisses any results previously displayed
+            if (searchQuery.isEmpty()) {
+                // Hide last snackbar to avoid having outdated stats lingering
+                // Notably useful when doing backspace on the search field until no characters are left
+                iSnackbar?.dismiss()
+            }
             // Check if our search is reporting any match
-            if (iNumberOfMatches==0) {
-                // Don't display 'no match found' for empty search query. Could be caught earlier I guess?
-                if (searchQuery.isNotEmpty()) {
-                    // Find in page did not find any match, tell our user about it
-                    iSnackbar = activity.makeSnackbar(
-                            activity.getString(R.string.no_match_found),
-                            Snackbar.LENGTH_SHORT, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
-                            .setAction(R.string.button_dismiss) {
-                                iSnackbar?.dismiss()
-                            }
+            else if (iNumberOfMatches==0) {
+                // Find in page did not find any match, tell our user about it
+                iSnackbar = activity.makeSnackbar(
+                        activity.getString(R.string.no_match_found),
+                        Snackbar.LENGTH_SHORT, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                        .setAction(R.string.button_dismiss) {
+                            iSnackbar?.dismiss()
+                        }
 
-                    iSnackbar?.show()
-                }
+                iSnackbar?.show()
             } else {
                 // Show our user how many matches we have and which one is currently focused
                 val currentMatch = iActiveMatchOrdinal + 1
@@ -947,10 +950,6 @@ class LightningView(
 
                 iSnackbar?.show()
             }
-        } else if (searchQuery.isEmpty()) {
-            // Hide last snackbar to avoid having outdated stats lingering
-            // Notably useful when doing backspace on the search field until no characters are left
-            iSnackbar?.dismiss()
         }
     }
 
