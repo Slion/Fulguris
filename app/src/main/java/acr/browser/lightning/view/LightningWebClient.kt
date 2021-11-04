@@ -165,7 +165,7 @@ class LightningWebClient(
             uiController.setForwardButtonEnabled(view.canGoForward())
             view.postInvalidate()
         }
-        if (view.title == null || view.title.isEmpty()) {
+        if (view.title == null || (view.title as String).isEmpty()) {
             lightningView.titleInfo.setTitle(activity.getString(R.string.untitled))
         } else {
             lightningView.titleInfo.setTitle(view.title)
@@ -326,13 +326,13 @@ class LightningWebClient(
             setOnCancelListener { handler.cancel() }
             setPositiveButton(activity.getString(R.string.action_yes)) { _, _ ->
                 if (dontAskAgain.isChecked) {
-                    sslWarningPreferences.rememberBehaviorForDomain(webView.url, SslWarningPreferences.Behavior.PROCEED)
+                    sslWarningPreferences.rememberBehaviorForDomain(webView.url as String, SslWarningPreferences.Behavior.PROCEED)
                 }
                 handler.proceed()
             }
             setNegativeButton(activity.getString(R.string.action_no)) { _, _ ->
                 if (dontAskAgain.isChecked) {
-                    sslWarningPreferences.rememberBehaviorForDomain(webView.url, SslWarningPreferences.Behavior.CANCEL)
+                    sslWarningPreferences.rememberBehaviorForDomain(webView.url as String, SslWarningPreferences.Behavior.CANCEL)
                 }
                 handler.cancel()
             }

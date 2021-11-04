@@ -182,9 +182,8 @@ class ResultMessageInitializer(private val resultMessage: Message) : TabInitiali
 abstract class BundleInitializer(private val bundle: Bundle?) : TabInitializer {
 
     override fun initialize(webView: WebView, headers: Map<String, String>) {
-        webView.restoreState(bundle)
+        bundle?.let {webView.restoreState(it)}
     }
-
 }
 
 /**

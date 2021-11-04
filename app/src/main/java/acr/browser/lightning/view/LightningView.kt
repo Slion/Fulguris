@@ -287,7 +287,7 @@ class LightningView(
             return if (webView == null || webView!!.url.isNullOrBlank() || webView!!.url.isSpecialUrl()) {
                 iTargetUrl.toString()
             } else  {
-                webView!!.url
+                webView!!.url as String
             }
         }
 

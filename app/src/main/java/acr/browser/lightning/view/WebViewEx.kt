@@ -50,15 +50,15 @@ class WebViewEx : WebView {
      */
     fun print() : PrintJob {
         val printManager: PrintManager = context.getSystemService(Context.PRINT_SERVICE) as PrintManager
-        val printAdapter: PrintDocumentAdapter = createPrintDocumentAdapter(title)
-        val jobName = title
+        val printAdapter: PrintDocumentAdapter = createPrintDocumentAdapter(title as String)
+        val jobName = title as String
         val builder: PrintAttributes.Builder = PrintAttributes.Builder()
         builder.setMediaSize(PrintAttributes.MediaSize.ISO_A4)
         return printManager.print(jobName, printAdapter, builder.build())
     }
 
     /**
-     * We shied away from overriding [WebView.destroy] so here we that function instead.
+     * We shied away from overriding [WebView.destroy] so here we have that function instead.
      */
     fun destruction() {
         stopLoading()

@@ -489,7 +489,7 @@
     <string name="button_dismiss">Отклонить</string>
     <!-- Find in page -->
     <string name="no_match_found">Совпадений не найдено!</string>
-    <string name="match_x_of_n">Совпадение %d из %d</string>
+    <string name="match_x_of_n">Совпадение <xliff:g id="current_match" example="1">%1$d</xliff:g> из <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Показывать snackbar</string>
     <string name="pref_title_show_animation">Показывать анимацию</string>
     <string name="pref_title_vibrate">Вибрация</string>

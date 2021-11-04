@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlinVersion = '1.5.20'
+    ext.kotlinVersion = '1.5.31'
     repositories {
         google()
         mavenCentral()
@@ -34,6 +34,6 @@ allprojects {
 
 ext {
     minSdkVersion = 21
-    targetSdkVersion = 29
+    targetSdkVersion = 30
     buildToolsVersion = '30.0.2'
 }
