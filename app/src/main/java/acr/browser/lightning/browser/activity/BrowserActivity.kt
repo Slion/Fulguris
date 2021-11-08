@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020-2021 Stéphane Lenclud
+ * Copyright © 2020 Stéphane Lenclud. All Rights Reserved.
  * Copyright 2015 Anthony Restaino
  */
 

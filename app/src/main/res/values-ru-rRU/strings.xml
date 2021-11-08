@@ -21,7 +21,7 @@
     <string name="password">Сохранять пароли</string>
     <string name="agent">User Agent</string>
     <string name="flash">Включить Adobe Flash</string>
-    <string name="home">Домашняя страница</string>
+    <string name="home">Новая вкладка</string>
     <string name="fullscreen">Полноэкранный режим</string>
     <string name="java">Включить JavaScript</string>
     <string name="download">Путь загрузки</string>
@@ -99,7 +99,7 @@
     <string name="title_edit_bookmark">Редактировать закладку</string>
     <string name="action_edit">Редактировать</string>
     <string name="action_incognito">Инкогнито-вкладка</string>
-    <string name="action_homepage">Домой</string>
+    <string name="action_homepage">По умолчанию</string>
     <string name="action_show_homepage">Показать домашнюю страницу</string>
     <string name="action_back">Назад</string>
     <string name="action_find">Найти на странице</string>
@@ -366,7 +366,7 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокировщик рекламы и фильтрация содержимого</string>
     <string name="settings_summary_content_control_toggle">Включить блокировку рекламы и фильтрацию содержимого</string>
-    <string name="settings_title_vertical_tab_bar">Показывать владки в боковом меню</string>
+    <string name="settings_title_vertical_tab_bar">Панель вертикальных вкладок</string>
     <string name="settings_summary_vertical_tab_bar">Отключите его, чтобы использовать горизонтальную панель вкладок</string>
     <string name="settings_title_toolbars_bottom">Панель инструментов внизу</string>
     <string name="settings_title_desktop_mode_default">Режим для настольного компьютера</string>
@@ -399,7 +399,7 @@
     <string name="dialog_remove_bookmark">Удалить закладку</string>
     <string name="dialog_edit_bookmark">Редактировать закладку</string>
     <string name="dialog_remove_from_history">Удалить из истории</string>
-    <string name="dialog_download_image">Загрузить картинку</string>
+    <string name="dialog_download_image">Загрузить изображение</string>
     <string name="dialog_copy_link">Скопировать ссылку</string>
     <string name="dialog_copy_text">Скопировать текст</string>
     <string name="dialog_rename_folder">Переименовать папку</string>

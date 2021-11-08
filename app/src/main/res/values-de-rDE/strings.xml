@@ -484,9 +484,9 @@
     <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Tab geschlossen</string>
     <string name="button_undo">Rückgängig machen</string>
-    <string name="button_dismiss">Dismiss</string>
+    <string name="button_dismiss">Ablehnen</string>
     <!-- Find in page -->
-    <string name="no_match_found">No match found!</string>
+    <string name="no_match_found">Keine Übereinstimmung gefunden!</string>
     <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Snackbar anzeigen</string>
     <string name="pref_title_show_animation">Animation anzeigen</string>

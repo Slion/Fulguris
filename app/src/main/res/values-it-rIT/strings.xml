@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
-    <string name="action_reload">Reload</string>
-    <string name="action_menu">Menu</string>
+    <string name="action_reload">Ricaricare</string>
+    <string name="action_menu">Menù</string>
     <string name="action_new_tab">Nuova scheda</string>
     <string name="action_share">Condividi</string>
     <string name="action_history">Cronologia</string>
@@ -10,10 +10,10 @@
     <string name="action_add_bookmark">Aggiungi segnalibro</string>
     <string name="action_copy">Copia indirizzo link</string>
     <string name="action_forward">Avanti</string>
-    <string name="action_sessions">Sessions</string>
-    <string name="action_new_session">New session</string>
-    <string name="action_save_session">Save session as</string>
-    <string name="action_edit_sessions">Edit sessions</string>
+    <string name="action_sessions">Sessioni</string>
+    <string name="action_new_session">Nuova sessione</string>
+    <string name="action_save_session">Salva la sessione come</string>
+    <string name="action_edit_sessions">Modifica la sessione</string>
     <string name="enable">Enable</string>
     <string name="disable">Disable</string>
     <string name="settings">Impostazioni</string>
@@ -30,12 +30,12 @@
     <string name="version">Versione app</string>
     <string name="update_available">Update available</string>
     <string name="update_check_error">Update check error, try again later</string>
-    <string name="up_to_date">This is the newest version</string>
-    <string name="show">Show</string>
+    <string name="up_to_date">Stai usando l\'ultima versione</string>
+    <string name="show">Mostra</string>
     <string name="cache">Cancella la cache in chiusura</string>
     <string name="reflow">Abilità il reflow del testo</string>
     <string name="block">Blocca immagini</string>
-    <string name="load_images">Load images</string>
+    <string name="load_images">Carica le immagini</string>
     <string name="window">Consenti a siti di aprire nuove finestre</string>
     <string name="cookies">Abilita cookies</string>
     <string name="size">Dimensione dei caratteri</string>
@@ -63,23 +63,23 @@
     <string name="action_delete">Elimina</string>
     <string name="action_blank">Pagina vuota</string>
     <string name="agent_default">Predefinito</string>
-    <string name="agent_desktop">Desktop</string>
-    <string name="agent_mobile">Mobile</string>
+    <string name="agent_desktop">Scrivania</string>
+    <string name="agent_mobile">Cellulare</string>
     <string name="agent_custom">Personalizzato</string>
-    <string name="agent_system">System</string>
+    <string name="agent_system">Sistema</string>
     <string name="agent_web_view">Web View</string>
     <string name="title_search_engine">Motore di ricerca</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Vuoi scaricarlo? (%1$s)</string>
-    <string name="unknown_size">Unknown size</string>
+    <string name="unknown_size">Dimensione sconosciuta</string>
     <string name="action_cancel">Annulla</string>
     <string name="title_warning">Attenzione</string>
     <string name="dialog_adobe_not_installed">Adobe Flash Player non è stato trovato.\nSi prega di installarlo.</string>
     <string name="title_user_agent">User Agent</string>
     <string name="title_download_location">Percorso download</string>
     <string name="title_custom_homepage">Pagina iniziale</string>
-    <string name="action_webpage">Web page</string>
-    <string name="action_main_menu">Main menu</string>
+    <string name="action_webpage">Pagina web</string>
+    <string name="action_main_menu">Menù principale</string>
     <string name="title_clear_history">Cancella la cronologia</string>
     <string name="title_clear_cookies">Cancella i cookie</string>
     <string name="dialog_history">Desideri cancellare tutta la cronologia?</string>
@@ -100,11 +100,11 @@
     <string name="action_edit">Modifica</string>
     <string name="action_incognito">Nuova scheda in incognito</string>
     <string name="action_homepage">Predefinita</string>
-    <string name="action_show_homepage">Show homepage</string>
+    <string name="action_show_homepage">Mostra pagina iniziale</string>
     <string name="action_back">Indietro</string>
     <string name="action_find">Trova nella pagina</string>
-    <string name="action_print">Print</string>
-    <string name="downloads">Downloads</string>
+    <string name="action_print">Stampare</string>
+    <string name="downloads">Scaricamenti</string>
     <string name="downloads_notification_description">Triggers upon download completion</string>
     <string name="download_pending">Avvio download\u2026</string>
     <string name="cannot_download">È possibile scaricare solo da URL \"http\" o \"https\".</string>
@@ -114,8 +114,8 @@
     <string name="download_no_sdcard_dlg_msg">È necessario un archivio per il download.</string>
     <string name="download_sdcard_busy_dlg_title">Nessuna unità USB disponibile</string>
     <string name="download_sdcard_busy_dlg_msg">Unità USB occupata. Per continuare il download, spegnere l\'unità USB dalla notifica.</string>
-    <string name="download_complete">Download complete</string>
-    <string name="download_failed">Download failed</string>
+    <string name="download_complete">Scaricamento completato</string>
+    <string name="download_failed">Scaricamento fallito</string>
     <string name="incognito_cookies">Abilita i cookie nella modalità incognito</string>
     <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
     <string name="title_flash">Adobe Flash Player</string>
@@ -143,9 +143,9 @@
     <string name="block_ad_source">Hosts file source</string>
     <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
     <string name="block_ad_refresh_now">Refresh hosts now</string>
-    <string name="block_remote_frequency_daily">Daily</string>
-    <string name="block_remote_frequency_weekly">Weekly</string>
-    <string name="block_remote_frequency_monthly">Monthly</string>
+    <string name="block_remote_frequency_daily">Ogni giorno</string>
+    <string name="block_remote_frequency_weekly">Settimanalmente</string>
+    <string name="block_remote_frequency_monthly">Mensilmente</string>
     <string name="block_source_default">Default hosts</string>
     <string name="block_source_local">Local hosts file</string>
     <string name="block_source_local_description">File: %1$s</string>
@@ -441,10 +441,10 @@
     <!-- Search in page -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="close">Close</string>
-    <string name="exit">Exit</string>
+    <string name="close">Chiudi</string>
+    <string name="exit">Esci</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Frozen…</string>
+    <string name="tab_frozen">Congelato...</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Insert suggestion</string>
     <string name="action_close_all_other_tabs">Close all other tabs</string>
