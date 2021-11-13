@@ -59,6 +59,18 @@
                         android:clipChildren="true"
                         android:animateLayoutChanges="false" />
 
+                    <com.google.android.material.bottomnavigation.BottomNavigationView
+                        android:id="@+id/bottom_navigation"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_gravity="bottom"
+                        android:background="?attr/haloColor"
+                        app:itemIconTint="@drawable/toolbar_color"
+                        app:itemTextColor="?attr/colorControlNormal"
+                        app:elevation="0dp"
+                        app:labelVisibilityMode="unlabeled"
+                        app:menu="@menu/bottom_menu" />
+
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             </LinearLayout>
@@ -72,7 +84,7 @@
                 android:background="?android:attr/colorBackground"
                 android:fitsSystemWindows="true"
                 android:weightSum="1"
-                android:layout_marginLeft="-64dp"/>
+                android:layout_marginStart="-64dp"/>
 
             <FrameLayout
                 android:id="@+id/right_drawer"
@@ -82,7 +94,7 @@
                 android:background="?android:attr/colorBackground"
                 android:fitsSystemWindows="true"
                 android:weightSum="1"
-                android:layout_marginLeft="-64dp"/>
+                android:layout_marginStart="-64dp"/>
 
         </androidx.drawerlayout.widget.DrawerLayout>
 
