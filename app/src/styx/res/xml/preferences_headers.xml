@@ -33,13 +33,13 @@
         app:icon="@drawable/ic_security_oval" />
 
     <androidx.preference.Preference
-        app:fragment="acr.browser.lightning.settings.fragment.ContentControlSettingsFragment"
+        app:fragment="acr.browser.lightning.settings.fragment.AdBlockSettingsFragment"
         app:title="@string/settings_content_control"
         app:summary="@string/settings_summary_content_control"
         app:icon="@drawable/ic_block_oval" />
 
     <androidx.preference.Preference
-        app:fragment="acr.browser.lightning.settings.fragment.ImportExportSettingsFragment"
+        app:fragment="acr.browser.lightning.settings.fragment.BackupSettingsFragment"
         app:title="@string/import_export_settings"
         app:summary="@string/settings_summary_import_export"
         app:icon="@drawable/ic_import_export_oval" />
