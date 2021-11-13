@@ -20,6 +20,13 @@
  All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
  All Rights Reserved.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen
+xmlns:android="http://schemas.android.com/apk/res/android">
 
-</PreferenceScreen>
+<PreferenceCategory
+    android:icon="@drawable/ic_apps_oval"
+    android:title="@string/settings_title_apps" >
+
+</PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

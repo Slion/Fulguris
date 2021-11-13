@@ -2036,6 +2036,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         logger.log(TAG, "Notify Tab Removed: $position")
         tabsView?.tabRemoved(position)
 
+        if (userPreferences.closeDrawer) {
+            mainHandler.postDelayed({ closePanels(null) }, 500)
+        }
+
         if (userPreferences.onTabCloseShowSnackbar) {
             // Notify user a tab was closed with an option to recover it
             makeSnackbar(

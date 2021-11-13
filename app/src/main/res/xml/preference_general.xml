@@ -110,14 +110,6 @@
             app:icon="@drawable/ic_dark_mode" />
 
         <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_key_show_undo_tab"
-            android:title="@string/show_undo_tab"
-            android:summary="@string/recommended"
-            app:singleLineTitle="false"
-            app:icon="@drawable/ic_undo_oval" />
-
-        <SwitchPreferenceCompat
             app:key="@string/pref_key_long_click_tab"
             app:title="@string/long_press_tab"
             android:summary="@string/recommended"
