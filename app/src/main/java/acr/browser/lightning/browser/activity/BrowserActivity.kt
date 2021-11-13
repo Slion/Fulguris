@@ -815,7 +815,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         if (verticalTabBar) {
             iBindingToolbarContent.tabsButton.isVisible = true
-            iBindingToolbarContent.homeButton.isVisible = false
+            iBindingToolbarContent.homeButton.isVisible = true
             iBinding.toolbarInclude.tabBarContainer.isVisible = false
         } else {
             iBindingToolbarContent.tabsButton.isVisible = false
