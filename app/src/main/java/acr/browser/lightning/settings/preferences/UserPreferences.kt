@@ -1,5 +1,6 @@
 package acr.browser.lightning.settings.preferences
 
+import acr.browser.lightning.AccentTheme
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
@@ -244,6 +245,8 @@ class UserPreferences @Inject constructor(
      * The index of the theme used by the application.
      */
     var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.DEFAULT)
+
+    var useAccent by preferences.enumPreference(R.string.pref_key_accent, AccentTheme.DEFAULT_ACCENT)
 
     /**
      * The text encoding used by the browser.
