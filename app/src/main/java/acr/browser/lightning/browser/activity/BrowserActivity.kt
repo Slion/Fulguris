@@ -2672,7 +2672,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // Now also set WebView background color otherwise it is just white and we don't want that.
             // This one is going to be a problem as it will break some websites such as bbc.com.
             // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color.
-            if (iBinding.toolbarInclude.progressView.progress >= 100
+            if (iBinding.toolbarInclude.progressView.progress >= 1
                     // Don't reset background color back to white on empty urls, that prevents displaying large empty white pages and blinding users in dark mode.
                     // When opening some download links a tab is spawned first with the download URL and later that URL is set back to null.
                     // Luckily our delayed call and the absence of invalidate prevents a flicker to white screen.
@@ -2686,7 +2686,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // It also still causes a flicker notably when a tab is spawned by a download link.
                     //webViewEx.invalidate()
                 }
-                mainHandler.postDelayed(resetBackgroundColorRunnable, 750);
+                mainHandler.postDelayed(resetBackgroundColorRunnable, 100);
             } else {
                 mainHandler.removeCallbacks(resetBackgroundColorRunnable)
                 webViewEx.setBackgroundColor(color)
