@@ -850,7 +850,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         if (userPreferences.longClickTab) {
             iBindingToolbarContent.tabsButton.setOnLongClickListener {
-                presenter?.newTab(homePageInitializer, true)
                 if (isIncognito()) {
                     presenter?.newTab(
                         incognitoPageInitializer,
