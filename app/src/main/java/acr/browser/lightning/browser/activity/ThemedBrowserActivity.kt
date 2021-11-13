@@ -22,6 +22,7 @@
 
 package acr.browser.lightning.browser.activity
 
+import acr.browser.lightning.AccentTheme
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
 import acr.browser.lightning.ThemedActivity
@@ -54,6 +55,10 @@ abstract class ThemedBrowserActivity : ThemedActivity() {
         if (themeId != userPreferences.useTheme) {
             restart()
         }
+
+        if (accentId != userPreferences.useAccent) {
+            restart()
+        }
     }
 
 
@@ -66,6 +71,28 @@ abstract class ThemedBrowserActivity : ThemedActivity() {
             AppTheme.DARK ->  R.style.Theme_App_Dark
             AppTheme.BLACK -> R.style.Theme_App_Black
             AppTheme.DEFAULT -> R.style.Theme_App_DayNight
+        }
+    }
+
+    override fun accentStyle(accentTheme: AccentTheme): Int? {
+        return when (accentTheme) {
+            AccentTheme.DEFAULT_ACCENT -> null
+            AccentTheme.PINK -> R.style.Accent_Pink
+            AccentTheme.PURPLE ->  R.style.Accent_Puple
+            AccentTheme.DEEP_PURPLE -> R.style.Accent_Deep_Purple
+            AccentTheme.INDIGO -> R.style.Accent_Indigo
+            AccentTheme.BLUE -> R.style.Accent_Blue
+            AccentTheme.LIGHT_BLUE -> R.style.Accent_Light_Blue
+            AccentTheme.CYAN -> R.style.Accent_Cyan
+            AccentTheme.TEAL -> R.style.Accent_Teal
+            AccentTheme.GREEN -> R.style.Accent_Green
+            AccentTheme.LIGHT_GREEN -> R.style.Accent_Light_Green
+            AccentTheme.LIME -> R.style.Accent_Lime
+            AccentTheme.YELLOW -> R.style.Accent_Yellow
+            AccentTheme.AMBER -> R.style.Accent_Amber
+            AccentTheme.ORANGE -> R.style.Accent_Orange
+            AccentTheme.DEEP_ORANGE -> R.style.Accent_Deep_Orange
+            AccentTheme.BROWN -> R.style.Accent_Brown
         }
     }
 
