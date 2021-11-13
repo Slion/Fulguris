@@ -15,18 +15,6 @@
         app:icon="@drawable/ic_palette_oval" />
 
     <androidx.preference.Preference
-        app:fragment="acr.browser.lightning.settings.fragment.PortraitLandscapeSettingsFragment"
-        app:icon="@drawable/ic_screen_rotation_oval"
-        app:summary="@string/settings_summary_portraitlandscape"
-        app:title="@string/settings_portrait_landscape" />
-
-    <androidx.preference.Preference
-        app:fragment="acr.browser.lightning.settings.fragment.TabsSettingsFragment"
-        app:title="@string/tabs"
-        app:summary="@string/settings_summary_tabs"
-        app:icon="@drawable/ic_tab_oval" />
-
-    <androidx.preference.Preference
         app:fragment="acr.browser.lightning.settings.fragment.PrivacySettingsFragment"
         app:title="@string/settings_privacy"
         app:summary="@string/settings_summary_privacy"
