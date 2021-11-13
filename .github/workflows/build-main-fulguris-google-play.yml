@@ -1,6 +1,8 @@
-name: Pull request build
+name: Build Fulguris Google Play
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -19,9 +21,5 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build Slions download variants
-      run: ./gradlew assembleSlionsFullDownload
     - name: Build Slions Google Play variants
       run: ./gradlew assembleSlionsFullPlaystore
-    - name: Build Styx variants
-      run: ./gradlew assembleStyxBaseUndef
