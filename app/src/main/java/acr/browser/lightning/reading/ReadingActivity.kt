@@ -20,7 +20,7 @@
  * All Rights Reserved.
  */
 
-package acr.browser.lightning.reading.activity
+package acr.browser.lightning.reading
 
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
