@@ -1,8 +1,10 @@
 package acr.browser.lightning.view
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AdBlocker
+import acr.browser.lightning.browser.JavaScriptChoice
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
@@ -21,6 +23,7 @@ import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTries
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
@@ -182,6 +185,13 @@ class LightningWebClient(
             }
             // takes around half a second, but not sure what that tells me
         }*/
+
+        if (userPreferences.forceZoom) {
+            view.loadUrl(
+                "javascript:(function() { document.querySelector('meta[name=\"viewport\"]').setAttribute(\"content\",\"width=device-width\"); })();"
+            )
+        }
+
         uiController.tabChanged(lightningView)
     }
 
@@ -207,7 +217,55 @@ class LightningWebClient(
         // Try to fetch meta theme color a few times
         lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
 
+        if (userPreferences.javaScriptChoice === JavaScriptChoice.BLACKLIST) {
+            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
+                val arrayOfURLs = userPreferences.javaScriptBlocked
+                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                if (arrayOfURLs.contains(", ")) {
+                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                }
+                if (!stringContainsItemFromList(url, strgs)) {
+                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
+                        return
+                    } else {
+                        view.settings.javaScriptEnabled = false
+                    }
+                }
+                else{ return }
+            }
+        }
+        else  if (userPreferences.javaScriptChoice === JavaScriptChoice.WHITELIST) run {
+            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
+                val arrayOfURLs = userPreferences.javaScriptBlocked
+                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                if (arrayOfURLs.contains(", ")) {
+                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                }
+                if (stringContainsItemFromList(url, strgs)) {
+                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
+                        return
+                    } else {
+                        view.settings.javaScriptEnabled = false
+                    }
+                }
+                else{
+                    return
+                }
+            }
+        }
+
         uiController.tabChanged(lightningView)
+    }
+
+    private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
+        for (i in items.indices) {
+            if (inputStr.contains(items[i])) {
+                return true
+            }
+        }
+        return false
     }
 
     /**
@@ -243,43 +301,30 @@ class LightningWebClient(
         }.resizeAndShow()
     }
 
-    /**
-     * Overrides [WebViewClient.onReceivedError].
-     * This deprecated callback is still in use and conveniently called only when the error affect the page main frame.
-     */
+    @SuppressLint("ResourceType")
     override fun onReceivedError(webview: WebView, errorCode: Int, error: String, failingUrl: String) {
-
-        // None of those were working so we did Base64 encoding instead
-        //"file:///android_asset/ask.png"
-        //"android.resource://${BuildConfig.APPLICATION_ID}/${R.drawable.ic_about}"
-        //"file:///android_res/drawable/ic_about"
-
-        //Encode image to base64 string
-        val output = ByteArrayOutputStream()
-        val bitmap = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_about, activity.theme)?.toBitmap()
-        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, output)
-        val imageBytes: ByteArray = output.toByteArray()
-        val imageString = "data:image/png;base64,"+Base64.encodeToString(imageBytes, Base64.NO_WRAP)
-
-        // Generate a JavaScript that's going to modify the standard WebView error page for us.
-        // It saves us from making up our own error texts and having to manage the translations ourselves.
-        // Thus we simply use the standard and localized error messages from WebView.
-        // The down side is that it makes a bunch of assumptions about WebView's error page that could fail us on some device or in case it gets changed at some point.
-        val script = """(function() {
-        document.getElementsByTagName('style')[0].innerHTML += "body { margin: 10px; background-color: ${htmlColor(ThemeUtils.getSurfaceColor(activity))}; color: ${htmlColor(ThemeUtils.getOnSurfaceColor(activity))};}"
+        if (errorCode != -1) {
+            val output = ByteArrayOutputStream()
+            val bitmap = ResourcesCompat.getDrawable(activity.resources, R.raw.warning, activity.theme)?.toBitmap()
+            bitmap?.compress(Bitmap.CompressFormat.PNG, 100, output)
+            val imageBytes: ByteArray = output.toByteArray()
+            val imageString = "data:image/png;base64," + Base64.encodeToString(imageBytes, Base64.NO_WRAP)
+            val tip = activity.getString(R.string.error_tip)
+            val tip2 = activity.getString(R.string.error_tip2)
+            val background = htmlColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext()))
+            val text = htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(), R.attr.colorOnPrimary))
+            val script = """(function() {
+        document.getElementsByTagName('style')[0].innerHTML += "body { pointer-events: none; user-select: none; margin: 30px; padding-top: 40px; text-align: center; background-color: ${background}; color: ${text};} img{width: 128px; height: 128px; margin-bottom: 20px;}"
+        document.getElementsByTagName('p')[0].innerHTML = '${tip}';
+        document.getElementsByTagName('p')[0].innerHTML += '<br><br>${tip2}';
         var img = document.getElementsByTagName('img')[0]
         img.src = "$imageString"
         img.width = ${bitmap?.width}
         img.height = ${bitmap?.height}
         })()"""
-
-        // Run our script once, did not help anything apparently
-        //webview.evaluateJavascript(script) {}
-        // Stall our thread to workaround issues were our JavaScript would not apply to our error page for some reason
-        // That works better than post or post delayed
-        Thread.sleep(100)
-        // Just run that script now
-        webview.evaluateJavascript(script) {}
+            webview.stopLoading()
+            webview.evaluateJavascript(script) {}
+        }
     }
 
 
@@ -315,6 +360,14 @@ class LightningWebClient(
             stringBuilder.append(" - ").append(activity.getString(messageCode)).append('\n')
         }
         val alertMessage = activity.getString(R.string.message_insecure_connection, stringBuilder.toString())
+
+        val ba = activity as BrowserActivity
+
+        if (!userPreferences.ssl) {
+            handler.proceed()
+            ba.snackbar(errorCodeMessageCodes[0])
+            return
+        }
 
         MaterialAlertDialogBuilder(activity).apply {
             val view = LayoutInflater.from(activity).inflate(R.layout.dialog_ssl_warning, null)

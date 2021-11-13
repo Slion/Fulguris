@@ -164,7 +164,7 @@ class LightningView(
             field = aDesktopMode
             // Set our user agent accordingly
             if (aDesktopMode) {
-                webView?.settings?.userAgentString = DESKTOP_USER_AGENT
+                webView?.settings?.userAgentString = WINDOWS_DESKTOP_USER_AGENT
             } else {
                 setUserAgentForPreference(userPreferences)
             }

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/tabs">
+
+        <ListPreference
+            app:key="@string/pref_key_new_tab_position"
+            app:title="@string/new_tab_position"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="@string/new_tab_position_after_value"
+            app:entries="@array/new_tab_positions"
+            app:entryValues="@array/new_tab_position_values"
+            app:icon="@drawable/ic_library_add_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_restore_tabs_on_startup"
+            android:summary="@string/recommended"
+            android:title="@string/restore_tabs_on_startup"
+            app:icon="@drawable/ic_save_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_show_undo_tab"
+            android:title="@string/show_undo_tab"
+            android:summary="@string/recommended"
+            app:singleLineTitle="false"
+            app:icon="@drawable/ic_undo_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_vibrate_on_tab_close"
+            android:title="@string/vibrate_on_tab_close"
+            app:singleLineTitle="false"
+            app:icon="@drawable/ic_vibrate_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_long_click_tab"
+            app:title="@string/long_press_tab"
+            android:summary="@string/recommended"
+            android:defaultValue="true"
+            app:singleLineTitle="false"
+            app:icon="@drawable/ic_tab_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_close_drawer"
+            android:key="@string/pref_key_close_drawer"
+            android:title="@string/pref_title_close_drawer"
+            android:summary="@string/pref_summary_close_drawer"
+            app:icon="@drawable/ic_arrow_left_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_tab_list_item_show_close_button"
+            android:key="@string/pref_key_tab_list_item_show_close_button"
+            android:title="@string/pref_title_tab_list_item_show_close_button"
+            android:summary="@string/pref_summary_tab_list_item_show_close_button"
+            app:icon="@drawable/ic_action_delete_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="last_tab"
+            android:title="@string/close_on_last_tab"
+            app:icon="@drawable/ic_apps_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_search_in_new_tab"
+            app:title="@string/search_in_new_tab"
+            app:defaultValue="@bool/pref_default_search_in_new_tab"
+            app:icon="@drawable/ic_search_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_url_in_new_tab"
+            app:title="@string/url_in_new_tab"
+            app:defaultValue="@bool/pref_default_url_in_new_tab"
+            app:icon="@drawable/ic_web_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_homepage_in_new_tab"
+            app:title="@string/homepage_in_new_tab"
+            app:defaultValue="@bool/pref_default_homepage_in_new_tab"
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_action_home_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_bookmark_in_new_tab"
+            android:summary="@string/recommended"
+            app:title="@string/bookmark_in_new_tab"
+            app:defaultValue="@bool/pref_default_bookmark_in_new_tab"
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_bookmark_border_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_desktop_mode_default"
+            android:title="@string/settings_title_desktop_mode_default"
+            android:summary="@string/settings_summary_desktop_mode_default"
+            app:icon="@drawable/ic_desktop_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_dark_mode_default"
+            android:title="@string/settings_title_dark_mode_default"
+            android:summary="@string/settings_summary_dark_mode_default"
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_dark_mode_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_use_bottom_sheets"
+            android:key="@string/pref_key_use_bottom_sheets"
+            android:title="@string/pref_title_use_bottom_sheets"
+            android:summary="@string/pref_summary_use_bottom_sheets"
+            android:disableDependentsState="true"
+            app:icon="@drawable/ic_fullscreen_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_locked_drawers"
+            android:key="@string/pref_key_locked_drawers"
+            android:title="@string/pref_title_locked_drawers"
+            android:summary="@string/pref_summary_locked_drawers"
+            android:dependency="@string/pref_key_use_bottom_sheets"
+            app:icon="@drawable/ic_block_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_swap_tabs_and_bookmarks"
+            android:title="@string/swap_bookmarks_and_tabs"
+            app:singleLineTitle="false"
+            android:dependency="@string/pref_key_use_bottom_sheets"
+            app:icon="@drawable/ic_cache_oval" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

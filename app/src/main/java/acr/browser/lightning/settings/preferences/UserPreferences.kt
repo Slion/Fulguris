@@ -4,9 +4,7 @@ import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpUpdateMode
-import acr.browser.lightning.browser.ProxyChoice
-import acr.browser.lightning.browser.SearchBoxDisplayChoice
-import acr.browser.lightning.browser.SearchBoxModel
+import acr.browser.lightning.browser.*
 import acr.browser.lightning.constant.DEFAULT_ENCODING
 import acr.browser.lightning.constant.PrefKeys
 import acr.browser.lightning.constant.Uris
@@ -379,6 +377,77 @@ class UserPreferences @Inject constructor(
     var onTabChangeShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_change_show_animation, R.bool.pref_default_on_tab_change_show_animation)
     var onTabBackShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_back_show_animation, R.bool.pref_default_on_tab_back_show_animation)
     var onTabBackAnimationDuration by preferences.intResPreference(R.string.pref_key_on_tab_back_animation_duration, R.integer.pref_default_animation_duration_tab_back_forward)
+
+    /**
+     * Block JavaScript for Websites
+     */
+    var javaScriptChoice by preferences.enumPreference(R.string.pref_key_use_js_block, JavaScriptChoice.NONE)
+
+    var javaScriptBlocked by preferences.stringPreference(R.string.pref_key_block_js, "")
+
+    var siteBlockNames by preferences.stringPreference(R.string.pref_key_use_site_block, "")
+
+    /**
+     * Force Zoom for Websites
+     */
+    var forceZoom by preferences.booleanPreference(R.string.pref_key_force_zoom, R.bool.pref_default_force_zoom)
+
+    /**
+     * Always in Incognito mode
+     */
+    var incognito by preferences.booleanPreference(R.string.pref_key_always_incognito, R.bool.pref_default_always_incognito)
+
+    /**
+     * SSL Warn Dialog
+     */
+    var ssl by preferences.booleanPreference(R.string.pref_key_ssl_dialog, R.bool.pref_default_ssl_dialog)
+
+    /**
+     * Show second navbar at the bottom of the screen
+     */
+    var navbar by preferences.booleanPreference(R.string.pref_key_second_nav_bar, R.bool.pref_default_second_nav_bar)
+
+    /**
+     * Define close on last tab
+     */
+    var closeOnLastTab by preferences.booleanPreference(R.string.pref_key_close_on_last_tab, R.bool.pref_default_close_on_last_tab)
+
+    var imageUrlString by preferences.stringPreference(R.string.pref_key_image_url, "")
+
+    /**
+     * Toggle device vibration on tab-close action
+     */
+    var vibrateOnTabClose by preferences.booleanPreference(R.string.pref_key_vibrate_on_tab_close, R.bool.pref_default_vibrate_on_tab_close)
+
+    /**
+     * Define Suggestion number Choice
+     */
+    var suggestionChoice by preferences.enumPreference(R.string.pref_key_search_suggestions_number, SuggestionNumChoice.FIVE)
+
+    /**
+     * Show download dialog before downloading a file
+     */
+    var showDownloadConfirmation by preferences.booleanPreference(R.string.pref_key_show_download_confirmation, R.bool.pref_default_show_download_confirmation)
+
+    /**
+     * Show "Undo" message when a tab is closed.
+     */
+    var showUndo by preferences.booleanPreference(R.string.pref_key_show_undo_tab, R.bool.pref_default_show_undo_tab)
+
+    /**
+     * Define long press on the 'Tabs' icon opens a new tab.
+     */
+    var longClickTab by preferences.booleanPreference(R.string.pref_key_long_click_tab, R.bool.pref_default_long_click_tab)
+
+    /**
+     * Show "Update available" message when a update is available.
+     */
+    var showUpdate by preferences.booleanPreference(R.string.pref_key_show_update, R.bool.pref_default_show_update)
+
+    /**
+     * Define if user wants to close the drawer after delete or create an tab automatically.
+     */
+    var closeDrawer by preferences.booleanPreference(R.string.pref_key_close_drawer, R.bool.pref_default_close_drawer)
 
 }
 

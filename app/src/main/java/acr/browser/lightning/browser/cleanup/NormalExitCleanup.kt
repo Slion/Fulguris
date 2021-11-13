@@ -21,7 +21,7 @@ class NormalExitCleanup @Inject constructor(
 ) : ExitCleanup {
     override fun cleanUp(webView: WebView?, context: BrowserActivity) {
         if (userPreferences.clearCacheExit) {
-            WebUtils.clearCache(webView)
+            WebUtils.clearCache(webView, context)
             logger.log(TAG, "Cache Cleared")
         }
         if (userPreferences.clearHistoryExitEnabled) {
@@ -29,7 +29,7 @@ class NormalExitCleanup @Inject constructor(
             logger.log(TAG, "History Cleared")
         }
         if (userPreferences.clearCookiesExitEnabled) {
-            WebUtils.clearCookies(context)
+            WebUtils.clearCookies()
             logger.log(TAG, "Cookies Cleared")
         }
         if (userPreferences.clearWebStorageExitEnabled) {

@@ -1,7 +1,6 @@
 package acr.browser.lightning.settings.preferences
 
-import acr.browser.lightning.constant.DESKTOP_USER_AGENT
-import acr.browser.lightning.constant.MOBILE_USER_AGENT
+import acr.browser.lightning.constant.*
 import android.app.Application
 import android.webkit.WebSettings
 
@@ -14,14 +13,17 @@ fun UserPreferences.userAgent(application: Application): String =
         // Clearly we don't want that so we just modify default user agent by removing the WebView specific parts.
         // That should make us look like Chrome, which we are really.
         1 -> {
-                var userAgent = Regex(" Build/.+; wv").replace(WebSettings.getDefaultUserAgent(application),"")
-                userAgent = Regex("Version/.+? ").replace(userAgent,"")
-                userAgent
+            var userAgent = Regex(" Build/.+; wv").replace(WebSettings.getDefaultUserAgent(application),"")
+            userAgent = Regex("Version/.+? ").replace(userAgent,"")
+            userAgent
         }
-        2 -> DESKTOP_USER_AGENT
-        3 -> MOBILE_USER_AGENT
-        4 -> userAgentString.takeIf(String::isNotEmpty) ?: " "
-        5 -> WebSettings.getDefaultUserAgent(application)
-        6 -> System.getProperty("http.agent") ?: " "
+        2 -> WINDOWS_DESKTOP_USER_AGENT
+        3 -> LINUX_DESKTOP_USER_AGENT
+        4 -> MACOS_DESKTOP_USER_AGENT
+        5 -> ANDROID_MOBILE_USER_AGENT
+        6 -> IOS_MOBILE_USER_AGENT
+        7 -> System.getProperty("http.agent") ?: " "
+        8 -> WebSettings.getDefaultUserAgent(application)
+        9 -> userAgentString.takeIf(String::isNotEmpty) ?: " "
         else -> throw UnsupportedOperationException("Unknown userAgentChoice: $choice")
     }

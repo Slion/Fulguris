@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/pref_category_portrait">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_portrait_pull_to_refresh"
+            android:key="@string/pref_key_portrait_pull_to_refresh"
+            android:summary="@string/recommended"
+            android:title="@string/pref_title_pull_to_refresh"
+            app:icon="@drawable/ic_action_refresh_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_portrait_tab_bar_vertical"
+            android:title="@string/tabs_in_drawer"
+            android:summary="@string/settings_summary_vertical_tab_bar"
+            app:icon="@drawable/ic_desktop_oval" />
+
+        <SwitchPreferenceCompat
+            android:key="@string/pref_key_portrait_toolbars_bottom"
+            android:title="@string/settings_title_toolbars_bottom"
+            android:defaultValue="@bool/pref_default_toolbars_bottom"
+            app:icon="@drawable/ic_bottom_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_portrait_hide_status_bar"
+            app:title="@string/pref_title_hide_status_bar"
+            app:defaultValue="false"
+            app:icon="@drawable/ic_fullscreen_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_portrait_hide_tool_bar"
+            app:title="@string/pref_title_hide_tool_bar"
+            app:defaultValue="false"
+            app:icon="@drawable/ic_baseline_aspect_ratio_24_oval" />
+
+        <SeekBarPreference
+            app:key="@string/pref_key_portrait_desktop_width"
+            app:title="@string/pref_title_desktop_width"
+            app:summary="@string/pref_summary_desktop_width"
+            app:defaultValue="@integer/pref_default_portrait_desktop_width"
+            app:min="640"
+            android:max="3840"
+            app:showSeekBarValue="true"
+            app:updatesContinuously="true"
+            app:icon="@drawable/ic_desktop_oval" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_landscape">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_landscape_pull_to_refresh"
+            android:key="@string/pref_key_landscape_pull_to_refresh"
+            android:summary="@string/recommended"
+            android:title="@string/pref_title_pull_to_refresh"
+            app:icon="@drawable/ic_action_refresh_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_landscape_tab_bar_vertical"
+            android:title="@string/tabs_in_drawer"
+            android:summary="@string/settings_summary_vertical_tab_bar"
+            app:icon="@drawable/ic_desktop_oval" />
+
+        <SwitchPreferenceCompat
+            android:key="@string/pref_key_landscape_toolbars_bottom"
+            android:title="@string/settings_title_toolbars_bottom"
+            android:defaultValue="@bool/pref_default_toolbars_bottom"
+            app:icon="@drawable/ic_bottom_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_landscape_hide_status_bar"
+            app:title="@string/pref_title_hide_status_bar"
+            app:defaultValue="false"
+            app:icon="@drawable/ic_fullscreen_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_landscape_hide_tool_bar"
+            app:title="@string/pref_title_hide_tool_bar"
+            app:defaultValue="false"
+            app:icon="@drawable/ic_baseline_aspect_ratio_24_oval" />
+
+        <SeekBarPreference
+            app:key="@string/pref_key_landscape_desktop_width"
+            app:title="@string/pref_title_desktop_width"
+            app:summary="@string/pref_summary_desktop_width"
+            app:defaultValue="@integer/pref_default_landscape_desktop_width"
+            app:min="640"
+            android:max="3840"
+            app:showSeekBarValue="true"
+            app:updatesContinuously="true"
+            app:icon="@drawable/ic_desktop_oval" />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Define control colors according to states -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?attr/appColorControlSelected"
+        android:state_enabled="true"
+        android:state_selected="true" />
+
+    <item android:color="?attr/appColorControlEnabled"
+        android:state_enabled="true"
+        android:state_selected="false" />
+
+    <item android:color="?attr/appColorControlDisabled"
+        android:state_enabled="false" />
+</selector>
