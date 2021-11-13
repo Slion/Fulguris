@@ -23,3 +23,5 @@ jobs:
       run: ./gradlew assembleSlionsFullDownload
     - name: Build Slions Google Play variants
       run: ./gradlew assembleSlionsFullPlaystore
+    - name: Build Styx variants
+      run: ./gradlew assembleStyxBaseUndef
