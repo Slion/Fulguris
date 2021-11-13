@@ -423,11 +423,6 @@ class UserPreferences @Inject constructor(
     var imageUrlString by preferences.stringPreference(R.string.pref_key_image_url, "")
 
     /**
-     * Toggle device vibration on tab-close action
-     */
-    var vibrateOnTabClose by preferences.booleanPreference(R.string.pref_key_vibrate_on_tab_close, R.bool.pref_default_vibrate_on_tab_close)
-
-    /**
      * Define Suggestion number Choice
      */
     var suggestionChoice by preferences.enumPreference(R.string.pref_key_search_suggestions_number, SuggestionNumChoice.FIVE)
@@ -436,11 +431,6 @@ class UserPreferences @Inject constructor(
      * Show download dialog before downloading a file
      */
     var showDownloadConfirmation by preferences.booleanPreference(R.string.pref_key_show_download_confirmation, R.bool.pref_default_show_download_confirmation)
-
-    /**
-     * Show "Undo" message when a tab is closed.
-     */
-    var showUndo by preferences.booleanPreference(R.string.pref_key_show_undo_tab, R.bool.pref_default_show_undo_tab)
 
     /**
      * Define long press on the 'Tabs' icon opens a new tab.
