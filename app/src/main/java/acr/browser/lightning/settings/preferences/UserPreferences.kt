@@ -116,6 +116,11 @@ class UserPreferences @Inject constructor(
     var homepage by preferences.stringPreference(HOMEPAGE, Uris.AboutBookmarks)
 
     /**
+     * The URL of the selected incognito page.
+     */
+    var incognitoPage by preferences.stringPreference(INCOGNITO, Uris.AboutIncognito)
+
+    /**
      * True if the browser should allow execution of javascript, false otherwise.
      */
     var javaScriptEnabled by preferences.booleanPreference(R.string.pref_key_javascript, true)
@@ -457,6 +462,7 @@ private const val BLOCK_ADS = "AdBlock"
 private const val CLEAR_CACHE_EXIT = "cache"
 private const val DOWNLOAD_DIRECTORY = "downloadLocation"
 private const val HOMEPAGE = "home"
+private const val INCOGNITO = "incognito"
 private const val LOCATION = "location"
 private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
