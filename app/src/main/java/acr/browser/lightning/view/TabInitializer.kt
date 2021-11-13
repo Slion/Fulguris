@@ -11,6 +11,7 @@ import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.download.DownloadPageFactory
 import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
+import acr.browser.lightning.html.incognito.IncognitoPageFactory
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.app.Activity
 import android.os.Bundle
@@ -80,6 +81,32 @@ class HomePageInitializer @Inject constructor(
 }
 
 /**
+ * An initializer that displays the page set as the user's incognito homepage preference.
+ */
+@Reusable
+class IncognitoPageInitializer @Inject constructor(
+    private val userPreferences: UserPreferences,
+    private val startIncognitoPageInitializer: StartIncognitoPageInitializer,
+    private val bookmarkPageInitializer: BookmarkPageInitializer
+) : TabInitializer {
+
+    override fun initialize(webView: WebView, headers: Map<String, String>) {
+        val homepage = userPreferences.homepage
+
+        when (homepage) {
+            Uris.AboutHome -> startIncognitoPageInitializer
+            Uris.AboutBookmarks -> bookmarkPageInitializer
+            else -> UrlInitializer(homepage)
+        }.initialize(webView, headers)
+    }
+
+    override fun url(): String {
+        return Uris.FulgurisIncognito
+    }
+
+}
+
+/**
  * An initializer that displays the start page.
  */
 @Reusable
@@ -92,6 +119,22 @@ class StartPageInitializer @Inject constructor(
         return Uris.FulgurisStart
     }
 }
+
+/**
+ * An initializer that displays the start incognito page.
+ */
+@Reusable
+class StartIncognitoPageInitializer @Inject constructor(
+    incognitoPageFactory: IncognitoPageFactory,
+    @DiskScheduler diskScheduler: Scheduler,
+    @MainScheduler foregroundScheduler: Scheduler
+) : HtmlPageFactoryInitializer(incognitoPageFactory, diskScheduler, foregroundScheduler) {
+    override fun url(): String {
+        return Uris.FulgurisIncognito
+    }
+}
+
+
 
 /**
  * An initializer that displays the bookmark page.
