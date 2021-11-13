@@ -3,6 +3,7 @@ package acr.browser.lightning.search.suggestions
 import acr.browser.lightning.database.SearchSuggestion
 import acr.browser.lightning.extensions.safeUse
 import acr.browser.lightning.log.Logger
+import acr.browser.lightning.settings.preferences.UserPreferences
 import io.reactivex.Single
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -22,7 +23,8 @@ abstract class BaseSuggestionsModel internal constructor(
     private val requestFactory: RequestFactory,
     private val encoding: String,
     locale: Locale,
-    private val logger: Logger
+    private val logger: Logger,
+    private val userPreferences: UserPreferences
 ) : SuggestionsRepository {
 
     private val language = locale.language.takeIf(String::isNotEmpty) ?: DEFAULT_LANGUAGE
@@ -54,11 +56,11 @@ abstract class BaseSuggestionsModel internal constructor(
 
                     return@fromCallable emptyList<SearchSuggestion>()
                 }
-
+                val choice: Int = userPreferences.suggestionChoice.value + 2
                 return@fromCallable client.downloadSuggestionsForQuery(query, language)
                         ?.body
                     ?.safeUse(::parseResults)
-                    ?.take(MAX_RESULTS) ?: emptyList()
+                    ?.take(choice) ?: emptyList()
             }
         }
 
@@ -85,7 +87,6 @@ abstract class BaseSuggestionsModel internal constructor(
 
         private const val TAG = "BaseSuggestionsModel"
 
-        private const val MAX_RESULTS = 5
         private const val DEFAULT_LANGUAGE = "en"
 
     }

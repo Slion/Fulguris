@@ -28,14 +28,12 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.drawable.DrawableCompat
 
 
 object ThemeUtils {
@@ -51,19 +49,7 @@ object ThemeUtils {
     @JvmStatic
     @ColorInt
     fun getPrimaryColor(context: Context): Int {
-        return ThemeUtils.getColor(context, R.attr.colorPrimary)
-    }
-
-    /**
-     * Gets the primary dark color of the current theme.
-     *
-     * @param context the context to get the theme from.
-     * @return the primary dark color of the current theme.
-     */
-    @JvmStatic
-    @ColorInt
-    fun getPrimaryColorDark(context: Context): Int {
-        return ThemeUtils.getColor(context, R.attr.colorPrimaryDark)
+        return getColor(context, R.attr.haloColor)
     }
 
     /**
@@ -75,21 +61,8 @@ object ThemeUtils {
     @JvmStatic
     @ColorInt
     fun getSurfaceColor(context: Context): Int {
-        return ThemeUtils.getColor(context, R.attr.colorSurface)
+        return getColor(context, R.attr.haloColor)
     }
-
-    /**
-     * Gets on surface color of the current theme.
-     *
-     * @param context the context to get the theme from.
-     * @return the on surface color of the current theme.
-     */
-    @JvmStatic
-    @ColorInt
-    fun getOnSurfaceColor(context: Context): Int {
-        return ThemeUtils.getColor(context, R.attr.colorOnSurface)
-    }
-
 
     /**
      * Get background color from current theme.
@@ -102,20 +75,7 @@ object ThemeUtils {
     @JvmStatic
     @ColorInt
     fun getBackgroundColor(context: Context): Int {
-        return ThemeUtils.getColor(context, android.R.attr.colorBackground)
-    }
-
-
-    /**
-     * Gets the accent color of the current theme.
-     *
-     * @param context the context to get the theme from.
-     * @return the accent color of the current theme.
-     */
-    @JvmStatic
-    @ColorInt
-    fun getAccentColor(context: Context): Int {
-        return ThemeUtils.getColor(context, R.attr.colorAccent)
+        return getColor(context, android.R.attr.colorBackground)
     }
 
     /**
@@ -129,7 +89,13 @@ object ThemeUtils {
     @ColorInt
     @TargetApi(21)
     fun getStatusBarColor(context: Context): Int {
-        return ThemeUtils.getColor(context, android.R.attr.statusBarColor)
+        return getColor(context, android.R.attr.statusBarColor)
+    }
+
+    @JvmStatic
+    @ColorInt
+    fun getSearchBarTextColor(context: Context): Int {
+        return getColor(context, R.attr.colorOnSurface)
     }
 
     /**
@@ -142,7 +108,7 @@ object ThemeUtils {
     @JvmStatic
     @ColorInt
     fun getColor(context: Context, @AttrRes resource: Int): Int {
-        val a: TypedArray = context.obtainStyledAttributes(ThemeUtils.sTypedValue.data, intArrayOf(resource))
+        val a: TypedArray = context.obtainStyledAttributes(sTypedValue.data, intArrayOf(resource))
         val color = a.getColor(0, 0)
         a.recycle()
         return color
@@ -172,37 +138,18 @@ object ThemeUtils {
         return ContextCompat.getColor(context, R.color.icon_dark_theme)
     }
 
-    /**
-     * Gets the color icon for the light or
-     * dark theme.
-     *
-     * @param context the context to use.
-     * @param dark    true for the dark theme,
-     * false for the light theme.
-     * @return the color of the icon.
-     */
-    @JvmStatic
-    @ColorInt
-    fun getIconThemeColor(context: Context, dark: Boolean): Int {
-        return if (dark) ThemeUtils.getIconDarkThemeColor(context) else ThemeUtils.getIconLightThemeColor(context)
-    }
-
     @JvmStatic
     private fun getVectorDrawable(context: Context, drawableId: Int): Drawable {
-        var drawable = ContextCompat.getDrawable(context, drawableId)
-        Preconditions.checkNonNull(drawable)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            drawable = DrawableCompat.wrap(drawable!!).mutate()
-        }
+        val drawable = ContextCompat.getDrawable(context, drawableId)
         return drawable!!
     }
 
     // http://stackoverflow.com/a/38244327/1499541
     @JvmStatic
     fun getBitmapFromVectorDrawable(context: Context, drawableId: Int): Bitmap {
-        val drawable: Drawable = ThemeUtils.getVectorDrawable(context, drawableId)
+        val drawable: Drawable = getVectorDrawable(context, drawableId)
         val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight,
-                Bitmap.Config.ARGB_8888)
+            Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
@@ -221,10 +168,10 @@ object ThemeUtils {
      */
     @JvmStatic
     fun createThemedBitmap(context: Context, @DrawableRes res: Int, dark: Boolean): Bitmap {
-        val color: Int = if (dark) ThemeUtils.getIconDarkThemeColor(context) else ThemeUtils.getIconLightThemeColor(context)
-        val sourceBitmap: Bitmap = ThemeUtils.getBitmapFromVectorDrawable(context, res)
+        val color: Int = if (dark) getIconDarkThemeColor(context) else getIconLightThemeColor(context)
+        val sourceBitmap: Bitmap = getBitmapFromVectorDrawable(context, res)
         val resultBitmap = Bitmap.createBitmap(sourceBitmap.width, sourceBitmap.height,
-                Bitmap.Config.ARGB_8888)
+            Bitmap.Config.ARGB_8888)
         val p = Paint()
         val filter: ColorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
         p.colorFilter = filter
@@ -243,7 +190,7 @@ object ThemeUtils {
     @ColorInt
     @JvmStatic
     fun getTextColor(context: Context): Int {
-        return ThemeUtils.getColor(context, android.R.attr.editTextColor)
+        return getColor(context, android.R.attr.editTextColor)
     }
 
 
@@ -255,10 +202,10 @@ object ThemeUtils {
         val luminance = ColorUtils.calculateLuminance(requestedColor)
         return if (luminance > 0.9) {
             // Too bright, make it darker then
-            DrawableUtils.mixColor(0.20f, requestedColor, Color.BLACK)
+            DrawableUtils.mixColor(0.05f, requestedColor, Color.BLACK)
         } else {
             // Make search text field background lighter
-            DrawableUtils.mixColor(0.20f, requestedColor, Color.WHITE)
+            DrawableUtils.mixColor(0.07f, requestedColor, Color.WHITE)
         }
     }
 
@@ -278,5 +225,3 @@ object ThemeUtils {
     }
 
 }
-
-

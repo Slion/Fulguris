@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.App.Light.Settings" parent="Theme.App.Light">
+        <item name="android:windowBackground">?android:attr/colorBackground</item>
+        <item name="android:navigationBarColor">?android:attr/colorBackground</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="colorPrimary">?android:attr/colorBackground</item>
+        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
+        <item name="actionBarWidgetTheme">@null</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
+    </style>
+
+    <style name="Theme.App.Light" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/red_500</item>
+        <item name="colorPrimaryVariant">@color/grey_1</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/red_500</item>
+        <item name="colorSecondaryVariant">@color/red_700</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="trackColor">@color/grey_0</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorPrimarySurface">@color/grey_00</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorError">@color/red_500</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="appColorControlEnabled">@color/grey_5</item>
+        <item name="appColorControlSelected">?attr/colorOnPrimary</item>
+        <item name="appColorControlDisabled">@color/grey_3</item>
+        <item name="colorControlNormal">@color/state_color_control</item>
+        <item name="haloColor">@color/white</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert.Light</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowDisablePreview">false</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="autoCompleteTitleColor">@color/black</item>
+        <item name="autoCompleteUrlColor">@color/hint_text_light_theme</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
+        <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme</item>
+        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout.Light</item>
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+        <item name="popupMenuBackground">@drawable/popup_menu_background</item>
+        <item name="navigationViewStyle">@drawable/session_menu_background</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="enableEdgeToEdge">true</item>
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+    <style name="Theme.App.Dark" parent="Theme.MaterialComponents">
+        <item name="colorPrimary">@color/red_300</item>
+        <item name="colorPrimaryVariant">@color/grey_6</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/red_300</item>
+        <item name="colorSecondaryVariant">@color/red_500</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">@color/grey_8</item>
+        <item name="android:navigationBarColor">@color/grey_8</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="trackColor">@color/grey_7</item>
+        <item name="colorSurface">@color/grey_6</item>
+        <item name="colorPrimarySurface">@color/grey_6</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorError">@color/red_500</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="appColorControlEnabled">@color/grey_2</item>
+        <item name="appColorControlSelected">?attr/colorOnPrimary</item>
+        <item name="appColorControlDisabled">@color/grey_4</item>
+        <item name="colorControlNormal">@color/state_color_control</item>
+        <item name="haloColor">@color/grey_8</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog.Dark</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowDisablePreview">false</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="autoCompleteTitleColor">@color/white</item>
+        <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="snackbarStyle">@style/MaterialSnackbarTheme.Dark</item>
+        <item name="snackbarTextViewStyle">@style/MaterialSnackbarTextViewTheme.Dark</item>
+        <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme.Dark</item>
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+        <item name="popupMenuBackground">@drawable/popup_menu_background</item>
+        <item name="navigationViewStyle">@drawable/session_menu_background</item>
+        <item name="enableEdgeToEdge">true</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+    <style name="Theme.App.Black" parent="Theme.MaterialComponents">
+        <item name="colorPrimary">@color/red_300</item>
+        <item name="colorPrimaryVariant">@color/grey_8</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/red_300</item>
+        <item name="colorSecondaryVariant">@color/red_500</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="trackColor">@color/grey_9</item>
+        <item name="colorSurface">@color/grey_9</item>
+        <item name="colorPrimarySurface">@color/grey_8</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorError">@color/red_500</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="appColorControlEnabled">@color/grey_2</item>
+        <item name="appColorControlSelected">?attr/colorOnPrimary</item>
+        <item name="appColorControlDisabled">@color/grey_4</item>
+        <item name="colorControlNormal">@color/state_color_control</item>
+        <item name="haloColor">@color/black</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog.Black</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowDisablePreview">false</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="autoCompleteTitleColor">@color/white</item>
+        <item name="autoCompleteUrlColor">@color/hint_text_dark_theme</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="snackbarStyle">@style/MaterialSnackbarTheme.Dark</item>
+        <item name="snackbarTextViewStyle">@style/MaterialSnackbarTextViewTheme.Dark</item>
+        <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme.Dark</item>
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+        <item name="popupMenuBackground">@drawable/popup_menu_background</item>
+        <item name="navigationViewStyle">@drawable/session_menu_background</item>
+        <item name="enableEdgeToEdge">true</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+</resources>

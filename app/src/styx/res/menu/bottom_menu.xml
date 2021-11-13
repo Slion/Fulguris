@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tabs"
+        android:icon="@drawable/ic_tabs"
+        app:itemIconTint="?attr/colorControlNormal"
+        android:title="@string/tabs"/>
+
+    <item
+        android:id="@+id/back"
+        android:icon="@drawable/ic_action_back"
+        app:itemIconTint="?attr/colorControlNormal"
+        android:title="@string/action_back"/>
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_action_home"
+        app:itemIconTint="?attr/colorControlNormal"
+        android:title="@string/home"/>
+
+    <item
+        android:id="@+id/forward"
+        android:icon="@drawable/ic_action_forward"
+        app:itemIconTint="?attr/colorControlNormal"
+        android:title="@string/action_forward"/>
+
+    <item
+        android:id="@+id/bookmarks"
+        android:icon="@drawable/ic_book"
+        app:itemIconTint="?attr/colorControlNormal"
+        android:title="@string/action_bookmarks"/>
+
+</menu> 

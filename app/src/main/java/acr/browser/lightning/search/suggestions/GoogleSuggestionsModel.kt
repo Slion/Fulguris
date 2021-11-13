@@ -5,6 +5,7 @@ import acr.browser.lightning.constant.UTF8
 import acr.browser.lightning.database.SearchSuggestion
 import acr.browser.lightning.extensions.preferredLocale
 import acr.browser.lightning.log.Logger
+import acr.browser.lightning.settings.preferences.UserPreferences
 import android.app.Application
 import io.reactivex.Single
 import okhttp3.HttpUrl
@@ -20,8 +21,9 @@ class GoogleSuggestionsModel(
     okHttpClient: Single<OkHttpClient>,
     requestFactory: RequestFactory,
     application: Application,
-    logger: Logger
-) : BaseSuggestionsModel(okHttpClient, requestFactory, UTF8, application.preferredLocale, logger) {
+    logger: Logger,
+    userPreferences: UserPreferences
+) : BaseSuggestionsModel(okHttpClient, requestFactory, UTF8, application.preferredLocale, logger, userPreferences) {
 
     private val searchSubtitle = application.getString(R.string.suggestion)
 

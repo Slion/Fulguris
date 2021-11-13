@@ -51,6 +51,7 @@ import acr.browser.lightning.view.*
 import acr.browser.lightning.view.SearchView
 
 import android.animation.*
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -114,6 +115,9 @@ import kotlin.system.exitProcess
 import android.text.Editable
 
 import android.text.TextWatcher
+import android.webkit.CookieManager
+import com.github.ahmadaghazadeh.editor.widget.CodeEditor
+import java.net.URL
 
 /**
  *
@@ -770,6 +774,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBindingToolbarContent.homeButton.isVisible = true
             iBinding.toolbarInclude.tabBarContainer.isVisible = true
         }
+
+        iBindingToolbarContent.buttonMore.setOnLongClickListener {
+            showPageToolsDialog(tabsManager.positionOf(tabsManager.currentTab))
+            true
+        }
     }
 
     /**
@@ -831,7 +840,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.switchToTab(0)
         tabsManager.clearSavedState()
 
-        historyPageFactory.deleteHistoryPage().subscribe()
         closeBrowser()
         // System exit needed in the case of receiving
         // the panic intent since finish() isn't completely
@@ -1227,9 +1235,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBindingToolbarContent.buttonActionBack.isVisible = it
             iBindingToolbarContent.buttonActionForward.isVisible = it
             // Hide tab bar action buttons if no room for them
-            if (tabsView is TabsDesktopView) {
-                (tabsView as TabsDesktopView).iBinding.actionButtons.isVisible = it
-            }
+            //if (tabsView is TabsDesktopView) {
+            //    (tabsView as TabsDesktopView).iBinding.actionButtons.isVisible = it
+            //}
         }
 
     }
@@ -2519,6 +2527,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             userPreferences.bookmarksChanged = false
         }
 
+        if (userPreferences.incognito) {
+            WebUtils.clearHistory(this, historyModel, databaseScheduler)
+            WebUtils.clearCookies()
+        }
+
         suggestionsAdapter?.let {
             it.refreshPreferences()
             it.refreshBookmarks()
@@ -3688,6 +3701,144 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     i.putExtra(SETTINGS_CLASS_NAME, SponsorshipSettingsFragment::class.java.name)
                     startActivity(i)
                 }).show()
+    }
+
+    private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
+        for (i in items.indices) {
+            if (inputStr.contains(items[i])) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * Show the page tools dialog.
+     */
+    @SuppressLint("CutPasteId")
+    @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    fun showPageToolsDialog(position: Int) {
+        if (position < 0) {
+            return
+        }
+        val currentTab = tabsManager.currentTab ?: return
+        val arrayOfURLs = userPreferences.javaScriptBlocked
+        val strgs: Array<String> = if (arrayOfURLs.contains(", ")) {
+            arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        } else {
+            arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        }
+        val jsEnabledString = if (userPreferences.javaScriptChoice == JavaScriptChoice.BLACKLIST && !stringContainsItemFromList(currentTab.url, strgs) || userPreferences.javaScriptChoice == JavaScriptChoice.WHITELIST && stringContainsItemFromList(currentTab.url, strgs)) {
+            R.string.allow_javascript
+        } else{
+            R.string.blocked_javascript
+        }
+        BrowserDialog.showWithIcons(this, this.getString(R.string.dialog_tools_title),
+            DialogItem(
+                icon = this.drawable(R.drawable.ic_baseline_code_24),
+                title = R.string.page_source) {
+                currentTab.webView?.evaluateJavascript("""(function() {
+                        return "<html>" + document.getElementsByTagName('html')[0].innerHTML + "</html>";
+                     })()""".trimMargin()) {
+                    // Hacky workaround for weird WebView encoding bug
+                    var name = it?.replace("\\u003C", "<")
+                    name = name?.replace("\\n", System.getProperty("line.separator").toString())
+                    name = name?.replace("\\t", "")
+                    name = name?.replace("\\\"", "\"")
+                    name = name?.substring(1, name.length - 1)
+
+                    val builder = MaterialAlertDialogBuilder(this)
+                    val inflater = this.layoutInflater
+                    builder.setTitle(R.string.page_source)
+                    val dialogLayout = inflater.inflate(R.layout.dialog_view_source, null)
+                    val editText = dialogLayout.findViewById<CodeEditor>(R.id.dialog_multi_line)
+                    editText.setText(name, 1)
+                    builder.setView(dialogLayout)
+                    builder.setNegativeButton(R.string.action_cancel) { _, _ -> }
+                    builder.setPositiveButton(R.string.action_ok) { _, _ ->
+                        editText.setText(editText.text?.toString()?.replace("\'", "\\\'"), 1)
+                        currentTab.loadUrl("javascript:(function() { document.documentElement.innerHTML = '" + editText.text.toString() + "'; })()")
+                    }
+                    builder.show()
+                }
+            },
+            DialogItem(
+                icon= this.drawable(R.drawable.ic_script_add),
+                title = R.string.inspect){
+                val builder = MaterialAlertDialogBuilder(this)
+                val inflater = this.layoutInflater
+                builder.setTitle(R.string.inspect)
+                val dialogLayout = inflater.inflate(R.layout.dialog_code_editor, null)
+                val codeView: CodeView = dialogLayout.findViewById(R.id.dialog_multi_line)
+                codeView.text.toString()
+                builder.setView(dialogLayout)
+                builder.setNegativeButton(R.string.action_cancel) { _, _ -> }
+                builder.setPositiveButton(R.string.action_ok) { _, _ -> currentTab.loadUrl("javascript:(function() {" + codeView.text.toString() + "})()") }
+                builder.show()
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.outline_script_text_key_outline),
+                colorTint = this.attrColor(R.attr.colorPrimary).takeIf { userPreferences.javaScriptChoice == JavaScriptChoice.BLACKLIST && !stringContainsItemFromList(currentTab.url, strgs) || userPreferences.javaScriptChoice == JavaScriptChoice.WHITELIST && stringContainsItemFromList(currentTab.url, strgs) },
+                title = jsEnabledString) {
+                val url = URL(currentTab.url)
+                if (userPreferences.javaScriptChoice != JavaScriptChoice.NONE) {
+                    if (!stringContainsItemFromList(currentTab.url, strgs)) {
+                        if (userPreferences.javaScriptBlocked == "") {
+                            userPreferences.javaScriptBlocked = url.host
+                        } else {
+                            userPreferences.javaScriptBlocked = userPreferences.javaScriptBlocked + ", " + url.host
+                        }
+                    } else {
+                        if (!userPreferences.javaScriptBlocked.contains(", " + url.host)) {
+                            userPreferences.javaScriptBlocked = userPreferences.javaScriptBlocked.replace(url.host, "")
+                        } else {
+                            userPreferences.javaScriptBlocked = userPreferences.javaScriptBlocked.replace(", " + url.host, "")
+                        }
+                    }
+                } else {
+                    userPreferences.javaScriptChoice = JavaScriptChoice.WHITELIST
+                }
+                tabsManager.currentTab?.reload()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    tabsManager.currentTab?.reload()
+                }, 250)
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.cookie_outline),
+                title = R.string.edit_cookies) {
+                val cookieManager = CookieManager.getInstance()
+                if (cookieManager.getCookie(currentTab.url) != null) {
+                    val builder = MaterialAlertDialogBuilder(this)
+                    val inflater = this.layoutInflater
+                    builder.setTitle(R.string.site_cookies)
+                    val dialogLayout = inflater.inflate(R.layout.dialog_code_editor, null)
+                    val codeView: CodeView = dialogLayout.findViewById(R.id.dialog_multi_line)
+                    codeView.setText(cookieManager.getCookie(currentTab.url))
+                    builder.setView(dialogLayout)
+                    builder.setNegativeButton(R.string.action_cancel) { _, _ -> }
+                    builder.setPositiveButton(R.string.action_ok) { _, _ ->
+                        val cookiesList = codeView.text.toString().split(";")
+                        cookiesList.forEach { item ->
+                            CookieManager.getInstance().setCookie(currentTab.url, item)
+                        }
+                    }
+                    builder.show()
+                }
+
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.ic_tabs),
+                title = R.string.close_tab) {
+                presenter?.deleteTab(position)
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.ic_delete_forever),
+                title = R.string.close_all_tabs) {
+                presenter?.closeAllOtherTabs()
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.round_clear_24),
+                title = R.string.exit, onClick = this::closeBrowser))
     }
 
     companion object {

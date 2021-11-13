@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/settings_display">
+
+    <Preference
+        android:key="@string/pref_key_theme"
+        android:title="@string/theme"
+        app:icon="@drawable/ic_brush_oval" />
+
+    <Preference
+        android:key="@string/pref_key_accent"
+        android:title="@string/accent_color"
+        app:icon="@drawable/ic_palette_oval" />
+
+    <Preference
+        android:key="@string/pref_key_browser_text_size"
+        android:title="@string/title_text_size"
+        app:icon="@drawable/ic_text_size_oval" />
+
+    <Preference
+        android:key="@string/pref_key_rendering_mode"
+        android:title="@string/rendering_mode"
+        app:icon="@drawable/ic_rendering_mode_oval" />
+
+    <Preference
+        android:key="@string/pref_key_tool_bar_text_display"
+        android:title="@string/url_contents"
+        app:icon="@drawable/ic_short_text_oval" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_category_general">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_web_page_theme"
+            android:summary="@string/recommended"
+            android:title="@string/color_mode"
+            app:icon="@drawable/ic_brush_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="second_bar"
+            android:title="@string/show_second_bar"
+            app:icon="@drawable/ic_nav_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_black_status_bar"
+            android:title="@string/settings_black_status_bar"
+            app:icon="@drawable/ic_phone_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_wide_viewport"
+            android:summary="@string/recommended"
+            android:title="@string/wideViewPort"
+            app:icon="@drawable/ic_baseline_aspect_ratio_24_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_overview_mode"
+            android:summary="@string/recommended"
+            android:title="@string/overViewMode"
+            app:icon="@drawable/ic_eye_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_text_reflow"
+            android:title="@string/reflow"
+            app:icon="@drawable/ic_text_variant_oval" />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
