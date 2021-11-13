@@ -60,25 +60,24 @@
 
     <style name="Theme.App.Dark" parent="Theme.MaterialComponents">
         <item name="colorPrimary">@color/red_300</item>
-        <item name="colorPrimaryVariant">@color/grey_6</item>
+        <item name="colorPrimaryVariant">@color/dark_2</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/red_300</item>
         <item name="colorSecondaryVariant">@color/red_500</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="android:colorBackground">@color/grey_8</item>
-        <item name="android:navigationBarColor">@color/grey_8</item>
+        <item name="android:colorBackground">@color/dark_0</item>
+        <item name="android:navigationBarColor">@color/dark_0</item>
         <item name="colorOnBackground">@color/white</item>
-        <item name="trackColor">@color/grey_7</item>
-        <item name="colorSurface">@color/grey_6</item>
-        <item name="colorPrimarySurface">@color/grey_6</item>
-        <item name="colorOnSurface">@color/white</item>
+        <item name="trackColor">@color/dark_1</item>
+        <item name="colorSurface">@color/dark_1</item>
+        <item name="colorPrimarySurface">@color/dark_1</item>
         <item name="colorError">@color/red_500</item>
         <item name="colorOnError">@color/white</item>
         <item name="appColorControlEnabled">@color/grey_2</item>
         <item name="appColorControlSelected">?attr/colorOnPrimary</item>
         <item name="appColorControlDisabled">@color/grey_4</item>
         <item name="colorControlNormal">@color/state_color_control</item>
-        <item name="haloColor">@color/grey_8</item>
+        <item name="haloColor">@color/dark_0</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog.Dark</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -116,7 +115,6 @@
         <item name="trackColor">@color/grey_9</item>
         <item name="colorSurface">@color/grey_9</item>
         <item name="colorPrimarySurface">@color/grey_8</item>
-        <item name="colorOnSurface">@color/white</item>
         <item name="colorError">@color/red_500</item>
         <item name="colorOnError">@color/white</item>
         <item name="appColorControlEnabled">@color/grey_2</item>
