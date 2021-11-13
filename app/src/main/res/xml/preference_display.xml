@@ -8,6 +8,11 @@
         app:icon="@drawable/ic_palette" />
 
     <Preference
+        android:key="@string/pref_key_accent"
+        android:title="@string/accent_color"
+        app:icon="@drawable/ic_palette_oval" />
+
+    <Preference
         android:key="@string/pref_key_browser_text_size"
         android:title="@string/title_text_size"
         app:icon="@drawable/ic_text_size" />
@@ -56,6 +61,12 @@
         android:summary="@string/pref_summary_color_mode"
         app:icon="@drawable/ic_brush"
         app:iconSpaceReserved="false" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="second_bar"
+        android:title="@string/show_second_bar"
+        app:icon="@drawable/ic_nav_oval" />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
