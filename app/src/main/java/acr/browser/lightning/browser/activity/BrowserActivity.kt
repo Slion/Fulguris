@@ -1749,7 +1749,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
             R.id.action_show_homepage -> {
                 if (userPreferences.homepageInNewTab) {
-                    presenter?.newTab(homePageInitializer, true)
+                    if (isIncognito()) {
+                        presenter?.newTab(incognitoPageInitializer, true)
+                    } else {
+                        presenter?.newTab(homePageInitializer, true)
+                    }
                 } else {
                     // Why not through presenter? We need some serious refactoring at some point
                     tabsManager.currentTab?.loadHomePage()
