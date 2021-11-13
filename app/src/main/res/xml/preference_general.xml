@@ -24,7 +24,22 @@
     <Preference
         android:key="suggestions_choice"
         android:title="@string/search_suggestions"
+        app:icon="@drawable/ic_list_oval" />
+
+    <Preference
+        android:key="suggestions_number"
+        android:title="@string/search_suggestions"
         app:icon="@drawable/ic_list" />
+
+    <PreferenceCategory
+        android:title="@string/home">
+
+        <Preference
+            android:key="image_url"
+            android:title="@string/image_url"
+            app:icon="@drawable/ic_image_oval" />
+
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/tabs">
 
@@ -94,15 +109,66 @@
             app:iconSpaceReserved="false"
             app:icon="@drawable/ic_dark_mode" />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_show_undo_tab"
+            android:title="@string/show_undo_tab"
+            android:summary="@string/recommended"
+            app:singleLineTitle="false"
+            app:icon="@drawable/ic_undo_oval" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_long_click_tab"
+            app:title="@string/long_press_tab"
+            android:summary="@string/recommended"
+            android:defaultValue="true"
+            app:singleLineTitle="false"
+            app:icon="@drawable/ic_tab_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_close_drawer"
+            android:key="@string/pref_key_close_drawer"
+            android:title="@string/pref_title_close_drawer"
+            android:summary="@string/pref_summary_close_drawer"
+            app:icon="@drawable/ic_arrow_left_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_tab_list_item_show_close_button"
+            android:key="@string/pref_key_tab_list_item_show_close_button"
+            android:title="@string/pref_title_tab_list_item_show_close_button"
+            android:summary="@string/pref_summary_tab_list_item_show_close_button"
+            app:icon="@drawable/ic_action_delete_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="last_tab"
+            android:title="@string/close_on_last_tab"
+            app:icon="@drawable/ic_apps_oval" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_advanced">
 
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_show_download_confirmation"
+            android:title="@string/pref_title_download_dialog"
+            android:summary="@string/recommended"
+            app:singleLineTitle="false"
+            app:icon="@drawable/ic_cloud_download_oval" />
         <Preference
             android:key="download"
             android:title="@string/download"
             app:icon="@drawable/ic_file_download"
             app:iconSpaceReserved="false"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_show_update"
+            android:title="@string/update_message"
+            android:summary="@string/recommended"
+            app:singleLineTitle="false"
+            app:icon="@drawable/ic_action_refresh_oval" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
@@ -120,6 +186,13 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
+            android:key="show_ssl"
+            android:summary="@string/recommended"
+            android:title="@string/show_ssl"
+            app:icon="@drawable/ic_warn_oval" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
             android:key="@string/pref_key_cookies"
             android:summary="@string/recommended"
             android:title="@string/cookies"
@@ -132,10 +205,22 @@
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="force_zoom"
+            android:summary="@string/force_zoom_summary"
+            android:title="@string/force_zoom"
+            app:icon="@drawable/ic_force_zoom_oval" />
+
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_key_javascript"
             android:title="@string/java"
             app:iconSpaceReserved="false"/>
+
+        <Preference
+            android:key="block_javascript"
+            android:title="@string/block_javascript"
+            app:icon="@drawable/ic_script_key_oval"/>
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
