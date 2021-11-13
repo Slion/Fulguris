@@ -34,7 +34,7 @@ import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.notifications.IncognitoNotification
-import acr.browser.lightning.reading.activity.ReadingActivity
+import acr.browser.lightning.reading.ReadingActivity
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.SuggestionsAdapter
 import acr.browser.lightning.settings.NewTabPosition
