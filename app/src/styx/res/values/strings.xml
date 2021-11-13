@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="app_name" translatable="false">Styx Browser</string>
+    <string name="app_version_name" translatable="false">\"Cyna\"</string>
+    <string name="accent_amber">Amber</string>
+    <string name="accent_blue">Blue</string>
+    <string name="accent_color">Accent color</string>
+    <string name="accent_cyan">Cyan</string>
+    <string name="accent_deep_orange">Deep Orange</string>
+    <string name="accent_deep_purple">Deep Purple</string>
+    <string name="accent_default">Default (Red)</string>
+    <string name="accent_green">Green</string>
+    <string name="accent_indigo">Indigo</string>
+    <string name="accent_light_blue">Light Blue</string>
+    <string name="accent_light_green">Light Green</string>
+    <string name="accent_lime">Lime</string>
+    <string name="accent_orange">Orange</string>
+    <string name="accent_pink">Pink</string>
+    <string name="accent_purple">Purple</string>
+    <string name="accent_teal">Teal</string>
+    <string name="accent_yellow">Yellow</string>
+    <string name="accent_brown">Brown</string>
+    <string name="action_add_bookmark">Add bookmark</string>
+    <string name="action_add_to_homescreen">Add to home screen</string>
+    <string name="action_allow">Allow</string>
+    <string name="action_back">Back</string>
+    <string name="action_blank">Blank page</string>
+    <string name="action_bookmark_edited">Bookmark edited</string>
+    <string name="action_bookmarks">Bookmarks</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_close_all_other_tabs">Close all other tabs</string>
+    <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_dont_allow">Don\'t allow</string>
+    <string name="action_download">Download</string>
+    <string name="action_downloads">Downloads</string>
+    <string name="action_edit_sessions">Edit sessions</string>
+    <string name="action_find">Find in page</string>
+    <string name="action_folder">Folder</string>
+    <string name="action_forward">Forward</string>
+    <string name="action_history">History</string>
+    <string name="action_homepage">Default</string>
+    <string name="action_incognito">Go incognito</string>
+    <string name="action_message_canceled">Action canceled.</string>
+    <string name="action_more">More</string>
+    <string name="action_new_session">New session</string>
+    <string name="action_new_tab">New tab</string>
+    <string name="action_no">No</string>
+    <string name="action_ok">OK</string>
+    <string name="action_open">Open</string>
+    <string name="action_print">Print</string>
+    <string name="action_reload">Reload</string>
+    <string name="action_remove_bookmark">Bookmark removed</string>
+    <string name="action_remove">Remove</string>
+    <string name="action_restore_all_tabs">Restore all tabs</string>
+    <string name="action_restore_tab">Restore tab</string>
+    <string name="action_save_session">Save session as</string>
+    <string name="action_sessions">Sessions</string>
+    <string name="action_share">Share</string>
+    <string name="action_show_homepage">Homepage</string>
+    <string name="action_webpage">Website</string>
+    <string name="action_yes">Yes</string>
+    <string name="content_control_address">Address</string>
+    <string name="content_control_add_filterlist_hint">Normal Ad-Hosts lists can be selected, as well as any filter lists that work with Adblock Plus rules.</string>
+    <string name="content_control_blocked_page">Content blocker blocked the following page:</string>
+    <string name="content_control_blocked_filter">Because of the following filter:</string>
+    <string name="content_control_blocked_list_ad">%s on ad filterlist</string>
+    <string name="content_control_blocked_list_malware">%s on malware filterlist</string>
+    <string name="content_control_blocked_list_user">%s blocked by user rule</string>
+    <string name="content_control_create_filterlist">Create filterlist</string>
+    <string name="content_control_edit_filterlist">Edit filterlist</string>
+    <string name="content_control_enable">Enable</string>
+    <string name="content_control_file">File</string>
+    <string name="content_control_from_file">Local</string>
+    <string name="content_control_from_address">Remote</string>
+    <string name="content_control_internal_list">Internal list</string>
+    <string name="content_control_invalid_title">Invalid title</string>
+    <string name="content_control_invalid_url">Invalid address</string>
+    <string name="content_control_last_update">Last update: %s</string>
+    <string name="content_control_load_failure">Failed to load hosts from content blocking source.</string>
+    <string name="content_control_local_file_chosen">File selected</string>
+    <string name="content_control_local_file_replace">Replace filterlist</string>
+    <string name="content_control_remote_frequency_daily">Daily</string>
+    <string name="content_control_remote_frequency_weekly">Weekly</string>
+    <string name="content_control_remote_frequency_monthly">Monthly</string>
+    <string name="content_control_update_description">Updates will be done with the chosen frequency, unless the filterlist specifies a longer interval.</string>
+    <string name="content_control_update_frequency">Automatic update frequency</string>
+    <string name="content_control_update_list">Update filterlist file</string>
+    <string name="content_control_update_mode">Automatic update</string>
+    <string name="content_control_update_now">Update lists</string>
+    <string name="content_control_update_on">On</string>
+    <string name="content_control_update_off">Off</string>
+    <string name="content_control_update_wifi">Only via WLAN</string>
+    <string name="ad_server_list">AdGuard Ad-Server List</string>
+    <string name="agent_android_mobile">Android (Mobile)</string>
+    <string name="agent_custom">Custom</string>
+    <string name="agent_default">Default</string>
+    <string name="agent_desktop">Desktop</string>
+    <string name="agent_ios_mobile">iOS (Mobile)</string>
+    <string name="agent_linux_desktop">Linux (Desktop)</string>
+    <string name="agent_macos_desktop">macOS (Desktop)</string>
+    <string name="agent_system">System</string>
+    <string name="agent_web_view">WebView</string>
+    <string name="agent_windows_desktop">Windows (Desktop)</string>
+    <string name="agent">User agent</string>
+    <string name="algorithm">Algorithm:</string>
+    <string name="allow_javascript">Allow JavaScript for this site</string>
+    <string name="android_open_source_project">Android Open Source Project</string>
+    <string name="apache" translatable="false">Apache License 2.0</string>
+    <string name="apply">Apply</string>
+    <string name="black_theme">Black (AMOLED)</string>
+    <string name="block_ads">Block ads</string>
+    <string name="block_javascript">Block JavaScript for site</string>
+    <string name="block_sites_title">Separate sites with a comma</string>
+    <string name="block_source_default">Default hosts</string>
+    <string name="block_source_local_description">File: %1$s</string>
+    <string name="block_source_remote_description">URL: %1$s</string>
+    <string name="blocked_javascript">Block JavaScript for this site</string>
+    <string name="bookmark_export_failure">Sorry, bookmarks could not be exported!</string>
+    <string name="bookmark_export_path">Bookmarks exported:</string>
+    <string name="bookmark_in_new_tab">Bookmark in new tab</string>
+    <string name="bookmark_restore">Bookmarks restored</string>
+    <string name="bookmark_settings">Bookmarks</string>
+    <string name="busy">Busy, try again shortly."</string>
+    <string name="button_image">Image</string>
+    <string name="button_link">Link</string>
+    <string name="button_undo">Undo</string>
+    <string name="cache">Clear cache on exit</string>
+    <string name="cannot_download">Can only download \"http\" or \"https\" URLs.</string>
+    <string name="clean_settings">This will delete all data that Styx has stored on your device! The app will exit when you confirm it.</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="clear_cookies_exit">Clear cookies on exit</string>
+    <string name="clear_cookies">Clear browser cookies</string>
+    <string name="clear_history_exit">Clear history on exit</string>
+    <string name="clear_history">Clear browser history</string>
+    <string name="clear_web_storage_exit">Clear web storage on exit</string>
+    <string name="clear_web_storage">Clear web storage</string>
+    <string name="close">Close</string>
+    <string name="close_all_tabs">Close all tabs</string>
+    <string name="close_on_last_tab">Close browser with last tab</string>
+    <string name="close_other_tabs">Close other tabs</string>
+    <string name="close_tab">Close current tab</string>
+    <string name="color_mode">Color mode</string>
+    <string name="cookies">Enable cookies</string>
+    <string name="credits_fulguris" translatable="false">Fulguris</string>
+    <string name="credits_lightning_browser" translatable="false">Lightning Browser</string>
+    <string name="credits_smartcookieweb" translatable="false">SmartCookieWeb</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_theme">Dark</string>
+    <string name="default_theme">Follow System</string>
+    <string name="delete_all_bookmarks">Delete all bookmarks?</string>
+    <string name="developer">Developer</string>
+    <string name="dialog_cookies">Would you like to clear all browser cookies?</string>
+    <string name="dialog_copy_link">Copy link</string>
+    <string name="dialog_copy_text">Copy text</string>
+    <string name="dialog_delete_all_downloads">Delete all downloads</string>
+    <string name="dialog_download_image">Download image</string>
+    <string name="dialog_download">Do you want to download this file? (%1$s)</string>
+    <string name="dialog_edit_bookmark">Edit bookmark</string>
+    <string name="dialog_history">Would you like to clear all browser history?</string>
+    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
+    <string name="dialog_open_background_tab">Open in background tab</string>
+    <string name="dialog_open_incognito_tab">Open in incognito tab</string>
+    <string name="dialog_open_new_tab">Open in new tab</string>
+    <string name="dialog_remove_bookmark">Remove bookmark</string>
+    <string name="dialog_remove_folder">Remove folder</string>
+    <string name="dialog_remove_from_history">Remove from history</string>
+    <string name="dialog_removed_from_history">Removed from history</string>
+    <string name="dialog_rename_folder">Rename folder</string>
+    <string name="dialog_title_close_browser">Close browser</string>
+    <string name="dialog_title_share">Share this page</string>
+    <string name="dialog_title_third_party_app">Third-party app available</string>
+    <string name="dialog_tools_title">Page tools</string>
+    <string name="do_not_track">Request \'Do Not Track\'</string>
+    <string name="domain">Domain</string>
+    <string name="download_pending">Downloading:</string>
+    <string name="download">Download location</string>
+    <string name="downloads_notification_description">Triggers upon download completion</string>
+    <string name="downloads">Downloads</string>
+    <string name="edit_cookies">Show site cookies</string>
+    <string name="edit_shortcuts">Edit Shortcuts</string>
+    <string name="eight" translatable="false">8</string>
+    <string name="enable">Enable</string>
+    <string name="error_reload">Reload</string>
+    <string name="error_tip">• Check the Address for typing errors such as ww.example.com instead of www.example.com</string>
+    <string name="error_tip2">• If you are unable to load any pages, check your devices data or Wi-Fi connection.</string>
+    <string name="error_title">Oh crumbs!</string>
+    <string name="example_text">Example text</string>
+    <string name="exit">Exit</string>
+    <string name="export_bookmarks">Export bookmarks to backup</string>
+    <string name="export_settings">Export settings to backup</string>
+    <string name="five" translatable="false">5</string>
+    <string name="folder_custom">Custom</string>
+    <string name="folder_default">Default</string>
+    <string name="folder">Folder name</string>
+    <string name="force_zoom_summary">Does not work if JavaScript is not enabled</string>
+    <string name="force_zoom">Force zoom for websites</string>
+    <string name="four" translatable="false">4</string>
+    <string name="github_update_check_url" translatable="false">https://api.github.com/repos/jamal2362/Styx/releases/latest</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_url">URL</string>
+    <string name="hint_username">Username</string>
+    <string name="home">Homepage</string>
+    <string name="homepage_in_new_tab">Homepage in new tab</string>
+    <string name="image_url">Set background image for search engine</string>
+    <string name="image_url_summary">Only for Custom URL</string>
+    <string name="import_backup">Import bookmarks from backup</string>
+    <string name="import_bookmark_error">Could not import bookmarks from file</string>
+    <string name="import_export_settings">Import &amp; Export</string>
+    <string name="import_settings">Import settings from backup</string>
+    <string name="incognito">Incognito</string>
+    <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
+    <string name="incognito_cookies">Enable cookies in incognito mode</string>
+    <string name="inspect">Inject Javascript</string>
+    <string name="invalid_character_removed">Invalid character removed!</string>
+    <string name="invalid_characters_removed">Invalid characters removed!</string>
+    <string name="invert_color">Invert color</string>
+    <string name="java">Enable JavaScript</string>
+    <string name="jsoup">jsoup: Java HTML Parser</string>
+    <string name="label_realm">Server message: %s</string>
+    <string name="library_netcipher">NetCipher</string>
+    <string name="license_gnu" translatable="false">GNU Lesser General Public License</string>
+    <string name="licenses">Open Source Licenses</string>
+    <string name="light_theme">Light</string>
+    <string name="listed_javascript">Only allow JavaScript for listed sites</string>
+    <string name="load_images">Load images</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="location">Location access</string>
+    <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
+    <string name="message_added_to_homescreen">Shortcut added to home screen</string>
+    <string name="message_blocked_local">Local file has been blocked from loading</string>
+    <string name="message_bookmark_added">Bookmark added.</string>
+    <string name="message_bookmark_not_added">Bookmark already exists.</string>
+    <string name="message_cache_cleared">Cache cleared</string>
+    <string name="message_certificate_date_invalid">Date of certificate is invalid</string>
+    <string name="message_certificate_domain_mismatch">Domain in certificate does not match the site domain</string>
+    <string name="message_certificate_expired">Certificate is expired</string>
+    <string name="message_certificate_invalid">Certificate is invalid</string>
+    <string name="message_certificate_not_yet_valid">Certificate is not yet valid</string>
+    <string name="message_certificate_untrusted">Certificate is not trusted</string>
+    <string name="message_clear_history">History cleared</string>
+    <string name="message_cookies_cleared">Cookies cleared</string>
+    <string name="message_form_resubmission">Would you like to resend the data?</string>
+    <string name="message_import">Bookmarks were imported</string>
+    <string name="message_insecure_connection">Connection to this site is not secure:\n%1$s\nProceed anyway?</string>
+    <string name="message_link_copied">Link copied to clipboard</string>
+    <string name="message_location">\nWould like to use your location</string>
+    <string name="message_open_download_fail">This file doesn\'t exist anymore</string>
+    <string name="message_permission_request">%1$s\n\nwould like to use:\n\n%2$s</string>
+    <string name="message_powered_by_fulguris" translatable="false">Powered by ⚡ Fulguris</string>
+    <string name="message_web_storage_cleared">Web storage cleared</string>
+    <string name="mit_license" translatable="false">MIT License</string>
+    <string name="mpl_license" translatable="false">Mozilla Public License v2.0</string>
+    <string name="name_grayscale">Grayscale</string>
+    <string name="name_increase_contrast">Increase contrast</string>
+    <string name="name_inverted_grayscale">Inverted grayscale</string>
+    <string name="name_inverted">Inverted</string>
+    <string name="name_normal">Normal</string>
+    <string name="name">Jamal2367</string>
+    <string name="new_tab_position_after">After current tab</string>
+    <string name="new_tab_position_end">End of tab list</string>
+    <string name="new_tab_position_start">Start of tab list</string>
+    <string name="new_tab_position">New tab position</string>
+    <string name="nine" translatable="false">9</string>
+    <string name="no_tts">Language is not supported</string>
+    <string name="no">No</string>
+    <string name="notification_incognito_running_description">Ongoing incognito notification</string>
+    <string name="notification_incognito_running_message">Touch to open</string>
+    <string name="notify_tab_closed">Tab closed</string>
+    <string name="oid">Object Identifier (OID):</string>
+    <string name="one">%1$d incognito tab open</string>
+    <string name="other">%1$d incognito tabs open</string>
+    <string name="overViewMode">Load pages in overview mode</string>
+    <string name="page_source">View page source</string>
+    <string name="password">Save your passwords</string>
+    <string name="powered_by_baidu">Powered by Baidu</string>
+    <string name="powered_by_duck">Powered by DuckDuckGo</string>
+    <string name="powered_by_google">Powered by Google</string>
+    <string name="powered_by_naver">Powered by Naver</string>
+    <string name="pref_app_version_summary">Version:</string>
+    <string name="pref_category_filters">Filters</string>
+    <string name="pref_category_general">General</string>
+    <string name="pref_category_landscape">Landscape</string>
+    <string name="pref_category_summary_filters">Local or remote files defining your content control rules</string>
+    <string name="pref_category_portrait">Portrait</string>
+    <string name="pref_report_issue_summary">Report bugs and suggest improvements on GitHub</string>
+    <string name="pref_report_issue_title">Report Issue</string>
+    <string name="pref_summary_close_drawer">Automatically close Drawer after creating or deleting a tab</string>
+    <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
+    <string name="pref_summary_locked_drawers">Tabs and Bookmarks drawers are locked</string>
+    <string name="pref_summary_menu_show_exit">Incognito mode always displays the button</string>
+    <string name="pref_summary_tab_list_item_show_close_button">Display close tab buttons on tab list items</string>
+    <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
+    <string name="pref_summary_webrtc">Allows Real Time Communication over the Web using your device camera and microphone</string>
+    <string name="pref_title_close_drawer">Close drawer</string>
+    <string name="pref_title_desktop_width">Desktop width</string>
+    <string name="pref_title_download_dialog">Show download dialog</string>
+    <string name="pref_title_hide_status_bar">Hide status bar</string>
+    <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
+    <string name="pref_title_locked_drawers">Locked drawers</string>
+    <string name="pref_title_menu_show_exit">Show \"Exit\" Button in Menu</string>
+    <string name="pref_title_pull_to_refresh">Pull to refresh</string>
+    <string name="pref_title_tab_list_item_show_close_button">Show close tab button</string>
+    <string name="pref_title_use_bottom_sheets">Use bottom sheets</string>
+    <string name="pref_title_webrtc">WebRTC Support</string>
+    <string name="pref_translation_summary">Help us translate the app</string>
+    <string name="pref_translation_title">Translation</string>
+    <string name="problem_download">Invalid URL encountered, cannot download</string>
+    <string name="problem_location_download">Cannot download to the specified location</string>
+    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
+    <string name="reading_mode_image_caption">Image with caption</string>
+    <string name="reading_mode_image_copyright">Image attributed to</string>
+    <string name="reading_mode">Reader mode</string>
+    <string name="recommended">Recommended</string>
+    <string name="reflow">Enable text reflow</string>
+    <string name="remove_identifying_headers">Remove identifying headers</string>
+    <string name="rendering_mode">Rendering mode</string>
+    <string name="reopening_recent_tab">Tab recovered</string>
+    <string name="reset_settings">Reset settings</string>
+    <string name="restore_tabs_on_startup">Restore tabs on startup</string>
+    <string name="save_data">Request \'Save-Data\'</string>
+    <string name="search_engine_ask" translatable="false">Ask</string>
+    <string name="search_engine_baidu" translatable="false">Baidu</string>
+    <string name="search_engine_bing" translatable="false">Bing</string>
+    <string name="search_engine_brave" translatable="false">Brave</string>
+    <string name="search_engine_custom">Custom URL</string>
+    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - No JavaScript</string>
+    <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
+    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - No JavaScript</string>
+    <string name="search_engine_duckduckgo" translatable="false">DuckDuckGo</string>
+    <string name="search_engine_ecosia" translatable="false">Ecosia</string>
+    <string name="search_engine_ekoru" translatable="false">Ekoru</string>
+    <string name="search_engine_google" translatable="false">Google</string>
+    <string name="search_engine_mojeek" translatable="false">Mojeek</string>
+    <string name="search_engine_naver" translatable="false">Naver</string>
+    <string name="search_engine_qwant" translatable="false">Qwant</string>
+    <string name="search_engine_qwant_lite">Qwant Lite</string>
+    <string name="search_engine_searx" translatable="false">Searx</string>
+    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
+    <string name="search_engine_startpage" translatable="false">StartPage</string>
+    <string name="search_engine_yahoo_no_js">Yahoo - No JavaScript</string>
+    <string name="search_engine_yahoo" translatable="false">Yahoo</string>
+    <string name="search_engine_yandex" translatable="false">Yandex</string>
+    <string name="search_homepage">Search</string>
+    <string name="search_incognito">Private search</string>
+    <string name="search_in_new_tab">Search in new tab</string>
+    <string name="search_insert_suggestion">Insert suggestion</string>
+    <string name="search_suggestions_off">No search suggestions</string>
+    <string name="search_suggestions">Search suggestions</string>
+    <string name="search">Search engine</string>
+    <string name="session_already_exists">A session with that name already exists!</string>
+    <string name="session_cant_delete_current">Can\'t delete current session!</string>
+    <string name="session_default">Default</string>
+    <string name="session_name_prompt">Enter session name:</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
+    <string name="session_prompt_confirm_deletion_title">Confirm deletion</string>
+    <string name="session_switched">Switched to \"%s\"</string>
+    <string name="settings_about">About</string>
+    <string name="settings_content_control">Content control</string>
+    <string name="settings_advanced">Advanced</string>
+    <string name="settings_app_prefix" translatable="false">app_for_</string>
+    <string name="settings_black_status_bar">Black status bar</string>
+    <string name="settings_content_blocking">Content Blocking</string>
+    <string name="settings_credits">Credits</string>
+    <string name="settings_display">Look &amp; feel</string>
+    <string name="settings_export_failure">Sorry, settings could not be exported!</string>
+    <string name="settings_exported">Settings exported:</string>
+    <string name="settings_general">General</string>
+    <string name="settings_help_us">Help us</string>
+    <string name="settings_portrait_landscape">Portrait &amp; Landscape</string>
+    <string name="settings_privacy">Privacy</string>
+    <string name="settings_reseted">All settings restored</string>
+    <string name="settings_summary_about">Version, author, license…</string>
+    <string name="settings_summary_apps">Third party applications…</string>
+    <string name="settings_summary_content_control">Ads blocker and content filtering</string>
+    <string name="settings_summary_content_control_toggle">Activate ads blocker and content filtering</string>
+    <string name="settings_summary_dark_mode_default">Define if new tabs use force dark mode by default</string>
+    <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
+    <string name="settings_summary_display">App design, accent color, color mode…</string>
+    <string name="settings_summary_general">Homepage, search services, JavaScript…</string>
+    <string name="settings_summary_import_export">Backup, restore, reset…</string>
+    <string name="settings_summary_tabs">Tab position, new tab, bottom sheets…</string>
+    <string name="settings_summary_portraitlandscape">Pull-to-Refresh, toolbar, drawer…</string>
+    <string name="settings_summary_privacy">Cache, history, cookies…</string>
+    <string name="settings_summary_vertical_tab_bar">Disable it to use tabs in navigation drawer</string>
+    <string name="settings_title_apps">Apps</string>
+    <string name="settings_title_dark_mode_default">Force dark mode</string>
+    <string name="settings_title_desktop_mode_default">Desktop mode</string>
+    <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
+    <string name="settings">Settings</string>
+    <string name="seven" translatable="false">7</string>
+    <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
+    <string name="show">Show</string>
+    <string name="show_second_bar">Show secondary navigation bar</string>
+    <string name="show_shortcuts">Show shortcuts on homepage</string>
+    <string name="show_ssl">Show SSL warning dialogs</string>
+    <string name="show_undo_tab">Show \"Undo\" button when a tab is closed</string>
+    <string name="site_cookies">Site cookies</string>
+    <string name="six" translatable="false">6</string>
+    <string name="size">Text size</string>
+    <string name="ssl_info_expires_on">Expires on:</string>
+    <string name="ssl_info_issued_by">Issued by:</string>
+    <string name="ssl_info_issued_on">Issued on:</string>
+    <string name="ssl_info_issued_to">Issued to:</string>
+    <string name="ssl_warning_dont_ask_again">Don\'t ask again for this browsing session.</string>
+    <string name="start_incognito">Permanently behave as if in incognito mode</string>
+    <string name="stop_tts">Stop reading</string>
+    <string name="suggest">Search suggestions (number)</string>
+    <string name="suggestion">Search for</string>
+    <string name="swap_bookmarks_and_tabs">Swap bookmark and tab drawers</string>
+    <string name="tabs_in_drawer">Show tabs in navigation drawer</string>
+    <string name="tabs">Tabs</string>
+    <string name="ten" translatable="false">10</string>
+    <string name="text_encoding">Text encoding</string>
+    <string name="theme">Theme</string>
+    <string name="third_party">Block 3rd party cookies</string>
+    <string name="three" translatable="false">3</string>
+    <string name="title_clear_cookies">Clear cookies</string>
+    <string name="title_clear_history">Clear history</string>
+    <string name="title_chooser">Choose a file</string>
+    <string name="title_custom_homepage">Custom homepage</string>
+    <string name="title_download_location">Download location</string>
+    <string name="title_edit_bookmark">Edit bookmark</string>
+    <string name="title_error">Error</string>
+    <string name="title_file_chooser">File chooser</string>
+    <string name="title_form_resubmission">Form resubmission</string>
+    <string name="title_permission_request">Permission request</string>
+    <string name="title_rename_folder">Rename folder</string>
+    <string name="title_search_engine">Search engine</string>
+    <string name="title_sign_in">Sign in</string>
+    <string name="title_standard">Title (Standard)</string>
+    <string name="title_text_size">Text size</string>
+    <string name="title_user_agent">User agent</string>
+    <string name="title_warning">Warning</string>
+    <string name="translator">Translate</string>
+    <string name="tts_initilization_failed">Initilization failed</string>
+    <string name="tts">Read page</string>
+    <string name="two" translatable="false">2</string>
+    <string name="unknown_size">Unknown size</string>
+    <string name="unknown">Unknown</string>
+    <string name="unlisted_javascript">Block JavaScript for listed sites</string>
+    <string name="untitled">Untitled</string>
+    <string name="update_available">is available!</string>
+    <string name="update_message">Show update notification when starting the browser</string>
+    <string name="url_app_home_page" translatable="false">https://github.com/jamal2362/Styx/releases/latest</string>
+    <string name="url_app_updates" translatable="false">https://slions.net/resources/fulguris.10</string>
+    <string name="url_contents">Tool bar shows</string>
+    <string name="url_in_new_tab">URL in new tab</string>
+    <string name="url">URL</string>
+    <string name="version">Application version</string>
+    <string name="webview_version">WebView version</string>
+    <string name="vibrate_on_tab_close">Vibrate when a tab is closed</string>
+    <string name="wideViewPort">Use wide viewport</string>
+    <string name="window">Allow sites to open new windows</string>
+    <string name="yes">Yes</string>
+
+	<plurals name="notification_incognito_running_title">
+        <item quantity="one">@string/one</item>
+        <item quantity="other">@string/other</item>
+    </plurals>
+
+    <string-array name="block_javascript">
+        <item>@string/no</item>
+        <item>@string/unlisted_javascript</item>
+        <item>@string/listed_javascript</item>
+    </string-array>
+
+    <string-array name="download_folder">
+        <item>@string/folder_default</item>
+        <item>@string/folder_custom</item>
+    </string-array>
+
+    <string-array name="homepage">
+        <item>@string/action_homepage</item>
+        <item>@string/action_blank</item>
+        <item>@string/action_bookmarks</item>
+        <item>@string/action_webpage</item>
+    </string-array>
+
+    <string-array name="new_tab_positions">
+        <item>@string/new_tab_position_after</item>
+        <item>@string/new_tab_position_start</item>
+        <item>@string/new_tab_position_end</item>
+    </string-array>
+
+    <string-array name="new_tab_position_values">
+        <item>@string/new_tab_position_after_value</item>
+        <item>@string/new_tab_position_start_value</item>
+        <item>@string/new_tab_position_end_value</item>
+    </string-array>
+
+    <string-array name="suggestions">
+        <item>@string/powered_by_google</item>
+        <item>@string/powered_by_duck</item>
+        <item>@string/powered_by_naver</item>
+        <item>@string/powered_by_baidu</item>
+        <item>@string/search_suggestions_off</item>
+    </string-array>
+
+    <string-array name="suggestion_name_array">
+        <item>@string/two</item>
+        <item>@string/three</item>
+        <item>@string/four</item>
+        <item>@string/five</item>
+        <item>@string/six</item>
+        <item>@string/seven</item>
+        <item>@string/eight</item>
+        <item>@string/nine</item>
+        <item>@string/ten</item>
+    </string-array>
+	
+	<string-array name="url_content_array">
+        <item>@string/domain</item>
+        <item>@string/url</item>
+        <item>@string/title_standard</item>
+    </string-array>
+
+    <string-array name="user_agent">
+        <item>@string/agent_default</item>
+        <item>@string/agent_windows_desktop</item>
+        <item>@string/agent_linux_desktop</item>
+        <item>@string/agent_macos_desktop</item>
+        <item>@string/agent_android_mobile</item>
+        <item>@string/agent_ios_mobile</item>
+        <item>@string/agent_system</item>
+        <item>@string/agent_web_view</item>
+        <item>@string/agent_custom</item>
+    </string-array>
+
+    <string name="new_tab_position_after_value" translatable="false">AFTER_CURRENT_TAB</string>
+    <string name="new_tab_position_end_value" translatable="false">END_OF_TAB_LIST</string>
+    <string name="new_tab_position_start_value" translatable="false">START_OF_TAB_LIST</string>
+    <string name="pref_key_accent" translatable="false">pref_key_accent</string>
+    <string name="pref_key_always_incognito" translatable="false">pref_key_always_incognito</string>
+    <string name="pref_key_black_status_bar" translatable="false">pref_key_black_status_bar</string>
+    <string name="pref_key_filterlist_auto_update" translatable="false">pref_key_filterlist_auto_update</string>
+    <string name="pref_key_filterlist_auto_update_frequency" translatable="false">pref_key_filterlist_auto_update_frequency</string>
+    <string name="pref_key_block_ads" translatable="false">pref_key_block_ads</string>
+    <string name="pref_key_block_js" translatable="false">pref_key_block_js</string>
+    <string name="pref_key_block_third_party" translatable="false">pref_key_block_third_party</string>
+    <string name="pref_key_bookmark_changed" translatable="false">pref_key_bookmark_changed</string>
+    <string name="pref_key_bookmark_in_new_tab" translatable="false">pref_key_bookmark_in_new_tab</string>
+    <string name="pref_key_browser_text_size" translatable="false">pref_key_browser_text_size</string>
+    <string name="pref_key_clear_cache_exit" translatable="false">pref_key_clear_cache_exit</string>
+    <string name="pref_key_clear_cookies_exit" translatable="false">pref_key_clear_cookies_exit</string>
+    <string name="pref_key_clear_history_exit" translatable="false">pref_key_clear_history_exit</string>
+    <string name="pref_key_clear_web_storage_exit" translatable="false">pref_key_clear_web_storage_exit</string>
+    <string name="pref_key_close_drawer" translatable="false">pref_key_close_drawer</string>
+    <string name="pref_key_close_on_last_tab" translatable="false">pref_key_close_on_last_tab</string>
+    <string name="pref_key_content_control" translatable="false">pref_key_content_control</string>
+    <string name="pref_key_content_control_filters" translatable="false">pref_key_content_control_filters</string>
+    <string name="pref_key_cookies_incognito" translatable="false">pref_key_cookies_incognito</string>
+    <string name="pref_key_cookies" translatable="false">pref_key_cookies</string>
+    <string name="pref_key_dark_mode_default" translatable="false">pref_key_dark_mode_default</string>
+    <string name="pref_key_default_text_encoding" translatable="false">pref_key_default_text_encoding</string>
+    <string name="pref_key_desktop_mode_default" translatable="false">pref_key_desktop_mode_default</string>
+    <string name="pref_key_do_not_track" translatable="false">pref_key_do_not_track</string>
+    <string name="pref_key_download_directory" translatable="false">pref_key_download_directory</string>
+    <string name="pref_key_force_zoom" translatable="false">pref_key_force_zoom</string>
+    <string name="pref_key_homepage_in_new_tab" translatable="false">pref_key_homepage_in_new_tab</string>
+    <string name="pref_key_homepage" translatable="false">pref_key_homepage</string>
+    <string name="pref_key_identifying_headers" translatable="false">pref_key_identifying_headers</string>
+    <string name="pref_key_identity" translatable="false">pref_key_identity</string>
+    <string name="pref_key_image_url" translatable="false">pref_key_image_url</string>
+    <string name="pref_key_incognito" translatable="false">pref_key_incognito</string>
+    <string name="pref_key_invert_colors" translatable="false">pref_key_invert_colors</string>
+    <string name="pref_key_javascript" translatable="false">pref_key_javascript</string>
+    <string name="pref_key_landscape_desktop_width" translatable="false">pref_key_landscape_desktop_width</string>
+    <string name="pref_key_landscape_hide_status_bar" translatable="false">pref_key_landscape_hide_status_bar</string>
+    <string name="pref_key_landscape_hide_tool_bar" translatable="false">pref_key_landscape_hide_tool_bar</string>
+    <string name="pref_key_landscape_pull_to_refresh" translatable="false">pref_key_landscape_pull_to_refresh</string>
+    <string name="pref_key_landscape_show_tool_bar_on_page_top" translatable="false">pref_key_landscape_show_tool_bar_on_page_top</string>
+    <string name="pref_key_landscape_show_tool_bar_on_scroll_up" translatable="false">pref_key_landscape_show_tool_bar_when_scroll_up</string>
+    <string name="pref_key_landscape_tab_bar_vertical" translatable="false">pref_key_landscape_tab_bar_vertical</string>
+    <string name="pref_key_landscape_toolbars_bottom" translatable="false">pref_key_landscape_toolbars_bottom</string>
+    <string name="pref_key_link1" translatable="false">pref_key_link1</string>
+    <string name="pref_key_link2" translatable="false">pref_key_link2</string>
+    <string name="pref_key_link3" translatable="false">pref_key_link3</string>
+    <string name="pref_key_link4" translatable="false">pref_key_link4</string>
+    <string name="pref_key_load_images" translatable="false">pref_key_load_images</string>
+    <string name="pref_key_location" translatable="false">pref_key_location</string>
+    <string name="pref_key_locked_drawers" translatable="false">pref_key_locked_drawers</string>
+    <string name="pref_key_menu_show_exit" translatable="false">pref_key_menu_show_exit</string>
+    <string name="pref_key_new_tab_position" translatable="false">pref_key_new_tab_position</string>
+    <string name="pref_key_overview_mode" translatable="false">pref_key_overview_mode</string>
+    <string name="pref_key_portrait_desktop_width" translatable="false">pref_key_portrait_desktop_width</string>
+    <string name="pref_key_portrait_hide_status_bar" translatable="false">pref_key_portrait_hide_status_bar</string>
+    <string name="pref_key_portrait_hide_tool_bar" translatable="false">pref_key_portrait_hide_tool_bar</string>
+    <string name="pref_key_portrait_pull_to_refresh" translatable="false">pref_key_portrait_pull_to_refresh</string>
+    <string name="pref_key_portrait_show_tool_bar_on_page_top" translatable="false">pref_key_portrait_show_tool_bar_on_page_top</string>
+    <string name="pref_key_portrait_show_tool_bar_on_scroll_up" translatable="false">pref_key_portrait_show_tool_bar_when_scroll_up</string>
+    <string name="pref_key_portrait_tab_bar_vertical" translatable="false">pref_key_portrait_tab_bar_vertical</string>
+    <string name="pref_key_portrait_toolbars_bottom" translatable="false">pref_key_portrait_toolbars_bottom</string>
+    <string name="pref_key_reading_text_size" translatable="false">pref_key_reading_text_size</string>
+    <string name="pref_key_rendering_mode" translatable="false">pref_key_rendering_mode</string>
+    <string name="pref_key_request_save_data" translatable="false">pref_key_request_save_data</string>
+    <string name="pref_key_restore_tabs_on_startup" translatable="false">pref_key_restore_tabs_on_startup</string>
+    <string name="pref_key_save_passwords" translatable="false">pref_key_save_passwords</string>
+    <string name="pref_key_search_in_new_tab" translatable="false">pref_key_search_in_new_tab</string>
+    <string name="pref_key_search_suggestions_number" translatable="false">pref_key_search_suggestions_number</string>
+    <string name="pref_key_search_suggestions" translatable="false">pref_key_search_suggestions</string>
+    <string name="pref_key_search_url" translatable="false">pref_key_search_url</string>
+    <string name="pref_key_search" translatable="false">pref_key_search</string>
+    <string name="pref_key_second_nav_bar" translatable="false">pref_key_second_nav_bar</string>
+    <string name="pref_key_show_download_confirmation" translatable="false">pref_key_show_download_confirmation</string>
+    <string name="pref_key_long_click_tab" translatable="false">pref_key_long_click_tab</string>
+    <string name="pref_key_show_shortcuts" translatable="false">pref_key_show_shortcuts</string>
+    <string name="pref_key_show_undo_tab" translatable="false">pref_key_show_undo_tab</string>
+    <string name="pref_key_show_update" translatable="false">pref_key_show_update</string>
+    <string name="pref_key_version_code" translatable="false">pref_key_version_code</string>
+    <string name="pref_key_ssl_dialog" translatable="false">pref_key_ssl_dialog</string>
+    <string name="pref_key_support_multiple_window" translatable="false">pref_key_support_multiple_window</string>
+    <string name="pref_key_swap_tabs_and_bookmarks" translatable="false">pref_key_swap_tabs_and_bookmarks</string>
+    <string name="pref_key_tab_list_item_show_close_button" translatable="false">pref_key_tab_list_item_show_close_button</string>
+    <string name="pref_key_text_reflow" translatable="false">pref_key_text_reflow</string>
+    <string name="pref_key_theme" translatable="false">pref_key_theme</string>
+    <string name="pref_key_tool_bar_text_display" translatable="false">pref_key_tool_bar_text_display</string>
+    <string name="pref_key_url_in_new_tab" translatable="false">pref_key_url_in_new_tab</string>
+    <string name="pref_key_use_bottom_sheets" translatable="false">pref_key_use_bottom_sheets</string>
+    <string name="pref_key_use_js_block" translatable="false">pref_key_use_js_block</string>
+    <string name="pref_key_use_site_block" translatable="false">pref_key_use_site_block</string>
+    <string name="pref_key_user_agent_string" translatable="false">pref_key_user_agent_string</string>
+    <string name="pref_key_user_agent" translatable="false">pref_key_user_agent</string>
+    <string name="pref_key_vibrate_on_tab_close" translatable="false">pref_key_vibrate_on_tab_close</string>
+    <string name="pref_key_web_page_theme" translatable="false">pref_key_web_page_theme</string>
+    <string name="pref_key_webrtc" translatable="false">pref_key_webrtc</string>
+    <string name="pref_key_wide_viewport" translatable="false">pref_key_wide_viewport</string>
+</resources>

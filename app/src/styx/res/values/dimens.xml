@@ -1,0 +1,14 @@
+<resources>
+
+    <dimen name="material_grid_small_icon">24dp</dimen>
+
+    <dimen name="material_grid_touch_medium">48dp</dimen>
+    <dimen name="material_grid_touch_large">54dp</dimen>
+
+    <dimen name="dialog_max_size">350dp</dimen>
+    <dimen name="dialog_padding">24dp</dimen>
+
+    <dimen name="toolbar_height_portrait">56dp</dimen>
+    <dimen name="toolbar_height_landscape">52dp</dimen>
+
+</resources>
