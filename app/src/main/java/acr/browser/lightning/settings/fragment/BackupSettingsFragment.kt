@@ -26,6 +26,7 @@ import android.app.Application
 import android.content.Intent
 import android.content.SharedPreferences
 import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -33,6 +34,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
+import androidx.preference.PreferenceManager
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -40,6 +42,8 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.*
 import java.util.*
 import javax.inject.Inject
@@ -90,6 +94,8 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         clickablePreference(preference = SETTINGS_EXPORT, onClick = this::exportBookmarks)
         clickablePreference(preference = SETTINGS_IMPORT, onClick = this::importBookmarks)
         clickablePreference(preference = SETTINGS_DELETE_BOOKMARKS, onClick = this::deleteAllBookmarks)
+        clickablePreference(preference = SETTINGS_SETTINGS_EXPORT, onClick = this::requestSettingsExport)
+        clickablePreference(preference = SETTINGS_SETTINGS_IMPORT, onClick = this::requestSettingsImport)
 
         // Sessions
         clickablePreference(preference = getString(R.string.pref_key_sessions_import), onClick = this::showSessionImportDialog)
@@ -565,8 +571,103 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
+    @Suppress("DEPRECATION")
+    private fun requestSettingsImport() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain"
+        }
+        startActivityForResult(intent, IMPORT_SETTINGS)
+    }
 
+    @Suppress("DEPRECATION")
+    private fun requestSettingsExport() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain"
+            var timeStamp = ""
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val dateFormat = java.text.SimpleDateFormat("-yyyy-MM-dd-(HH:mm)", Locale.US)
+                timeStamp = dateFormat.format(Date())
+            }
+            // That is a neat feature as it guarantee no file will be overwritten.
+            putExtra(Intent.EXTRA_TITLE, "StyxSettings$timeStamp.txt")
+        }
+        startActivityForResult(intent, EXPORT_SETTINGS)
+    }
 
+    private fun exportSettings(uri: Uri) {
+        val userPref = PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
+        val allEntries: Map<String, *> = userPref!!.all
+        var string = "{"
+        for (entry in allEntries.entries) {
+            string += "\"${entry.key}\"=\"${entry.value}\","
+        }
+
+        string = string.substring(0, string.length - 1) + "}"
+
+        try {
+            val output: OutputStream? = requireActivity().contentResolver.openOutputStream(uri)
+
+            output?.write(string.toByteArray())
+            output?.flush()
+            output?.close()
+            activity?.snackbar("${getString(R.string.settings_exported)} ${uri.fileName}")
+        } catch (e: IOException) {
+            activity?.snackbar(R.string.settings_export_failure)
+        }
+    }
+
+    private fun importSettings(uri: Uri) {
+        val input: InputStream? = requireActivity().contentResolver.openInputStream(uri)
+
+        val bufferSize = 1024
+        val buffer = CharArray(bufferSize)
+        val out = StringBuilder()
+        val `in`: Reader = InputStreamReader(input, "UTF-8")
+        while (true) {
+            val rsz = `in`.read(buffer, 0, buffer.size)
+            if (rsz < 0) break
+            out.append(buffer, 0, rsz)
+        }
+
+        val content = out.toString()
+
+        val answer = JSONObject(content)
+        val keys: JSONArray? = answer.names()
+        val userPref = PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
+        for (i in 0 until keys!!.length()) {
+            val key: String = keys.getString(i)
+            val value: String = answer.getString(key)
+            with (userPref.edit()) {
+                if(value.matches("-?\\d+".toRegex())){
+                    putInt(key, value.toInt())
+                }
+                else if(value == "true" || value == "false"){
+                    putBoolean(key, value.toBoolean())
+                }
+                else{
+                    putString(key, value)
+                }
+                apply()
+            }
+        }
+        activity?.snackbar(R.string.settings_reseted)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val uri: Uri? = data?.data
+        if(requestCode == EXPORT_SETTINGS && resultCode == Activity.RESULT_OK) {
+            if(uri != null){
+                exportSettings(uri)
+            }
+        }
+        else if(requestCode == IMPORT_SETTINGS && resultCode == Activity.RESULT_OK) {
+            if(uri != null){
+                importSettings(uri)
+            }
+        }
+    }
 
     companion object {
 
@@ -575,8 +676,13 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_EXPORT = "export_bookmark"
         private const val SETTINGS_IMPORT = "import_bookmark"
         private const val SETTINGS_DELETE_BOOKMARKS = "delete_bookmarks"
+        private const val SETTINGS_SETTINGS_EXPORT = "export_settings"
+        private const val SETTINGS_SETTINGS_IMPORT = "import_settings"
         private const val KSessionMimeType = "application/octet-stream"
 
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        const val EXPORT_SETTINGS = 0
+        const val IMPORT_SETTINGS = 1
     }
 }
