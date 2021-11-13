@@ -169,6 +169,13 @@ class MenuWebPage : PopupWindow {
             iBinding.menuItemDarkMode.isChecked = it.currentTab?.darkMode ?: false
             // And ad block
             iBinding.menuItemAdBlock.isChecked = it.currentTab?.url?.let { url -> !abpUserRules.isAllowed(Uri.parse(url)) } ?: false
+
+            if (iUserPreferences.navbar) {
+                iBinding.header.visibility = View.GONE
+                iBinding.menuShortcutRefresh.visibility = View.GONE
+                iBinding.menuShortcutForward.visibility = View.GONE
+                iBinding.menuShortcutBack.visibility = View.GONE
+            }
         }
 
         // Get our anchor location
