@@ -9,7 +9,6 @@ import android.net.http.SslCertificate
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
