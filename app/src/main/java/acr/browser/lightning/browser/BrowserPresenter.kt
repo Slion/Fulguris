@@ -233,14 +233,10 @@ class BrowserPresenter(
         iBrowserView.notifyTabViewRemoved(position)
 
         if (afterTab == null) {
-            if (userPreferences.closeOnLastTab) {
-                iBrowserView.closeBrowser()
-            } else {
                 if (isIncognito) {
                     newTab(UrlInitializer(mapIncognitoToCurrentUrl()), true)
                 } else {
                     newTab(UrlInitializer(mapHomepageToCurrentUrl()), true)
-                }
             }
             return
         } else if (afterTab !== currentTab) {

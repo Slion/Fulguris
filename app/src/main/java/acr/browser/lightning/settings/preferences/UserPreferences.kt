@@ -7,7 +7,6 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpUpdateMode
 import acr.browser.lightning.browser.*
 import acr.browser.lightning.constant.DEFAULT_ENCODING
-import acr.browser.lightning.constant.PrefKeys
 import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.device.ScreenSize
 import acr.browser.lightning.di.UserPrefs
@@ -410,16 +409,6 @@ class UserPreferences @Inject constructor(
      */
     var ssl by preferences.booleanPreference(R.string.pref_key_ssl_dialog, R.bool.pref_default_ssl_dialog)
 
-    /**
-     * Show second navbar at the bottom of the screen
-     */
-    var navbar by preferences.booleanPreference(R.string.pref_key_second_nav_bar, R.bool.pref_default_second_nav_bar)
-
-    /**
-     * Define close on last tab
-     */
-    var closeOnLastTab by preferences.booleanPreference(R.string.pref_key_close_on_last_tab, R.bool.pref_default_close_on_last_tab)
-
     var imageUrlString by preferences.stringPreference(R.string.pref_key_image_url, "")
 
     /**
@@ -428,19 +417,9 @@ class UserPreferences @Inject constructor(
     var suggestionChoice by preferences.enumPreference(R.string.pref_key_search_suggestions_number, SuggestionNumChoice.FIVE)
 
     /**
-     * Show download dialog before downloading a file
-     */
-    var showDownloadConfirmation by preferences.booleanPreference(R.string.pref_key_show_download_confirmation, R.bool.pref_default_show_download_confirmation)
-
-    /**
      * Define long press on the 'Tabs' icon opens a new tab.
      */
     var longClickTab by preferences.booleanPreference(R.string.pref_key_long_click_tab, R.bool.pref_default_long_click_tab)
-
-    /**
-     * Show "Update available" message when a update is available.
-     */
-    var showUpdate by preferences.booleanPreference(R.string.pref_key_show_update, R.bool.pref_default_show_update)
 
     /**
      * Define if user wants to close the drawer after delete or create an tab automatically.
