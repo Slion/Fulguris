@@ -7,28 +7,28 @@
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.GeneralSettingsFragment"
         app:title="@string/settings_general"
-        app:icon="@drawable/ic_settings" />
+        app:icon="@drawable/ic_settings_oval" />
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.DisplaySettingsFragment"
         app:title="@string/settings_display"
-        app:icon="@drawable/ic_palette"/>
+        app:icon="@drawable/ic_palette_oval" />
     
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AdBlockSettingsFragment"
         app:title="@string/settings_adblock"
         app:summary="@string/settings_summary_content_control"
-        app:icon="@drawable/ic_block" />
+        app:icon="@drawable/ic_block_oval" />
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.PrivacySettingsFragment"
         app:title="@string/settings_privacy"
-        app:icon="@drawable/ic_security" />
+        app:icon="@drawable/ic_security_oval" />
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.BackupSettingsFragment"
         app:title="@string/settings_backup"
-        app:icon="@drawable/ic_backup" />
+        app:icon="@drawable/ic_import_export_oval" />
 
     <!-- Advanced settings are now empty, remove them at some point -->
     <Preference
@@ -50,25 +50,25 @@
         app:fragment="acr.browser.lightning.settings.fragment.AppsSettingsFragment"
         app:summary="@string/settings_summary_apps"
         app:title="@string/settings_title_apps"
-        app:icon="@drawable/ic_apps" />
+        app:icon="@drawable/ic_apps_oval" />
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.DebugSettingsFragment"
         app:title="@string/debug_title"
-        app:icon="@drawable/ic_bug" />
+        app:icon="@drawable/ic_bug_oval" />
 
     <!-- About is traditionally last -->
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.SponsorshipSettingsFragment"
         app:title="@string/settings_contribute"
         app:summary="@string/settings_summary_contribute"
-        app:icon="@drawable/ic_giftcard" />
+        app:icon="@drawable/ic_giftcard_oval" />
 
     <!-- About is traditionally last -->
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.AboutSettingsFragment"
         app:title="@string/settings_about"
-        app:icon="@drawable/ic_about" />
+        app:icon="@drawable/ic_about_oval" />
 
 </PreferenceScreen>
 
