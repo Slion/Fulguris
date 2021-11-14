@@ -35,4 +35,5 @@
     <bool name="pref_default_save_passwords">true</bool>
     <bool name="pref_default_long_click_tab">true</bool>
     <bool name="pref_default_ssl_dialog">true</bool>
+    <bool name="pref_default_swap_drawer">false</bool>
 </resources>

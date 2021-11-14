@@ -116,7 +116,7 @@
             app:iconSpaceReserved="true"/>
 
         <SwitchPreferenceCompat
-            android:defaultValue="true"
+            android:defaultValue="@bool/pref_default_swap_drawer"
             android:key="@string/pref_key_swap_tabs_and_bookmarks"
             android:title="@string/settings_title_swap_bookmarks_and_tabs"
             android:summary="@string/settings_summary_swap_bookmarks_and_tabs"
