@@ -124,43 +124,9 @@
             android:summary="@string/pref_summary_close_drawer"
             app:icon="@drawable/ic_arrow_left_oval" />
 
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/pref_default_tab_list_item_show_close_button"
-            android:key="@string/pref_key_tab_list_item_show_close_button"
-            android:title="@string/pref_title_tab_list_item_show_close_button"
-            android:summary="@string/pref_summary_tab_list_item_show_close_button"
-            app:icon="@drawable/ic_action_delete_oval" />
-
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="last_tab"
-            android:title="@string/close_on_last_tab"
-            app:icon="@drawable/ic_apps_oval" />
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_advanced">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_key_show_download_confirmation"
-            android:title="@string/pref_title_download_dialog"
-            android:summary="@string/recommended"
-            app:singleLineTitle="false"
-            app:icon="@drawable/ic_cloud_download_oval" />
-        <Preference
-            android:key="download"
-            android:title="@string/download"
-            app:icon="@drawable/ic_file_download"
-            app:iconSpaceReserved="false"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_key_show_update"
-            android:title="@string/update_message"
-            android:summary="@string/recommended"
-            app:singleLineTitle="false"
-            app:icon="@drawable/ic_action_refresh_oval" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
