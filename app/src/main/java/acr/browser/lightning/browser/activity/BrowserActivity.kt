@@ -126,7 +126,7 @@ import java.net.URL
 /**
  *
  */
-abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIController, OnClickListener, OnKeyboardVisibilityListener {
+abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIController, OnClickListener {
 
     // Notifications
     lateinit var CHANNEL_ID: String
@@ -330,8 +330,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 logger
         )
 
-        setKeyboardVisibilityListener(this)
-
         initialize(savedInstanceState)
 
         if (BuildConfig.FLAVOR.contains("slionsFullDownload")) {
@@ -365,45 +363,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // Hook in buttons with onClick handler
         iBindingToolbarContent.buttonReload.setOnClickListener(this)
-    }
-
-    /**
-     *
-     */
-    private fun setKeyboardVisibilityListener(onKeyboardVisibilityListener: OnKeyboardVisibilityListener) {
-        val parentView = (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
-        parentView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            private var alreadyOpen = false
-            private val defaultKeyboardHeightDP = 100
-            private val EstimatedKeyboardDP = defaultKeyboardHeightDP + 48
-            private val rect: Rect = Rect()
-            override fun onGlobalLayout() {
-                val estimatedKeyboardHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, EstimatedKeyboardDP.toFloat(), parentView.resources.displayMetrics).toInt()
-                parentView.getWindowVisibleDisplayFrame(rect)
-                val heightDiff: Int = parentView.rootView.height - (rect.bottom - rect.top)
-                val isShown = heightDiff >= estimatedKeyboardHeight
-                if (isShown == alreadyOpen) {
-                    return
-                }
-                alreadyOpen = isShown
-                onKeyboardVisibilityListener.onVisibilityChanged(isShown)
-            }
-        })
-    }
-
-    /**
-     *
-     */
-    override fun onVisibilityChanged(visible: Boolean) {
-        if(userPreferences.navbar){
-            val extraBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-            if(visible){
-                extraBar.visibility = GONE
-            }
-            else{
-                extraBar.visibility = VISIBLE
-            }
-        }
     }
 
     /**
@@ -823,16 +782,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBinding.toolbarInclude.tabBarContainer.isVisible = true
         }
 
-        if (userPreferences.navbar) {
-            iBindingToolbarContent.tabsButton.isVisible = false
-            iBindingToolbarContent.homeButton.isVisible = false
-        }
-
-        if (userPreferences.navbar && !verticalTabBar) {
-            iBindingToolbarContent.homeButton.isVisible = false
-            iBindingToolbarContent.homeButton.isVisible = false
-        }
-
         if (userPreferences.homepageInNewTab) {
             iBindingToolbarContent.homeButton.setOnClickListener {
                 if (isIncognito()) {
@@ -855,8 +804,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         incognitoPageInitializer,
                         true
                     )
-                }
-                else{
+                } else {
                     presenter?.newTab(
                         homePageInitializer,
                         true
@@ -1338,8 +1286,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         updateCookiePreference().subscribeOn(diskScheduler).subscribe()
         proxyUtils.updateProxySettings(this)
 
-        val extraBar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
         if (!verticalTabBar) {
             iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
         }
@@ -1347,49 +1293,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         if (userPreferences.useBottomSheets) {
             iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
             iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getBookmarkDrawer())
-        }
-
-        if (!userPreferences.navbar) {
-            extraBar.visibility = GONE
-        } else {
-            extraBar.visibility = VISIBLE
-            if (!verticalTabBar) {
-                extraBar.menu.removeItem(R.id.tabs)
-                iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
-            }
-            extraBar.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.tabs -> {
-                        openTabs()
-                        true
-                    }
-                    R.id.bookmarks -> {
-                        openBookmarks()
-                        true
-                    }
-                    R.id.forward -> {
-                        tabsManager.currentTab?.goForward()
-                        true
-                    }
-                    R.id.back -> {
-                        tabsManager.currentTab?.goBack()
-                        true
-                    }
-                    R.id.home -> {
-                        if (userPreferences.homepageInNewTab) {
-                            if (isIncognito()) {
-                                presenter?.newTab(incognitoPageInitializer, true)
-                            } else {
-                                presenter?.newTab(homePageInitializer, true)
-                            }
-                        } else {
-                            tabsManager.currentTab?.loadHomePage()
-                        }
-                        true
-                    }
-                    else -> false
-                }
-            }
         }
     }
 
@@ -2840,11 +2743,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.homeButton.setColorFilter(currentToolBarTextColor)
         iBindingToolbarContent.buttonActionBack.setColorFilter(currentToolBarTextColor)
         iBindingToolbarContent.buttonActionForward.setColorFilter(currentToolBarTextColor)
-
-        if (userPreferences.navbar) {
-            iBindingToolbarContent.buttonActionBack.isVisible = false
-            iBindingToolbarContent.buttonActionForward.isVisible = false
-        }
 
         // Needed to delay that as otherwise disabled alpha state didn't get applied
         mainHandler.postDelayed({ setupToolBarButtons() }, 500)

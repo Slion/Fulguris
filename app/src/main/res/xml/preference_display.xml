@@ -64,12 +64,6 @@
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
-        android:key="second_bar"
-        android:title="@string/show_second_bar"
-        app:icon="@drawable/ic_nav_oval" />
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
         android:key="@string/pref_key_black_status_bar"
         android:title="@string/settings_black_status_bar"
         app:iconSpaceReserved="true"/>
