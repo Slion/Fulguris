@@ -66,11 +66,8 @@ class TabsDrawerAdapter(
         if (tab.isForeground) {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
             uiController.changeToolbarBackground(tab.favicon, tab.themeColor, null)
-        } else if (tab.isFrozen) {
-            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.italicText)
-        }
-        else {
-            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.normalText)
+        } else {
+        TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.italicText)
         }
     }
 
