@@ -64,7 +64,6 @@
     <string name="action_blank">صفحة فارغة</string>
     <string name="agent_default">الافتراضي</string>
     <string name="agent_desktop">الكمبيوتر</string>
-    <string name="agent_mobile">الجوال</string>
     <string name="agent_custom">مخصص</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">Web View</string>

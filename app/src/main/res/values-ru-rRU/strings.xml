@@ -64,7 +64,6 @@
     <string name="action_blank">Пустая страница</string>
     <string name="agent_default">По умолчанию</string>
     <string name="agent_desktop">Настольный ПК</string>
-    <string name="agent_mobile">Мобильный</string>
     <string name="agent_custom">Выбрать</string>
     <string name="agent_system">Система</string>
     <string name="agent_web_view">Web View</string>

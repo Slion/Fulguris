@@ -64,7 +64,6 @@
     <string name="action_blank">空白页</string>
     <string name="agent_default">默认</string>
     <string name="agent_desktop">桌面端</string>
-    <string name="agent_mobile">移动端</string>
     <string name="agent_custom">自定义</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">Web View</string>

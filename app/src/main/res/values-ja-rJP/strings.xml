@@ -64,7 +64,6 @@
     <string name="action_blank">空白ページ</string>
     <string name="agent_default">デフォルト</string>
     <string name="agent_desktop">デスクトップ</string>
-    <string name="agent_mobile">モバイル</string>
     <string name="agent_custom">カスタム</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">Web View</string>

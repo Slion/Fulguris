@@ -64,7 +64,6 @@
     <string name="action_blank">Prázdná stránka</string>
     <string name="agent_default">Výchozí</string>
     <string name="agent_desktop">Počítač</string>
-    <string name="agent_mobile">Mobil</string>
     <string name="agent_custom">Vlastní</string>
     <string name="agent_system">Systém</string>
     <string name="agent_web_view">WebView</string>

@@ -411,5 +411,86 @@ colorControlNormal:
     </style>
 
 
+    <style name="Accent_Pink">
+        <item name="colorSecondary">#E91E63</item>
+        <item name="colorAccent">#E91E63</item>
+    </style>
+
+    <style name="Accent_Puple">
+        <item name="colorSecondary">#9C27B0</item>
+        <item name="colorAccent">#9C27B0</item>
+    </style>
+
+    <style name="Accent_Deep_Purple">
+        <item name="colorSecondary">#673AB7</item>
+        <item name="colorAccent">#673AB7</item>
+    </style>
+
+    <style name="Accent_Indigo">
+        <item name="colorSecondary">#3F51B5</item>
+        <item name="colorAccent">#3F51B5</item>
+    </style>
+
+    <style name="Accent_Blue">
+        <item name="colorSecondary">#2196F3</item>
+        <item name="colorAccent">#2196F3</item>
+    </style>
+
+    <style name="Accent_Light_Blue">
+        <item name="colorSecondary">#03A9F4</item>
+        <item name="colorAccent">#03A9F4</item>
+    </style>
+
+    <style name="Accent_Cyan">
+        <item name="colorSecondary">#00BCD4</item>
+        <item name="colorAccent">#00BCD4</item>
+    </style>
+
+    <style name="Accent_Teal">
+        <item name="colorSecondary">#009688</item>
+        <item name="colorAccent">#009688</item>
+    </style>
+
+    <style name="Accent_Green">
+        <item name="colorSecondary">#4CAF50</item>
+        <item name="colorAccent">#4CAF50</item>
+    </style>
+
+    <style name="Accent_Light_Green">
+        <item name="colorSecondary">#8BC34A</item>
+        <item name="colorAccent">#8BC34A</item>
+    </style>
+
+    <style name="Accent_Lime">
+        <item name="colorSecondary">#C0CA33</item>
+        <item name="colorAccent">#C0CA33</item>
+    </style>
+
+    <style name="Accent_Yellow">
+        <item name="colorSecondary">#FDD835</item>
+        <item name="colorAccent">#FDD835</item>
+    </style>
+
+    <style name="Accent_Amber">
+        <item name="colorSecondary">#FFB300</item>
+        <item name="colorAccent">#FFB300</item>
+    </style>
+
+    <style name="Accent_Orange">
+        <item name="colorSecondary">#FF9800</item>
+        <item name="colorAccent">#FF9800</item>
+    </style>
+
+    <style name="Accent_Deep_Orange">
+        <item name="colorSecondary">#FF5722</item>
+        <item name="colorAccent">#FF5722</item>
+    </style>
+
+    <style name="Accent_Brown">
+        <item name="colorSecondary">#795548</item>
+        <item name="colorAccent">#795548</item>
+    </style>
+
+
 
 </resources>

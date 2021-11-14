@@ -64,7 +64,6 @@
     <string name="action_blank">Página en blanco</string>
     <string name="agent_default">Por defecto</string>
     <string name="agent_desktop">Escritorio</string>
-    <string name="agent_mobile">Móvil</string>
     <string name="agent_custom">Personalizado</string>
     <string name="agent_system">Sistema</string>
     <string name="agent_web_view">Web View</string>

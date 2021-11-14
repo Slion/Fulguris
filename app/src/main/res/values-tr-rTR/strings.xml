@@ -64,7 +64,6 @@
     <string name="action_blank">Boş sayfa</string>
     <string name="agent_default">Varsayılan</string>
     <string name="agent_desktop">Masaüstü</string>
-    <string name="agent_mobile">Mobil</string>
     <string name="agent_custom">Özel</string>
     <string name="agent_system">Sistem</string>
     <string name="agent_web_view">Web Görünümü</string>

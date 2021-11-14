@@ -64,7 +64,6 @@
     <string name="action_blank">Pagina vuota</string>
     <string name="agent_default">Predefinito</string>
     <string name="agent_desktop">Scrivania</string>
-    <string name="agent_mobile">Cellulare</string>
     <string name="agent_custom">Personalizzato</string>
     <string name="agent_system">Sistema</string>
     <string name="agent_web_view">Web View</string>

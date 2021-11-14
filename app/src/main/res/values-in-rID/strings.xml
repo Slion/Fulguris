@@ -64,7 +64,6 @@
     <string name="action_blank">Halaman kosong</string>
     <string name="agent_default">Bawaan</string>
     <string name="agent_desktop">Desktop</string>
-    <string name="agent_mobile">Ponsel</string>
     <string name="agent_custom">Buat khas sendiri</string>
     <string name="agent_system">Sistem</string>
     <string name="agent_web_view">Tampilan Web</string>
