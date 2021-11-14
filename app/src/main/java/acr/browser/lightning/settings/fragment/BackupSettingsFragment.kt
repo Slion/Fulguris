@@ -13,10 +13,7 @@ import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
-import acr.browser.lightning.extensions.fileName
-import acr.browser.lightning.extensions.resizeAndShow
-import acr.browser.lightning.extensions.snackbar
-import acr.browser.lightning.extensions.toast
+import acr.browser.lightning.extensions.*
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.utils.Utils
@@ -119,6 +116,8 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     private fun addPreferenceSessionExport(aSession: Session) {
         // We invite user to installer our Google Play Store release
         val pref = Preference(context)
+
+        pref.icon = requireContext().drawable(R.drawable.ic_file_export_oval)
 
         // Show tab count if any
         if (aSession.tabCount>0) {
