@@ -3,15 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/bookmark_settings">
-        <Preference
-            android:key="export_bookmark"
-            android:title="@string/export_bookmarks"/>
+
         <Preference
             android:key="import_bookmark"
-            android:title="@string/import_backup"/>
+            android:title="@string/import_backup"
+            app:icon="@drawable/ic_file_import_oval" />
+
+        <Preference
+            android:key="export_bookmark"
+            android:title="@string/export_bookmarks"
+            app:icon="@drawable/ic_file_export_oval" />
+
         <Preference
             android:key="delete_bookmarks"
-            android:title="@string/action_delete_all_bookmarks"/>
+            android:title="@string/action_delete_all_bookmarks"
+            app:icon="@drawable/ic_restore_page_oval" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -36,9 +43,11 @@
 
     <PreferenceCategory
         android:title="@string/action_sessions">
+
         <Preference
             android:key="@string/pref_key_sessions_import"
-            android:title="@string/generic_import"/>
+            android:title="@string/generic_import"
+            app:icon="@drawable/ic_file_import_oval" />
         <!--
         <Preference
             android:key="@string/pref_key_sessions_reset"
