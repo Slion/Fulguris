@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="non-default-test">
 
+    <PreferenceCategory
+        android:title="@string/settings_general">
+
     <!-- Empty default: we use an empty string to indicate "system default" language being selected -->
     <!--suppress AndroidDomInspection -->
     <acr.browser.lightning.settings.preferences.LocaleListPreference
@@ -30,6 +33,8 @@
         android:key="suggestions_number"
         android:title="@string/search_suggestions"
         app:icon="@drawable/ic_list_number_oval" />
+
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/home">
