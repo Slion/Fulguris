@@ -10,6 +10,13 @@
         app:icon="@drawable/ic_videocam"/>
 
     <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="start_incognito"
+        android:title="@string/start_incognito"
+        app:singleLineTitle="false"
+        app:icon="@drawable/ic_incognito_oval" />
+
+    <SwitchPreferenceCompat
         android:defaultValue="@bool/pref_default_crash_report"
         android:key="@string/pref_key_crash_report"
         android:title="@string/pref_title_crash_report"
@@ -25,52 +32,64 @@
         app:iconSpaceReserved="false"
         app:icon="@drawable/ic_query_stats"/>
 
-    <CheckBoxPreference
+    <SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="location"
         android:title="@string/location"/>
-    <CheckBoxPreference
+
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="third_party"
         android:title="@string/third_party"/>
-    <CheckBoxPreference
+
+    <SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="password"
         android:summary="@string/recommended"
         android:title="@string/password"/>
-    <CheckBoxPreference
+
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="do_not_track"
         android:title="@string/do_not_track"/>
-    <CheckBoxPreference
+
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="remove_identifying_headers"
         android:title="@string/remove_identifying_headers"/>
-    <CheckBoxPreference
+
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="clear_cache_exit"
         android:title="@string/cache"/>
-    <CheckBoxPreference
+
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="clear_history_exit"
         android:title="@string/clear_history_exit"/>
-    <CheckBoxPreference
+
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="clear_cookies_exit"
         android:title="@string/clear_cookies_exit"/>
-    <CheckBoxPreference
+
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="clear_webstorage_exit"
         android:title="@string/clear_web_storage_exit"/>
+
     <Preference
         android:key="clear_cache"
         android:title="@string/clear_cache"/>
+
     <Preference
         android:key="clear_history"
         android:title="@string/clear_history"/>
+
     <Preference
         android:key="clear_cookies"
         android:title="@string/clear_cookies"/>
+
     <Preference
         android:key="clear_webstorage"
         android:title="@string/clear_web_storage"/>
