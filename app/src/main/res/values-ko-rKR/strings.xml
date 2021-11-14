@@ -64,7 +64,6 @@
     <string name="action_blank">빈 페이지</string>
     <string name="agent_default">기본값</string>
     <string name="agent_desktop">데스크탑</string>
-    <string name="agent_mobile">모바일</string>
     <string name="agent_custom">임의의 UA</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">Web View</string>

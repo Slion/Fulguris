@@ -64,7 +64,6 @@
     <string name="action_blank">Üres oldal</string>
     <string name="agent_default">Alapértelmezett</string>
     <string name="agent_desktop">Asztali</string>
-    <string name="agent_mobile">Mobil</string>
     <string name="agent_custom">Egyéni</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">Web View</string>

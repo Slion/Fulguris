@@ -64,7 +64,6 @@
     <string name="action_blank">空白頁面</string>
     <string name="agent_default">預設</string>
     <string name="agent_desktop">桌上型電腦</string>
-    <string name="agent_mobile">行動裝置</string>
     <string name="agent_custom">自訂</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">Web View</string>

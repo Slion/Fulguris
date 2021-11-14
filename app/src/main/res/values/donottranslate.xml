@@ -98,7 +98,21 @@
     <string name="pref_key_sessions_import">pref_key_sessions_import</string>
 <!--    <string name="pref_key_sessions_export">pref_key_sessions_export</string>
     <string name="pref_key_sessions_reset">pref_key_sessions_reset</string>
--->    
+-->
+
+    <!-- Settings keys -->
+    <string name="pref_key_accent">pref_key_accent</string>
+    <string name="pref_key_close_drawer">pref_key_close_drawer</string>
+    <string name="pref_key_always_incognito">pref_key_always_incognito</string>
+    <string name="pref_key_block_js">pref_key_block_js</string>
+    <string name="pref_key_force_zoom">pref_key_force_zoom</string>
+    <string name="pref_key_image_url">pref_key_image_url</string>
+    <string name="pref_key_long_click_tab">pref_key_long_click_tab</string>
+    <string name="pref_key_search_suggestions_number">pref_key_search_suggestions_number</string>
+    <string name="pref_key_ssl_dialog">pref_key_ssl_dialog</string>
+    <string name="pref_key_use_js_block">pref_key_use_js_block</string>
+    <string name="pref_key_use_site_block">pref_key_use_site_block</string>
+
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>
@@ -121,5 +135,15 @@
         <item>@string/block_remote_frequency_weekly</item>
         <item>@string/block_remote_frequency_monthly</item>
     </string-array>
+
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="ten">10</string>
 
 </resources>

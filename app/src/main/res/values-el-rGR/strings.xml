@@ -64,7 +64,6 @@
     <string name="action_blank">Κενή σελίδα</string>
     <string name="agent_default">Προεπιλογή</string>
     <string name="agent_desktop">Desktop</string>
-    <string name="agent_mobile">Mobile</string>
     <string name="agent_custom">Συγκεκριμένο</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">Web View</string>

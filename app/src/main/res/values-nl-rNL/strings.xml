@@ -64,7 +64,6 @@
     <string name="action_blank">Witte pagina</string>
     <string name="agent_default">Standaard</string>
     <string name="agent_desktop">Desktop</string>
-    <string name="agent_mobile">Mobile</string>
     <string name="agent_custom">Aangepast</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">Web View</string>
