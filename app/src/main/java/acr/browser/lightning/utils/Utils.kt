@@ -49,7 +49,7 @@ fun adjustBottomSheet(aDialog : BottomSheetDialog) {
     val fieldBottomField = BottomSheetDialog::class.java.getDeclaredField("bottomSheet")
     fieldBottomField.isAccessible = true
     // Eventually call setPaddingForPosition from EdgeToEdgeCallback instance passing bottom sheet view as parameter
-    methodSetPaddingForPosition.invoke(fieldEdgeToEdgeCallback.get(aDialog),fieldBottomField.get(aDialog))
+    //methodSetPaddingForPosition.invoke(fieldEdgeToEdgeCallback.get(aDialog),fieldBottomField.get(aDialog))
 }
 
 
