@@ -6,6 +6,7 @@ import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.AbpUpdateMode
 import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.di.injector
+import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.extensions.withSingleChoiceItems
@@ -137,7 +138,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             // "new list" button
             val newList = Preference(context)
             newList.title = resources.getString(R.string.add_blocklist)
-            newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_action_plus,requireActivity().theme)
+            newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_add_oval,requireActivity().theme)
             newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
@@ -158,6 +159,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 //                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
 //                pref.isChecked = entity.enabled
                 entityPref.title = entity.title
+                entityPref.icon = requireContext().drawable(R.drawable.ic_import_export_oval)
                 entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockList(entity)
                     true
@@ -172,7 +174,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     private fun updateSummary(entity: AbpEntity) {
         if (entity.lastLocalUpdate > 0)
-            entityPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance().format(Date(entity.lastLocalUpdate)))
+            entityPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(Date(entity.lastLocalUpdate)))
     }
 
     // update entity and adjust displayed last update time
