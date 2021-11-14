@@ -9,10 +9,10 @@ package acr.browser.lightning.search.engine
 import acr.browser.lightning.R
 
 /**
- * The Naver search engine.
+ * The Yahoo search engine.
  */
-class NaverSearch : BaseSearchEngine(
-    "file:///android_asset/naver.webp",
-    "https://search.naver.com/search.naver?ie=utf8&query=",
-    R.string.search_engine_naver
+class YahooNoJSSearch : BaseSearchEngine(
+    "file:///android_asset/yahoo.webp",
+    "https://search.yahoo.com/mobile/s?nojs=1&p=",
+    R.string.search_engine_yahoo_no_js
 )

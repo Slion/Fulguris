@@ -42,18 +42,28 @@ class SearchEngineProvider @Inject constructor(
      */
     fun provideSearchEngine(): BaseSearchEngine =
         when (userPreferences.searchChoice) {
-            0 -> CustomSearch(userPreferences.searchUrl)
+            0 -> CustomSearch(userPreferences.searchUrl, userPreferences)
             1 -> GoogleSearch()
             2 -> AskSearch()
-            3 -> BingSearch()
-            4 -> YahooSearch()
-            5 -> StartPageSearch()
-            6 -> StartPageMobileSearch()
-            7 -> DuckSearch()
+            3 -> BaiduSearch()
+            4 -> BingSearch()
+            5 -> BraveSearch()
+            6 -> DuckSearch()
+            7 -> DuckNoJSSearch()
             8 -> DuckLiteSearch()
-            9 -> BaiduSearch()
-            10 -> YandexSearch()
-            11 -> NaverSearch()
+            9 -> DuckLiteNoJSSearch()
+            10 -> EcosiaSearch()
+            11 -> EkoruSearch()
+            12 -> MojeekSearch()
+            13 -> NaverSearch()
+            14 -> QwantSearch()
+            15 -> QwantLiteSearch()
+            16 -> SearxSearch()
+            17 -> StartPageSearch()
+            18 -> StartPageMobileSearch()
+            19 -> YahooSearch()
+            20 -> YahooNoJSSearch()
+            21 -> YandexSearch()
             else -> GoogleSearch()
         }
 
@@ -65,15 +75,25 @@ class SearchEngineProvider @Inject constructor(
             is CustomSearch -> 0
             is GoogleSearch -> 1
             is AskSearch -> 2
-            is BingSearch -> 3
-            is YahooSearch -> 4
-            is StartPageSearch -> 5
-            is StartPageMobileSearch -> 6
-            is DuckSearch -> 7
+            is BaiduSearch -> 3
+            is BingSearch -> 4
+            is BraveSearch -> 5
+            is DuckSearch -> 6
+            is DuckNoJSSearch -> 7
             is DuckLiteSearch -> 8
-            is BaiduSearch -> 9
-            is YandexSearch -> 10
-            is NaverSearch -> 11
+            is DuckLiteNoJSSearch -> 9
+            is EcosiaSearch -> 10
+            is EkoruSearch -> 11
+            is MojeekSearch -> 12
+            is NaverSearch -> 13
+            is QwantSearch -> 14
+            is QwantLiteSearch -> 15
+            is SearxSearch -> 16
+            is StartPageSearch -> 17
+            is StartPageMobileSearch -> 18
+            is YahooSearch -> 19
+            is YahooNoJSSearch -> 20
+            is YandexSearch -> 21
             else -> throw UnsupportedOperationException("Unknown search engine provided: " + searchEngine.javaClass)
         }
 
@@ -81,18 +101,28 @@ class SearchEngineProvider @Inject constructor(
      * Provide a list of all supported search engines.
      */
     fun provideAllSearchEngines(): List<BaseSearchEngine> = listOf(
-        CustomSearch(userPreferences.searchUrl),
+        CustomSearch(userPreferences.searchUrl, userPreferences),
         GoogleSearch(),
         AskSearch(),
+        BaiduSearch(),
         BingSearch(),
-        YahooSearch(),
+        BraveSearch(),
+        DuckSearch(),
+        DuckNoJSSearch(),
+        DuckLiteSearch(),
+        DuckLiteNoJSSearch(),
+        EcosiaSearch(),
+        EkoruSearch(),
+        MojeekSearch(),
+        NaverSearch(),
+        QwantSearch(),
+        QwantLiteSearch(),
+        SearxSearch(),
         StartPageSearch(),
         StartPageMobileSearch(),
-        DuckSearch(),
-        DuckLiteSearch(),
-        BaiduSearch(),
-        YandexSearch(),
-        NaverSearch()
+        YahooSearch(),
+        YahooNoJSSearch(),
+        YandexSearch()
     )
 
 }

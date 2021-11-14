@@ -9,10 +9,10 @@ package acr.browser.lightning.search.engine
 import acr.browser.lightning.R
 
 /**
- * The Naver search engine.
+ * The Ekoru search engine.
  */
-class NaverSearch : BaseSearchEngine(
-    "file:///android_asset/naver.webp",
-    "https://search.naver.com/search.naver?ie=utf8&query=",
-    R.string.search_engine_naver
+class EkoruSearch : BaseSearchEngine(
+    "file:///android_asset/ekoru.webp",
+    "https://www.ekoru.org/?ext=styx&q=",
+    R.string.search_engine_ekoru
 )
