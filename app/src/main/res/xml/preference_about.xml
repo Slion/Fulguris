@@ -28,6 +28,11 @@
                     android:value="SELF" />
             </intent>
         </Preference>
+        <Preference
+            android:key="pref_webview"
+            android:title="@string/webview_version"
+            app:icon="@drawable/ic_settings_oval">
+        </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/licenses">
         <Preference
