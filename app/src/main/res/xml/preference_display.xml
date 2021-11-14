@@ -201,6 +201,4 @@
             app:updatesContinuously="true" />
     </PreferenceCategory>
 
-
-
 </PreferenceScreen>
