@@ -36,6 +36,7 @@
     <bool name="pref_default_homepage_in_new_tab">true</bool>
     <bool name="pref_default_bookmark_in_new_tab">true</bool>
     <bool name="pref_default_toolbars_bottom">false</bool>
+    <bool name="pref_default_swap_drawer">true</bool>
 
     <bool name="pref_default_on_tab_close_show_snackbar">true</bool>
     <bool name="pref_default_on_tab_close_vibrate">false</bool>
