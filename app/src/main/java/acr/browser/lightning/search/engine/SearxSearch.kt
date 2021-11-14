@@ -9,10 +9,10 @@ package acr.browser.lightning.search.engine
 import acr.browser.lightning.R
 
 /**
- * The Naver search engine.
+ * The Searx search engine.
  */
-class NaverSearch : BaseSearchEngine(
-    "file:///android_asset/naver.webp",
-    "https://search.naver.com/search.naver?ie=utf8&query=",
-    R.string.search_engine_naver
+class SearxSearch : BaseSearchEngine(
+    "file:///android_asset/searx.webp",
+    "https://searx.prvcy.eu/search?q=",
+    R.string.search_engine_searx
 )

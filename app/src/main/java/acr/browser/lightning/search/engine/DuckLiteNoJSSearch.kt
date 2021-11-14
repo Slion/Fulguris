@@ -9,10 +9,10 @@ package acr.browser.lightning.search.engine
 import acr.browser.lightning.R
 
 /**
- * The Naver search engine.
+ * The DuckDuckGo Lite search engine.
  */
-class NaverSearch : BaseSearchEngine(
-    "file:///android_asset/naver.webp",
-    "https://search.naver.com/search.naver?ie=utf8&query=",
-    R.string.search_engine_naver
+class DuckLiteNoJSSearch : BaseSearchEngine(
+    "file:///android_asset/duckduckgo.webp",
+    "https://duckduckgo.com/lite/?q=",
+    R.string.search_engine_duckduckgo_lite_no_js
 )

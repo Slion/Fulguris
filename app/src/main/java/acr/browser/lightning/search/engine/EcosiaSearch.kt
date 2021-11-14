@@ -9,10 +9,10 @@ package acr.browser.lightning.search.engine
 import acr.browser.lightning.R
 
 /**
- * The Naver search engine.
+ * The Ecosia search engine.
  */
-class NaverSearch : BaseSearchEngine(
-    "file:///android_asset/naver.webp",
-    "https://search.naver.com/search.naver?ie=utf8&query=",
-    R.string.search_engine_naver
+class EcosiaSearch : BaseSearchEngine(
+    "file:///android_asset/ecosia.webp",
+    "https://www.ecosia.org/search?q=",
+    R.string.search_engine_ecosia
 )

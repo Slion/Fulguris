@@ -9,10 +9,10 @@ package acr.browser.lightning.search.engine
 import acr.browser.lightning.R
 
 /**
- * The Naver search engine.
+ * The Qwant Lite search engine.
  */
-class NaverSearch : BaseSearchEngine(
-    "file:///android_asset/naver.webp",
-    "https://search.naver.com/search.naver?ie=utf8&query=",
-    R.string.search_engine_naver
+class QwantLiteSearch : BaseSearchEngine(
+    "file:///android_asset/qwant.webp",
+    "https://lite.qwant.com/?q=",
+    R.string.search_engine_qwant_lite
 )
