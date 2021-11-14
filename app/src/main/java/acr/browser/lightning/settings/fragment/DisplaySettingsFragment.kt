@@ -78,12 +78,6 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                 onClick = this::showUrlBoxDialogPicker
         )
 
-        switchPreference(
-            preference = SETTINGS_NAVBAR,
-            isChecked = userPreferences.navbar,
-            onCheckChange = { userPreferences.navbar = it }
-        )
-
     }
 
 
@@ -260,8 +254,6 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
     }
 
     companion object {
-
-        private const val SETTINGS_NAVBAR = "second_bar"
 
         private const val XX_LARGE = 30.0f
         private const val X_SMALL = 10.0f
