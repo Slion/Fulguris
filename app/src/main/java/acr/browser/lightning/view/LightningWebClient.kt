@@ -344,6 +344,12 @@ class LightningWebClient(
     }
 
     override fun onReceivedSslError(webView: WebView, handler: SslErrorHandler, error: SslError) {
+        val urlMatcher = webView.url?.replace(Regex("^https?:\\/\\/"), "")
+        if (!urlMatcher?.let { error.url.contains(it) }!!) {
+            handler.proceed()
+            webView.url?.let { sslWarningPreferences.rememberBehaviorForDomain(it, SslWarningPreferences.Behavior.PROCEED) }
+        }
+
         urlWithSslError = webView.url
         sslState = SslState.Invalid(error)
 
