@@ -304,6 +304,7 @@
         <item name="checkedIcon">@drawable/ic_circle</item>
         <item name="checkedIconTint">?attr/colorSecondary</item>
         <item name="cardForegroundColor">@color/card_view_foreground</item>
+        <item name="rippleColor">@color/card_view_ripple</item>
     </style>
 
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">

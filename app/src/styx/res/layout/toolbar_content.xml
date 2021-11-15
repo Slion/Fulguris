@@ -68,6 +68,7 @@
             app:tabIconColor="?attr/colorControlNormal"
             app:tabIconTextSize="9dp"
             android:contentDescription="@string/tabs"
+            app:tooltipText="@{@string/tabs}"
             android:nextFocusDown="@id/web_view" />
 
         <ImageButton

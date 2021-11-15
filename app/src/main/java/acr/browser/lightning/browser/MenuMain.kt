@@ -111,7 +111,7 @@ class MenuMain : PopupWindow {
         iBinding.menuItemWebPage.isVisible = true
         // Basic items
         iBinding.menuItemSessions.isVisible = !iIsIncognito
-        iBinding.menuItemBookmarks.isVisible = true
+        //iBinding.menuItemBookmarks.isVisible = true
         iBinding.menuItemHistory.isVisible = true
         iBinding.menuItemDownloads.isVisible = true
         iBinding.menuItemNewTab.isVisible = true

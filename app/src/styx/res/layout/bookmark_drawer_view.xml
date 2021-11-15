@@ -37,7 +37,7 @@
                     android:focusable="false"
                     android:clickable="false"
                     android:contentDescription="@null"
-                    app:srcCompat="@drawable/ic_bookmarks" />
+                    app:srcCompat="@drawable/ic_bookmark_border" />
 
                 <TextView
                     android:id="@+id/textTitle"
