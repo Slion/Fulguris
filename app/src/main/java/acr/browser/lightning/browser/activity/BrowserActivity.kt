@@ -492,7 +492,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemIncognito) { executeAction(R.id.action_incognito) }
             onMenuItemClicked(iBinding.menuItemHistory) { executeAction(R.id.action_history) }
             onMenuItemClicked(iBinding.menuItemDownloads) { executeAction(R.id.action_downloads) }
-            onMenuItemClicked(iBinding.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
+            //onMenuItemClicked(iBinding.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
             onMenuItemClicked(iBinding.menuItemExit) { executeAction(R.id.action_exit) }
             //
             onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
@@ -502,7 +502,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
             onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
             onMenuItemClicked(iBinding.menuShortcutBack) { executeAction(R.id.action_back) }
-            //onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+            onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
         }
     }
 

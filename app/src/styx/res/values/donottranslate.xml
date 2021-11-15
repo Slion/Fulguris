@@ -18,9 +18,32 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Styx Browser</string>
-    <string name="pref_summary_contact_us">support@slions.net</string>
-    <string name="url_contact_us">mailto:support@slions.net?subject=Fulguris</string>
-    <string name="url_app_home_page">http://fulguris.slions.net</string>
-    <string name="url_app_updates">https://slions.net/resources/fulguris.10/updates</string>
+    <string name="pref_summary_contact_us">jamal2362@gmail.com</string>
+    <string name="url_contact_us">mailto:jamal2362@gmail.com?subject=Styx</string>
+    <string name="url_app_home_page">https://github.com/jamal2362/Fulguris</string>
+    <string name="url_app_updates">https://github.com/jamal2362/Fulguris/releases</string>
 
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="ten">10</string>
+
+    <!-- Settings keys -->
+    <string name="pref_key_accent">pref_key_accent</string>
+    <string name="pref_key_close_drawer">pref_key_close_drawer</string>
+    <string name="pref_key_always_incognito">pref_key_always_incognito</string>
+    <string name="pref_key_block_js">pref_key_block_js</string>
+    <string name="pref_key_force_zoom">pref_key_force_zoom</string>
+    <string name="pref_key_image_url">pref_key_image_url</string>
+    <string name="pref_key_javascript">pref_key_javascript</string>
+    <string name="pref_key_long_click_tab">pref_key_long_click_tab</string>
+    <string name="pref_key_search_suggestions_number">pref_key_search_suggestions_number</string>
+    <string name="pref_key_ssl_dialog">pref_key_ssl_dialog</string>
+    <string name="pref_key_use_js_block">pref_key_use_js_block</string>
+    <string name="pref_key_use_site_block">pref_key_use_site_block</string>
 </resources>
