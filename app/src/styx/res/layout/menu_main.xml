@@ -75,13 +75,14 @@
             <ImageButton
                 android:id="@+id/menuShortcutHome"
                 style="?android:attr/actionButtonStyle"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/action_show_homepage"
                 app:tooltipText="@{@string/action_show_homepage}"
-                app:srcCompat="@drawable/ic_action_home" />
+                app:srcCompat="@drawable/ic_action_home"
+                android:visibility="gone"
+                />
 
         </LinearLayout>
 
@@ -153,6 +154,14 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         android:background="?attr/selectableItemBackground"
                         app:drawableStartCompat="@drawable/ic_sessions"
                         android:text="@string/action_sessions" />
+
+                    <TextView
+                        android:id="@+id/menuItemBookmarks"
+                        style="@style/BrowserTextMenuItem"
+                        app:drawableStartCompat="@drawable/ic_bookmarks"
+                        android:text="@string/action_bookmarks"
+                        android:visibility="gone"
+                        />
 
                     <View
                         android:layout_width="match_parent"

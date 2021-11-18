@@ -62,15 +62,17 @@
                 app:tooltipText="@{@string/action_forward}"
                 app:srcCompat="@drawable/ic_action_forward" />
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/menuShortcutBookmarks"-->
-<!--                style="?android:attr/actionButtonStyle"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:contentDescription="@string/action_bookmarks"-->
-<!--                app:tooltipText="@{@string/action_bookmarks}"-->
-<!--                app:srcCompat="@drawable/ic_bookmark_border" />-->
+            <ImageButton
+                android:id="@+id/menuShortcutBookmarks"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_bookmarks"
+                app:tooltipText="@{@string/action_bookmarks}"
+                app:srcCompat="@drawable/round_star_border_24"
+                android:visibility="gone"
+                />
 
             <ImageButton
                 android:id="@+id/menuShortcutHome"

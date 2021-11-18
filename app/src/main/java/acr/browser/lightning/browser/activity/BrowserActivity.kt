@@ -492,7 +492,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemIncognito) { executeAction(R.id.action_incognito) }
             onMenuItemClicked(iBinding.menuItemHistory) { executeAction(R.id.action_history) }
             onMenuItemClicked(iBinding.menuItemDownloads) { executeAction(R.id.action_downloads) }
-            //onMenuItemClicked(iBinding.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
+            onMenuItemClicked(iBinding.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
             onMenuItemClicked(iBinding.menuItemExit) { executeAction(R.id.action_exit) }
             //
             onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
