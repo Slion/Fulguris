@@ -30,6 +30,13 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
+    <queries>
+        <intent>
+            <!-- Needed to be able to launch third party applications -->
+            <action android:name="android.intent.action.MAIN" />
+        </intent>
+    </queries>
+
     <application
         android:name=".BrowserApp"
         android:allowBackup="true"

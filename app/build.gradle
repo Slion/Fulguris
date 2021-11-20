@@ -119,9 +119,8 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 150
-            versionName "1.7.9"
-            archivesBaseName = "Fulguris-v$versionName"
+            versionCode 151
+            versionName "1.7.10"
         }
 
         styx {
@@ -129,7 +128,6 @@ android {
             applicationId "com.jamal2367.styx"
             versionCode 0
             versionName "20.0"
-            archivesBaseName = "Styx-v$versionName"
         }
 
         /*
@@ -187,16 +185,6 @@ android {
 
     }
 
-    /*
-    variantFilter { variant ->
-        def names = variant.flavors*.name
-
-        if (names.contains("fakeData") && variant.buildType.name == "release") {
-            variant.ignore = true
-        }
-    }
-    */
-
     // Filter out invalid variants
     variantFilter { variant ->
         def names = variant.flavors*.name
@@ -206,6 +194,30 @@ android {
                 || (names.contains("styx") && !(names.contains("undef") && names.contains("base")))) {
             // Gradle ignores any variants that satisfy the conditions above.
             setIgnore(true)
+        }
+    }
+
+    // Taken from: https://stackoverflow.com/a/59583066/3969362
+    // Needed to customize our APK file name per flavor
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            //def appId = variant.applicationId// com.exampleFree.app OR com.examplePaid.app
+            def versionName = variant.versionName
+            //def versionCode = variant.versionCode // e.g 1.0
+            //def flavorName = variant.flavorName // e. g. Free
+            //def buildType = variant.buildType.name // e. g. debug
+            //def variantName = variant.name // e. g. FreeDebug
+
+            // Just replace our archive base name, which by default is "app" with our own format according to flavor
+            if (variant.flavorName.contains("slions")) {
+                //println("Use Fulguris archive name")
+                outputFileName = outputFileName.replaceFirst("^$archivesBaseName", "Fulguris-v$versionName")
+            } else if (variant.flavorName.contains("styx")) {
+                //println("Use Styx archive name")
+                outputFileName = outputFileName.replaceFirst("^$archivesBaseName", "Styx-v$versionName")
+            }
+            //customize your app name by using variables
+            //outputFileName = "${variantName}.apk"
         }
     }
 
