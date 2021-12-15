@@ -1,29 +1,29 @@
 package acr.browser.lightning.database
 
+import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.preference.delegates.booleanPreference
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
+import android.os.Build
+import androidx.core.content.edit
 
-// domain settings backed by one shared preferences file per domain
-//  use for persistent storage of sites for dark mode, blocking/allowing js or ads, maybe other things
-class DomainSettings(applicationContext: Context, url: String) {
-    val prefs: SharedPreferences = applicationContext.getSharedPreferences(Uri.parse(url).host ?: "default", Context.MODE_PRIVATE)
+/**
+ * domain settings backed by one shared preferences file per domain
+ * use for persistent storage of sites for dark mode, blocking/allowing js or ads, maybe other things
+ */
+class DomainSettings(val host: String?, private val context: Context, userPrefs: UserPreferences) {
+    private val prefs: SharedPreferences = context.getSharedPreferences(host ?: "defaultHost", Context.MODE_PRIVATE)
 
-    fun set(setting: String, tf: Boolean) {
-        prefs.edit().putBoolean(setting, tf).apply()
-    }
+    var darkMode by prefs.booleanPreference(DARK_MODE, userPrefs.darkModeDefault)
 
-    fun get(setting: String, default: Boolean): Boolean {
-        return prefs.getBoolean(setting, default)
-    }
+    var desktopMode by prefs.booleanPreference(DESKTOP_MODE, userPrefs.desktopModeDefault)
 
     fun remove(setting: String) {
-        prefs.edit().remove(setting).apply()
-        if (prefs.all.isEmpty())
-            clear() // remove file if we removed the last preference
+        prefs.edit { remove(setting) }
+        // remove file if we removed the last preference (only on N and above)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && prefs.all.isEmpty())
+            host?.let { context.deleteSharedPreferences(it) }
     }
-
-    fun clear() = prefs.edit().clear().apply()
 
     companion object {
         const val DARK_MODE = "dark_mode"
