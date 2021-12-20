@@ -5,6 +5,7 @@ import acr.browser.lightning.browser.sessions.Session
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.DiskScheduler
 import acr.browser.lightning.di.MainScheduler
+import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.NewTabPosition
@@ -20,12 +21,15 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
+import java.io.File
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * A manager singleton that holds all the [LightningView] and tracks the current tab. It handles
  * creation, deletion, restoration, state saving, and switching of tabs and sessions.
  */
+@Singleton
 class TabsManager @Inject constructor(
         private val application: Application,
         private val searchEngineProvider: SearchEngineProvider,
@@ -224,10 +228,18 @@ class TabsManager @Inject constructor(
             .subscribeOn(mainScheduler)
             .observeOn(databaseScheduler)
             .flatMapObservable {
-                if (incognito) {
-                    initializeIncognitoMode(it.value())
-                } else {
-                    initializeRegularMode(it.value(), activity)
+                try {
+                    if (incognito) {
+                        initializeIncognitoMode(it.value())
+                    } else {
+                        initializeRegularMode(it.value(), activity)
+                    }
+                }
+                catch (ex: Throwable) {
+                    // That's a corrupted session file, can happen when importing garbage.
+                    // TODO: In theory we should implement the onError handler but I have no idea how to do that
+                    activity.snackbar(R.string.error_session_file_corrupted)
+                    Observable.just(homePageInitializer)
                 }
             }.observeOn(mainScheduler)
             .map {
@@ -599,8 +611,15 @@ class TabsManager @Inject constructor(
     /**
      * Provide session file name from session name
      */
-    private fun fileNameFromSessionName(aSessionName: String) : String {
+    fun fileNameFromSessionName(aSessionName: String) : String {
         return FILENAME_SESSION_PREFIX + aSessionName
+    }
+
+    /**
+     * Provide session file from session name
+     */
+    fun fileFromSessionName(aName: String) : File {
+        return  File(application.filesDir, fileNameFromSessionName(aName))
     }
 
     /**
@@ -639,6 +658,13 @@ class TabsManager @Inject constructor(
         FileUtils.writeBundleToStorage(application, bundle, FILENAME_SESSIONS)
                 .subscribeOn(diskScheduler)
                 .subscribe()
+    }
+
+    /**
+     * Just the sessions list really
+     */
+    fun deleteSessions() {
+        FileUtils.deleteBundleInStorage(application, FILENAME_SESSIONS)
     }
 
     /**
@@ -750,7 +776,7 @@ class TabsManager @Inject constructor(
         private const val KEY_CURRENT_SESSION = "KEY_CURRENT_SESSION"
         private const val KEY_SESSIONS = "KEY_SESSIONS"
         private const val FILENAME_SESSIONS = "SESSIONS"
-        private const val FILENAME_SESSION_PREFIX = "SESSION_"
+        const val FILENAME_SESSION_PREFIX = "SESSION_"
 
         private const val RECENT_TAB_INDICES = "RECENT_TAB_INDICES"
 

@@ -1,14 +1,50 @@
+/*
+ * The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ * (the "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ * https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ * The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ * added to cover use of software over a computer network and provide for limited attribution for
+ * the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ * ANY KIND, either express or implied. See the License for the specific language governing rights
+ * and limitations under the License.
+ *
+ * The Original Code is Fulguris.
+ *
+ * The Original Developer is the Initial Developer.
+ * The Initial Developer of the Original Code is Stéphane Lenclud.
+ *
+ * All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ * All Rights Reserved.
+ */
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 //apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.ben-manes.versions'
-// Firebase
-// Google Services Gradle plugin
-apply plugin: 'com.google.gms.google-services'
-// Apply the Crashlytics Gradle plugin
-apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'de.mobilej.unmock'
+
+// See: https://stackoverflow.com/a/53408667/3969362
+// Conditionally apply Firebase Google Plugins to flavors that needs it
+android.productFlavors.all { flavor ->
+    if (getGradle().getStartParameter().getTaskRequests().toString().toLowerCase().contains(flavor.name)) {
+        // Only download and playstore flavor need Firebase
+        if (flavor.name == "download" || flavor.name == "playstore") {
+            println("Building flavor with Firebase [${flavor.name}] - applying plugin")
+            // Google Services Gradle plugin
+            apply plugin: 'com.google.gms.google-services'
+            // Apply the Crashlytics Gradle plugin
+            apply plugin: 'com.google.firebase.crashlytics'
+        }
+    }
+}
+
+// TODO: Find a way to put it the variant/type folder such as: generated/source/locale/slionsFullDownload/debug/acr/browser/lightning/locale
+def generatedLocaleListDir = layout.buildDirectory.dir('generated/source/locale/acr/browser/lightning/locale')
 
 android {
     compileSdkVersion project.targetSdkVersion
@@ -23,6 +59,14 @@ android {
     dexOptions {
         javaMaxHeapSize "8g"
         preDexLibraries true
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDirs += generatedLocaleListDir
+            }
+        }
     }
 
     buildTypes {
@@ -72,31 +116,53 @@ android {
 
     productFlavors {
 
+        slions {
+            dimension "BRAND"
+            applicationId "net.slions.fulguris"
+            versionCode 151
+            versionName "1.7.10"
+        }
+
+        styx {
+            dimension "BRAND"
+            applicationId "com.jamal2367.styx"
+            versionCode 0
+            versionName "20.0"
+        }
+
+        /*
         lightning {
             dimension "BRAND"
             applicationId "acr.browser.lightning"
             versionCode 101
             versionName "5.1.0"
         }
+         */
 
-        slions {
-            dimension "BRAND"
-            applicationId "net.slions.fulguris"
-            versionCode 125
-            versionName "1.5.10"
-            archivesBaseName = "Fulguris-v$versionName"
-        }
-
-        lite {
+        // Base version does not add application ID suffix
+        base {
             dimension "VERSION"
-            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
-            applicationIdSuffix ".lite"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
         }
 
         full {
             dimension "VERSION"
             buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
             applicationIdSuffix ".full"
+        }
+
+        /*
+        lite {
+            dimension "VERSION"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
+            applicationIdSuffix ".lite"
+        }
+        */
+
+        // Undefined publisher do not add application ID suffix
+        undef {
+            dimension "PUBLISHER"
+            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
         }
 
         playstore {
@@ -114,9 +180,45 @@ android {
         fdroid {
             dimension "PUBLISHER"
             applicationIdSuffix ".fdroid"
-            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.TIN"
+            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
         }
 
+    }
+
+    // Filter out invalid variants
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        // slions variant do not support base version and undef publisher
+        if ((names.contains("slions") && (names.contains("undef") || names.contains("base")))
+                // styx variant only support base version and undef publisher
+                || (names.contains("styx") && !(names.contains("undef") && names.contains("base")))) {
+            // Gradle ignores any variants that satisfy the conditions above.
+            setIgnore(true)
+        }
+    }
+
+    // Taken from: https://stackoverflow.com/a/59583066/3969362
+    // Needed to customize our APK file name per flavor
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            //def appId = variant.applicationId// com.exampleFree.app OR com.examplePaid.app
+            def versionName = variant.versionName
+            //def versionCode = variant.versionCode // e.g 1.0
+            //def flavorName = variant.flavorName // e. g. Free
+            //def buildType = variant.buildType.name // e. g. debug
+            //def variantName = variant.name // e. g. FreeDebug
+
+            // Just replace our archive base name, which by default is "app" with our own format according to flavor
+            if (variant.flavorName.contains("slions")) {
+                //println("Use Fulguris archive name")
+                outputFileName = outputFileName.replaceFirst("^$archivesBaseName", "Fulguris-v$versionName")
+            } else if (variant.flavorName.contains("styx")) {
+                //println("Use Styx archive name")
+                outputFileName = outputFileName.replaceFirst("^$archivesBaseName", "Styx-v$versionName")
+            }
+            //customize your app name by using variables
+            //outputFileName = "${variantName}.apk"
+        }
     }
 
     lintOptions {
@@ -151,6 +253,13 @@ dexcount {
 }
 */
 
+// unMock is required for tests that use android.net.Uri
+unMock {
+    keepStartingWith "libcore."
+    keep "android.net.Uri"
+    keepAndRename "java.nio.charset.Charsets" to "xjava.nio.charset.Charsets"
+}
+
 dependencies {
     // Multi DEX is only needed in debug and on older devices from Android 5 and below.
     // If you disable minify in release mode you also need to load and install that library in release for those devices.
@@ -159,9 +268,9 @@ dependencies {
     debugImplementation 'androidx.multidex:multidex:2.0.1'
 
     // test dependencies
-    testImplementation 'junit:junit:4.13.1'
+    implementation 'junit:junit:4.13.2'
     testImplementation 'org.assertj:assertj-core:3.15.0'
-    testImplementation 'org.mockito:mockito-core:3.6.0'
+    testImplementation 'org.mockito:mockito-core:3.8.0'
     testImplementation 'com.nhaarman:mockito-kotlin:1.6.0', {
         exclude group: 'org.jetbrains.kotlin'
     }
@@ -171,11 +280,11 @@ dependencies {
     implementation "androidx.palette:palette-ktx:1.0.0"
     implementation "androidx.annotation:annotation:1.2.0"
     implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
-    implementation "androidx.appcompat:appcompat:1.3.0"
-    implementation "androidx.recyclerview:recyclerview:1.2.0"
-    implementation "androidx.core:core-ktx:1.5.0"
+    implementation "androidx.appcompat:appcompat:1.3.1"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+    implementation "androidx.core:core-ktx:1.6.0"
     implementation "androidx.constraintlayout:constraintlayout:2.0.4"
-    implementation "androidx.fragment:fragment-ktx:1.3.4"
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
     implementation "androidx.drawerlayout:drawerlayout:1.1.1"
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.webkit:webkit:1.4.0'
@@ -183,7 +292,7 @@ dependencies {
     // In code we use reflection to access some bottom sheet private class, methods and fields
     // Whenever you update that library you will need to review those hacks, see adjustBottomSheet.
     // Also search the code for BottomSheetDialog::class
-    implementation "com.google.android.material:material:1.4.0-beta01"
+    implementation "com.google.android.material:material:1.4.0"
 
     // Play Store billing
     playstoreImplementation 'com.android.billingclient:billing:3.0.3'
@@ -192,7 +301,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
 
     // reading mode
-    implementation 'net.dankito.readability4j:readability4j:1.0.3'
+    implementation 'net.dankito.readability4j:readability4j:1.0.6'
 
     // file reading
     final def mezzanineVersion = '1.1.1'
@@ -239,9 +348,12 @@ dependencies {
 
     // Firebase
     // Recommended: Add the Firebase SDK for Google Analytics.
-    implementation 'com.google.firebase:firebase-analytics:19.0.0'
+    playstoreImplementation 'com.google.firebase:firebase-analytics:19.0.0'
+    downloadImplementation 'com.google.firebase:firebase-analytics:19.0.0'
     // Add the Firebase SDK for Crashlytics.
-    implementation 'com.google.firebase:firebase-crashlytics:18.0.0'
+    playstoreImplementation 'com.google.firebase:firebase-crashlytics:18.2.0'
+    downloadImplementation 'com.google.firebase:firebase-crashlytics:18.2.0'
+
 
     // Volley HTTP request
     implementation 'com.android.volley:volley:1.2.0'
@@ -249,6 +361,9 @@ dependencies {
     // Since java.time need API 26 we use that backport instead
     // See: https://github.com/JakeWharton/ThreeTenABP
     implementation 'com.jakewharton.threetenabp:threetenabp:1.3.0'
+
+    // re2j is faster than normal java regex, used for content blocker
+    implementation 'com.google.re2j:re2j:1.6'
 }
 
 kapt {
@@ -269,3 +384,87 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         }
     }
 }
+
+
+// -------------------------------------------------------------------------------------------------
+// L10N: Generate list of locales
+// Fulguris provides its own (Android independent) locale switcher. That switcher requires a list
+// of locale codes. We generate that list here to avoid having to manually maintain a list of locales.
+// This code was taken from Mozilla Focus project:
+// https://github.com/mozilla-mobile/focus-android
+// -------------------------------------------------------------------------------------------------
+
+def getEnabledLocales() {
+    def resDir = file('src/main/res')
+
+    def potentialLanguageDirs = resDir.listFiles(new FilenameFilter() {
+        @Override
+        boolean accept(File dir, String name) {
+            return name.startsWith("values-")
+        }
+    })
+
+    def langs = potentialLanguageDirs.findAll {
+        // Only select locales where strings.xml exists
+        // Some locales might only contain e.g. sumo URLS in urls.xml, and should be skipped (see es vs es-ES/es-MX/etc)
+        return  file(new File(it, "strings.xml")).exists()
+    } .collect {
+        // And reduce down to actual values-* names
+        return it.name
+    } .collect {
+        return it.substring("values-".length())
+    } .collect {
+        if (it.length() > 3 && it.contains("-r")) {
+            // Android resource dirs add an "r" prefix to the region - we need to strip that for java usage
+            // Add 1 to have the index of the r, without the dash
+            def regionPrefixPosition = it.indexOf("-r") + 1
+
+            return it.substring(0, regionPrefixPosition) + it.substring(regionPrefixPosition + 1)
+        } else {
+            return it
+        }
+    }.collect {
+        return '"' + it + '"'
+    }
+
+    // en-US is the default language (in "values") and therefore needs to be added separately
+    langs << "\"en-US\""
+
+    return langs.sort { it }
+}
+
+def generatedLocaleListFilename = 'LocaleList.java'
+
+task generateLocaleList {
+    doLast {
+        def dir = file(generatedLocaleListDir)
+        dir.mkdirs()
+        def localeList = file(new File(dir, generatedLocaleListFilename))
+
+        project.logger.lifecycle(localeList.path)
+
+        localeList.delete()
+        localeList.createNewFile()
+        localeList << "package acr.browser.lightning.locale;" << "\n" << "\n"
+        localeList << "import java.util.Arrays;" << "\n"
+        localeList << "import java.util.Collections;" << "\n"
+        localeList << "import java.util.List;" << "\n"
+        localeList << "\n"
+        localeList << "public class LocaleList {" << "\n"
+        // findbugs doesn't like "public static final String[]", see http://findbugs.sourceforge.net/bugDescriptions.html#MS_MUTABLE_ARRAY
+        localeList << "    public static final List<String> BUNDLED_LOCALES = Collections.unmodifiableList(Arrays.asList(new String[] { "
+        localeList << getEnabledLocales().join(", ") + " }));" << "\n"
+        localeList << "}" << "\n"
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if (name.contains("compile")) {
+        task.dependsOn generateLocaleList
+    }
+}
+
+clean.doLast {
+    file(generatedLocaleListDir).deleteDir()
+}
+

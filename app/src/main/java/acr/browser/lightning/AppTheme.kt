@@ -1,6 +1,6 @@
 package acr.browser.lightning
 
-import acr.browser.lightning.preference.IntEnum
+import acr.browser.lightning.settings.preferences.IntEnum
 
 /**
  * The available app themes.

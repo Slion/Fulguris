@@ -1,7 +1,6 @@
 package acr.browser.lightning.browser.bookmarks
 
 import acr.browser.lightning.R
-import acr.browser.lightning.adblock.allowlist.AllowListModel
 import acr.browser.lightning.animation.AnimationUtils
 import acr.browser.lightning.browser.BookmarksView
 import acr.browser.lightning.browser.TabsManager
@@ -9,10 +8,7 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.BookmarkDrawerViewBinding
-import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.NetworkScheduler
-import acr.browser.lightning.di.injector
+import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.dialog.LightningDialogBuilder
@@ -20,9 +16,8 @@ import acr.browser.lightning.extensions.color
 import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.favicon.FaviconModel
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
-import acr.browser.lightning.utils.isSpecialUrl
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
@@ -45,7 +40,6 @@ class BookmarksDrawerView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr), BookmarksView {
 
     @Inject internal lateinit var bookmarkModel: BookmarkRepository
-    @Inject internal lateinit var allowListModel: AllowListModel
     @Inject internal lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject internal lateinit var faviconModel: FaviconModel
     @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
@@ -97,7 +91,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
         iBinding.listBookmarks.apply {
             // Reverse layout if using bottom tool bars
             // LinearLayoutManager.setReverseLayout is also adjusted from BrowserActivity.setupToolBar
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, context.configPrefs.toolbarsBottom)
             adapter = iAdapter
         }
 
@@ -214,12 +208,6 @@ class BookmarksDrawerView @JvmOverloads constructor(
      */
     private fun showPageToolsDialog(context: Context) {
         val currentTab = getTabsManager().currentTab ?: return
-        val isAllowedAds = allowListModel.isUrlAllowedAds(currentTab.url)
-        val whitelistString = if (isAllowedAds) {
-            R.string.dialog_adblock_enable_for_site
-        } else {
-            R.string.dialog_adblock_disable_for_site
-        }
 
         BrowserDialog.showWithIcons(context, context.getString(R.string.dialog_tools_title),
             DialogItem(
@@ -232,19 +220,6 @@ class BookmarksDrawerView @JvmOverloads constructor(
                     // TODO add back drawer closing
                 }
             },
-            DialogItem(
-                icon = context.drawable(R.drawable.ic_block),
-                colorTint = context.color(R.color.error_red).takeIf { isAllowedAds },
-                title = whitelistString,
-                isConditionMet = !currentTab.url.isSpecialUrl()
-            ) {
-                if (isAllowedAds) {
-                    allowListModel.removeUrlFromAllowList(currentTab.url)
-                } else {
-                    allowListModel.addUrlToAllowList(currentTab.url)
-                }
-                getTabsManager().currentTab?.reload()
-            }
         )
     }
 

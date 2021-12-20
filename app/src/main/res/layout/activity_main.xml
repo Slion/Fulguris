@@ -1,3 +1,7 @@
+<!--
+- Copyright © 2020-2021 Stéphane Lenclud
+-->
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -26,16 +30,37 @@
                 <include android:id="@+id/toolbar_include"
                     layout="@layout/toolbar"/>
 
-                <acr.browser.lightning.view.PullRefreshLayout
-                    android:id="@+id/content_frame"
+                <include android:id="@+id/findInPageInclude" layout="@layout/search_interface"/>
+
+                <!--
+                FrameLayout needed to animate our tabs.
+                We keep swapping both PullRefreshLayout to perform smooth flicker free tab animations.
+                We switched from a FrameLayout to a CoordinatorLayout to be able to display snackbar within our WebView.
+                -->
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:id="@+id/web_view_frame"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="?android:attr/colorBackground"
-                    android:clipChildren="true"
-                    android:animateLayoutChanges="true" />
+                    android:layout_weight="1">
 
-                <include android:id="@+id/findInPageInclude" layout="@layout/search_interface"/>
+                    <acr.browser.lightning.view.PullRefreshLayout
+                        android:id="@+id/tabViewContainerOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/colorBackground"
+                        android:clipChildren="true"
+                        android:animateLayoutChanges="false" />
+
+                    <acr.browser.lightning.view.PullRefreshLayout
+                        android:id="@+id/tabViewContainerTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/colorBackground"
+                        android:clipChildren="true"
+                        android:animateLayoutChanges="false" />
+
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
             </LinearLayout>
 
 

@@ -3,13 +3,20 @@ package acr.browser.lightning.settings.fragment
 import acr.browser.lightning.R
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.snackbar
-import acr.browser.lightning.preference.DeveloperPreferences
+import acr.browser.lightning.settings.preferences.DeveloperPreferences
 import android.os.Bundle
 import javax.inject.Inject
 
 class DebugSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
+
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.debug_title
+    }
 
     override fun providePreferencesXmlResource() = R.xml.preference_debug
 

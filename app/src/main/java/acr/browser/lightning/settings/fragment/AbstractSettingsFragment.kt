@@ -1,6 +1,11 @@
+/*
+ * Copyright © 2020-2021 Stéphane Lenclud
+ */
+
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
+import acr.browser.lightning.utils.IntentUtils
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -36,6 +41,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
             isVerticalFadingEdgeEnabled = true
         }
     }
+
 
     /**
      * Creates a [CheckBoxPreference] with the provided options and listener.
@@ -197,6 +203,50 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
             true
         }
         preferenceScreen.addPreference(pref)
+    }
+
+    /**
+     * Add a preference that opens up our Crowdin project page.
+     */
+    protected fun addPreferenceLinkToCrowdin() {
+        // We invite user to installer our Google Play Store release
+        val pref = Preference(context)
+        pref.title = resources.getString(R.string.pref_title_contribute_translations)
+        pref.summary = resources.getString(R.string.pref_summary_contribute_translations)
+        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_translate, activity?.theme)
+        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            // Open up Fulguris Crowdin project page
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://crowdin.com/project/fulguris-web-browser")))
+            true
+        }
+        preferenceScreen.addPreference(pref)
+    }
+
+    /**
+     * Add a preference to share Fulguris.
+     */
+    protected fun addPreferenceShareLink() {
+        // We invite user to installer our Google Play Store release
+        val pref = Preference(context)
+        pref.title = resources.getString(R.string.pref_title_contribute_share)
+        pref.summary = resources.getString(R.string.pref_summary_contribute_share)
+        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_share, activity?.theme)
+        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            // Share Fulguris
+            IntentUtils(requireActivity()).shareUrl(getString(R.string.url_app_home_page), getString(R.string.locale_app_name),R.string.pref_title_contribute_share)
+            true
+        }
+        preferenceScreen.addPreference(pref)
+    }
+
+    abstract fun titleResourceId() : Int
+
+    override fun onDisplayPreferenceDialog(preference: Preference) {
+        if (preference is ListPreference) {
+            showListPreferenceDialog(preference)
+        } else {
+            super.onDisplayPreferenceDialog(preference)
+        }
     }
 
 }

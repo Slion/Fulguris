@@ -1,17 +1,19 @@
 package acr.browser.lightning.settings.fragment
 
+import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.constant.TEXT_ENCODINGS
 import acr.browser.lightning.constant.Uris
-import acr.browser.lightning.di.injector
+import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.isSupported
-import acr.browser.lightning.preference.UserPreferences
-import acr.browser.lightning.preference.userAgent
+import acr.browser.lightning.locale.LocaleUtils
+import acr.browser.lightning.settings.preferences.UserPreferences
+import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.Suggestions
 import acr.browser.lightning.search.engine.BaseSearchEngine
@@ -21,6 +23,9 @@ import acr.browser.lightning.utils.ProxyUtils
 import acr.browser.lightning.utils.ThemeUtils
 import android.app.Activity
 import android.app.Application
+import android.content.Intent
+import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
@@ -31,6 +36,8 @@ import android.webkit.URLUtil
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.preference.ListPreference
+import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import javax.inject.Inject
 
@@ -42,7 +49,15 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
     @Inject lateinit var searchEngineProvider: SearchEngineProvider
     @Inject lateinit var userPreferences: UserPreferences
 
+
     private lateinit var proxyChoices: Array<String>
+
+    /**
+     * See [AbstractSettingsFragment.titleResourceId]
+     */
+    override fun titleResourceId(): Int {
+        return R.string.settings_general
+    }
 
     override fun providePreferencesXmlResource() = R.xml.preference_general
 
@@ -123,6 +138,20 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     }
                 }
         )
+
+        // Handle locale language selection
+        findPreference<ListPreference>(getString(R.string.pref_key_locale))?.apply {
+            onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, aNewLocale: Any ->
+                // User selected a new locale
+                val newLocaleId = aNewLocale as String
+                val newLocale = LocaleUtils.requestedLocale(newLocaleId)
+                // Update app configuration with selected locale
+                LocaleUtils.updateLocale(activity, newLocale)
+                // Reload our activity
+                requireActivity().recreate()
+                true
+            }
+        }
     }
 
     /**
@@ -353,27 +382,27 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             BrowserDialog.showCustomDialog(it) {
             setTitle(R.string.home)
             val n = when (userPreferences.homepage) {
-                Uris.AboutHome -> 0
-                Uris.AboutBlank -> 1
-                Uris.AboutBookmarks -> 2
-                else -> 3
+                Uris.AboutHome -> 2
+                Uris.AboutBlank -> 3
+                Uris.AboutBookmarks -> 0
+                else -> 1
             }
 
             setSingleChoiceItems(R.array.homepage, n) { _, which ->
                 when (which) {
-                    0 -> {
+                    2 -> {
                         userPreferences.homepage = Uris.AboutHome
-                        summaryUpdater.updateSummary(resources.getString(R.string.action_homepage))
+                        summaryUpdater.updateSummary(resources.getString(R.string.search_action))
                     }
-                    1 -> {
+                    3 -> {
                         userPreferences.homepage = Uris.AboutBlank
                         summaryUpdater.updateSummary(resources.getString(R.string.action_blank))
                     }
-                    2 -> {
+                    0 -> {
                         userPreferences.homepage = Uris.AboutBookmarks
                         summaryUpdater.updateSummary(resources.getString(R.string.action_bookmarks))
                     }
-                    3 -> {
+                    1 -> {
                         showCustomHomePagePicker(summaryUpdater)
                     }
                 }

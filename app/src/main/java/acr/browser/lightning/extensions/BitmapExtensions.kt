@@ -1,8 +1,8 @@
 package acr.browser.lightning.extensions
 
-import acr.browser.lightning.utils.Utils
 import android.graphics.*
 import androidx.core.graphics.createBitmap
+
 
 /**
  * Creates and returns a new favicon which is the same as the provided favicon but with horizontal
@@ -42,3 +42,30 @@ private val desaturatedPaint = Paint().apply {
 fun Bitmap.desaturate(): Bitmap = createBitmap(width, height).also {
     Canvas(it).drawBitmap(this, 0f, 0f, desaturatedPaint)
 }
+
+/**
+ * Return a new bitmap containing this bitmap with inverted colors.
+ * See: https://gist.github.com/moneytoo/87e3772c821cb1e86415
+ */
+fun Bitmap.invert(): Bitmap {
+    val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    val paint = Paint()
+    val matrixGrayscale = ColorMatrix()
+    matrixGrayscale.setSaturation(0f)
+    val matrixInvert = ColorMatrix()
+    matrixInvert.set(
+        floatArrayOf(
+            -1.0f, 0.0f, 0.0f, 0.0f, 255.0f,
+            0.0f, -1.0f, 0.0f, 0.0f, 255.0f,
+            0.0f, 0.0f, -1.0f, 0.0f, 255.0f,
+            0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+        )
+    )
+    matrixInvert.preConcat(matrixGrayscale)
+    val filter = ColorMatrixColorFilter(matrixInvert)
+    paint.colorFilter = filter
+    canvas.drawBitmap(this, 0f, 0f, paint)
+    return bitmap
+}
+

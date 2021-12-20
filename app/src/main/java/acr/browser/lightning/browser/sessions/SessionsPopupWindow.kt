@@ -1,3 +1,25 @@
+/*
+ * The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ * (the "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ * https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ * The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ * added to cover use of software over a computer network and provide for limited attribution for
+ * the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ * ANY KIND, either express or implied. See the License for the specific language governing rights
+ * and limitations under the License.
+ *
+ * The Original Code is Fulguris.
+ *
+ * The Original Developer is the Initial Developer.
+ * The Initial Developer of the Original Code is Stéphane Lenclud.
+ *
+ * All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ * All Rights Reserved.
+ */
+
 package acr.browser.lightning.browser.sessions
 
 import acr.browser.lightning.R
@@ -6,12 +28,12 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.SessionListBinding
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
-import acr.browser.lightning.extensions.dimBehind
 import acr.browser.lightning.extensions.toast
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.FileNameInputFilter
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.utils.Utils
+import acr.browser.lightning.di.configPrefs
 import android.app.Activity
 import android.graphics.drawable.ColorDrawable
 import android.text.InputFilter
@@ -20,7 +42,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import android.widget.PopupWindow
 import androidx.core.widget.PopupWindowCompat
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -83,7 +104,7 @@ class SessionsPopupWindow : PopupWindow {
                                 (view.context as BrowserActivity).apply {
                                     presenter?.switchToSession(name)
                                     // Close session dialog after creating and switching to new session
-                                    sessionsMenu.dismiss()
+                                    iMenuSessions.dismiss()
                                 }
                                 // Update our session list
                                 //iAdapter.showSessions(it)
@@ -126,7 +147,7 @@ class SessionsPopupWindow : PopupWindow {
                                 (view.context as BrowserActivity).apply {
                                     // Close session dialog after creating and switching to new session
                                     // TODO: not in edit mode?
-                                    sessionsMenu.dismiss()
+                                    iMenuSessions.dismiss()
                                 }
 
                                 // Show user we did switch session
@@ -191,7 +212,7 @@ class SessionsPopupWindow : PopupWindow {
         aBinding.recyclerViewSessions.apply {
             //setLayerType(View.LAYER_TYPE_NONE, null)
             //(itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, iUserPreferences.toolbarsBottom)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, context.configPrefs.toolbarsBottom)
             adapter = iAdapter
             setHasFixedSize(false)
         }
@@ -222,8 +243,8 @@ class SessionsPopupWindow : PopupWindow {
         val anchorLoc = IntArray(2)
         aAnchor.getLocationInWindow(anchorLoc)
         //
-        val gravity = if (iUserPreferences.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
-        val yOffset = if (iUserPreferences.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] else anchorLoc[1]+aAnchor.height
+        val gravity = if (contentView.context.configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
+        val yOffset = if (contentView.context.configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] else anchorLoc[1]+aAnchor.height
         // Show our popup menu from the right side of the screen below our anchor
         showAtLocation(aAnchor, gravity,
                 // Offset from the right screen edge
@@ -237,8 +258,15 @@ class SessionsPopupWindow : PopupWindow {
 
         if (aShowCurrent) {
             // Make sure current session is on the screen
-            iBinding.recyclerViewSessions.smoothScrollToPosition(iUiController.getTabModel().currentSessionIndex())
+            scrollToCurrentSession()
         }
+    }
+
+    /**
+     *
+     */
+    fun scrollToCurrentSession() {
+        iBinding.recyclerViewSessions.smoothScrollToPosition(iUiController.getTabModel().currentSessionIndex())
     }
 
     /**

@@ -1,0 +1,67 @@
+Features include:
+📑Sessions
+All your tabs belong to a session. You can have multiple named sessions to help you stay focused and organized. Switching between sessions is lightning fast. You can pack hundreds of tabs in every sessions.
+
+🌍 Address bar
+Smart address, title and search bar combined. You can put it at the top or at the bottom of your screen depending of your screen orientation.
+
+🚦Vertical tab panel
+Reorder your tabs using long tap to drag and drop. Swipe right to move a tab to the trash. Recover tabs from the trash using panel tool bar.
+
+🚥Horizontal tab bar
+Much like on your classic PC web browser. Most useful when using tablets and desktop modes such as Samsung Dex and Huawei EMUI Desktop. You can put it at the top or at the bottom of your screen.
+
+⚙Tabs management
+By default you should never need to push the new tab button. New tabs are spawned as you do searches or input addresses. However, if you like to have fewer tabs, you can adjust those settings to your liking.
+
+🏞Screen orientations
+Specific look and feel settings for portrait and landscape allowing optimal use of your screen real estate. Includes optional pull-to-refresh.
+
+🔖Bookmarks
+Import, export, group them in folders and organise your bookmarks using drag and drop. Backup and restore your bookmarks directly from any Cloud services.
+
+⌚History
+Review the pages you visited. Clear it any time you want.
+
+🌗Force dark mode
+For your late night reading sessions you can force any web page to display in dark mode.
+
+🎨Themes
+Tool bar and status bar colour theme integrates gracefully with your favourite web sites. Supports black, dark and light themes. Fulguris is not just fast, secure and efficient, it looks good too.
+
+⛔Ad blocker
+Use built-in ad blocker definitions or feed it local and online hosts files.
+
+🔒Privacy
+Fulguris protects and respects your privacy. Incognito mode. Can discard tracking cookies. Clear tabs, history, cookies and caches functionalities. Third-party apps management.
+
+🔎Search
+Multiple search engines (Google, Bing, Yahoo, StartPage, DuckDuckGo, etc.). Find text in page. Google search suggestion.
+
+♿Accessibility
+Reader mode. Various rendering mode: inverted, high contrast, grayscale.
+
+⌨Keyboard support
+Keyboard shortcuts and focus management. Persistent recent tab list enabling tab switching using CTRL+TAB. Visit our web site for a complete list of keyboard shortcuts.
+
+⚡Hardware accelerated
+Makes the most of your hardware processing power.
+
+🔧Settings
+Lots of settings options to fine tune your browser to your liking. That includes configuration settings specific to your screen orientation.
+
+👆Touch control
+Long press to drag and organize your tabs.
+Swipe right on a tab in the list to close it.
+Long press to drag and organize your bookmarks.
+Long press on icon buttons to show tooltips.
+
+📱Devices
+The following devices have had at least minimum testing with some version of Fulguris:
+Huawei P30 Pro - Android 10
+Samsung Galaxy Tab S6 - Android 10
+F(x)tec Pro¹ - Android 9
+LG G8X ThinQ - Android 9
+Samsung Galaxy S7 Edge - Android 8
+HTC One M8 - Android 6
+LG Leon - Android 6

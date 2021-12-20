@@ -1,6 +1,6 @@
 package acr.browser.lightning.browser
 
-import acr.browser.lightning.preference.IntEnum
+import acr.browser.lightning.settings.preferences.IntEnum
 
 /**
  * An enum representing what detail level should be displayed in the search box.

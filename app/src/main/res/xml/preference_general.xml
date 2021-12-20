@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:key="non-default-test">
+
+    <!-- Empty default: we use an empty string to indicate "system default" language being selected -->
+    <!--suppress AndroidDomInspection -->
+    <acr.browser.lightning.settings.preferences.LocaleListPreference
+        android:defaultValue=""
+        android:key="@string/pref_key_locale"
+        android:title="@string/pref_title_language"
+        app:icon="@drawable/ic_translate" />
 
     <Preference
         android:key="home"
@@ -148,6 +157,7 @@
             android:key="@string/pref_key_default_text_encoding"
             android:title="@string/text_encoding"
             app:iconSpaceReserved="false" />
+
 
     </PreferenceCategory>
 </PreferenceScreen>

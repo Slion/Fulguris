@@ -28,14 +28,14 @@ import acr.browser.lightning.R;
 import acr.browser.lightning.browser.activity.BrowserActivity;
 import acr.browser.lightning.database.downloads.DownloadsRepository;
 import acr.browser.lightning.di.Injector;
+//import acr.browser.lightning.di.ConfigPrefs;
 import acr.browser.lightning.dialog.BrowserDialog;
 import acr.browser.lightning.extensions.ActivityExtensions;
 import acr.browser.lightning.log.Logger;
-import acr.browser.lightning.preference.UserPreferences;
+import acr.browser.lightning.settings.preferences.UserPreferences;
 import acr.browser.lightning.utils.Utils;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -131,7 +131,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                 //Show a snackbar with a link to open the downloaded file
                 if (success) {
                     final Intent i = downloadsIntent;
-                    ActivityExtensions.makeSnackbar(mActivity,contentTitle, ActivityExtensions.KDuration, userPreferences.getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM).setAction(R.string.show, new View.OnClickListener() {
+                    ActivityExtensions.makeSnackbar(mActivity,contentTitle, ActivityExtensions.KDuration, Injector.getConfigPrefs(mActivity).getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM).setAction(R.string.show, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     context.startActivity(i);
@@ -139,7 +139,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                             }).show();
                 }
                 else {
-                    ActivityExtensions.snackbar(mActivity,contentTitle,userPreferences.getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM);
+                    ActivityExtensions.snackbar(mActivity,contentTitle,Injector.getConfigPrefs(mActivity).getToolbarsBottom()?Gravity.TOP: Gravity.BOTTOM);
                 }
             }
         }
@@ -184,12 +184,18 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                     //TODO show message
                 }
             });
+
+        // Some download link spawn an empty tab, just close it then
+        if (mActivity instanceof BrowserActivity) {
+            ((BrowserActivity)mActivity).closeCurrentTabIfEmpty();
+        }
+
     }
 
     private void doDownloadStart(@NonNull final String url, final String userAgent,
                                  final String contentDisposition, final String mimetype, final long contentLength)
     {
-        final String fileName = guessFileName(url, contentDisposition, mimetype);
+        final String fileName = guessFileName(url, contentDisposition, mimetype, null);
         final String downloadSize;
 
         if (contentLength > 0) {

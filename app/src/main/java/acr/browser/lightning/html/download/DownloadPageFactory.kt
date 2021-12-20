@@ -7,7 +7,7 @@ import acr.browser.lightning.database.downloads.DownloadsRepository
 import acr.browser.lightning.html.HtmlPageFactory
 import acr.browser.lightning.html.ListPageReader
 import acr.browser.lightning.html.jsoup.*
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import android.app.Application
 import dagger.Reusable
 import io.reactivex.Single

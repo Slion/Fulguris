@@ -4,7 +4,7 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.history.HistoryDatabase
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.log.Logger
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.WebUtils
 import android.webkit.WebView
 import io.reactivex.Scheduler

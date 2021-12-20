@@ -1,3 +1,25 @@
+/*
+ * The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ * (the "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ * https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ * The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ * added to cover use of software over a computer network and provide for limited attribution for
+ * the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ * ANY KIND, either express or implied. See the License for the specific language governing rights
+ * and limitations under the License.
+ *
+ * The Original Code is Fulguris.
+ *
+ * The Original Developer is the Initial Developer.
+ * The Initial Developer of the Original Code is Stéphane Lenclud.
+ *
+ * All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ * All Rights Reserved.
+ */
+
 package acr.browser.lightning.browser.sessions
 
 import acr.browser.lightning.R
@@ -25,8 +47,8 @@ import io.reactivex.disposables.Disposable
 
 
 /**
- * The [RecyclerView.ViewHolder] for both vertical and horizontal tabs.
- * That represents an item in our list, basically one tab.
+ * The [RecyclerView.ViewHolder] for our session list.
+ * That represents an item in our list, basically one session.
  */
 class SessionViewHolder(
         view: View,
@@ -61,7 +83,7 @@ class SessionViewHolder(
                             iUiController.getTabModel().saveSessions()
                             // Refresh our list
                             (it.context as BrowserActivity).apply {
-                                sessionsMenu.updateSessions()
+                                iMenuSessions.updateSessions()
                             }
                         }
                         .resizeAndShow()
@@ -101,7 +123,7 @@ class SessionViewHolder(
                         // Proceed with session rename
                         iUiController.getTabModel().renameSession(textName.tag as String,newName)
                         // Make sure we update adapter list and thus edited item too
-                        (iUiController as BrowserActivity).sessionsMenu.updateSessions()
+                        (iUiController as BrowserActivity).iMenuSessions.updateSessions()
                     } else {
                         // We already have a session with that name, display an error message
                         context.toast(R.string.session_already_exists)
@@ -137,14 +159,17 @@ class SessionViewHolder(
             }
 
             // User wants to switch session
-            session()?.name?.let { sessionName ->
+            session().name.let { sessionName ->
                 (it.context as BrowserActivity).apply {
                     presenter?.switchToSession(sessionName)
                     if (!isEditModeEnabled()) {
-                        sessionsMenu.dismiss()
+                        iMenuSessions.dismiss()
                     } else {
                         // Update our list, notably current item
-                        iUiController.getTabModel().doOnceAfterInitialization { sessionsMenu.updateSessions() }
+                        iUiController.getTabModel().doOnceAfterInitialization {
+                            iMenuSessions.updateSessions()
+                            iMenuSessions.scrollToCurrentSession()
+                        }
                     }
                 }
             }

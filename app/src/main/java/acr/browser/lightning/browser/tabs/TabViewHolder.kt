@@ -3,6 +3,7 @@ package acr.browser.lightning.browser.tabs
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.utils.ItemDragDropSwipeViewHolder
 import android.view.View
 import android.widget.ImageView
@@ -35,7 +36,7 @@ class TabViewHolder(
         // Is that the best way to access our preferences?
         // If not showing horizontal desktop tab bar, this one always shows close button.
         // Apply settings preference for showing close button on tabs.
-        exitButton.visibility = if (!(view.context as BrowserActivity).userPreferences.verticalTabBar
+        exitButton.visibility = if (!view.context.configPrefs.verticalTabBar
                 || (view.context as BrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
     }
 

@@ -1,12 +1,12 @@
 buildscript {
-    ext.kotlinVersion = '1.5.0'
+    ext.kotlinVersion = '1.5.31'
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath 'com.android.tools.build:gradle:7.0.3'
         //classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:2.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.38.0'
@@ -15,9 +15,10 @@ buildscript {
         // (if not, add it).
         classpath 'com.google.gms:google-services:4.3.8'
         // Add the Crashlytics Gradle plugin.
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.6.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
         //
         //classpath("com.github.triplet.gradle:play-publisher:3.4.0-agp7.0")
+        classpath 'de.mobilej.unmock:UnMockPlugin:0.7.6'
     }
 }
 
@@ -33,6 +34,6 @@ allprojects {
 
 ext {
     minSdkVersion = 21
-    targetSdkVersion = 29
+    targetSdkVersion = 30
     buildToolsVersion = '30.0.2'
 }

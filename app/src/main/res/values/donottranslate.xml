@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ (the "License"); you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at:
+ https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ added to cover use of software over a computer network and provide for limited attribution for
+ the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+
+ Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ ANY KIND, either express or implied. See the License for the specific language governing rights
+ and limitations under the License.
+
+ The Original Code is Fulguris.
+
+ The Original Developer is the Initial Developer.
+ The Initial Developer of the Original Code is Stéphane Lenclud.
+
+ All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ All Rights Reserved.
+-->
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">Lightning</string>
     <string name="url_app_home_page">https://github.com/anthonycr/Lightning-Browser</string>
 
     <!-- Settings keys -->
-    <string name="pref_key_portrait_hide_status_bar">pref_key_portrait_hide_status_bar</string>
-    <string name="pref_key_landscape_hide_status_bar">pref_key_landscape_hide_status_bar</string>
+    <string name="pref_key_hide_status_bar">pref_key_hide_status_bar</string>
+    <string name="pref_key_hide_tool_bar">pref_key_hide_tool_bar</string>
+    <string name="pref_key_show_tool_bar_on_scroll_up">pref_key_show_tool_bar_when_scroll_up</string>
+    <string name="pref_key_show_tool_bar_on_page_top">pref_key_show_tool_bar_on_page_top</string>
+    <string name="pref_key_desktop_width">pref_key_desktop_width</string>
+    <string name="pref_key_pull_to_refresh">pref_key_pull_to_refresh</string>
+    <string name="pref_key_tab_bar_vertical">pref_key_tab_bar_vertical</string>
+    <string name="pref_key_toolbars_bottom">pref_key_toolbars_bottom</string>
 
-    <string name="pref_key_portrait_hide_tool_bar">pref_key_portrait_hide_tool_bar</string>
-    <string name="pref_key_landscape_hide_tool_bar">pref_key_landscape_hide_tool_bar</string>
+    <!-- On tab close -->
+    <string name="pref_key_on_tab_close_show_snackbar">pref_key_on_tab_close_show_snackbar</string>
+    <string name="pref_key_on_tab_close_vibrate">pref_key_on_tab_close_vibrate</string>
 
-    <string name="pref_key_portrait_show_tool_bar_on_scroll_up">pref_key_portrait_show_tool_bar_when_scroll_up</string>
-    <string name="pref_key_landscape_show_tool_bar_on_scroll_up">pref_key_landscape_show_tool_bar_when_scroll_up</string>
+    <!-- On tab change -->
+    <string name="pref_key_on_tab_change_show_animation">pref_key_on_tab_change_show_animation</string>
+    <string name="pref_key_on_tab_change_vibrate">pref_key_on_tab_change_vibrate</string>
 
-    <string name="pref_key_portrait_show_tool_bar_on_page_top">pref_key_portrait_show_tool_bar_on_page_top</string>
-    <string name="pref_key_landscape_show_tool_bar_on_page_top">pref_key_landscape_show_tool_bar_on_page_top</string>
-
-    <string name="pref_key_portrait_desktop_width">pref_key_portrait_desktop_width</string>
-    <string name="pref_key_landscape_desktop_width">pref_key_landscape_desktop_width</string>
-
-    <string name="pref_key_portrait_pull_to_refresh">pref_key_portrait_pull_to_refresh</string>
-    <string name="pref_key_landscape_pull_to_refresh">pref_key_landscape_pull_to_refresh</string>
-
-    <string name="pref_key_portrait_tab_bar_vertical">pref_key_portrait_tab_bar_vertical</string>
-    <string name="pref_key_landscape_tab_bar_vertical">pref_key_landscape_tab_bar_vertical</string>
-
-    <string name="pref_key_portrait_toolbars_bottom">pref_key_portrait_toolbars_bottom</string>
-    <string name="pref_key_landscape_toolbars_bottom">pref_key_landscape_toolbars_bottom</string>
-
+    <!-- On tab back -->
+    <string name="pref_key_on_tab_back_show_animation">pref_key_on_tab_back_show_animation</string>
+    <string name="pref_key_on_tab_back_animation_duration">pref_key_on_tab_back_animation_duration</string>
 
     <string name="pref_key_wide_viewport">pref_key_wide_viewport</string>
     <string name="pref_key_browser_text_size">pref_key_browser_text_size</string>
@@ -57,6 +74,8 @@
     <string name="pref_key_desktop_mode_default">pref_key_desktop_mode_default</string>
     <string name="pref_key_dark_mode_default">pref_key_dark_mode_default</string>
     <string name="pref_key_webrtc">pref_key_webrtc</string>
+    <string name="pref_key_content_control">pref_key_content_control</string>
+    <string name="pref_key_content_control_filters">pref_key_content_control_filters</string>
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>
@@ -66,6 +85,20 @@
     <string name="pref_key_theme">pref_key_theme</string>
     <string name="pref_key_sponsorship">pref_key_sponsorship</string>
     <string name="pref_key_version_code">pref_key_version_code</string>
+    <string name="pref_key_reset_settings">pref_key_reset_settings</string>
+
+
+    <string name="pref_key_locale">pref_key_locale</string>
+
+    <string name="pref_key_blocklist_auto_update">pref_key_blocklist_auto_update</string>
+    <string name="pref_key_blocklist_auto_update_frequency">pref_key_blocklist_auto_update_frequency</string>
+
+
+    <string name="pref_key_session_export_category">pref_key_session_export_category</string>
+    <string name="pref_key_sessions_import">pref_key_sessions_import</string>
+<!--    <string name="pref_key_sessions_export">pref_key_sessions_export</string>
+    <string name="pref_key_sessions_reset">pref_key_sessions_reset</string>
+-->    
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>
@@ -77,5 +110,16 @@
     <string name="slions_update_check_url">https://slions.net/api/resources/10/versions</string>
     <string name="slions_api_key">eQxvqk5DGEXUBqdt5Y_7rGRxF2m0REdb</string>
 
+    <string-array name="block_ad_source_list">
+        <item>@string/block_source_default</item>
+        <item>@string/block_source_local</item>
+        <item>@string/block_source_remote</item>
+    </string-array>
+
+    <string-array name="block_ad_frequency_list">
+        <item>@string/block_remote_frequency_daily</item>
+        <item>@string/block_remote_frequency_weekly</item>
+        <item>@string/block_remote_frequency_monthly</item>
+    </string-array>
 
 </resources>

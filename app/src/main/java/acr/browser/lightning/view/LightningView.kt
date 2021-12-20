@@ -1,4 +1,5 @@
 /*
+ * Copyright © 2020-2021 Stéphane Lenclud
  * Copyright 2014 A.C.R. Development
  */
 
@@ -6,31 +7,30 @@ package acr.browser.lightning.view
 
 import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
+import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.DomainSettings
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
+import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
-import acr.browser.lightning.extensions.canScrollVertically
+import acr.browser.lightning.extensions.*
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.network.NetworkConnectivityModel
-import acr.browser.lightning.preference.UserPreferences
-import acr.browser.lightning.preference.userAgent
+import acr.browser.lightning.settings.preferences.UserPreferences
+import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.*
-import acr.browser.lightning.view.find.FindResults
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.IntentFilter
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.*
 import android.net.Uri
 import android.net.http.SslCertificate
@@ -44,13 +44,13 @@ import android.view.View.OnScrollChangeListener
 import android.view.View.OnTouchListener
 import android.webkit.CookieManager
 import android.webkit.WebSettings
-import android.webkit.WebSettings.FORCE_DARK_ON
 import android.webkit.WebSettings.LayoutAlgorithm
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -73,7 +73,7 @@ class LightningView(
     private val downloadPageInitializer: DownloadPageInitializer,
     private val historyPageInitializer: HistoryPageInitializer,
     private val logger: Logger
-) {
+): WebView.FindListener {
 
     /**
      * The unique ID of the view.
@@ -109,7 +109,7 @@ class LightningView(
      *
      * @return the WebView instance of the tab, which can be null.
      */
-    var webView: WebView? = null
+    var webView: WebViewEx? = null
         private set
 
     private lateinit var lightningWebClient: LightningWebClient
@@ -191,6 +191,23 @@ class LightningView(
     var domainSettings: DomainSettings
 
     /**
+     * Get our find in page search query.
+     *
+     * @return The find in page search query or an empty string.
+     */
+    var searchQuery: String = ""
+        set(aSearchQuery) {
+            field = aSearchQuery
+            //find(searchQuery)
+        }
+
+    /**
+     * Define if this tab has an active find in page search.
+     */
+    var searchActive = false
+
+
+    /**
      *
      */
     private val webViewHandler = WebViewHandler(this)
@@ -230,6 +247,12 @@ class LightningView(
      */
     val progress: Int
         get() = webView?.progress ?: 100
+
+    /**
+     * Tells if a web page is currently loading.
+     */
+    val isLoading
+        get() = progress != 100
 
     /**
      * Get the current user agent used by the WebView.
@@ -275,7 +298,7 @@ class LightningView(
             return if (webView == null || webView!!.url.isNullOrBlank() || webView!!.url.isSpecialUrl()) {
                 iTargetUrl.toString()
             } else  {
-                webView!!.url
+                webView!!.url as String
             }
         }
 
@@ -325,6 +348,8 @@ class LightningView(
             titleInfo.setFavicon(tabInitializer.tabModel.favicon)
             desktopMode = tabInitializer.tabModel.desktopMode
             darkMode = tabInitializer.tabModel.darkMode
+            searchQuery = tabInitializer.tabModel.searchQuery
+            searchActive = tabInitializer.tabModel.searchActive
         }
 
         networkDisposable = networkConnectivityModel.connectivity()
@@ -338,8 +363,9 @@ class LightningView(
     private fun createWebView() {
         lightningWebClient = LightningWebClient(activity, this)
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
-        webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebView;
+        webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebViewEx;
         webView?.apply {
+            setFindListener(this@LightningView)
             //id = this@LightningView.id
             gestureDetector = GestureDetector(activity, CustomGestureListener(this))
 
@@ -375,6 +401,11 @@ class LightningView(
         }
 
         initializePreferences()
+
+        // If search was active enable it again
+        if (searchActive) {
+            find(searchQuery)
+        }
     }
 
     fun currentSslState(): SslState = lightningWebClient.sslState
@@ -510,24 +541,60 @@ class LightningView(
     }
 
     /**
+     * Apply dark mode as needed.
+     * We try to go dark when using app dark theme or when page is forced to dark mode.
      *
+     * To test that you can load:
+     * https://septatrix.github.io/prefers-color-scheme-test/
+     *
+     * See also:
+     * https://stackoverflow.com/questions/57449900/letting-webview-on-android-work-with-prefers-color-scheme-dark
      */
     private fun applyDarkMode() {
         val settings = webView?.settings ?: return
 
-        // TODO: Have a settings option to have dark mode use specified render mode instead of WebView dark mode
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-            if (darkMode) {
-                WebSettingsCompat.setForceDark(settings,WebSettingsCompat.FORCE_DARK_ON)
-            } else {
-                WebSettingsCompat.setForceDark(settings,WebSettingsCompat.FORCE_DARK_OFF)
+        // If forced dark mode is supported
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK) &&
+            // and we are in dark theme or forced dark mode
+            ((activity as ThemedActivity).useDarkTheme || darkMode)) {
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
+                if (darkMode) {
+                    // User requested forced dark mode from menu, we need to enable user agent dark mode then.
+                    WebSettingsCompat.setForceDarkStrategy(
+                        settings,
+                        // Looks like that flag it's not working and will just do user agent dark mode even if page supports dark web theme.
+                        // That means that when using app light theme you can't get dark web theme, you will just get user agent dark theme.
+                        // No big deal though, just use app dark theme if you want proper web dark theme.
+                        WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING
+                    )
+                } else {
+                    // We are in app dark theme but this page does not forces to dark mode
+                    // Just request dark web theme then.
+                    // That's actually the only way to dark web theme rather than user agent darkening, see above comment.
+                    WebSettingsCompat.setForceDarkStrategy(
+                        settings,
+                        WebSettingsCompat.DARK_STRATEGY_WEB_THEME_DARKENING_ONLY
+                    )
+                }
             }
+
+            // We are either in app dark theme or forced dark mode, just request dark theme without actually forcing it.
+            // Yes I know that flag's name is misleading to say the least.
+            WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
         } else {
-            // Fallback to that then
-            if (darkMode) {
-                setColorMode(RenderingMode.INVERTED_GRAYSCALE)
+            // We are neither app dark theme or force dark mode or force dark mode is not supported.
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+                // We are in app light theme and force dark mode is disabled therefore:
+                WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_OFF)
             } else {
-                setColorMode(userPreferences.renderingMode)
+                // WebView force dark mode is not supported.
+                if (darkMode) {
+                    // Fallback to our special rendering mode then if user requests dark mode
+                    // TODO: Have a setting option to make this the default behaviour?
+                    setColorMode(RenderingMode.INVERTED_GRAYSCALE)
+                } else {
+                    setColorMode(userPreferences.renderingMode)
+                }
             }
         }
     }
@@ -587,11 +654,6 @@ class LightningView(
                         setGeolocationDatabasePath(file.path)
                     }
             }
-        }
-
-        // I guess that should do
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
-            WebSettingsCompat.setForceDarkStrategy(settings,WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING)
         }
 
     }
@@ -658,7 +720,7 @@ class LightningView(
      * Save the state of this tab and return it as a [Bundle].
      */
     fun saveState(): Bundle {
-         return TabModel(url, title, desktopMode, darkMode, favicon, webViewState()).toBundle()
+         return TabModel(url, title, desktopMode, darkMode, favicon, searchQuery, searchActive, webViewState()).toBundle()
     }
     /**
      * Pause the current WebView instance.
@@ -840,20 +902,86 @@ class LightningView(
      * @param text the text to search for.
      */
     @SuppressLint("NewApi")
-    fun find(text: String): FindResults {
+    fun find(text: String) {
+        resetFind()
+        searchQuery = text
+        searchActive = true
+        // Kick off our search
         webView?.findAllAsync(text)
+    }
 
-        return object : FindResults {
-            override fun nextResult() {
-                webView?.findNext(true)
+    fun findNext() {
+        webView?.findNext(true)
+    }
+
+    fun findPrevious() {
+        webView?.findNext(false)
+    }
+
+    fun clearFind() {
+        webView?.clearMatches()
+        searchActive = false
+        resetFind()
+    }
+
+    // Used to implement find in page
+    private var iActiveMatchOrdinal: Int = -1
+    private var iNumberOfMatches: Int = -1
+    private var iSnackbar: Snackbar? = null
+
+    /**
+     *
+     */
+    private fun resetFind() {
+        iActiveMatchOrdinal = -1
+        iNumberOfMatches = -1
+    }
+
+    /**
+     * That's where find in page results are being reported by our WebView.
+     */
+    override fun onFindResultReceived(activeMatchOrdinal: Int, numberOfMatches: Int, isDoneCounting: Boolean) {
+
+        // If our page is still loading or if our find in page search is not complete
+        if (isLoading || !isDoneCounting) {
+            // Just don't report intermediary results
+            return
+        }
+        // Only display message if something was changed
+        if (iActiveMatchOrdinal != activeMatchOrdinal || iNumberOfMatches != numberOfMatches) {
+
+            // Remember what we last reported
+            iActiveMatchOrdinal = activeMatchOrdinal
+            iNumberOfMatches = numberOfMatches
+
+            // Empty search query just dismisses any results previously displayed
+            if (searchQuery.isEmpty()) {
+                // Hide last snackbar to avoid having outdated stats lingering
+                // Notably useful when doing backspace on the search field until no characters are left
+                iSnackbar?.dismiss()
             }
+            // Check if our search is reporting any match
+            else if (iNumberOfMatches==0) {
+                // Find in page did not find any match, tell our user about it
+                iSnackbar = activity.makeSnackbar(
+                        activity.getString(R.string.no_match_found),
+                        Snackbar.LENGTH_SHORT, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                        .setAction(R.string.button_dismiss) {
+                            iSnackbar?.dismiss()
+                        }
 
-            override fun previousResult() {
-                webView?.findNext(false)
-            }
+                iSnackbar?.show()
+            } else {
+                // Show our user how many matches we have and which one is currently focused
+                val currentMatch = iActiveMatchOrdinal + 1
+                iSnackbar = activity.makeSnackbar(
+                        activity.getString(R.string.match_x_of_n,currentMatch,iNumberOfMatches) ,
+                        Snackbar.LENGTH_SHORT, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                        .setAction(R.string.button_dismiss) {
+                            iSnackbar?.dismiss()
+                        }
 
-            override fun clearResults() {
-                webView?.clearMatches()
+                iSnackbar?.show()
             }
         }
     }
@@ -866,32 +994,15 @@ class LightningView(
      * the WebView cannot be recreated using the public
      * api.
      */
-    // TODO fix bug where webView?.destroy is being called before the tab
-    // is removed and would cause a memory leak if the parent check
-    // was not in place.
     fun destroy() {
+
         //See: https://console.firebase.google.com/project/fulguris-b1f69/crashlytics/app/android:net.slions.fulguris.full.playstore/issues/ea99c7ea0c57f66eae6e95532a16859d
         if (iDownloadListener!=null) {
             activity.unregisterReceiver(iDownloadListener)
             iDownloadListener = null
         }
         networkDisposable.dispose()
-        webView?.let {
-            // Check to make sure the WebView has been removed
-            // before calling destroy() so that a memory leak is not created
-            val parent = it.parent as? ViewGroup
-            if (parent != null) {
-                logger.log(TAG, "WebView was not detached from window before destroy")
-                parent.removeView(it)
-            }
-            it.stopLoading()
-            it.onPause()
-            it.clearHistory()
-            it.visibility = View.GONE
-            it.removeAllViews()
-            it.destroyDrawingCache()
-            it.destroy()
-        }
+        webView?.autoDestruction()
     }
 
     /**
@@ -956,8 +1067,20 @@ class LightningView(
         } else {
             if (url != null) {
                 if (result != null) {
-                    if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE || result.type == WebView.HitTestResult.IMAGE_TYPE) {
-                        dialogBuilder.showLongPressImageDialog(activity, uiController, url, userAgent)
+                    if (result.type == WebView.HitTestResult.IMAGE_TYPE) {
+                        /** Should we just use [url] for images or is [result.extra] actually useful here? */
+                        dialogBuilder.showLongPressImageDialog(activity, uiController, result.extra ?: url, userAgent)
+                    } else if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE){
+                        // Ask user if she want to use the link or the image
+                        activity.makeSnackbar(
+                            activity.getString(R.string.question_what_do_you_want_to_use), Snackbar.LENGTH_LONG, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
+                            .setAction(R.string.button_link) {
+                                // Use the link then
+                                dialogBuilder.showLongPressLinkDialog(activity,uiController,url,userAgent)
+                            }.addAction(R.layout.snackbar_extra_button, R.string.button_image){
+                                /** Use the image then. That [result.extra] ?: [url] selection is probably not consistent here but it is convenient and safe */
+                                dialogBuilder.showLongPressImageDialog(activity, uiController, result.extra ?: url, userAgent)
+                            }.show()
                     } else {
                         dialogBuilder.showLongPressLinkDialog(activity, uiController, url, text)
                     }
@@ -965,11 +1088,7 @@ class LightningView(
                     dialogBuilder.showLongPressLinkDialog(activity, uiController, url, text)
                 }
             } else if (newUrl != null) {
-                if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE || result.type == WebView.HitTestResult.IMAGE_TYPE) {
-                    dialogBuilder.showLongPressImageDialog(activity, uiController, newUrl, userAgent)
-                } else {
-                    dialogBuilder.showLongPressLinkDialog(activity, uiController, newUrl, text)
-                }
+                dialogBuilder.showLongPressLinkDialog(activity, uiController, newUrl, text)
             }
         }
     }
@@ -1027,8 +1146,7 @@ class LightningView(
      * Check relevant user preferences and configuration before showing the tool bar if needed
      */
     fun showToolBarOnScrollUpIfNeeded() {
-        if (userPreferences.showToolBarOnScrollUpInPortrait && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-                || userPreferences.showToolBarOnScrollUpInLandscape && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (webView?.context?.configPrefs?.showToolBarOnScrollUp == true) {
             uiController.showActionBar()
         }
     }
@@ -1037,8 +1155,7 @@ class LightningView(
      * Check relevant user preferences and configuration before showing the tool bar if needed
      */
     fun showToolBarOnPageTopIfNeeded() {
-        if (userPreferences.showToolBarOnPageTopInPortrait && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-                || userPreferences.showToolBarOnPageTopInLandscape && Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (webView?.context?.configPrefs?.showToolBarOnPageTop == true) {
             uiController.showActionBar()
         }
     }

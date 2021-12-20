@@ -11,7 +11,7 @@ import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.download.DownloadPageFactory
 import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
-import acr.browser.lightning.preference.UserPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
 import android.app.Activity
 import android.os.Bundle
 import android.os.Message
@@ -182,9 +182,8 @@ class ResultMessageInitializer(private val resultMessage: Message) : TabInitiali
 abstract class BundleInitializer(private val bundle: Bundle?) : TabInitializer {
 
     override fun initialize(webView: WebView, headers: Map<String, String>) {
-        webView.restoreState(bundle)
+        bundle?.let {webView.restoreState(it)}
     }
-
 }
 
 /**

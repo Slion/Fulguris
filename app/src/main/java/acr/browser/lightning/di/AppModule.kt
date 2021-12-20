@@ -1,5 +1,6 @@
 package acr.browser.lightning.di
 
+import acr.browser.lightning.browser.TabsManager
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.device.BuildType
 import acr.browser.lightning.html.ListPageReader
@@ -14,6 +15,8 @@ import acr.browser.lightning.log.Logger
 import acr.browser.lightning.log.NoOpLogger
 import acr.browser.lightning.search.suggestions.RequestFactory
 import acr.browser.lightning.utils.FileUtils
+import acr.browser.lightning.utils.landscapeSharedPreferencesName
+import acr.browser.lightning.utils.portraitSharedPreferencesName
 import android.app.Application
 import android.app.DownloadManager
 import android.app.NotificationManager
@@ -62,6 +65,14 @@ class AppModule {
     @UserPrefs
     // Access default shared preferences to make sure preferences framework binding is working from XML
     fun provideUserPreferences(application: Application): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
+
+    @Provides
+    @PrefsPortrait
+    fun providePreferencesPortrait(application: Application): SharedPreferences = application.getSharedPreferences(portraitSharedPreferencesName(application), 0)
+
+    @Provides
+    @PrefsLandscape
+    fun providePreferencesLandscape(application: Application): SharedPreferences = application.getSharedPreferences(landscapeSharedPreferencesName(application), 0)
 
     @Provides
     @DevPrefs
@@ -150,19 +161,6 @@ class AppModule {
             .build()
     }.cache()
 
-    @Singleton
-    @Provides
-    @HostsClient
-    fun providesHostsHttpClient(application: Application): Single<OkHttpClient> = Single.fromCallable {
-        val intervalYear = TimeUnit.DAYS.toSeconds(365)
-        val suggestionsCache = File(application.cacheDir, "hosts_cache")
-
-        return@fromCallable OkHttpClient.Builder()
-            .cache(Cache(suggestionsCache, FileUtils.megabytesToBytes(5)))
-            .addNetworkInterceptor(createInterceptorWithMaxCacheAge(intervalYear))
-            .build()
-    }.cache()
-
     @Provides
     @Singleton
     fun provideLogger(buildInfo: BuildInfo): Logger = if (buildInfo.buildType == BuildType.DEBUG) {
@@ -196,6 +194,7 @@ class AppModule {
     @Provides
     fun providesSetMetaViewport(): SetMetaViewport = MezzanineGenerator.SetMetaViewport()
 
+
 }
 
 @Qualifier
@@ -204,15 +203,19 @@ annotation class SuggestionsClient
 
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)
-annotation class HostsClient
-
-@Qualifier
-@Retention(AnnotationRetention.SOURCE)
 annotation class MainHandler
 
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)
 annotation class UserPrefs
+
+@Qualifier
+@Retention(AnnotationRetention.SOURCE)
+annotation class PrefsPortrait
+
+@Qualifier
+@Retention(AnnotationRetention.SOURCE)
+annotation class PrefsLandscape
 
 @Qualifier
 @Retention(AnnotationRetention.SOURCE)

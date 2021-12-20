@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
+    <string name="action_reload">Reload</string>
+    <string name="action_menu">Menu</string>
     <string name="action_new_tab">新建标签页</string>
     <string name="action_share">分享</string>
     <string name="action_history">历史记录</string>
@@ -9,6 +10,12 @@
     <string name="action_add_bookmark">添加书签</string>
     <string name="action_copy">复制链接</string>
     <string name="action_forward">前进</string>
+    <string name="action_sessions">Sessions</string>
+    <string name="action_new_session">New session</string>
+    <string name="action_save_session">Save session as</string>
+    <string name="action_edit_sessions">Edit sessions</string>
+    <string name="enable">Enable</string>
+    <string name="disable">Disable</string>
     <string name="settings">设置</string>
     <string name="location">位置信息访问</string>
     <string name="password">保存密码</string>
@@ -19,16 +26,23 @@
     <string name="java">启用 JavaScript</string>
     <string name="download">下载位置</string>
     <string name="settings_advanced">高级设置</string>
+    <string name="apache">Apache License 2.0</string>
     <string name="version">应用版本</string>
+    <string name="update_available">Update available</string>
+    <string name="update_check_error">Update check error, try again later</string>
+    <string name="up_to_date">This is the newest version</string>
+    <string name="show">Show</string>
     <string name="cache">退出时清除缓存</string>
     <string name="reflow">启用文本重排</string>
     <string name="block">屏蔽图像</string>
+    <string name="load_images">Load images</string>
     <string name="window">允许网页打开新窗口</string>
     <string name="cookies">启用 Cookies</string>
     <string name="size">文本大小</string>
     <string name="recommended">推荐</string>
     <string name="search">搜索引擎</string>
     <string name="search_hint">搜索</string>
+    <string name="search_action">@string/search_hint</string>
     <string name="wideViewPort">使用宽视口</string>
     <string name="overViewMode">以概览模式加载页面</string>
     <string name="restore_tabs_on_startup">启动时恢复未关闭的标签页</string>
@@ -52,6 +66,8 @@
     <string name="agent_desktop">桌面端</string>
     <string name="agent_mobile">移动端</string>
     <string name="agent_custom">自定义</string>
+    <string name="agent_system">System</string>
+    <string name="agent_web_view">Web View</string>
     <string name="title_search_engine">搜索引擎</string>
     <string name="action_ok">确定</string>
     <string name="dialog_download">你想要下载这个文件吗？ (%1$s)</string>
@@ -62,7 +78,8 @@
     <string name="title_user_agent">用户代理</string>
     <string name="title_download_location">下载位置</string>
     <string name="title_custom_homepage">自定义主页</string>
-    <string name="action_webpage">网页</string>
+    <string name="action_webpage">Web page</string>
+    <string name="action_main_menu">Main menu</string>
     <string name="title_clear_history">清除历史记录</string>
     <string name="title_clear_cookies">清除 Cookie</string>
     <string name="dialog_history">你想要清除所有历史记录吗？</string>
@@ -83,8 +100,12 @@
     <string name="action_edit">编辑</string>
     <string name="action_incognito">新建无痕标签页</string>
     <string name="action_homepage">默认</string>
+    <string name="action_show_homepage">Show homepage</string>
     <string name="action_back">返回</string>
     <string name="action_find">在页面中查找</string>
+    <string name="action_print">Print</string>
+    <string name="downloads">Downloads</string>
+    <string name="downloads_notification_description">Triggers upon download completion</string>
     <string name="download_pending">正在开始下载\u2026</string>
     <string name="cannot_download">只能下载 HTTP 或 HTTPS 链接</string>
     <string name="problem_download">无效的 URL，无法下载</string>
@@ -93,12 +114,14 @@
     <string name="download_no_sdcard_dlg_msg">需要 USB 存储以下载文件</string>
     <string name="download_sdcard_busy_dlg_title">USB 存储不可用</string>
     <string name="download_sdcard_busy_dlg_msg">存储设备正忙。要允许下载，请轻触通知中的“关闭 USB 存储”</string>
+    <string name="download_complete">Download complete</string>
+    <string name="download_failed">Download failed</string>
     <string name="incognito_cookies">在无痕模式下启用 Cookie</string>
     <string name="incognito_cookies_pie">无痕模式运行于单独的进程，并在会话结束后重置。无痕模式下的 Cookie 设置由常规的 Cookie 选项控制。</string>
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">手动</string>
     <string name="action_auto">自动</string>
-    <string name="action_follow_me">联系我</string>
+    <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">清除缓存</string>
     <string name="message_cache_cleared">缓存已清除</string>
     <string name="message_import">书签已经导入</string>
@@ -110,40 +133,56 @@
     <string name="message_blocked_local">已阻止本地文件加载</string>
     <string name="licenses">开放源代码许可</string>
     <string name="suggestion">搜索</string>
-
+    <string name="checking_for_updates">Checking for updates…</string>
+    <string name="title_updated">Fulguris was updated</string>
+    <string name="message_updated">You are now running v%s. Do you want to check release notes online?</string>
+    <string name="title_welcome">Welcome to Fulguris</string>
+    <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
     <!-- Ad block -->
-    <string name="block_ads">屏蔽广告</string>
+    <string name="block_ads">Content control</string>
     <string name="block_ad_source">Hosts 文件来源</string>
     <string name="block_ad_remote_refresh_frequency_description">对于远程 Hosts 文件</string>
     <string name="block_ad_refresh_now">立即更新 Hosts</string>
-
-    <string name="block_ads_upsell_source">升级到 Lightning Plus 以选择</string>
-
     <string name="block_remote_frequency_daily">每天</string>
     <string name="block_remote_frequency_weekly">每周</string>
     <string name="block_remote_frequency_monthly">每月</string>
-
-    <string-array name="block_ad_frequency_list">
-        <item>@string/block_remote_frequency_daily</item>
-        <item>@string/block_remote_frequency_weekly</item>
-        <item>@string/block_remote_frequency_monthly</item>
-    </string-array>
-
     <string name="block_source_default">默认 Hosts</string>
     <string name="block_source_local">本地 Hosts 文件</string>
     <string name="block_source_local_description">文件：%1$s</string>
     <string name="block_source_remote">远程 Hosts 文件</string>
     <string name="block_source_remote_description">URL: %1$s</string>
-
-    <string-array name="block_ad_source_list">
-        <item>@string/block_source_default</item>
-        <item>@string/block_source_local</item>
-        <item>@string/block_source_remote</item>
-    </string-array>
-
+    <string name="ad_block_load_failure">从广告屏蔽来源加载 Hosts 失败</string>
+    <!-- new ad blocker -->
+    <string name="page_blocked">The following page was blocked:</string>
+    <string name="page_blocked_reason">because of:</string>
+    <string name="page_blocked_list_ad">%s on ad filters</string>
+    <string name="page_blocked_list_user">%s blocked by user rule</string>
+    <string name="page_blocked_list_malware">%s on malware filters</string>
+    <string name="request_blocked">Request blocked</string>
+    <!-- settings for new ad blocker -->
+    <string name="blocklist_update_mode">Auto-update mode</string>
+    <string name="blocklist_update_on">Auto-update on</string>
+    <string name="blocklist_update_off">Auto-update off</string>
+    <string name="blocklist_update_wifi">Only on non-metered connections</string>
+    <string name="blocklist_update">Update filters</string>
+    <string name="blocklist_update_frequency">Auto-update frequency</string>
+    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
+    <string name="blocklist_update_now">Update lists now</string>
+    <string name="blocklist_last_update">Last update: %s</string>
+    <string name="add_blocklist">Add filters file</string>
+    <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
+    <string name="enable_blocklist">Enable this list</string>
+    <string name="invalid_title">Invalid title</string>
+    <string name="invalid_url">Invalid URL</string>
+    <string name="blocklist_built_in">Built-in filters</string>
+    <string name="blocklist_remove">Remove filters file</string>
+    <string name="blocklist_remove_confirm">Really remove filters file %s?</string>
+    <string name="local_file">Local</string>
+    <string name="local_file_replace">Replace</string>
+    <string name="local_file_chosen">file selected</string>
+    <string name="remote_file">Remote</string>
     <!-- Common actions -->
     <string name="action_message_canceled">操作已取消</string>
-
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">本次会话中不再询问</string>
     <string name="message_insecure_connection">与此页的连接不安全：\n%1$s\n无论如何都要继续吗？</string>
@@ -153,11 +192,9 @@
     <string name="message_certificate_invalid">证书无效</string>
     <string name="message_certificate_not_yet_valid">证书尚未生效</string>
     <string name="message_certificate_untrusted">证书不受信任</string>
-
     <!-- permissions request -->
     <string name="title_permission_request">权限请求</string>
     <string name="message_permission_request">%1$s\n\n想要使用：\n\n%2$s</string>
-
     <string name="title_form_resubmission">重新提交表单</string>
     <string name="message_form_resubmission">你想要重新发送数据吗？</string>
     <string name="message_location">\n想要使用你的位置信息</string>
@@ -195,6 +232,10 @@
     <string name="folder_default">默认</string>
     <string name="folder_custom">自定义</string>
     <string name="untitled">未命名</string>
+    <string name="mpl_license">Mozilla Public License v. 2.0</string>
+    <string name="freeware">Freeware</string>
+    <string name="android_open_source_project">Android Open Source Project</string>
+    <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>
     <string name="reopening_recent_tab">重新打开了之前的标签页</string>
     <string name="rendering_mode">渲染模式</string>
     <string name="name_inverted">反色</string>
@@ -204,6 +245,11 @@
     <string name="name_normal">正常</string>
     <string name="sync_history">与 Google 同步历史记录</string>
     <string name="title_file_chooser">文件选择器</string>
+    <string name="library_netcipher">NetCipher</string>
+    <string name="license_gnu">GNU Lesser General Public License</string>
+    <string name="generic_export">Export</string>
+    <string name="generic_import">Import</string>
+    <string name="generic_reset">Reset</string>
     <string name="export_bookmarks">导出书签备份</string>
     <string name="import_backup">从备份中导入书签</string>
     <string name="bookmark_export_path">书签已经导出到</string>
@@ -211,11 +257,65 @@
     <string name="bookmark_settings">书签设置</string>
     <string name="import_bookmark_error">无法从文件导入书签</string>
     <string name="message_bookmark_added">书签已添加</string>
+    <string name="message_bookmark_not_added">Bookmark already exists.</string>
     <string name="title_chooser">选择一个文件</string>
     <string name="settings_general">常规设置</string>
     <string name="settings_display">显示设置</string>
+    <string name="settings_backup">Backup</string>
+    <string name="settings_title_configuration">Configuration</string>
+    <string name="settings_summary_configuration">Portrait and landscape settings</string>
+    <string name="settings_title_portrait">@string/pref_category_portrait</string>
+    <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_privacy">隐私设置</string>
     <string name="settings_about">关于</string>
+    <string name="settings_contribute">Contribute</string>
+    <string name="settings_summary_contribute">Help Fulguris grow and succeed</string>
+    <string name="pref_category_general">General</string>
+    <string name="pref_category_panels">Panels</string>
+    <string name="pref_category_webpage">@string/action_webpage</string>
+    <string name="pref_category_landscape">Landscape</string>
+    <string name="pref_category_portrait">Portrait</string>
+    <string name="pref_category_menu">@string/action_menu</string>
+    <string name="pref_category_filters">Filters</string>
+    <string name="pref_category_summary_filters">Local or remote files defining your content control rules</string>
+    <string name="pref_category_on_tab_close">When closing tab</string>
+    <string name="pref_category_on_tab_change">When changing tab</string>
+    <string name="pref_category_on_tab_back_forward">When going back or forward</string>
+    <string name="pref_title_hide_status_bar">Hide status bar</string>
+    <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
+    <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
+    <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
+    <string name="pref_title_locked_drawers">Locked panels</string>
+    <string name="pref_summary_locked_drawers">Tabs and Bookmarks panels can\'t be dragged</string>
+    <string name="pref_title_use_bottom_sheets">Use bottom sheets</string>
+    <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
+    <string name="pref_title_tab_list_item_show_close_button">Show close tab button</string>
+    <string name="pref_summary_tab_list_item_show_close_button">Display close tab buttons on tab list items</string>
+    <string name="pref_title_menu_show_exit">Exit menu item</string>
+    <string name="pref_summary_menu_show_exit">Show Exit app option in menu. Incognito mode always displays it regardless.</string>
+    <string name="pref_title_menu_new_tab">New tab menu item</string>
+    <string name="pref_summary_menu_new_tab">Show New tab option in menu</string>
+    <string name="pref_title_crash_report">Crash report</string>
+    <string name="pref_title_analytics">Analytics</string>
+    <string name="pref_title_pull_to_refresh">Pull to refresh</string>
+    <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
+    <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
+    <string name="pref_title_desktop_width">Desktop width</string>
+    <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
+    <string name="pref_title_no_sponsorship">In-app sponsorship not available</string>
+    <string name="pref_summary_no_sponsorship">Use Fulguris from Google Play to sponsor us.</string>
+    <string name="pref_title_free_download">Free download</string>
+    <string name="pref_summary_free_download">Fulguris is Open Source Software. You can download our free edition including full feature set and unlimited tabs.</string>
+    <string name="pref_title_sponsorship_github">Sponsor us on GitHub</string>
+    <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
+    <string name="pref_title_sponsorship_five_stars">Five stars review</string>
+    <string name="pref_summary_sponsorship_five_stars">Giving us a five stars review on Google Play is a great way to help this project.</string>
+    <string name="pref_title_contribute_translations">Translations</string>
+    <string name="pref_summary_contribute_translations">You can help translate Fulguris to your locale language on Crowdin.</string>
+    <string name="pref_title_contribute_share">Spread the word</string>
+    <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
+    <string name="pref_title_language">Language</string>
+    <string name="language_system_default">System default</string>
     <string name="settings_about_explain">版本，作者以及许可的详细信息</string>
     <string name="close_tab">关闭当前标签页</string>
     <string name="close_all_tabs">关闭所有标签页</string>
@@ -225,20 +325,35 @@
     <string name="reading_mode">阅读模式</string>
     <string name="loading">加载中&#8230;</string>
     <string name="loading_failed">无法从页面中加载任何内容</string>
+    <string name="snacktory">Snacktory</string>
+    <string name="jsoup">jsoup: Java HTML Parser</string>
+    <string name="mit_license">MIT License</string>
     <string name="url_contents">地址栏内容</string>
+    <string name="search_in_new_tab">Search in new tab</string>
+    <string name="url_in_new_tab">URL in new tab</string>
+    <string name="homepage_in_new_tab">Homepage in new tab</string>
+    <string name="bookmark_in_new_tab">Bookmark in new tab</string>
+    <string name="new_tab_position">New tab position</string>
+    <string name="new_tab_position_before">Before current tab</string>
+    <string name="new_tab_position_after">After current tab</string>
+    <string name="new_tab_position_start">Start of tab list</string>
+    <string name="new_tab_position_end">End of tab list</string>
     <string name="text_encoding">文字编码</string>
+    <string name="reset_settings">Reset settings</string>
+    <string name="reset_settings_confirmation">You will loose all your settings. Are you sure you want to proceed?</string>
     <string-array name="url_content_array">
         <item>域名（默认）</item>
         <item>URL</item>
         <item>标题</item>
     </string-array>
     <string name="invert_color">反色</string>
-    <string name="dark_theme">暗色</string>
     <string name="settings_black_status_bar">黑色状态栏</string>
     <string name="tabs">标签页</string>
     <string name="theme">应用主题</string>
     <string name="light_theme">亮色</string>
+    <string name="dark_theme">暗色</string>
     <string name="black_theme">黑色 (AMOLED)</string>
+    <string name="default_theme">@string/agent_default</string>
     <string name="folder">文件夹名称</string>
     <string name="action_folder">文件夹</string>
     <string name="action_rename">重命名</string>
@@ -248,28 +363,35 @@
     <string name="clear_web_storage_exit">退出时清除 Web 存储</string>
     <string name="message_web_storage_cleared">Web 存储已清除</string>
     <string name="hosts_source">广告屏蔽 Hosts 来源</string>
-    <string name="settings_adblock">广告屏蔽设置</string>
+    <string name="settings_adblock">@string/block_ads</string>
+    <string name="settings_summary_content_control">Ad blocker and content filtering</string>
+    <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
     <string name="settings_title_vertical_tab_bar">在导航抽屉中显示标签页</string>
+    <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
+    <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
+    <string name="settings_title_desktop_mode_default">Desktop mode</string>
+    <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
+    <string name="settings_title_dark_mode_default">Force dark mode</string>
+    <string name="settings_summary_dark_mode_default">Define if new tabs use force dark mode by default</string>
     <string name="settings_title_swap_bookmarks_and_tabs">交换书签和标签页抽屉</string>
+    <string name="settings_summary_swap_bookmarks_and_tabs">Tabs and Bookmarks drawers will swap places</string>
     <string name="do_not_track">请求“Do Not Track”</string>
     <string name="save_data">请求“Save-Data”</string>
     <string name="remove_identifying_headers">移除可用于识别的头部信息</string>
     <string name="pref_title_webrtc">WebRTC 支持</string>
+    <string name="pref_summary_webrtc">Allows Real Time Communication over the Web using your device camera and microphone</string>
     <string name="action_add_to_homescreen">添加到桌面</string>
     <string name="message_added_to_homescreen">快捷方式已添加到桌面</string>
     <string name="shortcut_message_failed_to_add">抱歉，你的桌面应用不支持快捷方式</string>
     <string name="action_delete_all_bookmarks">删除所有书签</string>
     <string name="flash_not_supported">你的系统不支持 Flash Player</string>
-    <string name="upsell_plus_version">升级到 Lightning Plus 以屏蔽广告</string>
     <string name="message_open_download_fail">文件不存在</string>
-
     <string name="faq">FAQ</string>
     <string name="faq_description">常见问题</string>
-
     <!-- debug strings -->
     <string name="debug_title">调试设置</string>
+    <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">重新启动应用以使更改生效</string>
-
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">在新标签页中打开</string>
     <string name="dialog_open_background_tab">在后台标签页中打开</string>
@@ -279,18 +401,17 @@
     <string name="dialog_remove_from_history">从历史记录中移除</string>
     <string name="dialog_download_image">下载图像</string>
     <string name="dialog_copy_link">复制链接</string>
+    <string name="dialog_copy_text">Copy text</string>
     <string name="dialog_rename_folder">重命名文件夹</string>
     <string name="dialog_remove_folder">移除文件夹</string>
     <string name="dialog_title_close_browser">关闭浏览器</string>
     <string name="dialog_delete_download">删除下载内容</string>
     <string name="dialog_delete_all_downloads">删除所有下载内容</string>
-
     <!-- Tools dialog -->
     <string name="dialog_tools_title">页面工具</string>
     <string name="dialog_toggle_desktop">切换桌面用户代理</string>
     <string name="dialog_adblock_enable_for_site">为此页启用广告屏蔽</string>
     <string name="dialog_adblock_disable_for_site">为此页禁用广告屏蔽</string>
-
     <!-- Search Engines -->
     <string name="search_engine_custom">自定义 URL</string>
     <string name="search_engine_google">Google</string>
@@ -304,26 +425,76 @@
     <string name="search_engine_baidu">百度</string>
     <string name="search_engine_yandex">Yandex</string>
     <string name="search_engine_naver">Naver</string>
-
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">打开了 %1$d 个无痕标签页</item>
     </plurals>
     <string name="notification_incognito_running_message">轻触以打开</string>
     <string name="notification_incognito_running_description">进行中的无痕标签页通知</string>
-
-    <!--Ad block -->
-    <string name="ad_block_load_failure">从广告屏蔽来源加载 Hosts 失败</string>
-
+    <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">颁发者</string>
     <string name="ssl_info_issued_to">颁发给</string>
     <string name="ssl_info_issued_on">颁发时间</string>
     <string name="ssl_info_expires_on">过期时间</string>
-
+    <!-- Search in page -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="close">Close</string>
+    <string name="exit">Exit</string>
     <!-- Frozen tabs -->
     <string name="tab_frozen">已冻结…</string>
-
     <!-- Search -->
     <string name="search_insert_suggestion">插入搜索建议</string>
+    <string name="action_close_all_other_tabs">Close all other tabs</string>
+    <string name="action_restore_all_tabs">Restore all tabs</string>
+    <string name="action_restore_tab">Restore tab</string>
+    <string name="settings_summary_apps">Enable third-party apps</string>
+    <string name="settings_title_apps">Apps</string>
+    <string name="settings_app_prefix">app_for_</string>
+    <string name="dialog_title_third_party_app">Third-party app available</string>
+    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
+    <string name="per_month">\u0020/ month</string>
+    <string name="per_year">\u0020/ year</string>
+    <string name="session_default">@string/agent_default</string>
+    <string name="session_name_prompt">Enter session name:</string>
+    <string name="session_already_exists">A session with that name already exists!</string>
+    <string name="session_cant_delete_current">Can\'t delete current session!</string>
+    <string name="session_prompt_confirm_deletion_title">Confirm deletion</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
+    <string name="session_switched">Switched to \"%s\"</string>
+    <string name="busy">Busy, try again shortly.\"</string>
+    <string name="invalid_character_removed">Invalid character removed!</string>
+    <string name="invalid_characters_removed">Invalid characters removed!</string>
+    <string name="reading_mode_image_copyright">Image attributed to</string>
+    <string name="reading_mode_image_caption">Image with caption</string>
+    <!-- text-to-speech -->
+    <string name="tts">Read page</string>
+    <string name="stop_tts">Stop reading</string>
+    <!-- Application name which can be translated -->
+    <string name="locale_app_name">Fulguris Web Browser</string>
+    <!--
+    Long press on image link disambiguation:
+        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
+     -->
+    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
+    <string name="button_link">Link</string>
+    <string name="button_image">Image</string>
+    <!-- Displayed in snackbar to notify user a tab was closed -->
+    <string name="notify_tab_closed">Tab closed</string>
+    <string name="button_undo">Undo</string>
+    <string name="button_dismiss">Dismiss</string>
+    <!-- Find in page -->
+    <string name="no_match_found">No match found!</string>
+    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="pref_title_show_snackbar">Show snackbar</string>
+    <string name="pref_title_show_animation">Show animation</string>
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_title_duration">Duration</string>
+    <string name="pref_summary_duration">Animation duration in centiseconds</string>
+    <string name="pref_category_title_session_export">Export session</string>
+    <string name="pref_category_summary_session_export">Pick the session you want to export</string>
+    <string name="error_session_file_corrupted">Error: corrupted session file!</string>
+    <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
+    <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
 </resources>

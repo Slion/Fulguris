@@ -34,15 +34,13 @@ import acr.browser.lightning.di.DatabaseScheduler;
 import acr.browser.lightning.di.MainScheduler;
 import acr.browser.lightning.di.NetworkScheduler;
 import acr.browser.lightning.dialog.BrowserDialog;
-import acr.browser.lightning.extensions.ActivityExtensions;
 import acr.browser.lightning.log.Logger;
-import acr.browser.lightning.preference.UserPreferences;
+import acr.browser.lightning.settings.preferences.UserPreferences;
 import acr.browser.lightning.utils.FileUtils;
 import acr.browser.lightning.utils.Utils;
 import acr.browser.lightning.view.LightningView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -60,6 +58,8 @@ public class DownloadHandler {
     private static final String TAG = "DownloadHandler";
 
     private static final String COOKIE_REQUEST_HEADER = "Cookie";
+    private static final String REFERER_REQUEST_HEADER = "Referer";
+    private static final String USERAGENT_REQUEST_HEADER = "User-Agent";
 
     private final DownloadsRepository downloadsRepository;
     private final DownloadManager downloadManager;
@@ -186,7 +186,7 @@ public class DownloadHandler {
     private void onDownloadStartNoStream(@NonNull final Activity context, @NonNull UserPreferences preferences,
                                          @NonNull String url, String userAgent,
                                          String contentDisposition, @Nullable String mimetype, @NonNull String contentSize) {
-        iFilename = guessFileName(url, contentDisposition, mimetype);
+        iFilename = guessFileName(url, contentDisposition, mimetype, null);
 
         BrowserActivity ba = (BrowserActivity)context;
 
@@ -261,6 +261,8 @@ public class DownloadHandler {
         // old percent-encoded url.
         String cookies = CookieManager.getInstance().getCookie(url);
         request.addRequestHeader(COOKIE_REQUEST_HEADER, cookies);
+        request.addRequestHeader(REFERER_REQUEST_HEADER, url);
+        request.addRequestHeader(USERAGENT_REQUEST_HEADER, userAgent);
         // We don't want to show the default download complete notification as it just opens our app when you click it
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
 

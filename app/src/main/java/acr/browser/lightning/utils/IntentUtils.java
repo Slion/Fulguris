@@ -10,6 +10,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 
 import android.os.Handler;
@@ -143,7 +144,7 @@ public class IntentUtils {
      * @param title the title of the URL to share. This
      *              is optional.
      */
-    public void shareUrl(@Nullable String url, @Nullable String title) {
+    public void shareUrl(@Nullable String url, @Nullable String title, @StringRes int aTitleId) {
         if (url != null && !UrlUtils.isSpecialUrl(url)) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
@@ -151,7 +152,17 @@ public class IntentUtils {
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
             }
             shareIntent.putExtra(Intent.EXTRA_TEXT, url);
-            mActivity.startActivity(Intent.createChooser(shareIntent, mActivity.getString(R.string.dialog_title_share)));
+            mActivity.startActivity(Intent.createChooser(shareIntent, mActivity.getString(aTitleId)));
         }
     }
+
+    /**
+     * Same as above with default parameter.
+     * @param url
+     * @param title
+     */
+    public void shareUrl(@Nullable String url, @Nullable String title) {
+        shareUrl(url,title,R.string.dialog_title_share);
+    }
+
 }

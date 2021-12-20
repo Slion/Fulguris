@@ -1,6 +1,6 @@
 package acr.browser.lightning.view
 
-import acr.browser.lightning.preference.IntEnum
+import acr.browser.lightning.settings.preferences.IntEnum
 
 /**
  * An enum representing the browser's available rendering modes.

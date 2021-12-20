@@ -28,14 +28,12 @@ fun View.canScrollVertically() = this.let {
 
 /**
  * Removes a view from its parent if it has one.
+ * WARNING: This may not set this parent to null instantly if you are using animateLayoutChanges.
  */
-fun View?.removeFromParent() : ViewGroup? = this?.let {
-    val parent = it.parent
-    (parent as? ViewGroup)?.let { vg ->
-        vg.removeView(it)
+fun View.removeFromParent() : ViewGroup? {
+        val vg = (parent as? ViewGroup)
+        vg?.removeView(this)
         return vg
-    }
-    // Assuming you don't need to explicitly return null in Kotlin
 }
 
 /**
@@ -120,7 +118,7 @@ inline fun View?.onLayoutChange(crossinline runnable: () -> Unit) = this?.apply 
         override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int,
                                     oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int)
         {
-            runnable();
+            runnable()
         }
     })
 }
@@ -135,11 +133,39 @@ inline fun View?.onLayoutChange(crossinline runnable: () -> Unit) = this?.apply 
             val rect = Rect(left, top, right, bottom)
             val oldRect = Rect(oldLeft, oldTop, oldRight, oldBottom)
             if (rect.width() != oldRect.width() || rect.height() != oldRect.height()) {
-                runnable();
+                runnable()
             }
         }
     }
 
+/**
+ * That's not actually working for WebView. You only get the top of the web page or blank if the page was scrolled down.
+ * See: https://stackoverflow.com/questions/31295237/android-webview-takes-screenshot-only-from-top-of-the-page
+ */
+/*
+fun View.createBitmap(): Bitmap {
+    val b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val c = Canvas(b)
+    //layout(left, top, right, bottom)
+    draw(c)
+    return b
+}
+*/
+
+/**
+ * Capture a bitmap for this view. Also works with WeView.
+ * Though those drawing cache APIs are deprecated they hopefully won't be removed so soon.
+ * See: https://stackoverflow.com/a/63529956/3969362
+ * [View.setFlags] which is called by [View.setDrawingCacheEnabled] discards calls which are not actually changing flags so we are cool there.
+ */
+@Suppress("DEPRECATION")
+fun View.captureBitmap(): Bitmap {
+    val wasDrawingCacheEnabled = isDrawingCacheEnabled
+    isDrawingCacheEnabled = true // Enable cache in case it was not already, has not effect if already enabled
+    val bitmap: Bitmap = Bitmap.createBitmap(getDrawingCache(false))
+    isDrawingCacheEnabled = wasDrawingCacheEnabled // Restore cache state as it was, has not effect if already enabled
+    return bitmap;
+}
 
 
 /**
@@ -191,7 +217,7 @@ fun SwipeRefreshLayout?.resetTarget() {
     val field = SwipeRefreshLayout::class.java.getDeclaredField("mTarget")
     field.isAccessible = true
     // Then reset it
-    field.set(this,null);
+    field.set(this,null)
     // Next time this is doing a layout ensureTarget() will be called and the target set properly again
 }
 
@@ -205,6 +231,7 @@ fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
     clearColorFilter()
 
     if (isDarkTheme) {
+        /**TODO: That code was duplicated in [FaviconModel.cacheFaviconForUrl] fix it, somehow */
         Palette.from(bitmap).generate { palette ->
             // OR with opaque black to remove transparency glitches
             val filteredColor = Color.BLACK or getFilteredColor(bitmap) // OR with opaque black to remove transparency glitches
@@ -218,7 +245,9 @@ fun ImageView.setImageForTheme(bitmap: Bitmap, isDarkTheme: Boolean) {
             // Use white filter on darkest favicons
             // Filtered luminance  works well enough for theregister.co.uk and github.com while not impacting bbc.co.uk
             // Luminance from dominant color was added to prevent toytowngermany.com from being filtered
-            if (luminance < threshold && filteredLuminance < threshold) {
+            if (luminance < threshold && filteredLuminance < threshold
+                // Needed to exclude white favicon variant provided by GitHub dark web theme
+                && palette?.dominantSwatch != null) {
                 // Mostly black icon
                 //setColorFilter(Color.WHITE)
                 // Invert its colors
@@ -266,3 +295,5 @@ fun PopupWindow.dimBehind(aDimAmout: Float = 0.3f) {
     p.dimAmount = aDimAmout
     wm.updateViewLayout(container, p)
 }
+
+

@@ -44,9 +44,16 @@ object Uris {
     const val AboutHistory = "${Schemes.About}:${Hosts.History}"
 }
 
-
-
-
+object PrefKeys {
+    const val HideStatusBar = "pref_key_hide_status_bar"
+    const val HideToolBar = "pref_key_hide_tool_bar"
+    const val ShowToolBarWhenScrollUp = "pref_key_show_tool_bar_on_scroll_up"
+    const val ShowToolBarOnPageTop = "pref_key_show_tool_bar_on_page_top"
+    const val DesktopWidth = "pref_key_desktop_width"
+    const val PullToRefresh = "pref_key_pull_to_refresh"
+    const val TabBarVertical = "pref_key_tab_bar_vertical"
+    const val ToolbarsBottom = "pref_key_toolbars_bottom"
+}
 
 
 const val UTF8 = "UTF-8"

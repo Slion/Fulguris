@@ -1,13 +1,16 @@
 package acr.browser.lightning.view
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
 import android.print.PrintJob
 import android.print.PrintManager
 import android.util.AttributeSet
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.WebView
+import androidx.annotation.ColorInt
 
 /**
  * Specialising  WebView could be useful at some point.
@@ -35,15 +38,63 @@ class WebViewEx : WebView {
     }
 
     /**
+     * We use that to debug our beautiful color mess.
+     */
+    override fun setBackgroundColor(@ColorInt color: Int) {
+        super<WebView>.setBackgroundColor(color)
+    }
+
+
+    /**
      * Start a print job, thus notably enabling saving a web page as PDF.
      */
     fun print() : PrintJob {
         val printManager: PrintManager = context.getSystemService(Context.PRINT_SERVICE) as PrintManager
-        val printAdapter: PrintDocumentAdapter = createPrintDocumentAdapter(title)
-        val jobName = title
+        val printAdapter: PrintDocumentAdapter = createPrintDocumentAdapter(title as String)
+        val jobName = title as String
         val builder: PrintAttributes.Builder = PrintAttributes.Builder()
         builder.setMediaSize(PrintAttributes.MediaSize.ISO_A4)
         return printManager.print(jobName, printAdapter, builder.build())
+    }
+
+    /**
+     * We shied away from overriding [WebView.destroy] so here we have that function instead.
+     */
+    fun destruction() {
+        stopLoading()
+        onPause()
+        clearHistory()
+        visibility = View.GONE
+        removeAllViews()
+        destroyDrawingCache()
+        destroy()
+    }
+
+    /**
+     * Tell if this object should be destroyed.
+     */
+    private var iNeedDestruction = false
+
+    /**
+     * Does just that.
+     */
+    fun destroyIfNeeded() {
+        if (iNeedDestruction) {
+            destruction()
+        }
+    }
+
+    /**
+     * Destroy self if no parent else mark this as needing destruction.
+     * This is was needed to accommodate for WebView animation.
+     */
+    fun autoDestruction() {
+        if (parent!=null) {
+            // There is probably still an animation running
+            iNeedDestruction = true
+        } else {
+            destruction()
+        }
     }
 
 }
