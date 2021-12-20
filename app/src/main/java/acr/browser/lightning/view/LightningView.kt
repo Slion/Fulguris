@@ -118,12 +118,6 @@ class LightningView(
      * The URL we tried to load
      */
     private var iTargetUrl: Uri = Uri.parse("")
-        set(value) {
-            field = value
-            val host = value.host
-            if (host != domainSettings.host)
-                domainSettings = DomainSettings(host, activity.baseContext, userPreferences)
-        }
 
     private val uiController: UIController
     private lateinit var gestureDetector: GestureDetector
@@ -186,10 +180,53 @@ class LightningView(
             applyDarkMode();
         }
 
-//    val domainSettings: DomainSettings
-//    	get() = DomainSettings(Uri.parse(url).host, activity.baseContext, userPreferences)
-    var domainSettings: DomainSettings
+    // TODO: decide which one to use, maybe try more callbacks
+    //   bad:
+    //    shouldInterceptRequest (only for main frame does not work sometimes)
+    //    onPageStarted (too late)
+    //    shouldOverrideUrlLoading (sometimes not called)
+    //   try:
+    //    onProgressChanged (chromeClient)
+    //    shouldInterceptRequest (find a way to fix the wrong mainFrame problem?)
+    /* domainsettings: getting url on every access is slow
+        webView.url takes 20 µs
+        url takes 100 µs (60 after optimizing)
+        getter from domainSettings3 takes 35-40 µs
+        simply returning current value is 1-2 µs
+            but when to set?
+            try in the same function when it is accessed
+                but: this might be different for each domainSetting, and will be horrible to keep up to date
+     */
 
+    // to be used with setting host whenever url changed
+    // fastest, but how ot reliably detect url change?
+//    val domainSettings: DomainSettings by lazy { DomainSettings(null, activity.baseContext, userPreferences) }
+
+    // reading webView.url on each access is slow
+    // and creating new DomainSettings on each access is bad...
+    // would work better if we could get existing instances with same constructor
+//    private val domainSettings: DomainSettings
+//    	get() = DomainSettings(webView?.url.quickHost(), activity.baseContext, userPreferences)
+
+    // like above, but without creating new DomainSettings on each access
+    private var domainSettings: DomainSettings
+        get() {
+            val host = webView?.url.quickHost()
+            if (host == field.host)
+                return field
+            //field = DomainSettings(host, activity.baseContext, userPreferences)
+            field.host = host
+            return field
+        }
+
+    // get host from url string without the 5 times slower Uri.parse
+    // should detect correctly for urls that webView may have, but not for arbitrary strings
+    // TODO: should be moved down to other functions if we will keep using it
+    private fun String?.quickHost(): String? {
+        this ?: return null
+        if (isBlank() || indexOf("//") == -1) return null
+        return substringAfter("//").substringBefore('/').substringAfter('@').substringBefore(':')
+    }
     /**
      * Get our find in page search query.
      *
@@ -328,11 +365,10 @@ class LightningView(
         titleInfo = LightningViewTitle(activity)
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()
 
-        // domainSettings need to be initialized before setting iTargetUrl
-        domainSettings = DomainSettings(null, activity.baseContext, userPreferences)
-
         // Mark our URL
         iTargetUrl = Uri.parse(tabInitializer.url())
+
+        domainSettings = DomainSettings(iTargetUrl.host, activity.baseContext, userPreferences)
 
         if (tabInitializer !is FreezableBundleInitializer) {
             // Create our WebView now
@@ -502,7 +538,7 @@ class LightningView(
 
         settings.saveFormData = userPreferences.savePasswordsEnabled && !isIncognito
 
-        if (userPreferences.javaScriptEnabled) {
+        if (domainSettings.javaScriptEnabled) {
             settings.javaScriptEnabled = true
             settings.javaScriptCanOpenWindowsAutomatically = true
         } else {
@@ -523,7 +559,7 @@ class LightningView(
             settings.layoutAlgorithm = LayoutAlgorithm.NORMAL
         }
 
-        settings.blockNetworkImage = !userPreferences.loadImages
+        settings.blockNetworkImage = !domainSettings.loadImages
         // Modifying headers causes SEGFAULTS, so disallow multi window if headers are enabled.
         settings.setSupportMultipleWindows(userPreferences.popupsEnabled && !modifiesHeaders)
 
