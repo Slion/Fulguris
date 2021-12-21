@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_more_vertical"
-            android:contentDescription="@string/action_more"
+            android:contentDescription="@string/action_menu"
             android:nextFocusDown="@id/web_view" />
     </LinearLayout>
 </layout>
