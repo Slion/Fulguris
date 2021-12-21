@@ -64,7 +64,6 @@
     <string name="action_blank">Празна страница</string>
     <string name="agent_default">Подразумевана</string>
     <string name="agent_desktop">Рачунар</string>
-    <string name="agent_mobile">Мобилни</string>
     <string name="agent_custom">Посебна</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">Web View</string>

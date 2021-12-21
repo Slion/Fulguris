@@ -64,7 +64,6 @@
     <string name="action_blank">Leere Seite</string>
     <string name="agent_default">Standard</string>
     <string name="agent_desktop">Desktop</string>
-    <string name="agent_mobile">Mobile</string>
     <string name="agent_custom">Benutzerdefiniert</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">WebView</string>

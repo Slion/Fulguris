@@ -1,6 +1,5 @@
 package acr.browser.lightning.di
 
-import acr.browser.lightning.browser.TabsManager
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.device.BuildType
 import acr.browser.lightning.html.ListPageReader
@@ -35,6 +34,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import com.anthonycr.mezzanine.MezzanineGenerator
+import acr.browser.lightning.html.incognito.IncognitoPageReader
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -178,6 +178,9 @@ class AppModule {
 
     @Provides
     fun providesHomePageReader(): HomePageReader = MezzanineGenerator.HomePageReader()
+
+    @Provides
+    fun providesIncognitoPageReader(): IncognitoPageReader = MezzanineGenerator.IncognitoPageReader()
 
     @Provides
     fun providesBookmarkPageReader(): BookmarkPageReader = MezzanineGenerator.BookmarkPageReader()

@@ -1,75 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/dialog_padding">
+    android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ssl_info_issued_by"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/ssl_layout_issue_by"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_grid_unit"
-        android:paddingStart="@dimen/material_grid_unit"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        tools:text="Test Cert Authority" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ssl_info_issued_by"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_grid_margin"
-        android:text="@string/ssl_info_issued_to"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/ssl_layout_issue_by"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            tools:text="Test Cert Authority" />
 
-    <TextView
-        android:id="@+id/ssl_layout_issue_to"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_grid_unit"
-        android:paddingStart="@dimen/material_grid_unit"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        tools:text="Test Company" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/ssl_info_issued_to"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_grid_margin"
-        android:text="@string/ssl_info_issued_on"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/ssl_layout_issue_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            tools:text="Test Company" />
 
-    <TextView
-        android:id="@+id/ssl_layout_issue_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_grid_unit"
-        android:paddingStart="@dimen/material_grid_unit"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        tools:text="today" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/ssl_info_issued_on"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_grid_margin"
-        android:text="@string/ssl_info_expires_on"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/ssl_layout_issue_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            tools:text="today" />
 
-    <TextView
-        android:id="@+id/ssl_layout_expire_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_grid_unit"
-        android:paddingStart="@dimen/material_grid_unit"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        tools:text="tomorrow" />
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/ssl_info_expires_on"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ssl_layout_expire_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            tools:text="tomorrow" />
+
+        <TextView
+            android:id="@+id/algorithm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/algorithm"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ssl_layout_serial_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            tools:text="tomorrow" />
+
+        <TextView
+            android:id="@+id/oid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/oid"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ssl_layout_algorithm_oid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textDirection="locale"
+            tools:text="tomorrow" />
+
+    </LinearLayout>
+
+</ScrollView>

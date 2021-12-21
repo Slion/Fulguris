@@ -364,6 +364,9 @@ dependencies {
 
     // re2j is faster than normal java regex, used for content blocker
     implementation 'com.google.re2j:re2j:1.6'
+
+    // Code Editor //
+    implementation 'com.github.jamal2362:CodeEditor:3.0.0'
 }
 
 kapt {

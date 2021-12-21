@@ -64,7 +64,6 @@
     <string name="action_blank">Pusta</string>
     <string name="agent_default">Domyślne</string>
     <string name="agent_desktop">Komputer</string>
-    <string name="agent_mobile">Urządzenie przenośne</string>
     <string name="agent_custom">Własny identyfikator</string>
     <string name="agent_system">Tak jak urządzenie</string>
     <string name="agent_web_view">Web View</string>

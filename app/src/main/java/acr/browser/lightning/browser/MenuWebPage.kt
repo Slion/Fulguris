@@ -11,15 +11,12 @@ import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isAppScheme
 import acr.browser.lightning.utils.isSpecialUrl
-import android.animation.AnimatorInflater
-import android.animation.LayoutTransition
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.view.animation.AnimationUtils
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import javax.inject.Inject

@@ -68,6 +68,7 @@ class LightningView(
     val isIncognito: Boolean,
     // TODO: Could we remove those?
     private val homePageInitializer: HomePageInitializer,
+    private val incognitoPageInitializer: IncognitoPageInitializer,
     private val bookmarkPageInitializer: BookmarkPageInitializer,
     private val downloadPageInitializer: DownloadPageInitializer,
     private val historyPageInitializer: HistoryPageInitializer,
@@ -164,7 +165,7 @@ class LightningView(
             field = aDesktopMode
             // Set our user agent accordingly
             if (aDesktopMode) {
-                webView?.settings?.userAgentString = DESKTOP_USER_AGENT
+                webView?.settings?.userAgentString = WINDOWS_DESKTOP_USER_AGENT
             } else {
                 setUserAgentForPreference(userPreferences)
             }
@@ -403,8 +404,13 @@ class LightningView(
      * homepage, or loads the startpage or bookmark page if either of those are set as the homepage.
      */
     fun loadHomePage() {
-        iTargetUrl = Uri.parse(Uris.FulgurisHome)
-        initializeContent(homePageInitializer)
+        if (isIncognito) {
+            iTargetUrl = Uri.parse(Uris.FulgurisIncognito)
+            initializeContent(incognitoPageInitializer)
+        } else {
+            iTargetUrl = Uri.parse(Uris.FulgurisHome)
+            initializeContent(homePageInitializer)
+        }
     }
 
     /**

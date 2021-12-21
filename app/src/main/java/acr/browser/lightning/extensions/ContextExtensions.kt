@@ -55,3 +55,11 @@ val Context.preferredLocale: Locale
         @Suppress("DEPRECATION")
         resources.configuration.locale
     }
+
+@ColorInt
+fun Context.attrColor( @AttrRes attrColor: Int): Int {
+    val typedArray = theme.obtainStyledAttributes(intArrayOf(attrColor))
+    val textColor = typedArray.getColor(0, 0)
+    typedArray.recycle()
+    return textColor
+}

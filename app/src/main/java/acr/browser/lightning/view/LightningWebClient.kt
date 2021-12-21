@@ -1,8 +1,10 @@
 package acr.browser.lightning.view
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AdBlocker
+import acr.browser.lightning.browser.JavaScriptChoice
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
@@ -21,6 +23,7 @@ import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTries
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
@@ -182,6 +185,13 @@ class LightningWebClient(
             }
             // takes around half a second, but not sure what that tells me
         }*/
+
+        if (userPreferences.forceZoom) {
+            view.loadUrl(
+                "javascript:(function() { document.querySelector('meta[name=\"viewport\"]').setAttribute(\"content\",\"width=device-width\"); })();"
+            )
+        }
+
         uiController.tabChanged(lightningView)
     }
 
@@ -207,7 +217,55 @@ class LightningWebClient(
         // Try to fetch meta theme color a few times
         lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
 
+        if (userPreferences.javaScriptChoice === JavaScriptChoice.BLACKLIST) {
+            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
+                val arrayOfURLs = userPreferences.javaScriptBlocked
+                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                if (arrayOfURLs.contains(", ")) {
+                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                }
+                if (!stringContainsItemFromList(url, strgs)) {
+                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
+                        return
+                    } else {
+                        view.settings.javaScriptEnabled = false
+                    }
+                }
+                else{ return }
+            }
+        }
+        else  if (userPreferences.javaScriptChoice === JavaScriptChoice.WHITELIST) run {
+            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
+                val arrayOfURLs = userPreferences.javaScriptBlocked
+                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                if (arrayOfURLs.contains(", ")) {
+                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                }
+                if (stringContainsItemFromList(url, strgs)) {
+                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
+                        return
+                    } else {
+                        view.settings.javaScriptEnabled = false
+                    }
+                }
+                else{
+                    return
+                }
+            }
+        }
+
         uiController.tabChanged(lightningView)
+    }
+
+    private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
+        for (i in items.indices) {
+            if (inputStr.contains(items[i])) {
+                return true
+            }
+        }
+        return false
     }
 
     /**
@@ -299,6 +357,12 @@ class LightningWebClient(
     }
 
     override fun onReceivedSslError(webView: WebView, handler: SslErrorHandler, error: SslError) {
+        val urlMatcher = webView.url?.replace(Regex("^https?:\\/\\/"), "")
+        if (!urlMatcher?.let { error.url.contains(it) }!!) {
+            handler.proceed()
+            webView.url?.let { sslWarningPreferences.rememberBehaviorForDomain(it, SslWarningPreferences.Behavior.PROCEED) }
+        }
+
         urlWithSslError = webView.url
         sslState = SslState.Invalid(error)
 
@@ -315,6 +379,14 @@ class LightningWebClient(
             stringBuilder.append(" - ").append(activity.getString(messageCode)).append('\n')
         }
         val alertMessage = activity.getString(R.string.message_insecure_connection, stringBuilder.toString())
+
+        val ba = activity as BrowserActivity
+
+        if (!userPreferences.ssl) {
+            handler.proceed()
+            ba.snackbar(errorCodeMessageCodes[0])
+            return
+        }
 
         MaterialAlertDialogBuilder(activity).apply {
             val view = LayoutInflater.from(activity).inflate(R.layout.dialog_ssl_warning, null)

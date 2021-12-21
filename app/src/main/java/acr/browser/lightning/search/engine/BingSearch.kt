@@ -1,15 +1,18 @@
+/*
+ * Copyright © 2020-2021 Jamal Rothfuchs
+ * Copyright © 2020-2021 Stéphane Lenclud
+ * Copyright © 2015 Anthony Restaino
+ */
+
 package acr.browser.lightning.search.engine
 
 import acr.browser.lightning.R
 
 /**
  * The Bing search engine.
- *
- * See http://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Bing_logo_%282013%29.svg/500px-Bing_logo_%282013%29.svg.png
- * for the icon.
  */
 class BingSearch : BaseSearchEngine(
-    "file:///android_asset/bing.png",
+    "file:///android_asset/bing.webp",
     "https://www.bing.com/search?q=",
     R.string.search_engine_bing
 )
