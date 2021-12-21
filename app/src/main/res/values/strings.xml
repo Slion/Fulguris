@@ -588,7 +588,7 @@
     <string name="accent_cyan">Cyan</string>
     <string name="accent_deep_orange">Deep Orange</string>
     <string name="accent_deep_purple">Deep Purple</string>
-    <string name="accent_default">Default (Red)</string>
+    <string name="accent_default">Default</string>
     <string name="accent_green">Green</string>
     <string name="accent_indigo">Indigo</string>
     <string name="accent_light_blue">Light Blue</string>

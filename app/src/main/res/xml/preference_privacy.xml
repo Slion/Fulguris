@@ -12,12 +12,17 @@
         android:summary="@string/pref_summary_webrtc"
         app:icon="@drawable/ic_videocam_oval" />
 
+    <!--
+    Not currently used as it does not make much sense,
+    it just deletes cookies but all tabs are restored.
+    -->
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="start_incognito"
         android:title="@string/start_incognito"
         app:singleLineTitle="false"
-        app:icon="@drawable/ic_incognito_oval" />
+        app:icon="@drawable/ic_incognito_oval"
+        app:isPreferenceVisible="@bool/const_false"/>
 
     <SwitchPreferenceCompat
         android:defaultValue="@bool/pref_default_crash_report"

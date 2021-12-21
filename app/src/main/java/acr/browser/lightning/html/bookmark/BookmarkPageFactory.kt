@@ -30,6 +30,9 @@ import javax.inject.Inject
 
 /**
  * Created by anthonycr on 9/23/18.
+ *
+ * Generates our bookmarks HTML page.
+ * We actually use it as our default home page these days.
  */
 @Reusable
 class BookmarkPageFactory @Inject constructor(
@@ -39,7 +42,7 @@ class BookmarkPageFactory @Inject constructor(
     @DatabaseScheduler private val databaseScheduler: Scheduler,
     @DiskScheduler private val diskScheduler: Scheduler,
     private val bookmarkPageReader: BookmarkPageReader,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
 ) : HtmlPageFactory {
 
     private val title = application.getString(R.string.action_bookmarks)
@@ -77,7 +80,7 @@ class BookmarkPageFactory @Inject constructor(
         }
         .ignoreElements()
         .toSingle {
-            cacheIcon(ThemeUtils.createThemedBitmap(application, R.drawable.outline_folder_special_24, false), folderIconFile)
+            cacheIcon(ThemeUtils.createThemedBitmap(application, R.drawable.ic_folder, false), folderIconFile)
             cacheIcon(ThemeUtils.createThemedBitmap(application, R.drawable.ic_folder, true), folderIconFileOnDark)
             cacheIcon(faviconModel.createDefaultBitmapForTitle(null), defaultIconFile)
 
@@ -92,11 +95,12 @@ class BookmarkPageFactory @Inject constructor(
     private fun construct(list: List<BookmarkViewModel>): String {
         val useDarkTheme = (BrowserApp.currentContext() as BrowserActivity).useDarkTheme
         return parse(bookmarkPageReader.provideHtml()
-            .replace("\${useDarkTheme}", useDarkTheme.toString())
-            .replace("\${backgroundColor}", htmlColor(ThemeUtils.getPrimaryColor(BrowserApp.currentContext())))
-            .replace("\${backgroundColor1}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.appColorControlEnabled)))
-            .replace("\${searchBarColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.trackColor)))
-            .replace("\${searchBarTextColor}", htmlColor(ThemeUtils.getSearchBarTextColor(BrowserApp.currentContext())))
+            // Theme our page first
+            .replace("\${useDarkTheme}", useDarkTheme.toString()) // Not actually used for now
+            .replace("\${colorBackground}", htmlColor(ThemeUtils.getBackgroundColor(BrowserApp.currentContext())))
+            .replace("\${colorOnBackground}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnBackground)))
+            .replace("\${colorControl}", htmlColor(ThemeUtils.getSearchBarColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext()))))
+            .replace("\${colorBorder}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.appColorControlDisabled)))
         ) andBuild {
             title { title }
             body {
@@ -105,6 +109,7 @@ class BookmarkPageFactory @Inject constructor(
                     list.forEach {
                         val newElement = repeatableElement.clone {
                             tag("a") { attr("href", it.url) }
+                            // Make sure we use proper icon for dark themes
                             tag("img") { attr("src", if (useDarkTheme && it.iconUrlOnDark.isNotEmpty()) it.iconUrlOnDark else it.iconUrl) }
                             id("title") { appendText(it.title) }
                         }
@@ -113,6 +118,7 @@ class BookmarkPageFactory @Inject constructor(
                         } else {
                             appendChild(newElement)
                         }
+
                     }
                 }
             }
@@ -139,6 +145,7 @@ class BookmarkPageFactory @Inject constructor(
     private fun createViewModelForBookmark(entry: Bookmark.Entry): BookmarkViewModel {
         val bookmarkUri = entry.url.toUri().toValidUri()
 
+        // Fetch icon URL for light theme
         val iconUrl = if (bookmarkUri != null) {
             val faviconFile = FaviconModel.getFaviconCacheFile(application, bookmarkUri,false)
             if (!faviconFile.exists()) {
@@ -167,6 +174,7 @@ class BookmarkPageFactory @Inject constructor(
         {
             ""
         }
+
 
         return BookmarkViewModel(
             title = entry.title,

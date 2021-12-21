@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 fun Context.createSslDrawableForState(sslState: SslState): Drawable? = when (sslState) {
     is SslState.None -> null
     is SslState.Valid -> {
-        ContextCompat.getDrawable(this, R.drawable.ic_secure)
+        ContextCompat.getDrawable(this, R.drawable.ic_secured)
     }
     is SslState.Invalid -> {
         ContextCompat.getDrawable(this, R.drawable.ic_unsecured)

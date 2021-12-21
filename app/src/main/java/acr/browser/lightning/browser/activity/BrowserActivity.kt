@@ -774,43 +774,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         if (verticalTabBar) {
             iBindingToolbarContent.tabsButton.isVisible = true
-            iBindingToolbarContent.homeButton.isVisible = true
+            iBindingToolbarContent.homeButton.isVisible = false
             iBinding.toolbarInclude.tabBarContainer.isVisible = false
         } else {
             iBindingToolbarContent.tabsButton.isVisible = false
             iBindingToolbarContent.homeButton.isVisible = true
             iBinding.toolbarInclude.tabBarContainer.isVisible = true
-        }
-
-        if (userPreferences.homepageInNewTab) {
-            iBindingToolbarContent.homeButton.setOnClickListener {
-                if (isIncognito()) {
-                    presenter?.newTab(incognitoPageInitializer, true)
-                } else {
-                    presenter?.newTab(homePageInitializer, true)
-                }
-            }
-        }
-
-        iBindingToolbarContent.buttonMore.setOnLongClickListener {
-            showPageToolsDialog(tabsManager.positionOf(tabsManager.currentTab))
-            true
-        }
-
-        if (userPreferences.longClickTab) {
-            iBindingToolbarContent.tabsButton.setOnLongClickListener {
-                if (isIncognito()) {
-                    presenter?.newTab(
-                        incognitoPageInitializer,
-                        true
-                    )
-                } else {
-                    presenter?.newTab(
-                        homePageInitializer,
-                        true
-                    )
-                }
-                true }
         }
     }
 
@@ -873,6 +842,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.switchToTab(0)
         tabsManager.clearSavedState()
 
+        historyPageFactory.deleteHistoryPage().subscribe()
         closeBrowser()
         // System exit needed in the case of receiving
         // the panic intent since finish() isn't completely
@@ -1268,9 +1238,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBindingToolbarContent.buttonActionBack.isVisible = it
             iBindingToolbarContent.buttonActionForward.isVisible = it
             // Hide tab bar action buttons if no room for them
-            //if (tabsView is TabsDesktopView) {
-            //    (tabsView as TabsDesktopView).iBinding.actionButtons.isVisible = it
-            //}
+            if (tabsView is TabsDesktopView) {
+                (tabsView as TabsDesktopView).iBinding.actionButtons.isVisible = it
+            }
         }
 
     }
@@ -1285,15 +1255,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         updateCookiePreference().subscribeOn(diskScheduler).subscribe()
         proxyUtils.updateProxySettings(this)
-
-        if (!verticalTabBar) {
-            iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
-        }
-
-        if (userPreferences.useBottomSheets) {
-            iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getTabDrawer())
-            iBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, getBookmarkDrawer())
-        }
     }
 
     public override fun onWindowVisibleToUserAfterResume() {
@@ -1938,13 +1899,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         logger.log(TAG, "Notify Tab Removed: $position")
         tabsView?.tabRemoved(position)
 
-        // Use a delayed handler to make the transition smooth
-        // otherwise it will get caught up with the showTab code
-        // and cause a janky motion
-        if (userPreferences.closeDrawer) {
-            mainHandler.postDelayed({ closePanels(null) }, 500)
-        }
-
         if (userPreferences.onTabCloseShowSnackbar) {
             // Notify user a tab was closed with an option to recover it
             makeSnackbar(
@@ -2032,12 +1986,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         currentTabView?.onFocusChangeListener = null
         currentTabView = null
 
-        // Use a delayed handler to make the transition smooth
-        // otherwise it will get caught up with the showTab code
-        // and cause a janky motion
-        if (userPreferences.closeDrawer) {
-            mainHandler.postDelayed({ closePanels(null) }, 200)
-        }
+
     }
 
     /**
@@ -2078,13 +2027,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * @param aView Input is in fact a [WebViewEx].
      */
     override fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean) {
-
-        // Use a delayed handler to make the transition smooth
-        // otherwise it will get caught up with the showTab code
-        // and cause a janky motion
-        if (userPreferences.closeDrawer) {
-            mainHandler.postDelayed({ closePanels(null) }, 200)
-        }
 
         if (currentTabView == aView) {
             return
@@ -2772,7 +2714,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // Now also set WebView background color otherwise it is just white and we don't want that.
             // This one is going to be a problem as it will break some websites such as bbc.com.
             // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color.
-            if (iBinding.toolbarInclude.progressView.progress >= 1
+            if (iBinding.toolbarInclude.progressView.progress >= 100
                     // Don't reset background color back to white on empty urls, that prevents displaying large empty white pages and blinding users in dark mode.
                     // When opening some download links a tab is spawned first with the download URL and later that URL is set back to null.
                     // Luckily our delayed call and the absence of invalidate prevents a flicker to white screen.
@@ -2786,7 +2728,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // It also still causes a flicker notably when a tab is spawned by a download link.
                     //webViewEx.invalidate()
                 }
-                mainHandler.postDelayed(resetBackgroundColorRunnable, 100);
+                mainHandler.postDelayed(resetBackgroundColorRunnable, 750);
             } else {
                 mainHandler.removeCallbacks(resetBackgroundColorRunnable)
                 webViewEx.setBackgroundColor(color)

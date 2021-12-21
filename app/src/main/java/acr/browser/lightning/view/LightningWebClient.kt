@@ -301,30 +301,43 @@ class LightningWebClient(
         }.resizeAndShow()
     }
 
-    @SuppressLint("ResourceType")
+    /**
+     * Overrides [WebViewClient.onReceivedError].
+     * This deprecated callback is still in use and conveniently called only when the error affect the page main frame.
+     */
     override fun onReceivedError(webview: WebView, errorCode: Int, error: String, failingUrl: String) {
-        if (errorCode != -1) {
-            val output = ByteArrayOutputStream()
-            val bitmap = ResourcesCompat.getDrawable(activity.resources, R.raw.warning, activity.theme)?.toBitmap()
-            bitmap?.compress(Bitmap.CompressFormat.PNG, 100, output)
-            val imageBytes: ByteArray = output.toByteArray()
-            val imageString = "data:image/png;base64," + Base64.encodeToString(imageBytes, Base64.NO_WRAP)
-            val tip = activity.getString(R.string.error_tip)
-            val tip2 = activity.getString(R.string.error_tip2)
-            val background = htmlColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext()))
-            val text = htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(), R.attr.colorOnPrimary))
-            val script = """(function() {
-        document.getElementsByTagName('style')[0].innerHTML += "body { pointer-events: none; user-select: none; margin: 30px; padding-top: 40px; text-align: center; background-color: ${background}; color: ${text};} img{width: 128px; height: 128px; margin-bottom: 20px;}"
-        document.getElementsByTagName('p')[0].innerHTML = '${tip}';
-        document.getElementsByTagName('p')[0].innerHTML += '<br><br>${tip2}';
+
+        // None of those were working so we did Base64 encoding instead
+        //"file:///android_asset/ask.png"
+        //"android.resource://${BuildConfig.APPLICATION_ID}/${R.drawable.ic_about}"
+        //"file:///android_res/drawable/ic_about"
+
+        //Encode image to base64 string
+        val output = ByteArrayOutputStream()
+        val bitmap = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_about, activity.theme)?.toBitmap()
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, output)
+        val imageBytes: ByteArray = output.toByteArray()
+        val imageString = "data:image/png;base64,"+Base64.encodeToString(imageBytes, Base64.NO_WRAP)
+
+        // Generate a JavaScript that's going to modify the standard WebView error page for us.
+        // It saves us from making up our own error texts and having to manage the translations ourselves.
+        // Thus we simply use the standard and localized error messages from WebView.
+        // The down side is that it makes a bunch of assumptions about WebView's error page that could fail us on some device or in case it gets changed at some point.
+        val script = """(function() {
+        document.getElementsByTagName('style')[0].innerHTML += "body { margin: 10px; background-color: ${htmlColor(ThemeUtils.getSurfaceColor(activity))}; color: ${htmlColor(ThemeUtils.getOnSurfaceColor(activity))};}"
         var img = document.getElementsByTagName('img')[0]
         img.src = "$imageString"
         img.width = ${bitmap?.width}
         img.height = ${bitmap?.height}
         })()"""
-            webview.stopLoading()
-            webview.evaluateJavascript(script) {}
-        }
+
+        // Run our script once, did not help anything apparently
+        //webview.evaluateJavascript(script) {}
+        // Stall our thread to workaround issues were our JavaScript would not apply to our error page for some reason
+        // That works better than post or post delayed
+        Thread.sleep(100)
+        // Just run that script now
+        webview.evaluateJavascript(script) {}
     }
 
 

@@ -132,7 +132,7 @@ class TabsDesktopAdapter(
             viewHolder.iCardView.isChecked = false
             viewHolder.iCardView.isCheckable = false
             // Background tab
-            TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.italicText)
+            TextViewCompat.setTextAppearance(viewHolder.txtTitle, if (tab.isFrozen) R.style.italicText else R.style.normalText)
             viewHolder.txtTitle.setTextColor(textColor)
             viewHolder.exitButton.findViewById<ImageView>(R.id.deleteButton).setColorFilter(textColor)
         }

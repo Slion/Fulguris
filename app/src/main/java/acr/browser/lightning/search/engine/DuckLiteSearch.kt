@@ -13,6 +13,6 @@ import acr.browser.lightning.R
  */
 class DuckLiteSearch : BaseSearchEngine(
     "file:///android_asset/duckduckgo.webp",
-    "https://duckduckgo.com/lite/?t=styx&q=",
+    "https://duckduckgo.com/lite/?t=fulguris&q=",
     R.string.search_engine_duckduckgo_lite
 )

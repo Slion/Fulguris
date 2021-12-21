@@ -21,8 +21,14 @@
 
     </PreferenceCategory>
 
+    <!--
+    Currently not fully working. Therefore hidden for now.
+    Configuration settings are not backed up.
+    Moreover icons do not make much sense.
+    -->
     <PreferenceCategory
-        android:title="@string/settings">
+        android:title="@string/settings"
+        app:isPreferenceVisible="@bool/const_false">
 
         <Preference
             android:key="import_settings"

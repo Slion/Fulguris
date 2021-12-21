@@ -3,6 +3,7 @@ package acr.browser.lightning.settings.fragment
 import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.JavaScriptChoice
+import acr.browser.lightning.browser.ProxyChoice
 import acr.browser.lightning.browser.SuggestionNumChoice
 import acr.browser.lightning.constant.TEXT_ENCODINGS
 import acr.browser.lightning.constant.Uris
@@ -11,18 +12,31 @@ import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.isSupported
+import acr.browser.lightning.locale.LocaleUtils
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.Suggestions
 import acr.browser.lightning.search.engine.BaseSearchEngine
 import acr.browser.lightning.search.engine.CustomSearch
+import acr.browser.lightning.utils.FileUtils
+import acr.browser.lightning.utils.ProxyUtils
+import acr.browser.lightning.utils.ThemeUtils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.os.Environment
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.webkit.URLUtil
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.preference.ListPreference
+import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import javax.inject.Inject
 
@@ -33,6 +47,9 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
     @Inject lateinit var searchEngineProvider: SearchEngineProvider
     @Inject lateinit var userPreferences: UserPreferences
+
+
+    private lateinit var proxyChoices: Array<String>
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
@@ -48,10 +65,24 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
         injector.inject(this)
 
+        proxyChoices = resources.getStringArray(R.array.proxy_choices_array)
+
+        clickableDynamicPreference(
+            preference = SETTINGS_PROXY,
+            summary = userPreferences.proxyChoice.toSummary(),
+            onClick = ::showProxyPicker
+        )
+
         clickableDynamicPreference(
             preference = SETTINGS_USER_AGENT,
             summary = userAgentSummary(),
             onClick = ::showUserAgentChooserDialog
+        )
+
+        clickableDynamicPreference(
+            preference = SETTINGS_DOWNLOAD,
+            summary = userPreferences.downloadDirectory,
+            onClick = ::showDownloadLocationDialog
         )
 
         clickableDynamicPreference(
@@ -120,6 +151,20 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             }
         )
 
+        // Handle locale language selection
+        findPreference<ListPreference>(getString(R.string.pref_key_locale))?.apply {
+            onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, aNewLocale: Any ->
+                // User selected a new locale
+                val newLocaleId = aNewLocale as String
+                val newLocale = LocaleUtils.requestedLocale(newLocaleId)
+                // Update app configuration with selected locale
+                LocaleUtils.updateLocale(activity, newLocale)
+                // Reload our activity
+                requireActivity().recreate()
+                true
+            }
+	    }
+
         clickableDynamicPreference(
             preference = SETTINGS_BLOCK_JAVASCRIPT,
             summary = userPreferences.javaScriptChoice.toSummary(),
@@ -139,6 +184,11 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         )
     }
 
+    /**
+     * Shows the dialog which allows the user to choose the browser's text encoding.
+     *
+     * @param summaryUpdater the command which allows the summary to be updated.
+     */
     private fun showTextEncodingDialogPicker(summaryUpdater: SummaryUpdater) {
         activity?.let {
             MaterialAlertDialogBuilder(it).apply {
@@ -155,6 +205,45 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
+
+    private fun ProxyChoice.toSummary(): String {
+        val stringArray = resources.getStringArray(R.array.proxy_choices_array)
+        return when (this) {
+            ProxyChoice.NONE -> stringArray[0]
+            ProxyChoice.ORBOT -> stringArray[1]
+            ProxyChoice.I2P -> stringArray[2]
+            ProxyChoice.MANUAL -> "${userPreferences.proxyHost}:${userPreferences.proxyPort}"
+        }
+    }
+
+    private fun showProxyPicker(summaryUpdater: SummaryUpdater) {
+        BrowserDialog.showCustomDialog(activity as Activity) {
+            setTitle(R.string.http_proxy)
+            val stringArray = resources.getStringArray(R.array.proxy_choices_array)
+            val values = ProxyChoice.values().map {
+                Pair(it, when (it) {
+                    ProxyChoice.NONE -> stringArray[0]
+                    ProxyChoice.ORBOT -> stringArray[1]
+                    ProxyChoice.I2P -> stringArray[2]
+                    ProxyChoice.MANUAL -> stringArray[3]
+                })
+            }
+            withSingleChoiceItems(values, userPreferences.proxyChoice) {
+                updateProxyChoice(it, activity as Activity, summaryUpdater)
+            }
+            setPositiveButton(R.string.action_ok, null)
+        }
+    }
+
+    private fun updateProxyChoice(choice: ProxyChoice, activity: Activity, summaryUpdater: SummaryUpdater) {
+        val sanitizedChoice = ProxyUtils.sanitizeProxyChoice(choice, activity)
+        if (sanitizedChoice == ProxyChoice.MANUAL) {
+            showManualProxyPicker(activity, summaryUpdater)
+        }
+
+        userPreferences.proxyChoice = sanitizedChoice
+        summaryUpdater.updateSummary(sanitizedChoice.toSummary())
+    }
     private fun showSuggestionNumPicker(summaryUpdater: SummaryUpdater) {
         BrowserDialog.showCustomDialog(activity as AppCompatActivity) {
             setTitle(R.string.suggest)
@@ -184,6 +273,40 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
         userPreferences.suggestionChoice = choice
         summaryUpdater.updateSummary(stringArray[choice.value])
+    }
+
+    private fun showManualProxyPicker(activity: Activity, summaryUpdater: SummaryUpdater) {
+        val v = activity.layoutInflater.inflate(R.layout.dialog_manual_proxy, null)
+        val eProxyHost = v.findViewById<TextView>(R.id.proxyHost)
+        val eProxyPort = v.findViewById<TextView>(R.id.proxyPort)
+
+        // Limit the number of characters since the port needs to be of type int
+        // Use input filters to limit the EditText length and determine the max
+        // length by using length of integer MAX_VALUE
+        val maxCharacters = Integer.MAX_VALUE.toString().length
+        eProxyPort.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxCharacters - 1))
+
+        eProxyHost.text = userPreferences.proxyHost
+        eProxyPort.text = userPreferences.proxyPort.toString()
+
+        BrowserDialog.showCustomDialog(activity) {
+            setTitle(R.string.manual_proxy)
+            setView(v)
+            setPositiveButton(R.string.action_ok) { _, _ ->
+                val proxyHost = eProxyHost.text.toString()
+                val proxyPort = try {
+                    // Try/Catch in case the user types an empty string or a number
+                    // larger than max integer
+                    Integer.parseInt(eProxyPort.text.toString())
+                } catch (ignored: NumberFormatException) {
+                    userPreferences.proxyPort
+                }
+
+                userPreferences.proxyHost = proxyHost
+                userPreferences.proxyPort = proxyPort
+                summaryUpdater.updateSummary("$proxyHost:$proxyPort")
+            }
+        }
     }
 
     private fun showImageUrlPicker() {
@@ -245,8 +368,79 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
+    private fun showDownloadLocationDialog(summaryUpdater: SummaryUpdater) {
+        activity?.let {
+            BrowserDialog.showCustomDialog(it) {
+            setTitle(resources.getString(R.string.title_download_location))
+            val n: Int = if (userPreferences.downloadDirectory.contains(Environment.DIRECTORY_DOWNLOADS)) {
+                0
+            } else {
+                1
+            }
+
+            setSingleChoiceItems(R.array.download_folder, n) { _, which ->
+                when (which) {
+                    0 -> {
+                        userPreferences.downloadDirectory = FileUtils.DEFAULT_DOWNLOAD_PATH
+                        summaryUpdater.updateSummary(FileUtils.DEFAULT_DOWNLOAD_PATH)
+                    }
+                    1 -> {
+                        showCustomDownloadLocationPicker(summaryUpdater)
+                    }
+                }
+            }
+            setPositiveButton(resources.getString(R.string.action_ok), null)
+        }
+        }
+    }
+
+
+    private fun showCustomDownloadLocationPicker(summaryUpdater: SummaryUpdater) {
+        activity?.let { activity ->
+            val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_text, null)
+            val getDownload = dialogView.findViewById<EditText>(R.id.dialog_edit_text)
+
+            val errorColor = ContextCompat.getColor(activity
+                , R.color.error_red)
+            val regularColor = ThemeUtils.getTextColor(activity)
+            getDownload.setTextColor(regularColor)
+            getDownload.addTextChangedListener(DownloadLocationTextWatcher(getDownload, errorColor, regularColor))
+            getDownload.setText(userPreferences.downloadDirectory)
+
+            BrowserDialog.showCustomDialog(activity) {
+                setTitle(R.string.title_download_location)
+                setView(dialogView)
+                setPositiveButton(R.string.action_ok) { _, _ ->
+                    var text = getDownload.text.toString()
+                    text = FileUtils.addNecessarySlashes(text)
+                    userPreferences.downloadDirectory = text
+                    summaryUpdater.updateSummary(text)
+                }
+            }
+        }
+    }
+
+    private class DownloadLocationTextWatcher(
+        private val getDownload: EditText,
+        private val errorColor: Int,
+        private val regularColor: Int
+    ) : TextWatcher {
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable) {
+            if (!FileUtils.isWriteAccessAvailable(s.toString())) {
+                this.getDownload.setTextColor(this.errorColor)
+            } else {
+                this.getDownload.setTextColor(this.regularColor)
+            }
+        }
+    }
+
     private fun homePageUrlToDisplayTitle(url: String): String = when (url) {
-        Uris.AboutHome -> resources.getString(R.string.action_homepage)
+        Uris.AboutHome -> resources.getString(R.string.search_action)
         Uris.AboutBlank -> resources.getString(R.string.action_blank)
         Uris.AboutBookmarks -> resources.getString(R.string.action_bookmarks)
         else -> url
@@ -267,7 +461,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     when (which) {
                         0 -> {
                             userPreferences.homepage = Uris.AboutHome
-                            summaryUpdater.updateSummary(resources.getString(R.string.action_homepage))
+                            summaryUpdater.updateSummary(resources.getString(R.string.search_action))
                         }
                         1 -> {
                             userPreferences.homepage = Uris.AboutBlank
@@ -467,8 +661,10 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
     }
 
     companion object {
+        private const val SETTINGS_PROXY = "proxy"
         private const val SETTINGS_SUGGESTIONS_NUM = "suggestions_number"
         private const val SETTINGS_USER_AGENT = "agent"
+        private const val SETTINGS_DOWNLOAD = "download"
         private const val SETTINGS_HOME = "home"
         private const val SETTINGS_SEARCH_ENGINE = "search"
         private const val SETTINGS_SUGGESTIONS = "suggestions_choice"

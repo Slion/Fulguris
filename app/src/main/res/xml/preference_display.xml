@@ -10,10 +10,12 @@
         android:title="@string/theme"
         app:icon="@drawable/ic_brush_oval" />
 
+    <!-- Currently not working, therefore hidden for now -->
     <Preference
         android:key="@string/pref_key_accent"
         android:title="@string/accent_color"
-        app:icon="@drawable/ic_palette_oval" />
+        app:icon="@drawable/ic_palette_oval"
+        app:isPreferenceVisible="@bool/const_false"/>
 
     <Preference
         android:key="@string/pref_key_browser_text_size"

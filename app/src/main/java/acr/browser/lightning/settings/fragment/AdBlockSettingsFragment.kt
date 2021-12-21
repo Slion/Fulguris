@@ -159,7 +159,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 //                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
 //                pref.isChecked = entity.enabled
                 entityPref.title = entity.title
-                entityPref.icon = requireContext().drawable(R.drawable.ic_import_export_oval)
+                //entityPref.icon = requireContext().drawable(R.drawable.ic_import_export_oval)
                 entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockList(entity)
                     true
@@ -174,7 +174,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     private fun updateSummary(entity: AbpEntity) {
         if (entity.lastLocalUpdate > 0)
-            entityPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT).format(Date(entity.lastLocalUpdate)))
+            entityPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance().format(Date(entity.lastLocalUpdate)))
     }
 
     // update entity and adjust displayed last update time

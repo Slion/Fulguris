@@ -133,6 +133,12 @@
 
     <PreferenceCategory android:title="@string/settings_advanced">
 
+        <Preference
+            android:key="download"
+            android:title="@string/download"
+            app:icon="@drawable/ic_file_download"
+            app:iconSpaceReserved="false"/>
+
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_key_load_images"
@@ -199,7 +205,7 @@
         <Preference
             android:key="proxy"
             android:title="@string/http_proxy"
-            app:iconSpaceReserved="false"/>
+            app:iconSpaceReserved="true"/>
 
         <Preference
             android:key="agent"

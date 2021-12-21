@@ -11,6 +11,7 @@ import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.utils.htmlColor
 import android.app.Application
 import dagger.Reusable
+import io.reactivex.Completable
 import io.reactivex.Single
 import java.io.File
 import java.io.FileWriter
@@ -32,11 +33,13 @@ class HistoryPageFactory @Inject constructor(
         .lastHundredVisitedHistoryEntries()
         .map { list ->
             parse(listPageReader.provideHtml()
-                .replace("\${pageTitle}", application.getString(R.string.action_history))
-                .replace("\${backgroundColor}", htmlColor(ThemeUtils.getPrimaryColor(BrowserApp.currentContext())))
-                .replace("\${searchBarColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.trackColor)))
-                .replace("\${textColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorSecondary)))
-                .replace("\${secondaryTextColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnBackground)))
+                    // Show localized page title
+                    .replace("\${pageTitle}", application.getString(R.string.action_history))
+                    // Theme our page first
+                    .replace("\${backgroundColor}", htmlColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext())))
+                    .replace("\${textColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnBackground)))
+                    .replace("\${secondaryTextColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorSecondary)))
+                    .replace("\${dividerColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.appColorControlDisabled)))
             ) andBuild {
                 title { title }
                 body {
@@ -58,6 +61,20 @@ class HistoryPageFactory @Inject constructor(
             FileWriter(page, false).use { it.write(content) }
         }
         .map { (page, _) -> "$FILE$page" }
+
+    /**
+     * Use this observable to immediately delete the history page. This will clear the cached
+     * history page that was stored on file.
+     *
+     * @return a completable that deletes the history page when subscribed to.
+     */
+    fun deleteHistoryPage(): Completable = Completable.fromAction {
+        with(createHistoryPage()) {
+            if (exists()) {
+                delete()
+            }
+        }
+    }
 
     private fun createHistoryPage() = File(application.filesDir, FILENAME)
 
