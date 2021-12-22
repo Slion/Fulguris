@@ -16,7 +16,7 @@ import acr.browser.lightning.browser.tabs.TabsDrawerView
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
-import acr.browser.lightning.reading.activity.ReadingActivity
+import acr.browser.lightning.reading.ReadingActivity
 import acr.browser.lightning.search.SuggestionsAdapter
 import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.settings.activity.ThemedSettingsActivity

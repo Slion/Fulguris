@@ -14,6 +14,7 @@ abstract class ThemedActivity : LocaleAwareActivity() {
 
     // TODO reduce protected visibility
 
+    protected var accentId: AccentTheme = AccentTheme.DEFAULT_ACCENT
     protected var themeId: AppTheme = AppTheme.LIGHT
     private var isDarkTheme: Boolean = false
     val useDarkTheme get() = isDarkTheme
@@ -24,6 +25,8 @@ abstract class ThemedActivity : LocaleAwareActivity() {
      * activity regardless of the user's preference.
      */
     protected open fun provideThemeOverride(): AppTheme? = null
+
+    protected open fun provideAccentThemeOverride(): AccentTheme? = null
 
     /**
      * Called after the activity is resumed
@@ -39,12 +42,16 @@ abstract class ThemedActivity : LocaleAwareActivity() {
     @StyleRes
     abstract fun themeStyle(aTheme: AppTheme): Int
 
+    @StyleRes
+    protected abstract fun accentStyle(accentTheme: AccentTheme): Int?
+
     override fun onCreate(savedInstanceState: Bundle?) {
         injector.inject(this)
         themeId = userPreferences.useTheme
-
+        accentId = userPreferences.useAccent
         // set the theme
         applyTheme(provideThemeOverride()?:themeId)
+        applyAccent()
         super.onCreate(savedInstanceState)
         resetPreferences()
     }
@@ -73,6 +80,13 @@ abstract class ThemedActivity : LocaleAwareActivity() {
                 || themeId == AppTheme.DARK // Dark is indeed a dark theme
                 // Check if we are using system default theme and it is currently set to dark
                 || (themeId == AppTheme.DEFAULT && mode == Configuration.UI_MODE_NIGHT_YES)
+    }
+
+    /**
+     *
+     */
+    private fun applyAccent() {
+        accentStyle(accentId)?.let { setTheme(it) }
     }
 
     /**

@@ -14,6 +14,7 @@ import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
+import acr.browser.lightning.html.incognito.IncognitoPageFactory
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslState
@@ -31,15 +32,16 @@ import io.reactivex.rxkotlin.subscribeBy
  * browser.
  */
 class BrowserPresenter(
-        private val iBrowserView: BrowserView,
-        private val isIncognito: Boolean,
-        private val userPreferences: UserPreferences,
-        private val tabsModel: TabsManager,
-        @MainScheduler private val mainScheduler: Scheduler,
-        private val homePageFactory: HomePageFactory,
-        private val bookmarkPageFactory: BookmarkPageFactory,
-        public val closedTabs: RecentTabsModel,
-        private val logger: Logger
+    private val iBrowserView: BrowserView,
+    private val isIncognito: Boolean,
+    private val userPreferences: UserPreferences,
+    private val tabsModel: TabsManager,
+    @MainScheduler private val mainScheduler: Scheduler,
+    private val homePageFactory: HomePageFactory,
+    private val incognitoPageFactory: IncognitoPageFactory,
+    private val bookmarkPageFactory: BookmarkPageFactory,
+    public val closedTabs: RecentTabsModel,
+    private val logger: Logger
 ) {
 
     private var currentTab: LightningView? = null
@@ -197,6 +199,12 @@ class BrowserPresenter(
 
     private fun mapHomepageToCurrentUrl(): String = when (val homepage = userPreferences.homepage) {
         Uris.AboutHome -> "$FILE${homePageFactory.createHomePage()}"
+        Uris.AboutBookmarks -> "$FILE${bookmarkPageFactory.createBookmarkPage(null)}"
+        else -> homepage
+    }
+
+    private fun mapIncognitoToCurrentUrl(): String = when (val homepage = userPreferences.incognitoPage) {
+        Uris.AboutIncognito -> "$FILE${incognitoPageFactory.createIncognitoPage()}"
         Uris.AboutBookmarks -> "$FILE${bookmarkPageFactory.createBookmarkPage(null)}"
         else -> homepage
     }

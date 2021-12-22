@@ -6,53 +6,54 @@
         android:key="@string/pref_key_tab_bar_vertical"
         android:title="@string/settings_title_vertical_tab_bar"
         android:summary="@string/settings_summary_vertical_tab_bar"
-        app:icon="@drawable/ic_action_tabs"
+        app:icon="@drawable/ic_desktop_oval"
         app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_toolbars_bottom"
         android:title="@string/settings_title_toolbars_bottom"
-        app:icon="@drawable/ic_vertical_align_bottom"
+        app:icon="@drawable/ic_bottom_oval"
         app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_pull_to_refresh"
         android:title="@string/pref_title_pull_to_refresh"
-        app:icon="@drawable/ic_action_refresh"
+        app:icon="@drawable/ic_action_refresh_oval"
         app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
         app:key="@string/pref_key_hide_status_bar"
         app:title="@string/pref_title_hide_status_bar"
-        app:iconSpaceReserved="false"
-        />
+        app:icon="@drawable/ic_fullscreen_oval"
+        app:iconSpaceReserved="false" />
+
     <SwitchPreferenceCompat
         app:key="@string/pref_key_hide_tool_bar"
         app:title="@string/pref_title_hide_tool_bar"
         app:iconSpaceReserved="false"
-        />
+        app:icon="@drawable/ic_baseline_aspect_ratio_24_oval" />
+
     <SwitchPreferenceCompat
         app:key="@string/pref_key_show_tool_bar_on_scroll_up"
         app:title="@string/pref_title_show_tool_bar_when_scroll_up"
-        app:iconSpaceReserved="false"
-        />
+        app:icon="@drawable/ic_eye_oval"
+        app:iconSpaceReserved="false" />
+
     <SwitchPreferenceCompat
         app:key="@string/pref_key_show_tool_bar_on_page_top"
         app:title="@string/pref_title_show_tool_bar_on_page_top"
-        app:iconSpaceReserved="false"
-        />
+        app:icon="@drawable/ic_vertical_align_oval"
+        app:iconSpaceReserved="false" />
 
     <SeekBarPreference
         app:key="@string/pref_key_desktop_width"
         app:title="@string/pref_title_desktop_width"
         app:summary="@string/pref_summary_desktop_width"
+        app:icon="@drawable/ic_desktop_oval"
         app:min="640"
         android:max="3840"
         app:showSeekBarValue="true"
         app:iconSpaceReserved="false"
-        app:updatesContinuously="true"
-        />
-
-
+        app:updatesContinuously="true" />
 
 </PreferenceScreen>
