@@ -200,8 +200,10 @@ class LightningWebClient(
      */
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         currentUrl = url
+        lightningView.domainSettings.host = Uri.parse(url).host
         lightningView.updateDarkMode()
         lightningView.updateDesktopMode()
+        view.settings.blockNetworkImage = !lightningView.domainSettings.loadImages
         // Only set the SSL state if there isn't an error for the current URL.
         if (urlWithSslError != url) {
             sslState = if (URLUtil.isHttpsUrl(url)) {

@@ -184,7 +184,7 @@ class LightningView(
     // TODO: domainSettings could be a val
     //  but userPreferences are not initialized when initializing the val here
     //  I would need to inject userPreferences in domainSettings, and I don't understand how to make this work
-    private var domainSettings: DomainSettings
+/*    var domainSettings: DomainSettings
         get() {
             field.host = webView?.url
                     // get the host in a simplified way, much faster than Uri.parse(url).host
@@ -196,7 +196,12 @@ class LightningView(
              ?: iTargetUrl.host
             return field
         }
-
+        private set
+*/
+    // TODO: does is work reliably now or not?
+    //  previous tests: no
+    //  recent tests: yes
+    val domainSettings: DomainSettings by lazy { DomainSettings(iTargetUrl.host, activity.baseContext, userPreferences) }
     /**
      * Get our find in page search query.
      *
@@ -339,7 +344,8 @@ class LightningView(
         // Mark our URL
         iTargetUrl = Uri.parse(tabInitializer.url())
 
-        domainSettings = DomainSettings(iTargetUrl.host, activity.baseContext, userPreferences)
+        // TODO: remove?
+        //domainSettings = DomainSettings(iTargetUrl.host, activity.baseContext, userPreferences)
 
         if (tabInitializer !is FreezableBundleInitializer) {
             // Create our WebView now
