@@ -180,53 +180,15 @@ class LightningView(
             applyDarkMode();
         }
 
-    // TODO: decide which one to use, maybe try more callbacks
-    //   bad:
-    //    shouldInterceptRequest (only for main frame does not work sometimes)
-    //    onPageStarted (too late)
-    //    shouldOverrideUrlLoading (sometimes not called)
-    //   try:
-    //    onProgressChanged (chromeClient)
-    //    shouldInterceptRequest (find a way to fix the wrong mainFrame problem?)
-    /* domainsettings: getting url on every access is slow
-        webView.url takes 20 µs
-        url takes 100 µs (60 after optimizing)
-        getter from domainSettings3 takes 35-40 µs
-        simply returning current value is 1-2 µs
-            but when to set?
-            try in the same function when it is accessed
-                but: this might be different for each domainSetting, and will be horrible to keep up to date
-     */
-
-    // to be used with setting host whenever url changed
-    // fastest, but how ot reliably detect url change?
-//    val domainSettings: DomainSettings by lazy { DomainSettings(null, activity.baseContext, userPreferences) }
-
-    // reading webView.url on each access is slow
-    // and creating new DomainSettings on each access is bad...
-    // would work better if we could get existing instances with same constructor
-//    private val domainSettings: DomainSettings
-//    	get() = DomainSettings(webView?.url.quickHost(), activity.baseContext, userPreferences)
-
-    // like above, but without creating new DomainSettings on each access
+    // TODO: domainSettings could be a val
+    //  but userPreferences are not initialized when initializing the val here
+    //  I would need to inject userPreferences in domainSettings, and I don't understand how to make this work
     private var domainSettings: DomainSettings
         get() {
-            val host = webView?.url.quickHost()
-            if (host == field.host)
-                return field
-            //field = DomainSettings(host, activity.baseContext, userPreferences)
-            field.host = host
+            field.host = webView?.url.quickHost()// ?: iTargetUrl.host
             return field
         }
 
-    // get host from url string without the 5 times slower Uri.parse
-    // should detect correctly for urls that webView may have, but not for arbitrary strings
-    // TODO: should be moved down to other functions if we will keep using it
-    private fun String?.quickHost(): String? {
-        this ?: return null
-        if (isBlank() || indexOf("//") == -1) return null
-        return substringAfter("//").substringBefore('/').substringAfter('@').substringBefore(':')
-    }
     /**
      * Get our find in page search query.
      *
@@ -1127,6 +1089,22 @@ class LightningView(
                 dialogBuilder.showLongPressLinkDialog(activity, uiController, newUrl, text)
             }
         }
+    }
+
+    /**
+     * Get the host of a correctly formatted url string
+     * This is considerably faster than Uri.parse(url).host, but doesn't work on arbitrary strings
+     *
+     * @return The host of the url or null if considered invalid. Empty string for file:///...
+     */
+    private fun String?.quickHost(): String? {
+        if (this == null || indexOf("//") == -1) return null
+        val host = substringAfter("//") // remove https:// and the like
+                .substringBefore('/') // remove everything after tld (if 'file:///', this means result will be empty, which is fine for our use case)
+                .substringAfter('@') // remove username (does webView.url ever contain such thing?)
+                .substringAfter(':') // remove port (does webView.url ever contain such thing?)
+        if (host.contains('%')) return Uri.parse(this).host // don't bother with % encoded stuff, do it the proper way
+        return host
     }
 
     /**
