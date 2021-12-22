@@ -294,11 +294,12 @@ class LightningView(
     val url: String
         get() {
             //TODO: One day find a way to write this expression without !! and without duplicating iTargetUrl.toString(), Kotlin is so weird
-            return if (webView == null || webView!!.url.isNullOrBlank() || webView!!.url.isSpecialUrl()) {
-                iTargetUrl.toString()
-            } else  {
-                webView!!.url as String
-            }
+            webView?.url?.let {
+                return if (it.isBlank() || it.isSpecialUrl())
+                    iTargetUrl.toString()
+                else
+                    it
+            } ?: return iTargetUrl.toString()
         }
 
     /**
