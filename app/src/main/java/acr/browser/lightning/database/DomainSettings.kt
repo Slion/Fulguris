@@ -11,14 +11,14 @@ import android.os.Build
  */
 class DomainSettings(_host: String?, private val context: Context, private val userPrefs: UserPreferences) {
     var host = _host
-        set(value) {
-            if (value == field) return
+        set(newHost) {
+            if (newHost == field) return
             // update preferences if necessary
-            prefs = if (host.isNullOrBlank())
-                null
+            prefs = if (newHost.isNullOrBlank() || !newHost.contains('.'))
+                null // only have prefs for actual hosts
             else
-                context.getSharedPreferences(host, Context.MODE_PRIVATE)
-            field = value
+                context.getSharedPreferences(newHost, Context.MODE_PRIVATE)
+            field = newHost
         }
 
     // prefs are null if host is null or empty.

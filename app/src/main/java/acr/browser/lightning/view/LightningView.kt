@@ -185,7 +185,14 @@ class LightningView(
     //  I would need to inject userPreferences in domainSettings, and I don't understand how to make this work
     private var domainSettings: DomainSettings
         get() {
-            field.host = webView?.url.quickHost()// ?: iTargetUrl.host
+            field.host = webView?.url
+                    // get the host in a simplified way, much faster than Uri.parse(url).host
+                    //  not working for arbitrary strings, but ok for webView.url
+                    ?.substringAfter("//") // remove https:// and the like
+                    ?.substringBefore('/') // remove everything after tld (if 'file:///', this means result will be empty, which is fine for our use case)
+                    ?.substringAfter('@') // remove username (does webView.url ever contain such thing?)
+                    ?.substringAfter(':') // remove port (does webView.url ever contain such thing?)
+             ?: iTargetUrl.host
             return field
         }
 
@@ -1090,22 +1097,6 @@ class LightningView(
                 dialogBuilder.showLongPressLinkDialog(activity, uiController, newUrl, text)
             }
         }
-    }
-
-    /**
-     * Get the host of a correctly formatted url string
-     * This is considerably faster than Uri.parse(url).host, but doesn't work on arbitrary strings
-     *
-     * @return The host of the url or null if considered invalid. Empty string for file:///...
-     */
-    private fun String?.quickHost(): String? {
-        if (this == null || indexOf("//") == -1) return null
-        val host = substringAfter("//") // remove https:// and the like
-                .substringBefore('/') // remove everything after tld (if 'file:///', this means result will be empty, which is fine for our use case)
-                .substringAfter('@') // remove username (does webView.url ever contain such thing?)
-                .substringAfter(':') // remove port (does webView.url ever contain such thing?)
-        if (host.contains('%')) return Uri.parse(this).host // don't bother with % encoded stuff, do it the proper way
-        return host
     }
 
     /**
