@@ -25,6 +25,12 @@
         app:icon="@drawable/ic_search_oval" />
 
     <Preference
+        android:key="@string/pref_key_search_custom_image_url"
+        android:title="@string/pref_title_search_custom_image_url"
+        android:summary="@string/pref_summary_search_custom_image_url"
+        app:icon="@drawable/ic_image_oval" />
+
+        <Preference
         android:key="suggestions_choice"
         android:title="@string/search_suggestions"
         app:icon="@drawable/ic_list_oval" />
@@ -36,15 +42,6 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/home">
-
-        <Preference
-            android:key="image_url"
-            android:title="@string/image_url"
-            app:icon="@drawable/ic_image_oval" />
-
-    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/tabs">
 
@@ -113,14 +110,17 @@
             android:summary="@string/settings_summary_dark_mode_default"
             app:iconSpaceReserved="false"
             app:icon="@drawable/ic_dark_mode_oval" />
-
+        <!--
+        Disabled as currently not working.
+        -->
         <SwitchPreferenceCompat
             app:key="@string/pref_key_long_click_tab"
             app:title="@string/long_press_tab"
             android:summary="@string/recommended"
             android:defaultValue="true"
             app:singleLineTitle="false"
-            app:icon="@drawable/ic_tab_oval" />
+            app:icon="@drawable/ic_tab_oval"
+            app:isPreferenceVisible="@bool/const_false" />
 
         <!--
         Disabled as currently not working.

@@ -51,6 +51,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
     private lateinit var proxyChoices: Array<String>
 
+    private lateinit var iPrefSearchCustomImageUrl: Preference
+
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
@@ -177,11 +179,14 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             onCheckChange = { userPreferences.forceZoom = it }
         )
 
-        clickablePreference(
-            preference = SETTINGS_IMAGE_URL,
-            summary = getString(R.string.image_url_summary),
+
+        iPrefSearchCustomImageUrl = clickablePreference(
+            preference = getString(R.string.pref_key_search_custom_image_url),
             onClick = ::showImageUrlPicker
         )
+
+        // Only visible when using custom URL instead of predefined search engines
+        iPrefSearchCustomImageUrl.isVisible = (userPreferences.searchChoice == 0)
     }
 
     /**
@@ -312,7 +317,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
     private fun showImageUrlPicker() {
         activity?.let {
             BrowserDialog.showEditText(it as AppCompatActivity,
-                R.string.image_url,
+                R.string.pref_title_search_custom_image_url,
                 R.string.hint_url,
                 userPreferences.imageUrlString,
                 R.string.action_ok) { s ->
@@ -528,6 +533,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     // Store the search engine preference
                     val preferencesIndex = searchEngineProvider.mapSearchEngineToPreferenceIndex(searchEngine)
                     userPreferences.searchChoice = preferencesIndex
+                    // Update that guy visibility
+                    iPrefSearchCustomImageUrl.isVisible = (userPreferences.searchChoice == 0)
 
                     if (searchEngine is CustomSearch) {
                         // Show the URL picker
@@ -554,7 +561,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 userPreferences.searchUrl = searchUrl
                 summaryUpdater.updateSummary(getSearchEngineSummary(customSearch))
             }
-
         }
     }
 
@@ -671,6 +677,5 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_BLOCK_JAVASCRIPT = "block_javascript"
         private const val SETTINGS_FORCE_ZOOM = "force_zoom"
         private const val SETTINGS_SHOW_SSL = "show_ssl"
-        private const val SETTINGS_IMAGE_URL = "image_url"
     }
 }

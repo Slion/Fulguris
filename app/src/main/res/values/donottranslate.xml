@@ -112,6 +112,8 @@
     <string name="pref_key_ssl_dialog">pref_key_ssl_dialog</string>
     <string name="pref_key_use_js_block">pref_key_use_js_block</string>
     <string name="pref_key_use_site_block">pref_key_use_site_block</string>
+    <string name="pref_key_search_custom_image_url">pref_key_search_custom_image_url</string>
+
 
 
     <!-- See: NewTabPosition -->
