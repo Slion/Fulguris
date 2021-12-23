@@ -46,10 +46,16 @@ class DomainSettings(_host: String?, private val context: Context, private val u
 
     fun remove(setting: String) {
         if (prefs == null) return
-        prefs!!.edit().remove(setting).apply()
-        // remove file if we removed the last preference (only on N and above)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && prefs!!.all.isEmpty())
-            host?.let { context.deleteSharedPreferences(it) }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && prefs!!.contains(setting) && prefs!!.all.size == 1) {
+            // we remove the last setting, so the file can be deleted
+            // using commit() instead of apply(), because otherwise deletion reports success, but is still not happening
+            // commit takes a few ms, we need to consider that host may change during this time
+            val h = host ?: return
+            prefs!!.edit().remove(setting).commit()
+            context.deleteSharedPreferences(h)
+        }
+        else
+            prefs!!.edit().remove(setting).apply()
     }
 
     companion object {
