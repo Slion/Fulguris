@@ -143,6 +143,7 @@ class MenuWebPage : PopupWindow {
                     iBinding.menuItemAddBookmark.isVisible = it
                     iBinding.menuItemShare.isVisible = it
                     iBinding.menuItemAdBlock.isVisible = it && iUserPreferences.adBlockEnabled
+                    iBinding.menuItemTranslate.isVisible = it
                 }
             }
         }

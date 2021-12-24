@@ -118,10 +118,13 @@ import android.text.TextWatcher
 import android.webkit.CookieManager
 import com.github.ahmadaghazadeh.editor.widget.CodeEditor
 import acr.browser.lightning.html.incognito.IncognitoPageFactory
+import acr.browser.lightning.locale.LocaleUtils
 import android.graphics.Rect
 import android.util.TypedValue
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.net.URL
+import java.util.*
+import kotlin.collections.HashMap
 
 /**
  *
@@ -535,6 +538,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
             onMenuItemClicked(iBinding.menuItemDarkMode) { executeAction(R.id.action_toggle_dark_mode) }
             onMenuItemClicked(iBinding.menuItemAdBlock) { executeAction(R.id.action_block) }
+            onMenuItemClicked(iBinding.menuItemTranslate) { executeAction(R.id.action_translate) }
             // Popup menu action shortcut icons
             onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
             onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
@@ -1700,6 +1704,27 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 findInPage()
                 return true
             }
+
+            R.id.action_translate -> {
+                // Get our local
+                val locale = LocaleUtils.requestedLocale(userPreferences.locale)
+                // For most languages Google just wants the two letters code
+                // Using the full language tag such as fr-FR will actually prevent Google translate…
+                // …to display the target language name even though the translation is actually working
+                var languageCode = locale.language
+                val languageTag = locale.toLanguageTag()
+                // For chinese however, Google translate expects the full language tag
+                if (languageCode == "zh") {
+                    languageCode = languageTag
+                }
+
+                // TODO: Have a settings option to translate in new tab
+                presenter?.loadUrlInCurrentView("https://translate.google.com/translate?sl=auto&tl=$languageCode&u=$currentUrl")
+                // TODO: support other translation providers?
+                //presenter?.loadUrlInCurrentView("https://www.translatetheweb.com/?from=&to=$locale&dl=$locale&a=$currentUrl")
+                return true
+            }
+
             R.id.action_print -> {
                 (currentTabView as WebViewEx).print()
                 return true
