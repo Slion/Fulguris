@@ -694,9 +694,18 @@ class LightningView(
     }
 
     fun updateDesktopMode() {
-        val newDesktopMode = domainSettings.desktopMode
-        if (newDesktopMode != desktopMode)
-            desktopMode = newDesktopMode
+        if (domainSettings.desktopMode != desktopMode)
+            desktopMode = domainSettings.desktopMode
+    }
+
+    fun updateBlockImages() {
+        if (webView?.settings?.blockNetworkImage == domainSettings.loadImages) // don't care if webView is null, then there is nothing to set anyway
+            webView?.settings?.blockNetworkImage = !domainSettings.loadImages
+    }
+
+    fun updateBlockJavascript() {
+        if (webView?.settings?.javaScriptEnabled != domainSettings.javaScriptEnabled)
+            webView?.settings?.javaScriptEnabled = domainSettings.javaScriptEnabled
     }
 
     /**
@@ -712,9 +721,8 @@ class LightningView(
     }
 
     fun updateDarkMode() {
-        val newDarkMode = domainSettings.darkMode
-        if (newDarkMode != darkMode)
-            darkMode = newDarkMode
+        if (domainSettings.darkMode != darkMode)
+            darkMode = domainSettings.darkMode
     }
 
     /**

@@ -200,10 +200,14 @@ class LightningWebClient(
      */
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         currentUrl = url
-        lightningView.domainSettings.host = Uri.parse(url).host
+        lightningView.domainSettings.host = Uri.parse(url).host // maybe replace by something more efficient?
         lightningView.updateDarkMode()
         lightningView.updateDesktopMode()
+        // maybe i already should set the ones below at shouldOverrideUrlLoading?
+        // because actually that would make sense... and for 3rd party apps it's necessary anyway
+        // TODO: do performance test, maybe set only if different
         view.settings.blockNetworkImage = !lightningView.domainSettings.loadImages
+        view.settings.javaScriptEnabled = lightningView.domainSettings.javaScriptEnabled
         // Only set the SSL state if there isn't an error for the current URL.
         if (urlWithSslError != url) {
             sslState = if (URLUtil.isHttpsUrl(url)) {
@@ -221,7 +225,7 @@ class LightningWebClient(
         // Try to fetch meta theme color a few times
         lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
 
-        if (userPreferences.javaScriptChoice === JavaScriptChoice.BLACKLIST) {
+/*        if (userPreferences.javaScriptChoice === JavaScriptChoice.BLACKLIST) {
             if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
                 val arrayOfURLs = userPreferences.javaScriptBlocked
                 var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
@@ -259,7 +263,7 @@ class LightningWebClient(
                 }
             }
         }
-
+*/
         uiController.tabChanged(lightningView)
     }
 

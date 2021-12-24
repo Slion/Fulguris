@@ -429,6 +429,7 @@
     <string name="dialog_title_close_browser">Close browser</string>
     <string name="dialog_delete_download">Delete download</string>
     <string name="dialog_delete_all_downloads">Delete all downloads</string>
+    <string name="dialog_domain_settings">Settings for %s</string>
 
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Page tools</string>

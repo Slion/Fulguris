@@ -44,14 +44,35 @@ class DomainSettings(_host: String?, private val context: Context, private val u
         set(value) = prefs.set(JAVA_SCRIPT_ENABLED, value)
         get() = prefs.get(JAVA_SCRIPT_ENABLED, userPrefs.javaScriptEnabled)
 
+    fun exists(setting: String) = prefs?.contains(setting) ?: false
+
+    // these get/put functions mimic the original shared prefences methods
+    //  but sometimes access by name is convenient, see the provideSpinner function on BrowserActivity
+    fun getBoolean(setting: String) =
+         when(setting) {
+            DARK_MODE -> darkMode
+            DESKTOP_MODE -> desktopMode
+            LOAD_IMAGES -> loadImages
+            JAVA_SCRIPT_ENABLED -> javaScriptEnabled
+            else -> throw(IllegalArgumentException())
+        }
+
+    fun putBoolean(setting: String, value: Boolean) {
+        when (setting) {
+            DARK_MODE -> darkMode = value
+            DESKTOP_MODE -> desktopMode = value
+            LOAD_IMAGES -> loadImages = value
+            JAVA_SCRIPT_ENABLED -> javaScriptEnabled = value
+            else -> throw(IllegalArgumentException())
+        }
+    }
+
     fun remove(setting: String) {
         if (prefs == null) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && prefs!!.contains(setting) && prefs!!.all.size == 1) {
-            // we remove the last setting, so the file can be deleted
-            // using commit() instead of apply(), because otherwise deletion reports success, but is still not happening
-            // commit takes a few ms, we need to consider that host may change during this time
-            val h = host ?: return
-            prefs!!.edit().remove(setting).commit()
+            // we remove the last setting, so the remaining empty file can be deleted
+            val h = host ?: return // commit takes a few ms, we need to consider that host may change during this time
+            prefs!!.edit().remove(setting).commit() // using commit() instead of apply(), because otherwise deletion reports success, but is still not happening
             context.deleteSharedPreferences(h)
         }
         else
