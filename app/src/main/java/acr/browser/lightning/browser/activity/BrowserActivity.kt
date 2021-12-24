@@ -1727,7 +1727,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
 
             R.id.action_show_homepage -> {
-                if (isIncognito()) {
+                if (userPreferences.homepageInNewTab) {
                     if (isIncognito()) {
                         presenter?.newTab(incognitoPageInitializer, true)
                     } else {

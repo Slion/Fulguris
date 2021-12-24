@@ -508,7 +508,7 @@
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
     <string name="webview_version">WebView version</string>
-    <string name="image_url">Set background image for search engine</string>
+    <string name="pref_title_search_custom_image_url">Search page custom image</string>
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
     <string name="pref_title_close_drawer">Close drawer</string>
     <string name="pref_summary_close_drawer">Automatically close Drawer after creating or deleting a tab</string>
@@ -547,7 +547,7 @@
     <string name="settings_export_failure">Sorry, settings could not be exported!</string>
     <string name="settings_exported">Settings exported:</string>
     <string name="settings_reseted">All settings restored</string>
-    <string name="image_url_summary">Only for Custom URL</string>
+    <string name="pref_summary_search_custom_image_url">Only for Custom URL</string>
     <string name="suggest">Search suggestions (number)</string>
     <string name="error_tip">• Check the Address for typing errors such as ww.example.com instead of www.example.com</string>
     <string name="error_tip2">• If you are unable to load any pages, check your devices data or Wi-Fi connection.</string>

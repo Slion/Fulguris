@@ -18,7 +18,7 @@ import androidx.core.view.isVisible
 import javax.inject.Inject
 
 /**
- *
+ * That's our browser main navigation menu.
  */
 class MenuMain : PopupWindow {
 
