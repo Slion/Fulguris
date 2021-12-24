@@ -10,19 +10,19 @@
             android:key="@string/pref_key_content_control"
             android:title="@string/enable"
             android:summary="@string/settings_summary_content_control_toggle"
-            app:icon="@drawable/ic_block_oval" />
+            app:icon="@drawable/ic_block" />
 
         <Preference
             android:key="@string/pref_key_blocklist_auto_update"
             android:title="@string/blocklist_update_mode"
             android:dependency="@string/pref_key_content_control"
-            app:icon="@drawable/ic_action_refresh_oval" />
+            app:icon="@drawable/ic_action_refresh" />
 
         <Preference
             android:key="@string/pref_key_blocklist_auto_update_frequency"
             android:title="@string/blocklist_update_frequency"
             android:dependency="@string/pref_key_content_control"
-            app:icon="@drawable/ic_update_oval" />
+            app:icon="@drawable/ic_update" />
 
         </PreferenceCategory>
 
