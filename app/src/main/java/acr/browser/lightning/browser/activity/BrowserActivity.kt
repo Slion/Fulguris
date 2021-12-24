@@ -419,7 +419,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // This is designed so that callbacks are cancelled unless our timeout expires
             // That avoids spamming adjustBottomSheet while our view is animated or dragged
             mainHandler.removeCallbacks(onSizeChangeRunnable)
-            onSizeChangeRunnable = Runnable {adjustBottomSheet(dialog)};
+            onSizeChangeRunnable = Runnable {
+                // Catch and ignore exceptions as adjustBottomSheet is using reflection to call private methods.
+                // Jamal was reporting this was not working on his device for some reason.
+                try {
+                    // Also I'm not sure now why we needed that, maybe it has since been fixed in the material components library.
+                    // Though the GitHub issue specified in that function description is still open.
+                    adjustBottomSheet(dialog)
+                } catch (ex: java.lang.Exception) {
+                    logger.log(TAG, "adjustBottomSheet: $ex")
+                }
+            }
             mainHandler.postDelayed(onSizeChangeRunnable, 100)
         }
 
