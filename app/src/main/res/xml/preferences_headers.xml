@@ -28,7 +28,7 @@
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.BackupSettingsFragment"
         app:title="@string/settings_backup"
-        app:icon="@drawable/ic_import_export" />
+        app:icon="@drawable/ic_cloud_upload" />
 
     <!-- Advanced settings are now empty, remove them at some point -->
     <Preference
