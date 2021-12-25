@@ -54,6 +54,7 @@
 
     <Preference
         app:fragment="acr.browser.lightning.settings.fragment.DebugSettingsFragment"
+        app:key="@string/pref_key_debug"
         app:title="@string/debug_title"
         app:icon="@drawable/ic_bug" />
 

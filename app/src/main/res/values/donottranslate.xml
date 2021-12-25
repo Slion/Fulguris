@@ -114,6 +114,7 @@
     <string name="pref_key_use_site_block">pref_key_use_site_block</string>
     <string name="pref_key_search_custom_image_url">pref_key_search_custom_image_url</string>
 
+    <string name="pref_key_debug">pref_key_debug</string>
 
 
     <!-- See: NewTabPosition -->
