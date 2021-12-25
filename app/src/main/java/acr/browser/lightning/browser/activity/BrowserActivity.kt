@@ -125,6 +125,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.net.URL
 import java.util.*
 import kotlin.collections.HashMap
+import android.view.KeyboardShortcutGroup
+
+import android.view.KeyboardShortcutInfo
+import androidx.annotation.RequiresApi
+
 
 /**
  *
@@ -267,6 +272,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         super.onCreate(savedInstanceState)
         injector.inject(this)
+
+        createKeyboardShortcuts()
 
         if (BrowserApp.instance.justStarted) {
             BrowserApp.instance.justStarted = false
@@ -3916,6 +3923,34 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             DialogItem(
                 icon = this.drawable(R.drawable.round_clear_24),
                 title = R.string.exit, onClick = this::closeBrowser))
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    lateinit var iShortcuts: fulguris.keyboard.Shortcuts
+
+    /**
+     *
+     */
+    private fun createKeyboardShortcuts() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            iShortcuts = fulguris.keyboard.Shortcuts(this)
+        }
+    }
+
+    /**
+     * Publish keyboard shortcuts so that user can see them when doing Meta+/?
+     */
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onProvideKeyboardShortcuts(data: MutableList<KeyboardShortcutGroup?>, menu: Menu?, deviceId: Int) {
+
+        // Publish our shortcuts, could publish a different list based on current state too
+        if (iShortcuts.iList.isNotEmpty()) {
+                data.add(KeyboardShortcutGroup(getString(R.string.app_name), iShortcuts.iList))
+        }
+
+        super.onProvideKeyboardShortcuts(data, menu, deviceId)
     }
 
     companion object {

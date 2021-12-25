@@ -617,4 +617,24 @@
 
     <string name="error_tip">• Check the Address for typing errors such as ww.example.com instead of www.example.com</string>
     <string name="error_tip2">• If you are unable to load any pages, check your devices data or Wi-Fi connection.</string>
+
+    <string name="action_cycle_tabs_forwards">Cycle tabs forwards</string>
+    <string name="action_cycle_tabs_backwards">Cycle tabs backwards</string>
+    <string name="action_focus_address_bar">Focus address bar</string>
+    <string name="action_tab_history_forward">Forward in tab history</string>
+    <string name="action_toggle_toolbar">Toggle toolbar</string>
+    <string name="action_toggle_status_bar">Toggle status bar</string>
+    <string name="action_text_size_increment">Increase text size</string>
+    <string name="action_text_size_decrement">Decrease text size</string>
+    <string name="action_text_size_small_increment">Increase text size a bit</string>
+    <string name="action_text_size_small_decrement">Decrease text size a bit</string>
+    <string name="action_open_bookmark_list">Open bookmark list</string>
+    <string name="action_open_tab_list">Open tab list</string>
+    <string name="action_open_session_list">Open session list</string>
+    <string name="action_switch_to_session">Switch to session 1 to 9</string>
+    <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
+    <string name="action_switch_to_last_tab">Switch to last tab</string>
+    <string name="action_switch_to_last_session">Switch to last session</string>
+
+
 </resources>
