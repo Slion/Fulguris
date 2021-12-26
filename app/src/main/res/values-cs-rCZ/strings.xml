@@ -26,7 +26,7 @@
     <string name="java">Povolit JavaScript</string>
     <string name="download">Umístění stahování</string>
     <string name="settings_advanced">Pokročilé</string>
-    <string name="apache">Licence Apache 2.0</string>
+    <string name="license_apache">Licence Apache 2.0</string>
     <string name="version">Verze aplikace</string>
     <string name="update_available">Aktualizace je k dispozici</string>
     <string name="update_check_error">Chyba kontroly aktualizace, zkuste to znovu později</string>
@@ -236,7 +236,7 @@
     <string name="folder_default">Výchozí</string>
     <string name="folder_custom">Vlastní</string>
     <string name="untitled">Bez názvu</string>
-    <string name="mpl_license">Mozilla Public License v. 2.0</string>
+
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>

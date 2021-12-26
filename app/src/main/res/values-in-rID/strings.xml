@@ -26,7 +26,7 @@
     <string name="java">Nyalakan JavaScript</string>
     <string name="download">Tempat menyimpan unduhan</string>
     <string name="settings_advanced">Selanjutnya</string>
-    <string name="apache">Surat izin Apache 2.0</string>
+    <string name="license_apache">Surat izin Apache 2.0</string>
     <string name="version">Versi aplikasi</string>
     <string name="update_available">Ada pembaruan</string>
     <string name="update_check_error">Gagal mengecek pembaruan, silahkan mencoba lagi nanti</string>
@@ -236,7 +236,7 @@
     <string name="folder_default">Bawaan</string>
     <string name="folder_custom">Custom</string>
     <string name="untitled">Tanpa judul</string>
-    <string name="mpl_license">Mozilla Public License v. 2.0</string>
+
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>

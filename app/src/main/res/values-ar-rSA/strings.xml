@@ -26,7 +26,7 @@
     <string name="java">تفعيل الجافا</string>
     <string name="download">مسار التحميلات</string>
     <string name="settings_advanced">الإعدادات المتقدمة</string>
-    <string name="apache"> ترخيص اباتشي 2.0</string>
+    <string name="license_apache"> ترخيص اباتشي 2.0</string>
     <string name="version">إصدار التطبيق</string>
     <string name="update_available">Update available</string>
     <string name="update_check_error">Update check error, try again later</string>
@@ -236,7 +236,7 @@
     <string name="folder_default">الافتراضي</string>
     <string name="folder_custom">مخصص</string>
     <string name="untitled">Untitled</string>
-    <string name="mpl_license">Mozilla Public License v. 2.0</string>
+
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>

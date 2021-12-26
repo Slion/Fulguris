@@ -26,7 +26,7 @@
     <string name="java">Javascript\'i etkinleştir</string>
     <string name="download">İndirme konumu</string>
     <string name="settings_advanced">Gelişmiş ayarlar</string>
-    <string name="apache">Apache Lisans 2.0</string>
+    <string name="license_apache">Apache Lisans 2.0</string>
     <string name="version">Uygulama sürümü</string>
     <string name="update_available">Güncelleme mevcut</string>
     <string name="update_check_error">Güncellemeleri kontrol ederken bir hata oluştu, daha sonra tekrar deneyin</string>
@@ -236,7 +236,7 @@
     <string name="folder_default">Varsayılan</string>
     <string name="folder_custom">Özel</string>
     <string name="untitled">Başlıksız</string>
-    <string name="mpl_license">Mozilla Kamu Lisansı v. 2.0</string>
+    <string name="license_mpl">Mozilla Kamu Lisansı v. 2.0</string>
     <string name="freeware">Ücretsiz</string>
     <string name="android_open_source_project">Android Açık Kaynak Projesi</string>
     <string name="hphosts_ad_server_list">hpHosts Reklam Sunucu Listesi</string>

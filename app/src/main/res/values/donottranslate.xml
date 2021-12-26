@@ -151,4 +151,11 @@
     <string name="nine">9</string>
     <string name="ten">10</string>
 
+    <string name="app_name_yuzu_browser">Yuzu Browser</string>
+    <string name="app_name_lightning_browser">Lightning Browser</string>
+
+    <string name="license_mpl">Mozilla Public License 2.0</string>
+    <string name="license_cpal">Common Public Attribution License 1.0</string>
+    <string name="license_apache">Apache License 2.0</string>
+
 </resources>

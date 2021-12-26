@@ -26,7 +26,7 @@
     <string name="java">JavaScript aktivieren</string>
     <string name="download">Download-Verzeichnis</string>
     <string name="settings_advanced">Erweitert</string>
-    <string name="apache">Apache License 2.0</string>
+
     <string name="version">App-Version</string>
     <string name="update_available">Aktualisierung verfügbar</string>
     <string name="update_check_error">Aktualisierungs-Prüffehler, versuche es später erneut</string>
@@ -236,7 +236,7 @@
     <string name="folder_default">Standard</string>
     <string name="folder_custom">Benutzerdefiniert</string>
     <string name="untitled">Ohne Titel</string>
-    <string name="mpl_license">Mozilla Public License v2.0</string>
+    <string name="license_mpl">Mozilla Public License v2.0</string>
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server Liste</string>

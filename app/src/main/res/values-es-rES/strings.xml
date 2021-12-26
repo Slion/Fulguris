@@ -26,7 +26,7 @@
     <string name="java">Activar JavaScript</string>
     <string name="download">Ruta de descargas</string>
     <string name="settings_advanced">Ajustes avanzados</string>
-    <string name="apache">Licencia Apache 2.0</string>
+    <string name="license_apache">Licencia Apache 2.0</string>
     <string name="version">Versión de la aplicación</string>
     <string name="update_available">Actualización disponible</string>
     <string name="update_check_error">Error de comprobación de actualización, inténtelo más tarde</string>
@@ -236,7 +236,7 @@
     <string name="folder_default">Por defecto</string>
     <string name="folder_custom">Personalizado</string>
     <string name="untitled">Sin título</string>
-    <string name="mpl_license">Licencia Pública Mozilla 2.0</string>
+    <string name="license_mpl">Licencia Pública Mozilla 2.0</string>
     <string name="freeware">Software gratuito</string>
     <string name="android_open_source_project">Proyecto Android de código abierto</string>
     <string name="hphosts_ad_server_list">Lista de servidores de anuncios hpHosts</string>

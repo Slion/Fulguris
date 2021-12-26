@@ -26,7 +26,7 @@
     <string name="java">Омогући јаваскрипте</string>
     <string name="download">Фасцикла преузимања</string>
     <string name="settings_advanced">Напредне поставке</string>
-    <string name="apache">Апачи лиценца 2.0</string>
+    <string name="license_apache">Апачи лиценца 2.0</string>
     <string name="version">Издање апликације</string>
     <string name="update_available">Update available</string>
     <string name="update_check_error">Update check error, try again later</string>
@@ -236,7 +236,7 @@
     <string name="folder_default">Подразумевана</string>
     <string name="folder_custom">Посебна</string>
     <string name="untitled">Неименована</string>
-    <string name="mpl_license">Мозилина Јавна Лиценца в. 2.0</string>
+    <string name="license_mpl">Мозилина Јавна Лиценца в. 2.0</string>
     <string name="freeware">Фривер</string>
     <string name="android_open_source_project">Андроид пројекат отвореног кôда</string>
     <string name="hphosts_ad_server_list">hpHosts списак рекламних сервера</string>
