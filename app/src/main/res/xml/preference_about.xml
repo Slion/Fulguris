@@ -41,6 +41,17 @@
             android:key="@string/pref_key_webview"
             android:title="@string/webview_version"
             app:icon="@drawable/ic_webview">
+
+            <!--
+            Launch WebView DevTools, see https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/developer-ui.md#launching-webview-devtools
+            See also: https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/webview-shell.md
+            -->
+            <intent
+                android:action="com.android.webview.SHOW_DEV_UI">
+                <extra
+                    android:name="SOURCE"
+                    android:value="SELF" />
+            </intent>
         </Preference>
 
     </PreferenceCategory>

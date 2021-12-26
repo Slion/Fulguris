@@ -42,14 +42,7 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
 
         clickablePreference(
             preference = getString(R.string.pref_key_webview),
-            summary = webview,
-            onClick = {
-                // Launch WebView DevTools, see https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/developer-ui.md#launching-webview-devtools
-                // See also: https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/webview-shell.md
-                val intent = Intent()
-                intent.action = "com.android.webview.SHOW_DEV_UI"
-                startActivity(intent)
-            }
+            summary = webview
         )
 
         queue = Volley.newRequestQueue(this.context)
