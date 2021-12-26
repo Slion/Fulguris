@@ -11,11 +11,13 @@ import androidx.preference.Preference
 import androidx.webkit.WebViewCompat
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+import android.content.Intent
 
-
+/**
+ * About settings page.
+ */
 class AboutSettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource() = R.xml.preference_about
@@ -39,9 +41,15 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
         )
 
         clickablePreference(
-            preference = WEBVIEW_VERSION,
+            preference = getString(R.string.pref_key_webview),
             summary = webview,
-            onClick = { }
+            onClick = {
+                // Launch WebView DevTools, see https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/developer-ui.md#launching-webview-devtools
+                // See also: https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/webview-shell.md
+                val intent = Intent()
+                intent.action = "com.android.webview.SHOW_DEV_UI"
+                startActivity(intent)
+            }
         )
 
         queue = Volley.newRequestQueue(this.context)
@@ -116,7 +124,6 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
 
     companion object {
         private const val SETTINGS_VERSION = "pref_version"
-        private const val WEBVIEW_VERSION = "pref_webview"
         private const val TAG = "AboutSettingsFragment"
     }
 }

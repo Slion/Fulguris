@@ -38,9 +38,9 @@
         </Preference>
 
         <Preference
-            android:key="pref_webview"
+            android:key="@string/pref_key_webview"
             android:title="@string/webview_version"
-            app:icon="@drawable/ic_settings">
+            app:icon="@drawable/ic_webview">
         </Preference>
 
     </PreferenceCategory>
