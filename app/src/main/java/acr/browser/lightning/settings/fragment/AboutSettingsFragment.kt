@@ -27,12 +27,10 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-        var webview = resources.getString(R.string.unknown)
+        var webViewSummary = resources.getString(R.string.unknown)
 
-        context?.let {
-            WebViewCompat.getCurrentWebViewPackage(it)?.versionName?.let {
-                webview = it
-            }
+        WebViewCompat.getCurrentWebViewPackage(requireContext())?.let {
+            webViewSummary = "${it.packageName} - v${it.versionName}"
         }
 
         clickablePreference(
@@ -42,7 +40,7 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
 
         clickablePreference(
             preference = getString(R.string.pref_key_webview),
-            summary = webview
+            summary = webViewSummary
         )
 
         queue = Volley.newRequestQueue(this.context)

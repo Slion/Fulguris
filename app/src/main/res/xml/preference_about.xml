@@ -39,7 +39,7 @@
 
         <Preference
             android:key="@string/pref_key_webview"
-            android:title="@string/webview_version"
+            android:title="@string/agent_web_view"
             app:icon="@drawable/ic_webview">
 
             <!--

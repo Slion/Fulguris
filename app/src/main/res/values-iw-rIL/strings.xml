@@ -507,7 +507,7 @@
     <string name="oid">Object Identifier (OID):</string>
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
-    <string name="webview_version">WebView version</string>
+
     <string name="pref_title_search_custom_image_url">Search page custom image</string>
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
     <string name="pref_title_close_drawer">Close drawer</string>
