@@ -26,7 +26,6 @@
     <string name="java">Włącz JavaScript</string>
     <string name="download">Miejsce zapisu pobieranych plików</string>
     <string name="settings_advanced">Zaawansowane</string>
-    <string name="license_apache">Licencja Apache 2.0</string>
     <string name="version">Wersja aplikacji</string>
     <string name="update_available">Dostępna aktualizacja</string>
     <string name="update_check_error">Błąd sprawdzania aktualizacji, spróbuj ponownie później</string>

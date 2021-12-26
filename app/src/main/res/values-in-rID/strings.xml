@@ -26,7 +26,6 @@
     <string name="java">Nyalakan JavaScript</string>
     <string name="download">Tempat menyimpan unduhan</string>
     <string name="settings_advanced">Selanjutnya</string>
-    <string name="license_apache">Surat izin Apache 2.0</string>
     <string name="version">Versi aplikasi</string>
     <string name="update_available">Ada pembaruan</string>
     <string name="update_check_error">Gagal mengecek pembaruan, silahkan mencoba lagi nanti</string>

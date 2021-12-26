@@ -26,7 +26,6 @@
     <string name="java">Povolit JavaScript</string>
     <string name="download">Umístění stahování</string>
     <string name="settings_advanced">Pokročilé</string>
-    <string name="license_apache">Licence Apache 2.0</string>
     <string name="version">Verze aplikace</string>
     <string name="update_available">Aktualizace je k dispozici</string>
     <string name="update_check_error">Chyba kontroly aktualizace, zkuste to znovu později</string>

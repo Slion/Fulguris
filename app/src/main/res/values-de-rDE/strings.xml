@@ -236,7 +236,6 @@
     <string name="folder_default">Standard</string>
     <string name="folder_custom">Benutzerdefiniert</string>
     <string name="untitled">Ohne Titel</string>
-    <string name="license_mpl">Mozilla Public License v2.0</string>
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server Liste</string>

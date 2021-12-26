@@ -26,7 +26,6 @@
     <string name="java">Ativar JavaScript</string>
     <string name="download">Pasta de download</string>
     <string name="settings_advanced">Configurações avançadas</string>
-    <string name="license_apache">Licença Apache 2.0</string>
     <string name="version">Versão da aplicação</string>
     <string name="update_available">Atualização disponível</string>
     <string name="update_check_error">Erro de verificação de atualização, tente novamente mais tarde</string>

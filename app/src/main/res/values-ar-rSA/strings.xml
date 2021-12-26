@@ -26,7 +26,6 @@
     <string name="java">تفعيل الجافا</string>
     <string name="download">مسار التحميلات</string>
     <string name="settings_advanced">الإعدادات المتقدمة</string>
-    <string name="license_apache"> ترخيص اباتشي 2.0</string>
     <string name="version">إصدار التطبيق</string>
     <string name="update_available">Update available</string>
     <string name="update_check_error">Update check error, try again later</string>

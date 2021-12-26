@@ -26,7 +26,6 @@
     <string name="java">JavaScript 사용</string>
     <string name="download">다운로드 위치</string>
     <string name="settings_advanced">고급 설정</string>
-    <string name="license_apache">Apache 라이선스 2.0</string>
     <string name="version">앱 버전</string>
     <string name="update_available">Update available</string>
     <string name="update_check_error">Update check error, try again later</string>
