@@ -429,12 +429,20 @@
     <string name="dialog_title_close_browser">Close browser</string>
     <string name="dialog_delete_download">Delete download</string>
     <string name="dialog_delete_all_downloads">Delete all downloads</string>
+    <string name="dialog_domain_settings_title">Settings for %s</string>
+    <string name="dialog_domain_settings_remove_all">Set all to default</string>
 
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Page tools</string>
     <string name="dialog_toggle_desktop">Toggle desktop user agent</string>
     <string name="dialog_adblock_enable_for_site">Enable ad block for site</string>
     <string name="dialog_adblock_disable_for_site">Disable ad block for site</string>
+    <string name="action_page_settings">Page settings</string>
+    <string name="page_settings_java_script">JavaScript</string>
+    <string name="page_settings_dark_mode">Dark mode</string>
+    <string name="page_settings_default_enabled">Default (enabled)</string>
+    <string name="page_settings_default_disabled">Default (disabled)</string>
+    <string name="page_settings_ask">Ask</string>
 
     <!-- Search Engines -->
     <string name="search_engine_ask" translatable="false">Ask</string>

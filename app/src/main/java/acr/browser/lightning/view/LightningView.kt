@@ -11,6 +11,7 @@ import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.database.DomainSettings
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.configPrefs
@@ -163,6 +164,7 @@ class LightningView(
      */
     var desktopMode = false
         set(aDesktopMode) {
+            if (field == aDesktopMode) return // no change, nothing to do
             field = aDesktopMode
             // Set our user agent accordingly
             if (aDesktopMode) {
@@ -177,9 +179,28 @@ class LightningView(
      */
     var darkMode = false
         set(aDarkMode) {
+            if (field == aDarkMode) return // no change, nothing to do
             field = aDarkMode
             applyDarkMode();
         }
+
+    // TODO: does is work reliably now or not?
+    //  if not, switch to the version below instead of changing the host in LightningWebClient
+    val domainSettings: DomainSettings by lazy { DomainSettings(iTargetUrl.host, activity.baseContext, userPreferences) }
+/*    var domainSettings: DomainSettings
+        get() {
+            field.host = webView?.url
+                    // get the host in a simplified way, much faster than Uri.parse(url).host
+                    //  not working for arbitrary strings, but ok for webView.url
+                    ?.substringAfter("//") // remove https:// and the like
+                    ?.substringBefore('/') // remove everything after tld (if 'file:///', this means result will be empty, which is fine for our use case)
+                    ?.substringAfter('@') // remove username (does webView.url ever contain such thing?)
+                    ?.substringAfter(':') // remove port (does webView.url ever contain such thing?)
+             ?: iTargetUrl.host
+            return field
+        }
+        private set
+*/
 
     /**
      * Get our find in page search query.
@@ -286,11 +307,12 @@ class LightningView(
     val url: String
         get() {
             //TODO: One day find a way to write this expression without !! and without duplicating iTargetUrl.toString(), Kotlin is so weird
-            return if (webView == null || webView!!.url.isNullOrBlank() || webView!!.url.isSpecialUrl()) {
-                iTargetUrl.toString()
-            } else  {
-                webView!!.url as String
-            }
+            webView?.url?.let {
+                return if (it.isBlank() || it.isSpecialUrl())
+                    iTargetUrl.toString()
+                else
+                    it
+            } ?: return iTargetUrl.toString()
         }
 
     /**
@@ -318,17 +340,20 @@ class LightningView(
         uiController = activity as UIController
         titleInfo = LightningViewTitle(activity)
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()
-	
+
         // Mark our URL
         iTargetUrl = Uri.parse(tabInitializer.url())
+
+        // TODO: remove?
+        //domainSettings = DomainSettings(iTargetUrl.host, activity.baseContext, userPreferences)
 
         if (tabInitializer !is FreezableBundleInitializer) {
             // Create our WebView now
             //TODO: it looks like our special URLs don't get frozen for some reason
             createWebView()
             initializeContent(tabInitializer)
-            desktopMode = userPreferences.desktopModeDefault
-            darkMode = userPreferences.darkModeDefault
+            desktopMode = domainSettings.desktopMode
+            darkMode = domainSettings.darkMode
         } else {
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer
@@ -495,7 +520,7 @@ class LightningView(
 
         settings.saveFormData = userPreferences.savePasswordsEnabled && !isIncognito
 
-        if (userPreferences.javaScriptEnabled) {
+        if (domainSettings.javaScriptEnabled) {
             settings.javaScriptEnabled = true
             settings.javaScriptCanOpenWindowsAutomatically = true
         } else {
@@ -516,7 +541,7 @@ class LightningView(
             settings.layoutAlgorithm = LayoutAlgorithm.NORMAL
         }
 
-        settings.blockNetworkImage = !userPreferences.loadImages
+        settings.blockNetworkImage = !domainSettings.loadImages
         // Modifying headers causes SEGFAULTS, so disallow multi window if headers are enabled.
         settings.setSupportMultipleWindows(userPreferences.popupsEnabled && !modifiesHeaders)
 
@@ -662,6 +687,10 @@ class LightningView(
     fun toggleDesktopUserAgent() {
         // Toggle desktop mode
         desktopMode = !desktopMode
+        if (desktopMode != userPreferences.desktopModeDefault)
+            domainSettings.desktopMode = desktopMode
+        else
+            domainSettings.remove(DomainSettings.DESKTOP_MODE)
     }
 
     /**
@@ -670,8 +699,27 @@ class LightningView(
     fun toggleDarkMode() {
         // Toggle dark mode
         darkMode = !darkMode
+        if (darkMode != userPreferences.darkModeDefault)
+            domainSettings.darkMode = darkMode
+        else
+            domainSettings.remove(DomainSettings.DARK_MODE)
     }
 
+    fun updateDesktopMode() {
+        activity.runOnUiThread { desktopMode = domainSettings.desktopMode } // maybe runOnUiThread not necessary
+    }
+
+    fun updateBlockImages() {
+        activity.runOnUiThread { webView?.settings?.blockNetworkImage = !domainSettings.loadImages }
+    }
+
+    fun updateBlockJavascript() {
+        activity.runOnUiThread { webView?.settings?.javaScriptEnabled = domainSettings.javaScriptEnabled }
+    }
+
+    fun updateDarkMode() {
+        darkMode = domainSettings.darkMode
+    }
 
     /**
      * This method sets the user agent of the current tab based on the user's preference

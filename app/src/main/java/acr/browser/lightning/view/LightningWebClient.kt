@@ -8,6 +8,7 @@ import acr.browser.lightning.browser.JavaScriptChoice
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.database.DomainSettings
 import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
@@ -200,6 +201,13 @@ class LightningWebClient(
      */
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         currentUrl = url
+        lightningView.domainSettings.host = Uri.parse(url).host // maybe replace by something more efficient?
+        lightningView.updateDarkMode()
+        // TODO: the settings below are also set onShouldOverrideUrlLoading
+        //  there is no problem in doing so, but it looks strange
+        lightningView.updateDesktopMode()
+        lightningView.updateBlockImages()
+        lightningView.updateBlockJavascript()
         // Only set the SSL state if there isn't an error for the current URL.
         if (urlWithSslError != url) {
             sslState = if (URLUtil.isHttpsUrl(url)) {
@@ -216,45 +224,6 @@ class LightningWebClient(
 
         // Try to fetch meta theme color a few times
         lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
-
-        if (userPreferences.javaScriptChoice === JavaScriptChoice.BLACKLIST) {
-            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
-                val arrayOfURLs = userPreferences.javaScriptBlocked
-                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                    .toTypedArray()
-                if (arrayOfURLs.contains(", ")) {
-                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                }
-                if (!stringContainsItemFromList(url, strgs)) {
-                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
-                        return
-                    } else {
-                        view.settings.javaScriptEnabled = false
-                    }
-                }
-                else{ return }
-            }
-        }
-        else  if (userPreferences.javaScriptChoice === JavaScriptChoice.WHITELIST) run {
-            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
-                val arrayOfURLs = userPreferences.javaScriptBlocked
-                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                    .toTypedArray()
-                if (arrayOfURLs.contains(", ")) {
-                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                }
-                if (stringContainsItemFromList(url, strgs)) {
-                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
-                        return
-                    } else {
-                        view.settings.javaScriptEnabled = false
-                    }
-                }
-                else{
-                    return
-                }
-            }
-        }
 
         uiController.tabChanged(lightningView)
     }
@@ -432,6 +401,13 @@ class LightningWebClient(
      * Overrides [WebViewClient.shouldOverrideUrlLoading].
      */
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+        // TODO: updating host and settings before loading the page:
+        //  could it cause problems when going back or canceling? nothing found so far, but keep checking
+        lightningView.domainSettings.host = request.url.host
+        lightningView.updateDesktopMode()
+        lightningView.updateBlockImages()
+        lightningView.updateBlockJavascript()
+
         // Check if configured proxy is available
         if (!proxyUtils.isProxyReady(activity)) {
             // User has been notified
@@ -460,9 +436,8 @@ class LightningWebClient(
         val intent = intentUtils.intentForUrl(view, url)
         intent?.let {
             // Check if that external app is already known
-            val prefKey = activity.getString(R.string.settings_app_prefix) + Uri.parse(url).host
-            if (preferences.contains(prefKey)) {
-                if (preferences.getBoolean(prefKey, false)) {
+            if (lightningView.domainSettings.exists(DomainSettings.THIRD_PARTY_APP_LAUNCH)) {
+                if (lightningView.domainSettings.thirdPartyAppLaunch) {
                     // Trusted app, just launch it on the stop and abort loading
                     intentUtils.startActivityForIntent(intent)
                     return true
@@ -483,14 +458,14 @@ class LightningWebClient(
                                 dialog.dismiss()
                                 exAppLaunchDialog = null
                                 // Remember user choice
-                                preferences.edit().putBoolean(prefKey, true).apply()
+                                lightningView.domainSettings.thirdPartyAppLaunch = true
                             })
                             .setNegativeButton(activity.getText(R.string.no), DialogInterface.OnClickListener { dialog, id ->
                                 // Handle Cancel
                                 dialog.dismiss()
                                 exAppLaunchDialog = null
                                 // Remember user choice
-                                preferences.edit().putBoolean(prefKey, false).apply()
+                                lightningView.domainSettings.thirdPartyAppLaunch = false
                             })
                             .create()
                     exAppLaunchDialog?.show()

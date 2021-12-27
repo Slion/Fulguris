@@ -194,11 +194,6 @@
             app:icon="@drawable/ic_script"
             app:iconSpaceReserved="false"/>
 
-        <Preference
-            android:key="block_javascript"
-            android:title="@string/block_javascript"
-            app:icon="@drawable/ic_script_key"/>
-
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/pref_key_request_save_data"

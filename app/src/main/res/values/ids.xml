@@ -46,6 +46,7 @@
     <item name="action_sessions" type="id" />
     <item name="action_exit" type="id" />
     <item name="action_block" type="id" />
+    <item name="action_domain_settings" type="id" />
     <item name="action_translate" type="id" />
 
 </resources>
