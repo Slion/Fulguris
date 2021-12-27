@@ -167,12 +167,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             }
 	    }
 
-        clickableDynamicPreference(
-            preference = SETTINGS_BLOCK_JAVASCRIPT,
-            summary = userPreferences.javaScriptChoice.toSummary(),
-            onClick = ::showJavaScriptPicker
-        )
-
         switchPreference(
             preference = SETTINGS_FORCE_ZOOM,
             isChecked = userPreferences.forceZoom,
@@ -571,33 +565,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             JavaScriptChoice.WHITELIST -> userPreferences.siteBlockNames
             JavaScriptChoice.BLACKLIST -> userPreferences.siteBlockNames
         }
-    }
-
-    private fun showJavaScriptPicker(summaryUpdater: SummaryUpdater) {
-        BrowserDialog.showCustomDialog(activity as AppCompatActivity) {
-            setTitle(R.string.block_javascript)
-            val stringArray = resources.getStringArray(R.array.block_javascript)
-            val values = JavaScriptChoice.values().map {
-                Pair(it, when (it) {
-                    JavaScriptChoice.NONE -> stringArray[0]
-                    JavaScriptChoice.WHITELIST -> stringArray[1]
-                    JavaScriptChoice.BLACKLIST -> stringArray[2]
-                })
-            }
-            withSingleChoiceItems(values, userPreferences.javaScriptChoice) {
-                updateJavaScriptChoice(it, activity as Activity, summaryUpdater)
-            }
-            setPositiveButton(R.string.action_ok, null)
-        }
-    }
-
-    private fun updateJavaScriptChoice(choice: JavaScriptChoice, activity: Activity, summaryUpdater: SummaryUpdater) {
-        if (choice == JavaScriptChoice.WHITELIST || choice == JavaScriptChoice.BLACKLIST) {
-            showManualJavaScriptPicker(activity, summaryUpdater, choice)
-        }
-
-        userPreferences.javaScriptChoice = choice
-        summaryUpdater.updateSummary(choice.toSummary())
     }
 
     @SuppressLint("InflateParams")
