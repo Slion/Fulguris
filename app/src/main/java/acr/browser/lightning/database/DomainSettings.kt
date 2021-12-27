@@ -46,6 +46,10 @@ class DomainSettings(_host: String?, private val context: Context, private val u
         set(value) = prefs.set(JAVA_SCRIPT_ENABLED, value)
         get() = prefs.get(JAVA_SCRIPT_ENABLED, userPrefs.javaScriptEnabled)
 
+    var thirdPartyAppLaunch: Boolean
+        set(value) = prefs.set(THIRD_PARTY_APP_LAUNCH, value)
+        get() = prefs.get(THIRD_PARTY_APP_LAUNCH, false)
+
     fun exists(setting: String) = prefs?.contains(setting) ?: false
 
     // these get/put functions mimic the original SharedPreferences methods
@@ -96,6 +100,7 @@ class DomainSettings(_host: String?, private val context: Context, private val u
         const val DESKTOP_MODE = "desktop_mode"
         const val LOAD_IMAGES = "load_images"
         const val JAVA_SCRIPT_ENABLED = "java_script_enabled"
+        const val THIRD_PARTY_APP_LAUNCH = "third_party_app_launch"
 
         private fun SharedPreferences?.set(pref: String, value: Boolean) {
             if (this == null) return

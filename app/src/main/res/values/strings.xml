@@ -440,7 +440,9 @@
     <string name="action_page_settings">Page settings</string>
     <string name="page_settings_java_script">JavaScript</string>
     <string name="page_settings_dark_mode">Dark mode</string>
-    <string name="page_settings_default">Default (%s)</string>
+    <string name="page_settings_default_enabled">Default (enabled)</string>
+    <string name="page_settings_default_disabled">Default (disabled)</string>
+    <string name="page_settings_ask">Ask</string>
 
     <!-- Search Engines -->
     <string name="search_engine_ask" translatable="false">Ask</string>

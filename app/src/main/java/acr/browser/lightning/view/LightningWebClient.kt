@@ -8,6 +8,7 @@ import acr.browser.lightning.browser.JavaScriptChoice
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.database.DomainSettings
 import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.di.injector
@@ -435,9 +436,8 @@ class LightningWebClient(
         val intent = intentUtils.intentForUrl(view, url)
         intent?.let {
             // Check if that external app is already known
-            val prefKey = activity.getString(R.string.settings_app_prefix) + Uri.parse(url).host
-            if (preferences.contains(prefKey)) {
-                if (preferences.getBoolean(prefKey, false)) {
+            if (lightningView.domainSettings.exists(DomainSettings.THIRD_PARTY_APP_LAUNCH)) {
+                if (lightningView.domainSettings.thirdPartyAppLaunch) {
                     // Trusted app, just launch it on the stop and abort loading
                     intentUtils.startActivityForIntent(intent)
                     return true
@@ -458,14 +458,14 @@ class LightningWebClient(
                                 dialog.dismiss()
                                 exAppLaunchDialog = null
                                 // Remember user choice
-                                preferences.edit().putBoolean(prefKey, true).apply()
+                                lightningView.domainSettings.thirdPartyAppLaunch = true
                             })
                             .setNegativeButton(activity.getText(R.string.no), DialogInterface.OnClickListener { dialog, id ->
                                 // Handle Cancel
                                 dialog.dismiss()
                                 exAppLaunchDialog = null
                                 // Remember user choice
-                                preferences.edit().putBoolean(prefKey, false).apply()
+                                lightningView.domainSettings.thirdPartyAppLaunch = false
                             })
                             .create()
                     exAppLaunchDialog?.show()

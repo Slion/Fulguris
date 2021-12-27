@@ -1803,26 +1803,47 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         layout.addView(LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             addView(TextView(this@BrowserActivity).apply { setText(R.string.page_settings_dark_mode) })
-            addView(provideSpinner(DomainSettings.DARK_MODE, userPreferences.darkModeDefault, ds) {
+            addView(provideSpinner(
+                    DomainSettings.DARK_MODE,
+                    if (userPreferences.darkModeDefault) getString(R.string.page_settings_default_enabled) else getString(R.string.page_settings_default_disabled),
+                    ds) {
                 tabsManager.currentTab?.updateDarkMode() })
         })
         layout.addView(LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             addView(TextView(this@BrowserActivity).apply { setText(R.string.settings_title_desktop_mode_default) })
-            addView(provideSpinner(DomainSettings.DESKTOP_MODE, userPreferences.desktopModeDefault, ds) {
+            addView(provideSpinner(
+                    DomainSettings.DESKTOP_MODE,
+                    if (userPreferences.desktopModeDefault) getString(R.string.page_settings_default_enabled) else getString(R.string.page_settings_default_disabled),
+                    ds) {
                 tabsManager.currentTab?.updateDesktopMode()
                 tabsManager.currentTab?.reload() })
         })
         layout.addView(LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             addView(TextView(this@BrowserActivity).apply { setText(R.string.load_images) })
-            addView(provideSpinner(DomainSettings.LOAD_IMAGES, userPreferences.loadImages, ds) {
+            addView(provideSpinner(
+                    DomainSettings.LOAD_IMAGES,
+                    if (userPreferences.loadImages) getString(R.string.page_settings_default_enabled) else getString(R.string.page_settings_default_disabled),
+                    ds) {
                 tabsManager.currentTab?.updateBlockImages() })
         })
         layout.addView(LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             addView(TextView(this@BrowserActivity).apply { setText(R.string.page_settings_java_script) })
-            addView(provideSpinner(DomainSettings.JAVA_SCRIPT_ENABLED, userPreferences.javaScriptEnabled, ds) {
+            addView(provideSpinner(
+                    DomainSettings.JAVA_SCRIPT_ENABLED,
+                    if (userPreferences.javaScriptEnabled) getString(R.string.page_settings_default_enabled) else getString(R.string.page_settings_default_disabled),
+                    ds) {
+                tabsManager.currentTab?.updateBlockJavascript() })
+        })
+        layout.addView(LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            addView(TextView(this@BrowserActivity).apply { setText(R.string.settings_summary_apps) })
+            addView(provideSpinner(
+                    DomainSettings.THIRD_PARTY_APP_LAUNCH,
+                    getString(R.string.page_settings_ask),
+                    ds) {
                 tabsManager.currentTab?.updateBlockJavascript() })
         })
         layout.setPadding(30,10,30,10)
@@ -1839,12 +1860,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     // TODO: maybe switch to provide default string? likely necessary for the 3rd party app launch, where default is "ask"
-    private fun provideSpinner(setting: String, defaultValue: Boolean, ds: DomainSettings, runOnSettingChanged: Runnable) = Spinner(this).apply {
+    private fun provideSpinner(setting: String, defaultString: String, ds: DomainSettings, runOnSettingChanged: Runnable) = Spinner(this).apply {
         adapter = ArrayAdapter(
                 this@BrowserActivity,
                 R.layout.domain_settings_spinner_item,
                 arrayOf(
-                        getString(R.string.page_settings_default, if (defaultValue) getString(R.string.enable) else getString(R.string.disable)),
+                        defaultString,
                         getString(R.string.enable),
                         getString(R.string.disable)
                 ))
