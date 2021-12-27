@@ -2,6 +2,7 @@ package acr.browser.lightning.settings.preferences
 
 import acr.browser.lightning.constant.*
 import android.app.Application
+import android.os.Build
 import android.webkit.WebSettings
 
 /**
