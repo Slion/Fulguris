@@ -60,6 +60,7 @@ class DomainSettings(_host: String?, private val context: Context, private val u
             DESKTOP_MODE -> desktopMode
             LOAD_IMAGES -> loadImages
             JAVA_SCRIPT_ENABLED -> javaScriptEnabled
+             THIRD_PARTY_APP_LAUNCH -> thirdPartyAppLaunch
             else -> throw(IllegalArgumentException())
         }
 
@@ -69,6 +70,7 @@ class DomainSettings(_host: String?, private val context: Context, private val u
             DESKTOP_MODE -> desktopMode = value
             LOAD_IMAGES -> loadImages = value
             JAVA_SCRIPT_ENABLED -> javaScriptEnabled = value
+            THIRD_PARTY_APP_LAUNCH -> thirdPartyAppLaunch = value
             else -> throw(IllegalArgumentException())
         }
     }
