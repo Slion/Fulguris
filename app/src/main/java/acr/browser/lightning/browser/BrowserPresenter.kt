@@ -72,7 +72,7 @@ class BrowserPresenter(
         // Save it again to preserve new current session name
         tabsModel.saveSessions()
         // Then reload our tabs
-        setupTabs(null)
+        setupTabs()
         //
         BrowserApp.instance.applicationContext.apply {
             toast(getString(R.string.session_switched,aSessionName))
@@ -85,8 +85,8 @@ class BrowserPresenter(
      *
      * @param intent the intent to handle, may be null.
      */
-    fun setupTabs(intent: Intent?) {
-        tabsModel.initializeTabs(iBrowserView as Activity, intent, isIncognito)
+    fun setupTabs() {
+        tabsModel.initializeTabs(iBrowserView as Activity, isIncognito)
             .subscribeBy(
                 onSuccess = {
                     // At this point we always have at least a tab in the tab manager
@@ -251,12 +251,23 @@ class BrowserPresenter(
 
     /**
      * Handle a new intent from the the main BrowserActivity.
-     *
+     * TODO: That implementation is so ugly… try and improve that.
      * @param intent the intent to handle, may be null.
      */
     fun onNewIntent(intent: Intent?) = tabsModel.doOnceAfterInitialization {
         val url = if (intent?.action == Intent.ACTION_WEB_SEARCH) {
             tabsModel.extractSearchFromIntent(intent)
+        }
+        else if (intent?.action == Intent.ACTION_SEND) {
+            // User shared text with our app
+                if ("text/plain" == intent.type) {
+                    // Get shared text
+                    val clue = intent.getStringExtra(Intent.EXTRA_TEXT)
+                    // Put it in the address bar if any
+                    clue?.let { iBrowserView.setAddressBarText(it) }
+                }
+            // Cancel other operation as we won't open a tab here
+            null
         } else {
             intent?.dataString
         }

@@ -59,4 +59,9 @@ interface BrowserView {
      */
     fun onMaxTabReached()
 
+    /**
+     * Set the browser address bar text.
+     */
+    fun setAddressBarText(aText: String)
+
 }

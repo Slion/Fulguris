@@ -216,24 +216,18 @@ class TabsManager @Inject constructor(
      * new provided [intent] and emit the last tab that should be displayed. By default operates on
      * a background scheduler and emits on the foreground scheduler.
      */
-    fun initializeTabs(activity: Activity, intent: Intent?, incognito: Boolean): Single<LightningView> =
+    fun initializeTabs(activity: Activity, incognito: Boolean): Single<LightningView> =
         Single
-            .just(Option.fromNullable(
-                    if (intent?.action == Intent.ACTION_WEB_SEARCH) {
-                        extractSearchFromIntent(intent)
-                    } else {
-                        intent?.dataString
-                    }
-            ))
+            .just(Option.fromNullable(null as String?))
             .doOnSuccess { shutdown() }
             .subscribeOn(mainScheduler)
             .observeOn(databaseScheduler)
             .flatMapObservable {
                 try {
                     if (incognito) {
-                        initializeIncognitoMode(it.value())
+                        initializeIncognitoMode()
                     } else {
-                        initializeRegularMode(it.value(), activity)
+                        initializeRegularMode()
                     }
                 }
                 catch (ex: Throwable) {
@@ -252,24 +246,14 @@ class TabsManager @Inject constructor(
     /**
      * Returns an [Observable] that emits the [TabInitializer] for incognito mode.
      */
-    private fun initializeIncognitoMode(initialUrl: String?): Observable<TabInitializer> =
-        Observable.fromCallable { initialUrl?.let(::UrlInitializer) ?: incognitoPageInitializer }
+    private fun initializeIncognitoMode(): Observable<TabInitializer> =
+        Observable.fromCallable { incognitoPageInitializer }
 
     /**
      * Returns an [Observable] that emits the [TabInitializer] for normal operation mode.
      */
-    private fun initializeRegularMode(initialUrl: String?, activity: Activity): Observable<TabInitializer> =
-        restorePreviousTabs()
-            .concatWith(Maybe.fromCallable<TabInitializer> {
-                return@fromCallable initialUrl?.let {
-                    if (URLUtil.isFileUrl(it)) {
-                        PermissionInitializer(it, activity, homePageInitializer)
-                    } else {
-                        UrlInitializer(it)
-                    }
-                }
-            })
-            .defaultIfEmpty(homePageInitializer)
+    private fun initializeRegularMode(): Observable<TabInitializer> =
+        restorePreviousTabs().defaultIfEmpty(homePageInitializer)
 
     /**
      * Returns the URL for a search [Intent]. If the query is empty, then a null URL will be

@@ -3,10 +3,8 @@ package acr.browser.lightning.extensions
 import acr.browser.lightning.utils.getFilteredColor
 import android.content.Context
 import android.graphics.*
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.view.WindowManager
+import android.os.SystemClock
+import android.view.*
 import android.widget.ImageView
 import android.widget.PopupWindow
 import androidx.appcompat.widget.TooltipCompat
@@ -270,7 +268,18 @@ fun View.bindTooltipText(tooltipText: String) {
     TooltipCompat.setTooltipText(this, tooltipText)
 }
 
+/**
+ * Crazy workaround to get the virtual keyboard to show, Android FFS
+ * See: https://stackoverflow.com/a/7784904/3969362
+ */
+fun View.simulateTap(x: Float = 0F, y: Float = 0F) {
+    dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , x, y, 0))
+    dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP , x, y, 0))
+}
 
+/**
+ *
+ */
 fun RectF.scale(factor: Float) {
     val oldWidth = width()
     val oldHeight = height()

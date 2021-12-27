@@ -169,6 +169,18 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+            <!--
+            For Fulguris to show up in Android Sharesheet.
+            See: https://developer.android.com/training/sharing/receive
+            We will accept text to put it in the address bar.
+             -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".IncognitoActivity"

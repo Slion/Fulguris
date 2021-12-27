@@ -709,7 +709,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             if (launchedFromHistory) {
                 intent = null
             }
-            presenter?.setupTabs(intent)
+            // Make sure that intent will be processed once our tabs are initialized
+            presenter?.onNewIntent(intent)
+            // Load our tabs
+            presenter?.setupTabs()
             setIntent(null)
             proxyUtils.checkForProxy(this)
         }
@@ -1855,8 +1858,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // See: https://stackoverflow.com/a/7784904/3969362
                 mainHandler.postDelayed({
                     // Emulate tap to open up soft keyboard if needed
-                    it.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , 0F, 0F, 0))
-                    it.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP , 0F, 0F, 0))
+                    it.simulateTap()
                     // That will trigger our search, see addTextChangedListener
                     it.setText(tabsManager.currentTab?.searchQuery)
                     // Move cursor to the end of our text
@@ -3781,6 +3783,19 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     i.putExtra(SETTINGS_CLASS_NAME, SponsorshipSettingsFragment::class.java.name)
                     startActivity(i)
                 }).show()
+    }
+
+    /**
+     * Implement [BrowserView.setAddressBarText]
+     */
+    override fun setAddressBarText(aText: String) {
+        mainHandler.postDelayed({
+            // Emulate tap to open up soft keyboard if needed
+            searchView.simulateTap()
+            searchView.setText(aText)
+            searchView.selectAll()
+            // Large one second delay to be safe otherwise we no-op or find the UI in a weird state
+        }, 1000)
     }
 
     private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
