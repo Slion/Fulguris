@@ -8,17 +8,20 @@ import android.os.Build
 /**
  * domain settings backed by one shared preferences file per host (not actually per domain!)
  * use for persistent storage of sites for dark mode, blocking/allowing js or ads, maybe other things
+ * settings changed in one instance of DomainSettings affect other instances with the same host immediately
  */
 class DomainSettings(_host: String?, private val context: Context, private val userPrefs: UserPreferences) {
     var host = _host
         set(newHost) {
             if (newHost == field) return
             // update preferences if necessary
-            prefs = if (newHost.isNullOrBlank() || !newHost.contains('.'))
-                null // only have prefs for actual hosts
-            else
-                context.getSharedPreferences(newHost, Context.MODE_PRIVATE)
-            field = newHost
+            if (newHost.isNullOrBlank() || !newHost.contains('.')) {
+                prefs = null // only have prefs for actual hosts
+                field = null // always set host to null if it's not backed by any SharedPreferences
+            } else {
+                prefs = context.getSharedPreferences(newHost, Context.MODE_PRIVATE)
+                field = newHost
+            }
         }
 
     // prefs are null if host is null or empty.
@@ -27,7 +30,6 @@ class DomainSettings(_host: String?, private val context: Context, private val u
 
     //var darkMode by prefs.booleanPreference(DARK_MODE, userPrefs.darkModeDefault)
     // not using delegate because prefs might be null
-    // not as nice code, but still ok
     var darkMode: Boolean
         set(value) = prefs.set(DARK_MODE, value)
         get() = prefs.get(DARK_MODE, userPrefs.darkModeDefault)
@@ -46,7 +48,7 @@ class DomainSettings(_host: String?, private val context: Context, private val u
 
     fun exists(setting: String) = prefs?.contains(setting) ?: false
 
-    // these get/put functions mimic the original shared prefences methods
+    // these get/put functions mimic the original SharedPreferences methods
     //  but sometimes access by name is convenient, see the provideSpinner function on BrowserActivity
     fun getBoolean(setting: String) =
          when(setting) {
@@ -77,6 +79,16 @@ class DomainSettings(_host: String?, private val context: Context, private val u
         }
         else
             prefs!!.edit().remove(setting).apply()
+    }
+
+    fun removeAll() {
+        val h = host ?: return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            prefs!!.edit().clear().commit() // prefs are not affected if the file is deleted, so clear them first
+            context.deleteSharedPreferences(h)
+        }
+        else
+            prefs!!.edit().clear().apply()
     }
 
     companion object {

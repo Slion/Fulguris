@@ -269,7 +269,8 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"
                         tools:visibility="visible"
-                        android:text="@string/dialog_tools_title"
+                        app:drawableStartCompat="@drawable/ic_apps"
+                        android:text="@string/action_page_settings"
                         />
 
                 </LinearLayout>

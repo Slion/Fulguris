@@ -202,12 +202,11 @@ class LightningWebClient(
         currentUrl = url
         lightningView.domainSettings.host = Uri.parse(url).host // maybe replace by something more efficient?
         lightningView.updateDarkMode()
+        // TODO: the settings below are also set onShouldOverrideUrlLoading
+        //  there is no problem in doing so, but it looks strange
         lightningView.updateDesktopMode()
-        // maybe i already should set the ones below at shouldOverrideUrlLoading?
-        // because actually that would make sense... and for 3rd party apps it's necessary anyway
-        // TODO: do performance test, maybe set only if different
-        view.settings.blockNetworkImage = !lightningView.domainSettings.loadImages
-        view.settings.javaScriptEnabled = lightningView.domainSettings.javaScriptEnabled
+        lightningView.updateBlockImages()
+        lightningView.updateBlockJavascript()
         // Only set the SSL state if there isn't an error for the current URL.
         if (urlWithSslError != url) {
             sslState = if (URLUtil.isHttpsUrl(url)) {
@@ -225,45 +224,6 @@ class LightningWebClient(
         // Try to fetch meta theme color a few times
         lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
 
-/*        if (userPreferences.javaScriptChoice === JavaScriptChoice.BLACKLIST) {
-            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
-                val arrayOfURLs = userPreferences.javaScriptBlocked
-                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                    .toTypedArray()
-                if (arrayOfURLs.contains(", ")) {
-                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                }
-                if (!stringContainsItemFromList(url, strgs)) {
-                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
-                        return
-                    } else {
-                        view.settings.javaScriptEnabled = false
-                    }
-                }
-                else{ return }
-            }
-        }
-        else  if (userPreferences.javaScriptChoice === JavaScriptChoice.WHITELIST) run {
-            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
-                val arrayOfURLs = userPreferences.javaScriptBlocked
-                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                    .toTypedArray()
-                if (arrayOfURLs.contains(", ")) {
-                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                }
-                if (stringContainsItemFromList(url, strgs)) {
-                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
-                        return
-                    } else {
-                        view.settings.javaScriptEnabled = false
-                    }
-                }
-                else{
-                    return
-                }
-            }
-        }
-*/
         uiController.tabChanged(lightningView)
     }
 
@@ -440,6 +400,13 @@ class LightningWebClient(
      * Overrides [WebViewClient.shouldOverrideUrlLoading].
      */
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+        // TODO: updating host and settings before loading the page:
+        //  could it cause problems when going back or canceling? nothing found so far, but keep checking
+        lightningView.domainSettings.host = request.url.host
+        lightningView.updateDesktopMode()
+        lightningView.updateBlockImages()
+        lightningView.updateBlockJavascript()
+
         // Check if configured proxy is available
         if (!proxyUtils.isProxyReady(activity)) {
             // User has been notified

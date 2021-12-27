@@ -1768,7 +1768,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
             R.id.action_domain_settings -> {
 
-                showDomainSettings()
+                tabsManager.currentTab?.domainSettings?.let { showDomainSettings(it) }
                 return true
             }
 
@@ -1790,10 +1790,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      * Shows a dialog to adjust [DomainSettings].
      */
-    private fun showDomainSettings() {
+    private fun showDomainSettings(domainSettings: DomainSettings) {
         // use separate instance of DomainSettings, because the host may change while the dialog is open
-        //  prefs are a singleton, so the actual settings are changed as expected
-        val ds = DomainSettings(tabsManager.currentTab?.domainSettings?.host ?: return, this, userPreferences)
+        val ds = DomainSettings(domainSettings.host ?: return, this, userPreferences)
         val layout = LinearLayout(this)
         layout.orientation = LinearLayout.VERTICAL
         // 2-line variant
@@ -1803,7 +1802,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // TODO: this is basically the same thing 4 times, can i put it in a loop or another function?
         layout.addView(LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            addView(TextView(this@BrowserActivity).apply { setText(R.string.dark_theme) })
+            addView(TextView(this@BrowserActivity).apply { setText(R.string.page_settings_dark_mode) })
             addView(provideSpinner(DomainSettings.DARK_MODE, userPreferences.darkModeDefault, ds) {
                 tabsManager.currentTab?.updateDarkMode() })
         })
@@ -1822,29 +1821,30 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         })
         layout.addView(LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            addView(TextView(this@BrowserActivity).apply { setText(R.string.java) })
+            addView(TextView(this@BrowserActivity).apply { setText(R.string.page_settings_java_script) })
             addView(provideSpinner(DomainSettings.JAVA_SCRIPT_ENABLED, userPreferences.javaScriptEnabled, ds) {
                 tabsManager.currentTab?.updateBlockJavascript() })
         })
         layout.setPadding(30,10,30,10)
         MaterialAlertDialogBuilder(this)
-//                .setTitle("settings for ${ds.host ?: return}")
-                .setTitle(getString(R.string.dialog_domain_settings, ds.host ?: return))
-                .setNegativeButton(R.string.action_ok, null)
+                .setTitle(getString(R.string.dialog_domain_settings_title, ds.host ?: return))
+                .setPositiveButton(R.string.action_ok, null)
+                .setNegativeButton(R.string.dialog_domain_settings_remove_all) {_,_ ->
+                    ds.removeAll()
+                }
                 .setView(ScrollView(this).apply {
                     addView(layout)
                     isScrollbarFadingEnabled = canScrollVertically() }) // always show scrollbar, to make clear there are settings "hidden"
                 .show()
     }
 
+    // TODO: maybe switch to provide default string? likely necessary for the 3rd party app launch, where default is "ask"
     private fun provideSpinner(setting: String, defaultValue: Boolean, ds: DomainSettings, runOnSettingChanged: Runnable) = Spinner(this).apply {
-//        val default = if (defaultValue) "on" else "off"
         adapter = ArrayAdapter(
                 this@BrowserActivity,
                 R.layout.domain_settings_spinner_item,
                 arrayOf(
-//                        "default ($default)",
-                        getString(R.string.folder_default),
+                        getString(R.string.page_settings_default, if (defaultValue) getString(R.string.enable) else getString(R.string.disable)),
                         getString(R.string.enable),
                         getString(R.string.disable)
                 ))
@@ -1863,12 +1863,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     ds.putBoolean(setting, selected == 1)
                 val newSettingValue = ds.getBoolean(setting)
                 if (settingValue != newSettingValue) // actual setting value has changed
-                    runOnUiThread(runOnSettingChanged) // must be on UI thread, otherwise webView might cause a crash
+                    runOnSettingChanged.run() // be careful with the runnable, some functions need to be run on UI thread!
                 settingValue = newSettingValue
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
-        // extend until end of line, otherwise spinners look misaligned
+        // extend layout until end of line, otherwise spinners look misaligned
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     }
 

@@ -163,6 +163,7 @@ class LightningView(
      */
     var desktopMode = false
         set(aDesktopMode) {
+            if (field == aDesktopMode) return // no change, nothing to do
             field = aDesktopMode
             // Set our user agent accordingly
             if (aDesktopMode) {
@@ -177,13 +178,14 @@ class LightningView(
      */
     var darkMode = false
         set(aDarkMode) {
+            if (field == aDarkMode) return // no change, nothing to do
             field = aDarkMode
             applyDarkMode();
         }
 
-    // TODO: domainSettings could be a val
-    //  but userPreferences are not initialized when initializing the val here
-    //  I would need to inject userPreferences in domainSettings, and I don't understand how to make this work
+    // TODO: does is work reliably now or not?
+    //  if not, switch to the version below instead of changing the host in LightningWebClient
+    val domainSettings: DomainSettings by lazy { DomainSettings(iTargetUrl.host, activity.baseContext, userPreferences) }
 /*    var domainSettings: DomainSettings
         get() {
             field.host = webView?.url
@@ -198,10 +200,7 @@ class LightningView(
         }
         private set
 */
-    // TODO: does is work reliably now or not?
-    //  previous tests: no
-    //  recent tests: yes
-    val domainSettings: DomainSettings by lazy { DomainSettings(iTargetUrl.host, activity.baseContext, userPreferences) }
+
     /**
      * Get our find in page search query.
      *
@@ -693,21 +692,6 @@ class LightningView(
             domainSettings.remove(DomainSettings.DESKTOP_MODE)
     }
 
-    fun updateDesktopMode() {
-        if (domainSettings.desktopMode != desktopMode)
-            desktopMode = domainSettings.desktopMode
-    }
-
-    fun updateBlockImages() {
-        if (webView?.settings?.blockNetworkImage == domainSettings.loadImages) // don't care if webView is null, then there is nothing to set anyway
-            webView?.settings?.blockNetworkImage = !domainSettings.loadImages
-    }
-
-    fun updateBlockJavascript() {
-        if (webView?.settings?.javaScriptEnabled != domainSettings.javaScriptEnabled)
-            webView?.settings?.javaScriptEnabled = domainSettings.javaScriptEnabled
-    }
-
     /**
      *
      */
@@ -720,9 +704,20 @@ class LightningView(
             domainSettings.remove(DomainSettings.DARK_MODE)
     }
 
+    fun updateDesktopMode() {
+        activity.runOnUiThread { desktopMode = domainSettings.desktopMode } // maybe runOnUiThread not necessary
+    }
+
+    fun updateBlockImages() {
+        activity.runOnUiThread { webView?.settings?.blockNetworkImage = !domainSettings.loadImages }
+    }
+
+    fun updateBlockJavascript() {
+        activity.runOnUiThread { webView?.settings?.javaScriptEnabled = domainSettings.javaScriptEnabled }
+    }
+
     fun updateDarkMode() {
-        if (domainSettings.darkMode != darkMode)
-            darkMode = domainSettings.darkMode
+        darkMode = domainSettings.darkMode
     }
 
     /**
