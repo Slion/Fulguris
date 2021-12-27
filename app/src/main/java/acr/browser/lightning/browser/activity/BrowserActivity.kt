@@ -554,6 +554,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemAdBlock) { executeAction(R.id.action_block) }
             onMenuItemClicked(iBinding.menuItemDomainSettings) { executeAction(R.id.action_domain_settings) }
             onMenuItemClicked(iBinding.menuItemTranslate) { executeAction(R.id.action_translate) }
+            // Popup menu action shortcut icons
             onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
             onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
             onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
@@ -1900,7 +1901,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 .show()
     }
 
-    // TODO: maybe switch to provide default string? likely necessary for the 3rd party app launch, where default is "ask"
     private fun provideSpinner(setting: String, defaultString: String, ds: DomainSettings, runOnSettingChanged: Runnable) = Spinner(this).apply {
         adapter = ArrayAdapter(
                 this@BrowserActivity,
