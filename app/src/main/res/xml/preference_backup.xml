@@ -6,18 +6,21 @@
 
         <Preference
             android:key="import_bookmark"
-            android:title="@string/import_backup"
-            app:icon="@drawable/ic_file_import_oval" />
+            android:title="@string/generic_import"
+            android:summary="@string/import_backup"
+            app:icon="@drawable/ic_cloud_download" />
 
         <Preference
             android:key="export_bookmark"
-            android:title="@string/export_bookmarks"
-            app:icon="@drawable/ic_file_export_oval" />
+            android:title="@string/generic_export"
+            android:summary="@string/export_bookmarks"
+            app:icon="@drawable/ic_cloud_upload" />
 
         <Preference
             android:key="delete_bookmarks"
-            android:title="@string/action_delete_all_bookmarks"
-            app:icon="@drawable/ic_restore_page_oval" />
+            android:title="@string/generic_reset"
+            android:summary="@string/action_delete_all_bookmarks"
+            app:icon="@drawable/ic_delete_forever" />
 
     </PreferenceCategory>
 
@@ -33,17 +36,17 @@
         <Preference
             android:key="import_settings"
             android:title="@string/import_settings"
-            app:icon="@drawable/ic_apps_oval" />
+            app:icon="@drawable/ic_apps" />
 
         <Preference
             android:key="export_settings"
             android:title="@string/export_settings"
-            app:icon="@drawable/ic_save_oval" />
+            app:icon="@drawable/ic_save" />
 
         <Preference
             android:key="@string/pref_key_reset_settings"
             android:title="@string/reset_settings"
-            app:icon="@drawable/ic_delete_forever_oval" />
+            app:icon="@drawable/ic_delete_forever" />
 
     </PreferenceCategory>
 
@@ -53,7 +56,7 @@
         <Preference
             android:key="@string/pref_key_sessions_import"
             android:title="@string/generic_import"
-            app:icon="@drawable/ic_file_import_oval" />
+            app:icon="@drawable/ic_cloud_download" />
         <!--
         <Preference
             android:key="@string/pref_key_sessions_reset"

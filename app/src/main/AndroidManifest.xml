@@ -7,6 +7,14 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--
+    From Android 12 we need ACCESS_COARSE_LOCATION location too if asking for ACCESS_FINE_LOCATION
+    User can then decide if she wants to give us fine or approximate location.
+    See: https://developer.android.com/about/versions/12/migration
+    See: https://proandroiddev.com/android-12-privacy-changes-for-location-55ffd8c016fd
+    See: https://developer.android.com/training/location/permissions#approximate-request
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />

@@ -115,10 +115,18 @@ import android.text.TextWatcher
 import android.webkit.CookieManager
 import com.github.ahmadaghazadeh.editor.widget.CodeEditor
 import acr.browser.lightning.html.incognito.IncognitoPageFactory
+import acr.browser.lightning.locale.LocaleUtils
 import android.graphics.Rect
 import android.util.TypedValue
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.net.URL
+import java.util.*
+import kotlin.collections.HashMap
+import android.view.KeyboardShortcutGroup
+
+import android.view.KeyboardShortcutInfo
+import androidx.annotation.RequiresApi
+
 
 /**
  *
@@ -261,6 +269,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         super.onCreate(savedInstanceState)
         injector.inject(this)
+
+        createKeyboardShortcuts()
 
         if (BrowserApp.instance.justStarted) {
             BrowserApp.instance.justStarted = false
@@ -413,7 +423,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // This is designed so that callbacks are cancelled unless our timeout expires
             // That avoids spamming adjustBottomSheet while our view is animated or dragged
             mainHandler.removeCallbacks(onSizeChangeRunnable)
-            onSizeChangeRunnable = Runnable {adjustBottomSheet(dialog)};
+            onSizeChangeRunnable = Runnable {
+                // Catch and ignore exceptions as adjustBottomSheet is using reflection to call private methods.
+                // Jamal was reporting this was not working on his device for some reason.
+                try {
+                    // Also I'm not sure now why we needed that, maybe it has since been fixed in the material components library.
+                    // Though the GitHub issue specified in that function description is still open.
+                    adjustBottomSheet(dialog)
+                } catch (ex: java.lang.Exception) {
+                    logger.log(TAG, "adjustBottomSheet: $ex")
+                }
+            }
             mainHandler.postDelayed(onSizeChangeRunnable, 100)
         }
 
@@ -533,7 +553,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemDarkMode) { executeAction(R.id.action_toggle_dark_mode) }
             onMenuItemClicked(iBinding.menuItemAdBlock) { executeAction(R.id.action_block) }
             onMenuItemClicked(iBinding.menuItemDomainSettings) { executeAction(R.id.action_domain_settings) }
-            // Popup menu action shortcut icons
+            onMenuItemClicked(iBinding.menuItemTranslate) { executeAction(R.id.action_translate) }
             onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
             onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
             onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
@@ -1698,6 +1718,27 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 findInPage()
                 return true
             }
+
+            R.id.action_translate -> {
+                // Get our local
+                val locale = LocaleUtils.requestedLocale(userPreferences.locale)
+                // For most languages Google just wants the two letters code
+                // Using the full language tag such as fr-FR will actually prevent Google translate…
+                // …to display the target language name even though the translation is actually working
+                var languageCode = locale.language
+                val languageTag = locale.toLanguageTag()
+                // For chinese however, Google translate expects the full language tag
+                if (languageCode == "zh") {
+                    languageCode = languageTag
+                }
+
+                // TODO: Have a settings option to translate in new tab
+                presenter?.loadUrlInCurrentView("https://translate.google.com/translate?sl=auto&tl=$languageCode&u=$currentUrl")
+                // TODO: support other translation providers?
+                //presenter?.loadUrlInCurrentView("https://www.translatetheweb.com/?from=&to=$locale&dl=$locale&a=$currentUrl")
+                return true
+            }
+
             R.id.action_print -> {
                 (currentTabView as WebViewEx).print()
                 return true
@@ -2664,12 +2705,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             unlockDrawers()
         }
 
-        if (userPreferences.bookmarksChanged)
-        {
-            handleBookmarksChange()
-            userPreferences.bookmarksChanged = false
-        }
-
         if (userPreferences.incognito) {
             WebUtils.clearHistory(this, historyModel, databaseScheduler)
             WebUtils.clearCookies()
@@ -2695,6 +2730,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding.drawerLayout.requestLayout()
 
         //intent?.let {logger.log(TAG, it.toString())}
+
+        handleBookmarksChange()
     }
 
     /**
@@ -3990,6 +4027,34 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             DialogItem(
                 icon = this.drawable(R.drawable.round_clear_24),
                 title = R.string.exit, onClick = this::closeBrowser))
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    lateinit var iShortcuts: fulguris.keyboard.Shortcuts
+
+    /**
+     *
+     */
+    private fun createKeyboardShortcuts() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            iShortcuts = fulguris.keyboard.Shortcuts(this)
+        }
+    }
+
+    /**
+     * Publish keyboard shortcuts so that user can see them when doing Meta+/?
+     */
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onProvideKeyboardShortcuts(data: MutableList<KeyboardShortcutGroup?>, menu: Menu?, deviceId: Int) {
+
+        // Publish our shortcuts, could publish a different list based on current state too
+        if (iShortcuts.iList.isNotEmpty()) {
+                data.add(KeyboardShortcutGroup(getString(R.string.app_name), iShortcuts.iList))
+        }
+
+        super.onProvideKeyboardShortcuts(data, menu, deviceId)
     }
 
     companion object {

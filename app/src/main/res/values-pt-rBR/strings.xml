@@ -26,7 +26,6 @@
     <string name="java">Ativar JavaScript</string>
     <string name="download">Pasta de download</string>
     <string name="settings_advanced">Configurações avançadas</string>
-    <string name="apache">Licença Apache 2.0</string>
     <string name="version">Versão da aplicação</string>
     <string name="update_available">Atualização disponível</string>
     <string name="update_check_error">Erro de verificação de atualização, tente novamente mais tarde</string>
@@ -236,7 +235,7 @@
     <string name="folder_default">Padrão</string>
     <string name="folder_custom">Personalizado</string>
     <string name="untitled">Sem título</string>
-    <string name="mpl_license">Mozilla Public License v. 2.0</string>
+
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Projeto Android Open Source</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>
@@ -505,7 +504,7 @@
     <string name="oid">Object Identifier (OID):</string>
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
-    <string name="webview_version">WebView version</string>
+
     <string name="pref_title_search_custom_image_url">Search page custom image</string>
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
     <string name="pref_title_close_drawer">Close drawer</string>

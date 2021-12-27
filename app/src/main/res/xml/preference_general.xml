@@ -12,33 +12,33 @@
         android:defaultValue=""
         android:key="@string/pref_key_locale"
         android:title="@string/pref_title_language"
-        app:icon="@drawable/ic_translate_oval" />
+        app:icon="@drawable/ic_translate" />
 
     <Preference
         android:key="home"
         android:title="@string/home"
-        app:icon="@drawable/ic_action_home_oval" />
+        app:icon="@drawable/ic_action_home" />
 
     <Preference
         android:key="search"
         android:title="@string/search"
-        app:icon="@drawable/ic_search_oval" />
+        app:icon="@drawable/ic_search" />
 
     <Preference
         android:key="@string/pref_key_search_custom_image_url"
         android:title="@string/pref_title_search_custom_image_url"
         android:summary="@string/pref_summary_search_custom_image_url"
-        app:icon="@drawable/ic_image_oval" />
+        app:icon="@drawable/ic_image" />
 
         <Preference
         android:key="suggestions_choice"
         android:title="@string/search_suggestions"
-        app:icon="@drawable/ic_list_oval" />
+        app:icon="@drawable/ic_list" />
 
     <Preference
         android:key="suggestions_number"
         android:title="@string/search_suggestions"
-        app:icon="@drawable/ic_list_number_oval" />
+        app:icon="@drawable/ic_list_number" />
 
     </PreferenceCategory>
 
@@ -54,35 +54,35 @@
             app:isPreferenceVisible="false"
             android:key="@string/pref_key_restore_tabs_on_startup"
             android:title="@string/restore_tabs_on_startup"
-            app:icon="@drawable/ic_save_oval" />
+            app:icon="@drawable/ic_save" />
 
         <SwitchPreferenceCompat
             app:key="@string/pref_key_search_in_new_tab"
             app:title="@string/search_in_new_tab"
             app:defaultValue="@bool/pref_default_search_in_new_tab"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_search_oval" />
+            app:icon="@drawable/ic_search" />
 
         <SwitchPreferenceCompat
             app:key="@string/pref_key_url_in_new_tab"
             app:title="@string/url_in_new_tab"
             app:defaultValue="@bool/pref_default_url_in_new_tab"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_web_oval" />
+            app:icon="@drawable/ic_web" />
 
         <SwitchPreferenceCompat
             app:key="@string/pref_key_homepage_in_new_tab"
             app:title="@string/homepage_in_new_tab"
             app:defaultValue="@bool/pref_default_homepage_in_new_tab"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_action_home_oval" />
+            app:icon="@drawable/ic_action_home" />
 
         <SwitchPreferenceCompat
             app:key="@string/pref_key_bookmark_in_new_tab"
             app:title="@string/bookmark_in_new_tab"
             app:defaultValue="@bool/pref_default_bookmark_in_new_tab"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_bookmark_border_oval" />
+            app:icon="@drawable/ic_bookmark_border" />
 
 
         <ListPreference
@@ -93,7 +93,7 @@
             app:defaultValue="@string/new_tab_position_after_value"
             app:entries="@array/new_tab_positions"
             app:entryValues="@array/new_tab_position_values"
-            app:icon="@drawable/ic_library_add_oval" />
+            app:icon="@drawable/ic_library_add" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
@@ -101,7 +101,7 @@
             android:title="@string/settings_title_desktop_mode_default"
             android:summary="@string/settings_summary_desktop_mode_default"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_desktop_oval" />
+            app:icon="@drawable/ic_desktop" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
@@ -109,7 +109,7 @@
             android:title="@string/settings_title_dark_mode_default"
             android:summary="@string/settings_summary_dark_mode_default"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_dark_mode_oval" />
+            app:icon="@drawable/ic_dark_mode" />
         <!--
         Disabled as currently not working.
         -->
@@ -119,7 +119,7 @@
             android:summary="@string/recommended"
             android:defaultValue="true"
             app:singleLineTitle="false"
-            app:icon="@drawable/ic_tab_oval"
+            app:icon="@drawable/ic_tab"
             app:isPreferenceVisible="@bool/const_false" />
 
         <!--
@@ -130,7 +130,7 @@
             android:key="@string/pref_key_close_drawer"
             android:title="@string/pref_title_close_drawer"
             android:summary="@string/pref_summary_close_drawer"
-            app:icon="@drawable/ic_arrow_left_oval"
+            app:icon="@drawable/ic_arrow_left"
             app:isPreferenceVisible="@bool/const_false"/>
 
     </PreferenceCategory>
@@ -147,7 +147,7 @@
             android:defaultValue="true"
             android:key="@string/pref_key_load_images"
             android:title="@string/load_images"
-            app:icon="@drawable/ic_image_oval"
+            app:icon="@drawable/ic_image"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
@@ -155,7 +155,7 @@
             android:key="@string/pref_key_support_multiple_window"
             android:summary="@string/recommended"
             android:title="@string/window"
-            app:icon="@drawable/ic_baseline_open_in_new_24_oval"
+            app:icon="@drawable/ic_baseline_open_in_new_24"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
@@ -163,21 +163,21 @@
             android:key="show_ssl"
             android:summary="@string/recommended"
             android:title="@string/show_ssl"
-            app:icon="@drawable/ic_warn_oval" />
+            app:icon="@drawable/ic_warn" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_key_cookies"
             android:summary="@string/recommended"
             android:title="@string/cookies"
-            app:icon="@drawable/ic_cookie_oval"
+            app:icon="@drawable/ic_cookie"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/pref_key_cookies_incognito"
             android:title="@string/incognito_cookies"
-            app:icon="@drawable/ic_cookie_oval"
+            app:icon="@drawable/ic_cookie"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
@@ -185,20 +185,20 @@
             android:key="force_zoom"
             android:summary="@string/force_zoom_summary"
             android:title="@string/force_zoom"
-            app:icon="@drawable/ic_force_zoom_oval" />
+            app:icon="@drawable/ic_force_zoom" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_key_javascript"
             android:title="@string/java"
-            app:icon="@drawable/ic_script_oval"
+            app:icon="@drawable/ic_script"
             app:iconSpaceReserved="false"/>
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/pref_key_request_save_data"
             android:title="@string/save_data"
-            app:icon="@drawable/ic_data_save_oval"
+            app:icon="@drawable/ic_data_save"
             app:iconSpaceReserved="false" />
 
         <Preference
@@ -209,13 +209,13 @@
         <Preference
             android:key="agent"
             android:title="@string/agent"
-            app:icon="@drawable/ic_about_oval"
+            app:icon="@drawable/ic_about"
             app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_key_default_text_encoding"
             android:title="@string/text_encoding"
-            app:icon="@drawable/ic_text_variant_oval"
+            app:icon="@drawable/ic_text_variant"
             app:iconSpaceReserved="false" />
 
 

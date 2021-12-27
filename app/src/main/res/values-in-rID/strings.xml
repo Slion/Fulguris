@@ -26,7 +26,6 @@
     <string name="java">Nyalakan JavaScript</string>
     <string name="download">Tempat menyimpan unduhan</string>
     <string name="settings_advanced">Selanjutnya</string>
-    <string name="apache">Surat izin Apache 2.0</string>
     <string name="version">Versi aplikasi</string>
     <string name="update_available">Ada pembaruan</string>
     <string name="update_check_error">Gagal mengecek pembaruan, silahkan mencoba lagi nanti</string>
@@ -236,7 +235,7 @@
     <string name="folder_default">Bawaan</string>
     <string name="folder_custom">Custom</string>
     <string name="untitled">Tanpa judul</string>
-    <string name="mpl_license">Mozilla Public License v. 2.0</string>
+
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>
@@ -504,7 +503,7 @@
     <string name="oid">Object Identifier (OID):</string>
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
-    <string name="webview_version">WebView version</string>
+
     <string name="pref_title_search_custom_image_url">Search page custom image</string>
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
     <string name="pref_title_close_drawer">Close drawer</string>

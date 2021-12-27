@@ -47,10 +47,16 @@ class IncognitoNotification(
         require(number > 0)
         val incognitoIntent = IncognitoActivity.createIntent(context)
 
+        var flags = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Was needed for Android 12
+            flags = PendingIntent.FLAG_IMMUTABLE
+        }
+
         val incognitoNotification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_incognito)
             .setContentTitle(context.resources.getQuantityString(R.plurals.notification_incognito_running_title, number, number))
-            .setContentIntent(PendingIntent.getActivity(context, 0, incognitoIntent, 0))
+            .setContentIntent(PendingIntent.getActivity(context, 0, incognitoIntent, flags))
             .setContentText(context.getString(R.string.notification_incognito_running_message))
             .setAutoCancel(false)
             .setOngoing(true)

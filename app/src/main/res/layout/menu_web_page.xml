@@ -255,6 +255,14 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         android:text="@string/reading_mode"
                         />
 
+
+                    <TextView
+                        android:id="@+id/menuItemTranslate"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        app:drawableStartCompat="@drawable/ic_translate"
+                        android:text="@string/action_translate" />
+
                     <TextView
                         android:id="@+id/menuItemAddToHome"
                         style="@style/BrowserTextMenuItem"

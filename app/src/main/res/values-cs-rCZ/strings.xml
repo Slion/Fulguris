@@ -26,7 +26,6 @@
     <string name="java">Povolit JavaScript</string>
     <string name="download">Umístění stahování</string>
     <string name="settings_advanced">Pokročilé</string>
-    <string name="apache">Licence Apache 2.0</string>
     <string name="version">Verze aplikace</string>
     <string name="update_available">Aktualizace je k dispozici</string>
     <string name="update_check_error">Chyba kontroly aktualizace, zkuste to znovu později</string>
@@ -236,7 +235,7 @@
     <string name="folder_default">Výchozí</string>
     <string name="folder_custom">Vlastní</string>
     <string name="untitled">Bez názvu</string>
-    <string name="mpl_license">Mozilla Public License v. 2.0</string>
+
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>
@@ -507,7 +506,7 @@
     <string name="oid">Object Identifier (OID):</string>
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
-    <string name="webview_version">WebView version</string>
+
     <string name="pref_title_search_custom_image_url">Search page custom image</string>
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
     <string name="pref_title_close_drawer">Close drawer</string>

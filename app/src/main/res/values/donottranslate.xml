@@ -114,6 +114,9 @@
     <string name="pref_key_use_site_block">pref_key_use_site_block</string>
     <string name="pref_key_search_custom_image_url">pref_key_search_custom_image_url</string>
 
+    <string name="pref_key_debug">pref_key_debug</string>
+    <string name="pref_key_webview">pref_key_webview</string>
+
 
 
     <!-- See: NewTabPosition -->
@@ -147,5 +150,12 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
     <string name="ten">10</string>
+
+    <string name="app_name_yuzu_browser">Yuzu Browser</string>
+    <string name="app_name_lightning_browser">Lightning Browser</string>
+
+    <string name="license_mpl">Mozilla Public License 2.0</string>
+    <string name="license_cpal">Common Public Attribution License 1.0</string>
+    <string name="license_apache">Apache License 2.0</string>
 
 </resources>

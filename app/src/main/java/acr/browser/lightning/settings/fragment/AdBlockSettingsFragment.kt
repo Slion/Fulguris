@@ -138,7 +138,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             // "new list" button
             val newList = Preference(context)
             newList.title = resources.getString(R.string.add_blocklist)
-            newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_add_oval,requireActivity().theme)
+            newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_add,requireActivity().theme)
             newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
@@ -159,7 +159,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 //                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
 //                pref.isChecked = entity.enabled
                 entityPref.title = entity.title
-                //entityPref.icon = requireContext().drawable(R.drawable.ic_import_export_oval)
+                //entityPref.icon = requireContext().drawable(R.drawable.ic_import_export)
                 entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     showBlockList(entity)
                     true
