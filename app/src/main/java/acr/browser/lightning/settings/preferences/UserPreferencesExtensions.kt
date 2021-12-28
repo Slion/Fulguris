@@ -13,8 +13,11 @@ fun UserPreferences.userAgent(application: Application): String =
         // WebSettings default identifies us as WebView and as WebView Google is preventing us to login to its services.
         // Clearly we don't want that so we just modify default user agent by removing the WebView specific parts.
         // That should make us look like Chrome, which we are really.
-        1 -> "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE})" +
-                WebSettings.getDefaultUserAgent(application).substringAfter(")")
+         1 -> {
+            var userAgent = Regex(" Build/.+; wv").replace(WebSettings.getDefaultUserAgent(application),"")
+            userAgent = Regex("Version/.+? ").replace(userAgent,"")
+            userAgent
+        }
         2 -> WINDOWS_DESKTOP_USER_AGENT
         3 -> LINUX_DESKTOP_USER_AGENT
         4 -> MACOS_DESKTOP_USER_AGENT
@@ -23,5 +26,7 @@ fun UserPreferences.userAgent(application: Application): String =
         7 -> System.getProperty("http.agent") ?: " "
         8 -> WebSettings.getDefaultUserAgent(application)
         9 -> userAgentString.takeIf(String::isNotEmpty) ?: " "
+        10 -> "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE})" +
+            WebSettings.getDefaultUserAgent(application).substringAfter(")")
         else -> throw UnsupportedOperationException("Unknown userAgentChoice: $choice")
     }

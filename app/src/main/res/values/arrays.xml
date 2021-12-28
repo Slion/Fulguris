@@ -10,6 +10,7 @@
         <item>@string/agent_system</item>
         <item>@string/agent_web_view</item>
         <item>@string/agent_custom</item>
+        <item>@string/agent_hide_device</item>
     </string-array>
 
     <string-array name="download_folder">
