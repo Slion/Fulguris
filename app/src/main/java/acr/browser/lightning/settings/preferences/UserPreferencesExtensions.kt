@@ -2,6 +2,7 @@ package acr.browser.lightning.settings.preferences
 
 import acr.browser.lightning.constant.*
 import android.app.Application
+import android.os.Build
 import android.webkit.WebSettings
 
 /**
@@ -12,7 +13,7 @@ fun UserPreferences.userAgent(application: Application): String =
         // WebSettings default identifies us as WebView and as WebView Google is preventing us to login to its services.
         // Clearly we don't want that so we just modify default user agent by removing the WebView specific parts.
         // That should make us look like Chrome, which we are really.
-        1 -> {
+         1 -> {
             var userAgent = Regex(" Build/.+; wv").replace(WebSettings.getDefaultUserAgent(application),"")
             userAgent = Regex("Version/.+? ").replace(userAgent,"")
             userAgent
@@ -25,5 +26,7 @@ fun UserPreferences.userAgent(application: Application): String =
         7 -> System.getProperty("http.agent") ?: " "
         8 -> WebSettings.getDefaultUserAgent(application)
         9 -> userAgentString.takeIf(String::isNotEmpty) ?: " "
+        10 -> "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE})" +
+            WebSettings.getDefaultUserAgent(application).substringAfter(")")
         else -> throw UnsupportedOperationException("Unknown userAgentChoice: $choice")
     }

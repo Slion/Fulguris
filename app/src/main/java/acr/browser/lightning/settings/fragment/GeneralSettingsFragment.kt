@@ -338,6 +338,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         7 -> resources.getString(R.string.agent_system)
         8 -> resources.getString(R.string.agent_web_view)
         9 -> resources.getString(R.string.agent_custom)
+        10 -> resources.getString(R.string.agent_hide_device)
         else -> resources.getString(R.string.agent_default)
     }
 
@@ -348,7 +349,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 setSingleChoiceItems(R.array.user_agent, userPreferences.userAgentChoice - 1) { _, which ->
                     userPreferences.userAgentChoice = which + 1
                     when (which) {
-                        in 0..7 -> Unit
+                        in 0..7, 9 -> Unit
                         8 -> {
                             showCustomUserAgentPicker()
                         }

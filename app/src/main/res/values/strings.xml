@@ -73,6 +73,7 @@
     <string name="agent_system">System</string>
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Desktop)</string>
+    <string name="agent_hide_device">Hide device</string>
 
     <string name="title_search_engine">Search engine</string>
     <string name="action_ok">OK</string>
