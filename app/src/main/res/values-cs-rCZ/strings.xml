@@ -71,6 +71,7 @@
     <string name="agent_system">Systém</string>
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Desktop)</string>
+    <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Výchozí vyhledávač</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Chcete stáhnout tento soubor? (%1$s)</string>
@@ -107,6 +108,7 @@
     <string name="action_back">Back</string>
     <string name="action_find">Find in page</string>
     <string name="action_print">Tisk</string>
+    <string name="action_translate">Translate</string>
     <string name="downloads">Stažené</string>
     <string name="downloads_notification_description">Zobrazí se po dokončení stahování</string>
     <string name="download_pending">Stahování:</string>
@@ -235,7 +237,6 @@
     <string name="folder_default">Výchozí</string>
     <string name="folder_custom">Vlastní</string>
     <string name="untitled">Bez názvu</string>
-
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>
@@ -506,8 +507,8 @@
     <string name="oid">Object Identifier (OID):</string>
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
-
     <string name="pref_title_search_custom_image_url">Search page custom image</string>
+    <string name="pref_summary_search_custom_image_url">Only for Custom URL</string>
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
     <string name="pref_title_close_drawer">Close drawer</string>
     <string name="pref_summary_close_drawer">Automatically close Drawer after creating or deleting a tab</string>
@@ -546,8 +547,24 @@
     <string name="settings_export_failure">Sorry, settings could not be exported!</string>
     <string name="settings_exported">Settings exported:</string>
     <string name="settings_reseted">All settings restored</string>
-    <string name="pref_summary_search_custom_image_url">Only for Custom URL</string>
     <string name="suggest">Search suggestions (number)</string>
     <string name="error_tip">• Check the Address for typing errors such as ww.example.com instead of www.example.com</string>
     <string name="error_tip2">• If you are unable to load any pages, check your devices data or Wi-Fi connection.</string>
+    <string name="action_cycle_tabs_forwards">Cycle tabs forwards</string>
+    <string name="action_cycle_tabs_backwards">Cycle tabs backwards</string>
+    <string name="action_focus_address_bar">Focus address bar</string>
+    <string name="action_tab_history_forward">Forward in tab history</string>
+    <string name="action_toggle_toolbar">Toggle toolbar</string>
+    <string name="action_toggle_status_bar">Toggle status bar</string>
+    <string name="action_text_size_increment">Increase text size</string>
+    <string name="action_text_size_decrement">Decrease text size</string>
+    <string name="action_text_size_small_increment">Increase text size a bit</string>
+    <string name="action_text_size_small_decrement">Decrease text size a bit</string>
+    <string name="action_open_bookmark_list">Open bookmark list</string>
+    <string name="action_open_tab_list">Open tab list</string>
+    <string name="action_open_session_list">Open session list</string>
+    <string name="action_switch_to_session">Switch to session 1 to 9</string>
+    <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
+    <string name="action_switch_to_last_tab">Switch to last tab</string>
+    <string name="action_switch_to_last_session">Switch to last session</string>
 </resources>

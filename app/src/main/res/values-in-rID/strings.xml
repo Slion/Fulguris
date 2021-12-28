@@ -71,6 +71,7 @@
     <string name="agent_system">Sistem</string>
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Desktop)</string>
+    <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Mesin pencarian</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Lanjutkan mengunduh file ini? (%1$s)</string>
@@ -82,7 +83,7 @@
     <string name="title_download_location">Tempat unduhan</string>
     <string name="title_custom_homepage">Buat khas halaman sendiri</string>
     <string name="action_webpage">Web page</string>
-    <string name="action_main_menu">Main menu</string>
+    <string name="action_main_menu">Menu utama</string>
     <string name="title_clear_history">Hapus riwayat</string>
     <string name="title_clear_cookies">Hapus cookies</string>
     <string name="dialog_history">Hendak menghapus semua riwayat browser?</string>
@@ -107,6 +108,7 @@
     <string name="action_back">Kembali</string>
     <string name="action_find">Cari dalam halaman ini</string>
     <string name="action_print">Cetak</string>
+    <string name="action_translate">Translate</string>
     <string name="downloads">Unduhan</string>
     <string name="downloads_notification_description">Picukan pada saat pengunduhan selesai</string>
     <string name="download_pending">Sedang mengunduh:</string>
@@ -119,12 +121,12 @@
     <string name="download_sdcard_busy_dlg_msg">Simpanan sedang sibuk. Untuk mengunduh, sentuh \"Matikan simpanan USB\" dalam pemberitahuan.</string>
     <string name="download_complete">Selesai mengunduh</string>
     <string name="download_failed">Gagal mengunduh</string>
-    <string name="incognito_cookies">Izinkan cookies dalam mode incognito</string>
-    <string name="incognito_cookies_pie">Mode incognito menggunakan proses terpisah yang diatur kembali pada setiap akhir sesi. Pengunaan cookies dalam mode incognito mulai sekarang mengikuti penggunaan yang biasanya.</string>
+    <string name="incognito_cookies">Izinkan cookies dalam mode menyamar</string>
+    <string name="incognito_cookies_pie">Mode menyamar menggunakan proses terpisah yang selalu diatur ulang pada setiap akhir sesi. Mulai sekarang pengunaan cookies dalam mode menyamar mengikuti penggunaan yang seperti biasa.</string>
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Secara manual</string>
     <string name="action_auto">Secara otomatis</string>
-    <string name="pref_title_contact_us">Contact us</string>
+    <string name="pref_title_contact_us">Hubungi kami</string>
     <string name="clear_cache">Hapus cache</string>
     <string name="message_cache_cleared">Cache telah dihapus</string>
     <string name="message_import">Penanda telah dibawa masuk</string>
@@ -134,7 +136,7 @@
     <string name="message_text_copied">Teks telah tersalin dalam clipboard</string>
     <string name="message_link_copied">Tautan telah tersalin dalam clipboard</string>
     <string name="message_blocked_local">Tidak bisa memuat file yang tersimpan</string>
-    <string name="licenses">Open Source Licenses</string>
+    <string name="licenses">Lisensi Open Source</string>
     <string name="suggestion">Cari</string>
     <string name="checking_for_updates">Mengecek adanya pembaruan…</string>
     <string name="title_updated">Versi Fulguris sekarang sudah yang terbaru</string>
@@ -142,7 +144,7 @@
     <string name="title_welcome">Selamat datang di Fulguris</string>
     <string name="message_welcome">Mau mengunjungi beranda kami untuk tahu lebih banyak tentang browser ini?</string>
     <!-- Ad block -->
-    <string name="block_ads">Content control</string>
+    <string name="block_ads">Pengaturan untuk isi halaman</string>
     <string name="block_ad_source">Daftar halaman yang ingin diblokir</string>
     <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
     <string name="block_ad_refresh_now">Refresh hosts now</string>
@@ -161,14 +163,14 @@
     <string name="page_blocked_list_ad">%s on ad filters</string>
     <string name="page_blocked_list_user">%s blocked by user rule</string>
     <string name="page_blocked_list_malware">%s on malware filters</string>
-    <string name="request_blocked">Request blocked</string>
+    <string name="request_blocked">Permintaan ditolak</string>
     <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Auto-update mode</string>
     <string name="blocklist_update_on">Auto-update on</string>
     <string name="blocklist_update_off">Auto-update off</string>
     <string name="blocklist_update_wifi">Only on non-metered connections</string>
     <string name="blocklist_update">Update filters</string>
-    <string name="blocklist_update_frequency">Auto-update frequency</string>
+    <string name="blocklist_update_frequency">Seringnya pembaruan secara otomatis</string>
     <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
     <string name="blocklist_update_now">Update lists now</string>
     <string name="blocklist_last_update">Last update: %s</string>
@@ -181,7 +183,7 @@
     <string name="blocklist_remove">Remove filters file</string>
     <string name="blocklist_remove_confirm">Really remove filters file %s?</string>
     <string name="local_file">Local</string>
-    <string name="local_file_replace">Replace</string>
+    <string name="local_file_replace">Ganti</string>
     <string name="local_file_chosen">file selected</string>
     <string name="remote_file">Remote</string>
     <!-- Common actions -->
@@ -235,7 +237,6 @@
     <string name="folder_default">Bawaan</string>
     <string name="folder_custom">Custom</string>
     <string name="untitled">Tanpa judul</string>
-
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>
@@ -271,7 +272,7 @@
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_privacy">Privacy</string>
     <string name="settings_about">About</string>
-    <string name="settings_contribute">Contribute</string>
+    <string name="settings_contribute">Berkontribusi</string>
     <string name="settings_summary_contribute">Membantu Fulguris tumbuh dan berkembang</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_panels">Panels</string>
@@ -295,7 +296,7 @@
     <string name="pref_title_tab_list_item_show_close_button">Tampilkan tombol penutup tab</string>
     <string name="pref_summary_tab_list_item_show_close_button">pada setiap tab pada daftar tab</string>
     <string name="pref_title_menu_show_exit">Exit menu item</string>
-    <string name="pref_summary_menu_show_exit">Show Exit app option in menu. Incognito mode always displays it regardless.</string>
+    <string name="pref_summary_menu_show_exit">Tampilkan pilihan untuk keluar di menu. Pilihan untuk keluar akan selalu tampil dalam mode menyamar.</string>
     <string name="pref_title_menu_new_tab">New tab menu item</string>
     <string name="pref_summary_menu_new_tab">Show New tab option in menu</string>
     <string name="pref_title_crash_report">Laporan crash</string>
@@ -496,24 +497,24 @@
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Show SSL warning dialogs</string>
-    <string name="start_incognito">Permanently behave as if in incognito mode</string>
-    <string name="force_zoom_summary">Does not work if JavaScript is not enabled</string>
-    <string name="force_zoom">Force zoom for websites</string>
+    <string name="start_incognito">Selalu dalam mode menyamar</string>
+    <string name="force_zoom_summary">Tidak berfungsi jika JavaScript tidak dinyalakan</string>
+    <string name="force_zoom">Izinkan pembesaran halaman</string>
     <string name="algorithm">Algorithm:</string>
     <string name="oid">Object Identifier (OID):</string>
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
-
     <string name="pref_title_search_custom_image_url">Search page custom image</string>
+    <string name="pref_summary_search_custom_image_url">Only for Custom URL</string>
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
     <string name="pref_title_close_drawer">Close drawer</string>
     <string name="pref_summary_close_drawer">Automatically close Drawer after creating or deleting a tab</string>
-    <string name="block_javascript">Block JavaScript for site</string>
+    <string name="block_javascript">Blokir JavaScript untuk halaman</string>
     <string name="block_sites_title">Separate sites with a comma</string>
     <string name="listed_javascript">Only allow JavaScript for listed sites</string>
     <string name="unlisted_javascript">Block JavaScript for listed sites</string>
     <string name="allow_javascript">Allow JavaScript for this site</string>
-    <string name="blocked_javascript">Block JavaScript for this site</string>
+    <string name="blocked_javascript">Blokir JavaScript untuk halaman ini</string>
     <string name="page_source">View page source</string>
     <string name="inspect">Inject Javascript</string>
     <string name="edit_cookies">Show site cookies</string>
@@ -538,13 +539,29 @@
     <string name="accent_brown">Brown</string>
     <string name="search_homepage">Search</string>
     <string name="search_incognito">Private search</string>
-    <string name="incognito">Incognito</string>
+    <string name="incognito">Menyamar</string>
     <string name="unknown">Unknown</string>
     <string name="settings_export_failure">Sorry, settings could not be exported!</string>
     <string name="settings_exported">Settings exported:</string>
     <string name="settings_reseted">All settings restored</string>
-    <string name="pref_summary_search_custom_image_url">Only for Custom URL</string>
     <string name="suggest">Search suggestions (number)</string>
     <string name="error_tip">• Check the Address for typing errors such as ww.example.com instead of www.example.com</string>
     <string name="error_tip2">• If you are unable to load any pages, check your devices data or Wi-Fi connection.</string>
+    <string name="action_cycle_tabs_forwards">Cycle tabs forwards</string>
+    <string name="action_cycle_tabs_backwards">Cycle tabs backwards</string>
+    <string name="action_focus_address_bar">Focus address bar</string>
+    <string name="action_tab_history_forward">Forward in tab history</string>
+    <string name="action_toggle_toolbar">Toggle toolbar</string>
+    <string name="action_toggle_status_bar">Toggle status bar</string>
+    <string name="action_text_size_increment">Increase text size</string>
+    <string name="action_text_size_decrement">Decrease text size</string>
+    <string name="action_text_size_small_increment">Increase text size a bit</string>
+    <string name="action_text_size_small_decrement">Decrease text size a bit</string>
+    <string name="action_open_bookmark_list">Open bookmark list</string>
+    <string name="action_open_tab_list">Open tab list</string>
+    <string name="action_open_session_list">Open session list</string>
+    <string name="action_switch_to_session">Switch to session 1 to 9</string>
+    <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
+    <string name="action_switch_to_last_tab">Switch to last tab</string>
+    <string name="action_switch_to_last_session">Switch to last session</string>
 </resources>
