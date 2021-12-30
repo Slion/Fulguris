@@ -11,7 +11,8 @@
         android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".browser.activity.BrowserActivity">
+        tools:context=".browser.activity.BrowserActivity"
+        android:animateLayoutChanges="true">
 
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_layout"
@@ -41,7 +42,8 @@
                     android:id="@+id/web_view_frame"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:animateLayoutChanges="false">
 
                     <acr.browser.lightning.view.PullRefreshLayout
                         android:id="@+id/tabViewContainerOne"
@@ -60,6 +62,7 @@
                         android:animateLayoutChanges="false" />
 
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
             </LinearLayout>
 
@@ -85,6 +88,63 @@
                 android:layout_marginLeft="-64dp"/>
 
         </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/fabContainer"
+            android:layout_gravity="start|top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginBottom="@dimen/toolbar_height_portrait"
+            android:layout_marginTop="78dp">
+
+            <LinearLayout
+                android:layout_gravity="start|top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabForward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_forward"
+                    android:contentDescription="@string/action_cycle_tabs_forwards"
+                    app:tooltipText="@{@string/action_cycle_tabs_forwards}"
+                    android:layout_margin="@dimen/material_grid_unit" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_back"
+                    android:contentDescription="@string/action_cycle_tabs_backwards"
+                    app:tooltipText="@{@string/action_cycle_tabs_backwards}"
+                    android:layout_margin="@dimen/material_grid_unit" />
+
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabTabClose"
+                android:layout_gravity="bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_delete"
+                android:contentDescription="@string/close_tab"
+                app:tooltipText="@{@string/close_tab}"
+                android:layout_margin="@dimen/material_grid_unit" />
+
+        </LinearLayout>
+
+
+
+
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -6,8 +6,10 @@ import android.graphics.*
 import android.os.SystemClock
 import android.view.*
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.appcompat.widget.TooltipCompat
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.graphics.ColorUtils
 import androidx.databinding.BindingAdapter
 import androidx.drawerlayout.widget.DrawerLayout
@@ -276,6 +278,44 @@ fun View.simulateTap(x: Float = 0F, y: Float = 0F) {
     dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , x, y, 0))
     dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP , x, y, 0))
 }
+
+/**
+ * Set gravity on the given layout parameters to bottom and apply it to this view
+ * TODO: Find a way to use a generic to have a single implementation
+ */
+fun View.setGravityBottom(aParams: LinearLayout.LayoutParams) {
+    aParams.gravity = aParams.gravity and Gravity.TOP.inv()
+    aParams.gravity = aParams.gravity or Gravity.BOTTOM
+    layoutParams = aParams
+}
+
+/**
+ * Set gravity on the given layout parameters to top and apply it to this view
+ */
+fun View.setGravityTop(aParams: LinearLayout.LayoutParams) {
+    aParams.gravity = aParams.gravity and Gravity.BOTTOM.inv()
+    aParams.gravity = aParams.gravity or Gravity.TOP
+    layoutParams = aParams
+}
+
+/**
+ * Set gravity on the given layout parameters to bottom and apply it to this view
+ */
+fun View.setGravityBottom(aParams: CoordinatorLayout.LayoutParams) {
+    aParams.gravity = aParams.gravity and Gravity.TOP.inv()
+    aParams.gravity = aParams.gravity or Gravity.BOTTOM
+    layoutParams = aParams
+}
+
+/**
+ * Set gravity on the given layout parameters to top and apply it to this view
+ */
+fun View.setGravityTop(aParams: CoordinatorLayout.LayoutParams) {
+    aParams.gravity = aParams.gravity and Gravity.BOTTOM.inv()
+    aParams.gravity = aParams.gravity or Gravity.TOP
+    layoutParams = aParams
+}
+
 
 /**
  *

@@ -119,16 +119,16 @@ import android.webkit.CookieManager
 import com.github.ahmadaghazadeh.editor.widget.CodeEditor
 import acr.browser.lightning.html.incognito.IncognitoPageFactory
 import acr.browser.lightning.locale.LocaleUtils
-import android.graphics.Rect
-import android.util.TypedValue
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.net.URL
 import java.util.*
 import kotlin.collections.HashMap
 import android.view.KeyboardShortcutGroup
 
-import android.view.KeyboardShortcutInfo
 import androidx.annotation.RequiresApi
+
+import android.view.MotionEvent
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 
 
 /**
@@ -613,6 +613,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      *
      */
+    @SuppressLint("ClickableViewAccessibility")
     private fun initialize(savedInstanceState: Bundle?) {
 
         createNotificationChannel()
@@ -651,7 +652,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBindingToolbarContent.buttonMore.setImageResource(R.drawable.ic_incognito)
         }
 
-
         // Is that still needed
         val customView = iBinding.toolbarInclude.toolbar
         customView.layoutParams = customView.layoutParams.apply {
@@ -659,7 +659,45 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             height = LayoutParams.MATCH_PARENT
         }
 
+        // Define tabs button clicks handlers
         iBindingToolbarContent.tabsButton.setOnClickListener(this)
+        iBindingToolbarContent.tabsButton.setOnLongClickListener { view ->
+            iBinding.fabContainer.isVisible = true
+            tabSwitchStart()
+            // We still want tooltip to show so return false here
+            false
+        }
+
+        iBindingToolbarContent.tabsButton.setOnTouchListener{ v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {}
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    iBinding.fabContainer.isVisible = false
+                    tabSwitchStop()
+                }
+            }
+            false
+        }
+
+        // Close current tab during tab switch
+        iBinding.fabTabClose.setOnClickListener {
+            tabsManager.let { presenter?.deleteTab(it.indexOfCurrentTab()) }
+            tabSwitchReset()
+        }
+
+        // Switch back in our tab list
+        iBinding.fabBack.setOnClickListener {
+            tabSwitchBack()
+            tabSwitchApply()
+        }
+
+        // Switch forward in our tab list
+        iBinding.fabForward.setOnClickListener{
+            tabSwitchForward()
+            tabSwitchApply()
+        }
+
+
         iBindingToolbarContent.homeButton.setOnClickListener(this)
         iBindingToolbarContent.buttonActionBack.setOnClickListener{executeAction(R.id.action_back)}
         iBindingToolbarContent.buttonActionForward.setOnClickListener{executeAction(R.id.action_forward)}
@@ -1176,6 +1214,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // Set search dropdown anchor to avoid gap
                 searchView.dropDownAnchor = R.id.address_bar_include
 
+                // Floating Action Buttons at the bottom
+                iBinding.fabContainer.apply {setGravityBottom(layoutParams as CoordinatorLayout.LayoutParams)}
+
+                // FAB tab close button at the bottom
+                iBinding.fabTabClose.apply {setGravityBottom(layoutParams as LinearLayout.LayoutParams)}
+
+                // ctrlTabBack at the top
+                iBinding.fabBack.apply{removeFromParent()?.addView(this, 0)}
             } else {
                 // Move search in page to top
                 iBinding.findInPageInclude.root.let {
@@ -1245,6 +1291,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
                 // Set search dropdown anchor to avoid gap
                 searchView.dropDownAnchor = R.id.toolbar_include
+
+                // Floating Action Buttons at the top
+                iBinding.fabContainer.apply {setGravityTop(layoutParams as CoordinatorLayout.LayoutParams)}
+
+                // FAB tab close button at the bottom
+                iBinding.fabTabClose.apply {setGravityTop(layoutParams as LinearLayout.LayoutParams)}
+
+                // ctrlTabBack at the bottom
+                iBinding.fabBack.apply{removeFromParent()?.addView(this)}
             }
         }
 
@@ -1331,7 +1386,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      * Initiate Ctrl + Tab session if one is not already started.
      */
-    private fun startCtrlTab()
+    private fun tabSwitchStart()
     {
         if (iCapturedRecentTabsIndices==null)
         {
@@ -1343,7 +1398,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Reset ctrl + tab session if one was started.
      * Typically used when creating or deleting tabs.
      */
-    private fun resetCtrlTab()
+    private fun tabSwitchReset()
     {
         if (iCapturedRecentTabsIndices!=null)
         {
@@ -1355,7 +1410,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Stop ctrl + tab session.
      * Typically when the ctrl key is released.
      */
-    private fun stopCtrlTab()
+    private fun tabSwitchStop()
     {
         iCapturedRecentTabsIndices?.let {
             // Replace our recent tabs list by putting our captured one back in place making sure the selected tab is going back on top
@@ -1372,13 +1427,46 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
+     * Apply pending tab switch
+     */
+    private fun tabSwitchApply() {
+        iCapturedRecentTabsIndices?.let {
+            if (iRecentTabIndex >= 0) {
+                // We worked out which tab to switch to, just do it now
+                presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)), false)
+                //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
+            }
+        }
+    }
+
+    /**
+     * Switch back to previous tab
+     */
+    private fun tabSwitchBack() {
+        iCapturedRecentTabsIndices?.let {
+            iRecentTabIndex--
+            if (iRecentTabIndex<0) iRecentTabIndex=it.size-1
+        }
+    }
+
+    /**
+     * Switch forward to previous tab
+     */
+    private fun tabSwitchForward() {
+        iCapturedRecentTabsIndices?.let {
+            iRecentTabIndex++
+            if (iRecentTabIndex >= it.size) iRecentTabIndex = 0
+        }
+    }
+
+    /**
      * Manage our key events.
      */
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
 
         if (event.action == KeyEvent.ACTION_UP && (event.keyCode==KeyEvent.KEYCODE_CTRL_LEFT||event.keyCode==KeyEvent.KEYCODE_CTRL_RIGHT)) {
             // Exiting CTRL+TAB mode
-            stopCtrlTab()
+            tabSwitchStop()
         }
 
         // Keyboard shortcuts
@@ -1468,29 +1556,23 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             if (event.isCtrlPressed && event.keyCode == KeyEvent.KEYCODE_TAB) {
 
                 // Entering CTRL+TAB mode
-                startCtrlTab()
+                tabSwitchStart()
 
                 iCapturedRecentTabsIndices?.let{
 
                     // Reversing can be done with those three modifiers notably to make it easier with two thumbs on F(x)tec Pro1
                     if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
                         // Go forward one tab
-                        iRecentTabIndex++
-                        if (iRecentTabIndex>=it.size) iRecentTabIndex=0
-
+                        tabSwitchForward()
                     } else {
                         // Go back one tab
-                        iRecentTabIndex--
-                        if (iRecentTabIndex<0) iRecentTabIndex=iCapturedRecentTabsIndices?.size?.minus(1) ?: -1
+                        tabSwitchBack()
                     }
 
                     //logger.log(TAG, "Switching to $iRecentTabIndex : $iCapturedRecentTabsIndices")
 
-                    if (iRecentTabIndex >= 0) {
-                        // We worked out which tab to switch to, just do it now
-                        presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)),false)
-                        //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
-                    }
+                    tabSwitchApply()
+
                 }
 
                 //logger.log(TAG,"Tab: down discarded")
@@ -1517,13 +1599,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                                 true
                             )
                         }
-                        resetCtrlTab()
+                        tabSwitchReset()
                         return true
                     }
                     KeyEvent.KEYCODE_W -> {
                         // Close current tab
                         tabsManager.let { presenter?.deleteTab(it.indexOfCurrentTab()) }
-                        resetCtrlTab()
+                        tabSwitchReset()
                         return true
                     }
                     KeyEvent.KEYCODE_Q -> {
