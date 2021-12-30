@@ -32,7 +32,7 @@ fun UserPreferences.userAgent(application: Application): String =
     }
 
 fun webViewEngineVersion(application: Application) =
-        WebSettings.getDefaultUserAgent(application).substringAfter(")")
+        WebSettings.getDefaultUserAgent(application).substringAfter(")").replace("Version/.+? ".toRegex(), "")
 
 fun webViewEngineVersionDesktop(application: Application) =
         webViewEngineVersion(application).replace(" Mobile ", " ")
