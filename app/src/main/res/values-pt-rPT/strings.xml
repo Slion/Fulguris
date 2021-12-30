@@ -71,7 +71,7 @@
     <string name="agent_system">Sistema</string>
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Desktop)</string>
-    <string name="agent_hide_device">Hide device</string>
+    <string name="agent_hide_device">Ocultar dispositivo</string>
     <string name="title_search_engine">Motor de pesquisa</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Deseja descarregar este ficheiro? (%1$s)</string>
@@ -552,8 +552,8 @@
     <string name="action_cycle_tabs_backwards">Percorrer separadores para trás</string>
     <string name="action_focus_address_bar">Focar barra de endereço</string>
     <string name="action_tab_history_forward">Avançar no histórico de separadores</string>
-    <string name="action_toggle_toolbar">Toggle toolbar</string>
-    <string name="action_toggle_status_bar">Toggle status bar</string>
+    <string name="action_toggle_toolbar">Alternar barra de ferramentas</string>
+    <string name="action_toggle_status_bar">Alternar barra de estado</string>
     <string name="action_text_size_increment">Aumentar texto</string>
     <string name="action_text_size_decrement">Diminuir texto</string>
     <string name="action_text_size_small_increment">Aumentar um pouco o texto</string>

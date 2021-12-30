@@ -14,8 +14,8 @@
     <string name="action_new_session">Yeni oturum</string>
     <string name="action_save_session">Oturumu kaydet</string>
     <string name="action_edit_sessions">Oturumları düzenle</string>
-    <string name="enable">Enable</string>
-    <string name="disable">Disable</string>
+    <string name="enable">Etkinleştir</string>
+    <string name="disable">Devre Dışı Bırak</string>
     <string name="settings">Ayarlar</string>
     <string name="location">Konum erişimi</string>
     <string name="password">Şifrelerinizi kaydedin</string>
@@ -29,7 +29,7 @@
     <string name="version">Uygulama sürümü</string>
     <string name="update_available">Güncelleme mevcut</string>
     <string name="update_check_error">Güncellemeleri kontrol ederken bir hata oluştu, daha sonra tekrar deneyin</string>
-    <string name="up_to_date">This is the newest version</string>
+    <string name="up_to_date">Uygulama güncel.</string>
     <string name="show">Göster</string>
     <string name="cache">Çıkışta önbelleği temizle</string>
     <string name="reflow">Yazıyı sayfaya göre ayarla</string>
@@ -83,7 +83,7 @@
     <string name="title_download_location">İndirme konumu</string>
     <string name="title_custom_homepage">Özel ana sayfa</string>
     <string name="action_webpage">Web page</string>
-    <string name="action_main_menu">Main menu</string>
+    <string name="action_main_menu">Ana menü</string>
     <string name="title_clear_history">Geçmişi temizle</string>
     <string name="title_clear_cookies">Çerezleri temizle</string>
     <string name="dialog_history">Tüm tarayıcı geçmişini silmek ister misiniz?</string>
@@ -108,7 +108,7 @@
     <string name="action_back">Geri</string>
     <string name="action_find">Sayfada bul</string>
     <string name="action_print">Yazdır</string>
-    <string name="action_translate">Translate</string>
+    <string name="action_translate">Çevir</string>
     <string name="downloads">İndirilenler</string>
     <string name="downloads_notification_description">Triggers upon download completion</string>
     <string name="download_pending">İndirme başlatılıyor\u2026</string>
@@ -126,7 +126,7 @@
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">El ile</string>
     <string name="action_auto">Otomatik</string>
-    <string name="pref_title_contact_us">Contact us</string>
+    <string name="pref_title_contact_us">Bize ulaşın</string>
     <string name="clear_cache">Önbelleği temizle</string>
     <string name="message_cache_cleared">Önbellek temizlendi</string>
     <string name="message_import">Yer işaretleri içe aktarıldı</string>
