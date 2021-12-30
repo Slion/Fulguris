@@ -18,7 +18,7 @@ fun UserPreferences.userAgent(application: Application): String =
             userAgent = Regex("Version/.+? ").replace(userAgent,"")
             userAgent
         }
-        2 -> WINDOWS_DESKTOP_USER_AGENT_PREFIX + webViewEngineVersion(application)
+        2 -> WINDOWS_DESKTOP_USER_AGENT_PREFIX + webViewEngineVersionDesktop(application)
         3 -> LINUX_DESKTOP_USER_AGENT
         4 -> MACOS_DESKTOP_USER_AGENT
         5 -> ANDROID_MOBILE_USER_AGENT_PREFIX + webViewEngineVersion(application)
@@ -32,4 +32,7 @@ fun UserPreferences.userAgent(application: Application): String =
     }
 
 fun webViewEngineVersion(application: Application) =
-        WebSettings.getDefaultUserAgent(application).substringAfter(")")
+        WebSettings.getDefaultUserAgent(application).substringAfter(")").replace("Version/.+? ".toRegex(), "")
+
+fun webViewEngineVersionDesktop(application: Application) =
+        webViewEngineVersion(application).replace(" Mobile ", " ")
