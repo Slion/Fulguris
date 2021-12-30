@@ -24,6 +24,7 @@ import acr.browser.lightning.network.NetworkConnectivityModel
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
+import acr.browser.lightning.settings.preferences.webViewEngineVersion
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.*
 import android.annotation.SuppressLint
@@ -165,7 +166,7 @@ class LightningView(
             field = aDesktopMode
             // Set our user agent accordingly
             if (aDesktopMode) {
-                webView?.settings?.userAgentString = WINDOWS_DESKTOP_USER_AGENT
+                webView?.settings?.userAgentString = WINDOWS_DESKTOP_USER_AGENT_PREFIX + webViewEngineVersion(activity.application)
             } else {
                 setUserAgentForPreference(userPreferences)
             }
