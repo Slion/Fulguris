@@ -3850,6 +3850,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
             }
         }
+        if (tabsManager.currentTab == null) return false
         return super.dispatchTouchEvent(anEvent)
     }
 
