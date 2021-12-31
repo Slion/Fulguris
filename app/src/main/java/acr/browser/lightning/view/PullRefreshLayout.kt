@@ -24,11 +24,15 @@ package acr.browser.lightning.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 
 import android.view.ViewConfiguration
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.lang.reflect.Method
 import kotlin.math.abs
 
 /**
@@ -44,7 +48,59 @@ class PullRefreshLayout(context: Context, attrs: AttributeSet?) : SwipeRefreshLa
     //private var mTouchDownY = 0f
     private var mIntercept = true
 
+    private val LOG_TAG = PullRefreshLayout::class.java.simpleName
+
+    private val iMethodEnsureTarget: Method = SwipeRefreshLayout::class.java.getDeclaredMethod("ensureTarget")
+    private val iFieldTarget = SwipeRefreshLayout::class.java.getDeclaredField("mTarget")
+
+    // I vaguely remember that Kotlin init blocks are called in order of declaration.
+    // Since this comes after iMethodEnsureTarget was set we should be fine.
+    init {
+        iMethodEnsureTarget.isAccessible = true
+        iFieldTarget.isAccessible = true
+    }
+
+    /**
+     * Calls private method [SwipeRefreshLayout.ensureTarget].
+     */
+    private fun callEnsureTarget() {
+        iMethodEnsureTarget.invoke(this)
+    }
+
+    /**
+     * Get value of private field [SwipeRefreshLayout.mTarget].
+     */
+    private fun getTarget() : View? {
+        return iFieldTarget.get(this) as View?
+    }
+
+    /**
+     *
+     */
+    override fun onTouchEvent(ev: MotionEvent?): Boolean {
+        // Prevent crash when SwipeRefreshLayout does not have a target
+        // See: https://github.com/Slion/Fulguris/issues/285
+        callEnsureTarget()
+        if (getTarget()==null) {
+            //Log.d(LOG_TAG,"================FIXED-IT================::onTouchEvent")
+            return false;
+        }
+
+        return super.onTouchEvent(ev)
+    }
+
+    /**
+     *
+     */
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
+
+        // Prevent crash when SwipeRefreshLayout does not have a target
+        // See: https://github.com/Slion/Fulguris/issues/285
+        callEnsureTarget()
+        if (getTarget()==null) {
+            //Log.d(LOG_TAG,"================FIXED-IT================")
+            return false;
+        }
 
         when (event.action) {
             // Mark X position of our touchdown
@@ -61,8 +117,8 @@ class PullRefreshLayout(context: Context, attrs: AttributeSet?) : SwipeRefreshLa
                 val eventX = event.x
                 val xDiff = abs(eventX - mTouchDownX)
                 if (xDiff > mTouchSlop) {
-                    // User is scrolling vertically do not intercept inputs
-                    // Thus preventing pull-to-refresh to trigger while we scroll vertically
+                    // User is scrolling horizontally do not intercept inputs
+                    // Thus preventing pull-to-refresh to trigger while we scroll horizontally
                     mIntercept = false
                 }
             }
