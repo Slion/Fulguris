@@ -349,6 +349,7 @@
         <item>Dominio (por defecto)</item>
         <item>Dirección URL</item>
         <item>Título</item>
+        <item>URL abreviado</item>
     </string-array>
     <string name="invert_color">Invertir color</string>
     <string name="settings_black_status_bar">Barra de estado negra</string>

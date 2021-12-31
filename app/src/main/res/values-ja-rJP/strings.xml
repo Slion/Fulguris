@@ -349,6 +349,7 @@
         <item>ドメイン名 (デフォルト)</item>
         <item>URL</item>
         <item>タイトル</item>
+        <item>短縮 URL</item>
     </string-array>
     <string name="invert_color">色を反転する</string>
     <string name="settings_black_status_bar">ステータスバーを暗色にする</string>

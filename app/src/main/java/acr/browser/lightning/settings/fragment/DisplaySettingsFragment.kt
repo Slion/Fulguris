@@ -107,6 +107,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             SearchBoxDisplayChoice.DOMAIN -> stringArray[0]
             SearchBoxDisplayChoice.URL -> stringArray[1]
             SearchBoxDisplayChoice.TITLE -> stringArray[2]
+            SearchBoxDisplayChoice.TRIMMED -> stringArray[3]
         }
     }
 

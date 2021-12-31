@@ -349,6 +349,7 @@
         <item>Доменное имя</item>
         <item>Адрес</item>
         <item>Заголовок</item>
+        <item>Сокращенный URL</item>
     </string-array>
     <string name="invert_color">Инвертировать цвета</string>
     <string name="settings_black_status_bar">Тёмная строка состояния</string>
