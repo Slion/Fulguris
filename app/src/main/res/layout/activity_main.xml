@@ -66,7 +66,11 @@
 
             </LinearLayout>
 
-
+            <!--
+            - android:clickable="true":
+            Needed to fix click through issues.
+            See: https://github.com/Slion/Fulguris/issues/290
+            -->
             <FrameLayout
                 android:id="@+id/left_drawer"
                 android:layout_width="match_parent"
@@ -75,8 +79,14 @@
                 android:background="?android:attr/colorBackground"
                 android:fitsSystemWindows="true"
                 android:weightSum="1"
-                android:layout_marginLeft="-64dp"/>
+                android:layout_marginLeft="-64dp"
+                android:clickable="true" />
 
+            <!--
+            - android:clickable="true":
+            Needed to fix click through issues.
+            See: https://github.com/Slion/Fulguris/issues/290
+            -->
             <FrameLayout
                 android:id="@+id/right_drawer"
                 android:layout_width="match_parent"
@@ -85,7 +95,8 @@
                 android:background="?android:attr/colorBackground"
                 android:fitsSystemWindows="true"
                 android:weightSum="1"
-                android:layout_marginLeft="-64dp"/>
+                android:layout_marginLeft="-64dp"
+                android:clickable="true" />
 
         </androidx.drawerlayout.widget.DrawerLayout>
 
