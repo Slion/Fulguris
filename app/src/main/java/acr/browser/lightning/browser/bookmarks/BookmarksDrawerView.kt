@@ -43,8 +43,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
     @Inject internal lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject internal lateinit var faviconModel: FaviconModel
     @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
-    @Inject @field:NetworkScheduler inter        iBinding.textTitle.setOnClickListener { }
-nal lateinit var networkScheduler: Scheduler
+    @Inject @field:NetworkScheduler internal lateinit var networkScheduler: Scheduler
     @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
     @Inject
     lateinit var iUserPreferences: UserPreferences
