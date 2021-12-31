@@ -349,6 +349,7 @@
         <item>Domínio (padrão)</item>
         <item>URL</item>
         <item>Título</item>
+        <item>URL abreviado</item>
     </string-array>
     <string name="invert_color">Inverter cores</string>
     <string name="settings_black_status_bar">Barra de estado escura</string>

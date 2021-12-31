@@ -349,6 +349,7 @@
         <item>도메인 (기본값)</item>
         <item>URL</item>
         <item>페이지 제목</item>
+        <item>Shortened URL</item>
     </string-array>
     <string name="invert_color">색상 반전</string>
     <string name="settings_black_status_bar">검정 상태표시줄</string>

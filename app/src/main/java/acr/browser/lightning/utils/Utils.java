@@ -141,6 +141,33 @@ public final class Utils {
         return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
+    /**
+     * Extracts the domain name from {@code url}
+     * by means of String manipulation
+     * rather than using the {@link URI} or {@link URL} class.
+     *
+     * @param url is non-null.
+     * @return the domain name within {@code url}.
+     */
+    public static String trimmedProtocolFromURL(String url) {
+        String domainName = url;
+
+        int index = domainName.indexOf("://");
+
+        if (index != -1) {
+            // keep everything after the "://"
+            domainName = domainName.substring(index + 3);
+        }
+
+        // check for and remove a preceding 'www'
+        // followed by any sequence of characters (non-greedy)
+        // followed by a '.'
+        // from the beginning of the string
+        domainName = domainName.replaceFirst("^www.*?\\.", "");
+
+        return domainName;
+    }
+
     public static void trimCache(@NonNull Context context) {
         try {
             File dir = context.getCacheDir();

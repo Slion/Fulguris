@@ -349,6 +349,7 @@
         <item>Domain (Standard)</item>
         <item>URL</item>
         <item>Titel</item>
+        <item>Gekürzte URL</item>
     </string-array>
     <string name="invert_color">Farben invertieren</string>
     <string name="settings_black_status_bar">Schwarze Statusleiste</string>

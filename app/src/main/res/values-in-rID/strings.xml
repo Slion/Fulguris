@@ -349,6 +349,7 @@
         <item>Domain</item>
         <item>URL</item>
         <item>Judul</item>
+        <item>Shortened URL</item>
     </string-array>
     <string name="invert_color">Invert color</string>
     <string name="settings_black_status_bar">Hitamkan status bar</string>
