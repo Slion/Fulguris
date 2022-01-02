@@ -181,6 +181,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     private fun updateEntity(abpEntity: AbpEntity?, forceUpdate: Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
             ++updatesRunning
+            activity?.runOnUiThread {
+                if (abpEntity != null)
+                    entityPrefs[abpEntity.entityId]?.summary = resources.getString(R.string.blocklist_updating)
+            }
             val updated = if (abpEntity == null) abpListUpdater.updateAll(forceUpdate) else abpListUpdater.updateAbpEntity(abpEntity, forceUpdate)
 
             // delete temporary file
