@@ -154,7 +154,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             newList.dependency = getString(R.string.pref_key_content_control)
 
             // list of blocklists/entities
-            for (entity in abpDao.getAll()) {
+            for (entity in abpDao.getAll().sortedBy { it.title?.lowercase() }) {
                 val entityPref = Preference(context)
 //                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
 //                pref.isChecked = entity.enabled
