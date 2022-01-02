@@ -115,6 +115,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
         layout_weight needed to prevent our header/toolbar being pushed out in reversed mode with toolbars at bottom
         -->
         <LinearLayout
+            android:id="@+id/layoutMenuItemsContainer"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
