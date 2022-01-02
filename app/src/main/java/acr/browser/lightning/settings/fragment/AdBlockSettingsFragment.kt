@@ -285,7 +285,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     .setPositiveButton(R.string.action_delete) { _, _ ->
                         abpDao.delete(entity)
                         dialog?.dismiss()
-                        preferenceScreen.removePreference(entityPrefs[entity.entityId])
+                        filtersCategory.removePreference(entityPrefs[entity.entityId])
                         reloadBlockLists()
                     }
                     .setTitle(resources.getString(R.string.blocklist_remove_confirm, entity.title))
