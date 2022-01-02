@@ -775,21 +775,39 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         iBindingToolbarContent.buttonMore.setOnClickListener(OnClickListener {
             // Web page is loosing focus as we open our menu
-            // Actually this was causing our search field to gain focus on HTC One M8 - Android 6
-            //currentTabView?.clearFocus()
-            // Check if virtual keyboard is showing
-            if (inputMethodManager.isActive) {
-                // Open our menu with a slight delay giving enough time for our virtual keyboard to close
-                mainHandler.postDelayed({ showPopupMenu() }, 100)
-
-            } else {
-                //Display our popup menu instantly
-                showPopupMenu()
-            }
+            // Should notably hide the virtual keyboard
+            currentTabView?.clearFocus()
+            searchView.clearFocus()
+            // Set focus to menu button
+            it.requestFocus()
+            // Show popup menu once our virtual keyboard is hidden
+            showPopupMenuWhenReady()
         })
-
     }
 
+    // Make sure we will show our popup menu at some point
+    private var iPopupMenuTries: Int = 0
+    private val kMaxPopupMenuTries: Int = 5
+
+    /**
+     * Show popup menu once our virtual keyboard is hidden.
+     * This was designed so that popup menu does not remain in the middle of the screen once virtual keyboard is hidden,
+     * notably when using toolbars at the bottom option.
+     */
+    private fun showPopupMenuWhenReady() {
+        // Check if virtual keyboard is showing and if we have another try to wait for it to close
+        if (inputMethodManager.isVirtualKeyboardVisible() && iPopupMenuTries<kMaxPopupMenuTries) {
+            // Increment our tries counter
+            iPopupMenuTries++
+            // Open our menu with a slight delay giving enough time for our virtual keyboard to close
+            mainHandler.postDelayed({ showPopupMenuWhenReady() }, 100)
+        } else {
+            //Display our popup menu instantly
+            showPopupMenu()
+            // Reset tries counter for the next time around
+            iPopupMenuTries = 0
+        }
+    }
 
     /**
      *
@@ -866,7 +884,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 v.removeFromParent()
                 getTabBarContainer().addView(v)
             }
-
         }
     }
 

@@ -1,10 +1,12 @@
 package acr.browser.lightning.extensions
 
 import acr.browser.lightning.utils.getFilteredColor
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.os.SystemClock
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -16,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import java.lang.reflect.Method
 
 
 /**
@@ -345,4 +348,21 @@ fun PopupWindow.dimBehind(aDimAmout: Float = 0.3f) {
     wm.updateViewLayout(container, p)
 }
 
-
+/**
+ * Tells if the virtual keyboard is shown.
+ * Solution taken from https://stackoverflow.com/a/52171843/3969362
+ * Android is silly like this.
+ */
+@SuppressLint("DiscouragedPrivateApi")
+fun InputMethodManager.isVirtualKeyboardVisible() : Boolean {
+    return try {
+        // Use reflection to access the hidden API we need.
+        val method: Method = InputMethodManager::class.java.getDeclaredMethod("getInputMethodWindowVisibleHeight")
+        // Assuming if the virtual keyboard height is above zero it is currently being shown.
+        ((method.invoke(this) as Int) > 0);
+    } catch (ex: Exception) {
+        // Something went wrong, let's pretend the virtual keyboard is not showing then.
+        // This is defensive and should never happen.
+        false
+    }
+}
