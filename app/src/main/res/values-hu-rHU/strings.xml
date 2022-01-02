@@ -349,7 +349,6 @@
         <item>Domain (alapértelmezett)</item>
         <item>URL</item>
         <item>Cím</item>
-        <item>Rövidített URL</item>
     </string-array>
     <string name="invert_color">Negatív szín</string>
     <string name="settings_black_status_bar">Black status bar</string>

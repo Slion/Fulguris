@@ -281,7 +281,7 @@
     <string name="pref_category_portrait">Портретная</string>
     <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Фильтры</string>
-    <string name="pref_category_summary_filters">Локальные или удалённые файлы, определяющие ваши правила управления содержимым</string>
+    <string name="pref_category_summary_filters">Локальные или размещенные удалённо файлы, определяющие ваши правила управления содержимым</string>
     <string name="pref_category_on_tab_close">При закрытии вкладки</string>
     <string name="pref_category_on_tab_change">При смене вкладки</string>
     <string name="pref_category_on_tab_back_forward">При возвращении или переходе</string>
@@ -295,10 +295,10 @@
     <string name="pref_summary_use_bottom_sheets">Вкладки и закладки отображаются на нижних панелях вместо боковых меню</string>
     <string name="pref_title_tab_list_item_show_close_button">Показать кнопку закрытия вкладки</string>
     <string name="pref_summary_tab_list_item_show_close_button">Отображать кнопки закрытия вкладок в списке вкладок</string>
-    <string name="pref_title_menu_show_exit">Выйти из пункта меню</string>
+    <string name="pref_title_menu_show_exit">Пункт \"Выход\" в меню</string>
     <string name="pref_summary_menu_show_exit">Показать опцию выхода из приложения в меню. В режиме инкогнито он отображается всегда в любом случае.</string>
-    <string name="pref_title_menu_new_tab">Пункт меню новой вкладки</string>
-    <string name="pref_summary_menu_new_tab">Показывать опцию новой вкладки в меню</string>
+    <string name="pref_title_menu_new_tab">Пункт меню \"Новая вкладка\"</string>
+    <string name="pref_summary_menu_new_tab">Показывать в меню пункт \"Новая вкладка\"</string>
     <string name="pref_title_crash_report">Отчет о сбое</string>
     <string name="pref_title_analytics">Аналитика</string>
     <string name="pref_title_pull_to_refresh">Потяните для обновления</string>
@@ -349,7 +349,6 @@
         <item>Доменное имя</item>
         <item>Адрес</item>
         <item>Заголовок</item>
-        <item>Сокращенный URL</item>
     </string-array>
     <string name="invert_color">Инвертировать цвета</string>
     <string name="settings_black_status_bar">Тёмная строка состояния</string>
@@ -494,7 +493,7 @@
     <string name="pref_title_show_animation">Показывать анимацию</string>
     <string name="pref_title_vibrate">Вибрация</string>
     <string name="pref_title_duration">Продолжительность</string>
-    <string name="pref_summary_duration">Продолжительность анимации в сантисекундах</string>
+    <string name="pref_summary_duration">Продолжительность анимации в сотых долях секунды</string>
     <string name="pref_category_title_session_export">Экспорт сеанса</string>
     <string name="pref_category_summary_session_export">Выберите сессию, которую хотите экспортировать</string>
     <string name="error_session_file_corrupted">Ошибка: повреждён файл сессии!</string>

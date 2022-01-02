@@ -349,7 +349,6 @@
         <item>Tylko domena (domyślne)</item>
         <item>Pełny URL</item>
         <item>Tytuł strony</item>
-        <item>Skrócony URL</item>
     </string-array>
     <string name="invert_color">Odwróć kolory</string>
     <string name="settings_black_status_bar">Czarny pasek stanu</string>

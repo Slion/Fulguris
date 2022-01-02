@@ -349,7 +349,6 @@
         <item>網域（預設）</item>
         <item>網址</item>
         <item>標題</item>
-        <item>Shortened URL</item>
     </string-array>
     <string name="invert_color">反轉色彩</string>
     <string name="settings_black_status_bar">黑色狀態列</string>

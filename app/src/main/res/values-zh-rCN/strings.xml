@@ -349,7 +349,6 @@
         <item>域名（默认）</item>
         <item>URL</item>
         <item>标题</item>
-        <item>缩短的 URL</item>
     </string-array>
     <string name="invert_color">反色</string>
     <string name="settings_black_status_bar">黑色状态栏</string>

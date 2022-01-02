@@ -349,7 +349,6 @@
         <item>Alan adı (varsayılan)</item>
         <item>URL</item>
         <item>Başlık</item>
-        <item>Shortened URL</item>
     </string-array>
     <string name="invert_color">Rengi ters çevir</string>
     <string name="settings_black_status_bar">Siyah durum çubuğu</string>
