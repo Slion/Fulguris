@@ -307,7 +307,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
-        createPopupMenu()
+        createMenuMain()
         createMenuWebPage()
         createSessionsMenu()
         tabsDialog = BottomSheetDialog(this)
@@ -500,36 +500,37 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      *
      */
-    private fun createPopupMenu() {
+    private fun createMenuMain() {
         iMenuMain = MenuMain(layoutInflater)
         // TODO: could use data binding instead
         iMenuMain.apply {
             // Menu
-            onMenuItemClicked(iBinding.menuItemWebPage) { iMenuMain.dismiss(); showMenuWebPage() }
+            onMenuItemClicked(iBinding.menuItemWebPage) { dismiss(); showMenuWebPage() }
             // Bind our actions
-            onMenuItemClicked(iBinding.menuItemSessions) { executeAction(R.id.action_sessions) }
-            onMenuItemClicked(iBinding.menuItemNewTab) { executeAction(R.id.action_new_tab) }
-            onMenuItemClicked(iBinding.menuItemIncognito) { executeAction(R.id.action_incognito) }
-            onMenuItemClicked(iBinding.menuItemHistory) { executeAction(R.id.action_history) }
-            onMenuItemClicked(iBinding.menuItemDownloads) { executeAction(R.id.action_downloads) }
-            onMenuItemClicked(iBinding.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
-            onMenuItemClicked(iBinding.menuItemExit) { executeAction(R.id.action_exit) }
+            onMenuItemClicked(iBinding.menuItemSessions) { dismiss(); executeAction(R.id.action_sessions) }
+            onMenuItemClicked(iBinding.menuItemNewTab) { dismiss(); executeAction(R.id.action_new_tab) }
+            onMenuItemClicked(iBinding.menuItemIncognito) { dismiss(); executeAction(R.id.action_incognito) }
+            onMenuItemClicked(iBinding.menuItemHistory) { dismiss(); executeAction(R.id.action_history) }
+            onMenuItemClicked(iBinding.menuItemDownloads) { dismiss(); executeAction(R.id.action_downloads) }
+            onMenuItemClicked(iBinding.menuItemBookmarks) { dismiss(); executeAction(R.id.action_bookmarks) }
+            onMenuItemClicked(iBinding.menuItemExit) { dismiss(); executeAction(R.id.action_exit) }
             //
-            onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
+            onMenuItemClicked(iBinding.menuItemSettings) { dismiss(); executeAction(R.id.action_settings) }
 
             // Popup menu action shortcut icons
-            onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
-            onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
-            onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
-            onMenuItemClicked(iBinding.menuShortcutBack) { executeAction(R.id.action_back) }
-            onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+            onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
+            onMenuItemClicked(iBinding.menuShortcutHome) { dismiss(); executeAction(R.id.action_show_homepage) }
+            onMenuItemClicked(iBinding.menuShortcutBookmarks) { dismiss(); executeAction(R.id.action_bookmarks) }
+            // Back and forward do not dismiss the menu to make it easier for users to navigate tab history
+            onMenuItemClicked(iBinding.menuShortcutForward) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_forward) }
+            onMenuItemClicked(iBinding.menuShortcutBack) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_back) }
         }
     }
 
     /**
      *
      */
-    fun showPopupMenu() {
+    private fun showMenuMain() {
         // Make sure back and forward buttons are in correct state
         setForwardButtonEnabled(tabsManager.currentTab?.canGoForward()?:false)
         setBackButtonEnabled(tabsManager.currentTab?.canGoBack()?:false)
@@ -544,23 +545,24 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iMenuWebPage = MenuWebPage(layoutInflater)
         // TODO: could use data binding instead
         iMenuWebPage.apply {
-            onMenuItemClicked(iBinding.menuItemMainMenu) { iMenuWebPage.dismiss(); showPopupMenu() }
+            onMenuItemClicked(iBinding.menuItemMainMenu) { dismiss(); showMenuMain() }
             // Web page actions
-            onMenuItemClicked(iBinding.menuItemShare) { executeAction(R.id.action_share) }
-            onMenuItemClicked(iBinding.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
-            onMenuItemClicked(iBinding.menuItemFind) { executeAction(R.id.action_find) }
-            onMenuItemClicked(iBinding.menuItemPrint) { executeAction(R.id.action_print) }
-            onMenuItemClicked(iBinding.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
-            onMenuItemClicked(iBinding.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
-            onMenuItemClicked(iBinding.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
-            onMenuItemClicked(iBinding.menuItemDarkMode) { executeAction(R.id.action_toggle_dark_mode) }
-            onMenuItemClicked(iBinding.menuItemAdBlock) { executeAction(R.id.action_block) }
-            onMenuItemClicked(iBinding.menuItemTranslate) { executeAction(R.id.action_translate) }
+            onMenuItemClicked(iBinding.menuItemShare) { dismiss(); executeAction(R.id.action_share) }
+            onMenuItemClicked(iBinding.menuItemAddBookmark) { dismiss(); executeAction(R.id.action_add_bookmark) }
+            onMenuItemClicked(iBinding.menuItemFind) { dismiss(); executeAction(R.id.action_find) }
+            onMenuItemClicked(iBinding.menuItemPrint) { dismiss(); executeAction(R.id.action_print) }
+            onMenuItemClicked(iBinding.menuItemAddToHome) { dismiss(); executeAction(R.id.action_add_to_homescreen) }
+            onMenuItemClicked(iBinding.menuItemReaderMode) { dismiss(); executeAction(R.id.action_reading_mode) }
+            onMenuItemClicked(iBinding.menuItemDesktopMode) { dismiss(); executeAction(R.id.action_toggle_desktop_mode) }
+            onMenuItemClicked(iBinding.menuItemDarkMode) { dismiss(); executeAction(R.id.action_toggle_dark_mode) }
+            onMenuItemClicked(iBinding.menuItemAdBlock) { dismiss(); executeAction(R.id.action_block) }
+            onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
             // Popup menu action shortcut icons
-            onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
-            onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
-            onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
-            onMenuItemClicked(iBinding.menuShortcutBack) { executeAction(R.id.action_back) }
+            onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
+            onMenuItemClicked(iBinding.menuShortcutHome) { dismiss(); executeAction(R.id.action_show_homepage) }
+            // Back and forward do not dismiss the menu to make it easier for users to navigate tab history
+            onMenuItemClicked(iBinding.menuShortcutForward) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_forward) }
+            onMenuItemClicked(iBinding.menuShortcutBack) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_back) }
             //onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
         }
     }
@@ -803,7 +805,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             mainHandler.postDelayed({ showPopupMenuWhenReady() }, 100)
         } else {
             //Display our popup menu instantly
-            showPopupMenu()
+            showMenuMain()
             // Reset tries counter for the next time around
             iPopupMenuTries = 0
         }
@@ -2590,7 +2592,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
-
+    /**
+     *
+     */
     private fun doBackAction() {
         val currentTab = tabsManager.currentTab
         if (showingTabs()) {
@@ -2600,7 +2604,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         } else {
             if (currentTab != null) {
                 logger.log(TAG, "onBackPressed")
-                if (searchView.hasFocus() == true) {
+                if (searchView.hasFocus()) {
                     currentTab.requestFocus()
                 } else if (currentTab.canGoBack()) {
                     if (!currentTab.isShown) {

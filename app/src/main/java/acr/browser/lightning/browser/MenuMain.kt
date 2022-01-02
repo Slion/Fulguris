@@ -74,7 +74,6 @@ class MenuMain : PopupWindow {
                 .build()
          */
 
-
     }
 
     /**
@@ -94,11 +93,14 @@ class MenuMain : PopupWindow {
         )
     }
 
-
+    /**
+     * Register click observer with the given menu item.
+     * This gave us the opportunity to dismiss the dialog…
+     * …but since we don't do that for all menu items anymore it is kinda useless.
+     */
     fun onMenuItemClicked(menuView: View, onClick: () -> Unit) {
         menuView.setOnClickListener {
             onClick()
-            dismiss()
         }
     }
 
@@ -108,6 +110,7 @@ class MenuMain : PopupWindow {
      */
     private fun applyMainMenuItemVisibility() {
         // Reset items visibility
+        iBinding.layoutMenuItemsContainer.isVisible=true;
         iBinding.menuItemWebPage.isVisible = true
         // Basic items
         iBinding.menuItemSessions.isVisible = !iIsIncognito
