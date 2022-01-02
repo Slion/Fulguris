@@ -16,12 +16,16 @@
 
 package acr.browser.lightning.adblock
 
+import acr.browser.lightning.R
 import acr.browser.lightning.adblock.parser.HostsFileParser
+import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_DIR
 import jp.hazuki.yuzubrowser.adblock.filter.unified.StartEndFilter
@@ -146,6 +150,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             }
         } catch (e: IOException) {
             e.printStackTrace()
+            Handler(Looper.getMainLooper()).post {
+                context.toast(context.getString(R.string.blocklist_update_error, entity.title))
+            }
         }
         return false
     }
