@@ -135,41 +135,48 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 }
             )
 
-            // "new list" button
-            val newList = Preference(context)
-            newList.title = resources.getString(R.string.add_blocklist)
-            newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_add,requireActivity().theme)
-            newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val dialog = MaterialAlertDialogBuilder(requireContext())
-                    .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
-                    .setNegativeButton(R.string.local_file) { _,_ -> showBlockList(AbpEntity(url = "file")) }
-                    .setPositiveButton(R.string.remote_file) { _,_ -> showBlockList(AbpEntity(url = "")) }
-                    .setTitle(R.string.add_blocklist)
-                    .setMessage(R.string.add_blocklist_hint)
-                    .create()
-                dialog.show()
-                true
-            }
-            filtersCategory.addPreference(newList)
-            newList.dependency = getString(R.string.pref_key_content_control)
+            loadFilterLists()
+        }
+    }
 
-            // list of blocklists/entities
-            for (entity in abpDao.getAll().sortedBy { it.title?.lowercase() }) {
-                val entityPref = Preference(context)
+    private fun loadFilterLists() {
+        filtersCategory.removeAll()
+
+        // "new list" button
+        val newList = Preference(context)
+        newList.title = resources.getString(R.string.add_blocklist)
+        newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_add,requireActivity().theme)
+        newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val dialog = MaterialAlertDialogBuilder(requireContext())
+                .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
+                .setNegativeButton(R.string.local_file) { _,_ -> showBlockList(AbpEntity(url = "file")) }
+                .setPositiveButton(R.string.remote_file) { _,_ -> showBlockList(AbpEntity(url = "")) }
+                .setTitle(R.string.add_blocklist)
+                .setMessage(R.string.add_blocklist_hint)
+                .create()
+            dialog.show()
+            true
+        }
+        filtersCategory.addPreference(newList)
+        newList.dependency = getString(R.string.pref_key_content_control)
+
+        // list of blocklists/entities
+        for (entity in abpDao.getAll().sortedBy { it.title?.lowercase() }) {
+            val entityPref = Preference(context)
 //                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
 //                pref.isChecked = entity.enabled
-                entityPref.title = entity.title
-                //entityPref.icon = requireContext().drawable(R.drawable.ic_import_export)
-                entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    showBlockList(entity)
-                    true
-                }
-                entityPrefs[entity.entityId] = entityPref
-                updateSummary(entity)
-                filtersCategory.addPreference(entityPrefs[entity.entityId])
-                entityPref.dependency = getString(R.string.pref_key_content_control)
+            entityPref.title = entity.title
+            //entityPref.icon = requireContext().drawable(R.drawable.ic_import_export)
+            entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                showBlockList(entity)
+                true
             }
+            entityPrefs[entity.entityId] = entityPref
+            updateSummary(entity)
+            filtersCategory.addPreference(entityPrefs[entity.entityId])
+            entityPref.dependency = getString(R.string.pref_key_content_control)
         }
+
     }
 
     private fun updateSummary(entity: AbpEntity) {
@@ -323,19 +330,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             if (enabled.isChecked != wasEnabled)
                 reloadBlockLists()
 
-            if (entityPrefs[newId] == null) { // not in entityPrefs if new
-                val pref = Preference(context)
-                entity.entityId = newId
-                pref.title = entity.title
-                pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    showBlockList(entity)
-                    true
-                }
-                entityPrefs[newId] = pref
-                updateSummary(entity)
-                filtersCategory.addPreference(pref)
-                pref.dependency = getString(R.string.pref_key_content_control)
-            } else
+            if (entityPrefs[newId] == null) // not in entityPrefs if new
+                loadFilterLists() // load lists again, to get alphabetical order
+            else
                 entityPrefs[entity.entityId]?.title = entity.title
         }
         dialog = builder.create()
