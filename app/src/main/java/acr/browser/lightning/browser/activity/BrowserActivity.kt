@@ -309,7 +309,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         queue = Volley.newRequestQueue(this)
         createMenuMain()
         createMenuWebPage()
-        createSessionsMenu()
+        createMenuSessions()
         tabsDialog = BottomSheetDialog(this)
         bookmarksDialog = BottomSheetDialog(this)
 
@@ -378,8 +378,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      *
      */
-    private fun createSessionsMenu() {
+    private fun createMenuSessions() {
         iMenuSessions = SessionsPopupWindow(layoutInflater)
+        // Make it full screen gesture friendly
+        iMenuSessions.setOnDismissListener { justClosedMenuCountdown() }
     }
 
     // Used to avoid running that too many times, by keeping a reference to it we can cancel that runnable
@@ -497,6 +499,20 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    // Set whenever a menu was just closed
+    private var iJustClosedMenu = false
+
+    /**
+     * Used to avoid processing back commands when we just closed a menu.
+     * That's done to improve user experience when user is using full screen gesture.
+     * As user does its full screen back gesture it in fact dismisses the menu just by touching the screen outside the menu.
+     * That meant once the back gesture was completed it reached the activity which was processing it as if the menu were not there.
+     * In the end it looked like two back keys were processed.
+     */
+    private fun justClosedMenuCountdown() {
+        iJustClosedMenu = true; mainHandler.postDelayed({iJustClosedMenu = false},250)
+    }
+
     /**
      *
      */
@@ -524,6 +540,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // Back and forward do not dismiss the menu to make it easier for users to navigate tab history
             onMenuItemClicked(iBinding.menuShortcutForward) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_forward) }
             onMenuItemClicked(iBinding.menuShortcutBack) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_back) }
+
+            // Make it full screen gesture friendly
+            setOnDismissListener { justClosedMenuCountdown() }
         }
     }
 
@@ -564,13 +583,16 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuShortcutForward) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_forward) }
             onMenuItemClicked(iBinding.menuShortcutBack) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_back) }
             //onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+
+            // Make it full screen gesture friendly
+            setOnDismissListener { justClosedMenuCountdown() }
         }
     }
 
     /**
      *
      */
-    fun showMenuWebPage() {
+    private fun showMenuWebPage() {
         iMenuWebPage.show(iBindingToolbarContent.buttonMore)
     }
 
@@ -2597,6 +2619,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun doBackAction() {
         val currentTab = tabsManager.currentTab
+        if (iJustClosedMenu) {
+            return
+        }
+
         if (showingTabs()) {
             closePanelTabs()
         } else if (showingBookmarks()) {
