@@ -174,6 +174,8 @@
     <string name="blocklist_update_description">Pembaruan akan berlangsung sesuai dengan kekerapan yang ditentukan, terkecuali jika file penyaring menentukan kekerapan yang lebih lama</string>
     <string name="blocklist_update_now">Perbarui daftarnya sekarang</string>
     <string name="blocklist_last_update">Pembaruan yang terakhir: %s</string>
+    <string name="blocklist_updating">Updating…</string>
+    <string name="blocklist_update_error">Error while updating filters list %s</string>
     <string name="add_blocklist">Tambahkan file penyaring</string>
     <string name="add_blocklist_hint">Anda bisa memilih daftar host atau daftar mana saja yang menuruti aturan AdBlockPlus</string>
     <string name="enable_blocklist">Gunakan daftar ini</string>
@@ -251,8 +253,8 @@
     <string name="title_file_chooser">Pemilih file</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
-    <string name="generic_export">Bawa keluar</string>
-    <string name="generic_import">Bawa masuk</string>
+    <string name="generic_export">Ekspor</string>
+    <string name="generic_import">Impor</string>
     <string name="generic_reset">Atur ulang</string>
     <string name="export_bookmarks">Bawa keluar penanda</string>
     <string name="import_backup">Bawa masuk pananda</string>
@@ -349,6 +351,7 @@
         <item>Domain</item>
         <item>URL</item>
         <item>Judul</item>
+        <item>Shortened URL</item>
     </string-array>
     <string name="invert_color">Invert color</string>
     <string name="settings_black_status_bar">Hitamkan status bar</string>
@@ -377,8 +380,8 @@
     <string name="settings_summary_desktop_mode_default">Mengotomatiskan wujud desktop untuk tab baru</string>
     <string name="settings_title_dark_mode_default">Pemakaian wujud gelap</string>
     <string name="settings_summary_dark_mode_default">Mengotomatiskan pemakaian wujud gelap atau tidak</string>
-    <string name="settings_title_swap_bookmarks_and_tabs">Tukar tempat untuk <i>drawers</i></string>
-    <string name="settings_summary_swap_bookmarks_and_tabs">Antara tab dan penanda</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">Tukar tempat untuk <i>Drawer</i></string>
+    <string name="settings_summary_swap_bookmarks_and_tabs"><i>Drawer</i> tab dan penanda akan bertukar tempat</string>
     <string name="do_not_track">Permintaan agar tidak dilacak (’Do Not Track’)</string>
     <string name="save_data">Permintaan untuk menyimpan data (’Save-Data’)</string>
     <string name="remove_identifying_headers">Jangan tampilkan judul halaman</string>
@@ -492,10 +495,10 @@
     <string name="pref_title_duration">Tempo</string>
     <string name="pref_summary_duration">Lamanya animasi dalam satuan sentidetik</string>
     <string name="pref_category_title_session_export">Ekspor Sesi</string>
-    <string name="pref_category_summary_session_export">Tentukan sesi yang ingin diekspor</string>
+    <string name="pref_category_summary_session_export">Pilih sesi yang ingin dibawa keluar</string>
     <string name="error_session_file_corrupted">Error: file sesi rusak!</string>
     <string name="message_session_imported">Sesi yang sudah diimpor: <xliff:g id="session_name" example="News">%s</xliff:g></string>
-    <string name="message_session_exported">Sesi yang sudah diekspor: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
+    <string name="message_session_exported">Sesi yang sudah dibawa keluar: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Show SSL warning dialogs</string>
     <string name="start_incognito">Selalu dalam mode menyamar</string>
     <string name="force_zoom_summary">Tidak berfungsi jika JavaScript tidak dinyalakan</string>
@@ -507,8 +510,8 @@
     <string name="pref_title_search_custom_image_url">Search page custom image</string>
     <string name="pref_summary_search_custom_image_url">Only for Custom URL</string>
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
-    <string name="pref_title_close_drawer">Tutup Drawer</string>
-    <string name="pref_summary_close_drawer">Tutup Drawer secara otomatis saat menambah atau menghapus tab</string>
+    <string name="pref_title_close_drawer">Tutup <i>Drawer</i></string>
+    <string name="pref_summary_close_drawer">Tutup <i>Drawer</i> secara otomatis saat menambah atau menghapus tab</string>
     <string name="block_javascript">Blokir JavaScript untuk halaman</string>
     <string name="block_sites_title">Pisahkan halaman dengan tanda koma</string>
     <string name="listed_javascript">Hanya izinkan JavaScript untuk halaman yang ditentukan</string>

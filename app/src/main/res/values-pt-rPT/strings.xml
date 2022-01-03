@@ -174,6 +174,8 @@
     <string name="blocklist_update_description">As atualizações serão feitas com a frequência escolhida, a menos que o ficheiro de filtros especifique um intervalo maior</string>
     <string name="blocklist_update_now">Atualizar listas agora</string>
     <string name="blocklist_last_update">Última atualização: %s</string>
+    <string name="blocklist_updating">Updating…</string>
+    <string name="blocklist_update_error">Error while updating filters list %s</string>
     <string name="add_blocklist">Adicionar ficheiro de filtros</string>
     <string name="add_blocklist_hint">Pode escolher listas de filtros ou adicionar uma lista compatível com a sintaxe AdBlockPlus</string>
     <string name="enable_blocklist">Ativar esta lista</string>
@@ -349,6 +351,7 @@
         <item>Domínio (padrão)</item>
         <item>URL</item>
         <item>Título</item>
+        <item>Shortened URL</item>
     </string-array>
     <string name="invert_color">Inverter cores</string>
     <string name="settings_black_status_bar">Barra de estado escura</string>
