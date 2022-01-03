@@ -21,6 +21,8 @@ import acr.browser.lightning.adblock.parser.HostsFileParser
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
+import acr.browser.lightning.settings.preferences.userAgent
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -112,6 +114,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         val request = try {
             Request.Builder()
                 .url(entity.url)
+                .header("User-Agent", userPreferences.userAgent(context.applicationContext as Application))
                 .get()
         } catch (e: IllegalArgumentException) {
             return false
