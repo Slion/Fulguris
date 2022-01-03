@@ -173,6 +173,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             }
             entityPrefs[entity.entityId] = entityPref
             updateSummary(entity)
+            updateIcon(entity)
             filtersCategory.addPreference(entityPrefs[entity.entityId])
             entityPref.dependency = getString(R.string.pref_key_content_control)
         }
@@ -182,6 +183,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     private fun updateSummary(entity: AbpEntity) {
         if (entity.lastLocalUpdate > 0)
             entityPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance().format(Date(entity.lastLocalUpdate)))
+    }
+
+    private fun updateIcon(entity: AbpEntity) {
+        entityPrefs[entity.entityId]?.icon = ResourcesCompat.getDrawable(resources, if (entity.enabled) R.drawable.ic_eye else R.drawable.ic_eye_off, requireActivity().theme)
     }
 
     // update entity and adjust displayed last update time
@@ -330,6 +335,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 loadFilterLists() // load lists again, to get alphabetical order
             else
                 entityPrefs[entity.entityId]?.title = entity.title
+            updateIcon(entity)
         }
         dialog = builder.create()
         dialog.show()
