@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.text.format.Formatter;
 import android.view.Gravity;
 import android.view.View;
@@ -111,8 +112,13 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
                 else
                 {
                     // Create pending intent to open downloads folder when tapping notification
+                    int flags = 0;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        // Was needed for Android 12
+                        flags = PendingIntent.FLAG_IMMUTABLE;
+                    }
                     downloadsIntent = Utils.getIntentForDownloads(mActivity, userPreferences.getDownloadDirectory());
-                    pendingIntent = PendingIntent.getActivity(mActivity, 0, downloadsIntent, 0);
+                    pendingIntent = PendingIntent.getActivity(mActivity, 0, downloadsIntent, flags);
                 }
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(mActivity, ((BrowserActivity)mActivity).CHANNEL_ID)
