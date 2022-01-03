@@ -127,7 +127,8 @@
                     android:src="@drawable/ic_action_forward"
                     android:contentDescription="@string/action_cycle_tabs_forwards"
                     app:tooltipText="@{@string/action_cycle_tabs_forwards}"
-                    android:layout_margin="@dimen/material_grid_unit" />
+                    android:layout_margin="@dimen/material_grid_unit"
+                    />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabBack"
@@ -136,19 +137,23 @@
                     android:src="@drawable/ic_action_back"
                     android:contentDescription="@string/action_cycle_tabs_backwards"
                     app:tooltipText="@{@string/action_cycle_tabs_backwards}"
-                    android:layout_margin="@dimen/material_grid_unit" />
+                    android:layout_margin="@dimen/material_grid_unit"
+                    app:backgroundTint="?attr/colorPrimaryVariant"
+                     />
 
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabTabClose"
-                android:layout_gravity="bottom"
+                android:layout_gravity="top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_action_delete"
                 android:contentDescription="@string/close_tab"
                 app:tooltipText="@{@string/close_tab}"
-                android:layout_margin="@dimen/material_grid_unit" />
+                android:layout_margin="@dimen/material_grid_unit"
+                app:backgroundTint="?attr/colorError"
+                 />
 
         </LinearLayout>
 

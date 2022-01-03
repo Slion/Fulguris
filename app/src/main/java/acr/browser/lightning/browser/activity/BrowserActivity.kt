@@ -634,6 +634,30 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
         }
 
+
+    /**
+     * See below.
+     */
+    private val iDisableFabs : Runnable = Runnable {
+        iBinding.fabContainer.isVisible = false
+        tabSwitchStop()
+    }
+
+    private var iTabsButtonLongPressed = false
+
+    /**
+     * Will disable floating action buttons once our countdown expires
+     */
+    private fun restartDisableFabsCountdown() {
+        if (!iTabsButtonLongPressed) {
+            // Cancel any pending action if any
+            mainHandler.removeCallbacks(iDisableFabs)
+            // Restart our countdown
+            // TODO: make that delay a settings option?
+            mainHandler.postDelayed(iDisableFabs, 5000)
+        }
+    }
+
     /**
      *
      */
@@ -687,6 +711,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.tabsButton.setOnClickListener(this)
         iBindingToolbarContent.tabsButton.setOnLongClickListener { view ->
             iBinding.fabContainer.isVisible = true
+            iTabsButtonLongPressed = true
             tabSwitchStart()
             // We still want tooltip to show so return false here
             false
@@ -696,8 +721,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {}
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    iBinding.fabContainer.isVisible = false
-                    tabSwitchStop()
+                    iTabsButtonLongPressed = false
+                    restartDisableFabsCountdown()
                 }
             }
             false
@@ -705,18 +730,21 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // Close current tab during tab switch
         iBinding.fabTabClose.setOnClickListener {
+            restartDisableFabsCountdown()
             tabsManager.let { presenter?.deleteTab(it.indexOfCurrentTab()) }
             tabSwitchReset()
         }
 
         // Switch back in our tab list
         iBinding.fabBack.setOnClickListener {
+            restartDisableFabsCountdown()
             tabSwitchBack()
             tabSwitchApply()
         }
 
         // Switch forward in our tab list
         iBinding.fabForward.setOnClickListener{
+            restartDisableFabsCountdown()
             tabSwitchForward()
             tabSwitchApply()
         }
