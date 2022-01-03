@@ -24,6 +24,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
+import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
@@ -48,7 +49,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     @Inject internal lateinit var abpBlocker: AbpBlocker
 
     private lateinit var abpDao: AbpDao
-    private val entityPrefs = mutableMapOf<Int, Preference>()
+    private val entityPrefs = mutableMapOf<Int, SwitchPreferenceCompat>()
 
     // if blocklist changed, they need to be reloaded, but this should happen only once
     //  if reloadLists is true, list reload will be launched onDestroy
@@ -162,12 +163,12 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         // list of blocklists/entities
         for (entity in abpDao.getAll().sortedBy { it.title?.lowercase() }) {
-            val entityPref = Preference(context)
-//                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
-//                pref.isChecked = entity.enabled
+            val entityPref = SwitchPreferenceCompat(context)
+            entityPref.isChecked = entity.enabled
             entityPref.title = entity.title
             //entityPref.icon = requireContext().drawable(R.drawable.ic_import_export)
             entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                (it as SwitchPreferenceCompat).isChecked = entity.enabled // avoid flipping the switch on click
                 showBlockList(entity)
                 true
             }
@@ -314,6 +315,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         builder.setPositiveButton(R.string.action_ok) { _,_ ->
             val wasEnabled = entity.enabled
             entity.enabled = enabled.isChecked
+            entityPrefs[entity.entityId]?.isChecked = entity.enabled
 
             entity.title = title.text.toString()
             if (entity.entityId == 0) // id == 0 if new entity was added, we want to update it immediately
