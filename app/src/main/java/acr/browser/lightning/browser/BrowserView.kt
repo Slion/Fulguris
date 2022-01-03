@@ -17,8 +17,9 @@ interface BrowserView {
      * [aView] is in fact a WebViewEx however this could change.
      * [aWasTabAdded] True if [aView] is a newly created tab.
      * [aPreviousTabClosed] True if the current foreground tab [aView] will replaced was closed.
+     * [aGoingBack] True if we are going back rather than forward in our tab cycling.
      */
-    fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean)
+    fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean)
 
     /**
      * Only called during application shutdown process.

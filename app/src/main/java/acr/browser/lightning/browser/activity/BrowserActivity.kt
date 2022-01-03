@@ -739,14 +739,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding.fabBack.setOnClickListener {
             restartDisableFabsCountdown()
             tabSwitchBack()
-            tabSwitchApply()
+            tabSwitchApply(true)
         }
 
         // Switch forward in our tab list
         iBinding.fabForward.setOnClickListener{
             restartDisableFabsCountdown()
             tabSwitchForward()
-            tabSwitchApply()
+            tabSwitchApply(false)
         }
 
 
@@ -1498,11 +1498,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      * Apply pending tab switch
      */
-    private fun tabSwitchApply() {
+    private fun tabSwitchApply(aGoingBack: Boolean) {
         iCapturedRecentTabsIndices?.let {
             if (iRecentTabIndex >= 0) {
                 // We worked out which tab to switch to, just do it now
-                presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)), false)
+                presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)), false, aGoingBack)
                 //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
             }
         }
@@ -1598,7 +1598,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                             // Otherwise access any of the first nine tabs
                             event.keyCode - KeyEvent.KEYCODE_1
                         }
-                        presenter?.tabChanged(nextIndex,false)
+                        presenter?.tabChanged(nextIndex,false, false)
                         return true
                     }
                 }
@@ -1633,14 +1633,16 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
                         // Go forward one tab
                         tabSwitchForward()
+                        tabSwitchApply(false)
                     } else {
                         // Go back one tab
                         tabSwitchBack()
+                        tabSwitchApply(true)
                     }
 
                     //logger.log(TAG, "Switching to $iRecentTabIndex : $iCapturedRecentTabsIndices")
 
-                    tabSwitchApply()
+
 
                 }
 
@@ -2219,9 +2221,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * This function is central to browser tab switching.
      * It swaps our previous WebView with our new WebView.
      *
-     * @param aView Input is in fact a [WebViewEx].
+     * [aView] Input is in fact a [WebViewEx].
      */
-    override fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean) {
+    override fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
 
         if (currentTabView == aView) {
             return
@@ -2270,16 +2272,22 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iTabViewContainerFront = front
             //
             if (aWasTabAdded) {
-                animateIncomingTab(iTabViewContainerFront)
+                animateTabInScaleUp(iTabViewContainerFront)
             } else if (aPreviousTabClosed) {
-                animateClosingTab(iTabViewContainerBack)
+                animateTabOutScaleDown(iTabViewContainerBack)
                 if (userPreferences.onTabCloseVibrate) {
                     vibrate()
                 }
             }
             else {
                 //iBinding.imageBelow.isVisible = false // Won't be needed in this case
-                animateOutgoingTab(iTabViewContainerBack)
+                if (aGoingBack) {
+                    animateTabOutRight(iTabViewContainerBack)
+                    animateTabInRight(iTabViewContainerFront)
+                } else {
+                    animateTabOutLeft(iTabViewContainerBack)
+                    animateTabInLeft(iTabViewContainerFront)
+                }
             }
         }
         showActionBar()
@@ -2297,11 +2305,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    private val iTabAnimationDuration: Long = 300
 
     /**
      * That's intended to show the user a new tab was created
      */
-    private fun animateIncomingTab(aTab: View?) {
+    private fun animateTabInScaleUp(aTab: View?) {
         assertNull(iTabAnimator)
         aTab?.let{
             //iBinding.webViewFrame.addView(it, MATCH_PARENT)
@@ -2315,7 +2324,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iTabAnimator = it.animate()
                     .scaleY(1f)
                     .scaleX(1f)
-                    .setDuration(300)
+                    .setDuration(iTabAnimationDuration)
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             it.scaleX = 1f
@@ -2332,17 +2341,48 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
+     * Intended to show user a tab was closed.
+     */
+    private fun animateTabOutScaleDown(aTab: View?) {
+        assertNull(iTabAnimator)
+        aTab?.let{
+            iTabAnimator = it.animate()
+                    .scaleY(0f)
+                    .scaleX(0f)
+                    .setDuration(iTabAnimationDuration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            // Time to swap our frames
+                            swapTabViewsFrontToBack()
+                            // Now do the clean-up
+                            iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                removeFromParent()
+                                destroyIfNeeded()
+                            }
+                            // Reset our properties
+                            it.scaleX = 1.0f
+                            it.scaleY = 1.0f
+                            //
+                            iTabAnimator = null;
+                        }
+                    })
+        }
+    }
+
+
+    /**
      * Intended to show user a tab was sent to the background.
      * Animate a tab that's being sent to the background.
+     * Designed to work together with [animateTabInRight].
      */
-    private fun animateOutgoingTab(aTab: View?) {
+    private fun animateTabOutRight(aTab: View?) {
         assertNull(iTabAnimator)
         aTab?.let{
                 // Move our tab to a frame were we can animate it on top of our new foreground tab
             iTabAnimator = it.animate()
-                        // Move our tab outside of the screen to the left
-                        .translationX(-it.width.toFloat())
-                        .setDuration(300)
+                        // Move our tab outside of the screen to the right
+                        .translationX(it.width.toFloat())
+                        .setDuration(iTabAnimationDuration)
                         .setListener(object : AnimatorListenerAdapter() {
                             override fun onAnimationEnd(animation: Animator) {
                             // Put outgoing frame in the back
@@ -2352,50 +2392,95 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                                 removeFromParent()
                                 //destroyIfNeeded()
                             }
-                                // Reset our properties
-                                it.translationX = 0f
+                            // Reset our properties
+                            it.translationX = 0f
                             //
                             iTabAnimator = null;
                             }
                         })
-
         }
     }
 
     /**
-     * Intended to show user a tab was closed.
+     * Intended to show user a tab was sent to the background.
+     * Animate a tab that's being sent to the background.
+     * Designed to work together with [animateTabInLeft].
      */
-    private fun animateClosingTab(aTab: View?) {
+    private fun animateTabOutLeft(aTab: View?) {
         assertNull(iTabAnimator)
         aTab?.let{
+            // Move our tab to a frame were we can animate it on top of our new foreground tab
             iTabAnimator = it.animate()
-                    .scaleY(0f)
-                    .scaleX(0f)
-                    .setDuration(300)
+                    // Move our tab outside of the screen to the left
+                    .translationX(-it.width.toFloat())
+                    .setDuration(iTabAnimationDuration)
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
-                        // Time to swap our frames
-                        swapTabViewsFrontToBack()
-                        // Now do the clean-up
-                        iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                            removeFromParent()
-                            destroyIfNeeded()
-                        }
+                            // Put outgoing frame in the back
+                            swapTabViewsFrontToBack()
+                            // Animation is complete unhook that tab then
+                            it.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                removeFromParent()
+                                //destroyIfNeeded()
+                            }
                             // Reset our properties
-                            it.scaleX = 1.0f
-                            it.scaleY = 1.0f
-                        //
-                        iTabAnimator = null;
+                            it.translationX = 0f
+                            //
+                            iTabAnimator = null;
                         }
                     })
         }
     }
 
+    /**
+     * Animate an incoming tab from the left to the right.
+     * Designed to work together with [animateTabOutRight].
+     */
+    private fun animateTabInRight(aTab: View?) {
+        aTab?.let{
+            it.translationX = -it.width.toFloat()
+            // Move our tab to a frame were we can animate it on top of our new foreground tab
+            it.animate()
+                    // Move our tab outside of the screen to the right
+                    .translationX(0f)
+                    .setDuration(iTabAnimationDuration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            // Animation is complete
+                            // Reset our properties
+                            it.translationX = 0f
+                        }
+                    })
+        }
+    }
 
     /**
-     *
+     * Animate an incoming tab from the right to the left.
+     * Designed to work together with [animateTabOutLeft].
      */
-    private fun animateForwardingTab(aTab: View?) {
+    private fun animateTabInLeft(aTab: View?) {
+        aTab?.let{
+            // Initial tab position in offset to the right outside the screen
+            it.translationX = it.width.toFloat()
+            it.animate()
+                // Move our tab to its default layout position on the screen
+                .translationX(0f)
+                .setDuration(iTabAnimationDuration)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        // Animation is complete
+                        // Reset our properties
+                        it.translationX = 0f
+                    }
+                })
+        }
+    }
+
+
+    /**
+     * Used when going forward in tab history
+     */
+    private fun animateTabFlipLeft(aTab: View?) {
         assertNull(iTabAnimator)
         aTab?.let{
             // Adjust camera distance to avoid clipping
@@ -2415,9 +2500,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     *
+     * Used when going back in tab history
      */
-    private fun animateBackingTab(aTab: View?) {
+    private fun animateTabFlipRight(aTab: View?) {
         assertNull(iTabAnimator)
 
         aTab?.let{
@@ -2464,7 +2549,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     override fun tabClicked(position: Int) {
         // Switch tab
-        presenter?.tabChanged(position,false)
+        presenter?.tabChanged(position,false, false)
         // Keep the drawer open while the tab change animation in running
         // Has the added advantage that closing of the drawer itself should be smoother as the webview had a bit of time to load
         mainHandler.postDelayed({ closePanels(null) }, 350)
@@ -2621,7 +2706,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             if (iTabAnimator==null &&
                     //…and user wants animation
                     userPreferences.onTabBackShowAnimation) {
-                animateBackingTab(iTabViewContainerFront)
+                animateTabFlipRight(iTabViewContainerFront)
             }
         }
     }
@@ -2637,7 +2722,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             if (iTabAnimator==null
                     //…and user wants animation
                     && userPreferences.onTabBackShowAnimation) {
-                animateForwardingTab(iTabViewContainerFront)
+                animateTabFlipLeft(iTabViewContainerFront)
             }
         }
     }
