@@ -174,8 +174,8 @@
     <string name="blocklist_update_description">Обновления будут выполняться с выбранной периодичностью, если в файле фильтров не указан более длительный интервал</string>
     <string name="blocklist_update_now">Обновить списки сейчас</string>
     <string name="blocklist_last_update">Последнее обновление: %s</string>
-    <string name="blocklist_updating">Updating…</string>
-    <string name="blocklist_update_error">Error while updating filters list %s</string>
+    <string name="blocklist_updating">Обновление...</string>
+    <string name="blocklist_update_error">Сбой при обновлении списка фильтров %s</string>
     <string name="add_blocklist">Добавить файл фильтров</string>
     <string name="add_blocklist_hint">Вы можете выбрать списки хостов или любой список, совместимый с правилами AdBlockPlus</string>
     <string name="enable_blocklist">Включить этот список</string>
@@ -351,7 +351,7 @@
         <item>Доменное имя</item>
         <item>Адрес</item>
         <item>Заголовок</item>
-        <item>Shortened URL</item>
+        <item>Сокращённая ссылка</item>
     </string-array>
     <string name="invert_color">Инвертировать цвета</string>
     <string name="settings_black_status_bar">Тёмная строка состояния</string>
