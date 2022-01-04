@@ -10,7 +10,6 @@ import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.INTENT_ORIGIN
 import acr.browser.lightning.constant.Uris
-import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
@@ -23,9 +22,10 @@ import acr.browser.lightning.view.*
 import android.app.Activity
 import android.content.Intent
 import android.webkit.URLUtil
-import io.reactivex.Scheduler
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.subscribeBy
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Presenter in charge of keeping track of the current tab and setting the current tab of the
@@ -36,17 +36,15 @@ class BrowserPresenter(
     private val isIncognito: Boolean,
     private val userPreferences: UserPreferences,
     private val tabsModel: TabsManager,
-    @MainScheduler private val mainScheduler: Scheduler,
     private val homePageFactory: HomePageFactory,
     private val incognitoPageFactory: IncognitoPageFactory,
     private val bookmarkPageFactory: BookmarkPageFactory,
     public val closedTabs: RecentTabsModel,
     private val logger: Logger
-) {
+): ViewModel() {
 
     private var currentTab: LightningView? = null
     private var shouldClose: Boolean = false
-    private var sslStateSubscription: Disposable? = null
 
     init {
         tabsModel.addTabNumberChangedListener(iBrowserView::updateTabNumber)
@@ -77,32 +75,32 @@ class BrowserPresenter(
         BrowserApp.instance.applicationContext.apply {
             toast(getString(R.string.session_switched,aSessionName))
         }
-
     }
 
+
     /**
-     * Initializes the tab manager with the new intent that is handed in by the BrowserActivity.
-     *
-     * @param intent the intent to handle, may be null.
+     * Initializes our tab manager.
      */
     fun setupTabs() {
-        tabsModel.initializeTabs(iBrowserView as Activity, isIncognito)
-            .subscribeBy(
-                onSuccess = {
-                    // At this point we always have at least a tab in the tab manager
-                    iBrowserView.notifyTabViewInitialized()
-                    iBrowserView.updateTabNumber(tabsModel.size())
-                    if (tabsModel.savedRecentTabsIndices.count() == tabsModel.allTabs.count()) {
-                        // Switch to saved current tab if any, otherwise the last tab I guess
-                        tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(it),false, false)
-                    } else {
-                        // Number of tabs does not match the number of recent tabs saved
-                        // That means we were most certainly launched from another app opening a new tab
-                        // Assuming our new tab is the last one we switch to it
-                        tabChanged(tabsModel.positionOf(it),false, false)
-                    }
-                }
-            )
+        viewModelScope.launch {
+            delay(1L)
+            val tabs = tabsModel.initializeTabs(iBrowserView as Activity, isIncognito)
+            // At this point we always have at least a tab in the tab manager
+            iBrowserView.notifyTabViewInitialized()
+            iBrowserView.updateTabNumber(tabsModel.size())
+            if (tabsModel.savedRecentTabsIndices.count() == tabsModel.allTabs.count()) {
+                // Switch to saved current tab if any, otherwise the last tab I guess
+                tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(tabs.last()),false, false)
+            } else {
+                // Number of tabs does not match the number of recent tabs saved
+                // That means we were most certainly launched from another app opening a new tab
+                // Assuming our new tab is the last one we switch to it
+                tabChanged(tabsModel.positionOf(tabs.last()),false, false)
+            }
+            logger.log(TAG,"After from coroutine")
+        }
+
+        logger.log(TAG,"After from main")
     }
 
     /**
@@ -159,11 +157,6 @@ class BrowserPresenter(
 
             // Must come late as it needs a webview
             iBrowserView.updateSslState(aTab.currentSslState() ?: SslState.None)
-            sslStateSubscription?.dispose()
-            sslStateSubscription = aTab
-                    .sslStateObservable()
-                    .observeOn(mainScheduler)
-                    ?.subscribe(iBrowserView::updateSslState)
         }
 
         currentTab = aTab
@@ -335,7 +328,6 @@ class BrowserPresenter(
     fun shutdown() {
         onTabChanged(null,false, false, false)
         tabsModel.cancelPendingWork()
-        sslStateSubscription?.dispose()
     }
 
     /**

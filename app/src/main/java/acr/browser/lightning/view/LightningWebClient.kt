@@ -45,8 +45,6 @@ import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URISyntaxException
@@ -87,12 +85,10 @@ class LightningWebClient(
 
     var sslState: SslState = SslState.None
         private set(value) {
-            sslStateSubject.onNext(value)
             field = value
+            uiController.updateSslState(field)
         }
 
-
-    private val sslStateSubject: PublishSubject<SslState> = PublishSubject.create()
 
     init {
         activity.injector.inject(this)
@@ -100,7 +96,6 @@ class LightningWebClient(
         adBlock = chooseAdBlocker()
     }
 
-    fun sslStateObservable(): Observable<SslState> = sslStateSubject.hide()
 
     fun updatePreferences() {
         adBlock = chooseAdBlocker()

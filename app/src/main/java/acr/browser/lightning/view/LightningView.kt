@@ -51,7 +51,6 @@ import androidx.collection.ArrayMap
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -397,8 +396,6 @@ class LightningView(
     }
 
     fun currentSslState(): SslState = lightningWebClient.sslState
-
-    fun sslStateObservable(): Observable<SslState> = lightningWebClient.sslStateObservable()
 
     /**
      * This method loads the homepage for the browser. Either it loads the URL stored as the
