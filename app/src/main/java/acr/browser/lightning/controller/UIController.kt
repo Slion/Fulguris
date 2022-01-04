@@ -6,6 +6,7 @@ package acr.browser.lightning.controller
 import acr.browser.lightning.browser.TabsManager
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.dialog.LightningDialogBuilder
+import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.view.LightningView
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
@@ -216,4 +217,10 @@ interface UIController {
      *
      */
     fun executeAction(@IdRes id: Int): Boolean
+
+    /**
+     * TODO: Defined both in BrowserView and UIController
+     * Sort out that mess.
+     */
+    fun updateSslState(sslState: SslState)
 }

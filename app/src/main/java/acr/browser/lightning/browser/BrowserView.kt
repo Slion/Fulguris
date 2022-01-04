@@ -32,6 +32,10 @@ interface BrowserView {
 
     fun updateTabNumber(number: Int)
 
+    /**
+     * TODO: Define both in BrowserView and UIController
+     * Sort out that mess.
+     */
     fun updateSslState(sslState: SslState)
 
     fun closeBrowser()

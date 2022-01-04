@@ -332,7 +332,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 isIncognito(),
                 userPreferences,
                 tabsManager,
-                mainScheduler,
                 homePageFactory,
                 incognitoPageFactory,
                 bookmarkPageFactory,
@@ -2132,6 +2131,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsView?.tabsInitialized()
     }
 
+    /**
+     * TODO: Defined both in [BrowserView] and [UIController]
+     * Sort out that mess.
+     */
     override fun updateSslState(sslState: SslState) {
         iBindingToolbarContent.addressBarInclude.searchSslStatus.setImageDrawable(createSslDrawableForState(sslState))
 

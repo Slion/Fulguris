@@ -42,8 +42,8 @@ public final class FileUtils {
      * @param bundle the bundle to store in persistent storage.
      * @param name   the name of the file to store the bundle in.
      */
-    public static Completable writeBundleToStorage(final @NonNull Application app, final Bundle bundle, final @NonNull String name) {
-        return Completable.fromAction(() -> {
+    public static void writeBundleToStorage(final @NonNull Application app, final Bundle bundle, final @NonNull String name) {
+
             File outputFile = new File(app.getFilesDir(), name);
             FileOutputStream outputStream = null;
             try {
@@ -60,7 +60,6 @@ public final class FileUtils {
             } finally {
                 Utils.close(outputStream);
             }
-        });
     }
 
     /**
