@@ -468,7 +468,7 @@
     <string name="session_prompt_confirm_deletion_title">Confirm deletion</string>
     <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
     <string name="session_switched">Switched to \"%s\"</string>
-    <string name="busy">Busy, try again shortly.\"</string>
+    <string name="busy">Busy, try again shortly.</string>
     <string name="invalid_character_removed">Invalid character removed!</string>
     <string name="invalid_characters_removed">Invalid characters removed!</string>
     <string name="reading_mode_image_copyright">Image attributed to</string>
