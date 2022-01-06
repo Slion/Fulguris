@@ -26,7 +26,6 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.SessionListBinding
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -64,7 +63,7 @@ class SessionsPopupWindow : PopupWindow {
                 aBinding: SessionListBinding = SessionListBinding.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
-        aBinding.root.context.injector.inject(this)
+        //aBinding.root.context.injector.inject(this)
         // Needed to make sure our bottom sheet shows below our session pop-up
         PopupWindowCompat.setWindowLayoutType(this, WindowManager.LayoutParams.FIRST_SUB_WINDOW + 5);
 

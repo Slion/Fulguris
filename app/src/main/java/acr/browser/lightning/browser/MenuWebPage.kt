@@ -27,8 +27,8 @@ import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.MenuWebPageBinding
+import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isAppScheme
@@ -41,17 +41,15 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
+import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
 
 class MenuWebPage : PopupWindow {
 
-    @Inject
-    internal lateinit var bookmarkModel: BookmarkRepository
-    @Inject
-    lateinit var iUserPreferences: UserPreferences
-    @Inject
-    lateinit var abpUserRules: AbpUserRules
+    val bookmarkModel: BookmarkRepository
+    val iUserPreferences: UserPreferences
+    val abpUserRules: AbpUserRules
 
     var iBinding: MenuWebPageBinding
     var iIsIncognito = false
@@ -59,7 +57,7 @@ class MenuWebPage : PopupWindow {
     constructor(layoutInflater: LayoutInflater, aBinding: MenuWebPageBinding = MenuWebPage.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
-        aBinding.root.context.injector.inject(this)
+        //aBinding.root.context.injector.inject(this)
 
         iBinding = aBinding
 
@@ -108,7 +106,10 @@ class MenuWebPage : PopupWindow {
                 .build()
          */
 
-
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(iBinding.root.context.applicationContext, HiltEntryPoint::class.java)
+        bookmarkModel = hiltEntryPoint.bookmarkRepository
+        iUserPreferences = hiltEntryPoint.userPreferences
+        abpUserRules = hiltEntryPoint.abpUserRules
 
     }
 

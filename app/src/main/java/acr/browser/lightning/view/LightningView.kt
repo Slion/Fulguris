@@ -11,10 +11,7 @@ import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
-import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.di.injector
+import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
 import acr.browser.lightning.extensions.*
@@ -51,6 +48,8 @@ import androidx.collection.ArrayMap
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -196,7 +195,6 @@ class LightningView(
      */
     var searchActive = false
 
-
     /**
      *
      */
@@ -212,12 +210,14 @@ class LightningView(
 
     private val maxFling: Float
 
-    @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject internal lateinit var dialogBuilder: LightningDialogBuilder
-    @Inject internal lateinit var proxyUtils: ProxyUtils
-    @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
-    @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
-    @Inject lateinit var networkConnectivityModel: NetworkConnectivityModel
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
+
+    val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
+    val dialogBuilder: LightningDialogBuilder = hiltEntryPoint.dialogBuilder
+    val proxyUtils: ProxyUtils = hiltEntryPoint.proxyUtils
+    val databaseScheduler: Scheduler = hiltEntryPoint.databaseScheduler()
+    val mainScheduler: Scheduler = hiltEntryPoint.mainScheduler()
+    val networkConnectivityModel: NetworkConnectivityModel = hiltEntryPoint.networkConnectivityModel
 
     private val networkDisposable: Disposable
 
@@ -313,7 +313,7 @@ class LightningView(
      * Constructor
      */
     init {
-        activity.injector.inject(this)
+        //activity.injector.inject(this)
         uiController = activity as UIController
         titleInfo = LightningViewTitle(activity)
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()

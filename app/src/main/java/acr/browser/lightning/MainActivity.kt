@@ -6,9 +6,12 @@ import android.os.Build
 import android.view.KeyEvent
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
+import javax.inject.Inject
 
-class MainActivity : BrowserActivity() {
+@AndroidEntryPoint
+class MainActivity @Inject constructor(): BrowserActivity() {
 
     @Suppress("DEPRECATION")
     public override fun updateCookiePreference(): Completable = Completable.fromAction {

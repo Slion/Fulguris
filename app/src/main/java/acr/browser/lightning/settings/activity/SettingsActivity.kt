@@ -12,10 +12,12 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val TITLE_TAG = "settingsActivityTitle"
 const val SETTINGS_CLASS_NAME = "ClassName"
 
+@AndroidEntryPoint
 class SettingsActivity : ThemedSettingsActivity(),
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 

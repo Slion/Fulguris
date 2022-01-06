@@ -38,11 +38,13 @@ import androidx.core.content.ContextCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * The general settings of the app.
  */
+@AndroidEntryPoint
 class GeneralSettingsFragment : AbstractSettingsFragment() {
 
     @Inject lateinit var searchEngineProvider: SearchEngineProvider
@@ -65,7 +67,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-        injector.inject(this)
+        //injector.inject(this)
 
         proxyChoices = resources.getStringArray(R.array.proxy_choices_array)
 

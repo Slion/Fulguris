@@ -26,7 +26,6 @@ import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog.setDialogSize
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.settings.activity.ThemedSettingsActivity
@@ -58,6 +57,7 @@ import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
 import net.dankito.readability4j.Readability4J
@@ -67,7 +67,7 @@ import java.net.URL
 import java.util.*
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class ReadingActivity : ThemedSettingsActivity(), TextToSpeech.OnInitListener {
     @JvmField
     @BindView(R.id.textViewTitle)
@@ -100,11 +100,11 @@ class ReadingActivity : ThemedSettingsActivity(), TextToSpeech.OnInitListener {
     private val mPageLoaderSubscription: Disposable? = null
     private val originalHtml: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
-        this.injector.inject(this)
+        super.onCreate(savedInstanceState)
+        //this.injector.inject(this)
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.fade_out_scale)
         mInvert = mUserPreferences!!.invertColors
         iTtsEngine = TextToSpeech(this, this)
-        super.onCreate(savedInstanceState)
 
         // Change our theme if inverted
         if (mInvert) {

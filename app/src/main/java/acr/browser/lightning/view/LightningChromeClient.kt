@@ -2,8 +2,7 @@ package acr.browser.lightning.view
 
 import acr.browser.lightning.R
 import acr.browser.lightning.controller.UIController
-import acr.browser.lightning.di.DiskScheduler
-import acr.browser.lightning.di.injector
+import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.resizeAndShow
@@ -27,8 +26,8 @@ import android.webkit.*
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.Scheduler
-import javax.inject.Inject
 
 class LightningChromeClient(
     private val activity: Activity,
@@ -37,13 +36,14 @@ class LightningChromeClient(
 
     private val geoLocationPermissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     private val uiController: UIController
-    @Inject internal lateinit var faviconModel: FaviconModel
-    @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject internal lateinit var webRtcPermissionsModel: WebRtcPermissionsModel
-    @Inject @field:DiskScheduler internal lateinit var diskScheduler: Scheduler
+
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
+    val faviconModel: FaviconModel = hiltEntryPoint.faviconModel
+    val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
+    val webRtcPermissionsModel: WebRtcPermissionsModel = hiltEntryPoint.webRtcPermissionsModel
+    val diskScheduler: Scheduler = hiltEntryPoint.diskScheduler()
 
     init {
-        activity.injector.inject(this)
         uiController = activity as UIController
     }
 

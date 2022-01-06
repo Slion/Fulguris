@@ -5,6 +5,7 @@
 package acr.browser.lightning.locale;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.core.text.TextUtilsCompat;
@@ -20,8 +21,11 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import acr.browser.lightning.di.UserPrefs;
 import acr.browser.lightning.settings.preferences.UserPreferences;
+import dagger.hilt.android.AndroidEntryPoint;
 
+//@AndroidEntryPoint
 public abstract class LocaleAwareActivity extends AppCompatActivity {
 
     private static final String TAG = "LocaleAwareActivity";
@@ -30,6 +34,9 @@ public abstract class LocaleAwareActivity extends AppCompatActivity {
     @Inject
     public UserPreferences userPreferences;
 
+    @UserPrefs
+    @Inject
+    public SharedPreferences userSharedPreferences;
 
     /**
      * Is called whenever the application locale has changed. Your Activity must either update
@@ -39,12 +46,13 @@ public abstract class LocaleAwareActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         mLastLocale = LocaleUtils.requestedLocale(userPreferences.getLocale());
         LocaleUtils.updateLocale(this, mLastLocale);
         setLayoutDirection(getWindow().getDecorView(), mLastLocale);
 
-        super.onCreate(savedInstanceState);
+
     }
 
 

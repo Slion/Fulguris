@@ -3,6 +3,7 @@
  */
 package acr.browser.lightning.settings.fragment
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.bookmark.LegacyBookmarkImporter
 import acr.browser.lightning.bookmark.NetscapeBookmarkFormatImporter
@@ -29,12 +30,17 @@ import android.os.Bundle
 import android.os.Environment
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceManager
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.components.SingletonComponent
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -44,15 +50,18 @@ import org.json.JSONObject
 import java.io.*
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
+@AndroidEntryPoint
 class BackupSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var bookmarkRepository: BookmarkRepository
     @Inject internal lateinit var application: Application
     @Inject internal lateinit var netscapeBookmarkFormatImporter: NetscapeBookmarkFormatImporter
     @Inject internal lateinit var legacyBookmarkImporter: LegacyBookmarkImporter
-    @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
-    @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
+    @Inject @DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
+    @Inject @MainScheduler internal lateinit var mainScheduler: Scheduler
     @Inject internal lateinit var logger: Logger
 
     // Need those to implement settings reset
@@ -62,7 +71,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     @Inject @PrefsPortrait lateinit var prefsPortrait: SharedPreferences
     @Inject @AdBlockPrefs lateinit var prefsAdBlock: SharedPreferences
     //
-    @Inject lateinit var tabsManager: TabsManager
+    private val tabsManager: TabsManager = BrowserApp.instance.tabsManager!!
 
     private var importSubscription: Disposable? = null
     private var exportSubscription: Disposable? = null
@@ -81,7 +90,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-        injector.inject(this)
+        //injector.inject(this)
 
         PermissionsManager
             .getInstance()

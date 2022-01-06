@@ -1,5 +1,6 @@
 package acr.browser.lightning.browser
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.sessions.Session
 import acr.browser.lightning.extensions.snackbar
@@ -15,6 +16,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -26,7 +28,7 @@ import javax.inject.Singleton
  * A manager singleton that holds all the [LightningView] and tracks the current tab. It handles
  * creation, deletion, restoration, state saving, and switching of tabs and sessions.
  */
-@Singleton
+@HiltViewModel
 class TabsManager @Inject constructor(
         private val application: Application,
         private val searchEngineProvider: SearchEngineProvider,
@@ -67,6 +69,11 @@ class TabsManager @Inject constructor(
     private var postInitializationWorkList = mutableListOf<InitializationListener>()
 
     init {
+        // BAD: I know
+        // We put this there so that BackupSettingsFragment use this TabsManager
+        // Hilt does not allow ViewModels to be Singleton in the application scope apparently
+        BrowserApp.instance.tabsManager = this
+
         addTabNumberChangedListener {
             // Update current session tab count
             //TODO: Have a getCurrentSession function
@@ -80,6 +87,11 @@ class TabsManager @Inject constructor(
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        shutdown()
+        BrowserApp.instance.tabsManager = null;
+    }
 
     /**
      */

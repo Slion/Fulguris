@@ -24,31 +24,32 @@ import android.content.Intent
 import android.webkit.URLUtil
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Presenter in charge of keeping track of the current tab and setting the current tab of the
  * browser.
+ * SL: Should we merge this class with TabsManager?
  */
-class BrowserPresenter(
-    private val iBrowserView: BrowserView,
-    private val isIncognito: Boolean,
+@HiltViewModel
+class BrowserPresenter @Inject constructor(
     private val userPreferences: UserPreferences,
-    private val tabsModel: TabsManager,
     private val homePageFactory: HomePageFactory,
     private val incognitoPageFactory: IncognitoPageFactory,
     private val bookmarkPageFactory: BookmarkPageFactory,
-    public val closedTabs: RecentTabsModel,
     private val logger: Logger
 ): ViewModel() {
 
     private var currentTab: LightningView? = null
     private var shouldClose: Boolean = false
 
-    init {
-        tabsModel.addTabNumberChangedListener(iBrowserView::updateTabNumber)
-    }
+    lateinit var iBrowserView: BrowserView
+    var isIncognito: Boolean = false
+    lateinit var closedTabs: RecentTabsModel
+    lateinit var tabsModel: TabsManager
 
     /**
      * Switch to the session with the given name

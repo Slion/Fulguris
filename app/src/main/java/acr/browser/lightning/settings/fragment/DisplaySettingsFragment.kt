@@ -7,7 +7,6 @@ import acr.browser.lightning.AccentTheme
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.SearchBoxDisplayChoice
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -24,8 +23,10 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
@@ -42,7 +43,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-        injector.inject(this)
+        //injector.inject(this)
 
         // Setup theme selection
         clickableDynamicPreference(

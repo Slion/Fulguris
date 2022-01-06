@@ -25,7 +25,6 @@ package acr.browser.lightning.settings.fragment
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.Sponsorship
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -36,6 +35,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.android.billingclient.api.*
+import dagger.hilt.android.AndroidEntryPoint
 // See: https://stackoverflow.com/a/54188472/3969362
 import org.threeten.bp.Period;
 import javax.inject.Inject
@@ -43,12 +43,10 @@ import javax.inject.Inject
 /**
  * Manage in-app purchases and subscriptions.
  */
+@AndroidEntryPoint
 class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         PurchasesUpdatedListener,
         BillingClientStateListener {
-
-    //@Inject
-    //internal lateinit var userPreferences: UserPreferences
 
     private val LOG_TAG = "SponsorshipSettingsFragment"
 
@@ -71,8 +69,6 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-
-        injector.inject(this)
 
         // Connect our billing client
         context?.let {

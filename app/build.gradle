@@ -20,13 +20,16 @@
  * All Rights Reserved.
  */
 
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-//apply plugin: 'com.getkeepsafe.dexcount'
-apply plugin: 'jacoco'
-apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'de.mobilej.unmock'
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
+    id 'jacoco'
+    id 'com.github.ben-manes.versions'
+    id 'de.mobilej.unmock'
+}
 
 // See: https://stackoverflow.com/a/53408667/3969362
 // Conditionally apply Firebase Google Plugins to flavors that needs it
@@ -114,8 +117,8 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 163
-            versionName "1.7.22"
+            versionCode 165
+            versionName "1.7.24"
         }
 
         styx {
@@ -238,16 +241,6 @@ jacoco {
     toolVersion = '0.7.9' // See http://www.eclemma.org/jacoco/
 }
 
-/*
-dexcount {
-    includeClasses = false
-    includeFieldCount = false
-    format = "tree"
-    orderByMethodCount = true
-    verbose = false
-}
-*/
-
 // unMock is required for tests that use android.net.Uri
 unMock {
     keepStartingWith "libcore."
@@ -307,6 +300,9 @@ dependencies {
     final def daggerVersion = '2.40.5'
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "com.google.dagger:hilt-android:$daggerVersion"
+    kapt "com.google.dagger:hilt-compiler:$daggerVersion"
+
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
     // view binding

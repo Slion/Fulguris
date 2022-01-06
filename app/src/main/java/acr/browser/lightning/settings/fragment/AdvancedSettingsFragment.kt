@@ -1,14 +1,15 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.os.Bundle
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * The advanced settings of the app.
  */
+@AndroidEntryPoint
 class AdvancedSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
@@ -25,7 +26,7 @@ class AdvancedSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-        injector.inject(this)
+        //injector.inject(this)
     }
 
 
