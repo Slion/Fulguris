@@ -24,26 +24,16 @@ package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
 import acr.browser.lightning.di.UserPrefs
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.utils.IntentUtils
 import android.app.Activity
 import android.content.SharedPreferences
-import android.content.pm.ResolveInfo
-import android.content.res.Resources
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.preference.SwitchPreferenceCompat
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class AppsSettingsFragment : AbstractSettingsFragment() {
-
-    //@Inject
-    //internal lateinit var userPreferences: UserPreferences
 
     @Inject
     @UserPrefs
@@ -62,7 +52,7 @@ class AppsSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-        injector.inject(this)
+        //injector.inject(this)
 
         val intentUtils = IntentUtils(activity as Activity)
 

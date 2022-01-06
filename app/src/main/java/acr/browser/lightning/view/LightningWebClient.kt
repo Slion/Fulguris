@@ -3,14 +3,16 @@ package acr.browser.lightning.view
 import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AdBlocker
+import acr.browser.lightning.adblock.NoOpAdBlocker
 import acr.browser.lightning.browser.JavaScriptChoice
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.html.homepage.HomePageFactory
@@ -45,6 +47,8 @@ import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URISyntaxException
@@ -62,15 +66,19 @@ class LightningWebClient(
     private val uiController: UIController
     private val intentUtils = IntentUtils(activity)
 
-    @Inject internal lateinit var proxyUtils: ProxyUtils
-    @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject @UserPrefs internal lateinit var preferences: SharedPreferences
-    @Inject internal lateinit var sslWarningPreferences: SslWarningPreferences
-    @Inject internal lateinit var logger: Logger
-    @Inject internal lateinit var textReflowJs: TextReflow
-    @Inject internal lateinit var invertPageJs: InvertPage
-    @Inject internal lateinit var setMetaViewport: SetMetaViewport
-    @Inject internal lateinit var homePageFactory: HomePageFactory
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
+
+    val proxyUtils: ProxyUtils = hiltEntryPoint.proxyUtils
+    val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
+    val preferences: SharedPreferences = hiltEntryPoint.userSharedPreferences()
+    val sslWarningPreferences: SslWarningPreferences = hiltEntryPoint.sslWarningPreferences
+    val logger: Logger = hiltEntryPoint.logger
+    val textReflowJs: TextReflow = hiltEntryPoint.textReflowJs
+    val invertPageJs: InvertPage = hiltEntryPoint.invertPageJs
+    val setMetaViewport: SetMetaViewport = hiltEntryPoint.setMetaViewport
+    val homePageFactory: HomePageFactory = hiltEntryPoint.homePageFactory
+    val abpBlocker: AbpBlocker = hiltEntryPoint.abpBlocker
+    val noopBlocker: NoOpAdBlocker = hiltEntryPoint.noopBlocker
 
     private var adBlock: AdBlocker
 
@@ -91,7 +99,7 @@ class LightningWebClient(
 
 
     init {
-        activity.injector.inject(this)
+        //activity.injector.inject(this)
         uiController = activity as UIController
         adBlock = chooseAdBlocker()
     }
@@ -102,9 +110,9 @@ class LightningWebClient(
     }
 
     private fun chooseAdBlocker(): AdBlocker = if (userPreferences.adBlockEnabled) {
-        activity.injector.provideAbpAdBlocker()
+        abpBlocker
     } else {
-        activity.injector.provideNoOpAdBlocker()
+        noopBlocker
     }
 
     /**

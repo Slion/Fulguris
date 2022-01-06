@@ -25,7 +25,6 @@ package acr.browser.lightning.settings.fragment
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.PrefKeys
 import acr.browser.lightning.device.ScreenSize
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.ConfigurationPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -33,11 +32,13 @@ import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.TwoStatePreference
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * Configuration settings of the app.
  */
+@AndroidEntryPoint
 abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
@@ -49,7 +50,7 @@ abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
     abstract fun configurationPreferences() : ConfigurationPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injector.inject(this)
+        //injector.inject(this)
         super.onCreate(savedInstanceState)
         // At this stage our preferences have been created
         // Go through our defaults and set them as needed

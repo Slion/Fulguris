@@ -26,17 +26,15 @@ import acr.browser.lightning.AccentTheme
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
 import acr.browser.lightning.ThemedActivity
-import acr.browser.lightning.di.injector
-import android.content.Intent
 import android.os.Bundle
 
-
+//@AndroidEntryPoint
 abstract class ThemedBrowserActivity : ThemedActivity() {
 
     private var shouldRunOnResumeActions = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injector.inject(this)
+        //injector.inject(this)
         super.onCreate(savedInstanceState)
     }
 

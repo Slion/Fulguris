@@ -4,8 +4,8 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.MenuMainBinding
+import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import android.graphics.drawable.ColorDrawable
@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
+import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
 /**
@@ -22,18 +23,13 @@ import javax.inject.Inject
  */
 class MenuMain : PopupWindow {
 
-    @Inject
-    internal lateinit var bookmarkModel: BookmarkRepository
-    @Inject
-    lateinit var iUserPreferences: UserPreferences
-
     var iBinding: MenuMainBinding
     var iIsIncognito = false
 
     constructor(layoutInflater: LayoutInflater, aBinding: MenuMainBinding = MenuMain.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
-        aBinding.root.context.injector.inject(this)
+        //aBinding.root.context.injector.inject(this)
 
         iBinding = aBinding
 
@@ -74,7 +70,15 @@ class MenuMain : PopupWindow {
                 .build()
          */
 
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(iBinding.root.context.applicationContext, HiltEntryPoint::class.java)
+        bookmarkModel = hiltEntryPoint.bookmarkRepository
+        iUserPreferences = hiltEntryPoint.userPreferences
     }
+
+    val bookmarkModel: BookmarkRepository
+    val iUserPreferences: UserPreferences
+
+
 
     /**
      * Scroll to the start of our menu.

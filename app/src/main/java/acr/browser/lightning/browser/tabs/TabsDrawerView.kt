@@ -5,7 +5,6 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.TabDrawerViewBinding
 import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
@@ -44,7 +43,7 @@ class TabsDrawerView @JvmOverloads constructor(
 
     init {
 
-        context.injector.inject(this)
+        //context.injector.inject(this)
 
         orientation = VERTICAL
         isClickable = true

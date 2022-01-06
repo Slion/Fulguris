@@ -29,7 +29,6 @@ import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.asFolder
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.extensions.setImageForTheme
 import acr.browser.lightning.favicon.FaviconModel
@@ -67,7 +66,7 @@ class BookmarksAdapter(
     internal lateinit var databaseScheduler: Scheduler
 
     init {
-        context.injector.inject(this)
+        //context.injector.inject(this)
     }
 
     fun itemAt(position: Int): BookmarksViewModel = bookmarks[position]

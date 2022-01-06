@@ -19,11 +19,14 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.*
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 import javax.inject.Inject
+
 
 class SuggestionsAdapter(
     context: Context,
@@ -32,13 +35,15 @@ class SuggestionsAdapter(
 
     private var filteredList: List<WebPage> = emptyList()
 
-    @Inject internal lateinit var bookmarkRepository: BookmarkRepository
-    @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject internal lateinit var historyRepository: HistoryRepository
-    @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
-    @Inject @field:NetworkScheduler internal lateinit var networkScheduler: Scheduler
-    @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
-    @Inject internal lateinit var searchEngineProvider: SearchEngineProvider
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(context.applicationContext, HiltEntryPoint::class.java)
+
+    val bookmarkRepository = hiltEntryPoint.bookmarkRepository
+    val userPreferences = hiltEntryPoint.userPreferences
+    val historyRepository = hiltEntryPoint.historyRepository
+    val databaseScheduler = hiltEntryPoint.databaseScheduler()
+    val networkScheduler = hiltEntryPoint.networkScheduler()
+    val mainScheduler = hiltEntryPoint.mainScheduler()
+    val searchEngineProvider = hiltEntryPoint.searchEngineProvider
 
     private var allBookmarks: List<Bookmark.Entry> = emptyList()
     private val searchFilter = SearchFilter(this)
@@ -62,7 +67,7 @@ class SuggestionsAdapter(
     private val layoutInflater = LayoutInflater.from(context)
 
     init {
-        context.injector.inject(this)
+        //context.injector.inject(this)
 
         suggestionsRepository = if (isIncognito) {
             NoOpSuggestionsRepository()

@@ -23,11 +23,17 @@
 package acr.browser.lightning
 
 import acr.browser.lightning.browser.activity.ThemedBrowserActivity
+import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SplashActivity : ThemedBrowserActivity() {
+@Singleton
+@AndroidEntryPoint
+class SplashActivity @Inject constructor(): ThemedBrowserActivity() {
 
     val mHandler = Handler()
 

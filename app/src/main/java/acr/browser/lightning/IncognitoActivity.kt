@@ -7,9 +7,12 @@ import android.net.Uri
 import android.os.Build
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
+import javax.inject.Inject
 
-class IncognitoActivity : BrowserActivity() {
+@AndroidEntryPoint
+class IncognitoActivity @Inject constructor(): BrowserActivity() {
 
     override fun provideThemeOverride(): AppTheme? = AppTheme.BLACK
 

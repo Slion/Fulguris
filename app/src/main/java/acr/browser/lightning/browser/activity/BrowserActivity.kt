@@ -127,13 +127,16 @@ import android.view.KeyboardShortcutGroup
 import androidx.annotation.RequiresApi
 
 import android.view.MotionEvent
+import androidx.activity.viewModels
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
  *
  */
+@AndroidEntryPoint
 abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIController, OnClickListener {
 
     // Notifications
@@ -189,7 +192,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     @Inject @field:DiskScheduler lateinit var diskScheduler: Scheduler
     @Inject @field:DatabaseScheduler lateinit var databaseScheduler: Scheduler
     @Inject @field:MainScheduler lateinit var mainScheduler: Scheduler
-    @Inject lateinit var tabsManager: TabsManager
     @Inject lateinit var homePageFactory: HomePageFactory
     @Inject lateinit var incognitoPageFactory: IncognitoPageFactory
     @Inject lateinit var incognitoPageInitializer: IncognitoPageInitializer
@@ -204,8 +206,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     @Inject lateinit var logger: Logger
     @Inject lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject lateinit var exitCleanup: ExitCleanup
-
     @Inject lateinit var abpUserRules: AbpUserRules
+    //
+    val tabsManager: TabsManager by viewModels()
+    val presenter: BrowserPresenter by viewModels()
+
     // HTTP
     private lateinit var queue: RequestQueue
 
@@ -214,7 +219,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private val backgroundDrawable = ColorDrawable()
     private var incognitoNotification: IncognitoNotification? = null
 
-    var presenter: BrowserPresenter? = null
     private var tabsView: TabsView? = null
     private var bookmarksView: BookmarksDrawerView? = null
 
@@ -271,7 +275,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        injector.inject(this)
+        //injector.inject(this)
 
         createKeyboardShortcuts()
 
@@ -326,18 +330,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 }
             }
         }
+        tabsManager.addTabNumberChangedListener(::updateTabNumber)
 
-        presenter = BrowserPresenter(
-                this,
-                isIncognito(),
-                userPreferences,
-                tabsManager,
-                homePageFactory,
-                incognitoPageFactory,
-                bookmarkPageFactory,
-                RecentTabsModel(),
-                logger
-        )
+        // Setup our presenter
+        presenter.iBrowserView = this
+        presenter.closedTabs = RecentTabsModel()
+        presenter.isIncognito = isIncognito()
+        presenter.tabsModel = tabsManager
+
 
         initialize(savedInstanceState)
 

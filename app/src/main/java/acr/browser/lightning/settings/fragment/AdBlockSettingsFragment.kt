@@ -4,9 +4,6 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.AbpUpdateMode
-import acr.browser.lightning.constant.Schemes
-import acr.browser.lightning.di.injector
-import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.extensions.withSingleChoiceItems
@@ -26,6 +23,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.*
@@ -42,6 +40,7 @@ import javax.inject.Inject
 /**
  * Settings for the ad block mechanic.
  */
+@AndroidEntryPoint
 class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
@@ -77,7 +76,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-        injector.inject(this)
+        //injector.inject(this)
 
         switchPreference(
             preference = getString(R.string.pref_key_content_control),

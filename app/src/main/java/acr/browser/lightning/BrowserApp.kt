@@ -1,13 +1,11 @@
 package acr.browser.lightning
 
+import acr.browser.lightning.browser.TabsManager
 import acr.browser.lightning.database.bookmark.BookmarkExporter
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.device.BuildType
-import acr.browser.lightning.di.AppComponent
-import acr.browser.lightning.di.DaggerAppComponent
 import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.locale.LocaleUtils
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.DeveloperPreferences
@@ -25,12 +23,14 @@ import android.os.StrictMode
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
+import dagger.hilt.android.HiltAndroidApp
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.plugins.RxJavaPlugins
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
+@HiltAndroidApp
 class BrowserApp : Application() {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
@@ -38,11 +38,11 @@ class BrowserApp : Application() {
     @Inject internal lateinit var portraitPreferences: PortraitPreferences
     @Inject internal lateinit var landscapePreferences: LandscapePreferences
     @Inject internal lateinit var bookmarkModel: BookmarkRepository
-    @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
+    @Inject @DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
     @Inject internal lateinit var logger: Logger
-    @Inject internal lateinit var buildInfo: BuildInfo
+    //@Inject internal lateinit var buildInfo: BuildInfo
 
-    lateinit var applicationComponent: AppComponent
+    var tabsManager: TabsManager? = null
 
     // Used to be able to tell when our application was just started
     var justStarted: Boolean = true;
@@ -60,12 +60,13 @@ class BrowserApp : Application() {
 
 
     override fun onCreate() {
+        instance = this
         // SL: Use this to debug when launched from another app for instance
         //Debug.waitForDebugger()
         super.onCreate()
 
         AndroidThreeTen.init(this);
-        instance = this
+
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                 .detectAll()
@@ -104,12 +105,6 @@ class BrowserApp : Application() {
             }
         }
 
-        applicationComponent = DaggerAppComponent.builder()
-            .application(this)
-            .buildInfo(createBuildInfo())
-            .build()
-        injector.inject(this)
-
         // Apply locale
         val requestLocale = LocaleUtils.requestedLocale(userPreferences.locale)
         LocaleUtils.updateLocale(this, requestLocale)
@@ -123,7 +118,7 @@ class BrowserApp : Application() {
             .subscribeOn(databaseScheduler)
             .subscribe()
 
-        if (buildInfo.buildType == BuildType.DEBUG) {
+        if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true)
         }
 
@@ -147,13 +142,6 @@ class BrowserApp : Application() {
         })
     }
 
-    /**
-     * Create the [BuildType] from the [BuildConfig].
-     */
-    private fun createBuildInfo() = BuildInfo(when {
-        BuildConfig.DEBUG -> BuildType.DEBUG
-        else -> BuildType.RELEASE
-    })
 
     companion object {
         private const val TAG = "BrowserApp"

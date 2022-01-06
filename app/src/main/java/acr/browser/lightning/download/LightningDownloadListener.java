@@ -29,7 +29,6 @@ import acr.browser.lightning.R;
 import acr.browser.lightning.browser.activity.BrowserActivity;
 import acr.browser.lightning.database.downloads.DownloadsRepository;
 import acr.browser.lightning.di.Injector;
-//import acr.browser.lightning.di.ConfigPrefs;
 import acr.browser.lightning.dialog.BrowserDialog;
 import acr.browser.lightning.extensions.ActivityExtensions;
 import acr.browser.lightning.log.Logger;
@@ -57,7 +56,7 @@ public class LightningDownloadListener extends BroadcastReceiver implements Down
     @Inject Logger logger;
 
     public LightningDownloadListener(Activity context) {
-        Injector.getInjector(context).inject(this);
+        //Injector.getInjector(context).inject(this);
         mActivity = context;
     }
 

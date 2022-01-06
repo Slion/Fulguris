@@ -1,6 +1,5 @@
 package acr.browser.lightning
 
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.locale.LocaleAwareActivity
 import acr.browser.lightning.utils.ThemeUtils
 import android.content.Intent
@@ -9,7 +8,10 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StyleRes
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+//@AndroidEntryPoint
 abstract class ThemedActivity : LocaleAwareActivity() {
 
     // TODO reduce protected visibility
@@ -46,13 +48,14 @@ abstract class ThemedActivity : LocaleAwareActivity() {
     protected abstract fun accentStyle(accentTheme: AccentTheme): Int?
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injector.inject(this)
+        super.onCreate(savedInstanceState)
         themeId = userPreferences.useTheme
         accentId = userPreferences.useAccent
+
         // set the theme
         applyTheme(provideThemeOverride()?:themeId)
         applyAccent()
-        super.onCreate(savedInstanceState)
+
         resetPreferences()
     }
 

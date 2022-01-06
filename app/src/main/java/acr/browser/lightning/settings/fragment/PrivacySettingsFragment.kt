@@ -6,7 +6,6 @@ import acr.browser.lightning.R
 import acr.browser.lightning.database.history.HistoryRepository
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.snackbar
@@ -19,10 +18,12 @@ import android.os.Build
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.preference.Preference
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var historyRepository: HistoryRepository
@@ -41,7 +42,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-        injector.inject(this)
+        //injector.inject(this)
 
         if (BuildConfig.FLAVOR_PUBLISHER=="fdroid") {
             // Hide firebase preferences for fdroid
