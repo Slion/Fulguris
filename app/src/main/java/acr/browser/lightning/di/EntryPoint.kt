@@ -4,8 +4,10 @@ import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.adblock.NoOpAdBlocker
 import acr.browser.lightning.database.bookmark.BookmarkRepository
+import acr.browser.lightning.database.downloads.DownloadsRepository
 import acr.browser.lightning.database.history.HistoryRepository
 import acr.browser.lightning.dialog.LightningDialogBuilder
+import acr.browser.lightning.download.DownloadHandler
 import acr.browser.lightning.favicon.FaviconModel
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.js.InvertPage
@@ -18,6 +20,7 @@ import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.ProxyUtils
 import acr.browser.lightning.view.webrtc.WebRtcPermissionsModel
+import android.app.DownloadManager
 import android.content.SharedPreferences
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -61,6 +64,9 @@ interface HiltEntryPoint {
     val faviconModel: FaviconModel
     val webRtcPermissionsModel: WebRtcPermissionsModel
     val abpUserRules: AbpUserRules
+    val downloadHandler: DownloadHandler
+    val downloadManager: DownloadManager
+    val downloadsRepository: DownloadsRepository
 }
 
 
