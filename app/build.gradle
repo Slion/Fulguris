@@ -280,7 +280,8 @@ dependencies {
     // In code we use reflection to access some bottom sheet private class, methods and fields
     // Whenever you update that library you will need to review those hacks, see adjustBottomSheet.
     // Also search the code for BottomSheetDialog::class
-    implementation "com.google.android.material:material:1.4.0"
+    implementation "com.google.android.material:material:1.5.0-rc01"
+    //implementation group: 'com.google.android.material', name: 'material', version: '1.6.0-alpha01'
 
     // Play Store billing
     playstoreImplementation 'com.android.billingclient:billing:3.0.3'

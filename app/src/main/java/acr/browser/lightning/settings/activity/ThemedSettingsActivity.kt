@@ -37,7 +37,8 @@ abstract class ThemedSettingsActivity : ThemedActivity() {
     override fun onResume() {
         super.onResume()
         // Make sure icons have the right color
-        window.setStatusBarIconsColor(foregroundColorFromBackgroundColor(ThemeUtils.getPrimaryColor(this)) == Color.BLACK && !userPreferences.useBlackStatusBar)
+        //window.setStatusBarIconsColor(foregroundColorFromBackgroundColor(ThemeUtils.getPrimaryColor(this)) == Color.BLACK && !userPreferences.useBlackStatusBar)
+        window.setStatusBarIconsColor(!(useDarkTheme || userPreferences.useBlackStatusBar))
         resetPreferences()
         if (userPreferences.useTheme != themeId) {
             recreate()

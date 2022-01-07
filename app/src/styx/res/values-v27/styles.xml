@@ -8,11 +8,11 @@
         <item name="colorPrimary">?android:attr/colorBackground</item>
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
         <item name="actionBarWidgetTheme">@null</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
         <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
     </style>
 
-    <style name="Theme.App.Light" parent="Theme.MaterialComponents.Light">
+    <style name="Theme.App.Light" parent="Theme.Material3.Light">
         <item name="colorPrimary">@color/red_500</item>
         <item name="colorPrimaryVariant">@color/grey_1</item>
         <item name="colorOnPrimary">@color/black</item>
@@ -58,7 +58,7 @@
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
     </style>
 
-    <style name="Theme.App.Dark" parent="Theme.MaterialComponents">
+    <style name="Theme.App.Dark" parent="Theme.Material3.Dark">
         <item name="colorPrimary">@color/red_300</item>
         <item name="colorPrimaryVariant">@color/dark_2</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -103,7 +103,7 @@
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
     </style>
 
-    <style name="Theme.App.Black" parent="Theme.MaterialComponents">
+    <style name="Theme.App.Black" parent="Theme.Material3.Dark">
         <item name="colorPrimary">@color/red_300</item>
         <item name="colorPrimaryVariant">@color/grey_8</item>
         <item name="colorOnPrimary">@color/white</item>

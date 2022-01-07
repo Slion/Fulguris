@@ -6,7 +6,7 @@
         <item name="colorPrimary">?android:attr/colorBackground</item>
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
         <item name="actionBarWidgetTheme">@null</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
         <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
     </style>
 
@@ -15,7 +15,7 @@
         <item name="colorPrimary">?android:attr/colorBackground</item>
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
         <item name="actionBarWidgetTheme">@null</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
         <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
     </style>
 
@@ -24,7 +24,7 @@
         <item name="colorPrimary">?android:attr/colorBackground</item>
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
         <item name="actionBarWidgetTheme">@null</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
         <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
     </style>
 
@@ -33,11 +33,11 @@
         <item name="colorPrimary">?android:attr/colorBackground</item>
         <item name="colorPrimaryDark">?android:attr/colorBackground</item>
         <item name="actionBarWidgetTheme">@null</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>
         <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
     </style>
 
-    <style name="Theme.App.Light" parent="Theme.MaterialComponents.Light">
+    <style name="Theme.App.Light" parent="Theme.Material3.Light">
         <item name="colorPrimary">@color/red_500</item>
         <item name="colorPrimaryVariant">@color/grey_1</item>
         <item name="colorOnPrimary">@color/black</item>
@@ -81,7 +81,7 @@
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
     </style>
 
-    <style name="Theme.App.Dark" parent="Theme.MaterialComponents">
+    <style name="Theme.App.Dark" parent="Theme.Material3.Dark">
         <item name="colorPrimary">@color/red_300</item>
         <item name="colorPrimaryVariant">@color/dark_2</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -125,7 +125,7 @@
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
     </style>
 
-    <style name="Theme.App.Black" parent="Theme.MaterialComponents">
+    <style name="Theme.App.Black" parent="Theme.Material3.Dark">
         <item name="colorPrimary">@color/red_300</item>
         <item name="colorPrimaryVariant">@color/grey_8</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -208,27 +208,27 @@
         <item name="android:windowExitAnimation">@anim/menu_close_bottom</item>
     </style>
 
-    <style name="ThemeOverlay.App.Dialog.Alert.Light" parent="@style/ThemeOverlay.MaterialComponents.Dialog.Alert">
+    <style name="ThemeOverlay.App.Dialog.Alert.Light" parent="@style/ThemeOverlay.Material3.Dialog.Alert">
         <item name="android:background">?attr/trackColor</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle.Light</item>
         <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonStyle.Light</item>
     </style>
 
-    <style name="ThemeOverlay.App.Dialog.Alert" parent="@style/ThemeOverlay.MaterialComponents.Dialog.Alert">
+    <style name="ThemeOverlay.App.Dialog.Alert" parent="@style/ThemeOverlay.Material3.Dialog.Alert">
         <item name="android:background">?attr/trackColor</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
     </style>
 
-    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle.Light</item>
         <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonStyle.Light</item>
     </style>
 
-    <style name="ThemeOverlay.App.MaterialAlertDialog.Dark" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="ThemeOverlay.App.MaterialAlertDialog.Dark" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
@@ -236,7 +236,7 @@
         <item name="elevationOverlayEnabled">false</item>
     </style>
 
-    <style name="ThemeOverlay.App.MaterialAlertDialog.Black" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="ThemeOverlay.App.MaterialAlertDialog.Black" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
@@ -244,53 +244,53 @@
         <item name="elevationOverlayEnabled">false</item>
     </style>
 
-    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <style name="PositiveButtonStyle" parent="Widget.Material3.Button.TextButton.Dialog">
         <item name="android:textColor">?attr/colorSecondary</item>
         <item name="rippleColor">?attr/colorSecondary</item>
     </style>
 
-    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <style name="NegativeButtonStyle" parent="Widget.Material3.Button.TextButton.Dialog">
         <item name="android:textColor">@color/white</item>
         <item name="rippleColor">@color/grey_5</item>
     </style>
 
-    <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <style name="NeutralButtonStyle" parent="Widget.Material3.Button.TextButton.Dialog">
         <item name="android:textColor">@color/white</item>
         <item name="rippleColor">@color/grey_5</item>
     </style>
 
-    <style name="NegativeButtonStyle.Light" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <style name="NegativeButtonStyle.Light" parent="Widget.Material3.Button.TextButton.Dialog">
         <item name="android:textColor">@color/black</item>
         <item name="rippleColor">@color/grey_3</item>
     </style>
 
-    <style name="NeutralButtonStyle.Light" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <style name="NeutralButtonStyle.Light" parent="Widget.Material3.Button.TextButton.Dialog">
         <item name="android:textColor">@color/black</item>
         <item name="rippleColor">@color/grey_3</item>
     </style>
 
-    <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
+    <style name="MaterialSnackbarTheme" parent="@style/Widget.Material3.Snackbar">
         <item name="actionTextColorAlpha">1</item>
     </style>
 
-    <style name="MaterialSnackbarTheme.Dark" parent="@style/Widget.MaterialComponents.Snackbar">
+    <style name="MaterialSnackbarTheme.Dark" parent="@style/Widget.Material3.Snackbar">
         <item name="android:backgroundTint">?attr/colorSurface</item>
         <item name="actionTextColorAlpha">1</item>
     </style>
 
-    <style name="MaterialSnackbarTextViewTheme.Dark" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+    <style name="MaterialSnackbarTextViewTheme.Dark" parent="@style/Widget.Material3.Snackbar.TextView">
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="MaterialSnackbarTextButtonTheme" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">
+    <style name="MaterialSnackbarTextButtonTheme" parent="@style/Widget.Material3.Button.TextButton.Snackbar">
         <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
-    <style name="MaterialSnackbarTextButtonTheme.Dark" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">
+    <style name="MaterialSnackbarTextButtonTheme.Dark" parent="@style/Widget.Material3.Button.TextButton.Snackbar">
         <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 
-    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
+    <style name="Widget.App.Button" parent="Widget.Material3.Button">
         <item name="backgroundTint">?attr/colorPrimaryVariant</item>
     </style>
 
@@ -298,7 +298,7 @@
         <item name="android:background">@color/grey_1</item>
     </style>
 
-    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+    <style name="Widget.App.CardView" parent="Widget.Material3.CardView.Outlined">
         <item name="checkedIconMargin">4dp</item>
         <item name="checkedIconSize">6dp</item>
         <item name="checkedIcon">@drawable/ic_circle</item>
@@ -307,17 +307,17 @@
         <item name="rippleColor">@color/card_view_ripple</item>
     </style>
 
-    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">12dp</item>
     </style>
 
-    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">12dp</item>
     </style>
 
-    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">12dp</item>
     </style>
