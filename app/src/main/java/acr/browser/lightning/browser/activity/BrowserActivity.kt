@@ -650,13 +650,19 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private fun restartDisableFabsCountdown() {
         if (!iTabsButtonLongPressed) {
             // Cancel any pending action if any
-            mainHandler.removeCallbacks(iDisableFabs)
+            cancelDisableFabsCountdown()
             // Restart our countdown
             // TODO: make that delay a settings option?
             mainHandler.postDelayed(iDisableFabs, 5000)
         }
     }
 
+    /**
+     *
+     */
+    private fun cancelDisableFabsCountdown() {
+        mainHandler.removeCallbacks(iDisableFabs)
+    }
     /**
      *
      */
@@ -711,6 +717,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.tabsButton.setOnLongClickListener { view ->
             iBinding.fabContainer.isVisible = true
             iTabsButtonLongPressed = true
+            cancelDisableFabsCountdown()
             tabSwitchStart()
             // We still want tooltip to show so return false here
             false
