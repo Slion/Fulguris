@@ -642,7 +642,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabSwitchStop()
     }
 
+    // Used to manage our Easy Tab Switcher
     private var iTabsButtonLongPressed = false
+    private var iEasyTabSwitcherWasUsed = false
 
     /**
      * Will disable floating action buttons once our countdown expires
@@ -717,32 +719,49 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.tabsButton.setOnLongClickListener { view ->
             iBinding.fabContainer.isVisible = true
             iTabsButtonLongPressed = true
+            iEasyTabSwitcherWasUsed = false
             cancelDisableFabsCountdown()
             tabSwitchStart()
             // We still want tooltip to show so return false here
             false
         }
 
+        // Handle release of tabs button after long press
         iBindingToolbarContent.tabsButton.setOnTouchListener{ v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {}
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    iTabsButtonLongPressed = false
-                    restartDisableFabsCountdown()
+                    if (iTabsButtonLongPressed) {
+                        iTabsButtonLongPressed = false
+                        if (iEasyTabSwitcherWasUsed) {
+                            // Tabs button was released after using tab switcher
+                            // User was using multiple fingers
+                            // Hide fabs on the spot to emulate CTRL+TAB best
+                            iDisableFabs.run()
+                        } else {
+                            // Tabs button was released without using tab switcher
+                            // Give a chance to the user to use it with a single finger
+                            // Only hide fabs after countdown
+                            restartDisableFabsCountdown()
+                        }
+                    }
                 }
             }
             false
         }
 
         // Close current tab during tab switch
+        // TODO: What if a tab is opened during tab switch?
         iBinding.fabTabClose.setOnClickListener {
+            iEasyTabSwitcherWasUsed = true
             restartDisableFabsCountdown()
-            tabsManager.let { presenter?.deleteTab(it.indexOfCurrentTab()) }
+            tabsManager.let { presenter.deleteTab(it.indexOfCurrentTab()) }
             tabSwitchReset()
         }
 
         // Switch back in our tab list
         iBinding.fabBack.setOnClickListener {
+            iEasyTabSwitcherWasUsed = true
             restartDisableFabsCountdown()
             tabSwitchBack()
             tabSwitchApply(true)
@@ -750,6 +769,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // Switch forward in our tab list
         iBinding.fabForward.setOnClickListener{
+            iEasyTabSwitcherWasUsed = true
             restartDisableFabsCountdown()
             tabSwitchForward()
             tabSwitchApply(false)
