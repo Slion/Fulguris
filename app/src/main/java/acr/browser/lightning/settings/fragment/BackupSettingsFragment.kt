@@ -71,7 +71,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     @Inject @PrefsPortrait lateinit var prefsPortrait: SharedPreferences
     @Inject @AdBlockPrefs lateinit var prefsAdBlock: SharedPreferences
     //
-    private val tabsManager: TabsManager = BrowserApp.instance.tabsManager!!
+    @Inject lateinit var tabsManager: TabsManager
 
     private var importSubscription: Disposable? = null
     private var exportSubscription: Disposable? = null

@@ -127,11 +127,8 @@ import android.view.KeyboardShortcutGroup
 import androidx.annotation.RequiresApi
 
 import android.view.MotionEvent
-import androidx.activity.viewModels
-
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import dagger.hilt.android.AndroidEntryPoint
-
 
 /**
  *
@@ -208,8 +205,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     @Inject lateinit var exitCleanup: ExitCleanup
     @Inject lateinit var abpUserRules: AbpUserRules
     //
-    val tabsManager: TabsManager by viewModels()
-    val presenter: BrowserPresenter by viewModels()
+    @Inject lateinit var tabsManager: TabsManager
+    @Inject lateinit var presenter: BrowserPresenter
 
     // HTTP
     private lateinit var queue: RequestQueue
@@ -273,10 +270,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     protected abstract fun updateCookiePreference(): Completable
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        // Need to go first to inject our components
         super.onCreate(savedInstanceState)
-        //injector.inject(this)
-
+        // Register lifecycle observers
+        lifecycle.addObserver(tabsManager)
+        lifecycle.addObserver(presenter)
+        //
         createKeyboardShortcuts()
 
         if (BrowserApp.instance.justStarted) {
@@ -826,9 +825,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 intent = null
             }
             // Make sure that intent will be processed once our tabs are initialized
-            presenter?.onNewIntent(intent)
+            presenter.onNewIntent(intent)
             // Load our tabs
-            presenter?.setupTabs()
+            presenter.setupTabs()
             setIntent(null)
             proxyUtils.checkForProxy(this)
         }
@@ -1528,8 +1527,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iCapturedRecentTabsIndices?.let {
             if (iRecentTabIndex >= 0) {
                 // We worked out which tab to switch to, just do it now
-                presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)), false, aGoingBack)
-                //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
+                presenter.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)), false, aGoingBack)
+                //mainHandler.postDelayed({presenter.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
             }
         }
     }
@@ -1624,7 +1623,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                             // Otherwise access any of the first nine tabs
                             event.keyCode - KeyEvent.KEYCODE_1
                         }
-                        presenter?.tabChanged(nextIndex,false, false)
+                        presenter.tabChanged(nextIndex,false, false)
                         return true
                     }
                 }
@@ -1641,7 +1640,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                             // Otherwise access any of the first nine sessions
                             event.keyCode - KeyEvent.KEYCODE_1
                         }
-                        presenter?.switchToSession(it.iSessions[nextIndex].name)
+                        presenter.switchToSession(it.iSessions[nextIndex].name)
                         return true
                     }
                 }
@@ -1686,12 +1685,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     KeyEvent.KEYCODE_T -> {
                         // Open new tab
                         if (isIncognito()) {
-                            presenter?.newTab(
+                            presenter.newTab(
                                 incognitoPageInitializer,
                                 true
                             )
                         } else{
-                            presenter?.newTab(
+                            presenter.newTab(
                                 homePageInitializer,
                                 true
                             )
@@ -1701,7 +1700,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     }
                     KeyEvent.KEYCODE_W -> {
                         // Close current tab
-                        tabsManager.let { presenter?.deleteTab(it.indexOfCurrentTab()) }
+                        tabsManager.let { presenter.deleteTab(it.indexOfCurrentTab()) }
                         tabSwitchReset()
                         return true
                     }
@@ -1788,7 +1787,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // URL is later on reset to null by WebView internal mechanics.
         mainHandler.postDelayed({
             if ((currentTabView as? WebViewEx)?.url.isNullOrBlank()) {
-                tabsManager.let { presenter?.deleteTab(it.indexOfCurrentTab()) }
+                tabsManager.let { presenter.deleteTab(it.indexOfCurrentTab()) }
             }
         }, 500);
     }
@@ -1834,12 +1833,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
             R.id.action_new_tab -> {
                 if (isIncognito()) {
-                    presenter?.newTab(
+                    presenter.newTab(
                         incognitoPageInitializer,
                         true
                     )
                 } else {
-                    presenter?.newTab(
+                    presenter.newTab(
                         homePageInitializer,
                         true
                     )
@@ -1918,9 +1917,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 }
 
                 // TODO: Have a settings option to translate in new tab
-                presenter?.loadUrlInCurrentView("https://translate.google.com/translate?sl=auto&tl=$languageCode&u=$currentUrl")
+                presenter.loadUrlInCurrentView("https://translate.google.com/translate?sl=auto&tl=$languageCode&u=$currentUrl")
                 // TODO: support other translation providers?
-                //presenter?.loadUrlInCurrentView("https://www.translatetheweb.com/?from=&to=$locale&dl=$locale&a=$currentUrl")
+                //presenter.loadUrlInCurrentView("https://www.translatetheweb.com/?from=&to=$locale&dl=$locale&a=$currentUrl")
                 return true
             }
 
@@ -1935,11 +1934,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 return true
             }
             R.id.action_restore_page -> {
-                presenter?.recoverClosedTab()
+                presenter.recoverClosedTab()
                 return true
             }
             R.id.action_restore_all_pages -> {
-                presenter?.recoverAllClosedTabs()
+                presenter.recoverAllClosedTabs()
                 return true
             }
 
@@ -1947,20 +1946,20 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // TODO: consider just closing all tabs
                 // TODO: Confirmation dialog
                 //closeBrowser()
-                //presenter?.closeAllTabs()
-                presenter?.closeAllOtherTabs()
+                //presenter.closeAllTabs()
+                presenter.closeAllOtherTabs()
                 return true
             }
 
             R.id.action_show_homepage -> {
                 if (userPreferences.homepageInNewTab) {
                     if (isIncognito()) {
-                        presenter?.newTab(incognitoPageInitializer, true)
+                        presenter.newTab(incognitoPageInitializer, true)
                     } else {
-                        presenter?.newTab(homePageInitializer, true)
+                        presenter.newTab(homePageInitializer, true)
                     }
                 } else {
-                    // Why not through presenter? We need some serious refactoring at some point
+                    // Why not through presenter We need some serious refactoring at some point
                     tabsManager.currentTab?.loadHomePage()
                 }
                 closePanels(null)
@@ -2107,10 +2106,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
         BrowserDialog.show(this, R.string.dialog_title_close_browser,
                 DialogItem(title = R.string.close_tab) {
-                    presenter?.deleteTab(position)
+                    presenter.deleteTab(position)
                 },
                 DialogItem(title = R.string.close_other_tabs) {
-                    presenter?.closeAllOtherTabs()
+                    presenter.closeAllOtherTabs()
                 },
                 DialogItem(title = R.string.close_all_tabs, onClick = this::closeBrowser))
     }
@@ -2127,7 +2126,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             makeSnackbar(
                     getString(R.string.notify_tab_closed), Snackbar.LENGTH_SHORT, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
                     .setAction(R.string.button_undo) {
-                        presenter?.recoverClosedTab()
+                        presenter.recoverClosedTab()
                     }.show()
         }
     }
@@ -2176,7 +2175,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     override fun tabChanged(tab: LightningView) {
         // SL: Is this being called way too many times?
-        presenter?.tabChangeOccurred(tab)
+        presenter.tabChangeOccurred(tab)
         // SL: Putting this here to update toolbar background color was a bad idea
         // That somehow freezes the WebView after switching between a few tabs on F(x)tec Pro1 at least (Android 9)
         //initializePreferences()
@@ -2574,12 +2573,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     fun showSnackbar(aMessage: String) = snackbar(aMessage, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
 
     override fun tabCloseClicked(position: Int) {
-        presenter?.deleteTab(position)
+        presenter.deleteTab(position)
     }
 
     override fun tabClicked(position: Int) {
         // Switch tab
-        presenter?.tabChanged(position,false, false)
+        presenter.tabChanged(position,false, false)
         // Keep the drawer open while the tab change animation in running
         // Has the added advantage that closing of the drawer itself should be smoother as the webview had a bit of time to load
         mainHandler.postDelayed({ closePanels(null) }, 350)
@@ -2592,12 +2591,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Then slightly delay page loading to give enough time for the drawer to close without stutter
         mainHandler.postDelayed({
             if (isIncognito()) {
-                presenter?.newTab(
+                presenter.newTab(
                     incognitoPageInitializer,
                     true
                 )
             } else {
-                presenter?.newTab(
+                presenter.newTab(
                     homePageInitializer,
                     true
                 )
@@ -2606,7 +2605,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     override fun newTabButtonLongClicked() {
-        presenter?.recoverClosedTab()
+        presenter.recoverClosedTab()
     }
 
     override fun bookmarkButtonClicked() {
@@ -2633,9 +2632,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     override fun bookmarkItemClicked(entry: Bookmark.Entry) {
         if (userPreferences.bookmarkInNewTab) {
-            presenter?.newTab(UrlInitializer(entry.url), true)
+            presenter.newTab(UrlInitializer(entry.url), true)
         } else {
-            presenter?.loadUrlInCurrentView(entry.url)
+            presenter.loadUrlInCurrentView(entry.url)
         }
         // keep any jank from happening when the drawer is closed after the URL starts to load
         mainHandler.postDelayed({ closePanels(null) }, 150)
@@ -2656,7 +2655,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     protected fun handleNewIntent(intent: Intent) {
-        presenter?.onNewIntent(intent)
+        presenter.onNewIntent(intent)
     }
 
     protected fun performExitCleanUp() {
@@ -2700,8 +2699,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 iBinding.toolbarInclude.toolbar.requestLayout()
             }
 
+    /**
+     *
+     */
     override fun closeBrowser() {
         currentTabView?.removeFromParent()
+
         performExitCleanUp()
         finishAndRemoveTask()
     }
@@ -2790,7 +2793,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         onHideCustomView()
                     } else {
                         if (isToolBarVisible()) {
-                            presenter?.deleteTab(tabsManager.positionOf(currentTab))
+                            presenter.deleteTab(tabsManager.positionOf(currentTab))
                         } else {
                             showActionBar()
                         }
@@ -2800,16 +2803,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 logger.log(TAG, "This shouldn't happen ever")
                 super.onBackPressed()
             }
-        }
-
-    }
-
-    protected fun saveOpenTabsIfNeeded() {
-        if (userPreferences.restoreTabsOnStartup) {
-            tabsManager.saveState()
-        }
-        else {
-            tabsManager.clearSavedState()
         }
     }
 
@@ -2831,7 +2824,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         mainHandler.removeCallbacksAndMessages(null)
 
-        presenter?.shutdown()
+        presenter.shutdown()
 
         super.onDestroy()
     }
@@ -2938,26 +2931,26 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // That's also done in LightningView.loadURL
             when {
                 url.isHomeUri() -> {
-                    presenter?.newTab(homePageInitializer, true)
+                    presenter.newTab(homePageInitializer, true)
                 }
                 url.isIncognitoUri() -> {
-                    presenter?.newTab(incognitoPageInitializer, true)
+                    presenter.newTab(incognitoPageInitializer, true)
                 }
                 url.isBookmarkUri() -> {
-                    presenter?.newTab(bookmarkPageInitializer, true)
+                    presenter.newTab(bookmarkPageInitializer, true)
                 }
                 url.isHistoryUri() -> {
-                    presenter?.newTab(historyPageInitializer, true)
+                    presenter.newTab(historyPageInitializer, true)
                 }
                 else -> {
-                    presenter?.newTab(UrlInitializer(url), true)
+                    presenter.newTab(UrlInitializer(url), true)
                 }
             }
         }
         else if (currentTab != null) {
             // User don't want us the create a new tab
             currentTab.stopLoading()
-            presenter?.loadUrlInCurrentView(url)
+            presenter.loadUrlInCurrentView(url)
         }
     }
 
@@ -3234,14 +3227,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         getUrl.setText(url)
         searchTheWeb(url)
         inputMethodManager.hideSoftInputFromWindow(getUrl.windowToken, 0)
-        presenter?.onAutoCompleteItemPressed()
+        presenter.onAutoCompleteItemPressed()
     }
 
     /**
      * function that opens the HTML history page in the browser
      */
     private fun openHistory() {
-        presenter?.newTab(
+        presenter.newTab(
                 historyPageInitializer,
                 true
         )
@@ -3254,7 +3247,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         startActivity(Utils.getIntentForDownloads(this, userPreferences.downloadDirectory))
         // Our built-in downloads list did not display downloaded items properly
         // Not sure why, consider fixing it or just removing it altogether at some point
-        //presenter?.newTab(downloadPageInitializer,true)
+        //presenter.newTab(downloadPageInitializer,true)
     }
 
     /**
@@ -3640,7 +3633,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             if (currentTab?.canGoBack() == true) {
                 currentTabGoBack()
             } else if (currentTab != null) {
-                tabsManager.let { presenter?.deleteTab(it.positionOf(currentTab)) }
+                tabsManager.let { presenter.deleteTab(it.positionOf(currentTab)) }
             }
         } else if (closeBookmarksPanelIfOpen()) {
             // Don't do anything other than close the bookmarks drawer when the activity is being
@@ -3726,7 +3719,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * the newly created WebView.
      */
     override fun onCreateWindow(resultMsg: Message) {
-        presenter?.newTab(ResultMessageInitializer(resultMsg), true)
+        presenter.newTab(ResultMessageInitializer(resultMsg), true)
     }
 
     /**
@@ -3738,7 +3731,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * @param tab the LightningView to close, delete it.
      */
     override fun onCloseWindow(tab: LightningView) {
-        presenter?.deleteTab(tabsManager.positionOf(tab))
+        presenter.deleteTab(tabsManager.positionOf(tab))
     }
 
     /**
@@ -3804,8 +3797,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun handleNewTab(newTabType: LightningDialogBuilder.NewTab, url: String) {
         val urlInitializer = UrlInitializer(url)
         when (newTabType) {
-            LightningDialogBuilder.NewTab.FOREGROUND -> presenter?.newTab(urlInitializer, true)
-            LightningDialogBuilder.NewTab.BACKGROUND -> presenter?.newTab(urlInitializer, false)
+            LightningDialogBuilder.NewTab.FOREGROUND -> presenter.newTab(urlInitializer, true)
+            LightningDialogBuilder.NewTab.BACKGROUND -> presenter.newTab(urlInitializer, false)
             LightningDialogBuilder.NewTab.INCOGNITO -> {
                 closePanels { }
                 val intent = IncognitoActivity.createIntent(this, url.toUri())
@@ -4200,12 +4193,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             DialogItem(
                 icon = this.drawable(R.drawable.ic_tabs),
                 title = R.string.close_tab) {
-                presenter?.deleteTab(position)
+                presenter.deleteTab(position)
             },
             DialogItem(
                 icon = this.drawable(R.drawable.ic_delete_forever),
                 title = R.string.close_all_tabs) {
-                presenter?.closeAllOtherTabs()
+                presenter.closeAllOtherTabs()
             },
             DialogItem(
                 icon = this.drawable(R.drawable.round_clear_24),

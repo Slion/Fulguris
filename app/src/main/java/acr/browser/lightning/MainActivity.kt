@@ -31,24 +31,6 @@ class MainActivity @Inject constructor(): BrowserActivity() {
             super.onNewIntent(intent)
         }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
-    /**
-     * This is called once our activity is not visible anymore.
-     * That's where we should save our data according to the docs.
-     * https://developer.android.com/guide/components/activities/activity-lifecycle#onstop
-     * Saving data can't wait for onDestroy as there is no guarantee onDestroy will ever be called.
-     * In fact even when user closes our Task from recent Task list our activity is just terminated without getting any notifications.
-     */
-    override fun onStop() {
-        super.onStop()
-        saveOpenTabsIfNeeded()
-    }
-
-
-
     override fun updateHistory(title: String?, url: String) = addItemToHistory(title, url)
 
     override fun isIncognito() = false

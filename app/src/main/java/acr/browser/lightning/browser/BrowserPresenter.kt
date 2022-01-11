@@ -22,26 +22,25 @@ import acr.browser.lightning.view.*
 import android.app.Activity
 import android.content.Intent
 import android.webkit.URLUtil
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Presenter in charge of keeping track of the current tab and setting the current tab of the
  * browser.
  * SL: Should we merge this class with TabsManager?
  */
-@HiltViewModel
+//@HiltViewModel
+@Singleton
 class BrowserPresenter @Inject constructor(
     private val userPreferences: UserPreferences,
     private val homePageFactory: HomePageFactory,
     private val incognitoPageFactory: IncognitoPageFactory,
     private val bookmarkPageFactory: BookmarkPageFactory,
     private val logger: Logger
-): ViewModel() {
+): fulguris.Component() {
 
     private var currentTab: LightningView? = null
     private var shouldClose: Boolean = false
@@ -83,7 +82,7 @@ class BrowserPresenter @Inject constructor(
      * Initializes our tab manager.
      */
     fun setupTabs() {
-        viewModelScope.launch {
+        iScopeMainThread.launch {
             delay(1L)
             val tabs = tabsModel.initializeTabs(iBrowserView as Activity, isIncognito)
             // At this point we always have at least a tab in the tab manager

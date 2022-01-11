@@ -42,8 +42,6 @@ class BrowserApp : Application() {
     @Inject internal lateinit var logger: Logger
     //@Inject internal lateinit var buildInfo: BuildInfo
 
-    var tabsManager: TabsManager? = null
-
     // Used to be able to tell when our application was just started
     var justStarted: Boolean = true;
 

@@ -1,12 +1,12 @@
 package acr.browser.lightning.browser
 
-import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.sessions.Session
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.NewTabPosition
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
 import android.app.Activity
@@ -14,10 +14,7 @@ import android.app.Application
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.launch
 
 import java.io.File
@@ -28,7 +25,8 @@ import javax.inject.Singleton
  * A manager singleton that holds all the [LightningView] and tracks the current tab. It handles
  * creation, deletion, restoration, state saving, and switching of tabs and sessions.
  */
-@HiltViewModel
+//@HiltViewModel
+@Singleton
 class TabsManager @Inject constructor(
         private val application: Application,
         private val searchEngineProvider: SearchEngineProvider,
@@ -37,12 +35,14 @@ class TabsManager @Inject constructor(
         private val bookmarkPageInitializer: BookmarkPageInitializer,
         private val historyPageInitializer: HistoryPageInitializer,
         private val downloadPageInitializer: DownloadPageInitializer,
-        private val logger: Logger
-): ViewModel() {
+        private val userPreferences: UserPreferences,
+        private val logger: Logger,
+): fulguris.Component() {
 
     private val tabList = arrayListOf<LightningView>()
     var iRecentTabs = mutableSetOf<LightningView>()
     val savedRecentTabsIndices = mutableSetOf<Int>()
+    private var iIsIncognito = false;
 
     // Our persisted list of sessions
     // TODO: Consider using a map instead of an array
@@ -69,10 +69,6 @@ class TabsManager @Inject constructor(
     private var postInitializationWorkList = mutableListOf<InitializationListener>()
 
     init {
-        // BAD: I know
-        // We put this there so that BackupSettingsFragment use this TabsManager
-        // Hilt does not allow ViewModels to be Singleton in the application scope apparently
-        BrowserApp.instance.tabsManager = this
 
         addTabNumberChangedListener {
             // Update current session tab count
@@ -87,10 +83,25 @@ class TabsManager @Inject constructor(
         }
     }
 
+    /*
     override fun onCleared() {
         super.onCleared()
         shutdown()
         BrowserApp.instance.tabsManager = null;
+    }
+    */
+
+    /**
+     * From [DefaultLifecycleObserver.onStop]
+     *
+     * This is called once our activity is not visible anymore.
+     * That's where we should save our data according to the docs.
+     * https://developer.android.com/guide/components/activities/activity-lifecycle#onstop
+     * Saving data can't wait for onDestroy as there is no guarantee onDestroy will ever be called.
+     * In fact even when user closes our Task from recent Task list our activity is just terminated without getting any notifications.
+     */
+    override fun onStop(owner: LifecycleOwner) {
+        saveIfNeeded()
     }
 
     /**
@@ -224,16 +235,17 @@ class TabsManager @Inject constructor(
     }
 
     /**
-     * Initialize the state of the [TabsManager] based on previous state of the browser and with the
-     * new provided [intent] and emit the last tab that should be displayed. By default operates on
-     * a background scheduler and emits on the foreground scheduler.
+     * Initialize the state of the [TabsManager] based on previous state of the browser.
+     *
+     * TODO: See how you can offload IO to a background thread
      */
     fun initializeTabs(activity: Activity, incognito: Boolean) : MutableList<LightningView> {
+
+        iIsIncognito = incognito
 
         shutdown()
 
         val list = mutableListOf<LightningView>()
-
 
         if (incognito) {
             list.add(newTab(activity, incognitoPageInitializer, incognito, NewTabPosition.END_OF_TAB_LIST))
@@ -565,6 +577,22 @@ class TabsManager @Inject constructor(
     fun positionOf(tab: LightningView?): Int = tabList.indexOf(tab)
 
 
+    /**
+     * Save our states if needed.
+     */
+    private fun saveIfNeeded() {
+        if (iIsIncognito) {
+            // We don't persist anything when browsing incognito
+            return
+        }
+
+        if (userPreferences.restoreTabsOnStartup) {
+            saveState()
+        }
+        else {
+            clearSavedState()
+        }
+    }
 
     /**
      * Saves the state of the current WebViews, to a bundle which is then stored in persistent
@@ -601,16 +629,30 @@ class TabsManager @Inject constructor(
         outState.putIntArray(RECENT_TAB_INDICES, savedRecentTabsIndices.toIntArray())
 
         // Write our bundle to disk
-        viewModelScope.launch {
-            delay(1L)
+        iScopeThreadPool.launch {
+            // Guessing delay is not needed since we do not use the main thread scope anymore
+            //delay(1L)
             FileUtils.writeBundleToStorage(application, outState, aFilename)
+            // We used that loop to test that our jobs are completed no matter what when the app is closed.
+            // However long running tasks could run into race condition I guess if we queue it multiple times.
+            // I really don't understand what's going on exactly when we close the app twice and we have two instances of that job running.
+            // It looks like the process was not terminated when exiting the app the first time and both jobs are running in different thread on the same process.
+            // Though even when waiting for the end of that job before restarting the app Android can reuse that process anyway…
+            // Log example:
+            // date time PID-TID/package priority/tag: message
+            // 2022-01-11 11:32:59.939 23094-23207/net.slions.fulguris.full.download.debug D/TabsManager: Tick: 28
+            // 2022-01-11 11:33:00.224 23094-23208/net.slions.fulguris.full.download.debug D/TabsManager: Tick: 20
+//            repeat(30) {
+//                delay(1000L)
+//                logger.log(TAG, "Tick: $it")
+//            }
         }
     }
 
     /**
      * Provide session file name from session name
      */
-    fun fileNameFromSessionName(aSessionName: String) : String {
+    private fun fileNameFromSessionName(aSessionName: String) : String {
         return FILENAME_SESSION_PREFIX + aSessionName
     }
 
@@ -654,8 +696,9 @@ class TabsManager @Inject constructor(
         bundle.putString(KEY_CURRENT_SESSION, iCurrentSessionName)
         bundle.putParcelableArrayList(KEY_SESSIONS, iSessions)
         // Write our bundle to disk
-        viewModelScope.launch {
-            delay(1L)
+        iScopeThreadPool.launch {
+            // Guessing delay is not needed since we do not use the main thread scope anymore
+            //delay(1L)
             FileUtils.writeBundleToStorage(application, bundle, FILENAME_SESSIONS)
         }
     }

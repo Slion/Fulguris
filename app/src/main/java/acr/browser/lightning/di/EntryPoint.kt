@@ -3,6 +3,8 @@ package acr.browser.lightning.di
 import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.adblock.NoOpAdBlocker
+import acr.browser.lightning.browser.BrowserPresenter
+import acr.browser.lightning.browser.TabsManager
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.database.downloads.DownloadsRepository
 import acr.browser.lightning.database.history.HistoryRepository
@@ -26,7 +28,6 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.reactivex.Scheduler
-
 
 /**
  * Provide access to all our injectable classes.
@@ -67,6 +68,9 @@ interface HiltEntryPoint {
     val downloadHandler: DownloadHandler
     val downloadManager: DownloadManager
     val downloadsRepository: DownloadsRepository
+    var tabsManager: TabsManager
+    var presenter: BrowserPresenter
+
 }
 
 

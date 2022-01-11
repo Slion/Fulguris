@@ -290,7 +290,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
 
     // reading mode
-    implementation 'net.dankito.readability4j:readability4j:1.0.6'
+    implementation 'net.dankito.readability4j:readability4j:1.0.8'
 
     // file reading
     final def mezzanineVersion = '1.1.1'
