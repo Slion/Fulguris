@@ -39,9 +39,9 @@ class IncognitoPageFactory @Inject constructor(
                         .replace("\${TITLE}", application.getString(R.string.incognito))
                         .replace("\${backgroundColor}", htmlColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext())))
                         .replace("\${searchBarColor}", htmlColor(ThemeUtils.getSearchBarColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext()))))
-                        .replace("\${searchBarTextColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnPrimary)))
-                        .replace("\${backgroundColor1}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.trackColor)))
-                        .replace("\${backgroundColor2}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.appColorControlEnabled)))
+                        .replace("\${searchBarTextColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnSurface)))
+                        .replace("\${backgroundColor1}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOutline)))
+                        .replace("\${backgroundColor2}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOutline)))
                         .replace("\${accent}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorSecondary)))
                         .replace("\${search}", application.getString(R.string.search_incognito))
                 ) andBuild {

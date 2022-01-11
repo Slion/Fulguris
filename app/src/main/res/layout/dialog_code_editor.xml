@@ -9,7 +9,7 @@
         android:id="@+id/dialog_multi_line"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="?attr/trackColor"
+        android:background="?attr/colorSurface"
         android:gravity="top|start" />
 
 </LinearLayout>
