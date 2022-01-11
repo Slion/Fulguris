@@ -272,6 +272,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun onCreate(savedInstanceState: Bundle?) {
         // Need to go first to inject our components
         super.onCreate(savedInstanceState)
+
         // Register lifecycle observers
         lifecycle.addObserver(tabsManager)
         lifecycle.addObserver(presenter)
@@ -824,10 +825,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             if (launchedFromHistory) {
                 intent = null
             }
-            // Make sure that intent will be processed once our tabs are initialized
-            presenter.onNewIntent(intent)
             // Load our tabs
-            presenter.setupTabs()
+            presenter.setupTabs(intent)
             setIntent(null)
             proxyUtils.checkForProxy(this)
         }

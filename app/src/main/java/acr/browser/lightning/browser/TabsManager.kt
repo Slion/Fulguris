@@ -101,6 +101,8 @@ class TabsManager @Inject constructor(
      * In fact even when user closes our Task from recent Task list our activity is just terminated without getting any notifications.
      */
     override fun onStop(owner: LifecycleOwner) {
+        // Once we go background make sure the current tab is not new anymore
+        currentTab?.isNewTab = false
         saveIfNeeded()
     }
 

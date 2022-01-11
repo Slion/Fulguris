@@ -124,11 +124,12 @@ class LightningView(
 
     /**
      * Sets whether this tab was the result of a new intent sent to the browser.
+     * That's notably used to decide if we close our activity when closing this tab thus going back to the app which opened it.
      */
     var isNewTab: Boolean = false
 
     /**
-     * This method sets the tab as the foreground tab or the background tab.
+     * This method sets the tab as the foreground tab or a background tab.
      */
     var isForeground: Boolean = false
         set(aIsForeground) {
@@ -143,6 +144,9 @@ class LightningView(
                     // Discard tab initializer since we just consumed it
                     latentTabInitializer = null
                 }
+            } else {
+                // A tab sent to the background is not so new anymore
+                isNewTab = false
             }
             uiController.tabChanged(this)
         }

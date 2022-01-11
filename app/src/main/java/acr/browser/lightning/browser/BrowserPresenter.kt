@@ -81,26 +81,22 @@ class BrowserPresenter @Inject constructor(
     /**
      * Initializes our tab manager.
      */
-    fun setupTabs() {
+    fun setupTabs(aIntent: Intent? = null) {
         iScopeMainThread.launch {
             delay(1L)
             val tabs = tabsModel.initializeTabs(iBrowserView as Activity, isIncognito)
             // At this point we always have at least a tab in the tab manager
             iBrowserView.notifyTabViewInitialized()
             iBrowserView.updateTabNumber(tabsModel.size())
-            if (tabsModel.savedRecentTabsIndices.count() == tabsModel.allTabs.count()) {
-                // Switch to saved current tab if any, otherwise the last tab I guess
-                tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(tabs.last()),false, false)
-            } else {
-                // Number of tabs does not match the number of recent tabs saved
-                // That means we were most certainly launched from another app opening a new tab
-                // Assuming our new tab is the last one we switch to it
-                tabChanged(tabsModel.positionOf(tabs.last()),false, false)
-            }
-            logger.log(TAG,"After from coroutine")
+            // Switch to persisted current tab
+            tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(tabs.last()),false, false)
+            // Only then can we open tab from external app on startup otherwise it is opened in the background somehow
+            aIntent?.let {onNewIntent(aIntent)}
+
+            //logger.log(TAG,"After from coroutine")
         }
 
-        logger.log(TAG,"After from main")
+        //logger.log(TAG,"After from main")
     }
 
     /**
