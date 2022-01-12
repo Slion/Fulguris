@@ -21,11 +21,6 @@ interface BrowserView {
      */
     fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean)
 
-    /**
-     * Only called during application shutdown process.
-     */
-    fun removeTabView()
-
     fun updateUrl(url: String?, isLoading: Boolean)
 
     fun updateProgress(progress: Int)

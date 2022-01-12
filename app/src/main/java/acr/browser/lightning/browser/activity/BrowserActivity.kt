@@ -826,6 +826,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 intent = null
             }
             // Load our tabs
+            // TODO: Consider not reloading our session if it is already loaded.
+            // That could be the case notably when the activity is restarted after theme change in settings
+            // However that would require we careful setup our UI anew from an already loaded session
             presenter.setupTabs(intent)
             setIntent(null)
             proxyUtils.checkForProxy(this)
@@ -2201,20 +2204,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * Only called during application shutdown process.
-     */
-    override fun removeTabView() {
-
-        logger.log(TAG, "Remove the tab view")
-
-        currentTabView?.removeFromParent()
-        currentTabView?.onFocusChangeListener = null
-        currentTabView = null
-
-
-    }
-
-    /**
      *
      */
     fun vibrate() {
@@ -2813,6 +2802,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      * Amazingly this is not called when closing our app from Task list.
      * See: https://developer.android.com/reference/android/app/Activity.html#onDestroy()
+     *
+     * NOTE: Moreover when restarting this activity this is called after the onCreate of the new activity.
      */
     override fun onDestroy() {
         logger.log(TAG, "onDestroy")
@@ -2823,8 +2814,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         mainHandler.removeCallbacksAndMessages(null)
 
-        presenter.shutdown()
+        // Presenter and tab manager, which are tightly coupled, are owned by the application now.
+        // Therefore we should not clean and destroy them here as they will survive that activity.
+        // Instead we just unhook our tab.
+        // Actually even that is a bad idea since it could already be in used by another instance of that activity.
+        //removeTabView()
+        // That would do, not strictly needed though
+        currentTabView = null
 
+        //
         super.onDestroy()
     }
 

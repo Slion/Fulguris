@@ -116,44 +116,35 @@ class BrowserPresenter @Inject constructor(
      * [aWasTabAdded] True if [aTab] was just created.
      * [aGoingBack] Tells in which direction we are going, this can help determine what kind of tab animation will be used.
      */
-    private fun onTabChanged(aTab: LightningView?, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
+    private fun onTabChanged(aTab: LightningView, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
         logger.log(TAG, "On tab changed")
 
-        if (aTab == null) {
-            iBrowserView.removeTabView()
-            currentTab?.let {
-                it.pauseTimers()
-                it.destroy()
-            }
-        }  else {
-
-            currentTab?.let {
-                // TODO: Restore this when Google fixes the bug where the WebView is
-                // blank after calling onPause followed by onResume.
-                // it.onPause();
-                it.isForeground = false
-            }
-
-            // Must come first so that frozen tabs are unfrozen
-            // This will create frozen tab WebView, before that WebView is not available
-            aTab.isForeground = true
-
-            aTab.resumeTimers()
-            aTab.onResume()
-
-            iBrowserView.updateProgress(aTab.progress)
-            iBrowserView.setBackButtonEnabled(aTab.canGoBack())
-            iBrowserView.setForwardButtonEnabled(aTab.canGoForward())
-            iBrowserView.updateUrl(aTab.url, false)
-            iBrowserView.setTabView(aTab.webView!!,aWasTabAdded,aPreviousTabClosed, aGoingBack)
-            val index = tabsModel.indexOfTab(aTab)
-            if (index >= 0) {
-                iBrowserView.notifyTabViewChanged(tabsModel.indexOfTab(aTab))
-            }
-
-            // Must come late as it needs a webview
-            iBrowserView.updateSslState(aTab.currentSslState() ?: SslState.None)
+        currentTab?.let {
+            // TODO: Restore this when Google fixes the bug where the WebView is
+            // blank after calling onPause followed by onResume.
+            // it.onPause();
+            it.isForeground = false
         }
+
+        // Must come first so that frozen tabs are unfrozen
+        // This will create frozen tab WebView, before that WebView is not available
+        aTab.isForeground = true
+
+        aTab.resumeTimers()
+        aTab.onResume()
+
+        iBrowserView.updateProgress(aTab.progress)
+        iBrowserView.setBackButtonEnabled(aTab.canGoBack())
+        iBrowserView.setForwardButtonEnabled(aTab.canGoForward())
+        iBrowserView.updateUrl(aTab.url, false)
+        iBrowserView.setTabView(aTab.webView!!,aWasTabAdded,aPreviousTabClosed, aGoingBack)
+        val index = tabsModel.indexOfTab(aTab)
+        if (index >= 0) {
+            iBrowserView.notifyTabViewChanged(tabsModel.indexOfTab(aTab))
+        }
+
+        // Must come late as it needs a webview
+        iBrowserView.updateSslState(aTab.currentSslState() ?: SslState.None)
 
         currentTab = aTab
     }
@@ -315,15 +306,6 @@ class BrowserPresenter @Inject constructor(
      */
     fun loadUrlInCurrentView(url: String) {
         tabsModel.currentTab?.loadUrl(url)
-    }
-
-    /**
-     * Notifies the presenter that it should shut down. This should be called when the
-     * BrowserActivity is destroyed so that we don't leak any memory.
-     */
-    fun shutdown() {
-        onTabChanged(null,false, false, false)
-        tabsModel.cancelPendingWork()
     }
 
     /**

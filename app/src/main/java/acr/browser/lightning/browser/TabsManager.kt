@@ -106,6 +106,11 @@ class TabsManager @Inject constructor(
         saveIfNeeded()
     }
 
+    override fun onDestroy(owner: LifecycleOwner) {
+        //shutdown()
+    }
+
+
     /**
      */
     fun currentSessionIndex() : Int {
@@ -779,27 +784,22 @@ class TabsManager @Inject constructor(
         tabList.firstOrNull { lightningView -> lightningView.webView?.let { it.hashCode() == hashCode } == true }
 
     /**
-     * Switch the current tab to the one at the given position. It returns the selected tab that has
-     * been switched to.
+     * Switch from the current tab to the one at the given [aPosition].
      *
-     * @return the selected tab or null if position is out of tabs range.
+     * @param aPosition Index of the tab we want to switch to.
+     * @exception IndexOutOfBoundsException if the provided index is out of range.
+     * @return The selected tab we just switched to.
      */
-    fun switchToTab(position: Int): LightningView? {
-        logger.log(TAG, "switch to tab: $position")
-        return if (position < 0 || position >= tabList.size) {
-            logger.log(TAG, "Returning a null LightningView requested for position: $position")
-            null
-        } else {
-            tabList[position].also {
+    fun switchToTab(aPosition: Int): LightningView {
+        logger.log(TAG, "switch to tab: $aPosition")
+        return tabList[aPosition].also {
                 currentTab = it
                 // Put that tab at the top of our recent tab list
                 iRecentTabs.apply{
                     remove(it)
                     add(it)
                     }
-
-                //logger.log(TAG, "Recent indices: $recentTabsIndices")
-                }
+            //logger.log(TAG, "Recent indices: $recentTabsIndices")
             }
         }
 
