@@ -2,6 +2,7 @@ package acr.browser.lightning.adblock
 
 import acr.browser.lightning.R
 import acr.browser.lightning.log.Logger
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.isAppScheme
 import acr.browser.lightning.utils.isSpecialUrl
 import android.app.Application
@@ -32,6 +33,7 @@ class AbpBlocker @Inject constructor(
     private val application: Application,
     abpListUpdater: AbpListUpdater,
     private val abpUserRules: AbpUserRules,
+    userPreferences: UserPreferences,
     private val logger: Logger
     ) : AdBlocker {
 
@@ -60,23 +62,21 @@ class AbpBlocker @Inject constructor(
     private val dummyResponse by lazy { WebResourceResponse("text/plain", "UTF-8", EmptyInputStream()) }
 
     init {
-        // TODO: ideally we should call loadLists here (blocking) if the url in current tab (on opening browser) is not special
-        //  because loadLists() here is sometimes significantly faster than inside the GlobalScope
-        //  but generally no need to block UI, better just delay the first web requests
-        //  -> so, how to get current tab url?
+        // hilt always loads blocker, even if not used
+        //  thus we load the lists only if blocker is actually enabled
+        if (userPreferences.adBlockEnabled)
+            GlobalScope.launch(Dispatchers.Default) {
+                // load lists here if not loaded above
+                //  2-5x slower than blocking for some reason -> is there any reasonable compromise?
+                loadLists()
 
-        GlobalScope.launch(Dispatchers.Default) {
-            // load lists here if not loaded above
-            //  2-5x slower than blocking for some reason -> is there any reasonable compromise?
-            loadLists()
-
-            // update all enabled entities/blocklists
-            // may take a while depending on how many lists need update, and on internet connection
-            if (abpListUpdater.updateAll(false)) { // returns true if anything was updated
-                removeJointLists()
-                loadLists() // update again if files have changed
+                // update all enabled entities/blocklists
+                // may take a while depending on how many lists need update, and on internet connection
+                if (abpListUpdater.updateAll(false)) { // returns true if anything was updated
+                    removeJointLists()
+                    loadLists() // update again if files have changed
+                }
             }
-        }
     }
 
     fun removeJointLists() {

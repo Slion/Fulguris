@@ -65,7 +65,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             var nextUpdateTime = Long.MAX_VALUE
             val now = System.currentTimeMillis()
             abpDao.getAll().forEach {
-                if (forceUpdate || (it.isNeedUpdate() && it.enabled)) {
+                if (forceUpdate || (needsUpdate(it) && it.enabled)) {
                     val localResult = updateInternal(it, forceUpdate)
                     if (localResult && it.expires > 0) {
                         val nextTime = it.expires * AN_HOUR + now
@@ -138,6 +138,12 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             if (response.code == 304) {
                 entity.lastLocalUpdate = System.currentTimeMillis()
                 abpDao.update(entity)
+                return false
+            }
+            if (response.code == 404) {
+                Handler(Looper.getMainLooper()).post {
+                    context.toast(context.getString(R.string.blocklist_update_error_404, entity.title))
+                }
                 return false
             }
             response.body?.run {
@@ -248,9 +254,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         }
     }
 
-    private fun AbpEntity.isNeedUpdate(): Boolean {
+    fun needsUpdate(entity: AbpEntity): Boolean {
         val now = System.currentTimeMillis()
-        if (now - lastLocalUpdate >= max(expires * AN_HOUR, A_DAY * userPreferences.blockListAutoUpdateFrequency)) {
+        if (now - entity.lastLocalUpdate >= max(entity.expires * AN_HOUR, A_DAY * userPreferences.blockListAutoUpdateFrequency)) {
             return true
         }
         return false
