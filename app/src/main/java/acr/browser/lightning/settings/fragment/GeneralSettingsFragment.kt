@@ -13,12 +13,11 @@ import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.locale.LocaleUtils
-import acr.browser.lightning.settings.preferences.UserPreferences
-import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.Suggestions
 import acr.browser.lightning.search.engine.BaseSearchEngine
 import acr.browser.lightning.search.engine.CustomSearch
+import acr.browser.lightning.settings.preferences.*
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.utils.ProxyUtils
 import acr.browser.lightning.utils.ThemeUtils
@@ -330,32 +329,38 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
     private fun userAgentSummary() = choiceToUserAgent(userPreferences.userAgentChoice) + activity?.application?.let { ":\n" + userPreferences.userAgent(it) }
 
-    private fun choiceToUserAgent(index: Int) = when (index) {
-        1 -> resources.getString(R.string.agent_default)
-        2 -> resources.getString(R.string.agent_windows_desktop)
-        3 -> resources.getString(R.string.agent_linux_desktop)
-        4 -> resources.getString(R.string.agent_macos_desktop)
-        5 -> resources.getString(R.string.agent_android_mobile)
-        6 -> resources.getString(R.string.agent_ios_mobile)
-        7 -> resources.getString(R.string.agent_system)
-        8 -> resources.getString(R.string.agent_web_view)
-        9 -> resources.getString(R.string.agent_custom)
-        10 -> resources.getString(R.string.agent_hide_device)
+    private fun choiceToUserAgent(agent: String) = when (agent) {
+        USER_AGENT_DEFAULT -> resources.getString(R.string.agent_default)
+        USER_AGENT_WINDOWS_DESKTOP -> resources.getString(R.string.agent_windows_desktop)
+        USER_AGENT_LINUX_DESKTOP -> resources.getString(R.string.agent_linux_desktop)
+        USER_AGENT_MACOS_DESKTOP -> resources.getString(R.string.agent_macos_desktop)
+        USER_AGENT_ANDROID_MOBILE -> resources.getString(R.string.agent_android_mobile)
+        USER_AGENT_IOS_MOBILE -> resources.getString(R.string.agent_ios_mobile)
+        USER_AGENT_SYSTEM -> resources.getString(R.string.agent_system)
+        USER_AGENT_WEB_VIEW -> resources.getString(R.string.agent_web_view)
+        USER_AGENT_CUSTOM -> resources.getString(R.string.agent_custom)
+        USER_AGENT_HIDE_DEVICE -> resources.getString(R.string.agent_hide_device)
         else -> resources.getString(R.string.agent_default)
     }
 
+    private fun String.toAgentIndex(): Int {
+        val a = USER_AGENTS_ORDERED
+        val index = a.indexOf(this)
+        return if (index == -1) 0 else index
+    }
+
     private fun showUserAgentChooserDialog(summaryUpdater: SummaryUpdater) {
-        activity?.let {
-            BrowserDialog.showCustomDialog(it as AppCompatActivity) {
+        activity?.let { activity ->
+            val userAgentChoices = USER_AGENTS_ORDERED//resources.getStringArray(R.array.user_agent)
+            BrowserDialog.showCustomDialog(activity as AppCompatActivity) {
                 setTitle(resources.getString(R.string.title_user_agent))
-                setSingleChoiceItems(R.array.user_agent, userPreferences.userAgentChoice - 1) { _, which ->
-                    userPreferences.userAgentChoice = which + 1
-                    when (which) {
-                        in 0..7, 9 -> Unit
-                        8 -> {
-                            showCustomUserAgentPicker()
-                        }
-                    }
+                setSingleChoiceItems(
+                    userAgentChoices.map { choiceToUserAgent(it) }.toTypedArray(),
+                    userPreferences.userAgentChoice.toAgentIndex())
+                { _, which ->
+                    userPreferences.userAgentChoice = userAgentChoices[which]
+                    if (userAgentChoices[which] == USER_AGENT_CUSTOM)
+                        showCustomUserAgentPicker()
 
                     summaryUpdater.updateSummary(userAgentSummary())
                 }
