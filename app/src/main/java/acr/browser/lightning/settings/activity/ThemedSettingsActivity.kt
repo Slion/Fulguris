@@ -48,19 +48,7 @@ abstract class ThemedSettingsActivity : ThemedActivity() {
             recreate()
         }
     }
-
-    /**
-     * From ThemedActivity
-     */
-    override fun themeStyle(aTheme: AppTheme): Int {
-        return when (aTheme) {
-            AppTheme.LIGHT -> R.style.Theme_App_Light_Settings
-            AppTheme.DARK ->  R.style.Theme_App_Dark_Settings
-            AppTheme.BLACK -> R.style.Theme_App_Black_Settings
-            AppTheme.DEFAULT -> R.style.Theme_App_DayNight_Settings
-        }
-    }
-
+    
     override fun accentStyle(accentTheme: AccentTheme): Int? {
         return when (accentTheme) {
             AccentTheme.DEFAULT_ACCENT -> null

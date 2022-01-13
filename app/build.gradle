@@ -276,6 +276,7 @@ dependencies {
     implementation "androidx.drawerlayout:drawerlayout:1.1.1"
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.webkit:webkit:1.4.0'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
     // We had to use alpha release to be able to use edge-to-edge bottom sheet
     // In code we use reflection to access some bottom sheet private class, methods and fields
     // Whenever you update that library you will need to review those hacks, see adjustBottomSheet.

@@ -57,59 +57,12 @@ colorControlNormal:
 
 -->
 
-    <!-- Settings themes -->
-    <style name="Theme.App.Light.Settings" parent="Theme.App.Light">
-        <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-<!--        &lt;!&ndash; That's the status bar background color &ndash;&gt;-->
-<!--        <item name="colorPrimaryDark">?android:attr/colorBackground</item>-->
-
-<!--        &lt;!&ndash; Dark actionbar &ndash;&gt;-->
-<!--        <item name="colorPrimary">?android:attr/colorBackground</item>-->
-<!--        <item name="actionBarWidgetTheme">@null</item>-->
-<!--        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>-->
-<!--        &lt;!&ndash; Panel attributes &ndash;&gt;-->
-<!--        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>-->
-    </style>
-
-    <style name="Theme.App.Dark.Settings" parent="Theme.App.Dark">
-        <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-        <!-- That's the status bar background color -->
-<!--        <item name="colorPrimaryDark">?android:attr/colorBackground</item>-->
-        <!-- Dark actionbar -->
-<!--        <item name="colorPrimary">?android:attr/colorBackground</item>-->
-<!--        <item name="actionBarWidgetTheme">@null</item>-->
-<!--        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>-->
-        <!-- Panel attributes -->
-<!--        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>-->
-
-    </style>
-
-    <style name="Theme.App.Black.Settings" parent="Theme.App.Black">
-        <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-<!--        &lt;!&ndash; That's the status bar background color &ndash;&gt;-->
-<!--        <item name="colorPrimaryDark">?android:attr/colorBackground</item>-->
-<!--        &lt;!&ndash; Dark actionbar &ndash;&gt;-->
-<!--        <item name="colorPrimary">?android:attr/colorBackground</item>-->
-<!--        <item name="actionBarWidgetTheme">@null</item>-->
-<!--        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>-->
-<!--        &lt;!&ndash; Panel attributes &ndash;&gt;-->
-<!--        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>-->
-    </style>
-
-    <style name="Theme.App.DayNight.Settings" parent="Theme.App.DayNight">
-        <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-<!--        &lt;!&ndash; That's the status bar background color &ndash;&gt;-->
-<!--        <item name="colorPrimaryDark">?android:attr/colorBackground</item>-->
-<!--        &lt;!&ndash; Dark actionbar &ndash;&gt;-->
-<!--        <item name="colorPrimary">?android:attr/colorBackground</item>-->
-<!--        <item name="actionBarWidgetTheme">@null</item>-->
-<!--        <item name="actionBarTheme">@style/ThemeOverlay.Material3.Dark.ActionBar</item>-->
-<!--        &lt;!&ndash; Panel attributes &ndash;&gt;-->
-<!--        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>-->
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+<!--        <item name="windowSplashScreenBackground">@drawable/ic_secure</item>-->
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.App.DayNight</item>
     </style>
 
 
@@ -273,7 +226,6 @@ colorControlNormal:
         <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:windowDisablePreview">false</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
@@ -447,7 +399,6 @@ colorControlNormal:
         <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:windowDisablePreview">false</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
@@ -616,7 +567,6 @@ colorControlNormal:
         <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:windowDisablePreview">false</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->

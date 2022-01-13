@@ -60,7 +60,7 @@
         Needed to be in the root activity which is our splash screen apparently.
         -->
         <activity android:name=".SplashActivity"
-            android:theme="@style/Theme.App.DayNight"
+            android:theme="@style/Theme.App.SplashScreen"
             android:resizeableActivity="true"
             android:exported="true">
             <intent-filter>
@@ -91,7 +91,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.APP_BROWSER" />
@@ -205,7 +204,7 @@
             android:colorMode="wideColorGamut"
             android:label="@string/settings"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.App.DayNight.Settings"
+            android:theme="@style/Theme.App.DayNight"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SETTINGS" />
@@ -217,7 +216,7 @@
             android:name=".reading.ReadingActivity"
             android:colorMode="wideColorGamut"
             android:label="@string/reading_mode"
-            android:theme="@style/Theme.App.DayNight.Settings"
+            android:theme="@style/Theme.App.DayNight"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.READING" />

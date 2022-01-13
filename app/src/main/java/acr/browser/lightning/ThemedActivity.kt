@@ -48,7 +48,14 @@ abstract class ThemedActivity : LocaleAwareActivity() {
      * Implement this to provide themes resource style ids.
      */
     @StyleRes
-    abstract fun themeStyle(aTheme: AppTheme): Int
+    fun themeStyle(aTheme: AppTheme): Int {
+        return when (aTheme) {
+            AppTheme.LIGHT -> R.style.Theme_App_Light
+            AppTheme.DARK ->  R.style.Theme_App_Dark
+            AppTheme.BLACK -> R.style.Theme_App_Black
+            AppTheme.DEFAULT -> R.style.Theme_App_DayNight
+        }
+    }
 
     @StyleRes
     protected abstract fun accentStyle(accentTheme: AccentTheme): Int?
@@ -94,7 +101,7 @@ abstract class ThemedActivity : LocaleAwareActivity() {
      *
      */
     private fun applyAccent() {
-        accentStyle(accentId)?.let { setTheme(it) }
+        //accentStyle(accentId)?.let { setTheme(it) }
     }
 
     /**

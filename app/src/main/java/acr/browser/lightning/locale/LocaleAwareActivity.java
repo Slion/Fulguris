@@ -51,8 +51,6 @@ public abstract class LocaleAwareActivity extends AppCompatActivity {
         mLastLocale = LocaleUtils.requestedLocale(userPreferences.getLocale());
         LocaleUtils.updateLocale(this, mLastLocale);
         setLayoutDirection(getWindow().getDecorView(), mLastLocale);
-
-
     }
 
 

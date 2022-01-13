@@ -23,22 +23,32 @@
 package acr.browser.lightning
 
 import acr.browser.lightning.browser.activity.ThemedBrowserActivity
+import acr.browser.lightning.locale.LocaleAwareActivity
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 @AndroidEntryPoint
-class SplashActivity @Inject constructor(): ThemedBrowserActivity() {
+class SplashActivity @Inject constructor(): LocaleAwareActivity() {
 
     val mHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Handle the splash screen transition.
+        val splashScreen = installSplashScreen()
+        /*
+        splashScreen.setOnExitAnimationListener {
+            it.remove()
+        }*/
+
         setContentView(R.layout.activity_splash)
 
         // TODO: check if we need onboarding
@@ -49,5 +59,9 @@ class SplashActivity @Inject constructor(): ThemedBrowserActivity() {
 
         // Close this activity
         mHandler.postDelayed({   finish()},3000)
+    }
+
+    override fun onLocaleChanged() {
+        TODO("Not yet implemented")
     }
 }

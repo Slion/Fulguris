@@ -59,19 +59,6 @@ abstract class ThemedBrowserActivity : ThemedActivity() {
         }
     }
 
-
-    /**
-     * From ThemedActivity
-     */
-    override fun themeStyle(aTheme: AppTheme): Int {
-        return when (aTheme) {
-            AppTheme.LIGHT -> R.style.Theme_App_Light
-            AppTheme.DARK ->  R.style.Theme_App_Dark
-            AppTheme.BLACK -> R.style.Theme_App_Black
-            AppTheme.DEFAULT -> R.style.Theme_App_DayNight
-        }
-    }
-
     override fun accentStyle(accentTheme: AccentTheme): Int? {
         return when (accentTheme) {
             AccentTheme.DEFAULT_ACCENT -> null
