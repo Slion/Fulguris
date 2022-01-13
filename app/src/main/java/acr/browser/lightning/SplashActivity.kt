@@ -33,7 +33,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
+/**
+ * Still needed a splash screen activity as the SplashScreen API would not play well with our themed activity.
+ * We just could not get our theme override to work then.
+ */
 @AndroidEntryPoint
 class SplashActivity @Inject constructor(): LocaleAwareActivity() {
 
@@ -62,6 +65,6 @@ class SplashActivity @Inject constructor(): LocaleAwareActivity() {
     }
 
     override fun onLocaleChanged() {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 }
