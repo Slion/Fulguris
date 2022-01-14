@@ -22,6 +22,7 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
 import jp.hazuki.yuzubrowser.adblock.getContentType
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import kotlinx.coroutines.*
+import okhttp3.Headers.Companion.toHeaders
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.internal.publicsuffix.PublicSuffix
@@ -40,9 +41,9 @@ class AbpBlocker @Inject constructor(
     ) : AdBlocker {
 
     // use a map of filterContainers instead of several separate containers
-    // could also use list and associate prefix with id, but only if it's considerably faster...
+    // TODO: could also use list and associate prefix with id, but only if it's considerably faster...
     private val prefixes = listOf(ABP_PREFIX_ALLOW, ABP_PREFIX_DENY, ABP_PREFIX_IMPORTANT, ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
-    private val filterContainers = prefixes.map { it to FilterContainer() }.toMap()
+    private val filterContainers = prefixes.associateWith { FilterContainer() }
 
     // store whether lists are loaded (and delay any request until loading is done)
     private var listsLoaded = false
@@ -281,13 +282,13 @@ class AbpBlocker @Inject constructor(
             //}
         }
 
-        // careful, i need to get ALL matching filters, not just one
+        // careful: we need to get ALL matching modify filters, not just one (like it's done for block and allow decisions)
         var modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(contentRequest)
         if (modifyFilters.isNotEmpty()) {
             // there is a hit, but first check whether the exact filter has an exception
             val modifyExceptions = filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getAll(contentRequest)
             if (modifyExceptions.isNotEmpty()) {
-                modifyFilters = modifyFilters.toMutableList() // better always to mutable list or like this?
+                modifyFilters = modifyFilters.toMutableList()
                 /* how exceptions/negations work: (adguard removeparam documentation is useful)
                  *  without parameter (i.e. empty), all filters of that type (removeparam, csp,...) are invalid
                  *  with parameter, only same filter type (i.e. same prefix) and same parameter are considered invalid
@@ -335,8 +336,8 @@ class AbpBlocker @Inject constructor(
         like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
          */
 
+        // TODO: log url and parameters to check this is correct
         val url = request.url.toString().substringBefore('?').substringBefore('#') // url without query and fragment
-        var headers = request.requestHeaders // do i actually need them? looks like they aren't modified anyway
         // getting this map needs to be done for every request if some generic parameters are removed -> should be as fast as possible
         val parameters = request.url.getQueryParameterMap() as MutableMap
 
@@ -378,22 +379,25 @@ class AbpBlocker @Inject constructor(
                 }
             }
         }
+        // TODO: return null if no filter actually applies
 
-        val fullUrl = url +
+        val modifiedUrl = url +
                 (if (parameters.isNotEmpty())
                     "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
                 else "") +
                 (request.url.fragment ?: "")
-        val request2 = Request.Builder()
-            .url(fullUrl)
-//            .headers(Headers.headersOf(headers)) // not working, how to set headers without having to do it one by one?
-                // anything missing?
-            .get()
+        val newRequest = Request.Builder()
+            .url(modifiedUrl) // use new URL
+            .method(request.method, null) // use same method, TODO: is body null really ok?
+            .headers(request.requestHeaders.toHeaders()) // use same headers, TODO: are there filters that modify the request headers
+            .build() // anything missing?
 
-        val call = OkHttpClient().newCall(request2.build()) // maybe have one client like it's done in AbpListUpdater
+        val call = OkHttpClient().newCall(newRequest) // TODO: maybe have one client like it's done in AbpListUpdater
         try {
             val response = call.execute()
-            // i guess i should get mimetype and encoding from the response?
+            // TODO
+            //  i guess i should get mimetype and encoding from the response?
+            //  what about response headers? https://stackoverflow.com/questions/35768621/get-response-headers-in-webview-in-shouldinterceptrequest-in-android
             response.body?.let { return WebResourceResponse("bla", "bla", it.byteStream())}
         } catch (e: IOException) {
         }
