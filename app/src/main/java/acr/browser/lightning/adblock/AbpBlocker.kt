@@ -10,6 +10,7 @@ import android.net.Uri
 import android.webkit.MimeTypeMap
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
+import androidx.collection.LruCache
 import androidx.core.util.PatternsCompat
 import jp.hazuki.yuzubrowser.adblock.EmptyInputStream
 import jp.hazuki.yuzubrowser.adblock.core.*
@@ -54,8 +55,7 @@ class AbpBlocker @Inject constructor(
 */
 
     // cache for 3rd party check, allows significantly faster checks
-    private val thirdPartyCache = mutableMapOf<String, Boolean>()
-    private val thirdPartyCacheSize = 100
+    private val thirdPartyCache = ThirdPartyLruCache(100)
 
     private val dummyImage: ByteArray by lazy { readByte(application.resources.assets.open("blank.png")) }
     private val dummyResponse by lazy { WebResourceResponse("text/plain", "UTF-8", EmptyInputStream()) }
@@ -217,41 +217,15 @@ class AbpBlocker @Inject constructor(
     private fun WebResourceRequest.getContentRequest(pageUri: Uri) =
         ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri))
 
-    // moved from jp.hazuki.yuzubrowser.adblock/AdBlock.kt
-    // modified to use cache for the slow part, decreases average time by 50-70%
+    // initially based on jp.hazuki.yuzubrowser.adblock/AdBlock.kt
+    //  modified to use cache for the slow part, decreases average time by 50-70%
     private fun is3rdParty(url: Uri, pageUri: Uri): Boolean {
         val hostName = url.host ?: return true
         val pageHost = pageUri.host ?: return true
 
         if (hostName == pageHost) return false
 
-        val cacheEntry = hostName + pageHost
-        val cached = thirdPartyCache[cacheEntry]
-        if (cached != null)
-            return cached
-
-        val ipPattern = PatternsCompat.IP_ADDRESS
-        if (ipPattern.matcher(hostName).matches() || ipPattern.matcher(pageHost).matches())
-            return cache3rdPartyResult(true, cacheEntry)
-
-        val db = PublicSuffix.get()
-
-        return cache3rdPartyResult(db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost), cacheEntry)
-    }
-
-    // cache 3rd party check result, and remove oldest entry if cache too large
-    // TODO: this can trigger concurrentModificationException
-    //   fix should not defeat purpose of cache (introduce slowdown)
-    //   simply use try and don't catch anything?
-    //    if something is not added to cache it doesn't matter
-    //    in worst case it takes another 1-2 ms to create the same result again
-    private fun cache3rdPartyResult(is3rdParty: Boolean, cacheEntry: String): Boolean {
-        runCatching {
-            thirdPartyCache[cacheEntry] = is3rdParty
-            if (thirdPartyCache.size > thirdPartyCacheSize)
-                thirdPartyCache.remove(thirdPartyCache.keys.first())
-        }
-        return is3rdParty
+        return thirdPartyCache["$hostName/$pageHost"]!! // the create function can't return null!
     }
 
     // returns null if not blocked, else some WebResourceResponse
@@ -512,6 +486,20 @@ class AbpBlocker @Inject constructor(
                 start = end + 1
             } while (start < query.length)
             return parameters
+        }
+
+        private class ThirdPartyLruCache(size: Int): LruCache<String, Boolean>(size) {
+            override fun create(key: String): Boolean {
+                return key.split('/').let { is3rdParty(it[0], it[1])}
+            }
+
+            private fun is3rdParty(hostName: String, pageHost: String): Boolean {
+                val ipPattern = PatternsCompat.IP_ADDRESS
+                if (ipPattern.matcher(hostName).matches() || ipPattern.matcher(pageHost).matches())
+                    return true
+                val db = PublicSuffix.get()
+                return db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost)
+            }
         }
 
     }
