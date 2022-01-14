@@ -188,7 +188,7 @@ class UserPreferences @Inject constructor(
      *
      * @see UserPreferences.userAgent
      */
-    var userAgentChoice by preferences.stringPreference(USER_AGENT, USER_AGENT_DEFAULT)
+    var userAgentChoice by preferences.stringPreference(R.string.pref_key_user_agent, USER_AGENT_DEFAULT)
 
     /**
      * The custom user agent that should be used by the browser.
@@ -439,7 +439,6 @@ private const val LOCATION = "location"
 private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
 private const val SEARCH_URL = "searchurl"
-private const val USER_AGENT = "userAgentChoice"
 private const val USER_AGENT_STRING = "userAgentString"
 private const val CLEAR_HISTORY_EXIT = "clearHistoryExit"
 private const val CLEAR_COOKIES_EXIT = "clearCookiesExit"
