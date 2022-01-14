@@ -327,36 +327,20 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    private fun userAgentSummary() = choiceToUserAgent(userPreferences.userAgentChoice) + activity?.application?.let { ":\n" + userPreferences.userAgent(it) }
-
-    private fun choiceToUserAgent(agent: String) = when (agent) {
-        USER_AGENT_DEFAULT -> resources.getString(R.string.agent_default)
-        USER_AGENT_WINDOWS_DESKTOP -> resources.getString(R.string.agent_windows_desktop)
-        USER_AGENT_LINUX_DESKTOP -> resources.getString(R.string.agent_linux_desktop)
-        USER_AGENT_MACOS_DESKTOP -> resources.getString(R.string.agent_macos_desktop)
-        USER_AGENT_ANDROID_MOBILE -> resources.getString(R.string.agent_android_mobile)
-        USER_AGENT_IOS_MOBILE -> resources.getString(R.string.agent_ios_mobile)
-        USER_AGENT_SYSTEM -> resources.getString(R.string.agent_system)
-        USER_AGENT_WEB_VIEW -> resources.getString(R.string.agent_web_view)
-        USER_AGENT_CUSTOM -> resources.getString(R.string.agent_custom)
-        USER_AGENT_HIDE_DEVICE -> resources.getString(R.string.agent_hide_device)
-        else -> resources.getString(R.string.agent_default)
-    }
-
-    private fun String.toAgentIndex(): Int {
-        val a = USER_AGENTS_ORDERED
-        val index = a.indexOf(this)
-        return if (index == -1) 0 else index
-    }
+    private fun userAgentSummary() =
+        resources.getString(USER_AGENTS_ORDERED[userPreferences.userAgentChoice] ?: R.string.agent_default) +
+                activity?.application?.let { ":\n" + userPreferences.userAgent(it) }
 
     private fun showUserAgentChooserDialog(summaryUpdater: SummaryUpdater) {
         activity?.let { activity ->
-            val userAgentChoices = USER_AGENTS_ORDERED//resources.getStringArray(R.array.user_agent)
+            val userAgentChoices = USER_AGENTS_ORDERED.keys.toTypedArray()
+            val currentAgentIndex = userAgentChoices.indexOf(userPreferences.userAgentChoice).
+                let {if (it == -1) 0 else it}
             BrowserDialog.showCustomDialog(activity as AppCompatActivity) {
                 setTitle(resources.getString(R.string.title_user_agent))
                 setSingleChoiceItems(
-                    userAgentChoices.map { choiceToUserAgent(it) }.toTypedArray(),
-                    userPreferences.userAgentChoice.toAgentIndex())
+                    USER_AGENTS_ORDERED.values.map { resources.getString(it) }.toTypedArray(),
+                    currentAgentIndex)
                 { _, which ->
                     userPreferences.userAgentChoice = userAgentChoices[which]
                     if (userAgentChoices[which] == USER_AGENT_CUSTOM)

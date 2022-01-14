@@ -1,5 +1,6 @@
 package acr.browser.lightning.settings.preferences
 
+import acr.browser.lightning.R
 import acr.browser.lightning.constant.*
 import android.app.Application
 import android.os.Build
@@ -37,26 +38,28 @@ fun webViewEngineVersion(application: Application) =
 fun webViewEngineVersionDesktop(application: Application) =
         webViewEngineVersion(application).replace(" Mobile ", " ")
 
-    const val USER_AGENT_DEFAULT = "agent_default"
-    const val USER_AGENT_HIDE_DEVICE = "agent_hide_device"
-    const val USER_AGENT_WINDOWS_DESKTOP = "agent_windows_desktop"
-    const val USER_AGENT_LINUX_DESKTOP = "agent_linux_desktop"
-    const val USER_AGENT_MACOS_DESKTOP = "agent_macos_desktop"
-    const val USER_AGENT_ANDROID_MOBILE = "agent_android_mobile"
-    const val USER_AGENT_IOS_MOBILE = "agent_ios_mobile"
-    const val USER_AGENT_SYSTEM = "agent_system"
-    const val USER_AGENT_WEB_VIEW = "agent_web_view"
-    const val USER_AGENT_CUSTOM = "agent_custom"
+const val USER_AGENT_DEFAULT = "agent_default"
+const val USER_AGENT_HIDE_DEVICE = "agent_hide_device"
+const val USER_AGENT_WINDOWS_DESKTOP = "agent_windows_desktop"
+const val USER_AGENT_LINUX_DESKTOP = "agent_linux_desktop"
+const val USER_AGENT_MACOS_DESKTOP = "agent_macos_desktop"
+const val USER_AGENT_ANDROID_MOBILE = "agent_android_mobile"
+const val USER_AGENT_IOS_MOBILE = "agent_ios_mobile"
+const val USER_AGENT_SYSTEM = "agent_system"
+const val USER_AGENT_WEB_VIEW = "agent_web_view"
+const val USER_AGENT_CUSTOM = "agent_custom"
 
-    val USER_AGENTS_ORDERED = arrayOf(
-        USER_AGENT_DEFAULT,
-        USER_AGENT_ANDROID_MOBILE,
-        USER_AGENT_IOS_MOBILE,
-        USER_AGENT_SYSTEM,
-        USER_AGENT_WEB_VIEW,
-        USER_AGENT_CUSTOM,
-        USER_AGENT_HIDE_DEVICE,
-        USER_AGENT_WINDOWS_DESKTOP,
-        USER_AGENT_LINUX_DESKTOP,
-        USER_AGENT_MACOS_DESKTOP,
-    )
+// use LinkedHashMap because it keeps insertion order
+//  in tests, order was also kept for Map. But this is not guaranteed
+val USER_AGENTS_ORDERED = linkedMapOf(
+    USER_AGENT_DEFAULT to R.string.agent_default,
+    USER_AGENT_HIDE_DEVICE to R.string.agent_hide_device,
+    USER_AGENT_WINDOWS_DESKTOP to R.string.agent_windows_desktop,
+    USER_AGENT_LINUX_DESKTOP to R.string.agent_linux_desktop,
+    USER_AGENT_MACOS_DESKTOP to R.string.agent_macos_desktop,
+    USER_AGENT_ANDROID_MOBILE to R.string.agent_android_mobile,
+    USER_AGENT_IOS_MOBILE to R.string.agent_ios_mobile,
+    USER_AGENT_SYSTEM to R.string.agent_system,
+    USER_AGENT_WEB_VIEW to R.string.agent_web_view,
+    USER_AGENT_CUSTOM to R.string.agent_custom,
+)
