@@ -1,12 +1,13 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.settings.preferences.DeveloperPreferences
 import android.os.Bundle
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DebugSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
@@ -22,7 +23,7 @@ class DebugSettingsFragment : AbstractSettingsFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-        injector.inject(this)
+        //injector.inject(this)
 
         switchPreference(
             preference = LEAK_CANARY,

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        style="?attr/popupMenuStyle"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/popupMenuBackground"
+        android:elevation="4dp">
+
+        <!-- TODO: could not get this working with rounded corner
+            <com.google.android.material.appbar.AppBarLayout-->
+        <!--            android:id="@+id/header"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="?attr/actionBarSize"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent">-->
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="250dp"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/menuShortcutBack"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_back"
+                app:tooltipText="@{@string/action_back}"
+                app:srcCompat="@drawable/ic_action_back" />
+
+            <ImageButton
+                android:id="@+id/menuShortcutForward"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_forward"
+                app:tooltipText="@{@string/action_forward}"
+                app:srcCompat="@drawable/ic_action_forward" />
+
+            <ImageButton
+                android:id="@+id/menuShortcutRefresh"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_reload"
+                app:tooltipText="@{@string/action_reload}"
+                app:srcCompat="@drawable/round_refresh_24" />
+
+            <ImageButton
+                android:id="@+id/menuShortcutBookmarks"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_bookmarks"
+                app:tooltipText="@{@string/action_bookmarks}"
+                app:srcCompat="@drawable/round_star_border_24" />
+
+            <ImageButton
+                android:id="@+id/menuShortcutHome"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_show_homepage"
+                app:tooltipText="@{@string/action_show_homepage}"
+                app:srcCompat="@drawable/ic_action_home"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+
+        <!--        </com.google.android.material.appbar.AppBarLayout>-->
+
+        <!-- Divider
+TODO: Find a way not to scroll that guy without breaking our layout
+-->
+
+        <!--
+        layout_weight needed to prevent our header/toolbar being pushed out in reversed mode with toolbars at bottom
+        -->
+        <LinearLayout
+            android:id="@+id/layoutMenuItemsContainer"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <!-- paddingBottom to make sure fading edge is working with our fancy background
+            layout_weight needed to prevent the divider above being pushed out in reversed mode with toolbars at bottom
+            -->
+            <ScrollView
+                android:id="@+id/scrollViewItems"
+                android:layout_width="250dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingBottom="10dp"
+                android:requiresFadingEdge="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layoutMenuItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        android:id="@+id/menuItemWebPage"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_web"
+                        android:text="@string/action_webpage" />
+
+                    <TextView
+                        android:id="@+id/menuItemNewTab"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        app:drawableStartCompat="@drawable/ic_action_plus"
+                        android:text="@string/action_new_tab" />
+
+                    <TextView
+                        android:id="@+id/menuItemIncognito"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:enabled="true"
+                        android:text="@string/action_incognito"
+                        app:drawableStartCompat="@drawable/ic_incognito_24" />
+
+                    <TextView
+                        android:id="@+id/menuItemSessions"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        app:drawableStartCompat="@drawable/ic_sessions"
+                        android:text="@string/action_sessions" />
+
+                    <TextView
+                        android:id="@+id/menuItemBookmarks"
+                        style="@style/BrowserTextMenuItem"
+                        app:drawableStartCompat="@drawable/ic_bookmarks"
+                        android:text="@string/action_bookmarks"
+                        android:visibility="gone"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <!--<TextView-->
+                    <!--    android:id="@+id/menuItemBookmarks"-->
+                    <!--    style="@style/BrowserTextMenuItem"-->
+                    <!--    android:background="?attr/selectableItemBackground"-->
+                    <!--    android:text="@string/action_bookmarks"-->
+                    <!--    app:drawableStartCompat="@drawable/ic_bookmark_border" />-->
+
+                    <TextView
+                        android:id="@+id/menuItemHistory"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        app:drawableStartCompat="@drawable/round_history_24"
+                        android:text="@string/action_history" />
+
+                    <TextView
+                        android:id="@+id/menuItemDownloads"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        app:drawableStartCompat="@drawable/ic_file_download"
+                        android:text="@string/action_downloads" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/menuItemSettings"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        app:drawableStartCompat="@drawable/outline_settings_24"
+                        android:text="@string/settings" />
+
+                    <TextView
+                        android:id="@+id/menuItemExit"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        app:drawableStartCompat="@drawable/round_clear_24"
+                        android:text="@string/exit" />
+
+                    <!-- Divider -->
+                    <!--
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="?android:attr/listDivider"
+                        />
+                    -->
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

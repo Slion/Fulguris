@@ -1,5 +1,6 @@
 package acr.browser.lightning.di
 
+import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.device.BuildType
 import acr.browser.lightning.html.ListPageReader
@@ -34,8 +35,13 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import com.anthonycr.mezzanine.MezzanineGenerator
+import acr.browser.lightning.html.incognito.IncognitoPageReader
+import acr.browser.lightning.settings.preferences.UserPreferences
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -51,7 +57,14 @@ import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 class AppModule {
+
+    @Provides
+    fun provideBuildInfo(): BuildInfo = BuildInfo(when {
+        BuildConfig.DEBUG -> BuildType.DEBUG
+        else -> BuildType.RELEASE
+    })
 
     @Provides
     @MainHandler
@@ -60,10 +73,12 @@ class AppModule {
     @Provides
     fun provideContext(application: Application): Context = application.applicationContext
 
+
     @Provides
     @UserPrefs
+    @Singleton
     // Access default shared preferences to make sure preferences framework binding is working from XML
-    fun provideUserPreferences(application: Application): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
+    fun provideUserSharedPreferences(application: Application): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application.applicationContext)
 
     @Provides
     @PrefsPortrait
@@ -179,6 +194,9 @@ class AppModule {
     fun providesHomePageReader(): HomePageReader = MezzanineGenerator.HomePageReader()
 
     @Provides
+    fun providesIncognitoPageReader(): IncognitoPageReader = MezzanineGenerator.IncognitoPageReader()
+
+    @Provides
     fun providesBookmarkPageReader(): BookmarkPageReader = MezzanineGenerator.BookmarkPageReader()
 
     @Provides
@@ -192,49 +210,48 @@ class AppModule {
 
     @Provides
     fun providesSetMetaViewport(): SetMetaViewport = MezzanineGenerator.SetMetaViewport()
-
 }
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class SuggestionsClient
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class MainHandler
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class UserPrefs
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class PrefsPortrait
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class PrefsLandscape
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class AdBlockPrefs
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class DevPrefs
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class MainScheduler
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class DiskScheduler
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class NetworkScheduler
 
 @Qualifier
-@Retention(AnnotationRetention.SOURCE)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class DatabaseScheduler

@@ -1,14 +1,18 @@
 package acr.browser.lightning.view
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AdBlocker
+import acr.browser.lightning.adblock.NoOpAdBlocker
+import acr.browser.lightning.browser.JavaScriptChoice
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.html.homepage.HomePageFactory
@@ -21,6 +25,7 @@ import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTries
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
@@ -42,8 +47,8 @@ import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URISyntaxException
@@ -61,15 +66,19 @@ class LightningWebClient(
     private val uiController: UIController
     private val intentUtils = IntentUtils(activity)
 
-    @Inject internal lateinit var proxyUtils: ProxyUtils
-    @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject @UserPrefs internal lateinit var preferences: SharedPreferences
-    @Inject internal lateinit var sslWarningPreferences: SslWarningPreferences
-    @Inject internal lateinit var logger: Logger
-    @Inject internal lateinit var textReflowJs: TextReflow
-    @Inject internal lateinit var invertPageJs: InvertPage
-    @Inject internal lateinit var setMetaViewport: SetMetaViewport
-    @Inject internal lateinit var homePageFactory: HomePageFactory
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
+
+    val proxyUtils: ProxyUtils = hiltEntryPoint.proxyUtils
+    val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
+    val preferences: SharedPreferences = hiltEntryPoint.userSharedPreferences()
+    val sslWarningPreferences: SslWarningPreferences = hiltEntryPoint.sslWarningPreferences
+    val logger: Logger = hiltEntryPoint.logger
+    val textReflowJs: TextReflow = hiltEntryPoint.textReflowJs
+    val invertPageJs: InvertPage = hiltEntryPoint.invertPageJs
+    val setMetaViewport: SetMetaViewport = hiltEntryPoint.setMetaViewport
+    val homePageFactory: HomePageFactory = hiltEntryPoint.homePageFactory
+    val abpBlocker: AbpBlocker = hiltEntryPoint.abpBlocker
+    val noopBlocker: NoOpAdBlocker = hiltEntryPoint.noopBlocker
 
     private var adBlock: AdBlocker
 
@@ -84,29 +93,26 @@ class LightningWebClient(
 
     var sslState: SslState = SslState.None
         private set(value) {
-            sslStateSubject.onNext(value)
             field = value
+            uiController.updateSslState(field)
         }
 
 
-    private val sslStateSubject: PublishSubject<SslState> = PublishSubject.create()
-
     init {
-        activity.injector.inject(this)
+        //activity.injector.inject(this)
         uiController = activity as UIController
         adBlock = chooseAdBlocker()
     }
 
-    fun sslStateObservable(): Observable<SslState> = sslStateSubject.hide()
 
     fun updatePreferences() {
         adBlock = chooseAdBlocker()
     }
 
     private fun chooseAdBlocker(): AdBlocker = if (userPreferences.adBlockEnabled) {
-        activity.injector.provideAbpAdBlocker()
+        abpBlocker
     } else {
-        activity.injector.provideNoOpAdBlocker()
+        noopBlocker
     }
 
     /**
@@ -165,7 +171,7 @@ class LightningWebClient(
             uiController.setForwardButtonEnabled(view.canGoForward())
             view.postInvalidate()
         }
-        if (view.title == null || view.title.isEmpty()) {
+        if (view.title == null || (view.title as String).isEmpty()) {
             lightningView.titleInfo.setTitle(activity.getString(R.string.untitled))
         } else {
             lightningView.titleInfo.setTitle(view.title)
@@ -182,6 +188,13 @@ class LightningWebClient(
             }
             // takes around half a second, but not sure what that tells me
         }*/
+
+        if (userPreferences.forceZoom) {
+            view.loadUrl(
+                "javascript:(function() { document.querySelector('meta[name=\"viewport\"]').setAttribute(\"content\",\"width=device-width\"); })();"
+            )
+        }
+
         uiController.tabChanged(lightningView)
     }
 
@@ -207,7 +220,55 @@ class LightningWebClient(
         // Try to fetch meta theme color a few times
         lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
 
+        if (userPreferences.javaScriptChoice === JavaScriptChoice.BLACKLIST) {
+            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
+                val arrayOfURLs = userPreferences.javaScriptBlocked
+                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                if (arrayOfURLs.contains(", ")) {
+                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                }
+                if (!stringContainsItemFromList(url, strgs)) {
+                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
+                        return
+                    } else {
+                        view.settings.javaScriptEnabled = false
+                    }
+                }
+                else{ return }
+            }
+        }
+        else  if (userPreferences.javaScriptChoice === JavaScriptChoice.WHITELIST) run {
+            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
+                val arrayOfURLs = userPreferences.javaScriptBlocked
+                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                if (arrayOfURLs.contains(", ")) {
+                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                }
+                if (stringContainsItemFromList(url, strgs)) {
+                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
+                        return
+                    } else {
+                        view.settings.javaScriptEnabled = false
+                    }
+                }
+                else{
+                    return
+                }
+            }
+        }
+
         uiController.tabChanged(lightningView)
+    }
+
+    private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
+        for (i in items.indices) {
+            if (inputStr.contains(items[i])) {
+                return true
+            }
+        }
+        return false
     }
 
     /**
@@ -299,6 +360,12 @@ class LightningWebClient(
     }
 
     override fun onReceivedSslError(webView: WebView, handler: SslErrorHandler, error: SslError) {
+        val urlMatcher = webView.url?.replace(Regex("^https?:\\/\\/"), "")
+        if (!urlMatcher?.let { error.url.contains(it) }!!) {
+            handler.proceed()
+            webView.url?.let { sslWarningPreferences.rememberBehaviorForDomain(it, SslWarningPreferences.Behavior.PROCEED) }
+        }
+
         urlWithSslError = webView.url
         sslState = SslState.Invalid(error)
 
@@ -316,6 +383,14 @@ class LightningWebClient(
         }
         val alertMessage = activity.getString(R.string.message_insecure_connection, stringBuilder.toString())
 
+        val ba = activity as BrowserActivity
+
+        if (!userPreferences.ssl) {
+            handler.proceed()
+            ba.snackbar(errorCodeMessageCodes[0])
+            return
+        }
+
         MaterialAlertDialogBuilder(activity).apply {
             val view = LayoutInflater.from(activity).inflate(R.layout.dialog_ssl_warning, null)
             val dontAskAgain = view.findViewById<CheckBox>(R.id.checkBoxDontAskAgain)
@@ -326,13 +401,13 @@ class LightningWebClient(
             setOnCancelListener { handler.cancel() }
             setPositiveButton(activity.getString(R.string.action_yes)) { _, _ ->
                 if (dontAskAgain.isChecked) {
-                    sslWarningPreferences.rememberBehaviorForDomain(webView.url, SslWarningPreferences.Behavior.PROCEED)
+                    sslWarningPreferences.rememberBehaviorForDomain(webView.url as String, SslWarningPreferences.Behavior.PROCEED)
                 }
                 handler.proceed()
             }
             setNegativeButton(activity.getString(R.string.action_no)) { _, _ ->
                 if (dontAskAgain.isChecked) {
-                    sslWarningPreferences.rememberBehaviorForDomain(webView.url, SslWarningPreferences.Behavior.CANCEL)
+                    sslWarningPreferences.rememberBehaviorForDomain(webView.url as String, SslWarningPreferences.Behavior.CANCEL)
                 }
                 handler.cancel()
             }

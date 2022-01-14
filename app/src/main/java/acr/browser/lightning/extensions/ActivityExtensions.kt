@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020-2021 Stéphane Lenclud
+ */
+
 @file:JvmName("ActivityExtensions")
 
 package acr.browser.lightning.extensions
@@ -48,28 +52,29 @@ fun Activity.snackbar(message: String, aGravity: Int = Gravity.BOTTOM) {
  */
 @SuppressLint("WrongConstant")
 fun Activity.makeSnackbar(message: String, aDuration: Int, aGravity: Int): Snackbar {
-    var view = findViewById<View>(R.id.coordinator_layout)
+    var view = findViewById<View>(R.id.web_view_frame)
     if (view == null) {
         // We won't use gravity and we provide compatibility with previous implementation
         view = findViewById<View>(android.R.id.content)
         return Snackbar.make(view, message, aDuration)
     } else {
         // Apply specified gravity before showing snackbar
-        val snackbar = Snackbar.make(view, message, KDuration)
+        val snackbar = Snackbar.make(view, message, aDuration)
+        //snackbar.setAnchorView(R.id.web_view_frame)
+        snackbar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
         val params = snackbar.view.layoutParams as CoordinatorLayout.LayoutParams
         params.gravity = aGravity
         if (aGravity==Gravity.TOP) {
             // Move snackbar away from status bar
             // That one works well it seems
-            params.topMargin = Utils.dpToPx(30F)
+            //params.topMargin = Utils.dpToPx(90F)
         } else {
             // Make sure it is above rounded corner
             // Ain't working on F(x)tec Pro1, weird...
-            params.bottomMargin = Utils.dpToPx(30F)
+            //params.bottomMargin = Utils.dpToPx(90F)
         }
         snackbar.view.layoutParams = params
-        snackbar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
-        snackbar.show()
+
         return snackbar;
     }
 }

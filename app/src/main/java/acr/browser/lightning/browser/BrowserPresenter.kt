@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020-2021 Stéphane Lenclud
+ */
+
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.BrowserApp
@@ -6,46 +10,45 @@ import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.INTENT_ORIGIN
 import acr.browser.lightning.constant.Uris
-import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
+import acr.browser.lightning.html.incognito.IncognitoPageFactory
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.isSpecialUrl
 import acr.browser.lightning.view.*
-import acr.browser.lightning.view.find.FindResults
 import android.app.Activity
 import android.content.Intent
 import android.webkit.URLUtil
-import io.reactivex.Scheduler
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Presenter in charge of keeping track of the current tab and setting the current tab of the
  * browser.
+ * SL: Should we merge this class with TabsManager?
  */
-class BrowserPresenter(
-        private val view: BrowserView,
-        private val isIncognito: Boolean,
-        private val userPreferences: UserPreferences,
-        private val tabsModel: TabsManager,
-        @MainScheduler private val mainScheduler: Scheduler,
-        private val homePageFactory: HomePageFactory,
-        private val bookmarkPageFactory: BookmarkPageFactory,
-        public val closedTabs: RecentTabsModel,
-        private val logger: Logger
-) {
+//@HiltViewModel
+@Singleton
+class BrowserPresenter @Inject constructor(
+    private val userPreferences: UserPreferences,
+    private val homePageFactory: HomePageFactory,
+    private val incognitoPageFactory: IncognitoPageFactory,
+    private val bookmarkPageFactory: BookmarkPageFactory,
+    private val logger: Logger
+): fulguris.Component() {
 
     private var currentTab: LightningView? = null
     private var shouldClose: Boolean = false
-    private var sslStateSubscription: Disposable? = null
 
-    init {
-        tabsModel.addTabNumberChangedListener(view::updateTabNumber)
-    }
+    lateinit var iBrowserView: BrowserView
+    var isIncognito: Boolean = false
+    lateinit var closedTabs: RecentTabsModel
+    lateinit var tabsModel: TabsManager
 
     /**
      * Switch to the session with the given name
@@ -67,37 +70,33 @@ class BrowserPresenter(
         // Save it again to preserve new current session name
         tabsModel.saveSessions()
         // Then reload our tabs
-        setupTabs(null)
+        setupTabs()
         //
         BrowserApp.instance.applicationContext.apply {
             toast(getString(R.string.session_switched,aSessionName))
         }
-
     }
 
+
     /**
-     * Initializes the tab manager with the new intent that is handed in by the BrowserActivity.
-     *
-     * @param intent the intent to handle, may be null.
+     * Initializes our tab manager.
      */
-    fun setupTabs(intent: Intent?) {
-        tabsModel.initializeTabs(view as Activity, intent, isIncognito)
-            .subscribeBy(
-                onSuccess = {
-                    // At this point we always have at least a tab in the tab manager
-                    view.notifyTabViewInitialized()
-                    view.updateTabNumber(tabsModel.size())
-                    if (tabsModel.savedRecentTabsIndices.count() == tabsModel.allTabs.count()) {
-                        // Switch to saved current tab if any, otherwise the last tab I guess
-                        tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(it))
-                    } else {
-                        // Number of tabs does not match the number of recent tabs saved
-                        // That means we were most certainly launched from another app opening a new tab
-                        // Assuming our new tab is the last one we switch to it
-                        tabChanged(tabsModel.positionOf(it))
-                    }
-                }
-            )
+    fun setupTabs(aIntent: Intent? = null) {
+        iScopeMainThread.launch {
+            delay(1L)
+            val tabs = tabsModel.initializeTabs(iBrowserView as Activity, isIncognito)
+            // At this point we always have at least a tab in the tab manager
+            iBrowserView.notifyTabViewInitialized()
+            iBrowserView.updateTabNumber(tabsModel.size())
+            // Switch to persisted current tab
+            tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(tabs.last()),false, false)
+            // Only then can we open tab from external app on startup otherwise it is opened in the background somehow
+            aIntent?.let {onNewIntent(aIntent)}
+
+            //logger.log(TAG,"After from coroutine")
+        }
+
+        //logger.log(TAG,"After from main")
     }
 
     /**
@@ -107,57 +106,47 @@ class BrowserPresenter(
      * @param tab the tab that changed, may be null.
      */
     fun tabChangeOccurred(tab: LightningView?) = tab?.let {
-        view.notifyTabViewChanged(tabsModel.indexOfTab(it))
+        iBrowserView.notifyTabViewChanged(tabsModel.indexOfTab(it))
     }
 
     /**
+     * Called when the foreground is changing.
      *
+     * [aTab] The tab we are switching to.
+     * [aWasTabAdded] True if [aTab] was just created.
+     * [aGoingBack] Tells in which direction we are going, this can help determine what kind of tab animation will be used.
      */
-    private fun onTabChanged(newTab: LightningView?) {
+    private fun onTabChanged(aTab: LightningView, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
         logger.log(TAG, "On tab changed")
 
-        if (newTab == null) {
-            view.removeTabView()
-            currentTab?.let {
-                it.pauseTimers()
-                it.destroy()
-            }
-        }  else {
-
-            currentTab?.let {
-                // TODO: Restore this when Google fixes the bug where the WebView is
-                // blank after calling onPause followed by onResume.
-                // it.onPause();
-                it.isForeground = false
-            }
-
-            // Must come first so that frozen tabs are unfrozen
-            // This will create frozen tab WebView, before that WebView is not available
-            newTab.isForeground = true
-
-            newTab.resumeTimers()
-            newTab.onResume()
-
-            view.updateProgress(newTab.progress)
-            view.setBackButtonEnabled(newTab.canGoBack())
-            view.setForwardButtonEnabled(newTab.canGoForward())
-            view.updateUrl(newTab.url, false)
-            view.setTabView(newTab.webView!!)
-            val index = tabsModel.indexOfTab(newTab)
-            if (index >= 0) {
-                view.notifyTabViewChanged(tabsModel.indexOfTab(newTab))
-            }
-
-            // Must come late as it needs a webview
-            view.updateSslState(newTab.currentSslState() ?: SslState.None)
-            sslStateSubscription?.dispose()
-            sslStateSubscription = newTab
-                    .sslStateObservable()
-                    .observeOn(mainScheduler)
-                    ?.subscribe(view::updateSslState)
+        currentTab?.let {
+            // TODO: Restore this when Google fixes the bug where the WebView is
+            // blank after calling onPause followed by onResume.
+            // it.onPause();
+            it.isForeground = false
         }
 
-        currentTab = newTab
+        // Must come first so that frozen tabs are unfrozen
+        // This will create frozen tab WebView, before that WebView is not available
+        aTab.isForeground = true
+
+        aTab.resumeTimers()
+        aTab.onResume()
+
+        iBrowserView.updateProgress(aTab.progress)
+        iBrowserView.setBackButtonEnabled(aTab.canGoBack())
+        iBrowserView.setForwardButtonEnabled(aTab.canGoForward())
+        iBrowserView.updateUrl(aTab.url, false)
+        iBrowserView.setTabView(aTab.webView!!,aWasTabAdded,aPreviousTabClosed, aGoingBack)
+        val index = tabsModel.indexOfTab(aTab)
+        if (index >= 0) {
+            iBrowserView.notifyTabViewChanged(tabsModel.indexOfTab(aTab))
+        }
+
+        // Must come late as it needs a webview
+        iBrowserView.updateSslState(aTab.currentSslState() ?: SslState.None)
+
+        currentTab = aTab
     }
 
     /**
@@ -195,6 +184,12 @@ class BrowserPresenter(
         else -> homepage
     }
 
+    private fun mapIncognitoToCurrentUrl(): String = when (val homepage = userPreferences.incognitoPage) {
+        Uris.AboutIncognito -> "$FILE${incognitoPageFactory.createIncognitoPage()}"
+        Uris.AboutBookmarks -> "$FILE${bookmarkPageFactory.createBookmarkPage(null)}"
+        else -> homepage
+    }
+
     /**
      * Deletes the tab at the specified position.
      *
@@ -209,54 +204,51 @@ class BrowserPresenter(
         val isShown = tabToDelete.isShown
         val shouldClose = shouldClose && isShown && tabToDelete.isNewTab
         val currentTab = tabsModel.currentTab
-        /*
-        // SL: That special case is apparently not needed
-        // It lead to an empty tab list after removing the last tab if it was the home page
-        if (tabsModel.size() == 1
-            && currentTab != null
-            && URLUtil.isFileUrl(currentTab.url)
-            && currentTab.url == mapHomepageToCurrentUrl()) {
-            view.closeActivity()
-            return
-        } else {
-        */
-            if (isShown) {
-                view.removeTabView()
-            }
-            val currentDeleted = tabsModel.deleteTab(position)
-            if (currentDeleted) {
-                tabChanged(tabsModel.indexOfCurrentTab())
-            }
-        //}
+
+        val currentDeleted = tabsModel.deleteTab(position)
+        if (currentDeleted) {
+            tabChanged(tabsModel.indexOfCurrentTab(), isShown, false)
+        }
 
         val afterTab = tabsModel.currentTab
-        view.notifyTabViewRemoved(position)
+        iBrowserView.notifyTabViewRemoved(position)
 
         if (afterTab == null) {
-            view.closeBrowser()
+            iBrowserView.closeBrowser()
             return
         } else if (afterTab !== currentTab) {
-            view.notifyTabViewChanged(tabsModel.indexOfCurrentTab())
+            iBrowserView.notifyTabViewChanged(tabsModel.indexOfCurrentTab())
         }
 
         if (shouldClose && !isIncognito) {
             this.shouldClose = false
-            view.closeActivity()
+            iBrowserView.closeActivity()
         }
 
-        view.updateTabNumber(tabsModel.size())
+        iBrowserView.updateTabNumber(tabsModel.size())
 
         logger.log(TAG, "...deleted tab")
     }
 
     /**
      * Handle a new intent from the the main BrowserActivity.
-     *
+     * TODO: That implementation is so ugly… try and improve that.
      * @param intent the intent to handle, may be null.
      */
     fun onNewIntent(intent: Intent?) = tabsModel.doOnceAfterInitialization {
         val url = if (intent?.action == Intent.ACTION_WEB_SEARCH) {
             tabsModel.extractSearchFromIntent(intent)
+        }
+        else if (intent?.action == Intent.ACTION_SEND) {
+            // User shared text with our app
+                if ("text/plain" == intent.type) {
+                    // Get shared text
+                    val clue = intent.getStringExtra(Intent.EXTRA_TEXT)
+                    // Put it in the address bar if any
+                    clue?.let { iBrowserView.setAddressBarText(it) }
+                }
+            // Cancel other operation as we won't open a tab here
+            null
         } else {
             intent?.dataString
         }
@@ -267,7 +259,7 @@ class BrowserPresenter(
             tabsModel.getTabForHashCode(tabHashCode)?.loadUrl(url)
         } else if (url != null) {
             if (URLUtil.isFileUrl(url)) {
-                view.showBlockedLocalFileDialog {
+                iBrowserView.showBlockedLocalFileDialog {
                     newTab(UrlInitializer(url), true)
                     shouldClose = true
                     tabsModel.lastTab()?.isNewTab = true
@@ -294,7 +286,7 @@ class BrowserPresenter(
                     newTab(FreezableBundleInitializer(it), show)
                 }
             }
-            view.showSnackbar(R.string.reopening_recent_tab)
+            iBrowserView.showSnackbar(R.string.reopening_recent_tab)
         }
     }
 
@@ -317,29 +309,21 @@ class BrowserPresenter(
     }
 
     /**
-     * Notifies the presenter that it should shut down. This should be called when the
-     * BrowserActivity is destroyed so that we don't leak any memory.
-     */
-    fun shutdown() {
-        onTabChanged(null)
-        tabsModel.cancelPendingWork()
-        sslStateSubscription?.dispose()
-    }
-
-    /**
      * Notifies the presenter that we wish to switch to a different tab at the specified position.
      * If the position is not in the model, this method will do nothing.
      *
-     * @param position the position of the tab to switch to.
+     * [position] the position of the tab to switch to.
+     * [aPreviousTabClosed] Tells if the previous tab was closed, this can help determine what kind of tab animation will be used.
+     * [aGoingBack] Tells in which direction we are going, this can help determine what kind of tab animation will be used.
      */
-    fun tabChanged(position: Int) {
+    fun tabChanged(position: Int, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
         if (position < 0 || position >= tabsModel.size()) {
             logger.log(TAG, "tabChanged invalid position: $position")
             return
         }
 
         logger.log(TAG, "tabChanged: $position")
-        onTabChanged(tabsModel.switchToTab(position))
+        onTabChanged(tabsModel.switchToTab(position),false, aPreviousTabClosed, aGoingBack)
     }
 
     /**
@@ -353,7 +337,7 @@ class BrowserPresenter(
     fun newTab(tabInitializer: TabInitializer, show: Boolean): Boolean {
         // Limit number of tabs according to sponsorship level
         if (tabsModel.size() >= Entitlement.maxTabCount(userPreferences.sponsorship)) {
-            view.onMaxTabReached()
+            iBrowserView.onMaxTabReached()
             // Still allow spawning more tabs for the time being.
             // That means not having a valid subscription will only spawn that annoying message above.
             //return false
@@ -361,16 +345,16 @@ class BrowserPresenter(
 
         logger.log(TAG, "New tab, show: $show")
 
-        val startingTab = tabsModel.newTab(view as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
+        val startingTab = tabsModel.newTab(iBrowserView as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
         if (tabsModel.size() == 1) {
             startingTab.resumeTimers()
         }
 
-        view.notifyTabViewAdded()
-        view.updateTabNumber(tabsModel.size())
+        iBrowserView.notifyTabViewAdded()
+        iBrowserView.updateTabNumber(tabsModel.size())
 
         if (show) {
-            onTabChanged(tabsModel.switchToTab(tabsModel.indexOfTab(startingTab)))
+            onTabChanged(tabsModel.switchToTab(tabsModel.indexOfTab(startingTab)),true, false, false)
         }
         else {
             // We still need to add it to our recent tabs
@@ -386,10 +370,6 @@ class BrowserPresenter(
 
     fun onAutoCompleteItemPressed() {
         tabsModel.currentTab?.requestFocus()
-    }
-
-    fun findInPage(query: String): FindResults? {
-        return tabsModel.currentTab?.find(query)
     }
 
     companion object {

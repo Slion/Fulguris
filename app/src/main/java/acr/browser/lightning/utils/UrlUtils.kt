@@ -25,6 +25,7 @@ import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.download.DownloadPageFactory
 import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
+import acr.browser.lightning.html.incognito.IncognitoPageFactory
 import android.net.Uri
 import android.os.Environment
 import android.util.Patterns
@@ -97,6 +98,14 @@ fun String?.isHomeUri(): Boolean =
  *
  * @return true if the url is a bookmark url, false otherwise.
  */
+fun String?.isIncognitoUri(): Boolean =
+    this == Uris.FulgurisIncognito || this == Uris.AboutIncognito
+
+/**
+ * Determines if the url is a url for the bookmark page.
+ *
+ * @return true if the url is a bookmark url, false otherwise.
+ */
 fun String?.isHistoryUri(): Boolean =
     this == Uris.FulgurisHistory || this == Uris.AboutHistory
 
@@ -111,7 +120,8 @@ fun String?.isSpecialUrl(): Boolean =
             && (this.endsWith(BookmarkPageFactory.FILENAME)
             || this.endsWith(DownloadPageFactory.FILENAME)
             || this.endsWith(HistoryPageFactory.FILENAME)
-            || this.endsWith(HomePageFactory.FILENAME))
+            || this.endsWith(HomePageFactory.FILENAME)
+            || this.endsWith(IncognitoPageFactory.FILENAME))
             // TODO: That's somehow causing History page to be restored as Home page
             /*|| this.startsWith(Schemes.Fulguris + "://")*/)
 
@@ -161,6 +171,14 @@ fun String?.isHistoryUrl(): Boolean =
  */
 fun String?.isStartPageUrl(): Boolean =
     this != null && this.startsWith(FILE) && this.endsWith(HomePageFactory.FILENAME)
+
+/**
+ * Determines if the url is a url for the incognito page.
+ *
+ * @return true if the url is a incognito page url, false otherwise.
+ */
+fun String?.isIncognitoPageUrl(): Boolean =
+    this != null && this.startsWith(FILE) && this.endsWith(IncognitoPageFactory.FILENAME)
 
 private val ACCEPTED_URI_SCHEMA = Pattern.compile("(?i)((?:http|https|file)://|(?:inline|data|about|javascript|fulguris):|(?:.*:.*@))(.*)")
 const val QUERY_PLACE_HOLDER = "%s"

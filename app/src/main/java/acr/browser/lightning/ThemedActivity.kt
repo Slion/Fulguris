@@ -1,7 +1,8 @@
 package acr.browser.lightning
 
-import acr.browser.lightning.di.injector
+import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.locale.LocaleAwareActivity
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
 import android.content.Intent
 import android.content.res.Configuration
@@ -9,21 +10,31 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StyleRes
+import dagger.hilt.android.EntryPointAccessors
 
+//@AndroidEntryPoint
 abstract class ThemedActivity : LocaleAwareActivity() {
-
+    /**
+     We need to get our Theme before calling onCreate for settings theme to work.
+     However onCreate does the Hilt injections so we did not have access to [LocaleAwareActivity.userPreferences] early enough.
+     Fortunately we can access our Hilt entry point early as shown below.
+     TODO: Move this in the base class after migrating it to Kotlin.
+     */
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(BrowserApp.instance.applicationContext, HiltEntryPoint::class.java)
+    private val quickUserPrefs: UserPreferences = hiltEntryPoint.userPreferences
     // TODO reduce protected visibility
-
-    protected var themeId: AppTheme = AppTheme.LIGHT
+    protected var accentId: AccentTheme = quickUserPrefs.useAccent
+    protected var themeId: AppTheme = quickUserPrefs.useTheme
     private var isDarkTheme: Boolean = false
     val useDarkTheme get() = isDarkTheme
-
 
     /**
      * Override this to provide an alternate theme that should be set for every instance of this
      * activity regardless of the user's preference.
      */
     protected open fun provideThemeOverride(): AppTheme? = null
+
+    protected open fun provideAccentThemeOverride(): AccentTheme? = null
 
     /**
      * Called after the activity is resumed
@@ -37,14 +48,25 @@ abstract class ThemedActivity : LocaleAwareActivity() {
      * Implement this to provide themes resource style ids.
      */
     @StyleRes
-    abstract fun themeStyle(aTheme: AppTheme): Int
+    fun themeStyle(aTheme: AppTheme): Int {
+        return when (aTheme) {
+            AppTheme.LIGHT -> R.style.Theme_App_Light
+            AppTheme.DARK ->  R.style.Theme_App_Dark
+            AppTheme.BLACK -> R.style.Theme_App_Black
+            AppTheme.DEFAULT -> R.style.Theme_App_DayNight
+        }
+    }
+
+    @StyleRes
+    protected abstract fun accentStyle(accentTheme: AccentTheme): Int?
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injector.inject(this)
-        themeId = userPreferences.useTheme
-
-        // set the theme
+        // Set the theme before onCreate otherwise settings are broken
+        // That's apparently not an issue specific to Fulguris
         applyTheme(provideThemeOverride()?:themeId)
+        applyAccent()
+        // NOTE: https://github.com/Slion/Fulguris/issues/308
+        // Only now call on create which will do Hilt injections
         super.onCreate(savedInstanceState)
         resetPreferences()
     }
@@ -73,6 +95,13 @@ abstract class ThemedActivity : LocaleAwareActivity() {
                 || themeId == AppTheme.DARK // Dark is indeed a dark theme
                 // Check if we are using system default theme and it is currently set to dark
                 || (themeId == AppTheme.DEFAULT && mode == Configuration.UI_MODE_NIGHT_YES)
+    }
+
+    /**
+     *
+     */
+    private fun applyAccent() {
+        //accentStyle(accentId)?.let { setTheme(it) }
     }
 
     /**

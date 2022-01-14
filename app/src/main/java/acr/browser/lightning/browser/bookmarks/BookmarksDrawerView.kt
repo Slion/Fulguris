@@ -25,6 +25,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -33,6 +34,7 @@ import javax.inject.Inject
 /**
  * The view that displays bookmarks in a list and some controls.
  */
+@AndroidEntryPoint
 class BookmarksDrawerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -65,7 +67,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
     var iBinding: BookmarkDrawerViewBinding
 
     init {
-        context.injector.inject(this)
+        //context.injector.inject(this)
         uiController = context as UIController
         iBinding = BookmarkDrawerViewBinding.inflate(context.inflater,this, true)
         iBinding.uiController = uiController

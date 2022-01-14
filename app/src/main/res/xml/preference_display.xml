@@ -2,29 +2,40 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory
+        android:title="@string/settings_display">
+
     <Preference
         android:key="@string/pref_key_theme"
         android:title="@string/theme"
-        app:icon="@drawable/ic_palette" />
+        app:icon="@drawable/ic_brush" />
+
+    <!-- Currently not working, therefore hidden for now -->
+    <Preference
+        android:key="@string/pref_key_accent"
+        android:title="@string/accent_color"
+        app:icon="@drawable/ic_palette"
+        app:isPreferenceVisible="@bool/const_false"/>
 
     <Preference
         android:key="@string/pref_key_browser_text_size"
         android:title="@string/title_text_size"
         app:icon="@drawable/ic_text_size" />
 
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_title_configuration"
-        android:summary="@string/settings_summary_configuration"
-        app:icon="@drawable/ic_conf_settings">
+        android:summary="@string/settings_summary_configuration">
 
         <Preference
             app:fragment="acr.browser.lightning.settings.fragment.PortraitSettingsFragment"
             app:title="@string/settings_title_portrait"
-            app:icon="@drawable/ic_portrait"/>
+            app:icon="@drawable/ic_phone" />
 
         <Preference
             app:fragment="acr.browser.lightning.settings.fragment.LandscapeSettingsFragment"
             app:title="@string/settings_title_landscape"
-            app:icon="@drawable/ic_landscape"/>
+            app:icon="@drawable/ic_landscape" />
 
     </PreferenceCategory>
 
@@ -46,7 +57,7 @@
         android:key="@string/pref_key_tab_list_item_show_close_button"
         android:title="@string/pref_title_tab_list_item_show_close_button"
         android:summary="@string/pref_summary_tab_list_item_show_close_button"
-        app:icon="@drawable/ic_tab_close"
+        app:icon="@drawable/ic_action_delete"
         app:iconSpaceReserved="false"/>
 
     <SwitchPreferenceCompat
@@ -61,12 +72,12 @@
         android:defaultValue="false"
         android:key="@string/pref_key_black_status_bar"
         android:title="@string/settings_black_status_bar"
+        app:icon="@drawable/ic_phone"
         app:iconSpaceReserved="true"/>
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_category_menu"
-        app:icon="@drawable/ic_menu">
+    <PreferenceCategory android:title="@string/pref_category_menu">
 
         <SwitchPreferenceCompat
             android:defaultValue="@bool/pref_default_menu_show_exit"
@@ -81,7 +92,7 @@
             android:key="@string/pref_key_menu_show_new_tab"
             android:title="@string/pref_title_menu_new_tab"
             android:summary="@string/pref_summary_menu_new_tab"
-            app:icon="@drawable/ic_action_plus"
+            app:icon="@drawable/ic_add"
             app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
@@ -95,6 +106,7 @@
             android:title="@string/pref_title_use_bottom_sheets"
             android:summary="@string/pref_summary_use_bottom_sheets"
             android:disableDependentsState="true"
+            app:icon="@drawable/ic_fullscreen"
             app:iconSpaceReserved="true"/>
 
         <SwitchPreferenceCompat
@@ -102,14 +114,16 @@
             android:key="@string/pref_key_locked_drawers"
             android:title="@string/pref_title_locked_drawers"
             android:summary="@string/pref_summary_locked_drawers"
+            app:icon="@drawable/ic_block"
             app:iconSpaceReserved="true"/>
 
         <SwitchPreferenceCompat
-            android:defaultValue="true"
+            android:defaultValue="@bool/pref_default_swap_drawer"
             android:key="@string/pref_key_swap_tabs_and_bookmarks"
             android:title="@string/settings_title_swap_bookmarks_and_tabs"
             android:summary="@string/settings_summary_swap_bookmarks_and_tabs"
             android:dependency="@string/pref_key_use_bottom_sheets"
+            app:icon="@drawable/ic_cache"
             app:iconSpaceReserved="true" />
 
     </PreferenceCategory>
@@ -122,6 +136,7 @@
             android:key="@string/pref_key_wide_viewport"
             android:summary="@string/recommended"
             android:title="@string/wideViewPort"
+            app:icon="@drawable/ic_baseline_aspect_ratio_24"
             app:iconSpaceReserved="true"/>
         <!-- SL: not sure what that does -->
         <SwitchPreferenceCompat
@@ -129,12 +144,63 @@
             android:key="@string/pref_key_overview_mode"
             android:summary="@string/recommended"
             android:title="@string/overViewMode"
+            app:icon="@drawable/ic_eye"
             app:iconSpaceReserved="true"/>
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/pref_key_text_reflow"
             android:title="@string/reflow"
+            app:icon="@drawable/ic_text_variant"
             app:iconSpaceReserved="true" />
+
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_on_tab_change">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_change_show_animation"
+            android:title="@string/pref_title_show_animation"
+            app:icon="@drawable/ic_animation"
+            app:iconSpaceReserved="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_on_tab_close">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_close_show_snackbar"
+            android:title="@string/pref_title_show_snackbar"
+            app:icon="@drawable/ic_info"
+            app:iconSpaceReserved="true"/>
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_on_tab_close_vibrate"
+            android:title="@string/pref_title_vibrate"
+            app:icon="@drawable/ic_vibrate"
+            app:iconSpaceReserved="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_on_tab_back_forward">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_back_show_animation"
+            android:title="@string/pref_title_show_animation"
+            app:icon="@drawable/ic_animation"
+            app:iconSpaceReserved="true" />
+
+        <SeekBarPreference
+            app:key="@string/pref_key_on_tab_back_animation_duration"
+            app:dependency="@string/pref_key_on_tab_back_show_animation"
+            app:title="@string/pref_title_duration"
+            app:summary="@string/pref_summary_duration"
+            app:icon="@drawable/ic_timer"
+            app:defaultValue="@integer/pref_default_animation_duration_tab_back_forward"
+            app:min="10"
+            android:max="100"
+            app:seekBarIncrement="50"
+            app:showSeekBarValue="true"
+            app:iconSpaceReserved="true"
+            app:updatesContinuously="true" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

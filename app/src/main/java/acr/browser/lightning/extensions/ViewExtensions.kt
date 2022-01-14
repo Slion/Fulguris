@@ -1,21 +1,24 @@
 package acr.browser.lightning.extensions
 
 import acr.browser.lightning.utils.getFilteredColor
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.view.WindowManager
+import android.os.SystemClock
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.appcompat.widget.TooltipCompat
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.graphics.ColorUtils
 import androidx.databinding.BindingAdapter
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import java.lang.reflect.Method
 
 
 /**
@@ -28,14 +31,12 @@ fun View.canScrollVertically() = this.let {
 
 /**
  * Removes a view from its parent if it has one.
+ * WARNING: This may not set this parent to null instantly if you are using animateLayoutChanges.
  */
-fun View?.removeFromParent() : ViewGroup? = this?.let {
-    val parent = it.parent
-    (parent as? ViewGroup)?.let { vg ->
-        vg.removeView(it)
+fun View.removeFromParent() : ViewGroup? {
+        val vg = (parent as? ViewGroup)
+        vg?.removeView(this)
         return vg
-    }
-    // Assuming you don't need to explicitly return null in Kotlin
 }
 
 /**
@@ -120,7 +121,7 @@ inline fun View?.onLayoutChange(crossinline runnable: () -> Unit) = this?.apply 
         override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int,
                                     oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int)
         {
-            runnable();
+            runnable()
         }
     })
 }
@@ -135,11 +136,39 @@ inline fun View?.onLayoutChange(crossinline runnable: () -> Unit) = this?.apply 
             val rect = Rect(left, top, right, bottom)
             val oldRect = Rect(oldLeft, oldTop, oldRight, oldBottom)
             if (rect.width() != oldRect.width() || rect.height() != oldRect.height()) {
-                runnable();
+                runnable()
             }
         }
     }
 
+/**
+ * That's not actually working for WebView. You only get the top of the web page or blank if the page was scrolled down.
+ * See: https://stackoverflow.com/questions/31295237/android-webview-takes-screenshot-only-from-top-of-the-page
+ */
+/*
+fun View.createBitmap(): Bitmap {
+    val b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val c = Canvas(b)
+    //layout(left, top, right, bottom)
+    draw(c)
+    return b
+}
+*/
+
+/**
+ * Capture a bitmap for this view. Also works with WeView.
+ * Though those drawing cache APIs are deprecated they hopefully won't be removed so soon.
+ * See: https://stackoverflow.com/a/63529956/3969362
+ * [View.setFlags] which is called by [View.setDrawingCacheEnabled] discards calls which are not actually changing flags so we are cool there.
+ */
+@Suppress("DEPRECATION")
+fun View.captureBitmap(): Bitmap {
+    val wasDrawingCacheEnabled = isDrawingCacheEnabled
+    isDrawingCacheEnabled = true // Enable cache in case it was not already, has not effect if already enabled
+    val bitmap: Bitmap = Bitmap.createBitmap(getDrawingCache(false))
+    isDrawingCacheEnabled = wasDrawingCacheEnabled // Restore cache state as it was, has not effect if already enabled
+    return bitmap;
+}
 
 
 /**
@@ -191,7 +220,7 @@ fun SwipeRefreshLayout?.resetTarget() {
     val field = SwipeRefreshLayout::class.java.getDeclaredField("mTarget")
     field.isAccessible = true
     // Then reset it
-    field.set(this,null);
+    field.set(this,null)
     // Next time this is doing a layout ensureTarget() will be called and the target set properly again
 }
 
@@ -244,7 +273,56 @@ fun View.bindTooltipText(tooltipText: String) {
     TooltipCompat.setTooltipText(this, tooltipText)
 }
 
+/**
+ * Crazy workaround to get the virtual keyboard to show, Android FFS
+ * See: https://stackoverflow.com/a/7784904/3969362
+ */
+fun View.simulateTap(x: Float = 0F, y: Float = 0F) {
+    dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN , x, y, 0))
+    dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP , x, y, 0))
+}
 
+/**
+ * Set gravity on the given layout parameters to bottom and apply it to this view
+ * TODO: Find a way to use a generic to have a single implementation
+ */
+fun View.setGravityBottom(aParams: LinearLayout.LayoutParams) {
+    aParams.gravity = aParams.gravity and Gravity.TOP.inv()
+    aParams.gravity = aParams.gravity or Gravity.BOTTOM
+    layoutParams = aParams
+}
+
+/**
+ * Set gravity on the given layout parameters to top and apply it to this view
+ */
+fun View.setGravityTop(aParams: LinearLayout.LayoutParams) {
+    aParams.gravity = aParams.gravity and Gravity.BOTTOM.inv()
+    aParams.gravity = aParams.gravity or Gravity.TOP
+    layoutParams = aParams
+}
+
+/**
+ * Set gravity on the given layout parameters to bottom and apply it to this view
+ */
+fun View.setGravityBottom(aParams: CoordinatorLayout.LayoutParams) {
+    aParams.gravity = aParams.gravity and Gravity.TOP.inv()
+    aParams.gravity = aParams.gravity or Gravity.BOTTOM
+    layoutParams = aParams
+}
+
+/**
+ * Set gravity on the given layout parameters to top and apply it to this view
+ */
+fun View.setGravityTop(aParams: CoordinatorLayout.LayoutParams) {
+    aParams.gravity = aParams.gravity and Gravity.BOTTOM.inv()
+    aParams.gravity = aParams.gravity or Gravity.TOP
+    layoutParams = aParams
+}
+
+
+/**
+ *
+ */
 fun RectF.scale(factor: Float) {
     val oldWidth = width()
     val oldHeight = height()
@@ -268,4 +346,23 @@ fun PopupWindow.dimBehind(aDimAmout: Float = 0.3f) {
     p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
     p.dimAmount = aDimAmout
     wm.updateViewLayout(container, p)
+}
+
+/**
+ * Tells if the virtual keyboard is shown.
+ * Solution taken from https://stackoverflow.com/a/52171843/3969362
+ * Android is silly like this.
+ */
+@SuppressLint("DiscouragedPrivateApi")
+fun InputMethodManager.isVirtualKeyboardVisible() : Boolean {
+    return try {
+        // Use reflection to access the hidden API we need.
+        val method: Method = InputMethodManager::class.java.getDeclaredMethod("getInputMethodWindowVisibleHeight")
+        // Assuming if the virtual keyboard height is above zero it is currently being shown.
+        ((method.invoke(this) as Int) > 0);
+    } catch (ex: Exception) {
+        // Something went wrong, let's pretend the virtual keyboard is not showing then.
+        // This is defensive and should never happen.
+        false
+    }
 }

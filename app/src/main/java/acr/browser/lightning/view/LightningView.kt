@@ -1,4 +1,5 @@
 /*
+ * Copyright © 2020-2021 Stéphane Lenclud
  * Copyright 2014 A.C.R. Development
  */
 
@@ -10,10 +11,7 @@ import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
-import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.di.injector
+import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
 import acr.browser.lightning.extensions.*
@@ -23,9 +21,9 @@ import acr.browser.lightning.network.NetworkConnectivityModel
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
+import acr.browser.lightning.settings.preferences.webViewEngineVersionDesktop
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.*
-import acr.browser.lightning.view.find.FindResults
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
@@ -50,7 +48,8 @@ import androidx.collection.ArrayMap
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.Observable
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -68,11 +67,12 @@ class LightningView(
     val isIncognito: Boolean,
     // TODO: Could we remove those?
     private val homePageInitializer: HomePageInitializer,
+    private val incognitoPageInitializer: IncognitoPageInitializer,
     private val bookmarkPageInitializer: BookmarkPageInitializer,
     private val downloadPageInitializer: DownloadPageInitializer,
     private val historyPageInitializer: HistoryPageInitializer,
     private val logger: Logger
-) {
+): WebView.FindListener {
 
     /**
      * The unique ID of the view.
@@ -108,7 +108,7 @@ class LightningView(
      *
      * @return the WebView instance of the tab, which can be null.
      */
-    var webView: WebView? = null
+    var webView: WebViewEx? = null
         private set
 
     private lateinit var lightningWebClient: LightningWebClient
@@ -124,11 +124,12 @@ class LightningView(
 
     /**
      * Sets whether this tab was the result of a new intent sent to the browser.
+     * That's notably used to decide if we close our activity when closing this tab thus going back to the app which opened it.
      */
     var isNewTab: Boolean = false
 
     /**
-     * This method sets the tab as the foreground tab or the background tab.
+     * This method sets the tab as the foreground tab or a background tab.
      */
     var isForeground: Boolean = false
         set(aIsForeground) {
@@ -143,6 +144,9 @@ class LightningView(
                     // Discard tab initializer since we just consumed it
                     latentTabInitializer = null
                 }
+            } else {
+                // A tab sent to the background is not so new anymore
+                isNewTab = false
             }
             uiController.tabChanged(this)
         }
@@ -164,7 +168,7 @@ class LightningView(
             field = aDesktopMode
             // Set our user agent accordingly
             if (aDesktopMode) {
-                webView?.settings?.userAgentString = DESKTOP_USER_AGENT
+                webView?.settings?.userAgentString = WINDOWS_DESKTOP_USER_AGENT_PREFIX + webViewEngineVersionDesktop(activity.application)
             } else {
                 setUserAgentForPreference(userPreferences)
             }
@@ -178,6 +182,22 @@ class LightningView(
             field = aDarkMode
             applyDarkMode();
         }
+
+    /**
+     * Get our find in page search query.
+     *
+     * @return The find in page search query or an empty string.
+     */
+    var searchQuery: String = ""
+        set(aSearchQuery) {
+            field = aSearchQuery
+            //find(searchQuery)
+        }
+
+    /**
+     * Define if this tab has an active find in page search.
+     */
+    var searchActive = false
 
     /**
      *
@@ -194,12 +214,14 @@ class LightningView(
 
     private val maxFling: Float
 
-    @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject internal lateinit var dialogBuilder: LightningDialogBuilder
-    @Inject internal lateinit var proxyUtils: ProxyUtils
-    @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
-    @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
-    @Inject lateinit var networkConnectivityModel: NetworkConnectivityModel
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
+
+    val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
+    val dialogBuilder: LightningDialogBuilder = hiltEntryPoint.dialogBuilder
+    val proxyUtils: ProxyUtils = hiltEntryPoint.proxyUtils
+    val databaseScheduler: Scheduler = hiltEntryPoint.databaseScheduler()
+    val mainScheduler: Scheduler = hiltEntryPoint.mainScheduler()
+    val networkConnectivityModel: NetworkConnectivityModel = hiltEntryPoint.networkConnectivityModel
 
     private val networkDisposable: Disposable
 
@@ -219,6 +241,12 @@ class LightningView(
      */
     val progress: Int
         get() = webView?.progress ?: 100
+
+    /**
+     * Tells if a web page is currently loading.
+     */
+    val isLoading
+        get() = progress != 100
 
     /**
      * Get the current user agent used by the WebView.
@@ -264,7 +292,7 @@ class LightningView(
             return if (webView == null || webView!!.url.isNullOrBlank() || webView!!.url.isSpecialUrl()) {
                 iTargetUrl.toString()
             } else  {
-                webView!!.url
+                webView!!.url as String
             }
         }
 
@@ -289,7 +317,7 @@ class LightningView(
      * Constructor
      */
     init {
-        activity.injector.inject(this)
+        //activity.injector.inject(this)
         uiController = activity as UIController
         titleInfo = LightningViewTitle(activity)
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()
@@ -311,6 +339,8 @@ class LightningView(
             titleInfo.setFavicon(tabInitializer.tabModel.favicon)
             desktopMode = tabInitializer.tabModel.desktopMode
             darkMode = tabInitializer.tabModel.darkMode
+            searchQuery = tabInitializer.tabModel.searchQuery
+            searchActive = tabInitializer.tabModel.searchActive
         }
 
         networkDisposable = networkConnectivityModel.connectivity()
@@ -324,8 +354,9 @@ class LightningView(
     private fun createWebView() {
         lightningWebClient = LightningWebClient(activity, this)
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
-        webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebView;
+        webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebViewEx;
         webView?.apply {
+            setFindListener(this@LightningView)
             //id = this@LightningView.id
             gestureDetector = GestureDetector(activity, CustomGestureListener(this))
 
@@ -361,19 +392,27 @@ class LightningView(
         }
 
         initializePreferences()
+
+        // If search was active enable it again
+        if (searchActive) {
+            find(searchQuery)
+        }
     }
 
     fun currentSslState(): SslState = lightningWebClient.sslState
-
-    fun sslStateObservable(): Observable<SslState> = lightningWebClient.sslStateObservable()
 
     /**
      * This method loads the homepage for the browser. Either it loads the URL stored as the
      * homepage, or loads the startpage or bookmark page if either of those are set as the homepage.
      */
     fun loadHomePage() {
-        iTargetUrl = Uri.parse(Uris.FulgurisHome)
-        initializeContent(homePageInitializer)
+        if (isIncognito) {
+            iTargetUrl = Uri.parse(Uris.FulgurisIncognito)
+            initializeContent(incognitoPageInitializer)
+        } else {
+            iTargetUrl = Uri.parse(Uris.FulgurisHome)
+            initializeContent(homePageInitializer)
+        }
     }
 
     /**
@@ -656,7 +695,7 @@ class LightningView(
      * Save the state of this tab and return it as a [Bundle].
      */
     fun saveState(): Bundle {
-         return TabModel(url, title, desktopMode, darkMode, favicon, webViewState()).toBundle()
+         return TabModel(url, title, desktopMode, darkMode, favicon, searchQuery, searchActive, webViewState()).toBundle()
     }
     /**
      * Pause the current WebView instance.
@@ -838,20 +877,86 @@ class LightningView(
      * @param text the text to search for.
      */
     @SuppressLint("NewApi")
-    fun find(text: String): FindResults {
+    fun find(text: String) {
+        resetFind()
+        searchQuery = text
+        searchActive = true
+        // Kick off our search
         webView?.findAllAsync(text)
+    }
 
-        return object : FindResults {
-            override fun nextResult() {
-                webView?.findNext(true)
+    fun findNext() {
+        webView?.findNext(true)
+    }
+
+    fun findPrevious() {
+        webView?.findNext(false)
+    }
+
+    fun clearFind() {
+        webView?.clearMatches()
+        searchActive = false
+        resetFind()
+    }
+
+    // Used to implement find in page
+    private var iActiveMatchOrdinal: Int = -1
+    private var iNumberOfMatches: Int = -1
+    private var iSnackbar: Snackbar? = null
+
+    /**
+     *
+     */
+    private fun resetFind() {
+        iActiveMatchOrdinal = -1
+        iNumberOfMatches = -1
+    }
+
+    /**
+     * That's where find in page results are being reported by our WebView.
+     */
+    override fun onFindResultReceived(activeMatchOrdinal: Int, numberOfMatches: Int, isDoneCounting: Boolean) {
+
+        // If our page is still loading or if our find in page search is not complete
+        if (isLoading || !isDoneCounting) {
+            // Just don't report intermediary results
+            return
+        }
+        // Only display message if something was changed
+        if (iActiveMatchOrdinal != activeMatchOrdinal || iNumberOfMatches != numberOfMatches) {
+
+            // Remember what we last reported
+            iActiveMatchOrdinal = activeMatchOrdinal
+            iNumberOfMatches = numberOfMatches
+
+            // Empty search query just dismisses any results previously displayed
+            if (searchQuery.isEmpty()) {
+                // Hide last snackbar to avoid having outdated stats lingering
+                // Notably useful when doing backspace on the search field until no characters are left
+                iSnackbar?.dismiss()
             }
+            // Check if our search is reporting any match
+            else if (iNumberOfMatches==0) {
+                // Find in page did not find any match, tell our user about it
+                iSnackbar = activity.makeSnackbar(
+                        activity.getString(R.string.no_match_found),
+                        Snackbar.LENGTH_SHORT, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                        .setAction(R.string.button_dismiss) {
+                            iSnackbar?.dismiss()
+                        }
 
-            override fun previousResult() {
-                webView?.findNext(false)
-            }
+                iSnackbar?.show()
+            } else {
+                // Show our user how many matches we have and which one is currently focused
+                val currentMatch = iActiveMatchOrdinal + 1
+                iSnackbar = activity.makeSnackbar(
+                        activity.getString(R.string.match_x_of_n,currentMatch,iNumberOfMatches) ,
+                        Snackbar.LENGTH_SHORT, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                        .setAction(R.string.button_dismiss) {
+                            iSnackbar?.dismiss()
+                        }
 
-            override fun clearResults() {
-                webView?.clearMatches()
+                iSnackbar?.show()
             }
         }
     }
@@ -864,32 +969,15 @@ class LightningView(
      * the WebView cannot be recreated using the public
      * api.
      */
-    // TODO fix bug where webView?.destroy is being called before the tab
-    // is removed and would cause a memory leak if the parent check
-    // was not in place.
     fun destroy() {
+
         //See: https://console.firebase.google.com/project/fulguris-b1f69/crashlytics/app/android:net.slions.fulguris.full.playstore/issues/ea99c7ea0c57f66eae6e95532a16859d
         if (iDownloadListener!=null) {
             activity.unregisterReceiver(iDownloadListener)
             iDownloadListener = null
         }
         networkDisposable.dispose()
-        webView?.let {
-            // Check to make sure the WebView has been removed
-            // before calling destroy() so that a memory leak is not created
-            val parent = it.parent as? ViewGroup
-            if (parent != null) {
-                logger.log(TAG, "WebView was not detached from window before destroy")
-                parent.removeView(it)
-            }
-            it.stopLoading()
-            it.onPause()
-            it.clearHistory()
-            it.visibility = View.GONE
-            it.removeAllViews()
-            it.destroyDrawingCache()
-            it.destroy()
-        }
+        webView?.autoDestruction()
     }
 
     /**

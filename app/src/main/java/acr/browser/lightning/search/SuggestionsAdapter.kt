@@ -19,11 +19,14 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.*
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 import javax.inject.Inject
+
 
 class SuggestionsAdapter(
     context: Context,
@@ -32,20 +35,22 @@ class SuggestionsAdapter(
 
     private var filteredList: List<WebPage> = emptyList()
 
-    @Inject internal lateinit var bookmarkRepository: BookmarkRepository
-    @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject internal lateinit var historyRepository: HistoryRepository
-    @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
-    @Inject @field:NetworkScheduler internal lateinit var networkScheduler: Scheduler
-    @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
-    @Inject internal lateinit var searchEngineProvider: SearchEngineProvider
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(context.applicationContext, HiltEntryPoint::class.java)
+
+    val bookmarkRepository = hiltEntryPoint.bookmarkRepository
+    val userPreferences = hiltEntryPoint.userPreferences
+    val historyRepository = hiltEntryPoint.historyRepository
+    val databaseScheduler = hiltEntryPoint.databaseScheduler()
+    val networkScheduler = hiltEntryPoint.networkScheduler()
+    val mainScheduler = hiltEntryPoint.mainScheduler()
+    val searchEngineProvider = hiltEntryPoint.searchEngineProvider
 
     private var allBookmarks: List<Bookmark.Entry> = emptyList()
     private val searchFilter = SearchFilter(this)
 
-    private val searchIcon = context.drawable(R.drawable.ic_search)
-    private val webPageIcon = context.drawable(R.drawable.ic_history)
-    private val bookmarkIcon = context.drawable(R.drawable.ic_bookmark)
+    private val searchIcon = context.drawable(R.drawable.ic_find)
+    private val webPageIcon = context.drawable(R.drawable.round_history_24)
+    private val bookmarkIcon = context.drawable(R.drawable.round_star_border_24)
     private var suggestionsRepository: SuggestionsRepository
 
     val iContext: Context = context;
@@ -62,7 +67,7 @@ class SuggestionsAdapter(
     private val layoutInflater = LayoutInflater.from(context)
 
     init {
-        context.injector.inject(this)
+        //context.injector.inject(this)
 
         suggestionsRepository = if (isIncognito) {
             NoOpSuggestionsRepository()
@@ -152,11 +157,13 @@ class SuggestionsAdapter(
 
     private fun getBookmarksForQuery(query: String): Single<List<Bookmark.Entry>> =
         Single.fromCallable {
+            val choice: Int = userPreferences.suggestionChoice.value + 2
+
             (allBookmarks.filter {
                 it.title.toLowerCase(Locale.getDefault()).startsWith(query)
             } + allBookmarks.filter {
                 it.url.contains(query)
-            }).distinct().take(MAX_SUGGESTIONS)
+            }).distinct().take(choice)
         }
 
     private fun Observable<CharSequence>.results(): Flowable<List<WebPage>> = this
@@ -205,17 +212,14 @@ class SuggestionsAdapter(
                 }
         }
         .map { (bookmarks, history, searches) ->
-            val bookmarkCount = MAX_SUGGESTIONS - 2.coerceAtMost(history.size) - 1.coerceAtMost(searches.size)
-            val historyCount = MAX_SUGGESTIONS - bookmarkCount.coerceAtMost(bookmarks.size) - 1.coerceAtMost(searches.size)
-            val searchCount = MAX_SUGGESTIONS - bookmarkCount.coerceAtMost(bookmarks.size) - historyCount.coerceAtMost(history.size)
+            val choice: Int = userPreferences.suggestionChoice.value + 2
+            val bookmarkCount = choice - 2.coerceAtMost(history.size) - 1.coerceAtMost(searches.size)
+            val historyCount = choice - bookmarkCount.coerceAtMost(bookmarks.size) - 1.coerceAtMost(searches.size)
+            val searchCount = choice - bookmarkCount.coerceAtMost(bookmarks.size) - historyCount.coerceAtMost(history.size)
             val results = bookmarks.take(bookmarkCount) + history.take(historyCount) + searches.take(searchCount)
             // Reverse results if needed
             if (iContext.configPrefs.toolbarsBottom) results.reversed() else results
         }
-
-    companion object {
-        private const val MAX_SUGGESTIONS = 5
-    }
 
     private class SearchFilter(
         private val suggestionsAdapter: SuggestionsAdapter

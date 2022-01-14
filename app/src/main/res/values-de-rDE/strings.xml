@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Neu laden</string>
     <string name="action_menu">Menü</string>
     <string name="action_new_tab">Neuer Tab</string>
@@ -14,6 +14,8 @@
     <string name="action_new_session">Neue Sitzung</string>
     <string name="action_save_session">Sitzung speichern als</string>
     <string name="action_edit_sessions">Sitzungen bearbeiten</string>
+    <string name="enable">Aktivieren</string>
+    <string name="disable">Deaktivieren</string>
     <string name="settings">Einstellungen</string>
     <string name="location">Standortzugriff erlauben</string>
     <string name="password">Passwörter speichern</string>
@@ -24,7 +26,6 @@
     <string name="java">JavaScript aktivieren</string>
     <string name="download">Download-Verzeichnis</string>
     <string name="settings_advanced">Erweitert</string>
-    <string name="apache">Apache License 2.0</string>
     <string name="version">App-Version</string>
     <string name="update_available">Aktualisierung verfügbar</string>
     <string name="update_check_error">Aktualisierungs-Prüffehler, versuche es später erneut</string>
@@ -60,12 +61,17 @@
     <string name="dialog_bookmark">Was möchten Sie mit diesem Lesezeichen tun?</string>
     <string name="action_delete">Löschen</string>
     <string name="action_blank">Leere Seite</string>
+    <string name="agent_android_mobile">Android (Mobile)</string>
+    <string name="agent_custom">Benutzerdefiniert</string>
     <string name="agent_default">Standard</string>
     <string name="agent_desktop">Desktop</string>
-    <string name="agent_mobile">Mobile</string>
-    <string name="agent_custom">Benutzerdefiniert</string>
+    <string name="agent_ios_mobile">iOS (Mobile)</string>
+    <string name="agent_linux_desktop">Linux (Desktop)</string>
+    <string name="agent_macos_desktop">macOS (Desktop)</string>
     <string name="agent_system">System</string>
     <string name="agent_web_view">WebView</string>
+    <string name="agent_windows_desktop">Windows (Desktop)</string>
+    <string name="agent_hide_device">Verstecke Gerät</string>
     <string name="title_search_engine">Suchmaschine</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Möchten Sie diese Datei herunterladen? (%1$s)</string>
@@ -77,6 +83,7 @@
     <string name="title_download_location">Download-Verzeichnis festlegen</string>
     <string name="title_custom_homepage">Benutzerdefinierte Startseite</string>
     <string name="action_webpage">Webseite</string>
+    <string name="action_main_menu">Hauptmenü</string>
     <string name="title_clear_history">Verlauf löschen</string>
     <string name="title_clear_cookies">Cookies löschen</string>
     <string name="dialog_history">Möchten Sie den gesamten Verlauf löschen?</string>
@@ -101,6 +108,7 @@
     <string name="action_back">Zurück</string>
     <string name="action_find">Auf Seite suchen</string>
     <string name="action_print">Drucken</string>
+    <string name="action_translate">Übersetzen</string>
     <string name="downloads">Downloads</string>
     <string name="downloads_notification_description">Nach Fertigstellung des Downloads auslösen</string>
     <string name="download_pending">Herunterladen:</string>
@@ -136,11 +144,10 @@
     <string name="title_welcome">Willkommen bei Fulguris</string>
     <string name="message_welcome">Besuche unsere Webseite um mehr über diesen leistungsstarken Webbrowser zu erfahren.</string>
     <!-- Ad block -->
-    <string name="block_ads">Werbung blockieren</string>
+    <string name="block_ads">Inhaltskontrolle</string>
     <string name="block_ad_source">Hosts-Datei Quelle</string>
     <string name="block_ad_remote_refresh_frequency_description">(Online-Hosts Datei)</string>
     <string name="block_ad_refresh_now">Hosts aktualisieren</string>
-    <string name="block_ads_upsell_source">Auf Lightning Plus upgraden, um auszuwählen</string>
     <string name="block_remote_frequency_daily">Täglich</string>
     <string name="block_remote_frequency_weekly">Wöchentlich</string>
     <string name="block_remote_frequency_monthly">Monatlich</string>
@@ -149,6 +156,38 @@
     <string name="block_source_local_description">Datei: %1$s</string>
     <string name="block_source_remote">Online Hosts-Datei</string>
     <string name="block_source_remote_description">URL: %1$s</string>
+    <string name="ad_block_load_failure">Das Laden der Online-Hosts ist fehlgeschlagen.</string>
+    <!-- new ad blocker -->
+    <string name="page_blocked">Die folgende Seite wurde blockiert:</string>
+    <string name="page_blocked_reason">weil:</string>
+    <string name="page_blocked_list_ad">%s in der Werbeblocker Filterliste</string>
+    <string name="page_blocked_list_user">%s blockiert durch Benutzerregel</string>
+    <string name="page_blocked_list_malware">%s in der Malware Filterliste</string>
+    <string name="request_blocked">Anfrage blockiert</string>
+    <!-- settings for new ad blocker -->
+    <string name="blocklist_update_mode">Automatischer Aktualisierungsmodus</string>
+    <string name="blocklist_update_on">An</string>
+    <string name="blocklist_update_off">Aus</string>
+    <string name="blocklist_update_wifi">Nur über WLAN</string>
+    <string name="blocklist_update">Filter aktualisieren</string>
+    <string name="blocklist_update_frequency">Automatisches aktualisieren (Häufigkeit)</string>
+    <string name="blocklist_update_description">Die Aktualisierung erfolgt mit der gewählten Häufigkeit, es sei denn, in der Filterliste ist ein längeres Intervall angegeben.</string>
+    <string name="blocklist_update_now">Listen aktualisieren</string>
+    <string name="blocklist_last_update">Letzte Aktualisierung: %s</string>
+    <string name="blocklist_updating">Updating…</string>
+    <string name="blocklist_update_error">Error while updating filters list %s</string>
+    <string name="add_blocklist">Filterdatei hinzufügen</string>
+    <string name="add_blocklist_hint">Es können Host-Listen oder jede Liste gewählt werden, die mit AdBlockPlus-Regeln arbeiten</string>
+    <string name="enable_blocklist">Diese Liste aktivieren</string>
+    <string name="invalid_title">Ungültiger Titel</string>
+    <string name="invalid_url">Ungültige URL</string>
+    <string name="blocklist_built_in">Integrierte Filter</string>
+    <string name="blocklist_remove">Filterdatei entfernen</string>
+    <string name="blocklist_remove_confirm">Filterdatei: %s wirklich entfernen?</string>
+    <string name="local_file">Lokal</string>
+    <string name="local_file_replace">Ersetzen</string>
+    <string name="local_file_chosen">Datei ausgewählt</string>
+    <string name="remote_file">Online</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Aktion abgebrochen.</string>
     <!-- SSL warnings -->
@@ -200,7 +239,6 @@
     <string name="folder_default">Standard</string>
     <string name="folder_custom">Benutzerdefiniert</string>
     <string name="untitled">Ohne Titel</string>
-    <string name="mpl_license">Mozilla Public License v2.0</string>
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">hpHosts Ad Server Liste</string>
@@ -215,6 +253,9 @@
     <string name="title_file_chooser">Dateiauswahl</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
+    <string name="generic_export">Exportieren</string>
+    <string name="generic_import">Importieren</string>
+    <string name="generic_reset">Zurücksetzen</string>
     <string name="export_bookmarks">Lesezeichen exportieren</string>
     <string name="import_backup">Lesezeichen importieren</string>
     <string name="bookmark_export_path">Lesezeichen exportiert:</string>
@@ -226,8 +267,11 @@
     <string name="title_chooser">Wähle eine Datei aus</string>
     <string name="settings_general">Allgemein</string>
     <string name="settings_display">Darstellung</string>
+    <string name="settings_backup">Sicherung</string>
     <string name="settings_title_configuration">Konfiguration</string>
     <string name="settings_summary_configuration">Hoch- und Querformat Einstellungen</string>
+    <string name="settings_title_portrait">@string/pref_category_portrait</string>
+    <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_privacy">Privatsphäre</string>
     <string name="settings_about">Über</string>
     <string name="settings_contribute">Unterstützen</string>
@@ -238,6 +282,11 @@
     <string name="pref_category_landscape">Querformat</string>
     <string name="pref_category_portrait">Hochformat</string>
     <string name="pref_category_menu">@string/action_menu</string>
+    <string name="pref_category_filters">Filter</string>
+    <string name="pref_category_summary_filters">Lokale oder Online-Dateien, die deine Regeln zur Inhaltskontrolle definieren</string>
+    <string name="pref_category_on_tab_close">Beim Schließen des Tab</string>
+    <string name="pref_category_on_tab_change">Beim Wechseln des Tab</string>
+    <string name="pref_category_on_tab_back_forward">Beim Zurück- oder Weitergehen</string>
     <string name="pref_title_hide_status_bar">Statusleiste ausblenden</string>
     <string name="pref_title_hide_tool_bar">Suchleiste beim Scrollen ausblenden</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Suchleiste beim Scrollen nach oben anzeigen</string>
@@ -296,10 +345,13 @@
     <string name="new_tab_position_start">Am Start der Tabliste</string>
     <string name="new_tab_position_end">Am Ende der Tabliste</string>
     <string name="text_encoding">Text Enkodierung</string>
+    <string name="reset_settings">Einstellungen zurücksetzen</string>
+    <string name="reset_settings_confirmation">Vorsicht! Dies wird alle deine individuellen Einstellungen entfernen. Bist du sicher, dass du fortfahren willst?</string>
     <string-array name="url_content_array">
         <item>Domain (Standard)</item>
         <item>URL</item>
         <item>Titel</item>
+        <item>Shortened URL</item>
     </string-array>
     <string name="invert_color">Farben invertieren</string>
     <string name="settings_black_status_bar">Schwarze Statusleiste</string>
@@ -318,7 +370,9 @@
     <string name="clear_web_storage_exit">Webinhalte beim Beenden löschen</string>
     <string name="message_web_storage_cleared">Webinhalte gelöscht</string>
     <string name="hosts_source">Quelle für Werbeblocker</string>
-    <string name="settings_adblock">Werbeblocker</string>
+    <string name="settings_adblock">@string/block_ads</string>
+    <string name="settings_summary_content_control">Werbeblocker und Inhaltsfilterung</string>
+    <string name="settings_summary_content_control_toggle">Werbeblocker und Inhaltsfilterung aktivieren</string>
     <string name="settings_title_vertical_tab_bar">Vertikale Tab-Leiste</string>
     <string name="settings_summary_vertical_tab_bar">Ausschalten um die horizontale Tab-Leiste zu nutzen</string>
     <string name="settings_title_toolbars_bottom">Suchleiste nach unten</string>
@@ -338,7 +392,6 @@
     <string name="shortcut_message_failed_to_add">Ihr Launcher unterstützt keine Verknüpfungen!</string>
     <string name="action_delete_all_bookmarks">Alle Lesezeichen löschen</string>
     <string name="flash_not_supported">Flash Player wird von Ihrem System nicht unterstützt!</string>
-    <string name="upsell_plus_version">Upgrade auf Lightning Plus um Werbung zu blockieren!</string>
     <string name="message_open_download_fail">Diese Datei existiert nicht mehr</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">Häufig gestellte Fragen</string>
@@ -368,17 +421,12 @@
     <string name="dialog_adblock_disable_for_site">Werbeblocker für diese Webseite deaktivieren</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Benutzerdefinierte URL</string>
-    <string name="search_engine_google">Google</string>
-    <string name="search_engine_ask">Ask</string>
-    <string name="search_engine_bing">Bing</string>
-    <string name="search_engine_yahoo">Yahoo</string>
-    <string name="search_engine_startpage">StartPage</string>
-    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
-    <string name="search_engine_duckduckgo">DuckDuckGo</string>
+    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - Kein JavaScript</string>
     <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
-    <string name="search_engine_baidu">Baidu</string>
-    <string name="search_engine_yandex">Yandex</string>
-    <string name="search_engine_naver">Naver</string>
+    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - Kein JavaScript</string>
+    <string name="search_engine_qwant_lite">Qwant Lite</string>
+    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
+    <string name="search_engine_yahoo_no_js">Yahoo - Kein JavaScript</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d Inkognito-Tab geöffnet</item>
@@ -386,8 +434,6 @@
     </plurals>
     <string name="notification_incognito_running_message">Inkognito-Tab anzeigen</string>
     <string name="notification_incognito_running_description">Dauerhafte Inkognito-Benachrichtigung</string>
-    <!--Ad block -->
-    <string name="ad_block_load_failure">Das Laden der Online-Hosts ist fehlgeschlagen.</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Ausgestellt von:</string>
@@ -434,10 +480,92 @@
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
+    <string name="question_what_do_you_want_to_use">Was soll verwendet werden?</string>
     <string name="button_link">Link</string>
-    <string name="button_image">Image</string>
+    <string name="button_image">Bild</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
-    <string name="notify_tab_closed">Tab closed</string>
-    <string name="button_undo">Undo</string>
+    <string name="notify_tab_closed">Tab geschlossen</string>
+    <string name="button_undo">Rückgängig machen</string>
+    <string name="button_dismiss">Ablehnen</string>
+    <!-- Find in page -->
+    <string name="no_match_found">Keine Übereinstimmung gefunden!</string>
+    <string name="match_x_of_n">Treffer: <xliff:g id="current_match" example="1">%1$d</xliff:g> von <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="pref_title_show_snackbar">Snackbar anzeigen</string>
+    <string name="pref_title_show_animation">Animation anzeigen</string>
+    <string name="pref_title_vibrate">Vibrieren</string>
+    <string name="pref_title_duration">Dauer</string>
+    <string name="pref_summary_duration">Dauer der Animation in Zentisekunden</string>
+    <string name="pref_category_title_session_export">Sitzungen exportieren</string>
+    <string name="pref_category_summary_session_export">Wähle eine Sitzung, die exportiert werden soll</string>
+    <string name="error_session_file_corrupted">Fehler: Beschädigte Sitzungsdatei!</string>
+    <string name="message_session_imported">Importierte Sitzung: <xliff:g id="session_name" example="News">%s</xliff:g></string>
+    <string name="message_session_exported">Exportierte Sitzung: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
+    <string name="show_ssl">SSL-Warndialog anzeigen</string>
+    <string name="start_incognito">Dauerhaft wie im Inkognito-Modus verhalten</string>
+    <string name="force_zoom_summary">(JavaScript muss aktiviert sein)</string>
+    <string name="force_zoom">Zoom auf Webseiten erzwingen</string>
+    <string name="algorithm">Algorithmus:</string>
+    <string name="oid">Objekt-Identifikator (OID):</string>
+    <string name="export_settings">Einstellungen exportieren</string>
+    <string name="import_settings">Einstellungen aus Sicherung importieren</string>
+    <string name="pref_title_search_custom_image_url">Benutzerdefiniertes Bild</string>
+    <string name="pref_summary_search_custom_image_url">Nur für benutzerdefinierte URL</string>
+    <string name="long_press_tab">Langes Drücken auf das \"Tab\"-Symbol öffnet einen neuen Tab</string>
+    <string name="pref_title_close_drawer">Drawer schließen</string>
+    <string name="pref_summary_close_drawer">Drawer nach dem Erstellen oder Löschen eines Tabs automatisch schließen</string>
+    <string name="block_javascript">JavaScript für Webseiten blockieren</string>
+    <string name="block_sites_title">Webseiten mit einem Komma trennen!</string>
+    <string name="listed_javascript">JavaScript nur für aufgelistete Sites zulassen</string>
+    <string name="unlisted_javascript">JavaScript für diese Webseiten blockieren</string>
+    <string name="allow_javascript">JavaScript für diese Webseite zulassen</string>
+    <string name="blocked_javascript">JavaScript für diese Webseite blockieren</string>
+    <string name="page_source">Seitenquelltext anzeigen</string>
+    <string name="inspect">Javascript injizieren</string>
+    <string name="edit_cookies">Webseiten-Cookies anzeigen</string>
+    <string name="site_cookies">Webseiten-Cookies</string>
+    <string name="accent_color">Akzentfarbe</string>
+    <string name="accent_amber">Bernstein</string>
+    <string name="accent_blue">Blau</string>
+    <string name="accent_cyan">Türkis</string>
+    <string name="accent_deep_orange">Dunkelorange</string>
+    <string name="accent_deep_purple">Dunkellila</string>
+    <string name="accent_default">Standard</string>
+    <string name="accent_green">Grün</string>
+    <string name="accent_indigo">Indigo</string>
+    <string name="accent_light_blue">Hellblau</string>
+    <string name="accent_light_green">Hellgrün</string>
+    <string name="accent_lime">Limette</string>
+    <string name="accent_orange">Orange</string>
+    <string name="accent_pink">Pink</string>
+    <string name="accent_purple">Lila</string>
+    <string name="accent_teal">Türkisblau</string>
+    <string name="accent_yellow">Gelb</string>
+    <string name="accent_brown">Braun</string>
+    <string name="search_homepage">Suche</string>
+    <string name="search_incognito">Private Suche</string>
+    <string name="incognito">Inkognito</string>
+    <string name="unknown">Unbekannt</string>
+    <string name="settings_export_failure">Einstellungen konnten nicht exportiert werden</string>
+    <string name="settings_exported">Einstellungen exportiert:</string>
+    <string name="settings_reseted">Alle Einstellungen wiederhergestellt</string>
+    <string name="suggest">Suchvorschläge (Anzahl)</string>
+    <string name="error_tip">• Bitte überprüfen Sie die Adresse auf Tippfehler, wie ww.example.com statt www.example.com</string>
+    <string name="error_tip2">• Wenn Sie auch keine andere Website aufrufen können, überprüfen Sie bitte die Daten- oder WLAN-Verbindung.</string>
+    <string name="action_cycle_tabs_forwards">Tabs vorwärts wechseln</string>
+    <string name="action_cycle_tabs_backwards">Tabs rückwärts wechseln</string>
+    <string name="action_focus_address_bar">Adressleiste fokussieren </string>
+    <string name="action_tab_history_forward">Vorwärts im Tab-Verlauf</string>
+    <string name="action_toggle_toolbar">Symbolleiste umschalten</string>
+    <string name="action_toggle_status_bar">Statusleiste umschalten</string>
+    <string name="action_text_size_increment">Schriftgröße erhöhen</string>
+    <string name="action_text_size_decrement">Schriftgröße verringern</string>
+    <string name="action_text_size_small_increment">Textgröße etwas vergrößern</string>
+    <string name="action_text_size_small_decrement">Textgröße etwas verkleinern</string>
+    <string name="action_open_bookmark_list">Lesezeichenliste öffnen</string>
+    <string name="action_open_tab_list">Tabliste öffnen</string>
+    <string name="action_open_session_list">Sitzungsliste öffnen</string>
+    <string name="action_switch_to_session">Zu Sitzung 1 bis 9 wechseln</string>
+    <string name="action_switch_to_tab">Zu Tab 1 bis 9 wechseln</string>
+    <string name="action_switch_to_last_tab">Zum letzten Tab wechseln</string>
+    <string name="action_switch_to_last_session">Zur letzten Sitzung wechseln</string>
 </resources>

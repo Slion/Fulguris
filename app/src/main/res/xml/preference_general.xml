@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="non-default-test">
 
+    <PreferenceCategory
+        android:title="@string/settings_general">
+
     <!-- Empty default: we use an empty string to indicate "system default" language being selected -->
     <!--suppress AndroidDomInspection -->
     <acr.browser.lightning.settings.preferences.LocaleListPreference
@@ -22,9 +25,23 @@
         app:icon="@drawable/ic_search" />
 
     <Preference
+        android:key="@string/pref_key_search_custom_image_url"
+        android:title="@string/pref_title_search_custom_image_url"
+        android:summary="@string/pref_summary_search_custom_image_url"
+        app:icon="@drawable/ic_image" />
+
+        <Preference
         android:key="suggestions_choice"
         android:title="@string/search_suggestions"
         app:icon="@drawable/ic_list" />
+
+    <Preference
+        android:key="suggestions_number"
+        android:title="@string/search_suggestions"
+        app:icon="@drawable/ic_list_number" />
+
+    </PreferenceCategory>
+
 
     <PreferenceCategory android:title="@string/tabs">
 
@@ -65,7 +82,7 @@
             app:title="@string/bookmark_in_new_tab"
             app:defaultValue="@bool/pref_default_bookmark_in_new_tab"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_bookmark" />
+            app:icon="@drawable/ic_bookmark_border" />
 
 
         <ListPreference
@@ -93,6 +110,28 @@
             android:summary="@string/settings_summary_dark_mode_default"
             app:iconSpaceReserved="false"
             app:icon="@drawable/ic_dark_mode" />
+        <!--
+        Disabled as currently not working.
+        -->
+        <SwitchPreferenceCompat
+            app:key="@string/pref_key_long_click_tab"
+            app:title="@string/long_press_tab"
+            android:summary="@string/recommended"
+            android:defaultValue="true"
+            app:singleLineTitle="false"
+            app:icon="@drawable/ic_tab"
+            app:isPreferenceVisible="@bool/const_false" />
+
+        <!--
+        Disabled as currently not working.
+        -->
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_default_close_drawer"
+            android:key="@string/pref_key_close_drawer"
+            android:title="@string/pref_title_close_drawer"
+            android:summary="@string/pref_summary_close_drawer"
+            app:icon="@drawable/ic_arrow_left"
+            app:isPreferenceVisible="@bool/const_false"/>
 
     </PreferenceCategory>
 
@@ -116,47 +155,74 @@
             android:key="@string/pref_key_support_multiple_window"
             android:summary="@string/recommended"
             android:title="@string/window"
+            app:icon="@drawable/ic_baseline_open_in_new_24"
             app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="show_ssl"
+            android:summary="@string/recommended"
+            android:title="@string/show_ssl"
+            app:icon="@drawable/ic_warn" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_key_cookies"
             android:summary="@string/recommended"
             android:title="@string/cookies"
+            app:icon="@drawable/ic_cookie"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/pref_key_cookies_incognito"
             android:title="@string/incognito_cookies"
+            app:icon="@drawable/ic_cookie"
             app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="force_zoom"
+            android:summary="@string/force_zoom_summary"
+            android:title="@string/force_zoom"
+            app:icon="@drawable/ic_force_zoom" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_key_javascript"
             android:title="@string/java"
+            app:icon="@drawable/ic_script"
             app:iconSpaceReserved="false"/>
+
+        <Preference
+            android:key="block_javascript"
+            android:title="@string/block_javascript"
+            app:icon="@drawable/ic_script_key"/>
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/pref_key_request_save_data"
             android:title="@string/save_data"
+            app:icon="@drawable/ic_data_save"
             app:iconSpaceReserved="false" />
 
         <Preference
             android:key="proxy"
             android:title="@string/http_proxy"
-            app:iconSpaceReserved="false" />
+            app:iconSpaceReserved="true"/>
 
         <Preference
             android:key="agent"
             android:title="@string/agent"
+            app:icon="@drawable/ic_about"
             app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_key_default_text_encoding"
             android:title="@string/text_encoding"
+            app:icon="@drawable/ic_text_variant"
             app:iconSpaceReserved="false" />
+
 
     </PreferenceCategory>
 </PreferenceScreen>

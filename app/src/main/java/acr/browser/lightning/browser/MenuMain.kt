@@ -4,8 +4,8 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.MenuMainBinding
+import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import android.graphics.drawable.ColorDrawable
@@ -15,17 +15,13 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
+import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
 /**
- *
+ * That's our browser main navigation menu.
  */
 class MenuMain : PopupWindow {
-
-    @Inject
-    internal lateinit var bookmarkModel: BookmarkRepository
-    @Inject
-    lateinit var iUserPreferences: UserPreferences
 
     var iBinding: MenuMainBinding
     var iIsIncognito = false
@@ -33,7 +29,7 @@ class MenuMain : PopupWindow {
     constructor(layoutInflater: LayoutInflater, aBinding: MenuMainBinding = MenuMain.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
-        aBinding.root.context.injector.inject(this)
+        //aBinding.root.context.injector.inject(this)
 
         iBinding = aBinding
 
@@ -48,13 +44,8 @@ class MenuMain : PopupWindow {
         // See: https://stackoverflow.com/questions/46872634/close-popupwindow-upon-tapping-outside-or-back-button
         setBackgroundDrawable(ColorDrawable())
 
-        // Hide incognito menu item if we are already incognito
+        // Incognito status will be used to manage menu items visibility
         iIsIncognito = (aBinding.root.context as BrowserActivity).isIncognito()
-        if (iIsIncognito) {
-            aBinding.menuItemIncognito.isVisible = false
-            // No sessions in incognito mode
-            aBinding.menuItemSessions.isVisible = false
-        }
 
         //val radius: Float = getResources().getDimension(R.dimen.default_corner_radius) //32dp
 
@@ -79,8 +70,15 @@ class MenuMain : PopupWindow {
                 .build()
          */
 
-
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(iBinding.root.context.applicationContext, HiltEntryPoint::class.java)
+        bookmarkModel = hiltEntryPoint.bookmarkRepository
+        iUserPreferences = hiltEntryPoint.userPreferences
     }
+
+    val bookmarkModel: BookmarkRepository
+    val iUserPreferences: UserPreferences
+
+
 
     /**
      * Scroll to the start of our menu.
@@ -99,11 +97,14 @@ class MenuMain : PopupWindow {
         )
     }
 
-
+    /**
+     * Register click observer with the given menu item.
+     * This gave us the opportunity to dismiss the dialog…
+     * …but since we don't do that for all menu items anymore it is kinda useless.
+     */
     fun onMenuItemClicked(menuView: View, onClick: () -> Unit) {
         menuView.setOnClickListener {
             onClick()
-            dismiss()
         }
     }
 
@@ -113,15 +114,16 @@ class MenuMain : PopupWindow {
      */
     private fun applyMainMenuItemVisibility() {
         // Reset items visibility
+        iBinding.layoutMenuItemsContainer.isVisible=true;
         iBinding.menuItemWebPage.isVisible = true
         // Basic items
         iBinding.menuItemSessions.isVisible = !iIsIncognito
-        iBinding.menuItemBookmarks.isVisible = true
+        //iBinding.menuItemBookmarks.isVisible = true
         iBinding.menuItemHistory.isVisible = true
         iBinding.menuItemDownloads.isVisible = true
         iBinding.menuItemNewTab.isVisible = true
         iBinding.menuItemIncognito.isVisible = !iIsIncognito
-        iBinding.menuItemSettings.isVisible = true
+        iBinding.menuItemSettings.isVisible = !iIsIncognito
 
         iBinding.menuItemExit.isVisible = iUserPreferences.menuShowExit || iIsIncognito
         iBinding.menuItemNewTab.isVisible = iUserPreferences.menuShowNewTab

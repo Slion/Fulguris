@@ -2,12 +2,11 @@ package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.sessions.Session
-import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.di.DiskScheduler
-import acr.browser.lightning.di.MainScheduler
+import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.NewTabPosition
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
 import android.app.Activity
@@ -15,33 +14,35 @@ import android.app.Application
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
-import android.webkit.URLUtil
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.Single
+import androidx.lifecycle.LifecycleOwner
+import kotlinx.coroutines.launch
+
+import java.io.File
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * A manager singleton that holds all the [LightningView] and tracks the current tab. It handles
  * creation, deletion, restoration, state saving, and switching of tabs and sessions.
  */
+//@HiltViewModel
+@Singleton
 class TabsManager @Inject constructor(
         private val application: Application,
         private val searchEngineProvider: SearchEngineProvider,
-        @DatabaseScheduler private val databaseScheduler: Scheduler,
-        @DiskScheduler private val diskScheduler: Scheduler,
-        @MainScheduler private val mainScheduler: Scheduler,
         private val homePageInitializer: HomePageInitializer,
+        private val incognitoPageInitializer: IncognitoPageInitializer,
         private val bookmarkPageInitializer: BookmarkPageInitializer,
         private val historyPageInitializer: HistoryPageInitializer,
         private val downloadPageInitializer: DownloadPageInitializer,
-        private val logger: Logger
-) {
+        private val userPreferences: UserPreferences,
+        private val logger: Logger,
+): fulguris.Component() {
 
     private val tabList = arrayListOf<LightningView>()
     var iRecentTabs = mutableSetOf<LightningView>()
     val savedRecentTabsIndices = mutableSetOf<Int>()
+    private var iIsIncognito = false;
 
     // Our persisted list of sessions
     // TODO: Consider using a map instead of an array
@@ -68,6 +69,7 @@ class TabsManager @Inject constructor(
     private var postInitializationWorkList = mutableListOf<InitializationListener>()
 
     init {
+
         addTabNumberChangedListener {
             // Update current session tab count
             //TODO: Have a getCurrentSession function
@@ -79,6 +81,33 @@ class TabsManager @Inject constructor(
                 session[0].tabCount = it
             }
         }
+    }
+
+    /*
+    override fun onCleared() {
+        super.onCleared()
+        shutdown()
+        BrowserApp.instance.tabsManager = null;
+    }
+    */
+
+    /**
+     * From [DefaultLifecycleObserver.onStop]
+     *
+     * This is called once our activity is not visible anymore.
+     * That's where we should save our data according to the docs.
+     * https://developer.android.com/guide/components/activities/activity-lifecycle#onstop
+     * Saving data can't wait for onDestroy as there is no guarantee onDestroy will ever be called.
+     * In fact even when user closes our Task from recent Task list our activity is just terminated without getting any notifications.
+     */
+    override fun onStop(owner: LifecycleOwner) {
+        // Once we go background make sure the current tab is not new anymore
+        currentTab?.isNewTab = false
+        saveIfNeeded()
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        //shutdown()
     }
 
 
@@ -161,6 +190,9 @@ class TabsManager @Inject constructor(
         }
     }
 
+    /**
+     *
+     */
     private fun finishInitialization() {
 
         if (allTabs.size >= savedRecentTabsIndices.size) { // Defensive
@@ -191,7 +223,10 @@ class TabsManager @Inject constructor(
         }
     }
 
-    fun resetRecentTabsList()
+    /**
+     *
+     */
+    private fun resetRecentTabsList()
     {
         // Reset recent tabs list to arbitrary order
         iRecentTabs.clear()
@@ -207,56 +242,42 @@ class TabsManager @Inject constructor(
     }
 
     /**
-     * Initialize the state of the [TabsManager] based on previous state of the browser and with the
-     * new provided [intent] and emit the last tab that should be displayed. By default operates on
-     * a background scheduler and emits on the foreground scheduler.
+     * Initialize the state of the [TabsManager] based on previous state of the browser.
+     *
+     * TODO: See how you can offload IO to a background thread
      */
-    fun initializeTabs(activity: Activity, intent: Intent?, incognito: Boolean): Single<LightningView> =
-        Single
-            .just(Option.fromNullable(
-                    if (intent?.action == Intent.ACTION_WEB_SEARCH) {
-                        extractSearchFromIntent(intent)
-                    } else {
-                        intent?.dataString
-                    }
-            ))
-            .doOnSuccess { shutdown() }
-            .subscribeOn(mainScheduler)
-            .observeOn(databaseScheduler)
-            .flatMapObservable {
-                if (incognito) {
-                    initializeIncognitoMode(it.value())
-                } else {
-                    initializeRegularMode(it.value(), activity)
+    fun initializeTabs(activity: Activity, incognito: Boolean) : MutableList<LightningView> {
+
+        iIsIncognito = incognito
+
+        shutdown()
+
+        val list = mutableListOf<LightningView>()
+
+        if (incognito) {
+            list.add(newTab(activity, incognitoPageInitializer, incognito, NewTabPosition.END_OF_TAB_LIST))
+        } else {
+            restorePreviousTabs().forEach {
+                try {
+                    list.add(newTab(activity, it, incognito, NewTabPosition.END_OF_TAB_LIST))
                 }
-            }.observeOn(mainScheduler)
-            .map {
-                newTab(activity, it, incognito, NewTabPosition.END_OF_TAB_LIST)
+                catch (ex: Throwable) {
+                    // That's a corrupted session file, can happen when importing garbage.
+                    // TODO: In theory we should implement the onError handler but I have no idea how to do that
+                    activity.snackbar(R.string.error_session_file_corrupted)
+                }
             }
-            .lastOrError()
-            .doAfterSuccess { finishInitialization() }
 
-    /**
-     * Returns an [Observable] that emits the [TabInitializer] for incognito mode.
-     */
-    private fun initializeIncognitoMode(initialUrl: String?): Observable<TabInitializer> =
-        Observable.fromCallable { initialUrl?.let(::UrlInitializer) ?: homePageInitializer }
+            // Make sure we have one tab
+            if (list.isEmpty()) {
+                list.add(newTab(activity, homePageInitializer, incognito, NewTabPosition.END_OF_TAB_LIST))
+            }
+        }
 
-    /**
-     * Returns an [Observable] that emits the [TabInitializer] for normal operation mode.
-     */
-    private fun initializeRegularMode(initialUrl: String?, activity: Activity): Observable<TabInitializer> =
-        restorePreviousTabs()
-            .concatWith(Maybe.fromCallable<TabInitializer> {
-                return@fromCallable initialUrl?.let {
-                    if (URLUtil.isFileUrl(it)) {
-                        PermissionInitializer(it, activity, homePageInitializer)
-                    } else {
-                        UrlInitializer(it)
-                    }
-                }
-            })
-            .defaultIfEmpty(homePageInitializer)
+        finishInitialization()
+
+        return list
+    }
 
     /**
      * Returns the URL for a search [Intent]. If the query is empty, then a null URL will be
@@ -273,28 +294,36 @@ class TabsManager @Inject constructor(
         }
     }
 
+
     /**
      * Load tabs from the given file
      */
-    private fun loadSession(aFilename: String): Observable<TabInitializer>
+    private fun loadSession(aFilename: String): MutableList<TabInitializer>
     {
         val bundle = FileUtils.readBundleFromStorage(application, aFilename)
 
-	    // Read saved current tab index if any
+        // Read saved current tab index if any
         bundle?.let{
             savedRecentTabsIndices.clear()
             it.getIntArray(RECENT_TAB_INDICES)?.toList()?.let { it1 -> savedRecentTabsIndices.addAll(it1) }
         }
 
-        return readSavedStateFromDisk(bundle)
-                .map { tabModel ->
-                    return@map if (tabModel.url.isSpecialUrl()) {
-                        tabInitializerForSpecialUrl(tabModel.url)
-                    } else {
-                        FreezableBundleInitializer(tabModel)
-                    }
-                }
+        val list = mutableListOf<TabInitializer>()
+        readSavedStateFromDisk(bundle).forEach {
+            list.add(if (it.url.isSpecialUrl()) {
+                tabInitializerForSpecialUrl(it.url)
+            } else {
+                FreezableBundleInitializer(it)
+            })
+        }
+
+        // Make sure we have at least one tab
+        if (list.isEmpty()) {
+            list.add(homePageInitializer)
+        }
+        return list
     }
+
 
     /**
      * Rename the session [aOldName] to [aNewName].
@@ -352,13 +381,11 @@ class TabsManager @Inject constructor(
     }
 
 
-
-
     /**
      * Returns an observable that emits the [TabInitializer] for each previously opened tab as
      * saved on disk. Can potentially be empty.
      */
-    private fun restorePreviousTabs(): Observable<TabInitializer>
+    private fun restorePreviousTabs(): MutableList<TabInitializer>
     {
         // First load our sessions
         loadSessions()
@@ -387,6 +414,7 @@ class TabsManager @Inject constructor(
             url.isBookmarkUrl() -> bookmarkPageInitializer
             url.isDownloadsUrl() -> downloadPageInitializer
             url.isStartPageUrl() -> homePageInitializer
+            url.isIncognitoPageUrl() -> incognitoPageInitializer
             url.isHistoryUrl() -> historyPageInitializer
             else -> homePageInitializer
         }
@@ -433,8 +461,8 @@ class TabsManager @Inject constructor(
         get() = tabList
 
     /**
-     * Shutdown the manager. This destroys all tabs and clears the references to those tabs. Current
-     * tab is also released for garbage collection.
+     * Shutdown the manager. This destroys all tabs and clears the references to those tabs.
+     * Current tab is also released for garbage collection.
      */
     fun shutdown() {
         repeat(tabList.size) { deleteTab(0) }
@@ -484,6 +512,7 @@ class TabsManager @Inject constructor(
                 tabInitializer,
                 isIncognito,
                 homePageInitializer,
+                incognitoPageInitializer,
                 bookmarkPageInitializer,
                 downloadPageInitializer,
                 historyPageInitializer,
@@ -555,6 +584,22 @@ class TabsManager @Inject constructor(
     fun positionOf(tab: LightningView?): Int = tabList.indexOf(tab)
 
 
+    /**
+     * Save our states if needed.
+     */
+    private fun saveIfNeeded() {
+        if (iIsIncognito) {
+            // We don't persist anything when browsing incognito
+            return
+        }
+
+        if (userPreferences.restoreTabsOnStartup) {
+            saveState()
+        }
+        else {
+            clearSavedState()
+        }
+    }
 
     /**
      * Saves the state of the current WebViews, to a bundle which is then stored in persistent
@@ -591,9 +636,24 @@ class TabsManager @Inject constructor(
         outState.putIntArray(RECENT_TAB_INDICES, savedRecentTabsIndices.toIntArray())
 
         // Write our bundle to disk
-        FileUtils.writeBundleToStorage(application, outState, aFilename)
-            .subscribeOn(diskScheduler)
-            .subscribe()
+        iScopeThreadPool.launch {
+            // Guessing delay is not needed since we do not use the main thread scope anymore
+            //delay(1L)
+            FileUtils.writeBundleToStorage(application, outState, aFilename)
+            // We used that loop to test that our jobs are completed no matter what when the app is closed.
+            // However long running tasks could run into race condition I guess if we queue it multiple times.
+            // I really don't understand what's going on exactly when we close the app twice and we have two instances of that job running.
+            // It looks like the process was not terminated when exiting the app the first time and both jobs are running in different thread on the same process.
+            // Though even when waiting for the end of that job before restarting the app Android can reuse that process anyway…
+            // Log example:
+            // date time PID-TID/package priority/tag: message
+            // 2022-01-11 11:32:59.939 23094-23207/net.slions.fulguris.full.download.debug D/TabsManager: Tick: 28
+            // 2022-01-11 11:33:00.224 23094-23208/net.slions.fulguris.full.download.debug D/TabsManager: Tick: 20
+//            repeat(30) {
+//                delay(1000L)
+//                logger.log(TAG, "Tick: $it")
+//            }
+        }
     }
 
     /**
@@ -601,6 +661,13 @@ class TabsManager @Inject constructor(
      */
     private fun fileNameFromSessionName(aSessionName: String) : String {
         return FILENAME_SESSION_PREFIX + aSessionName
+    }
+
+    /**
+     * Provide session file from session name
+     */
+    fun fileFromSessionName(aName: String) : File {
+        return  File(application.filesDir, fileNameFromSessionName(aName))
     }
 
     /**
@@ -636,9 +703,18 @@ class TabsManager @Inject constructor(
         bundle.putString(KEY_CURRENT_SESSION, iCurrentSessionName)
         bundle.putParcelableArrayList(KEY_SESSIONS, iSessions)
         // Write our bundle to disk
-        FileUtils.writeBundleToStorage(application, bundle, FILENAME_SESSIONS)
-                .subscribeOn(diskScheduler)
-                .subscribe()
+        iScopeThreadPool.launch {
+            // Guessing delay is not needed since we do not use the main thread scope anymore
+            //delay(1L)
+            FileUtils.writeBundleToStorage(application, bundle, FILENAME_SESSIONS)
+        }
+    }
+
+    /**
+     * Just the sessions list really
+     */
+    fun deleteSessions() {
+        FileUtils.deleteBundleInStorage(application, FILENAME_SESSIONS)
     }
 
     /**
@@ -668,22 +744,21 @@ class TabsManager @Inject constructor(
         }
     }
 
-
     /**
-     * Creates an [Observable] that emits the [Bundle] state stored for each previously opened tab
-     * on disk.
-     * Can potentially be empty.
+     *
      */
-    private fun readSavedStateFromDisk(aBundle: Bundle?): Observable<TabModel> = Maybe
-        .fromCallable { aBundle }
-        .flattenAsObservable { bundle ->
-            bundle.keySet()
-                .filter { it.startsWith(TAB_KEY_PREFIX) }
-                .mapNotNull { bundleKey ->
-                    bundle.getBundle(bundleKey)?.let {TabModelFromBundle(it) as TabModel }
+    private fun readSavedStateFromDisk(aBundle: Bundle?): MutableList<TabModel> {
+
+        val list = mutableListOf<TabModel>()
+        aBundle?.keySet()
+                ?.filter { it.startsWith(TAB_KEY_PREFIX) }
+                ?.mapNotNull { bundleKey ->
+                    aBundle.getBundle(bundleKey)?.let { list.add(TabModelFromBundle(it))}
                 }
-            }
-        .doOnNext { logger.log(TAG, "Restoring previous WebView state now") }
+
+        return list;
+    }
+
 
     /**
      * Returns the index of the current tab.
@@ -709,27 +784,22 @@ class TabsManager @Inject constructor(
         tabList.firstOrNull { lightningView -> lightningView.webView?.let { it.hashCode() == hashCode } == true }
 
     /**
-     * Switch the current tab to the one at the given position. It returns the selected tab that has
-     * been switched to.
+     * Switch from the current tab to the one at the given [aPosition].
      *
-     * @return the selected tab or null if position is out of tabs range.
+     * @param aPosition Index of the tab we want to switch to.
+     * @exception IndexOutOfBoundsException if the provided index is out of range.
+     * @return The selected tab we just switched to.
      */
-    fun switchToTab(position: Int): LightningView? {
-        logger.log(TAG, "switch to tab: $position")
-        return if (position < 0 || position >= tabList.size) {
-            logger.log(TAG, "Returning a null LightningView requested for position: $position")
-            null
-        } else {
-            tabList[position].also {
+    fun switchToTab(aPosition: Int): LightningView {
+        logger.log(TAG, "switch to tab: $aPosition")
+        return tabList[aPosition].also {
                 currentTab = it
                 // Put that tab at the top of our recent tab list
                 iRecentTabs.apply{
                     remove(it)
                     add(it)
                     }
-
-                //logger.log(TAG, "Recent indices: $recentTabsIndices")
-                }
+            //logger.log(TAG, "Recent indices: $recentTabsIndices")
             }
         }
 
@@ -750,7 +820,7 @@ class TabsManager @Inject constructor(
         private const val KEY_CURRENT_SESSION = "KEY_CURRENT_SESSION"
         private const val KEY_SESSIONS = "KEY_SESSIONS"
         private const val FILENAME_SESSIONS = "SESSIONS"
-        private const val FILENAME_SESSION_PREFIX = "SESSION_"
+        const val FILENAME_SESSION_PREFIX = "SESSION_"
 
         private const val RECENT_TAB_INDICES = "RECENT_TAB_INDICES"
 

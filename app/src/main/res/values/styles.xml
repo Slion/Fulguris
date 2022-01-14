@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ (the "License"); you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at:
+ https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ added to cover use of software over a computer network and provide for limited attribution for
+ the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+
+ Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ ANY KIND, either express or implied. See the License for the specific language governing rights
+ and limitations under the License.
+
+ The Original Code is Fulguris.
+
+ The Original Developer is the Initial Developer.
+ The Initial Developer of the Original Code is Stéphane Lenclud.
+
+ All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ All Rights Reserved.
+-->
+ 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
@@ -35,95 +57,163 @@ colorControlNormal:
 
 -->
 
-    <!-- Settings themes -->
-    <style name="Theme.App.Light.Settings" parent="Theme.App.Light">
-        <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-        <!-- That's the status bar background color -->
-        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
-
-        <!-- Dark actionbar -->
-        <item name="colorPrimary">?android:attr/colorBackground</item>
-        <item name="actionBarWidgetTheme">@null</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
-        <!-- Panel attributes -->
-        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
-    </style>
-
-    <style name="Theme.App.Dark.Settings" parent="Theme.App.Dark">
-        <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-        <!-- That's the status bar background color -->
-        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
-        <!-- Dark actionbar -->
-        <item name="colorPrimary">?android:attr/colorBackground</item>
-        <item name="actionBarWidgetTheme">@null</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
-        <!-- Panel attributes -->
-        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
-
-    </style>
-
-    <style name="Theme.App.Black.Settings" parent="Theme.App.Black">
-        <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-        <!-- That's the status bar background color -->
-        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
-        <!-- Dark actionbar -->
-        <item name="colorPrimary">?android:attr/colorBackground</item>
-        <item name="actionBarWidgetTheme">@null</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
-        <!-- Panel attributes -->
-        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
-    </style>
-
-    <style name="Theme.App.DayNight.Settings" parent="Theme.App.DayNight">
-        <!-- Should be the same android:colorBackground -->
-        <item name="android:windowBackground">?android:attr/colorBackground</item>
-        <!-- That's the status bar background color -->
-        <item name="colorPrimaryDark">?android:attr/colorBackground</item>
-        <!-- Dark actionbar -->
-        <item name="colorPrimary">?android:attr/colorBackground</item>
-        <item name="actionBarWidgetTheme">@null</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
-        <!-- Panel attributes -->
-        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+<!--        <item name="windowSplashScreenBackground">@drawable/ic_secure</item>-->
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.App.DayNight</item>
     </style>
 
 
     <!-- Light theme -->
-    <style name="Theme.App.Light" parent="Theme.MaterialComponents.Light">
+    <style name="Theme.App.Light" parent="Theme.Material3.Light.NoActionBar">
 
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
         -->
-        <!-- Primary & secondary colors -->
-        <item name="colorPrimary">@color/app_blue</item>
-        <item name="colorPrimaryVariant">@color/app_blue_dark</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <item name="colorSecondary">@color/app_blue</item>
-        <item name="colorSecondaryVariant">@color/app_blue_dark</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <!-- Additional colors -->
-        <item name="android:colorBackground">@color/md_grey_200</item>
-        <item name="colorOnBackground">@color/black</item>
-        <item name="colorSurface">@color/md_grey_200</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="colorError">@color/md_red_500</item>
-        <item name="colorOnError">@color/white</item>
+        <!-- Material Design colors -->
+<!--=============================================================================================-->
+        <!--
+        Usage:
+        - Switch toggle knob when enabled
+        - Dialog background tint derived from it
+        - Dialog text button
+        - Offset background tint of toolbar and status bar in drawers and bottom sheet
+        -->
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <!--
+        Usage:
+        -->
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <!--
+        Usage:
+        - Switch toggle background when enabled
+        -->
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <!--
+        Usage:
+        - List card view current item highlight and checked icon tint
+        - Settings:
+            - Category titles
+        - Dialog:
+            - Current radio button
+        - Find in page text field highlight when selected
+        - Selected checkbox tick background in tab menu
+        -->
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <!-- ? -->
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <!-- ? -->
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <!-- ? -->
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <!-- ? -->
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <!-- ? -->
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <!--
+        Usage:
+        - Settings background
+        - Settings status bar background
+        - Tab list background (drawers and bottom sheet)
+        -->
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <!-- ? -->
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <!--
+        Usage:
+        - Tab list toolbar background
+        - Session list background
+        - Menus background
+        - Settings top bar
+        -->
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <!--
+        Usage:
+        - Settings dialog title
+        - Disabled switch toggle knob
+        -->
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <!--
+        Usage:
+        - Card view background, tabs and sessions
+        -->
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <!--
+        Settings:
+        - Dialog radio button text
+        -->
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <!--
+        Usage:
+        - Disabled switch toggle knob background
+        -->
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
+        <!--
+        Usage:
+        - Snackbar background
+        -->
+        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
+        <!--
+        Usage:
+        - Snackbar action text
+        -->
+        <item name="colorPrimaryInverse">@color/md_theme_light_primaryInverse</item>
+        <!--
+        Usage:
+        - Tabs text
+        - Settings title and page header
+        - Menu item text, except checkbox
+        - Toolbar title text, session menu, bookmarks
+        -->
+<!--        <item name="android:textColorPrimary">@color/m3_light_default_color_primary_text</item>-->
+<!--        <item name="android:textColorPrimaryInverse">@color/m3_default_color_primary_text</item>-->
+
+        <!--
+        Usage:
+        - Icons in menus, toolbars and settings
+        - Settings item summary text
+        - Empty checkbox tick border in tab menu
+        - Settings dialog not selected radio button empty circle icon
+        -->
+<!--        <item name="android:textColorSecondary">@color/m3_light_default_color_secondary_text</item>-->
+<!--        <item name="android:textColorSecondaryInverse">@color/m3_default_color_secondary_text</item>-->
+
+        <!--
+        Usage:
+        - Sessions menu item text
+        -->
+<!--        <item name="android:textColorTertiary">@color/m3_light_default_color_secondary_text</item>-->
+<!--        <item name="android:textColorTertiaryInverse">@color/m3_default_color_secondary_text</item>-->
+
+<!--=============================================================================================-->
+
         <!-- Icons color -->
-        <item name="appColorControlEnabled">@color/md_grey_650</item>
-        <item name="appColorControlSelected">?attr/colorOnPrimary</item>
-        <item name="appColorControlDisabled">@color/md_grey_400</item>
-        <item name="colorControlNormal">@color/state_color_control</item>
+<!--        <item name="appColorControlEnabled">@color/md_grey_650</item>-->
+<!--        <item name="appColorControlSelected">?attr/colorOnPrimary</item>-->
+<!--        <item name="appColorControlDisabled">@color/md_grey_400</item>-->
+<!--        <item name="colorControlNormal">@color/state_color_control</item>-->
         <!-- Fix dialog issues -->
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+<!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
+<!--        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
         <!-- Override AppBarLayout background color -->
-        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout.Light</item>
+<!--        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout.Light</item>-->
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <!-- Override BottomSheetDialog styles -->
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+<!--        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>-->
         <!-- Shapes -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
@@ -136,7 +226,6 @@ colorControlNormal:
         <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:windowDisablePreview">false</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
@@ -148,39 +237,156 @@ colorControlNormal:
         <!-- Needed for full screen material design bottom sheets -->
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="enableEdgeToEdge">true</item>
+
     </style>
 
     <!-- Dark theme -->
-    <style name="Theme.App.Dark" parent="Theme.MaterialComponents">
+    <style name="Theme.App.Dark" parent="Theme.Material3.Dark.NoActionBar">
 
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
         -->
-        <!-- Primary & secondary colors -->
-        <item name="colorPrimary">@color/app_blue_light</item>
-        <item name="colorPrimaryVariant">@color/app_blue</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/app_blue_light</item>
-        <item name="colorSecondaryVariant">@color/app_blue</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <!-- Additional colors -->
-        <item name="android:colorBackground">@color/md_grey_900</item>
-        <item name="colorOnBackground">@color/white</item>
-        <item name="colorSurface">@color/md_grey_900</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="colorError">@color/md_red_500</item>
-        <item name="colorOnError">@color/white</item>
+        <!-- Material Design colors -->
+<!--=============================================================================================-->
+        <!--
+        Usage:
+        - Switch toggle knob when enabled
+        - Dialog background tint derived from it
+        - Dialog text button
+        - Offset background tint of toolbar and status bar in drawers and bottom sheet
+        -->
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <!--
+        Usage:
+        -->
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <!--
+        Usage:
+        - Switch toggle background when enabled
+        -->
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+        <!--
+        Usage:
+        - List card view current item highlight and checked icon tint
+        - Settings:
+            - Category titles
+        - Dialog:
+            - Current radio button
+        - Find in page text field highlight when selected
+        - Selected checkbox tick background in tab menu
+        -->
+        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
+        <!-- ? -->
+        <item name="colorSecondaryContainer">@color/md_theme_dark_secondaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnSecondaryContainer">@color/md_theme_dark_onSecondaryContainer</item>
+        <!-- ? -->
+        <item name="colorTertiary">@color/md_theme_dark_tertiary</item>
+        <!-- ? -->
+        <item name="colorOnTertiary">@color/md_theme_dark_onTertiary</item>
+        <!-- ? -->
+        <item name="colorTertiaryContainer">@color/md_theme_dark_tertiaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnTertiaryContainer">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_dark_error</item>
+        <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_dark_onError</item>
+        <!-- ? -->
+        <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
+        <!--
+        Usage:
+        - Settings background
+        - Settings status bar background
+        - Tab list background (drawers and bottom sheet)
+        -->
+        <item name="android:colorBackground">@color/md_theme_dark_background</item>
+        <!-- ? -->
+        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
+        <!--
+        Usage:
+        - Tab list toolbar background
+        - Session list background
+        - Menus background
+        - Settings top bar
+        -->
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <!--
+        Usage:
+        - Settings dialog title
+        - Disabled switch toggle knob
+        -->
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+        <!--
+        Usage:
+        - Card view background, tabs and sessions
+        -->
+        <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
+        <!--
+        Settings:
+        - Dialog radio button text
+        -->
+        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
+        <!--
+        Usage:
+        - Disabled switch toggle knob background
+        -->
+        <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
+        <!--
+        Usage:
+        - Snackbar background
+        -->
+        <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
+        <!--
+        Usage:
+        - Snackbar action text
+        -->
+        <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
+        <!--
+        Usage:
+        - Tabs text
+        - Settings title and page header
+        - Menu item text, except checkbox
+        - Toolbar title text, session menu, bookmarks
+        -->
+<!--        <item name="android:textColorPrimary">@color/m3_dark_default_color_primary_text</item>-->
+<!--        <item name="android:textColorPrimaryInverse">@color/m3_default_color_primary_text</item>-->
+
+        <!--
+        Usage:
+        - Icons in menus, toolbars and settings
+        - Settings item summary text
+        - Empty checkbox tick border in tab menu
+        - Settings dialog not selected radio button empty circle icon
+        -->
+<!--        <item name="android:textColorSecondary">@color/m3_dark_default_color_secondary_text</item>-->
+<!--        <item name="android:textColorSecondaryInverse">@color/m3_default_color_secondary_text</item>-->
+
+        <!--
+        Usage:
+        - Sessions menu item text
+        -->
+<!--        <item name="android:textColorTertiary">@color/m3_dark_default_color_secondary_text</item>-->
+<!--        <item name="android:textColorTertiaryInverse">@color/m3_default_color_secondary_text</item>-->
+
+<!--=============================================================================================-->
+
+
         <!-- Icons color -->
-        <item name="appColorControlEnabled">@color/md_grey_350</item>
-        <item name="appColorControlSelected">?attr/colorOnPrimary</item>
-        <item name="appColorControlDisabled">@color/md_grey_600</item>
-        <item name="colorControlNormal">@color/state_color_control</item>
+<!--        <item name="appColorControlEnabled">@color/md_grey_350</item>-->
+<!--        <item name="appColorControlSelected">?attr/colorOnPrimary</item>-->
+<!--        <item name="appColorControlDisabled">@color/md_grey_600</item>-->
+<!--        <item name="colorControlNormal">@color/state_color_control</item>-->
         <!-- Fix dialog issues -->
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+<!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
+<!--        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <!-- Override BottomSheetDialog styles -->
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+<!--        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>-->
         <!-- Shapes -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
@@ -193,7 +399,6 @@ colorControlNormal:
         <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:windowDisablePreview">false</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
@@ -207,35 +412,149 @@ colorControlNormal:
         <item name="enableEdgeToEdge">true</item>
     </style>
 
-    <style name="Theme.App.Black" parent="Theme.MaterialComponents">
+    <style name="Theme.App.Black" parent="Theme.Material3.Dark">
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
         -->
-        <!-- Primary & secondary colors -->
-        <item name="colorPrimary">@color/app_blue_light</item>
-        <item name="colorPrimaryVariant">@color/app_blue</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/app_blue_light</item>
-        <item name="colorSecondaryVariant">@color/app_blue</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <!-- Additional colors -->
-        <item name="android:colorBackground">@color/md_black_1000</item>
-        <item name="colorOnBackground">@color/white</item>
-        <item name="colorSurface">@color/md_black_1000</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="colorError">@color/md_red_500</item>
-        <item name="colorOnError">@color/white</item>
+        <!-- Material Design colors -->
+<!--=============================================================================================-->
+        <!--
+        Usage:
+        - Switch toggle knob when enabled
+        - Dialog background tint derived from it
+        - Dialog text button
+        - Offset background tint of toolbar and status bar in drawers and bottom sheet
+        -->
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <!--
+        Usage:
+        -->
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <!--
+        Usage:
+        - Switch toggle background when enabled
+        -->
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+        <!--
+        Usage:
+        - List card view current item highlight and checked icon tint
+        - Settings:
+            - Category titles
+        - Dialog:
+            - Current radio button
+        - Find in page text field highlight when selected
+        - Selected checkbox tick background in tab menu
+        -->
+        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
+        <!-- ? -->
+        <item name="colorSecondaryContainer">@color/md_theme_dark_secondaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnSecondaryContainer">@color/md_theme_dark_onSecondaryContainer</item>
+        <!-- ? -->
+        <item name="colorTertiary">@color/md_theme_dark_tertiary</item>
+        <!-- ? -->
+        <item name="colorOnTertiary">@color/md_theme_dark_onTertiary</item>
+        <!-- ? -->
+        <item name="colorTertiaryContainer">@color/md_theme_dark_tertiaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnTertiaryContainer">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_dark_error</item>
+        <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_dark_onError</item>
+        <!-- ? -->
+        <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
+        <!--
+        Usage:
+        - Settings background
+        - Settings status bar background
+        - Tab list background (drawers and bottom sheet)
+        -->
+        <item name="android:colorBackground">@color/black</item>
+        <!-- ? -->
+        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
+        <!--
+        Usage:
+        - Tab list toolbar background
+        - Session list background
+        - Menus background
+        - Settings top bar
+        -->
+        <item name="colorSurface">@color/black</item>
+        <!--
+        Usage:
+        - Settings dialog title
+        - Disabled switch toggle knob
+        -->
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+        <!--
+        Usage:
+        - Card view background, tabs and sessions
+        -->
+        <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
+        <!--
+        Settings:
+        - Dialog radio button text
+        -->
+        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
+        <!--
+        Usage:
+        - Disabled switch toggle knob background
+        -->
+        <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
+        <!--
+        Usage:
+        - Snackbar background
+        -->
+        <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
+        <!--
+        Usage:
+        - Snackbar action text
+        -->
+        <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
+        <!--
+        Usage:
+        - Tabs text
+        - Settings title and page header
+        - Menu item text, except checkbox
+        - Toolbar title text, session menu, bookmarks
+        -->
+<!--        <item name="android:textColorPrimary">@color/m3_dark_default_color_primary_text</item>-->
+<!--        <item name="android:textColorPrimaryInverse">@color/m3_default_color_primary_text</item>-->
+
+        <!--
+        Usage:
+        - Icons in menus, toolbars and settings
+        - Settings item summary text
+        - Empty checkbox tick border in tab menu
+        - Settings dialog not selected radio button empty circle icon
+        -->
+<!--        <item name="android:textColorSecondary">@color/m3_dark_default_color_secondary_text</item>-->
+<!--        <item name="android:textColorSecondaryInverse">@color/m3_default_color_secondary_text</item>-->
+
+        <!--
+        Usage:
+        - Sessions menu item text
+        -->
+<!--        <item name="android:textColorTertiary">@color/m3_dark_default_color_secondary_text</item>-->
+<!--        <item name="android:textColorTertiaryInverse">@color/m3_default_color_secondary_text</item>-->
+
+<!--=============================================================================================-->
         <!-- Icons color -->
-        <item name="appColorControlEnabled">@color/md_grey_350</item>
-        <item name="appColorControlSelected">?attr/colorOnPrimary</item>
-        <item name="appColorControlDisabled">@color/md_grey_600</item>
-        <item name="colorControlNormal">@color/state_color_control</item>
+<!--        <item name="appColorControlEnabled">@color/md_grey_350</item>-->
+<!--        <item name="appColorControlSelected">?attr/colorOnPrimary</item>-->
+<!--        <item name="appColorControlDisabled">@color/md_grey_600</item>-->
+<!--        <item name="colorControlNormal">@color/state_color_control</item>-->
         <!-- Fix dialog issues -->
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+<!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
+<!--        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <!-- Override BottomSheetDialog styles -->
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+<!--        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>-->
         <!-- Shapes -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
@@ -248,7 +567,6 @@ colorControlNormal:
         <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:windowDisablePreview">false</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
         <!-- Make status bar transparent so that it looks better with drawers -->
         <item name="colorPrimaryDark">@color/transparent</item>
         <!-- Needed until we remove them from our icons SVG -->
@@ -324,11 +642,11 @@ colorControlNormal:
     <!--
     Override bottom sheets dialog theme notably to make sure background and status bar have the proper background color.
     -->
-    <style name="ThemeOverlay.App.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="@style/ThemeOverlay.Material3.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
     </style>
 
-    <style name="Widget.App.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
+    <style name="Widget.App.BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
         <item name="backgroundTint">?attr/colorSurface</item>
         <item name="android:elevation">0dp</item>
 <!--        <item name="elevation">0dp</item>-->
@@ -338,7 +656,7 @@ colorControlNormal:
     Override dialog theme otherwise buttons' text is not visible in dark mode notably
     See: https://material.io/components/dialogs/android#theming-dialogs
     -->
-    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <!-- Override button text color
             Should be the same as you colorSecondary really
         -->
@@ -354,8 +672,9 @@ colorControlNormal:
 
     <!--
     Override MaterialCardView style to position our checked icon properly
+    TODO: Optionally allow use of Widget.Material3.CardView.Outlined
     -->
-    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+    <style name="Widget.App.CardView" parent="Widget.Material3.CardView.Filled">
         <item name="checkedIconMargin">4dp</item>
         <item name="checkedIconSize">6dp</item>
 <!--        <item name="elevation">24dp</item>-->
@@ -364,25 +683,106 @@ colorControlNormal:
 
     <!--
     TODO: explore this to improve our toolbar in popup menu
-    <style name="Widget.App.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Primary">
+    <style name="Widget.App.AppBarLayout" parent="Widget.Material3.AppBarLayout.Primary">
         <item name="background">@</item>
     </style>
     -->
 
     <!-- Shapes -->
-    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
 
-    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
 
-    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
+    </style>
+
+
+    <style name="Accent_Pink">
+        <item name="colorSecondary">#E91E63</item>
+        <item name="colorAccent">#E91E63</item>
+    </style>
+
+    <style name="Accent_Puple">
+        <item name="colorSecondary">#9C27B0</item>
+        <item name="colorAccent">#9C27B0</item>
+    </style>
+
+    <style name="Accent_Deep_Purple">
+        <item name="colorSecondary">#673AB7</item>
+        <item name="colorAccent">#673AB7</item>
+    </style>
+
+    <style name="Accent_Indigo">
+        <item name="colorSecondary">#3F51B5</item>
+        <item name="colorAccent">#3F51B5</item>
+    </style>
+
+    <style name="Accent_Blue">
+        <item name="colorSecondary">#2196F3</item>
+        <item name="colorAccent">#2196F3</item>
+    </style>
+
+    <style name="Accent_Light_Blue">
+        <item name="colorSecondary">#03A9F4</item>
+        <item name="colorAccent">#03A9F4</item>
+    </style>
+
+    <style name="Accent_Cyan">
+        <item name="colorSecondary">#00BCD4</item>
+        <item name="colorAccent">#00BCD4</item>
+    </style>
+
+    <style name="Accent_Teal">
+        <item name="colorSecondary">#009688</item>
+        <item name="colorAccent">#009688</item>
+    </style>
+
+    <style name="Accent_Green">
+        <item name="colorSecondary">#4CAF50</item>
+        <item name="colorAccent">#4CAF50</item>
+    </style>
+
+    <style name="Accent_Light_Green">
+        <item name="colorSecondary">#8BC34A</item>
+        <item name="colorAccent">#8BC34A</item>
+    </style>
+
+    <style name="Accent_Lime">
+        <item name="colorSecondary">#C0CA33</item>
+        <item name="colorAccent">#C0CA33</item>
+    </style>
+
+    <style name="Accent_Yellow">
+        <item name="colorSecondary">#FDD835</item>
+        <item name="colorAccent">#FDD835</item>
+    </style>
+
+    <style name="Accent_Amber">
+        <item name="colorSecondary">#FFB300</item>
+        <item name="colorAccent">#FFB300</item>
+    </style>
+
+    <style name="Accent_Orange">
+        <item name="colorSecondary">#FF9800</item>
+        <item name="colorAccent">#FF9800</item>
+    </style>
+
+    <style name="Accent_Deep_Orange">
+        <item name="colorSecondary">#FF5722</item>
+        <item name="colorAccent">#FF5722</item>
+    </style>
+
+    <style name="Accent_Brown">
+        <item name="colorSecondary">#795548</item>
+        <item name="colorAccent">#795548</item>
     </style>
 
 

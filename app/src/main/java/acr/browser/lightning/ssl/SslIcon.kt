@@ -16,6 +16,6 @@ fun Context.createSslDrawableForState(sslState: SslState): Drawable? = when (ssl
         ContextCompat.getDrawable(this, R.drawable.ic_secured)
     }
     is SslState.Invalid -> {
-        ContextCompat.getDrawable(this, R.drawable.ic_unsecured);
+        ContextCompat.getDrawable(this, R.drawable.ic_unsecured)
     }
 }

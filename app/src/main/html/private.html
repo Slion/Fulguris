@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta content="en-us" http-equiv="Content-Language" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>${TITLE}</title>
+    </head>
+    <style>
+        body {
+        background: ${backgroundColor};
+        text-align: center;
+        margin: 0px;
+        }
+        * {
+        box-sizing: border-box;
+        }
+        /* Style the search field */
+        form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid ${borderColor};
+        float: left;
+        width: 83%;
+        -moz-box-shadow: 0 0 1px ${borderColor};
+        -webkit-box-shadow: 0 0 1px ${borderColor};
+        box-shadow: 0 0 1px ${borderColor};
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+        height: 45px;
+        }
+        /* Style the submit button */
+        form.example button {
+        position: relative;
+        width: 15%;
+        padding: 9px;
+        background: ${accent};
+        color: ${backgroundColor};
+        -webkit-tap-highlight-color: transparent;
+        overflow: hidden;
+        cursor: pointer;
+        border: 1px solid ${borderColor};
+        -moz-box-shadow: 0 0 1px ${borderColor};
+        -webkit-box-shadow: 0 0 1px ${borderColor};
+        box-shadow: 0 0 1px ${borderColor};
+        outline: none;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        }
+        form.example button:after {
+        content: "";
+        background: #000000;
+        display: block;
+        position: absolute;
+        padding-top: 300%;
+        padding-left: 350%;
+        margin-left: -120px!important;
+        margin-top: -120%;
+        opacity: 0;
+        transition: 0.8s;
+        }
+        form.example button:active:after {
+        padding: 0;
+        margin: 0;
+        opacity: 1;
+        transition: 0s
+        }
+        /* Clear floats */
+        form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+        }
+        img.smaller {
+        width: 50%;
+        max-width: 150px;
+        margin-top: 20px;
+        }
+        .outer {
+        display: table;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        }
+        .middle {
+        display: table-cell;
+        vertical-align: middle;
+        }
+        .inner {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10%;
+		width: 100%;
+        }
+        #search_input {
+        color: ${searchBarTextColor};
+        background-color: ${backgroundColor};
+        padding-left: 17px;
+        }
+        .search_bar {
+        display: table;
+        vertical-align: middle;
+        width: 90%;
+        height: 35px;
+        max-width: 500px;
+        margin: 0 auto;
+        }
+        .text{
+        font-weight: 300;
+        margin-top: 0;
+        }
+        .shortcuts{
+        max-width: 500px;
+        height: auto;
+        vertical-align: middle;
+        position: relative; 
+        left: 50%;
+        transform: translateX(-50%);
+        margin-right: 50px !important;
+        bottom: 10px;
+        }
+        .button-material {
+        position: relative;
+        display: inline-block;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 4px;
+        padding: 0 16px;
+        min-width: 64px;
+        height: 36px;
+        vertical-align: middle;
+        text-align: center;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        color: ${searchBarTextColor};
+        background-color: ${backgroundColor};
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 36px;
+        overflow: hidden;
+        outline: none;
+        cursor: pointer;
+        transition: box-shadow 0.2s;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        }
+        .button-materials {
+        position: relative;
+        display: inline-block;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 4px;
+        padding: 0 16px;
+        min-width: 64px;
+        height: 36px;
+        vertical-align: middle;
+        text-align: center;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        color: ${accent};
+        background-color: ${backgroundColor};
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 36px;
+        overflow: hidden;
+        outline: none;
+        cursor: pointer;
+        transition: box-shadow 0.2s;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        }
+        h2 {
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        }
+        .link {
+        height: 35px;
+        width: 35px;
+        background-color: ${searchBarColor};
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 15px;
+        margin-right: 15px;
+        }
+        .link-text {
+        display: inline-block;
+        }
+        .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 1;
+        padding-top: 5vh; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0,0,0); 
+        background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+        background-color: ${backgroundColor};
+        color: ${searchBarTextColor};
+        margin: auto;
+        padding: 20px;
+        width: 80%;
+        border-radius: 8px;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        }
+        input {
+        background-color: ${backgroundColor};
+        color: ${searchBarTextColor};
+        border: 0.5px solid ${searchBarTextColor};
+        padding-left: 5px;
+        padding-right: 5px;
+        border-radius: 4px;
+        }
+        input:focus{
+        outline: none;
+        }
+        img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        -webkit-tap-highlight-color: transparent;
+        }
+        a {
+        -webkit-tap-highlight-color: transparent;
+        }
+        .column {
+        display: block;
+        flex-basis: 0;
+        flex-grow: 1;
+        flex-shrink: 1;
+        padding: .75rem;
+        }
+        .edit {
+        border: none;
+        outline: none;
+        }
+        #search_submit {
+        outline: none;
+        height: 45px;
+        }
+    </style>
+    <body>
+        <div class="outer">
+            <div class="middle">
+                <div class="inner">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" height="100">
+                    <title>icon-private-browsing</title><path d="M17.06 13C15.2 13 13.64 14.33 13.24 16.1C12.29 15.69 11.42 15.8 10.76 16.09C10.35 14.31 8.79 13 6.94 13C4.77 13 3 14.79 3 17C3 19.21 4.77 21 6.94 21C9 21 10.68 19.38 10.84 17.32C11.18 17.08 12.07 16.63 13.16 17.34C13.34 19.39 15 21 17.06 21C19.23 21 21 19.21 21 17C21 14.79 19.23 13 17.06 13M6.94 19.86C5.38 19.86 4.13 18.58 4.13 17S5.39 14.14 6.94 14.14C8.5 14.14 9.75 15.42 9.75 17S8.5 19.86 6.94 19.86M17.06 19.86C15.5 19.86 14.25 18.58 14.25 17S15.5 14.14 17.06 14.14C18.62 14.14 19.88 15.42 19.88 17S18.61 19.86 17.06 19.86M22 10.5H2V12H22V10.5M15.53 2.63C15.31 2.14 14.75 1.88 14.22 2.05L12 2.79L9.77 2.05L9.72 2.04C9.19 1.89 8.63 2.17 8.43 2.68L6 9H18L15.56 2.68L15.53 2.63Z" fill="#fff"/></svg>
+                    </br>
+                    </br>
+                    <form onsubmit="return search()" class="search_bar example" autocomplete="off">
+                        <button type="submit" id="search_submit">
+                            <svg height="24px" viewBox="0 0 24 24" width="24px" fill="${backgroundColor}">
+                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                <path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            </svg>
+                        </button>
+                        <span>
+                        <input class="search" type="text" id="search_input" placeholder="${search}"/>
+                        </span>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script type="text/javascript">
+            function search() {
+                if (document.getElementById("search_input").value != "") {
+                    window.location.href = "${BASE_URL}" + document.getElementById("search_input").value;
+                    document.getElementById("search_input").value = "";
+                }
+                return false;
+            }
+        </script>
+    </body>

@@ -2,6 +2,8 @@ package acr.browser.lightning.settings.preferences.delegates
 
 import acr.browser.lightning.BrowserApp
 import android.content.SharedPreferences
+import androidx.annotation.BoolRes
+import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -39,3 +41,12 @@ fun SharedPreferences.intPreference(
         @StringRes stringRes: Int,
         defaultValue: Int
 ): ReadWriteProperty<Any, Int> = IntPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), defaultValue, this)
+
+/**
+ * Creates a [Int] from [SharedPreferences] with the provide arguments.
+ */
+fun SharedPreferences.intResPreference(
+    @StringRes stringRes: Int,
+    @IntegerRes intRes: Int
+): ReadWriteProperty<Any, Int> = IntPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), BrowserApp.instance.resources.getInteger(intRes), this)
+

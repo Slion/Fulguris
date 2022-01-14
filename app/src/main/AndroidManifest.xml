@@ -4,8 +4,17 @@
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--
+    From Android 12 we need ACCESS_COARSE_LOCATION location too if asking for ACCESS_FINE_LOCATION
+    User can then decide if she wants to give us fine or approximate location.
+    See: https://developer.android.com/about/versions/12/migration
+    See: https://proandroiddev.com/android-12-privacy-changes-for-location-55ffd8c016fd
+    See: https://developer.android.com/training/location/permissions#approximate-request
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
@@ -29,6 +38,13 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
+    <queries>
+        <intent>
+            <!-- Needed to be able to launch third party applications -->
+            <action android:name="android.intent.action.MAIN" />
+        </intent>
+    </queries>
+
     <application
         android:name=".BrowserApp"
         android:allowBackup="true"
@@ -44,8 +60,9 @@
         Needed to be in the root activity which is our splash screen apparently.
         -->
         <activity android:name=".SplashActivity"
-            android:theme="@style/Theme.App.DayNight"
-            android:resizeableActivity="true">
+            android:theme="@style/Theme.App.SplashScreen"
+            android:resizeableActivity="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -70,10 +87,10 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/Theme.App.DayNight"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.APP_BROWSER" />
@@ -151,6 +168,18 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+            <!--
+            For Fulguris to show up in Android Sharesheet.
+            See: https://developer.android.com/training/sharing/receive
+            We will accept text to put it in the address bar.
+             -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".IncognitoActivity"
@@ -162,7 +191,8 @@
             android:parentActivityName=".MainActivity"
             android:process=":incognito"
             android:theme="@style/Theme.App.DayNight"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.INCOGNITO" />
 
@@ -174,7 +204,8 @@
             android:colorMode="wideColorGamut"
             android:label="@string/settings"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.App.DayNight.Settings">
+            android:theme="@style/Theme.App.DayNight"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SETTINGS" />
 
@@ -182,10 +213,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".reading.activity.ReadingActivity"
+            android:name=".reading.ReadingActivity"
             android:colorMode="wideColorGamut"
             android:label="@string/reading_mode"
-            android:theme="@style/Theme.App.DayNight.Settings">
+            android:theme="@style/Theme.App.DayNight"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.READING" />
 

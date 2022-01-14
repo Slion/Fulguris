@@ -1,9 +1,30 @@
+/*
+ * The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ * (the "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ * https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ * The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ * added to cover use of software over a computer network and provide for limited attribution for
+ * the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ * ANY KIND, either express or implied. See the License for the specific language governing rights
+ * and limitations under the License.
+ *
+ * The Original Code is Fulguris.
+ *
+ * The Original Developer is the Initial Developer.
+ * The Initial Developer of the Original Code is Stéphane Lenclud.
+ *
+ * All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ * All Rights Reserved.
+ */
+
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.Sponsorship
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -14,6 +35,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.android.billingclient.api.*
+import dagger.hilt.android.AndroidEntryPoint
 // See: https://stackoverflow.com/a/54188472/3969362
 import org.threeten.bp.Period;
 import javax.inject.Inject
@@ -21,12 +43,10 @@ import javax.inject.Inject
 /**
  * Manage in-app purchases and subscriptions.
  */
+@AndroidEntryPoint
 class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         PurchasesUpdatedListener,
         BillingClientStateListener {
-
-    //@Inject
-    //internal lateinit var userPreferences: UserPreferences
 
     private val LOG_TAG = "SponsorshipSettingsFragment"
 
@@ -49,8 +69,6 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-
-        injector.inject(this)
 
         // Connect our billing client
         context?.let {

@@ -6,7 +6,6 @@ import acr.browser.lightning.R
 import acr.browser.lightning.database.history.HistoryRepository
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.snackbar
@@ -19,10 +18,12 @@ import android.os.Build
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.preference.Preference
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var historyRepository: HistoryRepository
@@ -41,7 +42,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-        injector.inject(this)
+        //injector.inject(this)
 
         if (BuildConfig.FLAVOR_PUBLISHER=="fdroid") {
             // Hide firebase preferences for fdroid
@@ -54,51 +55,51 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         clickablePreference(preference = SETTINGS_CLEARCOOKIES, onClick = this::clearCookiesDialog)
         clickablePreference(preference = SETTINGS_CLEARWEBSTORAGE, onClick = this::clearWebStorage)
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_LOCATION,
             isChecked = userPreferences.locationEnabled,
             onCheckChange = { userPreferences.locationEnabled = it }
         )
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_THIRDPCOOKIES,
             isChecked = userPreferences.blockThirdPartyCookiesEnabled,
             isEnabled = Capabilities.THIRD_PARTY_COOKIE_BLOCKING.isSupported,
             onCheckChange = { userPreferences.blockThirdPartyCookiesEnabled = it }
         )
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_SAVEPASSWORD,
             isChecked = userPreferences.savePasswordsEnabled,
             onCheckChange = { userPreferences.savePasswordsEnabled = it }
         // From Android O auto-fill framework is used instead
         ).isVisible = Build.VERSION.SDK_INT < Build.VERSION_CODES.O
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_CACHEEXIT,
             isChecked = userPreferences.clearCacheExit,
             onCheckChange = { userPreferences.clearCacheExit = it }
         )
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_HISTORYEXIT,
             isChecked = userPreferences.clearHistoryExitEnabled,
             onCheckChange = { userPreferences.clearHistoryExitEnabled = it }
         )
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_COOKIEEXIT,
             isChecked = userPreferences.clearCookiesExitEnabled,
             onCheckChange = { userPreferences.clearCookiesExitEnabled = it }
         )
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_WEBSTORAGEEXIT,
             isChecked = userPreferences.clearWebStorageExitEnabled,
             onCheckChange = { userPreferences.clearWebStorageExitEnabled = it }
         )
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_DONOTTRACK,
             isChecked = userPreferences.doNotTrackEnabled,
             onCheckChange = { userPreferences.doNotTrackEnabled = it }
@@ -111,11 +112,17 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
             onCheckChange = { userPreferences.webRtcEnabled = it }
         )
 
-        checkBoxPreference(
+        switchPreference(
             preference = SETTINGS_IDENTIFYINGHEADERS,
             isChecked = userPreferences.removeIdentifyingHeadersEnabled,
             summary = "${LightningView.HEADER_REQUESTED_WITH}, ${LightningView.HEADER_WAP_PROFILE}",
             onCheckChange = { userPreferences.removeIdentifyingHeadersEnabled = it }
+        )
+
+        switchPreference(
+            preference = SETTINGS_INCOGNITO,
+            isChecked = userPreferences.incognito,
+            onCheckChange = { userPreferences.incognito = it }
         )
 
     }
@@ -177,7 +184,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
     private fun clearCookies(): Completable = Completable.fromAction {
         val activity = activity
         if (activity != null) {
-            WebUtils.clearCookies(activity)
+            WebUtils.clearCookies()
         } else {
             throw RuntimeException("Activity was null in clearCookies")
         }
@@ -202,6 +209,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_WEBSTORAGEEXIT = "clear_webstorage_exit"
         private const val SETTINGS_DONOTTRACK = "do_not_track"
         private const val SETTINGS_IDENTIFYINGHEADERS = "remove_identifying_headers"
+        private const val SETTINGS_INCOGNITO = "start_incognito"
     }
 
 }

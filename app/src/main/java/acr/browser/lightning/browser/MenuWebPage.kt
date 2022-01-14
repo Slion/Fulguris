@@ -1,3 +1,25 @@
+/*
+ * The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ * (the "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ * https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ * The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ * added to cover use of software over a computer network and provide for limited attribution for
+ * the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ * ANY KIND, either express or implied. See the License for the specific language governing rights
+ * and limitations under the License.
+ *
+ * The Original Code is Fulguris.
+ *
+ * The Original Developer is the Initial Developer.
+ * The Initial Developer of the Original Code is Stéphane Lenclud.
+ *
+ * All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ * All Rights Reserved.
+ */
+
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
@@ -5,34 +27,29 @@ import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.MenuWebPageBinding
+import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isAppScheme
 import acr.browser.lightning.utils.isSpecialUrl
-import android.animation.AnimatorInflater
-import android.animation.LayoutTransition
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.view.animation.AnimationUtils
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
+import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
 
 
 class MenuWebPage : PopupWindow {
 
-    @Inject
-    internal lateinit var bookmarkModel: BookmarkRepository
-    @Inject
-    lateinit var iUserPreferences: UserPreferences
-    @Inject
-    lateinit var abpUserRules: AbpUserRules
+    val bookmarkModel: BookmarkRepository
+    val iUserPreferences: UserPreferences
+    val abpUserRules: AbpUserRules
 
     var iBinding: MenuWebPageBinding
     var iIsIncognito = false
@@ -40,7 +57,7 @@ class MenuWebPage : PopupWindow {
     constructor(layoutInflater: LayoutInflater, aBinding: MenuWebPageBinding = MenuWebPage.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
 
-        aBinding.root.context.injector.inject(this)
+        //aBinding.root.context.injector.inject(this)
 
         iBinding = aBinding
 
@@ -89,7 +106,10 @@ class MenuWebPage : PopupWindow {
                 .build()
          */
 
-
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(iBinding.root.context.applicationContext, HiltEntryPoint::class.java)
+        bookmarkModel = hiltEntryPoint.bookmarkRepository
+        iUserPreferences = hiltEntryPoint.userPreferences
+        abpUserRules = hiltEntryPoint.abpUserRules
 
     }
 
@@ -110,21 +130,23 @@ class MenuWebPage : PopupWindow {
         )
     }
 
-
+    /**
+     * Register click observer with the given menu item.
+     * This gave us the opportunity to dismiss the dialog…
+     * …but since we don't do that for all menu items anymore it is kinda useless.
+     */
     fun onMenuItemClicked(menuView: View, onClick: () -> Unit) {
         menuView.setOnClickListener {
             onClick()
-            dismiss()
         }
     }
-
-
 
     /**
      * Show menu items corresponding to our main menu.
      */
     private fun applyMainMenuItemVisibility() {
 
+        iBinding.layoutMenuItemsContainer.isVisible = true
         // Those menu items are always on even for special URLs
         iBinding.menuItemFind.isVisible = true
         iBinding.menuItemPrint.isVisible = true
@@ -146,6 +168,7 @@ class MenuWebPage : PopupWindow {
                     iBinding.menuItemAddBookmark.isVisible = it
                     iBinding.menuItemShare.isVisible = it
                     iBinding.menuItemAdBlock.isVisible = it && iUserPreferences.adBlockEnabled
+                    iBinding.menuItemTranslate.isVisible = it
                 }
             }
         }

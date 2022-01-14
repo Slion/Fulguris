@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ (the "License"); you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at:
+ https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ added to cover use of software over a computer network and provide for limited attribution for
+ the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+
+ Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ ANY KIND, either express or implied. See the License for the specific language governing rights
+ and limitations under the License.
+
+ The Original Code is Fulguris.
+
+ The Original Developer is the Initial Developer.
+ The Initial Developer of the Original Code is Stéphane Lenclud.
+
+ All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ All Rights Reserved.
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        style="?attr/popupMenuStyle"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/popupMenuBackground"
+        android:elevation="4dp">
+
+        <!-- TODO: could not get this working with rounded corner
+            <com.google.android.material.appbar.AppBarLayout-->
+        <!--            android:id="@+id/header"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="?attr/actionBarSize"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent">-->
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="250dp"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/menuShortcutRefresh"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_reload"
+                app:tooltipText="@{@string/action_reload}"
+                app:srcCompat="@drawable/ic_action_refresh" />
+
+            <ImageButton
+                android:id="@+id/menuShortcutBack"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_back"
+                app:tooltipText="@{@string/action_back}"
+                app:srcCompat="@drawable/ic_action_back" />
+
+            <ImageButton
+                android:id="@+id/menuShortcutForward"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_forward"
+                app:tooltipText="@{@string/action_forward}"
+                app:srcCompat="@drawable/ic_action_forward" />
+
+            <!--            <ImageButton-->
+            <!--                android:id="@+id/menuShortcutBookmarks"-->
+            <!--                style="?android:attr/actionButtonStyle"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:contentDescription="@string/action_bookmarks"-->
+            <!--                app:tooltipText="@{@string/action_bookmarks}"-->
+            <!--                app:srcCompat="@drawable/ic_bookmark_border" />-->
+
+            <ImageButton
+                android:id="@+id/menuShortcutHome"
+                style="?android:attr/actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/action_show_homepage"
+                app:tooltipText="@{@string/action_show_homepage}"
+                app:srcCompat="@drawable/ic_action_home" />
+
+        </LinearLayout>
+
+        <!--        </com.google.android.material.appbar.AppBarLayout>-->
+
+        <!-- Divider
+TODO: Find a way not to scroll that guy without breaking our layout
+-->
+
+        <!--
+        layout_weight needed to prevent our header/toolbar being pushed out in reversed mode with toolbars at bottom
+        -->
+        <LinearLayout
+            android:id="@+id/layoutMenuItemsContainer"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <!-- paddingBottom to make sure fading edge is working with our fancy background
+            layout_weight needed to prevent the divider above being pushed out in reversed mode with toolbars at bottom
+            -->
+            <ScrollView
+                android:id="@+id/scrollViewItems"
+                android:layout_width="250dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingBottom="10dp"
+                android:requiresFadingEdge="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layoutMenuItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:animateLayoutChanges="true">
+
+
+                    <!-- Divider -->
+                    <!--
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="?android:attr/listDivider"
+                        />
+                    -->
+
+                    <TextView
+                        android:id="@+id/menuItemMainMenu"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:text="@string/action_main_menu"
+                        android:visibility="gone"
+                        app:drawableStartCompat="@drawable/ic_menu"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/menuItemAddBookmark"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_bookmark_add"
+                        android:text="@string/action_add_bookmark" />
+
+                    <View
+                        android:id="@+id/divider1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/menuItemShare"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_share"
+                        android:text="@string/action_share" />
+
+                    <TextView
+                        android:id="@+id/menuItemFind"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_find"
+                        android:text="@string/action_find" />
+
+                    <TextView
+                        android:id="@+id/menuItemAddToHome"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_add_to_home_screen"
+                        android:text="@string/action_add_to_homescreen" />
+
+                    <TextView
+                        android:id="@+id/menuItemPrint"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_action_print"
+                        android:text="@string/action_print" />
+
+                    <TextView
+                        android:id="@+id/menuItemReaderMode"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_action_reading"
+                        android:text="@string/reading_mode" />
+
+                    <TextView
+                        android:id="@+id/menuItemTranslate"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        app:drawableStartCompat="@drawable/ic_translate"
+                        android:text="@string/action_translate" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <CheckBox
+                        android:id="@+id/menuItemDesktopMode"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="@string/agent_desktop"
+                        android:gravity="center_vertical"
+                        android:enabled="true"
+                        app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
+                        app:drawableStartCompat="@drawable/round_desktop_windows_24" />
+
+                    <CheckBox
+                        android:id="@+id/menuItemDarkMode"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="@string/dark_theme"
+                        android:gravity="center_vertical"
+                        android:enabled="true"
+                        app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
+                        app:drawableStartCompat="@drawable/round_dark_mode_24" />
+
+                    <CheckBox
+                        android:id="@+id/menuItemAdBlock"
+                        style="@style/BrowserTextMenuItem"
+                        android:background="?attr/selectableItemBackground"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:button="@null"
+                        android:text="@string/block_ads"
+                        android:gravity="center_vertical"
+                        android:enabled="true"
+                        app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
+                        app:drawableStartCompat="@drawable/outline_remove_circle_outline_24" />
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

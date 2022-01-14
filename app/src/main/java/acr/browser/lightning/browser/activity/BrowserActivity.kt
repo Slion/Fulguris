@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020-2021 Stéphane Lenclud
+ * Copyright © 2020 Stéphane Lenclud. All Rights Reserved.
  * Copyright 2015 Anthony Restaino
  */
 
@@ -34,7 +34,7 @@ import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.notifications.IncognitoNotification
-import acr.browser.lightning.reading.activity.ReadingActivity
+import acr.browser.lightning.reading.ReadingActivity
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.SuggestionsAdapter
 import acr.browser.lightning.settings.NewTabPosition
@@ -49,8 +49,9 @@ import acr.browser.lightning.ssl.showSslDialog
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
 import acr.browser.lightning.view.SearchView
-import acr.browser.lightning.view.find.FindResults
-import android.animation.LayoutTransition
+
+import android.animation.*
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -66,10 +67,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
+import android.os.*
 import android.provider.MediaStore
 import android.view.*
 import android.view.View.*
@@ -80,6 +78,7 @@ import android.webkit.ValueCallback
 import android.webkit.WebChromeClient.CustomViewCallback
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.FrameLayout
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
@@ -108,19 +107,47 @@ import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
+import junit.framework.Assert.assertNull
 import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.system.exitProcess
+import android.text.Editable
 
+import android.text.TextWatcher
+import android.webkit.CookieManager
+import com.github.ahmadaghazadeh.editor.widget.CodeEditor
+import acr.browser.lightning.html.incognito.IncognitoPageFactory
+import acr.browser.lightning.locale.LocaleUtils
+import java.net.URL
+import java.util.*
+import kotlin.collections.HashMap
+import android.view.KeyboardShortcutGroup
 
+import androidx.annotation.RequiresApi
+
+import android.view.MotionEvent
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import dagger.hilt.android.AndroidEntryPoint
+
+/**
+ *
+ */
+@AndroidEntryPoint
 abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIController, OnClickListener {
 
     // Notifications
     lateinit var CHANNEL_ID: String
 
     // Current tab view being displayed
+    // Should always be a [WebViewEx] but that could change
     private var currentTabView: View? = null
+    // Our tab view back and front containers
+    // We swap them as needed to make sure our view animations are performed smoothly and without flicker
+    private lateinit var iTabViewContainerBack: PullRefreshLayout
+    private lateinit var iTabViewContainerFront: PullRefreshLayout
+    // Points to current tab animator or null if no tab animation is running
+    private var iTabAnimator: ViewPropertyAnimator? = null
 
     // Full Screen Video Views
     private var fullscreenContainerView: FrameLayout? = null
@@ -150,7 +177,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private var searchText: String? = null
     private var cameraPhotoPath: String? = null
 
-    private var findResult: FindResults? = null
 
     // The singleton BookmarkManager
     @Inject lateinit var bookmarkManager: BookmarkRepository
@@ -163,8 +189,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     @Inject @field:DiskScheduler lateinit var diskScheduler: Scheduler
     @Inject @field:DatabaseScheduler lateinit var databaseScheduler: Scheduler
     @Inject @field:MainScheduler lateinit var mainScheduler: Scheduler
-    @Inject lateinit var tabsManager: TabsManager
     @Inject lateinit var homePageFactory: HomePageFactory
+    @Inject lateinit var incognitoPageFactory: IncognitoPageFactory
+    @Inject lateinit var incognitoPageInitializer: IncognitoPageInitializer
     @Inject lateinit var bookmarkPageFactory: BookmarkPageFactory
     @Inject lateinit var historyPageFactory: HistoryPageFactory
     @Inject lateinit var historyPageInitializer: HistoryPageInitializer
@@ -176,8 +203,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     @Inject lateinit var logger: Logger
     @Inject lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject lateinit var exitCleanup: ExitCleanup
-
     @Inject lateinit var abpUserRules: AbpUserRules
+    //
+    @Inject lateinit var tabsManager: TabsManager
+    @Inject lateinit var presenter: BrowserPresenter
+
     // HTTP
     private lateinit var queue: RequestQueue
 
@@ -186,7 +216,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private val backgroundDrawable = ColorDrawable()
     private var incognitoNotification: IncognitoNotification? = null
 
-    var presenter: BrowserPresenter? = null
     private var tabsView: TabsView? = null
     private var bookmarksView: BookmarksDrawerView? = null
 
@@ -241,9 +270,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     protected abstract fun updateCookiePreference(): Completable
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        // Need to go first to inject our components
         super.onCreate(savedInstanceState)
-        injector.inject(this)
+
+        // Register lifecycle observers
+        lifecycle.addObserver(tabsManager)
+        lifecycle.addObserver(presenter)
+        //
+        createKeyboardShortcuts()
 
         if (BrowserApp.instance.justStarted) {
             BrowserApp.instance.justStarted = false
@@ -253,13 +287,33 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         iBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        iTabViewContainerBack = iBinding.tabViewContainerOne
+        iTabViewContainerFront = iBinding.tabViewContainerTwo
+
+        // Setup our find in page bindings
+        iBinding.findInPageInclude.searchQuery.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    // Trigger on setText
+                }
+                override fun afterTextChanged(s: Editable) {
+                    if (!iSkipNextSearchQueryUpdate) {
+                        tabsManager.currentTab?.find(s.toString())
+                    }
+                    iSkipNextSearchQueryUpdate = false
+                }
+            })
+        iBinding.findInPageInclude.buttonNext.setOnClickListener(this)
+        iBinding.findInPageInclude.buttonBack.setOnClickListener(this)
+        iBinding.findInPageInclude.buttonQuit.setOnClickListener(this)
+
 
 
         ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
-        createPopupMenu()
+        createMenuMain()
         createMenuWebPage()
-        createSessionsMenu()
+        createMenuSessions()
         tabsDialog = BottomSheetDialog(this)
         bookmarksDialog = BottomSheetDialog(this)
 
@@ -276,18 +330,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 }
             }
         }
+        tabsManager.addTabNumberChangedListener(::updateTabNumber)
 
-        presenter = BrowserPresenter(
-                this,
-                isIncognito(),
-                userPreferences,
-                tabsManager,
-                mainScheduler,
-                homePageFactory,
-                bookmarkPageFactory,
-                RecentTabsModel(),
-                logger
-        )
+        // Setup our presenter
+        presenter.iBrowserView = this
+        presenter.closedTabs = RecentTabsModel()
+        presenter.isIncognito = isIncognito()
+        presenter.tabsModel = tabsManager
+
 
         initialize(savedInstanceState)
 
@@ -327,8 +377,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      *
      */
-    private fun createSessionsMenu() {
+    private fun createMenuSessions() {
         iMenuSessions = SessionsPopupWindow(layoutInflater)
+        // Make it full screen gesture friendly
+        iMenuSessions.setOnDismissListener { justClosedMenuCountdown() }
     }
 
     // Used to avoid running that too many times, by keeping a reference to it we can cancel that runnable
@@ -346,6 +398,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Set up BottomSheetDialog
         dialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
         dialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        //dialog.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         //dialog.window?.setFlags(dialog.window?.attributes!!.flags, WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         //dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
@@ -355,15 +408,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         //
 
         // We need to set private data member edgeToEdgeEnabled to true to get full screen effect
-        // That won't be needed past material:1.4.0-alpha02
-        val field = BottomSheetDialog::class.java.getDeclaredField("edgeToEdgeEnabled")
-        field.isAccessible = true
-        field.setBoolean(dialog, true)
+        // That won't be needed past material:1.4.0-alpha02 as it is read from our theme definition from then on
+        //val field = BottomSheetDialog::class.java.getDeclaredField("edgeToEdgeEnabled")
+        //field.isAccessible = true
+        //field.setBoolean(dialog, true)
+
         //
         aContentView.removeFromParent()
         dialog.setContentView(aContentView)
         dialog.behavior.skipCollapsed = true
         dialog.behavior.isDraggable = !userPreferences.lockedDrawers
+        // Fix for https://github.com/Slion/Fulguris/issues/226
+        dialog.behavior.maxWidth = -1 // We want fullscreen width
 
         // Make sure dialog top padding and status bar icons color are updated whenever our dialog is resized
         // Since we keep recreating our dialogs every time we open them we should not accumulate observers here
@@ -371,7 +427,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // This is designed so that callbacks are cancelled unless our timeout expires
             // That avoids spamming adjustBottomSheet while our view is animated or dragged
             mainHandler.removeCallbacks(onSizeChangeRunnable)
-            onSizeChangeRunnable = Runnable {adjustBottomSheet(dialog)};
+            onSizeChangeRunnable = Runnable {
+                // Catch and ignore exceptions as adjustBottomSheet is using reflection to call private methods.
+                // Jamal was reporting this was not working on his device for some reason.
+                try {
+                    // Also I'm not sure now why we needed that, maybe it has since been fixed in the material components library.
+                    // Though the GitHub issue specified in that function description is still open.
+                    adjustBottomSheet(dialog)
+                } catch (ex: java.lang.Exception) {
+                    logger.log(TAG, "adjustBottomSheet: $ex")
+                }
+            }
             mainHandler.postDelayed(onSizeChangeRunnable, 100)
         }
 
@@ -432,39 +498,61 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    // Set whenever a menu was just closed
+    private var iJustClosedMenu = false
+
+    /**
+     * Used to avoid processing back commands when we just closed a menu.
+     * That's done to improve user experience when user is using full screen gesture.
+     * As user does its full screen back gesture it in fact dismisses the menu just by touching the screen outside the menu.
+     * That meant once the back gesture was completed it reached the activity which was processing it as if the menu were not there.
+     * In the end it looked like two back keys were processed.
+     */
+    private fun justClosedMenuCountdown() {
+        iJustClosedMenu = true; mainHandler.postDelayed({iJustClosedMenu = false},250)
+    }
+
     /**
      *
      */
-    private fun createPopupMenu() {
+    private fun createMenuMain() {
         iMenuMain = MenuMain(layoutInflater)
         // TODO: could use data binding instead
         iMenuMain.apply {
             // Menu
-            onMenuItemClicked(iBinding.menuItemWebPage) { iMenuMain.dismiss(); showMenuWebPage() }
+            onMenuItemClicked(iBinding.menuItemWebPage) { dismiss(); showMenuWebPage() }
             // Bind our actions
-            onMenuItemClicked(iBinding.menuItemSessions) { executeAction(R.id.action_sessions) }
-            onMenuItemClicked(iBinding.menuItemNewTab) { executeAction(R.id.action_new_tab) }
-            onMenuItemClicked(iBinding.menuItemIncognito) { executeAction(R.id.action_incognito) }
-            onMenuItemClicked(iBinding.menuItemHistory) { executeAction(R.id.action_history) }
-            onMenuItemClicked(iBinding.menuItemDownloads) { executeAction(R.id.action_downloads) }
-            onMenuItemClicked(iBinding.menuItemBookmarks) { executeAction(R.id.action_bookmarks) }
-            onMenuItemClicked(iBinding.menuItemExit) { executeAction(R.id.action_exit) }
+            onMenuItemClicked(iBinding.menuItemSessions) { dismiss(); executeAction(R.id.action_sessions) }
+            onMenuItemClicked(iBinding.menuItemNewTab) { dismiss(); executeAction(R.id.action_new_tab) }
+            onMenuItemClicked(iBinding.menuItemIncognito) { dismiss(); executeAction(R.id.action_incognito) }
+            onMenuItemClicked(iBinding.menuItemHistory) { dismiss(); executeAction(R.id.action_history) }
+            onMenuItemClicked(iBinding.menuItemDownloads) { dismiss(); executeAction(R.id.action_downloads) }
+            onMenuItemClicked(iBinding.menuItemBookmarks) { dismiss(); executeAction(R.id.action_bookmarks) }
+            onMenuItemClicked(iBinding.menuItemExit) { dismiss(); executeAction(R.id.action_exit) }
             //
-            onMenuItemClicked(iBinding.menuItemSettings) { executeAction(R.id.action_settings) }
+            onMenuItemClicked(iBinding.menuItemSettings) { dismiss(); executeAction(R.id.action_settings) }
 
             // Popup menu action shortcut icons
-            onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
-            onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
-            onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
-            onMenuItemClicked(iBinding.menuShortcutBack) { executeAction(R.id.action_back) }
-            //onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+            onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
+            onMenuItemClicked(iBinding.menuShortcutHome) { dismiss(); executeAction(R.id.action_show_homepage) }
+            onMenuItemClicked(iBinding.menuShortcutBookmarks) { dismiss(); executeAction(R.id.action_bookmarks) }
+            // Back and forward do not dismiss the menu to make it easier for users to navigate tab history
+            onMenuItemClicked(iBinding.menuShortcutForward) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_forward) }
+            onMenuItemClicked(iBinding.menuShortcutBack) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_back) }
+
+            // Make it full screen gesture friendly
+            setOnDismissListener { justClosedMenuCountdown() }
         }
     }
 
     /**
      *
      */
-    fun showPopupMenu() {
+    private fun showMenuMain() {
+        // Make sure back and forward buttons are in correct state
+        setForwardButtonEnabled(tabsManager.currentTab?.canGoForward()?:false)
+        setBackButtonEnabled(tabsManager.currentTab?.canGoBack()?:false)
+        // Open our menu
         iMenuMain.show(iBindingToolbarContent.buttonMore)
     }
 
@@ -475,30 +563,35 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iMenuWebPage = MenuWebPage(layoutInflater)
         // TODO: could use data binding instead
         iMenuWebPage.apply {
-            onMenuItemClicked(iBinding.menuItemMainMenu) { iMenuWebPage.dismiss(); showPopupMenu() }
+            onMenuItemClicked(iBinding.menuItemMainMenu) { dismiss(); showMenuMain() }
             // Web page actions
-            onMenuItemClicked(iBinding.menuItemShare) { executeAction(R.id.action_share) }
-            onMenuItemClicked(iBinding.menuItemAddBookmark) { executeAction(R.id.action_add_bookmark) }
-            onMenuItemClicked(iBinding.menuItemFind) { executeAction(R.id.action_find) }
-            onMenuItemClicked(iBinding.menuItemPrint) { executeAction(R.id.action_print) }
-            onMenuItemClicked(iBinding.menuItemAddToHome) { executeAction(R.id.action_add_to_homescreen) }
-            onMenuItemClicked(iBinding.menuItemReaderMode) { executeAction(R.id.action_reading_mode) }
-            onMenuItemClicked(iBinding.menuItemDesktopMode) { executeAction(R.id.action_toggle_desktop_mode) }
-            onMenuItemClicked(iBinding.menuItemDarkMode) { executeAction(R.id.action_toggle_dark_mode) }
-            onMenuItemClicked(iBinding.menuItemAdBlock) { executeAction(R.id.action_block) }
+            onMenuItemClicked(iBinding.menuItemShare) { dismiss(); executeAction(R.id.action_share) }
+            onMenuItemClicked(iBinding.menuItemAddBookmark) { dismiss(); executeAction(R.id.action_add_bookmark) }
+            onMenuItemClicked(iBinding.menuItemFind) { dismiss(); executeAction(R.id.action_find) }
+            onMenuItemClicked(iBinding.menuItemPrint) { dismiss(); executeAction(R.id.action_print) }
+            onMenuItemClicked(iBinding.menuItemAddToHome) { dismiss(); executeAction(R.id.action_add_to_homescreen) }
+            onMenuItemClicked(iBinding.menuItemReaderMode) { dismiss(); executeAction(R.id.action_reading_mode) }
+            onMenuItemClicked(iBinding.menuItemDesktopMode) { dismiss(); executeAction(R.id.action_toggle_desktop_mode) }
+            onMenuItemClicked(iBinding.menuItemDarkMode) { dismiss(); executeAction(R.id.action_toggle_dark_mode) }
+            onMenuItemClicked(iBinding.menuItemAdBlock) { dismiss(); executeAction(R.id.action_block) }
+            onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
             // Popup menu action shortcut icons
-            onMenuItemClicked(iBinding.menuShortcutRefresh) { executeAction(R.id.action_reload) }
-            onMenuItemClicked(iBinding.menuShortcutHome) { executeAction(R.id.action_show_homepage) }
-            onMenuItemClicked(iBinding.menuShortcutForward) { executeAction(R.id.action_forward) }
-            onMenuItemClicked(iBinding.menuShortcutBack) { executeAction(R.id.action_back) }
+            onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
+            onMenuItemClicked(iBinding.menuShortcutHome) { dismiss(); executeAction(R.id.action_show_homepage) }
+            // Back and forward do not dismiss the menu to make it easier for users to navigate tab history
+            onMenuItemClicked(iBinding.menuShortcutForward) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_forward) }
+            onMenuItemClicked(iBinding.menuShortcutBack) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_back) }
             //onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
+
+            // Make it full screen gesture friendly
+            setOnDismissListener { justClosedMenuCountdown() }
         }
     }
 
     /**
      *
      */
-    fun showMenuWebPage() {
+    private fun showMenuWebPage() {
         iMenuWebPage.show(iBindingToolbarContent.buttonMore)
     }
 
@@ -540,9 +633,42 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
         }
 
+
+    /**
+     * See below.
+     */
+    private val iDisableFabs : Runnable = Runnable {
+        iBinding.fabContainer.isVisible = false
+        tabSwitchStop()
+    }
+
+    // Used to manage our Easy Tab Switcher
+    private var iTabsButtonLongPressed = false
+    private var iEasyTabSwitcherWasUsed = false
+
+    /**
+     * Will disable floating action buttons once our countdown expires
+     */
+    private fun restartDisableFabsCountdown() {
+        if (!iTabsButtonLongPressed) {
+            // Cancel any pending action if any
+            cancelDisableFabsCountdown()
+            // Restart our countdown
+            // TODO: make that delay a settings option?
+            mainHandler.postDelayed(iDisableFabs, 5000)
+        }
+    }
+
     /**
      *
      */
+    private fun cancelDisableFabsCountdown() {
+        mainHandler.removeCallbacks(iDisableFabs)
+    }
+    /**
+     *
+     */
+    @SuppressLint("ClickableViewAccessibility")
     private fun initialize(savedInstanceState: Bundle?) {
 
         createNotificationChannel()
@@ -581,7 +707,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBindingToolbarContent.buttonMore.setImageResource(R.drawable.ic_incognito)
         }
 
-
         // Is that still needed
         val customView = iBinding.toolbarInclude.toolbar
         customView.layoutParams = customView.layoutParams.apply {
@@ -589,11 +714,73 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             height = LayoutParams.MATCH_PARENT
         }
 
+        // Define tabs button clicks handlers
         iBindingToolbarContent.tabsButton.setOnClickListener(this)
+        iBindingToolbarContent.tabsButton.setOnLongClickListener { view ->
+            iBinding.fabContainer.isVisible = true
+            iTabsButtonLongPressed = true
+            iEasyTabSwitcherWasUsed = false
+            cancelDisableFabsCountdown()
+            tabSwitchStart()
+            // We still want tooltip to show so return false here
+            false
+        }
+
+        // Handle release of tabs button after long press
+        iBindingToolbarContent.tabsButton.setOnTouchListener{ v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {}
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    if (iTabsButtonLongPressed) {
+                        iTabsButtonLongPressed = false
+                        if (iEasyTabSwitcherWasUsed) {
+                            // Tabs button was released after using tab switcher
+                            // User was using multiple fingers
+                            // Hide fabs on the spot to emulate CTRL+TAB best
+                            iDisableFabs.run()
+                        } else {
+                            // Tabs button was released without using tab switcher
+                            // Give a chance to the user to use it with a single finger
+                            // Only hide fabs after countdown
+                            restartDisableFabsCountdown()
+                        }
+                    }
+                }
+            }
+            false
+        }
+
+        // Close current tab during tab switch
+        // TODO: What if a tab is opened during tab switch?
+        iBinding.fabTabClose.setOnClickListener {
+            iEasyTabSwitcherWasUsed = true
+            restartDisableFabsCountdown()
+            tabsManager.let { presenter.deleteTab(it.indexOfCurrentTab()) }
+            tabSwitchReset()
+        }
+
+        // Switch back in our tab list
+        iBinding.fabBack.setOnClickListener {
+            iEasyTabSwitcherWasUsed = true
+            restartDisableFabsCountdown()
+            tabSwitchBack()
+            tabSwitchApply(true)
+        }
+
+        // Switch forward in our tab list
+        iBinding.fabForward.setOnClickListener{
+            iEasyTabSwitcherWasUsed = true
+            restartDisableFabsCountdown()
+            tabSwitchForward()
+            tabSwitchApply(false)
+        }
+
+
         iBindingToolbarContent.homeButton.setOnClickListener(this)
         iBindingToolbarContent.buttonActionBack.setOnClickListener{executeAction(R.id.action_back)}
         iBindingToolbarContent.buttonActionForward.setOnClickListener{executeAction(R.id.action_forward)}
 
+        //setFullscreenIfNeeded(resources.configuration) // As that's needed before bottom sheets creation
         createTabsView()
         //createTabsDialog()
         bookmarksView = BookmarksDrawerView(this)
@@ -638,17 +825,26 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             if (launchedFromHistory) {
                 intent = null
             }
-            presenter?.setupTabs(intent)
+            // Load our tabs
+            // TODO: Consider not reloading our session if it is already loaded.
+            // That could be the case notably when the activity is restarted after theme change in settings
+            // However that would require we careful setup our UI anew from an already loaded session
+            presenter.setupTabs(intent)
             setIntent(null)
             proxyUtils.checkForProxy(this)
         }
 
         // Enable swipe to refresh
-        iBinding.contentFrame.setOnRefreshListener {
+        iTabViewContainerFront.setOnRefreshListener {
             tabsManager.currentTab?.reload()
-            mainHandler.postDelayed({ iBinding.contentFrame.isRefreshing = false }, 1000)   // Stop the loading spinner after one second
+            mainHandler.postDelayed({ iTabViewContainerFront.isRefreshing = false }, 1000)   // Stop the loading spinner after one second
         }
 
+        iTabViewContainerBack.setOnRefreshListener {
+            tabsManager.currentTab?.reload()
+            // Assuming this guys will be in front when refreshing
+            mainHandler.postDelayed({ iTabViewContainerFront.isRefreshing = false }, 1000)   // Stop the loading spinner after one second
+        }
         // TODO: define custom transitions to make flying in and out of the tool bar nicer
         //ui_layout.layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, ui_layout.layoutTransition.getAnimator(LayoutTransition.CHANGE_DISAPPEARING))
         // Disabling animations which are not so nice
@@ -658,21 +854,39 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         iBindingToolbarContent.buttonMore.setOnClickListener(OnClickListener {
             // Web page is loosing focus as we open our menu
-            // Actually this was causing our search field to gain focus on HTC One M8 - Android 6
-            //currentTabView?.clearFocus()
-            // Check if virtual keyboard is showing
-            if (inputMethodManager.isActive) {
-                // Open our menu with a slight delay giving enough time for our virtual keyboard to close
-                mainHandler.postDelayed({ showPopupMenu() }, 100)
-
-            } else {
-                //Display our popup menu instantly
-                showPopupMenu()
-            }
+            // Should notably hide the virtual keyboard
+            currentTabView?.clearFocus()
+            searchView.clearFocus()
+            // Set focus to menu button
+            it.requestFocus()
+            // Show popup menu once our virtual keyboard is hidden
+            showPopupMenuWhenReady()
         })
-
     }
 
+    // Make sure we will show our popup menu at some point
+    private var iPopupMenuTries: Int = 0
+    private val kMaxPopupMenuTries: Int = 5
+
+    /**
+     * Show popup menu once our virtual keyboard is hidden.
+     * This was designed so that popup menu does not remain in the middle of the screen once virtual keyboard is hidden,
+     * notably when using toolbars at the bottom option.
+     */
+    private fun showPopupMenuWhenReady() {
+        // Check if virtual keyboard is showing and if we have another try to wait for it to close
+        if (inputMethodManager.isVirtualKeyboardVisible() && iPopupMenuTries<kMaxPopupMenuTries) {
+            // Increment our tries counter
+            iPopupMenuTries++
+            // Open our menu with a slight delay giving enough time for our virtual keyboard to close
+            mainHandler.postDelayed({ showPopupMenuWhenReady() }, 100)
+        } else {
+            //Display our popup menu instantly
+            showMenuMain()
+            // Reset tries counter for the next time around
+            iPopupMenuTries = 0
+        }
+    }
 
     /**
      *
@@ -749,7 +963,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 v.removeFromParent()
                 getTabBarContainer().addView(v)
             }
-
         }
     }
 
@@ -796,9 +1009,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     private inner class SearchListenerClass : OnKeyListener,
-        OnEditorActionListener,
-        OnFocusChangeListener,
-        SearchView.PreFocusListener {
+            OnEditorActionListener,
+            OnFocusChangeListener,
+            SearchView.PreFocusListener {
 
         override fun onKey(view: View, keyCode: Int, keyEvent: KeyEvent): Boolean {
             when (keyCode) {
@@ -826,11 +1039,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // hide the keyboard and search the web when the enter key
             // button is pressed
             if (actionId == EditorInfo.IME_ACTION_GO
-                || actionId == EditorInfo.IME_ACTION_DONE
-                || actionId == EditorInfo.IME_ACTION_NEXT
-                || actionId == EditorInfo.IME_ACTION_SEND
-                || actionId == EditorInfo.IME_ACTION_SEARCH
-                || arg2?.action == KeyEvent.KEYCODE_ENTER) {
+                    || actionId == EditorInfo.IME_ACTION_DONE
+                    || actionId == EditorInfo.IME_ACTION_NEXT
+                    || actionId == EditorInfo.IME_ACTION_SEND
+                    || actionId == EditorInfo.IME_ACTION_SEARCH
+                    || arg2?.action == KeyEvent.KEYCODE_ENTER) {
                 searchView.let {
                     inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
                     searchTheWeb(it.text.toString())
@@ -886,7 +1099,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         val currentView = tabsManager.currentTab ?: return
         val url = currentView.url
         if (!url.isSpecialUrl()) {
-                searchView.setText(url)
+            searchView.setText(url)
         }
         else {
             // Special URLs like home page and history just show search field then
@@ -1027,12 +1240,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Put our toolbar where it belongs, top or bottom according to user preferences
         iBinding.toolbarInclude.apply {
             if (configPrefs.toolbarsBottom) {
+
+                // Move search bar to the bottom
+                iBinding.findInPageInclude.root.let {
+                    it.removeFromParent()?.addView(it)
+                }
+
                 // Move toolbar to the bottom
                 root.removeFromParent()?.addView(root)
-                // Move search in page to top
-                iBinding.findInPageInclude.root.let {
-                    it.removeFromParent()?.addView(it, 0)
-                }
 
                 // Rearrange it so that it is upside down
                 // Put tab bar at the bottom
@@ -1048,7 +1263,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         reverseLayout = true
                         // Fix broken scroll to item
                         //stackFromEnd = true
-                        }
+                    }
                 }
 
                 // Take care of bookmarks drawer
@@ -1095,15 +1310,22 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // Set search dropdown anchor to avoid gap
                 searchView.dropDownAnchor = R.id.address_bar_include
 
+                // Floating Action Buttons at the bottom
+                iBinding.fabContainer.apply {setGravityBottom(layoutParams as CoordinatorLayout.LayoutParams)}
+
+                // FAB tab close button at the bottom
+                iBinding.fabTabClose.apply {setGravityBottom(layoutParams as LinearLayout.LayoutParams)}
+
+                // ctrlTabBack at the top
+                iBinding.fabBack.apply{removeFromParent()?.addView(this, 0)}
             } else {
+                // Move search in page to top
+                iBinding.findInPageInclude.root.let {
+                    it.removeFromParent()?.addView(it, 0)
+                }
                 // Move toolbar to the top
                 root.removeFromParent()?.addView(root, 0)
                 //iBinding.uiLayout.addView(root, 0)
-                // Move search in page to bottom
-                iBinding.findInPageInclude.root.let {
-                    it.removeFromParent()?.addView(it)
-                    //iBinding.uiLayout.addView(it)
-                }
                 // Rearrange it so that it is the right way up
                 // Put tab bar at the bottom
                 tabBarContainer.removeFromParent()?.addView(tabBarContainer, 0)
@@ -1165,6 +1387,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
                 // Set search dropdown anchor to avoid gap
                 searchView.dropDownAnchor = R.id.toolbar_include
+
+                // Floating Action Buttons at the top
+                iBinding.fabContainer.apply {setGravityTop(layoutParams as CoordinatorLayout.LayoutParams)}
+
+                // FAB tab close button at the bottom
+                iBinding.fabTabClose.apply {setGravityTop(layoutParams as LinearLayout.LayoutParams)}
+
+                // ctrlTabBack at the bottom
+                iBinding.fabBack.apply{removeFromParent()?.addView(this)}
             }
         }
 
@@ -1251,7 +1482,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      * Initiate Ctrl + Tab session if one is not already started.
      */
-    private fun startCtrlTab()
+    private fun tabSwitchStart()
     {
         if (iCapturedRecentTabsIndices==null)
         {
@@ -1263,7 +1494,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Reset ctrl + tab session if one was started.
      * Typically used when creating or deleting tabs.
      */
-    private fun resetCtrlTab()
+    private fun tabSwitchReset()
     {
         if (iCapturedRecentTabsIndices!=null)
         {
@@ -1275,7 +1506,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Stop ctrl + tab session.
      * Typically when the ctrl key is released.
      */
-    private fun stopCtrlTab()
+    private fun tabSwitchStop()
     {
         iCapturedRecentTabsIndices?.let {
             // Replace our recent tabs list by putting our captured one back in place making sure the selected tab is going back on top
@@ -1292,13 +1523,46 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
+     * Apply pending tab switch
+     */
+    private fun tabSwitchApply(aGoingBack: Boolean) {
+        iCapturedRecentTabsIndices?.let {
+            if (iRecentTabIndex >= 0) {
+                // We worked out which tab to switch to, just do it now
+                presenter.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)), false, aGoingBack)
+                //mainHandler.postDelayed({presenter.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
+            }
+        }
+    }
+
+    /**
+     * Switch back to previous tab
+     */
+    private fun tabSwitchBack() {
+        iCapturedRecentTabsIndices?.let {
+            iRecentTabIndex--
+            if (iRecentTabIndex<0) iRecentTabIndex=it.size-1
+        }
+    }
+
+    /**
+     * Switch forward to previous tab
+     */
+    private fun tabSwitchForward() {
+        iCapturedRecentTabsIndices?.let {
+            iRecentTabIndex++
+            if (iRecentTabIndex >= it.size) iRecentTabIndex = 0
+        }
+    }
+
+    /**
      * Manage our key events.
      */
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
 
         if (event.action == KeyEvent.ACTION_UP && (event.keyCode==KeyEvent.KEYCODE_CTRL_LEFT||event.keyCode==KeyEvent.KEYCODE_CTRL_RIGHT)) {
             // Exiting CTRL+TAB mode
-            stopCtrlTab()
+            tabSwitchStop()
         }
 
         // Keyboard shortcuts
@@ -1336,7 +1600,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // Move forward if WebView has focus
                 KeyEvent.KEYCODE_FORWARD -> {
                     if (tabsManager.currentTab?.webView?.hasFocus() == true && tabsManager.currentTab?.canGoForward() == true) {
-                        tabsManager.currentTab?.goForward()
+                        currentTabGoForward()
                         return true
                     }
                 }
@@ -1361,7 +1625,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                             // Otherwise access any of the first nine tabs
                             event.keyCode - KeyEvent.KEYCODE_1
                         }
-                        presenter?.tabChanged(nextIndex)
+                        presenter.tabChanged(nextIndex,false, false)
                         return true
                     }
                 }
@@ -1378,7 +1642,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                             // Otherwise access any of the first nine sessions
                             event.keyCode - KeyEvent.KEYCODE_1
                         }
-                        presenter?.switchToSession(it.iSessions[nextIndex].name)
+                        presenter.switchToSession(it.iSessions[nextIndex].name)
                         return true
                     }
                 }
@@ -1388,29 +1652,25 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             if (event.isCtrlPressed && event.keyCode == KeyEvent.KEYCODE_TAB) {
 
                 // Entering CTRL+TAB mode
-                startCtrlTab()
+                tabSwitchStart()
 
                 iCapturedRecentTabsIndices?.let{
 
                     // Reversing can be done with those three modifiers notably to make it easier with two thumbs on F(x)tec Pro1
                     if (event.isShiftPressed or event.isAltPressed or event.isFunctionPressed) {
                         // Go forward one tab
-                        iRecentTabIndex++
-                        if (iRecentTabIndex>=it.size) iRecentTabIndex=0
-
+                        tabSwitchForward()
+                        tabSwitchApply(false)
                     } else {
                         // Go back one tab
-                        iRecentTabIndex--
-                        if (iRecentTabIndex<0) iRecentTabIndex=iCapturedRecentTabsIndices?.size?.minus(1) ?: -1
+                        tabSwitchBack()
+                        tabSwitchApply(true)
                     }
 
                     //logger.log(TAG, "Switching to $iRecentTabIndex : $iCapturedRecentTabsIndices")
 
-                    if (iRecentTabIndex >= 0) {
-                        // We worked out which tab to switch to, just do it now
-                        presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))
-                        //mainHandler.postDelayed({presenter?.tabChanged(tabsManager.indexOfTab(it.elementAt(iRecentTabIndex)))}, 300)
-                    }
+
+
                 }
 
                 //logger.log(TAG,"Tab: down discarded")
@@ -1426,14 +1686,24 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     }
                     KeyEvent.KEYCODE_T -> {
                         // Open new tab
-                        presenter?.newTab(homePageInitializer, true)
-                        resetCtrlTab()
+                        if (isIncognito()) {
+                            presenter.newTab(
+                                incognitoPageInitializer,
+                                true
+                            )
+                        } else{
+                            presenter.newTab(
+                                homePageInitializer,
+                                true
+                            )
+                        }
+                        tabSwitchReset()
                         return true
                     }
                     KeyEvent.KEYCODE_W -> {
                         // Close current tab
-                        tabsManager.let { presenter?.deleteTab(it.indexOfCurrentTab()) }
-                        resetCtrlTab()
+                        tabsManager.let { presenter.deleteTab(it.indexOfCurrentTab()) }
+                        tabSwitchReset()
                         return true
                     }
                     KeyEvent.KEYCODE_Q -> {
@@ -1519,7 +1789,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // URL is later on reset to null by WebView internal mechanics.
         mainHandler.postDelayed({
             if ((currentTabView as? WebViewEx)?.url.isNullOrBlank()) {
-                tabsManager.let { presenter?.deleteTab(it.indexOfCurrentTab()) }
+                tabsManager.let { presenter.deleteTab(it.indexOfCurrentTab()) }
             }
         }, 500);
     }
@@ -1542,13 +1812,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
             R.id.action_back -> {
                 if (currentView?.canGoBack() == true) {
-                    currentView.goBack()
+                    currentTabGoBack()
                 }
                 return true
             }
             R.id.action_forward -> {
                 if (currentView?.canGoForward() == true) {
-                    currentView.goForward()
+                    currentTabGoForward()
                 }
                 return true
             }
@@ -1564,7 +1834,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 return true
             }
             R.id.action_new_tab -> {
-                presenter?.newTab(homePageInitializer, true)
+                if (isIncognito()) {
+                    presenter.newTab(
+                        incognitoPageInitializer,
+                        true
+                    )
+                } else {
+                    presenter.newTab(
+                        homePageInitializer,
+                        true
+                    )
+                }
                 return true
             }
             R.id.action_reload -> {
@@ -1624,6 +1904,27 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 findInPage()
                 return true
             }
+
+            R.id.action_translate -> {
+                // Get our local
+                val locale = LocaleUtils.requestedLocale(userPreferences.locale)
+                // For most languages Google just wants the two letters code
+                // Using the full language tag such as fr-FR will actually prevent Google translate…
+                // …to display the target language name even though the translation is actually working
+                var languageCode = locale.language
+                val languageTag = locale.toLanguageTag()
+                // For chinese however, Google translate expects the full language tag
+                if (languageCode == "zh") {
+                    languageCode = languageTag
+                }
+
+                // TODO: Have a settings option to translate in new tab
+                presenter.loadUrlInCurrentView("https://translate.google.com/translate?sl=auto&tl=$languageCode&u=$currentUrl")
+                // TODO: support other translation providers?
+                //presenter.loadUrlInCurrentView("https://www.translatetheweb.com/?from=&to=$locale&dl=$locale&a=$currentUrl")
+                return true
+            }
+
             R.id.action_print -> {
                 (currentTabView as WebViewEx).print()
                 return true
@@ -1635,11 +1936,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 return true
             }
             R.id.action_restore_page -> {
-                presenter?.recoverClosedTab()
+                presenter.recoverClosedTab()
                 return true
             }
             R.id.action_restore_all_pages -> {
-                presenter?.recoverAllClosedTabs()
+                presenter.recoverAllClosedTabs()
                 return true
             }
 
@@ -1647,16 +1948,20 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // TODO: consider just closing all tabs
                 // TODO: Confirmation dialog
                 //closeBrowser()
-                //presenter?.closeAllTabs()
-                presenter?.closeAllOtherTabs()
+                //presenter.closeAllTabs()
+                presenter.closeAllOtherTabs()
                 return true
             }
 
             R.id.action_show_homepage -> {
                 if (userPreferences.homepageInNewTab) {
-                    presenter?.newTab(homePageInitializer, true)
+                    if (isIncognito()) {
+                        presenter.newTab(incognitoPageInitializer, true)
+                    } else {
+                        presenter.newTab(homePageInitializer, true)
+                    }
                 } else {
-                    // Why not through presenter? We need some serious refactoring at some point
+                    // Why not through presenter We need some serious refactoring at some point
                     tabsManager.currentTab?.loadHomePage()
                 }
                 closePanels(null)
@@ -1700,7 +2005,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     // Legacy from menu framework. Since we are using custom popup window as menu we don't need this anymore.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-            return if (executeAction(item.itemId)) true else super.onOptionsItemSelected(item)
+        return if (executeAction(item.itemId)) true else super.onOptionsItemSelected(item)
     }
 
 
@@ -1712,39 +2017,39 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     private fun deleteBookmark(title: String, url: String) {
         bookmarkManager.deleteBookmark(Bookmark.Entry(url, title, 0, Bookmark.Folder.Root))
-            .subscribeOn(databaseScheduler)
-            .observeOn(mainScheduler)
-            .subscribe { boolean ->
-                if (boolean) {
-                    handleBookmarksChange()
+                .subscribeOn(databaseScheduler)
+                .observeOn(mainScheduler)
+                .subscribe { boolean ->
+                    if (boolean) {
+                        handleBookmarksChange()
+                    }
                 }
-            }
     }
 
 
     /**
-     * method that shows a dialog asking what string the user wishes to search
-     * for. It highlights the text entered.
+     *
      */
-    private fun findInPage() = BrowserDialog.showEditText(
-            this,
-            R.string.action_find,
-            R.string.search_hint,
-            R.string.search_hint
-    ) { text ->
-        if (text.isNotEmpty()) {
-            findResult = presenter?.findInPage(text)
-            showFindInPageControls(text)
+    private fun findInPage()  {
+        iBinding.findInPageInclude.searchQuery.let{
+            it.doOnLayout {
+                it.requestFocus()
+                // Crazy workaround to get the virtual keyboard to show, Android FFS
+                // See: https://stackoverflow.com/a/7784904/3969362
+                mainHandler.postDelayed({
+                    // Emulate tap to open up soft keyboard if needed
+                    it.simulateTap()
+                    // That will trigger our search, see addTextChangedListener
+                    it.setText(tabsManager.currentTab?.searchQuery)
+                    // Move cursor to the end of our text
+                    it.setSelection(it.length())
+                }, 100)
+            }
         }
+
+        iBinding.findInPageInclude.root.isVisible = true
     }
 
-    private fun showFindInPageControls(text: String) {
-        findViewById<View>(R.id.findInPageInclude).visibility = VISIBLE
-        findViewById<TextView>(R.id.search_query).text = text
-        findViewById<ImageButton>(R.id.button_next).setOnClickListener(this)
-        findViewById<ImageButton>(R.id.button_back).setOnClickListener(this)
-        findViewById<ImageButton>(R.id.button_quit).setOnClickListener(this)
-    }
 
 
     private fun isLoading() : Boolean = tabsManager.currentTab?.let{it.progress < 100} ?: false
@@ -1755,16 +2060,16 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private fun setupPullToRefresh(configuration: Configuration) {
         if (!configPrefs(configuration).pullToRefresh) {
             // User does not want to use pull to refresh
-            iBinding.contentFrame.isEnabled = false
+            iTabViewContainerFront.isEnabled = false
             iBindingToolbarContent.buttonReload.visibility = View.VISIBLE
             return
         }
 
         // Disable pull to refresh if no vertical scroll as it bugs with frame internal scroll
         // See: https://github.com/Slion/Lightning-Browser/projects/1
-        iBinding.contentFrame.isEnabled = currentTabView?.canScrollVertically()?:false
+        iTabViewContainerFront.isEnabled = currentTabView?.canScrollVertically()?:false
         // Don't show reload button if pull-to-refresh is enabled and once we are not loading
-        iBindingToolbarContent.buttonReload.visibility = if (iBinding.contentFrame.isEnabled && !isLoading()) View.GONE else View.VISIBLE
+        iBindingToolbarContent.buttonReload.visibility = if (iTabViewContainerFront.isEnabled && !isLoading()) View.GONE else View.VISIBLE
     }
 
     /**
@@ -1773,7 +2078,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun setupTabBar(): Boolean {
         // Check if our tab bar style changed
-        if (verticalTabBar!=configPrefs.verticalTabBar) {
+        if (verticalTabBar!=configPrefs.verticalTabBar
+                // Our bottom sheets dialog needs to be recreated with proper window decor state, with or without status bar that is.
+                // Looks like that was also needed for the bottom sheets top padding to be in sync? Go figure…
+                || userPreferences.useBottomSheets) {
             // We either coming or going to desktop like horizontal tab bar, tabs panel should be closed then
             mainHandler.post {closePanelTabs()}
             // Tab bar style changed recreate our tab bar then
@@ -1800,30 +2108,42 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
         BrowserDialog.show(this, R.string.dialog_title_close_browser,
                 DialogItem(title = R.string.close_tab) {
-                    presenter?.deleteTab(position)
+                    presenter.deleteTab(position)
                 },
                 DialogItem(title = R.string.close_other_tabs) {
-                    presenter?.closeAllOtherTabs()
+                    presenter.closeAllOtherTabs()
                 },
                 DialogItem(title = R.string.close_all_tabs, onClick = this::closeBrowser))
     }
 
+    /**
+     * From [BrowserView].
+     */
     override fun notifyTabViewRemoved(position: Int) {
         logger.log(TAG, "Notify Tab Removed: $position")
         tabsView?.tabRemoved(position)
-        // Notify user a tab was closed with an option to recover it
-        makeSnackbar(
-            getString(R.string.notify_tab_closed), Snackbar.LENGTH_SHORT, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
-            .setAction(R.string.button_undo) {
-                presenter?.recoverClosedTab()
-            }.show()
+
+        if (userPreferences.onTabCloseShowSnackbar) {
+            // Notify user a tab was closed with an option to recover it
+            makeSnackbar(
+                    getString(R.string.notify_tab_closed), Snackbar.LENGTH_SHORT, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                    .setAction(R.string.button_undo) {
+                        presenter.recoverClosedTab()
+                    }.show()
+        }
     }
 
+    /**
+     * From [BrowserView].
+     */
     override fun notifyTabViewAdded() {
         logger.log(TAG, "Notify Tab Added")
         tabsView?.tabAdded()
     }
 
+    /**
+     * From [BrowserView].
+     */
     override fun notifyTabViewChanged(position: Int) {
         logger.log(TAG, "Notify Tab Changed: $position")
         tabsView?.tabChanged(position)
@@ -1831,11 +2151,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setupPullToRefresh(resources.configuration)
     }
 
+    /**
+     * From [BrowserView].
+     */
     override fun notifyTabViewInitialized() {
         logger.log(TAG, "Notify Tabs Initialized")
         tabsView?.tabsInitialized()
     }
 
+    /**
+     * TODO: Defined both in [BrowserView] and [UIController]
+     * Sort out that mess.
+     */
     override fun updateSslState(sslState: SslState) {
         iBindingToolbarContent.addressBarInclude.searchSslStatus.setImageDrawable(createSslDrawableForState(sslState))
 
@@ -1850,7 +2177,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     override fun tabChanged(tab: LightningView) {
         // SL: Is this being called way too many times?
-        presenter?.tabChangeOccurred(tab)
+        presenter.tabChangeOccurred(tab)
         // SL: Putting this here to update toolbar background color was a bad idea
         // That somehow freezes the WebView after switching between a few tabs on F(x)tec Pro1 at least (Android 9)
         //initializePreferences()
@@ -1876,35 +2203,76 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
-    override fun removeTabView() {
-
-        logger.log(TAG, "Remove the tab view")
-
-        currentTabView.removeFromParent()
-        currentTabView?.onFocusChangeListener = null
-        currentTabView = null
+    /**
+     *
+     */
+    fun vibrate() {
+        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (vibrator.hasVibrator()) { // Vibrator availability checking
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                vibrator.vibrate(VibrationEffect.createPredefined(EFFECT_DOUBLE_CLICK))
+                //
+            } else*/ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(50,50,50), intArrayOf(10,0,10), -1))
+                //vibrator.vibrate(VibrationEffect.createOneShot(250, VibrationEffect.DEFAULT_AMPLITUDE))
+            }
+            else {
+                vibrator.vibrate(200) // Vibrate method for below API Level 26
+            }
+        }
     }
 
     /**
+     *
+     */
+    private fun swapTabViewsFrontToBack() {
+        // Actually move our back frame below our front frame
+        iTabViewContainerBack.removeFromParent()?.addView(iTabViewContainerBack,0)
+    }
+
+
+    var iSkipNextSearchQueryUpdate = false
+
+    /**
+     * From [BrowserView].
      * This function is central to browser tab switching.
      * It swaps our previous WebView with our new WebView.
      *
-     * @param aView Input is in fact a [WebViewEx].
+     * [aView] Input is in fact a [WebViewEx].
      */
-    override fun setTabView(aView: View) {
+    override fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
 
         if (currentTabView == aView) {
             return
         }
 
-        logger.log(TAG, "Setting the tab view")
-        aView.removeFromParent()
-        currentTabView.removeFromParent()
+        logger.log(TAG, "setTabView")
+
+        aView.removeFromParent() // Just to be safe
+
+        // Skip tab animation if user does not want it…
+        val skipAnimation = !userPreferences.onTabChangeShowAnimation
+                // …or if we already have a tab animation running
+                || iTabAnimator!=null
 
 
-        iBinding.contentFrame.resetTarget() // Needed to make it work together with swipe to refresh
-        iBinding.contentFrame.addView(aView, 0, MATCH_PARENT)
-        aView.requestFocus()
+        // If we have not swapped our views yet
+        if (skipAnimation) {
+            // Just perform our layout changes in our front view container then
+            // We need to specify the layout params otherwise WebView fails in the strangest way.
+            // In fact Web pages using popup and side menu will be broken as those elements background won't render, it'd look just transparent.
+            // Issue could be reproduced on firebase console side menu and some BBC consent pop-up
+            iTabViewContainerFront.addView(aView,0, MATCH_PARENT)
+            currentTabView?.removeFromParent()
+            iTabViewContainerFront.resetTarget() // Needed to make it work together with swipe to refresh
+            aView.requestFocus()
+        } else {
+            // Prepare our back view container then
+            iTabViewContainerBack.resetTarget() // Needed to make it work together with swipe to refresh
+            // Same as above, make sure you specify layout params when adding you web view
+            iTabViewContainerBack.addView(aView, MATCH_PARENT)
+            aView.requestFocus()
+        }
 
         // Remove existing focus change observer before we change our tab
         currentTabView?.onFocusChangeListener = null
@@ -1912,20 +2280,280 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         currentTabView = aView
         // Close virtual keyboard if we loose focus
         currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(iBinding.uiLayout.windowToken, 0) }
+        // Now everything is ready below our image snapshot of current view
+        // Last perform our transitions
+        if (!skipAnimation) {
+            // Swap our variables but not the views yet
+            val front = iTabViewContainerBack
+            iTabViewContainerBack = iTabViewContainerFront
+            iTabViewContainerFront = front
+            //
+            if (aWasTabAdded) {
+                animateTabInScaleUp(iTabViewContainerFront)
+            } else if (aPreviousTabClosed) {
+                animateTabOutScaleDown(iTabViewContainerBack)
+                if (userPreferences.onTabCloseVibrate) {
+                    vibrate()
+                }
+            }
+            else {
+                //iBinding.imageBelow.isVisible = false // Won't be needed in this case
+                if (aGoingBack) {
+                    animateTabOutRight(iTabViewContainerBack)
+                    animateTabInRight(iTabViewContainerFront)
+                } else {
+                    animateTabOutLeft(iTabViewContainerBack)
+                    animateTabInLeft(iTabViewContainerFront)
+                }
+            }
+        }
         showActionBar()
         // Make sure current tab is visible in tab list
         scrollToCurrentTab()
         //mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
+
+        // Current tab was already set by the time we get here
+        tabsManager.currentTab?.let {
+            // Update our find in page UI as needed
+            iSkipNextSearchQueryUpdate = true // Make sure we don't redo a search as our UI text is changed
+            iBinding.findInPageInclude.searchQuery.setText(it.searchQuery)
+            // Set find in page UI visibility
+            iBinding.findInPageInclude.root.isVisible = it.searchActive
+        }
     }
+
+    private val iTabAnimationDuration: Long = 300
+
+    /**
+     * That's intended to show the user a new tab was created
+     */
+    private fun animateTabInScaleUp(aTab: View?) {
+        assertNull(iTabAnimator)
+        aTab?.let{
+            //iBinding.webViewFrame.addView(it, MATCH_PARENT)
+            // Set our properties
+            it.scaleX = 0f
+            it.scaleY = 0f
+            // Put our incoming frame on top
+            // This replaces swapTabViewsFrontToBack for this special case
+            it.removeFromParent()?.addView(it)
+            // Animate it
+            iTabAnimator = it.animate()
+                    .scaleY(1f)
+                    .scaleX(1f)
+                    .setDuration(iTabAnimationDuration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            it.scaleX = 1f
+                            it.scaleY = 1f
+                            iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                removeFromParent()
+                                //destroyIfNeeded()
+                            }
+                            //
+                            iTabAnimator = null;
+                        }
+                    })
+        }
+    }
+
+    /**
+     * Intended to show user a tab was closed.
+     */
+    private fun animateTabOutScaleDown(aTab: View?) {
+        assertNull(iTabAnimator)
+        aTab?.let{
+            iTabAnimator = it.animate()
+                    .scaleY(0f)
+                    .scaleX(0f)
+                    .setDuration(iTabAnimationDuration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            // Time to swap our frames
+                            swapTabViewsFrontToBack()
+                            // Now do the clean-up
+                            iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                removeFromParent()
+                                destroyIfNeeded()
+                            }
+                            // Reset our properties
+                            it.scaleX = 1.0f
+                            it.scaleY = 1.0f
+                            //
+                            iTabAnimator = null;
+                        }
+                    })
+        }
+    }
+
+
+    /**
+     * Intended to show user a tab was sent to the background.
+     * Animate a tab that's being sent to the background.
+     * Designed to work together with [animateTabInRight].
+     */
+    private fun animateTabOutRight(aTab: View?) {
+        assertNull(iTabAnimator)
+        aTab?.let{
+                // Move our tab to a frame were we can animate it on top of our new foreground tab
+            iTabAnimator = it.animate()
+                        // Move our tab outside of the screen to the right
+                        .translationX(it.width.toFloat())
+                        .setDuration(iTabAnimationDuration)
+                        .setListener(object : AnimatorListenerAdapter() {
+                            override fun onAnimationEnd(animation: Animator) {
+                            // Put outgoing frame in the back
+                            swapTabViewsFrontToBack()
+                                // Animation is complete unhook that tab then
+                            it.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                removeFromParent()
+                                //destroyIfNeeded()
+                            }
+                            // Reset our properties
+                            it.translationX = 0f
+                            //
+                            iTabAnimator = null;
+                            }
+                        })
+        }
+    }
+
+    /**
+     * Intended to show user a tab was sent to the background.
+     * Animate a tab that's being sent to the background.
+     * Designed to work together with [animateTabInLeft].
+     */
+    private fun animateTabOutLeft(aTab: View?) {
+        assertNull(iTabAnimator)
+        aTab?.let{
+            // Move our tab to a frame were we can animate it on top of our new foreground tab
+            iTabAnimator = it.animate()
+                    // Move our tab outside of the screen to the left
+                    .translationX(-it.width.toFloat())
+                    .setDuration(iTabAnimationDuration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            // Put outgoing frame in the back
+                            swapTabViewsFrontToBack()
+                            // Animation is complete unhook that tab then
+                            it.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                removeFromParent()
+                                //destroyIfNeeded()
+                            }
+                            // Reset our properties
+                            it.translationX = 0f
+                            //
+                            iTabAnimator = null;
+                        }
+                    })
+        }
+    }
+
+    /**
+     * Animate an incoming tab from the left to the right.
+     * Designed to work together with [animateTabOutRight].
+     */
+    private fun animateTabInRight(aTab: View?) {
+        aTab?.let{
+            it.translationX = -it.width.toFloat()
+            // Move our tab to a frame were we can animate it on top of our new foreground tab
+            it.animate()
+                    // Move our tab outside of the screen to the right
+                    .translationX(0f)
+                    .setDuration(iTabAnimationDuration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            // Animation is complete
+                            // Reset our properties
+                            it.translationX = 0f
+                        }
+                    })
+        }
+    }
+
+    /**
+     * Animate an incoming tab from the right to the left.
+     * Designed to work together with [animateTabOutLeft].
+     */
+    private fun animateTabInLeft(aTab: View?) {
+        aTab?.let{
+            // Initial tab position in offset to the right outside the screen
+            it.translationX = it.width.toFloat()
+            it.animate()
+                // Move our tab to its default layout position on the screen
+                .translationX(0f)
+                .setDuration(iTabAnimationDuration)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        // Animation is complete
+                        // Reset our properties
+                        it.translationX = 0f
+                    }
+                })
+        }
+    }
+
+
+    /**
+     * Used when going forward in tab history
+     */
+    private fun animateTabFlipLeft(aTab: View?) {
+        assertNull(iTabAnimator)
+        aTab?.let{
+            // Adjust camera distance to avoid clipping
+            val scale = resources.displayMetrics.density
+            it.cameraDistance = it.width * scale * 2
+            iTabAnimator = it.animate()
+                    .rotationY(360f)
+                    .setDuration(userPreferences.onTabBackAnimationDuration.toLong()*10)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            it.rotationY = 0f
+                        //
+                        iTabAnimator = null;
+                        }
+                    })
+        }
+    }
+
+    /**
+     * Used when going back in tab history
+     */
+    private fun animateTabFlipRight(aTab: View?) {
+        assertNull(iTabAnimator)
+
+        aTab?.let{
+            // Adjust camera distance to avoid clipping
+            val scale = resources.displayMetrics.density
+            it.cameraDistance = it.width * scale * 2
+
+            iTabAnimator = it.animate()
+                    .rotationY(-360f)
+                    .setDuration(userPreferences.onTabBackAnimationDuration.toLong()*10)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            it.rotationY = 0f
+                        //
+                        iTabAnimator = null;
+                        }
+                    })
+
+
+
+
+
+        }
+    }
+
 
     override fun showBlockedLocalFileDialog(onPositiveClick: Function0<Unit>) {
         MaterialAlertDialogBuilder(this)
-            .setCancelable(true)
-            .setTitle(R.string.title_warning)
-            .setMessage(R.string.message_blocked_local)
-            .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(R.string.action_open) { _, _ -> onPositiveClick.invoke() }
-            .resizeAndShow()
+                .setCancelable(true)
+                .setTitle(R.string.title_warning)
+                .setMessage(R.string.message_blocked_local)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.action_open) { _, _ -> onPositiveClick.invoke() }
+                .resizeAndShow()
     }
 
     override fun showSnackbar(@StringRes resource: Int) = snackbar(resource, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
@@ -1933,12 +2561,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     fun showSnackbar(aMessage: String) = snackbar(aMessage, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
 
     override fun tabCloseClicked(position: Int) {
-        presenter?.deleteTab(position)
+        presenter.deleteTab(position)
     }
 
     override fun tabClicked(position: Int) {
         // Switch tab
-        presenter?.tabChanged(position)
+        presenter.tabChanged(position,false, false)
         // Keep the drawer open while the tab change animation in running
         // Has the added advantage that closing of the drawer itself should be smoother as the webview had a bit of time to load
         mainHandler.postDelayed({ closePanels(null) }, 350)
@@ -1950,15 +2578,22 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         closePanels(null)
         // Then slightly delay page loading to give enough time for the drawer to close without stutter
         mainHandler.postDelayed({
-            presenter?.newTab(
+            if (isIncognito()) {
+                presenter.newTab(
+                    incognitoPageInitializer,
+                    true
+                )
+            } else {
+                presenter.newTab(
                     homePageInitializer,
                     true
-            )
+                )
+            }
         }, 300)
     }
 
     override fun newTabButtonLongClicked() {
-        presenter?.recoverClosedTab()
+        presenter.recoverClosedTab()
     }
 
     override fun bookmarkButtonClicked() {
@@ -1971,23 +2606,23 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         if (!url.isSpecialUrl()) {
             bookmarkManager.isBookmark(url)
-                .subscribeOn(databaseScheduler)
-                .observeOn(mainScheduler)
-                .subscribe { boolean ->
-                    if (boolean) {
-                        deleteBookmark(title, url)
-                    } else {
-                        addBookmark(title, url)
+                    .subscribeOn(databaseScheduler)
+                    .observeOn(mainScheduler)
+                    .subscribe { boolean ->
+                        if (boolean) {
+                            deleteBookmark(title, url)
+                        } else {
+                            addBookmark(title, url)
+                        }
                     }
-                }
         }
     }
 
     override fun bookmarkItemClicked(entry: Bookmark.Entry) {
         if (userPreferences.bookmarkInNewTab) {
-            presenter?.newTab(UrlInitializer(entry.url), true)
+            presenter.newTab(UrlInitializer(entry.url), true)
         } else {
-            presenter?.loadUrlInCurrentView(entry.url)
+            presenter.loadUrlInCurrentView(entry.url)
         }
         // keep any jank from happening when the drawer is closed after the URL starts to load
         mainHandler.postDelayed({ closePanels(null) }, 150)
@@ -2001,14 +2636,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     override fun handleHistoryChange() {
         historyPageFactory
-            .buildPage()
-            .subscribeOn(databaseScheduler)
-            .observeOn(mainScheduler)
-            .subscribeBy(onSuccess = { tabsManager.currentTab?.reload() })
+                .buildPage()
+                .subscribeOn(databaseScheduler)
+                .observeOn(mainScheduler)
+                .subscribeBy(onSuccess = { tabsManager.currentTab?.reload() })
     }
 
     protected fun handleNewIntent(intent: Intent) {
-        presenter?.onNewIntent(intent)
+        presenter.onNewIntent(intent)
     }
 
     protected fun performExitCleanUp() {
@@ -2023,6 +2658,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setFullscreenIfNeeded(newConfig)
         setupTabBar()
         setupToolBar(newConfig)
+        setupBookmarksView()
 
         // Can't find a proper event to do that after the configuration changes were applied so we just delay it
         mainHandler.postDelayed({
@@ -2039,8 +2675,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     private fun initializeToolbarHeight(configuration: Configuration) =
             iBinding.uiLayout.doOnLayout {
-            // TODO externalize the dimensions
-            val toolbarSize = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                // TODO externalize the dimensions
+                val toolbarSize = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     R.dimen.toolbar_height_portrait
                 } else {
                     R.dimen.toolbar_height_landscape
@@ -2051,8 +2687,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 iBinding.toolbarInclude.toolbar.requestLayout()
             }
 
+    /**
+     *
+     */
     override fun closeBrowser() {
-        currentTabView.removeFromParent()
+        currentTabView?.removeFromParent()
+
         performExitCleanUp()
         finishAndRemoveTask()
     }
@@ -2076,8 +2716,47 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         doBackAction()
     }
 
+    /**
+     * Go back in current tab history.
+     * Perform animation as specified in settings.
+     */
+    private fun currentTabGoBack() {
+        tabsManager.currentTab?.let {
+            it.goBack()
+            // If no animation running yet…
+            if (iTabAnimator==null &&
+                    //…and user wants animation
+                    userPreferences.onTabBackShowAnimation) {
+                animateTabFlipRight(iTabViewContainerFront)
+            }
+        }
+    }
+
+    /**
+     * Go forward in current tab history.
+     * Perform animation as specified in settings.
+     */
+    private fun currentTabGoForward() {
+        tabsManager.currentTab?.let {
+            it.goForward()
+            // If no animation running yet…
+            if (iTabAnimator==null
+                    //…and user wants animation
+                    && userPreferences.onTabBackShowAnimation) {
+                animateTabFlipLeft(iTabViewContainerFront)
+            }
+        }
+    }
+
+    /**
+     *
+     */
     private fun doBackAction() {
         val currentTab = tabsManager.currentTab
+        if (iJustClosedMenu) {
+            return
+        }
+
         if (showingTabs()) {
             closePanelTabs()
         } else if (showingBookmarks()) {
@@ -2085,14 +2764,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         } else {
             if (currentTab != null) {
                 logger.log(TAG, "onBackPressed")
-                if (searchView.hasFocus() == true) {
+                if (searchView.hasFocus()) {
                     currentTab.requestFocus()
                 } else if (currentTab.canGoBack()) {
                     if (!currentTab.isShown) {
                         onHideCustomView()
                     } else {
                         if (isToolBarVisible()) {
-                            currentTab.goBack()
+                            currentTabGoBack()
                         } else {
                             showActionBar()
                         }
@@ -2102,7 +2781,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         onHideCustomView()
                     } else {
                         if (isToolBarVisible()) {
-                            presenter?.deleteTab(tabsManager.positionOf(currentTab))
+                            presenter.deleteTab(tabsManager.positionOf(currentTab))
                         } else {
                             showActionBar()
                         }
@@ -2112,16 +2791,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 logger.log(TAG, "This shouldn't happen ever")
                 super.onBackPressed()
             }
-        }
-
-    }
-
-    protected fun saveOpenTabsIfNeeded() {
-        if (userPreferences.restoreTabsOnStartup) {
-            tabsManager.saveState()
-        }
-        else {
-            tabsManager.clearSavedState()
         }
     }
 
@@ -2133,6 +2802,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      * Amazingly this is not called when closing our app from Task list.
      * See: https://developer.android.com/reference/android/app/Activity.html#onDestroy()
+     *
+     * NOTE: Moreover when restarting this activity this is called after the onCreate of the new activity.
      */
     override fun onDestroy() {
         logger.log(TAG, "onDestroy")
@@ -2143,8 +2814,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         mainHandler.removeCallbacksAndMessages(null)
 
-        presenter?.shutdown()
+        // Presenter and tab manager, which are tightly coupled, are owned by the application now.
+        // Therefore we should not clean and destroy them here as they will survive that activity.
+        // Instead we just unhook our tab.
+        // Actually even that is a bad idea since it could already be in used by another instance of that activity.
+        //removeTabView()
+        // That would do, not strictly needed though
+        currentTabView = null
 
+        //
         super.onDestroy()
     }
 
@@ -2174,9 +2852,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         if (userPreferences.lockedDrawers
-            // We need to lock our drawers when using bottom sheets
-            // See: https://github.com/Slion/Fulguris/issues/192
-            || userPreferences.useBottomSheets) {
+                // We need to lock our drawers when using bottom sheets
+                // See: https://github.com/Slion/Fulguris/issues/192
+                || userPreferences.useBottomSheets) {
             lockDrawers()
         }
         else {
@@ -2187,6 +2865,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         {
             handleBookmarksChange()
             userPreferences.bookmarksChanged = false
+        }
+
+        if (userPreferences.incognito) {
+            WebUtils.clearHistory(this, historyModel, databaseScheduler)
+            WebUtils.clearCookies()
         }
 
         suggestionsAdapter?.let {
@@ -2219,7 +2902,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         if (userPreferences.useBottomSheets) {
             createBookmarksDialog()
         } else {
-            bookmarksView.removeFromParent()
+            bookmarksView?.removeFromParent()
             getBookmarksContainer().addView(bookmarksView)
         }
 
@@ -2243,20 +2926,28 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // Create a new tab according to user preference
             // TODO: URI resolution should not be here really
             // That's also done in LightningView.loadURL
-            if (url.isHomeUri()) {
-                presenter?.newTab(homePageInitializer, true)
-            } else if (url.isBookmarkUri()) {
-                presenter?.newTab(bookmarkPageInitializer, true)
-            } else if (url.isHistoryUri()) {
-                presenter?.newTab(historyPageInitializer, true)
-            } else {
-                presenter?.newTab(UrlInitializer(url), true)
+            when {
+                url.isHomeUri() -> {
+                    presenter.newTab(homePageInitializer, true)
+                }
+                url.isIncognitoUri() -> {
+                    presenter.newTab(incognitoPageInitializer, true)
+                }
+                url.isBookmarkUri() -> {
+                    presenter.newTab(bookmarkPageInitializer, true)
+                }
+                url.isHistoryUri() -> {
+                    presenter.newTab(historyPageInitializer, true)
+                }
+                else -> {
+                    presenter.newTab(UrlInitializer(url), true)
+                }
             }
         }
         else if (currentTab != null) {
             // User don't want us the create a new tab
             currentTab.stopLoading()
-            presenter?.loadUrlInCurrentView(url)
+            presenter.loadUrlInCurrentView(url)
         }
     }
 
@@ -2274,9 +2965,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // That if statement is preventing us to change the icons color while a drawer is showing
         // That's typically the case when user open a drawer before the HTML meta theme color was delivered
 
-	//if (!tabsDialog.isShowing && !bookmarksDialog.isShowing)
-	if (drawerClosing || !drawerOpened) // Do not update icons color if drawer is opened
-	{
+        //if (!tabsDialog.isShowing && !bookmarksDialog.isShowing)
+        if (drawerClosing || !drawerOpened) // Do not update icons color if drawer is opened
+        {
             // Make sure the status bar icons are still readable
             window.setStatusBarIconsColor(darkIcons && !userPreferences.useBlackStatusBar)
         }
@@ -2313,13 +3004,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.buttonReload.setColorFilter(currentToolBarTextColor)
 
         // Pull to refresh spinner color also follow current theme
-        iBinding.contentFrame.setProgressBackgroundColorSchemeColor(color)
-        iBinding.contentFrame.setColorSchemeColors(currentToolBarTextColor)
+        iTabViewContainerFront.setProgressBackgroundColorSchemeColor(color)
+        iTabViewContainerFront.setColorSchemeColors(currentToolBarTextColor)
 
         // Color also applies to the following backgrounds as they show during tool bar show/hide animation
         iBinding.uiLayout.setBackgroundColor(color)
-        iBinding.contentFrame.setBackgroundColor(color)
-
+        iTabViewContainerFront.setBackgroundColor(color)
+        // Somehow this was needed to make sure background colors are not swapped, most visible during page navigation animation
+        // TODO: Investigate what's going on here, as that should not be the case and could lead to other issues
+        iTabViewContainerBack.setBackgroundColor(color)
 
         val webViewEx: WebViewEx? = currentTabView as? WebViewEx
 
@@ -2328,10 +3021,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // This one is going to be a problem as it will break some websites such as bbc.com.
             // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color.
             if (iBinding.toolbarInclude.progressView.progress >= 100
-                // Don't reset background color back to white on empty urls, that prevents displaying large empty white pages and blinding users in dark mode.
-                // When opening some download links a tab is spawned first with the download URL and later that URL is set back to null.
-                // Luckily our delayed call and the absence of invalidate prevents a flicker to white screen.
-                && !webViewEx.url.isNullOrBlank()) {
+                    // Don't reset background color back to white on empty urls, that prevents displaying large empty white pages and blinding users in dark mode.
+                    // When opening some download links a tab is spawned first with the download URL and later that URL is set back to null.
+                    // Luckily our delayed call and the absence of invalidate prevents a flicker to white screen.
+                    && !webViewEx.url.isNullOrBlank()) {
                 // We delay that to avoid some web sites including default startup page to flash white on app startup
                 mainHandler.removeCallbacks(resetBackgroundColorRunnable)
                 resetBackgroundColorRunnable = Runnable {
@@ -2481,7 +3174,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     override fun updateTabNumber(number: Int) {
-            iBindingToolbarContent.tabsButton.updateCount(number)
+        iBindingToolbarContent.tabsButton.updateCount(number)
     }
 
     override fun updateProgress(progress: Int) {
@@ -2495,8 +3188,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         historyModel.visitHistoryEntry(url, title)
-            .subscribeOn(databaseScheduler)
-            .subscribe()
+                .subscribeOn(databaseScheduler)
+                .subscribe()
     }
 
     /**
@@ -2531,14 +3224,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         getUrl.setText(url)
         searchTheWeb(url)
         inputMethodManager.hideSoftInputFromWindow(getUrl.windowToken, 0)
-        presenter?.onAutoCompleteItemPressed()
+        presenter.onAutoCompleteItemPressed()
     }
 
     /**
      * function that opens the HTML history page in the browser
      */
     private fun openHistory() {
-        presenter?.newTab(
+        presenter.newTab(
                 historyPageInitializer,
                 true
         )
@@ -2551,7 +3244,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         startActivity(Utils.getIntentForDownloads(this, userPreferences.downloadDirectory))
         // Our built-in downloads list did not display downloaded items properly
         // Not sure why, consider fixing it or just removing it altogether at some point
-        //presenter?.newTab(downloadPageInitializer,true)
+        //presenter.newTab(downloadPageInitializer,true)
     }
 
     /**
@@ -2935,9 +3628,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         if (closeTabsPanelIfOpen()) {
             val currentTab = tabsManager.currentTab
             if (currentTab?.canGoBack() == true) {
-                currentTab.goBack()
+                currentTabGoBack()
             } else if (currentTab != null) {
-                tabsManager.let { presenter?.deleteTab(it.positionOf(currentTab)) }
+                tabsManager.let { presenter.deleteTab(it.positionOf(currentTab)) }
             }
         } else if (closeBookmarksPanelIfOpen()) {
             // Don't do anything other than close the bookmarks drawer when the activity is being
@@ -2948,7 +3641,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun onForwardButtonPressed() {
         val currentTab = tabsManager.currentTab
         if (currentTab?.canGoForward() == true) {
-            currentTab.goForward()
+            currentTabGoForward()
             closePanels(null)
         }
     }
@@ -3006,6 +3699,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             decor.systemUiVisibility = decor.systemUiVisibility and fullScreenFlags.inv()
             statusBarHidden = false
         }
+
+        // Keep our bottom sheets dialog in sync
+        tabsDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
+        tabsDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        bookmarksDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
+        bookmarksDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     /**
@@ -3017,7 +3716,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * the newly created WebView.
      */
     override fun onCreateWindow(resultMsg: Message) {
-        presenter?.newTab(ResultMessageInitializer(resultMsg), true)
+        presenter.newTab(ResultMessageInitializer(resultMsg), true)
     }
 
     /**
@@ -3029,7 +3728,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * @param tab the LightningView to close, delete it.
      */
     override fun onCloseWindow(tab: LightningView) {
-        presenter?.deleteTab(tabsManager.positionOf(tab))
+        presenter.deleteTab(tabsManager.positionOf(tab))
     }
 
     /**
@@ -3095,8 +3794,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun handleNewTab(newTabType: LightningDialogBuilder.NewTab, url: String) {
         val urlInitializer = UrlInitializer(url)
         when (newTabType) {
-            LightningDialogBuilder.NewTab.FOREGROUND -> presenter?.newTab(urlInitializer, true)
-            LightningDialogBuilder.NewTab.BACKGROUND -> presenter?.newTab(urlInitializer, false)
+            LightningDialogBuilder.NewTab.FOREGROUND -> presenter.newTab(urlInitializer, true)
+            LightningDialogBuilder.NewTab.BACKGROUND -> presenter.newTab(urlInitializer, false)
             LightningDialogBuilder.NewTab.INCOGNITO -> {
                 closePanels { }
                 val intent = IncognitoActivity.createIntent(this, url.toUri())
@@ -3180,12 +3879,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             R.id.home_button -> currentTab.apply { requestFocus(); loadHomePage() }
             R.id.tabs_button -> openTabs()
             R.id.button_reload -> refreshOrStop()
-            R.id.button_next -> findResult?.nextResult()
-            R.id.button_back -> findResult?.previousResult()
+            R.id.button_next -> currentTab.findNext()
+            R.id.button_back -> currentTab.findPrevious()
             R.id.button_quit -> {
-                findResult?.clearResults()
-                findResult = null
-                findViewById<View>(R.id.findInPageInclude).visibility = GONE
+                currentTab.clearFind()
+                iBinding.findInPageInclude.root.isVisible = false
+                // Hide software keyboard
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(iBinding.findInPageInclude.searchQuery.windowToken, 0)
+                //tabsManager.currentTab?.requestFocus()
             }
         }
     }
@@ -3208,12 +3910,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * If the [drawer] is open, close it and return true. Return false otherwise.
      */
     private fun closeTabsPanelIfOpen(): Boolean =
-        if (showingTabs()) {
-            closePanelTabs()
-            true
-        } else {
-            false
-        }
+            if (showingTabs()) {
+                closePanelTabs()
+                true
+            } else {
+                false
+            }
 
     /**
      * If the [drawer] is open, close it and return true. Return false otherwise.
@@ -3338,15 +4040,194 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Show a message telling the user to contribute.
         // It provides a link to our settings Contribute section.
         makeSnackbar(
-            getString(R.string.max_tabs), 10000, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
-            .setAction(R.string.show, OnClickListener {
-                // We want to launch our settings activity
-                val i = Intent(this, SettingsActivity::class.java)
-                /** See [SettingsActivity.onResume] for details of how this is handled on the other side */
-                // Tell our settings activity to load our Contrubite/Sponsorship fragment
-                i.putExtra(SETTINGS_CLASS_NAME, SponsorshipSettingsFragment::class.java.name)
-                startActivity(i)
-            }).show()
+                getString(R.string.max_tabs), 10000, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
+                .setAction(R.string.show, OnClickListener {
+                    // We want to launch our settings activity
+                    val i = Intent(this, SettingsActivity::class.java)
+                    /** See [SettingsActivity.onResume] for details of how this is handled on the other side */
+                    // Tell our settings activity to load our Contrubite/Sponsorship fragment
+                    i.putExtra(SETTINGS_CLASS_NAME, SponsorshipSettingsFragment::class.java.name)
+                    startActivity(i)
+                }).show()
+    }
+
+    /**
+     * Implement [BrowserView.setAddressBarText]
+     */
+    override fun setAddressBarText(aText: String) {
+        mainHandler.postDelayed({
+            // Emulate tap to open up soft keyboard if needed
+            searchView.simulateTap()
+            searchView.setText(aText)
+            searchView.selectAll()
+            // Large one second delay to be safe otherwise we no-op or find the UI in a weird state
+        }, 1000)
+    }
+
+    private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
+        for (i in items.indices) {
+            if (inputStr.contains(items[i])) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * Show the page tools dialog.
+     */
+    @SuppressLint("CutPasteId")
+    @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    fun showPageToolsDialog(position: Int) {
+        if (position < 0) {
+            return
+        }
+        val currentTab = tabsManager.currentTab ?: return
+        val arrayOfURLs = userPreferences.javaScriptBlocked
+        val strgs: Array<String> = if (arrayOfURLs.contains(", ")) {
+            arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        } else {
+            arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        }
+        val jsEnabledString = if (userPreferences.javaScriptChoice == JavaScriptChoice.BLACKLIST && !stringContainsItemFromList(currentTab.url, strgs) || userPreferences.javaScriptChoice == JavaScriptChoice.WHITELIST && stringContainsItemFromList(currentTab.url, strgs)) {
+            R.string.allow_javascript
+        } else{
+            R.string.blocked_javascript
+        }
+        BrowserDialog.showWithIcons(this, this.getString(R.string.dialog_tools_title),
+            DialogItem(
+                icon = this.drawable(R.drawable.ic_baseline_code_24),
+                title = R.string.page_source) {
+                currentTab.webView?.evaluateJavascript("""(function() {
+                        return "<html>" + document.getElementsByTagName('html')[0].innerHTML + "</html>";
+                     })()""".trimMargin()) {
+                    // Hacky workaround for weird WebView encoding bug
+                    var name = it?.replace("\\u003C", "<")
+                    name = name?.replace("\\n", System.getProperty("line.separator").toString())
+                    name = name?.replace("\\t", "")
+                    name = name?.replace("\\\"", "\"")
+                    name = name?.substring(1, name.length - 1)
+
+                    val builder = MaterialAlertDialogBuilder(this)
+                    val inflater = this.layoutInflater
+                    builder.setTitle(R.string.page_source)
+                    val dialogLayout = inflater.inflate(R.layout.dialog_view_source, null)
+                    val editText = dialogLayout.findViewById<CodeEditor>(R.id.dialog_multi_line)
+                    editText.setText(name, 1)
+                    builder.setView(dialogLayout)
+                    builder.setNegativeButton(R.string.action_cancel) { _, _ -> }
+                    builder.setPositiveButton(R.string.action_ok) { _, _ ->
+                        editText.setText(editText.text?.toString()?.replace("\'", "\\\'"), 1)
+                        currentTab.loadUrl("javascript:(function() { document.documentElement.innerHTML = '" + editText.text.toString() + "'; })()")
+                    }
+                    builder.show()
+                }
+            },
+            DialogItem(
+                icon= this.drawable(R.drawable.ic_script_add),
+                title = R.string.inspect){
+                val builder = MaterialAlertDialogBuilder(this)
+                val inflater = this.layoutInflater
+                builder.setTitle(R.string.inspect)
+                val dialogLayout = inflater.inflate(R.layout.dialog_code_editor, null)
+                val codeView: CodeView = dialogLayout.findViewById(R.id.dialog_multi_line)
+                codeView.text.toString()
+                builder.setView(dialogLayout)
+                builder.setNegativeButton(R.string.action_cancel) { _, _ -> }
+                builder.setPositiveButton(R.string.action_ok) { _, _ -> currentTab.loadUrl("javascript:(function() {" + codeView.text.toString() + "})()") }
+                builder.show()
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.outline_script_text_key_outline),
+                colorTint = this.attrColor(R.attr.colorPrimary).takeIf { userPreferences.javaScriptChoice == JavaScriptChoice.BLACKLIST && !stringContainsItemFromList(currentTab.url, strgs) || userPreferences.javaScriptChoice == JavaScriptChoice.WHITELIST && stringContainsItemFromList(currentTab.url, strgs) },
+                title = jsEnabledString) {
+                val url = URL(currentTab.url)
+                if (userPreferences.javaScriptChoice != JavaScriptChoice.NONE) {
+                    if (!stringContainsItemFromList(currentTab.url, strgs)) {
+                        if (userPreferences.javaScriptBlocked == "") {
+                            userPreferences.javaScriptBlocked = url.host
+                        } else {
+                            userPreferences.javaScriptBlocked = userPreferences.javaScriptBlocked + ", " + url.host
+                        }
+                    } else {
+                        if (!userPreferences.javaScriptBlocked.contains(", " + url.host)) {
+                            userPreferences.javaScriptBlocked = userPreferences.javaScriptBlocked.replace(url.host, "")
+                        } else {
+                            userPreferences.javaScriptBlocked = userPreferences.javaScriptBlocked.replace(", " + url.host, "")
+                        }
+                    }
+                } else {
+                    userPreferences.javaScriptChoice = JavaScriptChoice.WHITELIST
+                }
+                tabsManager.currentTab?.reload()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    tabsManager.currentTab?.reload()
+                }, 250)
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.cookie_outline),
+                title = R.string.edit_cookies) {
+                val cookieManager = CookieManager.getInstance()
+                if (cookieManager.getCookie(currentTab.url) != null) {
+                    val builder = MaterialAlertDialogBuilder(this)
+                    val inflater = this.layoutInflater
+                    builder.setTitle(R.string.site_cookies)
+                    val dialogLayout = inflater.inflate(R.layout.dialog_code_editor, null)
+                    val codeView: CodeView = dialogLayout.findViewById(R.id.dialog_multi_line)
+                    codeView.setText(cookieManager.getCookie(currentTab.url))
+                    builder.setView(dialogLayout)
+                    builder.setNegativeButton(R.string.action_cancel) { _, _ -> }
+                    builder.setPositiveButton(R.string.action_ok) { _, _ ->
+                        val cookiesList = codeView.text.toString().split(";")
+                        cookiesList.forEach { item ->
+                            CookieManager.getInstance().setCookie(currentTab.url, item)
+                        }
+                    }
+                    builder.show()
+                }
+
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.ic_tabs),
+                title = R.string.close_tab) {
+                presenter.deleteTab(position)
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.ic_delete_forever),
+                title = R.string.close_all_tabs) {
+                presenter.closeAllOtherTabs()
+            },
+            DialogItem(
+                icon = this.drawable(R.drawable.round_clear_24),
+                title = R.string.exit, onClick = this::closeBrowser))
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    lateinit var iShortcuts: fulguris.keyboard.Shortcuts
+
+    /**
+     *
+     */
+    private fun createKeyboardShortcuts() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            iShortcuts = fulguris.keyboard.Shortcuts(this)
+        }
+    }
+
+    /**
+     * Publish keyboard shortcuts so that user can see them when doing Meta+/?
+     */
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onProvideKeyboardShortcuts(data: MutableList<KeyboardShortcutGroup?>, menu: Menu?, deviceId: Int) {
+
+        // Publish our shortcuts, could publish a different list based on current state too
+        if (iShortcuts.iList.isNotEmpty()) {
+                data.add(KeyboardShortcutGroup(getString(R.string.app_name), iShortcuts.iList))
+        }
+
+        super.onProvideKeyboardShortcuts(data, menu, deviceId)
     }
 
     companion object {

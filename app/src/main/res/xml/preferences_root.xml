@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.GeneralSettingsFragment"
+        app:title="@string/settings_general"
+        app:icon="@drawable/ic_settings" />
+
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.DisplaySettingsFragment"
+        app:title="@string/settings_display"
+        app:icon="@drawable/ic_palette" />
+    
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.AdBlockSettingsFragment"
+        app:title="@string/settings_adblock"
+        app:summary="@string/settings_summary_content_control"
+        app:icon="@drawable/ic_block" />
+
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.PrivacySettingsFragment"
+        app:title="@string/settings_privacy"
+        app:icon="@drawable/ic_security" />
+
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.BackupSettingsFragment"
+        app:title="@string/settings_backup"
+        app:icon="@drawable/ic_cloud_upload" />
+
+    <!-- Advanced settings are now empty, remove them at some point -->
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.AdvancedSettingsFragment"
+        app:isPreferenceVisible="false"
+        app:title="@string/settings_advanced"/>
+    <!-- Just hide Lightning FAQ for now -->
+    <Preference
+        app:summary="@string/faq_description"
+        app:isPreferenceVisible="false"
+        app:title="@string/faq">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="http://acrdevelopment.org/lightning/faq">
+        </intent>
+    </Preference>
+
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.AppsSettingsFragment"
+        app:summary="@string/settings_summary_apps"
+        app:title="@string/settings_title_apps"
+        app:icon="@drawable/ic_apps" />
+
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.DebugSettingsFragment"
+        app:key="@string/pref_key_debug"
+        app:title="@string/debug_title"
+        app:icon="@drawable/ic_bug" />
+
+    <!-- About is traditionally last -->
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.SponsorshipSettingsFragment"
+        app:title="@string/settings_contribute"
+        app:summary="@string/settings_summary_contribute"
+        app:icon="@drawable/ic_giftcard" />
+
+    <!-- About is traditionally last -->
+    <Preference
+        app:fragment="acr.browser.lightning.settings.fragment.AboutSettingsFragment"
+        app:title="@string/settings_about"
+        app:icon="@drawable/ic_about" />
+
+</PreferenceScreen>
+
+

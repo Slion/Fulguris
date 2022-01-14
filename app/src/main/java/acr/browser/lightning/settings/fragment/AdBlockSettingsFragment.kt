@@ -4,13 +4,12 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlocker
 import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.AbpUpdateMode
-import acr.browser.lightning.constant.Schemes
-import acr.browser.lightning.di.injector
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,7 +22,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
+import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.*
@@ -36,10 +37,12 @@ import java.io.IOException
 import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject
+import androidx.preference.PreferenceViewHolder
 
 /**
  * Settings for the ad block mechanic.
  */
+@AndroidEntryPoint
 class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
@@ -47,7 +50,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     @Inject internal lateinit var abpBlocker: AbpBlocker
 
     private lateinit var abpDao: AbpDao
-    private val entityPrefs = mutableMapOf<Int, Preference>()
+    private val entityPrefs = mutableMapOf<Int, FilterListSwitchPreference>()
 
     // if blocklist changed, they need to be reloaded, but this should happen only once
     //  if reloadLists is true, list reload will be launched onDestroy
@@ -75,7 +78,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-        injector.inject(this)
+        //injector.inject(this)
 
         switchPreference(
             preference = getString(R.string.pref_key_content_control),
@@ -83,7 +86,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             onCheckChange = {
                 userPreferences.adBlockEnabled = it
                 // update enabled lists when enabling blocker
-                if (it) updateEntity(null, false)
+                if (it) {
+                    updateFilterList(null, false)
+                    reloadLists = true
+                }
             }
         )
 
@@ -128,57 +134,68 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                         }
                         setPositiveButton(resources.getString(R.string.action_ok), null)
                         setNeutralButton(R.string.blocklist_update_now) {_,_ ->
-                            updateEntity(null, true)
+                            updateFilterList(null, true)
                         }
                     }?.resizeAndShow()
                 }
             )
 
-            // "new list" button
-            val newList = Preference(context)
-            newList.title = resources.getString(R.string.add_blocklist)
-            newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_action_plus,requireActivity().theme)
-            newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val dialog = MaterialAlertDialogBuilder(requireContext())
-                    .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
-                    .setNegativeButton(R.string.local_file) { _,_ -> showBlockList(AbpEntity(url = "file")) }
-                    .setPositiveButton(R.string.remote_file) { _,_ -> showBlockList(AbpEntity(url = "")) }
-                    .setTitle(R.string.add_blocklist)
-                    .setMessage(R.string.add_blocklist_hint)
-                    .create()
-                dialog.show()
-                true
-            }
-            filtersCategory.addPreference(newList)
-            newList.dependency = getString(R.string.pref_key_content_control)
-
-            // list of blocklists/entities
-            for (entity in abpDao.getAll()) {
-                val entityPref = Preference(context)
-//                val pref = SwitchPreferenceCompat(context) // not working... is there a way to separate clicks on text and switch?
-//                pref.isChecked = entity.enabled
-                entityPref.title = entity.title
-                entityPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    showBlockList(entity)
-                    true
-                }
-                entityPrefs[entity.entityId] = entityPref
-                updateSummary(entity)
-                filtersCategory.addPreference(entityPrefs[entity.entityId])
-                entityPref.dependency = getString(R.string.pref_key_content_control)
-            }
+            loadFilterLists()
         }
+    }
+
+    private fun loadFilterLists() {
+        filtersCategory.removeAll()
+
+        // "new list" button
+        val newList = Preference(context)
+        newList.title = resources.getString(R.string.add_blocklist)
+        newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_add,requireActivity().theme)
+        newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val dialog = MaterialAlertDialogBuilder(requireContext())
+                .setNeutralButton(R.string.action_cancel, null) // actually the negative button, but looks nicer this way
+                .setNegativeButton(R.string.local_file) { _,_ -> showBlockList(AbpEntity(url = "file")) }
+                .setPositiveButton(R.string.remote_file) { _,_ -> showBlockList(AbpEntity(url = "")) }
+                .setTitle(R.string.add_blocklist)
+                .setMessage(R.string.add_blocklist_hint)
+                .create()
+            dialog.show()
+            true
+        }
+        filtersCategory.addPreference(newList)
+        newList.dependency = getString(R.string.pref_key_content_control)
+
+        // list of blocklists/entities
+        for (entity in abpDao.getAll().sortedBy { it.title?.lowercase() }) {
+            val entityPref = FilterListSwitchPreference(context, entity)
+            entityPrefs[entity.entityId] = entityPref
+            updateSummary(entity)
+            filtersCategory.addPreference(entityPrefs[entity.entityId])
+            entityPref.dependency = getString(R.string.pref_key_content_control)
+        }
+
     }
 
     private fun updateSummary(entity: AbpEntity) {
         if (entity.lastLocalUpdate > 0)
             entityPrefs[entity.entityId]?.summary = resources.getString(R.string.blocklist_last_update, DateFormat.getDateTimeInstance().format(Date(entity.lastLocalUpdate)))
+        else
+            entityPrefs[entity.entityId]?.summary = ""
     }
 
-    // update entity and adjust displayed last update time
-    private fun updateEntity(abpEntity: AbpEntity?, forceUpdate: Boolean) {
+    // update filter list and adjust displayed last update time
+    //  update all lists if no entity provided
+    private fun updateFilterList(abpEntity: AbpEntity?, forceUpdate: Boolean) {
         GlobalScope.launch(Dispatchers.IO) {
+            // do nothing if update not required
+            if (!forceUpdate && abpEntity != null && !abpListUpdater.needsUpdate(abpEntity))
+                return@launch
+
             ++updatesRunning
+            activity?.runOnUiThread {
+                if (abpEntity != null)
+                    entityPrefs[abpEntity.entityId]?.summary = resources.getString(R.string.blocklist_updating)
+            }
             val updated = if (abpEntity == null) abpListUpdater.updateAll(forceUpdate) else abpListUpdater.updateAbpEntity(abpEntity, forceUpdate)
 
             // delete temporary file
@@ -186,14 +203,13 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             //  so it could happen that lists get mixed up via an old temporary blocklist file
             activity?.externalCacheDir?.let { File(it, BLOCK_LIST_FILE).delete() }
 
-            if (updated) {
+            if (updated)
                 reloadBlockLists()
 
-                // update the "last updated" times
-                activity?.runOnUiThread {
-                    for (entity in abpDao.getAll())
-                        updateSummary(entity)
-                }
+            // update the "last updated" times
+            activity?.runOnUiThread {
+                for (entity in abpDao.getAll())
+                    updateSummary(entity)
             }
             --updatesRunning
         }
@@ -219,6 +235,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         linearLayout.addView(title)
 
         var needsUpdate = false
+        val oldUrl = entity.url
 
         // field for choosing file or url
         when {
@@ -265,12 +282,6 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             }
         }
 
-        // enabled switch
-        val enabled = SwitchCompat(requireContext())
-        enabled.text = resources.getString(R.string.enable_blocklist)
-        enabled.isChecked = entity.enabled
-        linearLayout.addView(enabled)
-
         // delete button
         // don't show for internal list or when creating a new entity
         if (entity.entityId != 0) {
@@ -283,7 +294,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     .setPositiveButton(R.string.action_delete) { _, _ ->
                         abpDao.delete(entity)
                         dialog?.dismiss()
-                        preferenceScreen.removePreference(entityPrefs[entity.entityId])
+                        filtersCategory.removePreference(entityPrefs[entity.entityId])
                         reloadBlockLists()
                     }
                     .setTitle(resources.getString(R.string.blocklist_remove_confirm, entity.title))
@@ -299,37 +310,27 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         builder.setView(linearLayout)
         builder.setNegativeButton(R.string.action_cancel, null)
         builder.setPositiveButton(R.string.action_ok) { _,_ ->
-            val wasEnabled = entity.enabled
-            entity.enabled = enabled.isChecked
 
             entity.title = title.text.toString()
-            val newId = abpDao.update(entity) // new id if new entity was added, otherwise newId == entity.entityId
 
-            // set new id for newly added list
-            if (entity.entityId == 0) {
-                entity.entityId = newId
+            // make sure list is reloaded if url changed
+            if (oldUrl != entity.url) {
+                entity.lastLocalUpdate = 0
+                entity.lastModified = null
                 needsUpdate = true
             }
 
-            // check for update (necessary to have correct id!)
-            if ((entity.url.startsWith("http") && enabled.isChecked && !wasEnabled) || needsUpdate)
-                updateEntity(entity, needsUpdate)
-            if (enabled.isChecked != wasEnabled)
-                reloadBlockLists()
+            if (entity.entityId == 0) // id == 0 if new entity was added, we want to update it immediately
+                needsUpdate = true
+            val newId = abpDao.update(entity)
 
-            if (entityPrefs[newId] == null) { // not in entityPrefs if new
-                val pref = Preference(context)
-                entity.entityId = newId
-                pref.title = entity.title
-                pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    showBlockList(entity)
-                    true
-                }
-                entityPrefs[newId] = pref
-                updateSummary(entity)
-                filtersCategory.addPreference(pref)
-                pref.dependency = getString(R.string.pref_key_content_control)
-            } else
+            // check for update (after abpDao.update!)
+            if (needsUpdate)
+                updateFilterList(entity, needsUpdate)
+
+            if (entityPrefs[newId] == null) // not in entityPrefs if new
+                loadFilterLists() // load lists again, to get alphabetical order
+            else
                 entityPrefs[entity.entityId]?.title = entity.title
         }
         dialog = builder.create()
@@ -412,6 +413,38 @@ override fun onDestroy() {
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    // class necessary to allow separate onClickListener for the switch
+    private inner class FilterListSwitchPreference(context : Context?, val entity: AbpEntity) : SwitchPreferenceCompat(context) {
+
+        override fun onBindViewHolder(holder: PreferenceViewHolder?) {
+            super.onBindViewHolder(holder)
+            val switch: SwitchCompat? = holder?.itemView?.findViewById(R.id.filter_list_switch_widget)
+            switch?.isChecked = entity.enabled
+            switch?.setOnClickListener {
+                isChecked = (it as SwitchCompat).isChecked
+                entity.enabled = isChecked
+                abpDao.update(entity)
+                if (isChecked)
+                    updateFilterList(entity, false) // check for update, entity may have been disabled for a longer time
+                reloadBlockLists()
+            }
+            onPreferenceClickListener = OnPreferenceClickListener {
+                (it as FilterListSwitchPreference).isChecked = entity.enabled // avoid flipping the switch on click
+                showBlockList(entity)
+                true
+            }
+        }
+
+        // layout resource must be set before onBindViewHolder
+        // title and isChecked can't be changed in onBindViewHolder, so also set it now
+        override fun onAttached() {
+            super.onAttached()
+            title = entity.title
+            isChecked = entity.enabled
+            widgetLayoutResource = R.layout.filter_list_preference_widget
+        }
     }
 
     companion object {

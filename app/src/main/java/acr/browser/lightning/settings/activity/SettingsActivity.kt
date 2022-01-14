@@ -6,16 +6,18 @@ package acr.browser.lightning.settings.activity
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.findPreference
 import acr.browser.lightning.settings.fragment.AbstractSettingsFragment
+import acr.browser.lightning.settings.fragment.RootSettingsFragment
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val TITLE_TAG = "settingsActivityTitle"
 const val SETTINGS_CLASS_NAME = "ClassName"
 
+@AndroidEntryPoint
 class SettingsActivity : ThemedSettingsActivity(),
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
@@ -27,7 +29,7 @@ class SettingsActivity : ThemedSettingsActivity(),
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.settings, HeaderFragment())
+                .replace(R.id.settings, RootSettingsFragment())
                 .commit()
         }
 
@@ -131,7 +133,7 @@ class SettingsActivity : ThemedSettingsActivity(),
      */
     fun startFragment(aClass: Class<*>) {
         // We need to find the preference that's associated with that fragment, before we can start it.
-        (currentFragment() as? HeaderFragment)?.let {
+        (currentFragment() as? RootSettingsFragment)?.let {
             it.preferenceScreen.findPreference(aClass)?.let { pref ->
                 startFragment(it,pref)
             }
@@ -165,10 +167,4 @@ class SettingsActivity : ThemedSettingsActivity(),
         updateTitle(fragment)
     }
 
-
-    class HeaderFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.preferences_headers, rootKey)
-        }
-    }
 }

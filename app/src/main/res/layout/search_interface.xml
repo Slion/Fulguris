@@ -14,7 +14,7 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <TextView
+            <EditText
                 android:id="@+id/search_query"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -23,7 +23,10 @@
                 android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/material_grid_margin"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:hint="@string/search_hint" />
 
             <ImageButton
                 android:id="@+id/button_back"

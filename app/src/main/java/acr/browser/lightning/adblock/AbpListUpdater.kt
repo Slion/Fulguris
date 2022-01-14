@@ -16,12 +16,18 @@
 
 package acr.browser.lightning.adblock
 
+import acr.browser.lightning.R
 import acr.browser.lightning.adblock.parser.HostsFileParser
+import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
+import acr.browser.lightning.settings.preferences.userAgent
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_DIR
 import jp.hazuki.yuzubrowser.adblock.filter.unified.StartEndFilter
@@ -59,7 +65,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             var nextUpdateTime = Long.MAX_VALUE
             val now = System.currentTimeMillis()
             abpDao.getAll().forEach {
-                if (forceUpdate || (it.isNeedUpdate() && it.enabled)) {
+                if (forceUpdate || (needsUpdate(it) && it.enabled)) {
                     val localResult = updateInternal(it, forceUpdate)
                     if (localResult && it.expires > 0) {
                         val nextTime = it.expires * AN_HOUR + now
@@ -110,6 +116,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         val request = try {
             Request.Builder()
                 .url(entity.url)
+                .header("User-Agent", userPreferences.userAgent(context.applicationContext as Application))
                 .get()
         } catch (e: IllegalArgumentException) {
             return false
@@ -137,6 +144,12 @@ class AbpListUpdater @Inject constructor(val context: Context) {
                 abpDao.update(entity)
                 return false
             }
+            if (response.code == 404) {
+                Handler(Looper.getMainLooper()).post {
+                    context.toast(context.getString(R.string.blocklist_update_error_404, entity.title))
+                }
+                return false
+            }
             response.body?.run {
                 val charset = contentType()?.charset() ?: Charsets.UTF_8
                 source().inputStream().bufferedReader(charset).use { reader ->
@@ -150,6 +163,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             }
         } catch (e: IOException) {
             e.printStackTrace()
+            Handler(Looper.getMainLooper()).post {
+                context.toast(context.getString(R.string.blocklist_update_error, entity.title))
+            }
         }
         return false
     }
@@ -258,9 +274,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         }
     }
 
-    private fun AbpEntity.isNeedUpdate(): Boolean {
+    fun needsUpdate(entity: AbpEntity): Boolean {
         val now = System.currentTimeMillis()
-        if (now - lastLocalUpdate >= max(expires * AN_HOUR, A_DAY * userPreferences.blockListAutoUpdateFrequency)) {
+        if (now - entity.lastLocalUpdate >= max(entity.expires * AN_HOUR, A_DAY * userPreferences.blockListAutoUpdateFrequency)) {
             return true
         }
         return false

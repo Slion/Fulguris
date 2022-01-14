@@ -1,12 +1,11 @@
 package acr.browser.lightning.settings.preferences
 
+import acr.browser.lightning.AccentTheme
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpUpdateMode
-import acr.browser.lightning.browser.ProxyChoice
-import acr.browser.lightning.browser.SearchBoxDisplayChoice
-import acr.browser.lightning.browser.SearchBoxModel
+import acr.browser.lightning.browser.*
 import acr.browser.lightning.constant.DEFAULT_ENCODING
 import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.device.ScreenSize
@@ -23,6 +22,12 @@ import javax.inject.Singleton
 
 /**
  * The user's preferences.
+ *
+ * Defaults specified here are only used while that settings entry has not been initialized.
+ * Settings entry are typically initialized the first time you access the settings page it belongs to.
+ * They also happen to be initialized with the default value specified in the preference XML rather than the default specified here.
+ * It should be the same but still that's really poor design.
+ * TODO: Fix that that at some point
  */
 @Singleton
 class UserPreferences @Inject constructor(
@@ -109,6 +114,11 @@ class UserPreferences @Inject constructor(
      * The URL of the selected homepage.
      */
     var homepage by preferences.stringPreference(HOMEPAGE, Uris.AboutBookmarks)
+
+    /**
+     * The URL of the selected incognito page.
+     */
+    var incognitoPage by preferences.stringPreference(INCOGNITO, Uris.AboutIncognito)
 
     /**
      * True if the browser should allow execution of javascript, false otherwise.
@@ -234,6 +244,8 @@ class UserPreferences @Inject constructor(
      * The index of the theme used by the application.
      */
     var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.DEFAULT)
+
+    var useAccent by preferences.enumPreference(R.string.pref_key_accent, AccentTheme.DEFAULT_ACCENT)
 
     /**
      * The text encoding used by the browser.
@@ -363,6 +375,57 @@ class UserPreferences @Inject constructor(
     var blockListAutoUpdate by preferences.enumPreference(R.string.pref_key_blocklist_auto_update, AbpUpdateMode.WIFI_ONLY)
     var blockListAutoUpdateFrequency by preferences.intPreference(R.string.pref_key_blocklist_auto_update_frequency, 7)
 
+    ///
+    /// Various tab event actions
+    ///
+
+    var onTabCloseShowSnackbar by preferences.booleanPreference(R.string.pref_key_on_tab_close_show_snackbar, R.bool.pref_default_on_tab_close_show_snackbar)
+    var onTabCloseVibrate by preferences.booleanPreference(R.string.pref_key_on_tab_close_vibrate, R.bool.pref_default_on_tab_close_vibrate)
+    var onTabChangeShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_change_show_animation, R.bool.pref_default_on_tab_change_show_animation)
+    var onTabBackShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_back_show_animation, R.bool.pref_default_on_tab_back_show_animation)
+    var onTabBackAnimationDuration by preferences.intResPreference(R.string.pref_key_on_tab_back_animation_duration, R.integer.pref_default_animation_duration_tab_back_forward)
+
+    /**
+     * Block JavaScript for Websites
+     */
+    var javaScriptChoice by preferences.enumPreference(R.string.pref_key_use_js_block, JavaScriptChoice.NONE)
+
+    var javaScriptBlocked by preferences.stringPreference(R.string.pref_key_block_js, "")
+
+    var siteBlockNames by preferences.stringPreference(R.string.pref_key_use_site_block, "")
+
+    /**
+     * Force Zoom for Websites
+     */
+    var forceZoom by preferences.booleanPreference(R.string.pref_key_force_zoom, R.bool.pref_default_force_zoom)
+
+    /**
+     * Always in Incognito mode
+     */
+    var incognito by preferences.booleanPreference(R.string.pref_key_always_incognito, R.bool.pref_default_always_incognito)
+
+    /**
+     * SSL Warn Dialog
+     */
+    var ssl by preferences.booleanPreference(R.string.pref_key_ssl_dialog, R.bool.pref_default_ssl_dialog)
+
+    var imageUrlString by preferences.stringPreference(R.string.pref_key_image_url, "")
+
+    /**
+     * Define Suggestion number Choice
+     */
+    var suggestionChoice by preferences.enumPreference(R.string.pref_key_search_suggestions_number, SuggestionNumChoice.FIVE)
+
+    /**
+     * Define long press on the 'Tabs' icon opens a new tab.
+     */
+    var longClickTab by preferences.booleanPreference(R.string.pref_key_long_click_tab, R.bool.pref_default_long_click_tab)
+
+    /**
+     * Define if user wants to close the drawer after delete or create an tab automatically.
+     */
+    var closeDrawer by preferences.booleanPreference(R.string.pref_key_close_drawer, R.bool.pref_default_close_drawer)
+
 }
 
 // SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML
@@ -371,6 +434,7 @@ private const val BLOCK_ADS = "AdBlock"
 private const val CLEAR_CACHE_EXIT = "cache"
 private const val DOWNLOAD_DIRECTORY = "downloadLocation"
 private const val HOMEPAGE = "home"
+private const val INCOGNITO = "incognito"
 private const val LOCATION = "location"
 private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"

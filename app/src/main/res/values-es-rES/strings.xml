@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Recargar</string>
     <string name="action_menu">Menú</string>
     <string name="action_new_tab">Nueva pestaña</string>
@@ -14,6 +14,8 @@
     <string name="action_new_session">Nueva sesión</string>
     <string name="action_save_session">Guardar sesión como</string>
     <string name="action_edit_sessions">Editar sesiones</string>
+    <string name="enable">Activar</string>
+    <string name="disable">Desactivar</string>
     <string name="settings">Ajustes</string>
     <string name="location">Permitir acceso a ubicación</string>
     <string name="password">Almacenar contraseñas</string>
@@ -24,10 +26,9 @@
     <string name="java">Activar JavaScript</string>
     <string name="download">Ruta de descargas</string>
     <string name="settings_advanced">Ajustes avanzados</string>
-    <string name="apache">Licencia Apache 2.0</string>
     <string name="version">Versión de la aplicación</string>
     <string name="update_available">Actualización disponible</string>
-    <string name="update_check_error">Error de comprobación de actualización, inténtelo más tárde</string>
+    <string name="update_check_error">Error de comprobación de actualización, inténtelo más tarde</string>
     <string name="up_to_date">Esta es la versión más reciente</string>
     <string name="show">Mostrar</string>
     <string name="cache">Vaciar caché al salir</string>
@@ -60,12 +61,17 @@
     <string name="dialog_bookmark">¿Qué quiere hacer con este marcador?</string>
     <string name="action_delete">Eliminar</string>
     <string name="action_blank">Página en blanco</string>
+    <string name="agent_android_mobile">Android (Móvil)</string>
+    <string name="agent_custom">Personalizado</string>
     <string name="agent_default">Por defecto</string>
     <string name="agent_desktop">Escritorio</string>
-    <string name="agent_mobile">Móvil</string>
-    <string name="agent_custom">Personalizado</string>
+    <string name="agent_ios_mobile">iOS (Móvil)</string>
+    <string name="agent_linux_desktop">Linux (Escritorio)</string>
+    <string name="agent_macos_desktop">macOS (Escritorio)</string>
     <string name="agent_system">Sistema</string>
-    <string name="agent_web_view">Web View</string>
+    <string name="agent_web_view">WebView</string>
+    <string name="agent_windows_desktop">Windows (Escritorio)</string>
+    <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Motor de búsqueda</string>
     <string name="action_ok">Aceptar</string>
     <string name="dialog_download">¿Quiere descargar este archivo? (%1$s)</string>
@@ -77,6 +83,7 @@
     <string name="title_download_location">Ubicación de descarga</string>
     <string name="title_custom_homepage">Página de inicio personalizada</string>
     <string name="action_webpage">Página web</string>
+    <string name="action_main_menu">Menú principal</string>
     <string name="title_clear_history">Limpiar historial</string>
     <string name="title_clear_cookies">Limpiar cookies</string>
     <string name="dialog_history">¿Quiere limpiar todo el historial de navegación?</string>
@@ -101,6 +108,7 @@
     <string name="action_back">Atrás</string>
     <string name="action_find">Buscar en la página</string>
     <string name="action_print">Imprimir</string>
+    <string name="action_translate">Translate</string>
     <string name="downloads">Descargas</string>
     <string name="downloads_notification_description">Desencadenantes al finalizar la descarga</string>
     <string name="download_pending">Descargando: \u2026</string>
@@ -113,18 +121,18 @@
     <string name="download_sdcard_busy_dlg_msg">El almacenamiento está ocupado. Para permitir las descargas, desactive el almacenamiento USB desde el área de notificaciones.</string>
     <string name="download_complete">Descarga completada</string>
     <string name="download_failed">Descarga fallida</string>
-    <string name="incognito_cookies">Habilitar cookies en el modo incógnito</string>
+    <string name="incognito_cookies">Activar cookies en el modo incógnito</string>
     <string name="incognito_cookies_pie">El modo incógnito se ejecuta en un proceso separado que se reinicia tras cada sesión. Las cookies del modo incógnito están ahora controladas por las preferencias generales de cookies.</string>
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Manual</string>
     <string name="action_auto">Automático</string>
-    <string name="pref_title_contact_us">Contáctame</string>
+    <string name="pref_title_contact_us">Contáctate con nosotros</string>
     <string name="clear_cache">Limpiar caché</string>
     <string name="message_cache_cleared">La caché se ha eliminado</string>
     <string name="message_import">Los marcadores se han importado</string>
     <string name="message_clear_history">El historial se ha eliminado</string>
     <string name="message_cookies_cleared">Las cookies se han eliminado</string>
-    <string name="max_tabs">Se ha alcanzado el máximo de pestañas</string>
+    <string name="max_tabs">Se ha alcanzado el máximo de pestañas.</string>
     <string name="message_text_copied">Texto copiado al portapapeles</string>
     <string name="message_link_copied">Enlace copiado al portapapeles</string>
     <string name="message_blocked_local">Se ha bloqueado la carga del archivo local</string>
@@ -136,11 +144,10 @@
     <string name="title_welcome">Bienvenido a Fulguris</string>
     <string name="message_welcome">¿Visita nuestra página de inicio para saber más sobre este potente navegador web?</string>
     <!-- Ad block -->
-    <string name="block_ads">Bloquear anuncios</string>
+    <string name="block_ads">Control de contenido</string>
     <string name="block_ad_source">Fuente del archivo hosts</string>
     <string name="block_ad_remote_refresh_frequency_description">Para archivo hosts remoto</string>
     <string name="block_ad_refresh_now">Actualizar hosts ahora</string>
-    <string name="block_ads_upsell_source">Actualice a Lightning Plus para elegir</string>
     <string name="block_remote_frequency_daily">Diariamente</string>
     <string name="block_remote_frequency_weekly">Semanalmente</string>
     <string name="block_remote_frequency_monthly">Mensualmente</string>
@@ -149,11 +156,43 @@
     <string name="block_source_local_description">Archivo: %1$s</string>
     <string name="block_source_remote">Archivo hosts remoto</string>
     <string name="block_source_remote_description">Dirección: %1$s</string>
+    <string name="ad_block_load_failure">Error al cargar hosts desde la fuente de bloqueo de anuncios.</string>
+    <!-- new ad blocker -->
+    <string name="page_blocked">La siguiente página fue bloqueada:</string>
+    <string name="page_blocked_reason">debido a:</string>
+    <string name="page_blocked_list_ad">%s en filtros de anuncios</string>
+    <string name="page_blocked_list_user">%s bloqueada por regla de usuario</string>
+    <string name="page_blocked_list_malware">%s en filtros de malware</string>
+    <string name="request_blocked">Solicitud bloqueada</string>
+    <!-- settings for new ad blocker -->
+    <string name="blocklist_update_mode">Modo de actualización automática</string>
+    <string name="blocklist_update_on">Activado</string>
+    <string name="blocklist_update_off">Desactivado</string>
+    <string name="blocklist_update_wifi">Sólo en conexiones no medidas</string>
+    <string name="blocklist_update">Actualizar filtros</string>
+    <string name="blocklist_update_frequency">Frecuencia de actualización automática</string>
+    <string name="blocklist_update_description">Las actualizaciones se realizarán con la frecuencia seleccionada, a menos que el archivo de filtros especifique un intervalo más largo</string>
+    <string name="blocklist_update_now">Actualizar listas ahora</string>
+    <string name="blocklist_last_update">Última actualización: %s</string>
+    <string name="blocklist_updating">Updating…</string>
+    <string name="blocklist_update_error">Error while updating filters list %s</string>
+    <string name="add_blocklist">Añadir archivo de filtros</string>
+    <string name="add_blocklist_hint">Puede elegir listas de hosts o cualquier lista compatible con las reglas de AdBlockPlus</string>
+    <string name="enable_blocklist">Activar esta lista</string>
+    <string name="invalid_title">Título inválido</string>
+    <string name="invalid_url">Dirección inválida</string>
+    <string name="blocklist_built_in">Filtros integrados</string>
+    <string name="blocklist_remove">Eliminar archivo de filtros</string>
+    <string name="blocklist_remove_confirm">¿Eliminar definitivamente el archivo de filtros %s?</string>
+    <string name="local_file">Local</string>
+    <string name="local_file_replace">Reemplazar</string>
+    <string name="local_file_chosen">archivo seleccionado</string>
+    <string name="remote_file">Remoto</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Acción cancelada.</string>
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">No preguntar de nuevo durante esta sesión de navegación.</string>
-    <string name="message_insecure_connection">La conexión a este sitio no es segura:\n%1$s\n¿Continuar en cualquier caso?</string>
+    <string name="message_insecure_connection">La conexión a este sitio no es segura:\n%1$s\n¿Continuar de todos modos?</string>
     <string name="message_certificate_date_invalid">La fecha del certificado es inválida</string>
     <string name="message_certificate_expired">El certificado está caducado</string>
     <string name="message_certificate_domain_mismatch">El dominio del certificado y el del sitio web no coinciden</string>
@@ -165,7 +204,7 @@
     <string name="message_permission_request">%1$s\n\nquiere hacer uso de:\n\n%2$s</string>
     <string name="title_form_resubmission">Reenvío de formulario</string>
     <string name="message_form_resubmission">¿Quiere reenviar los datos?</string>
-    <string name="message_location">\n Quiere acceder a su ubicación</string>
+    <string name="message_location">\nQuiere acceder a su ubicación</string>
     <string name="action_allow">Permitir</string>
     <string name="action_dont_allow">No permitir</string>
     <string name="title_sign_in">Iniciar sesión</string>
@@ -192,7 +231,7 @@
     <string name="use_i2p_prompt">Parece que tiene I2P instalado. ¿Quiere usar I2P?</string>
     <string name="install_orbot">Por favor, instale Orbot para usar Tor.</string>
     <string name="i2p_not_running">I2P no se está ejecutando.</string>
-    <string name="i2p_tunnels_not_ready">Los túneles I2P no están preparados aún.</string>
+    <string name="i2p_tunnels_not_ready">Los túneles I2P aún no están preparados.</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="clear_cookies_exit">Vaciar cookies al salir</string>
@@ -200,7 +239,6 @@
     <string name="folder_default">Por defecto</string>
     <string name="folder_custom">Personalizado</string>
     <string name="untitled">Sin título</string>
-    <string name="mpl_license">Licencia Pública Mozilla 2.0</string>
     <string name="freeware">Software gratuito</string>
     <string name="android_open_source_project">Proyecto Android de código abierto</string>
     <string name="hphosts_ad_server_list">Lista de servidores de anuncios hpHosts</string>
@@ -215,6 +253,9 @@
     <string name="title_file_chooser">Selector de archivos</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">Licencia Pública General Reducida de GNU</string>
+    <string name="generic_export">Exportar</string>
+    <string name="generic_import">Importar</string>
+    <string name="generic_reset">Restablecer</string>
     <string name="export_bookmarks">Exportar marcadores a una copia de seguridad</string>
     <string name="import_backup">Importar marcadores desde una copia de seguridad</string>
     <string name="bookmark_export_path">Marcadores exportados a</string>
@@ -226,8 +267,11 @@
     <string name="title_chooser">Elige un archivo</string>
     <string name="settings_general">Ajustes generales</string>
     <string name="settings_display">Ajustes de apariencia</string>
+    <string name="settings_backup">Copia de seguridad</string>
     <string name="settings_title_configuration">Configuración</string>
     <string name="settings_summary_configuration">Ajustes de visualización vertical y horizontal</string>
+    <string name="settings_title_portrait">@string/pref_category_portrait</string>
+    <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_privacy">Ajustes de privacidad</string>
     <string name="settings_about">Acerca de</string>
     <string name="settings_contribute">Contribuir</string>
@@ -238,6 +282,11 @@
     <string name="pref_category_landscape">Horizontal</string>
     <string name="pref_category_portrait">Vertical</string>
     <string name="pref_category_menu">Menú</string>
+    <string name="pref_category_filters">Filtros</string>
+    <string name="pref_category_summary_filters">Archivos locales o remotos que definen sus reglas de control de contenido</string>
+    <string name="pref_category_on_tab_close">Al cerrar la pestaña</string>
+    <string name="pref_category_on_tab_change">Al cambiar la pestaña</string>
+    <string name="pref_category_on_tab_back_forward">Al regresar o avanzar</string>
     <string name="pref_title_hide_status_bar">Ocultar barra de estado</string>
     <string name="pref_title_hide_tool_bar">Ocultar barra de herramientas al desplazarse hacia abajo</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Mostrar barra de herramientas al desplazarse hacia arriba</string>
@@ -251,7 +300,7 @@
     <string name="pref_title_menu_show_exit">Elemento salir en el menú</string>
     <string name="pref_summary_menu_show_exit">Mostrar la opción salir de la aplicación en el menú. El modo incógnito lo muestra indistintamente.</string>
     <string name="pref_title_menu_new_tab">Elemento nueva pestaña en el menú</string>
-    <string name="pref_summary_menu_new_tab">Mostrar la opción de abrir una nueva pestaña en el menú</string>
+    <string name="pref_summary_menu_new_tab">Mostrar la opción abrir una nueva pestaña en el menú</string>
     <string name="pref_title_crash_report">Informe de errores</string>
     <string name="pref_title_analytics">Analíticas</string>
     <string name="pref_title_pull_to_refresh">Tirar para actualizar</string>
@@ -296,10 +345,13 @@
     <string name="new_tab_position_start">Inicio de la lista de pestañas</string>
     <string name="new_tab_position_end">Fin de la lista de pestañas</string>
     <string name="text_encoding">Codificación del texto</string>
+    <string name="reset_settings">Restablecer ajustes</string>
+    <string name="reset_settings_confirmation">Todos los ajustes se perderán. ¿Continuar de todos modos?</string>
     <string-array name="url_content_array">
         <item>Dominio (por defecto)</item>
         <item>Dirección URL</item>
         <item>Título</item>
+        <item>Shortened URL</item>
     </string-array>
     <string name="invert_color">Invertir color</string>
     <string name="settings_black_status_bar">Barra de estado negra</string>
@@ -318,7 +370,9 @@
     <string name="clear_web_storage_exit">Vaciar almacenamiento web al salir</string>
     <string name="message_web_storage_cleared">El almacenamiento web se ha eliminado</string>
     <string name="hosts_source">Fuente del archivo hosts de bloqueo de anuncios</string>
-    <string name="settings_adblock">Ajustes de bloqueo de anuncios</string>
+    <string name="settings_adblock">@string/block_ads</string>
+    <string name="settings_summary_content_control">Bloqueo de anuncios y filtrado de contenido</string>
+    <string name="settings_summary_content_control_toggle">Activar bloqueo de anuncios y filtrado de contenido</string>
     <string name="settings_title_vertical_tab_bar">Barra de pestañas vertical</string>
     <string name="settings_summary_vertical_tab_bar">Desactivar para usar la barra de pestañas horizontal</string>
     <string name="settings_title_toolbars_bottom">Barra de herramientas inferior</string>
@@ -338,7 +392,6 @@
     <string name="shortcut_message_failed_to_add">Lo sentimos, su lanzador no soporta atajos.</string>
     <string name="action_delete_all_bookmarks">Eliminar todos los marcadores</string>
     <string name="flash_not_supported">Su sistema no soporta Flash Player</string>
-    <string name="upsell_plus_version">Actualice a Lightning Plus para bloquear anuncios</string>
     <string name="message_open_download_fail">Este archivo ya no existe</string>
     <string name="faq">Preguntas frecuentes</string>
     <string name="faq_description">Preguntas frecuentes</string>
@@ -368,17 +421,12 @@
     <string name="dialog_adblock_disable_for_site">Desactivar bloqueo de anuncios para el sitio</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Dirección personalizada</string>
-    <string name="search_engine_google">Google</string>
-    <string name="search_engine_ask">Ask</string>
-    <string name="search_engine_bing">Bing</string>
-    <string name="search_engine_yahoo">Yahoo!</string>
-    <string name="search_engine_startpage">StartPage</string>
-    <string name="search_engine_startpage_mobile">StartPage Movil</string>
-    <string name="search_engine_duckduckgo">DuckDuckGo</string>
+    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - Sin JavaScript</string>
     <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
-    <string name="search_engine_baidu">Baidu</string>
-    <string name="search_engine_yandex">Yandex</string>
-    <string name="search_engine_naver">Naver</string>
+    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - Sin JavaScript</string>
+    <string name="search_engine_qwant_lite">Qwant Lite</string>
+    <string name="search_engine_startpage_mobile">StartPage Movil</string>
+    <string name="search_engine_yahoo_no_js">Yahoo - Sin JavaScript</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d pestaña de incógnito abierta</item>
@@ -386,8 +434,6 @@
     </plurals>
     <string name="notification_incognito_running_message">Tocar para abrir</string>
     <string name="notification_incognito_running_description">Notificación de incógnito en curso</string>
-    <!--Ad block -->
-    <string name="ad_block_load_failure">Error al cargar hosts desde la fuente de bloqueo de anuncios.</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Emitido por</string>
@@ -440,4 +486,86 @@
     <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Pestaña cerrada</string>
     <string name="button_undo">Deshacer</string>
+    <string name="button_dismiss">Rechazar</string>
+    <!-- Find in page -->
+    <string name="no_match_found">No se encontró ninguna coincidencia!</string>
+    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="pref_title_show_snackbar">Mostrar snackbar</string>
+    <string name="pref_title_show_animation">Mostrar animación</string>
+    <string name="pref_title_vibrate">Vibrar</string>
+    <string name="pref_title_duration">Duración</string>
+    <string name="pref_summary_duration">Duración de la animación en centésimas de segundo</string>
+    <string name="pref_category_title_session_export">Exportar sesión</string>
+    <string name="pref_category_summary_session_export">Elija la sesión que quiere exportar</string>
+    <string name="error_session_file_corrupted">Error: ¡archivo de sesión corrompido!</string>
+    <string name="message_session_imported">Sesión importada: <xliff:g id="session_name" example="News">%s</xliff:g></string>
+    <string name="message_session_exported">Sesión exportada: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
+    <string name="show_ssl">Mostrar diálogos de advertencia SSL</string>
+    <string name="start_incognito">Actuar permanentemente como en modo incógnito</string>
+    <string name="force_zoom_summary">No funciona si JavaScript no está activado</string>
+    <string name="force_zoom">Forzar zoom en los sitios web</string>
+    <string name="algorithm">Algoritmo:</string>
+    <string name="oid">Identificador de Objeto (OID):</string>
+    <string name="export_settings">Exportar ajustes a una copia de seguridad</string>
+    <string name="import_settings">Importar ajustes desde una copia de seguridad</string>
+    <string name="pref_title_search_custom_image_url">Imagen personalizada de la pagina de búsqueda</string>
+    <string name="pref_summary_search_custom_image_url">Solo para URL personalizada</string>
+    <string name="long_press_tab">Pulsación larga en el icono \"Pestaña\" abre una nueva pestaña</string>
+    <string name="pref_title_close_drawer">Cerrar cajón</string>
+    <string name="pref_summary_close_drawer">Cerrar automáticamente el cajón tras crear o eliminar una pestaña</string>
+    <string name="block_javascript">Bloquear Javascript para el sitio</string>
+    <string name="block_sites_title">Separar sitios con comas</string>
+    <string name="listed_javascript">Permitir JavaScript solo para los sitios listados</string>
+    <string name="unlisted_javascript">Bloquear JavaScript para los sitios listados</string>
+    <string name="allow_javascript">Permitir JavaScript para este sitio</string>
+    <string name="blocked_javascript">Bloquear JavaScript para este sitio</string>
+    <string name="page_source">Ver código fuente de la página</string>
+    <string name="inspect">Inyectar JavaScript</string>
+    <string name="edit_cookies">Mostrar cookies del sitio</string>
+    <string name="site_cookies">Cookies del sitio</string>
+    <string name="accent_color">Color de énfasis</string>
+    <string name="accent_amber">Ámbar</string>
+    <string name="accent_blue">Azul</string>
+    <string name="accent_cyan">Cian</string>
+    <string name="accent_deep_orange">Naranja intenso</string>
+    <string name="accent_deep_purple">Morado intenso</string>
+    <string name="accent_default">Por defecto</string>
+    <string name="accent_green">Verde</string>
+    <string name="accent_indigo">Índigo</string>
+    <string name="accent_light_blue">Azul claro</string>
+    <string name="accent_light_green">Verde claro</string>
+    <string name="accent_lime">Verde lima</string>
+    <string name="accent_orange">Naranja</string>
+    <string name="accent_pink">Rosa</string>
+    <string name="accent_purple">Morado</string>
+    <string name="accent_teal">Azul turquesa</string>
+    <string name="accent_yellow">Amarillo</string>
+    <string name="accent_brown">Marrón</string>
+    <string name="search_homepage">Buscar</string>
+    <string name="search_incognito">Búsqueda privada</string>
+    <string name="incognito">Incógnito</string>
+    <string name="unknown">Desconocido</string>
+    <string name="settings_export_failure">Lo sentimos, ¡No han podido exportarse los ajustes!</string>
+    <string name="settings_exported">Ajustes exportados:</string>
+    <string name="settings_reseted">Todos los ajustes restaurados</string>
+    <string name="suggest">Sugerencias de búsqueda (número)</string>
+    <string name="error_tip">• Compruebe la dirección en busca de errores como ww.ejemplo.com en lugar de www.ejemplo.com</string>
+    <string name="error_tip2">• Si no puede cargar ninguna página, compruebe los datos de su dispositivo o la conexión Wi-Fi.</string>
+    <string name="action_cycle_tabs_forwards">Cycle tabs forwards</string>
+    <string name="action_cycle_tabs_backwards">Cycle tabs backwards</string>
+    <string name="action_focus_address_bar">Focus address bar</string>
+    <string name="action_tab_history_forward">Forward in tab history</string>
+    <string name="action_toggle_toolbar">Toggle toolbar</string>
+    <string name="action_toggle_status_bar">Toggle status bar</string>
+    <string name="action_text_size_increment">Increase text size</string>
+    <string name="action_text_size_decrement">Decrease text size</string>
+    <string name="action_text_size_small_increment">Increase text size a bit</string>
+    <string name="action_text_size_small_decrement">Decrease text size a bit</string>
+    <string name="action_open_bookmark_list">Open bookmark list</string>
+    <string name="action_open_tab_list">Open tab list</string>
+    <string name="action_open_session_list">Open session list</string>
+    <string name="action_switch_to_session">Switch to session 1 to 9</string>
+    <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
+    <string name="action_switch_to_last_tab">Switch to last tab</string>
+    <string name="action_switch_to_last_session">Switch to last session</string>
 </resources>

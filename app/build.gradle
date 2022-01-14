@@ -1,10 +1,35 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-//apply plugin: 'com.getkeepsafe.dexcount'
-apply plugin: 'jacoco'
-apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'de.mobilej.unmock'
+/*
+ * The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ * (the "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ * https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ * The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ * added to cover use of software over a computer network and provide for limited attribution for
+ * the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ * ANY KIND, either express or implied. See the License for the specific language governing rights
+ * and limitations under the License.
+ *
+ * The Original Code is Fulguris.
+ *
+ * The Original Developer is the Initial Developer.
+ * The Initial Developer of the Original Code is Stéphane Lenclud.
+ *
+ * All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ * All Rights Reserved.
+ */
+
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
+    id 'jacoco'
+    id 'com.github.ben-manes.versions'
+    id 'de.mobilej.unmock'
+}
 
 // See: https://stackoverflow.com/a/53408667/3969362
 // Conditionally apply Firebase Google Plugins to flavors that needs it
@@ -32,11 +57,6 @@ android {
         minSdkVersion project.minSdkVersion
         targetSdkVersion project.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-    }
-
-    dexOptions {
-        javaMaxHeapSize "8g"
-        preDexLibraries true
     }
 
     sourceSets {
@@ -97,9 +117,15 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 141
-            versionName "1.7.0"
-            archivesBaseName = "Fulguris-v$versionName"
+            versionCode 168
+            versionName "1.8.0"
+        }
+
+        styx {
+            dimension "BRAND"
+            applicationId "com.jamal2367.styx"
+            versionCode 0
+            versionName "20.0"
         }
 
         /*
@@ -110,6 +136,12 @@ android {
             versionName "5.1.0"
         }
          */
+
+        // Base version does not add application ID suffix
+        base {
+            dimension "VERSION"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
+        }
 
         full {
             dimension "VERSION"
@@ -124,6 +156,12 @@ android {
             applicationIdSuffix ".lite"
         }
         */
+
+        // Undefined publisher do not add application ID suffix
+        undef {
+            dimension "PUBLISHER"
+            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
+        }
 
         playstore {
             dimension "PUBLISHER"
@@ -143,6 +181,42 @@ android {
             buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
         }
 
+    }
+
+    // Filter out invalid variants
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        // slions variant do not support base version and undef publisher
+        if ((names.contains("slions") && (names.contains("undef") || names.contains("base")))
+                // styx variant only support base version and undef publisher
+                || (names.contains("styx") && !(names.contains("undef") && names.contains("base")))) {
+            // Gradle ignores any variants that satisfy the conditions above.
+            setIgnore(true)
+        }
+    }
+
+    // Taken from: https://stackoverflow.com/a/59583066/3969362
+    // Needed to customize our APK file name per flavor
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            //def appId = variant.applicationId// com.exampleFree.app OR com.examplePaid.app
+            def versionName = variant.versionName
+            //def versionCode = variant.versionCode // e.g 1.0
+            //def flavorName = variant.flavorName // e. g. Free
+            //def buildType = variant.buildType.name // e. g. debug
+            //def variantName = variant.name // e. g. FreeDebug
+
+            // Just replace our archive base name, which by default is "app" with our own format according to flavor
+            if (variant.flavorName.contains("slions")) {
+                //println("Use Fulguris archive name")
+                outputFileName = outputFileName.replaceFirst("^$archivesBaseName", "Fulguris-v$versionName")
+            } else if (variant.flavorName.contains("styx")) {
+                //println("Use Styx archive name")
+                outputFileName = outputFileName.replaceFirst("^$archivesBaseName", "Styx-v$versionName")
+            }
+            //customize your app name by using variables
+            //outputFileName = "${variantName}.apk"
+        }
     }
 
     lintOptions {
@@ -167,16 +241,6 @@ jacoco {
     toolVersion = '0.7.9' // See http://www.eclemma.org/jacoco/
 }
 
-/*
-dexcount {
-    includeClasses = false
-    includeFieldCount = false
-    format = "tree"
-    orderByMethodCount = true
-    verbose = false
-}
-*/
-
 // unMock is required for tests that use android.net.Uri
 unMock {
     keepStartingWith "libcore."
@@ -192,7 +256,7 @@ dependencies {
     debugImplementation 'androidx.multidex:multidex:2.0.1'
 
     // test dependencies
-    testImplementation 'junit:junit:4.13.2'
+    implementation 'junit:junit:4.13.2'
     testImplementation 'org.assertj:assertj-core:3.15.0'
     testImplementation 'org.mockito:mockito-core:3.8.0'
     testImplementation 'com.nhaarman:mockito-kotlin:1.6.0', {
@@ -202,21 +266,23 @@ dependencies {
 
     // Jetpack AndroidX libraries
     implementation "androidx.palette:palette-ktx:1.0.0"
-    implementation "androidx.annotation:annotation:1.2.0"
+    implementation "androidx.annotation:annotation:1.3.0"
     implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
-    implementation "androidx.appcompat:appcompat:1.3.0"
+    implementation "androidx.appcompat:appcompat:1.4.0"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
-    implementation "androidx.core:core-ktx:1.6.0"
-    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
-    implementation "androidx.fragment:fragment-ktx:1.3.5"
+    implementation "androidx.core:core-ktx:1.7.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.2"
+    implementation "androidx.fragment:fragment-ktx:1.4.0"
     implementation "androidx.drawerlayout:drawerlayout:1.1.1"
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.webkit:webkit:1.4.0'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
     // We had to use alpha release to be able to use edge-to-edge bottom sheet
     // In code we use reflection to access some bottom sheet private class, methods and fields
     // Whenever you update that library you will need to review those hacks, see adjustBottomSheet.
     // Also search the code for BottomSheetDialog::class
-    implementation "com.google.android.material:material:1.4.0"
+    implementation "com.google.android.material:material:1.5.0-rc01"
+    //implementation group: 'com.google.android.material', name: 'material', version: '1.6.0-alpha01'
 
     // Play Store billing
     playstoreImplementation 'com.android.billingclient:billing:3.0.3'
@@ -225,7 +291,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
 
     // reading mode
-    implementation 'net.dankito.readability4j:readability4j:1.0.6'
+    implementation 'net.dankito.readability4j:readability4j:1.0.8'
 
     // file reading
     final def mezzanineVersion = '1.1.1'
@@ -233,9 +299,12 @@ dependencies {
     kapt "com.anthonycr.mezzanine:mezzanine-compiler:$mezzanineVersion"
 
     // dependency injection
-    final def daggerVersion = '2.35.1'
+    final def daggerVersion = '2.40.5'
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "com.google.dagger:hilt-android:$daggerVersion"
+    kapt "com.google.dagger:hilt-compiler:$daggerVersion"
+
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
     // view binding
@@ -263,24 +332,22 @@ dependencies {
     implementation "info.guardianproject.netcipher:netcipher-webkit:$netCipherVersion"
 
     // memory leak analysis
-    final def leakCanaryVersion = '1.6.3'
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.7"
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     // Firebase
     // Recommended: Add the Firebase SDK for Google Analytics.
-    playstoreImplementation 'com.google.firebase:firebase-analytics:19.0.0'
-    downloadImplementation 'com.google.firebase:firebase-analytics:19.0.0'
+    playstoreImplementation 'com.google.firebase:firebase-analytics:20.0.2'
+    downloadImplementation 'com.google.firebase:firebase-analytics:20.0.2'
     // Add the Firebase SDK for Crashlytics.
-    playstoreImplementation 'com.google.firebase:firebase-crashlytics:18.1.0'
-    downloadImplementation 'com.google.firebase:firebase-crashlytics:18.1.0'
+    playstoreImplementation 'com.google.firebase:firebase-crashlytics:18.2.6'
+    downloadImplementation 'com.google.firebase:firebase-crashlytics:18.2.6'
 
 
     // Volley HTTP request
-    implementation 'com.android.volley:volley:1.2.0'
+    implementation 'com.android.volley:volley:1.2.1'
 
     // Since java.time need API 26 we use that backport instead
     // See: https://github.com/JakeWharton/ThreeTenABP
@@ -288,6 +355,9 @@ dependencies {
 
     // re2j is faster than normal java regex, used for content blocker
     implementation 'com.google.re2j:re2j:1.6'
+
+    // Code Editor //
+    implementation 'com.github.jamal2362:CodeEditor:3.0.0'
 }
 
 kapt {

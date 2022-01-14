@@ -42,6 +42,7 @@ class SearchBoxModel @Inject constructor(
                 SearchBoxDisplayChoice.DOMAIN -> safeDomain(url)
                 SearchBoxDisplayChoice.URL -> url
                 SearchBoxDisplayChoice.TITLE -> titleToDisplay(title)
+                SearchBoxDisplayChoice.TRIMMED -> Utils.trimmedProtocolFromURL(url)
             }
         }
 

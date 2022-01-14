@@ -8,5 +8,6 @@ import acr.browser.lightning.settings.preferences.IntEnum
 enum class SearchBoxDisplayChoice(override val value: Int) : IntEnum {
     DOMAIN(0),
     URL(1),
-    TITLE(2)
+    TITLE(2),
+    TRIMMED(3)
 }

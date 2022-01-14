@@ -8,13 +8,16 @@ import acr.browser.lightning.R
 import android.os.Bundle
 import android.util.Log
 import androidx.preference.Preference
+import androidx.webkit.WebViewCompat
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+import android.content.Intent
 
-
+/**
+ * About settings page.
+ */
 class AboutSettingsFragment : AbstractSettingsFragment() {
 
     override fun providePreferencesXmlResource() = R.xml.preference_about
@@ -24,9 +27,20 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
+        var webViewSummary = resources.getString(R.string.unknown)
+
+        WebViewCompat.getCurrentWebViewPackage(requireContext())?.let {
+            webViewSummary = "${it.packageName} - v${it.versionName}"
+        }
+
         clickablePreference(
             preference = SETTINGS_VERSION,
             summary = versionString()
+        )
+
+        clickablePreference(
+            preference = getString(R.string.pref_key_webview),
+            summary = webViewSummary
         )
 
         queue = Volley.newRequestQueue(this.context)
