@@ -144,9 +144,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
                 abpDao.update(entity)
                 return false
             }
-            if (response.code == 404) {
+            if (!response.isSuccessful) {
                 Handler(Looper.getMainLooper()).post {
-                    context.toast(context.getString(R.string.blocklist_update_error_404, entity.title))
+                    context.toast(context.getString(R.string.blocklist_update_error, entity.title))
                 }
                 return false
             }
