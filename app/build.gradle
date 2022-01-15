@@ -106,6 +106,7 @@ android {
             jacoco {
                 // This option needs to be included for robolectric tests
                 includeNoLocationClasses = true
+                excludes = ['jdk.internal.*']
             }
         }
     }
@@ -238,7 +239,7 @@ android {
 }
 
 jacoco {
-    toolVersion = '0.7.9' // See http://www.eclemma.org/jacoco/
+    toolVersion = '0.8.7' // See http://www.eclemma.org/jacoco/
 }
 
 // unMock is required for tests that use android.net.Uri

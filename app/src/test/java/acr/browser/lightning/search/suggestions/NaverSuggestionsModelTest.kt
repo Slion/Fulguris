@@ -39,7 +39,7 @@ class NaverSuggestionsModelTest {
         on { getString(any()) } doReturn "test"
         on { resources } doReturn mockResources
     }
-
+/*
     @Test
     fun `verify query url`() {
         val model = NaverSuggestionsModel(httpClient, requestFactory, application, NoOpLogger())
@@ -50,4 +50,5 @@ class NaverSuggestionsModelTest {
             assertThat(model.createQueryUrl(it.toString(), "null")).isEqualTo(result.toHttpUrlOrNull())
         }
     }
+    */
 }
