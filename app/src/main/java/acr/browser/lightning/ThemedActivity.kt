@@ -21,7 +21,7 @@ abstract class ThemedActivity : LocaleAwareActivity() {
      TODO: Move this in the base class after migrating it to Kotlin.
      */
     private val hiltEntryPoint = EntryPointAccessors.fromApplication(BrowserApp.instance.applicationContext, HiltEntryPoint::class.java)
-    private val quickUserPrefs: UserPreferences = hiltEntryPoint.userPreferences
+    protected val quickUserPrefs: UserPreferences = hiltEntryPoint.userPreferences
     // TODO reduce protected visibility
     protected var accentId: AccentTheme = quickUserPrefs.useAccent
     protected var themeId: AppTheme = quickUserPrefs.useTheme
@@ -58,7 +58,7 @@ abstract class ThemedActivity : LocaleAwareActivity() {
     }
 
     @StyleRes
-    protected abstract fun accentStyle(accentTheme: AccentTheme): Int?
+    protected open fun accentStyle(accentTheme: AccentTheme): Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Set the theme before onCreate otherwise settings are broken
@@ -85,16 +85,26 @@ abstract class ThemedActivity : LocaleAwareActivity() {
     }
 
     /**
-     *
+     * Private because one should use [provideThemeOverride] to set our theme.
+     * Changing it during the lifetime of the activity or after super.[onCreate] call is not working properly.
      */
-    protected fun applyTheme(themeId: AppTheme) {
+    private fun applyTheme(themeId: AppTheme) {
         setTheme(themeStyle(themeId))
         // Check if we have a dark theme
+        isDarkTheme = isDarkTheme(themeId)
+    }
+
+    /**
+     * Tells if the given [themeId] is dark. Takes into account current system theme if needed.
+     * Works even before calling supper.[onCreate].
+     */
+    protected fun isDarkTheme(themeId: AppTheme) : Boolean {
         val mode = resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
-        isDarkTheme = themeId == AppTheme.BLACK // Black qualifies as dark theme
+        return themeId == AppTheme.BLACK // Black qualifies as dark theme
                 || themeId == AppTheme.DARK // Dark is indeed a dark theme
                 // Check if we are using system default theme and it is currently set to dark
                 || (themeId == AppTheme.DEFAULT && mode == Configuration.UI_MODE_NIGHT_YES)
+
     }
 
     /**

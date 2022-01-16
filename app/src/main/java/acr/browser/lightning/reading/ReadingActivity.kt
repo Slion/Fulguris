@@ -22,13 +22,13 @@
 
 package acr.browser.lightning.reading
 
+
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
+import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
 import acr.browser.lightning.dialog.BrowserDialog.setDialogSize
-import acr.browser.lightning.settings.preferences.UserPreferences
-import acr.browser.lightning.settings.activity.ThemedSettingsActivity
 import acr.browser.lightning.utils.Utils
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -59,7 +59,6 @@ import butterknife.ButterKnife
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Scheduler
-import io.reactivex.disposables.Disposable
 import net.dankito.readability4j.Readability4J
 import org.jsoup.Jsoup
 import java.io.*
@@ -68,7 +67,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ReadingActivity : ThemedSettingsActivity(), TextToSpeech.OnInitListener {
+class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
     @JvmField
     @BindView(R.id.textViewTitle)
     var mTitle: TextView? = null
@@ -77,9 +76,6 @@ class ReadingActivity : ThemedSettingsActivity(), TextToSpeech.OnInitListener {
     @BindView(R.id.textViewBody)
     var mBody: TextView? = null
 
-    @JvmField
-    @Inject
-    var mUserPreferences: UserPreferences? = null
 
     @JvmField
     @Inject
@@ -97,30 +93,33 @@ class ReadingActivity : ThemedSettingsActivity(), TextToSpeech.OnInitListener {
     private var file: Boolean = false
     private var mTextSize = 0
     private var mProgressDialog: AlertDialog? = null
-    private val mPageLoaderSubscription: Disposable? = null
-    private val originalHtml: String? = null
+
+    /**
+     * Override our theme as needed according to current theme and invert mode.
+     */
+    override fun provideThemeOverride(): AppTheme {
+        var applyDarkTheme = isDarkTheme(quickUserPrefs.useTheme)
+        applyDarkTheme = (applyDarkTheme && !quickUserPrefs.invertColors) || (!applyDarkTheme && quickUserPrefs.invertColors)
+        return if (applyDarkTheme) {
+            AppTheme.BLACK
+        } else {
+            AppTheme.LIGHT
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //this.injector.inject(this)
-        overridePendingTransition(R.anim.slide_in_from_right, R.anim.fade_out_scale)
-        mInvert = mUserPreferences!!.invertColors
-        iTtsEngine = TextToSpeech(this, this)
 
-        // Change our theme if inverted
-        if (mInvert) {
-            if (useDarkTheme) {
-                applyTheme(AppTheme.LIGHT);
-            } else {
-                applyTheme(AppTheme.BLACK);
-            }
-        }
+        overridePendingTransition(R.anim.slide_in_from_right, R.anim.fade_out_scale)
+        mInvert = quickUserPrefs.invertColors
+        iTtsEngine = TextToSpeech(this, this)
 
         setContentView(R.layout.reading_view)
         ButterKnife.bind(this)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        mTextSize = mUserPreferences!!.readingTextSize
+        mTextSize = quickUserPrefs!!.readingTextSize
         mBody!!.textSize = getTextSize(mTextSize)
         mTitle!!.text = getString(R.string.untitled)
         mBody!!.text = getString(R.string.loading)
@@ -322,7 +321,7 @@ class ReadingActivity : ThemedSettingsActivity(), TextToSpeech.OnInitListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.invert_item -> {
-                mUserPreferences!!.invertColors = !mInvert
+                quickUserPrefs!!.invertColors = !mInvert
                 if (mUrl != null) {
                     launch(this, mUrl!!, file)
                     finish()
@@ -347,7 +346,7 @@ class ReadingActivity : ThemedSettingsActivity(), TextToSpeech.OnInitListener {
                         .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, arg1: Int ->
                             mTextSize = bar.progress
                             mBody!!.textSize = getTextSize(mTextSize)
-                            mUserPreferences!!.readingTextSize = bar.progress
+                            quickUserPrefs!!.readingTextSize = bar.progress
                         }
                 val dialog: Dialog = builder.show()
                 setDialogSize(this, dialog)
