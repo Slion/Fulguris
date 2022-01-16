@@ -25,22 +25,11 @@ class FilterContainer {
     //  of true, checking is much faster
     private var domainOnly = true
 
-    // not needed any more
-/*    operator fun plusAssign(filter: ContentFilter) {
-        val key = when {
-            filter.isRegex -> ""
-            else -> Tag.createBest(filter.pattern)
-        }
-        this[key] = filter
-        // using old way with tags, need to do full check
-        domainOnly = false
-    }
-*/
     // not having to create best tag accelerates loading lists and filling FilterContainer by 20-50%
     fun addWithTag(p: Pair<String, ContentFilter>) {
-        if (!p.first.contains('.'))
-            // normally created tags will only consist of %, numbers and letters
-            // only tag specifically created for patterns consisting of domains contain '.'
+        // normally, created tags will only consist of %, numbers and letters
+        //  only tag specifically created for patterns that are a domain will contain '.'
+        if (domainOnly && !p.first.contains('.'))
             domainOnly = false
         this[p.first] = p.second
     }
@@ -118,5 +107,19 @@ class FilterContainer {
             domain = domain.substringAfter('.')
         }
         return list
+    }
+
+    // only used in tests
+    operator fun plusAssign(filter: ContentFilter) {
+        val key = when {
+            filter.isRegex -> ""
+            else -> Tag.createBest(filter.pattern)
+        }
+        addWithTag(Pair(key, filter))
+    }
+
+    // only used in tests
+    fun filters(): Map<String, ContentFilter> {
+        return filters
     }
 }

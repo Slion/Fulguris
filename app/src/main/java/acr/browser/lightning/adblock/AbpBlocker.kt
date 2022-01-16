@@ -42,7 +42,6 @@ class AbpBlocker @Inject constructor(
 
     // use a map of filterContainers instead of several separate containers
     // TODO: could also use list and associate prefix with id, but only if it's considerably faster...
-    private val prefixes = listOf(ABP_PREFIX_ALLOW, ABP_PREFIX_DENY, ABP_PREFIX_IMPORTANT, ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
     private val filterContainers = prefixes.associateWith { FilterContainer() }
 
     // store whether lists are loaded (and delay any request until loading is done)
@@ -336,61 +335,7 @@ class AbpBlocker @Inject constructor(
         like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
          */
 
-        // TODO: log url and parameters to check this is correct
-        val url = request.url.toString().substringBefore('?').substringBefore('#') // url without query and fragment
-        // getting this map needs to be done for every request if some generic parameters are removed -> should be as fast as possible
-        val parameters = request.url.getQueryParameterMap() as MutableMap
-
-        filters.forEach { filter ->
-            when(filter.modify!![0]) {
-                MODIFY_PREFIX_REMOVEPARAM -> {
-                    if (parameters.isEmpty()) return@forEach // no need to check if there are no parameters
-                    if (filter.modify!!.length == 1) { // no removeParameter means remove all parameters
-                        parameters.clear()
-                        return@forEach
-                    }
-                    val negation = filter.modify!![1] == '~'
-                    val removeParameter = filter.modify!!.substring(if (negation) 2 else 1)
-
-                    if (removeParameter.startsWith('/')) {
-                        // TODO: it's a regex, start the matcher!
-                    } else {
-                        if (negation)
-                            parameters.entries.retainAll { it.key == removeParameter }
-                        else
-                            parameters.entries.removeAll { it.key == removeParameter }
-                    }
-                }
-                MODIFY_PREFIX_CSP -> {
-                    // from uBo documentation https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#modifier-filters:
-                    //   This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames.
-                    //  -> add 'Content-Security-Policy' header entry, but apparently not to the request!
-                    //   wikipedia: If the Content-Security-Policy header is present in the server response -> need to add to the response, not request!!
-                    //   -> understand what needs to be done
-                    //   probably modify the bytestream from response
-                    //    gather csp stuff here in some list and use it in some InputStream.injectCSP(list) function
-                    //    this may help: https://stackoverflow.com/questions/61825334/convert-inputstream-to-flow
-                    //   best: simply check how uBo does it, this should at least give an idea
-                }
-                MODIFY_PREFIX_REDIRECT -> {
-                    // apparently this always redirects to some internal resources! see uBo documentation
-                    //  need to get the resources library from uBo
-                    // and this means the other 2 can be ignored if a redirect filter exists
-                }
-            }
-        }
-        // TODO: return null if no filter actually applies
-
-        val modifiedUrl = url +
-                (if (parameters.isNotEmpty())
-                    "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
-                else "") +
-                (request.url.fragment ?: "")
-        val newRequest = Request.Builder()
-            .url(modifiedUrl) // use new URL
-            .method(request.method, null) // use same method, TODO: is body null really ok?
-            .headers(request.requestHeaders.toHeaders()) // use same headers, TODO: are there filters that modify the request headers
-            .build() // anything missing?
+        val newRequest = getModifiedRequest(request, filters) ?: return null
 
         val call = OkHttpClient().newCall(newRequest) // TODO: maybe have one client like it's done in AbpListUpdater
         try {
@@ -402,11 +347,25 @@ class AbpBlocker @Inject constructor(
         } catch (e: IOException) {
         }
 
+//        MODIFY_PREFIX_CSP -> {
+            // from uBo documentation https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#modifier-filters:
+            //   This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames.
+            //  -> add 'Content-Security-Policy' header entry, but apparently not to the request!
+            //   wikipedia: If the Content-Security-Policy header is present in the server response -> need to add to the response, not request!!
+            //   -> understand what needs to be done
+            //   probably modify the bytestream from response
+            //    gather csp stuff here in some list and use it in some InputStream.injectCSP(list) function
+            //    this may help: https://stackoverflow.com/questions/61825334/convert-inputstream-to-flow
+            //   best: simply check how uBo does it, this should at least give an idea
+//        }
+
         // still return null if nothing was changed? (e.g. parameters not found)
         return null
     }
 
     companion object {
+        private val prefixes = listOf(ABP_PREFIX_ALLOW, ABP_PREFIX_DENY, ABP_PREFIX_IMPORTANT, ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
+
         private const val BUFFER_SIZE = 1024 * 8
         private const val TAG = "AbpBlocker"
 
@@ -470,6 +429,72 @@ class AbpBlocker @Inject constructor(
         }
 
         private fun isModify(prefix: String) = prefix in listOf(ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
+
+        fun getModifiedRequest(request: WebResourceRequest, filters: List<ContentFilter>): Request? {
+            // TODO: log url and parameters to check this is correct
+            val url = request.url.toString().substringBefore('?').substringBefore('#') // url without query and fragment
+            // getting this map needs to be done for every request if some generic parameters are removed -> should be as fast as possible
+            val parameters = request.url.getQueryParameterMap() as MutableMap
+            //TODO: first check whether request.url.queryParameterNames actually contains bad parameters?
+            //  how to do... assume i don't want to create the parameter map unnecessarily
+            //   i have the name of parameters ready
+            //   i know the modify filters... but i need to check every one because i need to remove the prefex
+            //    -> remove the prefix and create classes instead
+            //    or add the prefix to each of the parameters before comparing (do this first, change depending on performance)
+
+
+            // maybe modify should not be a string, but some kind of class / interface
+            //  and i want subclasses, so e.g.
+            //    when modify is removeparam
+            //      if modifiy is removeparamregex -> bla
+            //      else -> it's simple (and negataion could also be in there)
+            //  so... need to decode, read and write it properly!
+
+            filters.forEach { filter ->
+                when(filter.modify!![0]) {
+                    MODIFY_PREFIX_REMOVEPARAM -> {
+                        if (parameters.isEmpty()) return@forEach // no need to check if there are no parameters
+                        if (filter.modify!!.length == 1) { // no removeParameter means remove all parameters
+                            parameters.clear()
+                            return@forEach
+                        }
+                        val negation = filter.modify!![1] == '~'
+                        val removeParameter = filter.modify!!.substring(if (negation) 2 else 1)
+
+                        if (removeParameter.startsWith('/')) {
+                            // TODO: it's a regex, start the matcher!
+                        } else {
+                            if (negation)
+                                parameters.entries.retainAll { it.key == removeParameter }
+                            else
+                                parameters.entries.removeAll { it.key == removeParameter }
+                        }
+                    }
+                    MODIFY_PREFIX_REDIRECT -> {
+                        // apparently this always redirects to some internal resources! see uBo documentation
+                        //  need to get the resources library from uBo
+                        // and this means the other 2 can be ignored if a redirect filter exists
+                    }
+                }
+            }
+            // TODO: return null if no filter actually applies
+
+            val modifiedUrl = url +
+                    (if (parameters.isNotEmpty())
+                        "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
+                    else "") +
+                    (request.url.fragment ?: "")
+            return if (modifiedUrl == request.url.toString()) null
+            else Request.Builder()
+                .url(modifiedUrl) // use new URL
+                .method(request.method, null) // use same method, TODO: is body null really ok?
+                .headers(request.requestHeaders.toHeaders()) // use same headers, TODO: are there filters that modify the request headers
+                .build() // anything missing?
+        }
+
+        fun parameterString(parameters: Map<String, String>) = if (parameters.isEmpty()) ""
+        else "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
+
 
         // is encoded query and decode necessary?
         //  is it slower than using decoded query?
