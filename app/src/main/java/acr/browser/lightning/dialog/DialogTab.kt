@@ -22,6 +22,7 @@
 package acr.browser.lightning.dialog
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 
 
 /**
@@ -35,8 +36,8 @@ import androidx.annotation.DrawableRes
 class DialogTab(
     @DrawableRes
     val icon: Int = 0,
-    // Should we use resource id instead?
-    val title: String,
+    @param:StringRes
+    val title: Int,
     val show: Boolean = true,
     vararg items: DialogItem
 ) {

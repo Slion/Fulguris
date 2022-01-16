@@ -82,7 +82,7 @@ class TabsPagerAdapter(
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return tabs[position].title
+        return context.getString(tabs[position].title)
     }
 
     /**

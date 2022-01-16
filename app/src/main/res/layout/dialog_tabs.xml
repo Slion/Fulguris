@@ -33,16 +33,20 @@ Defines a dialog containing tabs
     android:paddingTop="0dp"
     android:paddingHorizontal="0dp"
     >
-
-    <TextView
-        android:id="@+id/dialog_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="start"
-        android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-         />
+    <!--
+    You could uncomment that text view to use custom title.
+    However if that view is not found it will use the default alert dialog title which is recommended.
+     -->
+<!--    <TextView-->
+<!--        android:id="@+id/dialog_title"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ellipsize="end"-->
+<!--        android:gravity="start"-->
+<!--        android:maxLines="2"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Title"-->
+<!--        android:padding="@dimen/dialog_padding"-->
+<!--         />-->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/dialog_tab_layout"

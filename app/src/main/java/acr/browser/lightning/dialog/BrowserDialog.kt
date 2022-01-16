@@ -129,6 +129,20 @@ object BrowserDialog {
         }
     }
 
+
+    /**
+     * Build and show a tabbed dialog based on the provided parameters.
+     *
+     * @param aActivity The activity requesting that dialog.
+     * @param aTitle The dialog title string resource id.
+     * @param aHideSingleTab Set to true to hide tab layout when a single tab is visible.
+     * @param aTabs Define our dialog's tabs.
+     */
+    @JvmStatic
+    fun show(aActivity: Activity, @StringRes aTitle: Int, aHideSingleTab: Boolean, vararg aTabs: DialogTab) {
+        show(aActivity,aActivity.getString(aTitle), aHideSingleTab,*aTabs)
+    }
+
     /**
      * Build and show a tabbed dialog based on the provided parameters.
      *
@@ -148,20 +162,24 @@ object BrowserDialog {
         val tabLayout = layout.findViewById<TabLayout>(R.id.dialog_tab_layout)
         val pager = layout.findViewById<ViewPager>(R.id.dialog_viewpager)
 
-        // Set dialog title
-        // TODO: Should we rather or also use the actual dialog title? See: AlertDialog.setTitle.
-        if (aTitle?.isNotEmpty() == true) {
-            titleView.text = aTitle
-        } else {
-            titleView.isVisible = false
-        }
-
         // Filter out invisible tabs
         val tabList = aTabs.filter(DialogTab::show)
         // Hide our tab layout out if needed
         tabLayout.isVisible = !(aHideSingleTab && tabList.count() == 1)
         // Create our dialog now as our adapter needs it
         val dialog = builder.create()
+        // Set dialog title
+        if (aTitle?.isNotEmpty() == true) {
+            if (titleView!=null) {
+                // Use custom title if provided in our layout
+                titleView.text = aTitle
+            } else {
+                // Otherwise you standard dialog title
+                dialog.setTitle(aTitle)
+            }
+        } else {
+            titleView?.isVisible = false
+        }
         // Create our adapter which will be creating our tabs content
         pager.adapter = TabsPagerAdapter(aActivity, dialog, tabList)
         // Hook-in our adapter with our tab layout

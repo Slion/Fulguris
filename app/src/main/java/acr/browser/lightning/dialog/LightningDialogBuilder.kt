@@ -300,11 +300,14 @@ class LightningDialogBuilder @Inject constructor(
         }
     }
 
+    /**
+     * Menu shown when doing a long press on an history list item.
+     */
     fun showLongPressedHistoryLinkDialog(
             activity: Activity,
             uiController: UIController,
             url: String
-    ) = BrowserDialog.show(activity, R.string.action_history,
+    ) = BrowserDialog.show(activity, "", false, DialogTab(show=true, icon=R.drawable.ic_history, title=R.string.action_history,items=arrayOf(
             DialogItem(title = R.string.dialog_open_new_tab) {
                 uiController.handleNewTab(NewTab.FOREGROUND, url)
             },
@@ -328,7 +331,7 @@ class LightningDialogBuilder @Inject constructor(
                         .subscribeOn(databaseScheduler)
                         .observeOn(mainScheduler)
                         .subscribe(uiController::handleHistoryChange)
-            })
+            })))
 
     /**
      * Show a dialog allowing the user to action either a link or an image.
@@ -344,7 +347,7 @@ class LightningDialogBuilder @Inject constructor(
         showImageTab: Boolean
     ) = BrowserDialog.show(activity, "", false,
         //Link tab
-        DialogTab(show=showLinkTab, icon=R.drawable.ic_link, title=activity.getString(R.string.button_link),items=arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
+        DialogTab(show=showLinkTab, icon=R.drawable.ic_link, title=R.string.button_link,items=arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
             uiController.handleNewTab(NewTab.FOREGROUND, linkUrl)
             },
             DialogItem(title = R.string.dialog_open_background_tab) {
@@ -371,7 +374,7 @@ class LightningDialogBuilder @Inject constructor(
                 }
             })),
         // Image tab
-        DialogTab(show=showImageTab, icon=R.drawable.ic_image, title = activity.getString(R.string.button_image),
+        DialogTab(show=showImageTab, icon=R.drawable.ic_image, title = R.string.button_image,
             items = arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
                 uiController.handleNewTab(NewTab.FOREGROUND, imageUrl)
             },
