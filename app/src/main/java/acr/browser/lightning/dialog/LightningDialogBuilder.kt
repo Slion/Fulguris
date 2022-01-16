@@ -2,7 +2,6 @@ package acr.browser.lightning.dialog
 
 import acr.browser.lightning.MainActivity
 import acr.browser.lightning.R
-import acr.browser.lightning.constant.HTTP
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.asFolder
@@ -12,10 +11,7 @@ import acr.browser.lightning.database.history.HistoryRepository
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.download.DownloadHandler
-import acr.browser.lightning.extensions.copyToClipboard
-import acr.browser.lightning.extensions.onFocusGained
-import acr.browser.lightning.extensions.resizeAndShow
-import acr.browser.lightning.extensions.toast
+import acr.browser.lightning.extensions.*
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.IntentUtils
@@ -25,6 +21,7 @@ import android.app.Activity
 import android.content.ClipboardManager
 import android.view.View
 import android.webkit.MimeTypeMap
+import android.webkit.URLUtil
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
@@ -101,7 +98,7 @@ class LightningDialogBuilder @Inject constructor(
             },
             DialogItem(
                     title = R.string.dialog_open_incognito_tab,
-                    isConditionMet = activity is MainActivity
+                    show = activity is MainActivity
             ) {
                 uiController.handleNewTab(NewTab.INCOGNITO, entry.url)
             },
@@ -316,7 +313,7 @@ class LightningDialogBuilder @Inject constructor(
             },
             DialogItem(
                     title = R.string.dialog_open_incognito_tab,
-                    isConditionMet = activity is MainActivity
+                    show = activity is MainActivity
             ) {
                 uiController.handleNewTab(NewTab.INCOGNITO, url)
             },
@@ -333,74 +330,83 @@ class LightningDialogBuilder @Inject constructor(
                         .subscribe(uiController::handleHistoryChange)
             })
 
-    // TODO There should be a way in which we do not need an activity reference to download a file
-    fun showLongPressImageDialog(
-            activity: Activity,
-            uiController: UIController,
-            url: String,
-            userAgent: String
-    ) = BrowserDialog.show(activity, url.replace(HTTP, ""),
-            DialogItem(title = R.string.dialog_open_new_tab) {
-                uiController.handleNewTab(NewTab.FOREGROUND, url)
+    /**
+     * Show a dialog allowing the user to action either a link or an image.
+     */
+    fun showLongPressLinkImageDialog(
+        activity: Activity,
+        uiController: UIController,
+        linkUrl: String,
+        imageUrl: String,
+        text: String?,
+        userAgent: String,
+        showLinkTab: Boolean,
+        showImageTab: Boolean
+    ) = BrowserDialog.show(activity, "", false,
+        //Link tab
+        DialogTab(show=showLinkTab, icon=R.drawable.ic_link, title=activity.getString(R.string.button_link),items=arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
+            uiController.handleNewTab(NewTab.FOREGROUND, linkUrl)
             },
             DialogItem(title = R.string.dialog_open_background_tab) {
-                uiController.handleNewTab(NewTab.BACKGROUND, url)
+                uiController.handleNewTab(NewTab.BACKGROUND, linkUrl)
             },
             DialogItem(
-                    title = R.string.dialog_open_incognito_tab,
-                    isConditionMet = activity is MainActivity
+                title = R.string.dialog_open_incognito_tab,
+                show = activity is MainActivity
             ) {
-                uiController.handleNewTab(NewTab.INCOGNITO, url)
+                uiController.handleNewTab(NewTab.INCOGNITO, linkUrl)
             },
             DialogItem(title = R.string.action_share) {
-                IntentUtils(activity).shareUrl(url, null)
+                IntentUtils(activity).shareUrl(linkUrl, null)
             },
             DialogItem(title = R.string.dialog_copy_link) {
-                clipboardManager.copyToClipboard(url)
+                clipboardManager.copyToClipboard(linkUrl)
+                activity.snackbar(R.string.message_link_copied)
             },
-            DialogItem(title = R.string.dialog_download_image) {
-                // Ask for required permissions before starting our download
-                PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            // Show copy text dialog item if we have some text
+            DialogItem(title = R.string.dialog_copy_text, show = !text.isNullOrEmpty()) {
+                if (!text.isNullOrEmpty()) {
+                    clipboardManager.copyToClipboard(text)
+                    activity.snackbar(R.string.message_text_copied)
+                }
+            })),
+        // Image tab
+        DialogTab(show=showImageTab, icon=R.drawable.ic_image, title = activity.getString(R.string.button_image),
+            items = arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
+                uiController.handleNewTab(NewTab.FOREGROUND, imageUrl)
+            },
+                DialogItem(title = R.string.dialog_open_background_tab) {
+                    uiController.handleNewTab(NewTab.BACKGROUND, imageUrl)
+                },
+                DialogItem(
+                    title = R.string.dialog_open_incognito_tab,
+                    show = activity is MainActivity
+                ) {
+                    uiController.handleNewTab(NewTab.INCOGNITO, imageUrl)
+                },
+                DialogItem(title = R.string.action_share) {
+                    IntentUtils(activity).shareUrl(imageUrl, null)
+                },
+                DialogItem(title = R.string.dialog_copy_link) {
+                    clipboardManager.copyToClipboard(imageUrl)
+                    activity.snackbar(R.string.message_link_copied)
+                },
+                DialogItem(title = R.string.dialog_download_image,
+                    // Do not show download option for data URL as we don't support that for now
+                    show=!URLUtil.isDataUrl(imageUrl)) {
+                    // Ask for required permissions before starting our download
+                    PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
                         object : PermissionsResultAction() {
                             override fun onGranted() {
-                                val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(url).lowercase(Locale.ROOT))
+                                val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(imageUrl).lowercase(Locale.ROOT))
                                 // Not sure why we should use PNG by default though.
                                 // TODO: I think we have some code somewhere that can download something and then check its mime type from its content.
-                                downloadHandler.onDownloadStart(activity, userPreferences, url, userAgent, "attachment", mimeType?:"image/png", "")
+                                downloadHandler.onDownloadStart(activity, userPreferences, imageUrl, userAgent, "attachment", mimeType?:"image/png", "")
                             }
                             override fun onDenied(permission: String) {
                                 //TODO show message
                             }
                         })
-            })
-
-    fun showLongPressLinkDialog(
-            activity: Activity,
-            uiController: UIController,
-            url: String,
-            text: String?,
-    ) = BrowserDialog.show(activity, url,
-            DialogItem(title = R.string.dialog_open_new_tab) {
-                uiController.handleNewTab(NewTab.FOREGROUND, url)
-            },
-            DialogItem(title = R.string.dialog_open_background_tab) {
-                uiController.handleNewTab(NewTab.BACKGROUND, url)
-            },
-            DialogItem(
-                    title = R.string.dialog_open_incognito_tab,
-                    isConditionMet = activity is MainActivity
-            ) {
-                uiController.handleNewTab(NewTab.INCOGNITO, url)
-            },
-            DialogItem(title = R.string.action_share) {
-                IntentUtils(activity).shareUrl(url, null)
-            },
-            DialogItem(title = R.string.dialog_copy_link) {
-                clipboardManager.copyToClipboard(url)
-            },
-            // Show copy text dialog item if we have some text
-            DialogItem(title = R.string.dialog_copy_text, isConditionMet = !text.isNullOrEmpty()) {
-                if (!text.isNullOrEmpty()) clipboardManager.copyToClipboard(text)
-            }
+                })),
     )
 }
