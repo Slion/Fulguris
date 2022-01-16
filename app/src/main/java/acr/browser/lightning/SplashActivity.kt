@@ -57,16 +57,19 @@ class SplashActivity @Inject constructor(): LocaleAwareActivity() {
             //it.remove()
             // Close this activity, with a defensive delay for smoother transitions on slower devices
             //finish()
-            mHandler.postDelayed({
-                // Just start our main activity now for fastest loading
-                // TODO: check if we need onboarding
-                // Launch main activity
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                //
-                finish()
-            },0)
         }
+
+        // Put this here as above in the callback it did not work on Android 12
+        // It would be too much to ask Google engineer to test their code across Android versions…
+        mHandler.postDelayed({
+            // Just start our main activity now for fastest loading
+            // TODO: check if we need onboarding
+            // Launch main activity
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            //
+            finish()
+        },0)
 
         setContentView(R.layout.activity_splash)
     }
