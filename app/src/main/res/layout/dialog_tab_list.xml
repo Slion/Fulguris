@@ -29,7 +29,7 @@ Defines a dialog tab content displaying a list of items
     android:layout_height="wrap_content"
     android:maxHeight="@dimen/dialog_max_size"
     android:orientation="vertical"
-    android:padding="@dimen/padding_medium">
+    android:padding="@dimen/material_grid_unit">
 
 <!--    <TextView-->
 <!--        android:id="@+id/dialog_title"-->
