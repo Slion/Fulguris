@@ -56,6 +56,27 @@ class LightningDialogBuilder @Inject constructor(
         INCOGNITO
     }
 
+
+    /**
+     * Show the appropriated dialog for the long pressed link.
+     * SL: Not used since we don't have a download list anymore.
+     *
+     * @param activity used to show the dialog
+     * @param url      the long pressed url
+     */
+    // TODO allow individual downloads to be deleted.
+    fun showLongPressedDialogForDownloadUrl(
+        activity: Activity,
+        uiController: UIController,
+        url: String
+    ) = BrowserDialog.show(activity, R.string.action_downloads,
+        DialogItem(title = R.string.dialog_delete_all_downloads) {
+            downloadsModel.deleteAllDownloads()
+                .subscribeOn(databaseScheduler)
+                .observeOn(mainScheduler)
+                .subscribe(uiController::handleDownloadDeleted)
+        })
+
     /**
      * Show the appropriated dialog for the long pressed link. It means that we try to understand
      * if the link is relative to a bookmark or is just a folder.
@@ -85,11 +106,14 @@ class LightningDialogBuilder @Inject constructor(
         }
     }
 
+    /**
+     * Show bookmark context menu.
+     */
     fun showLongPressedDialogForBookmarkUrl(
             activity: Activity,
             uiController: UIController,
             entry: Bookmark.Entry
-    ) = BrowserDialog.show(activity, R.string.action_bookmarks,
+    ) = BrowserDialog.show(activity, "",false, DialogTab(show=true, icon=R.drawable.ic_bookmark, title=R.string.dialog_title_bookmark,items=arrayOf(
             DialogItem(title = R.string.dialog_open_new_tab) {
                 uiController.handleNewTab(NewTab.FOREGROUND, entry.url)
             },
@@ -120,26 +144,7 @@ class LightningDialogBuilder @Inject constructor(
             },
             DialogItem(title = R.string.dialog_edit_bookmark) {
                 showEditBookmarkDialog(activity, uiController, entry)
-            })
-
-    /**
-     * Show the appropriated dialog for the long pressed link.
-     *
-     * @param activity used to show the dialog
-     * @param url      the long pressed url
-     */
-    // TODO allow individual downloads to be deleted.
-    fun showLongPressedDialogForDownloadUrl(
-            activity: Activity,
-            uiController: UIController,
-            url: String
-    ) = BrowserDialog.show(activity, R.string.action_downloads,
-            DialogItem(title = R.string.dialog_delete_all_downloads) {
-                downloadsModel.deleteAllDownloads()
-                        .subscribeOn(databaseScheduler)
-                        .observeOn(mainScheduler)
-                        .subscribe(uiController::handleDownloadDeleted)
-            })
+            })))
 
     /**
      * Show the add bookmark dialog. Shows a dialog with the title and URL pre-populated.
@@ -210,12 +215,12 @@ class LightningDialogBuilder @Inject constructor(
     ) {
         val editBookmarkDialog = MaterialAlertDialogBuilder(activity)
         editBookmarkDialog.setTitle(R.string.title_edit_bookmark)
-        val dialogLayout = View.inflate(activity, R.layout.dialog_edit_bookmark, null)
-        val getTitle = dialogLayout.findViewById<EditText>(R.id.bookmark_title)
+        val layout = View.inflate(activity, R.layout.dialog_edit_bookmark, null)
+        val getTitle = layout.findViewById<EditText>(R.id.bookmark_title)
         getTitle.setText(entry.title)
-        val getUrl = dialogLayout.findViewById<EditText>(R.id.bookmark_url)
+        val getUrl = layout.findViewById<EditText>(R.id.bookmark_url)
         getUrl.setText(entry.url)
-        val getFolder = dialogLayout.findViewById<AutoCompleteTextView>(R.id.bookmark_folder)
+        val getFolder = layout.findViewById<AutoCompleteTextView>(R.id.bookmark_folder)
         getFolder.setHint(R.string.folder)
         getFolder.setText(entry.folder.title)
 
@@ -228,7 +233,7 @@ class LightningDialogBuilder @Inject constructor(
                     getFolder.threshold = 1
                     getFolder.onFocusGained { getFolder.showDropDown(); mainScheduler.scheduleDirect{getFolder.selectAll()} }
                     getFolder.setAdapter(suggestionsAdapter)
-                    editBookmarkDialog.setView(dialogLayout)
+                    editBookmarkDialog.setView(layout)
                     editBookmarkDialog.setPositiveButton(activity.getString(R.string.action_ok)) { _, _ ->
                         val folder = getFolder.text.toString().asFolder()
                         if (folder.title != entry.folder.title) {
@@ -261,7 +266,9 @@ class LightningDialogBuilder @Inject constructor(
                                     .subscribe(uiController::handleBookmarksChange)
                         }
                     }
-                    editBookmarkDialog.resizeAndShow()
+                    val dialog = editBookmarkDialog.resizeAndShow()
+                    // Discard it on screen rotation as it's broken anyway
+                    layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
                 }
     }
 
@@ -269,7 +276,7 @@ class LightningDialogBuilder @Inject constructor(
             activity: Activity,
             uiController: UIController,
             folder: Bookmark.Folder
-    ) = BrowserDialog.show(activity, R.string.action_folder,
+    ) = BrowserDialog.show(activity, "", false, DialogTab(show=true, icon=R.drawable.ic_folder, title=R.string.action_folder,items=arrayOf(
             DialogItem(title = R.string.dialog_rename_folder) {
                 showRenameFolderDialog(activity, uiController, folder)
             },
@@ -280,7 +287,7 @@ class LightningDialogBuilder @Inject constructor(
                         .subscribe {
                             uiController.handleBookmarkDeleted(folder)
                         }
-            })
+            })))
 
     private fun showRenameFolderDialog(
             activity: Activity,

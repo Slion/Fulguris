@@ -19,12 +19,10 @@ import acr.browser.lightning.R
 import acr.browser.lightning.extensions.*
 import acr.browser.lightning.list.RecyclerViewDialogItemAdapter
 import acr.browser.lightning.list.RecyclerViewStringAdapter
-import acr.browser.lightning.utils.DeviceUtils
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
@@ -246,20 +244,23 @@ object BrowserDialog {
         @StringRes action: Int,
         textInputListener: (String) -> Unit
     ) {
-        val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_text, null)
-        val editText = dialogView.findViewById<EditText>(R.id.dialog_edit_text)
+        val layout = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_text, null)
+        val editText = layout.findViewById<EditText>(R.id.dialog_edit_text)
 
         editText.setHint(hint)
         if (currentText != null) {
             editText.setText(currentText)
         }
 
-        MaterialAlertDialogBuilder(activity)
+        val dialog = MaterialAlertDialogBuilder(activity)
             .setTitle(title)
-            .setView(dialogView)
+            .setView(layout)
             .setPositiveButton(action
             ) { _, _ -> textInputListener(editText.text.toString()) }
             .resizeAndShow()
+
+        // Discard it on screen rotation as it's broken anyway
+        layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
     }
 
     @JvmStatic
