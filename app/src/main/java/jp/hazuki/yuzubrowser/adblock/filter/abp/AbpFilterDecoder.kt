@@ -177,12 +177,12 @@ class AbpFilterDecoder {
         }
         val optionsIndex = filter.lastIndexOf('$')
         if (optionsIndex >= 0) {
-            val options = filter.substring(optionsIndex + 1).split(',')
+            val options = filter.substring(optionsIndex + 1).split(',').toMutableList()
             // all is equal to: document, popup, inline-script, inline-font
             //  but on mobile / webview there are no popups anyway
             if (options.contains("all")) {
-                options as MutableList
                 options.remove("all")
+                contentType = contentType  or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
                 if (!options.contains("~document"))
                     contentType = contentType or ContentRequest.TYPE_DOCUMENT
                 if (!options.contains("~inline-font")) {
