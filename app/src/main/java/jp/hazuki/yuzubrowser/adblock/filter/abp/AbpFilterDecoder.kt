@@ -292,7 +292,7 @@ class AbpFilterDecoder {
         }
 
         val abpFilter =
-            if (filter.length >= 2 && filter[0] == '/' && filter[filter.lastIndex] == '/') {
+            if (filter.length >= 2 && filter[0] == '/' && filter[filter.lastIndex] == '/' && filter.mayContainRegexChars()) {
                 createRegexFilter(filter, contentType, ignoreCase, domains, thirdParty) ?: return
             } else {
                 val isStartsWith = filter.startsWith("||")
@@ -361,6 +361,16 @@ class AbpFilterDecoder {
             important -> importantAllowList += abpFilter
             else -> whiteList += abpFilter
         }
+    }
+
+    private fun String.mayContainRegexChars(): Boolean {
+        forEach {
+            when (it.lowercaseChar()) {
+                in 'a'..'z', in '0'..'9', '%', '/', '_', '-' -> Unit
+                else -> return true
+            }
+        }
+        return false
     }
 
     private fun String.domainsToDomainMap(delimiter: Char): DomainMap? {
