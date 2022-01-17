@@ -421,6 +421,93 @@ class AbpBlocker @Inject constructor(
         }
     }
 
+    // resources from uBlockOrigin!
+    //  TODO: implement it in a better maintainable version, maybe something generated with a script
+    //   from https://github.com/gorhill/uBlock/blob/master/src/js/redirect-engine.js
+    private fun redirectResponse(resource: String): WebResourceResponse =
+        when (resource) {
+            "1x1.gif", "1x1-transparent.gif" ->
+                WebResourceResponse("image/gif", null, redirectFile("1x1.gif"))
+            "2x2.png", "2x2-transparent.png" ->
+                WebResourceResponse("image/png", null, redirectFile("2x2.png"))
+            "3x2.png", "3x2-transparent.png" ->
+                WebResourceResponse("image/png", null, redirectFile("3x2.png"))
+            "32x32.png", "32x32-transparent.png" ->
+                WebResourceResponse("image/png", null, redirectFile("32x32.png"))
+            "addthis_widget.js", "addthis.com/addthis_widget.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("addthis_widget.js"))
+            "amazon_ads.js", "amazon-adsystem.com/aax2/amzn_ads.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("amazon_ads.js"))
+            "amazon_apstag.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("amazon_apstag.jsf"))
+            "ampproject_v0.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("ampproject_v0.js"))
+            "chartbeat.js", "static.chartbeat.com/chartbeat.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("chartbeat.js"))
+            "click2load.html", "aliasURL", "url" ->
+                WebResourceResponse("text/html", "utf-8", redirectFile("click2load.html"))
+            "doubleclick_instream_ad_status.js", "doubleclick.net/instream/ad_status.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("doubleclick_instream_ad_status.js"))
+            "empty" ->
+                WebResourceResponse("text/plain", "utf-8", redirectFile("empty"))
+            "fingerprint2.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("fingerprint2.js"))
+            "google-nalytics_analytics.js", "google-analytics.com/analytics.js", "googletagmanager_gtm.js", "googletagmanager.com/gtm.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("google-analytics_analytics.js"))
+            "google-analytics_cx_api.js", "google-analytics.com/cx/api.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("google-analytics_cx_api.js"))
+            "google-analytics_ga.js", "google-analytics.com/ga.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("google-analytics_ga.js"))
+            "google-analytics_inpage_linkid.js", "google-analytics.com/inpage_linkid.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("google-analytics_inpage_linkid.js"))
+            "googlesyndication_adsbygoogle.js", "googlesyndication.com/adsbygoogle.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("googlesyndication_adsbygoogle.js"))
+            "googletagservices_gpt.js", "googletagservices.com/gpt.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("googletagservices_gpt.js"))
+            "hd-main.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("hd-main.js"))
+            "ligatus_angular-tag.js", "ligatus.com/*/angular-tag.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("1x1.gif"))
+            "mxpnl_mixpanel.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("mxpnl_mixpanel.js"))
+            "monkeybroker.js", "d3pkae9owd2lcf.cloudfront.net/mb105.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("monkeybroker.js"))
+            "noeval.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("noeval.js"))
+            "noeval-silent.js", "silent-noeval.js'" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("noeval-silent.js"))
+            "nobab2.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("nobab2.js"))
+            "nofab.js", "fuckadblock.js-3.2.0" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("nofab.js"))
+            "noop-0.1s.mp3", "noopmp3-0.1s", "abp-resource:blank-mp3" ->
+                WebResourceResponse("audio/mpeg", null, redirectFile("noop-0.1s.mp3"))
+            "noop-1s.mp4", "noopmp4-1s" ->
+                WebResourceResponse("video/mp4", null, redirectFile("noop-1s.mp4"))
+            "noop.html", "noopframe" ->
+                WebResourceResponse("text/html", "utf-8", redirectFile("noop.html"))
+            "noop.js", "noopjs", "abp-resource:blank-js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("noop.js"))
+            "noop.txt", "nooptext" ->
+                WebResourceResponse("text/plain", "utf-8", redirectFile("noop.txt"))
+            "noop-vmap1.0.xml", "noopvmap-1." ->
+                WebResourceResponse("application/xml", "utf-8", redirectFile("noop-vmap1.0.xml"))
+            "outbrain-widget.js", "widgets.outbrain.com/outbrain.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("outbrain-widget.js"))
+            "popads.js", "popads.net.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("popads.js"))
+            "popads-dummy.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("popads-dummy.js"))
+            "scorecardresearch_beacon.js", "scorecardresearch.com/beacon.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("scorecardresearch_beacon.js"))
+            "window.open-defuser.js", "nowoif.js" ->
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("window.open-defuser.js"))
+            else -> dummyResponse
+        }
+
+    private fun redirectFile(name: String) = application.resources.assets.open("blocker_resources/$name")
+
+
     companion object {
         private val prefixes = listOf(ABP_PREFIX_ALLOW, ABP_PREFIX_DENY, ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION, ABP_PREFIX_IMPORTANT, ABP_PREFIX_IMPORTANT_ALLOW)
 
@@ -515,12 +602,6 @@ class AbpBlocker @Inject constructor(
 
         fun parameterString(parameters: Map<String, String>) = if (parameters.isEmpty()) ""
         else "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
-
-        // TODO: implement this!
-        fun redirectResponse(resource: String): WebResourceResponse {
-            return WebResourceResponse("bla", "bla", null)
-        }
-
 
         // TODO: is encoded query and decode necessary?
         //  is it slower than using decoded query?

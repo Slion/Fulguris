@@ -239,7 +239,6 @@ class AbpFilterDecoder {
                             //  and redirect will never be checked if request is blocked
                             // TODO: have redirect-rule separate and put it in a different filter container
                             //  to be checked if request is blocked
-                            // TODO 2: redirect value must be one of internal resources -> check and discard if it's not
 //                            "redirect", "redirect-rule" -> modify = MODIFY_PREFIX_REDIRECT + (value ?: "")
                             "redirect", "redirect-rule" -> if (value != null) modify = RedirectFilter(value)
 //                            "empty" -> modify = MODIFY_PREFIX_REDIRECT + "empty"

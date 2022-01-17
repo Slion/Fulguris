@@ -23,13 +23,14 @@ abstract class ModifyFilter(val parameter: String?, val inverse: Boolean) {
 open class RemoveparamFilter(parameter: String?, inverse: Boolean): ModifyFilter(parameter, inverse) {
     override val prefix = MODIFY_PREFIX_REMOVEPARAM
 }
+
 class RemoveparamRegexFilter(parameter: String?, inverse: Boolean): RemoveparamFilter(parameter, inverse)
 
 class RedirectFilter(parameter: String?): ModifyFilter(parameter, false) {
     override val prefix = MODIFY_PREFIX_REDIRECT
-
 }
-class CspFilter(parameter: String?): ModifyFilter(parameter, false) { // TODO: what is this?
+
+class CspFilter(parameter: String?): ModifyFilter(parameter, false) {
     override val prefix = MODIFY_PREFIX_CSP
 }
 
