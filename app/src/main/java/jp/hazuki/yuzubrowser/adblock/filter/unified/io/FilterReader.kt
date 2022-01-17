@@ -86,6 +86,8 @@ class FilterReader(private val input: InputStream) {
         val thirdParty = when (input.read()) {
             0 -> 0
             1 -> 1
+            2 -> 2
+            3 -> 3
             0xff -> -1
             else -> return null
         }

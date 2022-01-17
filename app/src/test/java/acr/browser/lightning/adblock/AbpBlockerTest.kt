@@ -156,6 +156,15 @@ class AbpBlockerTest {
         blockedRequests.add(request("http://page5.co.uk/something/page", "http://page.com").second)
         blockedRequests.add(request("http://page5.com/something?test=yes", "http://page.com").second)
 
+        filterList.add("||page6.com^\$strict1p")
+        blockedRequests.add(request("http://page6.com/something", "https://page6.com").second)
+        allowedRequests.add(request("http://page6.com/something", "https://other.com").second)
+        allowedRequests.add(request("http://page6.com/something", "https://something.page6.com").second)
+        filterList.add("||page7.com^\$strict3p")
+        allowedRequests.add(request("http://page7.com/something", "https://page7.com").second)
+        blockedRequests.add(request("http://page7.com/something", "https://other.com").second)
+        blockedRequests.add(request("http://page7.com/something", "https://something.page7.com").second)
+
         val set = loadFilterSet(filterList.joinToString("\n").byteInputStream())
 
         // filters should be put in correct list
@@ -167,6 +176,7 @@ class AbpBlockerTest {
         val container = FilterContainer().also { set.blackList.forEach(it::plusAssign) }
 
         blockedRequests.forEach {
+            println("" + it.url + " "+ it.pageUrl)
             Assert.assertNotNull(container[it])
         }
         allowedRequests.forEach {

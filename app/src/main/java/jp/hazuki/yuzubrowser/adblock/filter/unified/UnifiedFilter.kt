@@ -30,7 +30,7 @@ abstract class UnifiedFilter(
 
     override fun isMatch(request: ContentRequest): Boolean {
         return if ((contentType and request.type) != 0
-            && checkThird(request.isThirdParty)
+            && checkThird(request)
             && checkDomain(request.pageUrl.host)
         ) {
             check(request.url)
@@ -41,14 +41,15 @@ abstract class UnifiedFilter(
 
     internal abstract fun check(url: Uri): Boolean
 
-    private fun checkThird(isThirdParty: Boolean): Boolean {
-        if (thirdParty == -1) return true
-        return if (isThirdParty) {
-            thirdParty == 1
-        } else {
-            thirdParty == 0
+    private fun checkThird(request: ContentRequest): Boolean =
+        when (thirdParty) {
+            -1 -> true // don't care about 3rd party
+            0 -> !request.isThirdParty // block 3rd party
+            1 -> request.isThirdParty // block 1st party
+            2 -> request.url.host != request.pageUrl.host // block strict 3rd party (fqdn)
+            3 -> request.url.host == request.pageUrl.host // block strict 1st party
+            else -> false // should not happen
         }
-    }
 
     private fun checkDomain(domain: String?): Boolean {
         if (domain == null) return true

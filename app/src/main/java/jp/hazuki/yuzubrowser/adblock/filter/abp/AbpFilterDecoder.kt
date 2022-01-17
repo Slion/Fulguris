@@ -217,6 +217,8 @@ class AbpFilterDecoder {
                             }
                             "third-party", "3p" -> thirdParty = if (inverse) 0 else 1
                             "first-party", "1p" -> thirdParty = if (inverse) 1 else 0
+                            "strict3p" -> thirdParty = if (inverse) 3 else 2
+                            "strict1p" -> thirdParty = if (inverse) 2 else 3
                             "sitekey" -> Unit
 //                            "removeparam", "queryprune" -> modify = MODIFY_PREFIX_REMOVEPARAM + (value ?: "")
                             "removeparam", "queryprune" -> {
@@ -256,6 +258,8 @@ class AbpFilterDecoder {
                                 if (header in REMOVEHEADER_NOT_ALLOWED) return
                                 modify = RemoveHeaderFilter(header, request)
                             }
+                            "inline-font" -> modify =  CspFilter("font-src *")
+                            "inline-script" -> modify =  CspFilter("script-src 'unsafe-eval' * blob: data:")
                             else -> return
                         }
                     }
