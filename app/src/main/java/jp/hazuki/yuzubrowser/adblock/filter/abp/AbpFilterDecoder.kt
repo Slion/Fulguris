@@ -177,7 +177,23 @@ class AbpFilterDecoder {
         }
         val optionsIndex = filter.lastIndexOf('$')
         if (optionsIndex >= 0) {
-            filter.substring(optionsIndex + 1).split(',').forEach {
+            val options = filter.substring(optionsIndex + 1).split(',')
+            // all is equal to: document, popup, inline-script, inline-font
+            //  but on mobile / webview there are no popups anyway
+            if (options.contains("all")) {
+                options as MutableList
+                options.remove("all")
+                if (!options.contains("~document"))
+                    contentType = contentType or ContentRequest.TYPE_DOCUMENT
+                if (!options.contains("~inline-font")) {
+                    options.add("inline-font")
+                    if (!options.contains("~inline-script"))
+                        options.add("csp=font-src *; script-src 'unsafe-eval' * blob: data:")
+                } else if (!options.contains("~inline-script"))
+                    options.add("inline-script")
+            }
+
+            options.forEach {
                 var option = it
                 var value: String? = null
                 val separatorIndex = option.indexOf('=')
@@ -258,8 +274,8 @@ class AbpFilterDecoder {
                                 if (header in REMOVEHEADER_NOT_ALLOWED) return
                                 modify = RemoveHeaderFilter(header, request)
                             }
-                            "inline-font" -> modify =  CspFilter("font-src *")
-                            "inline-script" -> modify =  CspFilter("script-src 'unsafe-eval' * blob: data:")
+                            "inline-font" -> modify = CspFilter("font-src *")
+                            "inline-script" -> modify = CspFilter("script-src 'unsafe-eval' * blob: data:")
                             else -> return
                         }
                     }
