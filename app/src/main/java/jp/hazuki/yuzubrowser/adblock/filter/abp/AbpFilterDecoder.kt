@@ -252,7 +252,9 @@ class AbpFilterDecoder {
                             "removeheader" -> {
                                 value = value?.lowercase() ?: return
                                 val request = value.startsWith("request:")
-                                modify = RemoveHeaderFilter(if (request) value.substringAfter("request:") else value, request)
+                                val header = if (request) value.substringAfter("request:") else value
+                                if (header in REMOVEHEADER_NOT_ALLOWED) return
+                                modify = RemoveHeaderFilter(header, request)
                             }
                             else -> return
                         }

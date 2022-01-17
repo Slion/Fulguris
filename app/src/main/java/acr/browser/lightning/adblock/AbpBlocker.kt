@@ -362,7 +362,7 @@ class AbpBlocker @Inject constructor(
         filters.removeRemoveparam()
         if (parameters == null && filters.isEmpty()) return null
 
-        // apply removeheaders, request part
+        // apply removeheader, request part
         val requestHeaders = request.requestHeaders
         val headerSize = requestHeaders.size
         filters.forEach { filter ->
