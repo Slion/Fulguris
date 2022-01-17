@@ -293,7 +293,7 @@ class AbpFilterDecoder {
 
         val abpFilter =
             if (filter.length >= 2 && filter[0] == '/' && filter[filter.lastIndex] == '/' && filter.mayContainRegexChars()) {
-                createRegexFilter(filter, contentType, ignoreCase, domains, thirdParty) ?: return
+                createRegexFilter(filter.substring(1, filter.lastIndex-1), contentType, ignoreCase, domains, thirdParty) ?: return
             } else {
                 val isStartsWith = filter.startsWith("||")
                 val isEndWith = filter.endsWith('^')

@@ -32,7 +32,7 @@ class Re2Filter(
         get() = FILTER_TYPE_RE2_REGEX
 
     override fun check(url: Uri): Boolean {
-        return regex.matches(url.toString())
+        return regex.matcher(url.toString()).find()
     }
 
     override val isRegex: Boolean

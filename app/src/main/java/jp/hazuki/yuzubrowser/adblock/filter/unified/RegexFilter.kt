@@ -31,7 +31,7 @@ class RegexFilter(
         get() = FILTER_TYPE_JVM_REGEX
 
     override fun check(url: Uri): Boolean {
-        return regex.matches(url.toString())
+        return regex.containsMatchIn(url.toString())
     }
 
     override val isRegex: Boolean
