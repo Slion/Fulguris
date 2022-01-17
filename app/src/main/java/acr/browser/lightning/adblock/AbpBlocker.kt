@@ -352,18 +352,30 @@ class AbpBlocker @Inject constructor(
 
         // first apply redirect filters
         //  this always redirects to some internal resources, see uBo documentation (so other filters are obsolete)
-        //  need to get the resources library from uBo
         filters.forEach {
             if (it.modify!! is RedirectFilter)
                 return redirectResponse(it.modify!!.parameter!!)
         }
 
+        // apply removeparam
         val parameters = getModifiedParameters(request, filters)
         filters.removeRemoveparam()
         if (parameters == null && filters.isEmpty()) return null
 
-        // apply remaining filter types for modifying request
-        //  (currently nothing)
+        // apply removeheaders, request part
+        val requestHeaders = request.requestHeaders
+        val headerSize = requestHeaders.size
+        filters.forEach { filter ->
+            if (filter.modify!! is RemoveHeaderFilter && filter.modify!!.inverse) { // why can't i access 'request'? but doesn't matter...
+                requestHeaders as MutableMap
+                requestHeaders.keys.forEach {
+                    if (it.lowercase() == filter.modify!!.parameter)
+                        requestHeaders.remove(it)
+                }
+            }
+        }
+        filters.removeAll { it.modify!! is RemoveHeaderFilter && it.modify!!.inverse }
+        if (filters.isEmpty() && headerSize == requestHeaders.size) return null
 
         val newRequest =  Request.Builder()
             .url(
@@ -375,7 +387,7 @@ class AbpBlocker @Inject constructor(
                             (request.url.fragment ?: "") // add fragment
                 )
             .method(request.method, null) // use same method, TODO: is body null really ok?
-            .headers(request.requestHeaders.toHeaders()) // use same headers, TODO: are there filters that modify the request headers?
+            .headers(requestHeaders.toHeaders())
             .build() // anything missing?
 
         // TODO: does this still apply? https://artemzin.com/blog/android-webview-io/
@@ -392,19 +404,30 @@ class AbpBlocker @Inject constructor(
             }
 
             // now apply filters that run on the response
-            //  currently only CSP
             filters.forEach eachFilter@{ filter ->
-                if (filter.modify!! !is CspFilter) throw IOException("should not happen!")
-                // from uBo documentation https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#modifier-filters:
-                //   "This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames."
-                // -> add header Content-Security-Policy with content = modify.parameter
-                headers.keys.forEach {
-                    if (it.lowercase() == "content-security-policy") { // header names are case insensitive, but we want to modify as little as possible
-                        headers[it] = headers[it] + "; " + filter.modify!!.parameter
-                        return@eachFilter
+                when (filter.modify!!) {
+                    is CspFilter -> {
+                        // from uBo documentation https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#modifier-filters:
+                        //   "This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames."
+                        // -> add header Content-Security-Policy with content = modify.parameter
+                        headers.keys.forEach {
+                            if (it.lowercase() == "content-security-policy") { // header names are case insensitive, but we want to modify as little as possible
+                                headers[it] = headers[it] + "; " + filter.modify!!.parameter
+                                return@eachFilter
+                            }
+                        }
+                        headers["Content-Security-Policy"] = filter.modify!!.parameter!!
                     }
+                    // removeheaders, response part
+                    is RemoveHeaderFilter -> {
+                        // no need to check whether it's for request, those are already removed
+                        headers.keys.forEach {
+                            if (it.lowercase() == filter.modify!!.parameter)
+                                headers.remove(it)
+                        }
+                    }
+                    else -> throw(IOException("should not happen!"))
                 }
-                headers["Content-Security-Policy"] = filter.modify!!.parameter!!
             }
 
             return response.body?.let {

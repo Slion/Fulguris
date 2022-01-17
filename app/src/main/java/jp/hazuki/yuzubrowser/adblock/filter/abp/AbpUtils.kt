@@ -33,6 +33,7 @@ internal const val ABP_PREFIX_IMPORTANT_ALLOW = "ia_"
 internal const val MODIFY_PREFIX_REDIRECT = 'r'
 internal const val MODIFY_PREFIX_REMOVEPARAM = 'p'
 internal const val MODIFY_PREFIX_CSP = 'c'
+internal const val MODIFY_PREFIX_REMOVEHEADER = 'h'
 
 internal fun File.getAbpBlackListFile(entity: AbpEntity): File {
     return File(this, ABP_PREFIX_DENY + entity.entityId)

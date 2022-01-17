@@ -18,6 +18,7 @@ package jp.hazuki.yuzubrowser.adblock.filter.unified.io
 
 import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_CSP
 import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REDIRECT
+import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REMOVEHEADER
 import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REMOVEPARAM
 import jp.hazuki.yuzubrowser.adblock.filter.toInt
 import jp.hazuki.yuzubrowser.adblock.filter.toShortInt
@@ -59,6 +60,7 @@ class FilterReader(private val input: InputStream) {
                 }
                 MODIFY_PREFIX_REDIRECT -> RedirectFilter(modify.substring(2))
                 MODIFY_PREFIX_CSP -> CspFilter(modify.substring(2))
+                MODIFY_PREFIX_REMOVEHEADER -> RemoveHeaderFilter(modify.substring(2), modify[1] == '1')
                 else -> break@loop
             }
             yield(Pair(filter.first, filter.second))

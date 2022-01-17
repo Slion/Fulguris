@@ -185,7 +185,7 @@ class AbpFilterDecoder {
                     value = option.substring(separatorIndex + 1)
                     option = option.substring(0, separatorIndex)
                 }
-                if (option.isEmpty()) return@forEach
+                if (option.isEmpty() || option.matches("^_+$".toRegex())) return@forEach
 
                 val inverse = option[0] == '~'
                 if (inverse) {
@@ -249,6 +249,11 @@ class AbpFilterDecoder {
                                 contentType = ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
                             "important" -> important = true
+                            "removeheader" -> {
+                                value = value?.lowercase() ?: return
+                                val request = value.startsWith("request:")
+                                modify = RemoveHeaderFilter(if (request) value.substringAfter("request:") else value, request)
+                            }
                             else -> return
                         }
                     }
@@ -320,8 +325,8 @@ class AbpFilterDecoder {
         when {
             elementFilter -> elementFilterList += abpFilter
             modify != null && blocking -> {
-                // redirect CSP filter parameter can be empty only if it's an exception
-                if ((abpFilter.modify is CspFilter || abpFilter.modify is RedirectFilter) && abpFilter.modify?.parameter == null) return
+                // only removeparam may have no parameter when blocking
+                if (abpFilter.modify !is RemoveparamFilter && abpFilter.modify?.parameter == null) return
                 abpFilter.modify = modify
                 modifyList += abpFilter
             }

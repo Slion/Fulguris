@@ -2,6 +2,7 @@ package jp.hazuki.yuzubrowser.adblock.filter.unified
 
 import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_CSP
 import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REDIRECT
+import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REMOVEHEADER
 import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REMOVEPARAM
 
 // this is NOT a unified filter, it's an optional part of it
@@ -32,6 +33,10 @@ class RedirectFilter(parameter: String?): ModifyFilter(parameter, false) {
 
 class CspFilter(parameter: String?): ModifyFilter(parameter, false) {
     override val prefix = MODIFY_PREFIX_CSP
+}
+
+class RemoveHeaderFilter(parameter: String, request: Boolean): ModifyFilter(parameter, request) {
+    override val prefix = MODIFY_PREFIX_REMOVEHEADER
 }
 
 fun getRemoveparamFilter(parameter: String, inverse: Boolean) =
