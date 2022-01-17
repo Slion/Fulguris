@@ -176,6 +176,7 @@
     <string name="blocklist_last_update">Last update: %s</string>
     <string name="blocklist_updating">Updating…</string>
     <string name="blocklist_update_error">Error while updating filters list %s</string>
+    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <string name="add_blocklist">Add filters file</string>
     <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
     <string name="enable_blocklist">Enable this list</string>
@@ -405,6 +406,7 @@
     <string name="dialog_open_incognito_tab">在无痕标签页中打开</string>
     <string name="dialog_remove_bookmark">移除书签</string>
     <string name="dialog_edit_bookmark">编辑书签</string>
+    <string name="dialog_title_bookmark">Bookmark</string>
     <string name="dialog_remove_from_history">从历史记录中移除</string>
     <string name="dialog_download_image">下载图像</string>
     <string name="dialog_copy_link">复制链接</string>

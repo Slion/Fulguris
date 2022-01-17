@@ -140,7 +140,7 @@
     <string name="suggestion">Искать</string>
     <string name="checking_for_updates">Проверка обновлений...</string>
     <string name="title_updated">Fulguris обновлён</string>
-    <string name="message_updated">Теперь вы используете версию%s. Вы хотите проверить примечания к выпуску в интернете?</string>
+    <string name="message_updated">Теперь вы используете версию%s. Вы хотите ознакомиться с примечаниями к выпуску онлайн?</string>
     <string name="title_welcome">Добро пожаловать в Fulguris</string>
     <string name="message_welcome">Посетить нашу домашнюю страницу, чтобы узнать больше об этом мощном веб-браузере?</string>
     <!-- Ad block -->
@@ -176,6 +176,7 @@
     <string name="blocklist_last_update">Последнее обновление: %s</string>
     <string name="blocklist_updating">Обновление...</string>
     <string name="blocklist_update_error">Сбой при обновлении списка фильтров %s</string>
+    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <string name="add_blocklist">Добавить файл фильтров</string>
     <string name="add_blocklist_hint">Вы можете выбрать списки хостов или любой список, совместимый с правилами AdBlockPlus</string>
     <string name="enable_blocklist">Включить этот список</string>
@@ -219,7 +220,7 @@
     <string name="search_suggestions_off">Нет поисковых подсказок</string>
     <string name="http_proxy">HTTP прокси</string>
     <string-array name="proxy_choices_array">
-        <item>Никто</item>
+        <item>Без прокси</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Вручную</item>
@@ -405,6 +406,7 @@
     <string name="dialog_open_incognito_tab">Открыть в инкогнито-вкладе</string>
     <string name="dialog_remove_bookmark">Удалить закладку</string>
     <string name="dialog_edit_bookmark">Редактировать закладку</string>
+    <string name="dialog_title_bookmark">Bookmark</string>
     <string name="dialog_remove_from_history">Удалить из истории</string>
     <string name="dialog_download_image">Загрузить изображение</string>
     <string name="dialog_copy_link">Скопировать ссылку</string>

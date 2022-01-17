@@ -176,6 +176,7 @@
     <string name="blocklist_last_update">Pembaruan yang terakhir: %s</string>
     <string name="blocklist_updating">Updating…</string>
     <string name="blocklist_update_error">Error while updating filters list %s</string>
+    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <string name="add_blocklist">Tambahkan file penyaring</string>
     <string name="add_blocklist_hint">Anda bisa memilih daftar host atau daftar mana saja yang menuruti aturan AdBlockPlus</string>
     <string name="enable_blocklist">Gunakan daftar ini</string>
@@ -405,6 +406,7 @@
     <string name="dialog_open_incognito_tab">Buka dengan tab penyamaran</string>
     <string name="dialog_remove_bookmark">Hapus penanda</string>
     <string name="dialog_edit_bookmark">Edit penanda</string>
+    <string name="dialog_title_bookmark">Bookmark</string>
     <string name="dialog_remove_from_history">Hapus dari riwayat</string>
     <string name="dialog_download_image">Unduh gambar</string>
     <string name="dialog_copy_link">Salin tautan</string>
