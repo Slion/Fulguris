@@ -67,6 +67,8 @@ class AbpFilterDecoder {
         val elementFilter = mutableListOf<ElementFilter>()
         val modifyExceptionList = mutableListOf<UnifiedFilter>()
         val modifyList = mutableListOf<UnifiedFilter>()
+        val importantList = mutableListOf<UnifiedFilter>()
+        val importantAllowList = mutableListOf<UnifiedFilter>()
         reader.forEachLine { line ->
             if (line.isEmpty()) return@forEachLine
             val trimmedLine = line.trim()
@@ -84,12 +86,12 @@ class AbpFilterDecoder {
                             elementFilter,
                         )
                     } else {
-                        trimmedLine.decodeFilter(black, white, elementDisableFilter, modifyList, modifyExceptionList)
+                        trimmedLine.decodeFilter(black, white, elementDisableFilter, modifyList, modifyExceptionList, importantList, importantAllowList)
                     }
                 }
             }
         }
-        return UnifiedFilterSet(info, black, white, elementDisableFilter, elementFilter, modifyList, modifyExceptionList)
+        return UnifiedFilterSet(info, black, white, elementDisableFilter, elementFilter, modifyList, modifyExceptionList, importantList, importantAllowList)
     }
 
     private fun decodeContentFilter(
@@ -155,7 +157,9 @@ class AbpFilterDecoder {
         whiteList: MutableList<UnifiedFilter>,
         elementFilterList: MutableList<UnifiedFilter>,
         modifyList: MutableList<UnifiedFilter>,
-        modifyExceptionList: MutableList<UnifiedFilter>
+        modifyExceptionList: MutableList<UnifiedFilter>,
+        importantList: MutableList<UnifiedFilter>,
+        importantAllowList: MutableList<UnifiedFilter>
     ) {
         var contentType = 0
         var ignoreCase = false
@@ -164,6 +168,7 @@ class AbpFilterDecoder {
         var filter = this
         var elementFilter = false
         var modify: ModifyFilter? = null
+        var important = false
         val blocking = if (filter.startsWith("@@")) {
             filter = substring(2)
             false
@@ -244,6 +249,7 @@ class AbpFilterDecoder {
                                 modify = RedirectFilter("noopmp4-1s")
                                 contentType = ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
+                            "important" -> important = true
                             else -> return
                         }
                     }
@@ -320,11 +326,13 @@ class AbpFilterDecoder {
                 abpFilter.modify = modify
                 modifyList += abpFilter
             }
+            important && blocking -> importantList += abpFilter
             blocking -> blackList += abpFilter
-            modify != null ->  {
+            modify != null -> {
                 abpFilter.modify = modify
                 modifyExceptionList += abpFilter
             }
+            important -> importantAllowList += abpFilter
             else -> whiteList += abpFilter
         }
     }

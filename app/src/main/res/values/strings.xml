@@ -171,7 +171,7 @@
     <string name="page_blocked_reason">because of:</string>
     <string name="page_blocked_list_ad">%s on ad filters</string>
     <string name="page_blocked_list_user">%s blocked by user rule</string>
-    <string name="page_blocked_list_malware">%s on malware filters</string>
+    <string name="page_blocked_list_malware">%s on important filters list</string>
     <string name="request_blocked">Request blocked</string>
 
     <!-- settings for new ad blocker -->

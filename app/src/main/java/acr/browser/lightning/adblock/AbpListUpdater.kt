@@ -86,6 +86,8 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         writer.write(dir.getAbpWhitePageListFile(entity), listOf())
         writer.write(dir.getAbpModifyListFile(entity), listOf())
         writer.write(dir.getAbpModifyExceptionListFile(entity), listOf())
+        writer.write(dir.getAbpImportantListFile(entity), listOf())
+        writer.write(dir.getAbpImportantAllowListFile(entity), listOf())
 
         val elementWriter = ElementWriter()
         elementWriter.write(dir.getAbpElementListFile(entity), listOf())
@@ -130,7 +132,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
                     dir.getAbpWhiteListFile(entity).exists() ||
                     dir.getAbpWhitePageListFile(entity).exists() ||
                     dir.getAbpModifyListFile(entity).exists() ||
-                    dir.getAbpModifyExceptionListFile(entity).exists())
+                    dir.getAbpModifyExceptionListFile(entity).exists() ||
+                    dir.getAbpImportantListFile(entity).exists() ||
+                    dir.getAbpImportantAllowListFile(entity).exists())
                     request.addHeader("If-Modified-Since", it)
             }
         }
@@ -224,6 +228,8 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         writer.write(dir.getAbpWhitePageListFile(entity), set.elementDisableFilter)
         writer.writeModifyFilters(dir.getAbpModifyListFile(entity), set.modifyList)
         writer.writeModifyFilters(dir.getAbpModifyExceptionListFile(entity), set.modifyExceptionList)
+        writer.write(dir.getAbpImportantListFile(entity), set.importantList)
+        writer.write(dir.getAbpImportantAllowListFile(entity), set.importantAllowList)
 
         val elementWriter = ElementWriter()
         elementWriter.write(dir.getAbpElementListFile(entity), set.elementList)

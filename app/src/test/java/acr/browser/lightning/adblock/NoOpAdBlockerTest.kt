@@ -213,11 +213,6 @@ class NoOpAdBlockerTest {
         }
     }
 
-    // TODO: this is not yet included I think...
-    @Test
-    fun importantList() {
-    }
-
     @Test
     fun modifyList() {
         // only tests removeparam so far

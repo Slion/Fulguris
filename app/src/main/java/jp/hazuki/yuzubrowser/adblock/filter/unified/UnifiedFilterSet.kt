@@ -25,5 +25,7 @@ class UnifiedFilterSet(
     val elementDisableFilter: List<UnifiedFilter>,
     val elementList: List<ElementFilter>,
     val modifyList: List<UnifiedFilter>,
-    val modifyExceptionList: List<UnifiedFilter>
+    val modifyExceptionList: List<UnifiedFilter>,
+    val importantList: List<UnifiedFilter>,
+    val importantAllowList: List<UnifiedFilter>
 )

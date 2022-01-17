@@ -27,6 +27,7 @@ internal const val ABP_PREFIX_ELEMENT = "e_"
 internal const val ABP_PREFIX_MODIFY_EXCEPTION = "me_"
 internal const val ABP_PREFIX_MODIFY = "m_"
 internal const val ABP_PREFIX_IMPORTANT = "i_"
+internal const val ABP_PREFIX_IMPORTANT_ALLOW = "ia_"
 
 // prefixes for modify filters used inside the modify files
 internal const val MODIFY_PREFIX_REDIRECT = 'r'
@@ -55,4 +56,12 @@ internal fun File.getAbpModifyListFile(entity: AbpEntity): File {
 
 internal fun File.getAbpModifyExceptionListFile(entity: AbpEntity): File {
     return File(this, ABP_PREFIX_MODIFY_EXCEPTION + entity.entityId)
+}
+
+internal fun File.getAbpImportantListFile(entity: AbpEntity): File {
+    return File(this, ABP_PREFIX_IMPORTANT + entity.entityId)
+}
+
+internal fun File.getAbpImportantAllowListFile(entity: AbpEntity): File {
+    return File(this, ABP_PREFIX_IMPORTANT_ALLOW + entity.entityId)
 }

@@ -14,6 +14,7 @@ import androidx.collection.LruCache
 import androidx.core.util.PatternsCompat
 import jp.hazuki.yuzubrowser.adblock.EmptyInputStream
 import jp.hazuki.yuzubrowser.adblock.core.*
+import jp.hazuki.yuzubrowser.adblock.core.ContentRequest.Companion.TYPE_DOCUMENT
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
@@ -25,7 +26,9 @@ import kotlinx.coroutines.*
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.internal.publicsuffix.PublicSuffix
+import okhttp3.internal.toHeaderList
 import java.io.*
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
@@ -136,6 +139,9 @@ class AbpBlocker @Inject constructor(
             //  relevant number of cases where there are filters "including" more specific filters?
             //   e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
             //TODO: badfilter should act here! (and thus should probably go to block filters)
+            // no, this is too late! because filters are already loaded
+            // and with the wildcard thing, it can't be done that easily
+            //  -> how to do?
             else -> it
         } }
     }
@@ -269,16 +275,21 @@ class AbpBlocker @Inject constructor(
         }
 
         // use !! to get an error if sth is wrong
+        filterContainers[ABP_PREFIX_IMPORTANT_ALLOW]!![contentRequest]?.let { return null }
+
+        // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#important
+        //  -> "The $important modifier will be ignored if a document-level exception rule is applied to the document."
         filterContainers[ABP_PREFIX_IMPORTANT]!![contentRequest]?.let {
-            return getBlockResponse(request, application.resources.getString(R.string.page_blocked_list_malware, it.pattern))
+            return if (filterContainers[ABP_PREFIX_ALLOW]!![contentRequest]?.let { allowFilter ->
+                    allowFilter.contentType == TYPE_DOCUMENT } == true) // document-level exception
+                        null
+            else getBlockResponse(request, application.resources.getString(R.string.page_blocked_list_malware, it.pattern))
         }
         filterContainers[ABP_PREFIX_ALLOW]!![contentRequest]?.let { return null }
         filterContainers[ABP_PREFIX_DENY]!![contentRequest]?.let {
             //if (it.pattern.isNotBlank()) {
                 return getBlockResponse(
-                    request,
-                    application.resources.getString(R.string.page_blocked_list_ad, it.pattern)
-                )
+                    request, application.resources.getString(R.string.page_blocked_list_ad, it.pattern))
             //}
         }
 
@@ -287,7 +298,7 @@ class AbpBlocker @Inject constructor(
         if (modifyFilters.isNotEmpty()) {
             if (request.url.encodedQuery == null) {
                 // if no parameters, remove all removeparam filters
-                    // TODO: maybe checking by class is faster? try!
+                    // TODO: compare speed checking by class vs the old way via string
 //                modifyFilters.removeAll { it.modify!!.prefix == MODIFY_PREFIX_REMOVEPARAM }
                 modifyFilters.removeRemoveparam()
                 if (modifyFilters.isEmpty()) return null
@@ -295,7 +306,7 @@ class AbpBlocker @Inject constructor(
             // there is a hit, but first check whether the exact filter has an exception
             val modifyExceptions = filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getAll(contentRequest)
             if (modifyExceptions.isNotEmpty()) {
-                /* how exceptions/negations work: (adguard removeparam documentation is useful)
+                /* how exceptions/negations work: (adguard removeparam documentation is useful: https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters)
                  *  without parameter (i.e. empty), all filters of that type (removeparam, csp,...) are invalid
                  *  with parameter, only same type and same parameter are considered invalid
                  */
@@ -335,12 +346,9 @@ class AbpBlocker @Inject constructor(
     // this needs to be fast, the adguard url tracking list has quite a few options acting on all urls!
     //  e.g. removing the fbclid parameter added by facebook
     private fun getModifiedResponse(request: WebResourceRequest, filters: MutableList<ContentFilter>): WebResourceResponse? {
-        /* plan
-        can't simply modify the request
-        so do what the request wants, but modify
-        then deliver what we got as response
-        like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
-         */
+        // we can't simply modify the request, so do what the request wants, but modify
+        //  then deliver what we got as response
+        //  like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
 
         // first apply redirect filters
         //  this always redirects to some internal resources, see uBo documentation (so other filters are obsolete)
@@ -354,10 +362,6 @@ class AbpBlocker @Inject constructor(
         filters.removeRemoveparam()
         if (parameters == null && filters.isEmpty()) return null
 
-        // TODO: log url and parameters to check this is correct
-        val url = request.url.toString().substringBefore('?').substringBefore('#') // url without query and fragment
-            // TODO: do parameters and fragment get removed automatically? if so, need to re-add them
-
         // apply remaining filter types for modifying request
         //  (currently nothing)
 
@@ -368,43 +372,57 @@ class AbpBlocker @Inject constructor(
                 else
                     request.url.toString().substringBefore('?').substringBefore('#') + // url without parameters and fragment
                             parameterString(parameters) + // add modified parameters
-                            (request.url.fragment ?: "") // add fragement
+                            (request.url.fragment ?: "") // add fragment
                 )
             .method(request.method, null) // use same method, TODO: is body null really ok?
             .headers(request.requestHeaders.toHeaders()) // use same headers, TODO: are there filters that modify the request headers?
             .build() // anything missing?
 
         // TODO: does this still apply? https://artemzin.com/blog/android-webview-io/
-        //  I think not, but need to check!
+        //  I think not (because I see multiple threads being used), but need to check!
+        //  if it still applies -> what do?
         val call = okHttpClient.newCall(newRequest)
         try {
             val response = call.execute()
-            // TODO
-            //  i guess i should get mimetype and encoding from the response?
-            //  what about response headers? https://stackoverflow.com/questions/35768621/get-response-headers-in-webview-in-shouldinterceptrequest-in-android
+
+            val headers = mutableMapOf<String, String>()
+            response.headers.toHeaderList().forEach {
+                // TODO: there should not be duplicate anythings, as this is uninterpreted header line... but better make sure?
+                headers[it.name.utf8()] = it.value.utf8()
+            }
 
             // now apply filters that run on the response
             //  currently only CSP
-            filters.forEach {
-                if (it.modify!! !is CspFilter) throw IOException("should not happen!")
+            filters.forEach eachFilter@{ filter ->
+                if (filter.modify!! !is CspFilter) throw IOException("should not happen!")
                 // from uBo documentation https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#modifier-filters:
-                //   This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames.
-                //  -> add 'Content-Security-Policy' header entry, but apparently not to the request!
-                //   wikipedia: If the Content-Security-Policy header is present in the server response -> need to add to the response, not request!!
-                //   -> understand what needs to be done
-                //   probably modify the bytestream from response
-                //    gather csp stuff here in some list and use it in some InputStream.injectCSP(list) function
-                //    this may help: https://stackoverflow.com/questions/61825334/convert-inputstream-to-flow
-                //   best: simply check how uBo does it, this should at least give an idea
+                //   "This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames."
+                // -> add header Content-Security-Policy with content = modify.parameter
+                headers.keys.forEach {
+                    if (it.lowercase() == "content-security-policy") { // header names are case insensitive, but we want to modify as little as possible
+                        headers[it] = headers[it] + "; " + filter.modify!!.parameter
+                        return@eachFilter
+                    }
+                }
+                headers["Content-Security-Policy"] = filter.modify!!.parameter!!
             }
-            return response.body?.let { return WebResourceResponse("bla", "bla", it.byteStream())}
+
+            return response.body?.let {
+                return WebResourceResponse(
+                    response.header("content-type", "text/plain"),
+                    response.header("content-encoding", "utf-8"),
+                    response.code,
+                    "", // TODO: should be ok... where to get reason from okhttp?
+                    headers,
+                    it.byteStream())
+            }
         } catch (e: IOException) {
-            return null // TODO: what do?
+            return null // TODO: what do? empty response? null to let webview try again? but the it's unmodified...
         }
     }
 
     companion object {
-        private val prefixes = listOf(ABP_PREFIX_ALLOW, ABP_PREFIX_DENY, ABP_PREFIX_IMPORTANT, ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
+        private val prefixes = listOf(ABP_PREFIX_ALLOW, ABP_PREFIX_DENY, ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION, ABP_PREFIX_IMPORTANT, ABP_PREFIX_IMPORTANT_ALLOW)
 
         private const val BUFFER_SIZE = 1024 * 8
         private const val TAG = "AbpBlocker"
