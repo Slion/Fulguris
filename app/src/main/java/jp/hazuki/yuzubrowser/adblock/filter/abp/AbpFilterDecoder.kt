@@ -220,7 +220,7 @@ class AbpFilterDecoder {
                             "sitekey" -> Unit
 //                            "removeparam", "queryprune" -> modify = MODIFY_PREFIX_REMOVEPARAM + (value ?: "")
                             "removeparam", "queryprune" -> {
-                                modify = if (value == null) RemoveparamFilter(null, false)
+                                modify = if (value == null || value.isEmpty()) RemoveparamFilter(null, false)
                                 else {
                                     if (value.startsWith('~'))
                                         getRemoveparamFilter(value.substring(1), true)
@@ -328,7 +328,7 @@ class AbpFilterDecoder {
             elementFilter -> elementFilterList += abpFilter
             modify != null && blocking -> {
                 // only removeparam may have no parameter when blocking
-                if (abpFilter.modify !is RemoveparamFilter && abpFilter.modify?.parameter == null) return
+                if (modify !is RemoveparamFilter && modify!!.parameter == null) return
                 abpFilter.modify = modify
                 modifyList += abpFilter
             }
