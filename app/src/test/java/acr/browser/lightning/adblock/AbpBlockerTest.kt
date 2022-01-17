@@ -76,8 +76,37 @@ class AbpBlockerTest {
         return TestWebResourceRequest(url.toUri(), mainFrame, headers).let { it to it.getContentRequest(pageUrl.toUri()) }
     }
 
+    private fun checkFilters(filterList: List<String>, blockedRequests: List<ContentRequest>, allowedRequests: List<ContentRequest>, list: String) {
+        val set = loadFilterSet(filterList.joinToString("\n").byteInputStream())
+        val container = FilterContainer()
+
+        when (list) {
+            "block" -> {
+                Assert.assertEquals(set.blackList.size, filterList.size)
+                container.also { set.blackList.forEach(it::plusAssign) }
+            }
+            "allow" -> {
+                Assert.assertEquals(set.whiteList.size, filterList.size)
+                container.also { set.whiteList.forEach(it::plusAssign) }
+            }
+            "modify" -> {
+                Assert.assertEquals(set.modifyList.size, filterList.size)
+                container.also { set.modifyList.forEach(it::plusAssign) }
+            }
+        }
+
+        blockedRequests.forEach {
+            println("should be filtered: " + it.url + " "+ it.pageUrl)
+            Assert.assertNotNull(container[it])
+        }
+        allowedRequests.forEach {
+            println("should not be touched: " + it.url + " "+ it.pageUrl)
+            Assert.assertNull(container[it])
+        }
+    }
+
     @Test
-    fun writeAndReadWorks() {
+    fun writeRead() {
         val startList = set.blackList
         val filterStore = ByteArrayOutputStream()
         filterStore.writeFilterList(startList)
@@ -107,7 +136,7 @@ class AbpBlockerTest {
     }
 
     @Test
-    fun filterContainerWorks() {
+    fun filterContainer() {
         val container = FilterContainer().also { set.blackList.forEach(it::plusAssign) }
         val filterStore = ByteArrayOutputStream()
         filterStore.writeFilterList(set.blackList)
@@ -130,6 +159,57 @@ class AbpBlockerTest {
         val allowedRequests = mutableListOf<ContentRequest>()
         filterList.add("||ad.adpage.com/ads/")
         blockedRequests.add(request("http://ad.adpage.com/ads/badad", "https://example.com").second)
+        filterList.add("/badthing/*")
+        blockedRequests.add(request("http://something.com/badthing/ad", "https://page.com").second)
+        allowedRequests.add(request("http://something.com/badthing", "https://page.com").second)
+        allowedRequests.add(request("http://something.com/badthingies", "https://page.com").second)
+        filterList.add("||page5.*/something")
+        blockedRequests.add(request("http://page5.co.uk/something/page", "http://page.com").second)
+        blockedRequests.add(request("http://page5.com/something?test=yes", "http://page.com").second)
+
+        checkFilters(filterList, blockedRequests, allowedRequests, "block")
+    }
+
+    @Test
+    fun thirdParty() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
+        filterList.add("||page2.com^\$1p")
+        blockedRequests.add(request("http://page2.com/something", "https://something.page2.com").second)
+        allowedRequests.add(request("http://page2.com/something", "https://badpage.com").second)
+        filterList.add("||page3.com^\$3p")
+        allowedRequests.add(request("http://page3.com/something", "https://something.page3.com").second)
+        blockedRequests.add(request("http://page3.com/something", "https://badpage.com").second)
+
+        checkFilters(filterList, blockedRequests, allowedRequests, "block")
+    }
+
+    @Test
+    fun strictThirdParty() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
+        filterList.add("||page6.com^\$strict1p")
+        blockedRequests.add(request("http://page6.com/something", "https://page6.com").second)
+        allowedRequests.add(request("http://page6.com/something", "https://other.com").second)
+        allowedRequests.add(request("http://page6.com/something", "https://something.page6.com").second)
+        filterList.add("||page7.com^\$strict3p")
+        allowedRequests.add(request("http://page7.com/something", "https://page7.com").second)
+        blockedRequests.add(request("http://page7.com/something", "https://other.com").second)
+        blockedRequests.add(request("http://page7.com/something", "https://something.page7.com").second)
+
+        checkFilters(filterList, blockedRequests, allowedRequests, "block")
+    }
+
+    @Test
+    fun domains() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
         filterList.add("||ad.adpage2.com^\$domain=~okpage.com")
         blockedRequests.add(request("http://ad.adpage2.com/ads/badad", "https://example.com").second)
         allowedRequests.add(request("http://ad.adpage2.com/ads/badad", "https://okpage.com").second)
@@ -142,46 +222,35 @@ class AbpBlockerTest {
         allowedRequests.add(request("http://ads.page4.com/something", "https://good.page4.com").second)
         allowedRequests.add(request("http://ads.page4.com/something", "https://goodotherpage.com").second)
 
-        filterList.add("||page2.com^\$1p")
-        blockedRequests.add(request("http://page2.com/something", "https://something.page2.com").second)
-        allowedRequests.add(request("http://page2.com/something", "https://badpage.com").second)
-        filterList.add("||page3.com^\$3p")
-        allowedRequests.add(request("http://page3.com/something", "https://something.page3.com").second)
-        blockedRequests.add(request("http://page3.com/something", "https://badpage.com").second)
-        filterList.add("/badthing/*")
-        blockedRequests.add(request("http://something.com/badthing/ad", "https://page.com").second)
-        allowedRequests.add(request("http://something.com/badthing", "https://page.com").second)
-        allowedRequests.add(request("http://something.com/badthingies", "https://page.com").second)
-        filterList.add("||page5.*/something")
-        blockedRequests.add(request("http://page5.co.uk/something/page", "http://page.com").second)
-        blockedRequests.add(request("http://page5.com/something?test=yes", "http://page.com").second)
+        checkFilters(filterList, blockedRequests, allowedRequests, "block")
+    }
 
-        filterList.add("||page6.com^\$strict1p")
-        blockedRequests.add(request("http://page6.com/something", "https://page6.com").second)
-        allowedRequests.add(request("http://page6.com/something", "https://other.com").second)
-        allowedRequests.add(request("http://page6.com/something", "https://something.page6.com").second)
-        filterList.add("||page7.com^\$strict3p")
-        allowedRequests.add(request("http://page7.com/something", "https://page7.com").second)
-        blockedRequests.add(request("http://page7.com/something", "https://other.com").second)
-        blockedRequests.add(request("http://page7.com/something", "https://something.page7.com").second)
+    @Test
+    fun allUrls() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
 
-        val set = loadFilterSet(filterList.joinToString("\n").byteInputStream())
+        filterList.add("*\$third-party")
+        allowedRequests.add(request("http://ads.page4.com/something", "https://something.page4.com").second)
+        blockedRequests.add(request("http://ads.page4.com/something", "https://goodotherpage.com").second)
 
-        // filters should be put in correct list
-        Assert.assertEquals(set.blackList.size, filterList.size)
-        Assert.assertTrue(set.whiteList.isEmpty())
-        Assert.assertTrue(set.modifyList.isEmpty())
-        Assert.assertTrue(set.modifyExceptionList.isEmpty())
+        checkFilters(filterList, blockedRequests, allowedRequests, "block")
+    }
 
-        val container = FilterContainer().also { set.blackList.forEach(it::plusAssign) }
+    @Test
+    fun all() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
 
-        blockedRequests.forEach {
-            println("" + it.url + " "+ it.pageUrl)
-            Assert.assertNotNull(container[it])
-        }
-        allowedRequests.forEach {
-            Assert.assertNull(container[it])
-        }
+        // not really a good test, modify it... and understand what "all" is actually supposed to do!
+        //  the csp parts imply it's a modify filter, but the initial discussions imply it should be blocking
+        filterList.add("||example.com^\$all")
+        allowedRequests.add(request("http://ads.example2.com/something", "https://something.page4.com").second)
+        blockedRequests.add(request("http://example.com/something", "https://goodotherpage.com").second)
+
+        checkFilters(filterList, blockedRequests, allowedRequests, "modify")
     }
 
     @Test
@@ -193,22 +262,7 @@ class AbpBlockerTest {
         allowlistedRequests.add(request("http://page.com/ads", "http://page.com").second)
         otherRequests.add(request("http://page.com/ads", "http://thing.com").second)
 
-        val set = loadFilterSet(filterList.joinToString("\n").byteInputStream())
-
-        // filters should be put in correct list
-        Assert.assertEquals(set.whiteList.size, filterList.size)
-        Assert.assertTrue(set.blackList.isEmpty())
-        Assert.assertTrue(set.modifyList.isEmpty())
-        Assert.assertTrue(set.modifyExceptionList.isEmpty())
-
-        val container = FilterContainer().also { set.whiteList.forEach(it::plusAssign) }
-
-        allowlistedRequests.forEach {
-            Assert.assertNotNull(container[it])
-        }
-        otherRequests.forEach {
-            Assert.assertNull(container[it])
-        }
+        checkFilters(filterList, allowlistedRequests, otherRequests, "allow")
     }
 
     @Test
