@@ -16,6 +16,9 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.unified.io
 
+import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_CSP
+import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REDIRECT
+import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REMOVEPARAM
 import jp.hazuki.yuzubrowser.adblock.filter.toInt
 import jp.hazuki.yuzubrowser.adblock.filter.toShortInt
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
@@ -48,7 +51,16 @@ class FilterReader(private val input: InputStream) {
         loop@ for (loop in 0 until size) {
             val filter = readFilter() ?: break@loop
             val modify = readModify() ?: break@loop
-            filter.second.modify = modify
+            if (modify.length > 2)
+            filter.second.modify = when (modify[0]) {
+                MODIFY_PREFIX_REMOVEPARAM -> {
+                    if (modify.length > 2) getRemoveparamFilter(modify.substring(2), modify[1] == '1')
+                    else RemoveparamFilter(null, false)
+                }
+                MODIFY_PREFIX_REDIRECT -> RedirectFilter(modify.substring(2))
+                MODIFY_PREFIX_CSP -> CspFilter(modify.substring(2))
+                else -> break@loop
+            }
             yield(Pair(filter.first, filter.second))
         }
     }

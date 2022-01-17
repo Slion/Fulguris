@@ -18,6 +18,7 @@ package jp.hazuki.yuzubrowser.adblock.filter
 
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.DomainMap
+import jp.hazuki.yuzubrowser.adblock.filter.unified.ModifyFilter
 
 interface ContentFilter {
     val filterType: Int
@@ -36,7 +37,7 @@ interface ContentFilter {
 
     var next: ContentFilter?
 
-    var modify: String?
+    var modify: ModifyFilter?
 
     fun isMatch(request: ContentRequest): Boolean
 }

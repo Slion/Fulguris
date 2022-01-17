@@ -82,7 +82,7 @@ abstract class UnifiedFilter(
 
     override var next: ContentFilter? = null
 
-    override var modify: String? = null
+    override var modify: ModifyFilter? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -95,6 +95,7 @@ abstract class UnifiedFilter(
         if (ignoreCase != other.ignoreCase) return false
         if (thirdParty != other.thirdParty) return false
         if (filterType != other.filterType) return false
+        if (modify != other.modify) return false
 
         // original domain map comparison not working properly (often returns false for same domains)
         // -> do more extensive check
@@ -120,6 +121,7 @@ abstract class UnifiedFilter(
         result = 31 * result + (domains?.hashCode() ?: 0)
         result = 31 * result + thirdParty
         result = 31 * result + filterType
+        result = 31 * result + (modify?.hashCode() ?: 0)
         return result
     }
 }

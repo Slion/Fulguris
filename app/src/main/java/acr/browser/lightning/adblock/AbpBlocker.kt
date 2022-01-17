@@ -59,6 +59,7 @@ class AbpBlocker @Inject constructor(
 
     private val dummyImage: ByteArray by lazy { readByte(application.resources.assets.open("blank.png")) }
     private val dummyResponse by lazy { WebResourceResponse("text/plain", "UTF-8", EmptyInputStream()) }
+    private val okHttpClient by lazy { OkHttpClient() } // we only need it for some filters
 
     init {
         // hilt always loads blocker, even if not used
@@ -282,20 +283,26 @@ class AbpBlocker @Inject constructor(
         }
 
         // careful: we need to get ALL matching modify filters, not just one (like it's done for block and allow decisions)
-        var modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(contentRequest)
+        val modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(contentRequest)
         if (modifyFilters.isNotEmpty()) {
+            if (request.url.encodedQuery == null) {
+                // if no parameters, remove all removeparam filters
+                    // TODO: maybe checking by class is faster? try!
+//                modifyFilters.removeAll { it.modify!!.prefix == MODIFY_PREFIX_REMOVEPARAM }
+                modifyFilters.removeRemoveparam()
+                if (modifyFilters.isEmpty()) return null
+            }
             // there is a hit, but first check whether the exact filter has an exception
             val modifyExceptions = filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getAll(contentRequest)
             if (modifyExceptions.isNotEmpty()) {
-                modifyFilters = modifyFilters.toMutableList()
                 /* how exceptions/negations work: (adguard removeparam documentation is useful)
                  *  without parameter (i.e. empty), all filters of that type (removeparam, csp,...) are invalid
-                 *  with parameter, only same filter type (i.e. same prefix) and same parameter are considered invalid
+                 *  with parameter, only same type and same parameter are considered invalid
                  */
 
                 modifyExceptions.forEach { exception ->
-                    if (exception.modify!!.length == 1) // only prefix -> remove all modify with same prefix
-                        modifyFilters.removeAll { it.modify!!.startsWith(exception.modify!!) }
+                    if (exception.modify!!.parameter == null) // no parameter -> remove all modify of same type
+                        modifyFilters.removeAll { it.modify!!.prefix == exception.modify!!.prefix }
                     else // else remove exact matches in modify
                         modifyFilters.removeAll { it.modify == exception.modify }
                 }
@@ -327,7 +334,7 @@ class AbpBlocker @Inject constructor(
 
     // this needs to be fast, the adguard url tracking list has quite a few options acting on all urls!
     //  e.g. removing the fbclid parameter added by facebook
-    private fun getModifiedResponse(request: WebResourceRequest, filters: List<ContentFilter>): WebResourceResponse? {
+    private fun getModifiedResponse(request: WebResourceRequest, filters: MutableList<ContentFilter>): WebResourceResponse? {
         /* plan
         can't simply modify the request
         so do what the request wants, but modify
@@ -335,32 +342,65 @@ class AbpBlocker @Inject constructor(
         like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
          */
 
-        val newRequest = getModifiedRequest(request, filters) ?: return null
+        // first apply redirect filters
+        //  this always redirects to some internal resources, see uBo documentation (so other filters are obsolete)
+        //  need to get the resources library from uBo
+        filters.forEach {
+            if (it.modify!! is RedirectFilter)
+                return redirectResponse(it.modify!!.parameter!!)
+        }
 
-        val call = OkHttpClient().newCall(newRequest) // TODO: maybe have one client like it's done in AbpListUpdater
+        val parameters = getModifiedParameters(request, filters)
+        filters.removeRemoveparam()
+        if (parameters == null && filters.isEmpty()) return null
+
+        // TODO: log url and parameters to check this is correct
+        val url = request.url.toString().substringBefore('?').substringBefore('#') // url without query and fragment
+            // TODO: do parameters and fragment get removed automatically? if so, need to re-add them
+
+        // apply remaining filter types for modifying request
+        //  (currently nothing)
+
+        val newRequest =  Request.Builder()
+            .url(
+                if (parameters == null)
+                    request.url.toString()
+                else
+                    request.url.toString().substringBefore('?').substringBefore('#') + // url without parameters and fragment
+                            parameterString(parameters) + // add modified parameters
+                            (request.url.fragment ?: "") // add fragement
+                )
+            .method(request.method, null) // use same method, TODO: is body null really ok?
+            .headers(request.requestHeaders.toHeaders()) // use same headers, TODO: are there filters that modify the request headers?
+            .build() // anything missing?
+
+        // TODO: does this still apply? https://artemzin.com/blog/android-webview-io/
+        //  I think not, but need to check!
+        val call = okHttpClient.newCall(newRequest)
         try {
             val response = call.execute()
             // TODO
             //  i guess i should get mimetype and encoding from the response?
             //  what about response headers? https://stackoverflow.com/questions/35768621/get-response-headers-in-webview-in-shouldinterceptrequest-in-android
-            response.body?.let { return WebResourceResponse("bla", "bla", it.byteStream())}
+
+            // now apply filters that run on the response
+            //  currently only CSP
+            filters.forEach {
+                if (it.modify!! !is CspFilter) throw IOException("should not happen!")
+                // from uBo documentation https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#modifier-filters:
+                //   This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames.
+                //  -> add 'Content-Security-Policy' header entry, but apparently not to the request!
+                //   wikipedia: If the Content-Security-Policy header is present in the server response -> need to add to the response, not request!!
+                //   -> understand what needs to be done
+                //   probably modify the bytestream from response
+                //    gather csp stuff here in some list and use it in some InputStream.injectCSP(list) function
+                //    this may help: https://stackoverflow.com/questions/61825334/convert-inputstream-to-flow
+                //   best: simply check how uBo does it, this should at least give an idea
+            }
+            return response.body?.let { return WebResourceResponse("bla", "bla", it.byteStream())}
         } catch (e: IOException) {
+            return null // TODO: what do?
         }
-
-//        MODIFY_PREFIX_CSP -> {
-            // from uBo documentation https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#modifier-filters:
-            //   This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames.
-            //  -> add 'Content-Security-Policy' header entry, but apparently not to the request!
-            //   wikipedia: If the Content-Security-Policy header is present in the server response -> need to add to the response, not request!!
-            //   -> understand what needs to be done
-            //   probably modify the bytestream from response
-            //    gather csp stuff here in some list and use it in some InputStream.injectCSP(list) function
-            //    this may help: https://stackoverflow.com/questions/61825334/convert-inputstream-to-flow
-            //   best: simply check how uBo does it, this should at least give an idea
-//        }
-
-        // still return null if nothing was changed? (e.g. parameters not found)
-        return null
     }
 
     companion object {
@@ -430,78 +470,47 @@ class AbpBlocker @Inject constructor(
 
         private fun isModify(prefix: String) = prefix in listOf(ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
 
-        fun getModifiedRequest(request: WebResourceRequest, filters: List<ContentFilter>): Request? {
-            // TODO: log url and parameters to check this is correct
-            val url = request.url.toString().substringBefore('?').substringBefore('#') // url without query and fragment
-            // getting this map needs to be done for every request if some generic parameters are removed -> should be as fast as possible
-            val parameters = request.url.getQueryParameterMap() as MutableMap
-            //TODO: first check whether request.url.queryParameterNames actually contains bad parameters?
-            //  how to do... assume i don't want to create the parameter map unnecessarily
-            //   i have the name of parameters ready
-            //   i know the modify filters... but i need to check every one because i need to remove the prefex
-            //    -> remove the prefix and create classes instead
-            //    or add the prefix to each of the parameters before comparing (do this first, change depending on performance)
-
-
-            // maybe modify should not be a string, but some kind of class / interface
-            //  and i want subclasses, so e.g.
-            //    when modify is removeparam
-            //      if modifiy is removeparamregex -> bla
-            //      else -> it's simple (and negataion could also be in there)
-            //  so... need to decode, read and write it properly!
-
+        // applies filters to parameters and returns remaining parameters
+        // returns null of parameters are not modified
+        fun getModifiedParameters(request: WebResourceRequest, filters: List<ContentFilter>): Map<String, String>? {
+            val parameters = request.url.getQueryParameterMap()
+            var changed = false
+            if (parameters.isEmpty()) return null // TODO: should not happen, maybe remove this check
             filters.forEach { filter ->
-                when(filter.modify!![0]) {
-                    MODIFY_PREFIX_REMOVEPARAM -> {
-                        if (parameters.isEmpty()) return@forEach // no need to check if there are no parameters
-                        if (filter.modify!!.length == 1) { // no removeParameter means remove all parameters
-                            parameters.clear()
-                            return@forEach
-                        }
-                        val negation = filter.modify!![1] == '~'
-                        val removeParameter = filter.modify!!.substring(if (negation) 2 else 1)
-
-                        if (removeParameter.startsWith('/')) {
-                            // TODO: it's a regex, start the matcher!
-                        } else {
-                            if (negation)
-                                parameters.entries.retainAll { it.key == removeParameter }
-                            else
-                                parameters.entries.removeAll { it.key == removeParameter }
-                        }
-                    }
-                    MODIFY_PREFIX_REDIRECT -> {
-                        // apparently this always redirects to some internal resources! see uBo documentation
-                        //  need to get the resources library from uBo
-                        // and this means the other 2 can be ignored if a redirect filter exists
+                when (val modify = filter.modify!!) {
+                    is RemoveparamRegexFilter -> {} // TODO: use the matcher!
+                    is RemoveparamFilter -> {
+                        if (modify.parameter == null)
+                            return emptyMap() // means: remove all parameters
+                        changed = changed or if (modify.inverse)
+                            parameters.entries.retainAll { it.key == modify.parameter }
+                        else
+                            parameters.entries.removeAll { it.key == modify.parameter }
                     }
                 }
             }
-            // TODO: return null if no filter actually applies
-
-            val modifiedUrl = url +
-                    (if (parameters.isNotEmpty())
-                        "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
-                    else "") +
-                    (request.url.fragment ?: "")
-            return if (modifiedUrl == request.url.toString()) null
-            else Request.Builder()
-                .url(modifiedUrl) // use new URL
-                .method(request.method, null) // use same method, TODO: is body null really ok?
-                .headers(request.requestHeaders.toHeaders()) // use same headers, TODO: are there filters that modify the request headers
-                .build() // anything missing?
+            return if (changed) parameters else null
         }
+
+        fun MutableList<ContentFilter>.removeRemoveparam() =
+            removeAll { it.modify!!::class.java.isAssignableFrom(RemoveparamFilter::class.java) }
 
         fun parameterString(parameters: Map<String, String>) = if (parameters.isEmpty()) ""
         else "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
 
+        // TODO: implement this!
+        fun redirectResponse(resource: String): WebResourceResponse {
+            return WebResourceResponse("bla", "bla", null)
+        }
 
-        // is encoded query and decode necessary?
+
+        // TODO: is encoded query and decode necessary?
         //  is it slower than using decoded query?
-        fun Uri.getQueryParameterMap(): Map<String, String> {
+        // using LinkedHashMap to keep original order
+        fun Uri.getQueryParameterMap(): LinkedHashMap<String, String> {
             // using some code from android.net.uri.getQueryParameters()
-            val query = encodedQuery ?: return emptyMap()
-            val parameters = mutableMapOf<String, String>()
+            val query = encodedQuery ?: return linkedMapOf()
+            val parameters = linkedMapOf<String, String>()
             var start = 0
             do {
                 val next = query.indexOf('&', start)

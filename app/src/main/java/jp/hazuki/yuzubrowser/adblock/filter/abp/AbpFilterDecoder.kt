@@ -163,7 +163,7 @@ class AbpFilterDecoder {
         var thirdParty = -1
         var filter = this
         var elementFilter = false
-        var modify: String? = null
+        var modify: ModifyFilter? = null
         val blocking = if (filter.startsWith("@@")) {
             filter = substring(2)
             false
@@ -213,9 +213,19 @@ class AbpFilterDecoder {
                             "third-party", "3p" -> thirdParty = if (inverse) 0 else 1
                             "first-party", "1p" -> thirdParty = if (inverse) 1 else 0
                             "sitekey" -> Unit
-                            "removeparam", "queryprune" -> modify = MODIFY_PREFIX_REMOVEPARAM + (value ?: "")
+//                            "removeparam", "queryprune" -> modify = MODIFY_PREFIX_REMOVEPARAM + (value ?: "")
+                            "removeparam", "queryprune" -> {
+                                modify = if (value == null) RemoveparamFilter(null, false)
+                                else {
+                                    if (value.startsWith('~'))
+                                        getRemoveparamFilter(value.substring(1), true)
+                                    else
+                                        getRemoveparamFilter(value, false)
+                                }
+                            }
                             "csp" -> {
-                                modify = MODIFY_PREFIX_CSP + (value ?: "")
+//                                modify = MODIFY_PREFIX_CSP + (value ?: "")
+                                modify = CspFilter(value)
                                 contentType = ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT // uBo documentation: It can be applied to main document and documents in frames
                             }
                             // currently no difference between redirect and redirect-rule
@@ -224,10 +234,14 @@ class AbpFilterDecoder {
                             //  and redirect will never be checked if request is blocked
                             // TODO: have redirect-rule separate and put it in a different filter container
                             //  to be checked if request is blocked
-                            "redirect", "redirect-rule" -> modify = MODIFY_PREFIX_REDIRECT + (value ?: "")
-                            "empty" -> modify = MODIFY_PREFIX_REDIRECT + "empty"
+                            // TODO 2: redirect value must be one of internal resources -> check and discard if it's not
+//                            "redirect", "redirect-rule" -> modify = MODIFY_PREFIX_REDIRECT + (value ?: "")
+                            "redirect", "redirect-rule" -> if (value != null) modify = RedirectFilter(value)
+//                            "empty" -> modify = MODIFY_PREFIX_REDIRECT + "empty"
+                            "empty" -> modify = RedirectFilter("empty")
                             "mp4" -> {
-                                modify = MODIFY_PREFIX_REDIRECT + "noopmp4-1s"
+//                                modify = MODIFY_PREFIX_REDIRECT + "noopmp4-1s"
+                                modify = RedirectFilter("noopmp4-1s")
                                 contentType = ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
                             else -> return
@@ -301,6 +315,8 @@ class AbpFilterDecoder {
         when {
             elementFilter -> elementFilterList += abpFilter
             modify != null && blocking -> {
+                // redirect CSP filter parameter can be empty only if it's an exception
+                if ((abpFilter.modify is CspFilter || abpFilter.modify is RedirectFilter) && abpFilter.modify?.parameter == null) return
                 abpFilter.modify = modify
                 modifyList += abpFilter
             }

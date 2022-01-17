@@ -1,6 +1,6 @@
 package acr.browser.lightning.adblock
 
-import acr.browser.lightning.adblock.AbpBlocker.Companion.getModifiedRequest
+import acr.browser.lightning.adblock.AbpBlocker.Companion.getModifiedParameters
 import acr.browser.lightning.adblock.AbpBlocker.Companion.getQueryParameterMap
 import android.net.Uri
 import android.webkit.WebResourceRequest
@@ -113,7 +113,7 @@ class NoOpAdBlockerTest {
                 endList.addAll(reader.readAllModifyFilters())
         }
         println(set2.modifyList[140].pattern)
-        println(set2.modifyList[140].modify)
+        println(set2.modifyList[140].modify?.parameter)
 
         Assert.assertEquals(startList, endList.map { it.second })
     }
@@ -164,6 +164,9 @@ class NoOpAdBlockerTest {
         blockedRequests.add(request("http://something.com/badthing/ad", "https://page.com").second)
         allowedRequests.add(request("http://something.com/badthing", "https://page.com").second)
         allowedRequests.add(request("http://something.com/badthingies", "https://page.com").second)
+        filterList.add("||page5.*/something")
+        blockedRequests.add(request("http://page5.co.uk/something/page", "http://page.com").second)
+        blockedRequests.add(request("http://page5.com/something?test=yes", "http://page.com").second)
 
         val set = loadFilterSet(filterList.joinToString("\n").byteInputStream())
 
@@ -217,23 +220,24 @@ class NoOpAdBlockerTest {
 
     @Test
     fun modifyList() {
+        // only tests removeparam so far
+        // redirect not implemented
+        // csp modifies response -> how to test?
         val filterList = mutableListOf<String>()
         val modifiedRequests = mutableListOf<Pair<WebResourceRequest,ContentRequest>>()
         val allowedRequests = mutableListOf<Pair<WebResourceRequest,ContentRequest>>()
         filterList.add("\$removeparam=badparam")
         modifiedRequests.add(request("http://page.com/page?badparam=yes", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam=yes&other=no", "http://page.com"))
-        //TODO: allowed fails
-        // it will not be modified, can i get some kind of quick-fail?
         allowedRequests.add(request("http://page.com/whatever", "http://thing.com"))
         allowedRequests.add(request("http://page.com/ads?param=yes", "http://thing.com"))
         filterList.add("||www.page.\$removeparam=badparam2")
-        modifiedRequests.add(request("http://page.com/page?badparam2=yes", "http://page.com"))
-        modifiedRequests.add(request("http://page.org/page?badparam2=yes", "http://page.com"))
-        modifiedRequests.add(request("http://page.co.uk/page?badparam2=yes", "http://page.com"))
-        filterList.add("||page2.*/something\$removeparam=badparam3")
-        modifiedRequests.add(request("http://page2.org/page?badparam3=yes", "http://page.com"))
-        modifiedRequests.add(request("http://page2.co.uk/page?badparam3=yes", "http://page.com"))
+        modifiedRequests.add(request("http://www.page.com/page?badparam2=yes", "http://page.com"))
+        modifiedRequests.add(request("http://www.page.org/page?badparam2=yes", "http://page.com"))
+        modifiedRequests.add(request("http://www.page.co.uk/page?badparam2=yes", "http://page.com"))
+        filterList.add("||page56.com\$removeparam")
+        modifiedRequests.add(request("http://page56.com/page?param2=yes", "http://page.com"))
+        allowedRequests.add(request("http://page56.com/page_param2=yes", "http://page.com"))
 
         val set = loadFilterSet(filterList.joinToString("\n").byteInputStream())
 
@@ -246,13 +250,10 @@ class NoOpAdBlockerTest {
         val container = FilterContainer().also { set.modifyList.forEach(it::plusAssign) }
 
         modifiedRequests.forEach {
-            val matchingFilters = container.getAll(it.second)
-            println("${matchingFilters.size} matching filters")
-            Assert.assertNotNull(getModifiedRequest(it.first, container.getAll(it.second)))
+            Assert.assertNotNull(getModifiedParameters(it.first, container.getAll(it.second)))
         }
         allowedRequests.forEach {
-            println(it.second.url)
-            Assert.assertNull(getModifiedRequest(it.first, container.getAll(it.second)))
+            Assert.assertNull(getModifiedParameters(it.first, container.getAll(it.second)))
         }
     }
 
@@ -263,30 +264,9 @@ class NoOpAdBlockerTest {
     @Test
     fun getQueryParameterMap() {
         // add some filter and make sure (only) the correct parameters are removed
-        val url = Uri.parse("http://g.doubleclick.net/ads?a=1&b=4#bla")
+        val url = Uri.parse("http://ads.test.net/ads?a=1&b=4#bla")
         val parameters = mapOf( "a" to "1", "b" to "4")
         Assert.assertEquals(parameters, url.getQueryParameterMap())
     }
 
-    @Test
-    fun removeparam() {
-        val filterList = mutableListOf<String>()
-        filterList.add("\$removeparam=utm_medium")
-        filterList.add("||google.*/search\$removeparam=sourceid")
-        filterList.add("||play.google.*^\$removeparam=referrer")
-        filterList.add("||play.google.*^\$removeparam")
-        filterList.add("||pixel.adsafeprotected.com/services/pub?\$removeparam=sessionId")
-        filterList.add("||ad.doubleclick.net/ddm/trackclk/\$removeparam=/^dc_trk_/")
-        filterList.add("||mvideo.ru^\$removeparam=/^(_requestid|reff)=/")
-        filterList.add("||daraz.*\$removeparam=/spm=|scm=|from=|keyori=|sugg=|search=|mp=|c=|^abtest|^abbucket|pos=|themeID=|algArgs=|clickTrackInfo=|acm=|item_id=|version=|up_id=|pvid=/")
-        filterList.add("@@||rightnowtech.com/engagement/api/consumer/nvidia/*/requestEngagement?pool=\$removeparam")
-        filterList.add("@@||urldefense.com^\$removeparam=utm_medium")
-        filterList.add("@@||t.send.vt.edu/r/?id=\$removeparam=utm_medium")
-        filterList.add("@@||medonet.pl/*&srcc=ucs\$removeparam")
-
-        val removeparamSet = loadFilterSet(filterList.joinToString("\n").byteInputStream())
-        val modify = removeparamSet.modifyList
-        FilterContainer().also { modify.forEach(it::plusAssign) }
-
-    }
 }

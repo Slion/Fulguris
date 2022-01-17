@@ -60,7 +60,8 @@ class FilterWriter {
         // catch and log error if modify is null?
         filters.forEach {
             writeFilter(os, it)
-            writeModify(os, it.modify!!)
+            val modifyString = "" + it.modify!!.prefix + (if (it.modify!!.inverse) 1 else 0) + it.modify!!.parameter
+            writeModify(os, modifyString)
         }
     }
 

@@ -75,7 +75,7 @@ class FilterContainer {
         return null
     }
 
-    fun getAll(request: ContentRequest): List<ContentFilter> {
+    fun getAll(request: ContentRequest): MutableList<ContentFilter> {
         val list = mutableListOf<ContentFilter>()
         list += getAllDomain(request)
         // no need for further checks if list only contains domain filters
