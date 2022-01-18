@@ -29,9 +29,6 @@ import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import okio.buffer
-import okio.sink
-import okio.source
 import java.io.File
 import java.io.IOException
 import java.text.DateFormat
@@ -196,7 +193,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 if (abpEntity != null)
                     entityPrefs[abpEntity.entityId]?.summary = resources.getString(R.string.blocklist_updating)
             }
-            val updated = if (abpEntity == null) abpListUpdater.updateAll(forceUpdate) else abpListUpdater.updateAbpEntity(abpEntity, forceUpdate)
+            val updated = if (abpEntity == null) abpListUpdater.updateAll(forceUpdate)
+                else abpListUpdater.updateAbpEntity(abpEntity, forceUpdate)
 
             // delete temporary file
             //  this is necessary because all local blocklists use the same temporary file (uri)
@@ -306,12 +304,12 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         // update button
         if (entity.entityId != 0 && entity.url.toHttpUrlOrNull() != null) {
-            val updateButton = Button(context)
-            updateButton.text = resources.getString(R.string.blocklist_update)
-            updateButton.setOnClickListener {
+            val updateListButton = Button(context)
+            updateListButton.text = resources.getString(R.string.blocklist_update)
+            updateListButton.setOnClickListener {
                 updateFilterList(entity, true)
             }
-            linearLayout.addView(updateButton)
+            linearLayout.addView(updateListButton)
         }
 
         // arbitrary numbers that look ok on my phone -> ok for other phones?
@@ -409,8 +407,7 @@ override fun onDestroy() {
                 try {
                     // copy file to temporary file, like done by lightning
                     val outputFile = File(cacheDir, BLOCK_LIST_FILE)
-                    val input = inputStream.source()
-                    outputFile.sink().buffer().writeAll(input)
+                    inputStream.copyTo(outputFile.outputStream())
                     fileUri = Uri.fromFile(outputFile)
                     return
                 } catch (exception: IOException) {
