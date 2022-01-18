@@ -28,13 +28,15 @@ fun WebResourceRequest.getContentType(pageUri: Uri): Int {
     var type = 0
     val scheme = url.scheme
     var isPage = false
+    val accept by lazy { requestHeaders["Accept"] }
 
     if (isForMainFrame) {
         if (url == pageUri) {
             isPage = true
             type = ContentRequest.TYPE_DOCUMENT
         }
-    }
+    } else if (accept != null && accept!!.contains("text/html"))
+        type = ContentRequest.TYPE_SUB_DOCUMENT
 
     if (scheme == "ws" || scheme == "wss") {
         type = type or ContentRequest.TYPE_WEB_SOCKET
@@ -51,7 +53,7 @@ fun WebResourceRequest.getContentType(pageUri: Uri): Int {
             "js" -> return type or ContentRequest.TYPE_SCRIPT
             "css" -> return type or ContentRequest.TYPE_STYLE_SHEET
             "otf", "ttf", "ttc", "woff", "woff2" -> return type or ContentRequest.TYPE_FONT
-            "php", "htm", "html" -> if (!isForMainFrame) return type or ContentRequest.TYPE_SUB_DOCUMENT // TODO: is this ok?
+            "php" -> Unit
             else -> {
                 val mimeType = getMimeTypeFromExtension(extension)
                 if (mimeType != "application/octet-stream") {
@@ -65,9 +67,8 @@ fun WebResourceRequest.getContentType(pageUri: Uri): Int {
         return type or ContentRequest.TYPE_OTHER
     }
 
-    val accept = requestHeaders["Accept"]
     return if (accept != null && accept != "*/*") {
-        val mimeType = accept.split(',')[0]
+        val mimeType = accept!!.split(',')[0]
         type or mimeType.getFilterType()
     } else {
         type or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_IMAGE or
