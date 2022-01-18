@@ -361,7 +361,7 @@ class AbpBlocker @Inject constructor(
 
         // apply removeheader, request part
         val requestHeaders = request.requestHeaders
-        val headerSize = requestHeaders.size
+        val requestHeaderSize = requestHeaders.size
         filters.forEach { filter ->
             if (filter.modify!! is RemoveHeaderFilter && filter.modify!!.inverse) { // why can't i access 'request'? but doesn't matter...
                 requestHeaders as MutableMap
@@ -372,9 +372,9 @@ class AbpBlocker @Inject constructor(
             }
         }
         filters.removeAll { it.modify!! is RemoveHeaderFilter && it.modify!!.inverse }
-        if (filters.isEmpty() && headerSize == requestHeaders.size) return null
+        if (filters.isEmpty() && requestHeaderSize == requestHeaders.size) return null
 
-        val newRequest =  Request.Builder()
+        val newRequest = Request.Builder()
             .url(
                 if (parameters == null)
                     request.url.toString()
@@ -385,18 +385,16 @@ class AbpBlocker @Inject constructor(
                 )
             .method(request.method, null) // use same method, TODO: is body null really ok?
             .headers(requestHeaders.toHeaders())
-            .build() // anything missing?
+            .build()
 
-        // TODO: does this still apply? https://artemzin.com/blog/android-webview-io/
-        //  I think not (because I see multiple threads being used), but need to check!
-        //  if it still applies -> what do?
+        // does apply here? https://artemzin.com/blog/android-webview-io/
+        //  in tests multiple threads are used, so probably google updated this
         val call = okHttpClient.newCall(newRequest)
         try {
             val response = call.execute()
 
             val headers = mutableMapOf<String, String>()
             response.headers.toHeaderList().forEach {
-                // TODO: there should not be duplicate anythings, as this is uninterpreted header line... but better make sure?
                 headers[it.name.utf8()] = it.value.utf8()
             }
 
@@ -423,21 +421,20 @@ class AbpBlocker @Inject constructor(
                                 headers.remove(it)
                         }
                     }
-                    else -> throw(IOException("should not happen!"))
                 }
             }
 
-            return response.body?.let {
+            return response.body?.let { body ->
                 return WebResourceResponse(
                     response.header("content-type", "text/plain"),
                     response.header("content-encoding", "utf-8"),
                     response.code,
-                    "", // TODO: should be ok... where to get reason from okhttp?
+                    response.message.let{ if (it.isEmpty()) "OK" else it}, // reason must not be empty!
                     headers,
-                    it.byteStream())
+                    body.byteStream())
             }
         } catch (e: IOException) {
-            return null // TODO: what do? empty response? null to let webview try again? but the it's unmodified...
+            return null // TODO: what do? empty response? null to let webview try again? but then it's unmodified...
         }
     }
 
@@ -604,7 +601,7 @@ class AbpBlocker @Inject constructor(
         fun getModifiedParameters(request: WebResourceRequest, filters: List<ContentFilter>): Map<String, String>? {
             val parameters = request.url.getQueryParameterMap()
             var changed = false
-            if (parameters.isEmpty()) return null // TODO: should not happen, but this is required for tests
+            if (parameters.isEmpty()) return null // TODO: should not happen anyway, but this is required for tests
             filters.forEach { filter ->
                 when (val modify = filter.modify!!) {
                     // TODO: this is somewhat inefficient!
