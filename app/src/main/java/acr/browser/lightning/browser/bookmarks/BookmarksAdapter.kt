@@ -48,9 +48,11 @@ import javax.inject.Inject
 class BookmarksAdapter(
         val context: Context,
         val uiController: UIController,
+        private val bookmarksRepository: BookmarkRepository,
         private val faviconModel: FaviconModel,
         private val networkScheduler: Scheduler,
         private val mainScheduler: Scheduler,
+        private val databaseScheduler: Scheduler,
         private val iShowBookmarkMenu: (Bookmark) -> Boolean,
         private val iOpenBookmark: (Bookmark) -> Unit
 ) : RecyclerView.Adapter<BookmarkViewHolder>(), ItemDragDropSwipeAdapter {
@@ -60,14 +62,6 @@ class BookmarksAdapter(
     private val folderIcon = context.drawable(R.drawable.ic_folder)
     private val webpageIcon = context.drawable(R.drawable.ic_webpage)
 
-    @Inject
-    internal lateinit var bookmarksRepository: BookmarkRepository
-    @Inject @field:DatabaseScheduler
-    internal lateinit var databaseScheduler: Scheduler
-
-    init {
-        //context.injector.inject(this)
-    }
 
     fun itemAt(position: Int): BookmarksViewModel = bookmarks[position]
 

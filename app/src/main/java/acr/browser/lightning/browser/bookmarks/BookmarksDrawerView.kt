@@ -44,13 +44,13 @@ class BookmarksDrawerView @JvmOverloads constructor(
     @Inject internal lateinit var bookmarkModel: BookmarkRepository
     @Inject internal lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject internal lateinit var faviconModel: FaviconModel
-    @Inject @field:DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
-    @Inject @field:NetworkScheduler internal lateinit var networkScheduler: Scheduler
-    @Inject @field:MainScheduler internal lateinit var mainScheduler: Scheduler
+    @Inject @DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
+    @Inject @NetworkScheduler internal lateinit var networkScheduler: Scheduler
+    @Inject @MainScheduler internal lateinit var mainScheduler: Scheduler
     @Inject
     lateinit var iUserPreferences: UserPreferences
 
-    private val uiController: UIController
+    private val uiController: UIController = context as UIController
 
     // Adapter
     private var iAdapter: BookmarksAdapter
@@ -64,12 +64,9 @@ class BookmarksDrawerView @JvmOverloads constructor(
     private var bookmarkUpdateSubscription: Disposable? = null
 
     private val uiModel = BookmarkUiModel()
-    var iBinding: BookmarkDrawerViewBinding
+    var iBinding: BookmarkDrawerViewBinding = BookmarkDrawerViewBinding.inflate(context.inflater,this, true)
 
     init {
-        //context.injector.inject(this)
-        uiController = context as UIController
-        iBinding = BookmarkDrawerViewBinding.inflate(context.inflater,this, true)
         iBinding.uiController = uiController
 
 
@@ -83,9 +80,11 @@ class BookmarksDrawerView @JvmOverloads constructor(
         iAdapter = BookmarksAdapter(
                 context,
                 uiController,
+                bookmarkModel,
                 faviconModel,
                 networkScheduler,
                 mainScheduler,
+                databaseScheduler,
                 ::showBookmarkMenu,
                 ::openBookmark
             )
