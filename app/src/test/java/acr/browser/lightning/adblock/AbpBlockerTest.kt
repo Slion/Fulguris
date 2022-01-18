@@ -333,15 +333,34 @@ class AbpBlockerTest {
     }
 
     @Test
-    fun modifyExceptionList() {
-    }
-
-    @Test
     fun getQueryParameterMap() {
         // add some filter and make sure (only) the correct parameters are removed
         val url = Uri.parse("http://ads.test.net/ads?a=1&b=4#bla")
         val parameters = mapOf( "a" to "1", "b" to "4")
         Assert.assertEquals(parameters, url.getQueryParameterMap())
+    }
+
+    @Test
+    fun simpleDomain() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
+        filterList.add("example.com") // TODO: decide what this should do, uBo or ABP: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#static-network-filtering
+//        allowedRequests.add(request("http://ads.example.com/something", "https://page4.com").second)
+//        allowedRequests.add(request("http://ads.example4.com/example.com/not", "https://page4.com").second)
+        blockedRequests.add(request("http://example.com/something", "https://page4.com").second)
+        filterList.add("||example2.com^")
+        blockedRequests.add(request("http://ads.example2.com/something", "https://page4.com").second)
+        blockedRequests.add(request("http://example2.com/something", "https://page4.com").second)
+        allowedRequests.add(request("http://ads.com/example2.com/not", "https://page4.com").second)
+        allowedRequests.add(request("http://ads.example2.com.org/something", "https://page4.com").second)
+        filterList.add("|http://example3.com/|")
+        blockedRequests.add(request("http://example3.com/", "https://page4.com").second)
+        allowedRequests.add(request("http://example3.com/bla", "https://page4.com").second)
+
+        checkFilters(filterList, blockedRequests, allowedRequests, "block")
+
     }
 }
 
