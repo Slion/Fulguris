@@ -24,29 +24,6 @@ import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import okhttp3.internal.publicsuffix.PublicSuffix
 import java.util.*
 
-const val BROADCAST_ACTION_UPDATE_AD_BLOCK_DATA = "jp.hazuki.yuzubrowser.adblock.broadcast.update.adblock"
-
-/*
-fun WebResourceRequest.isThirdParty(pageUri: Uri): Boolean {
-    val hostName = url.host ?: return true
-    val pageHost = pageUri.host ?: return true
-
-    if (hostName == pageHost) return false
-
-    val ipPattern = PatternsCompat.IP_ADDRESS
-    if (ipPattern.matcher(hostName).matches() || ipPattern.matcher(pageHost).matches()) {
-        return true
-    }
-
-    val db = PublicSuffix.get()
-
-    return db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost)
-}
-
-
-fun WebResourceRequest.getContentRequest(pageUri: Uri) =
-    ContentRequest(url, pageUri, getContentType(pageUri), isThirdParty(pageUri))
-*/
 fun WebResourceRequest.getContentType(pageUri: Uri): Int {
     var type = 0
     val scheme = url.scheme
@@ -57,8 +34,6 @@ fun WebResourceRequest.getContentType(pageUri: Uri): Int {
             isPage = true
             type = ContentRequest.TYPE_DOCUMENT
         }
-    } else {
-        type = ContentRequest.TYPE_SUB_DOCUMENT
     }
 
     if (scheme == "ws" || scheme == "wss") {
@@ -72,11 +47,11 @@ fun WebResourceRequest.getContentType(pageUri: Uri): Int {
     val path = url.path ?: url.toString()
     val lastDot = path.lastIndexOf('.')
     if (lastDot >= 0) {
-        when (val extension = path.substring(lastDot + 1).toLowerCase(Locale.ENGLISH)) {
+        when (val extension = path.substring(lastDot + 1).lowercase().substringBefore('?')) {
             "js" -> return type or ContentRequest.TYPE_SCRIPT
             "css" -> return type or ContentRequest.TYPE_STYLE_SHEET
             "otf", "ttf", "ttc", "woff", "woff2" -> return type or ContentRequest.TYPE_FONT
-            "php" -> Unit
+            "php", "htm", "html" -> if (!isForMainFrame) return type or ContentRequest.TYPE_SUB_DOCUMENT // TODO: is this ok?
             else -> {
                 val mimeType = getMimeTypeFromExtension(extension)
                 if (mimeType != "application/octet-stream") {
