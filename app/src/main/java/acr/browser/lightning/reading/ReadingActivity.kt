@@ -54,8 +54,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Scheduler
@@ -69,11 +67,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
     @JvmField
-    @BindView(R.id.textViewTitle)
     var mTitle: TextView? = null
 
     @JvmField
-    @BindView(R.id.textViewBody)
     var mBody: TextView? = null
 
 
@@ -115,7 +111,8 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
         iTtsEngine = TextToSpeech(this, this)
 
         setContentView(R.layout.reading_view)
-        ButterKnife.bind(this)
+        mTitle = findViewById(R.id.textViewTitle)
+        mBody = findViewById(R.id.textViewBody)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)

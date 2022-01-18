@@ -95,7 +95,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.ButterKnife
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -306,9 +305,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding.findInPageInclude.buttonBack.setOnClickListener(this)
         iBinding.findInPageInclude.buttonQuit.setOnClickListener(this)
 
-
-
-        ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
         createMenuMain()
         createMenuWebPage()
