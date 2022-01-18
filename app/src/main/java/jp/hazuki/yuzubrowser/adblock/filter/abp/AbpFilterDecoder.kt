@@ -179,18 +179,22 @@ class AbpFilterDecoder {
         if (optionsIndex >= 0) {
             val options = filter.substring(optionsIndex + 1).split(',').toMutableList()
             // all is equal to: document, popup, inline-script, inline-font
-            //  but on mobile / webview there are no popups anyway
+            //  but on mobile / webview there are no popups anyway (all opened in the same window/tab)
             if (options.contains("all")) {
                 options.remove("all")
-                contentType = contentType  or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
-                if (!options.contains("~document"))
-                    contentType = contentType or ContentRequest.TYPE_DOCUMENT
-                if (!options.contains("~inline-font")) {
-                    options.add("inline-font")
-                    if (!options.contains("~inline-script"))
-                        options.add("csp=font-src *; script-src 'unsafe-eval' * blob: data:")
-                } else if (!options.contains("~inline-script"))
-                    options.add("inline-script")
+                contentType = contentType or ContentRequest.TYPE_DOCUMENT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
+                when {
+                    options.contains("~inline-font") && options.contains("~inline-script") -> Unit // ignore both
+                    options.contains("~inline-font") -> { // ignore inline-font only
+                        options.add("inline-script")
+                    }
+                    options.contains("~inline-script") -> { // ignore inline-script only
+                        options.add("inline-font")
+                    }
+                    else -> options.add("csp=font-src *; script-src 'unsafe-eval' * blob: data:") // take both
+                }
+                options.remove("~inline-font")
+                options.remove("~inline-script")
             }
 
             options.forEach {
@@ -249,7 +253,15 @@ class AbpFilterDecoder {
                             "csp" -> {
 //                                modify = MODIFY_PREFIX_CSP + (value ?: "")
                                 modify = CspFilter(value)
-                                contentType = ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT // uBo documentation: It can be applied to main document and documents in frames
+                                contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT) // uBo documentation: It can be applied to main document and documents in frames
+                            }
+                            "inline-font" -> {
+                                modify = CspFilter("font-src *")
+                                contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT)
+                            }
+                            "inline-script" -> {
+                                modify = CspFilter("script-src 'unsafe-eval' * blob: data:")
+                                contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT)
                             }
                             // currently no difference between redirect and redirect-rule
                             // actually: redirect-rule does only redirect if target is blocked by some other filter
@@ -274,8 +286,6 @@ class AbpFilterDecoder {
                                 if (header in REMOVEHEADER_NOT_ALLOWED) return
                                 modify = RemoveHeaderFilter(header, request)
                             }
-                            "inline-font" -> modify = CspFilter("font-src *")
-                            "inline-script" -> modify = CspFilter("script-src 'unsafe-eval' * blob: data:")
                             else -> return
                         }
                     }
