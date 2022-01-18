@@ -16,29 +16,75 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.unified
 
-import java.util.*
-
 object Tag {
     fun create(url: String): List<String> {
-        return url.toLowerCase(Locale.ENGLISH).getTagCandidates().also {
+        return url.lowercase().getTagCandidates().also {
             it += ""
         }
     }
 
-    fun createBest(pattern: String): String {
-        var maxLength = 0
-        var tag = ""
+    fun createBest(pattern: String) = pattern.lowercase().getTagCandidates().maxByOrNull { it.length } ?: ""
 
-        val candidates = pattern.toLowerCase(Locale.ENGLISH).getTagCandidates()
-        for (i in 0 until candidates.size) {
-            val candidate = candidates[i]
-            if (candidate.length > maxLength) {
-                maxLength = candidate.length
-                tag = candidate
-            }
+    fun createBest(filter: UnifiedFilter): String {
+        if (!filter.isRegex)
+            return createBest(filter.pattern) // same as previously for non-regex
+
+        // require tags to be between a few selected delimiters
+        //   regex is used like a contains filter and can start in the middle of any string
+        //   can't just have it delimited like normal, because tags may be created from pattern
+        var pattern = filter.pattern.lowercase()
+
+        // valid separators: "\\/(.+?\\.)?", "\\.", "\\/"
+        //  convert to the same one for easier checking
+        pattern = pattern.replace("\\/(.+?\\.)?", "\\.").replace("\\/", "\\.")
+
+        // remove some common patterns before creating candidates
+        //  replace everything in [] and () with some invalid char that is a separator for getTagCandidates
+        pattern = pattern.replaceAllBetweenChars('[', ']', "|")
+        pattern = pattern.replaceAllBetweenChars('(', ')', "|")
+
+        val tags = pattern.getTagCandidates()
+
+        // remove tags that don't have a valid separator on each side
+        //  necessary for regex, as it's basically a contain filter
+        //  for normal filters this is not needed (TODO: but maybe for containsFilter?)
+        var tag = ""
+        for (i in tags.indices.reversed()) {
+            if (pattern.contains("\\.${tags[i]}\\.") && tags[i].length > tag.length)
+                tag = tags[i]
         }
 
         return tag
+    }
+
+    private fun String.replaceAllBetweenChars(start: Char, end: Char, replacement: String): String {
+        var r = this
+        val open = mutableListOf<Int>()
+        val close = mutableListOf<Int>()
+        var isOpen = false
+        for (i in 0 until length) {
+            when (get(i)) {
+                start -> {
+                    open.add(i)
+                    if (isOpen) return "" // no nesting
+                    else isOpen = true
+                }
+                end -> {
+                    close.add(i)
+                    if (!isOpen) return "" // no nesting
+                    else isOpen = false
+                }
+            }
+        }
+        if (open.size != close.size)
+            return "" // same amount of open and close
+
+        for (i in open.indices.reversed()) {
+            if (open[i] > close[i])
+                return "" // open before close
+            r = r.replaceRange(open[i], close[i], replacement)
+        }
+        return r
     }
 
     private fun String.getTagCandidates(): MutableList<String> {

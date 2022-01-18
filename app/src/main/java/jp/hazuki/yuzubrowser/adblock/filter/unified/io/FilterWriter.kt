@@ -97,10 +97,7 @@ class FilterWriter {
 
         // also write best tag
         //  no need to create tags when loading -> loading is ca 20-50% faster
-        val tagBytes = when {
-            it.isRegex -> "".toByteArray()
-            else -> Tag.createBest(it.pattern).toByteArray()
-        }
+        val tagBytes = Tag.createBest(it).toByteArray()
         os.write(tagBytes.size.toShortByteArray(shortBuf))
         os.write(tagBytes)
 

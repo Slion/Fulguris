@@ -18,6 +18,7 @@ package jp.hazuki.yuzubrowser.adblock.core
 
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.unified.Tag
+import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
 
 class FilterContainer {
     private val filters = hashMapOf<String, ContentFilter>()
@@ -111,10 +112,7 @@ class FilterContainer {
 
     // only used in tests
     operator fun plusAssign(filter: ContentFilter) {
-        val key = when {
-            filter.isRegex -> ""
-            else -> Tag.createBest(filter.pattern)
-        }
+        val key = Tag.createBest(filter as UnifiedFilter)
         addWithTag(Pair(key, filter))
     }
 
