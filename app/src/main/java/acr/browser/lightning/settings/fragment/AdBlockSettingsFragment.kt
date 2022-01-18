@@ -304,6 +304,16 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             linearLayout.addView(delete)
         }
 
+        // update button
+        if (entity.entityId != 0 && entity.url.toHttpUrlOrNull() != null) {
+            val updateButton = Button(context)
+            updateButton.text = resources.getString(R.string.blocklist_update)
+            updateButton.setOnClickListener {
+                updateFilterList(entity, true)
+            }
+            linearLayout.addView(updateButton)
+        }
+
         // arbitrary numbers that look ok on my phone -> ok for other phones?
         linearLayout.setPadding(30,10,30,10)
 
