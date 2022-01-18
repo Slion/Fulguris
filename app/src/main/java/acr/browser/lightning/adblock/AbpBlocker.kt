@@ -26,7 +26,6 @@ import kotlinx.coroutines.*
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.internal.publicsuffix.PublicSuffix
 import okhttp3.internal.toHeaderList
 import java.io.*
@@ -60,7 +59,7 @@ class AbpBlocker @Inject constructor(
     // cache for 3rd party check, allows significantly faster checks
     private val thirdPartyCache = ThirdPartyLruCache(100)
 
-    private val dummyImage: ByteArray by lazy { readByte(application.resources.assets.open("blank.png")) }
+//    private val dummyImage: ByteArray by lazy { readByte(application.resources.assets.open("blank.png")) }
     private val dummyResponse by lazy { WebResourceResponse("text/plain", "UTF-8", EmptyInputStream()) }
     private val okHttpClient by lazy { OkHttpClient() } // we only need it for some filters
 
@@ -94,9 +93,7 @@ class AbpBlocker @Inject constructor(
 
         // call loadFile for all prefixes and be done if all return true
         // asSequence() should not load all lists and then check, but fail faster if there is a problem
-        if (prefixes.asSequence().map {
-                    loadFile(File(filterDir, it), it) }.all { true }
-        ) {
+        if (prefixes.asSequence().map { loadFile(File(filterDir, it), it) }.all { it }) {
             listsLoaded = true
             return
         }
@@ -184,7 +181,7 @@ class AbpBlocker @Inject constructor(
     private fun createDummy(uri: Uri): WebResourceResponse {
         val mimeType = getMimeType(uri.toString())
         return if (mimeType.startsWith("image/")) {
-            WebResourceResponse("image/png", null, ByteArrayInputStream(dummyImage))
+            WebResourceResponse("image/gif", null, redirectFile("1x1.gif"))
         } else {
             dummyResponse
         }
@@ -528,7 +525,9 @@ class AbpBlocker @Inject constructor(
             else -> dummyResponse
         }
 
-    private fun redirectFile(name: String) = application.resources.assets.open("blocker_resources/$name")
+    // TODO: does it really work?
+    //  looks like images are not shown, need to test better
+    private fun redirectFile(name: String) = application.assets.open("blocker_resources/$name")
 
 
     companion object {
@@ -554,7 +553,9 @@ class AbpBlocker @Inject constructor(
         fun getMimeType(fileName: String): String {
             val lastDot = fileName.lastIndexOf('.')
             if (lastDot >= 0) {
-                val extension = fileName.substring(lastDot + 1).toLowerCase()
+                val extension = fileName.substring(lastDot + 1).lowercase()
+                    // strip potentially leftover parameters and fragment
+                    .substringBefore('?').substringBefore('#')
                 return getMimeTypeFromExtension(extension)
             }
             return "application/octet-stream"
@@ -603,13 +604,22 @@ class AbpBlocker @Inject constructor(
         fun getModifiedParameters(request: WebResourceRequest, filters: List<ContentFilter>): Map<String, String>? {
             val parameters = request.url.getQueryParameterMap()
             var changed = false
-            if (parameters.isEmpty()) return null // TODO: should not happen, maybe remove this check
+            if (parameters.isEmpty()) return null // TODO: should not happen, but this is required for tests
             filters.forEach { filter ->
                 when (val modify = filter.modify!!) {
-                    is RemoveparamRegexFilter -> {} // TODO: use the matcher!
+                    // TODO: this is somewhat inefficient!
+                    //  even if there is nothing left, all remaining entries are checked
+                    //  but: how many parameters really do exist in an average query?
+                    is RemoveparamRegexFilter -> {
+                        val regex = filter.modify!!.parameter!!.substring(1,filter.modify!!.parameter!!.lastIndex).toRegex()
+                        changed = changed or if (modify.inverse)
+                            parameters.entries.retainAll { regex.containsMatchIn(it.key) }
+                        else
+                            parameters.entries.removeAll { regex.containsMatchIn(it.key) }
+                    }
                     is RemoveparamFilter -> {
-                        if (modify.parameter == null)
-                            return emptyMap() // means: remove all parameters
+                        if (modify.parameter == null) // means: remove all parameters
+                            return emptyMap()
                         changed = changed or if (modify.inverse)
                             parameters.entries.retainAll { it.key == modify.parameter }
                         else
