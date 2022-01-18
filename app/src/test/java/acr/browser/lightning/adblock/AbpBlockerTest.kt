@@ -6,12 +6,12 @@ import android.net.Uri
 import android.webkit.WebResourceRequest
 import androidx.core.net.toUri
 import androidx.core.util.PatternsCompat
+import com.google.re2j.Pattern
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.abp.AbpFilterDecoder
-import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
-import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilterSet
+import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
 import jp.hazuki.yuzubrowser.adblock.getContentType
@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.*
 
 class AbpBlockerTest {
 
@@ -82,15 +83,15 @@ class AbpBlockerTest {
 
         when (list) {
             "block" -> {
-                Assert.assertEquals(set.blackList.size, filterList.size)
+                Assert.assertEquals(filterList.size, set.blackList.size)
                 container.also { set.blackList.forEach(it::plusAssign) }
             }
             "allow" -> {
-                Assert.assertEquals(set.whiteList.size, filterList.size)
+                Assert.assertEquals(filterList.size, set.whiteList.size)
                 container.also { set.whiteList.forEach(it::plusAssign) }
             }
             "modify" -> {
-                Assert.assertEquals(set.modifyList.size, filterList.size)
+                Assert.assertEquals(filterList.size, set.modifyList.size)
                 container.also { set.modifyList.forEach(it::plusAssign) }
             }
         }
@@ -166,6 +167,25 @@ class AbpBlockerTest {
         filterList.add("||page5.*/something")
         blockedRequests.add(request("http://page5.co.uk/something/page", "http://page.com").second)
         blockedRequests.add(request("http://page5.com/something?test=yes", "http://page.com").second)
+        filterList.add("/badfolder/worsething/")
+        blockedRequests.add(request("http://page6.co.uk/badfolder/worsething/", "http://page.com").second)
+        blockedRequests.add(request("http://page6.com/badfolder/worsething/something?test=yes", "http://page.com").second)
+        allowedRequests.add(request("http://page6.com/badfolder/worsething_/something?test=yes", "http://page.com").second)
+
+        checkFilters(filterList, blockedRequests, allowedRequests, "block")
+    }
+
+    @Test
+    fun regex() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
+        filterList.add("/banner\\d+/")
+        blockedRequests.add(request("http://page2.com/banner1", "https://something.page2.com").second)
+        blockedRequests.add(request("http://page2.com/banner123", "https://something.page2.com").second)
+        allowedRequests.add(request("http://page2.com/banner", "https://badpage.com").second)
+        allowedRequests.add(request("http://page2.com/banner/", "https://badpage.com").second)
 
         checkFilters(filterList, blockedRequests, allowedRequests, "block")
     }
@@ -273,6 +293,8 @@ class AbpBlockerTest {
         val allowedRequests = mutableListOf<Pair<WebResourceRequest,ContentRequest>>()
         filterList.add("\$removeparam=badparam")
         modifiedRequests.add(request("http://page.com/page?badparam=yes", "http://page.com"))
+        modifiedRequests.add(request("http://page.com/page?badparam", "http://page.com"))
+        modifiedRequests.add(request("http://page.com/page?badparam=", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam=yes&other=no", "http://page.com"))
         allowedRequests.add(request("http://page.com/whatever", "http://thing.com"))
         allowedRequests.add(request("http://page.com/ads?param=yes", "http://thing.com"))
@@ -283,6 +305,11 @@ class AbpBlockerTest {
         filterList.add("||page56.com\$removeparam")
         modifiedRequests.add(request("http://page56.com/page?param2=yes", "http://page.com"))
         allowedRequests.add(request("http://page56.com/page_param2=yes", "http://page.com"))
+        filterList.add("\$removeparam=/^par_/")
+        allowedRequests.add(request("http://page2.com/page?param2=yes", "http://page.com"))
+        allowedRequests.add(request("http://page2.com/page?1par_am2=yes", "http://page.com"))
+        modifiedRequests.add(request("http://page2.com/page?par_am2=yes", "http://page.com"))
+        modifiedRequests.add(request("http://page2.com/page?par_", "http://page.com"))
 
         val set = loadFilterSet(filterList.joinToString("\n").byteInputStream())
 
@@ -295,9 +322,11 @@ class AbpBlockerTest {
         val container = FilterContainer().also { set.modifyList.forEach(it::plusAssign) }
 
         modifiedRequests.forEach {
+            println("should be filtered: " + it.second.url + " "+ it.second.pageUrl)
             Assert.assertNotNull(getModifiedParameters(it.first, container.getAll(it.second)))
         }
         allowedRequests.forEach {
+            println("should not be touched: " + it.second.url + " "+ it.second.pageUrl)
             Assert.assertNull(getModifiedParameters(it.first, container.getAll(it.second)))
         }
     }
@@ -328,7 +357,8 @@ class TestWebResourceRequest(val url2: Uri,
 }
 
 fun WebResourceRequest.getContentRequest(pageUri: Uri) =
-    ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri))
+//    ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri))
+    ContentRequest(url, pageUri, 0xffff, is3rdParty(url, pageUri)) // TODO: avoids mimeTypeMap not mocked problems, but type is wrong
 
 fun is3rdParty(url: Uri, pageUri: Uri): Boolean {
     val hostName = url.host ?: return true
