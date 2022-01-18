@@ -20,6 +20,8 @@ import com.google.re2j.Pattern
 import jp.hazuki.yuzubrowser.adblock.*
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
+import jp.hazuki.yuzubrowser.adblock.filter.unified.ModifyFilter.Companion.REMOVEHEADER_NOT_ALLOWED
+import jp.hazuki.yuzubrowser.adblock.filter.unified.ModifyFilter.Companion.RESPONSEHEADER_ALLOWED
 import jp.hazuki.yuzubrowser.adblock.filter.unified.element.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -175,6 +177,20 @@ class AbpFilterDecoder {
         } else {
             true
         }
+        // re-write uBo responseheader to allow easier parsing
+        val responseHeaderStart = filter.indexOf("##^responseheader(")
+        if (responseHeaderStart > -1) {
+            val end = filter.indexOf(')', responseHeaderStart)
+            val header = filter.substring(responseHeaderStart + 18, end)
+            if (!RESPONSEHEADER_ALLOWED.contains(header))
+                return
+            val other = filter.substringAfter(header)
+            filter = if (other.length > 2 && other[2] == '$')
+                filter.substring(0, responseHeaderStart) + "\$removeheader=" + header + "," + other.substring(2)
+            else
+                filter.substring(0, responseHeaderStart) + "\$removeheader=" + header
+        }
+
         val optionsIndex = filter.lastIndexOf('$')
         if (optionsIndex >= 0) {
             val options = filter.substring(optionsIndex + 1).split(',').toMutableList()
@@ -212,7 +228,7 @@ class AbpFilterDecoder {
                     option = option.substring(1)
                 }
 
-                option = option.toLowerCase(Locale.ENGLISH)
+                option = option.lowercase()
                 val type = option.getOptionBit()
                 if (type == -1) return
 
@@ -240,7 +256,6 @@ class AbpFilterDecoder {
                             "strict3p" -> thirdParty = if (inverse) 3 else 2
                             "strict1p" -> thirdParty = if (inverse) 2 else 3
                             "sitekey" -> Unit
-//                            "removeparam", "queryprune" -> modify = MODIFY_PREFIX_REMOVEPARAM + (value ?: "")
                             "removeparam", "queryprune" -> {
                                 modify = if (value == null || value.isEmpty()) RemoveparamFilter(null, false)
                                 else {
@@ -251,7 +266,6 @@ class AbpFilterDecoder {
                                 }
                             }
                             "csp" -> {
-//                                modify = MODIFY_PREFIX_CSP + (value ?: "")
                                 modify = CspFilter(value)
                                 contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT) // uBo documentation: It can be applied to main document and documents in frames
                             }
@@ -269,12 +283,9 @@ class AbpFilterDecoder {
                             //  and redirect will never be checked if request is blocked
                             // TODO: have redirect-rule separate and put it in a different filter container
                             //  to be checked if request is blocked
-//                            "redirect", "redirect-rule" -> modify = MODIFY_PREFIX_REDIRECT + (value ?: "")
                             "redirect", "redirect-rule" -> if (value != null) modify = RedirectFilter(value)
-//                            "empty" -> modify = MODIFY_PREFIX_REDIRECT + "empty"
                             "empty" -> modify = RedirectFilter("empty")
                             "mp4" -> {
-//                                modify = MODIFY_PREFIX_REDIRECT + "noopmp4-1s"
                                 modify = RedirectFilter("noopmp4-1s")
                                 contentType = ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
