@@ -6,7 +6,6 @@ import android.net.Uri
 import android.webkit.WebResourceRequest
 import androidx.core.net.toUri
 import androidx.core.util.PatternsCompat
-import com.google.re2j.Pattern
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
@@ -14,7 +13,6 @@ import jp.hazuki.yuzubrowser.adblock.filter.abp.AbpFilterDecoder
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
-import jp.hazuki.yuzubrowser.adblock.getContentType
 import okhttp3.internal.publicsuffix.PublicSuffix
 import org.junit.Assert
 import org.junit.Test
@@ -22,7 +20,6 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.*
 
 class AbpBlockerTest {
 
@@ -252,8 +249,12 @@ class AbpBlockerTest {
         val allowedRequests = mutableListOf<ContentRequest>()
 
         filterList.add("*\$third-party")
+        filterList.add("\$third-party")
         allowedRequests.add(request("http://ads.page4.com/something", "https://something.page4.com").second)
         blockedRequests.add(request("http://ads.page4.com/something", "https://goodotherpage.com").second)
+
+        val s = loadFilterSet(filterList.joinToString("\n").byteInputStream())
+        Assert.assertEquals(s.blackList.first(), s.blackList.last()) // '*' and '' should give the same filter
 
         checkFilters(filterList, blockedRequests, allowedRequests, "block")
     }

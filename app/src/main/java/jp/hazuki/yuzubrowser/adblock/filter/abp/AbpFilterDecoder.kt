@@ -292,6 +292,10 @@ class AbpFilterDecoder {
                 }
             }
             filter = filter.substring(0, optionsIndex)
+
+            // some lists use * to match all, some use empty
+            //  convert * to empty since it will result in a simple contains filter
+            if (filter == "*") filter = ""
         }
 
         val domains = domain?.domainsToDomainMap('|')
