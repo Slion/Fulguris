@@ -307,11 +307,6 @@ dependencies {
 
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
-    // view binding
-    final def butterKnifeVersion = '10.2.1'
-    implementation "com.jakewharton:butterknife:$butterKnifeVersion"
-    kapt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
-
     // permissions
     implementation 'com.anthonycr.grant:permissions:1.1.2'
 
