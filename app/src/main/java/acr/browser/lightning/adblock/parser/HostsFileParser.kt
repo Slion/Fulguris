@@ -70,11 +70,12 @@ class HostsFileParser(
                     val partialLine = partial.toString()
 
                     // Add string to list
+                    if (partialLine.contains('.'))
                     parsedList.add(Host(partialLine))
                     lineBuilder.inlineReplace(partialLine, EMPTY)
                     lineBuilder.inlineTrim()
                 }
-                if (lineBuilder.isNotEmpty()) {
+                if (lineBuilder.isNotEmpty() && lineBuilder.containsChar('.')) {
                     // Add string to list.
                     parsedList.add(Host(lineBuilder.toString()))
                 }

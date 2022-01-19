@@ -196,14 +196,13 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
         if (!decoder.checkHeader(reader, charset)) {
             // no adblock plus format, try hosts reader
-            //  TODO: adjust hosts parser? accepts really a lot of not really suitable lines as hosts
-            //   no real problem, but they clutter the list (mostly slows down loading)
             val parser = HostsFileParser(logger)
             // TODO: HostFilter or StartEndFilter?
-            //  HostFilter is exact host match, StartEndFilter also matches subdomains
-            //  if StartEndFilter is the choice, we could remove unnecessary subdomains (e.g. ads.example.com if example.com is on list)
-            //   or rather do it when loading / creating joint lists?
-            val hostsList = parser.parseInput(reader).map {StartEndFilter(it.name,0xffff, false, null, -1)}
+            //  HostFilter is exact host match (like hosts lists do out of necessity)
+            //  StartEndFilter also matches subdomains
+            val hostsList = parser.parseInput(reader).map {
+                StartEndFilter(it.name,0xffff, false, null, -1)
+            }
             if (hostsList.isEmpty())
                 return false
             entity.lastLocalUpdate = System.currentTimeMillis()
