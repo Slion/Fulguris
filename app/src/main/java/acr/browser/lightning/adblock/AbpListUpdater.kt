@@ -149,7 +149,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             }
             if (!response.isSuccessful) {
                 Handler(Looper.getMainLooper()).post {
-                    context.toast(context.getString(R.string.blocklist_update_error, entity.title))
+                    context.toast(context.getString(R.string.blocklist_update_error_code, entity.title, response.code.toString()))
                 }
                 return false
             }
