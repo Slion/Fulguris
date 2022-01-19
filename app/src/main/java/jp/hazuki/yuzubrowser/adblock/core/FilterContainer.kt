@@ -110,6 +110,10 @@ class FilterContainer {
         return list
     }
 
+    fun clear() {
+        filters.clear()
+    }
+
     // only used in tests
     operator fun plusAssign(filter: ContentFilter) {
         val key = Tag.createBest(filter as UnifiedFilter)

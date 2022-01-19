@@ -43,7 +43,6 @@ class AbpBlocker @Inject constructor(
     ) : AdBlocker {
 
     // use a map of filterContainers instead of several separate containers
-    // TODO: could also use list and associate prefix with id, but only if it's considerably faster...
     private val filterContainers = prefixes.associateWith { FilterContainer() }
 
     // store whether lists are loaded (and delay any request until loading is done)
@@ -59,7 +58,6 @@ class AbpBlocker @Inject constructor(
     // cache for 3rd party check, allows significantly faster checks
     private val thirdPartyCache = ThirdPartyLruCache(100)
 
-//    private val dummyImage: ByteArray by lazy { readByte(application.resources.assets.open("blank.png")) }
     private val dummyResponse by lazy { WebResourceResponse("text/plain", "UTF-8", EmptyInputStream()) }
     private val okHttpClient by lazy { OkHttpClient() } // we only need it for some filters
 
@@ -110,8 +108,8 @@ class AbpBlocker @Inject constructor(
                 it to abpLoader.loadAll(it).toSet()
         }.toMap()
 
-        // use !! to get error
         prefixes.forEach { prefix ->
+            filterContainers[prefix]!!.clear() // clear container, or disabled filter lists will still be active
             filterContainers[prefix]!!.also { filters[prefix]!!.forEach(it::addWithTag) }
         }
         listsLoaded = true
@@ -295,18 +293,15 @@ class AbpBlocker @Inject constructor(
         if (modifyFilters.isNotEmpty()) {
             if (request.url.encodedQuery == null) {
                 // if no parameters, remove all removeparam filters
-                    // TODO: compare speed checking by class vs the old way via string
-//                modifyFilters.removeAll { it.modify!!.prefix == MODIFY_PREFIX_REMOVEPARAM }
                 modifyFilters.removeRemoveparam()
                 if (modifyFilters.isEmpty()) return null
             }
             // there is a hit, but first check whether the exact filter has an exception
             val modifyExceptions = filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getAll(contentRequest)
             if (modifyExceptions.isNotEmpty()) {
-                /* how exceptions/negations work: (adguard removeparam documentation is useful: https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters)
-                 *  without parameter (i.e. empty), all filters of that type (removeparam, csp,...) are invalid
-                 *  with parameter, only same type and same parameter are considered invalid
-                 */
+                // how exceptions/negations work: (adguard removeparam documentation is useful: https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters)
+                //  without parameter (i.e. empty), all filters of that type (removeparam, csp,...) are invalid
+                //  with parameter, only same type and same parameter are considered invalid
 
                 modifyExceptions.forEach { exception ->
                     if (exception.modify!!.parameter == null) // no parameter -> remove all modify of same type
@@ -316,9 +311,9 @@ class AbpBlocker @Inject constructor(
                 }
             }
 
-            // important: there can be multiple filters valid, and all should be applied if possible
+            // important: there can be multiple valid filters, and all should be applied if possible
             //  just do one after the other
-            //  but since I can't change the WebResourceRequest it must all happen within getModifiedResponse()
+            //  but since WebResourceRequest can't be changed and returned to WebView, it must all happen within getModifiedResponse()
             return getModifiedResponse(request, modifyFilters)
         }
 
@@ -383,7 +378,7 @@ class AbpBlocker @Inject constructor(
                             parameterString(parameters) + // add modified parameters
                             (request.url.fragment ?: "") // add fragment
                 )
-            .method(request.method, null) // use same method, TODO: is body null really ok?
+            .method(request.method, null) // use same method, no body to copy from WebResourceRequest
             .headers(requestHeaders.toHeaders())
             .build()
 
@@ -434,13 +429,18 @@ class AbpBlocker @Inject constructor(
                     body.byteStream())
             }
         } catch (e: IOException) {
-            return null // TODO: what do? empty response? null to let webview try again? but then it's unmodified...
+            // TODO: what do?
+            //  empty WebResourceResponse? it's like blocking... maybe with some error response code?
+            //  null to let WebView try again? but then the filters are not applied
+            return null
         }
     }
 
     // resources from uBlockOrigin!
-    //  TODO: implement it in a better maintainable version, maybe something generated with a script
-    //   from https://github.com/gorhill/uBlock/blob/master/src/js/redirect-engine.js
+    //  TODO: implement it in a better maintainable version
+    //   maybe something generated with a script from https://github.com/gorhill/uBlock/blob/master/src/js/redirect-engine.js?
+    //   and the file names should use string variables
+    // TODO2: load from file every time? is there some caching in the background? cache stuff manually?
     private fun redirectResponse(resource: String): WebResourceResponse =
         when (resource) {
             "1x1.gif", "1x1-transparent.gif" ->
@@ -484,7 +484,7 @@ class AbpBlocker @Inject constructor(
             "hd-main.js" ->
                 WebResourceResponse("application/javascript", "utf-8", redirectFile("hd-main.js"))
             "ligatus_angular-tag.js", "ligatus.com/*/angular-tag.js" ->
-                WebResourceResponse("application/javascript", "utf-8", redirectFile("1x1.gif"))
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("ligatus_angular-tag.js"))
             "mxpnl_mixpanel.js" ->
                 WebResourceResponse("application/javascript", "utf-8", redirectFile("mxpnl_mixpanel.js"))
             "monkeybroker.js", "d3pkae9owd2lcf.cloudfront.net/mb105.js" ->
@@ -522,28 +522,13 @@ class AbpBlocker @Inject constructor(
             else -> dummyResponse
         }
 
-    // TODO: does it really work?
-    //  looks like images are not shown, need to test better
     private fun redirectFile(name: String) = application.assets.open("blocker_resources/$name")
 
 
     companion object {
         private val prefixes = listOf(ABP_PREFIX_ALLOW, ABP_PREFIX_DENY, ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION, ABP_PREFIX_IMPORTANT, ABP_PREFIX_IMPORTANT_ALLOW)
 
-        private const val BUFFER_SIZE = 1024 * 8
         private const val TAG = "AbpBlocker"
-
-        // from jp.hazuki.yuzubrowser.core.utility.utils/IOUtils.java
-        @Throws(IOException::class)
-        fun readByte(inputStream: InputStream): ByteArray {
-            val buffer = ByteArray(BUFFER_SIZE)
-            val bout = ByteArrayOutputStream()
-            var n: Int
-            while (inputStream.read(buffer).also { n = it } >= 0) {
-                bout.write(buffer, 0, n)
-            }
-            return bout.toByteArray()
-        }
 
         // from jp.hazuki.yuzubrowser.core.utility.utils/FileUtils.kt
         private const val MIME_TYPE_UNKNOWN = "application/octet-stream"
@@ -601,14 +586,10 @@ class AbpBlocker @Inject constructor(
         fun getModifiedParameters(request: WebResourceRequest, filters: List<ContentFilter>): Map<String, String>? {
             val parameters = request.url.getQueryParameterMap()
             var changed = false
-            if (parameters.isEmpty()) return null // TODO: should not happen anyway, but this is required for tests
             filters.forEach { filter ->
                 when (val modify = filter.modify!!) {
-                    // TODO: this is somewhat inefficient!
-                    //  even if there is nothing left, all remaining entries are checked
-                    //  but: how many parameters really do exist in an average query?
                     is RemoveparamRegexFilter -> {
-                        val regex = filter.modify!!.parameter!!.substring(1,filter.modify!!.parameter!!.lastIndex).toRegex()
+                        val regex = (filter.modify!! as RemoveparamRegexFilter).regex
                         changed = changed or if (modify.inverse)
                             parameters.entries.retainAll { regex.containsMatchIn(it.key) }
                         else

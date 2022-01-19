@@ -88,7 +88,9 @@ open class RemoveparamFilter(parameter: String?, inverse: Boolean): ModifyFilter
     override val prefix = MODIFY_PREFIX_REMOVEPARAM
 }
 
-class RemoveparamRegexFilter(parameter: String?, inverse: Boolean): RemoveparamFilter(parameter, inverse)
+class RemoveparamRegexFilter(parameter: String, inverse: Boolean): RemoveparamFilter(parameter, inverse) {
+    val regex = parameter.toRegex()
+}
 
 class RedirectFilter(parameter: String?): ModifyFilter(parameter, false) {
     override val prefix = MODIFY_PREFIX_REDIRECT
@@ -103,8 +105,8 @@ class RemoveHeaderFilter(parameter: String, request: Boolean): ModifyFilter(para
 }
 
 fun getRemoveparamFilter(parameter: String, inverse: Boolean) =
-    if (parameter.startsWith('/'))
-        RemoveparamRegexFilter(parameter, inverse)
+    if (parameter.startsWith('/') && parameter.endsWith('/'))
+        RemoveparamRegexFilter(parameter.drop(1).dropLast(1), inverse)
     else
         RemoveparamFilter(parameter, inverse)
 

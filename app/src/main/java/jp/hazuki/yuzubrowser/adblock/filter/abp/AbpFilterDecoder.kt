@@ -221,7 +221,7 @@ class AbpFilterDecoder {
                     value = option.substring(separatorIndex + 1)
                     option = option.substring(0, separatorIndex)
                 }
-                if (option.isEmpty() || option.matches("^_+$".toRegex())) return@forEach
+                if (option.isEmpty() || (option.startsWith("_") && option.matches("^_+$".toRegex()))) return@forEach
 
                 val inverse = option[0] == '~'
                 if (inverse) {

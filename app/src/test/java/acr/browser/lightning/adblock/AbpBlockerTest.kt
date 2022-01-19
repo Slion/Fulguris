@@ -328,7 +328,7 @@ class AbpBlockerTest {
         }
         allowedRequests.forEach {
             println("should not be touched: " + it.second.url + " "+ it.second.pageUrl)
-            Assert.assertNull(getModifiedParameters(it.first, container.getAll(it.second)))
+            Assert.assertTrue(it.first.url.queryParameterNames.isEmpty() || null == getModifiedParameters(it.first, container.getAll(it.second)))
         }
     }
 
