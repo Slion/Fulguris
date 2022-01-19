@@ -71,13 +71,13 @@ class SettingsActivity : ThemedSettingsActivity(),
     /**
      * Fetch the currently loaded settings fragment.
      */
-    fun currentFragment() = supportFragmentManager.findFragmentById(R.id.settings)
+    private fun currentFragment() = supportFragmentManager.findFragmentById(R.id.settings)
 
 
     /**
      * Update activity title as define by the current fragment
      */
-    fun updateTitle()
+    private fun updateTitle()
     {
         updateTitle(currentFragment())
     }
@@ -85,7 +85,7 @@ class SettingsActivity : ThemedSettingsActivity(),
     /**
      * Update activity title as defined by the given [aFragment].
      */
-    fun updateTitle(aFragment : Fragment?)
+    private fun updateTitle(aFragment : Fragment?)
     {
         // Needed to update title after language change
         (aFragment as? AbstractSettingsFragment)?.let {
@@ -131,7 +131,7 @@ class SettingsActivity : ThemedSettingsActivity(),
      * Start fragment matching the given type.
      * That should only work if the currently loaded fragment is our root/header fragment.
      */
-    fun startFragment(aClass: Class<*>) {
+    private fun startFragment(aClass: Class<*>) {
         // We need to find the preference that's associated with that fragment, before we can start it.
         (currentFragment() as? RootSettingsFragment)?.let {
             it.preferenceScreen.findPreference(aClass)?.let { pref ->
@@ -148,7 +148,7 @@ class SettingsActivity : ThemedSettingsActivity(),
      * [aTarget] My understanding is that this is the fragment that will be replaced by the one the are starting.
      * [aPref] Preference associated with the fragment being started.
      */
-    fun startFragment(aTarget: PreferenceFragmentCompat, aPref: Preference) {
+    private fun startFragment(aTarget: PreferenceFragmentCompat, aPref: Preference) {
         // Instantiate the new Fragment
         val args = aPref.extras
         val fragment = supportFragmentManager.fragmentFactory.instantiate(

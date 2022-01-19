@@ -15,7 +15,7 @@ class RootSettingsFragment : PreferenceFragmentCompat() {
 
         if (BuildConfig.BUILD_TYPE!="debug") {
             // Hide debug page in release builds
-            findPreference<Preference>(getString(R.string.pref_key_debug))?.isVisible = false
+            //findPreference<Preference>(getString(R.string.pref_key_debug))?.isVisible = false
         }
     }
 }

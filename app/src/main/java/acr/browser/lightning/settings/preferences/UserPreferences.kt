@@ -336,6 +336,12 @@ class UserPreferences @Inject constructor(
     var crashReport by preferences.booleanPreference(R.string.pref_key_crash_report, R.bool.pref_default_crash_report)
 
     /**
+     * User can disable crash log.
+     * Crash log typically write crash callstack to file system.
+     */
+    var crashLogs by preferences.booleanPreference(R.string.pref_key_crash_logs, R.bool.pref_default_crash_logs)
+
+    /**
      * Toggle visibility of close tab button on drawer tab list items.
      */
     var showCloseTabButton by preferences.booleanPreference(R.string.pref_key_tab_list_item_show_close_button, if (screenSize.isTablet())  R.bool.const_true else R.bool.pref_default_tab_list_item_show_close_button)
