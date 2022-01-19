@@ -26,35 +26,50 @@ object Tag {
     fun createBest(pattern: String) = pattern.lowercase().getTagCandidates().maxByOrNull { it.length } ?: ""
 
     fun createBest(filter: UnifiedFilter): String {
-        if (!filter.isRegex)
-            return createBest(filter.pattern) // same as previously for non-regex
+        when {
+            // ContainsFilter requires removal of tags directly at start and end
+            //   ContainsFilter with pattern 'example' matches 'http://test.com/badexamples'
+            //   but will never get checked because tags don't match
+            // same for ContainsHostFilter, though this is actually never used
+            filter is ContainsFilter || filter is ContainsHostFilter -> {
+                val pattern = filter.pattern.lowercase()
+                val tags = pattern.getTagCandidates()
+                // remove tags directly at start or end of pattern
+                if (tags.isNotEmpty() && pattern.lastIndexOf(tags.first()) == 0) // lastIndex because tag may occur multiple times
+                    tags.removeAt(0)
+                if (tags.isNotEmpty() && pattern.indexOf(tags.first()) == 0)
+                    tags.removeAt(tags.lastIndex)
+                return tags.maxByOrNull { it.length } ?: ""
+            }
+            filter.isRegex -> {
+                // require tags to be between a few selected delimiters
+                //   regex is used like a contains filter and can start in the middle of any string
+                //   can't just have it delimited like normal, because tags may be created from pattern
+                var pattern = filter.pattern.lowercase()
 
-        // require tags to be between a few selected delimiters
-        //   regex is used like a contains filter and can start in the middle of any string
-        //   can't just have it delimited like normal, because tags may be created from pattern
-        var pattern = filter.pattern.lowercase()
+                // valid separators: "\\/(.+?\\.)?", "\\.", "\\/"
+                //  convert to the same one for easier checking
+                pattern = pattern.replace("\\/(.+?\\.)?", "\\.").replace("\\/", "\\.")
 
-        // valid separators: "\\/(.+?\\.)?", "\\.", "\\/"
-        //  convert to the same one for easier checking
-        pattern = pattern.replace("\\/(.+?\\.)?", "\\.").replace("\\/", "\\.")
+                // remove some common patterns before creating candidates
+                //  replace everything in [] and () with some invalid char that is a separator for getTagCandidates
+                pattern = pattern.replaceAllBetweenChars('[', ']', "|")
+                pattern = pattern.replaceAllBetweenChars('(', ')', "|")
 
-        // remove some common patterns before creating candidates
-        //  replace everything in [] and () with some invalid char that is a separator for getTagCandidates
-        pattern = pattern.replaceAllBetweenChars('[', ']', "|")
-        pattern = pattern.replaceAllBetweenChars('(', ')', "|")
+                val tags = pattern.getTagCandidates()
 
-        val tags = pattern.getTagCandidates()
+                // remove tags that don't have a valid separator on each side
+                //  necessary for regex, as it's basically a contain filter
+                var tag = ""
+                for (i in tags.indices.reversed()) {
+                    if (pattern.contains("\\.${tags[i]}\\.") && tags[i].length > tag.length)
+                        tag = tags[i]
+                }
 
-        // remove tags that don't have a valid separator on each side
-        //  necessary for regex, as it's basically a contain filter
-        //  for normal filters this is not needed (TODO: but maybe for containsFilter?)
-        var tag = ""
-        for (i in tags.indices.reversed()) {
-            if (pattern.contains("\\.${tags[i]}\\.") && tags[i].length > tag.length)
-                tag = tags[i]
+                return tag
+            }
+            else ->  return createBest(filter.pattern)
         }
-
-        return tag
     }
 
     private fun String.replaceAllBetweenChars(start: Char, end: Char, replacement: String): String {
