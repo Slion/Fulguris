@@ -287,6 +287,61 @@ class AbpBlockerTest {
     }
 
     @Test
+    fun decoderCheckHeader() {
+        val file1 = """
+            ! Homepage: https://github.com/AdguardTeam/AdGuardFilters
+            ! License: https://github.com/AdguardTeam/AdguardFilters/blob/master/LICENSE
+            !
+            !-------------------------------------------------------------------!
+            !------------------ General JS API ---------------------------------!
+            !-------------------------------------------------------------------!
+            ! JS API START
+            #%#var AG_onLoad=function(func){if(document.readyState==="complete"||document.readyState==="interactive")func();else if(document.addEventListener)document.addEventListener("DOMContentLoaded",func);else if(document.attachEvent)document.attachEvent("DOMContentLoaded",func)};
+        """.trimIndent()
+        Assert.assertTrue(AbpFilterDecoder().checkHeader(file1.byteInputStream().bufferedReader(), Charsets.UTF_8))
+
+        val file2 = """
+            [Adblock Plus 2.0]
+            ! Version: 202201181719
+            ! Title: EasyList
+            ! Last modified: 18 Jan 2022 17:19 UTC
+            ! Expires: 4 days (update frequency)
+            ! Homepage: https://easylist.to/
+            ! Licence: https://easylist.to/pages/licence.html
+            ! !
+            ! Please report any unblocked adverts or problems
+            ! in the forums (https://forums.lanik.us/)
+            ! or via e-mail (easylist@protonmail.com).
+            ! GitHub issues: https://github.com/easylist/easylist/issues
+            ! GitHub pull requests: https://github.com/easylist/easylist/pulls
+            ! 
+            ! -----------------------General advert blocking filters-----------------------!
+            ! *** easylist:easylist/easylist_general_block.txt ***
+            &ad_block=
+        """.trimIndent()
+        Assert.assertTrue(AbpFilterDecoder().checkHeader(file2.byteInputStream().bufferedReader(), Charsets.UTF_8))
+
+        val file3 = """
+            # Title: StevenBlack/hosts
+            #
+            # This hosts file is a merged collection of hosts from reputable sources,
+            # with a dash of crowd sourcing via GitHub
+            #
+            # Date: 18 January 2022 18:32:01 (UTC)
+            # Number of unique domains: 97,681
+            #
+            # Fetch the latest version of this file: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+            # Project home page: https://github.com/StevenBlack/hosts
+            # Project releases: https://github.com/StevenBlack/hosts/releases
+            #
+            # ===============================================================
+
+            127.0.0.1 localhost
+        """.trimIndent()
+        Assert.assertFalse(AbpFilterDecoder().checkHeader(file3.byteInputStream().bufferedReader(), Charsets.UTF_8))
+    }
+
+    @Test
     fun modifyList() {
         // only tests removeparam so far
         val filterList = mutableListOf<String>()
