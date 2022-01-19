@@ -2,7 +2,6 @@ package acr.browser.lightning.dialog
 
 import acr.browser.lightning.MainActivity
 import acr.browser.lightning.R
-import acr.browser.lightning.constant.HTTP
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.asFolder
@@ -12,10 +11,7 @@ import acr.browser.lightning.database.history.HistoryRepository
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.download.DownloadHandler
-import acr.browser.lightning.extensions.copyToClipboard
-import acr.browser.lightning.extensions.onFocusGained
-import acr.browser.lightning.extensions.resizeAndShow
-import acr.browser.lightning.extensions.toast
+import acr.browser.lightning.extensions.*
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.IntentUtils
@@ -25,6 +21,7 @@ import android.app.Activity
 import android.content.ClipboardManager
 import android.view.View
 import android.webkit.MimeTypeMap
+import android.webkit.URLUtil
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
@@ -59,6 +56,27 @@ class LightningDialogBuilder @Inject constructor(
         INCOGNITO
     }
 
+
+    /**
+     * Show the appropriated dialog for the long pressed link.
+     * SL: Not used since we don't have a download list anymore.
+     *
+     * @param activity used to show the dialog
+     * @param url      the long pressed url
+     */
+    // TODO allow individual downloads to be deleted.
+    fun showLongPressedDialogForDownloadUrl(
+        activity: Activity,
+        uiController: UIController,
+        url: String
+    ) = BrowserDialog.show(activity, R.string.action_downloads,
+        DialogItem(title = R.string.dialog_delete_all_downloads) {
+            downloadsModel.deleteAllDownloads()
+                .subscribeOn(databaseScheduler)
+                .observeOn(mainScheduler)
+                .subscribe(uiController::handleDownloadDeleted)
+        })
+
     /**
      * Show the appropriated dialog for the long pressed link. It means that we try to understand
      * if the link is relative to a bookmark or is just a folder.
@@ -88,11 +106,14 @@ class LightningDialogBuilder @Inject constructor(
         }
     }
 
+    /**
+     * Show bookmark context menu.
+     */
     fun showLongPressedDialogForBookmarkUrl(
             activity: Activity,
             uiController: UIController,
             entry: Bookmark.Entry
-    ) = BrowserDialog.show(activity, R.string.action_bookmarks,
+    ) = BrowserDialog.show(activity, "",false, DialogTab(show=true, icon=R.drawable.ic_bookmark, title=R.string.dialog_title_bookmark,items=arrayOf(
             DialogItem(title = R.string.dialog_open_new_tab) {
                 uiController.handleNewTab(NewTab.FOREGROUND, entry.url)
             },
@@ -101,7 +122,7 @@ class LightningDialogBuilder @Inject constructor(
             },
             DialogItem(
                     title = R.string.dialog_open_incognito_tab,
-                    isConditionMet = activity is MainActivity
+                    show = activity is MainActivity
             ) {
                 uiController.handleNewTab(NewTab.INCOGNITO, entry.url)
             },
@@ -123,26 +144,7 @@ class LightningDialogBuilder @Inject constructor(
             },
             DialogItem(title = R.string.dialog_edit_bookmark) {
                 showEditBookmarkDialog(activity, uiController, entry)
-            })
-
-    /**
-     * Show the appropriated dialog for the long pressed link.
-     *
-     * @param activity used to show the dialog
-     * @param url      the long pressed url
-     */
-    // TODO allow individual downloads to be deleted.
-    fun showLongPressedDialogForDownloadUrl(
-            activity: Activity,
-            uiController: UIController,
-            url: String
-    ) = BrowserDialog.show(activity, R.string.action_downloads,
-            DialogItem(title = R.string.dialog_delete_all_downloads) {
-                downloadsModel.deleteAllDownloads()
-                        .subscribeOn(databaseScheduler)
-                        .observeOn(mainScheduler)
-                        .subscribe(uiController::handleDownloadDeleted)
-            })
+            })))
 
     /**
      * Show the add bookmark dialog. Shows a dialog with the title and URL pre-populated.
@@ -213,12 +215,12 @@ class LightningDialogBuilder @Inject constructor(
     ) {
         val editBookmarkDialog = MaterialAlertDialogBuilder(activity)
         editBookmarkDialog.setTitle(R.string.title_edit_bookmark)
-        val dialogLayout = View.inflate(activity, R.layout.dialog_edit_bookmark, null)
-        val getTitle = dialogLayout.findViewById<EditText>(R.id.bookmark_title)
+        val layout = View.inflate(activity, R.layout.dialog_edit_bookmark, null)
+        val getTitle = layout.findViewById<EditText>(R.id.bookmark_title)
         getTitle.setText(entry.title)
-        val getUrl = dialogLayout.findViewById<EditText>(R.id.bookmark_url)
+        val getUrl = layout.findViewById<EditText>(R.id.bookmark_url)
         getUrl.setText(entry.url)
-        val getFolder = dialogLayout.findViewById<AutoCompleteTextView>(R.id.bookmark_folder)
+        val getFolder = layout.findViewById<AutoCompleteTextView>(R.id.bookmark_folder)
         getFolder.setHint(R.string.folder)
         getFolder.setText(entry.folder.title)
 
@@ -231,7 +233,7 @@ class LightningDialogBuilder @Inject constructor(
                     getFolder.threshold = 1
                     getFolder.onFocusGained { getFolder.showDropDown(); mainScheduler.scheduleDirect{getFolder.selectAll()} }
                     getFolder.setAdapter(suggestionsAdapter)
-                    editBookmarkDialog.setView(dialogLayout)
+                    editBookmarkDialog.setView(layout)
                     editBookmarkDialog.setPositiveButton(activity.getString(R.string.action_ok)) { _, _ ->
                         val folder = getFolder.text.toString().asFolder()
                         if (folder.title != entry.folder.title) {
@@ -264,7 +266,9 @@ class LightningDialogBuilder @Inject constructor(
                                     .subscribe(uiController::handleBookmarksChange)
                         }
                     }
-                    editBookmarkDialog.resizeAndShow()
+                    val dialog = editBookmarkDialog.resizeAndShow()
+                    // Discard it on screen rotation as it's broken anyway
+                    layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
                 }
     }
 
@@ -272,7 +276,7 @@ class LightningDialogBuilder @Inject constructor(
             activity: Activity,
             uiController: UIController,
             folder: Bookmark.Folder
-    ) = BrowserDialog.show(activity, R.string.action_folder,
+    ) = BrowserDialog.show(activity, "", false, DialogTab(show=true, icon=R.drawable.ic_folder, title=R.string.action_folder,items=arrayOf(
             DialogItem(title = R.string.dialog_rename_folder) {
                 showRenameFolderDialog(activity, uiController, folder)
             },
@@ -283,7 +287,7 @@ class LightningDialogBuilder @Inject constructor(
                         .subscribe {
                             uiController.handleBookmarkDeleted(folder)
                         }
-            })
+            })))
 
     private fun showRenameFolderDialog(
             activity: Activity,
@@ -303,11 +307,14 @@ class LightningDialogBuilder @Inject constructor(
         }
     }
 
+    /**
+     * Menu shown when doing a long press on an history list item.
+     */
     fun showLongPressedHistoryLinkDialog(
             activity: Activity,
             uiController: UIController,
             url: String
-    ) = BrowserDialog.show(activity, R.string.action_history,
+    ) = BrowserDialog.show(activity, "", false, DialogTab(show=true, icon=R.drawable.ic_history, title=R.string.action_history,items=arrayOf(
             DialogItem(title = R.string.dialog_open_new_tab) {
                 uiController.handleNewTab(NewTab.FOREGROUND, url)
             },
@@ -316,7 +323,7 @@ class LightningDialogBuilder @Inject constructor(
             },
             DialogItem(
                     title = R.string.dialog_open_incognito_tab,
-                    isConditionMet = activity is MainActivity
+                    show = activity is MainActivity
             ) {
                 uiController.handleNewTab(NewTab.INCOGNITO, url)
             },
@@ -331,76 +338,85 @@ class LightningDialogBuilder @Inject constructor(
                         .subscribeOn(databaseScheduler)
                         .observeOn(mainScheduler)
                         .subscribe(uiController::handleHistoryChange)
-            })
+            })))
 
-    // TODO There should be a way in which we do not need an activity reference to download a file
-    fun showLongPressImageDialog(
-            activity: Activity,
-            uiController: UIController,
-            url: String,
-            userAgent: String
-    ) = BrowserDialog.show(activity, url.replace(HTTP, ""),
-            DialogItem(title = R.string.dialog_open_new_tab) {
-                uiController.handleNewTab(NewTab.FOREGROUND, url)
+    /**
+     * Show a dialog allowing the user to action either a link or an image.
+     */
+    fun showLongPressLinkImageDialog(
+        activity: Activity,
+        uiController: UIController,
+        linkUrl: String,
+        imageUrl: String,
+        text: String?,
+        userAgent: String,
+        showLinkTab: Boolean,
+        showImageTab: Boolean
+    ) = BrowserDialog.show(activity, "", false,
+        //Link tab
+        DialogTab(show=showLinkTab, icon=R.drawable.ic_link, title=R.string.button_link,items=arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
+            uiController.handleNewTab(NewTab.FOREGROUND, linkUrl)
             },
             DialogItem(title = R.string.dialog_open_background_tab) {
-                uiController.handleNewTab(NewTab.BACKGROUND, url)
+                uiController.handleNewTab(NewTab.BACKGROUND, linkUrl)
             },
             DialogItem(
-                    title = R.string.dialog_open_incognito_tab,
-                    isConditionMet = activity is MainActivity
+                title = R.string.dialog_open_incognito_tab,
+                show = activity is MainActivity
             ) {
-                uiController.handleNewTab(NewTab.INCOGNITO, url)
+                uiController.handleNewTab(NewTab.INCOGNITO, linkUrl)
             },
             DialogItem(title = R.string.action_share) {
-                IntentUtils(activity).shareUrl(url, null)
+                IntentUtils(activity).shareUrl(linkUrl, null)
             },
             DialogItem(title = R.string.dialog_copy_link) {
-                clipboardManager.copyToClipboard(url)
+                clipboardManager.copyToClipboard(linkUrl)
+                activity.snackbar(R.string.message_link_copied)
             },
-            DialogItem(title = R.string.dialog_download_image) {
-                // Ask for required permissions before starting our download
-                PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            // Show copy text dialog item if we have some text
+            DialogItem(title = R.string.dialog_copy_text, show = !text.isNullOrEmpty()) {
+                if (!text.isNullOrEmpty()) {
+                    clipboardManager.copyToClipboard(text)
+                    activity.snackbar(R.string.message_text_copied)
+                }
+            })),
+        // Image tab
+        DialogTab(show=showImageTab, icon=R.drawable.ic_image, title = R.string.button_image,
+            items = arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
+                uiController.handleNewTab(NewTab.FOREGROUND, imageUrl)
+            },
+                DialogItem(title = R.string.dialog_open_background_tab) {
+                    uiController.handleNewTab(NewTab.BACKGROUND, imageUrl)
+                },
+                DialogItem(
+                    title = R.string.dialog_open_incognito_tab,
+                    show = activity is MainActivity
+                ) {
+                    uiController.handleNewTab(NewTab.INCOGNITO, imageUrl)
+                },
+                DialogItem(title = R.string.action_share) {
+                    IntentUtils(activity).shareUrl(imageUrl, null)
+                },
+                DialogItem(title = R.string.dialog_copy_link) {
+                    clipboardManager.copyToClipboard(imageUrl)
+                    activity.snackbar(R.string.message_link_copied)
+                },
+                DialogItem(title = R.string.dialog_download_image,
+                    // Do not show download option for data URL as we don't support that for now
+                    show=!URLUtil.isDataUrl(imageUrl)) {
+                    // Ask for required permissions before starting our download
+                    PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
                         object : PermissionsResultAction() {
                             override fun onGranted() {
-                                val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(url).lowercase(Locale.ROOT))
+                                val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(imageUrl).lowercase(Locale.ROOT))
                                 // Not sure why we should use PNG by default though.
                                 // TODO: I think we have some code somewhere that can download something and then check its mime type from its content.
-                                downloadHandler.onDownloadStart(activity, userPreferences, url, userAgent, "attachment", mimeType?:"image/png", "")
+                                downloadHandler.onDownloadStart(activity, userPreferences, imageUrl, userAgent, "attachment", mimeType?:"image/png", "")
                             }
                             override fun onDenied(permission: String) {
                                 //TODO show message
                             }
                         })
-            })
-
-    fun showLongPressLinkDialog(
-            activity: Activity,
-            uiController: UIController,
-            url: String,
-            text: String?,
-    ) = BrowserDialog.show(activity, url,
-            DialogItem(title = R.string.dialog_open_new_tab) {
-                uiController.handleNewTab(NewTab.FOREGROUND, url)
-            },
-            DialogItem(title = R.string.dialog_open_background_tab) {
-                uiController.handleNewTab(NewTab.BACKGROUND, url)
-            },
-            DialogItem(
-                    title = R.string.dialog_open_incognito_tab,
-                    isConditionMet = activity is MainActivity
-            ) {
-                uiController.handleNewTab(NewTab.INCOGNITO, url)
-            },
-            DialogItem(title = R.string.action_share) {
-                IntentUtils(activity).shareUrl(url, null)
-            },
-            DialogItem(title = R.string.dialog_copy_link) {
-                clipboardManager.copyToClipboard(url)
-            },
-            // Show copy text dialog item if we have some text
-            DialogItem(title = R.string.dialog_copy_text, isConditionMet = !text.isNullOrEmpty()) {
-                if (!text.isNullOrEmpty()) clipboardManager.copyToClipboard(text)
-            }
+                })),
     )
 }

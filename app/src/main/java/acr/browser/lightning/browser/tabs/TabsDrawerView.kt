@@ -30,10 +30,6 @@ class TabsDrawerView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), TabsView {
 
-
-    @Inject
-    lateinit var iUserPreferences: UserPreferences
-
     private val uiController = context as UIController
     private val tabsAdapter: TabsDrawerAdapter
 

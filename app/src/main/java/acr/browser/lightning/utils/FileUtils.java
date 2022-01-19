@@ -33,6 +33,8 @@ public final class FileUtils {
 
     private FileUtils() {}
 
+
+
     /**
      * Writes a bundle to persistent storage in the files directory
      * using the specified file name. This method is a blocking
@@ -141,7 +143,7 @@ public final class FileUtils {
      */
     public static void writeCrashToStorage(@NonNull Throwable throwable) {
         String fileName = throwable.getClass().getSimpleName() + '_' + System.currentTimeMillis() + ".txt";
-        File outputFile = new File(BrowserApp.instance.getApplicationContext().getExternalFilesDir("CrashLogs"), fileName);
+        File outputFile = new File(getFolderCrashLogs(), fileName);
 
         FileOutputStream outputStream = null;
         try {
@@ -154,6 +156,15 @@ public final class FileUtils {
         } finally {
             Utils.close(outputStream);
         }
+    }
+
+    /**
+     * Provide crash logs folder.
+     *
+     * @return Folder containing our crash logs.
+     */
+    public static File getFolderCrashLogs() {
+        return BrowserApp.instance.getApplicationContext().getExternalFilesDir("CrashLogs");
     }
 
     /**

@@ -95,7 +95,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.ButterKnife
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -116,7 +115,6 @@ import android.text.Editable
 
 import android.text.TextWatcher
 import android.webkit.CookieManager
-import com.github.ahmadaghazadeh.editor.widget.CodeEditor
 import acr.browser.lightning.html.incognito.IncognitoPageFactory
 import acr.browser.lightning.locale.LocaleUtils
 import java.net.URL
@@ -307,9 +305,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding.findInPageInclude.buttonBack.setOnClickListener(this)
         iBinding.findInPageInclude.buttonQuit.setOnClickListener(this)
 
-
-
-        ButterKnife.bind(this)
         queue = Volley.newRequestQueue(this)
         createMenuMain()
         createMenuWebPage()
@@ -4095,6 +4090,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             R.string.blocked_javascript
         }
         BrowserDialog.showWithIcons(this, this.getString(R.string.dialog_tools_title),
+            /*
             DialogItem(
                 icon = this.drawable(R.drawable.ic_baseline_code_24),
                 title = R.string.page_source) {
@@ -4122,7 +4118,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     }
                     builder.show()
                 }
-            },
+            },*/
             DialogItem(
                 icon= this.drawable(R.drawable.ic_script_add),
                 title = R.string.inspect){

@@ -188,7 +188,7 @@ class UserPreferences @Inject constructor(
      *
      * @see UserPreferences.userAgent
      */
-    var userAgentChoice by preferences.intPreference(USER_AGENT, 1)
+    var userAgentChoice by preferences.stringPreference(R.string.pref_key_user_agent, USER_AGENT_DEFAULT)
 
     /**
      * The custom user agent that should be used by the browser.
@@ -336,6 +336,12 @@ class UserPreferences @Inject constructor(
     var crashReport by preferences.booleanPreference(R.string.pref_key_crash_report, R.bool.pref_default_crash_report)
 
     /**
+     * User can disable crash log.
+     * Crash log typically write crash callstack to file system.
+     */
+    var crashLogs by preferences.booleanPreference(R.string.pref_key_crash_logs, R.bool.pref_default_crash_logs)
+
+    /**
      * Toggle visibility of close tab button on drawer tab list items.
      */
     var showCloseTabButton by preferences.booleanPreference(R.string.pref_key_tab_list_item_show_close_button, if (screenSize.isTablet())  R.bool.const_true else R.bool.pref_default_tab_list_item_show_close_button)
@@ -439,7 +445,6 @@ private const val LOCATION = "location"
 private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
 private const val SEARCH_URL = "searchurl"
-private const val USER_AGENT = "agentchoose"
 private const val USER_AGENT_STRING = "userAgentString"
 private const val CLEAR_HISTORY_EXIT = "clearHistoryExit"
 private const val CLEAR_COOKIES_EXIT = "clearCookiesExit"

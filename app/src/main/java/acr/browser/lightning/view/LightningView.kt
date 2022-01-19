@@ -48,13 +48,11 @@ import androidx.collection.ArrayMap
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import java.lang.ref.WeakReference
-import javax.inject.Inject
 
 /**
  * [LightningView] acts as a tab for the browser, handling WebView creation and handling logic, as
@@ -1040,30 +1038,30 @@ class LightningView(
                 }
             }
         } else {
-            if (url != null) {
-                if (result != null) {
-                    if (result.type == WebView.HitTestResult.IMAGE_TYPE) {
-                        /** Should we just use [url] for images or is [result.extra] actually useful here? */
-                        dialogBuilder.showLongPressImageDialog(activity, uiController, result.extra ?: url, userAgent)
-                    } else if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE){
-                        // Ask user if she want to use the link or the image
-                        activity.makeSnackbar(
-                            activity.getString(R.string.question_what_do_you_want_to_use), Snackbar.LENGTH_LONG, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM) //Snackbar.LENGTH_LONG
-                            .setAction(R.string.button_link) {
-                                // Use the link then
-                                dialogBuilder.showLongPressLinkDialog(activity,uiController,url,userAgent)
-                            }.addAction(R.layout.snackbar_extra_button, R.string.button_image){
-                                /** Use the image then. That [result.extra] ?: [url] selection is probably not consistent here but it is convenient and safe */
-                                dialogBuilder.showLongPressImageDialog(activity, uiController, result.extra ?: url, userAgent)
-                            }.show()
-                    } else {
-                        dialogBuilder.showLongPressLinkDialog(activity, uiController, url, text)
-                    }
-                } else {
-                    dialogBuilder.showLongPressLinkDialog(activity, uiController, url, text)
+
+            // See: https://developer.android.com/reference/android/webkit/WebView#getHitTestResult()
+            result?.extra?.let { extraUrl ->
+                if (result.type == WebView.HitTestResult.IMAGE_TYPE) {
+                    dialogBuilder.showLongPressLinkImageDialog(
+                        activity, uiController, "", extraUrl, text, userAgent,
+                        showLinkTab = false,
+                        showImageTab = true
+                    )
+                } else if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
+                    dialogBuilder.showLongPressLinkImageDialog(
+                        activity, uiController, url ?: "", extraUrl, text, userAgent,
+                        showLinkTab = true,
+                        showImageTab = true
+                    )
+                } else if (result.type == WebView.HitTestResult.SRC_ANCHOR_TYPE) {
+                    dialogBuilder.showLongPressLinkImageDialog(
+                        activity, uiController, extraUrl, "", text, userAgent,
+                        showLinkTab = true,
+                        showImageTab = false
+                    )
                 }
-            } else if (newUrl != null) {
-                dialogBuilder.showLongPressLinkDialog(activity, uiController, newUrl, text)
+                // TODO: UNKNOWN_TYPE for JavaScript URLs do we really want to?
+                // TODO: Handle other types such as phone, geo and email
             }
         }
     }

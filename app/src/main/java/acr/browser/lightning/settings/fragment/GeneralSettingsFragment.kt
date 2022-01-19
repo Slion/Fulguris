@@ -13,12 +13,11 @@ import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.locale.LocaleUtils
-import acr.browser.lightning.settings.preferences.UserPreferences
-import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.Suggestions
 import acr.browser.lightning.search.engine.BaseSearchEngine
 import acr.browser.lightning.search.engine.CustomSearch
+import acr.browser.lightning.settings.preferences.*
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.utils.ProxyUtils
 import acr.browser.lightning.utils.ThemeUtils
@@ -328,34 +327,24 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    private fun userAgentSummary() = choiceToUserAgent(userPreferences.userAgentChoice) + activity?.application?.let { ":\n" + userPreferences.userAgent(it) }
-
-    private fun choiceToUserAgent(index: Int) = when (index) {
-        1 -> resources.getString(R.string.agent_default)
-        2 -> resources.getString(R.string.agent_windows_desktop)
-        3 -> resources.getString(R.string.agent_linux_desktop)
-        4 -> resources.getString(R.string.agent_macos_desktop)
-        5 -> resources.getString(R.string.agent_android_mobile)
-        6 -> resources.getString(R.string.agent_ios_mobile)
-        7 -> resources.getString(R.string.agent_system)
-        8 -> resources.getString(R.string.agent_web_view)
-        9 -> resources.getString(R.string.agent_custom)
-        10 -> resources.getString(R.string.agent_hide_device)
-        else -> resources.getString(R.string.agent_default)
-    }
+    private fun userAgentSummary() =
+        resources.getString(USER_AGENTS_ORDERED[userPreferences.userAgentChoice] ?: R.string.agent_default) +
+                activity?.application?.let { ":\n" + userPreferences.userAgent(it) }
 
     private fun showUserAgentChooserDialog(summaryUpdater: SummaryUpdater) {
-        activity?.let {
-            BrowserDialog.showCustomDialog(it as AppCompatActivity) {
+        activity?.let { activity ->
+            val userAgentChoices = USER_AGENTS_ORDERED.keys.toTypedArray()
+            val currentAgentIndex = userAgentChoices.indexOf(userPreferences.userAgentChoice).
+                let {if (it == -1) 0 else it}
+            BrowserDialog.showCustomDialog(activity as AppCompatActivity) {
                 setTitle(resources.getString(R.string.title_user_agent))
-                setSingleChoiceItems(R.array.user_agent, userPreferences.userAgentChoice - 1) { _, which ->
-                    userPreferences.userAgentChoice = which + 1
-                    when (which) {
-                        in 0..7, 9 -> Unit
-                        8 -> {
-                            showCustomUserAgentPicker()
-                        }
-                    }
+                setSingleChoiceItems(
+                    USER_AGENTS_ORDERED.values.map { resources.getString(it) }.toTypedArray(),
+                    currentAgentIndex)
+                { _, which ->
+                    userPreferences.userAgentChoice = userAgentChoices[which]
+                    if (userAgentChoices[which] == USER_AGENT_CUSTOM)
+                        showCustomUserAgentPicker()
 
                     summaryUpdater.updateSummary(userAgentSummary())
                 }

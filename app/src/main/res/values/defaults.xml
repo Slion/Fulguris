@@ -28,6 +28,7 @@
     <bool name="pref_default_menu_show_new_tab">false</bool>
     <bool name="pref_default_crash_report">true</bool>
     <bool name="pref_default_analytics">true</bool>
+    <bool name="pref_default_crash_logs">true</bool>
     <bool name="pref_default_portrait_pull_to_refresh">true</bool>
     <bool name="pref_default_landscape_pull_to_refresh">false</bool>
     <bool name="pref_default_webrtc">true</bool>

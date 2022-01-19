@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ (the "License"); you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at:
+ https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ added to cover use of software over a computer network and provide for limited attribution for
+ the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+
+ Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ ANY KIND, either express or implied. See the License for the specific language governing rights
+ and limitations under the License.
+
+ The Original Code is Fulguris.
+
+ The Original Developer is the Initial Developer.
+ The Initial Developer of the Original Code is Stéphane Lenclud.
+
+ All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ All Rights Reserved.
+-->
+
+<!--
+Defines a dialog containing tabs
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="0dp"
+    android:paddingHorizontal="0dp"
+    >
+    <!--
+    You could uncomment that text view to use custom title.
+    However if that view is not found it will use the default alert dialog title which is recommended.
+     -->
+<!--    <TextView-->
+<!--        android:id="@+id/dialog_title"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ellipsize="end"-->
+<!--        android:gravity="start"-->
+<!--        android:maxLines="2"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Title"-->
+<!--        android:padding="@dimen/dialog_padding"-->
+<!--         />-->
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/dialog_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
+        android:background="@color/transparent"
+        app:tabInlineLabel="true"/>
+
+<!--
+acr.browser.lightning.view.DynamicHeightViewPager
+androidx.viewpager.widget.ViewPager
+-->
+
+        <acr.browser.lightning.view.DynamicHeightViewPager
+            android:id="@+id/dialog_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="6dp"
+            />
+
+</LinearLayout>

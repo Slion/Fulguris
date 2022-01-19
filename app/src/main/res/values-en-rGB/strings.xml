@@ -176,6 +176,7 @@
     <string name="blocklist_last_update">Last update: %s</string>
     <string name="blocklist_updating">Updating…</string>
     <string name="blocklist_update_error">Error while updating filters list %s</string>
+    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <string name="add_blocklist">Add filters file</string>
     <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
     <string name="enable_blocklist">Enable this list</string>
@@ -405,6 +406,7 @@
     <string name="dialog_open_incognito_tab">Open in incognito tab</string>
     <string name="dialog_remove_bookmark">Remove bookmark</string>
     <string name="dialog_edit_bookmark">Edit bookmark</string>
+    <string name="dialog_title_bookmark">Bookmark</string>
     <string name="dialog_remove_from_history">Remove from history</string>
     <string name="dialog_download_image">Download image</string>
     <string name="dialog_copy_link">Copy link</string>

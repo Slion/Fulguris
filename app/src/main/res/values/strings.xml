@@ -415,7 +415,9 @@
     <!-- debug strings -->
     <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Please restart the app for the change to take effect.</string>
+    <string name="app_restart">Please restart the app for the change to take effect</string>
+    <string name="pref_title_crash_logs">Crash logs</string>
+    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
 
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Open in new tab</string>
@@ -423,6 +425,7 @@
     <string name="dialog_open_incognito_tab">Open in incognito tab</string>
     <string name="dialog_remove_bookmark">Remove bookmark</string>
     <string name="dialog_edit_bookmark">Edit bookmark</string>
+    <string name="dialog_title_bookmark">Bookmark</string>
     <string name="dialog_remove_from_history">Remove from history</string>
     <string name="dialog_download_image">Download image</string>
     <string name="dialog_copy_link">Copy link</string>

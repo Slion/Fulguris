@@ -19,6 +19,7 @@ import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import java.lang.reflect.Method
+import java.util.ArrayList
 
 
 /**
@@ -317,6 +318,55 @@ fun View.setGravityTop(aParams: CoordinatorLayout.LayoutParams) {
     aParams.gravity = aParams.gravity and Gravity.BOTTOM.inv()
     aParams.gravity = aParams.gravity or Gravity.TOP
     layoutParams = aParams
+}
+
+
+/**
+ * Return the first view matching the given type
+ */
+fun <T : View> View.findViewByType(type: Class<T>, skipThis: Boolean = true): T? {
+    if (!skipThis && type.isInstance(this)) {
+        return this as T
+    }
+    if (this is ViewGroup) {
+        val viewGroup = this
+        for (i in 0 until viewGroup.childCount) {
+            val res = viewGroup.getChildAt(i).findViewByType(type, false)
+            if (res!=null) {
+                return res
+            }
+
+        }
+    }
+
+    return null;
+}
+
+
+/**
+ * Not tested.
+ * Taken from: https://github.com/material-components/material-components-android
+ */
+fun <T : View> View.findViewsByType(type: Class<T>): List<T> {
+    val views: MutableList<T> = ArrayList()
+    this.findViewsByType( type, views)
+    return views
+}
+
+/**
+ * Not tested.
+ * Taken from: https://github.com/material-components/material-components-android
+ */
+private fun <T : View> View.findViewsByType( type: Class<T>, views: MutableList<T>) {
+    if (type.isInstance(this)) {
+        views.add(type.cast(this))
+    }
+    if (this is ViewGroup) {
+        val viewGroup = this
+        for (i in 0 until viewGroup.childCount) {
+            getChildAt(i).findViewsByType(type, views)
+        }
+    }
 }
 
 

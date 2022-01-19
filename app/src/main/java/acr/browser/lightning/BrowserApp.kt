@@ -1,10 +1,7 @@
 package acr.browser.lightning
 
-import acr.browser.lightning.browser.TabsManager
 import acr.browser.lightning.database.bookmark.BookmarkExporter
 import acr.browser.lightning.database.bookmark.BookmarkRepository
-import acr.browser.lightning.device.BuildInfo
-import acr.browser.lightning.device.BuildType
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.locale.LocaleUtils
 import acr.browser.lightning.log.Logger
@@ -19,7 +16,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Build
-import android.os.Debug
 import android.os.StrictMode
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
@@ -86,7 +82,7 @@ class BrowserApp : Application() {
         val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
 
         Thread.setDefaultUncaughtExceptionHandler { thread, ex ->
-            if (BuildConfig.DEBUG) {
+            if (userPreferences.crashLogs) {
                 FileUtils.writeCrashToStorage(ex)
             }
 
@@ -98,7 +94,7 @@ class BrowserApp : Application() {
         }
 
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
-            if (BuildConfig.DEBUG && throwable != null) {
+            if (userPreferences.crashLogs && throwable != null) {
                 FileUtils.writeCrashToStorage(throwable)
                 throw throwable
             }

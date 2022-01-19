@@ -174,8 +174,9 @@
     <string name="blocklist_update_description">Die Aktualisierung erfolgt mit der gewählten Häufigkeit, es sei denn, in der Filterliste ist ein längeres Intervall angegeben.</string>
     <string name="blocklist_update_now">Listen aktualisieren</string>
     <string name="blocklist_last_update">Letzte Aktualisierung: %s</string>
-    <string name="blocklist_updating">Updating…</string>
-    <string name="blocklist_update_error">Error while updating filters list %s</string>
+    <string name="blocklist_updating">Aktualisierung läuft…</string>
+    <string name="blocklist_update_error">Fehler beim Aktualisieren der Filterliste %s</string>
+    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <string name="add_blocklist">Filterdatei hinzufügen</string>
     <string name="add_blocklist_hint">Es können Host-Listen oder jede Liste gewählt werden, die mit AdBlockPlus-Regeln arbeiten</string>
     <string name="enable_blocklist">Diese Liste aktivieren</string>
@@ -351,7 +352,7 @@
         <item>Domain (Standard)</item>
         <item>URL</item>
         <item>Titel</item>
-        <item>Shortened URL</item>
+        <item>Gekürzte URL</item>
     </string-array>
     <string name="invert_color">Farben invertieren</string>
     <string name="settings_black_status_bar">Schwarze Statusleiste</string>
@@ -405,6 +406,7 @@
     <string name="dialog_open_incognito_tab">In Inkognito-Tab öffnen</string>
     <string name="dialog_remove_bookmark">Lesezeichen löschen</string>
     <string name="dialog_edit_bookmark">Lesezeichen bearbeiten</string>
+    <string name="dialog_title_bookmark">Bookmark</string>
     <string name="dialog_remove_from_history">Aus dem Verlauf entfernen</string>
     <string name="dialog_download_image">Bild herunterladen</string>
     <string name="dialog_copy_link">Link kopieren</string>

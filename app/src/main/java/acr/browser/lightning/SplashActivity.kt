@@ -45,23 +45,33 @@ class SplashActivity @Inject constructor(): LocaleAwareActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Handle the splash screen transition.
+        // Setup our splash screen
+        // See: https://developer.android.com/guide/topics/ui/splash-screen
         val splashScreen = installSplashScreen()
-        /*
         splashScreen.setOnExitAnimationListener {
-            it.remove()
-        }*/
+            // Callback once our splash screen is done
+            // Splash screen duration is define in our style in Theme.App.SplashScreen
+            // NOTE: Though it does not seem to be working, therefore we cab use the post delayed below
+
+            // Remove our splash screen, though not needed since we are closing this activity anyway
+            //it.remove()
+            // Close this activity, with a defensive delay for smoother transitions on slower devices
+            //finish()
+        }
+
+        // Put this here as above in the callback it did not work on Android 12
+        // It would be too much to ask Google engineer to test their code across Android versions…
+        mHandler.postDelayed({
+            // Just start our main activity now for fastest loading
+            // TODO: check if we need onboarding
+            // Launch main activity
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            //
+            finish()
+        },0)
 
         setContentView(R.layout.activity_splash)
-
-        // TODO: check if we need onboarding
-
-        // Launch main activity
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent);
-
-        // Close this activity
-        mHandler.postDelayed({   finish()},3000)
     }
 
     override fun onLocaleChanged() {
