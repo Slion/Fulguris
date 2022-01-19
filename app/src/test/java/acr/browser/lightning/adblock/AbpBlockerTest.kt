@@ -346,10 +346,10 @@ class AbpBlockerTest {
         val blockedRequests = mutableListOf<ContentRequest>()
         val allowedRequests = mutableListOf<ContentRequest>()
 
-        filterList.add("example.com") // TODO: decide what this should do, uBo or ABP: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#static-network-filtering
-//        allowedRequests.add(request("http://ads.example.com/something", "https://page4.com").second)
-//        allowedRequests.add(request("http://ads.example4.com/example.com/not", "https://page4.com").second)
+        filterList.add("example.com") // should be same as ||example.com^, like done in uBo
+        blockedRequests.add(request("http://ads.example.com/something", "https://page4.com").second)
         blockedRequests.add(request("http://example.com/something", "https://page4.com").second)
+        allowedRequests.add(request("http://ads.example4.com/example.com/not", "https://page4.com").second)
         filterList.add("||example2.com^")
         blockedRequests.add(request("http://ads.example2.com/something", "https://page4.com").second)
         blockedRequests.add(request("http://example2.com/something", "https://page4.com").second)

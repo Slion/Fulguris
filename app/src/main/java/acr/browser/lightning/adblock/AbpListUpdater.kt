@@ -196,9 +196,8 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         if (!decoder.checkHeader(reader, charset)) {
             // no adblock plus format, try hosts reader
             val parser = HostsFileParser(logger)
-            // TODO: HostFilter or StartEndFilter?
-            //  HostFilter is exact host match (like hosts lists do out of necessity)
-            //  StartEndFilter also matches subdomains
+            // use StartEndFilter, which also matches subdomains
+            //  not strictly according to hosts rules, but uBlock does the same (and it makes sense)
             val hostsList = parser.parseInput(reader).map {
                 StartEndFilter(it.name,0xffff, false, null, -1)
             }

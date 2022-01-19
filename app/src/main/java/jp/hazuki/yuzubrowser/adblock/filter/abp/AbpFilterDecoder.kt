@@ -16,6 +16,7 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.abp
 
+import androidx.core.net.toUri
 import com.google.re2j.Pattern
 import jp.hazuki.yuzubrowser.adblock.*
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
@@ -360,7 +361,10 @@ class AbpFilterDecoder {
                                     thirdParty
                                 )
                             } else {
-                                ContainsFilter(content, contentType, domains, thirdParty)
+                                if ("http://$content".toUri().host != null) // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
+                                    StartEndFilter(content, contentType, ignoreCase, domains, thirdParty)
+                                else
+                                    ContainsFilter(content, contentType, domains, thirdParty)
                             }
                         }
                     }
