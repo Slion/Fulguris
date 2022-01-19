@@ -19,10 +19,7 @@ package jp.hazuki.yuzubrowser.adblock
 import acr.browser.lightning.adblock.AbpBlocker.Companion.getMimeTypeFromExtension
 import android.net.Uri
 import android.webkit.WebResourceRequest
-import androidx.core.util.PatternsCompat
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
-import okhttp3.internal.publicsuffix.PublicSuffix
-import java.util.*
 
 fun WebResourceRequest.getContentType(pageUri: Uri): Int {
     var type = 0

@@ -17,7 +17,6 @@
 package jp.hazuki.yuzubrowser.adblock.filter.unified
 
 import android.content.Context
-import com.google.re2j.PatternSyntaxException
 import jp.hazuki.yuzubrowser.adblock.filter.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
 import java.io.File
@@ -31,8 +30,8 @@ internal const val FILTER_TYPE_CONTAINS_HOST = 3
 internal const val FILTER_TYPE_START = 4
 internal const val FILTER_TYPE_END = 5
 internal const val FILTER_TYPE_START_END = 6
-internal const val FILTER_TYPE_RE2_REGEX = 7
-internal const val FILTER_TYPE_RE2_REGEX_HOST = 8
+//internal const val FILTER_TYPE_RE2_REGEX = 7
+//internal const val FILTER_TYPE_RE2_REGEX_HOST = 8
 internal const val FILTER_TYPE_JVM_REGEX = 9
 internal const val FILTER_TYPE_JVM_REGEX_HOST = 10
 internal const val FILTER_TYPE_PATTERN = 11
@@ -41,18 +40,6 @@ internal const val FILTER_TYPE_START_END_DOMAIN = 12 // not uses as actual filte
 internal const val FILTER_DIR = "adblock_filter"
 internal const val FILTER_CACHE_HEADER = "YZBABPFI\u0000\u0001\u0001"
 internal const val ELEMENT_FILTER_CACHE_HEADER = "YZBABPEF\u0000\u0001\u0001"
-
-fun createRegexFilter(filter: String, contentType: Int, ignoreCase: Boolean, domains: DomainMap?, thirdParty: Int): UnifiedFilter? {
-    try {
-        return RegexFilter(filter, contentType, ignoreCase, domains, thirdParty)
-    } catch (e: java.util.regex.PatternSyntaxException) {
-        try {
-            return Re2Filter(filter, contentType, ignoreCase, domains, thirdParty)
-        } catch (e: PatternSyntaxException) {
-        }
-    }
-    return null
-}
 
 internal fun Context.getFilterDir(): File {
     return getDir(FILTER_DIR, Context.MODE_PRIVATE)

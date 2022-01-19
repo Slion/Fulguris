@@ -179,8 +179,6 @@ class FilterReader(private val input: InputStream) {
             FILTER_TYPE_START -> StartsWithFilter(pattern, contentType, ignoreCase, domains, thirdParty)
             FILTER_TYPE_END -> EndWithFilter(pattern, contentType, domains, thirdParty)
             FILTER_TYPE_START_END -> StartEndFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-            FILTER_TYPE_RE2_REGEX -> Re2Filter(pattern, contentType, ignoreCase, domains, thirdParty)
-            FILTER_TYPE_RE2_REGEX_HOST -> Re2HostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
             FILTER_TYPE_JVM_REGEX -> RegexFilter(pattern, contentType, ignoreCase, domains, thirdParty)
             FILTER_TYPE_JVM_REGEX_HOST -> RegexHostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
             FILTER_TYPE_PATTERN -> PatternMatchFilter(pattern, contentType, ignoreCase, domains, thirdParty)

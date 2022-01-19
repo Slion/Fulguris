@@ -17,7 +17,6 @@
 package jp.hazuki.yuzubrowser.adblock.filter.abp
 
 import androidx.core.net.toUri
-import com.google.re2j.Pattern
 import jp.hazuki.yuzubrowser.adblock.*
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
@@ -28,9 +27,10 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.nio.charset.Charset
 import java.util.*
+import java.util.regex.Pattern
 
 class AbpFilterDecoder {
-    private val contentRegex = Pattern.compile(CONTENT_FILTER_REGEX)
+    private val elementFilterRegex = Pattern.compile(ELEMENT_FILTER_REGEX)
 
     fun checkHeader(reader: BufferedReader, charset: Charset): Boolean {
         reader.mark(1024)
@@ -80,9 +80,9 @@ class AbpFilterDecoder {
                     throw OnRedirectException(it)
                 }
                 else -> {
-                    val matcher = contentRegex.matcher(trimmedLine)
-                    if (matcher.matches()) {
-                        decodeContentFilter(
+                    val matcher = elementFilterRegex.matcher(trimmedLine)
+                    if (matcher.matches() && !trimmedLine.contains("##^responseheader")) { // exception necessary to process responseheader correctly
+                        decodeElementFilter(
                             matcher.group(1),
                             matcher.group(2),
                             matcher.group(3),
@@ -97,13 +97,13 @@ class AbpFilterDecoder {
         return UnifiedFilterSet(info, black, white, elementDisableFilter, elementFilter, modifyList, modifyExceptionList, importantList, importantAllowList)
     }
 
-    private fun decodeContentFilter(
+    private fun decodeElementFilter(
         domains: String?,
         type: String?,
-        body: String,
+        body: String?,
         elementFilterList: MutableList<ElementFilter>,
     ) {
-        if (body.startsWith("+js")) return
+        if (body?.startsWith("+js") != false) return
 
         if (domains == null && type == "@") return
 
@@ -319,7 +319,7 @@ class AbpFilterDecoder {
 
         val abpFilter =
             if (filter.length >= 2 && filter[0] == '/' && filter[filter.lastIndex] == '/' && filter.mayContainRegexChars()) {
-                createRegexFilter(filter.substring(1, filter.lastIndex), contentType, ignoreCase, domains, thirdParty) ?: return
+                RegexFilter(filter.substring(1, filter.lastIndex), contentType, ignoreCase, domains, thirdParty) ?: return
             } else {
                 val isStartsWith = filter.startsWith("||")
                 val isEndWith = filter.endsWith('^')
@@ -510,6 +510,6 @@ class AbpFilterDecoder {
     companion object {
         const val HEADER = "[Adblock Plus"
 
-        private const val CONTENT_FILTER_REGEX = "^([^/*|@\"!]*?)#([@?\$])?#(.+)\$"
+        private const val ELEMENT_FILTER_REGEX = "^([^/*|@\"!]*?)#([@?\$])?#(.+)\$"
     }
 }
