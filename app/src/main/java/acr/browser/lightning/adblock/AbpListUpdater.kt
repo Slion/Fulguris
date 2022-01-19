@@ -50,8 +50,7 @@ import kotlin.math.max
 // this is a slightly modified part of jp.hazuki.yuzubrowser.adblock.service/AbpUpdateService.kt
 class AbpListUpdater @Inject constructor(val context: Context) {
 
-    //@Inject internal lateinit var okHttpClient: OkHttpClient
-    val okHttpClient = OkHttpClient() // any problems if not injecting?
+    val okHttpClient by lazy { OkHttpClient() }
 
     @Inject internal lateinit var userPreferences: UserPreferences
     @Inject internal lateinit var logger: Logger

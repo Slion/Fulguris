@@ -115,6 +115,8 @@ class AbpBlocker @Inject constructor(
         listsLoaded = true
 
         // create joint files
+        // TODO: don't just write! after sanitize, reload filter containers!
+        //  if load is slow and sanitize is fast: only load after sanitize
         prefixes.forEach { prefix -> writeFile(prefix, filters[prefix]!!.sanitize().map {it.second}) }
 
         /*if (elementHide) {
@@ -126,17 +128,29 @@ class AbpBlocker @Inject constructor(
 
     private fun Set<Pair<String, UnifiedFilter>>.sanitize(): Collection<Pair<String, UnifiedFilter>> {
         return this.mapNotNull { when {
+            // TODO: badfilter should act here! (first thing!)
+            //  for now, load badfilter from filter sets (for important, block, allow, modify only)
+            //   and remove matching filters in the set of appropriate type
+            //  which wildcard domain matching as described on https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#badfilter-modifier
+            //   resp. https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#badfilter
+            //   -> if badfilter matches filter only ignoring domains -> remove matching domains from the filter, also match wildcard
+
             // WebResourceRequest.getContentType(pageUri: Uri) never returns TYPE_POPUP
             //  so we can remove filters that act on popup-only
             it.second.contentType == ContentRequest.TYPE_POPUP -> null
+
             // remove other unnecessary filters?
             //  more unsupported types?
-            //  relevant number of cases where there are filters "including" more specific filters?
+
+            // TODO: remove filters already included in others
             //   e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
-            //TODO: badfilter should act here! (and thus should probably go to block filters)
-            // no, this is too late! because filters are already loaded
-            // and with the wildcard thing, it can't be done that easily
-            //  -> how to do?
+            //  ->
+            //    combine filters that have same type and same pattern (we have the tag here as shortcut!) if difference is content type
+            //      other.contentType = it.contentType and other.contentType
+            //      null (to remove this filter)
+            //    check StartEndFilters that could be subdomain (not necessarily same patter, but this would accelerate match by a lot)
+            //      pattern does not contain '/', one endswith other
+
             else -> it
         } }
     }

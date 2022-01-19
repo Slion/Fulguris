@@ -457,7 +457,7 @@ class AbpFilterDecoder {
         val comment = split(':')
         if (comment.size < 2) return null
 
-        when (comment[0].substring(1).trim().toLowerCase(Locale.getDefault())) {
+        when (comment[0].substring(1).trim().lowercase()) {
             "title" -> info.title = comment[1].trim()
             "homepage" -> info.homePage = comment[1].trim()
             "last updated" -> info.lastUpdate = comment[1].trim()
