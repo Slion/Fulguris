@@ -7,10 +7,13 @@ import acr.browser.lightning.utils.isAppScheme
 import acr.browser.lightning.utils.isSpecialUrl
 import android.app.Application
 import android.net.Uri
+import android.os.SystemClock
+import android.util.Log
 import android.webkit.MimeTypeMap
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import androidx.collection.LruCache
+import androidx.core.net.toUri
 import androidx.core.util.PatternsCompat
 import jp.hazuki.yuzubrowser.adblock.EmptyInputStream
 import jp.hazuki.yuzubrowser.adblock.core.*
@@ -21,6 +24,7 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
 import jp.hazuki.yuzubrowser.adblock.getContentType
+import jp.hazuki.yuzubrowser.adblock.getFilterType
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import kotlinx.coroutines.*
 import okhttp3.Headers.Companion.toHeaders
@@ -66,9 +70,8 @@ class AbpBlocker @Inject constructor(
         //  thus we load the lists only if blocker is actually enabled
         if (userPreferences.adBlockEnabled)
             GlobalScope.launch(Dispatchers.Default) {
-                // load lists here if not loaded above
-                //  2-5x slower than blocking for some reason -> is there any reasonable compromise?
                 loadLists()
+                speedTest()
 
                 // update all enabled entities/blocklists
                 // may take a while depending on how many lists need update, and on internet connection
@@ -381,7 +384,8 @@ class AbpBlocker @Inject constructor(
             }
         }
         filters.removeAll { it.modify!! is RemoveHeaderFilter && it.modify!!.inverse }
-        if (filters.isEmpty() && requestHeaderSize == requestHeaders.size) return null
+        if (parameters == null && filters.isEmpty() && requestHeaderSize == requestHeaders.size)
+            return null
 
         val newRequest = Request.Builder()
             .url(
@@ -470,7 +474,7 @@ class AbpBlocker @Inject constructor(
             "amazon_ads.js", "amazon-adsystem.com/aax2/amzn_ads.js" ->
                 WebResourceResponse("application/javascript", "utf-8", redirectFile("amazon_ads.js"))
             "amazon_apstag.js" ->
-                WebResourceResponse("application/javascript", "utf-8", redirectFile("amazon_apstag.jsf"))
+                WebResourceResponse("application/javascript", "utf-8", redirectFile("amazon_apstag.js"))
             "ampproject_v0.js" ->
                 WebResourceResponse("application/javascript", "utf-8", redirectFile("ampproject_v0.js"))
             "chartbeat.js", "static.chartbeat.com/chartbeat.js" ->
@@ -664,5 +668,123 @@ class AbpBlocker @Inject constructor(
             }
         }
 
+    }
+
+    fun speedTest() {
+        val requests = readRequests(application)
+        speedGetContentType(requests)
+    }
+}
+
+fun speedGetContentType(requests: List<Pair<TestWebResourceRequest, String>>) {
+    var t = SystemClock.elapsedRealtime()
+    for (i in 0..100) {
+        requests.forEach {
+            it.first.getContentTypeOld(it.second.toUri())
+        }
+    }
+    Log.i("fulgtest", "getContentTypeOld: ${SystemClock.elapsedRealtime()-t}ms")
+    t = SystemClock.elapsedRealtime()
+    for (i in 0..100) {
+        requests.forEach {
+            it.first.getContentType(it.second.toUri())
+        }
+    }
+    Log.i("fulgtest", "getContentType new: ${SystemClock.elapsedRealtime()-t}ms")
+}
+
+fun readRequests(application: Application): List<Pair<TestWebResourceRequest, String>> {
+    val requests = mutableListOf<Pair<TestWebResourceRequest, String>>()
+    application.assets.open("yuzublock.log").bufferedReader().use { reader ->
+        reader.forEachLine {
+            if (!it.contains(": request: "))
+                return@forEachLine
+            val line = it.substringAfter(": request: ")
+            val url = Uri.parse(line.substringBefore(",§1 "))
+            val pageUrl = line.substringAfter(",§1 ").substringBefore(",§2 ")
+            val isForMainFrame = line.substringAfter(",§2 ").substringBefore(",§3 ") == "true"
+            val requestHeadersString = line.substringAfter(",§3 {").substringBefore("}")
+            val requestHeaders = mutableMapOf<String, String>()
+            if (requestHeadersString.contains("X-Requested-With="))
+                requestHeaders["X-Requested-With"] =
+                    requestHeadersString.substringAfter("X-Requested-With=")
+                        .substringBefore("}").substringBefore(", ")
+            if (requestHeadersString.contains("Accept="))
+                requestHeaders["Accept"] =
+                    requestHeadersString.substringAfter("Accept=").substringBefore("}")
+                        .substringBefore(", ")
+            requests.add(
+                Pair(
+                    TestWebResourceRequest(url, isForMainFrame, requestHeaders),
+                    pageUrl
+                )
+            )
+        }
+    }
+    return requests
+}
+
+class TestWebResourceRequest(val url2: Uri,
+                             val isForMainFrame2: Boolean,
+                             val requestHeaders2: Map<String, String>
+): WebResourceRequest {
+    override fun getUrl() = url2
+    override fun isForMainFrame() = isForMainFrame2
+    override fun getRequestHeaders() = requestHeaders2
+    override fun isRedirect() = false // not needed
+    override fun hasGesture() = false // not needed
+    override fun getMethod() = "" // not needed
+}
+
+fun WebResourceRequest.getContentTypeOld(pageUri: Uri): Int {
+    var type = 0
+    val scheme = url.scheme
+    var isPage = false
+
+    if (isForMainFrame) {
+        if (url == pageUri) {
+            isPage = true
+            type = ContentRequest.TYPE_DOCUMENT
+        }
+    } else {
+        type = ContentRequest.TYPE_SUB_DOCUMENT
+    }
+
+    if (scheme == "ws" || scheme == "wss") {
+        type = type or ContentRequest.TYPE_WEB_SOCKET
+    }
+
+    if (requestHeaders["X-Requested-With"] == "XMLHttpRequest") {
+        type = type or ContentRequest.TYPE_XHR
+    }
+
+    val path = url.path ?: url.toString()
+    val lastDot = path.lastIndexOf('.')
+    if (lastDot >= 0) {
+        when (val extension = path.substring(lastDot + 1).lowercase().substringBefore('?')) {
+            "js" -> return type or ContentRequest.TYPE_SCRIPT
+            "css" -> return type or ContentRequest.TYPE_STYLE_SHEET
+            "otf", "ttf", "ttc", "woff", "woff2" -> return type or ContentRequest.TYPE_FONT
+            "php" -> Unit
+            else -> {
+                val mimeType = AbpBlocker.getMimeTypeFromExtension(extension)
+                if (mimeType != "application/octet-stream") {
+                    return type or mimeType.getFilterType()
+                }
+            }
+        }
+    }
+
+    if (isPage) {
+        return type or ContentRequest.TYPE_OTHER
+    }
+
+    val accept = requestHeaders["Accept"]
+    return if (accept != null && accept != "*/*") {
+        val mimeType = accept.split(',')[0]
+        type or mimeType.getFilterType()
+    } else {
+        type or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_IMAGE or
+                ContentRequest.TYPE_FONT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_SCRIPT
     }
 }

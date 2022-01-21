@@ -32,6 +32,7 @@ internal const val ABP_PREFIX_IMPORTANT_ALLOW = "ia_"
 // prefixes for modify filters used inside the modify files
 internal const val MODIFY_PREFIX_REDIRECT = 'r'
 internal const val MODIFY_PREFIX_REMOVEPARAM = 'p'
+internal const val MODIFY_PREFIX_REMOVEPARAM_REGEX = 'x'
 internal const val MODIFY_PREFIX_CSP = 'c'
 internal const val MODIFY_PREFIX_REMOVEHEADER = 'h'
 

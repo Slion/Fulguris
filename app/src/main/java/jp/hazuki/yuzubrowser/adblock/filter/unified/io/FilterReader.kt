@@ -16,10 +16,7 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.unified.io
 
-import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_CSP
-import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REDIRECT
-import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REMOVEHEADER
-import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REMOVEPARAM
+import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.toInt
 import jp.hazuki.yuzubrowser.adblock.filter.toShortInt
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
@@ -52,15 +49,15 @@ class FilterReader(private val input: InputStream) {
         loop@ for (loop in 0 until size) {
             val filter = readFilter() ?: break@loop
             val modify = readModify() ?: break@loop
-            if (modify.length > 2)
+            val modifyParameter =
+                if (modify.length > 2) modify.substring(2)
+                else null
             filter.second.modify = when (modify[0]) {
-                MODIFY_PREFIX_REMOVEPARAM -> {
-                    if (modify.length > 2) getRemoveparamFilter(modify.substring(2), modify[1] == '1')
-                    else RemoveparamFilter(null, false)
-                }
-                MODIFY_PREFIX_REDIRECT -> RedirectFilter(modify.substring(2))
-                MODIFY_PREFIX_CSP -> CspFilter(modify.substring(2))
-                MODIFY_PREFIX_REMOVEHEADER -> RemoveHeaderFilter(modify.substring(2), modify[1] == '1')
+                MODIFY_PREFIX_REMOVEPARAM -> RemoveparamFilter(modifyParameter, modify[1] == '1')
+                MODIFY_PREFIX_REMOVEPARAM_REGEX -> RemoveparamRegexFilter(modifyParameter ?: break@loop, modify[1] == '1')
+                MODIFY_PREFIX_REDIRECT -> RedirectFilter(modifyParameter)
+                MODIFY_PREFIX_CSP -> CspFilter(modifyParameter ?: break@loop)
+                MODIFY_PREFIX_REMOVEHEADER -> RemoveHeaderFilter(modifyParameter ?: break@loop, modify[1] == '1')
                 else -> break@loop
             }
             yield(Pair(filter.first, filter.second))

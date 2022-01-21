@@ -89,6 +89,7 @@ open class RemoveparamFilter(parameter: String?, inverse: Boolean): ModifyFilter
 }
 
 class RemoveparamRegexFilter(parameter: String, inverse: Boolean): RemoveparamFilter(parameter, inverse) {
+    override val prefix = MODIFY_PREFIX_REMOVEPARAM_REGEX
     val regex = parameter.toRegex()
 }
 
@@ -96,7 +97,7 @@ class RedirectFilter(parameter: String?): ModifyFilter(parameter, false) {
     override val prefix = MODIFY_PREFIX_REDIRECT
 }
 
-class CspFilter(parameter: String?): ModifyFilter(parameter, false) {
+class CspFilter(parameter: String): ModifyFilter(parameter, false) {
     override val prefix = MODIFY_PREFIX_CSP
 }
 
@@ -109,4 +110,3 @@ fun getRemoveparamFilter(parameter: String, inverse: Boolean) =
         RemoveparamRegexFilter(parameter.drop(1).dropLast(1), inverse)
     else
         RemoveparamFilter(parameter, inverse)
-
