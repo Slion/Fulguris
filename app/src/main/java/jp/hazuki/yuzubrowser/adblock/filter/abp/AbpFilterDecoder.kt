@@ -167,7 +167,7 @@ class AbpFilterDecoder {
         var contentType = 0
         var ignoreCase = false
         var domain: String? = null
-        var thirdParty = -1
+        var thirdParty = NO_PARTY_PREFERENCE
         var filter = this
         var elementFilter = false
         var modify: ModifyFilter? = null
@@ -252,10 +252,10 @@ class AbpFilterDecoder {
                                 if (value == null) return
                                 domain = value
                             }
-                            "third-party", "3p" -> thirdParty = if (inverse) 0 else 1
-                            "first-party", "1p" -> thirdParty = if (inverse) 1 else 0
-                            "strict3p" -> thirdParty = if (inverse) 3 else 2
-                            "strict1p" -> thirdParty = if (inverse) 2 else 3
+                            "third-party", "3p" -> thirdParty = if (inverse) FIRST_PARTY else THIRD_PARTY
+                            "first-party", "1p" -> thirdParty = if (inverse) THIRD_PARTY else FIRST_PARTY
+                            "strict3p" -> thirdParty = if (inverse) STRICT_FIRST_PARTY else STRICT_THIRD_PARTY
+                            "strict1p" -> thirdParty = if (inverse) STRICT_THIRD_PARTY else STRICT_FIRST_PARTY
                             "sitekey" -> Unit
                             "removeparam", "queryprune" -> {
                                 modify = if (value == null || value.isEmpty()) RemoveparamFilter(null, false)

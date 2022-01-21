@@ -43,11 +43,11 @@ abstract class UnifiedFilter(
 
     private fun checkThird(request: ContentRequest): Boolean =
         when (thirdParty) {
-            -1 -> true // don't care about 3rd party
-            0 -> !request.isThirdParty // block 3rd party
-            1 -> request.isThirdParty // block 1st party
-            2 -> request.url.host != request.pageUrl.host // block strict 3rd party (fqdn)
-            3 -> request.url.host == request.pageUrl.host // block strict 1st party
+            NO_PARTY_PREFERENCE -> true // don't care about 3rd party
+            FIRST_PARTY -> !request.isThirdParty // match only 1st party
+            THIRD_PARTY -> request.isThirdParty // match only 3rd party
+            STRICT_FIRST_PARTY -> request.url.host == request.pageUrl.host // match only strict 1st party (compare fqdn)
+            STRICT_THIRD_PARTY -> request.url.host != request.pageUrl.host // match only strict 3rd party
             else -> false // should not happen
         }
 
@@ -126,3 +126,9 @@ abstract class UnifiedFilter(
         return result
     }
 }
+
+const val NO_PARTY_PREFERENCE = -1
+const val FIRST_PARTY = 0
+const val THIRD_PARTY = 1
+const val STRICT_FIRST_PARTY = 2
+const val STRICT_THIRD_PARTY = 3
