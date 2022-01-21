@@ -78,9 +78,9 @@ class AbpUserRules @Inject constructor(
 
 /*
         some examples
-        entire page: <page domain>, "", 0xffff, false
-        everything from youtube.com: "", "youtube.com", 0xffff, false
-        everything 3rd party from youtube.com: "", "youtube.com", 0xffff, true
+        entire page: <page domain>, "", ContentRequest.TYPE_ALL, false
+        everything from youtube.com: "", "youtube.com", ContentRequest.TYPE_ALL, false
+        everything 3rd party from youtube.com: "", "youtube.com", ContentRequest.TYPE_ALL, true
         all 3rd party frames: "", "", ContentRequest.TYPE_SUB_DOCUMENT, true //TODO: SHOULD be sub_document, but not checked
 
         find content types in ContentRequest, and how to get it from request in AdBlock -> WebResourceRequest.getContentType
@@ -117,16 +117,18 @@ class AbpUserRules @Inject constructor(
     fun isAllowed(pageUrl: Uri): Boolean {
         // TODO: checking by using a fake request might be "slower than necessary"? but sure is faster a than DB query
         //  anyway, this needs to be changed once there can be more rules for a page
-        return userRules.get(ContentRequest(pageUrl, pageUrl, 0xffff, false, listOf("")))?.response == false
+        return userRules.get(ContentRequest(pageUrl, pageUrl, ContentRequest.TYPE_ALL, false, tags = listOf("")))?.response == false
     }
 
     fun allowPage(pageUrl: Uri, add: Boolean) {
         // S4 mini speed test: 1.7 ms for 2nd entry, 26 ms for ~2400th entry -> fast enough, no need to move DB operation to different thread
         val domain = pageUrl.host ?: return
         if (add)
-            addUserRule(domain, "", 0xffff, thirdParty = false, response = false)
+            addUserRule(domain, "", ContentRequest.TYPE_ALL, thirdParty = false, response = false)
         else
-            removeUserRule(domain, "", 0xffff, thirdParty = false, response = false)
+            removeUserRule(domain, "", ContentRequest.TYPE_ALL, thirdParty = false, response = false)
     }
 
 }
+
+const val USER_BLOCKED = "user"

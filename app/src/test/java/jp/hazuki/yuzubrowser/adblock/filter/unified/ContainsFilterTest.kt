@@ -17,6 +17,7 @@
 package jp.hazuki.yuzubrowser.adblock.filter.unified
 
 import android.net.Uri
+import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.mockito.Mockito.mock
@@ -28,6 +29,6 @@ class ContainsFilterTest {
         val uri = mock(Uri::class.java)
         whenever(uri.toString()).thenReturn("http://blog.livedoor.jp/dqnplus/settings/lite2/ads.js")
 
-        assertThat(ContainsFilter("/lite2/ads.js", 0xffff, null, -1).check(uri)).isEqualTo(true)
+        assertThat(ContainsFilter("/lite2/ads.js", ContentRequest.TYPE_ALL, null, -1).check(uri)).isEqualTo(true)
     }
 }

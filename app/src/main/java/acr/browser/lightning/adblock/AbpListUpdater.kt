@@ -28,6 +28,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_DIR
 import jp.hazuki.yuzubrowser.adblock.filter.unified.StartEndFilter
@@ -199,7 +200,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             // use StartEndFilter, which also matches subdomains
             //  not strictly according to hosts rules, but uBlock does the same (and it makes sense)
             val hostsList = parser.parseInput(reader).map {
-                StartEndFilter(it.name,0xffff, false, null, -1)
+                StartEndFilter(it.name, ContentRequest.TYPE_ALL, false, null, -1)
             }
             if (hostsList.isEmpty())
                 return false

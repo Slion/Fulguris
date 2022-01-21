@@ -239,7 +239,7 @@ class AbpFilterDecoder {
                     }
                     type > 0 -> {
                         contentType = if (inverse) {
-                            if (contentType == 0) contentType = 0xffff
+                            if (contentType == 0) contentType = ContentRequest.TYPE_ALL
                             contentType and (type.inv())
                         } else {
                             contentType or type
@@ -267,7 +267,7 @@ class AbpFilterDecoder {
                                 }
                             }
                             "csp" -> {
-                                modify = CspFilter(value)
+                                modify = CspFilter(value ?: return)
                                 contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT) // uBo documentation: It can be applied to main document and documents in frames
                             }
                             "inline-font" -> {
@@ -311,7 +311,7 @@ class AbpFilterDecoder {
         }
 
         val domains = domain?.domainsToDomainMap('|')
-        if (contentType == 0) contentType = 0xffff
+        if (contentType == 0) contentType = ContentRequest.TYPE_ALL
 
         if (elementFilter) {
             return
@@ -361,7 +361,7 @@ class AbpFilterDecoder {
                                     thirdParty
                                 )
                             } else {
-                                if ("http://$content".toUri().host != null) // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
+                                if ("http://$content".toUri().host == content) // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
                                     StartEndFilter(content, contentType, ignoreCase, domains, thirdParty)
                                 else
                                     ContainsFilter(content, contentType, domains, thirdParty)
