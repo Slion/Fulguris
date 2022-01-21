@@ -16,11 +16,11 @@
 
 package jp.hazuki.yuzubrowser.adblock.core
 
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.isModify
 import jp.hazuki.yuzubrowser.adblock.filter.abp.ABP_PREFIX_ELEMENT
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.ElementReader
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
-//import jp.hazuki.yuzubrowser.core.utility.log.ErrorReport
 import java.io.File
 import java.io.IOException
 
@@ -29,7 +29,6 @@ class AbpLoader(private val abpDir: File, private val entityList: List<AbpEntity
     fun loadAll(prefix: String) = sequence {
         entityList.forEach {
             if (!it.enabled) return@forEach
-
             try {
                 val file = File(abpDir, prefix + it.entityId)
                 if (!file.exists()) {
@@ -37,28 +36,10 @@ class AbpLoader(private val abpDir: File, private val entityList: List<AbpEntity
                 file.inputStream().buffered().use { ins ->
                     val reader = FilterReader(ins)
                     if (reader.checkHeader()) {
-                        yieldAll(reader.readAll())
-                    }
-                }
-            } catch (e: IOException) {
-//                ErrorReport.printAndWriteLog(e)
-            }
-        }
-    }
-
-    // TODO: can i somehow combine this with loadAll? it's almost exactly the same code
-    fun loadAllModifyFilter(prefix: String) = sequence {
-        entityList.forEach {
-            if (!it.enabled) return@forEach
-
-            try {
-                val file = File(abpDir, prefix + it.entityId)
-                if (!file.exists()) {
-                    return@forEach }
-                file.inputStream().buffered().use { ins ->
-                    val reader = FilterReader(ins)
-                    if (reader.checkHeader()) {
-                        yieldAll(reader.readAllModifyFilters())
+                        if (isModify(prefix))
+                            yieldAll(reader.readAllModifyFilters())
+                        else
+                            yieldAll(reader.readAll())
                     }
                 }
             } catch (e: IOException) {

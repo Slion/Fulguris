@@ -1,7 +1,7 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.adblock.AbpBlocker
+import acr.browser.lightning.adblock.AbpBlockerManager
 import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.AbpUpdateMode
 import acr.browser.lightning.extensions.resizeAndShow
@@ -44,7 +44,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
     @Inject internal lateinit var abpListUpdater: AbpListUpdater
-    @Inject internal lateinit var abpBlocker: AbpBlocker
+    @Inject internal lateinit var abpBlockerManager: AbpBlockerManager
 
     private lateinit var abpDao: AbpDao
     private val entityPrefs = mutableMapOf<Int, FilterListSwitchPreference>()
@@ -351,7 +351,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     //  joint lists are removed immediately to avoid using them if app is stopped without leaving the setting screen
     private fun reloadBlockLists() {
         reloadLists = true
-        abpBlocker.removeJointLists()
+        abpBlockerManager.removeJointLists()
     }
 
     // disable ok button if url or title not valid
@@ -393,7 +393,7 @@ override fun onDestroy() {
                 while (updatesRunning > 0)
                     delay(200)
                 if (reloadLists)
-                    abpBlocker.loadLists()
+                    abpBlockerManager.loadLists()
             }
         }
     }
