@@ -14,6 +14,7 @@
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:background="?attr/colorSurface"
         android:clipChildren="false"
         android:clipToPadding="false"

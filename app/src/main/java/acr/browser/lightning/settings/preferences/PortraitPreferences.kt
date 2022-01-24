@@ -62,10 +62,12 @@ import javax.inject.Singleton
             PrefKeys.ShowToolBarOnPageTop to true,
             PrefKeys.PullToRefresh to true,
             //PrefKeys.TabBarVertical to !screenSize.isTablet(),
+	        //PrefKeys.TabBarInDrawer to !screenSize.isTablet(),
             PrefKeys.ToolbarsBottom to false,
             PrefKeys.DesktopWidth to 1024,
         )
     }
+
 
 }
 

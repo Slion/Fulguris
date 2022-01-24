@@ -32,8 +32,11 @@ fun UserPreferences.userAgent(application: Application): String =
         else -> throw UnsupportedOperationException("Unknown userAgentChoice: $choice")
     }
 
+// On WSA our WebView user-agent looks like that:
+// Mozilla/5.0 (Linux; Android 12; Subsystem for Android(TM) Build/SQ3A.220705.003.A1; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/104.0.5112.97 Safari/537.36
+
 fun webViewEngineVersion(application: Application) =
-        WebSettings.getDefaultUserAgent(application).substringAfter(")").replace("Version/.+? ".toRegex(), "")
+        WebSettings.getDefaultUserAgent(application).substringAfter("wv)").replace("Version/.+? ".toRegex(), "")
 
 fun webViewEngineVersionDesktop(application: Application) =
         webViewEngineVersion(application).replace(" Mobile ", " ")

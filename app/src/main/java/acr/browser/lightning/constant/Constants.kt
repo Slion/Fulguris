@@ -58,6 +58,7 @@ object PrefKeys {
     const val DesktopWidth = "pref_key_desktop_width"
     const val PullToRefresh = "pref_key_pull_to_refresh"
     const val TabBarVertical = "pref_key_tab_bar_vertical"
+    const val TabBarInDrawer = "pref_key_tab_bar_in_drawer"
     const val ToolbarsBottom = "pref_key_toolbars_bottom"
 }
 

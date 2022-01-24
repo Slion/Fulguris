@@ -166,6 +166,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     private var isImmersiveMode = false
     private var verticalTabBar: Boolean = false
+    private var tabBarInDrawer: Boolean = false
     private var swapBookmarksAndTabs: Boolean = false
 
     private var originalOrientation: Int = 0
@@ -484,9 +485,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     private fun showSessions() {
         // If using horizontal tab bar or if our tab drawer is open
-        if (!verticalTabBar || tabsDialog.isShowing) {
+        if ((!verticalTabBar && tabBarInDrawer) || tabsDialog.isShowing) {
             // Use sessions button as anchor
             buttonSessions.let { iMenuSessions.show(it) }
+        } else if (!tabBarInDrawer) {
+            // Vertical tab bar desktop style
+            (tabsView as? TabsDrawerView)?.iBinding?.actionSessions?.let {iMenuSessions.show(it)}
         } else {
             // Otherwise use main menu button as anchor
             iBindingToolbarContent.buttonMore.let { iMenuSessions.show(it) }
@@ -776,7 +780,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.buttonActionForward.setOnClickListener{executeAction(R.id.action_forward)}
 
         //setFullscreenIfNeeded(resources.configuration) // As that's needed before bottom sheets creation
-        createTabsView()
+        createTabsView(resources.configuration)
         //createTabsDialog()
         bookmarksView = BookmarksDrawerView(this)
         //createBookmarksDialog()
@@ -902,15 +906,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      * Used to create or recreate our tabs view according to current settings.
      */
-    private fun createTabsView() {
+    private fun createTabsView(configuration: Configuration) {
 
-        verticalTabBar = configPrefs.verticalTabBar
+        verticalTabBar = configPrefs(configuration).verticalTabBar
+        tabBarInDrawer = configPrefs(configuration).tabBarInDrawer
 
-        // Close tab drawer if we are switching to a configuration that's not using it
-        if (tabsView!=null && !verticalTabBar && showingTabs() /*&& tabsView is TabsDrawerView*/) {
-            // That's done to prevent user staring at an empty open drawer after changing configuration
-            closePanelTabs()
-        }
+        // Was needed when resizing on Windows 11 and changing from horizontal to vertical tab bar
+        mainHandler.postDelayed( {closePanels(null)},100)
 
         // Remove existing tab view if any
         (tabsView as View?)?.removeFromParent()
@@ -930,10 +932,18 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             iBindingToolbarContent.tabsButton.isVisible = true
             iBindingToolbarContent.homeButton.isVisible = false
             iBinding.toolbarInclude.tabBarContainer.isVisible = false
+            iBinding.layoutTabsLeft.isVisible = !tabBarInDrawer && !swapBookmarksAndTabs
+            iBinding.layoutTabsRight.isVisible = !tabBarInDrawer && swapBookmarksAndTabs
+            //iBinding.leftDrawer.isVisible = tabBarInDrawer
+            //iBinding.rightDrawer.isVisible = tabBarInDrawer
         } else {
             iBindingToolbarContent.tabsButton.isVisible = false
             iBindingToolbarContent.homeButton.isVisible = true
             iBinding.toolbarInclude.tabBarContainer.isVisible = true
+            iBinding.layoutTabsLeft.isVisible = false
+            iBinding.layoutTabsRight.isVisible = false
+            //iBinding.leftDrawer.isVisible = true
+            //iBinding.rightDrawer.isVisible = true
         }
     }
 
@@ -967,15 +977,27 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding.rightDrawer
     }
 
-    private fun getTabBarContainer(): ViewGroup = if (verticalTabBar) {
-        if (swapBookmarksAndTabs) {
-            iBinding.rightDrawer
-        } else {
-            iBinding.leftDrawer
-        }
-    } else {
-        iBinding.toolbarInclude.tabBarContainer
-    }
+    /**
+     *
+     */
+    private fun getTabBarContainer(): ViewGroup =
+            if (verticalTabBar) {
+                if (swapBookmarksAndTabs) {
+                    if (tabBarInDrawer) {
+                        iBinding.rightDrawer
+                    } else {
+                        iBinding.layoutTabsRight
+                    }
+                } else {
+                    if (tabBarInDrawer) {
+                        iBinding.leftDrawer
+                    } else {
+                        iBinding.layoutTabsLeft
+                    }
+                }
+            } else {
+                iBinding.toolbarInclude.tabBarContainer
+            }
 
     private fun getBookmarkDrawer(): View = if (swapBookmarksAndTabs) {
         iBinding.leftDrawer
@@ -1270,7 +1292,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 }
 
                 // Deal with session menu
-                iMenuSessions.animationStyle = R.style.AnimationMenuBottom
+                if (configPrefs.verticalTabBar && !configPrefs.tabBarInDrawer) {
+                    iMenuSessions.animationStyle = R.style.AnimationMenuDesktopBottom
+                } else {
+                    iMenuSessions.animationStyle = R.style.AnimationMenuBottom
+                }
                 (iMenuSessions.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.apply {
                     reverseLayout = true
                     stackFromEnd = true
@@ -1348,7 +1374,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 }
 
                 // Deal with session menu
-                iMenuSessions.animationStyle = R.style.AnimationMenu
+                if (configPrefs.verticalTabBar && !configPrefs.tabBarInDrawer) {
+                    iMenuSessions.animationStyle = R.style.AnimationMenuDesktopTop
+                } else {
+                    iMenuSessions.animationStyle = R.style.AnimationMenu
+                }
                 (iMenuSessions.iBinding.recyclerViewSessions.layoutManager as? LinearLayoutManager)?.apply {
                     reverseLayout = false
                     stackFromEnd = false
@@ -2071,16 +2101,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Reset our tab bar if needed.
      * Notably used after configuration change.
      */
-    private fun setupTabBar(): Boolean {
+    private fun setupTabBar(configuration: Configuration): Boolean {
         // Check if our tab bar style changed
-        if (verticalTabBar!=configPrefs.verticalTabBar
+        if (verticalTabBar!=configPrefs(configuration).verticalTabBar
+                || tabBarInDrawer!=configPrefs(configuration).tabBarInDrawer
                 // Our bottom sheets dialog needs to be recreated with proper window decor state, with or without status bar that is.
                 // Looks like that was also needed for the bottom sheets top padding to be in sync? Go figure…
                 || userPreferences.useBottomSheets) {
             // We either coming or going to desktop like horizontal tab bar, tabs panel should be closed then
             mainHandler.post {closePanelTabs()}
             // Tab bar style changed recreate our tab bar then
-            createTabsView()
+            createTabsView(configuration)
             tabsView?.tabsInitialized()
             mainHandler.postDelayed({ scrollToCurrentTab() }, 1000)
             return true
@@ -2651,7 +2682,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         logger.log(TAG, "onConfigurationChanged")
 
         setFullscreenIfNeeded(newConfig)
-        setupTabBar()
+        setupTabBar(newConfig)
         setupToolBar(newConfig)
         setupBookmarksView()
 
@@ -2846,10 +2877,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             restart()
         }
 
+        // Lock our drawers when not in use, I wonder if this logic should be applied elsewhere
+        // TODO: Tab drawer should be locked when not in use, but not the bookmarks drawer
+        // TODO: Consider !configPrefs.verticalTabBar and !configPrefs.tabBarInDrawer
         if (userPreferences.lockedDrawers
                 // We need to lock our drawers when using bottom sheets
                 // See: https://github.com/Slion/Fulguris/issues/192
-                || userPreferences.useBottomSheets) {
+                || userPreferences.useBottomSheets
+        ) {
             lockDrawers()
         }
         else {
@@ -2874,7 +2909,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.resumeAll()
         initializePreferences()
 
-        if (!setupTabBar()) {
+        if (!setupTabBar(resources.configuration)) {
             // useBottomsheets settings could have changed
             addTabsViewToParent()
         }
@@ -3308,6 +3343,12 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Open our tab list, works for both drawers and bottom sheets.
      */
     private fun openTabs() {
+
+        // Defensive, don't show empty drawers when not in use
+        if (!configPrefs.tabBarInDrawer) {
+            return
+        }
+
         if (showingBookmarks()) {
             closePanelBookmarks()
         }
@@ -3872,7 +3913,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         val currentTab = tabsManager.currentTab ?: return
         when (v.id) {
             R.id.home_button -> currentTab.apply { requestFocus(); loadHomePage() }
-            R.id.tabs_button -> openTabs()
+            // When not using drawer for tabs that button is used to show webpage menu
+            R.id.tabs_button -> if (configPrefs.tabBarInDrawer) openTabs() else {showMenuWebPage()}
             R.id.button_reload -> refreshOrStop()
             R.id.button_next -> currentTab.findNext()
             R.id.button_back -> currentTab.findPrevious()

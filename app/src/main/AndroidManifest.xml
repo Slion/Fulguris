@@ -37,6 +37,15 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
+    <!--
+    Input translation mode must be disabled to avoid issues on PC:
+    See: https://developer.android.com/guide/topics/large-screens/input-compatibility-large-screens#input_translation_mode
+    Though it seems it is not working as intended…
+    -->
+    <uses-feature
+        android:name="android.hardware.type.pc"
+        android:required="false" />
+
     <queries>
         <intent>
             <!-- Needed to be able to launch third party applications -->

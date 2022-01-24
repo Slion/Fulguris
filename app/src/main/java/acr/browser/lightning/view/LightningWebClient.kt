@@ -89,6 +89,9 @@ class LightningWebClient(
 
     private var currentUrl: String = ""
 
+    // Count the number of resources loaded since the page was last started
+    private var iResourceCount: Int = 0;
+
 //    private var elementHide = userPreferences.elementHide
 
     var sslState: SslState = SslState.None
@@ -116,6 +119,25 @@ class LightningWebClient(
     }
 
     /**
+     * We do some trick for desktop mode zoom level to be ok notably on Google search result page.
+     * It turns out that should not be needed to support proper desktop display.
+     * For Google search result to work on desktop mode we just needed to enable HTML meta viewport element.
+     * This is done by making sure we disable setUseWideViewPort.
+     */
+    private fun applyDesktopModeIfNeeded(aView: WebView) {
+        if (lightningView.desktopMode) {
+            // That's needed for desktop mode support
+            // See: https://stackoverflow.com/a/60621350/3969362
+            // See: https://stackoverflow.com/a/39642318/3969362
+            // Note how we compute our initial scale to be zoomed out and fit the page
+            // TODO: Check if we really need this here in onLoadResource
+            // In fact onLoadResource is called many times during page load
+            // Pick the proper settings desktop width according to current orientation
+            aView.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$","${aView.context.configPrefs.desktopWidth}"), null)
+        }
+    }
+
+    /**
      * Overrides [WebViewClient.shouldInterceptRequest].
      * Looks like we need to intercept our custom URLs here to implement support for fulguris and about scheme.
      *   comment Helium314: adBLock.shouldBock always never blocks if url.isSpecialUrl() or url.isAppScheme(), could be moved here
@@ -138,17 +160,19 @@ class LightningWebClient(
         return response
     }
 
+    /**
+     * Overrides [WebViewClient.onLoadResource]
+     * Called multiple times during page load, once for every resource we load.
+     */
     override fun onLoadResource(view: WebView, url: String?) {
         super.onLoadResource(view, url)
-        if (lightningView.desktopMode) {
-            // That's needed for desktop mode support
-            // See: https://stackoverflow.com/a/60621350/3969362
-            // See: https://stackoverflow.com/a/39642318/3969362
-            // Note how we compute our initial scale to be zoomed out and fit the page
-            // TODO: Check if we really need this here in onLoadResource
-            // Pick the proper settings desktop width according to current orientation
-            view.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$", (view.context.configPrefs.desktopWidth).toString()), null)
-        }
+        iResourceCount++;
+        logger.log(TAG, "onLoadResource - $iResourceCount - $url")
+
+        // Only do that on the first resource load
+//        if (iResourceCount==1) {
+//            applyDesktopModeIfNeeded(view)
+//        }
     }
 
     /**
@@ -165,6 +189,7 @@ class LightningWebClient(
      * Overrides [WebViewClient.onPageFinished]
      */
     override fun onPageFinished(view: WebView, url: String) {
+        logger.log(TAG, "onPageFinished - $url")
         if (view.isShown) {
             updateUrlIfNeeded(url, false)
             uiController.setBackButtonEnabled(view.canGoBack())
@@ -200,8 +225,16 @@ class LightningWebClient(
 
     /**
      * Overrides [WebViewClient.onPageStarted]
+     * At this stage our page HTML source code is already available.
+     * Though most other resources have not been loaded yet.
      */
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+        logger.log(TAG, "onPageStarted - $url")
+        // Reset our resource count
+        iResourceCount = 0
+
+        applyDesktopModeIfNeeded(view);
+
         currentUrl = url
         // Only set the SSL state if there isn't an error for the current URL.
         if (urlWithSslError != url) {

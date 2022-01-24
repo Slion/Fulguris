@@ -31,12 +31,14 @@ import android.content.SharedPreferences
 /**
  * Provide access to configuration specific preferences.
  * Portrait, Landscape, what have you…
+ * Defaults are not needed here and will be applied by the derived class.
  */
 abstract class ConfigurationPreferences constructor(
     preferences: SharedPreferences,
     screenSize: ScreenSize
 ) : ConfigurationDefaults  {
 
+    val iSharedPrefs = preferences
 
     /**
      * True if the system status bar should be hidden throughout the app, false if it should be
@@ -65,6 +67,12 @@ abstract class ConfigurationPreferences constructor(
     var pullToRefresh by preferences.booleanPreference(R.string.pref_key_pull_to_refresh, getDefaultBoolean(PrefKeys.PullToRefresh))
 
     /**
+     * True if the app should put the tab bar inside a drawer.
+     * False will put vertical tab bar beside the tab view.
+     */
+    var tabBarInDrawer by preferences.booleanPreference(R.string.pref_key_tab_bar_in_drawer)
+
+    /**
      * True if the app should use the navigation drawer UI, false if it should use the traditional
      * desktop browser tabs UI.
      */
@@ -86,5 +94,21 @@ abstract class ConfigurationPreferences constructor(
      */
     var desktopWidth by preferences.intPreference(R.string.pref_key_desktop_width, getDefaultInteger(PrefKeys.DesktopWidth))
 
+/*
+    fun applyDefaults(aDefaults: Map<String,Any>) {
+        aDefaults.keys.forEach { key ->
+            if (!iSharedPrefs.contains(key)) {
+                // Set our default then
+                val value = aDefaults[key];
+                if (value is Boolean) {
+                    iSharedPrefs.edit().putBoolean(key,value).apply()
+                } else if (value is Int) {
+                    iSharedPrefs.edit().putInt(key,value).apply()
+                }
+            }
+        }
+
+    }
+*/
 }
 

@@ -23,8 +23,6 @@
 (function () {
     'use strict';
 
-    //console.log("Set Meta Viewport");
-
     var width = $width$;
     var metaViewport = document.querySelector('meta[name="viewport"]')
     if (!metaViewport) {
@@ -34,5 +32,31 @@
         document.getElementsByTagName('head')[0].appendChild(metaViewport);
     }
 
-    metaViewport.setAttribute('content', 'width='+ width + ', initial-scale=' + (window.screen.width / width));
+    if (metaViewport.hasAttribute('data-fulguris')) {
+        // We already set it
+        console.log("Fulguris: meta viewport already set");
+    } else {
+        console.log("Fulguris: Set Meta Viewport");
+        console.log("Fulguris: window.screen.width: " + window.screen.width);
+        console.log("Fulguris: window.innerWidth: " + innerWidth);
+        // Dump our page source code
+        // We used this to check that our HTML page already available
+        //console.log(document.documentElement.outerHTML);
+
+        // Only fiddle with that once
+        metaViewport.setAttribute('content', 'width='+ width + ', initial-scale=' + (window.innerWidth / width));
+        //metaViewport.setAttribute('content', 'width='+ width);
+        //metaViewport.setAttribute('content', 'width=device-width');
+        metaViewport.setAttribute('data-fulguris', 'desktop-mode');
+    }
+
+    // Reapply our meta viewport again whenever our page is resized
+    // That was needed at least for Google search result page, not sure why though
+    window.addEventListener('resize', (event) => {
+        console.log("Fulguris: window resized: " + window.innerWidth);
+        //metaViewport.setAttribute('content', 'width='+ width);
+        metaViewport.setAttribute('content', 'width='+ width + ', initial-scale=' + (window.innerWidth / width));
+        //metaViewport.setAttribute('content', 'width=device-width');
+    });
+
 }());

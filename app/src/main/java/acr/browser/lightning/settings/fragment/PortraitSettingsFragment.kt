@@ -36,7 +36,6 @@ import javax.inject.Singleton
  * Portrait settings configuration screen.
  * Notably use the correct shared preferences file rather than the default one.
  */
-@Singleton
 @AndroidEntryPoint
 class PortraitSettingsFragment : ConfigurationSettingsFragment() {
 

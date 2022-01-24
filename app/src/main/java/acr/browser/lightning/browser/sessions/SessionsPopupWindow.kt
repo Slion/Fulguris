@@ -47,7 +47,10 @@ import androidx.recyclerview.widget.RecyclerView
 import javax.inject.Inject
 
 /**
- *
+ * TODO: Consider using ListPopupWindow
+ * TODO: Consider replacing all our PopupWindow with simple floating views.
+ * In fact PopupWindow seems full of bug, resource hungry and inflexible.
+ * For instance we can't animate them dynamically because it only uses an animation resource.
  */
 class SessionsPopupWindow : PopupWindow {
 
@@ -105,7 +108,9 @@ class SessionsPopupWindow : PopupWindow {
                                 (view.context as BrowserActivity).apply {
                                     presenter.switchToSession(name)
                                     // Close session dialog after creating and switching to new session
-                                    iMenuSessions.dismiss()
+                                    if (!isEditModeEnabled()) {
+                                        iMenuSessions.dismiss()
+                                    }
                                 }
                                 // Update our session list
                                 //iAdapter.showSessions(it)
@@ -147,8 +152,9 @@ class SessionsPopupWindow : PopupWindow {
                                 // Switch to our newly added session
                                 (view.context as BrowserActivity).apply {
                                     // Close session dialog after creating and switching to new session
-                                    // TODO: not in edit mode?
-                                    iMenuSessions.dismiss()
+                                    if (!isEditModeEnabled()) {
+                                        iMenuSessions.dismiss()
+                                    }
                                 }
 
                                 // Show user we did switch session
@@ -243,15 +249,36 @@ class SessionsPopupWindow : PopupWindow {
         // Get our anchor location
         val anchorLoc = IntArray(2)
         aAnchor.getLocationInWindow(anchorLoc)
-        //
-        val gravity = if (contentView.context.configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
-        val yOffset = if (contentView.context.configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] else anchorLoc[1]+aAnchor.height
-        // Show our popup menu from the right side of the screen below our anchor
-        showAtLocation(aAnchor, gravity,
-                // Offset from the right screen edge
-                Utils.dpToPx(10F),
-                // Below our anchor
-                yOffset)
+
+
+        val configPrefs = contentView.context.configPrefs
+        if (configPrefs.verticalTabBar && !configPrefs.tabBarInDrawer) {
+            //animationStyle = -1
+            //showAsDropDown(iAnchor)
+
+            //
+            //val gravity = if (configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.LEFT else Gravity.TOP or Gravity.LEFT
+            val gravity = if (configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.LEFT else Gravity.TOP or Gravity.LEFT
+            val xOffset = anchorLoc[0]
+            val yOffset = if (configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] - (aAnchor.height * 0.15).toInt() else anchorLoc[1] + (aAnchor.height * 0.85).toInt()
+            // Show our popup menu from the right side of the screen below our anchor
+            showAtLocation(aAnchor, gravity,
+                    // Offset from the left screen edge
+                    xOffset,
+                    // Below our anchor
+                    yOffset)
+
+        } else {
+            //
+            val gravity = if (configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
+            val yOffset = if (configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] else anchorLoc[1] + aAnchor.height
+            // Show our popup menu from the right side of the screen below our anchor
+            showAtLocation(aAnchor, gravity,
+                    // Offset from the right screen edge
+                    Utils.dpToPx(10F),
+                    // Below our anchor
+                    yOffset)
+        }
 
         //dimBehind()
         // Show our sessions
@@ -281,5 +308,11 @@ class SessionsPopupWindow : PopupWindow {
             iAdapter.showSessions(iUiController.getTabModel().iSessions)
         }
     }
+
+    /**
+     * Tell if edit mode is currently enabled
+     */
+    private fun isEditModeEnabled() = iAdapter.iEditModeEnabledObservable.value?:false
+
 }
 

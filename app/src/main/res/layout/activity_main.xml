@@ -31,38 +31,83 @@
                 <include android:id="@+id/toolbar_include"
                     layout="@layout/toolbar"/>
 
-                <include android:id="@+id/findInPageInclude" layout="@layout/search_interface"/>
-
-                <!--
-                FrameLayout needed to animate our tabs.
-                We keep swapping both PullRefreshLayout to perform smooth flicker free tab animations.
-                We switched from a FrameLayout to a CoordinatorLayout to be able to display snackbar within our WebView.
-                -->
-                <androidx.coordinatorlayout.widget.CoordinatorLayout
-                    android:id="@+id/web_view_frame"
+                <LinearLayout
+                    android:id="@+id/layoutHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:animateLayoutChanges="false">
+                    android:orientation="horizontal"
+                    android:background="?android:attr/colorBackground"
+                    android:animateLayoutChanges="true">
 
-                    <acr.browser.lightning.view.PullRefreshLayout
-                        android:id="@+id/tabViewContainerOne"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/layoutTabsLeft"
+                        android:layout_width="@dimen/vertical_tab_width"
                         android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:orientation="vertical"
                         android:background="?android:attr/colorBackground"
-                        android:clipChildren="true"
-                        android:animateLayoutChanges="false" />
+                        tools:background="?attr/colorError"
+                        android:animateLayoutChanges="true"
+                        tools:visibility="visible">
 
-                    <acr.browser.lightning.view.PullRefreshLayout
-                        android:id="@+id/tabViewContainerTwo"
-                        android:layout_width="match_parent"
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutPageContainer"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
                         android:background="?android:attr/colorBackground"
-                        android:clipChildren="true"
-                        android:animateLayoutChanges="false" />
+                        android:animateLayoutChanges="true">
 
-                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                        <include android:id="@+id/findInPageInclude" layout="@layout/search_interface"/>
 
+                        <!--
+                        FrameLayout needed to animate our tabs.
+                        We keep swapping both PullRefreshLayout to perform smooth flicker free tab animations.
+                        We switched from a FrameLayout to a CoordinatorLayout to be able to display snackbar within our WebView.
+                        -->
+                        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                            android:id="@+id/web_view_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:animateLayoutChanges="false">
+
+                            <acr.browser.lightning.view.PullRefreshLayout
+                                android:id="@+id/tabViewContainerOne"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="?android:attr/colorBackground"
+                                android:clipChildren="true"
+                                android:animateLayoutChanges="false" />
+
+                            <acr.browser.lightning.view.PullRefreshLayout
+                                android:id="@+id/tabViewContainerTwo"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="?android:attr/colorBackground"
+                                android:clipChildren="true"
+                                android:animateLayoutChanges="false" />
+
+                        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutTabsRight"
+                        android:layout_width="@dimen/vertical_tab_width"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:orientation="vertical"
+                        android:background="?android:attr/colorBackground"
+                        tools:background="?attr/colorError"
+                        android:animateLayoutChanges="true">
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -140,7 +185,7 @@
                     app:tooltipText="@{@string/action_cycle_tabs_backwards}"
                     android:layout_margin="@dimen/material_grid_unit"
                     app:backgroundTint="?attr/colorPrimary"
-                     />
+                    />
 
             </LinearLayout>
 
@@ -154,7 +199,7 @@
                 app:tooltipText="@{@string/close_tab}"
                 android:layout_margin="@dimen/material_grid_unit"
                 app:backgroundTint="?attr/colorError"
-                 />
+                />
 
         </LinearLayout>
 

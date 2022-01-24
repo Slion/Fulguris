@@ -30,7 +30,7 @@ private class BooleanPreferenceDelegate(
  */
 fun SharedPreferences.booleanPreference(
     name: String,
-    defaultValue: Boolean
+    defaultValue: Boolean = false
 ): ReadWriteProperty<Any, Boolean> = BooleanPreferenceDelegate(name, defaultValue, this)
 
 /**
@@ -39,7 +39,7 @@ fun SharedPreferences.booleanPreference(
  */
 fun SharedPreferences.booleanPreference(
         @StringRes stringRes: Int,
-        defaultValue: Boolean
+        defaultValue: Boolean = false
 ): ReadWriteProperty<Any, Boolean> = BooleanPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), defaultValue, this)
 
 /**

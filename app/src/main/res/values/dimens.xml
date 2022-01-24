@@ -36,6 +36,7 @@
     <dimen name="toolbar_height_portrait">56dp</dimen>
     <dimen name="toolbar_height_landscape">52dp</dimen>
 
+    <dimen name="vertical_tab_width">350dp</dimen>
     <dimen name="desktop_tab_width">175dp</dimen>
     <dimen name="desktop_tab_height">42dp</dimen>
 

@@ -60,6 +60,7 @@ abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
 
         // Handle special case for vertical tab default which is only known at runtime
         setDefaultIfNeeded(PrefKeys.TabBarVertical,!screenSize.isTablet())
+        setDefaultIfNeeded(PrefKeys.TabBarInDrawer,!screenSize.isTablet())
 
         /*
         // Sample to loop through our preference store

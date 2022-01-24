@@ -640,6 +640,15 @@ colorControlNormal:
         <item name="android:windowExitAnimation">@anim/menu_close_bottom</item>
     </style>
 
+    <style name="AnimationMenuDesktopTop">
+        <item name="android:windowEnterAnimation">@anim/menu_drop_down_open</item>
+        <item name="android:windowExitAnimation">@anim/menu_drop_down_close</item>
+    </style>
+
+    <style name="AnimationMenuDesktopBottom">
+        <item name="android:windowEnterAnimation">@anim/menu_drop_up_open</item>
+        <item name="android:windowExitAnimation">@anim/menu_drop_up_close</item>
+    </style>
 
     <!--
     Override bottom sheets dialog theme notably to make sure background and status bar have the proper background color.

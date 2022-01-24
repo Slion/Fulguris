@@ -30,7 +30,7 @@ private class IntPreferenceDelegate(
  */
 fun SharedPreferences.intPreference(
     name: String,
-    defaultValue: Int
+    defaultValue: Int = 0
 ): ReadWriteProperty<Any, Int> = IntPreferenceDelegate(name, defaultValue, this)
 
 
@@ -39,7 +39,7 @@ fun SharedPreferences.intPreference(
  */
 fun SharedPreferences.intPreference(
         @StringRes stringRes: Int,
-        defaultValue: Int
+        defaultValue: Int = 0
 ): ReadWriteProperty<Any, Int> = IntPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), defaultValue, this)
 
 /**

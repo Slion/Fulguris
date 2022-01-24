@@ -10,10 +10,18 @@
         app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
+        android:key="@string/pref_key_tab_bar_in_drawer"
+        android:title="@string/settings_title_tab_bar_in_drawer"
+        android:summary="@string/settings_summary_tab_bar_in_drawer"
+        app:icon="@drawable/ic_web"
+        app:iconSpaceReserved="false" />
+
+    <SwitchPreferenceCompat
         android:key="@string/pref_key_toolbars_bottom"
         android:title="@string/settings_title_toolbars_bottom"
         app:icon="@drawable/ic_bottom"
         app:iconSpaceReserved="false" />
+
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_pull_to_refresh"
