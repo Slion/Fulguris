@@ -195,6 +195,7 @@ class AbpFilterDecoder {
         val optionsIndex = filter.lastIndexOf('$')
         if (optionsIndex >= 0) {
             val options = filter.substring(optionsIndex + 1).split(',').toMutableList()
+/*      don't care about specifics of $all for now, just use content type
             // all is equal to: document, popup, inline-script, inline-font
             //  but on mobile / webview there are no popups anyway (all opened in the same window/tab)
             if (options.contains("all")) {
@@ -213,7 +214,7 @@ class AbpFilterDecoder {
                 options.remove("~inline-font")
                 options.remove("~inline-script")
             }
-
+*/
             options.forEach {
                 var option = it
                 var value: String? = null
@@ -301,6 +302,8 @@ class AbpFilterDecoder {
                                 contentType = contentType or ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
                             "important" -> important = true
+                            // TODO: see above, all is not handled 100% correctly (but might still be fine)
+                            "all" -> contentType = contentType or ContentRequest.TYPE_DOCUMENT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
                             else -> return
                         }
                     }
