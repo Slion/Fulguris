@@ -1,6 +1,8 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpBlocker.Companion.addHeader
+import acr.browser.lightning.adblock.AbpBlocker.Companion.removeHeader
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.isAppScheme
@@ -239,22 +241,8 @@ class AbpBlockerManager @Inject constructor(
                     if (response.addHeaders == null && response.removeHeaders == null)
                         return webResponse.toWebResourceResponse(null)
                     val headers = webResponse.headers.toMap()
-                    response.addHeaders?.forEach eachHeader@{ addHeader ->
-                        headers.keys.forEach {
-                            // header names are case insensitive, but we want to modify as little as possible
-                            if (it.lowercase() == addHeader.key.lowercase()) {
-                                headers[it] = headers[it] + "; " + addHeader.value
-                                return@eachHeader
-                            }
-                        }
-                        headers[addHeader.key] = addHeader.value
-                    }
-                    response.removeHeaders?.forEach { removeHeader ->
-                        headers.keys.forEach {
-                            if (it.lowercase() == removeHeader.lowercase())
-                                headers.remove(it)
-                        }
-                    }
+                    response.addHeaders?.forEach { headers.addHeader(it) }
+                    response.removeHeaders?.forEach { headers.removeHeader(it) }
                     return webResponse.toWebResourceResponse(headers)
                 } catch (e: IOException) {
                     // TODO: what do?

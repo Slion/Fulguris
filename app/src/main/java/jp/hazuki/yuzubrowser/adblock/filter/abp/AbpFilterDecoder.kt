@@ -267,16 +267,26 @@ class AbpFilterDecoder {
                                 }
                             }
                             "csp" -> {
-                                modify = CspFilter(value ?: return)
+                                modify = ResponseHeaderFilter("Content-Security-Policy: ${value?.substringAfter('=') ?: return}", false)
                                 contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT) // uBo documentation: It can be applied to main document and documents in frames
                             }
                             "inline-font" -> {
-                                modify = CspFilter("font-src *")
+                                // header value from uBlock source, src/js/background.js
+                                modify = ResponseHeaderFilter("Content-Security-Policy: font-src *", false)
                                 contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT)
                             }
                             "inline-script" -> {
-                                modify = CspFilter("script-src 'unsafe-eval' * blob: data:")
+                                // header value from uBlock source, src/js/background.js
+                                modify = ResponseHeaderFilter("Content-Security-Policy: script-src 'unsafe-eval' * blob: data:", false)
                                 contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT)
+                            }
+                            "removeheader" -> {
+                                value = value?.lowercase() ?: return
+                                val request = value.startsWith("request:")
+                                val header = if (request) value.substringAfter("request:") else value
+                                if (header in REMOVEHEADER_NOT_ALLOWED) return
+                                modify = if (request) RequestHeaderFilter(header, true)
+                                else ResponseHeaderFilter(header, true)
                             }
                             // currently no difference between redirect and redirect-rule
                             // actually: redirect-rule does only redirect if target is blocked by some other filter
@@ -291,13 +301,6 @@ class AbpFilterDecoder {
                                 contentType = ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
                             "important" -> important = true
-                            "removeheader" -> {
-                                value = value?.lowercase() ?: return
-                                val request = value.startsWith("request:")
-                                val header = if (request) value.substringAfter("request:") else value
-                                if (header in REMOVEHEADER_NOT_ALLOWED) return
-                                modify = RemoveHeaderFilter(header, request)
-                            }
                             else -> return
                         }
                     }
@@ -309,6 +312,13 @@ class AbpFilterDecoder {
             //  convert * to empty since it will result in a simple contains filter
             if (filter == "*") filter = ""
         }
+
+        // filters that add headers must contain header and value, separated by ':'
+        if (modify?.inverse == false
+            && (modify is RequestHeaderFilter || modify is ResponseHeaderFilter)
+            && modify?.parameter?.contains(':') == false
+        )
+            return
 
         val domains = domain?.domainsToDomainMap('|')
         if (contentType == 0) contentType = ContentRequest.TYPE_ALL

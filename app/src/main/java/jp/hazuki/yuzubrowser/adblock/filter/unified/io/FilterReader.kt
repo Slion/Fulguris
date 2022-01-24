@@ -56,8 +56,8 @@ class FilterReader(private val input: InputStream) {
                 MODIFY_PREFIX_REMOVEPARAM -> RemoveparamFilter(modifyParameter, modify[1] == '1')
                 MODIFY_PREFIX_REMOVEPARAM_REGEX -> RemoveparamRegexFilter(modifyParameter ?: break@loop, modify[1] == '1')
                 MODIFY_PREFIX_REDIRECT -> RedirectFilter(modifyParameter)
-                MODIFY_PREFIX_CSP -> CspFilter(modifyParameter ?: break@loop)
-                MODIFY_PREFIX_REMOVEHEADER -> RemoveHeaderFilter(modifyParameter ?: break@loop, modify[1] == '1')
+                MODIFY_PREFIX_REQUEST_HEADER -> RequestHeaderFilter(modifyParameter ?: break@loop, modify[1] == '1')
+                MODIFY_PREFIX_RESPONSE_HEADER -> ResponseHeaderFilter(modifyParameter ?: break@loop, modify[1] == '1')
                 else -> break@loop
             }
             yield(Pair(filter.first, filter.second))

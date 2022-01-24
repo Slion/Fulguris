@@ -8,6 +8,7 @@ import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.Request
+import java.io.IOException
 
 class AbpBlocker(
     private val abpUserRules: AbpUserRules?,
@@ -94,18 +95,18 @@ class AbpBlocker(
             filters.removeRemoveparam()
             if (parameters == null && filters.isEmpty()) return null
 
-            // apply removeheader, request part
+            // apply request header modifying filters
             val requestHeaders = request.headers
             val requestHeaderSize = requestHeaders.size
             filters.forEach { filter ->
-                if (filter.modify!! is RemoveHeaderFilter && filter.modify!!.inverse) { // why can't i access 'request'? but doesn't matter...
-                    requestHeaders.keys.forEach {
-                        if (it.lowercase() == filter.modify!!.parameter)
-                            requestHeaders.remove(it)
-                    }
+                if (filter.modify!! is RequestHeaderFilter) {
+                    if (filter.modify!!.inverse) // 'inverse' is the same as 'remove' here
+                        requestHeaders.removeHeader(filter.modify!!.parameter!!)
+                    else
+                        requestHeaders.addHeader(filter.modify!!.parameter!!)
                 }
             }
-            filters.removeAll { it.modify!! is RemoveHeaderFilter && it.modify!!.inverse }
+            filters.removeAll { it.modify!! is RequestHeaderFilter && it.modify!!.inverse }
             if (parameters == null && filters.isEmpty() && requestHeaderSize == requestHeaders.size)
                 return null
 
@@ -114,21 +115,14 @@ class AbpBlocker(
             val removeHeaders = mutableListOf<String>()
             filters.forEach { filter ->
                 when (filter.modify!!) {
-                    is CspFilter -> {
-                        // from uBo documentation https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#modifier-filters:
-                        //   "This option will inject Content-Security-Policy header to the HTTP network response of the requested web page. It can be applied to main document and documents in frames."
-                        // -> add header Content-Security-Policy with content = modify.parameter
-                        if (addHeaders["content-security-policy"] == null)
-                            addHeaders["content-security-policy"] = filter.modify!!.parameter!!
-                        else
-                            addHeaders["content-security-policy"] =
-                                addHeaders["content-security-policy"] + "; " + filter.modify!!.parameter
+                    is ResponseHeaderFilter -> {
+                        if (filter.modify!!.inverse) // 'inverse' is the same as 'remove' here
+                            removeHeaders.add(filter.modify!!.parameter!!)
+                        else {
+                            addHeaders.addHeader(filter.modify!!.parameter!!)
+                        }
                     }
-                    // removeheaders, response part
-                    is RemoveHeaderFilter -> {
-                        // no need to check whether it's for request, those are already removed
-                        removeHeaders.add(filter.modify!!.parameter!!)
-                    }
+                    else -> throw(IOException("unexpected filter type: ${filter.modify?.javaClass}"))
                 }
             }
             val newRequest = Request.Builder()
@@ -181,6 +175,32 @@ class AbpBlocker(
         private fun MutableList<ContentFilter>.removeRemoveparam() =
             removeAll { RemoveparamFilter::class.java.isAssignableFrom(it.modify!!::class.java) }
 
+        // string must look like: User-Agent: Mozilla/5.0
+        private fun MutableMap<String, String>.addHeader(headerAndValue: String) =
+            addHeader(MapEntry(
+                headerAndValue.substringBefore(':').trim(),
+                headerAndValue.substringAfter(':').trim()
+            ))
+
+        class MapEntry(override val key: String, override val value: String) : Map.Entry<String, String>
+
+        fun MutableMap<String, String>.addHeader(headerAndValue: Map.Entry<String, String>) {
+            keys.forEach {
+                // header names are case insensitive, but we want to modify as little as possible
+                if (it.lowercase() == headerAndValue.key.lowercase()) {
+                    put(it, get(it) + "; " + headerAndValue.value)
+                    return
+                }
+            }
+            put(headerAndValue.key, headerAndValue.value)
+        }
+
+        fun MutableMap<String, String>.removeHeader(header: String) {
+            keys.forEach {
+                if (it.lowercase() == header.lowercase())
+                    remove(it)
+            }
+        }
 
         // TODO: is encoded query and decode necessary?
         //  is it slower than using decoded query?

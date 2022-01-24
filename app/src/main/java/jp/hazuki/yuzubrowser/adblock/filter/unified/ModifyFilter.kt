@@ -1,10 +1,6 @@
 package jp.hazuki.yuzubrowser.adblock.filter.unified
 
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
-import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_CSP
-import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REDIRECT
-import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REMOVEHEADER
-import jp.hazuki.yuzubrowser.adblock.filter.abp.MODIFY_PREFIX_REMOVEPARAM
 
 // this is NOT a unified filter, it's an optional part of it
 abstract class ModifyFilter(val parameter: String?, val inverse: Boolean) {
@@ -23,7 +19,7 @@ abstract class ModifyFilter(val parameter: String?, val inverse: Boolean) {
 
     companion object {
 
-    val REMOVEHEADER_NOT_ALLOWED = """
+        val REMOVEHEADER_NOT_ALLOWED = """
         access-control-allow-origin
         access-control-allow-credentials
         access-control-allow-headers
@@ -85,24 +81,24 @@ abstract class ModifyFilter(val parameter: String?, val inverse: Boolean) {
 }
 
 open class RemoveparamFilter(parameter: String?, inverse: Boolean): ModifyFilter(parameter, inverse) {
-    override val prefix = MODIFY_PREFIX_REMOVEPARAM
+    override val prefix get() = MODIFY_PREFIX_REMOVEPARAM
 }
 
 class RemoveparamRegexFilter(parameter: String, inverse: Boolean): RemoveparamFilter(parameter, inverse) {
-    override val prefix = MODIFY_PREFIX_REMOVEPARAM_REGEX
+    override val prefix get() = MODIFY_PREFIX_REMOVEPARAM_REGEX
     val regex = parameter.toRegex()
 }
 
 class RedirectFilter(parameter: String?): ModifyFilter(parameter, false) {
-    override val prefix = MODIFY_PREFIX_REDIRECT
+    override val prefix get() = MODIFY_PREFIX_REDIRECT
 }
 
-class CspFilter(parameter: String): ModifyFilter(parameter, false) {
-    override val prefix = MODIFY_PREFIX_CSP
+class ResponseHeaderFilter(header: String, remove: Boolean): ModifyFilter(header, remove) {
+    override val prefix get() = MODIFY_PREFIX_RESPONSE_HEADER
 }
 
-class RemoveHeaderFilter(parameter: String, request: Boolean): ModifyFilter(parameter, request) {
-    override val prefix = MODIFY_PREFIX_REMOVEHEADER
+class RequestHeaderFilter(header: String, remove: Boolean): ModifyFilter(header, remove) {
+    override val prefix get() = MODIFY_PREFIX_REQUEST_HEADER
 }
 
 fun getRemoveparamFilter(parameter: String, inverse: Boolean) =
