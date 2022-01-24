@@ -423,7 +423,7 @@ class AbpFilterDecoder {
                 SingleDomainMap(true, items[0])
             }
         } else {
-            val domains = ArrayDomainMap(items.size)
+            val domains = ArrayDomainMap(items.size, this.contains('*'))
             items.forEach { domain ->
                 if (domain.isEmpty()) return@forEach
                 if (domain[0] == '~') {

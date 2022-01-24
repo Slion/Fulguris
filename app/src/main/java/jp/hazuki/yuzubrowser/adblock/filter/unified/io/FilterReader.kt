@@ -16,6 +16,7 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.unified.io
 
+import androidx.collection.SimpleArrayMap
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.toInt
 import jp.hazuki.yuzubrowser.adblock.filter.toShortInt
@@ -144,7 +145,7 @@ class FilterReader(private val input: InputStream) {
                     SingleDomainMap(include, domain)
                 }
                 else -> {
-                    val map = ArrayDomainMap(domainsSize)
+                    val map = ArrayDomainMap(domainsSize, false)
                     map.include = when (input.read()) {
                         0 -> false
                         1 -> true
@@ -158,6 +159,8 @@ class FilterReader(private val input: InputStream) {
                         }
                         if (input.read(stringBuffer, 0, textSize) != textSize) return null
                         val domain = String(stringBuffer, 0, textSize)
+                        if (domain.contains('*'))
+                            map.wildcard = true
                         val include = when (input.read()) {
                             0 -> false
                             1 -> true

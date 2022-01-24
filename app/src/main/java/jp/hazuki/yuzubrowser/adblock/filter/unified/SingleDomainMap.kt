@@ -20,10 +20,16 @@ class SingleDomainMap(override val include: Boolean, private val domain: String)
     override val size: Int
         get() = 1
 
+    override val wildcard = domain.contains('*')
+
+    // see https://adblockplus.org/en/filter-cheatsheet: also matches subdomains
     override fun get(domain: String): Boolean? {
-//        return if (this.domain == domain) include else null
-        // see https://adblockplus.org/en/filter-cheatsheet: also matches subdomains
-        // so either domains equal or domain = *.(this.domain)
+        // should match any tld (but only tld)
+        //   so example.* should match example.com and example.co.uk, but not example.example2.com
+        if (wildcard) {
+            return if (matchWildcard(this.domain, domain)) include else null
+        }
+
         return if (this.domain == domain || domain.endsWith(".${this.domain}")) include else null
     }
 

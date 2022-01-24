@@ -407,27 +407,28 @@ class AbpBlockerTest {
     }
 
     @Test
-    fun domains() {
+    fun domainsRules() {
         val filterList = mutableListOf<String>()
         val blockedRequests = mutableListOf<ContentRequest>()
         val allowedRequests = mutableListOf<ContentRequest>()
 
-        filterList.add("||ad.adpage2.com^\$domain=~okpage.com")
-        blockedRequests.add(request("http://ad.adpage2.com/ads/badad", "https://example.com"))
-        allowedRequests.add(request("http://ad.adpage2.com/ads/badad", "https://okpage.com"))
-        allowedRequests.add(request("http://ad.adpage2.com/ads/badad", "https://test.okpage.com"))
-        filterList.add("||page.com^\$domain=badpage.com")
-        allowedRequests.add(request("http://page.com/something", "https://okpage.com"))
-        blockedRequests.add(request("http://page.com/something", "https://badpage.com"))
-        filterList.add("://ads.\$domain=~goodotherpage.com|~good.page4.com")
-        blockedRequests.add(
-            request(
-                "http://ads.page4.com/something",
-                "https://something.page4.com"
-            )
-        )
-        allowedRequests.add(request("http://ads.page4.com/something", "https://good.page4.com"))
-        allowedRequests.add(request("http://ads.page4.com/something", "https://goodotherpage.com"))
+        filterList.add("||page.com^\$domain=~okpage.com")
+        blockedRequests.add(request("http://page.com/ads/badad", "https://example.com"))
+        allowedRequests.add(request("http://page.com/ads/badad", "https://okpage.com"))
+        allowedRequests.add(request("http://page.com/ads/badad", "https://test.okpage.com"))
+        filterList.add("||page2.com^\$domain=badpage.com")
+        allowedRequests.add(request("http://page2.com/something", "https://okpage.com"))
+        blockedRequests.add(request("http://page2.com/something", "https://badpage.com"))
+        filterList.add("://ads.\$domain=~goodotherpage.com|~good.page3.com")
+        blockedRequests.add(request("http://ads.page3.com/something", "https://something.page3.com"))
+        allowedRequests.add(request("http://ads.page3.com/something", "https://good.page3.com"))
+        allowedRequests.add(request("http://ads.page3.com/something", "https://goodotherpage.com"))
+        filterList.add("*\$domain=page4.*")
+        blockedRequests.add(request("http://ads.page4.com/something", "https://something.page4.com"))
+        blockedRequests.add(request("http://whatever.com/something", "https://page4.com"))
+        blockedRequests.add(request("http://whatever.com/something", "https://page4.co.uk"))
+        allowedRequests.add(request("http://whatever.com/something", "https://page4.test.com"))
+        allowedRequests.add(request("http://whatever.com/something", "https://page4.co.cn"))
 
         checkFiltersWithContainer(filterList, blockedRequests, allowedRequests, "block")
         checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
