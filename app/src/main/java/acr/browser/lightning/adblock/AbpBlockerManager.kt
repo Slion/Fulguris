@@ -300,15 +300,19 @@ class AbpBlockerManager @Inject constructor(
         return getNoCacheResponse("text/html", builder)
     }
 
-    private fun Response.toWebResourceResponse(modifiedHeaders: Map<String, String>?) =
-        WebResourceResponse(
-            header("content-type", "text/plain"),
-            header("content-encoding", "utf-8"),
+    private fun Response.toWebResourceResponse(modifiedHeaders: Map<String, String>?): WebResourceResponse {
+        // content-type usually has format text/html: charset=utf-8
+        // TODO: is this ok? worked in tests, but are there cases where it doesn't work?
+        val contentType = header("content-type", "text/plain")?.split(';')
+        return WebResourceResponse(
+            contentType?.first(),
+            contentType?.last()?.substringAfter('='),
             code,
             message.let { if (it.isEmpty()) "OK" else it }, // reason must not be empty!
             modifiedHeaders ?: headers.toMap(),
             body?.byteStream() ?: EmptyInputStream()
         )
+    }
 
     private fun Headers.toMap(): MutableMap<String, String> {
         val map = mutableMapOf<String, String>()

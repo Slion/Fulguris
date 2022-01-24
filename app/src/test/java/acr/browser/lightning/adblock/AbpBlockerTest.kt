@@ -554,18 +554,18 @@ class AbpBlockerTest {
     @Test
     fun all() {
         val filterList = mutableListOf<String>()
-        val modifiedRequests = mutableListOf<ContentRequest>()
+        val blockedRequests = mutableListOf<ContentRequest>()
         val allowedRequests = mutableListOf<ContentRequest>()
 
         // not really a good test, modify it... and understand what "all" is actually supposed to do!
         //  the csp parts imply it's a modify filter, but the initial discussions imply it should be blocking
         filterList.add("||example.com^\$all")
         allowedRequests.add(request("http://ads.example2.com/something", "https://something.page4.com"))
-        modifiedRequests.add(request("http://example.com/something", "https://goodotherpage.com"))
+        blockedRequests.add(request("http://example.com/something", "https://goodotherpage.com"))
 
         // can't check modify filters allow with container, because non-null could be returned only later
         //checkFiltersWithContainer(filterList, modifiedRequests, allowedRequests, "modify")
-        checkFiltersWithBlocker(filterList, null, allowedRequests, modifiedRequests)
+        checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
     }
 
     @Test
