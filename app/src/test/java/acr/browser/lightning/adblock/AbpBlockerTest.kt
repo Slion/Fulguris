@@ -129,11 +129,7 @@ class AbpBlockerTest {
         }
         modifiedRequests?.forEach {
             println("should be modified: " + it.url + " " + it.pageUrl)
-            Assert.assertTrue(
-                blocker.shouldBlock(it) is BlockResourceResponse || blocker.shouldBlock(
-                    it
-                ) is OkhttpResponse
-            )
+            Assert.assertTrue(blocker.shouldBlock(it) is BlockResourceResponse || blocker.shouldBlock(it) is OkhttpResponse)
         }
     }
 
@@ -447,16 +443,17 @@ class AbpBlockerTest {
     }
 
     @Test
-    fun modifyList() {
+    fun removeparam() {
         // only tests removeparam so far
         val filterList = mutableListOf<String>()
         val modifiedRequests = mutableListOf<ContentRequest>()
         val allowedRequests = mutableListOf<ContentRequest>()
         filterList.add("\$removeparam=badparam")
         modifiedRequests.add(request("http://page.com/page?badparam=yes", "http://page.com"))
+        modifiedRequests.add(request("http://page.com/page?badparam=yes#content", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam=", "http://page.com"))
-        modifiedRequests.add(request("http://page.com/page?badparam=yes&other=no", "http://page.com"))
+        modifiedRequests.add(request("http://page.com/page?goodparam&badparam=yes&other=no#content", "http://page.com"))
         allowedRequests.add(request("http://page.com/whatever", "http://thing.com"))
         allowedRequests.add(request("http://page.com/ads?param=yes", "http://thing.com"))
         filterList.add("||www.page.\$removeparam=badparam2")
@@ -475,6 +472,83 @@ class AbpBlockerTest {
         // can't check modify filters allow with container, because non-null could be returned only later
         //checkFiltersWithContainer(filterList, modifiedRequests, allowedRequests, "modify")
         checkFiltersWithBlocker(filterList, null, allowedRequests, modifiedRequests)
+        modifiedRequests.forEach { println((blocker.shouldBlock(it) as OkhttpResponse).request.url) }
+    }
+
+    @Test
+    fun addResponseHeaders() {
+        val filterList = mutableListOf<String>()
+        val modifiedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
+        // add stuff to hrequest eader, check whether it really is added
+        filterList.add("||example.com^\$inline-font")
+        allowedRequests.add(request("http://ads.example2.com/something", "https://something.page4.com"))
+        modifiedRequests.add(request("http://example.com/something", "https://goodotherpage.com"))
+
+        filterContainers.clear()
+        loadFiltersIntoContainers(filterList.joinToString("\n").byteInputStream())
+        modifiedRequests.forEach {
+            val response = blocker.shouldBlock(it)
+            Assert.assertNotNull(response)
+            Assert.assertTrue(response is OkhttpResponse)
+            response as OkhttpResponse
+            Assert.assertEquals(response.addHeaders?.get("Content-Security-Policy"), "font-src *")
+        }
+        allowedRequests.forEach {
+            Assert.assertNull(blocker.shouldBlock(it))
+        }
+    }
+
+    @Test
+    fun removeResponseHeaders() {
+        val filterList = mutableListOf<String>()
+        val modifiedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
+        // add stuff to request header, check whether it really is added
+        filterList.add("||example.com^##^responseheader(refresh)")
+        filterList.add("||example.com^\$removeheader=otherHeaderToRemove")
+        modifiedRequests.add(request("http://example.com/something", "https://goodotherpage.com"))
+
+        // blacklisted headers, rule should be ignored
+        filterList.add("||example2.com^\$removeheader=p3p")
+        filterList.add("||example2.com^##^responseheader(Content-Security-Policy)")
+        allowedRequests.add(request("http://example2.com/something", "https://goodotherpage.com"))
+
+        filterContainers.clear()
+        loadFiltersIntoContainers(filterList.joinToString("\n").byteInputStream())
+        modifiedRequests.forEach {
+            val response = blocker.shouldBlock(it)
+            Assert.assertNotNull(response)
+            Assert.assertTrue(response is OkhttpResponse)
+            response as OkhttpResponse
+            Assert.assertTrue(response.removeHeaders?.containsAll(listOf("refresh", "otherHeaderToRemove").map { it.lowercase() }) == true)
+        }
+        allowedRequests.forEach {
+            Assert.assertNull(blocker.shouldBlock(it))
+        }
+    }
+
+    @Test
+    fun redirect() {
+        val filterList = mutableListOf<String>()
+        val modifiedRequests = mutableListOf<ContentRequest>()
+
+        filterList.add("||example.com^\$image,redirect=1x1.gif") // RES_1X1
+        filterList.add("||example2.com^\$media,mp4") // RES_NOOP_MP4
+        modifiedRequests.add(request("http://example.com/something.png", "https://goodotherpage.com"))
+        modifiedRequests.add(request("http://example2.com/something.mpg", "https://goodotherpage.com"))
+
+        filterContainers.clear()
+        loadFiltersIntoContainers(filterList.joinToString("\n").byteInputStream())
+        modifiedRequests.forEach {
+            val response = blocker.shouldBlock(it)
+            Assert.assertNotNull(response)
+            Assert.assertTrue(response is BlockResourceResponse)
+            response as BlockResourceResponse
+            Assert.assertTrue(response.filename in listOf(RES_1X1, RES_NOOP_MP4))
+        }
     }
 
     @Test
@@ -500,6 +574,32 @@ class AbpBlockerTest {
         val url = Uri.parse("http://ads.test.net/ads?a=1&b=4#bla")
         val parameters = mapOf("a" to "1", "b" to "4")
         Assert.assertEquals(parameters, url.getQueryParameterMap())
+    }
+
+    @Test
+    fun important() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
+        filterList.add("||example.com^")
+        blockedRequests.add(request("http://example.com/something", "https://goodotherpage.com"))
+        blockedRequests.add(request("http://example.com/something.png", "https://goodotherpage.com"))
+        checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
+
+        blockedRequests.clear()
+        filterList.add("@@||example.com^\$image")
+        // maybe problem: if there is no htm, a bunch of default content types are assumed
+        //   but this is not really a problem if accept header is not empty or */*
+        blockedRequests.add(request("http://example.com/something.htm", "https://goodotherpage.com"))
+        allowedRequests.add(request("http://example.com/something.gif", "https://goodotherpage.com"))
+        checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
+
+        allowedRequests.clear()
+        filterList.add("||example.com^\$important")
+        blockedRequests.add(request("http://example.com/something.gif", "https://goodotherpage.com"))
+        checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
+
     }
 
     @Test

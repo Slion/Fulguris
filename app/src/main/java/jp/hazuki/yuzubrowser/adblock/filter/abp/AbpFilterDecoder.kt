@@ -298,7 +298,7 @@ class AbpFilterDecoder {
                             "empty" -> modify = RedirectFilter("empty")
                             "mp4" -> {
                                 modify = RedirectFilter("noopmp4-1s")
-                                contentType = ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
+                                contentType = contentType or ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
                             "important" -> important = true
                             else -> return

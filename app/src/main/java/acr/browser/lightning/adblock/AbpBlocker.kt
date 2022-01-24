@@ -132,7 +132,7 @@ class AbpBlocker(
                     else
                         request.url.toString().substringBefore('?').substringBefore('#') + // url without parameters and fragment
                                 parameterString(parameters) + // add modified parameters
-                                (request.url.fragment ?: "") // add fragment
+                                (request.url.fragment?.let {"#$it"} ?: "") // add fragment
                 )
                 .method(request.method, null) // use same method, no body to copy from WebResourceRequest
                 .headers(requestHeaders.toHeaders())
