@@ -16,6 +16,8 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.abp
 
+import acr.browser.lightning.adblock.RES_EMPTY
+import acr.browser.lightning.adblock.RES_NOOP_MP4
 import androidx.core.net.toUri
 import jp.hazuki.yuzubrowser.adblock.*
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
@@ -197,7 +199,7 @@ class AbpFilterDecoder {
 
         val optionsIndex = filter.lastIndexOf('$')
         if (optionsIndex >= 0) {
-            val options = filter.substring(optionsIndex + 1).split(',').toMutableList()
+        val options = filter.substring(optionsIndex + 1).split(',').toMutableList()
 /*      don't care about specifics of $all for now, just use content type
             // all is equal to: document, popup, inline-script, inline-font
             //  but on mobile / webview there are no popups anyway (all opened in the same window/tab)
@@ -292,22 +294,25 @@ class AbpFilterDecoder {
                                 modify = if (request) RequestHeaderFilter(header, true)
                                 else ResponseHeaderFilter(header, true)
                             }
-                            // currently no difference between redirect and redirect-rule
-                            // actually: redirect-rule does only redirect if target is blocked by some other filter
-                            //  more work to implement, currently blocking is completely independent from redirecting
-                            //  and redirect will never be checked if request is blocked
-                            // TODO: have redirect-rule separate and put it in a different filter container
-                            //  to be checked if request is blocked
-                            "redirect", "redirect-rule" -> if (value != null) modify = RedirectFilter(value)
-                            "empty" -> modify = RedirectFilter("empty")
+                            "redirect-rule" -> modify = RedirectFilter(value)
+                            "redirect" -> {
+                                // create block filter in addition to redirect
+                                this.getRedirectBlockString("redirect").decodeFilter(blackList, whiteList, elementFilterList, modifyList, modifyExceptionList, importantList, importantAllowList)
+                                modify = RedirectFilter(value)
+                            }
+                            "empty" -> {
+                                this.getRedirectBlockString("empty").decodeFilter(blackList, whiteList, elementFilterList, modifyList, modifyExceptionList, importantList, importantAllowList)
+                                modify = RedirectFilter(RES_EMPTY)
+                            }
                             "mp4" -> {
-                                modify = RedirectFilter("noopmp4-1s")
+                                this.getRedirectBlockString("mp4").decodeFilter(blackList, whiteList, elementFilterList, modifyList, modifyExceptionList, importantList, importantAllowList)
+                                modify = RedirectFilter(RES_NOOP_MP4)
                                 contentType = contentType or ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
                             "important" -> important = true
                             // TODO: see above, all is not handled 100% correctly (but might still be fine)
                             "all" -> contentType = contentType or ContentRequest.TYPE_DOCUMENT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
-                            else -> return
+                            else -> return // TODO: log what is not understood!
                         }
                     }
                 }
@@ -416,6 +421,16 @@ class AbpFilterDecoder {
             }
         }
         return false
+    }
+
+    private fun String.getRedirectBlockString(toReplace: String): String {
+        var blockString = this.substringAfterLast('$').replace(toReplace, "").replace(",,", ",")
+        if (blockString.endsWith(','))
+            blockString = blockString.dropLast(1)
+        return if (blockString.isEmpty())
+            this.dropLast(1) // no further filter rules, remove $
+        else
+            this.substringBeforeLast('$') + "$" + blockString
     }
 
     private fun String.domainsToDomainMap(delimiter: Char): DomainMap? {

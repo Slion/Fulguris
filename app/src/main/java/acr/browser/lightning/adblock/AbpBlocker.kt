@@ -1,5 +1,6 @@
 package acr.browser.lightning.adblock
 
+import acr.browser.lightning.adblock.AbpBlocker.Companion.withPriority
 import android.net.Uri
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
@@ -33,16 +34,21 @@ class AbpBlocker(
                             allowFilter.contentType and ContentRequest.INVERSE == 0 // but not simply everything allowed
                 } == true) // we have a document-level exception
                 null
-            else BlockResponse(ABP_PREFIX_IMPORTANT, it.pattern)
+            else blockOrRedirect(request, ABP_PREFIX_IMPORTANT, it.pattern)
         }
 
         // check normal blocklist
         filterContainers[ABP_PREFIX_ALLOW]!![request]?.let { return null }
-        filterContainers[ABP_PREFIX_DENY]!![request]?.let { return BlockResponse(ABP_PREFIX_DENY, it.pattern) }
+        filterContainers[ABP_PREFIX_DENY]!![request]?.let { return blockOrRedirect(request, ABP_PREFIX_DENY, it.pattern) }
 
         // check whether response should be modified // TODO: should this also happen if something is explicitly allowed?
         // careful: we need to get ALL matching modify filters, not just any (like it's done for block and allow decisions)
         val modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(request)
+
+        // TODO: should redirect filters rather be in a separate container? would make sense...
+        //  because they are never checked in the same thing and just create additional load here
+        modifyFilters.removeAll { it.modify!! is RedirectFilter }
+
         if (modifyFilters.isNotEmpty()) {
             if (request.url.encodedQuery == null) {
                 // if no parameters, remove all removeparam filters
@@ -63,7 +69,6 @@ class AbpBlocker(
                         modifyFilters.removeAll { it.modify == exception.modify }
                 }
             }
-
             // important: there can be multiple valid filters, and all should be applied if possible
             //  just do one after the other
             //  but since WebResourceRequest can't be changed and returned to WebView, it must all happen within getModifiedResponse()
@@ -73,6 +78,18 @@ class AbpBlocker(
         return null
     }
 
+    private fun blockOrRedirect(request: ContentRequest, prefix: String, pattern: String): BlockerResponse {
+        val modify = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(request).mapNotNull {
+            if (it.modify is RedirectFilter) (it.modify as RedirectFilter).withPriority() else null
+        }
+        return if (modify.isEmpty())
+            BlockResponse(prefix, pattern)
+        else {
+            val resource = modify.maxByOrNull { it.second } ?: return BlockResponse(prefix, pattern)
+            BlockResourceResponse(resource.first)
+        }
+    }
+
     companion object {
         // this needs to be fast, the adguard url tracking list has quite a few options acting on all urls!
         //  e.g. removing the fbclid parameter added by facebook
@@ -80,13 +97,6 @@ class AbpBlocker(
             // we can't simply modify the request, so do what the request wants, but modify
             //  then deliver what we got as response
             //  like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
-
-            // first apply redirect filters
-            //  this always redirects to some internal resources, see uBo documentation (so other filters are obsolete)
-            filters.forEach { filter ->
-                if (filter.modify!! is RedirectFilter)
-                    return BlockResourceResponse(filter.modify!!.parameter!!)
-            }
 
             // apply removeparam
             val parameters = getModifiedParameters(request.url, filters)
@@ -192,6 +202,16 @@ class AbpBlocker(
                 if (it.lowercase() == header.lowercase())
                     remove(it)
             }
+        }
+
+        // redirect filters are only applied (or even checked!) if request is blocked!
+        //  usually, a matching block filter is created with redirect filter, but not necessarily
+        private fun RedirectFilter.withPriority(): Pair<String, Int> {
+            val split = parameter!!.indexOf(':')
+            return if (split > -1)
+                Pair(parameter.substring(0,split), parameter.substring(split+1).toInt())
+            else
+                Pair(parameter, 0)
         }
 
         // TODO: is encoded query and decode necessary?

@@ -83,6 +83,7 @@ abstract class UnifiedFilter(
 
     override var next: ContentFilter? = null
 
+    // TODO: this should really be a val, currently handling this is horrible
     override var modify: ModifyFilter? = null
 
     override fun equals(other: Any?): Boolean {
