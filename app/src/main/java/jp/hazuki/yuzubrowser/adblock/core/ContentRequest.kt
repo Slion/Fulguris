@@ -26,7 +26,7 @@ data class ContentRequest(
     val isThirdParty: Boolean,
     val headers: MutableMap<String, String> = mutableMapOf(),
     val method: String = "GET",
-    val tags: List<String> = Tag.create(url.toString()),
+    val tags: Collection<String> = Tag.create(url.toString()).toSet(),
 ) {
     companion object {
         const val TYPE_OTHER = 0x01

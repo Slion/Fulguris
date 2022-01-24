@@ -202,6 +202,7 @@ class AbpBlockerManager @Inject constructor(
         // then ads
 
         // TODO: also allow files, not only special urls?
+        // files are not working for modify filters, and what should be bad with loading local resources?
         if (request.url.toString().isSpecialUrl() || request.url.toString().isAppScheme())
             return null
 

@@ -82,12 +82,15 @@ class AbpFilterDecoder {
                 else -> {
                     val matcher = elementFilterRegex.matcher(trimmedLine)
                     if (matcher.matches() && !trimmedLine.contains("##^responseheader")) { // exception necessary to process responseheader correctly
-                        decodeElementFilter(
+                        return@forEachLine
+                        // currently the element filters are not used, so there is no reason to decode them
+/*                        decodeElementFilter(
                             matcher.group(1),
                             matcher.group(2),
                             matcher.group(3),
                             elementFilter,
                         )
+*/
                     } else {
                         trimmedLine.decodeFilter(black, white, elementDisableFilter, modifyList, modifyExceptionList, importantList, importantAllowList)
                     }
