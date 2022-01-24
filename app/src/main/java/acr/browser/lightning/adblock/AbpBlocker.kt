@@ -6,8 +6,6 @@ import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
-import okhttp3.Headers.Companion.toHeaders
-import okhttp3.Request
 import java.io.IOException
 
 class AbpBlocker(
@@ -122,23 +120,17 @@ class AbpBlocker(
                             addHeaders.addHeader(filter.modify!!.parameter!!)
                         }
                     }
-                    else -> throw(IOException("unexpected filter type: ${filter.modify?.javaClass}"))
+                    // else -> what do? this should never happen, maybe log?
                 }
             }
-            val newRequest = Request.Builder()
-                .url(
-                    if (parameters == null)
-                        request.url.toString()
-                    else
-                        request.url.toString().substringBefore('?').substringBefore('#') + // url without parameters and fragment
-                                parameterString(parameters) + // add modified parameters
-                                (request.url.fragment?.let {"#$it"} ?: "") // add fragment
-                )
-                .method(request.method, null) // use same method, no body to copy from WebResourceRequest
-                .headers(requestHeaders.toHeaders())
-                .build()
+            val newUrl = if (parameters == null)
+                    request.url.toString()
+                else
+                    request.url.toString().substringBefore('?').substringBefore('#') + // url without parameters and fragment
+                        parameterString(parameters) + // add modified parameters
+                        (request.url.fragment?.let {"#$it"} ?: "") // add fragment
 
-            return OkhttpResponse(newRequest, addHeaders, removeHeaders)
+            return ModifyResponse(newUrl, request.method, requestHeaders, addHeaders, removeHeaders)
         }
 
         // applies filters to parameters and returns remaining parameters

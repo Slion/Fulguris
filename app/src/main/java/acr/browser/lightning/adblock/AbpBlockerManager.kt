@@ -29,7 +29,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.Headers
+import okhttp3.Headers.Companion.toHeaders
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.Response
 import okhttp3.internal.publicsuffix.PublicSuffix
 import okhttp3.internal.toHeaderList
@@ -236,14 +238,23 @@ class AbpBlockerManager @Inject constructor(
                     BlockResourceResponse(RES_EMPTY).toWebResourceResponse()
             }
             is BlockResourceResponse -> return response.toWebResourceResponse()
-            is OkhttpResponse -> {
+            is ModifyResponse -> {
+                // okhttp accepts only ws, wss, http, https, can't build a request otherwise
+                //  so don't block other schemes
+                if (request.url.scheme !in okHttpAcceptedSchemes)
+                    return null
+                val newRequest = Request.Builder()
+                    .url(response.url)
+                    .method(response.requestMethod, null) // use same method, no body to copy from WebResourceRequest
+                    .headers(response.requestHeaders.toHeaders())
+                    .build()
                 try {
-                    val webResponse = okHttpClient.newCall(response.request).execute()
-                    if (response.addHeaders == null && response.removeHeaders == null)
+                    val webResponse = okHttpClient.newCall(newRequest).execute()
+                    if (response.addResponseHeaders == null && response.removeResponseHeaders == null)
                         return webResponse.toWebResourceResponse(null)
                     val headers = webResponse.headers.toMap()
-                    response.addHeaders?.forEach { headers.addHeader(it) }
-                    response.removeHeaders?.forEach { headers.removeHeader(it) }
+                    response.addResponseHeaders?.forEach { headers.addHeader(it) }
+                    response.removeResponseHeaders?.forEach { headers.removeHeader(it) }
                     return webResponse.toWebResourceResponse(headers)
                 } catch (e: IOException) {
                     // TODO: what do?
@@ -407,6 +418,7 @@ class AbpBlockerManager @Inject constructor(
             return response
         }
 
+        private val okHttpAcceptedSchemes = listOf("https", "http", "ws", "wss")
     }
 
     private class ThirdPartyLruCache(size: Int): LruCache<String, Boolean>(size) {

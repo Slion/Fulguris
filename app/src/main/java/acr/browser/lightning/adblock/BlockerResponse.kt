@@ -1,13 +1,10 @@
 package acr.browser.lightning.adblock
 
-import okhttp3.Request
-import java.io.IOException
-
 abstract class BlockerResponse
 
-class BlockResponse(val blockList: String, val pattern: String): BlockerResponse()
+data class BlockResponse(val blockList: String, val pattern: String): BlockerResponse()
 
-class OkhttpResponse(val request: Request, val addHeaders: Map<String,String>?, val removeHeaders: List<String>?): BlockerResponse()
+data class ModifyResponse(val url: String, val requestMethod: String, val requestHeaders: Map<String, String>, val addResponseHeaders: Map<String,String>?, val removeResponseHeaders: Collection<String>?): BlockerResponse()
 
 class BlockResourceResponse(resource: String): BlockerResponse() {
     val filename = when (resource) {
@@ -43,7 +40,7 @@ class BlockResourceResponse(resource: String): BlockerResponse() {
         RES_WINDOW_OPEN_DEFUSER, "nowoif.js" -> RES_WINDOW_OPEN_DEFUSER
         RES_HD_MAIN, RES_MXPNL, RES_NOEVAL, RES_NOBAB_2, RES_POPADS_DUMMY, RES_FINGERPRINT_2, RES_AMAZON_APSTAG, RES_AMPPROJECT -> resource // no alias -> keep name
 
-        else -> throw(IOException()) //RES_EMPTY // TODO: throw exception for tests, but later a bad filter list should not cause crashes
+        else -> RES_EMPTY // might happen if new block resources are added to uBo, or if there is a type in the list
     }
 
 }
