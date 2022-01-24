@@ -56,31 +56,13 @@ class AbpBlockerTest {
         set.importantList.forEach(filterContainers[ABP_PREFIX_IMPORTANT]!!::plusAssign)
         set.importantAllowList.forEach(filterContainers[ABP_PREFIX_IMPORTANT_ALLOW]!!::plusAssign)
 
-        // TODO: assert correct number of filters in each container
-        Assert.assertEquals(
-            set.blackList.size,
-            filterContainers[ABP_PREFIX_DENY]!!.getFilterList().size
-        )
-        Assert.assertEquals(
-            set.whiteList.size,
-            filterContainers[ABP_PREFIX_ALLOW]!!.getFilterList().size
-        )
-        Assert.assertEquals(
-            set.modifyList.size,
-            filterContainers[ABP_PREFIX_MODIFY]!!.getFilterList().size
-        )
-        Assert.assertEquals(
-            set.modifyExceptionList.size,
-            filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getFilterList().size
-        )
-        Assert.assertEquals(
-            set.importantList.size,
-            filterContainers[ABP_PREFIX_IMPORTANT]!!.getFilterList().size
-        )
-        Assert.assertEquals(
-            set.importantAllowList.size,
-            filterContainers[ABP_PREFIX_IMPORTANT_ALLOW]!!.getFilterList().size
-        )
+        // assert correct number of filters in each container
+        Assert.assertEquals(set.blackList.size, filterContainers[ABP_PREFIX_DENY]!!.getFilterList().size)
+        Assert.assertEquals(set.whiteList.size, filterContainers[ABP_PREFIX_ALLOW]!!.getFilterList().size)
+        Assert.assertEquals(set.modifyList.size, filterContainers[ABP_PREFIX_MODIFY]!!.getFilterList().size)
+        Assert.assertEquals(set.modifyExceptionList.size, filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getFilterList().size)
+        Assert.assertEquals(set.importantList.size, filterContainers[ABP_PREFIX_IMPORTANT]!!.getFilterList().size)
+        Assert.assertEquals(set.importantAllowList.size, filterContainers[ABP_PREFIX_IMPORTANT_ALLOW]!!.getFilterList().size)
     }
 
     private fun Map<String, FilterContainer>.clear() = forEach { it.value.clear() }
@@ -207,12 +189,7 @@ class AbpBlockerTest {
             ! JS API START
             #%#var AG_onLoad=function(func){if(document.readyState==="complete"||document.readyState==="interactive")func();else if(document.addEventListener)document.addEventListener("DOMContentLoaded",func);else if(document.attachEvent)document.attachEvent("DOMContentLoaded",func)};
         """.trimIndent()
-        Assert.assertTrue(
-            AbpFilterDecoder().checkHeader(
-                file1.byteInputStream().bufferedReader(),
-                Charsets.UTF_8
-            )
-        )
+        Assert.assertTrue(AbpFilterDecoder().checkHeader(file1.byteInputStream().bufferedReader(), Charsets.UTF_8))
 
         val file2 = """
             [Adblock Plus 2.0]
@@ -233,12 +210,7 @@ class AbpBlockerTest {
             ! *** easylist:easylist/easylist_general_block.txt ***
             &ad_block=
         """.trimIndent()
-        Assert.assertTrue(
-            AbpFilterDecoder().checkHeader(
-                file2.byteInputStream().bufferedReader(),
-                Charsets.UTF_8
-            )
-        )
+        Assert.assertTrue(AbpFilterDecoder().checkHeader(file2.byteInputStream().bufferedReader(), Charsets.UTF_8))
 
         val file3 = """
             # Title: StevenBlack/hosts
@@ -257,12 +229,7 @@ class AbpBlockerTest {
 
             127.0.0.1 localhost
         """.trimIndent()
-        Assert.assertFalse(
-            AbpFilterDecoder().checkHeader(
-                file3.byteInputStream().bufferedReader(),
-                Charsets.UTF_8
-            )
-        )
+        Assert.assertFalse(AbpFilterDecoder().checkHeader(file3.byteInputStream().bufferedReader(), Charsets.UTF_8))
     }
 
     @Test
@@ -313,16 +280,12 @@ class AbpBlockerTest {
         Assert.assertTrue(filterList.containsAll(filterList2) && filterList2.containsAll(filterList))
 
         // if inserting into filter container works, set.blacklist and filterList contain the same filters (but possibly in different order)
-        Assert.assertTrue(
-            filterList.containsAll(set.blackList) && set.blackList.containsAll(
-                filterList
-            )
-        )
+        Assert.assertTrue(filterList.containsAll(set.blackList) && set.blackList.containsAll(filterList))
     }
 
     @Test
     fun blockList() {
-        // TODO: go through ubo/abp things and include examples for everything
+        // TODO: go through more ubo/abp/adguard things and include examples for more or less everything
         val filterList = mutableListOf<String>()
         val blockedRequests = mutableListOf<ContentRequest>()
         val allowedRequests = mutableListOf<ContentRequest>()
@@ -337,18 +300,11 @@ class AbpBlockerTest {
         blockedRequests.add(request("http://page5.com/something?test=yes", "http://page.com"))
         filterList.add("/badfolder/worsething/")
         blockedRequests.add(request("http://page6.co.uk/badfolder/worsething/", "http://page.com"))
-        blockedRequests.add(
-            request(
-                "http://page6.com/badfolder/worsething/something?test=yes",
-                "http://page.com"
-            )
-        )
-        allowedRequests.add(
-            request(
-                "http://page6.com/badfolder/worsething_/something?test=yes",
-                "http://page.com"
-            )
-        )
+        blockedRequests.add(request("http://page6.com/badfolder/worsething/something?test=yes", "http://page.com"))
+        allowedRequests.add(request("http://page6.com/badfolder/worsething_/something?test=yes", "http://page.com"))
+        filterList.add("||page7.*^")
+        blockedRequests.add(request("http://page7.com/something/", "http://page.com"))
+        blockedRequests.add(request("http://page7.co.uk/something/", "http://page.com"))
 
         checkFiltersWithContainer(filterList, blockedRequests, allowedRequests, "block", true)
         checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
@@ -465,12 +421,7 @@ class AbpBlockerTest {
 
         filterList.add("*\$third-party")
         filterList.add("\$third-party")
-        allowedRequests.add(
-            request(
-                "http://ads.page4.com/something",
-                "https://something.page4.com"
-            )
-        )
+        allowedRequests.add(request("http://ads.page4.com/something", "https://something.page4.com"))
         blockedRequests.add(request("http://ads.page4.com/something", "https://goodotherpage.com"))
 
         val s = loadFilterSet(filterList.joinToString("\n").byteInputStream())
@@ -505,12 +456,7 @@ class AbpBlockerTest {
         modifiedRequests.add(request("http://page.com/page?badparam=yes", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam=", "http://page.com"))
-        modifiedRequests.add(
-            request(
-                "http://page.com/page?badparam=yes&other=no",
-                "http://page.com"
-            )
-        )
+        modifiedRequests.add(request("http://page.com/page?badparam=yes&other=no", "http://page.com"))
         allowedRequests.add(request("http://page.com/whatever", "http://thing.com"))
         allowedRequests.add(request("http://page.com/ads?param=yes", "http://thing.com"))
         filterList.add("||www.page.\$removeparam=badparam2")
@@ -540,12 +486,7 @@ class AbpBlockerTest {
         // not really a good test, modify it... and understand what "all" is actually supposed to do!
         //  the csp parts imply it's a modify filter, but the initial discussions imply it should be blocking
         filterList.add("||example.com^\$all")
-        allowedRequests.add(
-            request(
-                "http://ads.example2.com/something",
-                "https://something.page4.com"
-            )
-        )
+        allowedRequests.add(request("http://ads.example2.com/something", "https://something.page4.com"))
         modifiedRequests.add(request("http://example.com/something", "https://goodotherpage.com"))
 
         // can't check modify filters allow with container, because non-null could be returned only later
@@ -623,10 +564,12 @@ class AbpBlockerTest {
         checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
     }
 
-    fun WebResourceRequest.getContentRequest(pageUri: Uri) =
+    private fun WebResourceRequest.getContentRequest(pageUri: Uri) =
         ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri), requestHeaders, "GET")
 
-    fun WebResourceRequest.getContentType(pageUri: Uri): Int {
+    // should be same code as in AdBlock.kt, but with mimeTypeMap[extension] instead of getMimeTypeFromExtension(extension)
+    // because mimetypemap not working in tests
+    private fun WebResourceRequest.getContentType(pageUri: Uri): Int {
         var type = 0
         val scheme = url.scheme
 //    var isPage = false
@@ -682,9 +625,9 @@ class AbpBlockerTest {
     }
 }
 
-class TestWebResourceRequest(val url2: Uri,
-                             val isForMainFrame2: Boolean,
-                             val requestHeaders2: Map<String, String>
+class TestWebResourceRequest(private val url2: Uri,
+                             private val isForMainFrame2: Boolean,
+                             private val requestHeaders2: Map<String, String>
                              ): WebResourceRequest {
     override fun getUrl() = url2
     override fun isForMainFrame() = isForMainFrame2
