@@ -129,7 +129,7 @@ class AbpBlockerTest {
         }
         modifiedRequests?.forEach {
             println("should be modified: " + it.url + " " + it.pageUrl)
-            Assert.assertTrue(blocker.shouldBlock(it) is BlockResourceResponse || blocker.shouldBlock(it) is OkhttpResponse)
+            Assert.assertTrue(blocker.shouldBlock(it) is BlockResourceResponse || blocker.shouldBlock(it) is ModifyResponse)
         }
     }
 
@@ -472,7 +472,7 @@ class AbpBlockerTest {
         // can't check modify filters allow with container, because non-null could be returned only later
         //checkFiltersWithContainer(filterList, modifiedRequests, allowedRequests, "modify")
         checkFiltersWithBlocker(filterList, null, allowedRequests, modifiedRequests)
-        modifiedRequests.forEach { println((blocker.shouldBlock(it) as OkhttpResponse).request.url) }
+        modifiedRequests.forEach { println((blocker.shouldBlock(it) as ModifyResponse).url) }
     }
 
     @Test
@@ -491,9 +491,9 @@ class AbpBlockerTest {
         modifiedRequests.forEach {
             val response = blocker.shouldBlock(it)
             Assert.assertNotNull(response)
-            Assert.assertTrue(response is OkhttpResponse)
-            response as OkhttpResponse
-            Assert.assertEquals(response.addHeaders?.get("Content-Security-Policy"), "font-src *")
+            Assert.assertTrue(response is ModifyResponse)
+            response as ModifyResponse
+            Assert.assertEquals(response.addResponseHeaders?.get("Content-Security-Policy"), "font-src *")
         }
         allowedRequests.forEach {
             Assert.assertNull(blocker.shouldBlock(it))
@@ -521,9 +521,9 @@ class AbpBlockerTest {
         modifiedRequests.forEach {
             val response = blocker.shouldBlock(it)
             Assert.assertNotNull(response)
-            Assert.assertTrue(response is OkhttpResponse)
-            response as OkhttpResponse
-            Assert.assertTrue(response.removeHeaders?.containsAll(listOf("refresh", "otherHeaderToRemove").map { it.lowercase() }) == true)
+            Assert.assertTrue(response is ModifyResponse)
+            response as ModifyResponse
+            Assert.assertTrue(response.removeResponseHeaders?.containsAll(listOf("refresh", "otherHeaderToRemove").map { it.lowercase() }) == true)
         }
         allowedRequests.forEach {
             Assert.assertNull(blocker.shouldBlock(it))
@@ -532,6 +532,7 @@ class AbpBlockerTest {
 
     @Test
     fun redirect() {
+        // TODO: check again, now after the change
         val filterList = mutableListOf<String>()
         val modifiedRequests = mutableListOf<ContentRequest>()
 

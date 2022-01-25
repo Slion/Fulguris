@@ -131,6 +131,7 @@ class AbpBlockerManager @Inject constructor(
         }*/
     }
 
+    // TODO: log what is sanitized, here and in the toSet before
     private fun Set<Pair<String, UnifiedFilter>>.sanitize(): Collection<Pair<String, UnifiedFilter>> {
         return this.mapNotNull {
             when {

@@ -324,12 +324,16 @@ class AbpFilterDecoder {
             if (filter == "*") filter = ""
         }
 
-        // filters that add headers must contain header and value, separated by ':'
-        if (modify?.inverse == false
-            && (modify is RequestHeaderFilter || modify is ResponseHeaderFilter)
-            && modify?.parameter?.contains(':') == false
-        )
-            return
+        // remove invalid modify filters
+        modify?.let {
+            // only removeparam may have no parameter when blocking
+            if (it !is RemoveparamFilter && it.parameter == null) return
+
+            // filters that add headers must contain header and value, separated by ':'
+            if (!it.inverse && (it is RequestHeaderFilter || it is ResponseHeaderFilter)
+                && it.parameter?.contains(':') == false)
+                    return
+        }
 
         val domains = domain?.domainsToDomainMap('|')
         if (contentType == 0) contentType = ContentRequest.TYPE_ALL
@@ -340,7 +344,7 @@ class AbpFilterDecoder {
 
         val abpFilter =
             if (filter.length >= 2 && filter[0] == '/' && filter[filter.lastIndex] == '/' && filter.mayContainRegexChars()) {
-                RegexFilter(filter.substring(1, filter.lastIndex), contentType, ignoreCase, domains, thirdParty) ?: return
+                RegexFilter(filter.substring(1, filter.lastIndex), contentType, ignoreCase, domains, thirdParty)
             } else {
                 val isStartsWith = filter.startsWith("||")
                 val isEndWith = filter.endsWith('^')
@@ -397,8 +401,6 @@ class AbpFilterDecoder {
         when {
             elementFilter -> elementFilterList += abpFilter
             modify != null && blocking -> {
-                // only removeparam may have no parameter when blocking
-                if (modify !is RemoveparamFilter && modify!!.parameter == null) return
                 abpFilter.modify = modify
                 modifyList += abpFilter
             }
