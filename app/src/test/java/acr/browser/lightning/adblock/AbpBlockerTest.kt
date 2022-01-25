@@ -447,7 +447,7 @@ class AbpBlockerTest {
         val filterList = mutableListOf<String>()
         val modifiedRequests = mutableListOf<ContentRequest>()
         val allowedRequests = mutableListOf<ContentRequest>()
-/*        filterList.add("\$removeparam=badparam")
+        filterList.add("\$removeparam=badparam")
         modifiedRequests.add(request("http://page.com/page?badparam=yes", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam=yes#content", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam", "http://page.com"))
@@ -471,7 +471,7 @@ class AbpBlockerTest {
         filterList.add("||page8.com\$removeparam")
         filterList.add("@@||page8.com^")
         modifiedRequests.add(request("http://page8.com/page?para_am2=yes", "http://page.com"))
-*/        filterList.add("||page9.com\$removeparam")
+        filterList.add("||page9.com\$removeparam")
         filterList.add("@@||page9.com\$removeparam=badparam4")
         modifiedRequests.add(request("http://page9.com/page?para_am2=yes", "http://page.com"))
         allowedRequests.add(request("http://page9.com/page?badparam4=yes", "http://page.com"))
@@ -492,10 +492,18 @@ class AbpBlockerTest {
         val modifiedRequests = mutableListOf<ContentRequest>()
         val allowedRequests = mutableListOf<ContentRequest>()
 
-        // add stuff to hrequest eader, check whether it really is added
+        // add stuff to request header, check whether it really is added
         filterList.add("||example.com^\$inline-font")
-        allowedRequests.add(request("http://ads.example2.com/something", "https://something.page4.com"))
         modifiedRequests.add(request("http://example.com/something", "https://goodotherpage.com"))
+        filterList.add("||example2.com^\$inline-font")
+        filterList.add("@@||example2.com^\$inline-font")
+        allowedRequests.add(request("http://ads.example2.com/something", "https://something.page4.com"))
+        filterList.add("||example3.com^\$inline-font")
+        filterList.add("@@||example3.com^\$csp=font-src *")
+        allowedRequests.add(request("http://example3.com/something", "https://something.page4.com"))
+        filterList.add("||example4.com^\$inline-font")
+        filterList.add("@@||example4.com^\$csp")
+        allowedRequests.add(request("http://example4.com/something", "https://something.page4.com"))
 
         filterContainers.clear()
         loadFiltersIntoContainers(filterList.joinToString("\n").byteInputStream())
@@ -507,6 +515,7 @@ class AbpBlockerTest {
             Assert.assertEquals(response.addResponseHeaders?.get("Content-Security-Policy"), "font-src *")
         }
         allowedRequests.forEach {
+            println("should not be touched: " + it.url + " " + it.pageUrl)
             Assert.assertNull(blocker.shouldBlock(it))
         }
     }

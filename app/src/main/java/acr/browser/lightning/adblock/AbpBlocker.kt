@@ -1,6 +1,7 @@
 package acr.browser.lightning.adblock
 
 import android.net.Uri
+import android.os.Build
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
@@ -67,50 +68,53 @@ class AbpBlocker(
             modifyFilters.removeAll { RemoveparamFilter::class.java.isAssignableFrom(it.modify!!::class.java) }
             if (modifyFilters.isEmpty()) return null
         }
-println("allowOrModify: check for ${request.url}")
-        println("allowOrModify: filters: ${modifyFilters.size}: ${modifyFilters.map { it.pattern }}")
-        modifyFilters.removeModifyExceptions(request, ABP_PREFIX_MODIFY_EXCEPTION)
-        println("allowOrModify: filters left after remove modify: ${modifyFilters.size}: ${modifyFilters.map { it.pattern }}")
+        val remainingExceptions = modifyFilters.removeModifyExceptions(request, ABP_PREFIX_MODIFY_EXCEPTION)
 
         // there can be multiple valid filters, and all should be applied if possible
         //  just do one after the other
         //  but since WebResourceRequest can't be changed and returned to WebView, it must all happen within getModifiedResponse()
-        return getModifiedResponse(request, modifyFilters.mapNotNull { it.modify }.toMutableList())
+        return getModifiedResponse(request, modifyFilters.mapNotNull { it.modify }.toMutableList(), remainingExceptions)
     }
 
     // how exceptions work: (adguard removeparam documentation is useful: https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters)
     //  without parameter (i.e. empty), all filters of that type (removeparam, csp, redirect,...) are invalid
     //  with parameter, only same type and same parameter are considered invalid
-    private fun MutableList<ContentFilter>.removeModifyExceptions(request: ContentRequest, prefix: String) {
+    // return exceptions that can't be decided at this point, e.g. $removeparam and exception $removeparam=p
+    private fun MutableList<ContentFilter>.removeModifyExceptions(request: ContentRequest, prefix: String): List<ModifyFilter> {
         val modifyExceptions = filterContainers[prefix]!!.getAll(request)
-        println("exceptions: ${modifyExceptions.size}, ${modifyExceptions.map { it.pattern }}")
-        println("exception filters: ${filterContainers[prefix]!!.filters().map {it.value.pattern + ", " + it.value.modify!!.parameter + ", " + it.value.javaClass}}")
-        modifyExceptions.forEach { exception ->
-            forEach {
-                println("contentFilter prefix: ${it.modify!!.prefix}, exception filter prefix ${exception.modify!!.prefix}")
-                println("parameter is ${it.modify!!.parameter}, ${exception.modify!!.parameter}")
+
+        for (i in (0 until modifyExceptions.size).reversed()) {
+            if (modifyExceptions[i].modify!!.parameter == null) {
+                // no parameter -> remove all modify of same type (not same prefix, because of RemoveParamRegexFilter!)
+                removeAll { modifyExceptions[i].modify!!::class.java.isAssignableFrom(it.modify!!::class.java) }
+                modifyExceptions.removeAt(i) // not needed any more
             }
-            if (exception.modify!!.parameter == null) // no parameter -> remove all modify of same type (not same prefix because of RemoveParamRegexFilter)
-                removeAll { exception.modify!!::class.java.isAssignableFrom(it.modify!!::class.java) }
-            // TODO: need to deal with things like contentFilter $removeparam, exception $removeparam=bla
-            //  should remove app parameters except bla -> $removeparam=~bla
-            //  but this simple thing does not hold, there could be some weird regex combinations
-            //  -> getModifedResponse NEEDS the exceptions and "undo" hits if there is an exception
-            else // else remove exact matches in modify
-                removeAll { it.modify == exception.modify }
+            else { // remove exact matches
+                removeAll { it.modify == modifyExceptions[i].modify }
+                // but don't remove from list, e.g. removeparam and exception $removeparam=a
+                // exceptions for header-modifying filters are not handled properly, but at least
+
+                // handle $csp exception and similar
+                if (modifyExceptions[i].modify!! is ResponseHeaderFilter && modifyExceptions[i].modify!!.parameter?.contains(':') == false) {
+                    val header = modifyExceptions[i].modify!!.parameter!!
+                    removeAll { it.modify is ResponseHeaderFilter && it.modify!!.parameter?.startsWith(header) == true }
+                    modifyExceptions.removeAt(i) // not needed any more
+                }
+            }
         }
+        return modifyExceptions.mapNotNull { it.modify }
     }
 
     companion object {
         // this needs to be fast, the adguard url tracking list has quite a few options acting on all urls!
         //  e.g. removing the fbclid parameter added by facebook
-        private fun getModifiedResponse(request: ContentRequest, filters: MutableList<ModifyFilter>): ModifyResponse? {
+        private fun getModifiedResponse(request: ContentRequest, filters: MutableList<ModifyFilter>, remainingExceptions: List<ModifyFilter>): ModifyResponse? {
             // we can't simply modify the request, so do what the request wants, but modify
             //  then deliver what we got as response
             //  like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
 
             // apply removeparam
-            val parameters = getModifiedParameters(request.url, filters)
+            val parameters = getModifiedParameters(request.url, filters, remainingExceptions)
             filters.removeAll { RemoveparamFilter::class.java.isAssignableFrom(it::class.java) }
             if (parameters == null && filters.isEmpty()) return null
 
@@ -118,6 +122,7 @@ println("allowOrModify: check for ${request.url}")
             val requestHeaders = request.headers
             val requestHeaderSize = requestHeaders.size
             filters.forEach {
+                // add only if not blocked by exception
                 if (it is RequestHeaderFilter) {
                     if (it.inverse) // 'inverse' is the same as 'remove' here
                         requestHeaders.removeHeader(it.parameter!!) // can't have null parameter
@@ -134,6 +139,7 @@ println("allowOrModify: check for ${request.url}")
             val removeHeaders = mutableListOf<String>()
             filters.forEach {
                 when (it) {
+                    // add only if not blocked by exception
                     is ResponseHeaderFilter -> {
                         if (it.inverse) // 'inverse' is the same as 'remove' here
                             removeHeaders.add(it.parameter!!) // can't have null parameter
@@ -156,29 +162,30 @@ println("allowOrModify: check for ${request.url}")
 
         // applies filters to parameters and returns remaining parameters
         // returns null of parameters are not modified
-        private fun getModifiedParameters(url: Uri, filters: List<ModifyFilter>): Map<String, String>? {
+        private fun getModifiedParameters(url: Uri, filters: List<ModifyFilter>, exceptions: List<ModifyFilter>): Map<String, String>? {
             val parameters = url.getQueryParameterMap()
             var changed = false
+            val removeParamExceptions = exceptions.mapNotNull {
+                if (RemoveparamFilter::class.java.isAssignableFrom(it::class.java)) it
+                else null
+            }
             filters.forEach { modify ->
-                when (modify) {
-                    is RemoveparamRegexFilter -> {
-                        val regex = modify.regex
-                        changed = changed or if (modify.inverse)
-                            parameters.entries.retainAll { regex.containsMatchIn(it.key) }
-                        else
-                            parameters.entries.removeAll { regex.containsMatchIn(it.key) }
-                    }
-                    is RemoveparamFilter -> {
-                        if (modify.parameter == null) // means: remove all parameters
-                            return emptyMap()
-                        changed = changed or if (modify.inverse)
-                            parameters.entries.retainAll { it.key == modify.parameter }
-                        else
-                            parameters.entries.removeAll { it.key == modify.parameter }
+                if (RemoveparamFilter::class.java.isAssignableFrom(modify::class.java)) {
+                    changed = changed or parameters.entries.removeAll { parameter ->
+                        modify.matchParameter(parameter.key)
+                                && removeParamExceptions.all { !it.matchParameter(parameter.key) }
                     }
                 }
             }
             return if (changed) parameters else null
+        }
+
+        private fun ModifyFilter.matchParameter(parm: String): Boolean {
+            return when (this) {
+                is RemoveparamRegexFilter -> regex.containsMatchIn(parm) xor inverse
+                is RemoveparamFilter -> (parameter == null || parameter == parm) xor inverse
+                else -> false
+            }
         }
 
         private fun parameterString(parameters: Map<String, String>) =

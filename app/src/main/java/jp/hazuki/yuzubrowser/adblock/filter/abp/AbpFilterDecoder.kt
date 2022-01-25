@@ -90,6 +90,7 @@ class AbpFilterDecoder {
 */
                     } else {
                         trimmedLine.decodeFilter(elementDisableFilter, filterLists)
+                        // log if no new filters were added
                     }
                 }
             }
@@ -263,7 +264,8 @@ class AbpFilterDecoder {
                                 }
                             }
                             "csp" -> {
-                                modify = ResponseHeaderFilter("Content-Security-Policy: ${value?.substringAfter('=') ?: return}", false)
+                                modify = if (value == null) ResponseHeaderFilter("Content-Security-Policy", false)
+                                else ResponseHeaderFilter("Content-Security-Policy: ${value.substringAfter('=')}", false)
                                 contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT) // uBo documentation: It can be applied to main document and documents in frames
                             }
                             "inline-font" -> {
@@ -302,7 +304,7 @@ class AbpFilterDecoder {
                             "important" -> important = true
                             // TODO: see above, all is not handled 100% correctly (but might still be fine)
                             "all" -> contentType = contentType or ContentRequest.TYPE_DOCUMENT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
-                            else -> return // TODO: log what is not understood!
+                            else -> return
                         }
                     }
                 }
@@ -320,7 +322,7 @@ class AbpFilterDecoder {
             if (it !is RemoveparamFilter && it.parameter == null) return
 
             // filters that add headers must contain header and value, separated by ':'
-            if (!it.inverse && (it is RequestHeaderFilter || it is ResponseHeaderFilter)
+            if (blocking && !it.inverse && (it is RequestHeaderFilter || it is ResponseHeaderFilter)
                 && it.parameter?.contains(':') == false)
                     return
 
