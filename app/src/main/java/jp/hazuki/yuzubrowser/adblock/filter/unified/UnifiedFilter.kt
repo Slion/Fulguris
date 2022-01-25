@@ -25,7 +25,8 @@ abstract class UnifiedFilter(
     override val contentType: Int,
     override val ignoreCase: Boolean,
     override val domains: DomainMap?,
-    override val thirdParty: Int
+    override val thirdParty: Int,
+    override val modify: ModifyFilter?
 ) : ContentFilter {
 
     override fun isMatch(request: ContentRequest): Boolean {
@@ -82,9 +83,6 @@ abstract class UnifiedFilter(
         get() = false
 
     override var next: ContentFilter? = null
-
-    // TODO: this should really be a val, currently handling this is horrible
-    override var modify: ModifyFilter? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

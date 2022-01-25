@@ -37,7 +37,7 @@ interface ContentFilter {
 
     var next: ContentFilter?
 
-    var modify: ModifyFilter?
+    val modify: ModifyFilter?
 
     fun isMatch(request: ContentRequest): Boolean
 }

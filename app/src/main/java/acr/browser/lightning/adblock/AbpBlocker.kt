@@ -1,13 +1,11 @@
 package acr.browser.lightning.adblock
 
-import acr.browser.lightning.adblock.AbpBlocker.Companion.withPriority
 import android.net.Uri
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
-import java.io.IOException
 
 class AbpBlocker(
     private val abpUserRules: AbpUserRules?,
@@ -46,13 +44,13 @@ class AbpBlocker(
         val modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(request)
 
         // TODO: should redirect filters rather be in a separate container? would make sense...
-        //  because they are never checked in the same thing and just create additional load here
+        //  because they are never checked in the same place and just create additional load here
         modifyFilters.removeAll { it.modify!! is RedirectFilter }
 
         if (modifyFilters.isNotEmpty()) {
             if (request.url.encodedQuery == null) {
                 // if no parameters, remove all removeparam filters
-                modifyFilters.removeRemoveparam()
+                modifyFilters.removeAll { RemoveparamFilter::class.java.isAssignableFrom(it.modify!!::class.java) }
                 if (modifyFilters.isEmpty()) return null
             }
             // there is a hit, but first check whether the exact filter has an exception
@@ -72,7 +70,7 @@ class AbpBlocker(
             // important: there can be multiple valid filters, and all should be applied if possible
             //  just do one after the other
             //  but since WebResourceRequest can't be changed and returned to WebView, it must all happen within getModifiedResponse()
-            return getModifiedResponse(request, modifyFilters)
+            return getModifiedResponse(request, modifyFilters.mapNotNull { it.modify }.toMutableList())
         }
 
         return null
@@ -93,41 +91,41 @@ class AbpBlocker(
     companion object {
         // this needs to be fast, the adguard url tracking list has quite a few options acting on all urls!
         //  e.g. removing the fbclid parameter added by facebook
-        private fun getModifiedResponse(request: ContentRequest, filters: MutableList<ContentFilter>): BlockerResponse? {
+        private fun getModifiedResponse(request: ContentRequest, filters: MutableList<ModifyFilter>): BlockerResponse? {
             // we can't simply modify the request, so do what the request wants, but modify
             //  then deliver what we got as response
             //  like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
 
             // apply removeparam
             val parameters = getModifiedParameters(request.url, filters)
-            filters.removeRemoveparam()
+            filters.removeAll { RemoveparamFilter::class.java.isAssignableFrom(it::class.java) }
             if (parameters == null && filters.isEmpty()) return null
 
             // apply request header modifying filters
             val requestHeaders = request.headers
             val requestHeaderSize = requestHeaders.size
-            filters.forEach { filter ->
-                if (filter.modify!! is RequestHeaderFilter) {
-                    if (filter.modify!!.inverse) // 'inverse' is the same as 'remove' here
-                        requestHeaders.removeHeader(filter.modify!!.parameter!!)
+            filters.forEach {
+                if (it is RequestHeaderFilter) {
+                    if (it.inverse) // 'inverse' is the same as 'remove' here
+                        requestHeaders.removeHeader(it.parameter!!) // can't have null parameter
                     else
-                        requestHeaders.addHeader(filter.modify!!.parameter!!)
+                        requestHeaders.addHeader(it.parameter!!)
                 }
             }
-            filters.removeAll { it.modify!! is RequestHeaderFilter && it.modify!!.inverse }
+            filters.removeAll { it is RequestHeaderFilter }
             if (parameters == null && filters.isEmpty() && requestHeaderSize == requestHeaders.size)
                 return null
 
             // gather headers to add/remove from remaining filters
             val addHeaders = mutableMapOf<String, String>()
             val removeHeaders = mutableListOf<String>()
-            filters.forEach { filter ->
-                when (filter.modify!!) {
+            filters.forEach {
+                when (it) {
                     is ResponseHeaderFilter -> {
-                        if (filter.modify!!.inverse) // 'inverse' is the same as 'remove' here
-                            removeHeaders.add(filter.modify!!.parameter!!)
+                        if (it.inverse) // 'inverse' is the same as 'remove' here
+                            removeHeaders.add(it.parameter!!) // can't have null parameter
                         else {
-                            addHeaders.addHeader(filter.modify!!.parameter!!)
+                            addHeaders.addHeader(it.parameter!!)
                         }
                     }
                     // else -> what do? this should never happen, maybe log?
@@ -145,13 +143,13 @@ class AbpBlocker(
 
         // applies filters to parameters and returns remaining parameters
         // returns null of parameters are not modified
-        private fun getModifiedParameters(url: Uri, filters: List<ContentFilter>): Map<String, String>? {
+        private fun getModifiedParameters(url: Uri, filters: List<ModifyFilter>): Map<String, String>? {
             val parameters = url.getQueryParameterMap()
             var changed = false
-            filters.forEach { filter ->
-                when (val modify = filter.modify!!) {
+            filters.forEach { modify ->
+                when (modify) {
                     is RemoveparamRegexFilter -> {
-                        val regex = (filter.modify!! as RemoveparamRegexFilter).regex
+                        val regex = modify.regex
                         changed = changed or if (modify.inverse)
                             parameters.entries.retainAll { regex.containsMatchIn(it.key) }
                         else
@@ -173,9 +171,6 @@ class AbpBlocker(
         private fun parameterString(parameters: Map<String, String>) =
             if (parameters.isEmpty()) ""
             else "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
-
-        private fun MutableList<ContentFilter>.removeRemoveparam() =
-            removeAll { RemoveparamFilter::class.java.isAssignableFrom(it.modify!!::class.java) }
 
         // string must look like: User-Agent: Mozilla/5.0
         private fun MutableMap<String, String>.addHeader(headerAndValue: String) =
@@ -214,8 +209,8 @@ class AbpBlocker(
                 Pair(parameter, 0)
         }
 
-        // TODO: is encoded query and decode necessary?
-        //  is it slower than using decoded query?
+        // using query and not decoding is twice as fast
+        //  any problems? better leave as is, overall this is so fast at doesn't matter anyway
         // using LinkedHashMap to keep original order
         fun Uri.getQueryParameterMap(): LinkedHashMap<String, String> {
             // using some code from android.net.uri.getQueryParameters()

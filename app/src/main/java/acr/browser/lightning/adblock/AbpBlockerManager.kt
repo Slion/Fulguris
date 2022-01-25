@@ -290,7 +290,7 @@ class AbpBlockerManager @Inject constructor(
             USER_BLOCKED -> application.resources.getString(R.string.page_blocked_list_user, pattern)
             ABP_PREFIX_IMPORTANT -> application.resources.getString(R.string.page_blocked_list_malware, pattern)
             ABP_PREFIX_DENY -> application.resources.getString(R.string.page_blocked_list_ad, pattern) // should only be ABP_PREFIX_DENY
-            else -> throw(IOException()) //application.resources.getString(R.string.page_blocked_list_ad, pattern) // TODO: exception for testing only
+            else -> application.resources.getString(R.string.page_blocked_list_ad, pattern) // TODO: should not happen, log?
         }
 
         val builder = StringBuilder(

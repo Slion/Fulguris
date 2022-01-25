@@ -79,7 +79,7 @@ class AbpFilterDecoder {
             val trimmedLine = line.trim()
             when {
                 trimmedLine[0] == '!' -> trimmedLine.decodeComment(url, info)?.let {
-                    throw OnRedirectException(it)
+                    throw OnRedirectException(it) // TODO: what does it do?
                 }
                 else -> {
                     val matcher = elementFilterRegex.matcher(trimmedLine)
@@ -333,6 +333,9 @@ class AbpFilterDecoder {
             if (!it.inverse && (it is RequestHeaderFilter || it is ResponseHeaderFilter)
                 && it.parameter?.contains(':') == false)
                     return
+
+            // in case of important redirect filters, only the blocking part should be important
+            important = false
         }
 
         val domains = domain?.domainsToDomainMap('|')
@@ -344,7 +347,7 @@ class AbpFilterDecoder {
 
         val abpFilter =
             if (filter.length >= 2 && filter[0] == '/' && filter[filter.lastIndex] == '/' && filter.mayContainRegexChars()) {
-                RegexFilter(filter.substring(1, filter.lastIndex), contentType, ignoreCase, domains, thirdParty)
+                RegexFilter(filter.substring(1, filter.lastIndex), contentType, ignoreCase, domains, thirdParty, modify)
             } else {
                 val isStartsWith = filter.startsWith("||")
                 val isEndWith = filter.endsWith('^')
@@ -360,9 +363,10 @@ class AbpFilterDecoder {
                             contentType,
                             ignoreCase,
                             domains,
-                            thirdParty
+                            thirdParty,
+                            modify
                         )
-                        isStartsWith -> StartsWithFilter(content, contentType, ignoreCase, domains, thirdParty)
+                        isStartsWith -> StartsWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         isEndWith -> {
                             if (ignoreCase) {
                                 PatternMatchFilter(
@@ -370,10 +374,11 @@ class AbpFilterDecoder {
                                     contentType,
                                     ignoreCase,
                                     domains,
-                                    thirdParty
+                                    thirdParty,
+                                    modify
                                 )
                             } else {
-                                EndWithFilter(content, contentType, domains, thirdParty)
+                                EndWithFilter(content, contentType, domains, thirdParty, modify)
                             }
                         }
                         else -> {
@@ -383,33 +388,28 @@ class AbpFilterDecoder {
                                     contentType,
                                     ignoreCase,
                                     domains,
-                                    thirdParty
+                                    thirdParty,
+                                    modify
                                 )
                             } else {
                                 if ("http://$content".toUri().host == content) // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
-                                    StartEndFilter(content, contentType, ignoreCase, domains, thirdParty)
+                                    StartEndFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                                 else
-                                    ContainsFilter(content, contentType, domains, thirdParty)
+                                    ContainsFilter(content, contentType, domains, thirdParty, modify)
                             }
                         }
                     }
                 } else {
-                    PatternMatchFilter(filter, contentType, ignoreCase, domains, thirdParty)
+                    PatternMatchFilter(filter, contentType, ignoreCase, domains, thirdParty, modify)
                 }
             }
 
         when {
             elementFilter -> elementFilterList += abpFilter
-            modify != null && blocking -> {
-                abpFilter.modify = modify
-                modifyList += abpFilter
-            }
+            modify != null && blocking -> modifyList += abpFilter
             important && blocking -> importantList += abpFilter
             blocking -> blackList += abpFilter
-            modify != null -> {
-                abpFilter.modify = modify
-                modifyExceptionList += abpFilter
-            }
+            modify != null -> modifyExceptionList += abpFilter
             important -> importantAllowList += abpFilter
             else -> whiteList += abpFilter
         }

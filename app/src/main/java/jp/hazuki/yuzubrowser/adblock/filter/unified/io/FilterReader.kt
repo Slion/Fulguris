@@ -16,7 +16,6 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.unified.io
 
-import androidx.collection.SimpleArrayMap
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.toInt
 import jp.hazuki.yuzubrowser.adblock.filter.toShortInt
@@ -24,8 +23,8 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import java.io.InputStream
 
 class FilterReader(private val input: InputStream) {
-    val intBuf = ByteArray(4)
-    val shortBuf = ByteArray(2)
+    private val intBuf = ByteArray(4)
+    private val shortBuf = ByteArray(2)
     var stringBuffer = ByteArray(32)
 
     fun checkHeader(): Boolean {
@@ -48,34 +47,35 @@ class FilterReader(private val input: InputStream) {
         val size = intBuf.toInt()
 
         loop@ for (loop in 0 until size) {
-            val filter = readFilter() ?: break@loop
             val modify = readModify() ?: break@loop
-            val modifyParameter =
-                if (modify.length > 2) modify.substring(2)
-                else null
-            filter.second.modify = when (modify[0]) {
-                MODIFY_PREFIX_REMOVEPARAM -> RemoveparamFilter(modifyParameter, modify[1] == '1')
-                MODIFY_PREFIX_REMOVEPARAM_REGEX -> RemoveparamRegexFilter(modifyParameter ?: break@loop, modify[1] == '1')
-                MODIFY_PREFIX_REDIRECT -> RedirectFilter(modifyParameter)
-                MODIFY_PREFIX_REQUEST_HEADER -> RequestHeaderFilter(modifyParameter ?: break@loop, modify[1] == '1')
-                MODIFY_PREFIX_RESPONSE_HEADER -> ResponseHeaderFilter(modifyParameter ?: break@loop, modify[1] == '1')
-                else -> break@loop
-            }
+            val filter = readFilter(modify) ?: break@loop
             yield(Pair(filter.first, filter.second))
         }
     }
 
-    private fun readModify(): String? {
+    private fun readModify(): ModifyFilter? {
         val modifySize = input.readVariableInt(shortBuf, intBuf)
         if (modifySize == -1) return null
         if (stringBuffer.size < modifySize) {
             stringBuffer = ByteArray(modifySize)
         }
         if (input.read(stringBuffer, 0, modifySize) != modifySize) return null
-        return String(stringBuffer, 0, modifySize)
+        val modifyString = String(stringBuffer, 0, modifySize)
+
+        val modifyParameter =
+            if (modifyString.length > 2) modifyString.substring(2)
+            else null
+        return when (modifyString[0]) {
+            MODIFY_PREFIX_REMOVEPARAM -> RemoveparamFilter(modifyParameter, modifyString[1] == '1')
+            MODIFY_PREFIX_REMOVEPARAM_REGEX -> RemoveparamRegexFilter(modifyParameter ?: return null, modifyString[1] == '1')
+            MODIFY_PREFIX_REDIRECT -> RedirectFilter(modifyParameter)
+            MODIFY_PREFIX_REQUEST_HEADER -> RequestHeaderFilter(modifyParameter ?: return null, modifyString[1] == '1')
+            MODIFY_PREFIX_RESPONSE_HEADER -> ResponseHeaderFilter(modifyParameter ?: return null, modifyString[1] == '1')
+            else -> null
+        }
     }
 
-    private fun readFilter(): Pair<String, UnifiedFilter>? {
+    private fun readFilter(modify: ModifyFilter? = null): Pair<String, UnifiedFilter>? {
         val type = input.read()
         if (type < 0) return null
 
@@ -100,7 +100,7 @@ class FilterReader(private val input: InputStream) {
 
         // startEndFilter with domain as pattern, gets special treatment for accelerated read/write
         if (type == FILTER_TYPE_START_END_DOMAIN)
-            return(Pair(pattern,StartEndFilter(pattern, contentType, false, null, thirdParty)))
+            return(Pair(pattern,StartEndFilter(pattern, contentType, false, null, thirdParty, modify)))
 
         val ignoreCase = when (input.read()) {
             0 -> false
@@ -173,15 +173,15 @@ class FilterReader(private val input: InputStream) {
             }
 
         val filter = when (type) {
-            FILTER_TYPE_CONTAINS -> ContainsFilter(pattern, contentType, domains, thirdParty)
-            FILTER_TYPE_HOST -> HostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-            FILTER_TYPE_CONTAINS_HOST -> ContainsHostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-            FILTER_TYPE_START -> StartsWithFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-            FILTER_TYPE_END -> EndWithFilter(pattern, contentType, domains, thirdParty)
-            FILTER_TYPE_START_END -> StartEndFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-            FILTER_TYPE_JVM_REGEX -> RegexFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-            FILTER_TYPE_JVM_REGEX_HOST -> RegexHostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
-            FILTER_TYPE_PATTERN -> PatternMatchFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_CONTAINS -> ContainsFilter(pattern, contentType, domains, thirdParty, modify)
+            FILTER_TYPE_HOST -> HostFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
+            FILTER_TYPE_CONTAINS_HOST -> ContainsHostFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
+            FILTER_TYPE_START -> StartsWithFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
+            FILTER_TYPE_END -> EndWithFilter(pattern, contentType, domains, thirdParty, modify)
+            FILTER_TYPE_START_END -> StartEndFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
+            FILTER_TYPE_JVM_REGEX -> RegexFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
+            FILTER_TYPE_JVM_REGEX_HOST -> RegexHostFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
+            FILTER_TYPE_PATTERN -> PatternMatchFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
             else -> return null
         }
         return Pair(tag, filter)

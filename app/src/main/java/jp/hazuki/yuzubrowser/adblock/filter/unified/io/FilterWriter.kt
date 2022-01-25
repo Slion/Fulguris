@@ -54,14 +54,16 @@ class FilterWriter {
         }
     }
 
+    // would be easier to write all in the same file
+    //  but would break compatibility with previously written lists, and that little simplification is not worth it
     private fun writeAllModifyFilters(os: OutputStream, filters: List<UnifiedFilter>) {
         os.write(filters.size.toByteArray(intBuf))
 
-        // catch and log error if modify is null?
         filters.forEach {
-            writeFilter(os, it)
+            if (it.modify == null) return // log if modify is null?
             val modifyString = "" + it.modify!!.prefix + (if (it.modify!!.inverse) 1 else 0) + it.modify!!.parameter
             writeModify(os, modifyString)
+            writeFilter(os, it)
         }
     }
 
@@ -75,7 +77,8 @@ class FilterWriter {
         // write simplified for simple domain filters
         //  increases write and read speeds
         if (it.filterType == FILTER_TYPE_START_END && !it.pattern.contains('/')
-            && !it.pattern.endsWith('.') && it.domains == null && !it.ignoreCase) {
+            && !it.pattern.endsWith('.') && it.domains == null && !it.ignoreCase && it.modify == null)
+            {
             os.write(FILTER_TYPE_START_END_DOMAIN and 0xff)
             os.write(it.contentType.toShortByteArray(shortBuf))
             os.write(it.thirdParty and 0xff)

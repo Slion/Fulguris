@@ -24,8 +24,9 @@ class RegexHostFilter(
     contentType: Int,
     ignoreCase: Boolean,
     domains: DomainMap?,
-    thirdParty: Int
-) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty) {
+    thirdParty: Int,
+    modify: ModifyFilter? = null
+) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty, modify) {
     private val regex = pattern.toRegex()
 
     override val filterType: Int

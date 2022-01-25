@@ -24,7 +24,8 @@ class RegexFilter(
     ignoreCase: Boolean,
     domains: DomainMap?,
     thirdParty: Int,
-) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty) {
+    modify: ModifyFilter? = null
+) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty, modify) {
     private val regex = if (ignoreCase) pattern.toRegex(RegexOption.IGNORE_CASE) else pattern.toRegex()
 
     override val filterType: Int
