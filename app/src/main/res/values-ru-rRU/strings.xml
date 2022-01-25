@@ -176,7 +176,7 @@
     <string name="blocklist_last_update">Последнее обновление: %s</string>
     <string name="blocklist_updating">Обновление...</string>
     <string name="blocklist_update_error">Сбой при обновлении списка фильтров %s</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
+    <string name="blocklist_update_error_404">Ошибка при обновлении списка фильтров %s: URL-адрес не найден</string>
     <string name="add_blocklist">Добавить файл фильтров</string>
     <string name="add_blocklist_hint">Вы можете выбрать списки хостов или любой список, совместимый с правилами AdBlockPlus</string>
     <string name="enable_blocklist">Включить этот список</string>

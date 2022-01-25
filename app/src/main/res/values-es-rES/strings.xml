@@ -71,7 +71,7 @@
     <string name="agent_system">Sistema</string>
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Escritorio)</string>
-    <string name="agent_hide_device">Hide device</string>
+    <string name="agent_hide_device">Ocultar dispositivo</string>
     <string name="title_search_engine">Motor de búsqueda</string>
     <string name="action_ok">Aceptar</string>
     <string name="dialog_download">¿Quiere descargar este archivo? (%1$s)</string>
@@ -108,7 +108,7 @@
     <string name="action_back">Atrás</string>
     <string name="action_find">Buscar en la página</string>
     <string name="action_print">Imprimir</string>
-    <string name="action_translate">Translate</string>
+    <string name="action_translate">Traducir</string>
     <string name="downloads">Descargas</string>
     <string name="downloads_notification_description">Desencadenantes al finalizar la descarga</string>
     <string name="download_pending">Descargando: \u2026</string>
@@ -174,9 +174,9 @@
     <string name="blocklist_update_description">Las actualizaciones se realizarán con la frecuencia seleccionada, a menos que el archivo de filtros especifique un intervalo más largo</string>
     <string name="blocklist_update_now">Actualizar listas ahora</string>
     <string name="blocklist_last_update">Última actualización: %s</string>
-    <string name="blocklist_updating">Updating…</string>
-    <string name="blocklist_update_error">Error while updating filters list %s</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
+    <string name="blocklist_updating">Actualizando…</string>
+    <string name="blocklist_update_error">Error al actualizar la lista de filtros %s</string>
+    <string name="blocklist_update_error_404">Error al actualizar la lista de filtros %s: url no encontrada</string>
     <string name="add_blocklist">Añadir archivo de filtros</string>
     <string name="add_blocklist_hint">Puede elegir listas de hosts o cualquier lista compatible con las reglas de AdBlockPlus</string>
     <string name="enable_blocklist">Activar esta lista</string>
@@ -352,7 +352,7 @@
         <item>Dominio (por defecto)</item>
         <item>Dirección URL</item>
         <item>Título</item>
-        <item>Shortened URL</item>
+        <item>URL acortada</item>
     </string-array>
     <string name="invert_color">Invertir color</string>
     <string name="settings_black_status_bar">Barra de estado negra</string>
@@ -406,7 +406,7 @@
     <string name="dialog_open_incognito_tab">Abrir en una pestaña de incógnito</string>
     <string name="dialog_remove_bookmark">Eliminar marcador</string>
     <string name="dialog_edit_bookmark">Editar marcador</string>
-    <string name="dialog_title_bookmark">Bookmark</string>
+    <string name="dialog_title_bookmark">Marcar como favorito</string>
     <string name="dialog_remove_from_history">Eliminar del historial</string>
     <string name="dialog_download_image">Descargar imagen</string>
     <string name="dialog_copy_link">Copiar enlace</string>
@@ -553,21 +553,21 @@
     <string name="suggest">Sugerencias de búsqueda (número)</string>
     <string name="error_tip">• Compruebe la dirección en busca de errores como ww.ejemplo.com en lugar de www.ejemplo.com</string>
     <string name="error_tip2">• Si no puede cargar ninguna página, compruebe los datos de su dispositivo o la conexión Wi-Fi.</string>
-    <string name="action_cycle_tabs_forwards">Cycle tabs forwards</string>
-    <string name="action_cycle_tabs_backwards">Cycle tabs backwards</string>
+    <string name="action_cycle_tabs_forwards">Ciclo de pestañas hacía adelante</string>
+    <string name="action_cycle_tabs_backwards">Ciclo de pestañas hacia atrás</string>
     <string name="action_focus_address_bar">Focus address bar</string>
-    <string name="action_tab_history_forward">Forward in tab history</string>
+    <string name="action_tab_history_forward">Avanzar en el historial</string>
     <string name="action_toggle_toolbar">Toggle toolbar</string>
-    <string name="action_toggle_status_bar">Toggle status bar</string>
-    <string name="action_text_size_increment">Increase text size</string>
-    <string name="action_text_size_decrement">Decrease text size</string>
-    <string name="action_text_size_small_increment">Increase text size a bit</string>
-    <string name="action_text_size_small_decrement">Decrease text size a bit</string>
-    <string name="action_open_bookmark_list">Open bookmark list</string>
-    <string name="action_open_tab_list">Open tab list</string>
-    <string name="action_open_session_list">Open session list</string>
-    <string name="action_switch_to_session">Switch to session 1 to 9</string>
-    <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
-    <string name="action_switch_to_last_tab">Switch to last tab</string>
-    <string name="action_switch_to_last_session">Switch to last session</string>
+    <string name="action_toggle_status_bar">Activa/desactiva la barra de estado</string>
+    <string name="action_text_size_increment">Aumentar tamaño de texto</string>
+    <string name="action_text_size_decrement">Reducir tamaño de texto</string>
+    <string name="action_text_size_small_increment">Aumentar un poco el tamaño del texto</string>
+    <string name="action_text_size_small_decrement">Reducir un poco el tamaño del texto</string>
+    <string name="action_open_bookmark_list">Abrir lista de favoritos</string>
+    <string name="action_open_tab_list">Abrir lista de pestañas</string>
+    <string name="action_open_session_list">Abrir lista de sesiones</string>
+    <string name="action_switch_to_session">Ir de la sesión 1 a la 9</string>
+    <string name="action_switch_to_tab">Ir de la pestaña 1 a la 9</string>
+    <string name="action_switch_to_last_tab">Ir a la última pestaña</string>
+    <string name="action_switch_to_last_session">Ir a la última sesión</string>
 </resources>
