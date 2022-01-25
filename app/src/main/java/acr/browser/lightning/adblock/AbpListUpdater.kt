@@ -17,6 +17,8 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.blockerPrefixes
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.isModify
 import acr.browser.lightning.adblock.parser.HostsFileParser
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
@@ -81,16 +83,12 @@ class AbpListUpdater @Inject constructor(val context: Context) {
     fun removeFiles(entity: AbpEntity) {
         val dir = getFilterDir()
         val writer = FilterWriter()
-        writer.write(dir.getAbpBlackListFile(entity), listOf())
-        writer.write(dir.getAbpWhiteListFile(entity), listOf())
-        writer.write(dir.getAbpWhitePageListFile(entity), listOf())
-        writer.write(dir.getAbpModifyListFile(entity), listOf())
-        writer.write(dir.getAbpModifyExceptionListFile(entity), listOf())
-        writer.write(dir.getAbpImportantListFile(entity), listOf())
-        writer.write(dir.getAbpImportantAllowListFile(entity), listOf())
+        (blockerPrefixes + ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach {
+            writer.write(dir.getFilterFile(it, entity), listOf())
+        }
 
         val elementWriter = ElementWriter()
-        elementWriter.write(dir.getAbpElementListFile(entity), listOf())
+        elementWriter.write(dir.getFilterFile(ABP_PREFIX_ELEMENT, entity), listOf())
     }
 
     fun updateAbpEntity(entity: AbpEntity, forceUpdate: Boolean) = runBlocking {
@@ -127,14 +125,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         if (!forceUpdate) {
             entity.lastModified?.let {
                 val dir = getFilterDir()
-
-                if (dir.getAbpBlackListFile(entity).exists() ||
-                    dir.getAbpWhiteListFile(entity).exists() ||
-                    dir.getAbpWhitePageListFile(entity).exists() ||
-                    dir.getAbpModifyListFile(entity).exists() ||
-                    dir.getAbpModifyExceptionListFile(entity).exists() ||
-                    dir.getAbpImportantListFile(entity).exists() ||
-                    dir.getAbpImportantAllowListFile(entity).exists())
+                if ((blockerPrefixes + ABP_PREFIX_DISABLE_ELEMENT_PAGE + ABP_PREFIX_ELEMENT).map { prefix ->
+                    dir.getFilterFile(prefix, entity).exists() }.any()
+                )
                     request.addHeader("If-Modified-Since", it)
             }
         }
@@ -205,7 +198,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             if (hostsList.isEmpty())
                 return false
             entity.lastLocalUpdate = System.currentTimeMillis()
-            writer.write(dir.getAbpBlackListFile(entity), hostsList)
+            writer.write(dir.getFilterFile(ABP_PREFIX_DENY, entity), hostsList)
             abpDao.update(entity)
 
             return true
@@ -221,16 +214,16 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         entity.version = info.version
         entity.lastUpdate = info.lastUpdate
         entity.lastLocalUpdate = System.currentTimeMillis()
-        writer.write(dir.getAbpBlackListFile(entity), set.blackList)
-        writer.write(dir.getAbpWhiteListFile(entity), set.whiteList)
-        writer.write(dir.getAbpWhitePageListFile(entity), set.elementDisableFilter)
-        writer.writeModifyFilters(dir.getAbpModifyListFile(entity), set.modifyList)
-        writer.writeModifyFilters(dir.getAbpModifyExceptionListFile(entity), set.modifyExceptionList)
-        writer.write(dir.getAbpImportantListFile(entity), set.importantList)
-        writer.write(dir.getAbpImportantAllowListFile(entity), set.importantAllowList)
+        blockerPrefixes.forEach {
+            if (isModify(it))
+                writer.writeModifyFilters(dir.getFilterFile(it, entity), set.filters[it])
+            else
+                writer.write(dir.getFilterFile(it, entity), set.filters[it])
+        }
+        writer.write(dir.getFilterFile(ABP_PREFIX_DISABLE_ELEMENT_PAGE,entity), set.elementDisableFilter)
 
         val elementWriter = ElementWriter()
-        elementWriter.write(dir.getAbpElementListFile(entity), set.elementList)
+        elementWriter.write(dir.getFilterFile(ABP_PREFIX_ELEMENT, entity), set.elementList)
 
         abpDao.update(entity)
         return true

@@ -1,6 +1,8 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.adblock.AbpBlocker.Companion.getQueryParameterMap
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.blockerPrefixes
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.isModify
 import android.net.Uri
 import android.webkit.WebResourceRequest
 import androidx.core.net.toUri
@@ -26,7 +28,7 @@ class AbpBlockerTest {
 
     private var set: UnifiedFilterSet
     private val set2: UnifiedFilterSet
-    private val filterContainers = AbpBlockerManager.prefixes.associateWith { FilterContainer() }
+    private val filterContainers = blockerPrefixes.associateWith { FilterContainer() }
     private val blocker = AbpBlocker(null, filterContainers)
     private val mimeTypeMap = loadMimeTypeMap()
 
@@ -49,37 +51,31 @@ class AbpBlockerTest {
         abpStyleList.bufferedReader().use {
             set = AbpFilterDecoder().decode(it, null)
         }
-        set.blackList.forEach(filterContainers[ABP_PREFIX_DENY]!!::plusAssign)
-        set.whiteList.forEach(filterContainers[ABP_PREFIX_ALLOW]!!::plusAssign)
-        set.modifyList.forEach(filterContainers[ABP_PREFIX_MODIFY]!!::plusAssign)
-        set.modifyExceptionList.forEach(filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!::plusAssign)
-        set.importantList.forEach(filterContainers[ABP_PREFIX_IMPORTANT]!!::plusAssign)
-        set.importantAllowList.forEach(filterContainers[ABP_PREFIX_IMPORTANT_ALLOW]!!::plusAssign)
-
-        // assert correct number of filters in each container
-        Assert.assertEquals(set.blackList.size, filterContainers[ABP_PREFIX_DENY]!!.getFilterList().size)
-        Assert.assertEquals(set.whiteList.size, filterContainers[ABP_PREFIX_ALLOW]!!.getFilterList().size)
-        Assert.assertEquals(set.modifyList.size, filterContainers[ABP_PREFIX_MODIFY]!!.getFilterList().size)
-        Assert.assertEquals(set.modifyExceptionList.size, filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getFilterList().size)
-        Assert.assertEquals(set.importantList.size, filterContainers[ABP_PREFIX_IMPORTANT]!!.getFilterList().size)
-        Assert.assertEquals(set.importantAllowList.size, filterContainers[ABP_PREFIX_IMPORTANT_ALLOW]!!.getFilterList().size)
+        blockerPrefixes.forEach { prefix ->
+            set.filters[prefix].forEach(filterContainers[prefix]!!::plusAssign)
+            // assert correct number of filters in each container
+            Assert.assertEquals(set.filters[prefix].size, filterContainers[prefix]!!.getFilterList().size)
+        }
     }
 
     private fun Map<String, FilterContainer>.clear() = forEach { it.value.clear() }
 
-    private fun OutputStream.writeFilterList(list: List<UnifiedFilter>) {
+    private fun OutputStream.writeFilterList(list: List<UnifiedFilter>, isModify: Boolean) {
         use {
             val writer = FilterWriter()
-            writer.write(it, list)
+            if (isModify) writer.writeModifyFilters(it, list)
+            else writer.write(it, list)
         }
     }
 
-    private fun readFiltersFile(filtersFile: InputStream): List<Pair<String, UnifiedFilter>> {
+    private fun readFiltersFile(filtersFile: InputStream, isModify: Boolean): List<Pair<String, UnifiedFilter>> {
         val filters = mutableListOf<Pair<String, UnifiedFilter>>()
         filtersFile.use {
             val reader = FilterReader(it)
-            if (reader.checkHeader())
-                filters.addAll(reader.readAll())
+            if (reader.checkHeader()) {
+                if (isModify) filters.addAll(reader.readAllModifyFilters())
+                else filters.addAll(reader.readAll())
+            }
         }
         return filters
     }
@@ -145,16 +141,16 @@ class AbpBlockerTest {
 
         when (list) {
             "block" -> {
-                Assert.assertEquals(filterList.size, set.blackList.size)
-                container.also { set.blackList.forEach(it::plusAssign) }
+                Assert.assertEquals(filterList.size, set.filters[ABP_PREFIX_DENY].size)
+                container.also { set.filters[ABP_PREFIX_DENY].forEach(it::plusAssign) }
             }
             "allow" -> {
-                Assert.assertEquals(filterList.size, set.whiteList.size)
-                container.also { set.whiteList.forEach(it::plusAssign) }
+                Assert.assertEquals(filterList.size, set.filters[ABP_PREFIX_ALLOW].size)
+                container.also { set.filters[ABP_PREFIX_ALLOW].forEach(it::plusAssign) }
             }
             "modify" -> {
-                Assert.assertEquals(filterList.size, set.modifyList.size)
-                container.also { set.modifyList.forEach(it::plusAssign) }
+                Assert.assertEquals(filterList.size, set.filters[ABP_PREFIX_MODIFY].size)
+                container.also { set.filters[ABP_PREFIX_MODIFY].forEach(it::plusAssign) }
             }
         }
 
@@ -230,18 +226,21 @@ class AbpBlockerTest {
 
     @Test
     fun writeRead() {
-        val startList = set.blackList
-        val filterStore = ByteArrayOutputStream()
-        filterStore.writeFilterList(startList)
-        val endList = readFiltersFile(filterStore.toByteArray().inputStream())
+        blockerPrefixes.forEach { prefix ->
+            val startList = set.filters[prefix]
+            val filterStore = ByteArrayOutputStream()
 
-        // endList also contains tag, we want to compare only the filter
-        Assert.assertEquals(startList, endList.map { it.second })
+            filterStore.writeFilterList(startList, isModify(prefix))
+            val endList = readFiltersFile(filterStore.toByteArray().inputStream(), isModify(prefix))
+
+            // endList also contains tag, we want to compare only the filter
+            Assert.assertEquals(startList, endList.map { it.second })
+        }
     }
 
     @Test
     fun modifyFiltersReadWrite() {
-        val startList = set2.modifyList
+        val startList = set2.filters[ABP_PREFIX_MODIFY]
         val filterStore = ByteArrayOutputStream()
         filterStore.use {
             val writer = FilterWriter()
@@ -261,22 +260,22 @@ class AbpBlockerTest {
 
     @Test
     fun filterContainer() {
-        val container = FilterContainer().also { set.blackList.forEach(it::plusAssign) }
-        val filterStore = ByteArrayOutputStream()
-        filterStore.writeFilterList(set.blackList)
-        val container2 = FilterContainer().also {
-            readFiltersFile(
-                filterStore.toByteArray().inputStream()
-            ).forEach(it::addWithTag)
+        blockerPrefixes.forEach { prefix ->
+            val container = FilterContainer().also { set.filters[prefix].forEach(it::plusAssign) }
+            val filterStore = ByteArrayOutputStream()
+            filterStore.writeFilterList(set.filters[prefix], isModify(prefix))
+            val container2 = FilterContainer().also {
+                readFiltersFile(filterStore.toByteArray().inputStream(), isModify(prefix)).forEach(it::addWithTag)
+            }
+            val filterList = container.getFilterList()
+            val filterList2 = container2.getFilterList()
+
+            // filter lists from containers should be equal
+            Assert.assertTrue(filterList.containsAll(filterList2) && filterList2.containsAll(filterList))
+
+            // if inserting into filter container works, set.blacklist and filterList contain the same filters (but possibly in different order)
+            Assert.assertTrue(filterList.containsAll(set.filters[prefix]) && set.filters[prefix].containsAll(filterList))
         }
-        val filterList = container.getFilterList()
-        val filterList2 = container2.getFilterList()
-
-        // filter lists from containers should be equal
-        Assert.assertTrue(filterList.containsAll(filterList2) && filterList2.containsAll(filterList))
-
-        // if inserting into filter container works, set.blacklist and filterList contain the same filters (but possibly in different order)
-        Assert.assertTrue(filterList.containsAll(set.blackList) && set.blackList.containsAll(filterList))
     }
 
     @Test
@@ -422,8 +421,8 @@ class AbpBlockerTest {
 
         val s = loadFilterSet(filterList.joinToString("\n").byteInputStream())
         Assert.assertEquals(
-            s.blackList.first(),
-            s.blackList.last()
+            s.filters[ABP_PREFIX_DENY].first(),
+            s.filters[ABP_PREFIX_DENY].last()
         ) // '*' and '' should give the same filter
 
         checkFiltersWithContainer(filterList, blockedRequests, allowedRequests, "block")
@@ -653,7 +652,7 @@ class AbpBlockerTest {
         allowedRequests.add(request("http://example7.com/something.png", "https://page.com"))
         allowedRequests.add(request("http://example7.com/something.js", "https://page.com"))
 
-        loadFilterSet(filterList.joinToString("\n").byteInputStream()).blackList.forEach {
+        loadFilterSet(filterList.joinToString("\n").byteInputStream()).filters[ABP_PREFIX_DENY].forEach {
             if (it.pattern.contains("example.")) {
                 println("${it.contentType}, ${ContentRequest.TYPE_DOCUMENT}, ${it.contentType and ContentRequest.TYPE_DOCUMENT}")
                 println("${it.thirdParty}")

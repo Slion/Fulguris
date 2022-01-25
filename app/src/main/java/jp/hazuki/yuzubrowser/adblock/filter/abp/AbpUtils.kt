@@ -16,8 +16,10 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.abp
 
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.blockerPrefixes
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import java.io.File
+import java.security.InvalidParameterException
 
 // prefixes for files
 internal const val ABP_PREFIX_DENY = "b_"
@@ -28,6 +30,8 @@ internal const val ABP_PREFIX_MODIFY_EXCEPTION = "me_"
 internal const val ABP_PREFIX_MODIFY = "m_"
 internal const val ABP_PREFIX_IMPORTANT = "i_"
 internal const val ABP_PREFIX_IMPORTANT_ALLOW = "ia_"
+internal const val ABP_PREFIX_REDIRECT = "r_"
+internal const val ABP_PREFIX_REDIRECT_EXCEPTION = "re_"
 
 // prefixes for modify filters used inside the modify files
 internal const val MODIFY_PREFIX_REDIRECT = 'r'
@@ -36,34 +40,8 @@ internal const val MODIFY_PREFIX_REMOVEPARAM_REGEX = 'x'
 internal const val MODIFY_PREFIX_REQUEST_HEADER = 'q'
 internal const val MODIFY_PREFIX_RESPONSE_HEADER = 'a'
 
-internal fun File.getAbpBlackListFile(entity: AbpEntity): File {
-    return File(this, ABP_PREFIX_DENY + entity.entityId)
-}
-
-internal fun File.getAbpWhiteListFile(entity: AbpEntity): File {
-    return File(this, ABP_PREFIX_ALLOW + entity.entityId)
-}
-
-internal fun File.getAbpWhitePageListFile(entity: AbpEntity): File {
-    return File(this, ABP_PREFIX_DISABLE_ELEMENT_PAGE + entity.entityId)
-}
-
-internal fun File.getAbpElementListFile(entity: AbpEntity): File {
-    return File(this, ABP_PREFIX_ELEMENT + entity.entityId)
-}
-
-internal fun File.getAbpModifyListFile(entity: AbpEntity): File {
-    return File(this, ABP_PREFIX_MODIFY + entity.entityId)
-}
-
-internal fun File.getAbpModifyExceptionListFile(entity: AbpEntity): File {
-    return File(this, ABP_PREFIX_MODIFY_EXCEPTION + entity.entityId)
-}
-
-internal fun File.getAbpImportantListFile(entity: AbpEntity): File {
-    return File(this, ABP_PREFIX_IMPORTANT + entity.entityId)
-}
-
-internal fun File.getAbpImportantAllowListFile(entity: AbpEntity): File {
-    return File(this, ABP_PREFIX_IMPORTANT_ALLOW + entity.entityId)
+internal fun File.getFilterFile(prefix: String, entity: AbpEntity): File {
+    if (prefix !in (blockerPrefixes + ABP_PREFIX_ELEMENT + ABP_PREFIX_DISABLE_ELEMENT_PAGE))
+        throw(InvalidParameterException("prefix $prefix is invalid"))
+    return File(this, prefix + entity.entityId)
 }

@@ -53,7 +53,7 @@ class AbpBlockerManager @Inject constructor(
 ) : AdBlocker {
 
     // use a map of filterContainers instead of several separate containers
-    private val filterContainers = prefixes.associateWith { FilterContainer() }
+    private val filterContainers = blockerPrefixes.associateWith { FilterContainer() }
 
     // store whether lists are loaded (and delay any request until loading is done)
     private var listsLoaded = false
@@ -89,7 +89,7 @@ class AbpBlockerManager @Inject constructor(
 
     fun removeJointLists() {
         val filterDir = application.applicationContext.getFilterDir()
-        prefixes.forEach { File(filterDir, it).delete() }
+        blockerPrefixes.forEach { File(filterDir, it).delete() }
     }
 
     // load lists
@@ -99,7 +99,7 @@ class AbpBlockerManager @Inject constructor(
 
         // call loadFile for all prefixes and be done if all return true
         // asSequence() should not load all lists and then check, but fail faster if there is a problem
-        if (prefixes.asSequence().map { loadFileToContainer(File(filterDir, it), it) }.all { it }) {
+        if (blockerPrefixes.asSequence().map { loadFileToContainer(File(filterDir, it), it) }.all { it }) {
             listsLoaded = true
             return
         }
@@ -109,9 +109,9 @@ class AbpBlockerManager @Inject constructor(
         val abpLoader = AbpLoader(filterDir, entities)
 
         // toSet() for removal of duplicate entries
-        val filters = prefixes.map { it to abpLoader.loadAll(it).toSet() }.toMap()
+        val filters = blockerPrefixes.map { it to abpLoader.loadAll(it).toSet() }.toMap()
 
-        prefixes.forEach { prefix ->
+        blockerPrefixes.forEach { prefix ->
             filterContainers[prefix]!!.clear() // clear container, or disabled filter lists will still be active
             filterContainers[prefix]!!.also { filters[prefix]!!.forEach(it::addWithTag) }
         }
@@ -120,7 +120,7 @@ class AbpBlockerManager @Inject constructor(
         // create joint files
         // TODO: don't just write! after sanitize, reload filter containers!
         //  if load is slow and sanitize is fast: only load after sanitize
-        prefixes.forEach { prefix ->
+        blockerPrefixes.forEach { prefix ->
             writeFile(prefix, filters[prefix]!!.sanitize().map { it.second })
         }
 
@@ -157,6 +157,7 @@ class AbpBlockerManager @Inject constructor(
                 //      null (to remove this filter)
                 //    check StartEndFilters that could be subdomain (not necessarily same patter, but this would accelerate match by a lot)
                 //      pattern does not contain '/', one endswith other
+                //  also remove unnecessary filters, like ||example.com^ if there is @@||example.com^
 
                 else -> it
             }
@@ -357,16 +358,18 @@ class AbpBlockerManager @Inject constructor(
      */
 
     companion object {
-        val prefixes = listOf(
+        val blockerPrefixes = listOf(
             ABP_PREFIX_ALLOW,
             ABP_PREFIX_DENY,
             ABP_PREFIX_MODIFY,
             ABP_PREFIX_MODIFY_EXCEPTION,
             ABP_PREFIX_IMPORTANT,
-            ABP_PREFIX_IMPORTANT_ALLOW
+            ABP_PREFIX_IMPORTANT_ALLOW,
+            ABP_PREFIX_REDIRECT,
+            ABP_PREFIX_REDIRECT_EXCEPTION,
         )
 
-        fun isModify(prefix: String) = prefix in listOf(ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION)
+        fun isModify(prefix: String) = prefix in listOf(ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION, ABP_PREFIX_REDIRECT, ABP_PREFIX_REDIRECT_EXCEPTION)
 
         private const val TAG = "AbpBlocker"
 

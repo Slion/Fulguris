@@ -66,14 +66,9 @@ class AbpFilterDecoder {
 
     fun decode(reader: BufferedReader, url: String?): UnifiedFilterSet {
         val info = DecoderInfo()
-        val black = mutableListOf<UnifiedFilter>()
-        val white = mutableListOf<UnifiedFilter>()
         val elementDisableFilter = mutableListOf<UnifiedFilter>()
         val elementFilter = mutableListOf<ElementFilter>()
-        val modifyExceptionList = mutableListOf<UnifiedFilter>()
-        val modifyList = mutableListOf<UnifiedFilter>()
-        val importantList = mutableListOf<UnifiedFilter>()
-        val importantAllowList = mutableListOf<UnifiedFilter>()
+        val filterLists = FilterMap()
         reader.forEachLine { line ->
             if (line.isEmpty()) return@forEachLine
             val trimmedLine = line.trim()
@@ -94,12 +89,12 @@ class AbpFilterDecoder {
                         )
 */
                     } else {
-                        trimmedLine.decodeFilter(black, white, elementDisableFilter, modifyList, modifyExceptionList, importantList, importantAllowList)
+                        trimmedLine.decodeFilter(elementDisableFilter, filterLists)
                     }
                 }
             }
         }
-        return UnifiedFilterSet(info, black, white, elementDisableFilter, elementFilter, modifyList, modifyExceptionList, importantList, importantAllowList)
+        return UnifiedFilterSet(info, elementDisableFilter, elementFilter, filterLists)
     }
 
     private fun decodeElementFilter(
@@ -161,13 +156,8 @@ class AbpFilterDecoder {
     private fun String.sanitizeSelector() = trim().replace("\\", "\\\\").replace("'", "\'")
 
     private fun String.decodeFilter(
-        blackList: MutableList<UnifiedFilter>,
-        whiteList: MutableList<UnifiedFilter>,
         elementFilterList: MutableList<UnifiedFilter>,
-        modifyList: MutableList<UnifiedFilter>,
-        modifyExceptionList: MutableList<UnifiedFilter>,
-        importantList: MutableList<UnifiedFilter>,
-        importantAllowList: MutableList<UnifiedFilter>
+        filterLists: FilterMap
     ) {
         var contentType = 0
         var ignoreCase = false
@@ -297,15 +287,15 @@ class AbpFilterDecoder {
                             "redirect-rule" -> modify = RedirectFilter(value)
                             "redirect" -> {
                                 // create block filter in addition to redirect
-                                this.getRedirectBlockString("redirect").decodeFilter(blackList, whiteList, elementFilterList, modifyList, modifyExceptionList, importantList, importantAllowList)
+                                this.getRedirectBlockString("redirect").decodeFilter(elementFilterList, filterLists)
                                 modify = RedirectFilter(value)
                             }
                             "empty" -> {
-                                this.getRedirectBlockString("empty").decodeFilter(blackList, whiteList, elementFilterList, modifyList, modifyExceptionList, importantList, importantAllowList)
+                                this.getRedirectBlockString("empty").decodeFilter(elementFilterList, filterLists)
                                 modify = RedirectFilter(RES_EMPTY)
                             }
                             "mp4" -> {
-                                this.getRedirectBlockString("mp4").decodeFilter(blackList, whiteList, elementFilterList, modifyList, modifyExceptionList, importantList, importantAllowList)
+                                this.getRedirectBlockString("mp4").decodeFilter(elementFilterList, filterLists)
                                 modify = RedirectFilter(RES_NOOP_MP4)
                                 contentType = contentType or ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
@@ -406,12 +396,12 @@ class AbpFilterDecoder {
 
         when {
             elementFilter -> elementFilterList += abpFilter
-            modify != null && blocking -> modifyList += abpFilter
-            important && blocking -> importantList += abpFilter
-            blocking -> blackList += abpFilter
-            modify != null -> modifyExceptionList += abpFilter
-            important -> importantAllowList += abpFilter
-            else -> whiteList += abpFilter
+            modify != null && blocking -> filterLists[ABP_PREFIX_MODIFY] += abpFilter
+            important && blocking -> filterLists[ABP_PREFIX_IMPORTANT] += abpFilter
+            blocking -> filterLists[ABP_PREFIX_DENY] += abpFilter
+            modify != null -> filterLists[ABP_PREFIX_MODIFY_EXCEPTION] += abpFilter
+            important -> filterLists[ABP_PREFIX_IMPORTANT_ALLOW] += abpFilter
+            else -> filterLists[ABP_PREFIX_ALLOW] += abpFilter
         }
     }
 
