@@ -19,11 +19,11 @@ class AbpBlocker(
         abpUserRules?.getResponse(request)?.let { response ->
             // no pattern needed if blocked by user
             return if (response) BlockResponse(USER_BLOCKED, "")
-            else null
+            else null // don't modify anything that is explicitly blocked or allowed by the user?
         }
 
         // then 'important' filters
-        filterContainers[ABP_PREFIX_IMPORTANT_ALLOW]!![request]?.let { return null }
+        filterContainers[ABP_PREFIX_IMPORTANT_ALLOW]!![request]?.let { return allowOrModify(request) }
         filterContainers[ABP_PREFIX_IMPORTANT]!![request]?.let {
             // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#important
             //  -> "The $important modifier will be ignored if a document-level exception rule is applied to the document."
@@ -36,62 +36,75 @@ class AbpBlocker(
         }
 
         // check normal blocklist
-        filterContainers[ABP_PREFIX_ALLOW]!![request]?.let { return null }
+        filterContainers[ABP_PREFIX_ALLOW]!![request]?.let { return allowOrModify(request) }
         filterContainers[ABP_PREFIX_DENY]!![request]?.let { return blockOrRedirect(request, ABP_PREFIX_DENY, it.pattern) }
 
-        // check whether response should be modified // TODO: should this also happen if something is explicitly allowed?
-        // careful: we need to get ALL matching modify filters, not just any (like it's done for block and allow decisions)
-        val modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(request)
-
-        // TODO: should redirect filters rather be in a separate container? would make sense...
-        //  because they are never checked in the same place and just create additional load here
-        modifyFilters.removeAll { it.modify!! is RedirectFilter }
-
-        if (modifyFilters.isNotEmpty()) {
-            if (request.url.encodedQuery == null) {
-                // if no parameters, remove all removeparam filters
-                modifyFilters.removeAll { RemoveparamFilter::class.java.isAssignableFrom(it.modify!!::class.java) }
-                if (modifyFilters.isEmpty()) return null
-            }
-            // there is a hit, but first check whether the exact filter has an exception
-            val modifyExceptions = filterContainers[ABP_PREFIX_MODIFY_EXCEPTION]!!.getAll(request)
-            if (modifyExceptions.isNotEmpty()) {
-                // how exceptions/negations work: (adguard removeparam documentation is useful: https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters)
-                //  without parameter (i.e. empty), all filters of that type (removeparam, csp,...) are invalid
-                //  with parameter, only same type and same parameter are considered invalid
-
-                modifyExceptions.forEach { exception ->
-                    if (exception.modify!!.parameter == null) // no parameter -> remove all modify of same type
-                        modifyFilters.removeAll { it.modify!!.prefix == exception.modify!!.prefix }
-                    else // else remove exact matches in modify
-                        modifyFilters.removeAll { it.modify == exception.modify }
-                }
-            }
-            // important: there can be multiple valid filters, and all should be applied if possible
-            //  just do one after the other
-            //  but since WebResourceRequest can't be changed and returned to WebView, it must all happen within getModifiedResponse()
-            return getModifiedResponse(request, modifyFilters.mapNotNull { it.modify }.toMutableList())
-        }
-
-        return null
+        // not explicitly allowed or blocked
+        return allowOrModify(request)
     }
 
     private fun blockOrRedirect(request: ContentRequest, prefix: String, pattern: String): BlockerResponse {
-        val modify = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(request).mapNotNull {
-            if (it.modify is RedirectFilter) (it.modify as RedirectFilter).withPriority() else null
-        }
+        val modify = filterContainers[ABP_PREFIX_REDIRECT]!!.getAll(request)
+        modify.removeModifyExceptions(request, ABP_PREFIX_REDIRECT_EXCEPTION)
         return if (modify.isEmpty())
             BlockResponse(prefix, pattern)
         else {
-            val resource = modify.maxByOrNull { it.second } ?: return BlockResponse(prefix, pattern)
-            BlockResourceResponse(resource.first)
+            modify.map { (it.modify as RedirectFilter).withPriority() }
+                .maxByOrNull { it.second }
+                ?.let { BlockResourceResponse(it.first) }
+                ?: BlockResponse(prefix, pattern)
+        }
+    }
+
+    private fun allowOrModify(request: ContentRequest): ModifyResponse? {
+        // check whether response should be modified
+        // careful: we need to get ALL matching modify filters, not just any (like it's done for block and allow decisions)
+        val modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(request)
+        if (modifyFilters.isEmpty()) return null
+
+        if (request.url.encodedQuery == null) {
+            // if no parameters, remove all removeparam filters
+            modifyFilters.removeAll { RemoveparamFilter::class.java.isAssignableFrom(it.modify!!::class.java) }
+            if (modifyFilters.isEmpty()) return null
+        }
+println("allowOrModify: check for ${request.url}")
+        println("allowOrModify: filters: ${modifyFilters.size}: ${modifyFilters.map { it.pattern }}")
+        modifyFilters.removeModifyExceptions(request, ABP_PREFIX_MODIFY_EXCEPTION)
+        println("allowOrModify: filters left after remove modify: ${modifyFilters.size}: ${modifyFilters.map { it.pattern }}")
+
+        // there can be multiple valid filters, and all should be applied if possible
+        //  just do one after the other
+        //  but since WebResourceRequest can't be changed and returned to WebView, it must all happen within getModifiedResponse()
+        return getModifiedResponse(request, modifyFilters.mapNotNull { it.modify }.toMutableList())
+    }
+
+    // how exceptions work: (adguard removeparam documentation is useful: https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters)
+    //  without parameter (i.e. empty), all filters of that type (removeparam, csp, redirect,...) are invalid
+    //  with parameter, only same type and same parameter are considered invalid
+    private fun MutableList<ContentFilter>.removeModifyExceptions(request: ContentRequest, prefix: String) {
+        val modifyExceptions = filterContainers[prefix]!!.getAll(request)
+        println("exceptions: ${modifyExceptions.size}, ${modifyExceptions.map { it.pattern }}")
+        println("exception filters: ${filterContainers[prefix]!!.filters().map {it.value.pattern + ", " + it.value.modify!!.parameter + ", " + it.value.javaClass}}")
+        modifyExceptions.forEach { exception ->
+            forEach {
+                println("contentFilter prefix: ${it.modify!!.prefix}, exception filter prefix ${exception.modify!!.prefix}")
+                println("parameter is ${it.modify!!.parameter}, ${exception.modify!!.parameter}")
+            }
+            if (exception.modify!!.parameter == null) // no parameter -> remove all modify of same type (not same prefix because of RemoveParamRegexFilter)
+                removeAll { exception.modify!!::class.java.isAssignableFrom(it.modify!!::class.java) }
+            // TODO: need to deal with things like contentFilter $removeparam, exception $removeparam=bla
+            //  should remove app parameters except bla -> $removeparam=~bla
+            //  but this simple thing does not hold, there could be some weird regex combinations
+            //  -> getModifedResponse NEEDS the exceptions and "undo" hits if there is an exception
+            else // else remove exact matches in modify
+                removeAll { it.modify == exception.modify }
         }
     }
 
     companion object {
         // this needs to be fast, the adguard url tracking list has quite a few options acting on all urls!
         //  e.g. removing the fbclid parameter added by facebook
-        private fun getModifiedResponse(request: ContentRequest, filters: MutableList<ModifyFilter>): BlockerResponse? {
+        private fun getModifiedResponse(request: ContentRequest, filters: MutableList<ModifyFilter>): ModifyResponse? {
             // we can't simply modify the request, so do what the request wants, but modify
             //  then deliver what we got as response
             //  like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android

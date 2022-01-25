@@ -447,7 +447,7 @@ class AbpBlockerTest {
         val filterList = mutableListOf<String>()
         val modifiedRequests = mutableListOf<ContentRequest>()
         val allowedRequests = mutableListOf<ContentRequest>()
-        filterList.add("\$removeparam=badparam")
+/*        filterList.add("\$removeparam=badparam")
         modifiedRequests.add(request("http://page.com/page?badparam=yes", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam=yes#content", "http://page.com"))
         modifiedRequests.add(request("http://page.com/page?badparam", "http://page.com"))
@@ -467,6 +467,18 @@ class AbpBlockerTest {
         allowedRequests.add(request("http://page2.com/page?1par_am2=yes", "http://page.com"))
         modifiedRequests.add(request("http://page2.com/page?par_am2=yes", "http://page.com"))
         modifiedRequests.add(request("http://page2.com/page?par_", "http://page.com"))
+        // exceptions should be exceptions from blocking, but not from modifying
+        filterList.add("||page8.com\$removeparam")
+        filterList.add("@@||page8.com^")
+        modifiedRequests.add(request("http://page8.com/page?para_am2=yes", "http://page.com"))
+*/        filterList.add("||page9.com\$removeparam")
+        filterList.add("@@||page9.com\$removeparam=badparam4")
+        modifiedRequests.add(request("http://page9.com/page?para_am2=yes", "http://page.com"))
+        allowedRequests.add(request("http://page9.com/page?badparam4=yes", "http://page.com"))
+        filterList.add("||page10.com\$removeparam=badparam5")
+        filterList.add("@@||page10.com\$removeparam")
+        allowedRequests.add(request("http://page10.com/page?badparam5=yes", "http://page.com"))
+        allowedRequests.add(request("http://page10.com/page?par_am2=yes", "http://page.com")) // blocked by /^par_/, but allowed here
 
         // can't check modify filters allow with container, because non-null could be returned only later
         //checkFiltersWithContainer(filterList, modifiedRequests, allowedRequests, "modify")

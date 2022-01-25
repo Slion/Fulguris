@@ -396,10 +396,20 @@ class AbpFilterDecoder {
 
         when {
             elementFilter -> elementFilterList += abpFilter
-            modify != null && blocking -> filterLists[ABP_PREFIX_MODIFY] += abpFilter
+            modify != null && blocking -> {
+                if (modify is RedirectFilter)
+                    filterLists[ABP_PREFIX_REDIRECT] += abpFilter
+                else
+                    filterLists[ABP_PREFIX_MODIFY] += abpFilter
+            }
             important && blocking -> filterLists[ABP_PREFIX_IMPORTANT] += abpFilter
             blocking -> filterLists[ABP_PREFIX_DENY] += abpFilter
-            modify != null -> filterLists[ABP_PREFIX_MODIFY_EXCEPTION] += abpFilter
+            modify != null -> {
+                if (modify is RedirectFilter)
+                    filterLists[ABP_PREFIX_REDIRECT_EXCEPTION] += abpFilter
+                else
+                    filterLists[ABP_PREFIX_MODIFY_EXCEPTION] += abpFilter
+            }
             important -> filterLists[ABP_PREFIX_IMPORTANT_ALLOW] += abpFilter
             else -> filterLists[ABP_PREFIX_ALLOW] += abpFilter
         }
