@@ -41,6 +41,8 @@ class TabsManager @Inject constructor(
 
     private val tabList = arrayListOf<LightningView>()
     var iRecentTabs = mutableSetOf<LightningView>()
+    // This is just used when loading and saving sessions.
+    // TODO: Ideally it should not be a data member.
     val savedRecentTabsIndices = mutableSetOf<Int>()
     private var iIsIncognito = false;
 
@@ -195,21 +197,12 @@ class TabsManager @Inject constructor(
      */
     private fun finishInitialization() {
 
-        if (allTabs.size >= savedRecentTabsIndices.size) { // Defensive
+        if (allTabs.size == savedRecentTabsIndices.size) { // Defensive
             // Populate our recent tab list from our persisted indices
             iRecentTabs.clear()
             savedRecentTabsIndices.forEach { iRecentTabs.add(allTabs.elementAt(it))}
-
-            if (allTabs.size == (savedRecentTabsIndices.size + 1)) {
-                // That's happening whenever the app was closed and user opens a link from another application
-                // Add our new tab to recent list, assuming that's the last one
-                // That's needed to preserve our recent tabs list otherwise it resets
-                iRecentTabs.add(allTabs.last())
-            }
-        }
-
-        // Defensive, if we have missing tabs in our recent tab list just reset it
-        if (iRecentTabs.size != tabList.size) {
+        } else {
+            // Defensive, if we have missing tabs in our recent tab list just reset it
             resetRecentTabsList()
         }
 
@@ -302,9 +295,10 @@ class TabsManager @Inject constructor(
     {
         val bundle = FileUtils.readBundleFromStorage(application, aFilename)
 
+        // Defensive. should have happened in the shutdown already
+        savedRecentTabsIndices.clear()
         // Read saved current tab index if any
         bundle?.let{
-            savedRecentTabsIndices.clear()
             it.getIntArray(RECENT_TAB_INDICES)?.toList()?.let { it1 -> savedRecentTabsIndices.addAll(it1) }
         }
 
@@ -466,6 +460,7 @@ class TabsManager @Inject constructor(
      */
     fun shutdown() {
         repeat(tabList.size) { deleteTab(0) }
+        savedRecentTabsIndices.clear()
         isInitialized = false
         currentTab = null
     }

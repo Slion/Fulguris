@@ -46,7 +46,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import javax.inject.Inject
 
-
+/**
+ *
+ */
 class SessionsPopupWindow : PopupWindow {
 
     var iUiController: UIController
@@ -101,7 +103,7 @@ class SessionsPopupWindow : PopupWindow {
                                 it.add(Session(name, 1))
                                 // Switch to our newly added session
                                 (view.context as BrowserActivity).apply {
-                                    presenter?.switchToSession(name)
+                                    presenter.switchToSession(name)
                                     // Close session dialog after creating and switching to new session
                                     iMenuSessions.dismiss()
                                 }
