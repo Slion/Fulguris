@@ -71,10 +71,13 @@ class BrowserPresenter @Inject constructor(
         tabsModel.saveSessions()
         // Then reload our tabs
         setupTabs()
-        //
-        BrowserApp.instance.applicationContext.apply {
-            toast(getString(R.string.session_switched,aSessionName))
-        }
+
+        // TODO: Using toast should really be avoided as they pileup
+        // TODO: Doing this here is also wrong as we do not know yet if our session was loaded correctly
+        // TODO: Give some user feedback yes but please do it properly
+        //BrowserApp.instance.applicationContext.apply {
+        //    toast(getString(R.string.session_switched,aSessionName))
+        //}
     }
 
 

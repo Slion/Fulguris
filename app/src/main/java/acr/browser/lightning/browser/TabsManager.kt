@@ -18,8 +18,10 @@ import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.launch
 
 import java.io.File
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.collections.ArrayList
 
 /**
  * A manager singleton that holds all the [LightningView] and tracks the current tab. It handles
@@ -35,6 +37,7 @@ class TabsManager @Inject constructor(
         private val bookmarkPageInitializer: BookmarkPageInitializer,
         private val historyPageInitializer: HistoryPageInitializer,
         private val downloadPageInitializer: DownloadPageInitializer,
+        private val noOpPageInitializer: NoOpInitializer,
         private val userPreferences: UserPreferences,
         private val logger: Logger,
 ): fulguris.Component() {
@@ -250,13 +253,11 @@ class TabsManager @Inject constructor(
         if (incognito) {
             list.add(newTab(activity, incognitoPageInitializer, incognito, NewTabPosition.END_OF_TAB_LIST))
         } else {
-            restorePreviousTabs().forEach {
+            tryRestorePreviousTabs(activity).forEach {
                 try {
                     list.add(newTab(activity, it, incognito, NewTabPosition.END_OF_TAB_LIST))
-                }
-                catch (ex: Throwable) {
+                } catch (ex: Throwable) {
                     // That's a corrupted session file, can happen when importing garbage.
-                    // TODO: In theory we should implement the onError handler but I have no idea how to do that
                     activity.snackbar(R.string.error_session_file_corrupted)
                 }
             }
@@ -314,6 +315,22 @@ class TabsManager @Inject constructor(
         // Make sure we have at least one tab
         if (list.isEmpty()) {
             list.add(homePageInitializer)
+        }
+        return list
+    }
+
+    /**
+     * Create a recovery session
+     */
+    private fun loadRecoverySession(): MutableList<TabInitializer>
+    {
+        // Defensive. should have happened in the shutdown already
+        savedRecentTabsIndices.clear()
+        val list = mutableListOf<TabInitializer>()
+
+        // Make sure we have at least one tab
+        if (list.isEmpty()) {
+            list.add(noOpPageInitializer)
         }
         return list
     }
@@ -381,23 +398,56 @@ class TabsManager @Inject constructor(
      */
     private fun restorePreviousTabs(): MutableList<TabInitializer>
     {
+        //throw Exception("Hi There!")
         // First load our sessions
         loadSessions()
         // Check if we have a current session
-        return if (iCurrentSessionName.isNullOrBlank()) {
+        if (iCurrentSessionName.isBlank()) {
             // No current session name meaning first load with version support
             // Add our default session
             iCurrentSessionName = application.getString(R.string.session_default)
             // At this stage we must have at least an empty list
-            iSessions.add(Session(iCurrentSessionName!!))
+            iSessions.add(Session(iCurrentSessionName))
             // Than load legacy session file to make sure tabs from earlier version are preserved
-            loadSession(FILENAME_SESSION_DEFAULT)
+            return loadSession(FILENAME_SESSION_DEFAULT)
             // TODO: delete legacy session file at some point
         } else {
             // Load current session then
-            loadSession(fileNameFromSessionName(iCurrentSessionName!!))
+            return loadSession(fileNameFromSessionName(iCurrentSessionName))
         }
     }
+
+    /**
+     * Safely restore previous tabs
+     */
+    private fun tryRestorePreviousTabs(activity: Activity): MutableList<TabInitializer>
+    {
+        return try {
+            restorePreviousTabs()
+        } catch (ex: Throwable) {
+            // TODO: report this using firebase or local crash logs
+            logger.log(TAG, ex.toString())
+            activity.snackbar(R.string.error_recovery_session)
+            createRecoverySession()
+        }
+    }
+
+
+    /**
+     * Called whenever we fail to load a session properly.
+     * The idea is that it should enable the app to start even when it's pointing to a corrupted session.
+     */
+    private fun createRecoverySession(): MutableList<TabInitializer>
+    {
+        recoverSessions()
+        // Add our recovery session using timestamp
+        iCurrentSessionName = application.getString(R.string.session_recovery) + "-" + Date().time
+        iSessions.add(Session(iCurrentSessionName,1, true))
+
+        return loadRecoverySession()
+    }
+
+
 
 
     /**
@@ -728,15 +778,26 @@ class TabsManager @Inject constructor(
         // That crazy bug we keep chasing after
         // TODO: consider running recovery even when our session list was loaded
         if (iSessions.isNullOrEmpty()) {
-            // Search for session files
-            val files = application.filesDir?.let{it.listFiles { d, name -> name.startsWith(FILENAME_SESSION_PREFIX) }}
-            // Add recovered sessions to our collection
-            files?.forEach { f -> iSessions.add(Session(f.name.substring(FILENAME_SESSION_PREFIX.length), -1)) }
+            recoverSessions()
             // Set the first one as current one
             if (!iSessions.isNullOrEmpty()) {
                 iCurrentSessionName = iSessions[0].name
             }
         }
+    }
+
+    /**
+     * Reset our session collection and repopulate by searching the file system for session files.
+     */
+    private fun recoverSessions() {
+        // TODO: report this in firebase or local logs
+        logger.log(TAG, "recoverSessions")
+        //
+        iSessions.clear() // Defensive, should already be empty if we get there
+        // Search for session files
+        val files = application.filesDir?.let{it.listFiles { d, name -> name.startsWith(FILENAME_SESSION_PREFIX) }}
+        // Add recovered sessions to our collection
+        files?.forEach { f -> iSessions.add(Session(f.name.substring(FILENAME_SESSION_PREFIX.length), -1)) }
     }
 
     /**

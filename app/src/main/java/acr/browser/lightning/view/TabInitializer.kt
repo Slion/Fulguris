@@ -244,14 +244,14 @@ class FreezableBundleInitializer(
 /**
  * An initializer that does not load anything into the [WebView].
  */
-class NoOpInitializer : TabInitializer {
+@Reusable
+class NoOpInitializer @Inject constructor() : TabInitializer {
 
     override fun initialize(webView: WebView, headers: Map<String, String>) = Unit
 
     override fun url(): String {
         return Uris.FulgurisNoop
     }
-
 }
 
 /**
