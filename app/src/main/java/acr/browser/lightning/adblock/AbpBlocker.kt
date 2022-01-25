@@ -97,7 +97,13 @@ class AbpBlocker(
                 // handle $csp exception and similar
                 if (modifyExceptions[i].modify!! is ResponseHeaderFilter && modifyExceptions[i].modify!!.parameter?.contains(':') == false) {
                     val header = modifyExceptions[i].modify!!.parameter!!
-                    removeAll { it.modify is ResponseHeaderFilter && it.modify!!.parameter?.startsWith(header) == true }
+                    removeAll { it.modify is ResponseHeaderFilter && it.modify!!.parameter?.startsWith(header) == true && it.modify!!.inverse == modifyExceptions[i].modify!!.inverse }
+                    modifyExceptions.removeAt(i) // not needed any more
+                }
+                // same thing for requestheaders, not sure though whether it is used at all
+                else if (modifyExceptions[i].modify!! is RequestHeaderFilter && modifyExceptions[i].modify!!.parameter?.contains(':') == false) {
+                    val header = modifyExceptions[i].modify!!.parameter!!
+                    removeAll { it.modify is RequestHeaderFilter && it.modify!!.parameter?.startsWith(header) == true && it.modify!!.inverse == modifyExceptions[i].modify!!.inverse }
                     modifyExceptions.removeAt(i) // not needed any more
                 }
             }

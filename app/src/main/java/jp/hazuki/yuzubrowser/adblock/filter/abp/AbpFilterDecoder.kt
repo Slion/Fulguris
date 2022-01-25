@@ -167,6 +167,7 @@ class AbpFilterDecoder {
         var filter = this
         var elementFilter = false
         var modify: ModifyFilter? = null
+        var badfilter = ""
         var important = false
         val blocking = if (filter.startsWith("@@")) {
             filter = substring(2)
@@ -304,6 +305,7 @@ class AbpFilterDecoder {
                             "important" -> important = true
                             // TODO: see above, all is not handled 100% correctly (but might still be fine)
                             "all" -> contentType = contentType or ContentRequest.TYPE_DOCUMENT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
+                            "badfilter" -> badfilter = ABP_PREFIX_BADFILTER
                             else -> return
                         }
                     }
@@ -400,20 +402,20 @@ class AbpFilterDecoder {
             elementFilter -> elementFilterList += abpFilter
             modify != null && blocking -> {
                 if (modify is RedirectFilter)
-                    filterLists[ABP_PREFIX_REDIRECT] += abpFilter
+                    filterLists[badfilter + ABP_PREFIX_REDIRECT] += abpFilter
                 else
-                    filterLists[ABP_PREFIX_MODIFY] += abpFilter
+                    filterLists[badfilter + ABP_PREFIX_MODIFY] += abpFilter
             }
-            important && blocking -> filterLists[ABP_PREFIX_IMPORTANT] += abpFilter
-            blocking -> filterLists[ABP_PREFIX_DENY] += abpFilter
+            important && blocking -> filterLists[badfilter + ABP_PREFIX_IMPORTANT] += abpFilter
+            blocking -> filterLists[badfilter + ABP_PREFIX_DENY] += abpFilter
             modify != null -> {
                 if (modify is RedirectFilter)
-                    filterLists[ABP_PREFIX_REDIRECT_EXCEPTION] += abpFilter
+                    filterLists[badfilter + ABP_PREFIX_REDIRECT_EXCEPTION] += abpFilter
                 else
-                    filterLists[ABP_PREFIX_MODIFY_EXCEPTION] += abpFilter
+                    filterLists[badfilter + ABP_PREFIX_MODIFY_EXCEPTION] += abpFilter
             }
-            important -> filterLists[ABP_PREFIX_IMPORTANT_ALLOW] += abpFilter
-            else -> filterLists[ABP_PREFIX_ALLOW] += abpFilter
+            important -> filterLists[badfilter + ABP_PREFIX_IMPORTANT_ALLOW] += abpFilter
+            else -> filterLists[badfilter + ABP_PREFIX_ALLOW] += abpFilter
         }
     }
 

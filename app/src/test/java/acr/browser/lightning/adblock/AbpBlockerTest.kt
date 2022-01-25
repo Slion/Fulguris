@@ -3,6 +3,7 @@ package acr.browser.lightning.adblock
 import acr.browser.lightning.adblock.AbpBlocker.Companion.getQueryParameterMap
 import acr.browser.lightning.adblock.AbpBlockerManager.Companion.blockerPrefixes
 import acr.browser.lightning.adblock.AbpBlockerManager.Companion.isModify
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.sanitize
 import android.net.Uri
 import android.webkit.WebResourceRequest
 import androidx.core.net.toUri
@@ -595,6 +596,36 @@ class AbpBlockerTest {
         val url = Uri.parse("http://ads.test.net/ads?a=1&b=4#bla")
         val parameters = mapOf("a" to "1", "b" to "4")
         Assert.assertEquals(parameters, url.getQueryParameterMap())
+    }
+
+    @Test
+    fun sanitize() {
+        val filterList = mutableListOf<String>()
+        filterList.add("||example.com^")
+        filterList.add("||example.com^\$badfilter")
+        filterList.add("@@||example2.com^")
+        filterList.add("@@||example2.com^\$badfilter")
+        filterList.add("||example3.com^\$3p")
+        filterList.add("||example3.com^\$3p,badfilter")
+        filterList.add("||example4.com^\$3p")
+        filterList.add("||example4.com^\$3p,badfilter")
+
+        val set = loadFilterSet(filterList.joinToString("\n").byteInputStream())
+        Assert.assertTrue(set.filters[ABP_PREFIX_DENY].isNotEmpty())
+        Assert.assertTrue(set.filters[ABP_PREFIX_BADFILTER + ABP_PREFIX_DENY].isNotEmpty())
+        Assert.assertTrue(set.filters[ABP_PREFIX_DENY].sanitize(set.filters[ABP_PREFIX_BADFILTER + ABP_PREFIX_DENY]).isEmpty())
+    }
+
+    // avoid copying code, map filter set to correct type
+    private fun Collection<UnifiedFilter>.sanitize(badFilters: Collection<UnifiedFilter>): Set<UnifiedFilter> {
+        val filters = mapNotNull {
+            if (it.contentType == ContentRequest.TYPE_POPUP
+                || badFilters.contains(it)
+            )
+                null
+            else it
+        }
+        return filters.toSet()
     }
 
     @Test

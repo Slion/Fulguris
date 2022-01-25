@@ -108,8 +108,9 @@ class AbpBlockerManager @Inject constructor(
         val entities = AbpDao(application.applicationContext).getAll()
         val abpLoader = AbpLoader(filterDir, entities)
 
-        // toSet() for removal of duplicate entries
-        val filters = blockerPrefixes.map { it to abpLoader.loadAll(it).toSet() }.toMap()
+        val filters = blockerPrefixes.associateWith { prefix ->
+            abpLoader.loadAll(prefix).sanitize(abpLoader.loadAll(ABP_PREFIX_BADFILTER + prefix))
+        }
 
         blockerPrefixes.forEach { prefix ->
             filterContainers[prefix]!!.clear() // clear container, or disabled filter lists will still be active
@@ -118,10 +119,9 @@ class AbpBlockerManager @Inject constructor(
         listsLoaded = true
 
         // create joint files
-        // TODO: don't just write! after sanitize, reload filter containers!
-        //  if load is slow and sanitize is fast: only load after sanitize
+        // TODO: avoid unnecessary tag creation
         blockerPrefixes.forEach { prefix ->
-            writeFile(prefix, filters[prefix]!!.sanitize().map { it.second })
+            writeFile(prefix, filters[prefix]!!.map { it.second })
         }
 
         /*if (elementHide) {
@@ -129,39 +129,6 @@ class AbpBlockerManager @Inject constructor(
             val elementFilter = ElementContainer().also { abpLoader.loadAllElementFilter().forEach(it::plusAssign) }
             elementBlocker = CosmeticFiltering(disableCosmetic, elementFilter)
         }*/
-    }
-
-    // TODO: log what is sanitized, here and in the toSet before
-    private fun Set<Pair<String, UnifiedFilter>>.sanitize(): Collection<Pair<String, UnifiedFilter>> {
-        return this.mapNotNull {
-            when {
-                // TODO: badfilter should act here! (first thing!)
-                //  for now, load badfilter from filter sets (for important, block, allow, modify only)
-                //   and remove matching filters in the set of appropriate type
-                //  which wildcard domain matching as described on https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#badfilter-modifier
-                //   resp. https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#badfilter
-                //   -> if badfilter matches filter only ignoring domains -> remove matching domains from the filter, also match wildcard
-
-                // WebResourceRequest.getContentType(pageUri: Uri) never returns TYPE_POPUP
-                //  so we can remove filters that act on popup-only
-                it.second.contentType == ContentRequest.TYPE_POPUP -> null
-
-                // remove other unnecessary filters?
-                //  more unsupported types?
-
-                // TODO: remove filters already included in others
-                //   e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
-                //  ->
-                //    combine filters that have same type and same pattern (we have the tag here as shortcut!) if difference is content type
-                //      other.contentType = it.contentType and other.contentType
-                //      null (to remove this filter)
-                //    check StartEndFilters that could be subdomain (not necessarily same patter, but this would accelerate match by a lot)
-                //      pattern does not contain '/', one endswith other
-                //  also remove unnecessary filters, like ||example.com^ if there is @@||example.com^
-
-                else -> it
-            }
-        }
     }
 
     private fun loadFileToContainer(file: File, prefix: String): Boolean {
@@ -368,10 +335,13 @@ class AbpBlockerManager @Inject constructor(
             ABP_PREFIX_REDIRECT,
             ABP_PREFIX_REDIRECT_EXCEPTION,
         )
+        val badfilterPrefixes = blockerPrefixes.map { ABP_PREFIX_BADFILTER + it}
 
         fun isModify(prefix: String) = prefix in listOf(ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION, ABP_PREFIX_REDIRECT, ABP_PREFIX_REDIRECT_EXCEPTION)
 
         private const val TAG = "AbpBlocker"
+
+        private val okHttpAcceptedSchemes = listOf("https", "http", "ws", "wss")
 
         // from jp.hazuki.yuzubrowser.core.utility.utils/FileUtils.kt
         private const val MIME_TYPE_UNKNOWN = "application/octet-stream"
@@ -422,7 +392,32 @@ class AbpBlockerManager @Inject constructor(
             return response
         }
 
-        private val okHttpAcceptedSchemes = listOf("https", "http", "ws", "wss")
+        fun Sequence<Pair<String, UnifiedFilter>>.sanitize(badFilters: Sequence<Pair<String, UnifiedFilter>>): Set<Pair<String, UnifiedFilter>> {
+            val badFilterFilters = badFilters.map { it.second }
+            val filters = mapNotNull {
+                if (it.second.contentType == ContentRequest.TYPE_POPUP
+                    || badFilterFilters.contains(it.second)
+                )
+                    null
+                else it
+            }
+            // TODO: badfilter should also work with wildcard domain matching as described on https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#badfilter-modifier
+            //  resp. https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#badfilter
+            //  -> if badfilter matches filter only ignoring domains -> remove matching domains from the filter, also match wildcard
+
+            // TODO 2: remove filters already included in others
+            //   e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
+            //  ->
+            //    combine filters that have same type and same pattern (we have the tag here as shortcut!) if difference is content type
+            //      other.contentType = it.contentType and other.contentType
+            //      null (to remove this filter)
+            //    check StartEndFilters that could be subdomain (not necessarily same patter, but this would accelerate match by a lot)
+            //      pattern does not contain '/', one endswith other
+            //  also remove unnecessary filters, like ||example.com^ if there is @@||example.com^
+            //  and: only do if it's reasonably fast
+            return filters.toSet()
+        }
+
     }
 
     private class ThirdPartyLruCache(size: Int): LruCache<String, Boolean>(size) {

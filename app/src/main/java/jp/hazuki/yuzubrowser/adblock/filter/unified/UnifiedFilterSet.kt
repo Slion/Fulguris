@@ -16,7 +16,8 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.unified
 
-import acr.browser.lightning.adblock.AbpBlockerManager
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.badfilterPrefixes
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.blockerPrefixes
 import jp.hazuki.yuzubrowser.adblock.filter.unified.element.ElementFilter
 import java.security.InvalidParameterException
 
@@ -30,6 +31,6 @@ class UnifiedFilterSet(
 // this is simply a Map<String, List<UnifiedFilter>> where i don't need to care about null
 // does NOT contains element hide filters or allowlist
 class FilterMap {
-    private val map = AbpBlockerManager.blockerPrefixes.associateWith { mutableListOf<UnifiedFilter>() }
+    private val map = (blockerPrefixes + badfilterPrefixes).associateWith { mutableListOf<UnifiedFilter>() }
     operator fun get(list: String) = map[list] ?: throw(InvalidParameterException("list $list does not exist"))
 }

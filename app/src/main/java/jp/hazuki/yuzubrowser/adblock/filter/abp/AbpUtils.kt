@@ -32,6 +32,8 @@ internal const val ABP_PREFIX_IMPORTANT = "i_"
 internal const val ABP_PREFIX_IMPORTANT_ALLOW = "ia_"
 internal const val ABP_PREFIX_REDIRECT = "r_"
 internal const val ABP_PREFIX_REDIRECT_EXCEPTION = "re_"
+// badfilter is an additional prefix for files
+internal const val ABP_PREFIX_BADFILTER = "bf_"
 
 // prefixes for modify filters used inside the modify files
 internal const val MODIFY_PREFIX_REDIRECT = 'r'
