@@ -39,6 +39,7 @@ import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import java.lang.IllegalArgumentException
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -212,12 +213,20 @@ class AbpBlockerManager @Inject constructor(
                 //  so don't block other schemes
                 if (request.url.scheme !in okHttpAcceptedSchemes)
                     return null
-                val newRequest = Request.Builder()
-                    .url(response.url)
-                    .method(response.requestMethod, null) // use same method, no body to copy from WebResourceRequest
-                    .headers(response.requestHeaders.toHeaders())
-                    .build()
+                if (request.method == "POST" || request.method == "PUT" || request.method == "PATCH") {
+                    // webresourcerequest does not contain request body, but these request types need body
+                    //  DELETE may have body... maybe ignore it here as well?
+                    //  others have no body
+                    // TODO: try to get request with body, needs change to webview client
+                    //  if not working: add logging to improve things
+                    return null
+                }
                 try {
+                    val newRequest = Request.Builder()
+                        .url(response.url)
+                        .method(response.requestMethod, null) // use same method, no body to copy from WebResourceRequest
+                        .headers(response.requestHeaders.toHeaders())
+                        .build()
                     val webResponse = okHttpClient.newCall(newRequest).execute()
                     if (response.addResponseHeaders == null && response.removeResponseHeaders == null)
                         return webResponse.toWebResourceResponse(null)
@@ -229,6 +238,10 @@ class AbpBlockerManager @Inject constructor(
                     // TODO: what do?
                     //  empty WebResourceResponse? it's like blocking... maybe with some error response code?
                     //  null to let WebView try again? but then the filters are not applied
+                    return null
+                } catch (e: IllegalArgumentException) {
+                    // catches problems when building request, like method and body incompatibility
+                    // TODO: log if it still happens
                     return null
                 }
             }
