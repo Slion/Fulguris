@@ -281,7 +281,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
     }
 
     companion object {
-        private const val AN_HOUR = 60 * 60 * 1000
+        private const val AN_HOUR = 60 * 60 * 1000L
         private const val A_DAY = 24 * AN_HOUR
 
     }
