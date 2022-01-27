@@ -21,5 +21,6 @@ open class UnifiedFilterInfo(
         open val homePage: String?,
         open val lastUpdate: String?,
         open val expires: Int?,
-        open val version: String?
+        open val version: String?,
+        open val redirectUrl: String?
 )

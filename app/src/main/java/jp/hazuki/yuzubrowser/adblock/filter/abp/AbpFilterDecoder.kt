@@ -73,9 +73,7 @@ class AbpFilterDecoder {
             if (line.isEmpty()) return@forEachLine
             val trimmedLine = line.trim()
             when {
-                trimmedLine[0] == '!' -> trimmedLine.decodeComment(url, info)?.let {
-                    throw OnRedirectException(it) // TODO: what does it do?
-                }
+                trimmedLine[0] == '!' -> trimmedLine.decodeComment(url, info)
                 else -> {
                     val matcher = elementFilterRegex.matcher(trimmedLine)
                     if (matcher.matches() && !trimmedLine.contains("##^responseheader")) { // exception necessary to process responseheader correctly
@@ -494,24 +492,23 @@ class AbpFilterDecoder {
         }
     }
 
-    private fun String.decodeComment(url: String?, info: DecoderInfo): String? {
+    private fun String.decodeComment(url: String?, info: DecoderInfo) {
+        // comment format:
+        // ! <title>: <content>
+        if (!contains(':')) return
+        val title = substringBefore(':').drop(1).trim().lowercase()
+        val content = substringAfter(':').trim()
         val comment = split(':')
-        if (comment.size < 2) return null
+        if (comment.size < 2) return
 
-        when (comment[0].substring(1).trim().lowercase()) {
-            "title" -> info.title = comment[1].trim()
-            "homepage" -> info.homePage = comment[1].trim()
-            "last updated" -> info.lastUpdate = comment[1].trim()
-            "expires" -> info.expires = comment[1].trim().decodeExpires()
-            "version" -> info.version = comment[1].trim()
-            "redirect" -> {
-                val redirect = comment[1].trim()
-                if (url != null && url != redirect) {
-                    return url
-                }
-            }
+        when (title) {
+            "title" -> info.title = content
+            "homepage" -> info.homePage = content
+            "last updated" -> info.lastUpdate = content
+            "expires" -> info.expires = content.decodeExpires()
+            "version" -> info.version = content
+            "redirect" -> info.redirectUrl = content
         }
-        return null
     }
 
     private fun String.decodeExpires(): Int {
@@ -534,14 +531,13 @@ class AbpFilterDecoder {
         return -1
     }
 
-    class OnRedirectException(val url: String) : IOException()
-
-    private class DecoderInfo : UnifiedFilterInfo(null, null, null, null, null) {
+    private class DecoderInfo : UnifiedFilterInfo(null, null, null, null, null, null) {
         override var expires: Int? = null
         override var homePage: String? = null
         override var lastUpdate: String? = null
         override var title: String? = null
         override var version: String? = null
+        override var redirectUrl: String? = null
     }
 
     companion object {

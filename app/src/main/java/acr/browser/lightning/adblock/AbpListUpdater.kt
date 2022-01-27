@@ -213,6 +213,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         entity.homePage = info.homePage
         entity.version = info.version
         entity.lastUpdate = info.lastUpdate
+        info.redirectUrl?.let { entity.url = it }
         entity.lastLocalUpdate = System.currentTimeMillis()
         blockerPrefixes.forEach {
             if (isModify(it))
