@@ -109,7 +109,7 @@ class AbpBlockerManager @Inject constructor(
         val abpLoader = AbpLoader(filterDir, entities)
 
         val filters = blockerPrefixes.associateWith { prefix ->
-            abpLoader.loadAll(prefix).sanitize(abpLoader.loadAll(ABP_PREFIX_BADFILTER + prefix))
+            abpLoader.loadAll(prefix).toSet().sanitize(abpLoader.loadAll(ABP_PREFIX_BADFILTER + prefix).toSet())
         }
 
         blockerPrefixes.forEach { prefix ->
@@ -392,7 +392,7 @@ class AbpBlockerManager @Inject constructor(
             return response
         }
 
-        fun Sequence<Pair<String, UnifiedFilter>>.sanitize(badFilters: Sequence<Pair<String, UnifiedFilter>>): Set<Pair<String, UnifiedFilter>> {
+        fun Collection<Pair<String, UnifiedFilter>>.sanitize(badFilters: Collection<Pair<String, UnifiedFilter>>): List<Pair<String, UnifiedFilter>> {
             val badFilterFilters = badFilters.map { it.second }
             val filters = mapNotNull {
                 if (it.second.contentType == ContentRequest.TYPE_POPUP
@@ -415,7 +415,7 @@ class AbpBlockerManager @Inject constructor(
             //      pattern does not contain '/', one endswith other
             //  also remove unnecessary filters, like ||example.com^ if there is @@||example.com^
             //  and: only do if it's reasonably fast
-            return filters.toSet()
+            return filters
         }
 
     }
