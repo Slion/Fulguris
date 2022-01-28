@@ -10,6 +10,7 @@ import acr.browser.lightning.utils.isAppScheme
 import acr.browser.lightning.utils.isSpecialUrl
 import android.app.Application
 import android.net.Uri
+import android.webkit.CookieManager
 import android.webkit.MimeTypeMap
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -29,11 +30,8 @@ import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.Headers
+import okhttp3.*
 import okhttp3.Headers.Companion.toHeaders
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import okhttp3.internal.publicsuffix.PublicSuffix
 import okhttp3.internal.toHeaderList
 import java.io.ByteArrayInputStream
@@ -60,7 +58,10 @@ class AbpBlockerManager @Inject constructor(
     // store whether lists are loaded (and delay any request until loading is done)
     private var listsLoaded = false
 
-    private val okHttpClient by lazy { OkHttpClient() } // we only need it for some filters
+    private val okHttpClient by lazy { OkHttpClient()
+        .newBuilder()
+        .cookieJar(WebkitCookieManager(CookieManager.getInstance()))
+        .build() } // we only need it for some filters, so don't create if not necessary
 
     private val thirdPartyCache = ThirdPartyLruCache(100)
 
@@ -211,14 +212,13 @@ class AbpBlockerManager @Inject constructor(
                 //  so don't block other schemes
                 if (request.url.scheme !in okHttpAcceptedSchemes)
                     return null
-                // for some reason, requests done via okhttp often cause problems with sites that
-                //  require login, or with some full screen cookie dialogs
-                // currently we reduce the problems by not executing modified requests for main frame
-                //  this is not good, as filter options like $csp are main frame only
-                //  and some pages are still broken
-                if (request.isForMainFrame)
-                    return null
+                // for some reason, requests done via okhttp on main frame may cause problems
+                //  occurs for example on heise.de
+                //  but not doing main frame requests with okhttp breaks filters like csp... not sure what to do, maybe add a setting?
+//                if (request.isForMainFrame)
+//                    return null
                 // webresourcerequest does not contain request body, but these request types must or can have a body
+                //  TODO: update in a way that a body can be provided, try https://github.com/KonstantinSchubert/request_data_webviewclient
                 if (request.method == "POST" || request.method == "PUT" || request.method == "PATCH" || request.method == "DELETE")
                     return null
                 try {
@@ -236,13 +236,13 @@ class AbpBlockerManager @Inject constructor(
                     return webResponse.toWebResourceResponse(headers)
                 } catch (e: IOException) {
                     // connection problems
-                    logger.log(TAG, "error while doing okhttp request", e)
+                    logger.log(TAG, "error while doing modified request for ${response.url}: ", e)
                     return null
                 } catch (e: IllegalArgumentException) {
-                    // request cannot be created, usually this is because of wrong scheme,
+                    // request cannot be created, this may be because of wrong scheme,
                     //  or not providing a body it the method requires one
-                    // both cases are checked, so nothing should happen
-                    logger.log(TAG, "error while creating okhttp request", e)
+                    // but also happens when creating WebResourceResponse with "wrong" response code
+                    logger.log(TAG, "error while doing modified request for ${response.url}: ", e)
                     return null
                 }
             }
@@ -299,14 +299,17 @@ class AbpBlockerManager @Inject constructor(
     }
 
     private fun Response.toWebResourceResponse(modifiedHeaders: Map<String, String>?): WebResourceResponse {
-        // content-type usually has format text/html: charset=utf-8
-        // TODO: is this ok? worked in tests, but are there cases where it doesn't work?
-        val contentType = header("content-type", "text/plain")?.split(';')
+        // content-type usually has format "text/html: charset=utf-8" or "text/html"
+        //  TODO: check when it's not any of the above cases
+        val contentType = (header("content-type") ?: "text/plain").split(';')
+        val responseCode = if (code < 300 || code > 399) code else 200 // TODO: WebResourceResponse doesn't accept codes in this range...
         return WebResourceResponse(
-            contentType?.first(),
-            contentType?.last()?.substringAfter('='),
-            code,
-            message.let { if (it.isEmpty()) "OK" else it }, // reason must not be empty!
+            contentType.first(),
+            if (contentType.size > 1 && contentType.last().lowercase().startsWith("charset="))
+                    contentType.last().substringAfter('=')
+                else null,
+            responseCode,
+            message.let { if (it.isEmpty()) "OK" else it }, // must not be empty! TODO: why is it still empty sometimes?
             modifiedHeaders ?: headers.toMap(),
             body?.byteStream() ?: EmptyInputStream()
         )
@@ -453,4 +456,19 @@ class AbpBlockerManager @Inject constructor(
             return db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost)
         }
     }
+}
+
+private class WebkitCookieManager (private val cookieManager: CookieManager) : CookieJar {
+
+    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+        cookies.forEach { cookie ->
+            cookieManager.setCookie(url.toString(), cookie.toString())
+        }
+    }
+
+    override fun loadForRequest(url: HttpUrl): List<Cookie> =
+        when (val cookies = cookieManager.getCookie(url.toString())) {
+            null -> emptyList()
+            else -> cookies.split("; ").mapNotNull { Cookie.parse(url, it) }
+        }
 }
