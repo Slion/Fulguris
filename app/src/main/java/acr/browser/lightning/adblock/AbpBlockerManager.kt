@@ -3,6 +3,7 @@ package acr.browser.lightning.adblock
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlocker.Companion.addHeader
 import acr.browser.lightning.adblock.AbpBlocker.Companion.removeHeader
+import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.isAppScheme
@@ -65,6 +66,7 @@ class AbpBlockerManager @Inject constructor(
 
     private val blocker = AbpBlocker(abpUserRules, filterContainers)
 
+    private val cacheDir by lazy { FILE + application.cacheDir.absolutePath }
     /*    // element hiding
         //  doesn't work, but maybe it's crucial to inject the js at the right point
         //  tried onPageFinished, might be too late (try to implement onDomFinished from yuzu?)
@@ -120,7 +122,7 @@ class AbpBlockerManager @Inject constructor(
         listsLoaded = true
 
         // create joint files
-        // TODO: avoid unnecessary tag creation
+        // tags will be created again, this is unnecessary, but fast enough to not care about it very much
         blockerPrefixes.forEach { prefix ->
             writeFile(prefix, filters[prefix]!!.map { it.second })
         }
@@ -168,15 +170,11 @@ class AbpBlockerManager @Inject constructor(
 
     // returns null if not blocked, else some WebResourceResponse
     override fun shouldBlock(request: WebResourceRequest, pageUrl: String): WebResourceResponse? {
-        // always allow special URLs
-        // then check user lists (user allow should even override malware list)
-        // then mining/malware (ad block allow should not override malware list)
-        // then ads
-
-        // TODO: also allow files, not only special urls?
-        // files are not working for modify filters, and what should be bad with loading local resources?
-        if (request.url.toString().isSpecialUrl() || request.url.toString().isAppScheme())
-            return null
+        // always allow special URLs, app scheme and cache dir (used for favicons)
+        request.url.toString().let {
+            if (it.isSpecialUrl() || it.isAppScheme() || it.startsWith(cacheDir))
+                return null
+        }
 
         // create contentRequest
         // pageUrl can be "" (when opening something in a new tab, or manually entering a URL)
@@ -213,14 +211,16 @@ class AbpBlockerManager @Inject constructor(
                 //  so don't block other schemes
                 if (request.url.scheme !in okHttpAcceptedSchemes)
                     return null
-                if (request.method == "POST" || request.method == "PUT" || request.method == "PATCH") {
-                    // webresourcerequest does not contain request body, but these request types need body
-                    //  DELETE may have body... maybe ignore it here as well?
-                    //  others have no body
-                    // TODO: try to get request with body, needs change to webview client
-                    //  if not working: add logging to improve things
+                // for some reason, requests done via okhttp often cause problems with sites that
+                //  require login, or with some full screen cookie dialogs
+                // currently we reduce the problems by not executing modified requests for main frame
+                //  this is not good, as filter options like $csp are main frame only
+                //  and some pages are still broken
+                if (request.isForMainFrame)
                     return null
-                }
+                // webresourcerequest does not contain request body, but these request types must or can have a body
+                if (request.method == "POST" || request.method == "PUT" || request.method == "PATCH" || request.method == "DELETE")
+                    return null
                 try {
                     val newRequest = Request.Builder()
                         .url(response.url)
@@ -235,13 +235,14 @@ class AbpBlockerManager @Inject constructor(
                     response.removeResponseHeaders?.forEach { headers.removeHeader(it) }
                     return webResponse.toWebResourceResponse(headers)
                 } catch (e: IOException) {
-                    // TODO: what do?
-                    //  empty WebResourceResponse? it's like blocking... maybe with some error response code?
-                    //  null to let WebView try again? but then the filters are not applied
+                    // connection problems
+                    logger.log(TAG, "error while doing okhttp request", e)
                     return null
                 } catch (e: IllegalArgumentException) {
-                    // catches problems when building request, like method and body incompatibility
-                    // TODO: log if it still happens
+                    // request cannot be created, usually this is because of wrong scheme,
+                    //  or not providing a body it the method requires one
+                    // both cases are checked, so nothing should happen
+                    logger.log(TAG, "error while creating okhttp request", e)
                     return null
                 }
             }
@@ -271,7 +272,10 @@ class AbpBlockerManager @Inject constructor(
             USER_BLOCKED -> application.resources.getString(R.string.page_blocked_list_user, pattern)
             ABP_PREFIX_IMPORTANT -> application.resources.getString(R.string.page_blocked_list_malware, pattern)
             ABP_PREFIX_DENY -> application.resources.getString(R.string.page_blocked_list_ad, pattern) // should only be ABP_PREFIX_DENY
-            else -> application.resources.getString(R.string.page_blocked_list_ad, pattern) // TODO: should not happen, log?
+            else -> {
+                logger.log(TAG, "unexpected blocklist when creating main frame dummy: $blockList")
+                application.resources.getString(R.string.page_blocked_list_ad, pattern)
+            }
         }
 
         val builder = StringBuilder(
@@ -419,15 +423,18 @@ class AbpBlockerManager @Inject constructor(
             //  -> if badfilter matches filter only ignoring domains -> remove matching domains from the filter, also match wildcard
 
             // TODO 2: remove filters already included in others
-            //   e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
-            //  ->
-            //    combine filters that have same type and same pattern (we have the tag here as shortcut!) if difference is content type
-            //      other.contentType = it.contentType and other.contentType
-            //      null (to remove this filter)
-            //    check StartEndFilters that could be subdomain (not necessarily same patter, but this would accelerate match by a lot)
-            //      pattern does not contain '/', one endswith other
+            //  e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
+            //  how to do:
+            //    combine filters that have same type and same pattern if difference is content type
+            //      simply other.contentType = it.contentType and other.contentType (and remove filter "it")
+            //      but: how to check quickly? we have the tag, but checking the entire list for every entry is bad
+            //       maybe this part of sanitize should work on the filterContainer?
+            //    check StartEndFilters that could be subdomain
+            //      remove longer if pattern does not contain '/', and one ends with other
+            //      do some pre-matching using tags. will not find everything, but much faster
             //  also remove unnecessary filters, like ||example.com^ if there is @@||example.com^
-            //  and: only do if it's reasonably fast
+            //   how to check properly? would need to do go through tags of allowlist, and remove blocklist entries that match
+            //   but likely there aren't many hits, so this is low priority
             return filters
         }
 
