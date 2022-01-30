@@ -3,7 +3,6 @@ package acr.browser.lightning.adblock
 import acr.browser.lightning.adblock.AbpBlocker.Companion.getQueryParameterMap
 import acr.browser.lightning.adblock.AbpBlockerManager.Companion.blockerPrefixes
 import acr.browser.lightning.adblock.AbpBlockerManager.Companion.isModify
-import acr.browser.lightning.adblock.AbpBlockerManager.Companion.sanitize
 import android.net.Uri
 import android.webkit.WebResourceRequest
 import androidx.core.net.toUri

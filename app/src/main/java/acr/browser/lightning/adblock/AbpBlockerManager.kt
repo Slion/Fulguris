@@ -15,6 +15,7 @@ import android.webkit.MimeTypeMap
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import androidx.collection.LruCache
+import androidx.core.net.toUri
 import androidx.core.util.PatternsCompat
 import jp.hazuki.yuzubrowser.adblock.EmptyInputStream
 import jp.hazuki.yuzubrowser.adblock.core.AbpLoader
@@ -187,7 +188,7 @@ class AbpBlockerManager @Inject constructor(
         // -> fix both by setting pageUrl to requestUrl if request.isForMainFrame
         //  is there any way a request for main frame can be a 3rd party request? then a different fix would be required
         val contentRequest = request.getContentRequest(
-            if (request.isForMainFrame || pageUrl.isBlank()) request.url else Uri.parse(pageUrl)
+            if (request.isForMainFrame || pageUrl.isBlank()) request.url else pageUrl.toUri()
         )
 
         // wait until blocklists are loaded
@@ -234,16 +235,12 @@ class AbpBlockerManager @Inject constructor(
                     response.addResponseHeaders?.forEach { headers.addHeader(it) }
                     response.removeResponseHeaders?.forEach { headers.removeHeader(it) }
                     return webResponse.toWebResourceResponse(headers)
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     // connection problems
+                    // problems when building okhttp Request
+                    // problems when creating WebResourceResponse
                     logger.log(TAG, "error while doing modified request for ${response.url}: ", e)
-                    return null
-                } catch (e: IllegalArgumentException) {
-                    // request cannot be created, this may be because of wrong scheme,
-                    //  or not providing a body it the method requires one
-                    // but also happens when creating WebResourceResponse with "wrong" response code
-                    logger.log(TAG, "error while doing modified request for ${response.url}: ", e)
-                    return null
+                    return null // allow webview to try again, even though this should be modified...
                 }
             }
         }
@@ -299,17 +296,17 @@ class AbpBlockerManager @Inject constructor(
     }
 
     private fun Response.toWebResourceResponse(modifiedHeaders: Map<String, String>?): WebResourceResponse {
-        // content-type usually has format "text/html: charset=utf-8" or "text/html"
-        //  TODO: check when it's not any of the above cases
+        // content-type usually has format "text/html, charset=utf-8" or "text/html"
         val contentType = (header("content-type") ?: "text/plain").split(';')
-        val responseCode = if (code < 300 || code > 399) code else 200 // TODO: WebResourceResponse doesn't accept codes in this range...
+        // WebResourceResponse doesn't accept codes in this range, but okhttp response sometimes to have them
+        val responseCode = if (code < 300 || code > 399) code else 200
         return WebResourceResponse(
             contentType.first(),
-            if (contentType.size > 1 && contentType.last().lowercase().startsWith("charset="))
-                    contentType.last().substringAfter('=')
+            if (contentType.size > 1 && contentType[1].lowercase().startsWith("charset="))
+                    contentType[1].substringAfter('=')
                 else null,
             responseCode,
-            message.let { if (it.isEmpty()) "OK" else it }, // must not be empty! TODO: why is it still empty sometimes?
+            message.let { if (it.isEmpty()) "OK" else it }, // must not be empty, but sometimes okhttp response has empty message
             modifiedHeaders ?: headers.toMap(),
             body?.byteStream() ?: EmptyInputStream()
         )
@@ -414,30 +411,24 @@ class AbpBlockerManager @Inject constructor(
 
         fun Collection<Pair<String, UnifiedFilter>>.sanitize(badFilters: Collection<Pair<String, UnifiedFilter>>): List<Pair<String, UnifiedFilter>> {
             val badFilterFilters = badFilters.map { it.second }
-            val filters = mapNotNull {
-                if (it.second.contentType == ContentRequest.TYPE_POPUP
-                    || badFilterFilters.contains(it.second)
-                )
-                    null
-                else it
-            }
+
             // TODO: badfilter should also work with wildcard domain matching as described on https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#badfilter-modifier
             //  resp. https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#badfilter
             //  -> if badfilter matches filter only ignoring domains -> remove matching domains from the filter, also match wildcard
+            val filters = filterNot {
+                it.second.contentType == ContentRequest.TYPE_POPUP
+                        || badFilterFilters.contains(it.second)
+            }
 
-            // TODO 2: remove filters already included in others
+            // TODO: remove filters contained in others
             //  e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
-            //  how to do:
-            //    combine filters that have same type and same pattern if difference is content type
-            //      simply other.contentType = it.contentType and other.contentType (and remove filter "it")
-            //      but: how to check quickly? we have the tag, but checking the entire list for every entry is bad
-            //       maybe this part of sanitize should work on the filterContainer?
-            //    check StartEndFilters that could be subdomain
-            //      remove longer if pattern does not contain '/', and one ends with other
-            //      do some pre-matching using tags. will not find everything, but much faster
-            //  also remove unnecessary filters, like ||example.com^ if there is @@||example.com^
-            //   how to check properly? would need to do go through tags of allowlist, and remove blocklist entries that match
-            //   but likely there aren't many hits, so this is low priority
+            //  use tags for the first, and hashCode without 3rd party for the second?
+
+            // TODO: combine filters that are the same except for domains or content type
+            //  but this may be slow and not worth much work...
+
+            // maybe limit checks to certain types where such things occur more often?
+
             return filters
         }
 
