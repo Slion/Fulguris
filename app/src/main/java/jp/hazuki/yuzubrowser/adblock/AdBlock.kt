@@ -16,6 +16,7 @@
 
 package jp.hazuki.yuzubrowser.adblock
 
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.MIME_TYPE_UNKNOWN
 import acr.browser.lightning.adblock.AbpBlockerManager.Companion.getMimeTypeFromExtension
 import android.net.Uri
 import android.webkit.WebResourceRequest
@@ -53,7 +54,7 @@ fun WebResourceRequest.getContentType(pageUri: Uri): Int {
             "php" -> Unit
             else -> {
                 val mimeType = getMimeTypeFromExtension(extension)
-                if (mimeType != "application/octet-stream") {
+                if (mimeType != MIME_TYPE_UNKNOWN) {
                     return otherIfNone(type or mimeType.getFilterType())
                 }
             }

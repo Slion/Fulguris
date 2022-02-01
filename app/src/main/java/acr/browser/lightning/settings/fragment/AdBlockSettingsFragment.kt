@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
@@ -117,9 +118,11 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 summary = userPreferences.blockListAutoUpdateFrequency.toUpdateFrequency(),
                 onClick = { summaryUpdater ->
                     activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
-                        setTitle(R.string.blocklist_update_frequency)
-                        // TODO: can't show message and singleChoice at the same time -> what do?
-                        //setMessage(R.string.blocklist_update_description)
+                        setCustomTitle(TextView(ContextThemeWrapper(context, R.style.MaterialAlertDialog_Material3)).apply {
+                            setPadding(40, 30, 40, 10)
+                            setText(R.string.blocklist_update_description)
+                            textSize = 18f
+                        })
                         val values = listOf(
                             Pair(1, resources.getString(R.string.block_remote_frequency_daily)),
                             Pair(7, resources.getString(R.string.block_remote_frequency_weekly)),
@@ -129,10 +132,34 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             userPreferences.blockListAutoUpdateFrequency = it
                             summaryUpdater.updateSummary(it.toUpdateFrequency())
                         }
-                        setPositiveButton(resources.getString(R.string.action_ok), null)
+                        setPositiveButton(R.string.action_ok, null)
                         setNeutralButton(R.string.blocklist_update_now) {_,_ ->
                             updateFilterList(null, true)
                         }
+                    }?.resizeAndShow()
+                }
+            )
+
+            clickableDynamicPreference(
+                preference = getString(R.string.pref_key_modify_filters),
+                summary = userPreferences.modifyFilters.toModifySetting(),
+                onClick = { summaryUpdater ->
+                    activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
+                        setCustomTitle(TextView(ContextThemeWrapper(context, R.style.MaterialAlertDialog_Material3)).apply {
+                            setPadding(40, 30, 40, 10)
+                            setText(R.string.use_modify_filters_warning)
+                            textSize = 18f
+                        })
+                        val values = listOf(
+                            Pair(0, resources.getString(R.string.disable)),
+                            Pair(1, resources.getString(R.string.modify_filters_not_for_main_frame)),
+                            Pair(2, resources.getString(R.string.enable))
+                        )
+                        withSingleChoiceItems(values, userPreferences.modifyFilters) {
+                            userPreferences.modifyFilters = it
+                            summaryUpdater.updateSummary(it.toModifySetting())
+                        }
+                        setPositiveButton(R.string.action_ok, null)
                     }?.resizeAndShow()
                 }
             )
@@ -384,8 +411,14 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         else -> "" //should not happen
     }
 
+    private fun Int.toModifySetting() = when(this) {
+        0 -> resources.getString(R.string.disable)
+        1 -> resources.getString(R.string.modify_filters_not_for_main_frame)
+        2 -> resources.getString(R.string.enable)
+        else -> "" //should not happen
+    }
 
-override fun onDestroy() {
+    override fun onDestroy() {
         super.onDestroy()
         // reload lists after updates are done
         if (reloadLists || updatesRunning > 0) {

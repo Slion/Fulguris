@@ -49,7 +49,7 @@ class AbpBlockerManager @Inject constructor(
     private val application: Application,
     abpListUpdater: AbpListUpdater,
     abpUserRules: AbpUserRules,
-    userPreferences: UserPreferences,
+    val userPreferences: UserPreferences,
     private val logger: Logger
 ) : AdBlocker {
 
@@ -202,25 +202,26 @@ class AbpBlockerManager @Inject constructor(
 
         when (response) {
             is BlockResponse -> {
-                return if (request.isForMainFrame) {
+                return if (request.isForMainFrame)
                     createMainFrameDummy(request.url, response.blockList, response.pattern)
-                } else
+                else
                     BlockResourceResponse(RES_EMPTY).toWebResourceResponse()
             }
             is BlockResourceResponse -> return response.toWebResourceResponse()
             is ModifyResponse -> {
-                // okhttp accepts only ws, wss, http, https, can't build a request otherwise
-                //  so don't block other schemes
-                if (request.url.scheme !in okHttpAcceptedSchemes)
-                    return null
-                // for some reason, requests done via okhttp on main frame may cause problems
-                //  occurs for example on heise.de
-                //  but not doing main frame requests with okhttp breaks filters like csp... not sure what to do, maybe add a setting?
-//                if (request.isForMainFrame)
-//                    return null
-                // webresourcerequest does not contain request body, but these request types must or can have a body
-                //  TODO: update in a way that a body can be provided, try https://github.com/KonstantinSchubert/request_data_webviewclient
-                if (request.method == "POST" || request.method == "PUT" || request.method == "PATCH" || request.method == "DELETE")
+                if (
+                    // okhttp accepts only ws, wss, http, https, can't build a request otherwise
+                    request.url.scheme !in okHttpAcceptedSchemes
+                    // modify filter implementation still has some problems, allow users to disable
+                    || userPreferences.modifyFilters == 0
+                    // for some reason, requests done via okhttp on main frame may cause problems
+                    //  occurs for example on heise.de
+                    //  allow users to disable on main frame only
+                    || (request.isForMainFrame && userPreferences.modifyFilters == 1)
+                    // webresourcerequest does not contain request body, but these request types must or can have a body
+                    || request.method == "POST" || request.method == "PUT" || request.method == "PATCH" || request.method == "DELETE"
+                    // TODO: update in a way that a body can be provided, try https://github.com/KonstantinSchubert/request_data_webviewclient
+                )
                     return null
                 try {
                     val newRequest = Request.Builder()
@@ -243,9 +244,8 @@ class AbpBlockerManager @Inject constructor(
                     return null // allow webview to try again, even though this should be modified...
                 }
             }
+            else -> logger.log(TAG, "unknown blocker response type: ${response.javaClass}")
         }
-        // put strings and files into blocked response
-        // get okhttp response and modify headers
         return null
     }
 
@@ -320,7 +320,7 @@ class AbpBlockerManager @Inject constructor(
         return map
     }
 
-    // TODO: load from file every time? is there some caching in the background? cache stuff manually?
+    // TODO: load from file every time? is there some caching in the background? cache files using by lazy?
     private fun BlockResourceResponse.toWebResourceResponse(): WebResourceResponse {
         val mimeType = getMimeType(filename)
         return WebResourceResponse(
@@ -361,7 +361,8 @@ class AbpBlockerManager @Inject constructor(
         private val okHttpAcceptedSchemes = listOf("https", "http", "ws", "wss")
 
         // from jp.hazuki.yuzubrowser.core.utility.utils/FileUtils.kt
-        private const val MIME_TYPE_UNKNOWN = "application/octet-stream"
+        const val MIME_TYPE_UNKNOWN = "application/octet-stream"
+
         fun getMimeType(fileName: String): String {
             val lastDot = fileName.lastIndexOf('.')
             if (lastDot >= 0) {

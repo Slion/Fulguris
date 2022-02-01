@@ -381,6 +381,12 @@ class UserPreferences @Inject constructor(
     var blockListAutoUpdate by preferences.enumPreference(R.string.pref_key_blocklist_auto_update, AbpUpdateMode.WIFI_ONLY)
     var blockListAutoUpdateFrequency by preferences.intPreference(R.string.pref_key_blocklist_auto_update_frequency, 7)
 
+    /**
+     * Modify filters may break some websites due to incomplete implementation.
+     * Let the user decide whether to use them.
+     */
+    var modifyFilters by preferences.intPreference(R.string.pref_key_modify_filters, 0)
+
     ///
     /// Various tab event actions
     ///
