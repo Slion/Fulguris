@@ -35,6 +35,13 @@ class FilterWriter {
         writeHeader(os)
     }
 
+    // second part in pair is the modify filter
+    fun writeModifyFilters(os: OutputStream, filters: List<UnifiedFilter>) {
+        writeHeader(os)
+        writeAllModifyFilters(os, filters)
+        writeHeader(os)
+    }
+
     private fun writeHeader(os: OutputStream) {
         os.write(FILTER_CACHE_HEADER.toByteArray())
     }
@@ -43,48 +50,70 @@ class FilterWriter {
         os.write(filters.size.toByteArray(intBuf))
 
         filters.forEach {
-            // write simplified for simple domain filters
-            //  increases write and read speeds
-            if (it.filterType == FILTER_TYPE_START_END && !it.pattern.contains('/')
-                && !it.pattern.endsWith('.') && it.domains == null && !it.ignoreCase) {
-                os.write(FILTER_TYPE_START_END_DOMAIN and 0xff)
-                os.write(it.contentType.toShortByteArray(shortBuf))
-                os.write(it.thirdParty and 0xff)
-                val patternBytes = it.pattern.toByteArray()
-                os.write(patternBytes.size.toShortByteArray(shortBuf))
-                os.write(patternBytes)
-                return@forEach
-            }
+            writeFilter(os, it)
+        }
+    }
 
-            os.write(it.filterType and 0xff)
+    // would be easier to write all in the same file
+    //  but would break compatibility with previously written lists, and that little simplification is not worth it
+    private fun writeAllModifyFilters(os: OutputStream, filters: List<UnifiedFilter>) {
+        os.write(filters.size.toByteArray(intBuf))
+
+        filters.forEach {
+            if (it.modify == null) return // log if modify is null?
+            val modifyString = "" + it.modify!!.prefix + (if (it.modify!!.inverse) 1 else 0) + it.modify!!.parameter
+            writeModify(os, modifyString)
+            writeFilter(os, it)
+        }
+    }
+
+    private fun writeModify(os: OutputStream, param: String) {
+        val modifyBytes = param.toByteArray()
+        os.write(modifyBytes.size.toShortByteArray(shortBuf))
+        os.write(modifyBytes)
+    }
+
+    private fun writeFilter(os: OutputStream, it: UnifiedFilter) {
+        // write simplified for simple domain filters
+        //  increases write and read speeds
+        if (it.filterType == FILTER_TYPE_START_END && !it.pattern.contains('/')
+            && !it.pattern.endsWith('.') && it.domains == null && !it.ignoreCase && it.modify == null)
+            {
+            os.write(FILTER_TYPE_START_END_DOMAIN and 0xff)
             os.write(it.contentType.toShortByteArray(shortBuf))
             os.write(it.thirdParty and 0xff)
-
             val patternBytes = it.pattern.toByteArray()
-            os.writeVariableInt(patternBytes.size, shortBuf, intBuf)
+            os.write(patternBytes.size.toShortByteArray(shortBuf))
             os.write(patternBytes)
+            return
+        }
 
-            os.write(if (it.ignoreCase) 1 else 0)
+        os.write(it.filterType and 0xff)
+        os.write(it.contentType.toShortByteArray(shortBuf))
+        os.write(it.thirdParty and 0xff)
 
-            // also write best tag
-            //  no need to create tags when loading -> loading is ca 20-50% faster
-            val tagBytes = when {
-                it.isRegex -> "".toByteArray()
-                else -> Tag.createBest(it.pattern).toByteArray()
-            }
-            os.write(tagBytes.size.toShortByteArray(shortBuf))
-            os.write(tagBytes)
+        val patternBytes = it.pattern.toByteArray()
+        os.writeVariableInt(patternBytes.size, shortBuf, intBuf)
+        os.write(patternBytes)
 
-            os.write(min(it.domains?.size ?: 0, 255))
-            it.domains?.let { map ->
-                os.write(if (map.include) 1 else 0)
-                for (i in 0 until min(map.size, 255)) {
-                    val key = map.getKey(i).toByteArray()
-                    os.write(key.size.toShortByteArray(shortBuf))
-                    os.write(key)
-                    os.write(if (map.getValue(i)) 1 else 0)
-                }
+        os.write(if (it.ignoreCase) 1 else 0)
+
+        // also write best tag
+        //  no need to create tags when loading -> loading is ca 20-50% faster
+        val tagBytes = Tag.createBest(it).toByteArray()
+        os.write(tagBytes.size.toShortByteArray(shortBuf))
+        os.write(tagBytes)
+
+        os.write(min(it.domains?.size ?: 0, 255))
+        it.domains?.let { map ->
+            os.write(if (map.include) 1 else 0)
+            for (i in 0 until min(map.size, 255)) {
+                val key = map.getKey(i).toByteArray()
+                os.write(key.size.toShortByteArray(shortBuf))
+                os.write(key)
+                os.write(if (map.getValue(i)) 1 else 0)
             }
         }
+
     }
 }

@@ -1,6 +1,5 @@
 package acr.browser.lightning.adblock
 
-import android.net.Uri
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 

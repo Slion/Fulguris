@@ -41,7 +41,7 @@ class ViewExtensionsTest {
     fun `removeFromParent allows null views`() {
         val nullView: View? = null
 
-        nullView.removeFromParent()
+        nullView?.removeFromParent()
     }
 
 }

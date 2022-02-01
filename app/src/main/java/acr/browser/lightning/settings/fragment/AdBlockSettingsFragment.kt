@@ -1,7 +1,7 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.adblock.AbpBlocker
+import acr.browser.lightning.adblock.AbpBlockerManager
 import acr.browser.lightning.adblock.AbpListUpdater
 import acr.browser.lightning.adblock.AbpUpdateMode
 import acr.browser.lightning.extensions.resizeAndShow
@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
@@ -29,9 +30,6 @@ import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpEntity
 import kotlinx.coroutines.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import okio.buffer
-import okio.sink
-import okio.source
 import java.io.File
 import java.io.IOException
 import java.text.DateFormat
@@ -47,7 +45,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
     @Inject internal lateinit var abpListUpdater: AbpListUpdater
-    @Inject internal lateinit var abpBlocker: AbpBlocker
+    @Inject internal lateinit var abpBlockerManager: AbpBlockerManager
 
     private lateinit var abpDao: AbpDao
     private val entityPrefs = mutableMapOf<Int, FilterListSwitchPreference>()
@@ -120,9 +118,11 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 summary = userPreferences.blockListAutoUpdateFrequency.toUpdateFrequency(),
                 onClick = { summaryUpdater ->
                     activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
-                        setTitle(R.string.blocklist_update_frequency)
-                        // TODO: can't show message and singleChoice at the same time -> what do?
-                        //setMessage(R.string.blocklist_update_description)
+                        setCustomTitle(TextView(ContextThemeWrapper(context, R.style.MaterialAlertDialog_Material3)).apply {
+                            setPadding(40, 30, 40, 10)
+                            setText(R.string.blocklist_update_description)
+                            textSize = 18f
+                        })
                         val values = listOf(
                             Pair(1, resources.getString(R.string.block_remote_frequency_daily)),
                             Pair(7, resources.getString(R.string.block_remote_frequency_weekly)),
@@ -132,10 +132,34 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             userPreferences.blockListAutoUpdateFrequency = it
                             summaryUpdater.updateSummary(it.toUpdateFrequency())
                         }
-                        setPositiveButton(resources.getString(R.string.action_ok), null)
+                        setPositiveButton(R.string.action_ok, null)
                         setNeutralButton(R.string.blocklist_update_now) {_,_ ->
                             updateFilterList(null, true)
                         }
+                    }?.resizeAndShow()
+                }
+            )
+
+            clickableDynamicPreference(
+                preference = getString(R.string.pref_key_modify_filters),
+                summary = userPreferences.modifyFilters.toModifySetting(),
+                onClick = { summaryUpdater ->
+                    activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
+                        setCustomTitle(TextView(ContextThemeWrapper(context, R.style.MaterialAlertDialog_Material3)).apply {
+                            setPadding(40, 30, 40, 10)
+                            setText(R.string.use_modify_filters_warning)
+                            textSize = 18f
+                        })
+                        val values = listOf(
+                            Pair(0, resources.getString(R.string.disable)),
+                            Pair(1, resources.getString(R.string.modify_filters_not_for_main_frame)),
+                            Pair(2, resources.getString(R.string.enable))
+                        )
+                        withSingleChoiceItems(values, userPreferences.modifyFilters) {
+                            userPreferences.modifyFilters = it
+                            summaryUpdater.updateSummary(it.toModifySetting())
+                        }
+                        setPositiveButton(R.string.action_ok, null)
                     }?.resizeAndShow()
                 }
             )
@@ -196,7 +220,8 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 if (abpEntity != null)
                     entityPrefs[abpEntity.entityId]?.summary = resources.getString(R.string.blocklist_updating)
             }
-            val updated = if (abpEntity == null) abpListUpdater.updateAll(forceUpdate) else abpListUpdater.updateAbpEntity(abpEntity, forceUpdate)
+            val updated = if (abpEntity == null) abpListUpdater.updateAll(forceUpdate)
+                else abpListUpdater.updateAbpEntity(abpEntity, forceUpdate)
 
             // delete temporary file
             //  this is necessary because all local blocklists use the same temporary file (uri)
@@ -304,6 +329,16 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             linearLayout.addView(delete)
         }
 
+        // update button
+        if (entity.entityId != 0 && entity.url.toHttpUrlOrNull() != null) {
+            val updateListButton = Button(context)
+            updateListButton.text = resources.getString(R.string.blocklist_update)
+            updateListButton.setOnClickListener {
+                updateFilterList(entity, true)
+            }
+            linearLayout.addView(updateListButton)
+        }
+
         // arbitrary numbers that look ok on my phone -> ok for other phones?
         linearLayout.setPadding(30,10,30,10)
 
@@ -343,7 +378,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     //  joint lists are removed immediately to avoid using them if app is stopped without leaving the setting screen
     private fun reloadBlockLists() {
         reloadLists = true
-        abpBlocker.removeJointLists()
+        abpBlockerManager.removeJointLists()
     }
 
     // disable ok button if url or title not valid
@@ -376,8 +411,14 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         else -> "" //should not happen
     }
 
+    private fun Int.toModifySetting() = when(this) {
+        0 -> resources.getString(R.string.disable)
+        1 -> resources.getString(R.string.modify_filters_not_for_main_frame)
+        2 -> resources.getString(R.string.enable)
+        else -> "" //should not happen
+    }
 
-override fun onDestroy() {
+    override fun onDestroy() {
         super.onDestroy()
         // reload lists after updates are done
         if (reloadLists || updatesRunning > 0) {
@@ -385,7 +426,7 @@ override fun onDestroy() {
                 while (updatesRunning > 0)
                     delay(200)
                 if (reloadLists)
-                    abpBlocker.loadLists()
+                    abpBlockerManager.loadLists()
             }
         }
     }
@@ -399,8 +440,7 @@ override fun onDestroy() {
                 try {
                     // copy file to temporary file, like done by lightning
                     val outputFile = File(cacheDir, BLOCK_LIST_FILE)
-                    val input = inputStream.source()
-                    outputFile.sink().buffer().writeAll(input)
+                    inputStream.copyTo(outputFile.outputStream())
                     fileUri = Uri.fromFile(outputFile)
                     return
                 } catch (exception: IOException) {

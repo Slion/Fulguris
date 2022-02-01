@@ -3,7 +3,7 @@ package acr.browser.lightning.view
 import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
-import acr.browser.lightning.adblock.AbpBlocker
+import acr.browser.lightning.adblock.AbpBlockerManager
 import acr.browser.lightning.adblock.AdBlocker
 import acr.browser.lightning.adblock.NoOpAdBlocker
 import acr.browser.lightning.browser.JavaScriptChoice
@@ -77,7 +77,7 @@ class LightningWebClient(
     val invertPageJs: InvertPage = hiltEntryPoint.invertPageJs
     val setMetaViewport: SetMetaViewport = hiltEntryPoint.setMetaViewport
     val homePageFactory: HomePageFactory = hiltEntryPoint.homePageFactory
-    val abpBlocker: AbpBlocker = hiltEntryPoint.abpBlocker
+    val abpBlockerManager: AbpBlockerManager = hiltEntryPoint.abpBlockerManager
     val noopBlocker: NoOpAdBlocker = hiltEntryPoint.noopBlocker
 
     private var adBlock: AdBlocker
@@ -110,7 +110,7 @@ class LightningWebClient(
     }
 
     private fun chooseAdBlocker(): AdBlocker = if (userPreferences.adBlockEnabled) {
-        abpBlocker
+        abpBlockerManager
     } else {
         noopBlocker
     }

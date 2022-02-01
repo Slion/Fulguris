@@ -16,18 +16,23 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.abp
 
-import com.google.re2j.Pattern
+import acr.browser.lightning.adblock.RES_EMPTY
+import acr.browser.lightning.adblock.RES_NOOP_MP4
+import androidx.core.net.toUri
 import jp.hazuki.yuzubrowser.adblock.*
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
+import jp.hazuki.yuzubrowser.adblock.filter.unified.ModifyFilter.Companion.REMOVEHEADER_NOT_ALLOWED
+import jp.hazuki.yuzubrowser.adblock.filter.unified.ModifyFilter.Companion.RESPONSEHEADER_ALLOWED
 import jp.hazuki.yuzubrowser.adblock.filter.unified.element.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.nio.charset.Charset
 import java.util.*
+import java.util.regex.Pattern
 
 class AbpFilterDecoder {
-    private val contentRegex = Pattern.compile(CONTENT_FILTER_REGEX)
+    private val elementFilterRegex = Pattern.compile(ELEMENT_FILTER_REGEX)
 
     fun checkHeader(reader: BufferedReader, charset: Charset): Boolean {
         reader.mark(1024)
@@ -61,42 +66,43 @@ class AbpFilterDecoder {
 
     fun decode(reader: BufferedReader, url: String?): UnifiedFilterSet {
         val info = DecoderInfo()
-        val black = mutableListOf<UnifiedFilter>()
-        val white = mutableListOf<UnifiedFilter>()
         val elementDisableFilter = mutableListOf<UnifiedFilter>()
         val elementFilter = mutableListOf<ElementFilter>()
+        val filterLists = FilterMap()
         reader.forEachLine { line ->
             if (line.isEmpty()) return@forEachLine
             val trimmedLine = line.trim()
             when {
-                trimmedLine[0] == '!' -> trimmedLine.decodeComment(url, info)?.let {
-                    throw OnRedirectException(it)
-                }
+                trimmedLine[0] == '!' -> trimmedLine.decodeComment(url, info)
                 else -> {
-                    val matcher = contentRegex.matcher(trimmedLine)
-                    if (matcher.matches()) {
-                        decodeContentFilter(
+                    val matcher = elementFilterRegex.matcher(trimmedLine)
+                    if (matcher.matches() && !trimmedLine.contains("##^responseheader")) { // exception necessary to process responseheader correctly
+                        return@forEachLine
+                        // currently the element filters are not used, so there is no reason to decode them
+/*                        decodeElementFilter(
                             matcher.group(1),
                             matcher.group(2),
                             matcher.group(3),
                             elementFilter,
                         )
+*/
                     } else {
-                        trimmedLine.decodeFilter(black, white, elementDisableFilter)
+                        trimmedLine.decodeFilter(elementDisableFilter, filterLists)
+                        // log if no new filters were added
                     }
                 }
             }
         }
-        return UnifiedFilterSet(info, black, white, elementDisableFilter, elementFilter)
+        return UnifiedFilterSet(info, elementDisableFilter, elementFilter, filterLists)
     }
 
-    private fun decodeContentFilter(
+    private fun decodeElementFilter(
         domains: String?,
         type: String?,
-        body: String,
+        body: String?,
         elementFilterList: MutableList<ElementFilter>,
     ) {
-        if (body.startsWith("+js")) return
+        if (body?.startsWith("+js") != false) return
 
         if (domains == null && type == "@") return
 
@@ -149,25 +155,62 @@ class AbpFilterDecoder {
     private fun String.sanitizeSelector() = trim().replace("\\", "\\\\").replace("'", "\'")
 
     private fun String.decodeFilter(
-        blackList: MutableList<UnifiedFilter>,
-        whiteList: MutableList<UnifiedFilter>,
         elementFilterList: MutableList<UnifiedFilter>,
+        filterLists: FilterMap
     ) {
         var contentType = 0
         var ignoreCase = false
         var domain: String? = null
-        var thirdParty = -1
+        var thirdParty = NO_PARTY_PREFERENCE
         var filter = this
         var elementFilter = false
+        var modify: ModifyFilter? = null
+        var badfilter = ""
+        var important = false
         val blocking = if (filter.startsWith("@@")) {
             filter = substring(2)
             false
         } else {
             true
         }
+        // re-write uBo responseheader to allow easier parsing
+        val responseHeaderStart = filter.indexOf("##^responseheader(")
+        if (responseHeaderStart > -1) {
+            val end = filter.indexOf(')', responseHeaderStart)
+            val header = filter.substring(responseHeaderStart + 18, end)
+            if (!RESPONSEHEADER_ALLOWED.contains(header))
+                return
+            val other = filter.substringAfter(header)
+            filter = if (other.length > 2 && other[2] == '$')
+                filter.substring(0, responseHeaderStart) + "\$removeheader=" + header + "," + other.substring(2)
+            else
+                filter.substring(0, responseHeaderStart) + "\$removeheader=" + header
+        }
+
         val optionsIndex = filter.lastIndexOf('$')
         if (optionsIndex >= 0) {
-            filter.substring(optionsIndex + 1).split(',').forEach {
+        val options = filter.substring(optionsIndex + 1).split(',').toMutableList()
+/*      don't care about specifics of $all for now, just use content type
+            // all is equal to: document, popup, inline-script, inline-font
+            //  but on mobile / webview there are no popups anyway (all opened in the same window/tab)
+            if (options.contains("all")) {
+                options.remove("all")
+                contentType = contentType or ContentRequest.TYPE_DOCUMENT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
+                when {
+                    options.contains("~inline-font") && options.contains("~inline-script") -> Unit // ignore both
+                    options.contains("~inline-font") -> { // ignore inline-font only
+                        options.add("inline-script")
+                    }
+                    options.contains("~inline-script") -> { // ignore inline-script only
+                        options.add("inline-font")
+                    }
+                    else -> options.add("csp=font-src *; script-src 'unsafe-eval' * blob: data:") // take both
+                }
+                options.remove("~inline-font")
+                options.remove("~inline-script")
+            }
+*/
+            options.forEach {
                 var option = it
                 var value: String? = null
                 val separatorIndex = option.indexOf('=')
@@ -175,14 +218,14 @@ class AbpFilterDecoder {
                     value = option.substring(separatorIndex + 1)
                     option = option.substring(0, separatorIndex)
                 }
-                if (option.isEmpty()) return@forEach
+                if (option.isEmpty() || (option.startsWith("_") && option.matches("^_+$".toRegex()))) return@forEach
 
                 val inverse = option[0] == '~'
                 if (inverse) {
                     option = option.substring(1)
                 }
 
-                option = option.toLowerCase(Locale.ENGLISH)
+                option = option.lowercase()
                 val type = option.getOptionBit()
                 if (type == -1) return
 
@@ -192,7 +235,7 @@ class AbpFilterDecoder {
                     }
                     type > 0 -> {
                         contentType = if (inverse) {
-                            if (contentType == 0) contentType = 0xffff
+                            if (contentType == 0) contentType = ContentRequest.TYPE_ALL
                             contentType and (type.inv())
                         } else {
                             contentType or type
@@ -205,26 +248,98 @@ class AbpFilterDecoder {
                                 if (value == null) return
                                 domain = value
                             }
-                            "third-party" -> thirdParty = if (inverse) 0 else 1
+                            "third-party", "3p" -> thirdParty = if (inverse) FIRST_PARTY else THIRD_PARTY
+                            "first-party", "1p" -> thirdParty = if (inverse) THIRD_PARTY else FIRST_PARTY
+                            "strict3p" -> thirdParty = if (inverse) STRICT_FIRST_PARTY else STRICT_THIRD_PARTY
+                            "strict1p" -> thirdParty = if (inverse) STRICT_THIRD_PARTY else STRICT_FIRST_PARTY
                             "sitekey" -> Unit
+                            "removeparam", "queryprune" -> {
+                                modify = if (value == null || value.isEmpty()) RemoveparamFilter(null, false)
+                                else {
+                                    if (value.startsWith('~'))
+                                        getRemoveparamFilter(value.substring(1), true)
+                                    else
+                                        getRemoveparamFilter(value, false)
+                                }
+                            }
+                            "csp" -> {
+                                modify = if (value == null) ResponseHeaderFilter("Content-Security-Policy", false)
+                                else ResponseHeaderFilter("Content-Security-Policy: ${value.substringAfter('=')}", false)
+                                contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT) // uBo documentation: It can be applied to main document and documents in frames
+                            }
+                            "inline-font" -> {
+                                // header value from uBlock source, src/js/background.js
+                                modify = ResponseHeaderFilter("Content-Security-Policy: font-src *", false)
+                                contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT)
+                            }
+                            "inline-script" -> {
+                                // header value from uBlock source, src/js/background.js
+                                modify = ResponseHeaderFilter("Content-Security-Policy: script-src 'unsafe-eval' * blob: data:", false)
+                                contentType = contentType or (ContentRequest.TYPE_DOCUMENT and ContentRequest.TYPE_SUB_DOCUMENT)
+                            }
+                            "removeheader" -> {
+                                value = value?.lowercase() ?: return
+                                val request = value.startsWith("request:")
+                                val header = if (request) value.substringAfter("request:") else value
+                                if (header in REMOVEHEADER_NOT_ALLOWED) return
+                                modify = if (request) RequestHeaderFilter(header, true)
+                                else ResponseHeaderFilter(header, true)
+                            }
+                            "redirect-rule" -> modify = RedirectFilter(value)
+                            "redirect" -> {
+                                // create block filter in addition to redirect
+                                this.getRedirectBlockString("redirect").decodeFilter(elementFilterList, filterLists)
+                                modify = RedirectFilter(value)
+                            }
+                            "empty" -> {
+                                this.getRedirectBlockString("empty").decodeFilter(elementFilterList, filterLists)
+                                modify = RedirectFilter(RES_EMPTY)
+                            }
+                            "mp4" -> {
+                                this.getRedirectBlockString("mp4").decodeFilter(elementFilterList, filterLists)
+                                modify = RedirectFilter(RES_NOOP_MP4)
+                                contentType = contentType or ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
+                            }
+                            "important" -> important = true
+                            // TODO: see above, all is not handled 100% correctly (but might still be fine)
+                            "all" -> contentType = contentType or ContentRequest.TYPE_DOCUMENT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
+                            "badfilter" -> badfilter = ABP_PREFIX_BADFILTER
                             else -> return
                         }
                     }
                 }
             }
             filter = filter.substring(0, optionsIndex)
+
+            // some lists use * to match all, some use empty
+            //  convert * to empty since it will result in a simple contains filter
+            if (filter == "*") filter = ""
+        }
+
+        // remove invalid modify filters
+        modify?.let {
+            // only removeparam may have no parameter when blocking
+            if (it !is RemoveparamFilter && it.parameter == null) return
+
+            // filters that add headers must contain header and value, separated by ':'
+            if (blocking && !it.inverse && (it is RequestHeaderFilter || it is ResponseHeaderFilter)
+                && it.parameter?.contains(':') == false)
+                    return
+
+            // in case of important redirect filters, only the blocking part should be important
+            important = false
         }
 
         val domains = domain?.domainsToDomainMap('|')
-        if (contentType == 0) contentType = 0xffff
+        if (contentType == 0) contentType = ContentRequest.TYPE_ALL
 
         if (elementFilter) {
             return
         }
 
         val abpFilter =
-            if (filter.length >= 2 && filter[0] == '/' && filter[filter.lastIndex] == '/') {
-                createRegexFilter(filter, contentType, ignoreCase, domains, thirdParty) ?: return
+            if (filter.length >= 2 && filter[0] == '/' && filter[filter.lastIndex] == '/' && filter.mayContainRegexChars()) {
+                RegexFilter(filter.substring(1, filter.lastIndex), contentType, ignoreCase, domains, thirdParty, modify)
             } else {
                 val isStartsWith = filter.startsWith("||")
                 val isEndWith = filter.endsWith('^')
@@ -240,9 +355,10 @@ class AbpFilterDecoder {
                             contentType,
                             ignoreCase,
                             domains,
-                            thirdParty
+                            thirdParty,
+                            modify
                         )
-                        isStartsWith -> StartsWithFilter(content, contentType, ignoreCase, domains, thirdParty)
+                        isStartsWith -> StartsWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         isEndWith -> {
                             if (ignoreCase) {
                                 PatternMatchFilter(
@@ -250,10 +366,11 @@ class AbpFilterDecoder {
                                     contentType,
                                     ignoreCase,
                                     domains,
-                                    thirdParty
+                                    thirdParty,
+                                    modify
                                 )
                             } else {
-                                EndWithFilter(content, contentType, domains, thirdParty)
+                                EndWithFilter(content, contentType, domains, thirdParty, modify)
                             }
                         }
                         else -> {
@@ -263,23 +380,61 @@ class AbpFilterDecoder {
                                     contentType,
                                     ignoreCase,
                                     domains,
-                                    thirdParty
+                                    thirdParty,
+                                    modify
                                 )
                             } else {
-                                ContainsFilter(content, contentType, domains, thirdParty)
+                                if ("http://$content".toUri().host == content) // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
+                                    StartEndFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
+                                else
+                                    ContainsFilter(content, contentType, domains, thirdParty, modify)
                             }
                         }
                     }
                 } else {
-                    PatternMatchFilter(filter, contentType, ignoreCase, domains, thirdParty)
+                    PatternMatchFilter(filter, contentType, ignoreCase, domains, thirdParty, modify)
                 }
             }
 
         when {
             elementFilter -> elementFilterList += abpFilter
-            blocking -> blackList += abpFilter
-            else -> whiteList += abpFilter
+            modify != null && blocking -> {
+                if (modify is RedirectFilter)
+                    filterLists[badfilter + ABP_PREFIX_REDIRECT] += abpFilter
+                else
+                    filterLists[badfilter + ABP_PREFIX_MODIFY] += abpFilter
+            }
+            important && blocking -> filterLists[badfilter + ABP_PREFIX_IMPORTANT] += abpFilter
+            blocking -> filterLists[badfilter + ABP_PREFIX_DENY] += abpFilter
+            modify != null -> {
+                if (modify is RedirectFilter)
+                    filterLists[badfilter + ABP_PREFIX_REDIRECT_EXCEPTION] += abpFilter
+                else
+                    filterLists[badfilter + ABP_PREFIX_MODIFY_EXCEPTION] += abpFilter
+            }
+            important -> filterLists[badfilter + ABP_PREFIX_IMPORTANT_ALLOW] += abpFilter
+            else -> filterLists[badfilter + ABP_PREFIX_ALLOW] += abpFilter
         }
+    }
+
+    private fun String.mayContainRegexChars(): Boolean {
+        forEach {
+            when (it.lowercaseChar()) {
+                in 'a'..'z', in '0'..'9', '%', '/', '_', '-' -> Unit
+                else -> return true
+            }
+        }
+        return false
+    }
+
+    private fun String.getRedirectBlockString(toReplace: String): String {
+        var blockString = this.substringAfterLast('$').replace(toReplace, "").replace(",,", ",")
+        if (blockString.endsWith(','))
+            blockString = blockString.dropLast(1)
+        return if (blockString.isEmpty())
+            this.dropLast(1) // no further filter rules, remove $
+        else
+            this.substringBeforeLast('$') + "$" + blockString
     }
 
     private fun String.domainsToDomainMap(delimiter: Char): DomainMap? {
@@ -293,7 +448,7 @@ class AbpFilterDecoder {
                 SingleDomainMap(true, items[0])
             }
         } else {
-            val domains = ArrayDomainMap(items.size)
+            val domains = ArrayDomainMap(items.size, this.contains('*'))
             items.forEach { domain ->
                 if (domain.isEmpty()) return@forEach
                 if (domain[0] == '~') {
@@ -321,40 +476,39 @@ class AbpFilterDecoder {
             "other", "xbl", "dtd" -> ContentRequest.TYPE_OTHER
             "script" -> ContentRequest.TYPE_SCRIPT
             "image", "background" -> ContentRequest.TYPE_IMAGE
-            "stylesheet" -> ContentRequest.TYPE_STYLE_SHEET
-            "subdocument" -> ContentRequest.TYPE_SUB_DOCUMENT
+            "stylesheet", "css" -> ContentRequest.TYPE_STYLE_SHEET
+            "subdocument", "frame" -> ContentRequest.TYPE_SUB_DOCUMENT
             "document" -> ContentRequest.TYPE_DOCUMENT
             "websocket" -> ContentRequest.TYPE_WEB_SOCKET
             "media" -> ContentRequest.TYPE_MEDIA
             "font" -> ContentRequest.TYPE_FONT
             "popup" -> ContentRequest.TYPE_POPUP
-            "xmlhttprequest" -> ContentRequest.TYPE_XHR
-            "object", "webrtc", "csp", "ping",
+            "xmlhttprequest", "xhr" -> ContentRequest.TYPE_XHR
+            "object", "webrtc", "ping",
             "object-subrequest", "genericblock" -> -1
             "elemhide", "ehide" -> ContentRequest.TYPE_ELEMENT_HIDE
-            "generichide" -> ContentRequest.TYPE_ELEMENT_GENERIC_HIDE
+            "generichide", "ghide" -> ContentRequest.TYPE_ELEMENT_GENERIC_HIDE
             else -> 0
         }
     }
 
-    private fun String.decodeComment(url: String?, info: DecoderInfo): String? {
+    private fun String.decodeComment(url: String?, info: DecoderInfo) {
+        // comment format:
+        // ! <title>: <content>
+        if (!contains(':')) return
+        val title = substringBefore(':').drop(1).trim().lowercase()
+        val content = substringAfter(':').trim()
         val comment = split(':')
-        if (comment.size < 2) return null
+        if (comment.size < 2) return
 
-        when (comment[0].substring(1).trim().toLowerCase(Locale.getDefault())) {
-            "title" -> info.title = comment[1].trim()
-            "homepage" -> info.homePage = comment[1].trim()
-            "last updated" -> info.lastUpdate = comment[1].trim()
-            "expires" -> info.expires = comment[1].trim().decodeExpires()
-            "version" -> info.version = comment[1].trim()
-            "redirect" -> {
-                val redirect = comment[1].trim()
-                if (url != null && url != redirect) {
-                    return url
-                }
-            }
+        when (title) {
+            "title" -> info.title = content
+            "homepage" -> info.homePage = content
+            "last updated" -> info.lastUpdate = content
+            "expires" -> info.expires = content.decodeExpires()
+            "version" -> info.version = content
+            "redirect" -> info.redirectUrl = content
         }
-        return null
     }
 
     private fun String.decodeExpires(): Int {
@@ -377,19 +531,18 @@ class AbpFilterDecoder {
         return -1
     }
 
-    class OnRedirectException(val url: String) : IOException()
-
-    private class DecoderInfo : UnifiedFilterInfo(null, null, null, null, null) {
+    private class DecoderInfo : UnifiedFilterInfo(null, null, null, null, null, null) {
         override var expires: Int? = null
         override var homePage: String? = null
         override var lastUpdate: String? = null
         override var title: String? = null
         override var version: String? = null
+        override var redirectUrl: String? = null
     }
 
     companion object {
         const val HEADER = "[Adblock Plus"
 
-        private const val CONTENT_FILTER_REGEX = "^([^/*|@\"!]*?)#([@?\$])?#(.+)\$"
+        private const val ELEMENT_FILTER_REGEX = "^([^/*|@\"!]*?)#([@?\$])?#(.+)\$"
     }
 }

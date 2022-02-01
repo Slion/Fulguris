@@ -1,6 +1,6 @@
 package acr.browser.lightning.di
 
-import acr.browser.lightning.adblock.AbpBlocker
+import acr.browser.lightning.adblock.AbpBlockerManager
 import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.adblock.NoOpAdBlocker
 import acr.browser.lightning.browser.BrowserPresenter
@@ -58,7 +58,7 @@ interface HiltEntryPoint {
     val invertPageJs: InvertPage
     val setMetaViewport: SetMetaViewport
     val homePageFactory: HomePageFactory
-    val abpBlocker: AbpBlocker
+    val abpBlockerManager: AbpBlockerManager
     val noopBlocker: NoOpAdBlocker
     val dialogBuilder: LightningDialogBuilder
     val networkConnectivityModel: NetworkConnectivityModel

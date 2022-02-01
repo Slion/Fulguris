@@ -16,29 +16,90 @@
 
 package jp.hazuki.yuzubrowser.adblock.filter.unified
 
-import java.util.*
-
 object Tag {
     fun create(url: String): List<String> {
-        return url.toLowerCase(Locale.ENGLISH).getTagCandidates().also {
+        return url.lowercase().getTagCandidates().also {
             it += ""
         }
     }
 
-    fun createBest(pattern: String): String {
-        var maxLength = 0
-        var tag = ""
+    fun createBest(pattern: String) = pattern.lowercase().getTagCandidates().maxByOrNull { it.length } ?: ""
 
-        val candidates = pattern.toLowerCase(Locale.ENGLISH).getTagCandidates()
-        for (i in 0 until candidates.size) {
-            val candidate = candidates[i]
-            if (candidate.length > maxLength) {
-                maxLength = candidate.length
-                tag = candidate
+    fun createBest(filter: UnifiedFilter): String {
+        when {
+            // ContainsFilter requires removal of tags directly at start and end
+            //   ContainsFilter with pattern 'example' matches 'http://test.com/badexamples'
+            //   but will never get checked because tags don't match
+            // same for ContainsHostFilter, though this is actually never used
+            filter is ContainsFilter || filter is ContainsHostFilter -> {
+                val pattern = filter.pattern.lowercase()
+                val tags = pattern.getTagCandidates()
+                // remove tags directly at start or end of pattern
+                if (tags.isNotEmpty() && pattern.lastIndexOf(tags.first()) == 0) // lastIndex because tag may occur multiple times
+                    tags.removeAt(0)
+                if (tags.isNotEmpty() && pattern.indexOf(tags.first()) == 0)
+                    tags.removeAt(tags.lastIndex)
+                return tags.maxByOrNull { it.length } ?: ""
+            }
+            filter.isRegex -> {
+                // require tags to be between a few selected delimiters
+                //   regex is used like a contains filter and can start in the middle of any string
+                //   can't just have it delimited like normal, because tags may be created from pattern
+                var pattern = filter.pattern.lowercase()
+
+                // valid separators: "\\/(.+?\\.)?", "\\.", "\\/"
+                //  convert to the same one for easier checking
+                pattern = pattern.replace("\\/(.+?\\.)?", "\\.").replace("\\/", "\\.")
+
+                // remove some common patterns before creating candidates
+                //  replace everything in [] and () with some invalid char that is a separator for getTagCandidates
+                pattern = pattern.replaceAllBetweenChars('[', ']', "|")
+                pattern = pattern.replaceAllBetweenChars('(', ')', "|")
+
+                val tags = pattern.getTagCandidates()
+
+                // remove tags that don't have a valid separator on each side
+                //  necessary for regex, as it's basically a contain filter
+                var tag = ""
+                for (i in tags.indices.reversed()) {
+                    if (pattern.contains("\\.${tags[i]}\\.") && tags[i].length > tag.length)
+                        tag = tags[i]
+                }
+
+                return tag
+            }
+            else ->  return createBest(filter.pattern)
+        }
+    }
+
+    private fun String.replaceAllBetweenChars(start: Char, end: Char, replacement: String): String {
+        var r = this
+        val open = mutableListOf<Int>()
+        val close = mutableListOf<Int>()
+        var isOpen = false
+        for (i in 0 until length) {
+            when (get(i)) {
+                start -> {
+                    open.add(i)
+                    if (isOpen) return "" // no nesting
+                    else isOpen = true
+                }
+                end -> {
+                    close.add(i)
+                    if (!isOpen) return "" // no nesting
+                    else isOpen = false
+                }
             }
         }
+        if (open.size != close.size)
+            return "" // same amount of open and close
 
-        return tag
+        for (i in open.indices.reversed()) {
+            if (open[i] > close[i])
+                return "" // open before close
+            r = r.replaceRange(open[i], close[i], replacement)
+        }
+        return r
     }
 
     private fun String.getTagCandidates(): MutableList<String> {

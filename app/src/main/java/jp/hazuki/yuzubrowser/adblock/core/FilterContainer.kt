@@ -18,6 +18,7 @@ package jp.hazuki.yuzubrowser.adblock.core
 
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.unified.Tag
+import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
 
 class FilterContainer {
     private val filters = hashMapOf<String, ContentFilter>()
@@ -25,22 +26,11 @@ class FilterContainer {
     //  of true, checking is much faster
     private var domainOnly = true
 
-    // not needed any more
-/*    operator fun plusAssign(filter: ContentFilter) {
-        val key = when {
-            filter.isRegex -> ""
-            else -> Tag.createBest(filter.pattern)
-        }
-        this[key] = filter
-        // using old way with tags, need to do full check
-        domainOnly = false
-    }
-*/
     // not having to create best tag accelerates loading lists and filling FilterContainer by 20-50%
     fun addWithTag(p: Pair<String, ContentFilter>) {
-        if (!p.first.contains('.'))
-            // normally created tags will only consist of %, numbers and letters
-            // only tag specifically created for patterns consisting of domains contain '.'
+        // normally, created tags will only consist of %, numbers and letters
+        //  only tag specifically created for patterns that are a domain will contain '.'
+        if (domainOnly && !p.first.contains('.'))
             domainOnly = false
         this[p.first] = p.second
     }
@@ -84,5 +74,54 @@ class FilterContainer {
             }
         }
         return null
+    }
+
+    fun getAll(request: ContentRequest): MutableList<ContentFilter> {
+        val list = mutableListOf<ContentFilter>()
+        list += getAllDomain(request)
+        // no need for further checks if list only contains domain filters
+        if (domainOnly) return list
+
+        request.tags.forEach {
+            var filter = filters[it]
+            while (filter != null) {
+                if (filter.isMatch(request)) {
+                    list.add(filter)
+                }
+                filter = filter.next
+            }
+        }
+        return list
+    }
+
+    private fun getAllDomain(request: ContentRequest): List<ContentFilter> {
+        var domain = request.url.host ?: return listOf()
+        val list = mutableListOf<ContentFilter>()
+        var filter: ContentFilter?
+        while (domain.contains('.')) {
+            filter = filters[domain]
+            while (filter != null) {
+                if (filter.isMatch(request))
+                    list.add(filter)
+                filter = filter.next
+            }
+            domain = domain.substringAfter('.')
+        }
+        return list
+    }
+
+    fun clear() {
+        filters.clear()
+    }
+
+    // only used in tests
+    operator fun plusAssign(filter: ContentFilter) {
+        val key = Tag.createBest(filter as UnifiedFilter)
+        addWithTag(Pair(key, filter))
+    }
+
+    // only used in tests
+    fun filters(): Map<String, ContentFilter> {
+        return filters
     }
 }

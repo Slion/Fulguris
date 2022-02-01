@@ -22,8 +22,9 @@ class EndWithFilter(
     filter: String,
     contentType: Int,
     domains: DomainMap?,
-    thirdParty: Int
-) : UnifiedFilter(filter, contentType, false, domains, thirdParty) {
+    thirdParty: Int,
+    modify: ModifyFilter? = null
+) : UnifiedFilter(filter, contentType, false, domains, thirdParty, modify) {
     override val filterType: Int
         get() = FILTER_TYPE_END
 

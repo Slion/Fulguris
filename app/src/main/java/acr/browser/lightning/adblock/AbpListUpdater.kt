@@ -17,6 +17,8 @@
 package acr.browser.lightning.adblock
 
 import acr.browser.lightning.R
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.blockerPrefixes
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.isModify
 import acr.browser.lightning.adblock.parser.HostsFileParser
 import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.log.Logger
@@ -28,6 +30,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.FILTER_DIR
 import jp.hazuki.yuzubrowser.adblock.filter.unified.StartEndFilter
@@ -50,8 +53,7 @@ import kotlin.math.max
 // this is a slightly modified part of jp.hazuki.yuzubrowser.adblock.service/AbpUpdateService.kt
 class AbpListUpdater @Inject constructor(val context: Context) {
 
-    //@Inject internal lateinit var okHttpClient: OkHttpClient
-    val okHttpClient = OkHttpClient() // any problems if not injecting?
+    val okHttpClient by lazy { OkHttpClient() }
 
     @Inject internal lateinit var userPreferences: UserPreferences
     @Inject internal lateinit var logger: Logger
@@ -81,12 +83,12 @@ class AbpListUpdater @Inject constructor(val context: Context) {
     fun removeFiles(entity: AbpEntity) {
         val dir = getFilterDir()
         val writer = FilterWriter()
-        writer.write(dir.getAbpBlackListFile(entity), listOf())
-        writer.write(dir.getAbpWhiteListFile(entity), listOf())
-        writer.write(dir.getAbpWhitePageListFile(entity), listOf())
+        (blockerPrefixes + ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach {
+            writer.write(dir.getFilterFile(it, entity), listOf())
+        }
 
         val elementWriter = ElementWriter()
-        elementWriter.write(dir.getAbpElementListFile(entity), listOf())
+        elementWriter.write(dir.getFilterFile(ABP_PREFIX_ELEMENT, entity), listOf())
     }
 
     fun updateAbpEntity(entity: AbpEntity, forceUpdate: Boolean) = runBlocking {
@@ -123,10 +125,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         if (!forceUpdate) {
             entity.lastModified?.let {
                 val dir = getFilterDir()
-
-                if (dir.getAbpBlackListFile(entity).exists() ||
-                    dir.getAbpWhiteListFile(entity).exists() ||
-                    dir.getAbpWhitePageListFile(entity).exists())
+                if ((blockerPrefixes + ABP_PREFIX_DISABLE_ELEMENT_PAGE + ABP_PREFIX_ELEMENT).map { prefix ->
+                    dir.getFilterFile(prefix, entity).exists() }.any()
+                )
                     request.addHeader("If-Modified-Since", it)
             }
         }
@@ -140,9 +141,9 @@ class AbpListUpdater @Inject constructor(val context: Context) {
                 abpDao.update(entity)
                 return false
             }
-            if (response.code == 404) {
+            if (!response.isSuccessful) {
                 Handler(Looper.getMainLooper()).post {
-                    context.toast(context.getString(R.string.blocklist_update_error_404, entity.title))
+                    context.toast(context.getString(R.string.blocklist_update_error_code, entity.title, response.code.toString()))
                 }
                 return false
             }
@@ -188,18 +189,16 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
         if (!decoder.checkHeader(reader, charset)) {
             // no adblock plus format, try hosts reader
-            //  TODO: adjust hosts parser? accepts really a lot of not really suitable lines as hosts
-            //   no real problem, but they clutter the list (mostly slows down loading)
             val parser = HostsFileParser(logger)
-            // TODO: HostFilter or StartEndFilter?
-            //  HostFilter is exact host match, StartEndFilter also matches subdomains
-            //  if StartEndFilter is the choice, we could remove unnecessary subdomains (e.g. ads.example.com if example.com is on list)
-            //   or rather do it when loading / creating joint lists?
-            val hostsList = parser.parseInput(reader).map {StartEndFilter(it.name,0xffff, false, null, -1)}
+            // use StartEndFilter, which also matches subdomains
+            //  not strictly according to hosts rules, but uBlock does the same (and it makes sense)
+            val hostsList = parser.parseInput(reader).map {
+                StartEndFilter(it.name, ContentRequest.TYPE_ALL, false, null, -1)
+            }
             if (hostsList.isEmpty())
                 return false
             entity.lastLocalUpdate = System.currentTimeMillis()
-            writer.write(dir.getAbpBlackListFile(entity), hostsList)
+            writer.write(dir.getFilterFile(ABP_PREFIX_DENY, entity), hostsList)
             abpDao.update(entity)
 
             return true
@@ -214,13 +213,18 @@ class AbpListUpdater @Inject constructor(val context: Context) {
         entity.homePage = info.homePage
         entity.version = info.version
         entity.lastUpdate = info.lastUpdate
+        info.redirectUrl?.let { entity.url = it }
         entity.lastLocalUpdate = System.currentTimeMillis()
-        writer.write(dir.getAbpBlackListFile(entity), set.blackList)
-        writer.write(dir.getAbpWhiteListFile(entity), set.whiteList)
-        writer.write(dir.getAbpWhitePageListFile(entity), set.elementDisableFilter)
+        blockerPrefixes.forEach {
+            if (isModify(it))
+                writer.writeModifyFilters(dir.getFilterFile(it, entity), set.filters[it])
+            else
+                writer.write(dir.getFilterFile(it, entity), set.filters[it])
+        }
+        writer.write(dir.getFilterFile(ABP_PREFIX_DISABLE_ELEMENT_PAGE,entity), set.elementDisableFilter)
 
         val elementWriter = ElementWriter()
-        elementWriter.write(dir.getAbpElementListFile(entity), set.elementList)
+        elementWriter.write(dir.getFilterFile(ABP_PREFIX_ELEMENT, entity), set.elementList)
 
         abpDao.update(entity)
         return true
@@ -231,6 +235,20 @@ class AbpListUpdater @Inject constructor(val context: Context) {
             try {
                 file.outputStream().buffered().use {
                     write(it, list)
+                }
+            } catch (e: IOException) {
+//                ErrorReport.printAndWriteLog(e)
+            }
+        } else {
+            if (file.exists()) file.delete()
+        }
+    }
+
+    private fun FilterWriter.writeModifyFilters(file: File, list: List<UnifiedFilter>) {
+        if (list.isNotEmpty()) {
+            try {
+                file.outputStream().buffered().use {
+                    writeModifyFilters(it, list)
                 }
             } catch (e: IOException) {
 //                ErrorReport.printAndWriteLog(e)
@@ -263,7 +281,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
     }
 
     companion object {
-        private const val AN_HOUR = 60 * 60 * 1000
+        private const val AN_HOUR = 60 * 60 * 1000L
         private const val A_DAY = 24 * AN_HOUR
 
     }

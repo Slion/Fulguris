@@ -1,379 +1,265 @@
 package acr.browser.lightning.adblock
 
-import acr.browser.lightning.R
-import acr.browser.lightning.log.Logger
-import acr.browser.lightning.settings.preferences.UserPreferences
-import acr.browser.lightning.utils.isAppScheme
-import acr.browser.lightning.utils.isSpecialUrl
-import android.app.Application
 import android.net.Uri
-import android.webkit.MimeTypeMap
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
-import androidx.core.util.PatternsCompat
-import jp.hazuki.yuzubrowser.adblock.EmptyInputStream
-import jp.hazuki.yuzubrowser.adblock.core.*
+import android.os.Build
+import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
+import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
+import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
-import jp.hazuki.yuzubrowser.adblock.filter.unified.getFilterDir
-import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader
-import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
-import jp.hazuki.yuzubrowser.adblock.getContentType
-import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
-import kotlinx.coroutines.*
-import okhttp3.internal.publicsuffix.PublicSuffix
-import java.io.*
-import java.nio.charset.StandardCharsets
-import javax.inject.Inject
-import javax.inject.Singleton
-import kotlin.collections.HashMap
 
-@Singleton
-class AbpBlocker @Inject constructor(
-    private val application: Application,
-    abpListUpdater: AbpListUpdater,
-    private val abpUserRules: AbpUserRules,
-    userPreferences: UserPreferences,
-    private val logger: Logger
-    ) : AdBlocker {
+class AbpBlocker(
+    private val abpUserRules: AbpUserRules?,
+    private val filterContainers: Map<String, FilterContainer>
+) {
 
-    private lateinit var allowList: FilterContainer
-    private lateinit var blockList: FilterContainer
+    // return null if ok, BlockerResponse if blocked or modified
+    fun shouldBlock(request: ContentRequest): BlockerResponse? {
 
-    // contains filters that should not be overridden by allowList
-    //  like mining list, malware list or maybe later the 'important' filter rules from AdGuard/uBo
-    private var importantBlockList = FilterContainer()
+        // first check user rules, they have highest priority
+        abpUserRules?.getResponse(request)?.let { response ->
+            // no pattern needed if blocked by user
+            return if (response) BlockResponse(USER_BLOCKED, "")
+            else null // don't modify anything that is explicitly blocked or allowed by the user?
+        }
 
-    // store whether lists are loaded (and delay any request until loading is done)
-    private var listsLoaded = false
+        // then 'important' filters
+        filterContainers[ABP_PREFIX_IMPORTANT_ALLOW]!![request]?.let { return allowOrModify(request) }
+        filterContainers[ABP_PREFIX_IMPORTANT]!![request]?.let {
+            // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#important
+            //  -> "The $important modifier will be ignored if a document-level exception rule is applied to the document."
+            return if (filterContainers[ABP_PREFIX_ALLOW]!![request]?.let { allowFilter ->
+                    allowFilter.contentType and ContentRequest.TYPE_DOCUMENT != 0 && // document-level allowed
+                            allowFilter.contentType and ContentRequest.INVERSE == 0 // but not simply everything allowed
+                } == true) // we have a document-level exception
+                null
+            else blockOrRedirect(request, ABP_PREFIX_IMPORTANT, it.pattern)
+        }
 
-/*    // element hiding
-    //  doesn't work, but maybe it's crucial to inject the js at the right point
-    //  tried onPageFinished, might be too late (try to implement onDomFinished from yuzu?)
-    private var elementBlocker: CosmeticFiltering? = null
-    var elementHide = userPreferences.elementHide
-*/
+        // check normal blocklist
+        filterContainers[ABP_PREFIX_ALLOW]!![request]?.let { return allowOrModify(request) }
+        filterContainers[ABP_PREFIX_DENY]!![request]?.let { return blockOrRedirect(request, ABP_PREFIX_DENY, it.pattern) }
 
-    // cache for 3rd party check, allows significantly faster checks
-    private val thirdPartyCache = mutableMapOf<String, Boolean>()
-    private val thirdPartyCacheSize = 100
+        // not explicitly allowed or blocked
+        return allowOrModify(request)
+    }
 
-    private val dummyImage: ByteArray by lazy { readByte(application.resources.assets.open("blank.png")) }
-    private val dummyResponse by lazy { WebResourceResponse("text/plain", "UTF-8", EmptyInputStream()) }
+    private fun blockOrRedirect(request: ContentRequest, prefix: String, pattern: String): BlockerResponse {
+        val modify = filterContainers[ABP_PREFIX_REDIRECT]!!.getAll(request)
+        modify.removeModifyExceptions(request, ABP_PREFIX_REDIRECT_EXCEPTION)
+        return if (modify.isEmpty())
+            BlockResponse(prefix, pattern)
+        else {
+            modify.map { (it.modify as RedirectFilter).withPriority() }
+                .maxByOrNull { it.second }
+                ?.let { BlockResourceResponse(it.first) }
+                ?: BlockResponse(prefix, pattern)
+        }
+    }
 
-    init {
-        // hilt always loads blocker, even if not used
-        //  thus we load the lists only if blocker is actually enabled
-        if (userPreferences.adBlockEnabled)
-            GlobalScope.launch(Dispatchers.Default) {
-                // load lists here if not loaded above
-                //  2-5x slower than blocking for some reason -> is there any reasonable compromise?
-                loadLists()
+    private fun allowOrModify(request: ContentRequest): ModifyResponse? {
+        // check whether response should be modified
+        // careful: we need to get ALL matching modify filters, not just any (like it's done for block and allow decisions)
+        val modifyFilters = filterContainers[ABP_PREFIX_MODIFY]!!.getAll(request)
+        if (modifyFilters.isEmpty()) return null
 
-                // update all enabled entities/blocklists
-                // may take a while depending on how many lists need update, and on internet connection
-                if (abpListUpdater.updateAll(false)) { // returns true if anything was updated
-                    removeJointLists()
-                    loadLists() // update again if files have changed
+        if (request.url.encodedQuery == null) {
+            // if no parameters, remove all removeparam filters
+            modifyFilters.removeAll { RemoveparamFilter::class.java.isAssignableFrom(it.modify!!::class.java) }
+            if (modifyFilters.isEmpty()) return null
+        }
+        val remainingExceptions = modifyFilters.removeModifyExceptions(request, ABP_PREFIX_MODIFY_EXCEPTION)
+
+        // there can be multiple valid filters, and all should be applied if possible
+        //  just do one after the other
+        //  but since WebResourceRequest can't be changed and returned to WebView, it must all happen within getModifiedResponse()
+        return getModifiedResponse(request, modifyFilters.mapNotNull { it.modify }.toMutableList(), remainingExceptions)
+    }
+
+    // how exceptions work: (adguard removeparam documentation is useful: https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters)
+    //  without parameter (i.e. empty), all filters of that type (removeparam, csp, redirect,...) are invalid
+    //  with parameter, only same type and same parameter are considered invalid
+    // return exceptions that can't be decided at this point, e.g. $removeparam and exception $removeparam=p
+    private fun MutableList<ContentFilter>.removeModifyExceptions(request: ContentRequest, prefix: String): List<ModifyFilter> {
+        val modifyExceptions = filterContainers[prefix]!!.getAll(request)
+
+        for (i in (0 until modifyExceptions.size).reversed()) {
+            if (modifyExceptions[i].modify!!.parameter == null) {
+                // no parameter -> remove all modify of same type (not same prefix, because of RemoveParamRegexFilter!)
+                removeAll { modifyExceptions[i].modify!!::class.java.isAssignableFrom(it.modify!!::class.java) }
+                modifyExceptions.removeAt(i) // not needed any more
+            }
+            else { // remove exact matches
+                removeAll { it.modify == modifyExceptions[i].modify }
+                // but don't remove from list, e.g. removeparam and exception $removeparam=a
+                // exceptions for header-modifying filters are not handled properly, but at least
+
+                // handle $csp exception and similar
+                if (modifyExceptions[i].modify!! is ResponseHeaderFilter && modifyExceptions[i].modify!!.parameter?.contains(':') == false) {
+                    val header = modifyExceptions[i].modify!!.parameter!!
+                    removeAll { it.modify is ResponseHeaderFilter && it.modify!!.parameter?.startsWith(header) == true && it.modify!!.inverse == modifyExceptions[i].modify!!.inverse }
+                    modifyExceptions.removeAt(i) // not needed any more
+                }
+                // same thing for requestheaders, not sure though whether it is used at all
+                else if (modifyExceptions[i].modify!! is RequestHeaderFilter && modifyExceptions[i].modify!!.parameter?.contains(':') == false) {
+                    val header = modifyExceptions[i].modify!!.parameter!!
+                    removeAll { it.modify is RequestHeaderFilter && it.modify!!.parameter?.startsWith(header) == true && it.modify!!.inverse == modifyExceptions[i].modify!!.inverse }
+                    modifyExceptions.removeAt(i) // not needed any more
                 }
             }
-    }
-
-    fun removeJointLists() {
-        val filterDir = application.applicationContext.getFilterDir()
-        File(filterDir, ABP_PREFIX_ALLOW).delete()
-        File(filterDir, ABP_PREFIX_DENY).delete()
-    }
-
-    // load lists
-    //  and create files containing filters from all enabled entities (without duplicates)
-    fun loadLists() {
-        val filterDir = application.applicationContext.getFilterDir()
-
-        val allowFile = File(filterDir, ABP_PREFIX_ALLOW)
-        val blockFile = File(filterDir, ABP_PREFIX_DENY)
-
-        // for some reason reading allows first is faster then reading blocks first... but why?
-       if (loadFile(allowFile, false) && loadFile(blockFile, true)) {
-            listsLoaded = true
-            return
         }
-        // loading failed or joint lists don't exist: load the normal way and create joint lists
-
-        val entities = AbpDao(application.applicationContext).getAll()
-        val abpLoader = AbpLoader(filterDir, entities)
-
-        // toSet() for removal of duplicate entries
-        val allowFilters = abpLoader.loadAll(ABP_PREFIX_ALLOW).toSet()
-        val blockFilters = abpLoader.loadAll(ABP_PREFIX_DENY).toSet()
-
-        blockList = FilterContainer().also { blockFilters.forEach(it::addWithTag) }
-        allowList = FilterContainer().also { allowFilters.forEach(it::addWithTag) }
-        listsLoaded = true
-
-        // create joint file
-        writeFile(blockFile, blockFilters.sanitize().map {it.second})
-        writeFile(allowFile, allowFilters.sanitize().map {it.second})
-
-        /*if (elementHide) {
-            val disableCosmetic = FilterContainer().also { abpLoader.loadAll(ABP_PREFIX_DISABLE_ELEMENT_PAGE).forEach(it::plusAssign) }
-            val elementFilter = ElementContainer().also { abpLoader.loadAllElementFilter().forEach(it::plusAssign) }
-            elementBlocker = CosmeticFiltering(disableCosmetic, elementFilter)
-        }*/
-    }
-
-    private fun Set<Pair<String, UnifiedFilter>>.sanitize(): Collection<Pair<String, UnifiedFilter>> {
-        return this.mapNotNull { when {
-            // WebResourceRequest.getContentType(pageUri: Uri) never returns TYPE_POPUP
-            //  so we can remove filters that act on popup-only
-            it.second.contentType == ContentRequest.TYPE_POPUP -> null
-            // remove other unnecessary filters?
-            //  more unsupported types?
-            //  relevant number of cases where there are filters "including" more specific filters?
-            //   e.g. ||example.com^ and ||ads.example.com^, or ||example.com^ and ||example.com^$third-party
-            else -> it
-        } }
-    }
-
-    private fun loadFile(file: File, blocks: Boolean): Boolean {
-        if (file.exists()) {
-            try {
-                file.inputStream().buffered().use { ins ->
-                    val reader = FilterReader(ins)
-                    if (reader.checkHeader()) {
-                        if (blocks)
-                            blockList =
-                                FilterContainer().also { reader.readAll().forEach(it::addWithTag) }
-                        else
-                            allowList =
-                                FilterContainer().also { reader.readAll().forEach(it::addWithTag) }
-                        // check 2nd "header" at end of the file, to avoid accepting partially written file
-                        return reader.checkHeader()
-                    }
-                }
-            } catch(e: IOException) {}
-        }
-        return false
-    }
-
-    private fun writeFile(file: File, filters: Collection<UnifiedFilter>) {
-        val writer = FilterWriter()
-        file.outputStream().buffered().use {
-            writer.write(it, filters.toList())
-            it.close()
-        }
-    }
-
-    // from yuzu: jp.hazuki.yuzubrowser.adblock/AdBlockController.kt
-    fun createDummy(uri: Uri): WebResourceResponse {
-        val mimeType = getMimeType(uri.toString())
-        return if (mimeType.startsWith("image/")) {
-            WebResourceResponse("image/png", null, ByteArrayInputStream(dummyImage))
-        } else {
-            dummyResponse
-        }
-    }
-
-    // from yuzu: jp.hazuki.yuzubrowser.adblock/AdBlockController.kt
-    // stings adjusted for Fulguris
-    fun createMainFrameDummy(uri: Uri, pattern: String): WebResourceResponse {
-        val builder = StringBuilder("<meta charset=utf-8>" +
-                "<meta content=\"width=device-width,initial-scale=1,minimum-scale=1\"name=viewport>" +
-                "<style>body{padding:5px 15px;background:#fafafa}body,p{text-align:center}p{margin:20px 0 0}" +
-                "pre{margin:5px 0;padding:5px;background:#ddd}</style><title>")
-            .append(application.resources.getText(R.string.request_blocked))
-            .append("</title><p>")
-            .append(application.resources.getText(R.string.page_blocked))
-            .append("<pre>")
-            .append(uri)
-            .append("</pre><p>")
-            .append(application.resources.getText(R.string.page_blocked_reason))
-            .append("<pre>")
-            .append(pattern)
-            .append("</pre>")
-
-        return getNoCacheResponse("text/html", builder)
-    }
-
-    /*
-    // element hiding
-    override fun loadScript(uri: Uri): String? {
-        val cosmetic = elementBlocker ?: return null
-        return cosmetic.loadScript(uri)
-        return null
-    }
-     */
-
-    // moved from jp.hazuki.yuzubrowser.adblock/AdBlock.kt to allow modified 3rd party detection
-    fun WebResourceRequest.getContentRequest(pageUri: Uri) =
-        ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri))
-
-    // moved from jp.hazuki.yuzubrowser.adblock/AdBlock.kt
-    // modified to use cache for the slow part, decreases average time by 50-70%
-    fun is3rdParty(url: Uri, pageUri: Uri): Boolean {
-        val hostName = url.host ?: return true
-        val pageHost = pageUri.host ?: return true
-
-        if (hostName == pageHost) return false
-
-        val cacheEntry = hostName + pageHost
-        val cached = thirdPartyCache[cacheEntry]
-        if (cached != null)
-            return cached
-
-        val ipPattern = PatternsCompat.IP_ADDRESS
-        if (ipPattern.matcher(hostName).matches() || ipPattern.matcher(pageHost).matches())
-            return cache3rdPartyResult(true, cacheEntry)
-
-        val db = PublicSuffix.get()
-
-        return cache3rdPartyResult(db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost), cacheEntry)
-    }
-
-    // cache 3rd party check result, and remove oldest entry if cache too large
-    // TODO: this can trigger concurrentModificationException
-    //   fix should not defeat purpose of cache (introduce slowdown)
-    //   simply use try and don't catch anything?
-    //    if something is not added to cache it doesn't matter
-    //    in worst case it takes another 1-2 ms to create the same result again
-    private fun cache3rdPartyResult(is3rdParty: Boolean, cacheEntry: String): Boolean {
-        runCatching {
-            thirdPartyCache[cacheEntry] = is3rdParty
-            if (thirdPartyCache.size > thirdPartyCacheSize)
-                thirdPartyCache.remove(thirdPartyCache.keys.first())
-        }
-        return is3rdParty
-    }
-
-    // returns null if not blocked, else some WebResourceResponse
-    override fun shouldBlock(request: WebResourceRequest, pageUrl: String): WebResourceResponse? {
-        // always allow special URLs
-        // then check user lists (user allow should even override malware list)
-        // then mining/malware (ad block allow should not override malware list)
-        // then ads
-
-        if (request.url.toString().isSpecialUrl() || request.url.toString().isAppScheme())
-            return null
-
-        //logger.log(TAG,"request.isForMainFrame: " + request.isForMainFrame)
-        //logger.log(TAG,"request.url: " + request.url)
-        //logger.log(TAG,"pageUrl: " + pageUrl)
-
-        // create contentRequest
-        // pageUrl can be "" (when opening something in a new tab, or manually entering a URL)
-        //  in this case everything gets blocked because of the pattern "|https://"
-        //  this is blocked for some specific page domains
-        //   and if pageUrl.host == null, domain check return true (in UnifiedFilter.kt)
-        //   same for is3rdParty
-        // if switching pages (via link or pressing back), pageUrl is still the old url, messing up 3rd party checks
-        // -> fix both by setting pageUrl to requestUrl if request.isForMainFrame
-        //  is there any way a request for main frame can be a 3rd party request? then a different fix would be required
-        val contentRequest = request.getContentRequest(if (request.isForMainFrame || pageUrl.isBlank()) request.url else Uri.parse(pageUrl))
-
-        // no need to supply pattern to getBlockResponse
-        //  pattern only used if it's for main frame
-        //  and if it's for main frame and blocked by user, it's always because user chose to block entire domain
-        abpUserRules.getResponse(contentRequest)?.let { response ->
-            return if (response) getBlockResponse(request, application.resources.getString(R.string.page_blocked_list_user, contentRequest.pageUrl.host ?: ""))
-             else null
-        }
-
-        // wait until blocklists are loaded
-        //  web request stuff does not run on main thread, so thread.sleep should be ok
-        while (!listsLoaded) {
-            Thread.sleep(50)
-        }
-
-        importantBlockList[contentRequest]?.let { return getBlockResponse(request, application.resources.getString(R.string.page_blocked_list_malware, it.pattern)) }
-        allowList[contentRequest]?.let { return null }
-        blockList[contentRequest]?.let {
-            //if (it.pattern.isNotBlank()) {
-                return getBlockResponse(
-                    request,
-                    application.resources.getString(R.string.page_blocked_list_ad, it.pattern)
-                )
-            //}
-        }
-
-        return null
-    }
-
-    private fun getBlockResponse(request: WebResourceRequest, pattern: String): WebResourceResponse {
-        var response = if (request.isForMainFrame) {
-            createMainFrameDummy(request.url, pattern)
-        }
-        else {
-            createDummy(request.url)
-        }
-
-        //SL: We used when debugging
-        // See: https://github.com/Slion/Fulguris/issues/225
-        // TODO: Though we should really set a status code TBH, could be 200 or 404 depending of our needs I guess
-        //response.setStatusCodeAndReasonPhrase(404, pattern)
-        return response
+        return modifyExceptions.mapNotNull { it.modify }
     }
 
     companion object {
-        const val BUFFER_SIZE = 1024 * 8
-        private const val TAG = "AbpBlocker"
+        // this needs to be fast, the adguard url tracking list has quite a few options acting on all urls!
+        //  e.g. removing the fbclid parameter added by facebook
+        private fun getModifiedResponse(request: ContentRequest, filters: MutableList<ModifyFilter>, remainingExceptions: List<ModifyFilter>): ModifyResponse? {
+            // we can't simply modify the request, so do what the request wants, but modify
+            //  then deliver what we got as response
+            //  like in https://stackoverflow.com/questions/7610790/add-custom-headers-to-webview-resource-requests-android
 
-        // from jp.hazuki.yuzubrowser.core.utility.utils/IOUtils.java
-        @Throws(IOException::class)
-        fun readByte(inputStream: InputStream): ByteArray {
-            val buffer = ByteArray(BUFFER_SIZE)
-            val bout = ByteArrayOutputStream()
-            var n: Int
-            while (inputStream.read(buffer).also { n = it } >= 0) {
-                bout.write(buffer, 0, n)
+            // apply removeparam
+            val parameters = getModifiedParameters(request.url, filters, remainingExceptions)
+            filters.removeAll { RemoveparamFilter::class.java.isAssignableFrom(it::class.java) }
+            if (parameters == null && filters.isEmpty()) return null
+
+            // apply request header modifying filters
+            val requestHeaders = request.headers
+            val requestHeaderSize = requestHeaders.size
+            filters.forEach {
+                // add only if not blocked by exception
+                if (it is RequestHeaderFilter) {
+                    if (it.inverse) // 'inverse' is the same as 'remove' here
+                        requestHeaders.removeHeader(it.parameter!!) // can't have null parameter
+                    else
+                        requestHeaders.addHeader(it.parameter!!)
+                }
             }
-            return bout.toByteArray()
+            filters.removeAll { it is RequestHeaderFilter }
+            if (parameters == null && filters.isEmpty() && requestHeaderSize == requestHeaders.size)
+                return null
+
+            // gather headers to add/remove from remaining filters
+            val addHeaders = mutableMapOf<String, String>()
+            val removeHeaders = mutableListOf<String>()
+            filters.forEach {
+                when (it) {
+                    // add only if not blocked by exception
+                    is ResponseHeaderFilter -> {
+                        if (it.inverse) // 'inverse' is the same as 'remove' here
+                            removeHeaders.add(it.parameter!!) // can't have null parameter
+                        else {
+                            addHeaders.addHeader(it.parameter!!)
+                        }
+                    }
+                    // else -> what do? this should never happen, maybe log?
+                }
+            }
+            val newUrl = if (parameters == null)
+                    request.url.toString()
+                else
+                    request.url.toString().substringBefore('?').substringBefore('#') + // url without parameters and fragment
+                        parameterString(parameters) + // add modified parameters
+                        (request.url.fragment?.let {"#$it"} ?: "") // add fragment
+
+            return ModifyResponse(newUrl, request.method, requestHeaders, addHeaders, removeHeaders)
         }
 
-        // from jp.hazuki.yuzubrowser.core.utility.utils/FileUtils.kt
-        const val MIME_TYPE_UNKNOWN = "application/octet-stream"
-        fun getMimeType(fileName: String): String {
-            val lastDot = fileName.lastIndexOf('.')
-            if (lastDot >= 0) {
-                val extension = fileName.substring(lastDot + 1).toLowerCase()
-                return getMimeTypeFromExtension(extension)
+        // applies filters to parameters and returns remaining parameters
+        // returns null of parameters are not modified
+        private fun getModifiedParameters(url: Uri, filters: List<ModifyFilter>, exceptions: List<ModifyFilter>): Map<String, String>? {
+            val parameters = url.getQueryParameterMap()
+            var changed = false
+            val removeParamExceptions = exceptions.mapNotNull {
+                if (RemoveparamFilter::class.java.isAssignableFrom(it::class.java)) it
+                else null
             }
-            return "application/octet-stream"
-        }
-
-        // from jp.hazuki.yuzubrowser.core.utility.utils/FileUtils.kt
-        fun getMimeTypeFromExtension(extension: String): String {
-            return when (extension) {
-                "js" -> "application/javascript"
-                "mhtml", "mht" -> "multipart/related"
-                "json" -> "application/json"
-                else -> {
-                    val type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
-                    if (type.isNullOrEmpty()) {
-                        MIME_TYPE_UNKNOWN
-                    } else {
-                        type
+            filters.forEach { modify ->
+                if (RemoveparamFilter::class.java.isAssignableFrom(modify::class.java)) {
+                    changed = changed or parameters.entries.removeAll { parameter ->
+                        modify.matchParameter(parameter.key)
+                                && removeParamExceptions.all { !it.matchParameter(parameter.key) }
                     }
                 }
             }
+            return if (changed) parameters else null
         }
 
-        // from jp.hazuki.yuzubrowser.core.utility.extensions/HtmlExtensions.kt
-        fun getNoCacheResponse(mimeType: String, sequence: CharSequence): WebResourceResponse {
-            return getNoCacheResponse(
-                mimeType, ByteArrayInputStream(
-                    sequence.toString().toByteArray(
-                        StandardCharsets.UTF_8
-                    )
-                )
-            )
+        private fun ModifyFilter.matchParameter(parm: String): Boolean {
+            return when (this) {
+                is RemoveparamRegexFilter -> regex.containsMatchIn(parm) xor inverse
+                is RemoveparamFilter -> (parameter == null || parameter == parm) xor inverse
+                else -> false
+            }
         }
 
-        // from jp.hazuki.yuzubrowser.core.utility.extensions/HtmlExtensions.kt
-        fun getNoCacheResponse(mimeType: String, stream: InputStream): WebResourceResponse {
-            val response = WebResourceResponse(mimeType, "UTF-8", stream)
-            response.responseHeaders =
-                HashMap<String, String>().apply { put("Cache-Control", "no-cache") }
-            return response
+        private fun parameterString(parameters: Map<String, String>) =
+            if (parameters.isEmpty()) ""
+            else "?" + parameters.entries.joinToString("&") { it.key + "=" + it.value }
+
+        // string must look like: User-Agent: Mozilla/5.0
+        private fun MutableMap<String, String>.addHeader(headerAndValue: String) =
+            addHeader(MapEntry(
+                headerAndValue.substringBefore(':').trim(),
+                headerAndValue.substringAfter(':').trim()
+            ))
+
+        class MapEntry(override val key: String, override val value: String) : Map.Entry<String, String>
+
+        fun MutableMap<String, String>.addHeader(headerAndValue: Map.Entry<String, String>) {
+            keys.forEach {
+                // header names are case insensitive, but we want to modify as little as possible
+                if (it.lowercase() == headerAndValue.key.lowercase()) {
+                    put(it, get(it) + "; " + headerAndValue.value)
+                    return
+                }
+            }
+            put(headerAndValue.key, headerAndValue.value)
+        }
+
+        fun MutableMap<String, String>.removeHeader(header: String) {
+            keys.forEach {
+                if (it.lowercase() == header.lowercase())
+                    remove(it)
+            }
+        }
+
+        // redirect filters are only applied (or even checked!) if request is blocked!
+        //  usually, a matching block filter is created with redirect filter, but not necessarily
+        private fun RedirectFilter.withPriority(): Pair<String, Int> {
+            val split = parameter!!.indexOf(':')
+            return if (split > -1)
+                Pair(parameter.substring(0,split), parameter.substring(split+1).toInt())
+            else
+                Pair(parameter, 0)
+        }
+
+        // using query and not decoding is twice as fast
+        //  any problems? better leave as is, overall this is so fast at doesn't matter anyway
+        // using LinkedHashMap to keep original order
+        fun Uri.getQueryParameterMap(): LinkedHashMap<String, String> {
+            // using some code from android.net.uri.getQueryParameters()
+            val query = encodedQuery ?: return linkedMapOf()
+            val parameters = linkedMapOf<String, String>()
+            var start = 0
+            do {
+                val next = query.indexOf('&', start)
+                val end = if (next == -1) query.length else next
+                var separator = query.indexOf('=', start)
+                if (separator > end || separator == -1) {
+                    separator = end
+                }
+                parameters[Uri.decode(query.substring(start, separator))] = // parameter name
+                    Uri.decode(
+                        query.substring(
+                            if (separator < end) separator + 1 else end,
+                            end
+                        )
+                    ) // parameter value
+                start = end + 1
+            } while (start < query.length)
+            return parameters
         }
     }
 }

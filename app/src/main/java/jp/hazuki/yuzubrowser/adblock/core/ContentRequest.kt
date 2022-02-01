@@ -24,7 +24,9 @@ data class ContentRequest(
     val pageUrl: Uri,
     val type: Int,
     val isThirdParty: Boolean,
-    val tags: List<String> = Tag.create(url.toString())
+    val headers: MutableMap<String, String> = mutableMapOf(),
+    val method: String = "GET",
+    val tags: Collection<String> = Tag.create(url.toString()).toSet(),
 ) {
     companion object {
         const val TYPE_OTHER = 0x01
@@ -38,6 +40,12 @@ data class ContentRequest(
         const val TYPE_POPUP = 0x0100
         const val TYPE_WEB_SOCKET = 0x0200
         const val TYPE_XHR = 0x0400
+        const val TYPE_ALL = 0xffff
+        // INVERSE and TYPE_ is 0
+        //  except if content type has ~ in filter string (again exception: no type results in TYPE_ALL)
+        // use 0x8000 so further types can be added: 0x0800, 0x1000, 0x2000, 0x4000
+        const val INVERSE = 0x8000
+
 
         const val TYPE_ELEMENT_HIDE = 0x4000_0000
         const val TYPE_ELEMENT_GENERIC_HIDE = 0x2000_0000

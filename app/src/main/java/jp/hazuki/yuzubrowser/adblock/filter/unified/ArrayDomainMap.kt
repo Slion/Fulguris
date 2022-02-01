@@ -18,13 +18,19 @@ package jp.hazuki.yuzubrowser.adblock.filter.unified
 
 import androidx.collection.SimpleArrayMap
 
-class ArrayDomainMap(size: Int) : SimpleArrayMap<String, Boolean>(size), DomainMap {
+class ArrayDomainMap(size: Int, override var wildcard: Boolean) : SimpleArrayMap<String, Boolean>(size), DomainMap {
 
     override val size: Int
         get() = size()
 
+    // see https://adblockplus.org/en/filter-cheatsheet: also matches subdomains
     override fun get(domain: String): Boolean? {
-        // see https://adblockplus.org/en/filter-cheatsheet: also matches subdomains
+        if (wildcard) {
+            // check all entries separately, return null if none matches
+            for (i in 0 until size)
+                if (matchWildcard(keyAt(i), domain)) return valueAt(i)
+            return null
+        }
         var d = domain
         while (d.contains('.')) {
             getOrDefault(d, null)?.let { return it }

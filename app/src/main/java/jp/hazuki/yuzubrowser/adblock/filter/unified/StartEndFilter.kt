@@ -23,8 +23,9 @@ class StartEndFilter(
     contentType: Int,
     ignoreCase: Boolean,
     domains: DomainMap?,
-    thirdParty: Int
-) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty) {
+    thirdParty: Int,
+    modify: ModifyFilter? = null
+) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty, modify) {
     override val filterType: Int
         get() = FILTER_TYPE_START_END
 

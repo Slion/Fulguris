@@ -24,9 +24,10 @@ class RegexHostFilter(
     contentType: Int,
     ignoreCase: Boolean,
     domains: DomainMap?,
-    thirdParty: Int
-) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty) {
-    private val regex = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE)
+    thirdParty: Int,
+    modify: ModifyFilter? = null
+) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty, modify) {
+    private val regex = pattern.toRegex()
 
     override val filterType: Int
         get() = FILTER_TYPE_JVM_REGEX_HOST
@@ -34,9 +35,9 @@ class RegexHostFilter(
     override fun check(url: Uri): Boolean {
         val host = url.host
         return if (host != null)
-            regex.matcher(host).find()
+            regex.containsMatchIn(host)
         else
-            regex.matcher(url.toString()).find()
+            regex.containsMatchIn(url.toString())
     }
 
     override val isRegex: Boolean

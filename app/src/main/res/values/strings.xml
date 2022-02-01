@@ -171,7 +171,7 @@
     <string name="page_blocked_reason">because of:</string>
     <string name="page_blocked_list_ad">%s on ad filters</string>
     <string name="page_blocked_list_user">%s blocked by user rule</string>
-    <string name="page_blocked_list_malware">%s on malware filters</string>
+    <string name="page_blocked_list_malware">%s on important filters list</string>
     <string name="request_blocked">Request blocked</string>
 
     <!-- settings for new ad blocker -->
@@ -181,12 +181,13 @@
     <string name="blocklist_update_wifi">Only on non-metered connections</string>
     <string name="blocklist_update">Update filters</string>
     <string name="blocklist_update_frequency">Auto-update frequency</string>
-    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
+    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filter list specifies a longer expiry interval</string>
     <string name="blocklist_update_now">Update lists now</string>
     <string name="blocklist_last_update">Last update: %s</string>
     <string name="blocklist_updating">Updating…</string>
     <string name="blocklist_update_error">Error while updating filters list %s</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
+    <string name="blocklist_update_error_404">Error while updating filters list %s</string> <!-- not used any more, generic error for all non-successful codes -->
+    <string name="blocklist_update_error_code">Error while updating filters list %1$s: status code %2$s</string>
     <string name="add_blocklist">Add filters file</string>
     <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
     <string name="enable_blocklist">Enable this list</string>
@@ -199,6 +200,9 @@
     <string name="local_file_replace">Replace</string>
     <string name="local_file_chosen">file selected</string>
     <string name="remote_file">Remote</string>
+    <string name="use_modify_filters">Modifier filters</string>
+    <string name="use_modify_filters_warning">In some cases, modifier filters have been found to break websites in this browser. Until implementation is improved, you can enable them at your own risk. Disabling for main-frame documents only avoids most issues.</string>
+    <string name="modify_filters_not_for_main_frame">Disable for main frame only</string>
 
 <!-- Common actions -->
     <string name="action_message_canceled">Action canceled.</string>

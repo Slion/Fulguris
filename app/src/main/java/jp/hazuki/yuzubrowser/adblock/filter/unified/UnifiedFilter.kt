@@ -25,12 +25,13 @@ abstract class UnifiedFilter(
     override val contentType: Int,
     override val ignoreCase: Boolean,
     override val domains: DomainMap?,
-    override val thirdParty: Int
+    override val thirdParty: Int,
+    override val modify: ModifyFilter?
 ) : ContentFilter {
 
     override fun isMatch(request: ContentRequest): Boolean {
         return if ((contentType and request.type) != 0
-            && checkThird(request.isThirdParty)
+            && checkThird(request)
             && checkDomain(request.pageUrl.host)
         ) {
             check(request.url)
@@ -41,14 +42,15 @@ abstract class UnifiedFilter(
 
     internal abstract fun check(url: Uri): Boolean
 
-    private fun checkThird(isThirdParty: Boolean): Boolean {
-        if (thirdParty == -1) return true
-        return if (isThirdParty) {
-            thirdParty == 1
-        } else {
-            thirdParty == 0
+    private fun checkThird(request: ContentRequest): Boolean =
+        when (thirdParty) {
+            NO_PARTY_PREFERENCE -> true // don't care about 3rd party
+            FIRST_PARTY -> !request.isThirdParty // match only 1st party
+            THIRD_PARTY -> request.isThirdParty // match only 3rd party
+            STRICT_FIRST_PARTY -> request.url.host == request.pageUrl.host // match only strict 1st party (compare fqdn)
+            STRICT_THIRD_PARTY -> request.url.host != request.pageUrl.host // match only strict 3rd party
+            else -> false // should not happen
         }
-    }
 
     private fun checkDomain(domain: String?): Boolean {
         if (domain == null) return true
@@ -93,6 +95,7 @@ abstract class UnifiedFilter(
         if (ignoreCase != other.ignoreCase) return false
         if (thirdParty != other.thirdParty) return false
         if (filterType != other.filterType) return false
+        if (modify != other.modify) return false
 
         // original domain map comparison not working properly (often returns false for same domains)
         // -> do more extensive check
@@ -118,6 +121,13 @@ abstract class UnifiedFilter(
         result = 31 * result + (domains?.hashCode() ?: 0)
         result = 31 * result + thirdParty
         result = 31 * result + filterType
+        result = 31 * result + (modify?.hashCode() ?: 0)
         return result
     }
 }
+
+const val NO_PARTY_PREFERENCE = -1
+const val FIRST_PARTY = 0
+const val THIRD_PARTY = 1
+const val STRICT_FIRST_PARTY = 2
+const val STRICT_THIRD_PARTY = 3

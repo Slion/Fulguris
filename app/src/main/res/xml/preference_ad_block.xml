@@ -24,6 +24,11 @@
             android:dependency="@string/pref_key_content_control"
             app:icon="@drawable/ic_update" />
 
+        <Preference
+            android:key="@string/pref_key_modify_filters"
+            android:title="@string/use_modify_filters"
+            android:dependency="@string/pref_key_content_control" />
+
         </PreferenceCategory>
 
         <acr.browser.lightning.settings.preferences.PreferenceCategoryEx

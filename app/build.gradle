@@ -106,6 +106,7 @@ android {
             jacoco {
                 // This option needs to be included for robolectric tests
                 includeNoLocationClasses = true
+                excludes = ['jdk.internal.*']
             }
         }
     }
@@ -238,7 +239,7 @@ android {
 }
 
 jacoco {
-    toolVersion = '0.7.9' // See http://www.eclemma.org/jacoco/
+    toolVersion = '0.8.7' // See http://www.eclemma.org/jacoco/
 }
 
 // unMock is required for tests that use android.net.Uri
@@ -314,7 +315,7 @@ dependencies {
     implementation 'net.i2p.android:client:0.9.45'
     implementation 'net.i2p.android:helper:0.9.5'
 
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 
     // rx
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
@@ -347,9 +348,6 @@ dependencies {
     // Since java.time need API 26 we use that backport instead
     // See: https://github.com/JakeWharton/ThreeTenABP
     implementation 'com.jakewharton.threetenabp:threetenabp:1.3.0'
-
-    // re2j is faster than normal java regex, used for content blocker
-    implementation 'com.google.re2j:re2j:1.6'
 }
 
 kapt {

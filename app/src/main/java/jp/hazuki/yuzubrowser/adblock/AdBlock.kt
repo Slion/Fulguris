@@ -16,50 +16,25 @@
 
 package jp.hazuki.yuzubrowser.adblock
 
-import acr.browser.lightning.adblock.AbpBlocker.Companion.getMimeTypeFromExtension
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.MIME_TYPE_UNKNOWN
+import acr.browser.lightning.adblock.AbpBlockerManager.Companion.getMimeTypeFromExtension
 import android.net.Uri
 import android.webkit.WebResourceRequest
-import androidx.core.util.PatternsCompat
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
-import okhttp3.internal.publicsuffix.PublicSuffix
-import java.util.*
 
-const val BROADCAST_ACTION_UPDATE_AD_BLOCK_DATA = "jp.hazuki.yuzubrowser.adblock.broadcast.update.adblock"
-
-/*
-fun WebResourceRequest.isThirdParty(pageUri: Uri): Boolean {
-    val hostName = url.host ?: return true
-    val pageHost = pageUri.host ?: return true
-
-    if (hostName == pageHost) return false
-
-    val ipPattern = PatternsCompat.IP_ADDRESS
-    if (ipPattern.matcher(hostName).matches() || ipPattern.matcher(pageHost).matches()) {
-        return true
-    }
-
-    val db = PublicSuffix.get()
-
-    return db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost)
-}
-
-
-fun WebResourceRequest.getContentRequest(pageUri: Uri) =
-    ContentRequest(url, pageUri, getContentType(pageUri), isThirdParty(pageUri))
-*/
 fun WebResourceRequest.getContentType(pageUri: Uri): Int {
     var type = 0
     val scheme = url.scheme
-    var isPage = false
+//    var isPage = false
+    val accept by lazy { requestHeaders["Accept"] }
 
     if (isForMainFrame) {
         if (url == pageUri) {
-            isPage = true
+//            isPage = true
             type = ContentRequest.TYPE_DOCUMENT
         }
-    } else {
+    } else if (accept != null && accept!!.contains("text/html"))
         type = ContentRequest.TYPE_SUB_DOCUMENT
-    }
 
     if (scheme == "ws" || scheme == "wss") {
         type = type or ContentRequest.TYPE_WEB_SOCKET
@@ -72,28 +47,30 @@ fun WebResourceRequest.getContentType(pageUri: Uri): Int {
     val path = url.path ?: url.toString()
     val lastDot = path.lastIndexOf('.')
     if (lastDot >= 0) {
-        when (val extension = path.substring(lastDot + 1).toLowerCase(Locale.ENGLISH)) {
+        when (val extension = path.substring(lastDot + 1).lowercase().substringBefore('?')) {
             "js" -> return type or ContentRequest.TYPE_SCRIPT
             "css" -> return type or ContentRequest.TYPE_STYLE_SHEET
             "otf", "ttf", "ttc", "woff", "woff2" -> return type or ContentRequest.TYPE_FONT
             "php" -> Unit
             else -> {
                 val mimeType = getMimeTypeFromExtension(extension)
-                if (mimeType != "application/octet-stream") {
-                    return type or mimeType.getFilterType()
+                if (mimeType != MIME_TYPE_UNKNOWN) {
+                    return otherIfNone(type or mimeType.getFilterType())
                 }
             }
         }
     }
 
-    if (isPage) {
-        return type or ContentRequest.TYPE_OTHER
-    }
+    // why was this here?
+    // breaks many $~document filters, because if there is no file extension (which is very common for main frame urls)
+    //  then type_document ALWAYS has type_other and thus is blocked by $~document
+//    if (isPage) {
+//        return type or ContentRequest.TYPE_OTHER
+//    }
 
-    val accept = requestHeaders["Accept"]
     return if (accept != null && accept != "*/*") {
-        val mimeType = accept.split(',')[0]
-        type or mimeType.getFilterType()
+        val mimeType = accept!!.split(',')[0]
+        otherIfNone(type or mimeType.getFilterType())
     } else {
         type or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_IMAGE or
             ContentRequest.TYPE_FONT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_SCRIPT
@@ -108,6 +85,7 @@ fun String.getFilterType(): Int {
         "application/json" -> ContentRequest.TYPE_SCRIPT
         "text/css" -> ContentRequest.TYPE_STYLE_SHEET
         else -> when {
+            startsWith("text/") -> 0 // don't add other for all text documents!
             startsWith("image/") -> ContentRequest.TYPE_IMAGE
             startsWith("video/") || startsWith("audio/") -> ContentRequest.TYPE_MEDIA
             startsWith("font/") -> ContentRequest.TYPE_FONT
@@ -115,3 +93,7 @@ fun String.getFilterType(): Int {
         }
     }
 }
+
+// text documents might have no type -> at least give them other, or filtering doesn't work
+fun otherIfNone(type: Int) =
+    if (type == 0) ContentRequest.TYPE_OTHER else type
