@@ -240,7 +240,7 @@ class AbpBlockerTest {
 
     @Test
     fun modifyFiltersReadWrite() {
-        val startList = set2.filters[ABP_PREFIX_MODIFY]
+        val startList = set2.filters[ABP_PREFIX_MODIFY] + set2.filters[ABP_PREFIX_MODIFY_EXCEPTION]
         val filterStore = ByteArrayOutputStream()
         filterStore.use {
             val writer = FilterWriter()

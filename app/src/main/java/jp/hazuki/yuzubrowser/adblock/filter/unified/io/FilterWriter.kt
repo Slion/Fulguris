@@ -68,7 +68,7 @@ class FilterWriter {
 
         filters.forEach {
             val modify = it.second.modify ?: return@forEach // log if null?
-            val modifyString = "" + modify.prefix + (if (modify.inverse) 1 else 0) + modify.parameter
+            val modifyString = "" + modify.prefix + (if (modify.inverse) 1 else 0) + (modify.parameter ?: "")
             writeModify(os, modifyString)
             writeFilter(os, it)
         }
