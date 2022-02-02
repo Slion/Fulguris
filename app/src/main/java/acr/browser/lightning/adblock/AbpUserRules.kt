@@ -4,6 +4,9 @@ import acr.browser.lightning.database.adblock.UserRulesRepository
 import android.net.Uri
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -68,12 +71,12 @@ class AbpUserRules @Inject constructor(
 
     private fun addUserRule(filter: UnifiedFilterResponse) {
         userRules.add(filter)
-        userRulesRepository.addRules(listOf(filter))
+        GlobalScope.launch(Dispatchers.IO) { userRulesRepository.addRules(listOf(filter)) }
     }
 
     private fun removeUserRule(filter: UnifiedFilterResponse) {
         userRules.remove(filter)
-        userRulesRepository.removeRule(filter)
+        GlobalScope.launch(Dispatchers.IO) { userRulesRepository.removeRule(filter) }
     }
 
 /*
@@ -121,7 +124,6 @@ class AbpUserRules @Inject constructor(
     }
 
     fun allowPage(pageUrl: Uri, add: Boolean) {
-        // S4 mini speed test: 1.7 ms for 2nd entry, 26 ms for ~2400th entry -> fast enough, no need to move DB operation to different thread
         val domain = pageUrl.host ?: return
         if (add)
             addUserRule(domain, "", ContentRequest.TYPE_ALL, thirdParty = false, response = false)
