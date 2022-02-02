@@ -126,7 +126,7 @@ class AbpBlockerManager @Inject constructor(
         // create joint files
         // tags will be created again, this is unnecessary, but fast enough to not care about it very much
         blockerPrefixes.forEach { prefix ->
-            writeFile(prefix, filters[prefix]!!.map { it.second })
+            writeFile(prefix, filters[prefix]!!)
         }
 
         /*if (elementHide) {
@@ -156,16 +156,16 @@ class AbpBlockerManager @Inject constructor(
         return false
     }
 
-    private fun writeFile(prefix: String, filters: Collection<UnifiedFilter>?) {
+    private fun writeFile(prefix: String, filters: Collection<Pair<String, UnifiedFilter>>?) {
         if (filters == null) return // better throw error, should not happen
         val file = File(application.applicationContext.getFilterDir(), prefix)
         val writer = FilterWriter()
         file.outputStream().buffered().use {
             if (isModify(prefix))
             // use !! to get error if filter.modify is null
-                writer.writeModifyFilters(it, filters.toList())
+                writer.writeModifyFiltersWithTag(it, filters.toList())
             else
-                writer.write(it, filters.toList())
+                writer.writeWithTag(it, filters.toList())
             it.close()
         }
     }

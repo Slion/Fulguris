@@ -41,6 +41,9 @@ object Tag {
                     tags.removeAt(tags.lastIndex)
                 return tags.maxByOrNull { it.length } ?: ""
             }
+            filter is StartEndFilter && filter.pattern.none { it == '/' || it == '*' }
+                    && !filter.pattern.endsWith('.') && filter.pattern.contains('.')
+                    -> return filter.pattern // pattern is a domain
             filter.isRegex -> {
                 // require tags to be between a few selected delimiters
                 //   regex is used like a contains filter and can start in the middle of any string

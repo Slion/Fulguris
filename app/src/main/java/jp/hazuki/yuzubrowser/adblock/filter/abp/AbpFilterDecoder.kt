@@ -351,18 +351,7 @@ class AbpFilterDecoder {
                 val isLiteral = content.isLiteralFilter()
                 if (isLiteral) {
                     when {
-                        isStartsWith && isEndWith -> //{
-//                            if (content.contains('.') && !content.contains('/'))
-
- //                       }
-                            StartEndFilter(
-                            content,
-                            contentType,
-                            ignoreCase,
-                            domains,
-                            thirdParty,
-                            modify
-                        )
+                        isStartsWith && isEndWith -> StartEndFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         isStartsWith -> StartsWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         isEndWith -> EndWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         else -> {
