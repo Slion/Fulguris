@@ -101,9 +101,9 @@ class AbpUserRules @Inject constructor(
 
         // HostFilter for specific request domain, ContainsFilter with empty pattern otherwise
         return if (requestDomain.isEmpty())
-            ContainsFilter(requestDomain, contentType, domains, thirdPartyInt)
+            ContainsFilter(requestDomain, contentType, true, domains, thirdPartyInt)
         else
-            HostFilter(requestDomain, contentType, false, domains, thirdPartyInt)
+            HostFilter(requestDomain, contentType, domains, thirdPartyInt)
     }
 
     fun addUserRule(pageDomain: String, requestDomain: String, contentType: Int, thirdParty: Boolean, response: Boolean?) {

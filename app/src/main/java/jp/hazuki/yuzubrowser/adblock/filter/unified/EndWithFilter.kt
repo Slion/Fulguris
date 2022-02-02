@@ -21,10 +21,11 @@ import android.net.Uri
 class EndWithFilter(
     filter: String,
     contentType: Int,
+    ignoreCase: Boolean,
     domains: DomainMap?,
     thirdParty: Int,
     modify: ModifyFilter? = null
-) : UnifiedFilter(filter, contentType, false, domains, thirdParty, modify) {
+) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty, modify) {
     override val filterType: Int
         get() = FILTER_TYPE_END
 

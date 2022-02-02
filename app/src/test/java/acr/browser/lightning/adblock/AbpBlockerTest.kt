@@ -442,6 +442,33 @@ class AbpBlockerTest {
     }
 
     @Test
+    fun matchCase() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+        filterList.add("||page.com/ads")
+        blockedRequests.add(request("http://page.com/ads", "https://page.com"))
+        blockedRequests.add(request("http://page.com/ADS", "https://page.com"))
+        filterList.add("||page2.com/Ads\$match-case")
+        blockedRequests.add(request("http://page2.com/Ads", "https://page.com"))
+        allowedRequests.add(request("http://page2.com/ads", "https://page.com"))
+        filterList.add("page3/ads")
+        blockedRequests.add(request("http://page3.com/page3/Ads", "https://page.com"))
+        blockedRequests.add(request("http://page3.com/page3/ads", "https://page.com"))
+        filterList.add("page4/Ads\$match-case")
+        blockedRequests.add(request("http://page4.com/page4/Ads", "https://page.com"))
+        allowedRequests.add(request("http://page4.com/page4/ads", "https://page.com"))
+        filterList.add("page5*/Ads\$match-case")
+        blockedRequests.add(request("http://page5.com/page5b/Ads", "https://page.com"))
+        allowedRequests.add(request("http://page5.com/page5b/ads", "https://page.com"))
+        filterList.add("page6*/Ads")
+        blockedRequests.add(request("http://page5.com/page6b/Ads", "https://page.com"))
+        blockedRequests.add(request("http://page5.com/page6b/ads", "https://page.com"))
+
+        checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
+    }
+
+    @Test
     fun removeparam() {
         // only tests removeparam so far
         val filterList = mutableListOf<String>()

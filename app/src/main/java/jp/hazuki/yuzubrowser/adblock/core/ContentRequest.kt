@@ -28,6 +28,8 @@ data class ContentRequest(
     val method: String = "GET",
     val tags: Collection<String> = Tag.create(url.toString()).toSet(),
 ) {
+    val urlLowercase = url.lowercase()
+
     companion object {
         const val TYPE_OTHER = 0x01
         const val TYPE_SCRIPT = 0x02
@@ -51,3 +53,10 @@ data class ContentRequest(
         const val TYPE_ELEMENT_GENERIC_HIDE = 0x2000_0000
     }
 }
+
+private fun Uri.lowercase(): Uri =
+    buildUpon()
+        .authority(authority?.lowercase())
+        .path(path?.lowercase())
+        .encodedQuery(encodedQuery?.lowercase())
+        .build()

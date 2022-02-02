@@ -159,7 +159,7 @@ class AbpFilterDecoder {
         filterLists: FilterMap
     ) {
         var contentType = 0
-        var ignoreCase = false
+        var ignoreCase = true
         var domain: String? = null
         var thirdParty = NO_PARTY_PREFERENCE
         var filter = this
@@ -343,14 +343,19 @@ class AbpFilterDecoder {
             } else {
                 val isStartsWith = filter.startsWith("||")
                 val isEndWith = filter.endsWith('^')
-                val content = filter.substring(
+                var content = filter.substring(
                     if (isStartsWith) 2 else 0,
                     if (isEndWith) filter.length - 1 else filter.length
                 )
+                if (ignoreCase) content = content.lowercase()
                 val isLiteral = content.isLiteralFilter()
                 if (isLiteral) {
                     when {
-                        isStartsWith && isEndWith -> StartEndFilter(
+                        isStartsWith && isEndWith -> //{
+//                            if (content.contains('.') && !content.contains('/'))
+
+ //                       }
+                            StartEndFilter(
                             content,
                             contentType,
                             ignoreCase,
@@ -359,36 +364,12 @@ class AbpFilterDecoder {
                             modify
                         )
                         isStartsWith -> StartsWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
-                        isEndWith -> {
-                            if (ignoreCase) {
-                                PatternMatchFilter(
-                                    filter,
-                                    contentType,
-                                    ignoreCase,
-                                    domains,
-                                    thirdParty,
-                                    modify
-                                )
-                            } else {
-                                EndWithFilter(content, contentType, domains, thirdParty, modify)
-                            }
-                        }
+                        isEndWith -> EndWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         else -> {
-                            if (ignoreCase) {
-                                PatternMatchFilter(
-                                    filter,
-                                    contentType,
-                                    ignoreCase,
-                                    domains,
-                                    thirdParty,
-                                    modify
-                                )
-                            } else {
-                                if ("http://$content".toUri().host == content) // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
-                                    StartEndFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
-                                else
-                                    ContainsFilter(content, contentType, domains, thirdParty, modify)
-                            }
+                            if ("http://$content".toUri().host == content) // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
+                                StartEndFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
+                            else
+                                ContainsFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         }
                     }
                 } else {

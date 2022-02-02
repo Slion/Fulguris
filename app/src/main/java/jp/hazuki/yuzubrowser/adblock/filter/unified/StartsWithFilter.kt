@@ -31,7 +31,7 @@ class StartsWithFilter(
 
     override fun check(url: Uri): Boolean {
         val path = url.schemeSpecificPart
-        val index = path.indexOf(pattern, ignoreCase = ignoreCase)
+        val index = path.indexOf(pattern)
         if (index > -1) {
             return path.checkIsDomainInSsp(index)
         }

@@ -24,7 +24,7 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.HostFilter
 import jp.hazuki.yuzubrowser.adblock.filter.unified.StartsWithFilter
 import java.io.IOException
 import java.io.InputStream
-
+/*
 class MiningProtector {
     val dummy = WebResourceResponse("text/plain", "UTF-8", EmptyInputStream())
 
@@ -95,3 +95,4 @@ class MiningProtector {
         override fun read(): Int = -1
     }
 }
+*/

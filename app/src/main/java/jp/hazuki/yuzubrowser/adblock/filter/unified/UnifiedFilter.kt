@@ -29,12 +29,16 @@ abstract class UnifiedFilter(
     override val modify: ModifyFilter?
 ) : ContentFilter {
 
+    // careful: for performance reasons, case sensitivity is handled by FilterContainer
     override fun isMatch(request: ContentRequest): Boolean {
         return if ((contentType and request.type) != 0
             && checkThird(request)
             && checkDomain(request.pageUrl.host)
         ) {
-            check(request.url)
+            if (ignoreCase)
+                check(request.urlLowercase)
+            else
+                check(request.url)
         } else {
             false
         }
