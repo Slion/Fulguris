@@ -57,21 +57,17 @@ class UserFilterContainer {
         }
     }
 
-    fun get(contentRequest: ContentRequest): UnifiedFilterResponse? {
+    fun get(request: ContentRequest): UnifiedFilterResponse? {
         // tags are not really used (only pageDomain and empty) -> ignore tags from contentRequest
 
-        // build list of all matching filters
-        // TODO: the mutable list seems avoidable
-        val list = mutableListOf<UnifiedFilterResponse>()
-        filters[""]?.forEach { if (it.filter.isMatch(contentRequest)) list.add(it) }
-        filters[contentRequest.pageUrl.host]?.forEach { if (it.filter.isMatch(contentRequest)) list.add(it) }
+        val matchingFilters = (filters[""] ?: listOf()) + (filters[request.pageUrl.host] ?: listOf())
 
-        if (list.isEmpty()) return null
-        if (allSameResponse(list)) return list.first()
+        if (matchingFilters.isEmpty()) return null
+        if (allSameResponse(matchingFilters)) return matchingFilters.first()
 
         // get the highest priority rule according to uBo criteria (see comments inside filterComparator)
         // TODO: test whether it does what it should
-        return list.maxOfWith(filterComparator, {it})
+        return matchingFilters.maxOfWith(filterComparator, {it})
     }
 
 
