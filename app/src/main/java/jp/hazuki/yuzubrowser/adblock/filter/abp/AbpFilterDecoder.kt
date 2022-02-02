@@ -26,7 +26,6 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.ModifyFilter.Companion.REMOV
 import jp.hazuki.yuzubrowser.adblock.filter.unified.ModifyFilter.Companion.RESPONSEHEADER_ALLOWED
 import jp.hazuki.yuzubrowser.adblock.filter.unified.element.*
 import java.io.BufferedReader
-import java.io.IOException
 import java.nio.charset.Charset
 import java.util.*
 import java.util.regex.Pattern
@@ -190,6 +189,14 @@ class AbpFilterDecoder {
         val optionsIndex = filter.lastIndexOf('$')
         if (optionsIndex >= 0) {
         val options = filter.substring(optionsIndex + 1).split(',').toMutableList()
+        // move denyallow to last position, domains need to be before denyallow
+        for (i in 0 until options.size) {
+            if (options[i].startsWith("denyallow")) {
+                options.add(options[i])
+                options.removeAt(i)
+                break
+            }
+        }
 /*      don't care about specifics of $all for now, just use content type
             // all is equal to: document, popup, inline-script, inline-font
             //  but on mobile / webview there are no popups anyway (all opened in the same window/tab)
@@ -288,15 +295,15 @@ class AbpFilterDecoder {
                             "redirect-rule" -> modify = RedirectFilter(value)
                             "redirect" -> {
                                 // create block filter in addition to redirect
-                                this.getRedirectBlockString("redirect").decodeFilter(elementFilterList, filterLists)
+                                this.removeOption("redirect").decodeFilter(elementFilterList, filterLists)
                                 modify = RedirectFilter(value)
                             }
                             "empty" -> {
-                                this.getRedirectBlockString("empty").decodeFilter(elementFilterList, filterLists)
+                                this.removeOption("empty").decodeFilter(elementFilterList, filterLists)
                                 modify = RedirectFilter(RES_EMPTY)
                             }
                             "mp4" -> {
-                                this.getRedirectBlockString("mp4").decodeFilter(elementFilterList, filterLists)
+                                this.removeOption("mp4").decodeFilter(elementFilterList, filterLists)
                                 modify = RedirectFilter(RES_NOOP_MP4)
                                 contentType = contentType or ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
@@ -304,6 +311,26 @@ class AbpFilterDecoder {
                             // TODO: see above, all is not handled 100% correctly (but might still be fine)
                             "all" -> contentType = contentType or ContentRequest.TYPE_DOCUMENT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
                             "badfilter" -> badfilter = ABP_PREFIX_BADFILTER
+                            "denyallow" -> {
+                                // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#denyallow-modifier
+                                //  either do regex filter
+                                //   but this also matches path, not just host
+                                //  or create filter + exception filters -> a lot of filters, but no regex
+                                //   problem here: denyallow is usually for common domains, so there will be many additional checks
+                                //   TODO: how to handle best? have new filter type that has all denyallow domains as pattern?
+                                //    could work, and would be much better for loading, and probably faster
+                                //    but first do a performance test whether effect of denyallow is actually measurable
+
+                                if (domain == null || value.isNullOrEmpty()) return
+                                if (value.any { it == '*' || it == '~' }) return
+                                val withoutDenyallow = this.removeOption("denyallow=$value")
+                                withoutDenyallow.decodeFilter(elementFilterList, filterLists)
+                                val optionsString = withoutDenyallow.substringAfter('$')
+                                value.split('|').forEach { denyAllowDomain ->
+                                    "@@||$denyAllowDomain\$$optionsString".decodeFilter(elementFilterList, filterLists)
+                                }
+
+                            }
                             else -> return
                         }
                     }
@@ -397,14 +424,15 @@ class AbpFilterDecoder {
         return false
     }
 
-    private fun String.getRedirectBlockString(toReplace: String): String {
-        var blockString = this.substringAfterLast('$').replace(toReplace, "").replace(",,", ",")
-        if (blockString.endsWith(','))
-            blockString = blockString.dropLast(1)
-        return if (blockString.isEmpty())
-            this.dropLast(1) // no further filter rules, remove $
+    // removes the option (must be full match) and any useless $ or ,
+    private fun String.removeOption(toRemove: String): String {
+        var optionString = this.substringAfterLast('$').replace(toRemove, "").replace(",,", ",")
+        if (optionString.endsWith(','))
+            optionString = optionString.dropLast(1)
+        return if (optionString.isEmpty())
+            this.dropLast(1) // no further filter options, remove $
         else
-            this.substringBeforeLast('$') + "$" + blockString
+            this.substringBeforeLast('$') + "$" + optionString
     }
 
     private fun String.domainsToDomainMap(delimiter: Char): DomainMap? {

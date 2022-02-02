@@ -677,7 +677,19 @@ class AbpBlockerTest {
         filterList.add("||example.com^\$important")
         blockedRequests.add(request("http://example.com/something.gif", "https://goodotherpage.com"))
         checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
+    }
 
+    @Test
+    fun denyallow() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
+        filterList.add("*\$denyallow=page1.com|page2.com,domain=page3.com|page4.com")
+        blockedRequests.add(request("http://page.com/something.gif", "https://page3.com"))
+        allowedRequests.add(request("http://page1.com/something.gif", "https://page3.com"))
+
+        checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
     }
 
     @Test
