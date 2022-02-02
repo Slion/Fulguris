@@ -17,6 +17,7 @@
 package jp.hazuki.yuzubrowser.adblock.core
 
 import android.net.Uri
+import jp.hazuki.yuzubrowser.adblock.filter.unified.FIRST_PARTY
 import jp.hazuki.yuzubrowser.adblock.filter.unified.element.ElementContainer
 
 class CosmeticFiltering(
@@ -29,7 +30,7 @@ class CosmeticFiltering(
     fun loadScript(url: Uri): String? {
         if (cacheUrl == url) return cache
 
-        val request = ContentRequest(url, null, TYPE, false)
+        val request = ContentRequest(url, null, TYPE, FIRST_PARTY)
         val result = disables[request]
 
         val isUseGeneric = when (result?.filterType ?: 0) {

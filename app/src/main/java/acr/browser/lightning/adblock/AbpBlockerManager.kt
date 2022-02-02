@@ -22,7 +22,7 @@ import jp.hazuki.yuzubrowser.adblock.core.AbpLoader
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
-import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
+import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.getFilterDir
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
@@ -256,13 +256,16 @@ class AbpBlockerManager @Inject constructor(
     }
 
     // initially based on jp.hazuki.yuzubrowser.adblock/AdBlock.kt
-    private fun is3rdParty(url: Uri, pageHost: String?): Boolean {
-        val hostName = url.host?.lowercase() ?: return true
-        if (pageHost == null) return true
+    private fun is3rdParty(url: Uri, pageHost: String?): Int {
+        val hostName = url.host?.lowercase() ?: return THIRD_PARTY
+        if (pageHost == null) return THIRD_PARTY
 
-        if (hostName == pageHost) return false
+        if (hostName == pageHost) return STRICT_FIRST_PARTY
 
-        return thirdPartyCache["$hostName/$pageHost"]!! // thirdPartyCache.Create can't return null!
+        return if (thirdPartyCache["$hostName/$pageHost"]!!) // thirdPartyCache.Create can't return null!
+            THIRD_PARTY
+        else
+            FIRST_PARTY
     }
 
     // builder part from yuzu: jp.hazuki.yuzubrowser.adblock/AdBlockController.kt

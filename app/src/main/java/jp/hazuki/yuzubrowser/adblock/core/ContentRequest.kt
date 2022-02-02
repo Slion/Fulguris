@@ -23,7 +23,7 @@ data class ContentRequest(
     val url: Uri,
     val pageHost: String?,
     val type: Int,
-    val isThirdParty: Boolean,
+    val isThirdParty: Int,
     val headers: MutableMap<String, String> = mutableMapOf(),
     val method: String = "GET",
     val tags: Collection<String> = Tag.create(url.toString()).toSet(),

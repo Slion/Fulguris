@@ -815,19 +815,22 @@ class TestWebResourceRequest(private val url2: Uri,
     override fun getMethod() = "GET" // not needed, but should be valid
 }
 
-fun is3rdParty(url: Uri, pageUri: Uri): Boolean {
-    val hostName = url.host ?: return true
-    val pageHost = pageUri.host ?: return true
+fun is3rdParty(url: Uri, pageUri: Uri): Int {
+    val hostName = url.host?.lowercase() ?: return THIRD_PARTY
+    val pageHost = pageUri.host ?: return THIRD_PARTY
 
-    if (hostName == pageHost) return false
+    if (hostName == pageHost) return STRICT_FIRST_PARTY
 
     val ipPattern = PatternsCompat.IP_ADDRESS
     if (ipPattern.matcher(hostName).matches() || ipPattern.matcher(pageHost).matches())
-        return true
+        return THIRD_PARTY
 
     val db = PublicSuffix.get()
 
-    return db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost)
+    return if (db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost))
+        THIRD_PARTY
+    else
+        FIRST_PARTY
 }
 
 
