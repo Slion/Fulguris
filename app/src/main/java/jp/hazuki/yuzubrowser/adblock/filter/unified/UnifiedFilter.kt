@@ -33,7 +33,7 @@ abstract class UnifiedFilter(
     override fun isMatch(request: ContentRequest): Boolean {
         return if ((contentType and request.type) != 0
             && checkThird(request)
-            && checkDomain(request.pageUrl.host)
+            && checkDomain(request.pageHost)
         ) {
             if (ignoreCase)
                 check(request.urlLowercase)
@@ -51,8 +51,8 @@ abstract class UnifiedFilter(
             NO_PARTY_PREFERENCE -> true // don't care about 3rd party
             FIRST_PARTY -> !request.isThirdParty // match only 1st party
             THIRD_PARTY -> request.isThirdParty // match only 3rd party
-            STRICT_FIRST_PARTY -> request.url.host == request.pageUrl.host // match only strict 1st party (compare fqdn)
-            STRICT_THIRD_PARTY -> request.url.host != request.pageUrl.host // match only strict 3rd party
+            STRICT_FIRST_PARTY -> request.url.host == request.pageHost // match only strict 1st party (compare fqdn)
+            STRICT_THIRD_PARTY -> request.url.host != request.pageHost // match only strict 3rd party
             else -> false // should not happen
         }
 

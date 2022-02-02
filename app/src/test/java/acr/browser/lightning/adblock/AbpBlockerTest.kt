@@ -116,15 +116,15 @@ class AbpBlockerTest {
         loadFiltersIntoContainers(filterList.joinToString("\n").byteInputStream())
 
         blockedRequests?.forEach {
-            println("should be blocked: " + it.url + " " + it.pageUrl)
+            println("should be blocked: " + it.url + " " + it.pageHost)
             Assert.assertTrue(blocker.shouldBlock(it) is BlockResponse)
         }
         allowedRequests?.forEach {
-            println("should not be blocked: " + it.url + " " + it.pageUrl)
+            println("should not be blocked: " + it.url + " " + it.pageHost)
             Assert.assertNull(blocker.shouldBlock(it))
         }
         modifiedRequests?.forEach {
-            println("should be modified: " + it.url + " " + it.pageUrl)
+            println("should be modified: " + it.url + " " + it.pageHost)
             Assert.assertTrue(blocker.shouldBlock(it) is BlockResourceResponse || blocker.shouldBlock(it) is ModifyResponse)
         }
     }
@@ -160,11 +160,11 @@ class AbpBlockerTest {
             }
 
         blockedRequests.forEach {
-            println("should be filtered: " + it.url + " " + it.pageUrl)
+            println("should be filtered: " + it.url + " " + it.pageHost)
             Assert.assertNotNull(container[it])
         }
         allowedRequests.forEach {
-            println("should not be touched: " + it.url + " " + it.pageUrl)
+            println("should not be touched: " + it.url + " " + it.pageHost)
             Assert.assertNull(container[it])
         }
     }
@@ -542,7 +542,7 @@ class AbpBlockerTest {
             Assert.assertEquals(response.addResponseHeaders?.get("Content-Security-Policy"), "font-src *")
         }
         allowedRequests.forEach {
-            println("should not be touched: " + it.url + " " + it.pageUrl)
+            println("should not be touched: " + it.url + " " + it.pageHost)
             Assert.assertNull(blocker.shouldBlock(it))
         }
     }
@@ -743,7 +743,7 @@ class AbpBlockerTest {
     }
 
     private fun WebResourceRequest.getContentRequest(pageUri: Uri) =
-        ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri), requestHeaders, "GET")
+        ContentRequest(url, pageUri.host, getContentType(pageUri), is3rdParty(url, pageUri), requestHeaders, "GET")
 
     // should be same code as in AdBlock.kt, but with mimeTypeMap[extension] instead of getMimeTypeFromExtension(extension)
     // because mimetypemap not working in tests

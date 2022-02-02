@@ -21,7 +21,7 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.Tag
 
 data class ContentRequest(
     val url: Uri,
-    val pageUrl: Uri,
+    val pageHost: String?,
     val type: Int,
     val isThirdParty: Boolean,
     val headers: MutableMap<String, String> = mutableMapOf(),

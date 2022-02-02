@@ -120,7 +120,7 @@ class AbpUserRules @Inject constructor(
     fun isAllowed(pageUrl: Uri): Boolean {
         // TODO: checking by using a fake request might be "slower than necessary"? but sure is faster a than DB query
         //  anyway, this needs to be changed once there can be more rules for a page
-        return userRules.get(ContentRequest(pageUrl, pageUrl, ContentRequest.TYPE_ALL, false, tags = listOf("")))?.response == false
+        return userRules.get(ContentRequest(pageUrl, pageUrl.host, ContentRequest.TYPE_ALL, false, tags = listOf("")))?.response == false
     }
 
     fun allowPage(pageUrl: Uri, add: Boolean) {

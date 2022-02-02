@@ -60,7 +60,7 @@ class UserFilterContainer {
     fun get(request: ContentRequest): UnifiedFilterResponse? {
         // tags are not really used (only pageDomain and empty) -> ignore tags from contentRequest
 
-        val matchingFilters = (filters[""] ?: listOf()) + (filters[request.pageUrl.host] ?: listOf())
+        val matchingFilters = (filters[""] ?: listOf()) + (filters[request.pageHost] ?: listOf())
 
         if (matchingFilters.isEmpty()) return null
         if (allSameResponse(matchingFilters)) return matchingFilters.first()

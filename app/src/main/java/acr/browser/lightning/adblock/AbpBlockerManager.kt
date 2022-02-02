@@ -250,13 +250,15 @@ class AbpBlockerManager @Inject constructor(
     }
 
     // moved from jp.hazuki.yuzubrowser.adblock/AdBlock.kt to allow modified 3rd party detection
-    private fun WebResourceRequest.getContentRequest(pageUri: Uri) =
-        ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri), requestHeaders, method)
+    private fun WebResourceRequest.getContentRequest(pageUri: Uri): ContentRequest {
+        val pageHost = pageUri.host?.lowercase()
+        return ContentRequest(url, pageHost, getContentType(pageUri), is3rdParty(url, pageHost), requestHeaders, method)
+    }
 
     // initially based on jp.hazuki.yuzubrowser.adblock/AdBlock.kt
-    private fun is3rdParty(url: Uri, pageUri: Uri): Boolean {
-        val hostName = url.host ?: return true
-        val pageHost = pageUri.host ?: return true
+    private fun is3rdParty(url: Uri, pageHost: String?): Boolean {
+        val hostName = url.host?.lowercase() ?: return true
+        if (pageHost == null) return true
 
         if (hostName == pageHost) return false
 

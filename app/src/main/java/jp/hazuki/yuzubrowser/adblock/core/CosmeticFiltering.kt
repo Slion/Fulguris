@@ -29,7 +29,7 @@ class CosmeticFiltering(
     fun loadScript(url: Uri): String? {
         if (cacheUrl == url) return cache
 
-        val request = ContentRequest(url, url, TYPE, false)
+        val request = ContentRequest(url, null, TYPE, false)
         val result = disables[request]
 
         val isUseGeneric = when (result?.filterType ?: 0) {
