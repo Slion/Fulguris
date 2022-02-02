@@ -246,7 +246,7 @@ class AbpFilterDecoder {
                             "match-case" -> ignoreCase = inverse
                             "domain" -> {
                                 if (value == null) return
-                                domain = value
+                                domain = value.lowercase()
                             }
                             "third-party", "3p" -> thirdParty = if (inverse) FIRST_PARTY else THIRD_PARTY
                             "first-party", "1p" -> thirdParty = if (inverse) THIRD_PARTY else FIRST_PARTY
