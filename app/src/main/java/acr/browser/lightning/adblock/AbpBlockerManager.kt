@@ -204,6 +204,9 @@ class AbpBlockerManager @Inject constructor(
             is BlockResponse -> {
                 return if (request.isForMainFrame)
                     createMainFrameDummy(request.url, response.blockList, response.pattern)
+                else if (contentRequest.type and ContentRequest.TYPE_IMAGE != 0
+                        && contentRequest.type and ContentRequest.TYPE_OTHER == 0) // definitely image
+                    BlockResourceResponse(RES_1X1).toWebResourceResponse()
                 else
                     BlockResourceResponse(RES_EMPTY).toWebResourceResponse()
             }
