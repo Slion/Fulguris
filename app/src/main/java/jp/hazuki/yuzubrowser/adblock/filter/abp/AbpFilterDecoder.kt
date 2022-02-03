@@ -384,7 +384,8 @@ class AbpFilterDecoder {
                         isStartsWith -> StartsWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         isEndWith -> EndWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         else -> {
-                            if ("http://$content".toUri().host == content) // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
+                            // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
+                            if (this == content && "http://$content".toUri().host == content)
                                 StartEndFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                             else
                                 ContainsFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
