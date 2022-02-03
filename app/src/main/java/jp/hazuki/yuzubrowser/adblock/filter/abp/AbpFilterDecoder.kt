@@ -234,7 +234,10 @@ class AbpFilterDecoder {
 
                 option = option.lowercase()
                 val type = option.getOptionBit()
-                if (type == -1) return
+                // type == -1: ignore if invers (works on all except unsupported type), discard filter otherwise
+                // type == -2: discard filter
+                if ((type == -1 && !inverse) || type < -1)
+                    return
 
                 when {
                     type > 0x00ff_ffff -> {
@@ -329,7 +332,6 @@ class AbpFilterDecoder {
                                 value.split('|').forEach { denyAllowDomain ->
                                     "@@||$denyAllowDomain\$$optionsString".decodeFilter(elementFilterList, filterLists)
                                 }
-
                             }
                             else -> return
                         }
@@ -346,7 +348,7 @@ class AbpFilterDecoder {
         // remove invalid modify filters
         modify?.let {
             // only removeparam may have no parameter when blocking
-            if (it !is RemoveparamFilter && it.parameter == null) return
+            if (blocking && it.parameter == null && it !is RemoveparamFilter) return
 
             // filters that add headers must contain header and value, separated by ':'
             if (blocking && !it.inverse && (it is RequestHeaderFilter || it is ResponseHeaderFilter)
@@ -476,14 +478,14 @@ class AbpFilterDecoder {
             "image", "background" -> ContentRequest.TYPE_IMAGE
             "stylesheet", "css" -> ContentRequest.TYPE_STYLE_SHEET
             "subdocument", "frame" -> ContentRequest.TYPE_SUB_DOCUMENT
-            "document" -> ContentRequest.TYPE_DOCUMENT
+            "document", "doc" -> ContentRequest.TYPE_DOCUMENT
             "websocket" -> ContentRequest.TYPE_WEB_SOCKET
             "media" -> ContentRequest.TYPE_MEDIA
             "font" -> ContentRequest.TYPE_FONT
             "popup" -> ContentRequest.TYPE_POPUP
             "xmlhttprequest", "xhr" -> ContentRequest.TYPE_XHR
-            "object", "webrtc", "ping",
-            "object-subrequest", "genericblock" -> -1
+            "object", "webrtc", "ping", "object-subrequest", "popunder" -> -1
+            "genericblock" -> -2
             "elemhide", "ehide" -> ContentRequest.TYPE_ELEMENT_HIDE
             "generichide", "ghide" -> ContentRequest.TYPE_ELEMENT_GENERIC_HIDE
             else -> 0
