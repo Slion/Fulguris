@@ -69,7 +69,7 @@ class AbpFilterDecoder {
         val elementFilter = mutableListOf<ElementFilter>()
         val filterLists = FilterMap()
         reader.forEachLine { line ->
-            if (line.isEmpty()) return@forEachLine
+            if (line.isBlank()) return@forEachLine
             val trimmedLine = line.trim()
             when {
                 trimmedLine[0] == '!' -> trimmedLine.decodeComment(url, info)
