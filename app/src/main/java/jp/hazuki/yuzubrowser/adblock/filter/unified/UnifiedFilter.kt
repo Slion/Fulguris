@@ -100,22 +100,8 @@ abstract class UnifiedFilter(
         if (thirdParty != other.thirdParty) return false
         if (filterType != other.filterType) return false
         if (modify != other.modify) return false
-
-        // original domain map comparison not working properly (often returns false for same domains)
-        // -> do more extensive check
-        if (domains == other.domains) return true
-        if (domains?.size != other.domains?.size) return false
-        if (domains?.include != other.domains?.include) return false
-        // now domains must have same size, and are not null -> compare each
-        val d1 = mutableSetOf<String>()
-        val d2 = mutableSetOf<String>()
-        for (i in 0 until domains!!.size) {
-            d1.add(domains!!.getKey(i))
-            d2.add(other.domains!!.getKey(i))
-        }
-        if (d1 == d2) return true
-
-        return false
+        if (domains != other.domains) return false
+        return true
     }
 
     override fun hashCode(): Int {

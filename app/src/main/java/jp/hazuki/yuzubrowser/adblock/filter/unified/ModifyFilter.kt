@@ -14,7 +14,10 @@ abstract class ModifyFilter(val parameter: String?, val inverse: Boolean) {
     }
 
     override fun hashCode(): Int {
-        return (parameter + prefix + inverse).hashCode()
+        var result = parameter.hashCode()
+        result = 31 * result + prefix.hashCode()
+        result = 31 * result + inverse.hashCode()
+        return result
     }
 
     companion object {

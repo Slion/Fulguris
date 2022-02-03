@@ -42,4 +42,18 @@ class SingleDomainMap(override val include: Boolean, private val domain: String)
         if (index != 0) throw IndexOutOfBoundsException()
         return include
     }
+
+    override fun hashCode(): Int {
+        var result = domain.hashCode()
+        result = 31 * result + include.hashCode()
+        return result
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as SingleDomainMap
+        if (domain != other.domain) return false
+        return include == other.include
+    }
 }

@@ -51,10 +51,23 @@ class AbpBlockerTest {
         abpStyleList.bufferedReader().use {
             set = AbpFilterDecoder().decode(it, null)
         }
+        loadFiltersIntoContainers(set)
+    }
+
+    private fun loadFiltersIntoContainers(set: UnifiedFilterSet) {
         blockerPrefixes.forEach { prefix ->
-            set.filters[prefix].forEach(filterContainers[prefix]!!::plusAssign)
-            // assert correct number of filters in each container
-            Assert.assertEquals(set.filters[prefix].size, filterContainers[prefix]!!.getFilterList().size)
+            val filterStore = ByteArrayOutputStream()
+            filterStore.writeFilterList(set.filters[prefix], isModify(prefix))
+            val sameListWithTag = readFiltersFile(filterStore.toByteArray().inputStream(), isModify(prefix))
+
+            // assert writing and reading the filters worked
+            Assert.assertEquals(set.filters[prefix], sameListWithTag.unzip().second)
+
+            // load filters into container
+            sameListWithTag.forEach(filterContainers[prefix]!!::addWithTag)
+
+            // assert filters are put into containers correctly
+            Assert.assertEquals(set.filters[prefix].sortedBy { it.hashCode() }, filterContainers[prefix]!!.getFilterList().sortedBy { it.hashCode() })
         }
     }
 
@@ -225,37 +238,13 @@ class AbpBlockerTest {
     }
 
     @Test
-    fun writeRead() {
-        blockerPrefixes.forEach { prefix ->
-            val startList = set.filters[prefix]
-            val filterStore = ByteArrayOutputStream()
+    fun loadFilters() {
+        // loadFiltersIntoContainers tests whether write/read works
+        filterContainers.clear()
+        loadFiltersIntoContainers(set2) // modify filters
 
-            filterStore.writeFilterList(startList, isModify(prefix))
-            val endList = readFiltersFile(filterStore.toByteArray().inputStream(), isModify(prefix))
-
-            // endList also contains tag, we want to compare only the filter
-            Assert.assertEquals(startList, endList.map { it.second })
-        }
-    }
-
-    @Test
-    fun modifyFiltersReadWrite() {
-        val startList = set2.filters[ABP_PREFIX_MODIFY] + set2.filters[ABP_PREFIX_MODIFY_EXCEPTION]
-        val filterStore = ByteArrayOutputStream()
-        filterStore.use {
-            val writer = FilterWriter()
-            writer.writeModifyFilters(it, startList)
-        }
-
-        val endList = mutableListOf<Pair<String, UnifiedFilter>>()
-        filterStore.toByteArray().inputStream().use { stream ->
-            val reader = FilterReader(stream)
-            if (reader.checkHeader())
-                endList.addAll(reader.readAllModifyFilters())
-        }
-
-        Assert.assertEquals(startList.size, endList.size)
-        Assert.assertEquals(startList, endList.map { it.second })
+        filterContainers.clear()
+        loadFiltersIntoContainers(set) // easylist
     }
 
     @Test
