@@ -1,8 +1,6 @@
 package acr.browser.lightning.database.adblock
 
 import acr.browser.lightning.adblock.UnifiedFilterResponse
-import io.reactivex.Completable
-import io.reactivex.Single
 
 /**
  * A repository that stores [Host].
@@ -13,10 +11,8 @@ interface UserRulesRepository {
 
     /**
      * Remove all hosts in the repository.
-     *
-     * @return A [Completable] that completes when the removal finishes.
      */
-    fun removeAllRules(): Completable
+    fun removeAllRules()
 
     // better use sequence or completable, but currently whatever
     //  sequence is not faster (tested), so no use

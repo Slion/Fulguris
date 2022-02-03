@@ -11,7 +11,6 @@ import android.database.Cursor
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import io.reactivex.Completable
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -88,7 +87,7 @@ class UserRulesDatabase @Inject constructor(
         }
     }
 
-    override fun removeAllRules(): Completable = Completable.fromCallable {
+    override fun removeAllRules() {
         database.run {
             delete(TABLE_RULES, null, null)
             close()
