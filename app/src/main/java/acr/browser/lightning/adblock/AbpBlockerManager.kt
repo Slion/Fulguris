@@ -425,8 +425,7 @@ class AbpBlockerManager @Inject constructor(
             //  resp. https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#badfilter
             //  -> if badfilter matches filter only ignoring domains -> remove matching domains from the filter, also match wildcard
             val filters = filterNot {
-                it.second.contentType == ContentRequest.TYPE_POPUP
-                        || badFilterFilters.contains(it.second)
+                badFilterFilters.contains(it.second)
             }
 
             // TODO: remove filters contained in others

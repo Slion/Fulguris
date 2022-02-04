@@ -234,10 +234,7 @@ class AbpFilterDecoder {
 
                 option = option.lowercase()
                 val type = option.getOptionBit()
-                // type == -1: ignore if invers (works on all except unsupported type), discard filter otherwise
-                // type == -2: discard filter
-                if ((type == -1 && !inverse) || type < -1)
-                    return
+                if (type == -1) return
 
                 when {
                     type > 0x00ff_ffff -> {
@@ -338,6 +335,13 @@ class AbpFilterDecoder {
                     }
                 }
             }
+            if (contentType and ContentRequest.TYPE_UNSUPPORTED != 0 && contentType and ContentRequest.INVERSE == 0) {
+                // remove filter if type is exclusively TYPE_UNSUPPORTED
+                if (contentType == ContentRequest.TYPE_UNSUPPORTED) return
+                // remove TYPE_UNSUPPORTED if it's not the only type
+                else contentType = contentType xor ContentRequest.TYPE_UNSUPPORTED
+            }
+
             filter = filter.substring(0, optionsIndex)
 
             // some lists use * to match all, some use empty
@@ -483,10 +487,9 @@ class AbpFilterDecoder {
             "websocket" -> ContentRequest.TYPE_WEB_SOCKET
             "media" -> ContentRequest.TYPE_MEDIA
             "font" -> ContentRequest.TYPE_FONT
-            "popup" -> ContentRequest.TYPE_POPUP
+            "popup", "object", "webrtc", "ping", "object-subrequest", "popunder" -> ContentRequest.TYPE_UNSUPPORTED
             "xmlhttprequest", "xhr" -> ContentRequest.TYPE_XHR
-            "object", "webrtc", "ping", "object-subrequest", "popunder" -> -1
-            "genericblock" -> -2
+            "genericblock" -> -1
             "elemhide", "ehide" -> ContentRequest.TYPE_ELEMENT_HIDE
             "generichide", "ghide" -> ContentRequest.TYPE_ELEMENT_GENERIC_HIDE
             else -> 0

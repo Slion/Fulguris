@@ -39,7 +39,7 @@ data class ContentRequest(
         const val TYPE_DOCUMENT = 0x20
         const val TYPE_MEDIA = 0x40
         const val TYPE_FONT = 0x80
-        const val TYPE_POPUP = 0x0100
+        const val TYPE_UNSUPPORTED = 0x0100 // was TYPE_POPUP, now gathers all types that are not (currently) supported
         const val TYPE_WEB_SOCKET = 0x0200
         const val TYPE_XHR = 0x0400
         const val TYPE_ALL = 0xffff

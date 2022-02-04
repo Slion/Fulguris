@@ -46,6 +46,10 @@ class AbpBlockerTest {
         }
     }
 
+    private fun loadFiltersIntoContainers(list: List<String>) {
+        loadFiltersIntoContainers(list.joinToString("\n").byteInputStream())
+    }
+
     private fun loadFiltersIntoContainers(abpStyleList: InputStream) {
         val set: UnifiedFilterSet
         abpStyleList.bufferedReader().use {
@@ -265,6 +269,30 @@ class AbpBlockerTest {
             // if inserting into filter container works, set.blacklist and filterList contain the same filters (but possibly in different order)
             Assert.assertTrue(filterList.containsAll(set.filters[prefix]) && set.filters[prefix].containsAll(filterList))
         }
+    }
+
+    @Test
+    fun unsuppertedTypes() {
+        val filterList = mutableListOf<String>()
+        filterList.add("||ad.adpage.com/ads^\$object") // exclusively unsupported -> discard
+        filterList.add("||ad.adpage.com/ads^\$object,3p") // type is still exclusively unsupported -> discard
+        filterContainers.clear()
+        loadFiltersIntoContainers(filterList)
+        var size = 0
+        blockerPrefixes.forEach {
+            size += filterContainers[it]!!.getFilterList().size
+        }
+        Assert.assertEquals(size, 0)
+
+        filterList.add("||ad.adpage.com/ads^\$~object") // inverse unsopported -> keep
+        filterList.add("||ad.adpage.com/ads^\$object,image") // unsuppported and other -> keep
+        loadFiltersIntoContainers(filterList)
+        size = 0
+        blockerPrefixes.forEach {
+            size += filterContainers[it]!!.getFilterList().size
+        }
+        Assert.assertEquals(size, 2)
+
     }
 
     @Test
@@ -633,12 +661,8 @@ class AbpBlockerTest {
 
     // avoid copying code, map filter set to correct type
     private fun Collection<UnifiedFilter>.sanitize(badFilters: Collection<UnifiedFilter>): Set<UnifiedFilter> {
-        val filters = mapNotNull {
-            if (it.contentType == ContentRequest.TYPE_POPUP
-                || badFilters.contains(it)
-            )
-                null
-            else it
+        val filters = filterNot {
+             badFilters.contains(it)
         }
         return filters.toSet()
     }
