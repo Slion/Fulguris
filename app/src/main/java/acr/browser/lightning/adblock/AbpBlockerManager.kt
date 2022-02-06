@@ -22,7 +22,7 @@ import jp.hazuki.yuzubrowser.adblock.core.AbpLoader
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
 import jp.hazuki.yuzubrowser.adblock.filter.abp.*
-import jp.hazuki.yuzubrowser.adblock.filter.unified.UnifiedFilter
+import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import jp.hazuki.yuzubrowser.adblock.filter.unified.getFilterDir
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterWriter
@@ -126,7 +126,7 @@ class AbpBlockerManager @Inject constructor(
         // create joint files
         // tags will be created again, this is unnecessary, but fast enough to not care about it very much
         blockerPrefixes.forEach { prefix ->
-            writeFile(prefix, filters[prefix]!!.map { it.second })
+            writeFile(prefix, filters[prefix]!!)
         }
 
         /*if (elementHide) {
@@ -156,16 +156,16 @@ class AbpBlockerManager @Inject constructor(
         return false
     }
 
-    private fun writeFile(prefix: String, filters: Collection<UnifiedFilter>?) {
+    private fun writeFile(prefix: String, filters: Collection<Pair<String, UnifiedFilter>>?) {
         if (filters == null) return // better throw error, should not happen
         val file = File(application.applicationContext.getFilterDir(), prefix)
         val writer = FilterWriter()
         file.outputStream().buffered().use {
             if (isModify(prefix))
             // use !! to get error if filter.modify is null
-                writer.writeModifyFilters(it, filters.toList())
+                writer.writeModifyFiltersWithTag(it, filters.toList())
             else
-                writer.write(it, filters.toList())
+                writer.writeWithTag(it, filters.toList())
             it.close()
         }
     }
@@ -204,8 +204,14 @@ class AbpBlockerManager @Inject constructor(
             is BlockResponse -> {
                 return if (request.isForMainFrame)
                     createMainFrameDummy(request.url, response.blockList, response.pattern)
-                else
-                    BlockResourceResponse(RES_EMPTY).toWebResourceResponse()
+                else when(contentRequest.type) {
+                    ContentRequest.TYPE_OTHER -> BlockResourceResponse(RES_EMPTY)
+                    ContentRequest.TYPE_IMAGE -> BlockResourceResponse(RES_1X1)
+                    ContentRequest.TYPE_SUB_DOCUMENT -> BlockResourceResponse(RES_NOOP_HTML)
+                    ContentRequest.TYPE_SCRIPT -> BlockResourceResponse(RES_NOOP_JS)
+                    ContentRequest.TYPE_MEDIA -> BlockResourceResponse(RES_NOOP_MP3)
+                    else -> BlockResourceResponse(RES_EMPTY)
+                }.toWebResourceResponse()
             }
             is BlockResourceResponse -> return response.toWebResourceResponse()
             is ModifyResponse -> {
@@ -250,17 +256,22 @@ class AbpBlockerManager @Inject constructor(
     }
 
     // moved from jp.hazuki.yuzubrowser.adblock/AdBlock.kt to allow modified 3rd party detection
-    private fun WebResourceRequest.getContentRequest(pageUri: Uri) =
-        ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri), requestHeaders, method)
+    private fun WebResourceRequest.getContentRequest(pageUri: Uri): ContentRequest {
+        val pageHost = pageUri.host?.lowercase()
+        return ContentRequest(url, pageHost, getContentType(pageUri), is3rdParty(url, pageHost), requestHeaders, method)
+    }
 
     // initially based on jp.hazuki.yuzubrowser.adblock/AdBlock.kt
-    private fun is3rdParty(url: Uri, pageUri: Uri): Boolean {
-        val hostName = url.host ?: return true
-        val pageHost = pageUri.host ?: return true
+    private fun is3rdParty(url: Uri, pageHost: String?): Int {
+        val hostName = url.host?.lowercase() ?: return THIRD_PARTY
+        if (pageHost == null) return THIRD_PARTY
 
-        if (hostName == pageHost) return false
+        if (hostName == pageHost) return STRICT_FIRST_PARTY
 
-        return thirdPartyCache["$hostName/$pageHost"]!! // thirdPartyCache.Create can't return null!
+        return if (thirdPartyCache["$hostName/$pageHost"]!!) // thirdPartyCache.Create can't return null!
+            THIRD_PARTY
+        else
+            FIRST_PARTY
     }
 
     // builder part from yuzu: jp.hazuki.yuzubrowser.adblock/AdBlockController.kt
@@ -417,8 +428,7 @@ class AbpBlockerManager @Inject constructor(
             //  resp. https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#badfilter
             //  -> if badfilter matches filter only ignoring domains -> remove matching domains from the filter, also match wildcard
             val filters = filterNot {
-                it.second.contentType == ContentRequest.TYPE_POPUP
-                        || badFilterFilters.contains(it.second)
+                badFilterFilters.contains(it.second)
             }
 
             // TODO: remove filters contained in others

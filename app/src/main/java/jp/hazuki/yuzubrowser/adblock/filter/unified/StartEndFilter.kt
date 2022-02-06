@@ -31,7 +31,7 @@ class StartEndFilter(
 
     override fun check(url: Uri): Boolean {
         val urlStr = url.schemeSpecificPart
-        val startIndex = urlStr.indexOf(pattern, ignoreCase = ignoreCase)
+        val startIndex = urlStr.indexOf(pattern)
         if (startIndex > -1 && urlStr.checkIsDomainInSsp(startIndex)) {
             return if (pattern.length + startIndex == urlStr.length) {
                 true

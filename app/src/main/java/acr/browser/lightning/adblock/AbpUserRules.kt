@@ -4,6 +4,9 @@ import acr.browser.lightning.database.adblock.UserRulesRepository
 import android.net.Uri
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -68,12 +71,12 @@ class AbpUserRules @Inject constructor(
 
     private fun addUserRule(filter: UnifiedFilterResponse) {
         userRules.add(filter)
-        userRulesRepository.addRules(listOf(filter))
+        GlobalScope.launch(Dispatchers.IO) { userRulesRepository.addRules(listOf(filter)) }
     }
 
     private fun removeUserRule(filter: UnifiedFilterResponse) {
         userRules.remove(filter)
-        userRulesRepository.removeRule(filter)
+        GlobalScope.launch(Dispatchers.IO) { userRulesRepository.removeRule(filter) }
     }
 
 /*
@@ -101,9 +104,9 @@ class AbpUserRules @Inject constructor(
 
         // HostFilter for specific request domain, ContainsFilter with empty pattern otherwise
         return if (requestDomain.isEmpty())
-            ContainsFilter(requestDomain, contentType, domains, thirdPartyInt)
+            ContainsFilter(requestDomain, contentType, true, domains, thirdPartyInt)
         else
-            HostFilter(requestDomain, contentType, false, domains, thirdPartyInt)
+            HostFilter(requestDomain, contentType, domains, thirdPartyInt)
     }
 
     fun addUserRule(pageDomain: String, requestDomain: String, contentType: Int, thirdParty: Boolean, response: Boolean?) {
@@ -117,11 +120,10 @@ class AbpUserRules @Inject constructor(
     fun isAllowed(pageUrl: Uri): Boolean {
         // TODO: checking by using a fake request might be "slower than necessary"? but sure is faster a than DB query
         //  anyway, this needs to be changed once there can be more rules for a page
-        return userRules.get(ContentRequest(pageUrl, pageUrl, ContentRequest.TYPE_ALL, false, tags = listOf("")))?.response == false
+        return userRules.get(ContentRequest(pageUrl, pageUrl.host, ContentRequest.TYPE_ALL, FIRST_PARTY, tags = listOf("")))?.response == false
     }
 
     fun allowPage(pageUrl: Uri, add: Boolean) {
-        // S4 mini speed test: 1.7 ms for 2nd entry, 26 ms for ~2400th entry -> fast enough, no need to move DB operation to different thread
         val domain = pageUrl.host ?: return
         if (add)
             addUserRule(domain, "", ContentRequest.TYPE_ALL, thirdParty = false, response = false)

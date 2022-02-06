@@ -46,15 +46,32 @@ class AbpBlockerTest {
         }
     }
 
+    private fun loadFiltersIntoContainers(list: List<String>) {
+        loadFiltersIntoContainers(list.joinToString("\n").byteInputStream())
+    }
+
     private fun loadFiltersIntoContainers(abpStyleList: InputStream) {
         val set: UnifiedFilterSet
         abpStyleList.bufferedReader().use {
             set = AbpFilterDecoder().decode(it, null)
         }
+        loadFiltersIntoContainers(set)
+    }
+
+    private fun loadFiltersIntoContainers(set: UnifiedFilterSet) {
         blockerPrefixes.forEach { prefix ->
-            set.filters[prefix].forEach(filterContainers[prefix]!!::plusAssign)
-            // assert correct number of filters in each container
-            Assert.assertEquals(set.filters[prefix].size, filterContainers[prefix]!!.getFilterList().size)
+            val filterStore = ByteArrayOutputStream()
+            filterStore.writeFilterList(set.filters[prefix], isModify(prefix))
+            val sameListWithTag = readFiltersFile(filterStore.toByteArray().inputStream(), isModify(prefix))
+
+            // assert writing and reading the filters worked
+            Assert.assertEquals(set.filters[prefix], sameListWithTag.unzip().second)
+
+            // load filters into container
+            sameListWithTag.forEach(filterContainers[prefix]!!::addWithTag)
+
+            // assert filters are put into containers correctly
+            Assert.assertEquals(set.filters[prefix].sortedBy { it.hashCode() }, filterContainers[prefix]!!.getFilterList().sortedBy { it.hashCode() })
         }
     }
 
@@ -116,15 +133,15 @@ class AbpBlockerTest {
         loadFiltersIntoContainers(filterList.joinToString("\n").byteInputStream())
 
         blockedRequests?.forEach {
-            println("should be blocked: " + it.url + " " + it.pageUrl)
+            println("should be blocked: " + it.url + " " + it.pageHost)
             Assert.assertTrue(blocker.shouldBlock(it) is BlockResponse)
         }
         allowedRequests?.forEach {
-            println("should not be blocked: " + it.url + " " + it.pageUrl)
+            println("should not be blocked: " + it.url + " " + it.pageHost)
             Assert.assertNull(blocker.shouldBlock(it))
         }
         modifiedRequests?.forEach {
-            println("should be modified: " + it.url + " " + it.pageUrl)
+            println("should be modified: " + it.url + " " + it.pageHost)
             Assert.assertTrue(blocker.shouldBlock(it) is BlockResourceResponse || blocker.shouldBlock(it) is ModifyResponse)
         }
     }
@@ -160,11 +177,11 @@ class AbpBlockerTest {
             }
 
         blockedRequests.forEach {
-            println("should be filtered: " + it.url + " " + it.pageUrl)
+            println("should be filtered: " + it.url + " " + it.pageHost)
             Assert.assertNotNull(container[it])
         }
         allowedRequests.forEach {
-            println("should not be touched: " + it.url + " " + it.pageUrl)
+            println("should not be touched: " + it.url + " " + it.pageHost)
             Assert.assertNull(container[it])
         }
     }
@@ -225,37 +242,13 @@ class AbpBlockerTest {
     }
 
     @Test
-    fun writeRead() {
-        blockerPrefixes.forEach { prefix ->
-            val startList = set.filters[prefix]
-            val filterStore = ByteArrayOutputStream()
+    fun loadFilters() {
+        // loadFiltersIntoContainers tests whether write/read works
+        filterContainers.clear()
+        loadFiltersIntoContainers(set2) // modify filters
 
-            filterStore.writeFilterList(startList, isModify(prefix))
-            val endList = readFiltersFile(filterStore.toByteArray().inputStream(), isModify(prefix))
-
-            // endList also contains tag, we want to compare only the filter
-            Assert.assertEquals(startList, endList.map { it.second })
-        }
-    }
-
-    @Test
-    fun modifyFiltersReadWrite() {
-        val startList = set2.filters[ABP_PREFIX_MODIFY]
-        val filterStore = ByteArrayOutputStream()
-        filterStore.use {
-            val writer = FilterWriter()
-            writer.writeModifyFilters(it, startList)
-        }
-
-        val endList = mutableListOf<Pair<String, UnifiedFilter>>()
-        filterStore.toByteArray().inputStream().use { stream ->
-            val reader = FilterReader(stream)
-            if (reader.checkHeader())
-                endList.addAll(reader.readAllModifyFilters())
-        }
-
-        Assert.assertEquals(startList.size, endList.size)
-        Assert.assertEquals(startList, endList.map { it.second })
+        filterContainers.clear()
+        loadFiltersIntoContainers(set) // easylist
     }
 
     @Test
@@ -276,6 +269,30 @@ class AbpBlockerTest {
             // if inserting into filter container works, set.blacklist and filterList contain the same filters (but possibly in different order)
             Assert.assertTrue(filterList.containsAll(set.filters[prefix]) && set.filters[prefix].containsAll(filterList))
         }
+    }
+
+    @Test
+    fun unsuppertedTypes() {
+        val filterList = mutableListOf<String>()
+        filterList.add("||ad.adpage.com/ads^\$object") // exclusively unsupported -> discard
+        filterList.add("||ad.adpage.com/ads^\$object,3p") // type is still exclusively unsupported -> discard
+        filterContainers.clear()
+        loadFiltersIntoContainers(filterList)
+        var size = 0
+        blockerPrefixes.forEach {
+            size += filterContainers[it]!!.getFilterList().size
+        }
+        Assert.assertEquals(size, 0)
+
+        filterList.add("||ad.adpage.com/ads^\$~object") // inverse unsopported -> keep
+        filterList.add("||ad.adpage.com/ads^\$object,image") // unsuppported and other -> keep
+        loadFiltersIntoContainers(filterList)
+        size = 0
+        blockerPrefixes.forEach {
+            size += filterContainers[it]!!.getFilterList().size
+        }
+        Assert.assertEquals(size, 2)
+
     }
 
     @Test
@@ -442,6 +459,33 @@ class AbpBlockerTest {
     }
 
     @Test
+    fun matchCase() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+        filterList.add("||page.com/ads")
+        blockedRequests.add(request("http://page.com/ads", "https://page.com"))
+        blockedRequests.add(request("http://page.com/ADS", "https://page.com"))
+        filterList.add("||page2.com/Ads\$match-case")
+        blockedRequests.add(request("http://page2.com/Ads", "https://page.com"))
+        allowedRequests.add(request("http://page2.com/ads", "https://page.com"))
+        filterList.add("page3/ads")
+        blockedRequests.add(request("http://page3.com/page3/Ads", "https://page.com"))
+        blockedRequests.add(request("http://page3.com/page3/ads", "https://page.com"))
+        filterList.add("page4/Ads\$match-case")
+        blockedRequests.add(request("http://page4.com/page4/Ads", "https://page.com"))
+        allowedRequests.add(request("http://page4.com/page4/ads", "https://page.com"))
+        filterList.add("page5*/Ads\$match-case")
+        blockedRequests.add(request("http://page5.com/page5b/Ads", "https://page.com"))
+        allowedRequests.add(request("http://page5.com/page5b/ads", "https://page.com"))
+        filterList.add("page6*/Ads")
+        blockedRequests.add(request("http://page5.com/page6b/Ads", "https://page.com"))
+        blockedRequests.add(request("http://page5.com/page6b/ads", "https://page.com"))
+
+        checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
+    }
+
+    @Test
     fun removeparam() {
         // only tests removeparam so far
         val filterList = mutableListOf<String>()
@@ -515,7 +559,7 @@ class AbpBlockerTest {
             Assert.assertEquals(response.addResponseHeaders?.get("Content-Security-Policy"), "font-src *")
         }
         allowedRequests.forEach {
-            println("should not be touched: " + it.url + " " + it.pageUrl)
+            println("should not be touched: " + it.url + " " + it.pageHost)
             Assert.assertNull(blocker.shouldBlock(it))
         }
     }
@@ -617,12 +661,8 @@ class AbpBlockerTest {
 
     // avoid copying code, map filter set to correct type
     private fun Collection<UnifiedFilter>.sanitize(badFilters: Collection<UnifiedFilter>): Set<UnifiedFilter> {
-        val filters = mapNotNull {
-            if (it.contentType == ContentRequest.TYPE_POPUP
-                || badFilters.contains(it)
-            )
-                null
-            else it
+        val filters = filterNot {
+             badFilters.contains(it)
         }
         return filters.toSet()
     }
@@ -650,7 +690,19 @@ class AbpBlockerTest {
         filterList.add("||example.com^\$important")
         blockedRequests.add(request("http://example.com/something.gif", "https://goodotherpage.com"))
         checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
+    }
 
+    @Test
+    fun denyallow() {
+        val filterList = mutableListOf<String>()
+        val blockedRequests = mutableListOf<ContentRequest>()
+        val allowedRequests = mutableListOf<ContentRequest>()
+
+        filterList.add("*\$denyallow=page1.com|page2.com,domain=page3.com|page4.com")
+        blockedRequests.add(request("http://page.com/something.gif", "https://page3.com"))
+        allowedRequests.add(request("http://page1.com/something.gif", "https://page3.com"))
+
+        checkFiltersWithBlocker(filterList, blockedRequests, allowedRequests, null)
     }
 
     @Test
@@ -716,7 +768,7 @@ class AbpBlockerTest {
     }
 
     private fun WebResourceRequest.getContentRequest(pageUri: Uri) =
-        ContentRequest(url, pageUri, getContentType(pageUri), is3rdParty(url, pageUri), requestHeaders, "GET")
+        ContentRequest(url, pageUri.host, getContentType(pageUri), is3rdParty(url, pageUri), requestHeaders, "GET")
 
     // should be same code as in AdBlock.kt, but with mimeTypeMap[extension] instead of getMimeTypeFromExtension(extension)
     // because mimetypemap not working in tests
@@ -788,19 +840,22 @@ class TestWebResourceRequest(private val url2: Uri,
     override fun getMethod() = "GET" // not needed, but should be valid
 }
 
-fun is3rdParty(url: Uri, pageUri: Uri): Boolean {
-    val hostName = url.host ?: return true
-    val pageHost = pageUri.host ?: return true
+fun is3rdParty(url: Uri, pageUri: Uri): Int {
+    val hostName = url.host?.lowercase() ?: return THIRD_PARTY
+    val pageHost = pageUri.host ?: return THIRD_PARTY
 
-    if (hostName == pageHost) return false
+    if (hostName == pageHost) return STRICT_FIRST_PARTY
 
     val ipPattern = PatternsCompat.IP_ADDRESS
     if (ipPattern.matcher(hostName).matches() || ipPattern.matcher(pageHost).matches())
-        return true
+        return THIRD_PARTY
 
     val db = PublicSuffix.get()
 
-    return db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost)
+    return if (db.getEffectiveTldPlusOne(hostName) != db.getEffectiveTldPlusOne(pageHost))
+        THIRD_PARTY
+    else
+        FIRST_PARTY
 }
 
 

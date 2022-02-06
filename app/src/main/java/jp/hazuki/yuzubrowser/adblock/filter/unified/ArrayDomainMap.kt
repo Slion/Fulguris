@@ -53,4 +53,19 @@ class ArrayDomainMap(size: Int, override var wildcard: Boolean) : SimpleArrayMap
     override fun getValue(index: Int): Boolean {
         return valueAt(index)
     }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + wildcard.hashCode()
+        return result
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as ArrayDomainMap
+        if (size != other.size) return false
+        if (wildcard != other.wildcard) return false
+        return super.equals(other as? SimpleArrayMap<String, Boolean>)
+    }
 }

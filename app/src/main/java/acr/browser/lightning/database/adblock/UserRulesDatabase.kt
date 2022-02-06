@@ -11,7 +11,6 @@ import android.database.Cursor
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import io.reactivex.Completable
 import jp.hazuki.yuzubrowser.adblock.filter.unified.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -88,7 +87,7 @@ class UserRulesDatabase @Inject constructor(
         }
     }
 
-    override fun removeAllRules(): Completable = Completable.fromCallable {
+    override fun removeAllRules() {
         database.run {
             delete(TABLE_RULES, null, null)
             close()
@@ -153,14 +152,14 @@ class UserRulesDatabase @Inject constructor(
         val pattern = cursor.getString(cursor.getColumnIndexOrThrow(KEY_PATTERN))
         val filterType = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_FILTER_TYPE))
         val contentType = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_CONTENT_TYPE))
-        val ignoreCase = false
+        val ignoreCase = true
         val thirdParty = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_THIRD_PARTY))
         val domains = cursor.getString(cursor.getColumnIndexOrThrow(KEY_DOMAIN_MAP)).toDomainMap()
 
 
         val filter = when (filterType) { // only recognize filter types that are used in user rules
-            FILTER_TYPE_CONTAINS -> ContainsFilter(pattern, contentType, domains, thirdParty)
-            FILTER_TYPE_HOST -> HostFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_CONTAINS -> ContainsFilter(pattern, contentType, ignoreCase, domains, thirdParty)
+            FILTER_TYPE_HOST -> HostFilter(pattern, contentType, domains, thirdParty)
             else -> return null // should not happen -> error message?
         }
         return UnifiedFilterResponse(filter, response)

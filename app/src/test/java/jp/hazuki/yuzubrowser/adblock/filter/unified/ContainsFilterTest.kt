@@ -29,6 +29,6 @@ class ContainsFilterTest {
         val uri = mock(Uri::class.java)
         whenever(uri.toString()).thenReturn("http://blog.livedoor.jp/dqnplus/settings/lite2/ads.js")
 
-        assertThat(ContainsFilter("/lite2/ads.js", ContentRequest.TYPE_ALL, null, -1).check(uri)).isEqualTo(true)
+        assertThat(ContainsFilter("/lite2/ads.js", ContentRequest.TYPE_ALL, true, null, -1).check(uri)).isEqualTo(true)
     }
 }

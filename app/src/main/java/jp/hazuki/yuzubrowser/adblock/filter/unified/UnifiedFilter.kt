@@ -29,12 +29,16 @@ abstract class UnifiedFilter(
     override val modify: ModifyFilter?
 ) : ContentFilter {
 
+    // careful: for performance reasons, case sensitivity is handled by FilterContainer
     override fun isMatch(request: ContentRequest): Boolean {
         return if ((contentType and request.type) != 0
             && checkThird(request)
-            && checkDomain(request.pageUrl.host)
+            && checkDomain(request.pageHost)
         ) {
-            check(request.url)
+            if (ignoreCase)
+                check(request.urlLowercase)
+            else
+                check(request.url)
         } else {
             false
         }
@@ -45,10 +49,10 @@ abstract class UnifiedFilter(
     private fun checkThird(request: ContentRequest): Boolean =
         when (thirdParty) {
             NO_PARTY_PREFERENCE -> true // don't care about 3rd party
-            FIRST_PARTY -> !request.isThirdParty // match only 1st party
-            THIRD_PARTY -> request.isThirdParty // match only 3rd party
-            STRICT_FIRST_PARTY -> request.url.host == request.pageUrl.host // match only strict 1st party (compare fqdn)
-            STRICT_THIRD_PARTY -> request.url.host != request.pageUrl.host // match only strict 3rd party
+            FIRST_PARTY -> request.isThirdParty != THIRD_PARTY // match only 1st party (can be 1st party or strict 1st party)
+            THIRD_PARTY -> request.isThirdParty == THIRD_PARTY // match only 3rd party
+            STRICT_FIRST_PARTY -> request.isThirdParty == STRICT_FIRST_PARTY // match only strict 1st party (compare fqdn)
+            STRICT_THIRD_PARTY -> request.isThirdParty != STRICT_FIRST_PARTY // match all that is not strict 1st party
             else -> false // should not happen
         }
 
@@ -96,22 +100,8 @@ abstract class UnifiedFilter(
         if (thirdParty != other.thirdParty) return false
         if (filterType != other.filterType) return false
         if (modify != other.modify) return false
-
-        // original domain map comparison not working properly (often returns false for same domains)
-        // -> do more extensive check
-        if (domains == other.domains) return true
-        if (domains?.size != other.domains?.size) return false
-        if (domains?.include != other.domains?.include) return false
-        // now domains must have same size, and are not null -> compare each
-        val d1 = mutableSetOf<String>()
-        val d2 = mutableSetOf<String>()
-        for (i in 0 until domains!!.size) {
-            d1.add(domains!!.getKey(i))
-            d2.add(other.domains!!.getKey(i))
-        }
-        if (d1 == d2) return true
-
-        return false
+        if (domains != other.domains) return false
+        return true
     }
 
     override fun hashCode(): Int {

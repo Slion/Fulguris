@@ -21,11 +21,10 @@ import android.net.Uri
 internal class HostFilter(
     filter: String,
     contentType: Int,
-    ignoreCase: Boolean,
     domains: DomainMap?,
     thirdParty: Int,
     modify: ModifyFilter? = null
-) : UnifiedFilter(filter, contentType, ignoreCase, domains, thirdParty, modify) {
+) : UnifiedFilter(filter, contentType, true, domains, thirdParty, modify) {
     override val filterType: Int
         get() = FILTER_TYPE_HOST
 

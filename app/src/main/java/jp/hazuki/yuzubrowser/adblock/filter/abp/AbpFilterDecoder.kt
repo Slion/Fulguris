@@ -26,7 +26,6 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.ModifyFilter.Companion.REMOV
 import jp.hazuki.yuzubrowser.adblock.filter.unified.ModifyFilter.Companion.RESPONSEHEADER_ALLOWED
 import jp.hazuki.yuzubrowser.adblock.filter.unified.element.*
 import java.io.BufferedReader
-import java.io.IOException
 import java.nio.charset.Charset
 import java.util.*
 import java.util.regex.Pattern
@@ -70,7 +69,7 @@ class AbpFilterDecoder {
         val elementFilter = mutableListOf<ElementFilter>()
         val filterLists = FilterMap()
         reader.forEachLine { line ->
-            if (line.isEmpty()) return@forEachLine
+            if (line.isBlank()) return@forEachLine
             val trimmedLine = line.trim()
             when {
                 trimmedLine[0] == '!' -> trimmedLine.decodeComment(url, info)
@@ -159,7 +158,7 @@ class AbpFilterDecoder {
         filterLists: FilterMap
     ) {
         var contentType = 0
-        var ignoreCase = false
+        var ignoreCase = true
         var domain: String? = null
         var thirdParty = NO_PARTY_PREFERENCE
         var filter = this
@@ -190,6 +189,14 @@ class AbpFilterDecoder {
         val optionsIndex = filter.lastIndexOf('$')
         if (optionsIndex >= 0) {
         val options = filter.substring(optionsIndex + 1).split(',').toMutableList()
+        // move denyallow to last position, domains need to be before denyallow
+        for (i in 0 until options.size) {
+            if (options[i].startsWith("denyallow")) {
+                options.add(options[i])
+                options.removeAt(i)
+                break
+            }
+        }
 /*      don't care about specifics of $all for now, just use content type
             // all is equal to: document, popup, inline-script, inline-font
             //  but on mobile / webview there are no popups anyway (all opened in the same window/tab)
@@ -246,7 +253,7 @@ class AbpFilterDecoder {
                             "match-case" -> ignoreCase = inverse
                             "domain" -> {
                                 if (value == null) return
-                                domain = value
+                                domain = value.lowercase()
                             }
                             "third-party", "3p" -> thirdParty = if (inverse) FIRST_PARTY else THIRD_PARTY
                             "first-party", "1p" -> thirdParty = if (inverse) THIRD_PARTY else FIRST_PARTY
@@ -288,15 +295,15 @@ class AbpFilterDecoder {
                             "redirect-rule" -> modify = RedirectFilter(value)
                             "redirect" -> {
                                 // create block filter in addition to redirect
-                                this.getRedirectBlockString("redirect").decodeFilter(elementFilterList, filterLists)
+                                this.removeOption("redirect").decodeFilter(elementFilterList, filterLists)
                                 modify = RedirectFilter(value)
                             }
                             "empty" -> {
-                                this.getRedirectBlockString("empty").decodeFilter(elementFilterList, filterLists)
+                                this.removeOption("empty").decodeFilter(elementFilterList, filterLists)
                                 modify = RedirectFilter(RES_EMPTY)
                             }
                             "mp4" -> {
-                                this.getRedirectBlockString("mp4").decodeFilter(elementFilterList, filterLists)
+                                this.removeOption("mp4").decodeFilter(elementFilterList, filterLists)
                                 modify = RedirectFilter(RES_NOOP_MP4)
                                 contentType = contentType or ContentRequest.TYPE_MEDIA // uBo documentation: media type will be assumed
                             }
@@ -304,11 +311,37 @@ class AbpFilterDecoder {
                             // TODO: see above, all is not handled 100% correctly (but might still be fine)
                             "all" -> contentType = contentType or ContentRequest.TYPE_DOCUMENT or ContentRequest.TYPE_STYLE_SHEET or ContentRequest.TYPE_IMAGE or ContentRequest.TYPE_OTHER or ContentRequest.TYPE_SCRIPT or ContentRequest.TYPE_XHR or ContentRequest.TYPE_FONT or ContentRequest.TYPE_MEDIA or ContentRequest.TYPE_WEB_SOCKET
                             "badfilter" -> badfilter = ABP_PREFIX_BADFILTER
+                            "denyallow" -> {
+                                // https://kb.adguard.com/en/general/how-to-create-your-own-ad-filters#denyallow-modifier
+                                //  either do regex filter
+                                //   but this also matches path, not just host
+                                //  or create filter + exception filters -> a lot of filters, but no regex
+                                //   problem here: denyallow is usually for common domains, so there will be many additional checks
+                                //   TODO: how to handle best? have new filter type that has all denyallow domains as pattern?
+                                //    could work, and would be much better for loading, and probably faster
+                                //    but first do a performance test whether effect of denyallow is actually measurable
+
+                                if (domain == null || value.isNullOrEmpty()) return
+                                if (value.any { it == '*' || it == '~' }) return
+                                val withoutDenyallow = this.removeOption("denyallow=$value")
+                                withoutDenyallow.decodeFilter(elementFilterList, filterLists)
+                                val optionsString = withoutDenyallow.substringAfter('$')
+                                value.split('|').forEach { denyAllowDomain ->
+                                    "@@||$denyAllowDomain\$$optionsString".decodeFilter(elementFilterList, filterLists)
+                                }
+                            }
                             else -> return
                         }
                     }
                 }
             }
+            if (contentType and ContentRequest.TYPE_UNSUPPORTED != 0 && contentType and ContentRequest.INVERSE == 0) {
+                // remove filter if type is exclusively TYPE_UNSUPPORTED
+                if (contentType == ContentRequest.TYPE_UNSUPPORTED) return
+                // remove TYPE_UNSUPPORTED if it's not the only type
+                else contentType = contentType xor ContentRequest.TYPE_UNSUPPORTED
+            }
+
             filter = filter.substring(0, optionsIndex)
 
             // some lists use * to match all, some use empty
@@ -319,7 +352,7 @@ class AbpFilterDecoder {
         // remove invalid modify filters
         modify?.let {
             // only removeparam may have no parameter when blocking
-            if (it !is RemoveparamFilter && it.parameter == null) return
+            if (blocking && it.parameter == null && it !is RemoveparamFilter) return
 
             // filters that add headers must contain header and value, separated by ':'
             if (blocking && !it.inverse && (it is RequestHeaderFilter || it is ResponseHeaderFilter)
@@ -343,52 +376,23 @@ class AbpFilterDecoder {
             } else {
                 val isStartsWith = filter.startsWith("||")
                 val isEndWith = filter.endsWith('^')
-                val content = filter.substring(
+                var content = filter.substring(
                     if (isStartsWith) 2 else 0,
                     if (isEndWith) filter.length - 1 else filter.length
                 )
+                if (ignoreCase) content = content.lowercase()
                 val isLiteral = content.isLiteralFilter()
                 if (isLiteral) {
                     when {
-                        isStartsWith && isEndWith -> StartEndFilter(
-                            content,
-                            contentType,
-                            ignoreCase,
-                            domains,
-                            thirdParty,
-                            modify
-                        )
+                        isStartsWith && isEndWith -> StartEndFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         isStartsWith -> StartsWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
-                        isEndWith -> {
-                            if (ignoreCase) {
-                                PatternMatchFilter(
-                                    filter,
-                                    contentType,
-                                    ignoreCase,
-                                    domains,
-                                    thirdParty,
-                                    modify
-                                )
-                            } else {
-                                EndWithFilter(content, contentType, domains, thirdParty, modify)
-                            }
-                        }
+                        isEndWith -> EndWithFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         else -> {
-                            if (ignoreCase) {
-                                PatternMatchFilter(
-                                    filter,
-                                    contentType,
-                                    ignoreCase,
-                                    domains,
-                                    thirdParty,
-                                    modify
-                                )
-                            } else {
-                                if ("http://$content".toUri().host == content) // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
-                                    StartEndFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
-                                else
-                                    ContainsFilter(content, contentType, domains, thirdParty, modify)
-                            }
+                            // mimic uBlock behavior: https://github.com/gorhill/uBlock/wiki/Static-filter-syntax#hosts-files
+                            if (this == content && "http://$content".toUri().host == content)
+                                StartEndFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
+                            else
+                                ContainsFilter(content, contentType, ignoreCase, domains, thirdParty, modify)
                         }
                     }
                 } else {
@@ -427,14 +431,15 @@ class AbpFilterDecoder {
         return false
     }
 
-    private fun String.getRedirectBlockString(toReplace: String): String {
-        var blockString = this.substringAfterLast('$').replace(toReplace, "").replace(",,", ",")
-        if (blockString.endsWith(','))
-            blockString = blockString.dropLast(1)
-        return if (blockString.isEmpty())
-            this.dropLast(1) // no further filter rules, remove $
+    // removes the option (must be full match) and any useless $ or ,
+    private fun String.removeOption(toRemove: String): String {
+        var optionString = this.substringAfterLast('$').replace(toRemove, "").replace(",,", ",")
+        if (optionString.endsWith(','))
+            optionString = optionString.dropLast(1)
+        return if (optionString.isEmpty())
+            this.dropLast(1) // no further filter options, remove $
         else
-            this.substringBeforeLast('$') + "$" + blockString
+            this.substringBeforeLast('$') + "$" + optionString
     }
 
     private fun String.domainsToDomainMap(delimiter: Char): DomainMap? {
@@ -478,14 +483,13 @@ class AbpFilterDecoder {
             "image", "background" -> ContentRequest.TYPE_IMAGE
             "stylesheet", "css" -> ContentRequest.TYPE_STYLE_SHEET
             "subdocument", "frame" -> ContentRequest.TYPE_SUB_DOCUMENT
-            "document" -> ContentRequest.TYPE_DOCUMENT
+            "document", "doc" -> ContentRequest.TYPE_DOCUMENT
             "websocket" -> ContentRequest.TYPE_WEB_SOCKET
             "media" -> ContentRequest.TYPE_MEDIA
             "font" -> ContentRequest.TYPE_FONT
-            "popup" -> ContentRequest.TYPE_POPUP
+            "popup", "object", "webrtc", "ping", "object-subrequest", "popunder" -> ContentRequest.TYPE_UNSUPPORTED
             "xmlhttprequest", "xhr" -> ContentRequest.TYPE_XHR
-            "object", "webrtc", "ping",
-            "object-subrequest", "genericblock" -> -1
+            "genericblock" -> -1
             "elemhide", "ehide" -> ContentRequest.TYPE_ELEMENT_HIDE
             "generichide", "ghide" -> ContentRequest.TYPE_ELEMENT_GENERIC_HIDE
             else -> 0

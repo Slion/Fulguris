@@ -21,13 +21,15 @@ import jp.hazuki.yuzubrowser.adblock.filter.unified.Tag
 
 data class ContentRequest(
     val url: Uri,
-    val pageUrl: Uri,
+    val pageHost: String?,
     val type: Int,
-    val isThirdParty: Boolean,
+    val isThirdParty: Int,
     val headers: MutableMap<String, String> = mutableMapOf(),
     val method: String = "GET",
     val tags: Collection<String> = Tag.create(url.toString()).toSet(),
 ) {
+    val urlLowercase = url.lowercase()
+
     companion object {
         const val TYPE_OTHER = 0x01
         const val TYPE_SCRIPT = 0x02
@@ -37,7 +39,7 @@ data class ContentRequest(
         const val TYPE_DOCUMENT = 0x20
         const val TYPE_MEDIA = 0x40
         const val TYPE_FONT = 0x80
-        const val TYPE_POPUP = 0x0100
+        const val TYPE_UNSUPPORTED = 0x0100 // was TYPE_POPUP, now gathers all types that are not (currently) supported
         const val TYPE_WEB_SOCKET = 0x0200
         const val TYPE_XHR = 0x0400
         const val TYPE_ALL = 0xffff
@@ -51,3 +53,10 @@ data class ContentRequest(
         const val TYPE_ELEMENT_GENERIC_HIDE = 0x2000_0000
     }
 }
+
+private fun Uri.lowercase(): Uri =
+    buildUpon()
+        .authority(authority?.lowercase())
+        .path(path?.lowercase())
+        .encodedQuery(encodedQuery?.lowercase())
+        .build()

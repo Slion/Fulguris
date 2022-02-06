@@ -173,11 +173,11 @@ class FilterReader(private val input: InputStream) {
             }
 
         val filter = when (type) {
-            FILTER_TYPE_CONTAINS -> ContainsFilter(pattern, contentType, domains, thirdParty, modify)
-            FILTER_TYPE_HOST -> HostFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
-            FILTER_TYPE_CONTAINS_HOST -> ContainsHostFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
+            FILTER_TYPE_CONTAINS -> ContainsFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
+            FILTER_TYPE_HOST -> HostFilter(pattern, contentType, domains, thirdParty, modify)
+            FILTER_TYPE_CONTAINS_HOST -> ContainsHostFilter(pattern, contentType, domains, thirdParty, modify)
             FILTER_TYPE_START -> StartsWithFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
-            FILTER_TYPE_END -> EndWithFilter(pattern, contentType, domains, thirdParty, modify)
+            FILTER_TYPE_END -> EndWithFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
             FILTER_TYPE_START_END -> StartEndFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
             FILTER_TYPE_JVM_REGEX -> RegexFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
             FILTER_TYPE_JVM_REGEX_HOST -> RegexHostFilter(pattern, contentType, ignoreCase, domains, thirdParty, modify)
