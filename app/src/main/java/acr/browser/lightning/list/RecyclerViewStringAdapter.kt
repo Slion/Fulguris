@@ -2,9 +2,11 @@ package acr.browser.lightning.list
 
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.inflater
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -12,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class RecyclerViewStringAdapter<T>(
     private val listItems: List<T>,
-    private val convertToString: T.() -> String
+    private val getTitle: T.() -> String,
+    private val getText: T.() -> String?
 ) : RecyclerView.Adapter<SimpleStringViewHolder>() {
 
     var onItemClickListener: ((T) -> Unit)? = null
@@ -26,10 +29,20 @@ class RecyclerViewStringAdapter<T>(
 
     override fun onBindViewHolder(holder: SimpleStringViewHolder, position: Int) {
         val item = listItems[position]
-        holder.title.text = item.convertToString()
+        holder.title.text = item.getTitle()
+        // Check secondary text
+        val text = item.getText()
+        if (text.isNullOrEmpty()) {
+            // Hide secondary text if none provided
+            holder.secondary.isVisible = false
+        } else {
+            holder.secondary.text = text
+            // Make sure marquee is working
+            holder.secondary.isSelected = true;
+        }
+
         holder.itemView.setOnClickListener { onItemClickListener?.invoke(item) }
     }
-
 }
 
 /**
@@ -41,5 +54,10 @@ class SimpleStringViewHolder(view: View) : RecyclerView.ViewHolder(view) {
      * The text to display.
      */
     val title: TextView = view.findViewById(R.id.title_text)
+
+    /**
+     * The text to display.
+     */
+    val secondary: TextView = view.findViewById(R.id.secondary_text)
 
 }

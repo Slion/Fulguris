@@ -369,7 +369,7 @@ class LightningDialogBuilder @Inject constructor(
             DialogItem(title = R.string.action_share) {
                 IntentUtils(activity).shareUrl(linkUrl, null)
             },
-            DialogItem(title = R.string.dialog_copy_link) {
+            DialogItem(title = R.string.dialog_copy_link, text = linkUrl) {
                 clipboardManager.copyToClipboard(linkUrl)
                 activity.snackbar(R.string.message_link_copied)
             },
@@ -384,7 +384,7 @@ class LightningDialogBuilder @Inject constructor(
         DialogTab(show=showImageTab, icon=R.drawable.ic_image, title = R.string.button_image,
             items = arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
                 uiController.handleNewTab(NewTab.FOREGROUND, imageUrl)
-            },
+                },
                 DialogItem(title = R.string.dialog_open_background_tab) {
                     uiController.handleNewTab(NewTab.BACKGROUND, imageUrl)
                 },
@@ -397,7 +397,7 @@ class LightningDialogBuilder @Inject constructor(
                 DialogItem(title = R.string.action_share) {
                     IntentUtils(activity).shareUrl(imageUrl, null)
                 },
-                DialogItem(title = R.string.dialog_copy_link) {
+		  DialogItem(title = R.string.dialog_copy_link, text = imageUrl) {
                     clipboardManager.copyToClipboard(imageUrl)
                     activity.snackbar(R.string.message_link_copied)
                 },

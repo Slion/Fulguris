@@ -105,7 +105,7 @@ object BrowserDialog {
 
         val itemList = items.filter(DialogItem::show)
 
-        val adapter = RecyclerViewStringAdapter(itemList, convertToString = { activity.getString(this.title) })
+        val adapter = RecyclerViewStringAdapter(itemList, getTitle = { activity.getString(this.title) }, getText = { this.text} )
 
         if (title?.isNotEmpty() == true) {
             titleView.text = title

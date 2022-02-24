@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/title_text"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="?attr/listChoiceBackgroundIndicator"
-          android:gravity="center_vertical"
-          android:minHeight="?android:attr/listPreferredItemHeightSmall"
-          android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-          android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-          android:textAppearance="?android:attr/textAppearanceListItemSmall"/>
+<!--
+List item layout notably used in our context menu dialogs.
+TODO: Add support for optional icon?
+-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:background="?attr/listChoiceBackgroundIndicator"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        >
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            tools:text="Item title"
+            />
+
+        <!--
+        Marquee only works when using single line.
+        Ellipsize middle is broken even when using single line.
+        -->
+        <TextView
+            android:id="@+id/secondary_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:singleLine="false"
+            tools:text="Item secondary text that's long enough so that ellipsis kicks in. It needs to be at least some many lines long otherwise that just won't do it. We need more text to test it over 3 lines too."
+            />
+
+    </LinearLayout>
+
+</layout>
+

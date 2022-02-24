@@ -6,9 +6,8 @@ import androidx.annotation.StringRes
 
 
 /**
- * An item representing a list item in a list dialog. The item has an [icon], [title], an [onClick]
- * function to be invoked when the item is clicked, and a boolean condition [show] which
- * defaults to true and allows the consumer to control the visibility of the item in the list.
+ * Our dialog item features an [icon], a [title], a secondary [text], an [onClick] callback
+ * and a [show] boolean condition to conveniently control its visibility.
  */
 class DialogItem(
     val icon: Drawable? = null,
@@ -16,10 +15,9 @@ class DialogItem(
     val colorTint: Int? = null,
     @param:StringRes
     val title: Int,
+    val text: String? = null,
     val show: Boolean = true,
     private val onClick: () -> Unit
 ) {
-
     fun onClick() = onClick.invoke()
-
 }
