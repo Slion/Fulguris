@@ -354,8 +354,13 @@ class LightningDialogBuilder @Inject constructor(
         showImageTab: Boolean
     ) = BrowserDialog.show(activity, "", false,
         //Link tab
-        DialogTab(show=showLinkTab, icon=R.drawable.ic_link, title=R.string.button_link,items=arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
-            uiController.handleNewTab(NewTab.FOREGROUND, linkUrl)
+        DialogTab(show=showLinkTab, icon=R.drawable.ic_link, title=R.string.button_link,items=arrayOf(
+            DialogItem(title = 0, titleString = linkUrl) {
+                clipboardManager.copyToClipboard(linkUrl)
+                activity.snackbar(R.string.message_link_copied)
+            },
+            DialogItem(title = R.string.dialog_open_new_tab) {
+                uiController.handleNewTab(NewTab.FOREGROUND, linkUrl)
             },
             DialogItem(title = R.string.dialog_open_background_tab) {
                 uiController.handleNewTab(NewTab.BACKGROUND, linkUrl)
@@ -369,10 +374,6 @@ class LightningDialogBuilder @Inject constructor(
             DialogItem(title = R.string.action_share) {
                 IntentUtils(activity).shareUrl(linkUrl, null)
             },
-            DialogItem(title = R.string.dialog_copy_link) {
-                clipboardManager.copyToClipboard(linkUrl)
-                activity.snackbar(R.string.message_link_copied)
-            },
             // Show copy text dialog item if we have some text
             DialogItem(title = R.string.dialog_copy_text, show = !text.isNullOrEmpty()) {
                 if (!text.isNullOrEmpty()) {
@@ -382,9 +383,14 @@ class LightningDialogBuilder @Inject constructor(
             })),
         // Image tab
         DialogTab(show=showImageTab, icon=R.drawable.ic_image, title = R.string.button_image,
-            items = arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
+            items = arrayOf(
+                DialogItem(title = 0, titleString = imageUrl) {
+                    clipboardManager.copyToClipboard(imageUrl)
+                    activity.snackbar(R.string.message_link_copied)
+                },
+                DialogItem(title = R.string.dialog_open_new_tab) {
                 uiController.handleNewTab(NewTab.FOREGROUND, imageUrl)
-            },
+                },
                 DialogItem(title = R.string.dialog_open_background_tab) {
                     uiController.handleNewTab(NewTab.BACKGROUND, imageUrl)
                 },
@@ -396,10 +402,6 @@ class LightningDialogBuilder @Inject constructor(
                 },
                 DialogItem(title = R.string.action_share) {
                     IntentUtils(activity).shareUrl(imageUrl, null)
-                },
-                DialogItem(title = R.string.dialog_copy_link) {
-                    clipboardManager.copyToClipboard(imageUrl)
-                    activity.snackbar(R.string.message_link_copied)
                 },
                 DialogItem(title = R.string.dialog_download_image,
                     // Do not show download option for data URL as we don't support that for now

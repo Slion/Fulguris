@@ -2,6 +2,7 @@ package acr.browser.lightning.list
 
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.inflater
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -26,6 +27,8 @@ class RecyclerViewStringAdapter<T>(
 
     override fun onBindViewHolder(holder: SimpleStringViewHolder, position: Int) {
         val item = listItems[position]
+        holder.title.maxLines = 2
+        holder.title.ellipsize = TextUtils.TruncateAt.END
         holder.title.text = item.convertToString()
         holder.itemView.setOnClickListener { onItemClickListener?.invoke(item) }
     }

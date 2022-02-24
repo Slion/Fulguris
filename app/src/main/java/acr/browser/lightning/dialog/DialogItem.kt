@@ -16,6 +16,7 @@ class DialogItem(
     val colorTint: Int? = null,
     @param:StringRes
     val title: Int,
+    val titleString: String? = null,
     val show: Boolean = true,
     private val onClick: () -> Unit
 ) {

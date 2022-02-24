@@ -49,7 +49,7 @@ class TabsPagerAdapter(
         // Populate our list with our items
         val recyclerView = view.findViewById<RecyclerView>(R.id.dialog_list)
         val itemList = tabs[position].iItems.filter(DialogItem::show)
-        val adapter = RecyclerViewStringAdapter(itemList, convertToString = { context.getString(this.title) })
+        val adapter = RecyclerViewStringAdapter(itemList, convertToString = { this.titleString ?: context.getString(this.title) })
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             this.adapter = adapter
