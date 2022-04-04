@@ -51,7 +51,6 @@ def generatedLocaleListDir = layout.buildDirectory.dir('generated/source/locale/
 
 android {
     compileSdkVersion project.targetSdkVersion
-    buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
         minSdkVersion project.minSdkVersion
@@ -195,6 +194,11 @@ android {
             setIgnore(true)
         }
     }
+    packagingOptions {
+        resources {
+            excludes += ['.readme']
+        }
+    }
 
     // Taken from: https://stackoverflow.com/a/59583066/3969362
     // Needed to customize our APK file name per flavor
@@ -220,13 +224,7 @@ android {
         }
     }
 
-    lintOptions {
-        abortOnError true
-    }
 
-    packagingOptions {
-        exclude '.readme'
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -235,6 +233,9 @@ android {
     buildFeatures {
         // That should give us both view and data binding
         dataBinding true
+    }
+    lint {
+        abortOnError true
     }
 }
 
