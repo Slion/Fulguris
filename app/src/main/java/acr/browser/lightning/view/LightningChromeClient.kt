@@ -153,7 +153,7 @@ class LightningChromeClient(
         activity.runOnUiThread {
             val resourcesString = resources.joinToString(separator = "\n")
             BrowserDialog.showPositiveNegativeDialog(
-                activity = activity,
+                aContext = activity,
                 title = R.string.title_permission_request,
                 message = R.string.message_permission_request,
                 messageArguments = arrayOf(source, resourcesString),

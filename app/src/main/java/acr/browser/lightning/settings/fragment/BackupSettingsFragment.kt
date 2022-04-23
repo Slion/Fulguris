@@ -212,7 +212,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
 
     private fun showDeleteBookmarksDialog() {
         BrowserDialog.showPositiveNegativeDialog(
-            activity = activity as Activity,
+            aContext = activity as Activity,
             title = R.string.action_delete,
             message = R.string.action_delete_all_bookmarks,
             positiveButton = DialogItem(title = R.string.yes) {

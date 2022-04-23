@@ -129,7 +129,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     private fun clearHistoryDialog() {
         BrowserDialog.showPositiveNegativeDialog(
-            activity = activity as Activity,
+            aContext = activity as Activity,
             title = R.string.title_clear_history,
             message = R.string.dialog_history,
             positiveButton = DialogItem(title = R.string.action_yes) {
@@ -147,7 +147,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     private fun clearCookiesDialog() {
         BrowserDialog.showPositiveNegativeDialog(
-            activity = activity as Activity,
+            aContext = activity as Activity,
             title = R.string.title_clear_cookies,
             message = R.string.dialog_cookies,
             positiveButton = DialogItem(title = R.string.action_yes) {

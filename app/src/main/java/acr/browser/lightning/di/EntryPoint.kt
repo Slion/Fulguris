@@ -23,6 +23,7 @@ import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.ProxyUtils
 import acr.browser.lightning.view.webrtc.WebRtcPermissionsModel
 import android.app.DownloadManager
+import android.content.ClipboardManager
 import android.content.SharedPreferences
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -70,6 +71,7 @@ interface HiltEntryPoint {
     val downloadsRepository: DownloadsRepository
     var tabsManager: TabsManager
     var presenter: BrowserPresenter
+    var clipboardManager: ClipboardManager
 
 }
 

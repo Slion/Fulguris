@@ -22,6 +22,7 @@ import acr.browser.lightning.list.RecyclerViewStringAdapter
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.TextView
@@ -37,10 +38,10 @@ object BrowserDialog {
 
     @JvmStatic
     fun show(
-        activity: Activity,
+        aContext: Context,
         @StringRes title: Int,
         vararg items: DialogItem
-    ) = show(activity, activity.getString(title), *items)
+    ) = show(aContext, aContext.getString(title), *items)
 
     fun showWithIcons(context: Context, title: String?, vararg items: DialogItem) {
         val builder = MaterialAlertDialogBuilder(context)
@@ -80,32 +81,32 @@ object BrowserDialog {
      * the selected item when the dialog is shown. The dialog has an OK button which just dismisses
      * the dialog.
      */
-    fun showListChoices(activity: Activity, @StringRes title: Int, vararg items: DialogItem) {
-        MaterialAlertDialogBuilder(activity).apply {
+    fun showListChoices(aContext: Context, @StringRes title: Int, vararg items: DialogItem) {
+        MaterialAlertDialogBuilder(aContext).apply {
             setTitle(title)
 
-            val choices = items.map { activity.getString(it.title) }.toTypedArray()
+            val choices = items.map { aContext.getString(it.title) }.toTypedArray()
             val currentChoice = items.indexOfFirst(DialogItem::show)
 
             setSingleChoiceItems(choices, currentChoice) { _, which ->
                 items[which].onClick()
             }
-            setPositiveButton(activity.getString(R.string.action_ok), null)
+            setPositiveButton(aContext.getString(R.string.action_ok), null)
         }.resizeAndShow()
     }
 
     @JvmStatic
-    fun show(activity: Activity, title: String?, vararg items: DialogItem) {
-        val builder = MaterialAlertDialogBuilder(activity)
+    fun show(aContext: Context, title: String?, vararg items: DialogItem) {
+        val builder = MaterialAlertDialogBuilder(aContext)
 
-        val layout = activity.inflater.inflate(R.layout.list_dialog, null)
+        val layout = aContext.inflater.inflate(R.layout.list_dialog, null)
 
         val titleView = layout.findViewById<TextView>(R.id.dialog_title)
         val recyclerView = layout.findViewById<RecyclerView>(R.id.dialog_list)
 
         val itemList = items.filter(DialogItem::show)
 
-        val adapter = RecyclerViewStringAdapter(itemList, getTitle = { activity.getString(this.title) }, getText = { this.text} )
+        val adapter = RecyclerViewStringAdapter(itemList, getTitle = { aContext.getString(this.title) }, getText = { this.text} )
 
         if (title?.isNotEmpty() == true) {
             titleView.text = title
@@ -131,30 +132,30 @@ object BrowserDialog {
     /**
      * Build and show a tabbed dialog based on the provided parameters.
      *
-     * @param aActivity The activity requesting that dialog.
+     * @param aContext The activity requesting that dialog.
      * @param aTitle The dialog title string resource id.
      * @param aHideSingleTab Set to true to hide tab layout when a single tab is visible.
      * @param aTabs Define our dialog's tabs.
      */
     @JvmStatic
-    fun show(aActivity: Activity, @StringRes aTitle: Int, aHideSingleTab: Boolean, vararg aTabs: DialogTab) {
-        show(aActivity,aActivity.getString(aTitle), aHideSingleTab,*aTabs)
+    fun show(aContext: Context, @StringRes aTitle: Int, aHideSingleTab: Boolean, vararg aTabs: DialogTab) {
+        show(aContext,null, aContext.getString(aTitle), aHideSingleTab,*aTabs)
     }
 
     /**
      * Build and show a tabbed dialog based on the provided parameters.
      *
-     * @param aActivity The activity requesting that dialog.
+     * @param aContext The activity requesting that dialog.
      * @param aTitle The dialog title.
      * @param aHideSingleTab Set to true to hide tab layout when a single tab is visible.
      * @param aTabs Define our dialog's tabs.
      */
     @JvmStatic
-    fun show(aActivity: Activity, aTitle: String?, aHideSingleTab: Boolean, vararg aTabs: DialogTab) {
-        val builder = MaterialAlertDialogBuilder(aActivity)
+    fun show(aContext: Context, aIcon: Drawable?, aTitle: String?, aHideSingleTab: Boolean, vararg aTabs: DialogTab) {
+        val builder = MaterialAlertDialogBuilder(aContext)
 
         // Inflate our layout
-        val layout = aActivity.inflater.inflate(R.layout.dialog_tabs, null)
+        val layout = aContext.inflater.inflate(R.layout.dialog_tabs, null)
         // Fetch the view we will need to use
         val titleView = layout.findViewById<TextView>(R.id.dialog_title)
         val tabLayout = layout.findViewById<TabLayout>(R.id.dialog_tab_layout)
@@ -179,18 +180,21 @@ object BrowserDialog {
             titleView?.isVisible = false
         }
         // Create our adapter which will be creating our tabs content
-        pager.adapter = TabsPagerAdapter(aActivity, dialog, tabList)
+        pager.adapter = TabsPagerAdapter(aContext, dialog, tabList)
         // Hook-in our adapter with our tab layout
         tabLayout.setupWithViewPager(pager)
         // Add icons to our tabs
         var i: Int = 0
         tabList.forEach {
-            tabLayout.getTabAt(i)?.setIcon(it.icon)
+            if (it.icon!=0) {
+                tabLayout.getTabAt(i)?.setIcon(it.icon)
+            }
             i++
         }
         // Our layout is setup, just hook it to our dialog
         dialog.setView(layout)
-        setDialogSize(aActivity, dialog)
+        setDialogSize(aContext, dialog)
+        dialog.setIcon(aIcon)
         dialog.show()
         //builder.resizeAndShow()
 
@@ -204,7 +208,7 @@ object BrowserDialog {
 
     @JvmStatic
     fun showPositiveNegativeDialog(
-        activity: Activity,
+        aContext: Context,
         @StringRes title: Int,
         @StringRes message: Int,
         messageArguments: Array<Any>? = null,
@@ -213,11 +217,11 @@ object BrowserDialog {
         onCancel: () -> Unit
     ) {
         val messageValue = if (messageArguments != null) {
-            activity.getString(message, *messageArguments)
+            aContext.getString(message, *messageArguments)
         } else {
-            activity.getString(message)
+            aContext.getString(message)
         }
-        MaterialAlertDialogBuilder(activity).apply {
+        MaterialAlertDialogBuilder(aContext).apply {
             setTitle(title)
             setMessage(messageValue)
             setOnCancelListener { onCancel() }
@@ -228,23 +232,23 @@ object BrowserDialog {
 
     @JvmStatic
     fun showEditText(
-        activity: Activity,
+        aContext: Context,
         @StringRes title: Int,
         @StringRes hint: Int,
         @StringRes action: Int,
         textInputListener: (String) -> Unit
-    ) = showEditText(activity, title, hint, null, action, textInputListener)
+    ) = showEditText(aContext, title, hint, null, action, textInputListener)
 
     @JvmStatic
     fun showEditText(
-        activity: Activity,
+        aContext: Context,
         @StringRes title: Int,
         @StringRes hint: Int,
         currentText: String?,
         @StringRes action: Int,
         textInputListener: (String) -> Unit
     ) {
-        val layout = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_text, null)
+        val layout = LayoutInflater.from(aContext).inflate(R.layout.dialog_edit_text, null)
         val editText = layout.findViewById<EditText>(R.id.dialog_edit_text)
 
         editText.setHint(hint)
@@ -252,7 +256,7 @@ object BrowserDialog {
             editText.setText(currentText)
         }
 
-        val dialog = MaterialAlertDialogBuilder(activity)
+        val dialog = MaterialAlertDialogBuilder(aContext)
             .setTitle(title)
             .setView(layout)
             .setPositiveButton(action
@@ -284,9 +288,9 @@ object BrowserDialog {
     /**
      * Show the custom dialog with the custom builder arguments applied.
      */
-    fun showCustomDialog(activity: Activity, block: MaterialAlertDialogBuilder.(Activity) -> Unit) : Dialog {
-            MaterialAlertDialogBuilder(activity).apply {
-                block(activity)
+    fun showCustomDialog(aContext: Context, block: MaterialAlertDialogBuilder.(Context) -> Unit) : Dialog {
+            MaterialAlertDialogBuilder(aContext).apply {
+                block(aContext)
                 return resizeAndShow()
             }
     }

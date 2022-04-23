@@ -37,7 +37,7 @@ class DialogTab(
     @DrawableRes
     val icon: Int = 0,
     @param:StringRes
-    val title: Int,
+    val title: Int = 0,
     val show: Boolean = true,
     vararg items: DialogItem
 ) {

@@ -113,7 +113,7 @@ class LightningDialogBuilder @Inject constructor(
             activity: Activity,
             uiController: UIController,
             entry: Bookmark.Entry
-    ) = BrowserDialog.show(activity, "",false, DialogTab(show=true, icon=R.drawable.ic_bookmark, title=R.string.dialog_title_bookmark,items=arrayOf(
+    ) = BrowserDialog.show(activity, null, "",false, DialogTab(show=true, icon=R.drawable.ic_bookmark, title=R.string.dialog_title_bookmark,items=arrayOf(
             DialogItem(title = R.string.dialog_open_new_tab) {
                 uiController.handleNewTab(NewTab.FOREGROUND, entry.url)
             },
@@ -276,7 +276,7 @@ class LightningDialogBuilder @Inject constructor(
             activity: Activity,
             uiController: UIController,
             folder: Bookmark.Folder
-    ) = BrowserDialog.show(activity, "", false, DialogTab(show=true, icon=R.drawable.ic_folder, title=R.string.action_folder,items=arrayOf(
+    ) = BrowserDialog.show(activity, null, "", false, DialogTab(show=true, icon=R.drawable.ic_folder, title=R.string.action_folder,items=arrayOf(
             DialogItem(title = R.string.dialog_rename_folder) {
                 showRenameFolderDialog(activity, uiController, folder)
             },
@@ -314,7 +314,7 @@ class LightningDialogBuilder @Inject constructor(
             activity: Activity,
             uiController: UIController,
             url: String
-    ) = BrowserDialog.show(activity, "", false, DialogTab(show=true, icon=R.drawable.ic_history, title=R.string.action_history,items=arrayOf(
+    ) = BrowserDialog.show(activity, null, "", false, DialogTab(show=true, icon=R.drawable.ic_history, title=R.string.action_history,items=arrayOf(
             DialogItem(title = R.string.dialog_open_new_tab) {
                 uiController.handleNewTab(NewTab.FOREGROUND, url)
             },
@@ -352,7 +352,7 @@ class LightningDialogBuilder @Inject constructor(
         userAgent: String,
         showLinkTab: Boolean,
         showImageTab: Boolean
-    ) = BrowserDialog.show(activity, "", false,
+    ) = BrowserDialog.show(activity, null, "", false,
         //Link tab
         DialogTab(show=showLinkTab, icon=R.drawable.ic_link, title=R.string.button_link,items=arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
             uiController.handleNewTab(NewTab.FOREGROUND, linkUrl)
