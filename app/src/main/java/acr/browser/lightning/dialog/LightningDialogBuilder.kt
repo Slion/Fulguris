@@ -399,7 +399,7 @@ class LightningDialogBuilder @Inject constructor(
                 DialogItem(title = R.string.action_share) {
                     IntentUtils(activity).shareUrl(imageUrl, null)
                 },
-                DialogItem(title = R.string.dialog_download_image,
+                DialogItem(title = R.string.action_download,
                     // Do not show download option for data URL as we don't support that for now
                     show=!URLUtil.isDataUrl(imageUrl)) {
                     // Ask for required permissions before starting our download
