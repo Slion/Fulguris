@@ -71,7 +71,7 @@
     <string name="agent_system">Tak jak urządzenie</string>
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (komputer)</string>
-    <string name="agent_hide_device">Hide device</string>
+    <string name="agent_hide_device">Ukryj urządzenie</string>
     <string name="title_search_engine">Wyszukiwarka</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Czy chcesz pobrać ten plik? (%1$s)</string>
@@ -108,7 +108,7 @@
     <string name="action_back">Wstecz</string>
     <string name="action_find">Znajdź na stronie</string>
     <string name="action_print">Drukuj</string>
-    <string name="action_translate">Translate</string>
+    <string name="action_translate">Przetłumacz</string>
     <string name="downloads">Pobrane</string>
     <string name="downloads_notification_description">Jest aktywowane po zakończeniu pobierania</string>
     <string name="download_pending">Rozpoczynanie pobieraniau2026</string>
@@ -144,10 +144,10 @@
     <string name="title_welcome">Witaj w Fulguris</string>
     <string name="message_welcome">Czy chcesz odwiedzić naszą stronę główną, aby dowiedzieć się więcej o tej potężnej przeglądarce?</string>
     <!-- Ad block -->
-    <string name="block_ads">Content control</string>
+    <string name="block_ads">Kontrola treści</string>
     <string name="block_ad_source">Źródło pliku hosts</string>
-    <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
-    <string name="block_ad_refresh_now">Refresh hosts now</string>
+    <string name="block_ad_remote_refresh_frequency_description">Dla zdalnego pliku hosts</string>
+    <string name="block_ad_refresh_now">Odśwież hosts teraz</string>
     <string name="block_remote_frequency_daily">Codziennie</string>
     <string name="block_remote_frequency_weekly">Cotygodniowo</string>
     <string name="block_remote_frequency_monthly">Comiesięcznie</string>
@@ -156,39 +156,39 @@
     <string name="block_source_local_description">Plik: %1$s</string>
     <string name="block_source_remote">Zdalny plik hosts</string>
     <string name="block_source_remote_description">Adres URL: %1$s</string>
-    <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
+    <string name="ad_block_load_failure">Błąd wczytywania hosts ze źródła blokowania reklam.</string>
     <!-- new ad blocker -->
-    <string name="page_blocked">The following page was blocked:</string>
-    <string name="page_blocked_reason">because of:</string>
-    <string name="page_blocked_list_ad">%s on ad filters</string>
-    <string name="page_blocked_list_user">%s blocked by user rule</string>
-    <string name="page_blocked_list_malware">%s on malware filters</string>
-    <string name="request_blocked">Request blocked</string>
+    <string name="page_blocked">Następująca strona została zablokowana:</string>
+    <string name="page_blocked_reason">z powodu:</string>
+    <string name="page_blocked_list_ad">%s na liście filtrów reklam</string>
+    <string name="page_blocked_list_user">%s zablokowana przez zasady użytkownika</string>
+    <string name="page_blocked_list_malware">%s na liście zagrożeń</string>
+    <string name="request_blocked">Żądanie zablokowane</string>
     <!-- settings for new ad blocker -->
-    <string name="blocklist_update_mode">Auto-update mode</string>
-    <string name="blocklist_update_on">Auto-update on</string>
-    <string name="blocklist_update_off">Auto-update off</string>
-    <string name="blocklist_update_wifi">Only on non-metered connections</string>
-    <string name="blocklist_update">Update filters</string>
-    <string name="blocklist_update_frequency">Auto-update frequency</string>
-    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
-    <string name="blocklist_update_now">Update lists now</string>
-    <string name="blocklist_last_update">Last update: %s</string>
-    <string name="blocklist_updating">Updating…</string>
-    <string name="blocklist_update_error">Error while updating filters list %s</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
-    <string name="add_blocklist">Add filters file</string>
-    <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
-    <string name="enable_blocklist">Enable this list</string>
-    <string name="invalid_title">Invalid title</string>
-    <string name="invalid_url">Invalid URL</string>
-    <string name="blocklist_built_in">Built-in filters</string>
-    <string name="blocklist_remove">Remove filters file</string>
-    <string name="blocklist_remove_confirm">Really remove filters file %s?</string>
-    <string name="local_file">Local</string>
-    <string name="local_file_replace">Replace</string>
-    <string name="local_file_chosen">file selected</string>
-    <string name="remote_file">Remote</string>
+    <string name="blocklist_update_mode">Tryb auto. aktualizacji</string>
+    <string name="blocklist_update_on">Auto. aktualizacje wł.</string>
+    <string name="blocklist_update_off">Auto. aktualizacje wył.</string>
+    <string name="blocklist_update_wifi">Tylko Wi-Fi</string>
+    <string name="blocklist_update">Aktualizuj filtry</string>
+    <string name="blocklist_update_frequency">Częstotliwość aktualizacji</string>
+    <string name="blocklist_update_description">Aktualizacje będą przeprowadzane z określoną częstotliwością, chyba że plik filtra stanowi inaczej</string>
+    <string name="blocklist_update_now">Aktualizuj listy teraz</string>
+    <string name="blocklist_last_update">Ostatnio aktualizowano: %s</string>
+    <string name="blocklist_updating">Aktualizacja…</string>
+    <string name="blocklist_update_error">Błąd podczas aktualizacji listy filtrów %s</string>
+    <string name="blocklist_update_error_404">Błąd podczas aktualizacji listy filtrów %s: nie znaleziono adresu URL</string>
+    <string name="add_blocklist">Dodaj plik filtrów</string>
+    <string name="add_blocklist_hint">Możesz wybrać listę dostawców lub dowolną inną listę zgodną z zasadami AdBlockPlus</string>
+    <string name="enable_blocklist">Aktywuj tę listę</string>
+    <string name="invalid_title">Nieprawidłowy tytuł</string>
+    <string name="invalid_url">Nieprawidłowy adres URL</string>
+    <string name="blocklist_built_in">Wbudowane filtry</string>
+    <string name="blocklist_remove">Usuń plik filtrów</string>
+    <string name="blocklist_remove_confirm">Na pewno usunąć plik filtrów %s?</string>
+    <string name="local_file">Lokalny</string>
+    <string name="local_file_replace">Zastąp</string>
+    <string name="local_file_chosen">wybrany plik</string>
+    <string name="remote_file">Zdalny</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Czynność anulowana.</string>
     <!-- SSL warnings -->
@@ -216,7 +216,7 @@
     <string name="powered_by_google">Dostarczane przez Google</string>
     <string name="powered_by_duck">Oparte o DuckDuckGo</string>
     <string name="powered_by_baidu">Oparte o Baidu</string>
-    <string name="powered_by_naver">Powered by Naver</string>
+    <string name="powered_by_naver">Dostarczone przez Naver</string>
     <string name="search_suggestions_off">Brak sugestii wyszukiwania</string>
     <string name="http_proxy">Konfiguracja serwera proxy</string>
     <string-array name="proxy_choices_array">
@@ -254,9 +254,9 @@
     <string name="title_file_chooser">Wybierz plik</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
-    <string name="generic_export">Export</string>
-    <string name="generic_import">Import</string>
-    <string name="generic_reset">Reset</string>
+    <string name="generic_export">Eksportuj</string>
+    <string name="generic_import">Importuj</string>
+    <string name="generic_reset">Wyzeruj</string>
     <string name="export_bookmarks">Eksportuj zakładki</string>
     <string name="import_backup">Importuj zakładki</string>
     <string name="bookmark_export_path">Zakładki wyeksportowane do</string>
@@ -268,9 +268,9 @@
     <string name="title_chooser">Wybierz plik</string>
     <string name="settings_general">Ogólne</string>
     <string name="settings_display">Wyświetlanie</string>
-    <string name="settings_backup">Backup</string>
+    <string name="settings_backup">Kopia zapasowa</string>
     <string name="settings_title_configuration">Konfiguracja</string>
-    <string name="settings_summary_configuration">Portrait and landscape settings</string>
+    <string name="settings_summary_configuration">Ustawienia orientacji ekranu</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_privacy">Prywatność</string>
@@ -344,15 +344,15 @@
     <string name="new_tab_position_before">Before current tab</string>
     <string name="new_tab_position_after">After current tab</string>
     <string name="new_tab_position_start">Start of tab list</string>
-    <string name="new_tab_position_end">End of tab list</string>
+    <string name="new_tab_position_end">Koniec listy kart</string>
     <string name="text_encoding">Kodowanie tekstu</string>
-    <string name="reset_settings">Reset settings</string>
-    <string name="reset_settings_confirmation">You will loose all your settings. Are you sure you want to proceed?</string>
+    <string name="reset_settings">Wyzeruj ustawienia</string>
+    <string name="reset_settings_confirmation">Utracisz wszystkie swoje ustawienia. Czy na pewno chcesz kontynuować?</string>
     <string-array name="url_content_array">
         <item>Tylko domena (domyślne)</item>
         <item>Pełny URL</item>
         <item>Tytuł strony</item>
-        <item>Shortened URL</item>
+        <item>Skrócony adres URL</item>
     </string-array>
     <string name="invert_color">Odwróć kolory</string>
     <string name="settings_black_status_bar">Czarny pasek stanu</string>
@@ -372,21 +372,21 @@
     <string name="message_web_storage_cleared">Dane i ustawienia witryn zostały wyczyszczone</string>
     <string name="hosts_source">Źródło filtrów blokujących reklamy</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Ad blocker and content filtering</string>
-    <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
+    <string name="settings_summary_content_control">Blokowanie reklam i filtrowanie treści</string>
+    <string name="settings_summary_content_control_toggle">Aktywuj blokowanie reklam i filtrowanie treści</string>
     <string name="settings_title_vertical_tab_bar">Pokazuj karty w bocznym menu</string>
-    <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
+    <string name="settings_summary_vertical_tab_bar">Wyłącz, aby używać poziomego paska kart</string>
     <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
-    <string name="settings_title_desktop_mode_default">Desktop mode</string>
-    <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
-    <string name="settings_title_dark_mode_default">Force dark mode</string>
-    <string name="settings_summary_dark_mode_default">Define if new tabs use force dark mode by default</string>
+    <string name="settings_title_desktop_mode_default">Wersja komputerowa</string>
+    <string name="settings_summary_desktop_mode_default">Określ, czy nowe karty mają być domyślnie wyświetlane w wersji komputerowej</string>
+    <string name="settings_title_dark_mode_default">Wymuś tryb ciemny</string>
+    <string name="settings_summary_dark_mode_default">Określ, czy domyślnie wymusić tryb ciemny w nowych kartach</string>
     <string name="settings_title_swap_bookmarks_and_tabs">Zamień miejscami ekran kart i zakładek</string>
-    <string name="settings_summary_swap_bookmarks_and_tabs">Tabs and Bookmarks drawers will swap places</string>
+    <string name="settings_summary_swap_bookmarks_and_tabs">Zamień miejscami panel Karty oraz Zakładki</string>
     <string name="do_not_track">Żądaj nieśledzenia</string>
     <string name="save_data">Request \'Save-Data\'</string>
     <string name="remove_identifying_headers">Usuwaj śledzące nagłówki</string>
-    <string name="pref_title_webrtc">WebRTC Support</string>
+    <string name="pref_title_webrtc">Wsparcie dla WebRTC</string>
     <string name="pref_summary_webrtc">Allows Real Time Communication over the Web using your device camera and microphone</string>
     <string name="action_add_to_homescreen">Dodaj do ekranu głównego</string>
     <string name="message_added_to_homescreen">Dodano skrót do ekranu głównego</string>
@@ -399,14 +399,16 @@
     <!-- debug strings -->
     <string name="debug_title">Ustawienia debugowania</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Uruchom aplikację ponownie, aby uzyskać zmiany.</string>
+    <string name="app_restart">Uruchom aplikację ponownie, aby zastosować zmiany</string>
+    <string name="pref_title_crash_logs">Rejestr awarii</string>
+    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Otwórz w nowej karcie</string>
     <string name="dialog_open_background_tab">Otwórz w nowej karcie w tle</string>
     <string name="dialog_open_incognito_tab">Otwórz w nowej karcie prywatnej</string>
     <string name="dialog_remove_bookmark">Usuń zakładkę</string>
     <string name="dialog_edit_bookmark">Edytuj zakładkę</string>
-    <string name="dialog_title_bookmark">Bookmark</string>
+    <string name="dialog_title_bookmark">Zakładka</string>
     <string name="dialog_remove_from_history">Usuń z historii</string>
     <string name="dialog_download_image">Pobierz obraz</string>
     <string name="dialog_copy_link">Kopiuj odnośnik</string>
@@ -418,17 +420,17 @@
     <string name="dialog_delete_all_downloads">Usuń wszystkie pobrane pliki</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Narzędzia strony</string>
-    <string name="dialog_toggle_desktop">Toggle desktop user agent</string>
-    <string name="dialog_adblock_enable_for_site">Enable ad block for site</string>
-    <string name="dialog_adblock_disable_for_site">Disable ad block for site</string>
+    <string name="dialog_toggle_desktop">Przełącz identyfikator wersji komputerowej</string>
+    <string name="dialog_adblock_enable_for_site">Włacz blokowanie reklam w witrynie</string>
+    <string name="dialog_adblock_disable_for_site">Wyłącz blokowanie reklam w witrynie</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Własny URL</string>
-    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - No JavaScript</string>
+    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - bez JavaScript</string>
     <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
-    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - No JavaScript</string>
+    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - bez JavaScript</string>
     <string name="search_engine_qwant_lite">Qwant Lite</string>
     <string name="search_engine_startpage_mobile">StartPage Mobile</string>
-    <string name="search_engine_yahoo_no_js">Yahoo - No JavaScript</string>
+    <string name="search_engine_yahoo_no_js">Yahoo - bez JavaScript</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d otwarta karta incognito</item>
@@ -452,7 +454,7 @@
     <!-- Frozen tabs -->
     <string name="tab_frozen">Frozen…</string>
     <!-- Search -->
-    <string name="search_insert_suggestion">Insert suggestion</string>
+    <string name="search_insert_suggestion">Wstaw sugestię</string>
     <string name="action_close_all_other_tabs">Zamknij wszystkie pozostałe karty</string>
     <string name="action_restore_all_tabs">Przywróć wszystkie karty</string>
     <string name="action_restore_tab">Przywróć kartę</string>
@@ -464,6 +466,7 @@
     <string name="per_month">\u0020/ miesiąc</string>
     <string name="per_year">\u0020/ rok</string>
     <string name="session_default">@string/agent_default</string>
+    <string name="session_recovery">Przywracanie</string>
     <string name="session_name_prompt">Wprowadź nazwę sesji:</string>
     <string name="session_already_exists">Sesja o tej nazwie już istnieje!</string>
     <string name="session_cant_delete_current">Nie można usunąć bieżącej sesji!</string>
@@ -473,35 +476,36 @@
     <string name="busy">Busy, try again shortly.</string>
     <string name="invalid_character_removed">Nieprawidłowy znak usunięty!</string>
     <string name="invalid_characters_removed">Nieprawidłowe znaki usunięte!</string>
-    <string name="reading_mode_image_copyright">Image attributed to</string>
+    <string name="reading_mode_image_copyright">Obraz pochodzi od</string>
     <string name="reading_mode_image_caption">Image with caption</string>
     <!-- text-to-speech -->
     <string name="tts">Dyktuj stronę</string>
-    <string name="stop_tts">Stop reading</string>
+    <string name="stop_tts">Przestań czytać</string>
     <!-- Application name which can be translated -->
     <string name="locale_app_name">Przeglądarka internetowa Fulguris</string>
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
+    <string name="question_what_do_you_want_to_use">Czego chcesz użyć?</string>
     <string name="button_link">Odnośnik</string>
     <string name="button_image">Obraz</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Karta zamknięta</string>
     <string name="button_undo">Cofnij</string>
-    <string name="button_dismiss">Dismiss</string>
+    <string name="button_dismiss">Odrzuć</string>
     <!-- Find in page -->
-    <string name="no_match_found">No match found!</string>
+    <string name="no_match_found">Nic nie znaleziono!</string>
     <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Show snackbar</string>
-    <string name="pref_title_show_animation">Show animation</string>
-    <string name="pref_title_vibrate">Vibrate</string>
-    <string name="pref_title_duration">Duration</string>
-    <string name="pref_summary_duration">Animation duration in centiseconds</string>
-    <string name="pref_category_title_session_export">Export session</string>
-    <string name="pref_category_summary_session_export">Pick the session you want to export</string>
-    <string name="error_session_file_corrupted">Error: corrupted session file!</string>
+    <string name="pref_title_show_animation">Pokaż animację</string>
+    <string name="pref_title_vibrate">Wibracje</string>
+    <string name="pref_title_duration">Czas trwania</string>
+    <string name="pref_summary_duration">Czas trwania animacji w centysekundach</string>
+    <string name="pref_category_title_session_export">Eksportuj sesję</string>
+    <string name="pref_category_summary_session_export">Wybierz sesję, którą chcesz wyeksportować</string>
+    <string name="error_session_file_corrupted">Błąd: uszkodzony plik sesji!</string>
+    <string name="error_recovery_session">Błąd: utworzono sesję zapasową!</string>
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Show SSL warning dialogs</string>
@@ -540,13 +544,13 @@
     <string name="accent_light_green">Light Green</string>
     <string name="accent_lime">Lime</string>
     <string name="accent_orange">Orange</string>
-    <string name="accent_pink">Pink</string>
-    <string name="accent_purple">Purple</string>
-    <string name="accent_teal">Teal</string>
-    <string name="accent_yellow">Yellow</string>
-    <string name="accent_brown">Brown</string>
-    <string name="search_homepage">Search</string>
-    <string name="search_incognito">Private search</string>
+    <string name="accent_pink">Różowy</string>
+    <string name="accent_purple">Fioletowy</string>
+    <string name="accent_teal">Morski</string>
+    <string name="accent_yellow">Żółty</string>
+    <string name="accent_brown">Brązowy</string>
+    <string name="search_homepage">Szukaj</string>
+    <string name="search_incognito">Prywatne szukanie</string>
     <string name="incognito">Incognito</string>
     <string name="unknown">Unknown</string>
     <string name="settings_export_failure">Sorry, settings could not be exported!</string>

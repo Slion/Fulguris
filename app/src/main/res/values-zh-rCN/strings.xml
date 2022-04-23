@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
-    <string name="action_reload">Reload</string>
-    <string name="action_menu">Menu</string>
+    <string name="action_reload">刷新</string>
+    <string name="action_menu">菜单</string>
     <string name="action_new_tab">新建标签页</string>
     <string name="action_share">分享</string>
     <string name="action_history">历史记录</string>
@@ -10,12 +10,12 @@
     <string name="action_add_bookmark">添加书签</string>
     <string name="action_copy">复制链接</string>
     <string name="action_forward">前进</string>
-    <string name="action_sessions">Sessions</string>
-    <string name="action_new_session">New session</string>
-    <string name="action_save_session">Save session as</string>
-    <string name="action_edit_sessions">Edit sessions</string>
-    <string name="enable">Enable</string>
-    <string name="disable">Disable</string>
+    <string name="action_sessions">会话</string>
+    <string name="action_new_session">新建会话</string>
+    <string name="action_save_session">将会话另存为</string>
+    <string name="action_edit_sessions">编辑会话</string>
+    <string name="enable">启用</string>
+    <string name="disable">禁用</string>
     <string name="settings">设置</string>
     <string name="location">位置信息访问</string>
     <string name="password">保存密码</string>
@@ -27,14 +27,14 @@
     <string name="download">下载位置</string>
     <string name="settings_advanced">高级设置</string>
     <string name="version">应用版本</string>
-    <string name="update_available">Update available</string>
-    <string name="update_check_error">Update check error, try again later</string>
-    <string name="up_to_date">This is the newest version</string>
-    <string name="show">Show</string>
+    <string name="update_available">有可用更新</string>
+    <string name="update_check_error">更新检查错误，请稍后再试</string>
+    <string name="up_to_date">已是最新版本。</string>
+    <string name="show">显示</string>
     <string name="cache">退出时清除缓存</string>
     <string name="reflow">启用文本重排</string>
     <string name="block">屏蔽图像</string>
-    <string name="load_images">Load images</string>
+    <string name="load_images">加载图像</string>
     <string name="window">允许网页打开新窗口</string>
     <string name="cookies">启用 Cookies</string>
     <string name="size">文本大小</string>
@@ -68,10 +68,10 @@
     <string name="agent_ios_mobile">iOS (Mobile)</string>
     <string name="agent_linux_desktop">Linux (Desktop)</string>
     <string name="agent_macos_desktop">macOS (Desktop)</string>
-    <string name="agent_system">System</string>
+    <string name="agent_system">系统</string>
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Desktop)</string>
-    <string name="agent_hide_device">Hide device</string>
+    <string name="agent_hide_device">隐藏设备</string>
     <string name="title_search_engine">搜索引擎</string>
     <string name="action_ok">确定</string>
     <string name="dialog_download">你想要下载这个文件吗？ (%1$s)</string>
@@ -82,8 +82,8 @@
     <string name="title_user_agent">用户代理</string>
     <string name="title_download_location">下载位置</string>
     <string name="title_custom_homepage">自定义主页</string>
-    <string name="action_webpage">Web page</string>
-    <string name="action_main_menu">Main menu</string>
+    <string name="action_webpage">网页</string>
+    <string name="action_main_menu">主菜单</string>
     <string name="title_clear_history">清除历史记录</string>
     <string name="title_clear_cookies">清除 Cookie</string>
     <string name="dialog_history">你想要清除所有历史记录吗？</string>
@@ -99,18 +99,18 @@
     <string name="title_error">错误</string>
     <string name="dialog_import_error">没有检测到可以导入书签的浏览器</string>
     <string name="hint_title">标题</string>
-    <string name="hint_url">URL</string>
+    <string name="hint_url">网址链接</string>
     <string name="title_edit_bookmark">编辑书签</string>
     <string name="action_edit">编辑</string>
     <string name="action_incognito">新建无痕标签页</string>
     <string name="action_homepage">默认</string>
-    <string name="action_show_homepage">Show homepage</string>
+    <string name="action_show_homepage">显示主页</string>
     <string name="action_back">返回</string>
     <string name="action_find">在页面中查找</string>
-    <string name="action_print">Print</string>
-    <string name="action_translate">Translate</string>
-    <string name="downloads">Downloads</string>
-    <string name="downloads_notification_description">Triggers upon download completion</string>
+    <string name="action_print">打印</string>
+    <string name="action_translate">翻译</string>
+    <string name="downloads">下载</string>
+    <string name="downloads_notification_description">下载完成时触发</string>
     <string name="download_pending">正在开始下载\u2026</string>
     <string name="cannot_download">只能下载 HTTP 或 HTTPS 链接</string>
     <string name="problem_download">无效的 URL，无法下载</string>
@@ -119,14 +119,14 @@
     <string name="download_no_sdcard_dlg_msg">需要 USB 存储以下载文件</string>
     <string name="download_sdcard_busy_dlg_title">USB 存储不可用</string>
     <string name="download_sdcard_busy_dlg_msg">存储设备正忙。要允许下载，请轻触通知中的“关闭 USB 存储”</string>
-    <string name="download_complete">Download complete</string>
-    <string name="download_failed">Download failed</string>
+    <string name="download_complete">下载完成</string>
+    <string name="download_failed">下载失败</string>
     <string name="incognito_cookies">在无痕模式下启用 Cookie</string>
     <string name="incognito_cookies_pie">无痕模式运行于单独的进程，并在会话结束后重置。无痕模式下的 Cookie 设置由常规的 Cookie 选项控制。</string>
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">手动</string>
     <string name="action_auto">自动</string>
-    <string name="pref_title_contact_us">Contact us</string>
+    <string name="pref_title_contact_us">联系我们</string>
     <string name="clear_cache">清除缓存</string>
     <string name="message_cache_cleared">缓存已清除</string>
     <string name="message_import">书签已经导入</string>
@@ -138,13 +138,13 @@
     <string name="message_blocked_local">已阻止本地文件加载</string>
     <string name="licenses">开放源代码许可</string>
     <string name="suggestion">搜索</string>
-    <string name="checking_for_updates">Checking for updates…</string>
-    <string name="title_updated">Fulguris was updated</string>
-    <string name="message_updated">You are now running v%s. Do you want to check release notes online?</string>
-    <string name="title_welcome">Welcome to Fulguris</string>
-    <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
+    <string name="checking_for_updates">正在检查更新……</string>
+    <string name="title_updated">Fulguris已更新</string>
+    <string name="message_updated">您正在运行 v%s。您想要在线检查发行通知吗？</string>
+    <string name="title_welcome">欢迎使用 Fulguris</string>
+    <string name="message_welcome">访问我们的主页来了解更多关于这个强大的浏览器？</string>
     <!-- Ad block -->
-    <string name="block_ads">Content control</string>
+    <string name="block_ads">内容控制</string>
     <string name="block_ad_source">Hosts 文件来源</string>
     <string name="block_ad_remote_refresh_frequency_description">对于远程 Hosts 文件</string>
     <string name="block_ad_refresh_now">立即更新 Hosts</string>
@@ -155,17 +155,17 @@
     <string name="block_source_local">本地 Hosts 文件</string>
     <string name="block_source_local_description">文件：%1$s</string>
     <string name="block_source_remote">远程 Hosts 文件</string>
-    <string name="block_source_remote_description">URL: %1$s</string>
+    <string name="block_source_remote_description">网址：%1$s</string>
     <string name="ad_block_load_failure">从广告屏蔽来源加载 Hosts 失败</string>
     <!-- new ad blocker -->
-    <string name="page_blocked">The following page was blocked:</string>
-    <string name="page_blocked_reason">because of:</string>
-    <string name="page_blocked_list_ad">%s on ad filters</string>
-    <string name="page_blocked_list_user">%s blocked by user rule</string>
-    <string name="page_blocked_list_malware">%s on malware filters</string>
-    <string name="request_blocked">Request blocked</string>
+    <string name="page_blocked">以下页面被阻止：</string>
+    <string name="page_blocked_reason">因为：</string>
+    <string name="page_blocked_list_ad">%s 位于广告过滤列表</string>
+    <string name="page_blocked_list_user">%s 被用户规则阻止</string>
+    <string name="page_blocked_list_malware">%s 位于恶意软件过滤列表</string>
+    <string name="request_blocked">请求已阻止</string>
     <!-- settings for new ad blocker -->
-    <string name="blocklist_update_mode">Auto-update mode</string>
+    <string name="blocklist_update_mode">自动更新模式</string>
     <string name="blocklist_update_on">Auto-update on</string>
     <string name="blocklist_update_off">Auto-update off</string>
     <string name="blocklist_update_wifi">Only on non-metered connections</string>
@@ -400,6 +400,8 @@
     <string name="debug_title">调试设置</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">重新启动应用以使更改生效</string>
+    <string name="pref_title_crash_logs">Crash logs</string>
+    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">在新标签页中打开</string>
     <string name="dialog_open_background_tab">在后台标签页中打开</string>
@@ -461,6 +463,7 @@
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">@string/agent_default</string>
+    <string name="session_recovery">Recovery</string>
     <string name="session_name_prompt">Enter session name:</string>
     <string name="session_already_exists">A session with that name already exists!</string>
     <string name="session_cant_delete_current">Can\'t delete current session!</string>
@@ -499,6 +502,7 @@
     <string name="pref_category_title_session_export">Export session</string>
     <string name="pref_category_summary_session_export">Pick the session you want to export</string>
     <string name="error_session_file_corrupted">Error: corrupted session file!</string>
+    <string name="error_recovery_session">Error: a recovery session was created!</string>
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Show SSL warning dialogs</string>

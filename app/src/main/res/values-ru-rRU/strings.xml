@@ -11,7 +11,7 @@
     <string name="action_copy">Копировать ссылку</string>
     <string name="action_forward">Вперёд</string>
     <string name="action_sessions">Сессии</string>
-    <string name="action_new_session">Новый сеанс</string>
+    <string name="action_new_session">Новая сессия</string>
     <string name="action_save_session">Сохранить сессию как</string>
     <string name="action_edit_sessions">Изменить сессии</string>
     <string name="enable">Вкл.</string>
@@ -36,7 +36,7 @@
     <string name="block">Блокировать изображения</string>
     <string name="load_images">Загружать изображения</string>
     <string name="window">Разрешить всплывающие окна</string>
-    <string name="cookies">Включить куки</string>
+    <string name="cookies">Включить cookie</string>
     <string name="size">Размер текста</string>
     <string name="recommended">Рекомендуется</string>
     <string name="search">Поисковая система</string>
@@ -192,7 +192,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Действие отменено.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Больше не запрашивать этот сеанс просмотра.</string>
+    <string name="ssl_warning_dont_ask_again">Больше не спрашивать об этой сессии браузера.</string>
     <string name="message_insecure_connection">Соединение не защищено:\n%1$s\nВсё равно продолжить?</string>
     <string name="message_certificate_date_invalid">Дата сертификата недействительна</string>
     <string name="message_certificate_expired">Истёк срок действия сертификата</string>
@@ -217,7 +217,7 @@
     <string name="powered_by_duck">Используя DuckDuckGo</string>
     <string name="powered_by_baidu">Используя Baidu</string>
     <string name="powered_by_naver">На базе Naver</string>
-    <string name="search_suggestions_off">Нет поисковых подсказок</string>
+    <string name="search_suggestions_off">Без поисковых подсказок</string>
     <string name="http_proxy">HTTP прокси</string>
     <string-array name="proxy_choices_array">
         <item>Без прокси</item>
@@ -318,7 +318,7 @@
     <string name="pref_title_sponsorship_five_stars">Пятизвездочный обзор</string>
     <string name="pref_summary_sponsorship_five_stars">Отзыв на пять звезд в Google Play - отличный способ помочь этому проекту.</string>
     <string name="pref_title_contribute_translations">Локализации</string>
-    <string name="pref_summary_contribute_translations">Вы можете помочь с переводом Fulguris на ваш язык на Crowdin.</string>
+    <string name="pref_summary_contribute_translations">Вы можете помочь с переводом Fulguris на ваш язык на платформе Crowdin.</string>
     <string name="pref_title_contribute_share">Расскажите всем</string>
     <string name="pref_summary_contribute_share">Ослепите своих друзей и сообщества, поделившись с ними Fulguris.</string>
     <string name="pref_title_language">Язык</string>
@@ -378,9 +378,9 @@
     <string name="settings_summary_vertical_tab_bar">Отключите, чтобы использовать горизонтальную панель вкладок</string>
     <string name="settings_title_toolbars_bottom">Панель инструментов внизу</string>
     <string name="settings_title_desktop_mode_default">Режим \"Настольный ПК\"</string>
-    <string name="settings_summary_desktop_mode_default">Определяет, использую ли новые вкладки режим для настольного компьютера по умолчанию</string>
+    <string name="settings_summary_desktop_mode_default">Определяет, используют ли новые вкладки режим для настольного компьютера по умолчанию</string>
     <string name="settings_title_dark_mode_default">Использовать тёмную тему</string>
-    <string name="settings_summary_dark_mode_default">Определить, используют ли новые вкладки принудительный темный режим по умолчанию</string>
+    <string name="settings_summary_dark_mode_default">Определяет, используют ли новые вкладки принудительный темный режим по умолчанию</string>
     <string name="settings_title_swap_bookmarks_and_tabs">Отобразить закладки в табах</string>
     <string name="settings_summary_swap_bookmarks_and_tabs">Панели вкладок и закладок поменяются местами</string>
     <string name="do_not_track">Запрос «Не отслеживать»</string>
@@ -400,13 +400,15 @@
     <string name="debug_title">Настройки отладки</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Чтобы изменения вступили в силу, необходимо перезапустить приложение.</string>
+    <string name="pref_title_crash_logs">Журналы сбоев</string>
+    <string name="pref_summary_crash_logs">Записывать журнал ошибок в файловую систему.\nНажмите, чтобы открыть папку. Пожалуйста, предоставьте соответствующий файл при сообщении об ошибке.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Открыть в новой вкладке</string>
     <string name="dialog_open_background_tab">Открыть вкладку в фоне</string>
-    <string name="dialog_open_incognito_tab">Открыть в инкогнито-вкладе</string>
+    <string name="dialog_open_incognito_tab">Открыть в инкогнито-вкладке</string>
     <string name="dialog_remove_bookmark">Удалить закладку</string>
     <string name="dialog_edit_bookmark">Редактировать закладку</string>
-    <string name="dialog_title_bookmark">Bookmark</string>
+    <string name="dialog_title_bookmark">Закладка</string>
     <string name="dialog_remove_from_history">Удалить из истории</string>
     <string name="dialog_download_image">Загрузить изображение</string>
     <string name="dialog_copy_link">Скопировать ссылку</string>
@@ -464,9 +466,10 @@
     <string name="per_month">\u0020/ месяц</string>
     <string name="per_year">\u0020/ год</string>
     <string name="session_default">@string/agent_default</string>
-    <string name="session_name_prompt">Введите название сеанса:</string>
-    <string name="session_already_exists">Сеанс с таким именем уже существует!</string>
-    <string name="session_cant_delete_current">Невозможно удалить текущий сеанс!</string>
+    <string name="session_recovery">Восстановление</string>
+    <string name="session_name_prompt">Введите название сессии:</string>
+    <string name="session_already_exists">Сессия с таким именем уже существует!</string>
+    <string name="session_cant_delete_current">Невозможно удалить текущую сессию!</string>
     <string name="session_prompt_confirm_deletion_title">Подтвердите удаление</string>
     <string name="session_prompt_confirm_deletion_message">Вы уверены, что хотите удалить сессию \"%s\"?</string>
     <string name="session_switched">Переключено на \"%s\"</string>
@@ -499,9 +502,10 @@
     <string name="pref_title_vibrate">Вибрация</string>
     <string name="pref_title_duration">Продолжительность</string>
     <string name="pref_summary_duration">Продолжительность анимации в сотых долях секунды</string>
-    <string name="pref_category_title_session_export">Экспорт сеанса</string>
+    <string name="pref_category_title_session_export">Экспорт сессии</string>
     <string name="pref_category_summary_session_export">Выберите сессию, которую хотите экспортировать</string>
     <string name="error_session_file_corrupted">Ошибка: повреждён файл сессии!</string>
+    <string name="error_recovery_session">Ошибка: сессия восстановления создана!</string>
     <string name="message_session_imported">Импортированная сессия: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Экспортированная сессия: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Показать диалоги предупреждения SSL</string>
@@ -552,7 +556,7 @@
     <string name="settings_export_failure">Извините, не удалось экспортировать настройки!</string>
     <string name="settings_exported">Настройки экспортированы:</string>
     <string name="settings_reseted">Все настройки восстановлены</string>
-    <string name="suggest">Поисковые подсказки (число)</string>
+    <string name="suggest">Количество подсказок поиска</string>
     <string name="error_tip">• Проверьте адрес на наличие ошибок, таких как ww.example.com вместо www.example.com</string>
     <string name="error_tip2">• Если вы не можете загрузить какие-либо страницы, проверьте подключение устройства к моб. интерненту или Wi-Fi.</string>
     <string name="action_cycle_tabs_forwards">Цикл вкладок вперед</string>

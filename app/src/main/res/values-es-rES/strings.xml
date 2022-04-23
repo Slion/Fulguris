@@ -399,7 +399,9 @@
     <!-- debug strings -->
     <string name="debug_title">Ajustes de depuración</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Reinicie la aplicación para efectuar el cambio.</string>
+    <string name="app_restart">Please restart the app for the change to take effect</string>
+    <string name="pref_title_crash_logs">Crash logs</string>
+    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Abrir en una nueva pestaña</string>
     <string name="dialog_open_background_tab">Abrir en una pestaña de fondo</string>
@@ -462,6 +464,7 @@
     <string name="per_month">\u0020/ mes</string>
     <string name="per_year">\u0020/ año</string>
     <string name="session_default">Por defecto</string>
+    <string name="session_recovery">Recovery</string>
     <string name="session_name_prompt">Introducir nombre de sesión:</string>
     <string name="session_already_exists">¡Ya existe una sesión con ese nombre!</string>
     <string name="session_cant_delete_current">¡La sesión actual no se puede eliminar!</string>
@@ -500,6 +503,7 @@
     <string name="pref_category_title_session_export">Exportar sesión</string>
     <string name="pref_category_summary_session_export">Elija la sesión que quiere exportar</string>
     <string name="error_session_file_corrupted">Error: ¡archivo de sesión corrompido!</string>
+    <string name="error_recovery_session">Error: a recovery session was created!</string>
     <string name="message_session_imported">Sesión importada: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Sesión exportada: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Mostrar diálogos de advertencia SSL</string>

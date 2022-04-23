@@ -399,7 +399,9 @@
     <!-- debug strings -->
     <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Restart aplikasi ini untuk menerapkan perubahan.</string>
+    <string name="app_restart">Restart aplikasi ini untuk menerapkan perubahan</string>
+    <string name="pref_title_crash_logs">Crash logs</string>
+    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Buka di tab baru</string>
     <string name="dialog_open_background_tab">Buka di tab latar belakang</string>
@@ -461,6 +463,7 @@
     <string name="per_month">\u0020/ bulan</string>
     <string name="per_year">\u0020/ tahun</string>
     <string name="session_default">@string/agent_default</string>
+    <string name="session_recovery">Recovery</string>
     <string name="session_name_prompt">Sebutkan nama sesi:</string>
     <string name="session_already_exists">Sudah ada sesi yang bernama ini!</string>
     <string name="session_cant_delete_current">Sesi terkini tidak bisa dihapus!</string>
@@ -499,6 +502,7 @@
     <string name="pref_category_title_session_export">Ekspor Sesi</string>
     <string name="pref_category_summary_session_export">Pilih sesi yang ingin dibawa keluar</string>
     <string name="error_session_file_corrupted">Error: file sesi rusak!</string>
+    <string name="error_recovery_session">Error: a recovery session was created!</string>
     <string name="message_session_imported">Sesi yang sudah diimpor: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Sesi yang sudah dibawa keluar: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Show SSL warning dialogs</string>

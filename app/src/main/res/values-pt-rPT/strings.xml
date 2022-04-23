@@ -399,7 +399,9 @@
     <!-- debug strings -->
     <string name="debug_title">Depuração</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Reinicie a aplicação para aplicar as alterações.</string>
+    <string name="app_restart">Por favor, reinicie a aplicação para aplicar as alterações</string>
+    <string name="pref_title_crash_logs">Relatórios de erro</string>
+    <string name="pref_summary_crash_logs">Escrever relatórios no sistema de ficheiros.\nToque para abrir a pasta. Ao reportar um erro, envio o ficheiro de registo correspondente.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Abrir em novo separador</string>
     <string name="dialog_open_background_tab">Abrir em separador de fundo</string>
@@ -462,6 +464,7 @@
     <string name="per_month">\u0020/ mês</string>
     <string name="per_year">\u0020/ ano</string>
     <string name="session_default">@string/agent_default</string>
+    <string name="session_recovery">Recuperação</string>
     <string name="session_name_prompt">Digite o nome da sessão:</string>
     <string name="session_already_exists">Já existe uma sessão com este nome.</string>
     <string name="session_cant_delete_current">Não foi possível apagar a sessão!</string>
@@ -500,6 +503,7 @@
     <string name="pref_category_title_session_export">Exportar sessão</string>
     <string name="pref_category_summary_session_export">Escolha a sessão que pretende exportar</string>
     <string name="error_session_file_corrupted">Erro: ficheiro de sessão danificado!</string>
+    <string name="error_recovery_session">Erro: foi criada uma sessão de recuperação!</string>
     <string name="message_session_imported">Sessão importada: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Sessão exportada: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Mostrar avisos SSL</string>

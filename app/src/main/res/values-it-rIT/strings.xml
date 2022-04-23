@@ -108,7 +108,7 @@
     <string name="action_back">Indietro</string>
     <string name="action_find">Trova nella pagina</string>
     <string name="action_print">Stampare</string>
-    <string name="action_translate">Translate</string>
+    <string name="action_translate">Traduci</string>
     <string name="downloads">Scaricamenti</string>
     <string name="downloads_notification_description">Triggers upon download completion</string>
     <string name="download_pending">Avvio download\u2026</string>
@@ -165,16 +165,16 @@
     <string name="page_blocked_list_malware">%s on malware filters</string>
     <string name="request_blocked">Request blocked</string>
     <!-- settings for new ad blocker -->
-    <string name="blocklist_update_mode">Auto-update mode</string>
-    <string name="blocklist_update_on">Auto-update on</string>
-    <string name="blocklist_update_off">Auto-update off</string>
+    <string name="blocklist_update_mode">Modalità aggiornamento automatico</string>
+    <string name="blocklist_update_on">Aggiornamento automatico ON</string>
+    <string name="blocklist_update_off">Aggiornamento automatico OFF</string>
     <string name="blocklist_update_wifi">Only on non-metered connections</string>
     <string name="blocklist_update">Update filters</string>
     <string name="blocklist_update_frequency">Auto-update frequency</string>
     <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
     <string name="blocklist_update_now">Update lists now</string>
     <string name="blocklist_last_update">Last update: %s</string>
-    <string name="blocklist_updating">Updating…</string>
+    <string name="blocklist_updating">Aggiornamento…</string>
     <string name="blocklist_update_error">Error while updating filters list %s</string>
     <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <string name="add_blocklist">Add filters file</string>
@@ -298,10 +298,10 @@
     <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
     <string name="pref_title_tab_list_item_show_close_button">Show close tab button</string>
     <string name="pref_summary_tab_list_item_show_close_button">Display close tab buttons on tab list items</string>
-    <string name="pref_title_menu_show_exit">Exit menu item</string>
-    <string name="pref_summary_menu_show_exit">Show Exit app option in menu. Incognito mode always displays it regardless.</string>
-    <string name="pref_title_menu_new_tab">New tab menu item</string>
-    <string name="pref_summary_menu_new_tab">Show New tab option in menu</string>
+    <string name="pref_title_menu_show_exit">Voce \"Esci\" nel menu</string>
+    <string name="pref_summary_menu_show_exit">Mostra l\'opzione Esci dall\'app nel menu. La modalità in incognito lo visualizza sempre indipendentemente dal menù.</string>
+    <string name="pref_title_menu_new_tab">Nuova voce di menu scheda</string>
+    <string name="pref_summary_menu_new_tab">Mostra l\'opzione Nuova scheda nel menu</string>
     <string name="pref_title_crash_report">Crash report</string>
     <string name="pref_title_analytics">Analytics</string>
     <string name="pref_title_pull_to_refresh">Pull to refresh</string>
@@ -399,7 +399,9 @@
     <!-- debug strings -->
     <string name="debug_title">Impostazioni di debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Riavvia l\'applicazione per applicare le modifiche.</string>
+    <string name="app_restart">Please restart the app for the change to take effect</string>
+    <string name="pref_title_crash_logs">Crash logs</string>
+    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Apri in un\'altra scheda</string>
     <string name="dialog_open_background_tab">Apri in una scheda in background</string>
@@ -462,6 +464,7 @@
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">@string/agent_default</string>
+    <string name="session_recovery">Recovery</string>
     <string name="session_name_prompt">Inserisci nome sessione:</string>
     <string name="session_already_exists">Una sessione con quel nome esiste già!</string>
     <string name="session_cant_delete_current">Impossibile eliminare sessione corrente!</string>
@@ -500,6 +503,7 @@
     <string name="pref_category_title_session_export">Export session</string>
     <string name="pref_category_summary_session_export">Pick the session you want to export</string>
     <string name="error_session_file_corrupted">Error: corrupted session file!</string>
+    <string name="error_recovery_session">Error: a recovery session was created!</string>
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Show SSL warning dialogs</string>

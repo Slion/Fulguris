@@ -176,7 +176,7 @@
     <string name="blocklist_last_update">Letzte Aktualisierung: %s</string>
     <string name="blocklist_updating">Aktualisierung läuft…</string>
     <string name="blocklist_update_error">Fehler beim Aktualisieren der Filterliste %s</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
+    <string name="blocklist_update_error_404">Fehler beim Aktualisieren der Filterliste %s: URL nicht gefunden</string>
     <string name="add_blocklist">Filterdatei hinzufügen</string>
     <string name="add_blocklist_hint">Es können Host-Listen oder jede Liste gewählt werden, die mit AdBlockPlus-Regeln arbeiten</string>
     <string name="enable_blocklist">Diese Liste aktivieren</string>
@@ -399,14 +399,16 @@
     <!-- debug strings -->
     <string name="debug_title">Debug Einstellungen</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Bitte schließe die App um die Änderungen anzuwenden.</string>
+    <string name="app_restart">Bitte starten Sie die App neu, damit die Änderung wirksam wird.</string>
+    <string name="pref_title_crash_logs">Absturzberichte</string>
+    <string name="pref_summary_crash_logs">Schreibe Absturzprotokolle in das Dateisystem.\nTippe um den Ordner zu öffnen. Bitte gib eine entsprechende Datei an, wenn du einen Fehler meldest.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">In neuem Tab öffnen</string>
     <string name="dialog_open_background_tab">In Hintergrund-Tab öffnen</string>
     <string name="dialog_open_incognito_tab">In Inkognito-Tab öffnen</string>
     <string name="dialog_remove_bookmark">Lesezeichen löschen</string>
     <string name="dialog_edit_bookmark">Lesezeichen bearbeiten</string>
-    <string name="dialog_title_bookmark">Bookmark</string>
+    <string name="dialog_title_bookmark">Lesezeichen</string>
     <string name="dialog_remove_from_history">Aus dem Verlauf entfernen</string>
     <string name="dialog_download_image">Bild herunterladen</string>
     <string name="dialog_copy_link">Link kopieren</string>
@@ -462,6 +464,7 @@
     <string name="per_month">\u0020/ Monat</string>
     <string name="per_year">\u0020/ Jahr</string>
     <string name="session_default">@string/agent_default</string>
+    <string name="session_recovery">Wiederherstellung</string>
     <string name="session_name_prompt">Name der Sitzung:</string>
     <string name="session_already_exists">Es existiert bereits eine Sitzung mit diesem Namen!</string>
     <string name="session_cant_delete_current">Die aktuelle Sitzung kann nicht gelöscht werden!</string>
@@ -500,6 +503,7 @@
     <string name="pref_category_title_session_export">Sitzungen exportieren</string>
     <string name="pref_category_summary_session_export">Wähle eine Sitzung, die exportiert werden soll</string>
     <string name="error_session_file_corrupted">Fehler: Beschädigte Sitzungsdatei!</string>
+    <string name="error_recovery_session">Fehler: Eine Wiederherstellungssitzung wurde erstellt!</string>
     <string name="message_session_imported">Importierte Sitzung: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exportierte Sitzung: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">SSL-Warndialog anzeigen</string>

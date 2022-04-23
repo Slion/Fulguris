@@ -400,6 +400,8 @@
     <string name="debug_title">Hata ayıklama ayarları</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Değişikliklerin etkili olması için lütfen uygulamayı yeniden başlatın.</string>
+    <string name="pref_title_crash_logs">Crash logs</string>
+    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Yeni sekmede aç</string>
     <string name="dialog_open_background_tab">Arka planda aç</string>
@@ -462,6 +464,7 @@
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">@string/agent_default</string>
+    <string name="session_recovery">Recovery</string>
     <string name="session_name_prompt">Enter session name:</string>
     <string name="session_already_exists">A session with that name already exists!</string>
     <string name="session_cant_delete_current">Can\'t delete current session!</string>
@@ -500,6 +503,7 @@
     <string name="pref_category_title_session_export">Export session</string>
     <string name="pref_category_summary_session_export">Pick the session you want to export</string>
     <string name="error_session_file_corrupted">Error: corrupted session file!</string>
+    <string name="error_recovery_session">Error: a recovery session was created!</string>
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Show SSL warning dialogs</string>
