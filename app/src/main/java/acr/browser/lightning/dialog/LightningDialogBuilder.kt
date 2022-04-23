@@ -369,17 +369,19 @@ class LightningDialogBuilder @Inject constructor(
             DialogItem(title = R.string.action_share) {
                 IntentUtils(activity).shareUrl(linkUrl, null)
             },
-            DialogItem(title = R.string.dialog_copy_link, text = linkUrl) {
-                clipboardManager.copyToClipboard(linkUrl)
-                activity.snackbar(R.string.message_link_copied)
-            },
             // Show copy text dialog item if we have some text
             DialogItem(title = R.string.dialog_copy_text, show = !text.isNullOrEmpty()) {
                 if (!text.isNullOrEmpty()) {
                     clipboardManager.copyToClipboard(text)
                     activity.snackbar(R.string.message_text_copied)
                 }
-            })),
+            },
+            // Show copy link URL last
+            DialogItem(title = R.string.dialog_copy_link, text = linkUrl) {
+                clipboardManager.copyToClipboard(linkUrl)
+                activity.snackbar(R.string.message_link_copied)
+            }
+        )),
         // Image tab
         DialogTab(show=showImageTab, icon=R.drawable.ic_image, title = R.string.button_image,
             items = arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
@@ -397,10 +399,6 @@ class LightningDialogBuilder @Inject constructor(
                 DialogItem(title = R.string.action_share) {
                     IntentUtils(activity).shareUrl(imageUrl, null)
                 },
-		  DialogItem(title = R.string.dialog_copy_link, text = imageUrl) {
-                    clipboardManager.copyToClipboard(imageUrl)
-                    activity.snackbar(R.string.message_link_copied)
-                },
                 DialogItem(title = R.string.dialog_download_image,
                     // Do not show download option for data URL as we don't support that for now
                     show=!URLUtil.isDataUrl(imageUrl)) {
@@ -417,6 +415,11 @@ class LightningDialogBuilder @Inject constructor(
                                 //TODO show message
                             }
                         })
-                })),
+                },
+                DialogItem(title = R.string.dialog_copy_link, text = imageUrl) {
+                    clipboardManager.copyToClipboard(imageUrl)
+                    activity.snackbar(R.string.message_link_copied)
+                }
+            )),
     )
 }
