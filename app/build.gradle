@@ -126,7 +126,7 @@ android {
         styx {
             dimension "BRAND"
             applicationId "com.jamal2367.styx"
-            versionCode 0
+            versionCode 1
             versionName "20.0"
         }
 
