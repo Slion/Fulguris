@@ -51,6 +51,8 @@ def generatedLocaleListDir = layout.buildDirectory.dir('generated/source/locale/
 
 android {
     compileSdkVersion project.targetSdkVersion
+    // Specify namespace for generated R and BuildConfig classes
+    namespace 'acr.browser.lightning'
 
     defaultConfig {
         minSdkVersion project.minSdkVersion
