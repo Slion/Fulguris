@@ -20,8 +20,8 @@ fun Activity.showSslDialog(sslCertificate: SslCertificate, sslState: SslState) {
     val by = sslCertificate.issuedBy
     val to = sslCertificate.issuedTo
     val toName = to.dName?.takeIf(String::isNotBlank) ?: to.cName
-    val issueDate = sslCertificate.validNotBeforeDate
-    val expireDate = sslCertificate.validNotAfterDate
+    var issueDate = sslCertificate.validNotBeforeDate
+    var expireDate = sslCertificate.validNotAfterDate
     val dateFormat = DateFormat.getDateFormat(applicationContext)
     val cm = EntryPointAccessors.fromApplication(BrowserApp.instance.applicationContext, HiltEntryPoint::class.java).clipboardManager
 
@@ -31,8 +31,12 @@ fun Activity.showSslDialog(sslCertificate: SslCertificate, sslState: SslState) {
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
         showAlgorithm = true
         val cert = sslCertificate.x509Certificate
-        algoName = cert?.sigAlgName ?: ""
-        oid = cert?.sigAlgOID ?: ""
+        cert?.let {
+            algoName = it.sigAlgName ?: ""
+            oid = it.sigAlgOID ?: ""
+            issueDate = it.notBefore
+            expireDate = it.notAfter
+        }
     }
 
     val icon = createSslDrawableForState(sslState)
