@@ -114,14 +114,12 @@ android {
 
     productFlavors {
 
-        /*
-        lightning {
+        slions {
             dimension "BRAND"
-            applicationId "acr.browser.lightning"
-            versionCode 101
-            versionName "5.1.0"
+            applicationId "net.slions.fulguris"
+            versionCode 175
+            versionName "1.8.7"
         }
-        */
 
         styx {
             dimension "BRAND"
@@ -130,14 +128,14 @@ android {
             versionName "20.0"
         }
 
-        // Keep this as the last applicationId definition to make the F-Droid build bot happy
-        // See: https://github.com/Slion/Fulguris/issues/84#issuecomment-1149778299
-        slions {
+        /*
+        lightning {
             dimension "BRAND"
-            applicationId "net.slions.fulguris"
-            versionCode 175
-            versionName "1.8.7"
+            applicationId "acr.browser.lightning"
+            versionCode 101
+            versionName "5.1.0"
         }
+        */
 
         // Base version does not add application ID suffix
         base {
