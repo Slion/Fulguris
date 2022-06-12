@@ -29,7 +29,7 @@ android:focusableInTouchMode="true"
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <ImageView
+            <fulguris.widget.ImageView
                 android:id="@+id/faviconTab"
                 android:layout_width="@dimen/material_grid_small_icon"
                 android:layout_height="@dimen/material_grid_small_icon"
@@ -53,7 +53,7 @@ android:focusableInTouchMode="true"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
-            <ImageView
+            <fulguris.widget.ImageView
                 android:id="@+id/deleteAction"
                 android:layout_width="@dimen/material_grid_touch_medium"
                 android:layout_height="match_parent"

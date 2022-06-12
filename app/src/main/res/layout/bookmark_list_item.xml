@@ -28,7 +28,7 @@ android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <fulguris.widget.ImageView
                 android:id="@+id/faviconBookmark"
                 android:layout_width="@dimen/material_grid_small_icon"
                 android:layout_height="@dimen/material_grid_small_icon"

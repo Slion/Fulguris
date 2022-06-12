@@ -22,7 +22,7 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <ImageView
+            <fulguris.widget.ImageView
                 android:id="@+id/faviconTab"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -45,7 +45,7 @@
                 android:singleLine="true"
                 android:textAppearance="?attr/textAppearanceListItemSmall" />
 
-            <ImageView
+            <fulguris.widget.ImageView
                 android:id="@+id/deleteAction"
                 android:layout_width="48dp"
                 android:layout_height="match_parent"

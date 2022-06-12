@@ -19,7 +19,7 @@
         android:focusableInTouchMode="true"
         android:focusable="true">
 
-        <ImageView
+        <fulguris.widget.ImageView
             android:id="@+id/search_ssl_status"
             android:layout_width="36dp"
             android:layout_height="match_parent"

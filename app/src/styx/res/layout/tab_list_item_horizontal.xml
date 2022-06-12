@@ -23,7 +23,7 @@
             android:paddingHorizontal="6dp"
             android:weightSum="1">
 
-            <ImageView
+            <fulguris.widget.ImageView
                 android:id="@+id/faviconTab"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -53,7 +53,7 @@
                 android:background="?attr/actionBarItemBackground"
                 android:gravity="center">
 
-                <ImageView
+                <fulguris.widget.ImageView
                     android:id="@+id/deleteButton"
                     android:layout_width="20dp"
                     android:layout_height="20dp"

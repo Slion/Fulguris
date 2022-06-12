@@ -35,7 +35,7 @@
 
 
 
-    <ImageView
+    <fulguris.widget.ImageView
 
         android:clickable="true"
         android:focusable="true"

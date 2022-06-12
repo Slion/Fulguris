@@ -20,7 +20,7 @@
             android:background="?attr/trackColor"
             android:orientation="horizontal">
 
-            <ImageView
+            <fulguris.widget.ImageView
                 android:id="@+id/faviconBookmark"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
