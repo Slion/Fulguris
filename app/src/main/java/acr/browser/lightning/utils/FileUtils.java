@@ -30,6 +30,7 @@ public final class FileUtils {
     // We think so since system download manager is doing our download for us.
     public static final String DEFAULT_DOWNLOAD_PATH =
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+    public static final String BACKUP_SUFFIX = ".backup";
 
     private FileUtils() {}
 
@@ -50,7 +51,10 @@ public final class FileUtils {
             FileOutputStream outputStream = null;
             try {
                 //noinspection IOResourceOpenedButNotSafelyClosed
-                // Overwrite any existing file
+                // if file exists, rename to name.backup
+                File backupFile = new File(outputFile.getAbsolutePath() + BACKUP_SUFFIX);
+                if (outputFile.exists() && backupFile.exists()) backupFile.delete(); // need to delete old backup file before renaming?
+                if (outputFile.exists()) outputFile.renameTo(backupFile);
                 outputStream = new FileOutputStream(outputFile);
                 Parcel parcel = Parcel.obtain();
                 parcel.writeBundle(bundle);
@@ -77,6 +81,11 @@ public final class FileUtils {
         if (outputFile.exists()) {
             outputFile.delete();
         }
+        // we might have a backup file, needs to be deleted too, or it might get read accidentally
+        File backupFile = new File(app.getFilesDir(), name + BACKUP_SUFFIX);
+        if (backupFile.exists()) {
+            backupFile.delete();
+        }
     }
 
     /**
@@ -91,6 +100,11 @@ public final class FileUtils {
         if (srcFile.exists()) {
             File destFile = new File(app.getFilesDir(), aNewName);
             srcFile.renameTo(destFile);
+        }
+        File srcBackupFile = new File(app.getFilesDir(), name + BACKUP_SUFFIX);
+        if (srcBackupFile.exists()) {
+            File destBackupFile = new File(app.getFilesDir(), aNewName + BACKUP_SUFFIX);
+            srcBackupFile.renameTo(destBackupFile);
         }
     }
 
@@ -126,8 +140,14 @@ public final class FileUtils {
             return out;
         } catch (FileNotFoundException e) {
             Log.e(TAG, "Unable to read bundle from storage");
+            // try backup file, but make sure we don't end up in a loop
+            if (!name.endsWith(BACKUP_SUFFIX))
+                readBundleFromStorage(app, name + BACKUP_SUFFIX);
         } catch (IOException e) {
             Log.e(TAG, "Unable to read bundle from storage", e);
+            // try backup file, but make sure we don't end up in a loop
+            if (!name.endsWith(BACKUP_SUFFIX))
+                readBundleFromStorage(app, name + BACKUP_SUFFIX);
         } finally {
             //noinspection ResultOfMethodCallIgnored
             Utils.close(inputStream);
