@@ -177,6 +177,8 @@
     <string name="blocklist_updating">Aktualizacja…</string>
     <string name="blocklist_update_error">Błąd podczas aktualizacji listy filtrów %s</string>
     <string name="blocklist_update_error_404">Błąd podczas aktualizacji listy filtrów %s: nie znaleziono adresu URL</string>
+    <!-- not used any more, generic error for all non-successful codes -->
+    <string name="blocklist_update_error_code">Error while updating filters list %1$s: status code %2$s</string>
     <string name="add_blocklist">Dodaj plik filtrów</string>
     <string name="add_blocklist_hint">Możesz wybrać listę dostawców lub dowolną inną listę zgodną z zasadami AdBlockPlus</string>
     <string name="enable_blocklist">Aktywuj tę listę</string>
@@ -189,6 +191,9 @@
     <string name="local_file_replace">Zastąp</string>
     <string name="local_file_chosen">wybrany plik</string>
     <string name="remote_file">Zdalny</string>
+    <string name="use_modify_filters">Modifier filters</string>
+    <string name="use_modify_filters_warning">In some cases, modifier filters have been found to break websites in this browser. Until implementation is improved, you can enable them at your own risk. Disabling for main-frame documents only avoids most issues.</string>
+    <string name="modify_filters_not_for_main_frame">Disable for main frame only</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Czynność anulowana.</string>
     <!-- SSL warnings -->
@@ -310,9 +315,9 @@
     <string name="pref_title_desktop_width">Desktop width</string>
     <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
     <string name="pref_title_no_sponsorship">In-app sponsorship not available</string>
-    <string name="pref_summary_no_sponsorship">Use Fulguris from Google Play to sponsor us.</string>
+    <string name="pref_summary_no_sponsorship">Zainstaluj Fulguris ze Sklepu Play, aby nas wspierać.</string>
     <string name="pref_title_free_download">Free download</string>
-    <string name="pref_summary_free_download">Fulguris is Open Source Software. You can download our free edition including full feature set and unlimited tabs.</string>
+    <string name="pref_summary_free_download">Fulguris to oprogramowanie o otwartym kodzie źródłowym. Możesz pobrać naszą bezpłatną edycję z pełnym zestawem funkcji oraz nieograniczoną liczbą kart.</string>
     <string name="pref_title_sponsorship_github">Sponsor us on GitHub</string>
     <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
     <string name="pref_title_sponsorship_five_stars">Five stars review</string>

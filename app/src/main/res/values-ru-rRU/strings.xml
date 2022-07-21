@@ -177,6 +177,8 @@
     <string name="blocklist_updating">Обновление...</string>
     <string name="blocklist_update_error">Сбой при обновлении списка фильтров %s</string>
     <string name="blocklist_update_error_404">Ошибка при обновлении списка фильтров %s: URL-адрес не найден</string>
+    <!-- not used any more, generic error for all non-successful codes -->
+    <string name="blocklist_update_error_code">Ошибка при обновлении списка фильтров %1$s: код состояния %2$s</string>
     <string name="add_blocklist">Добавить файл фильтров</string>
     <string name="add_blocklist_hint">Вы можете выбрать списки хостов или любой список, совместимый с правилами AdBlockPlus</string>
     <string name="enable_blocklist">Включить этот список</string>
@@ -189,6 +191,9 @@
     <string name="local_file_replace">Заменить</string>
     <string name="local_file_chosen">файл выбран</string>
     <string name="remote_file">Удалённое</string>
+    <string name="use_modify_filters">Фильтры-модификаторы</string>
+    <string name="use_modify_filters_warning">В некоторых случаях было обнаружено, что фильтры-модификаторы нарушают работу веб-сайтов в этом браузере. Пока реализация не будет улучшена, вы можете включить их на свой страх и риск. Отключение только для документов основного фрейма позволяет избежать большинства проблем.</string>
+    <string name="modify_filters_not_for_main_frame">Отключить только для основного фрейма</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Действие отменено.</string>
     <!-- SSL warnings -->
@@ -198,8 +203,8 @@
     <string name="message_certificate_expired">Истёк срок действия сертификата</string>
     <string name="message_certificate_domain_mismatch">Домен в сертификате не соответствует домену сайта</string>
     <string name="message_certificate_invalid">Сертификат недействителен</string>
-    <string name="message_certificate_not_yet_valid">сертикат ещё не действителен</string>
-    <string name="message_certificate_untrusted">сертификат не является доверенным</string>
+    <string name="message_certificate_not_yet_valid">Сертификат ещё не действителен</string>
+    <string name="message_certificate_untrusted">Сертификат не является доверенным.</string>
     <!-- permissions request -->
     <string name="title_permission_request">Запрос разрешения</string>
     <string name="message_permission_request">%1$s\n\nхотел бы использовать:\n\n%2$s</string>

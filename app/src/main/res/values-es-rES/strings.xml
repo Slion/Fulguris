@@ -177,6 +177,8 @@
     <string name="blocklist_updating">Actualizando…</string>
     <string name="blocklist_update_error">Error al actualizar la lista de filtros %s</string>
     <string name="blocklist_update_error_404">Error al actualizar la lista de filtros %s: url no encontrada</string>
+    <!-- not used any more, generic error for all non-successful codes -->
+    <string name="blocklist_update_error_code">Error while updating filters list %1$s: status code %2$s</string>
     <string name="add_blocklist">Añadir archivo de filtros</string>
     <string name="add_blocklist_hint">Puede elegir listas de hosts o cualquier lista compatible con las reglas de AdBlockPlus</string>
     <string name="enable_blocklist">Activar esta lista</string>
@@ -189,6 +191,9 @@
     <string name="local_file_replace">Reemplazar</string>
     <string name="local_file_chosen">archivo seleccionado</string>
     <string name="remote_file">Remoto</string>
+    <string name="use_modify_filters">Modifier filters</string>
+    <string name="use_modify_filters_warning">In some cases, modifier filters have been found to break websites in this browser. Until implementation is improved, you can enable them at your own risk. Disabling for main-frame documents only avoids most issues.</string>
+    <string name="modify_filters_not_for_main_frame">Disable for main frame only</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Acción cancelada.</string>
     <!-- SSL warnings -->

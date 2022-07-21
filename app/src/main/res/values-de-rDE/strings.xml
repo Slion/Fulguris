@@ -177,6 +177,8 @@
     <string name="blocklist_updating">Aktualisierung läuft…</string>
     <string name="blocklist_update_error">Fehler beim Aktualisieren der Filterliste %s</string>
     <string name="blocklist_update_error_404">Fehler beim Aktualisieren der Filterliste %s: URL nicht gefunden</string>
+    <!-- not used any more, generic error for all non-successful codes -->
+    <string name="blocklist_update_error_code">Fehler beim Aktualisieren der Filterliste %1$s: Statuscode %2$s</string>
     <string name="add_blocklist">Filterdatei hinzufügen</string>
     <string name="add_blocklist_hint">Es können Host-Listen oder jede Liste gewählt werden, die mit AdBlockPlus-Regeln arbeiten</string>
     <string name="enable_blocklist">Diese Liste aktivieren</string>
@@ -189,6 +191,9 @@
     <string name="local_file_replace">Ersetzen</string>
     <string name="local_file_chosen">Datei ausgewählt</string>
     <string name="remote_file">Online</string>
+    <string name="use_modify_filters">Modifizierungsfilter</string>
+    <string name="use_modify_filters_warning">In einigen Fällen wurde festgestellt, dass Modifizierungsfilter Webseiten in diesem Browser beschädigen. Bis die Implementierung verbessert wird, kann dies auf eigenes Risiko aktiviert werden. Die Deaktivierung nur für Mainframe-Dokumente vermeidet die meisten Probleme.</string>
+    <string name="modify_filters_not_for_main_frame">Nur für Haupt-Frame deaktivieren</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Aktion abgebrochen.</string>
     <!-- SSL warnings -->
