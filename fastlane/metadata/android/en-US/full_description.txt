@@ -30,7 +30,7 @@ For your late night reading sessions you can force any web page to display in da
 Tool bar and status bar colour theme integrates gracefully with your favourite web sites. Supports black, dark and light themes. Fulguris is not just fast, secure and efficient, it looks good too.
 
 ⛔Ad blocker
-Use built-in ad blocker definitions or feed it local and online hosts files.
+Use ad blocker definitions from local and online files. Suppports hosts files and most of Adblock Plus syntax, so you can use almost any common filter list.
 
 🔒Privacy
 Fulguris protects and respects your privacy. Incognito mode. Can discard tracking cookies. Clear tabs, history, cookies and caches functionalities. Third-party apps management.
