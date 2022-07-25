@@ -6,7 +6,14 @@
 [![Build Styx](https://github.com/Slion/Fulguris/actions/workflows/build-main-styx.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-styx.yml)
 
 # Download
-[<img width="25%" height="25%" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>](https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)<br />
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="80">](https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/net.slions.fulguris.full.fdroid/)
+
 [Get it on Slions.net.](http://fulguris.slions.net)
 
 # Contribute
