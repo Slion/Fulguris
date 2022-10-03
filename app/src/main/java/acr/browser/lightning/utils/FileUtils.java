@@ -53,8 +53,10 @@ public final class FileUtils {
                 //noinspection IOResourceOpenedButNotSafelyClosed
                 // if file exists, rename to name.backup
                 File backupFile = new File(outputFile.getAbsolutePath() + BACKUP_SUFFIX);
-                if (outputFile.exists() && backupFile.exists()) backupFile.delete(); // need to delete old backup file before renaming?
-                if (outputFile.exists()) outputFile.renameTo(backupFile);
+                if (outputFile.exists()) {
+                    if (backupFile.exists()) backupFile.delete(); // need to delete old backup file before renaming
+                    outputFile.renameTo(backupFile);
+                }
                 outputStream = new FileOutputStream(outputFile);
                 Parcel parcel = Parcel.obtain();
                 parcel.writeBundle(bundle);
@@ -76,12 +78,13 @@ public final class FileUtils {
      * @param app  the application object needed to get the file.
      * @param name the name of the file.
      */
-    public static void deleteBundleInStorage(final @NonNull Application app, final @NonNull String name) {
+    public static void deleteBundleInStorage(final @NonNull Application app, final @NonNull String name, boolean deleteBackup) {
         File outputFile = new File(app.getFilesDir(), name);
         if (outputFile.exists()) {
             outputFile.delete();
         }
-        // we might have a backup file, needs to be deleted too, or it might get read accidentally
+        // only delete backup file of explicitly desired
+        if (!deleteBackup) return;
         File backupFile = new File(app.getFilesDir(), name + BACKUP_SUFFIX);
         if (backupFile.exists()) {
             backupFile.delete();
@@ -101,11 +104,7 @@ public final class FileUtils {
             File destFile = new File(app.getFilesDir(), aNewName);
             srcFile.renameTo(destFile);
         }
-        File srcBackupFile = new File(app.getFilesDir(), name + BACKUP_SUFFIX);
-        if (srcBackupFile.exists()) {
-            File destBackupFile = new File(app.getFilesDir(), aNewName + BACKUP_SUFFIX);
-            srcBackupFile.renameTo(destBackupFile);
-        }
+        if (!name.endsWith(BACKUP_SUFFIX)) renameBundleInStorage(app, name + BACKUP_SUFFIX, aNewName + BACKUP_SUFFIX);
     }
 
 

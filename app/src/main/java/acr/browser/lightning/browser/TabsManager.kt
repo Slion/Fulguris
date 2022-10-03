@@ -8,6 +8,7 @@ import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.*
+import acr.browser.lightning.utils.FileUtils.BACKUP_SUFFIX
 import acr.browser.lightning.view.*
 import android.app.Activity
 import android.app.Application
@@ -400,20 +401,32 @@ class TabsManager @Inject constructor(
     {
         //throw Exception("Hi There!")
         // First load our sessions
-        loadSessions()
+        try {
+            loadSessions()
+        } catch (ex: Throwable) {
+            loadSessions(true)
+        }
         // Check if we have a current session
-        if (iCurrentSessionName.isBlank()) {
+        return if (iCurrentSessionName.isBlank()) {
             // No current session name meaning first load with version support
             // Add our default session
             iCurrentSessionName = application.getString(R.string.session_default)
             // At this stage we must have at least an empty list
             iSessions.add(Session(iCurrentSessionName))
             // Than load legacy session file to make sure tabs from earlier version are preserved
-            return loadSession(FILENAME_SESSION_DEFAULT)
+            try {
+                loadSession(FILENAME_SESSION_DEFAULT)
+            } catch (ex: Throwable) {
+                loadSession(FILENAME_SESSION_DEFAULT + BACKUP_SUFFIX)
+            }
             // TODO: delete legacy session file at some point
         } else {
             // Load current session then
-            return loadSession(fileNameFromSessionName(iCurrentSessionName))
+            try {
+                loadSession(fileNameFromSessionName(iCurrentSessionName))
+            } catch (ex: Throwable) {
+                loadSession(fileNameFromSessionName(iCurrentSessionName) + BACKUP_SUFFIX)
+            }
         }
     }
 
@@ -655,7 +668,7 @@ class TabsManager @Inject constructor(
         saveSessions()
         // Delete legacy session file if any, could not think of a better place to do that
         // TODO: Just remove that a few version down the road I guess
-        FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
+        FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT, false)
         // Save our session
         saveCurrentSession(fileNameFromSessionName(iCurrentSessionName))
     }
@@ -719,7 +732,7 @@ class TabsManager @Inject constructor(
      * Use this method to clear the saved state if you do not wish it to be restored when the
      * browser next starts.
      */
-    fun clearSavedState() = FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
+    fun clearSavedState() = FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT, true)
 
     /**
      *
@@ -734,7 +747,7 @@ class TabsManager @Inject constructor(
 
         val index = iSessions.indexOf(session(aSessionName))
         // Delete session file
-        FileUtils.deleteBundleInStorage(application, fileNameFromSessionName(iSessions[index].name))
+        FileUtils.deleteBundleInStorage(application, fileNameFromSessionName(iSessions[index].name), true)
         // Remove session from our list
         iSessions.removeAt(index)
     }
@@ -759,13 +772,15 @@ class TabsManager @Inject constructor(
      * Just the sessions list really
      */
     fun deleteSessions() {
-        FileUtils.deleteBundleInStorage(application, FILENAME_SESSIONS)
+        FileUtils.deleteBundleInStorage(application, FILENAME_SESSIONS, true)
     }
 
     /**
      * Load our session list and current session name from disk.
+     * use [backup] to read from the backup file.
      */
-    private fun loadSessions() {
+    private fun loadSessions(backup: Boolean = false) {
+        val filename = FILENAME_SESSIONS + if (backup) BACKUP_SUFFIX else ""
         val bundle = FileUtils.readBundleFromStorage(application, FILENAME_SESSIONS)
 
         bundle?.apply{
@@ -773,6 +788,7 @@ class TabsManager @Inject constructor(
             // Sessions must have been loaded when we load that guys
             getString(KEY_CURRENT_SESSION)?.let {iCurrentSessionName = it}
         }
+        if (!backup) return // don't recoverSessions if we have a second try!
 
         // Somehow we lost that file again :)
         // That crazy bug we keep chasing after
