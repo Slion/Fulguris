@@ -191,7 +191,7 @@
     <string name="local_file_replace">Reemplazar</string>
     <string name="local_file_chosen">archivo seleccionado</string>
     <string name="remote_file">Remoto</string>
-    <string name="use_modify_filters">Modifier filters</string>
+    <string name="use_modify_filters">Filtros modificadores</string>
     <string name="use_modify_filters_warning">In some cases, modifier filters have been found to break websites in this browser. Until implementation is improved, you can enable them at your own risk. Disabling for main-frame documents only avoids most issues.</string>
     <string name="modify_filters_not_for_main_frame">Disable for main frame only</string>
     <!-- Common actions -->
@@ -405,7 +405,7 @@
     <string name="debug_title">Ajustes de depuración</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Please restart the app for the change to take effect</string>
-    <string name="pref_title_crash_logs">Crash logs</string>
+    <string name="pref_title_crash_logs">Registros de fallos</string>
     <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Abrir en una nueva pestaña</string>
@@ -469,7 +469,7 @@
     <string name="per_month">\u0020/ mes</string>
     <string name="per_year">\u0020/ año</string>
     <string name="session_default">Por defecto</string>
-    <string name="session_recovery">Recovery</string>
+    <string name="session_recovery">Recuperación</string>
     <string name="session_name_prompt">Introducir nombre de sesión:</string>
     <string name="session_already_exists">¡Ya existe una sesión con ese nombre!</string>
     <string name="session_cant_delete_current">¡La sesión actual no se puede eliminar!</string>
