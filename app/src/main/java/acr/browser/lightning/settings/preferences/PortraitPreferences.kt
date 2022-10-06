@@ -54,17 +54,19 @@ import javax.inject.Singleton
     }
 
     companion object {
-        // Needs to be static as it is accessed by the base class constructor through virtual functions
+        // Define our defaults
+        // Needs to be static as it is accessed by the base class constructor through the virtual functions above
         val iDefaults = mapOf(
             PrefKeys.HideStatusBar to false,
             PrefKeys.HideToolBar to false,
             PrefKeys.ShowToolBarWhenScrollUp to false,
             PrefKeys.ShowToolBarOnPageTop to true,
             PrefKeys.PullToRefresh to true,
-            //PrefKeys.TabBarVertical to !screenSize.isTablet(),
-	        //PrefKeys.TabBarInDrawer to !screenSize.isTablet(),
             PrefKeys.ToolbarsBottom to false,
             PrefKeys.DesktopWidth to 1024,
+            // Omitted the following as they have non static default values specified in the base class
+            //PrefKeys.TabBarVertical to !screenSize.isTablet(),
+            //PrefKeys.TabBarInDrawer to !screenSize.isTablet(),
         )
     }
 

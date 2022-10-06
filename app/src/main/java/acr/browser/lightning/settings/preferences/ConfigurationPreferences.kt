@@ -29,16 +29,13 @@ import acr.browser.lightning.settings.preferences.delegates.*
 import android.content.SharedPreferences
 
 /**
- * Provide access to configuration specific preferences.
- * Portrait, Landscape, what have you…
- * Defaults are not needed here and will be applied by the derived class.
+ * Base class that provides access to configuration specific preferences.
+ * Derived class notably includes Portrait and Landscape variants.
  */
 abstract class ConfigurationPreferences constructor(
     preferences: SharedPreferences,
     screenSize: ScreenSize
 ) : ConfigurationDefaults  {
-
-    val iSharedPrefs = preferences
 
     /**
      * True if the system status bar should be hidden throughout the app, false if it should be
@@ -70,19 +67,13 @@ abstract class ConfigurationPreferences constructor(
      * True if the app should put the tab bar inside a drawer.
      * False will put vertical tab bar beside the tab view.
      */
-    var tabBarInDrawer by preferences.booleanPreference(R.string.pref_key_tab_bar_in_drawer)
+    var tabBarInDrawer by preferences.booleanPreference(R.string.pref_key_tab_bar_in_drawer, !screenSize.isTablet())
 
     /**
      * True if the app should use the navigation drawer UI, false if it should use the traditional
      * desktop browser tabs UI.
      */
     var verticalTabBar by preferences.booleanPreference(R.string.pref_key_tab_bar_vertical, !screenSize.isTablet())
-
-    /*
-    var verticalTabBar : Boolean = false
-        get() = if (Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT) verticalTabBarInPortrait else verticalTabBarInLandscape
-        private set
-    */
 
     /**
      *
@@ -94,21 +85,5 @@ abstract class ConfigurationPreferences constructor(
      */
     var desktopWidth by preferences.intPreference(R.string.pref_key_desktop_width, getDefaultInteger(PrefKeys.DesktopWidth))
 
-/*
-    fun applyDefaults(aDefaults: Map<String,Any>) {
-        aDefaults.keys.forEach { key ->
-            if (!iSharedPrefs.contains(key)) {
-                // Set our default then
-                val value = aDefaults[key];
-                if (value is Boolean) {
-                    iSharedPrefs.edit().putBoolean(key,value).apply()
-                } else if (value is Int) {
-                    iSharedPrefs.edit().putInt(key,value).apply()
-                }
-            }
-        }
-
-    }
-*/
 }
 
