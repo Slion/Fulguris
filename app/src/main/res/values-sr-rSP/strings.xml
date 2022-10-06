@@ -42,7 +42,6 @@
     <string name="search">Мотор претраге</string>
     <string name="search_hint">Тражи</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Широки приказ</string>
     <string name="overViewMode">Учитај странице у режиму прегледа</string>
     <string name="restore_tabs_on_startup">Врати изгубљене језичке по покретању</string>
     <string name="supported_browsers_title">Подржани прегледачи</string>

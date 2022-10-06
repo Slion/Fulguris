@@ -42,7 +42,6 @@
     <string name="search">Keresőmotor</string>
     <string name="search_hint">Keresés</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Széles nézőport használata</string>
     <string name="overViewMode">Oldalak betöltése áttekinthető módban</string>
     <string name="restore_tabs_on_startup">Elvesztett lapok visszaállítása induláskor</string>
     <string name="supported_browsers_title">Támogatott Böngészők</string>

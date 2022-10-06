@@ -42,7 +42,6 @@
     <string name="search">Suchdienst</string>
     <string name="search_hint">Suche</string>
     <string name="search_action">Suchen</string>
-    <string name="wideViewPort">Breiten Anzeigebereich verwenden</string>
     <string name="overViewMode">Seiten in der Übersicht öffnen</string>
     <string name="restore_tabs_on_startup">Tab beim Start wiederherstellen</string>
     <string name="supported_browsers_title">Unterstützte Browser</string>

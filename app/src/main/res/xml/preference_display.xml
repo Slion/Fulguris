@@ -130,16 +130,7 @@
 
 
     <PreferenceCategory android:title="@string/pref_category_webpage">
-
-        <!--
-        TODO: Provide a proper summary
-        android:summary="@string/recommended"-->
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="@string/pref_key_wide_viewport"
-            android:title="@string/wideViewPort"
-            app:icon="@drawable/ic_baseline_aspect_ratio_24"
-            app:iconSpaceReserved="true"/>
+        
         <!-- SL: not sure what that does -->
         <SwitchPreferenceCompat
             android:defaultValue="true"

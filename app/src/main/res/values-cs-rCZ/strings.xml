@@ -42,7 +42,6 @@
     <string name="search">Výchozí vyhledávač</string>
     <string name="search_hint">Hledat</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Použít široký výřez</string>
     <string name="overViewMode">Načítat stránky v režimu náhledu</string>
     <string name="restore_tabs_on_startup">Obnovit karty při spuštění</string>
     <string name="supported_browsers_title">Podporované prohlížeče</string>

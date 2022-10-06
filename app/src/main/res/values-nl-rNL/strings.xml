@@ -42,7 +42,6 @@
     <string name="search">Zoekmachine</string>
     <string name="search_hint">Zoek</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Gebruik wijde viewport</string>
     <string name="overViewMode">Laad pagina\'s in overzichtsweergave</string>
     <string name="restore_tabs_on_startup">Herstel tabbladen bij opstart</string>
     <string name="supported_browsers_title">Ondersteunde browsers</string>

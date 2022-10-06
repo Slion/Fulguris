@@ -450,6 +450,7 @@ class LightningView(
     /**
      * Initialize the preference driven settings of the WebView. This method must be called whenever
      * the preferences are changed within SharedPreferences.
+     * Apparently called whenever the app is sent to the foreground.
      */
     @SuppressLint("NewApi", "SetJavaScriptEnabled")
     fun initializePreferences() {
@@ -519,7 +520,6 @@ class LightningView(
         // Modifying headers causes SEGFAULTS, so disallow multi window if headers are enabled.
         settings.setSupportMultipleWindows(userPreferences.popupsEnabled && !modifiesHeaders)
 
-        settings.useWideViewPort = userPreferences.useWideViewPortEnabled
         settings.loadWithOverviewMode = userPreferences.overviewModeEnabled
 
         settings.textZoom = userPreferences.browserTextSize +  MIN_BROWSER_TEXT_SIZE

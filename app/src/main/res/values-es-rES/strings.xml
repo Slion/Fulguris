@@ -42,7 +42,6 @@
     <string name="search">Motor de búsqueda</string>
     <string name="search_hint">Buscar</string>
     <string name="search_action">Buscar</string>
-    <string name="wideViewPort">Utilizar vista amplia</string>
     <string name="overViewMode">Visualizar la página de lejos al cargar</string>
     <string name="restore_tabs_on_startup">Restaurar pestañas al iniciar</string>
     <string name="supported_browsers_title">Navegadores compatibles</string>

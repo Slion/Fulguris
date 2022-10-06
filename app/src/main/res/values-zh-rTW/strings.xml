@@ -42,7 +42,6 @@
     <string name="search">搜尋引擎</string>
     <string name="search_hint">搜尋</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">使用寬版檢視區</string>
     <string name="overViewMode">使用概覽模式載入頁面</string>
     <string name="restore_tabs_on_startup">啟動時重新開啟遺失的分頁</string>
     <string name="supported_browsers_title">支援的瀏覽器</string>

@@ -58,8 +58,8 @@
         app:title="@string/pref_title_desktop_width"
         app:summary="@string/pref_summary_desktop_width"
         app:icon="@drawable/ic_desktop"
-        app:min="640"
-        android:max="3840"
+        app:min="100"
+        android:max="300"
         app:showSeekBarValue="true"
         app:iconSpaceReserved="false"
         app:updatesContinuously="true" />

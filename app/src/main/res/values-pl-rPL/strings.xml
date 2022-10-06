@@ -42,7 +42,6 @@
     <string name="search">Wyszukiwarka</string>
     <string name="search_hint">Wyszukaj</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Dopasowywuj strony mobilne do ekranu</string>
     <string name="overViewMode">Wyświetlaj strony nie-mobilne w pomniejszeniu</string>
     <string name="restore_tabs_on_startup">Przywróć poprzednio otwarte karty przy uruchomieniu</string>
     <string name="supported_browsers_title">Obsługiwane przeglądarki</string>

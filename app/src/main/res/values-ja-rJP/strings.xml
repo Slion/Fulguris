@@ -42,7 +42,6 @@
     <string name="search">検索エンジン</string>
     <string name="search_hint">検索</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Wide view port を使用する</string>
     <string name="overViewMode">Overview mode でページを読み込む</string>
     <string name="restore_tabs_on_startup">前回終了時のタブをアプリ起動時に復元する</string>
     <string name="supported_browsers_title">サポートしているブラウザ</string>

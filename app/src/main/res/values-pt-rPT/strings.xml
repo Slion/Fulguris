@@ -42,7 +42,6 @@
     <string name="search">Motor de pesquisa</string>
     <string name="search_hint">Pesquisa</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Utilizar viewport amplo</string>
     <string name="overViewMode">Carregar páginas no modo panorâmico</string>
     <string name="restore_tabs_on_startup">Restaurar separadores ao iniciar</string>
     <string name="supported_browsers_title">Navegadores suportados</string>

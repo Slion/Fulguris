@@ -42,7 +42,6 @@
     <string name="search">محرك البحث</string>
     <string name="search_hint">بحث</string>
     <string name="search_action">\@سلسلة/البحث</string>
-    <string name="wideViewPort">استخدام إطار عرض واسع</string>
     <string name="overViewMode">تحميل الصفحات في نظرة عامة</string>
     <string name="restore_tabs_on_startup">استعادة علامات التبويب المفقودة عند  البدء</string>
     <string name="supported_browsers_title">المتصفحات المدعومة</string>

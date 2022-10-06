@@ -42,7 +42,6 @@
     <string name="search">Μηχανή αναζήτησης</string>
     <string name="search_hint">Αναζήτηση</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Χρήση ευρύ παραθύρου</string>
     <string name="overViewMode">Φόρτωση σελίδων σε προεπισκόπηση</string>
     <string name="restore_tabs_on_startup">Επαναφορά χαμένων καρτελών στην εκκίνηση</string>
     <string name="supported_browsers_title">Supported browsers</string>

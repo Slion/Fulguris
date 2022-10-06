@@ -20,43 +20,62 @@
  * All Rights Reserved.
  */
 
-(function () {
+{
     'use strict';
 
+    // Desired viewport width in percentage of the actual viewport width
     var width = $width$;
-    var metaViewport = document.querySelector('meta[name="viewport"]')
-    if (!metaViewport) {
-        // No meta viewport on that page, just add one then
-        metaViewport = document.createElement("meta");
-        metaViewport.setAttribute("name", "viewport");
-        document.getElementsByTagName('head')[0].appendChild(metaViewport);
-    }
+    // Support dealing with multiple meta viewport elements
+    // That's notably the case on vimeo.com
+    var metaViewports = document.querySelectorAll('meta[name="viewport"]');
+    // Remove all existing meta viewport elements
+    metaViewports.forEach((aMetaViewport) => {
+      //console.log("Fulguris: remove meta viewport: " + aMetaViewport.outerHTML);
+      aMetaViewport.remove();
+    });
 
+    //console.log("Fulguris: width input: " + width);
+    //console.log("Fulguris: create new meta viewport");
+    // Create our own meta viewport element
+    var metaViewport = document.createElement("meta");
+    metaViewport.setAttribute("name", "viewport");
+    // Defensive
     if (metaViewport.hasAttribute('data-fulguris')) {
         // We already set it
-        console.log("Fulguris: meta viewport already set");
+        //console.log("Fulguris: meta viewport already set");
     } else {
-        console.log("Fulguris: Set Meta Viewport");
-        console.log("Fulguris: window.screen.width: " + window.screen.width);
-        console.log("Fulguris: window.innerWidth: " + innerWidth);
+        //console.log("Fulguris: Set Meta Viewport");
+        //console.log("Fulguris: window.screen.width: " + window.screen.width);
+        //console.log("Fulguris: window.innerWidth: " + window.innerWidth);
         // Dump our page source code
         // We used this to check that our HTML page already available
         //console.log(document.documentElement.outerHTML);
 
         // Only fiddle with that once
-        metaViewport.setAttribute('content', 'width='+ width + ', initial-scale=' + (window.innerWidth / width));
-        //metaViewport.setAttribute('content', 'width='+ width);
+        //metaViewport.setAttribute('content', 'width='+ width + ', initial-scale=' + (window.innerWidth / width));
+        metaViewport.setAttribute('content', metaViewportContent(width));
         //metaViewport.setAttribute('content', 'width=device-width');
         metaViewport.setAttribute('data-fulguris', 'desktop-mode');
     }
 
+    // Add meta viewport element to our DOM
+    document.getElementsByTagName('head')[0].appendChild(metaViewport);
+
     // Reapply our meta viewport again whenever our page is resized
     // That was needed at least for Google search result page, not sure why though
     window.addEventListener('resize', (event) => {
-        console.log("Fulguris: window resized: " + window.innerWidth);
-        //metaViewport.setAttribute('content', 'width='+ width);
-        metaViewport.setAttribute('content', 'width='+ width + ', initial-scale=' + (window.innerWidth / width));
-        //metaViewport.setAttribute('content', 'width=device-width');
+        //console.log("Fulguris: window resized: " + window.innerWidth);
+        metaViewport.setAttribute('content', metaViewportContent(width));
     });
 
-}());
+    /**
+    */
+    function metaViewportContent(aWidth) {
+        var computedWidth = (window.innerWidth * aWidth) / 100;
+        //console.log("Fulguris: width input: " + aWidth);
+        //console.log("Fulguris: window.innerWidth: " + window.innerWidth);
+        //console.log("Fulguris: computed width: " + computedWidth);
+        return 'width=' + computedWidth + ', user-scalable=1';
+    }
+
+}

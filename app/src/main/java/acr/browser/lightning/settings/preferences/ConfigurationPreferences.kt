@@ -81,7 +81,9 @@ abstract class ConfigurationPreferences constructor(
      var toolbarsBottom by preferences.booleanPreference(R.string.pref_key_toolbars_bottom, getDefaultBoolean(PrefKeys.ToolbarsBottom))
 
     /**
-     * Define viewport width for desktop mode in portrait
+     * Define viewport width for desktop mode. Expressed in percentage of the actual viewport width.
+     * When set to 100% we use actual viewport width, the HTML page is not tempered with.
+     * When set to something other than 100% we will enable wide viewport mode and inject JS code to set HTML meta viewport element accordingly.
      */
     var desktopWidth by preferences.intPreference(R.string.pref_key_desktop_width, getDefaultInteger(PrefKeys.DesktopWidth))
 

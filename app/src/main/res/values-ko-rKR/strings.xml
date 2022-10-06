@@ -42,7 +42,6 @@
     <string name="search">검색 엔진</string>
     <string name="search_hint">검색</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">넓은 뷰포트 사용</string>
     <string name="overViewMode">개요 보기로 페이지 불러오기</string>
     <string name="restore_tabs_on_startup">시작할 때 잃어버린 탭 복원</string>
     <string name="supported_browsers_title">지원 브라우저</string>

@@ -42,7 +42,6 @@
     <string name="search">搜索引擎</string>
     <string name="search_hint">搜索</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">使用宽视口</string>
     <string name="overViewMode">以概览模式加载页面</string>
     <string name="restore_tabs_on_startup">启动时恢复未关闭的标签页</string>
     <string name="supported_browsers_title">支持的浏览器</string>

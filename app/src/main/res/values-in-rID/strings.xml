@@ -42,7 +42,6 @@
     <string name="search">Mesin pencarian</string>
     <string name="search_hint">Cari</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Gunakan viewport yang lebar</string>
     <string name="overViewMode">Muat halaman dalam bentuk ikhtisar</string>
     <string name="restore_tabs_on_startup">Kembalikan tab yang sama saat memulai</string>
     <string name="supported_browsers_title">Browser yang terdukung</string>

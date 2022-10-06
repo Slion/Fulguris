@@ -119,21 +119,28 @@ class LightningWebClient(
     }
 
     /**
-     * We do some trick for desktop mode zoom level to be ok notably on Google search result page.
-     * It turns out that should not be needed to support proper desktop display.
-     * For Google search result to work on desktop mode we just needed to enable HTML meta viewport element.
-     * This is done by making sure we disable setUseWideViewPort.
+     * Should be called once when the root HTML page had been loaded.
+     *
+     * If user requested a viewport different than 100% then we enable wide viewport mode and inject some JavaScript to manipulate meta viewport HTML element.
+     * This enables a zoomed out desktop mode on smartphones.
      */
     private fun applyDesktopModeIfNeeded(aView: WebView) {
+
+        // Just use normal viewport unless we decide otherwise later
+        aView.settings.useWideViewPort = false;
+
         if (lightningView.desktopMode) {
-            // That's needed for desktop mode support
-            // See: https://stackoverflow.com/a/60621350/3969362
-            // See: https://stackoverflow.com/a/39642318/3969362
-            // Note how we compute our initial scale to be zoomed out and fit the page
-            // TODO: Check if we really need this here in onLoadResource
-            // In fact onLoadResource is called many times during page load
-            // Pick the proper settings desktop width according to current orientation
-            aView.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$","${aView.context.configPrefs.desktopWidth}"), null)
+            // Do not hack anything when desktop width is set to 100%
+            // In this case desktop mode then only overrides the user agent which is all you should need in most cases really
+            if (aView.context.configPrefs.desktopWidth != 100) {
+                // That's needed for custom desktop mode support
+                // See: https://stackoverflow.com/a/60621350/3969362
+                // See: https://stackoverflow.com/a/39642318/3969362
+                // Just pass on user defined viewport width in percentage of the actual viewport to the JavaScript
+                logger.log(TAG, "JavaScript Desktop Mode Hack")
+                aView.settings.useWideViewPort = true;
+                aView.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$","${aView.context.configPrefs.desktopWidth}"), null)
+            }
         }
     }
 
@@ -166,13 +173,15 @@ class LightningWebClient(
      */
     override fun onLoadResource(view: WebView, url: String?) {
         super.onLoadResource(view, url)
+        // Count our resources
         iResourceCount++;
         logger.log(TAG, "onLoadResource - $iResourceCount - $url")
 
         // Only do that on the first resource load
-//        if (iResourceCount==1) {
-//            applyDesktopModeIfNeeded(view)
-//        }
+        if (iResourceCount==1) {
+            // Now assuming our root HTML document has been loaded
+            applyDesktopModeIfNeeded(view)
+        }
     }
 
     /**
@@ -190,6 +199,14 @@ class LightningWebClient(
      */
     override fun onPageFinished(view: WebView, url: String) {
         logger.log(TAG, "onPageFinished - $url")
+
+        // If no resource was loaded then deal with desktop mode now
+        // This is defensive code, most every web page load will load some resource
+        if (iResourceCount==0) {
+            // Now assuming our root HTML document has been loaded
+            applyDesktopModeIfNeeded(view)
+        }
+
         if (view.isShown) {
             updateUrlIfNeeded(url, false)
             uiController.setBackButtonEnabled(view.canGoBack())
@@ -225,15 +242,12 @@ class LightningWebClient(
 
     /**
      * Overrides [WebViewClient.onPageStarted]
-     * At this stage our page HTML source code is already available.
-     * Though most other resources have not been loaded yet.
+     * You have no guarantee that the root HTML document has been loaded when this is called.
      */
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         logger.log(TAG, "onPageStarted - $url")
         // Reset our resource count
         iResourceCount = 0
-
-        applyDesktopModeIfNeeded(view);
 
         currentUrl = url
         // Only set the SSL state if there isn't an error for the current URL.

@@ -42,7 +42,6 @@
     <string name="search">Motore di ricerca</string>
     <string name="search_hint">Cerca</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Adatta le pagine allo schermo</string>
     <string name="overViewMode">Visualizza le pagine alla massima larghezza</string>
     <string name="restore_tabs_on_startup">Ripristina schede chiuse all\'avvio</string>
     <string name="supported_browsers_title">Browser supportati</string>

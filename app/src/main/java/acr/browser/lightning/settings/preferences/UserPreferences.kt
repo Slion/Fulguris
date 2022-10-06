@@ -179,15 +179,6 @@ class UserPreferences @Inject constructor(
     var browserTextSize by preferences.intPreference(R.string.pref_key_browser_text_size, 50)
 
     /**
-     * This is a WebView settings option.
-     * False enables proper support for HTML meta viewport element.
-     * True will do some weird stuff that could be used for desktop mode on mobile.
-     * Your average user should leave this set to false.
-     * See: https://developer.android.com/reference/android/webkit/WebSettings.html#setUseWideViewPort(boolean)
-     */
-    var useWideViewPortEnabled by preferences.booleanPreference(R.string.pref_key_wide_viewport, false)
-
-    /**
      * The index of the user agent choice that should be used by the browser.
      *
      * @see UserPreferences.userAgent
