@@ -32,6 +32,9 @@ import acr.browser.lightning.extensions.*
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
+import acr.browser.lightning.html.incognito.IncognitoPageFactory
+import acr.browser.lightning.locale.LocaleAwareActivity
+import acr.browser.lightning.locale.LocaleUtils
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.notifications.IncognitoNotification
 import acr.browser.lightning.reading.ReadingActivity
@@ -49,7 +52,6 @@ import acr.browser.lightning.ssl.showSslDialog
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.*
 import acr.browser.lightning.view.SearchView
-
 import android.animation.*
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -69,20 +71,24 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.view.View.*
 import android.view.ViewGroup.LayoutParams
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.webkit.CookieManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient.CustomViewCallback
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.FrameLayout
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
@@ -103,30 +109,17 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import junit.framework.Assert.assertNull
 import org.json.JSONObject
 import java.io.IOException
-import javax.inject.Inject
-import kotlin.system.exitProcess
-import android.text.Editable
-
-import android.text.TextWatcher
-import android.webkit.CookieManager
-import acr.browser.lightning.html.incognito.IncognitoPageFactory
-import acr.browser.lightning.locale.LocaleUtils
 import java.net.URL
 import java.util.*
-import kotlin.collections.HashMap
-import android.view.KeyboardShortcutGroup
-
-import androidx.annotation.RequiresApi
-
-import android.view.MotionEvent
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import kotlin.system.exitProcess
 
 /**
  *
@@ -1607,6 +1600,23 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 KeyEvent.KEYCODE_F3 -> {
                     if (isShiftOnly) {
                         tabsManager.currentTab?.findPrevious()
+                    } else if (isCtrlOnly) {
+                        // Ctrl + F3 means use current selection to perform a search
+                        // We fetch current selection from WebView using JavaScript
+                        // TODO: Move JavaScript to WebViewEx
+                        (currentTabView as? WebViewEx)?.evaluateJavascript("(function(){return window.getSelection().toString()})()",
+                                ValueCallback<String> {
+                                    aSelection ->
+                                    // Our selection is within double quotes
+                                    if (aSelection.length >= 3) {
+                                        // Remove our quotes
+                                        val hint = aSelection.subSequence(1,aSelection.length-1).toString()
+                                        // Set our search query
+                                        tabsManager.currentTab?.searchQuery = hint
+                                        // Trigger our search
+                                        findInPage()
+                                    }
+                                })
                     } else {
                         tabsManager.currentTab?.findNext()
                     }
