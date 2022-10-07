@@ -1596,9 +1596,22 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // Used this to debug control usage on emulator as both ctrl and alt just don't work on emulator
             //val isCtrlOnly  = if (Build.PRODUCT.contains("sdk")) { true } else KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
             val isCtrlOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
+            val isShiftOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_SHIFT_ON)
             val isCtrlShiftOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON or KeyEvent.META_SHIFT_ON)
+            // TODO: Should we enforce that? I guess it should not break F(x)tec Pro¹ when using proper keyboard driver.
+            val noMods  = KeyEvent.metaStateHasModifiers(event.metaState, 0)
 
             when (event.keyCode) {
+
+                // Find next or previous in page
+                KeyEvent.KEYCODE_F3 -> {
+                    if (isShiftOnly) {
+                        tabsManager.currentTab?.findPrevious()
+                    } else {
+                        tabsManager.currentTab?.findNext()
+                    }
+                    return true
+                }
                 // Toggle status bar visibility
                 KeyEvent.KEYCODE_F10 -> {
                     setFullscreen(!statusBarHidden, false)
