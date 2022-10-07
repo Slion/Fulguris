@@ -2054,28 +2054,42 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
 
     /**
-     *
+     * Do find in page actions
      */
-    private fun findInPage()  {
-        iBinding.findInPageInclude.searchQuery.let{
-            it.doOnLayout {
-                it.requestFocus()
-                // Crazy workaround to get the virtual keyboard to show, Android FFS
-                // See: https://stackoverflow.com/a/7784904/3969362
-                mainHandler.postDelayed({
-                    // Emulate tap to open up soft keyboard if needed
-                    it.simulateTap()
-                    // That will trigger our search, see addTextChangedListener
-                    it.setText(tabsManager.currentTab?.searchQuery)
-                    // Move cursor to the end of our text
-                    it.setSelection(it.length())
-                }, 100)
-            }
+    private fun doFindInPage() {
+        iBinding.findInPageInclude.searchQuery.let {
+            it.requestFocus()
+            // Crazy workaround to get the virtual keyboard to show, Android FFS
+            // See: https://stackoverflow.com/a/7784904/3969362
+            mainHandler.postDelayed({
+                // Emulate tap to open up soft keyboard if needed
+                it.simulateTap()
+                // That will trigger our search, see addTextChangedListener
+                it.setText(tabsManager.currentTab?.searchQuery)
+                // Move cursor to the end of our text
+                it.setSelection(it.length())
+            }, 100)
         }
-
-        iBinding.findInPageInclude.root.isVisible = true
     }
 
+    /**
+     * Two code path depending on whether our search view is already visible.
+     * See: https://github.com/Slion/Fulguris/issues/402
+     */
+    private fun findInPage() {
+        iBinding.findInPageInclude.apply {
+            if (root.isVisible) {
+                // View is already visible
+                doFindInPage()
+            } else {
+                // Wait for view to be visible
+                searchQuery.doOnLayout {
+                    doFindInPage();
+                }
+                root.isVisible = true
+            }
+        }
+    }
 
 
     private fun isLoading() : Boolean = tabsManager.currentTab?.let{it.progress < 100} ?: false
