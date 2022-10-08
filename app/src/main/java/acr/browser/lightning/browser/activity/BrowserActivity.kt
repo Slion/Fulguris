@@ -33,7 +33,6 @@ import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.html.incognito.IncognitoPageFactory
-import acr.browser.lightning.locale.LocaleAwareActivity
 import acr.browser.lightning.locale.LocaleUtils
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.notifications.IncognitoNotification
@@ -905,7 +904,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabBarInDrawer = configPrefs(configuration).tabBarInDrawer
 
         // Was needed when resizing on Windows 11 and changing from horizontal to vertical tab bar
-        mainHandler.postDelayed( {closePanels(null)},100)
+        mainHandler.postDelayed( {closePanels()},100)
 
         // Remove existing tab view if any
         (tabsView as View?)?.removeFromParent()
@@ -2013,7 +2012,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // Why not through presenter We need some serious refactoring at some point
                     tabsManager.currentTab?.loadHomePage()
                 }
-                closePanels(null)
+                closePanels()
                 return true
             }
 
@@ -2633,13 +2632,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         presenter.tabChanged(position,false, false)
         // Keep the drawer open while the tab change animation in running
         // Has the added advantage that closing of the drawer itself should be smoother as the webview had a bit of time to load
-        mainHandler.postDelayed({ closePanels(null) }, 350)
+        mainHandler.postDelayed({ closePanels() }, 350)
     }
 
     // This is the callback from 'new tab' button on page drawer
     override fun newTabButtonClicked() {
         // First close drawer
-        closePanels(null)
+        closePanels()
         // Then slightly delay page loading to give enough time for the drawer to close without stutter
         mainHandler.postDelayed({
             if (isIncognito()) {
@@ -2689,7 +2688,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             presenter.loadUrlInCurrentView(entry.url)
         }
         // keep any jank from happening when the drawer is closed after the URL starts to load
-        mainHandler.postDelayed({ closePanels(null) }, 150)
+        mainHandler.postDelayed({ closePanels() }, 150)
     }
 
     /**
@@ -2714,29 +2713,39 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         exitCleanup.cleanUp(tabsManager.currentTab?.webView, this)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
+    /**
+     * Called notably when the device orientation was changed.
+     *
+     * See: [Activity.onConfigurationChanged]
+     */
+    override fun onConfigurationChanged(aNewConfig: Configuration) {
+        super.onConfigurationChanged(aNewConfig)
 
         logger.log(TAG, "onConfigurationChanged")
 
-        setFullscreenIfNeeded(newConfig)
-        setupTabBar(newConfig)
-        setupToolBar(newConfig)
+        setupDrawers()
+        setFullscreenIfNeeded(aNewConfig)
+        setupTabBar(aNewConfig)
+        setupToolBar(aNewConfig)
         setupBookmarksView()
 
         // Can't find a proper event to do that after the configuration changes were applied so we just delay it
         mainHandler.postDelayed({
             setupToolBar()
-            setupPullToRefresh(newConfig)
-            // Do we really need that?
+            setupPullToRefresh(aNewConfig)
+            // For embedded tab bars modes
             scrollToCurrentTab()
         }, 300)
         iMenuMain.dismiss() // As it wont update somehow
         iMenuWebPage.dismiss()
         // Make sure our drawers adjust accordingly
         iBinding.drawerLayout.requestLayout()
+
     }
 
+    /**
+     *
+     */
     private fun initializeToolbarHeight(configuration: Configuration) =
             iBinding.uiLayout.doOnLayout {
                 // TODO externalize the dimensions
@@ -2947,6 +2956,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.resumeAll()
         initializePreferences()
 
+        setupDrawers()
         if (!setupTabBar(resources.configuration)) {
             // useBottomsheets settings could have changed
             addTabsViewToParent()
@@ -2955,11 +2965,31 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setupToolBar(resources.configuration)
         mainHandler.postDelayed({ setupToolBar() }, 500)
         setupPullToRefresh(resources.configuration)
-
         // We think that's needed in case there was a rotation while in the background
         iBinding.drawerLayout.requestLayout()
 
         //intent?.let {logger.log(TAG, it.toString())}
+    }
+
+    /**
+     * We used that to solve issues with drawers sometimes breaking layout when empty after rotations.
+     * Notably an issue when using bottom sheet.
+     */
+    private fun setupDrawers() {
+        if (userPreferences.useBottomSheets) {
+            // We don't need drawers when using bottom sheets
+            iBinding.leftDrawer.removeFromParent()
+            iBinding.rightDrawer.removeFromParent()
+        } else {
+            // We may need drawers then, though it could be that the tab drawer is still not used
+            // Notably when using embedded tab bar, vertical or horizontal
+            if (iBinding.leftDrawer.parent==null) {
+                iBinding.drawerLayout.addView(iBinding.leftDrawer)
+            }
+            if (iBinding.rightDrawer.parent==null) {
+                iBinding.drawerLayout.addView(iBinding.rightDrawer)
+            }
+        }
     }
 
     /**
@@ -3479,12 +3509,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      * @param runnable an optional runnable to run after the drawers are closed.
      */
-    protected fun closePanels(runnable: (() -> Unit)?) {
+    protected fun closePanels() {
         closePanelTabs()
         closePanelBookmarks()
-        //TODO: delay?
-        // Yeah looks like delay are not needed we could even get rid of that functionality
-        runnable?.invoke()
     }
 
     override fun setForwardButtonEnabled(enabled: Boolean) {
@@ -3716,7 +3743,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         val currentTab = tabsManager.currentTab
         if (currentTab?.canGoForward() == true) {
             currentTabGoForward()
-            closePanels(null)
+            closePanels()
         }
     }
 
@@ -3871,7 +3898,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             LightningDialogBuilder.NewTab.FOREGROUND -> presenter.newTab(urlInitializer, true)
             LightningDialogBuilder.NewTab.BACKGROUND -> presenter.newTab(urlInitializer, false)
             LightningDialogBuilder.NewTab.INCOGNITO -> {
-                closePanels { }
+                closePanels()
                 val intent = IncognitoActivity.createIntent(this, url.toUri())
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_up_in, R.anim.fade_out_scale)
