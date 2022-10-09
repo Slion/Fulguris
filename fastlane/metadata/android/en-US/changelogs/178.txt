@@ -1,7 +1,7 @@
 🖥️ Embedded vertical tab bar.
 🖥️ Desktop mode improvements.
 🔎 Find in page improvements.
-⌨ New keyboard shortcuts: F3, Ctrl+F3.
+⌨ New keyboard shortcuts: F3, Shift+F3, Ctrl+F3, Alt+F4.
 Translations update:
 🇨🇳 Chinese
 🇮🇹 Italian
