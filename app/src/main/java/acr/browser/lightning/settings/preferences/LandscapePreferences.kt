@@ -60,7 +60,7 @@ class LandscapePreferences @Inject constructor(
             PrefKeys.ShowToolBarOnPageTop to true,
             PrefKeys.PullToRefresh to true,
             PrefKeys.ToolbarsBottom to false,
-            PrefKeys.DesktopWidth to 100,
+            PrefKeys.DesktopWidth to 200,
             // Omitted the following as they have non static default values specified in the base class
             //PrefKeys.TabBarVertical to !screenSize.isTablet(),
             //PrefKeys.TabBarInDrawer to !screenSize.isTablet(),

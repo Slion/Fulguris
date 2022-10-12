@@ -59,7 +59,8 @@
         app:summary="@string/pref_summary_desktop_width"
         app:icon="@drawable/ic_desktop"
         app:min="100"
-        android:max="300"
+        android:max="500"
+        app:seekBarIncrement="25"
         app:showSeekBarValue="true"
         app:iconSpaceReserved="false"
         app:updatesContinuously="true" />
