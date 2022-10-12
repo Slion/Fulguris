@@ -53,7 +53,8 @@
         app:icon="@drawable/ic_vertical_align"
         app:iconSpaceReserved="false" />
 
-    <SeekBarPreference
+    <fulguris.preference.SliderPreference
+        android:layout="@layout/preference_slider"
         app:key="@string/pref_key_desktop_width"
         app:title="@string/pref_title_desktop_width"
         app:summary="@string/pref_summary_desktop_width"
