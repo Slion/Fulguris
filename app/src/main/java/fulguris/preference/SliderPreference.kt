@@ -10,11 +10,15 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import androidx.preference.SeekBarPreference
+import com.google.android.material.slider.LabelFormatter
+import com.google.android.material.slider.Slider
+import java.lang.Float.max
+import java.lang.Float.min
+import java.util.*
 
 /*
 * Copyright 2018 The Android Open Source Project
@@ -54,13 +58,15 @@ import androidx.preference.SeekBarPreference
  * can be set directly on the preference widget layout.
  */
 class SliderPreference @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.seekBarPreferenceStyle, defStyleRes: Int = 0) : Preference(context, attrs, defStyleAttr, defStyleRes) {
-    var mSeekBarValue/* synthetic access */ = 0
-    var mMin: /* synthetic access */Int = 0
-    private var mMax = 100
-    private var mSeekBarIncrement = 0
-    var mTrackingTouch/* synthetic access */ = false
-    var mSeekBar: /* synthetic access */SeekBar? = null
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.sliderStyle, defStyleRes: Int = 0) : Preference(context, attrs, defStyleAttr, defStyleRes) {
+    var mSeekBarValue = 0F
+    //var mMin = 0F
+    //private var mMax = 100F
+    //private var mSeekBarIncrement = 0F
+    var mTrackingTouch = false
+    var mSlider: Slider? = null
+    //TODO: consider removing this once we support the latest Slider implementation as I think it does support an always visible mode
+    // Since MDC 1.6.0 LABEL_VISIBLE should be supported
     private var mSeekBarValueTextView: TextView? = null
     /**
      * Gets whether the [SeekBar] should respond to the left/right keys.
@@ -73,7 +79,7 @@ class SliderPreference @JvmOverloads constructor(
      * @param adjustable Whether the [SeekBar] should respond to the left/right keys
      */
     // Whether the SeekBar should respond to the left/right keys
-    var isAdjustable: /* synthetic access */Boolean = true
+    var isAdjustable: Boolean = true
 
     // Whether to show the SeekBar value TextView next to the bar
     private var mShowSeekBarValue: Boolean
@@ -96,29 +102,30 @@ class SliderPreference @JvmOverloads constructor(
      */
     // Whether the SeekBarPreference should continuously save the Seekbar value while it is being
     // dragged.
-    var updatesContinuously: /* synthetic access */Boolean = true
+    var updatesContinuously: Boolean = true
 
     /**
      * Listener reacting to the [SeekBar] changing value by the user
      */
-    private val mSeekBarChangeListener: OnSeekBarChangeListener = object : OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+    private val mSeekBarChangeListener = object : Slider.OnSliderTouchListener, Slider.OnChangeListener {
+        override fun onValueChange(aSlider: Slider, aValue: Float, fromUser: Boolean) {
             if (fromUser && (updatesContinuously || !mTrackingTouch)) {
-                syncValueInternal(seekBar)
+                syncValueInternal(aSlider)
             } else {
                 // We always want to update the text while the seekbar is being dragged
-                updateLabelValue(progress + mMin)
+                updateLabelValue(aValue)
             }
         }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar) {
+        override fun onStartTrackingTouch(aSlider: Slider) {
             mTrackingTouch = true
         }
 
-        override fun onStopTrackingTouch(seekBar: SeekBar) {
+        override fun onStopTrackingTouch(aSlider: Slider) {
             mTrackingTouch = false
-            if (seekBar.progress + mMin != mSeekBarValue) {
-                syncValueInternal(seekBar)
+            //TODO: review logic there
+            if (aSlider.value != mSeekBarValue) {
+                syncValueInternal(aSlider)
             }
         }
     }
@@ -143,18 +150,19 @@ class SliderPreference @JvmOverloads constructor(
             if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER) {
                 return false
             }
-            if (mSeekBar == null) {
+            if (mSlider == null) {
                 Log.e(TAG, "SeekBar view is null and hence cannot be adjusted.")
                 return false
             }
-            return mSeekBar!!.onKeyDown(keyCode, event)
+            return mSlider!!.onKeyDown(keyCode, event)
         }
     }
 
     override fun onBindViewHolder(view: PreferenceViewHolder) {
         super.onBindViewHolder(view)
         view.itemView.setOnKeyListener(mSeekBarKeyListener)
-        mSeekBar = view.findViewById(R.id.seekbar) as SeekBar
+        mSlider = view.findViewById(R.id.slider) as Slider
+
         mSeekBarValueTextView = view.findViewById(R.id.seekbar_value) as TextView
         if (mShowSeekBarValue) {
             mSeekBarValueTextView!!.visibility = View.VISIBLE
@@ -162,36 +170,72 @@ class SliderPreference @JvmOverloads constructor(
             mSeekBarValueTextView!!.visibility = View.GONE
             mSeekBarValueTextView = null
         }
-        if (mSeekBar == null) {
+        if (mSlider == null) {
             Log.e(TAG, "SeekBar view is null in onBindViewHolder.")
             return
         }
-        mSeekBar!!.setOnSeekBarChangeListener(mSeekBarChangeListener)
-        mSeekBar!!.max = mMax - mMin
+
+        mSlider?.addOnChangeListener(mSeekBarChangeListener)
+
+        mSlider?.let {
+            it.valueFrom = valueFrom
+            it.valueTo = valueTo
+            it.stepSize = stepSize
+            it.labelBehavior = labelBehavior
+            it.setLabelFormatter(formatter)
+            // Make sure our value is in range otherwise Slider will throw an exception
+            // That's defensive code which might be useful if your preference range did change
+            it.value = min(max(mSeekBarValue, valueFrom),valueTo)
+        }
+
+
+        // TODO: put that back in
+        /*
+        mSlider!!.setOnSeekBarChangeListener(mSeekBarChangeListener)
+        mSlider!!.max = mMax - mMin
         // If the increment is not zero, use that. Otherwise, use the default mKeyProgressIncrement
         // in AbsSeekBar when it's zero. This default increment value is set by AbsSeekBar
         // after calling setMax. That's why it's important to call setKeyProgressIncrement after
         // calling setMax() since setMax() can change the increment value.
         if (mSeekBarIncrement != 0) {
-            mSeekBar!!.keyProgressIncrement = mSeekBarIncrement
+            mSlider!!.keyProgressIncrement = mSeekBarIncrement
         } else {
-            mSeekBarIncrement = mSeekBar!!.keyProgressIncrement
+            mSeekBarIncrement = mSlider!!.keyProgressIncrement
         }
-        mSeekBar!!.progress = mSeekBarValue - mMin
+        mSlider!!.progress = mSeekBarValue - mMin
+        */
         updateLabelValue(mSeekBarValue)
-        mSeekBar!!.isEnabled = isEnabled
+        mSlider!!.isEnabled = isEnabled
     }
 
-    override fun onSetInitialValue(defaultValue: Any?) {
-        var defaultValue = defaultValue
-        if (defaultValue == null) {
-            defaultValue = 0
+    /**
+     * Defensive implementation to support type change
+     */
+    override fun onSetInitialValue(aDefaultValue: Any?) {
+
+        var defaultValue = 0F
+        aDefaultValue?.let {
+            if (it is Int) {
+                defaultValue = it.toFloat()
+            } else if (it is Float) {
+                defaultValue = it
+            }
         }
-        value = getPersistedInt((defaultValue as Int?)!!)
+
+
+        try {
+            value = getPersistedFloat(defaultValue)
+        } catch (ex: ClassCastException){
+            // Well kick in when switching form int to float
+            value = defaultValue
+        }
+
     }
 
     override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
-        return a.getInt(index, 0)
+
+
+        return a.getFloat(index, 0F)
     }
     /**
      * Gets the lower bound set on the [SeekBar].
@@ -203,7 +247,9 @@ class SliderPreference @JvmOverloads constructor(
      *
      * @param min The lower bound to set
      */
-    var min: Int
+
+    /*
+    var min: Float
         get() = mMin
         set(min) {
             var min = min
@@ -215,6 +261,7 @@ class SliderPreference @JvmOverloads constructor(
                 notifyChanged()
             }
         }
+     */
     /**
      * Returns the amount of increment change via each arrow key click. This value is derived from
      * user's specified increment value if it's not zero. Otherwise, the default value is picked
@@ -229,7 +276,9 @@ class SliderPreference @JvmOverloads constructor(
      * @param seekBarIncrement The amount to increment or decrement when the user presses an
      * arrow key.
      */
-    var seekBarIncrement: Int
+    // TODO: check if we still need this
+    /*
+    var seekBarIncrement: Float
         get() = mSeekBarIncrement
         set(seekBarIncrement) {
             if (seekBarIncrement != mSeekBarIncrement) {
@@ -237,6 +286,7 @@ class SliderPreference @JvmOverloads constructor(
                 notifyChanged()
             }
         }
+     */
     /**
      * Gets the upper bound set on the [SeekBar].
      *
@@ -247,7 +297,8 @@ class SliderPreference @JvmOverloads constructor(
      *
      * @param max The upper bound to set
      */
-    var max: Int
+    /*
+    var max: Float
         get() = mMax
         set(max) {
             var max = max
@@ -259,6 +310,8 @@ class SliderPreference @JvmOverloads constructor(
                 notifyChanged()
             }
         }
+        */
+
     /**
      * Gets whether the current [SeekBar] value is displayed to the user.
      *
@@ -278,18 +331,21 @@ class SliderPreference @JvmOverloads constructor(
             notifyChanged()
         }
 
-    private fun setValueInternal(seekBarValue: Int, notifyChanged: Boolean) {
-        var seekBarValue = seekBarValue
-        if (seekBarValue < mMin) {
-            seekBarValue = mMin
-        }
-        if (seekBarValue > mMax) {
-            seekBarValue = mMax
-        }
+    private fun setValueInternal(seekBarValue: Float, notifyChanged: Boolean) {
+
         if (seekBarValue != mSeekBarValue) {
             mSeekBarValue = seekBarValue
             updateLabelValue(mSeekBarValue)
-            persistInt(seekBarValue)
+            try {
+                persistFloat(seekBarValue)
+            } catch (ex: ClassCastException) {
+                // Possibly converting this key from another type to float
+                // Delete existing key
+                sharedPreferences.edit().remove(key).commit()
+                // Then try again
+                persistFloat(seekBarValue)
+            }
+
             if (notifyChanged) {
                 notifyChanged()
             }
@@ -305,7 +361,7 @@ class SliderPreference @JvmOverloads constructor(
      *
      * @param seekBarValue The current progress of the [SeekBar]
      */
-    var value: Int
+    var value: Float
         get() = mSeekBarValue
         set(seekBarValue) {
             setValueInternal(seekBarValue, true)
@@ -315,13 +371,13 @@ class SliderPreference @JvmOverloads constructor(
      * Persist the [SeekBar]'s SeekBar value if callChangeListener returns true, otherwise
      * set the [SeekBar]'s value to the stored value.
      */
-    fun  /* synthetic access */syncValueInternal(seekBar: SeekBar) {
-        val seekBarValue = mMin + seekBar.progress
-        if (seekBarValue != mSeekBarValue) {
-            if (callChangeListener(seekBarValue)) {
-                setValueInternal(seekBarValue, false)
+    fun  syncValueInternal(seekBar: Slider) {
+        if (seekBar.value != mSeekBarValue) {
+            if (callChangeListener(seekBar.value)) {
+                setValueInternal(seekBar.value, false)
             } else {
-                seekBar.progress = mSeekBarValue - mMin
+                // SL: Looks like value change was cancelled
+                seekBar.value = mSeekBarValue
                 updateLabelValue(mSeekBarValue)
             }
         }
@@ -332,9 +388,9 @@ class SliderPreference @JvmOverloads constructor(
      *
      * @param value the value to display next to the [SeekBar]
      */
-    fun  /* synthetic access */updateLabelValue(value: Int) {
+    fun  updateLabelValue(value: Float) {
         if (mSeekBarValueTextView != null) {
-            mSeekBarValueTextView!!.text = value.toString()
+            mSeekBarValueTextView!!.text = formatter.getFormattedValue(value)
         }
     }
 
@@ -348,8 +404,8 @@ class SliderPreference @JvmOverloads constructor(
         // Save the instance state
         val myState = SavedState(superState)
         myState.mSeekBarValue = mSeekBarValue
-        myState.mMin = mMin
-        myState.mMax = mMax
+        myState.mMin = valueFrom
+        myState.mMax = valueTo
         return myState
     }
 
@@ -364,8 +420,8 @@ class SliderPreference @JvmOverloads constructor(
         val myState = state as SavedState
         super.onRestoreInstanceState(myState.getSuperState())
         mSeekBarValue = myState.mSeekBarValue
-        mMin = myState.mMin
-        mMax = myState.mMax
+        valueFrom = myState.mMin
+        valueTo = myState.mMax
         notifyChanged()
     }
 
@@ -376,16 +432,17 @@ class SliderPreference @JvmOverloads constructor(
      * It is important to always call through to super methods.
      */
     private class SavedState : BaseSavedState {
-        var mSeekBarValue = 0
-        var mMin = 0
-        var mMax = 0
+        var mSeekBarValue = 0F
+        //SL: Not sure what's the use of persisting min and max
+        var mMin = 0F
+        var mMax = 0F
 
         internal constructor(source: Parcel) : super(source) {
 
             // Restore the click counter
-            mSeekBarValue = source.readInt()
-            mMin = source.readInt()
-            mMax = source.readInt()
+            mSeekBarValue = source.readFloat()
+            mMin = source.readFloat()
+            mMax = source.readFloat()
         }
 
         internal constructor(superState: Parcelable?) : super(superState) {}
@@ -394,9 +451,9 @@ class SliderPreference @JvmOverloads constructor(
             super.writeToParcel(dest, flags)
 
             // Save the click counter
-            dest.writeInt(mSeekBarValue)
-            dest.writeInt(mMin)
-            dest.writeInt(mMax)
+            dest.writeFloat(mSeekBarValue)
+            dest.writeFloat(mMin)
+            dest.writeFloat(mMax)
         }
 
         /*
@@ -414,23 +471,66 @@ class SliderPreference @JvmOverloads constructor(
         }*/
     }
 
+    /**
+     * See also [com.google.android.material.slider.BasicLabelFormatter]
+     */
+    class MostBasicLabelFormatter(aFormat: String="%s") : LabelFormatter {
+        private val iFormat = aFormat
+        override fun getFormattedValue(value: Float): String {
+            return String.format(iFormat, String.format(if (value.toInt().toFloat() == value) "%.0f" else "%.2f", value))
+        }
+    }
+
     companion object {
         private const val TAG = "SeekBarPreference"
     }
 
-    init {
-        val a = context.obtainStyledAttributes(
-                attrs, R.styleable.SeekBarPreference, defStyleAttr, defStyleRes)
 
-        // The ordering of these two statements are important. If we want to set max first, we need
-        // to perform the same steps by changing min/max to max/min as following:
-        // mMax = a.getInt(...) and setMin(...).
-        mMin = a.getInt(R.styleable.SeekBarPreference_min, 0)
-        max = a.getInt(R.styleable.SeekBarPreference_android_max, 100)
-        seekBarIncrement = a.getInt(R.styleable.SeekBarPreference_seekBarIncrement, 0)
-        isAdjustable = a.getBoolean(R.styleable.SeekBarPreference_adjustable, true)
-        mShowSeekBarValue = a.getBoolean(R.styleable.SeekBarPreference_showSeekBarValue, false)
-        updatesContinuously = a.getBoolean(R.styleable.SeekBarPreference_updatesContinuously, false)
-        a.recycle()
+    var valueFrom: Float
+    var valueTo: Float
+    var stepSize: Float
+
+    /**
+     * See [com.google.android.material.slider.LabelFormatter]
+     *      LABEL_FLOATING = 0
+     *      LABEL_WITHIN_BOUNDS = 1
+     *      LABEL_GONE = 2
+     */
+    var labelBehavior: Int
+    // This is use to format on label string
+    var formatter: MostBasicLabelFormatter = MostBasicLabelFormatter()
+
+    init {
+        // Get Slider attributes from XML
+        val sliderAttributes = context.obtainStyledAttributes(attrs, R.styleable.Slider, defStyleAttr, defStyleRes)
+        sliderAttributes.let {
+            valueFrom = it.getFloat(R.styleable.Slider_android_valueFrom, 0F)
+            valueTo = it.getFloat(R.styleable.Slider_android_valueTo, 100F)
+            stepSize = it.getFloat(R.styleable.Slider_android_stepSize, 0F)
+            labelBehavior = it.getInt(R.styleable.Slider_labelBehavior, 0)
+            it.recycle()
+        }
+
+        // Get SeekBarPreference attributes from XML
+        val seekbarAttributes = context.obtainStyledAttributes(attrs, R.styleable.SeekBarPreference, defStyleAttr, defStyleRes)
+        seekbarAttributes.let {
+            //seekBarIncrement = a.getInt(R.styleable.SeekBarPreference_seekBarIncrement, 0)
+            isAdjustable = it.getBoolean(R.styleable.SeekBarPreference_adjustable, true)
+            mShowSeekBarValue = it.getBoolean(R.styleable.SeekBarPreference_showSeekBarValue, false)
+            updatesContinuously = it.getBoolean(R.styleable.SeekBarPreference_updatesContinuously, false)
+            it.recycle()
+        }
+
+        // Get SliderPreference attributes from XML
+        val sliderPrefAttributes = context.obtainStyledAttributes(attrs, R.styleable.SliderPreference, defStyleAttr, defStyleRes)
+        sliderPrefAttributes.let {
+            val format = it.getString(R.styleable.SliderPreference_format)
+            if (format!=null) {
+                // Create a formatter using format provided in settings
+                formatter = MostBasicLabelFormatter(format);
+            }
+            it.recycle()
+        }
+
     }
 }

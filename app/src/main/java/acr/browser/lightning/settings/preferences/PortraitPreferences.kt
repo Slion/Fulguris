@@ -49,6 +49,10 @@ import javax.inject.Singleton
         return iDefaults[aKey] as Int
     }
 
+    override fun getDefaultFloat(aKey: String) : Float {
+        return LandscapePreferences.iDefaults[aKey] as Float
+    }
+
     override fun getDefaults(): Map<String, Any> {
         return iDefaults
     }
@@ -63,7 +67,7 @@ import javax.inject.Singleton
             PrefKeys.ShowToolBarOnPageTop to true,
             PrefKeys.PullToRefresh to true,
             PrefKeys.ToolbarsBottom to false,
-            PrefKeys.DesktopWidth to 200,
+            PrefKeys.DesktopWidth to 200F,
             // Omitted the following as they have non static default values specified in the base class
             //PrefKeys.TabBarVertical to !screenSize.isTablet(),
             //PrefKeys.TabBarInDrawer to !screenSize.isTablet(),

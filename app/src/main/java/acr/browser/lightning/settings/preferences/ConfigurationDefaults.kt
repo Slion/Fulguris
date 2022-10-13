@@ -40,6 +40,11 @@ interface ConfigurationDefaults {
     fun getDefaultInteger(aKey: String) : Int
 
     /**
+     * Return the default integer value for the settings option matching [aKey].
+     */
+    fun getDefaultFloat(aKey: String) : Float
+
+    /**
      * Provide a map of settings preference keys to their default values.
      */
     fun getDefaults() : Map<String,Any>

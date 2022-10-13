@@ -59,11 +59,15 @@
         app:title="@string/pref_title_desktop_width"
         app:summary="@string/pref_summary_desktop_width"
         app:icon="@drawable/ic_desktop"
-        app:min="100"
-        android:max="500"
         app:seekBarIncrement="25"
         app:showSeekBarValue="true"
         app:iconSpaceReserved="false"
-        app:updatesContinuously="true" />
+        app:updatesContinuously="true"
+        android:valueFrom="100"
+        android:valueTo="400"
+        android:stepSize="25"
+        app:labelBehavior="gone"
+        app:format="%s%%"
+        />
 
 </PreferenceScreen>

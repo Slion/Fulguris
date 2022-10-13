@@ -123,8 +123,22 @@ From: https://github.com/androidx/androidx/blob/androidx-main/preference/prefere
                 Note: we set 0dp padding at the start and end of this seekbar to allow it to properly
                 fit into the layout, but this means that there's no leeway on either side for touch
                 input - this might be something we should reconsider down the line. -->
-                <SeekBar
-                    android:id="@+id/seekbar"
+<!--                <SeekBar-->
+<!--                    android:id="@+id/seekbar"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingLeft="@dimen/preference_seekbar_padding_horizontal"-->
+<!--                    android:paddingStart="@dimen/preference_seekbar_padding_horizontal"-->
+<!--                    android:paddingRight="@dimen/preference_seekbar_padding_horizontal"-->
+<!--                    android:paddingEnd="@dimen/preference_seekbar_padding_horizontal"-->
+<!--                    android:paddingTop="@dimen/preference_seekbar_padding_vertical"-->
+<!--                    android:paddingBottom="@dimen/preference_seekbar_padding_vertical"-->
+<!--                    android:background="@null"/>-->
+
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/slider"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -134,7 +148,13 @@ From: https://github.com/androidx/androidx/blob/androidx-main/preference/prefere
                     android:paddingEnd="@dimen/preference_seekbar_padding_horizontal"
                     android:paddingTop="@dimen/preference_seekbar_padding_vertical"
                     android:paddingBottom="@dimen/preference_seekbar_padding_vertical"
-                    android:background="@null"/>
+                    android:background="@null"
+                    tools:value="50"
+                    tools:valueFrom="0.0"
+                    tools:valueTo="100.0"
+                    tools:stepSize="10.0" />
+
+
 
                 <!-- If the value is shown, we reserve a minimum width of 36dp to allow for consistent
                 seekbar width for smaller values. If the value is ~4 or more digits, it will expand
@@ -154,7 +174,7 @@ From: https://github.com/androidx/androidx/blob/androidx-main/preference/prefere
                     android:ellipsize="marquee"
                     android:fadingEdge="horizontal"
                     android:scrollbars="none"
-                    tools:text="100" />
+                    tools:text="50" />
 
             </androidx.preference.UnPressableLinearLayout>
         </LinearLayout>

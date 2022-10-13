@@ -85,7 +85,7 @@ abstract class ConfigurationPreferences constructor(
      * When set to 100% we use actual viewport width, the HTML page is not tempered with.
      * When set to something other than 100% we will enable wide viewport mode and inject JS code to set HTML meta viewport element accordingly.
      */
-    var desktopWidth by preferences.intPreference(R.string.pref_key_desktop_width, getDefaultInteger(PrefKeys.DesktopWidth))
+    var desktopWidth by preferences.floatPreference(R.string.pref_key_desktop_width, getDefaultFloat(PrefKeys.DesktopWidth))
 
 }
 

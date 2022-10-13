@@ -45,4 +45,10 @@
         <attr name="bidirectionalAnimate" format="boolean" />
         <attr name="animationDuration" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="SliderPreference">
+        <attr name="format" format="string" />
+    </declare-styleable>
+
+
 </resources>

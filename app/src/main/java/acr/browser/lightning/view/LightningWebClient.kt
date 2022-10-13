@@ -132,7 +132,7 @@ class LightningWebClient(
         if (lightningView.desktopMode) {
             // Do not hack anything when desktop width is set to 100%
             // In this case desktop mode then only overrides the user agent which is all you should need in most cases really
-            if (aView.context.configPrefs.desktopWidth != 100) {
+            if (aView.context.configPrefs.desktopWidth != 100F) {
                 // That's needed for custom desktop mode support
                 // See: https://stackoverflow.com/a/60621350/3969362
                 // See: https://stackoverflow.com/a/39642318/3969362
@@ -200,12 +200,10 @@ class LightningWebClient(
     override fun onPageFinished(view: WebView, url: String) {
         logger.log(TAG, "onPageFinished - $url")
 
-        // If no resource was loaded then deal with desktop mode now
-        // This is defensive code, most every web page load will load some resource
-        if (iResourceCount==0) {
-            // Now assuming our root HTML document has been loaded
-            applyDesktopModeIfNeeded(view)
-        }
+        // Make sure we apply desktop mode now as it may fail when done from onLoadResource
+        // In fact the HTML page may not be loaded yet when we hit our condition in onLoadResource
+        applyDesktopModeIfNeeded(view)
+
 
         if (view.isShown) {
             updateUrlIfNeeded(url, false)

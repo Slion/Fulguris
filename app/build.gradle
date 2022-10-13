@@ -333,8 +333,9 @@ dependencies {
     // memory leak analysis
     debugImplementation "com.squareup.leakcanary:leakcanary-android:2.7"
 
-    // kotlin
+    // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    //implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 
     // Firebase
     // Recommended: Add the Firebase SDK for Google Analytics.
