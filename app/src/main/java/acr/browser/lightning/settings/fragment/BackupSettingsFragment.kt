@@ -136,7 +136,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
      */
     private fun addPreferenceSessionExport(aSession: Session) {
         // We invite user to installer our Google Play Store release
-        val pref = Preference(context)
+        val pref = Preference(requireContext())
 
         pref.icon = requireContext().drawable(R.drawable.ic_cloud_upload)
 

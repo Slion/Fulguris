@@ -341,7 +341,7 @@ class SliderPreference @JvmOverloads constructor(
             } catch (ex: ClassCastException) {
                 // Possibly converting this key from another type to float
                 // Delete existing key
-                sharedPreferences.edit().remove(key).commit()
+                sharedPreferences!!.edit().remove(key).commit()
                 // Then try again
                 persistFloat(seekBarValue)
             }
@@ -398,7 +398,7 @@ class SliderPreference @JvmOverloads constructor(
         val superState = super.onSaveInstanceState()
         if (isPersistent) {
             // No need to save instance state since it's persistent
-            return superState
+            return superState!!
         }
 
         // Save the instance state
@@ -409,8 +409,8 @@ class SliderPreference @JvmOverloads constructor(
         return myState
     }
 
-    override fun onRestoreInstanceState(state: Parcelable) {
-        if (state.javaClass != SavedState::class.java) {
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state?.javaClass != SavedState::class.java) {
             // Didn't save state for us in onSaveInstanceState
             super.onRestoreInstanceState(state)
             return

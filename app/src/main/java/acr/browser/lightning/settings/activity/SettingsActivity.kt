@@ -153,7 +153,7 @@ class SettingsActivity : ThemedSettingsActivity(),
         val args = aPref.extras
         val fragment = supportFragmentManager.fragmentFactory.instantiate(
             classLoader,
-            aPref.fragment
+            aPref.fragment!!
         ).apply {
             arguments = args
             setTargetFragment(aTarget, 0)

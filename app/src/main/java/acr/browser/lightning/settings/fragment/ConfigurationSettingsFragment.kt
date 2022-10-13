@@ -88,16 +88,16 @@ abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
      * [aValue] is our preference default value.
      */
     fun setDefaultIfNeeded(aKey: String, aValue: Any) {
-        if (preferenceManager.sharedPreferences.contains(aKey)) {
+        if (preferenceManager.sharedPreferences!!.contains(aKey)) {
             // User defined to settings option, no need to initialize it's default then
             logger.log(TAG,"User defined: " + aKey)
         } else {
             // There is no user defined value for this preference therefore we need to set it's value to the default one
             // TODO: extend this if we need to support new kind of preferences or value types
             if (aValue is Boolean) {
-                findPreference<TwoStatePreference>(aKey)?.isChecked = preferenceManager.sharedPreferences.getBoolean(aKey,aValue)
+                findPreference<TwoStatePreference>(aKey)?.isChecked = preferenceManager!!.sharedPreferences!!.getBoolean(aKey,aValue)
             } else if (aValue is Int) {
-                findPreference<SeekBarPreference>(aKey)?.value = preferenceManager.sharedPreferences.getInt(aKey,aValue)
+                findPreference<SeekBarPreference>(aKey)?.value = preferenceManager!!.sharedPreferences!!.getInt(aKey,aValue)
             }
             // That is useless at this stage probably only used during construction
             //findPreference<Preference>(it.key)?.setDefaultValue(aValue)

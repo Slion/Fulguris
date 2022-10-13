@@ -63,7 +63,7 @@ class AppsSettingsFragment : AbstractSettingsFragment() {
             if (key.startsWith(getString(R.string.settings_app_prefix))) {
                 //Log.d("map values", key + ": " + value.toString())
 
-                val checkBoxPreference = SwitchPreferenceCompat(context)
+                val checkBoxPreference = SwitchPreferenceCompat(requireContext())
                 checkBoxPreference.title = key.substring(getString(R.string.settings_app_prefix).length)
                 checkBoxPreference.key = key
                 checkBoxPreference.isChecked = value as Boolean

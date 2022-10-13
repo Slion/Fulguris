@@ -47,7 +47,7 @@ class MaterialListPreferenceDialogFragment : ListPreferenceDialogFragmentCompat(
                 .setIcon(preference.dialogIcon)
                 .setPositiveButton(preference.positiveButtonText, this)
                 .setNegativeButton(preference.negativeButtonText, this)
-        val contentView = onCreateDialogView(context)
+        val contentView = onCreateDialogView(requireContext())
         if (contentView != null) {
             onBindDialogView(contentView)
             builder.setView(contentView)
@@ -68,7 +68,7 @@ class MaterialListPreferenceDialogFragment : ListPreferenceDialogFragmentCompat(
     /** Which button was clicked.  */
     private var mWhichButtonClicked = 0
 
-    override fun onClick(dialog: DialogInterface?, which: Int) {
+    override fun onClick(dialog: DialogInterface, which: Int) {
         mWhichButtonClicked = which
     }
 

@@ -172,7 +172,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         filtersCategory.removeAll()
 
         // "new list" button
-        val newList = Preference(context)
+        val newList = Preference(requireContext())
         newList.title = resources.getString(R.string.add_blocklist)
         newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_add,requireActivity().theme)
         newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -194,7 +194,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
             val entityPref = FilterListSwitchPreference(context, entity)
             entityPrefs[entity.entityId] = entityPref
             updateSummary(entity)
-            filtersCategory.addPreference(entityPrefs[entity.entityId])
+            filtersCategory.addPreference(entityPrefs[entity.entityId]!!)
             entityPref.dependency = getString(R.string.pref_key_content_control)
         }
 
@@ -319,7 +319,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                     .setPositiveButton(R.string.action_delete) { _, _ ->
                         abpDao.delete(entity)
                         dialog?.dismiss()
-                        filtersCategory.removePreference(entityPrefs[entity.entityId])
+                        filtersCategory.removePreference(entityPrefs[entity.entityId]!!)
                         reloadBlockLists()
                     }
                     .setTitle(resources.getString(R.string.blocklist_remove_confirm, entity.title))
@@ -456,9 +456,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     }
 
     // class necessary to allow separate onClickListener for the switch
-    private inner class FilterListSwitchPreference(context : Context?, val entity: AbpEntity) : SwitchPreferenceCompat(context) {
+    private inner class FilterListSwitchPreference(context : Context?, val entity: AbpEntity) : SwitchPreferenceCompat(requireContext()) {
 
-        override fun onBindViewHolder(holder: PreferenceViewHolder?) {
+        override fun onBindViewHolder(holder: PreferenceViewHolder) {
             super.onBindViewHolder(holder)
             val switch: SwitchCompat? = holder?.itemView?.findViewById(R.id.filter_list_switch_widget)
             switch?.isChecked = entity.enabled
