@@ -5,11 +5,13 @@ import acr.browser.lightning.R
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceHeaderFragmentCompat
 
 /**
  * TODO: Derive from [AbstractSettingsFragment]
  */
 class RootSettingsFragment : PreferenceFragmentCompat() {
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences_root, rootKey)
 
