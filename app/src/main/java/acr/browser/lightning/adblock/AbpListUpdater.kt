@@ -47,13 +47,21 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.nio.charset.Charset
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.max
 
 // this is a slightly modified part of jp.hazuki.yuzubrowser.adblock.service/AbpUpdateService.kt
 class AbpListUpdater @Inject constructor(val context: Context) {
 
-    val okHttpClient by lazy { OkHttpClient() }
+    val okHttpClient by lazy {
+        OkHttpClient().newBuilder()
+            .callTimeout(5, TimeUnit.MINUTES)
+            .connectTimeout(5, TimeUnit.MINUTES)
+            .readTimeout(5, TimeUnit.MINUTES)
+            .writeTimeout(5, TimeUnit.MINUTES)
+            .build()
+    }
 
     @Inject internal lateinit var userPreferences: UserPreferences
     @Inject internal lateinit var logger: Logger
