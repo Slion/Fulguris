@@ -30,7 +30,7 @@
     <string name="pref_key_hide_tool_bar">pref_key_hide_tool_bar</string>
     <string name="pref_key_show_tool_bar_on_scroll_up">pref_key_show_tool_bar_when_scroll_up</string>
     <string name="pref_key_show_tool_bar_on_page_top">pref_key_show_tool_bar_on_page_top</string>
-    <string name="pref_key_desktop_width">pref_key_desktop_width</string>
+    <string name="pref_key_desktop_width">pref_key_desktop_width_float</string>
     <string name="pref_key_pull_to_refresh">pref_key_pull_to_refresh</string>
     <string name="pref_key_tab_bar_vertical">pref_key_tab_bar_vertical</string>
     <string name="pref_key_tab_bar_in_drawer">pref_key_tab_bar_in_drawer</string>

@@ -66,6 +66,7 @@
         android:valueFrom="100"
         android:valueTo="400"
         android:stepSize="25"
+        android:value="200"
         app:labelBehavior="gone"
         app:format="%s%%"
         />

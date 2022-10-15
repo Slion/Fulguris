@@ -508,6 +508,7 @@ class SliderPreference @JvmOverloads constructor(
             valueTo = it.getFloat(R.styleable.Slider_android_valueTo, 100F)
             stepSize = it.getFloat(R.styleable.Slider_android_stepSize, 0F)
             labelBehavior = it.getInt(R.styleable.Slider_labelBehavior, 0)
+            value = it.getFloat(R.styleable.Slider_android_value, 0F)
             it.recycle()
         }
 
