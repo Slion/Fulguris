@@ -16,6 +16,13 @@
 
 [Get it on Slions.net.](http://fulguris.slions.net)
 
+## Release channels
+We have three official release channels linked above. The **Download** release channel tends to be somewhat less stable than the **Google Play** and **F-Droid** release channels. On the other hand you get to test the latest version earlier when using the **Download** release channel. All three variants of the app can be installed at the same time on your device. They are effectively three different albeit similar apps. You can differenciate them in your launcher from their slightly modified icon design.
+
+* **Google Play**: stable releases.
+* **F-Droid**: stable releases. 
+* **Download**: release candidates and stable releases.
+
 # Contribute
 
 ## Test
