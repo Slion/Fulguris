@@ -20,6 +20,7 @@ import java.lang.Exception
 
 /**
  * A view which displays browser tabs in a horizontal [RecyclerView].
+ * TODO: Rename to horizontal?
  */
 class TabsDesktopView @JvmOverloads constructor(
     context: Context,
