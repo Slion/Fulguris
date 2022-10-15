@@ -380,6 +380,8 @@
     <string name="settings_summary_content_control_toggle">Werbeblocker und Inhaltsfilterung aktivieren</string>
     <string name="settings_title_vertical_tab_bar">Vertikale Tab-Leiste</string>
     <string name="settings_summary_vertical_tab_bar">Ausschalten um die horizontale Tab-Leiste zu nutzen</string>
+    <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
+    <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
     <string name="settings_title_toolbars_bottom">Suchleiste nach unten</string>
     <string name="settings_title_desktop_mode_default">Desktop-Modus</string>
     <string name="settings_summary_desktop_mode_default">Neue Tabs standardmäßig im Desktop-Modus verwenden</string>

@@ -380,6 +380,8 @@
     <string name="settings_summary_content_control_toggle">Activar bloqueo de anuncios y filtrado de contenido</string>
     <string name="settings_title_vertical_tab_bar">Barra de pestañas vertical</string>
     <string name="settings_summary_vertical_tab_bar">Desactivar para usar la barra de pestañas horizontal</string>
+    <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
+    <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
     <string name="settings_title_toolbars_bottom">Barra de herramientas inferior</string>
     <string name="settings_title_desktop_mode_default">Modo escritorio</string>
     <string name="settings_summary_desktop_mode_default">Definir si las nuevas pestañas usan el modo escritorio por defecto</string>

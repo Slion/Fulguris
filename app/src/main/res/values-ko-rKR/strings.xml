@@ -380,6 +380,8 @@
     <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
     <string name="settings_title_vertical_tab_bar">탭을 탐색 창에 표시</string>
     <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
+    <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
+    <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
     <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
     <string name="settings_title_desktop_mode_default">Desktop mode</string>
     <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>

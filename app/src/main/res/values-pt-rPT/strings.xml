@@ -380,6 +380,8 @@
     <string name="settings_summary_content_control_toggle">Ativar bloqueador de anúncios e filtro de conteúdos</string>
     <string name="settings_title_vertical_tab_bar">Barra de separadores vertical</string>
     <string name="settings_summary_vertical_tab_bar">Desativa a opção para utilizar a barra horizontal</string>
+    <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
+    <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
     <string name="settings_title_toolbars_bottom">Barra de ferramentas em cima</string>
     <string name="settings_title_desktop_mode_default">Modo desktop</string>
     <string name="settings_summary_desktop_mode_default">Define que os novos separadores utilizam o modo desktop</string>
