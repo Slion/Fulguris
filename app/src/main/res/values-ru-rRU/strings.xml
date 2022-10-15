@@ -42,7 +42,6 @@
     <string name="search">Поисковая система</string>
     <string name="search_hint">Поиск</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Широкий вид</string>
     <string name="overViewMode">Загружать страницы в режиме обзора</string>
     <string name="restore_tabs_on_startup">Восстанавливать вкладки при запуске</string>
     <string name="supported_browsers_title">Поддерживаемые браузеры</string>

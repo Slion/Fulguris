@@ -42,7 +42,6 @@
     <string name="search">Arama motoru</string>
     <string name="search_hint">Ara</string>
     <string name="search_action">@string/search_hint</string>
-    <string name="wideViewPort">Geniş ekranda kullan</string>
     <string name="overViewMode">Sayfaları önizleme modunda göster</string>
     <string name="restore_tabs_on_startup">Açılırken önceki sekmeleri geri yükle</string>
     <string name="supported_browsers_title">Desteklenen tarayıcılar</string>
