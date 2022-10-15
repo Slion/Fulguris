@@ -131,22 +131,31 @@ class SettingsActivity : ThemedSettingsActivity(),
         // See: https://stackoverflow.com/questions/14545139/android-back-button-in-the-title-bar
         when (item.itemId) {
             android.R.id.home -> {
-                // Deploy workaround to make sure we exit this activity when user hits back from top level fragments
-                // You can reproduce that issue by disabling that workaround and going in a nested settings fragment such as Look & Feel > Portrait
-                // Then hit back button twice won't exit the settings activity. You can't exit the settings activity anymore.
-                val doFinish = (responsive.childFragmentManager.backStackEntryCount==0 && (!responsive.slidingPaneLayout.isOpen || !responsive.slidingPaneLayout.isSlideable))
-                //val doFinish = !responsive.slidingPaneLayout.isOpen
-                onBackPressed()
-                if (doFinish) {
-                    finish()
-                }
-
-                Handler().postDelayed({ updateTitle() }, 100)
-
+                doOnBackPressed()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        doOnBackPressed()
+    }
+
+    /**
+     *
+     */
+    fun doOnBackPressed() {
+        // Deploy workaround to make sure we exit this activity when user hits back from top level fragments
+        // You can reproduce that issue by disabling that workaround and going in a nested settings fragment such as Look & Feel > Portrait
+        // Then hit back button twice won't exit the settings activity. You can't exit the settings activity anymore.
+        val doFinish = (responsive.childFragmentManager.backStackEntryCount==0 && (!responsive.slidingPaneLayout.isOpen || !responsive.slidingPaneLayout.isSlideable))
+        //val doFinish = !responsive.slidingPaneLayout.isOpen
+        super.onBackPressed()
+        if (doFinish) {
+            finish()
+        }
+        Handler().postDelayed({ updateTitle() }, 100)
     }
 
 
