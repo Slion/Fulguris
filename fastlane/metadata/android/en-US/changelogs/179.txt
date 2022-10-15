@@ -1,0 +1,12 @@
+🖥️ Embedded vertical tab bar.
+🖥️ Desktop mode improvements.
+🖥️ Responsive settings for wide screens.
+🔎 Find in page improvements.
+⌨ New keyboard shortcuts: F3, Shift+F3, Ctrl+F3, Alt+F4.
+Translations update:
+🇨🇳 Chinese
+🇮🇹 Italian
+🇯🇵 Japanese
+🇪🇸 Spanish
+🇷🇺 Russian
+🇹🇷 Turkish
