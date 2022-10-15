@@ -380,6 +380,8 @@
     <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
     <string name="settings_title_vertical_tab_bar">在导航抽屉中显示标签页</string>
     <string name="settings_summary_vertical_tab_bar">关闭会改用横向标签栏</string>
+    <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
+    <string name="settings_summary_tab_bar_in_drawer">When disabled vertical tabs will be shown beside the current tab content</string>
     <string name="settings_title_toolbars_bottom">把工具栏置于底部</string>
     <string name="settings_title_desktop_mode_default">桌面模式</string>
     <string name="settings_summary_desktop_mode_default">设置新建的标签页下是否要默认浏览桌面版网站</string>

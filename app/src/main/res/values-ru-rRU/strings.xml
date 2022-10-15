@@ -42,6 +42,7 @@
     <string name="search">Поисковая система</string>
     <string name="search_hint">Поиск</string>
     <string name="search_action">@string/search_hint</string>
+    <string name="wideViewPort">Широкий вид</string>
     <string name="overViewMode">Загружать страницы в режиме обзора</string>
     <string name="restore_tabs_on_startup">Восстанавливать вкладки при запуске</string>
     <string name="supported_browsers_title">Поддерживаемые браузеры</string>
@@ -380,13 +381,15 @@
     <string name="settings_summary_content_control_toggle">Включить блокировку рекламы и фильтрацию содержимого</string>
     <string name="settings_title_vertical_tab_bar">Вертикальная панель вкладок</string>
     <string name="settings_summary_vertical_tab_bar">Отключите, чтобы использовать горизонтальную панель вкладок</string>
+    <string name="settings_title_tab_bar_in_drawer">Панель вкладок в ящике</string>
+    <string name="settings_summary_tab_bar_in_drawer">Когда отключенные вертикальные вкладки будут отображаться рядом с содержимым текущей вкладки</string>
     <string name="settings_title_toolbars_bottom">Панель инструментов внизу</string>
     <string name="settings_title_desktop_mode_default">Режим \"Настольный ПК\"</string>
     <string name="settings_summary_desktop_mode_default">Определяет, используют ли новые вкладки режим для настольного компьютера по умолчанию</string>
     <string name="settings_title_dark_mode_default">Использовать тёмную тему</string>
     <string name="settings_summary_dark_mode_default">Определяет, используют ли новые вкладки принудительный темный режим по умолчанию</string>
-    <string name="settings_title_swap_bookmarks_and_tabs">Отобразить закладки в табах</string>
-    <string name="settings_summary_swap_bookmarks_and_tabs">Панели вкладок и закладок поменяются местами</string>
+    <string name="settings_title_swap_bookmarks_and_tabs">Поменять местами ящики</string>
+    <string name="settings_summary_swap_bookmarks_and_tabs">Ящики вкладок и закладок поменяются местами</string>
     <string name="do_not_track">Запрос «Не отслеживать»</string>
     <string name="save_data">Запрос «Сохранить данные»</string>
     <string name="remove_identifying_headers">Удалять идентифиц. заголовки</string>
@@ -446,10 +449,10 @@
     <string name="notification_incognito_running_description">Постоянное уведомление инкогнито</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Выдан</string>
-    <string name="ssl_info_issued_to">Выдаётся</string>
-    <string name="ssl_info_issued_on">Выпущено</string>
-    <string name="ssl_info_expires_on">Срок истекает</string>
+    <string name="ssl_info_issued_by">Кем выдан:</string>
+    <string name="ssl_info_issued_to">Кому выдан:</string>
+    <string name="ssl_info_issued_on">Когда выдан:</string>
+    <string name="ssl_info_expires_on">Истекает:</string>
     <!-- Search in page -->
     <string name="next">Далее</string>
     <string name="previous">Предыдущее</string>
@@ -477,7 +480,7 @@
     <string name="session_prompt_confirm_deletion_title">Подтвердите удаление</string>
     <string name="session_prompt_confirm_deletion_message">Вы уверены, что хотите удалить сессию \"%s\"?</string>
     <string name="session_switched">Переключено на \"%s\"</string>
-    <string name="busy">Занято, попробуйте еще раз в ближайшее время.\"</string>
+    <string name="busy">Занято, попробуйте еще раз в ближайшее время.</string>
     <string name="invalid_character_removed">Недействительный символ удалён!</string>
     <string name="invalid_characters_removed">Недействительные символы удалены!</string>
     <string name="reading_mode_image_copyright">Изображение приписывается</string>
