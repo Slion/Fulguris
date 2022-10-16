@@ -4149,7 +4149,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // We want to launch our settings activity
                     val i = Intent(this, SettingsActivity::class.java)
                     /** See [SettingsActivity.onResume] for details of how this is handled on the other side */
-                    // Tell our settings activity to load our Contrubite/Sponsorship fragment
+                    // Tell our settings activity to load our Contribute/Sponsorship fragment
                     i.putExtra(SETTINGS_CLASS_NAME, SponsorshipSettingsFragment::class.java.name)
                     startActivity(i)
                 }).show()

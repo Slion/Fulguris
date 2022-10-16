@@ -109,6 +109,9 @@
     <string name="action_show_homepage">Show homepage</string>
     <string name="action_back">Back</string>
     <string name="action_find">Find in page</string>
+    <string name="action_find_next">Find next</string>
+    <string name="action_find_previous">Find previous</string>
+    <string name="action_find_selection">Find selection</string>
     <string name="action_print">Print</string>
     <string name="action_translate">Translate</string>
     <string name="downloads">Downloads</string>
