@@ -1931,9 +1931,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 return true
             }
             R.id.action_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
+                //startActivity(Intent(this, SettingsActivity::class.java))
                 // Was there just for testing it
-                //onMaxTabReached()
+                onMaxTabReached()
                 return true
             }
             R.id.action_history -> {

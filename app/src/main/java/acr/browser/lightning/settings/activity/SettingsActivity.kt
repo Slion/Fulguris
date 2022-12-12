@@ -25,8 +25,8 @@ const val SETTINGS_CLASS_NAME = "ClassName"
  * Meaning when you go to Portrait or Landscape settings in dual pane mode you don't know where you are.
  */
 @AndroidEntryPoint
-class SettingsActivity : ThemedSettingsActivity(),
-        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+class SettingsActivity : ThemedSettingsActivity()/*,
+        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback*/ {
 
     private lateinit var responsive: ResponsiveSettingsFragment
 
@@ -35,7 +35,12 @@ class SettingsActivity : ThemedSettingsActivity(),
         setContentView(R.layout.activity_settings)
         setTitle(R.string.settings)
 
+
+
+        //val className = intent.extras?.getString(SETTINGS_CLASS_NAME)
+
         responsive = ResponsiveSettingsFragment()
+        // onPreferenceTreeClick
 
         // TODO: savedInstanceState is not null after screen rotation
         // I guess we could use it to save and restore the current state so that we remain on the same page after screen rotation
@@ -63,6 +68,7 @@ class SettingsActivity : ThemedSettingsActivity(),
 
     override fun onResume() {
         super.onResume()
+
         // At this stage our preferences have been created
         try {
             // Start specified fragment if any
@@ -174,12 +180,14 @@ class SettingsActivity : ThemedSettingsActivity(),
         return super.onSupportNavigateUp()
     }
 
-
+/*
     override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat, pref: Preference): Boolean {
         // Instantiate the new Fragment
         startFragment(caller,pref)
         return true
     }
+*/
+
 
 
     /**
@@ -190,7 +198,8 @@ class SettingsActivity : ThemedSettingsActivity(),
         // We need to find the preference that's associated with that fragment, before we can start it.
         (currentFragment() as? RootSettingsFragment)?.let {
             it.preferenceScreen.findPreference(aClass)?.let { pref ->
-                startFragment(it,pref)
+                it.onPreferenceTreeClick(pref)
+                //startFragment(it,pref)
             }
         }
     }
