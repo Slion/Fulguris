@@ -159,7 +159,24 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
     private fun populatePreferenceScreen() {
         // First remove all preferences
         preferenceScreen.removeAll()
+        populatePreferenceScreenStaticItems()
         populateSubscriptions()
+    }
+
+    /**
+     *
+     */
+    private fun populatePreferenceScreenStaticItems() {
+        // Show link to five stars review
+        addPreferenceLinkToGooglePlayStoreFiveStarsReview()
+        //
+        addPreferenceShareLink()
+        // Crowdin link
+        addPreferenceLinkToCrowdin()
+        // Show GitHub sponsorship option
+        addPreferenceLinkToGitHubSponsor()
+        // Add preference with link to Fulguris download page
+        addPreferenceLinkToFulgurisHome()
     }
 
     /**
@@ -223,27 +240,18 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                                       }
                                       false
                                   }
+                                  pref.order = 0 // We want it at the top
                                   preferenceScreen.addPreference(pref)
                               }
                           } else {
+                              Log.e(LOG_TAG, "queryPurchasesAsync failed")
                               Log.e(LOG_TAG, billingResult.debugMessage)
                           }
                         })
-
                     }
-
-                    // Show link to five stars review
-                    addPreferenceLinkToGooglePlayStoreFiveStarsReview()
-                    //
-                    addPreferenceShareLink()
-                    // Crowdin link
-                    addPreferenceLinkToCrowdin()
-                    // Show GitHub sponsorship option
-                    addPreferenceLinkToGitHubSponsor()
-                    // Add preference with link to Fulguris download page
-                    addPreferenceLinkToFulgurisHome()
                 }
                 else -> {
+                    Log.e(LOG_TAG, "querySkuDetailsAsync failed")
                     Log.e(LOG_TAG, billingResult.debugMessage)
                 }
             }
