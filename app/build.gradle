@@ -119,8 +119,8 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 180
-            versionName "1.8.12"
+            versionCode 181
+            versionName "1.8.13"
         }
 
         styx {
@@ -290,7 +290,7 @@ dependencies {
     //implementation group: 'com.google.android.material', name: 'material', version: '1.6.0-alpha01'
 
     // Play Store billing
-    playstoreImplementation 'com.android.billingclient:billing:3.0.3'
+    playstoreImplementation 'com.android.billingclient:billing:5.1.0'
 
     // html parsing for reading mode
     implementation 'org.jsoup:jsoup:1.13.1'

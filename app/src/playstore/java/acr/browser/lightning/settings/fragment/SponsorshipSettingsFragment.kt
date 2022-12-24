@@ -178,52 +178,58 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                     Log.d(LOG_TAG, "populateSubscriptions OK")
                     if (skuDetailsList.orEmpty().isNotEmpty()) {
                         // We got a valid list of SKUs for our subscriptions
-                        var purchases = playStoreBillingClient.queryPurchases(BillingClient.SkuType.SUBS)
-                        //Log.d(LOG_TAG, "Purchases dump: ")
-                        if (purchases.purchasesList.isNullOrEmpty()) {
-                            // No valid subscriptions anymore, just downgrade then
-                            // We only do this here for now so unless user goes to Sponsorship activity after expiration she should still be able to use her expired subscriptions
-                            userPreferences.sponsorship = Sponsorship.TIN
-                        } else {
-                            purchases.purchasesList?.forEach {
-                                //Log.d(LOG_TAG, it.toString())
-                                // Take this opportunity to update our entitlements
-                                // That should fix things up for re-installations
-                                if (it.sku == SPONSOR_BRONZE && it.isAcknowledged) {
-                                    userPreferences.sponsorship = Sponsorship.BRONZE
-                                }
-                            }
-                        }
+                        var purchases = playStoreBillingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS, PurchasesResponseListener { billingResult, purchases ->
+                          if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                              //Log.d(LOG_TAG, "Purchases dump: ")
+                              if (purchases.isEmpty()) {
+                                  // No valid subscriptions anymore, just downgrade then
+                                  // We only do this here for now so unless user goes to Sponsorship activity after expiration she should still be able to use her expired subscriptions
+                                  userPreferences.sponsorship = Sponsorship.TIN
+                              } else {
+                                  purchases.forEach {
+                                      //Log.d(LOG_TAG, it.toString())
+                                      // Take this opportunity to update our entitlements
+                                      // That should fix things up for re-installations
+                                      if (it.skus.contains(SPONSOR_BRONZE)  && it.isAcknowledged) {
+                                          userPreferences.sponsorship = Sponsorship.BRONZE
+                                      }
+                                  }
+                              }
 
-                        // TODO: do we need to check the result?
-                        skuDetailsList?.forEach { skuDetails ->
-                            Log.d(LOG_TAG, skuDetails.toString())
-                            val pref = SwitchPreferenceCompat(requireContext())
-                            pref.title = skuDetails.title
-                            pref.summary = skuDetails.price + formatPeriod(skuDetails.subscriptionPeriod) + "\n" + skuDetails.description
-                            pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_payment, activity?.theme)
-                            // Check if that SKU is an active subscription
-                            pref.isChecked = purchases.purchasesList?.firstOrNull { purchase -> purchase.sku == skuDetails.sku && purchase.isAcknowledged } != null
-                            //
-                            pref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
-                                if (newValue == true) {
-                                    // User is trying to buy that subscription
-                                    // Launch subscription workflow
-                                    val purchaseParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build()
-                                    activity?.let {
-                                        playStoreBillingClient.launchBillingFlow(it, purchaseParams)
-                                        // TODO: Check the result?
-                                        // https://developer.android.com/reference/com/android/billingclient/api/BillingClient#launchBillingFlow(android.app.Activity,%20com.android.billingclient.api.BillingFlowParams)
-                                        // Purchase results are delivered in onPurchasesUpdated
-                                    }
-                                } else {
-                                    // USer is trying to cancel subscription maybe
-                                    showPlayStoreSubscriptions(skuDetails.sku)
-                                }
-                                false
-                            }
-                            preferenceScreen.addPreference(pref)
-                        }
+                              // TODO: do we need to check the result?
+                              skuDetailsList?.forEach { skuDetails ->
+                                  Log.d(LOG_TAG, skuDetails.toString())
+                                  val pref = SwitchPreferenceCompat(requireContext())
+                                  pref.title = skuDetails.title
+                                  pref.summary = skuDetails.price + formatPeriod(skuDetails.subscriptionPeriod) + "\n" + skuDetails.description
+                                  pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_payment, activity?.theme)
+                                  // Check if that SKU is an active subscription
+                                  pref.isChecked = purchases.firstOrNull { purchase -> purchase.skus.contains(skuDetails.sku) && purchase.isAcknowledged } != null
+                                  //
+                                  pref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
+                                      if (newValue == true) {
+                                          // User is trying to buy that subscription
+                                          // Launch subscription workflow
+                                          val purchaseParams = BillingFlowParams.newBuilder().setSkuDetails(skuDetails).build()
+                                          activity?.let {
+                                              playStoreBillingClient.launchBillingFlow(it, purchaseParams)
+                                              // TODO: Check the result?
+                                              // https://developer.android.com/reference/com/android/billingclient/api/BillingClient#launchBillingFlow(android.app.Activity,%20com.android.billingclient.api.BillingFlowParams)
+                                              // Purchase results are delivered in onPurchasesUpdated
+                                          }
+                                      } else {
+                                          // USer is trying to cancel subscription maybe
+                                          showPlayStoreSubscriptions(skuDetails.sku)
+                                      }
+                                      false
+                                  }
+                                  preferenceScreen.addPreference(pref)
+                              }
+                          } else {
+                              Log.e(LOG_TAG, billingResult.debugMessage)
+                          }
+                        })
+
                     }
 
                     // Show link to five stars review
@@ -307,7 +313,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                                 billingResult -> Log.d(LOG_TAG, "onAcknowledgePurchaseResponse: $billingResult")
                                 when (billingResult.responseCode) {
                                     BillingClient.BillingResponseCode.OK -> {
-                                        if (it.sku == SPONSOR_BRONZE) {
+                                        if (it.skus.contains(SPONSOR_BRONZE) ) {
                                             // Purchase acknowledgement was successful
                                             // Update  sponsorship in our settings so that changes can take effect in the app
                                             userPreferences.sponsorship = Sponsorship.BRONZE
