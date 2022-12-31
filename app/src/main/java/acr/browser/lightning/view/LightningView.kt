@@ -491,7 +491,11 @@ class LightningView(
             settings.setGeolocationEnabled(false)
         }
 
-        setUserAgentForPreference(userPreferences)
+        // Since this runs when the activity resumes we need to also take desktop mode into account
+        // Set the user agent properly taking desktop mode into account
+        desktopMode = desktopMode
+        // Don't just do the following as that's not taking desktop mode into account
+        //setUserAgentForPreference(userPreferences)
 
         settings.saveFormData = userPreferences.savePasswordsEnabled && !isIncognito
 
