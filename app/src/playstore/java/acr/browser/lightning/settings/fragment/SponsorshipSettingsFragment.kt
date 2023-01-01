@@ -274,6 +274,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
      */
     private fun addPreferenceLinkToFulgurisHome() {
         val pref = Preference(requireContext())
+        pref.isSingleLineTitle = false
         pref.title = resources.getString(R.string.pref_title_free_download)
         pref.summary = resources.getString(R.string.pref_summary_free_download)
         pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_free_breakfast, activity?.theme)

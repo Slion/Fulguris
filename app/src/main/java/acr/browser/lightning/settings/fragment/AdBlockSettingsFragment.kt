@@ -173,6 +173,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         // "new list" button
         val newList = Preference(requireContext())
+        newList.isSingleLineTitle = false
         newList.title = resources.getString(R.string.add_blocklist)
         newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_add,requireActivity().theme)
         newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -457,6 +458,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
     // class necessary to allow separate onClickListener for the switch
     private inner class FilterListSwitchPreference(context : Context?, val entity: AbpEntity) : SwitchPreferenceCompat(requireContext()) {
+
+        init {
+            isSingleLineTitle = false
+        }
 
         override fun onBindViewHolder(holder: PreferenceViewHolder) {
             super.onBindViewHolder(holder)

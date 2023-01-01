@@ -21,11 +21,13 @@
  All Rights Reserved.
 -->
 <androidx.preference.PreferenceScreen
-xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <PreferenceCategory
     android:icon="@drawable/ic_apps"
-    android:title="@string/settings_title_apps" >
+    android:title="@string/settings_title_apps"
+    app:singleLineTitle="false" >
 
 </PreferenceCategory>
 

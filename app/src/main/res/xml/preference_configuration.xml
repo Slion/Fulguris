@@ -7,51 +7,59 @@
         android:title="@string/settings_title_vertical_tab_bar"
         android:summary="@string/settings_summary_vertical_tab_bar"
         app:icon="@drawable/ic_desktop"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_tab_bar_in_drawer"
         android:title="@string/settings_title_tab_bar_in_drawer"
         android:summary="@string/settings_summary_tab_bar_in_drawer"
         app:icon="@drawable/ic_web"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_toolbars_bottom"
         android:title="@string/settings_title_toolbars_bottom"
         app:icon="@drawable/ic_bottom"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
 
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_pull_to_refresh"
         android:title="@string/pref_title_pull_to_refresh"
         app:icon="@drawable/ic_action_refresh"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
         app:key="@string/pref_key_hide_status_bar"
         app:title="@string/pref_title_hide_status_bar"
         app:icon="@drawable/ic_fullscreen"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
         app:key="@string/pref_key_hide_tool_bar"
         app:title="@string/pref_title_hide_tool_bar"
+        app:icon="@drawable/ic_baseline_aspect_ratio_24"
         app:iconSpaceReserved="false"
-        app:icon="@drawable/ic_baseline_aspect_ratio_24" />
+        app:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
         app:key="@string/pref_key_show_tool_bar_on_scroll_up"
         app:title="@string/pref_title_show_tool_bar_when_scroll_up"
         app:icon="@drawable/ic_eye"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
         app:key="@string/pref_key_show_tool_bar_on_page_top"
         app:title="@string/pref_title_show_tool_bar_on_page_top"
         app:icon="@drawable/ic_vertical_align"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
 
     <fulguris.preference.SliderPreference
         android:layout="@layout/preference_slider"
@@ -69,6 +77,7 @@
         android:value="200"
         app:labelBehavior="gone"
         app:format="%s%%"
+        app:singleLineTitle="false"
         />
 
 </PreferenceScreen>

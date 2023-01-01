@@ -60,6 +60,7 @@ abstract class RedirectSponsorshipSettingsFragment : AbstractSettingsFragment() 
     private fun addPreferenceLinkToGooglePlayStore() {
         // We invite user to installer our Google Play Store release
         val pref = Preference(requireContext())
+        pref.isSingleLineTitle = false
         pref.title = resources.getString(R.string.pref_title_no_sponsorship)
         pref.summary = resources.getString(R.string.pref_summary_no_sponsorship)
         pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_play_arrow, activity?.theme)

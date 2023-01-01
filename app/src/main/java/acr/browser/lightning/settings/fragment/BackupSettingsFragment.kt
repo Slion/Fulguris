@@ -137,7 +137,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     private fun addPreferenceSessionExport(aSession: Session) {
         // We invite user to installer our Google Play Store release
         val pref = Preference(requireContext())
-
+        pref.isSingleLineTitle = false
         pref.icon = requireContext().drawable(R.drawable.ic_cloud_upload)
 
         // Show tab count if any

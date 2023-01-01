@@ -195,6 +195,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
     protected fun addPreferenceLinkToGitHubSponsor() {
         // We invite user to installer our Google Play Store release
         val pref = Preference(requireContext())
+        pref.isSingleLineTitle = false
         pref.title = resources.getString(R.string.pref_title_sponsorship_github)
         pref.summary = resources.getString(R.string.pref_summary_sponsorship_github)
         pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_github_mark, activity?.theme)
@@ -212,6 +213,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
     protected fun addPreferenceLinkToGooglePlayStoreFiveStarsReview() {
         // We invite user to installer our Google Play Store release
         val pref = Preference(requireContext())
+        pref.isSingleLineTitle = false
         pref.title = resources.getString(R.string.pref_title_sponsorship_five_stars)
         pref.summary = resources.getString(R.string.pref_summary_sponsorship_five_stars)
         pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_full, activity?.theme)
@@ -229,6 +231,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
     protected fun addPreferenceLinkToCrowdin() {
         // We invite user to installer our Google Play Store release
         val pref = Preference(requireContext())
+        pref.isSingleLineTitle = false
         pref.title = resources.getString(R.string.pref_title_contribute_translations)
         pref.summary = resources.getString(R.string.pref_summary_contribute_translations)
         pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_translate, activity?.theme)
@@ -246,6 +249,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
     protected fun addPreferenceShareLink() {
         // We invite user to installer our Google Play Store release
         val pref = Preference(requireContext())
+        pref.isSingleLineTitle = false
         pref.title = resources.getString(R.string.pref_title_contribute_share)
         pref.summary = resources.getString(R.string.pref_summary_contribute_share)
         pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_share, activity?.theme)

@@ -3,13 +3,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/settings_about">
+    <PreferenceCategory
+        android:title="@string/settings_about"
+        app:singleLineTitle="false" >
 
         <Preference
             android:title="@string/pref_title_contact_us"
             android:summary="@string/pref_summary_contact_us"
             app:icon="@drawable/ic_email"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false" >
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -25,7 +28,8 @@
             android:key="pref_version"
             android:title="@string/version"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_lightning">
+            app:icon="@drawable/ic_lightning"
+            app:singleLineTitle="false">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -40,7 +44,8 @@
         <Preference
             android:key="@string/pref_key_webview"
             android:title="@string/agent_web_view"
-            app:icon="@drawable/ic_webview">
+            app:icon="@drawable/ic_webview"
+            app:singleLineTitle="false">
 
             <!--
             Launch WebView DevTools, see https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/developer-ui.md#launching-webview-devtools
@@ -62,7 +67,8 @@
             android:summary="@string/license_cpal"
             android:title="@string/app_name"
             app:icon="@drawable/ic_lightning"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -79,7 +85,8 @@
             android:summary="@string/license_mpl"
             android:title="@string/app_name_lightning_browser"
             app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -96,7 +103,8 @@
             android:summary="@string/license_apache"
             android:title="@string/app_name_yuzu_browser"
             app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -113,7 +121,8 @@
             android:summary="@string/license_apache"
             android:title="@string/android_open_source_project"
             app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -130,7 +139,8 @@
             android:summary="@string/freeware"
             android:title="@string/hphosts_ad_server_list"
             app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -147,7 +157,8 @@
             android:summary="@string/license_gnu"
             android:title="@string/library_netcipher"
             app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -163,7 +174,8 @@
             android:summary="@string/license_apache"
             android:title="@string/snacktory"
             app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -179,7 +191,8 @@
             android:summary="@string/mit_license"
             android:title="@string/jsoup"
             app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false">
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false">
 
             <intent
                 android:action="android.intent.action.VIEW"

@@ -10,6 +10,7 @@
         app:icon="@drawable/ic_folder_open"
         android:defaultValue="@bool/pref_default_crash_logs"
         android:summary="@string/pref_summary_crash_logs"
+        app:singleLineTitle="false"
         />
 
     <SwitchPreferenceCompat
@@ -17,6 +18,7 @@
         android:defaultValue="false"
         android:key="leak_canary_enabled"
         android:title="@string/debug_leak_canary"
+        app:singleLineTitle="false"
         />
 
 </PreferenceScreen>

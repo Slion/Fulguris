@@ -3,14 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="@string/settings_privacy">
+        android:title="@string/settings_privacy"
+        app:singleLineTitle="false"
+        >
 
     <SwitchPreferenceCompat
         android:defaultValue="@bool/pref_default_webrtc"
         android:key="@string/pref_key_webrtc"
         android:title="@string/pref_title_webrtc"
         android:summary="@string/pref_summary_webrtc"
-        app:icon="@drawable/ic_videocam" />
+        app:icon="@drawable/ic_videocam"
+        app:singleLineTitle="false"
+        />
 
     <!--
     Not currently used as it does not make much sense,
@@ -22,7 +26,8 @@
         android:title="@string/start_incognito"
         app:singleLineTitle="false"
         app:icon="@drawable/ic_incognito"
-        app:isPreferenceVisible="@bool/const_false"/>
+        app:isPreferenceVisible="@bool/const_false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="@bool/pref_default_crash_report"
@@ -30,7 +35,9 @@
         android:title="@string/pref_title_crash_report"
         android:summary="@string/pref_summary_recommended_anonymous"
         app:iconSpaceReserved="false"
-        app:icon="@drawable/ic_bug" />
+        app:icon="@drawable/ic_bug"
+        app:singleLineTitle="false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="@bool/pref_default_analytics"
@@ -38,38 +45,50 @@
         android:title="@string/pref_title_analytics"
         android:summary="@string/pref_summary_recommended_anonymous"
         app:iconSpaceReserved="false"
-        app:icon="@drawable/ic_query"/>
+        app:icon="@drawable/ic_query"
+        app:singleLineTitle="false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="location"
         android:title="@string/location"
-        app:icon="@drawable/ic_location" />
+        app:icon="@drawable/ic_location"
+        app:singleLineTitle="false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="third_party"
         android:title="@string/third_party"
-        app:icon="@drawable/ic_cookie" />
+        app:icon="@drawable/ic_cookie"
+        app:singleLineTitle="false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="password"
         android:summary="@string/recommended"
         android:title="@string/password"
-        app:icon="@drawable/ic_password" />
+        app:icon="@drawable/ic_password"
+        app:singleLineTitle="false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="do_not_track"
         android:title="@string/do_not_track"
-        app:icon="@drawable/ic_eye_off" />
+        app:icon="@drawable/ic_eye_off"
+        app:singleLineTitle="false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="remove_identifying_headers"
         android:title="@string/remove_identifying_headers"
-        app:icon="@drawable/ic_header" />
+        app:icon="@drawable/ic_header"
+        app:singleLineTitle="false"
+        />
 
     </PreferenceCategory>
 
@@ -80,50 +99,68 @@
         android:defaultValue="false"
         android:key="clear_cache_exit"
         android:title="@string/cache"
-        app:icon="@drawable/ic_cache" />
+        app:icon="@drawable/ic_cache"
+        app:singleLineTitle="false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="clear_history_exit"
         android:title="@string/clear_history_exit"
-        app:icon="@drawable/ic_history" />
+        app:icon="@drawable/ic_history"
+        app:singleLineTitle="false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="clear_cookies_exit"
         android:title="@string/clear_cookies_exit"
-        app:icon="@drawable/ic_cookie_remove" />
+        app:icon="@drawable/ic_cookie_remove"
+        app:singleLineTitle="false"
+        />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="clear_webstorage_exit"
         android:title="@string/clear_web_storage_exit"
-        app:icon="@drawable/ic_earth_remove" />
+        app:icon="@drawable/ic_earth_remove"
+        app:singleLineTitle="false"
+        />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/settings_advanced">
+        android:title="@string/settings_advanced"
+        app:singleLineTitle="false"
+        >
 
     <Preference
         android:key="clear_cache"
         android:title="@string/clear_cache"
-        app:icon="@drawable/ic_cache" />
+        app:icon="@drawable/ic_cache"
+        app:singleLineTitle="false"
+        />
 
     <Preference
         android:key="clear_history"
         android:title="@string/clear_history"
-        app:icon="@drawable/ic_history" />
+        app:icon="@drawable/ic_history"
+        app:singleLineTitle="false"
+        />
 
     <Preference
         android:key="clear_cookies"
         android:title="@string/clear_cookies"
-        app:icon="@drawable/ic_cookie_remove" />
+        app:icon="@drawable/ic_cookie_remove"
+        app:singleLineTitle="false"
+        />
 
     <Preference
         android:key="clear_webstorage"
         android:title="@string/clear_web_storage"
-        app:icon="@drawable/ic_earth_remove" />
+        app:icon="@drawable/ic_earth_remove"
+        app:singleLineTitle="false"
+        />
 
     </PreferenceCategory>
 
