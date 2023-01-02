@@ -1,0 +1,6 @@
+⚙️Settings options titles displayed over multiple lines if needed. 
+🪲Do not reset desktop mode user agent on resume.
+
+Translations update:
+🇨🇳 Chinese
+🇺🇦 Ukrainian
