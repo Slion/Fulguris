@@ -186,7 +186,7 @@
     <string name="blocklist_built_in">内置过滤器</string>
     <string name="blocklist_remove">删除过滤器文件</string>
     <string name="blocklist_remove_confirm">确定要删除过滤器文件 %s 吗？</string>
-    <string name="local_file">地区</string>
+    <string name="local_file">本地</string>
     <string name="local_file_replace">替换</string>
     <string name="local_file_chosen">已选择文件</string>
     <string name="remote_file">远程</string>

@@ -70,7 +70,7 @@
     <string name="agent_system">Sistema</string>
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Desktop)</string>
-    <string name="agent_hide_device">Hide device</string>
+    <string name="agent_hide_device">Ocultar dispositivo</string>
     <string name="title_search_engine">Mecanismo de pesquisa</string>
     <string name="action_ok">Aceitar</string>
     <string name="dialog_download">Gostaria de transferir este arquivo? (%1$s)</string>
@@ -103,11 +103,11 @@
     <string name="action_edit">Editar</string>
     <string name="action_incognito">Nova aba anônima</string>
     <string name="action_homepage">Padrão</string>
-    <string name="action_show_homepage">Show homepage</string>
+    <string name="action_show_homepage">Mostrar página inicial</string>
     <string name="action_back">Voltar</string>
     <string name="action_find">Localizar na página</string>
     <string name="action_print">Imprimir</string>
-    <string name="action_translate">Translate</string>
+    <string name="action_translate">Traduzir</string>
     <string name="downloads">Downloads</string>
     <string name="downloads_notification_description">Disparadores ao concluir download</string>
     <string name="download_pending">A iniciar transferência\u2026</string>
@@ -138,9 +138,9 @@
     <string name="licenses">Licenças Open Source</string>
     <string name="suggestion">Pesquisar por</string>
     <string name="checking_for_updates">Checking for updates…</string>
-    <string name="title_updated">Fulguris was updated</string>
+    <string name="title_updated">Fulguris foi atualizado</string>
     <string name="message_updated">You are now running v%s. Do you want to check release notes online?</string>
-    <string name="title_welcome">Welcome to Fulguris</string>
+    <string name="title_welcome">Bem-vindo(a) ao Fulguris</string>
     <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
     <!-- Ad block -->
     <string name="block_ads">Content control</string>
@@ -157,7 +157,7 @@
     <string name="block_source_remote_description">URL: %1$s</string>
     <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
     <!-- new ad blocker -->
-    <string name="page_blocked">The following page was blocked:</string>
+    <string name="page_blocked">Esta página foi bloqueada:</string>
     <string name="page_blocked_reason">because of:</string>
     <string name="page_blocked_list_ad">%s on ad filters</string>
     <string name="page_blocked_list_user">%s blocked by user rule</string>
