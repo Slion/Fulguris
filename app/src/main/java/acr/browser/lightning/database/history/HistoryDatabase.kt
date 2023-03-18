@@ -3,6 +3,7 @@
  */
 package acr.browser.lightning.database.history
 
+import acr.browser.lightning.database.History
 import acr.browser.lightning.database.HistoryEntry
 import acr.browser.lightning.database.databaseDelegate
 import acr.browser.lightning.extensions.firstOrNullMap
@@ -147,6 +148,19 @@ class HistoryDatabase @Inject constructor(
         ).useMap { it.bindToHistoryEntry() }
     }
 
+    override fun getAllHistoryEntriesAsSingle(): Single<List<History.Entry>> =
+            Single.fromCallable {
+                database.query(
+                        TABLE_HISTORY,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        "$KEY_TIME_VISITED DESC"
+                ).useMap { it.bindToSingleHistoryEntry() }
+            }
+
     fun getHistoryEntriesCount(): Long = DatabaseUtils.queryNumEntries(database, TABLE_HISTORY)
 
     private fun HistoryEntry.toContentValues() = ContentValues().apply {
@@ -161,6 +175,11 @@ class HistoryDatabase @Inject constructor(
         lastTimeVisited = getLong(3)
     )
 
+    private fun Cursor.bindToSingleHistoryEntry() = History.Entry(
+            url = getString(1),
+            title = getString(2),
+            lastTimeVisited = getLong(3)
+    )
     companion object {
 
         // Database version

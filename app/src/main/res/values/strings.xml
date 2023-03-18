@@ -581,6 +581,8 @@
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
 
+    <string name="export_history">Export history to backup</string>
+    <string name="import_history">Import history from backup</string>
 
 
     <string name="pref_title_search_custom_image_url">Search page custom image</string>
@@ -628,6 +630,9 @@
     <string name="settings_export_failure">Sorry, settings could not be exported!</string>
     <string name="settings_exported">Settings exported:</string>
     <string name="settings_reseted">All settings restored</string>
+
+    <string name="history_export_failure">Sorry, history could not be exported!</string>
+    <string name="history_export_path">History exported to</string>
 
     <string name="suggest">Search suggestions (number)</string>
 

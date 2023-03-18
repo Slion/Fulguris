@@ -1,5 +1,6 @@
 package acr.browser.lightning.database.history
 
+import acr.browser.lightning.database.History
 import acr.browser.lightning.database.HistoryEntry
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -53,4 +54,11 @@ interface HistoryRepository {
      * @return a valid observable that emits a list of history items.
      */
     fun lastHundredVisitedHistoryEntries(): Single<List<HistoryEntry>>
+
+    /**
+     * An observable that emits a list of all history items.
+     *
+     * @return a valid observable that emits a list of all history items.
+     */
+    fun getAllHistoryEntriesAsSingle(): Single<List<History.Entry>>
 }

@@ -57,6 +57,17 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/action_history">
+
+        <Preference
+            android:key="export_history"
+            android:title="@string/generic_export"
+            android:summary="@string/export_history"
+            app:icon="@drawable/ic_cloud_upload"
+            app:singleLineTitle="false" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/action_sessions">
 
