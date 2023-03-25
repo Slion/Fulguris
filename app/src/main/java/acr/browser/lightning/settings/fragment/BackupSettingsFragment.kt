@@ -510,7 +510,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         //TODO: specify default path
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = "text/plain" // Specify type of newly created document
+            type = "application/json" // Specify type of newly created document
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
