@@ -63,7 +63,7 @@ public final class HistoryExporter {
         });
     }
 
-    /**
+    /** ToDo: Ability to import the history back
      * Attempts to import bookmarks from the
      * given file. If the file is not in a
      * supported format, it will fail.

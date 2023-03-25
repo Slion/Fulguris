@@ -580,7 +580,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
             // Specify default file name, user can change it.
             // If that file already exists a numbered suffix is automatically generated and appended to the file name between brackets.
             // That is a neat feature as it guarantee no file will be overwritten.
-            putExtra(Intent.EXTRA_TITLE, "FulgurisHistory$timeStamp.txt")
+            putExtra(Intent.EXTRA_TITLE, "FulgurisHistory$timeStamp.json")
         }
         historyExportFilePicker.launch(intent)
         // See historyExportFilePicker declaration below for result handler

@@ -33,6 +33,8 @@ sealed class History(
 ) : WebPage(url, title) {
 
     /**
+     * A data type that represents a page that was visited by the user.
+     *
      * @param lastTimeVisited The last time the page was visited in milliseconds.
      */
     data class Entry(

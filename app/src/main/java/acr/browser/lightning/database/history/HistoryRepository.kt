@@ -58,7 +58,7 @@ interface HistoryRepository {
     /**
      * An observable that emits a list of all history items.
      *
-     * @return a valid observable that emits a list of all history items.
+     * @return a valid observable that emits a list of history items.
      */
     fun getAllHistoryEntriesAsSingle(): Single<List<History.Entry>>
 }
