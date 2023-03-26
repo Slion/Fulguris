@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
-    <string name="message_import">Bookmarks were imported</string>
+    <string name="message_bookmark_imported">Bookmarks were imported</string>
     <string name="message_clear_history">History cleared</string>
     <string name="message_cookies_cleared">Cookies cleared</string>
     <string name="max_tabs">Max tabs reached. Unlock more by purchasing a subscription.</string>

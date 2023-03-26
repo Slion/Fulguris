@@ -134,7 +134,6 @@
     <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
-    <string name="message_import">Bookmarks were imported</string>
     <string name="message_clear_history">History cleared</string>
     <string name="message_cookies_cleared">Cookies cleared</string>
     <string name="max_tabs">Max tabs reached. Unlock more by purchasing a subscription.</string>
@@ -282,6 +281,7 @@
     <string name="bookmark_export_path">Bookmarks exported to</string>
     <string name="bookmark_export_failure">Sorry, bookmarks could not be exported!</string>
     <string name="bookmark_settings">Bookmarks</string>
+    <string name="message_bookmark_imported">Bookmarks were imported</string>
     <string name="import_bookmark_error">Could not import bookmarks from file</string>
     <string name="message_bookmark_added">Bookmark added.</string>
     <string name="message_bookmark_not_added">Bookmark already exists.</string>
@@ -633,6 +633,9 @@
 
     <string name="history_export_failure">Sorry, history could not be exported!</string>
     <string name="history_export_path">History exported to</string>
+    <string name="message_history_imported">History entries were imported</string>
+    <string name="import_history_error">Could not import history from file</string>
+
 
     <string name="suggest">Search suggestions (number)</string>
 

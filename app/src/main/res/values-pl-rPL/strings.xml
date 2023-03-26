@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Kontakt</string>
     <string name="clear_cache">Wyczyść pamięć podręczną</string>
     <string name="message_cache_cleared">Pamięć podręczna została wyczyszczona</string>
-    <string name="message_import">Zakładki zostały zaimportowane</string>
+    <string name="message_bookmark_imported">Zakładki zostały zaimportowane</string>
     <string name="message_clear_history">Historia została wyczyszczona</string>
     <string name="message_cookies_cleared">Ciasteczka zostały wyczyszczone</string>
     <string name="max_tabs">Maksymalna liczba otwartych kart osiągnięta</string>

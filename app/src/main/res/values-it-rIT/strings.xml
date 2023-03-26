@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Contattateci</string>
     <string name="clear_cache">Cancella la cache</string>
     <string name="message_cache_cleared">Cache cancellata</string>
-    <string name="message_import">Segnalibri importati</string>
+    <string name="message_bookmark_imported">Segnalibri importati</string>
     <string name="message_clear_history">Cronologia cancellata</string>
     <string name="message_cookies_cleared">Cookies cancellati</string>
     <string name="max_tabs">Hai raggiunto il numero massimo di schede apribili</string>

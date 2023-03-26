@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">清除快取</string>
     <string name="message_cache_cleared">已清除快取</string>
-    <string name="message_import">書籤已匯入</string>
+    <string name="message_bookmark_imported">書籤已匯入</string>
     <string name="message_clear_history">已清除歷程記錄</string>
     <string name="message_cookies_cleared">已清除 cookies</string>
     <string name="max_tabs">已達最高分頁數量</string>

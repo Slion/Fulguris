@@ -56,6 +56,14 @@ interface HistoryRepository {
     fun lastHundredVisitedHistoryEntries(): Single<List<HistoryEntry>>
 
     /**
+     * Adds a list of history entries to the database.
+     *
+     * @param historyItems the bookmarks to add.
+     * @return an observable that emits a complete event when all the history entries have been added.
+     */
+    fun addHistoryListWithReset(historyItems: List<History.Entry>): Completable
+
+    /**
      * An observable that emits a list of all history items.
      *
      * @return a valid observable that emits a list of history items.

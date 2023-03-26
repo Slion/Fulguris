@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">联系我们</string>
     <string name="clear_cache">清除缓存</string>
     <string name="message_cache_cleared">缓存已清除</string>
-    <string name="message_import">书签已经导入</string>
+    <string name="message_bookmark_imported">书签已经导入</string>
     <string name="message_clear_history">历史记录已清除</string>
     <string name="message_cookies_cleared">Cookie 已清除</string>
     <string name="max_tabs">达到了最大标签页数量</string>

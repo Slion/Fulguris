@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Hubungi kami</string>
     <string name="clear_cache">Hapus cache</string>
     <string name="message_cache_cleared">Cache telah dihapus</string>
-    <string name="message_import">Penanda telah dibawa masuk</string>
+    <string name="message_bookmark_imported">Penanda telah dibawa masuk</string>
     <string name="message_clear_history">Riwayat telah dihapus</string>
     <string name="message_cookies_cleared">Cookies telah dihapus</string>
     <string name="max_tabs">Jumlah tab telah mencapai batas. Untuk menambah batas jumlah tab, ayo berlangganan.</string>

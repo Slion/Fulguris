@@ -4,12 +4,17 @@ import androidx.annotation.NonNull;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import acr.browser.lightning.database.History;
+import acr.browser.lightning.database.WebPageKt;
 import acr.browser.lightning.utils.Preconditions;
 import acr.browser.lightning.utils.Utils;
 import io.reactivex.Completable;
@@ -63,38 +68,37 @@ public final class HistoryExporter {
         });
     }
 
-    /** ToDo: Ability to import the history back
-     * Attempts to import bookmarks from the
+    /**
+     * Attempts to import history entries from the
      * given file. If the file is not in a
      * supported format, it will fail.
      *
      * @param inputStream The stream to import from.
-     * @return A list of bookmarks, or throws an exception if the bookmarks cannot be imported.
-     *
+     * @return A list of history entries, or throws an exception if the history cannot be imported.
+     **/
     @NonNull
-    public static List<Bookmark.Entry> importBookmarksFromFileStream(@NonNull InputStream inputStream) throws Exception {
-        BufferedReader bookmarksReader = null;
+    public static List<History.Entry> importHistoryFromFileStream(@NonNull InputStream inputStream) throws Exception {
+        BufferedReader historyReader = null;
         try {
             //noinspection IOResourceOpenedButNotSafelyClosed
-            bookmarksReader = new BufferedReader(new InputStreamReader(inputStream));
+            historyReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
 
-            List<Bookmark.Entry> bookmarks = new ArrayList<>();
-            while ((line = bookmarksReader.readLine()) != null) {
+            List<History.Entry> history = new ArrayList<>();
+            while ((line = historyReader.readLine()) != null) {
                 JSONObject object = new JSONObject(line);
-                final String folderName = object.getString(KEY_FOLDER);
-                final Bookmark.Entry entry = new Bookmark.Entry(
+                final History.Entry entry = new History.Entry(
                     object.getString(KEY_URL),
                     object.getString(KEY_TITLE),
-                    object.getInt(KEY_ORDER),
-                    WebPageKt.asFolder(folderName)
+                    object.getInt(KEY_LASTTIME)
                 );
-                bookmarks.add(entry);
+                history.add(entry);
             }
 
-            return bookmarks;
+            return history;
         } finally {
-            Utils.close(bookmarksReader);
+            Utils.close(historyReader);
         }
-    }*/
+    }
+
 }

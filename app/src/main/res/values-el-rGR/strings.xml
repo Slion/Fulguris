@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">Καθαρισμός cache</string>
     <string name="message_cache_cleared">Cache καθαρίστηκε</string>
-    <string name="message_import">Εισήχθησαν οι σελιδοδείκτες</string>
+    <string name="message_bookmark_imported">Εισήχθησαν οι σελιδοδείκτες</string>
     <string name="message_clear_history">Καθαρίστηκε το ιστορικό</string>
     <string name="message_cookies_cleared">Καθαρίστηκαν τα Cookies</string>
     <string name="max_tabs">Μέγιστος αριθμός καρτελών ξεπεράστηκε</string>

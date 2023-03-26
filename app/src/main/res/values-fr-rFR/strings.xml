@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">Effacer le cache</string>
     <string name="message_cache_cleared">Cache effacé</string>
-    <string name="message_import">Favoris ont été importés</string>
+    <string name="message_bookmark_imported">Favoris ont été importés</string>
     <string name="message_clear_history">Historique effacé</string>
     <string name="message_cookies_cleared">Cookies effacés</string>
     <string name="max_tabs">Onglets maximuns atteint</string>

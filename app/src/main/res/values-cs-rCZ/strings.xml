@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Kontaktuj nás</string>
     <string name="clear_cache">Vymazat mezipamět</string>
     <string name="message_cache_cleared">Mezipaměť vymazána</string>
-    <string name="message_import">Záložky byly importovány</string>
+    <string name="message_bookmark_imported">Záložky byly importovány</string>
     <string name="message_clear_history">Historie vymazána</string>
     <string name="message_cookies_cleared">Cookies vymazány</string>
     <string name="max_tabs">Max tabs reached. Unlock more from Settings &gt; Sponsorship.</string>

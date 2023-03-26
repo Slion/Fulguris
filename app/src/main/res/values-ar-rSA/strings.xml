@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">اتصل بنا</string>
     <string name="clear_cache">مسح ذاكرة التخزين المؤقت</string>
     <string name="message_cache_cleared">تم مسح الذاكرة المؤقتة</string>
-    <string name="message_import">تم استيراد الإشارات المرجعية</string>
+    <string name="message_bookmark_imported">تم استيراد الإشارات المرجعية</string>
     <string name="message_clear_history">تم مسح سجل التصفح</string>
     <string name="message_cookies_cleared">تم مسح ملفات تعريف الارتباط</string>
     <string name="max_tabs">تم الوصول إلى الحد الأقصى لعلامات التبويب. قم بفتح المزيد عن طريق شراء اشتراك.</string>

@@ -122,6 +122,21 @@ class HistoryDatabase @Inject constructor(
         database.insert(TABLE_HISTORY, null, item.toContentValues())
     }
 
+    override fun addHistoryListWithReset(historyItems: List<History.Entry>): Completable = Completable.fromAction {
+        database.apply {
+            beginTransaction()
+
+            database.delete(TABLE_HISTORY, null, null)
+
+            for (item in historyItems) {
+                database.insert(TABLE_HISTORY, null, item.toContentValues())
+            }
+
+            setTransactionSuccessful()
+            endTransaction()
+        }
+    }
+
     @WorkerThread
     fun getHistoryEntry(url: String): String? =
         database.query(
@@ -164,6 +179,12 @@ class HistoryDatabase @Inject constructor(
     fun getHistoryEntriesCount(): Long = DatabaseUtils.queryNumEntries(database, TABLE_HISTORY)
 
     private fun HistoryEntry.toContentValues() = ContentValues().apply {
+        put(KEY_URL, url)
+        put(KEY_TITLE, title)
+        put(KEY_TIME_VISITED, lastTimeVisited)
+    }
+
+    private fun History.Entry.toContentValues() = ContentValues().apply {
         put(KEY_URL, url)
         put(KEY_TITLE, title)
         put(KEY_TIME_VISITED, lastTimeVisited)

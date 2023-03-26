@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Kontakta oss</string>
     <string name="clear_cache">Rensa cacheminne</string>
     <string name="message_cache_cleared">Cachen rensad</string>
-    <string name="message_import">Bokmärken importerades</string>
+    <string name="message_bookmark_imported">Bokmärken importerades</string>
     <string name="message_clear_history">Historik rensad</string>
     <string name="message_cookies_cleared">Cookies rensade</string>
     <string name="max_tabs">Max tabs reached. Unlock more from Settings &gt; Sponsorship.</string>

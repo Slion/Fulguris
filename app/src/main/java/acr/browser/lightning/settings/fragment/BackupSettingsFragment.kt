@@ -35,6 +35,7 @@ import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.*
+import acr.browser.lightning.history.DefaultHistoryImporter
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.utils.Utils
@@ -75,6 +76,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     @Inject internal lateinit var application: Application
     @Inject internal lateinit var netscapeBookmarkFormatImporter: NetscapeBookmarkFormatImporter
     @Inject internal lateinit var legacyBookmarkImporter: LegacyBookmarkImporter
+    @Inject internal lateinit var DefaultHistoryImporter: DefaultHistoryImporter
     @Inject @DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
     @Inject @MainScheduler internal lateinit var mainScheduler: Scheduler
     @Inject internal lateinit var logger: Logger
@@ -121,7 +123,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
 
         // History
         clickablePreference(preference = SETTINGS_HISTORY_EXPORT, onClick = this::exportHistory)
-        //clickablePreference(preference = SETTINGS_HISTORY_IMPORT, onClick = this::importHistory)
+        clickablePreference(preference = SETTINGS_HISTORY_IMPORT, onClick = this::importHistory)
 
         // Sessions
         clickablePreference(preference = getString(R.string.pref_key_sessions_import), onClick = this::showSessionImportDialog)
@@ -443,7 +445,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                     .subscribeBy(
                         onSuccess = { count ->
                             activity?.apply {
-                                snackbar("$count ${getString(R.string.message_import)}")
+                                snackbar("$count ${getString(R.string.message_bookmark_imported)}")
                                 // Tell browser activity bookmarks have changed
                                 (activity as SettingsActivity).userPreferences.bookmarksChanged = true
                             }
@@ -487,6 +489,82 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                 .resizeAndShow()
 
     }
+
+    private fun importHistory() {
+        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS,
+                object : PermissionsResultAction() {
+                    override fun onGranted() {
+                        showImportHistoryDialog()
+                    }
+
+                    override fun onDenied(permission: String) {
+                        //TODO Show message
+                    }
+                })
+    }
+
+    /**
+     * Starts bookmarks import workflow by showing file selection dialog.
+     */
+    private fun showImportHistoryDialog() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*" // That's needed for some reason, crashes otherwise
+            putExtra(
+                    // List all file types you want the user to be able to select
+                    Intent.EXTRA_MIME_TYPES, arrayOf(
+                    "application/json", // .json
+                    "text/plain" // .txt
+            )
+            )
+        }
+        historyImportFilePicker.launch(intent)
+        // See bookmarkImportFilePicker declaration below for result handler
+    }
+
+    private val historyImportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // Using content resolver to get an input stream from selected URI
+            // See:  https://commonsware.com/blog/2016/03/15/how-consume-content-uri.html
+            result.data?.data?.let{ uri ->
+                context?.contentResolver?.openInputStream(uri).let { inputStream ->
+                    val mimeType = context?.contentResolver?.getType(uri)
+                    importSubscription?.dispose()
+                    importSubscription = Single.just(inputStream)
+                            .map {
+                                    DefaultHistoryImporter.importHistory(it)
+                            }
+                            .flatMap {
+                                historyRepository.addHistoryListWithReset(it).andThen(Single.just(it.size))
+                            }
+                            .subscribeOn(databaseScheduler)
+                            .observeOn(mainScheduler)
+                            .subscribeBy(
+                                    onSuccess = { count ->
+                                        activity?.apply {
+                                            snackbar("$count ${getString(R.string.message_history_imported)}")
+                                            /*// Tell browser activity bookmarks have changed
+                                            (activity as SettingsActivity).userPreferences.bookmarksChanged = true
+                                            */
+                                        }
+                                    },
+                                    onError = {
+                                        logger.log(HISTORY_TAG, "onError: importing history", it)
+                                        val activity = activity
+                                        if (activity != null && !activity.isFinishing && isAdded) {
+                                            Utils.createInformativeDialog(activity, R.string.title_error, R.string.import_history_error)
+                                        } else {
+                                            application.toast(R.string.import_history_error)
+                                        }
+                                    }
+                            )
+                }
+            }
+        }
+    }
+
+
 
     private fun exportHistory() {
         PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS,
@@ -850,7 +928,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_SETTINGS_EXPORT = "export_settings"
         private const val SETTINGS_SETTINGS_IMPORT = "import_settings"
         private const val SETTINGS_HISTORY_EXPORT = "export_history"
-        //private const val SETTINGS_HISTORY_IMPORT = "import_history"
+        private const val SETTINGS_HISTORY_IMPORT = "import_history"
         private const val KSessionMimeType = "application/octet-stream"
 
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)

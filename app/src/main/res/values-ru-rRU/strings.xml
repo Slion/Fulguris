@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Свяжитесь с нами</string>
     <string name="clear_cache">Очистить кэш</string>
     <string name="message_cache_cleared">Кэш очищен</string>
-    <string name="message_import">Закладки импортированы</string>
+    <string name="message_bookmark_imported">Закладки импортированы</string>
     <string name="message_clear_history">История очищена</string>
     <string name="message_cookies_cleared">Cookie очищены</string>
     <string name="max_tabs">Достигнуто максимальное количество вкладок. Разблокируйте больше, купив подписку.</string>

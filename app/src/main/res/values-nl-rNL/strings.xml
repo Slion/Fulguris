@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">Wis cache</string>
     <string name="message_cache_cleared">Cache gewist</string>
-    <string name="message_import">Bladwijzers zijn geïmporteerd</string>
+    <string name="message_bookmark_imported">Bladwijzers zijn geïmporteerd</string>
     <string name="message_clear_history">Historiek gewist</string>
     <string name="message_cookies_cleared">Cookies gewist</string>
     <string name="max_tabs">Maximum aantal tabbladen bereikt</string>

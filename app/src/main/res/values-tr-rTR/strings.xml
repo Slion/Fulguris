@@ -128,7 +128,7 @@
     <string name="pref_title_contact_us">Bize ulaşın</string>
     <string name="clear_cache">Önbelleği temizle</string>
     <string name="message_cache_cleared">Önbellek temizlendi</string>
-    <string name="message_import">Yer işaretleri içe aktarıldı</string>
+    <string name="message_bookmark_imported">Yer işaretleri içe aktarıldı</string>
     <string name="message_clear_history">Geçmiş temizlendi</string>
     <string name="message_cookies_cleared">Çerezler temizlendi</string>
     <string name="max_tabs">En yüksek sekme sınırına ulaşıldı</string>
