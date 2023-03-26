@@ -95,6 +95,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     private var bookmarksSortSubscription: Disposable? = null
     private var historySubscription: Disposable? = null
 
+
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
@@ -519,7 +520,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
             )
         }
         historyImportFilePicker.launch(intent)
-        // See bookmarkImportFilePicker declaration below for result handler
+        // See historyImportFilePicker declaration below for result handler
     }
 
     private val historyImportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -536,7 +537,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                                     DefaultHistoryImporter.importHistory(it)
                             }
                             .flatMap {
-                                historyRepository.addHistoryListWithReset(it).andThen(Single.just(it.size))
+                                historyRepository.addHistoryList(it).andThen(Single.just(it.size))
                             }
                             .subscribeOn(databaseScheduler)
                             .observeOn(mainScheduler)
@@ -544,9 +545,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                                     onSuccess = { count ->
                                         activity?.apply {
                                             snackbar("$count ${getString(R.string.message_history_imported)}")
-                                            /*// Tell browser activity bookmarks have changed
-                                            (activity as SettingsActivity).userPreferences.bookmarksChanged = true
-                                            */
                                         }
                                     },
                                     onError = {

@@ -122,14 +122,28 @@ class HistoryDatabase @Inject constructor(
         database.insert(TABLE_HISTORY, null, item.toContentValues())
     }
 
-    override fun addHistoryListWithReset(historyItems: List<History.Entry>): Completable = Completable.fromAction {
+    override fun addHistoryList(historyItems: List<History.Entry>): Completable = Completable.fromAction {
         database.apply {
             beginTransaction()
 
-            database.delete(TABLE_HISTORY, null, null)
-
             for (item in historyItems) {
-                database.insert(TABLE_HISTORY, null, item.toContentValues())
+                database.query(
+                        false,
+                        TABLE_HISTORY,
+                        arrayOf(KEY_ID),
+                        "$KEY_URL = ?",
+                        arrayOf(item.url),
+                        null,
+                        null,
+                        null,
+                        "1"
+                ).use {
+                    if (it.count > 0) {
+                        database.update(TABLE_HISTORY, item.toContentValues(), "$KEY_URL = ?", arrayOf(item.url))
+                    } else {
+                        database.insert(TABLE_HISTORY, null, item.toContentValues())
+                    }
+                }
             }
 
             setTransactionSuccessful()

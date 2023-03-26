@@ -582,7 +582,7 @@
     <string name="import_settings">Import settings from backup</string>
 
     <string name="export_history">Export history to backup</string>
-    <string name="import_history">Import history from backup</string>
+    <string name="import_history">Add history from backup</string>
 
 
     <string name="pref_title_search_custom_image_url">Search page custom image</string>

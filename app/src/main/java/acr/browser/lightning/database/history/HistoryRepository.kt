@@ -58,10 +58,10 @@ interface HistoryRepository {
     /**
      * Adds a list of history entries to the database.
      *
-     * @param historyItems the bookmarks to add.
+     * @param historyItems the history entries to add.
      * @return an observable that emits a complete event when all the history entries have been added.
      */
-    fun addHistoryListWithReset(historyItems: List<History.Entry>): Completable
+    fun addHistoryList(historyItems: List<History.Entry>): Completable
 
     /**
      * An observable that emits a list of all history items.
