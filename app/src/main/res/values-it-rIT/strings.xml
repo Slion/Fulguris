@@ -144,59 +144,59 @@
     <string name="message_welcome">Visita la nostra home page per saperne di più su questo potente browser web?</string>
     <!-- Ad block -->
     <string name="block_ads">Controllo contenuti</string>
-    <string name="block_ad_source">Hosts file source</string>
-    <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
-    <string name="block_ad_refresh_now">Refresh hosts now</string>
+    <string name="block_ad_source">Fonte dei file hosts</string>
+    <string name="block_ad_remote_refresh_frequency_description">Per file host remoto</string>
+    <string name="block_ad_refresh_now">Aggiorna gli host ora</string>
     <string name="block_remote_frequency_daily">Ogni giorno</string>
     <string name="block_remote_frequency_weekly">Settimanalmente</string>
     <string name="block_remote_frequency_monthly">Mensilmente</string>
-    <string name="block_source_default">Default hosts</string>
-    <string name="block_source_local">Local hosts file</string>
+    <string name="block_source_default">Host predefiniti</string>
+    <string name="block_source_local">File locale degli host</string>
     <string name="block_source_local_description">File: %1$s</string>
-    <string name="block_source_remote">Remote hosts file</string>
+    <string name="block_source_remote">File remoto degli host</string>
     <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
+    <string name="ad_block_load_failure">Impossibile caricare gli host dalla sorgente del blocco pubblicità.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">La seguente pagina è stata bloccata:</string>
     <string name="page_blocked_reason">a causa di:</string>
-    <string name="page_blocked_list_ad">%s on ad filters</string>
-    <string name="page_blocked_list_user">%s blocked by user rule</string>
+    <string name="page_blocked_list_ad">%s sui filtri pubblicitari</string>
+    <string name="page_blocked_list_user">%s bloccato dalla regola utente</string>
     <string name="page_blocked_list_malware">%s on malware filters</string>
     <string name="request_blocked">Richiesta bloccata</string>
     <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Modalità aggiornamento automatico</string>
     <string name="blocklist_update_on">Aggiornamento automatico ON</string>
     <string name="blocklist_update_off">Aggiornamento automatico OFF</string>
-    <string name="blocklist_update_wifi">Only on non-metered connections</string>
+    <string name="blocklist_update_wifi">Consenti sincronizzazione con connessione a consumo</string>
     <string name="blocklist_update">Aggiorna filtri</string>
     <string name="blocklist_update_frequency">Frequenza aggiornamento automatico</string>
     <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
     <string name="blocklist_update_now">Aggiorna le liste ora</string>
-    <string name="blocklist_last_update">Last update: %s</string>
+    <string name="blocklist_last_update">Ultimo aggiornamento: %s</string>
     <string name="blocklist_updating">Aggiornamento…</string>
-    <string name="blocklist_update_error">Error while updating filters list %s</string>
+    <string name="blocklist_update_error">Errore durante l\'aggiornamento dell\'elenco filtri %s</string>
     <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <!-- not used any more, generic error for all non-successful codes -->
-    <string name="blocklist_update_error_code">Error while updating filters list %1$s: status code %2$s</string>
+    <string name="blocklist_update_error_code">Errore durante l\'aggiornamento dell\'elenco filtri %1$s: codice di stato %2$s</string>
     <string name="add_blocklist">Aggiungi file di filtri</string>
     <string name="add_blocklist_hint">Puoi scegliere elenchi di host o qualsiasi elenco compatibile con le regole AdBlockPlus</string>
     <string name="enable_blocklist">Abilita questo elenco</string>
     <string name="invalid_title">Titolo non valido</string>
     <string name="invalid_url">URL non valido</string>
-    <string name="blocklist_built_in">Built-in filters</string>
+    <string name="blocklist_built_in">Filtri incorporati</string>
     <string name="blocklist_remove">Rimuovere il file dei filtri</string>
-    <string name="blocklist_remove_confirm">Really remove filters file %s?</string>
+    <string name="blocklist_remove_confirm">Rimuovere veramente il file filtri %s?</string>
     <string name="local_file">Locale</string>
     <string name="local_file_replace">Sostituisci</string>
     <string name="local_file_chosen">file selezionato</string>
     <string name="remote_file">Remoto</string>
     <string name="use_modify_filters">Filtri modificatori</string>
-    <string name="use_modify_filters_warning">In some cases, modifier filters have been found to break websites in this browser. Until implementation is improved, you can enable them at your own risk. Disabling for main-frame documents only avoids most issues.</string>
-    <string name="modify_filters_not_for_main_frame">Disable for main frame only</string>
+    <string name="use_modify_filters_warning">In alcuni casi, i filtri modificatori sono stati scoperti a crashare i siti Web in questo browser. Fino a quando l\'implementazione non sarà migliorata, è possibile attivarli a proprio rischio. Disabilitare per i documenti main-frame evita la maggior parte dei problemi.</string>
+    <string name="modify_filters_not_for_main_frame">Disabilita solo per frame principale</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Azione annullata.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Don\'t ask again for this browsing session.</string>
+    <string name="ssl_warning_dont_ask_again">Non richiedere per questa sessione.</string>
     <string name="message_insecure_connection">La connessione a questo sito non è sicura:\n%1$s\Procedere ugualmente?</string>
     <string name="message_certificate_date_invalid">la data del certificato non è valida</string>
     <string name="message_certificate_expired">il certificato è scaduto</string>
@@ -206,14 +206,14 @@
     <string name="message_certificate_untrusted">il certificato non è affidabile</string>
     <!-- permissions request -->
     <string name="title_permission_request">Richiesta di permesso</string>
-    <string name="message_permission_request">%1$s\n\nwould like to use:\n\n%2$s</string>
+    <string name="message_permission_request">%1$s\n\nvorrebbe usare:\n\n%2$s</string>
     <string name="title_form_resubmission">Reinvio modulo</string>
     <string name="message_form_resubmission">Vuoi inviare nuovamente i dati?</string>
     <string name="message_location">\nVorrebbe usare la tua posizione</string>
     <string name="action_allow">Consenti</string>
     <string name="action_dont_allow">Non consentire</string>
     <string name="title_sign_in">Registrati</string>
-    <string name="label_realm">Server message: %s</string>
+    <string name="label_realm">Messaggio del server: %s</string>
     <string name="hint_username">Nome utente</string>
     <string name="hint_password">Password</string>
     <string name="search_suggestions">Suggerimenti di ricerca</string>
@@ -244,9 +244,9 @@
     <string name="folder_default">Predefinito</string>
     <string name="folder_custom">Personalizzato</string>
     <string name="untitled">Senza titolo</string>
-    <string name="freeware">Freeware</string>
-    <string name="android_open_source_project">Android Open Source Project</string>
-    <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>
+    <string name="freeware">Gratuito</string>
+    <string name="android_open_source_project">Progetto Android Open Source</string>
+    <string name="hphosts_ad_server_list">hpHosts Elenco dei server annunci</string>
     <string name="reopening_recent_tab">Scheda precedente riaperta</string>
     <string name="rendering_mode">Modalità Rendering</string>
     <string name="name_inverted">Inverso</string>
@@ -264,7 +264,7 @@
     <string name="export_bookmarks">Esporta i segnalibri in un backup</string>
     <string name="import_backup">Importa i segnalibri da un backup</string>
     <string name="bookmark_export_path">Segnalibri esportati in</string>
-    <string name="bookmark_export_failure">Sorry, bookmarks could not be exported!</string>
+    <string name="bookmark_export_failure">Spiacente, i segnalibri non possono essere esportati!</string>
     <string name="bookmark_settings">Segnalibri</string>
     <string name="import_bookmark_error">Impossibile importare i segnalibri dal file</string>
     <string name="message_bookmark_added">Segnalibro aggiunto.</string>
@@ -288,20 +288,20 @@
     <string name="pref_category_portrait">Ritratto</string>
     <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filtri</string>
-    <string name="pref_category_summary_filters">Local or remote files defining your content control rules</string>
+    <string name="pref_category_summary_filters">File locali o remoti che definiscono le regole di controllo dei contenuti</string>
     <string name="pref_category_on_tab_close">Quando si chiude la scheda</string>
     <string name="pref_category_on_tab_change">Quando si cambia scheda</string>
-    <string name="pref_category_on_tab_back_forward">When going back or forward</string>
+    <string name="pref_category_on_tab_back_forward">Quando si torna indietro o in avanti</string>
     <string name="pref_title_hide_status_bar">Nascondi barra di stato</string>
-    <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
-    <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
-    <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
+    <string name="pref_title_hide_tool_bar">Nascondi barra navigazione durante lo scorrimento</string>
+    <string name="pref_title_show_tool_bar_when_scroll_up">Mostra barra degli strumenti quando scorri in alto</string>
+    <string name="pref_title_show_tool_bar_on_page_top">Mostra la barra degli strumenti in cima alla pagina</string>
     <string name="pref_title_locked_drawers">Pannelli bloccati</string>
-    <string name="pref_summary_locked_drawers">Tabs and Bookmarks panels can\'t be dragged</string>
-    <string name="pref_title_use_bottom_sheets">Use bottom sheets</string>
-    <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
-    <string name="pref_title_tab_list_item_show_close_button">Show close tab button</string>
-    <string name="pref_summary_tab_list_item_show_close_button">Display close tab buttons on tab list items</string>
+    <string name="pref_summary_locked_drawers">I pannelli di schede e segnalibri non possono essere trascinati</string>
+    <string name="pref_title_use_bottom_sheets">Usa schede inferiori</string>
+    <string name="pref_summary_use_bottom_sheets">Le schede e i segnalibri sono mostrati nei fogli inferiori invece dei cassetti laterali</string>
+    <string name="pref_title_tab_list_item_show_close_button">Mostra pulsante chiusura tab</string>
+    <string name="pref_summary_tab_list_item_show_close_button">Mostra pulsanti chiusura tab sugli elementi della lista dei tab</string>
     <string name="pref_title_menu_show_exit">Voce \"Esci\" nel menu</string>
     <string name="pref_summary_menu_show_exit">Mostra l\'opzione Esci dall\'app nel menu. La modalità in incognito lo visualizza sempre indipendentemente dal menù.</string>
     <string name="pref_title_menu_new_tab">Nuova voce di menu scheda</string>
@@ -309,22 +309,22 @@
     <string name="pref_title_crash_report">Rapporto di crash</string>
     <string name="pref_title_analytics">Analitica</string>
     <string name="pref_title_pull_to_refresh">Tira per rinfrescare</string>
-    <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
-    <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
-    <string name="pref_title_desktop_width">Desktop width</string>
-    <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
-    <string name="pref_title_no_sponsorship">In-app sponsorship not available</string>
-    <string name="pref_summary_no_sponsorship">Use Fulguris from Google Play to sponsor us.</string>
-    <string name="pref_title_free_download">Free download</string>
-    <string name="pref_summary_free_download">Fulguris is Open Source Software. You can download our free edition including full feature set and unlimited tabs.</string>
-    <string name="pref_title_sponsorship_github">Sponsor us on GitHub</string>
-    <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
-    <string name="pref_title_sponsorship_five_stars">Five stars review</string>
-    <string name="pref_summary_sponsorship_five_stars">Giving us a five stars review on Google Play is a great way to help this project.</string>
+    <string name="pref_summary_recommended_anonymous">Consigliato, i dati raccolti sono anonimi</string>
+    <string name="pref_summary_color_mode">Applica il colore della pagina web allo strumento e alla barra di stato</string>
+    <string name="pref_title_desktop_width">Larghezza desktop</string>
+    <string name="pref_summary_desktop_width">Larghezza della vista modalità desktop, impostala più alta per contenuti più piccoli</string>
+    <string name="pref_title_no_sponsorship">Sponsorizzazione in-app non disponibile</string>
+    <string name="pref_summary_no_sponsorship">Usa Fulguris da Google Play per sponsorizzarci.</string>
+    <string name="pref_title_free_download">Download gratuito</string>
+    <string name="pref_summary_free_download">Fulguris è Open Source Software. È possibile scaricare la nostra edizione gratuita, tra cui set completo di funzionalità e schede illimitate.</string>
+    <string name="pref_title_sponsorship_github">Sponsorizzaci su Github</string>
+    <string name="pref_summary_sponsorship_github">Puoi sponsorizzare il nostro lavoro su GitHub per contribuire a rendere questo progetto un successo.</string>
+    <string name="pref_title_sponsorship_five_stars">Recensione a cinque stelle</string>
+    <string name="pref_summary_sponsorship_five_stars">Darci una recensione di cinque stelle su Google Play è un ottimo modo per aiutare questo progetto.</string>
     <string name="pref_title_contribute_translations">Traduzioni</string>
-    <string name="pref_summary_contribute_translations">You can help translate Fulguris to your locale language on Crowdin.</string>
-    <string name="pref_title_contribute_share">Spread the word</string>
-    <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
+    <string name="pref_summary_contribute_translations">Puoi aiutare a tradurre Fulguris nella tua lingua locale su Crowdin.</string>
+    <string name="pref_title_contribute_share">Diffondere la parola</string>
+    <string name="pref_summary_contribute_share">Abbaglia i tuoi amici e le tue comunità condividendo Fulguris con loro.</string>
     <string name="pref_title_language">Lingua</string>
     <string name="language_system_default">Predefinito del sistema</string>
     <string name="settings_about_explain">Informazioni sulla versione, l\'autore e le licenze.</string>
@@ -376,11 +376,11 @@
     <string name="message_web_storage_cleared">Memoria siti cancellata</string>
     <string name="hosts_source">Fonte file host</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Ad blocker and content filtering</string>
-    <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
+    <string name="settings_summary_content_control">Blocco pubblicità e filtraggio dei contenuti</string>
+    <string name="settings_summary_content_control_toggle">Attiva blocco pubblicità e filtraggio contenuti</string>
     <string name="settings_title_vertical_tab_bar">Mostra le schede nel menù</string>
-    <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
-    <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
+    <string name="settings_summary_vertical_tab_bar">Disabilitare per usare la barra delle schede orizzontali</string>
+    <string name="settings_title_tab_bar_in_drawer">Barra delle schede nel cassetto</string>
     <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
     <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
     <string name="settings_title_desktop_mode_default">Modalità desktop</string>
@@ -390,9 +390,9 @@
     <string name="settings_title_swap_bookmarks_and_tabs">Inverti pannello segnalibri con schede</string>
     <string name="settings_summary_swap_bookmarks_and_tabs">Tabs and Bookmarks drawers will swap places</string>
     <string name="do_not_track">\"Non tenere traccia\"</string>
-    <string name="save_data">Request \'Save-Data\'</string>
+    <string name="save_data">Richiedi \'Save-Data\'</string>
     <string name="remove_identifying_headers">Rimuovi header di identificazione</string>
-    <string name="pref_title_webrtc">WebRTC Support</string>
+    <string name="pref_title_webrtc">Supporto WebRTC</string>
     <string name="pref_summary_webrtc">Allows Real Time Communication over the Web using your device camera and microphone</string>
     <string name="action_add_to_homescreen">Aggiungi a schermata Home</string>
     <string name="message_added_to_homescreen">Scorciatoia aggiunta</string>
@@ -431,19 +431,19 @@
     <string name="dialog_adblock_disable_for_site">Disable ad block for site</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">URL personalizzato</string>
-    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - No JavaScript</string>
+    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo - Nessun JavaScript</string>
     <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
-    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - No JavaScript</string>
+    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - Nessun JavaScript</string>
     <string name="search_engine_qwant_lite">Qwant Lite</string>
     <string name="search_engine_startpage_mobile">StartPage Mobile</string>
-    <string name="search_engine_yahoo_no_js">Yahoo - No JavaScript</string>
+    <string name="search_engine_yahoo_no_js">Yahoo - Nessun JavaScript</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d incognito tab open</item>
+        <item quantity="one">%1$d scheda in incognito aperta</item>
         <item quantity="other">%1$d incognito tabs open</item>
     </plurals>
     <string name="notification_incognito_running_message">Toccare per aprire</string>
-    <string name="notification_incognito_running_description">Ongoing incognito notification</string>
+    <string name="notification_incognito_running_description">Notifica in incognito in corso</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Issued by</string>
@@ -458,15 +458,15 @@
     <!-- Frozen tabs -->
     <string name="tab_frozen">Congelato...</string>
     <!-- Search -->
-    <string name="search_insert_suggestion">Insert suggestion</string>
+    <string name="search_insert_suggestion">Inserisci suggerimento</string>
     <string name="action_close_all_other_tabs">Chiudi tutte le altre schede</string>
     <string name="action_restore_all_tabs">Ripristina tutte le schede</string>
     <string name="action_restore_tab">Ripristina scheda</string>
     <string name="settings_summary_apps">Abilita app di terze parti</string>
     <string name="settings_title_apps">Apps</string>
-    <string name="settings_app_prefix">app_for_</string>
+    <string name="settings_app_prefix">app_per_</string>
     <string name="dialog_title_third_party_app">Applicazione di terze parti disponibile</string>
-    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
+    <string name="dialog_message_third_party_app">Vuoi lanciare l\'applicazione associata a quel sito web?</string>
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">@string/agent_default</string>
@@ -476,12 +476,12 @@
     <string name="session_cant_delete_current">Impossibile eliminare sessione corrente!</string>
     <string name="session_prompt_confirm_deletion_title">Conferma eliminazione</string>
     <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
-    <string name="session_switched">Switched to \"%s\"</string>
-    <string name="busy">Busy, try again shortly.</string>
-    <string name="invalid_character_removed">Invalid character removed!</string>
-    <string name="invalid_characters_removed">Invalid characters removed!</string>
-    <string name="reading_mode_image_copyright">Image attributed to</string>
-    <string name="reading_mode_image_caption">Image with caption</string>
+    <string name="session_switched">Passato a \"%s\"</string>
+    <string name="busy">Servizio occupato, riprova tra poco.</string>
+    <string name="invalid_character_removed">Carattere invalido rimosso!</string>
+    <string name="invalid_characters_removed">Caratteri invalidi rimossi!</string>
+    <string name="reading_mode_image_copyright">Immagine attriubuita a</string>
+    <string name="reading_mode_image_caption">Immagine con didascalia</string>
     <!-- text-to-speech -->
     <string name="tts">Leggi pagina</string>
     <string name="stop_tts">Interrompi lettura</string>
@@ -492,7 +492,7 @@
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
     <string name="question_what_do_you_want_to_use">Cosa vuoi usare?</string>
-    <string name="button_link">Link</string>
+    <string name="button_link">Collegamento</string>
     <string name="button_image">Immagine</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Tab chiuso</string>
@@ -500,35 +500,35 @@
     <string name="button_dismiss">Respingi</string>
     <!-- Find in page -->
     <string name="no_match_found">Nessuna partita trovata!</string>
-    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="match_x_of_n">Corrispondenza <xliff:g id="current_match" example="1">%1$d</xliff:g> di <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Mostra snackbar</string>
     <string name="pref_title_show_animation">Mostra animazione</string>
     <string name="pref_title_vibrate">Vibrazione</string>
     <string name="pref_title_duration">Durata</string>
     <string name="pref_summary_duration">Durata animazione in centisecondi</string>
     <string name="pref_category_title_session_export">Esporta sessione</string>
-    <string name="pref_category_summary_session_export">Pick the session you want to export</string>
-    <string name="error_session_file_corrupted">Error: corrupted session file!</string>
-    <string name="error_recovery_session">Error: a recovery session was created!</string>
-    <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
-    <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">Show SSL warning dialogs</string>
-    <string name="start_incognito">Permanently behave as if in incognito mode</string>
-    <string name="force_zoom_summary">Does not work if JavaScript is not enabled</string>
+    <string name="pref_category_summary_session_export">Scegli la sessione che vuoi esportare</string>
+    <string name="error_session_file_corrupted">Errore: file di sessione corrotto!</string>
+    <string name="error_recovery_session">Errore: è stata creata una sessione di ripristino!</string>
+    <string name="message_session_imported">Sessione importata: <xliff:g id="session_name" example="News">%s</xliff:g></string>
+    <string name="message_session_exported">Sessione esportata: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
+    <string name="show_ssl">Mostra finestre avviso SSL</string>
+    <string name="start_incognito">Mantini permanentemente modalità incognito</string>
+    <string name="force_zoom_summary">Non funziona se JavaScript non è abilitato</string>
     <string name="force_zoom">Forza zoom per i siti web</string>
     <string name="algorithm">Algoritmo:</string>
-    <string name="oid">Object Identifier (OID):</string>
-    <string name="export_settings">Export settings to backup</string>
-    <string name="import_settings">Import settings from backup</string>
+    <string name="oid">Identificatore Oggetto (OID):</string>
+    <string name="export_settings">Esporta impostazioni in backup</string>
+    <string name="import_settings">Importa impostazioni dal backup</string>
     <string name="pref_title_search_custom_image_url">Cerca l\'immagine personalizzata della pagina</string>
-    <string name="pref_summary_search_custom_image_url">Only for Custom URL</string>
-    <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
+    <string name="pref_summary_search_custom_image_url">Solo per URL personalizzato</string>
+    <string name="long_press_tab">Premendo a lungo sull\'icona \"Tab\" apre una nuova scheda</string>
     <string name="pref_title_close_drawer">Chiudi cassetto</string>
-    <string name="pref_summary_close_drawer">Automatically close Drawer after creating or deleting a tab</string>
-    <string name="block_javascript">Block JavaScript for site</string>
-    <string name="block_sites_title">Separate sites with a comma</string>
-    <string name="listed_javascript">Only allow JavaScript for listed sites</string>
-    <string name="unlisted_javascript">Block JavaScript for listed sites</string>
+    <string name="pref_summary_close_drawer">Chiudi automaticamente il cassetto dopo aver creato o eliminato una scheda</string>
+    <string name="block_javascript">Blocca JavaScript per il sito</string>
+    <string name="block_sites_title">Separa siti con una virgola</string>
+    <string name="listed_javascript">Permetti JavaScript solo per siti elencati</string>
+    <string name="unlisted_javascript">Blocca JavaScript per i siti indicati</string>
     <string name="allow_javascript">Allow JavaScript for this site</string>
     <string name="blocked_javascript">Block JavaScript for this site</string>
     <string name="page_source">Visualizza sorgente pagina</string>
@@ -563,16 +563,16 @@
     <string name="suggest">Search suggestions (number)</string>
     <string name="error_tip">• Check the Address for typing errors such as ww.example.com instead of www.example.com</string>
     <string name="error_tip2">• If you are unable to load any pages, check your devices data or Wi-Fi connection.</string>
-    <string name="action_cycle_tabs_forwards">Cycle tabs forwards</string>
-    <string name="action_cycle_tabs_backwards">Cycle tabs backwards</string>
+    <string name="action_cycle_tabs_forwards">Schede ciclo in avanti</string>
+    <string name="action_cycle_tabs_backwards">Schede ciclo all\'indietro</string>
     <string name="action_focus_address_bar">Barra degli indirizzi del focus</string>
     <string name="action_tab_history_forward">Avanti nella cronologia delle schede</string>
-    <string name="action_toggle_toolbar">Toggle toolbar</string>
-    <string name="action_toggle_status_bar">Toggle status bar</string>
-    <string name="action_text_size_increment">Increase text size</string>
-    <string name="action_text_size_decrement">Decrease text size</string>
-    <string name="action_text_size_small_increment">Increase text size a bit</string>
-    <string name="action_text_size_small_decrement">Decrease text size a bit</string>
+    <string name="action_toggle_toolbar">Attiva/disattiva La barra degli strumenti</string>
+    <string name="action_toggle_status_bar">Attiva/disattiva La barra di stato</string>
+    <string name="action_text_size_increment">Aumenta dimensione testo</string>
+    <string name="action_text_size_decrement">Diminuisci dimensione testo</string>
+    <string name="action_text_size_small_increment">Aumenta leggermente la dimensione del testo</string>
+    <string name="action_text_size_small_decrement">Diminuisci leggermente la dimensione del testo</string>
     <string name="action_open_bookmark_list">Apri elenco segnalibri</string>
     <string name="action_open_tab_list">Apri elenco schede</string>
     <string name="action_open_session_list">Apri elenco sessioni</string>

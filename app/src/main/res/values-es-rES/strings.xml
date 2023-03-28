@@ -177,7 +177,7 @@
     <string name="blocklist_update_error">Error al actualizar la lista de filtros %s</string>
     <string name="blocklist_update_error_404">Error al actualizar la lista de filtros %s: url no encontrada</string>
     <!-- not used any more, generic error for all non-successful codes -->
-    <string name="blocklist_update_error_code">Error while updating filters list %1$s: status code %2$s</string>
+    <string name="blocklist_update_error_code">Error mientras se actualizaba la lista de filtros %1$s: Código de Estado %2$s</string>
     <string name="add_blocklist">Añadir archivo de filtros</string>
     <string name="add_blocklist_hint">Puede elegir listas de hosts o cualquier lista compatible con las reglas de AdBlockPlus</string>
     <string name="enable_blocklist">Activar esta lista</string>
@@ -191,8 +191,8 @@
     <string name="local_file_chosen">archivo seleccionado</string>
     <string name="remote_file">Remoto</string>
     <string name="use_modify_filters">Filtros modificadores</string>
-    <string name="use_modify_filters_warning">In some cases, modifier filters have been found to break websites in this browser. Until implementation is improved, you can enable them at your own risk. Disabling for main-frame documents only avoids most issues.</string>
-    <string name="modify_filters_not_for_main_frame">Disable for main frame only</string>
+    <string name="use_modify_filters_warning">En algunos casos, Filtros modificadores han sido encontrados responsables de romper sitios web en este navegador. Hasta que su implementación sea mejorada, tú puedes habilitarlo bajo tu propio riesgo. Deshabilitarlo para los documentos del marco principal solo evita la mayoría de los problemas.</string>
+    <string name="modify_filters_not_for_main_frame">Deshabilitarlo solo para el marco principal</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Acción cancelada.</string>
     <!-- SSL warnings -->
@@ -380,8 +380,8 @@
     <string name="settings_summary_content_control_toggle">Activar bloqueo de anuncios y filtrado de contenido</string>
     <string name="settings_title_vertical_tab_bar">Barra de pestañas vertical</string>
     <string name="settings_summary_vertical_tab_bar">Desactivar para usar la barra de pestañas horizontal</string>
-    <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
-    <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
+    <string name="settings_title_tab_bar_in_drawer">Barra de pestañas en el cajón</string>
+    <string name="settings_summary_tab_bar_in_drawer">Deshabilite para usar la barra de pestañas estática vertical</string>
     <string name="settings_title_toolbars_bottom">Barra de herramientas inferior</string>
     <string name="settings_title_desktop_mode_default">Modo escritorio</string>
     <string name="settings_summary_desktop_mode_default">Definir si las nuevas pestañas usan el modo escritorio por defecto</string>
@@ -405,9 +405,9 @@
     <!-- debug strings -->
     <string name="debug_title">Ajustes de depuración</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Please restart the app for the change to take effect</string>
+    <string name="app_restart">Por favor reinicie la aplicación para que el cambio tenga efecto</string>
     <string name="pref_title_crash_logs">Registros de fallos</string>
-    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
+    <string name="pref_summary_crash_logs">Escriba registro de errores en el sistema de archivos.\nPulsa para abrir la carpeta. Por favor provee el archivo relevante cuando estés reportando un bug.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Abrir en una nueva pestaña</string>
     <string name="dialog_open_background_tab">Abrir en una pestaña de fondo</string>
@@ -464,7 +464,7 @@
     <string name="action_restore_tab">Restaurar pestaña</string>
     <string name="settings_summary_apps">Activar aplicaciones de terceros</string>
     <string name="settings_title_apps">Ajustes de aplicaciones</string>
-    <string name="settings_app_prefix">app_for_</string>
+    <string name="settings_app_prefix">aplicación_para_</string>
     <string name="dialog_title_third_party_app">Aplicación de terceros disponible</string>
     <string name="dialog_message_third_party_app">¿Quiere iniciar la aplicación asociada a ese sitio web?</string>
     <string name="per_month">\u0020/ mes</string>
@@ -500,7 +500,7 @@
     <string name="button_dismiss">Rechazar</string>
     <!-- Find in page -->
     <string name="no_match_found">No se encontró ninguna coincidencia!</string>
-    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="match_x_of_n">Iguala <xliff:g id="current_match" example="1">%1$d</xliff:g> en <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Mostrar snackbar</string>
     <string name="pref_title_show_animation">Mostrar animación</string>
     <string name="pref_title_vibrate">Vibrar</string>
@@ -509,7 +509,7 @@
     <string name="pref_category_title_session_export">Exportar sesión</string>
     <string name="pref_category_summary_session_export">Elija la sesión que quiere exportar</string>
     <string name="error_session_file_corrupted">Error: ¡archivo de sesión corrompido!</string>
-    <string name="error_recovery_session">Error: a recovery session was created!</string>
+    <string name="error_recovery_session">¡Error: Una sesión de recuperación ha sido creada!</string>
     <string name="message_session_imported">Sesión importada: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Sesión exportada: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="show_ssl">Mostrar diálogos de advertencia SSL</string>
@@ -565,9 +565,9 @@
     <string name="error_tip2">• Si no puede cargar ninguna página, compruebe los datos de su dispositivo o la conexión Wi-Fi.</string>
     <string name="action_cycle_tabs_forwards">Ciclo de pestañas hacía adelante</string>
     <string name="action_cycle_tabs_backwards">Ciclo de pestañas hacia atrás</string>
-    <string name="action_focus_address_bar">Focus address bar</string>
+    <string name="action_focus_address_bar">Enfoca la barra de direcciones</string>
     <string name="action_tab_history_forward">Avanzar en el historial</string>
-    <string name="action_toggle_toolbar">Toggle toolbar</string>
+    <string name="action_toggle_toolbar">Alterna la barra de herramientas</string>
     <string name="action_toggle_status_bar">Activa/desactiva la barra de estado</string>
     <string name="action_text_size_increment">Aumentar tamaño de texto</string>
     <string name="action_text_size_decrement">Reducir tamaño de texto</string>

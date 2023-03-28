@@ -77,7 +77,7 @@
     <string name="unknown_size">Tamanho desconhecido</string>
     <string name="action_cancel">Cancelar</string>
     <string name="title_warning">Aviso</string>
-    <string name="dialog_adobe_not_installed">O Adobe Flash Player não foi detetado.\nTem que instalar o Flash Player.</string>
+    <string name="dialog_adobe_not_installed">Adobe Flash Player não detetado.\nTem que instalar Flash Player.</string>
     <string name="title_user_agent">Agente</string>
     <string name="title_download_location">Local para as descargas</string>
     <string name="title_custom_homepage">Página inicial personalizada</string>
@@ -96,7 +96,7 @@
     <string name="size_small">Pequeno</string>
     <string name="size_smallest">Menor</string>
     <string name="title_error">Erro</string>
-    <string name="dialog_import_error">Não foi detetado qualquer navegador para importar os marcadores.</string>
+    <string name="dialog_import_error">Não foi detetado qualquer navegador de onde importar os marcadores.</string>
     <string name="hint_title">Título</string>
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Editar marcador</string>
@@ -115,13 +115,13 @@
     <string name="problem_download">URL inválido e a descarga não é possível</string>
     <string name="problem_location_download">Não é possível descarregar da localização especificada</string>
     <string name="download_no_sdcard_dlg_title">Cartão SD não encontrado</string>
-    <string name="download_no_sdcard_dlg_msg">Necessita de um cartão SD para guardar o ficheiro descarregado.</string>
+    <string name="download_no_sdcard_dlg_msg">Requer um cartão SD para guardar o ficheiro descarregado.</string>
     <string name="download_sdcard_busy_dlg_title">Cartão SD não disponível</string>
-    <string name="download_sdcard_busy_dlg_msg">O cartão SD está ocupado. Para descarregar ficheiros, desative a opção \"Desativar armazenamento USB\" na notificação.</string>
+    <string name="download_sdcard_busy_dlg_msg">O cartão SD está ocupado. Para descarregar ficheiros, toque em \"Desativar armazenamento USB\" na notificação.</string>
     <string name="download_complete">Descarga terminada</string>
     <string name="download_failed">Falha ao descarregar</string>
     <string name="incognito_cookies">Permitir cookies no modo incógnito</string>
-    <string name="incognito_cookies_pie">O modo incógnito é executado como processo distinto que será reposto após cada sessão. As preferências de cookies no modo incógnito são agora controladas nas preferências gerais de cookies.</string>
+    <string name="incognito_cookies_pie">O modo incógnito é executado como processo distinto, reposto após cada sessão. As preferências de cookies no modo incógnito são agora controladas nas preferências gerais de cookies.</string>
     <string name="title_flash">Adobe Flash</string>
     <string name="action_manual">Manual</string>
     <string name="action_auto">Automático</string>
@@ -131,7 +131,7 @@
     <string name="message_import">Marcadores importados</string>
     <string name="message_clear_history">Histórico removido</string>
     <string name="message_cookies_cleared">Cookies removidos</string>
-    <string name="max_tabs">Atingido o número máximo de separadores. Pode desbloquear este limite com uma subscrição.</string>
+    <string name="max_tabs">Atingiu o número máximo de separadores. Pode desbloquear este limite com uma subscrição.</string>
     <string name="message_text_copied">Texto copiado para a área de transferência</string>
     <string name="message_link_copied">Ligação copiada para a área de transferência</string>
     <string name="message_blocked_local">Bloqueado o carregamento do ficheiro local</string>
@@ -161,7 +161,7 @@
     <string name="page_blocked_reason">porque:</string>
     <string name="page_blocked_list_ad">%s está na lista de filtros</string>
     <string name="page_blocked_list_user">%s está bloqueada por uma regra do utilizador</string>
-    <string name="page_blocked_list_malware">%s está na lista de malware</string>
+    <string name="page_blocked_list_malware">%s está na lista de filtros importantes</string>
     <string name="request_blocked">Pedido bloqueado</string>
     <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Atualização automática</string>
@@ -407,10 +407,10 @@
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Por favor, reinicie a aplicação para aplicar as alterações</string>
     <string name="pref_title_crash_logs">Relatórios de erro</string>
-    <string name="pref_summary_crash_logs">Escrever relatórios no sistema de ficheiros.\nToque para abrir a pasta. Ao reportar um erro, envio o ficheiro de registo correspondente.</string>
+    <string name="pref_summary_crash_logs">Escrever relatórios no sistema de ficheiros.\nToque para abrir a pasta. Ao reportar um erro, envie o ficheiro de registo correspondente.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Abrir em novo separador</string>
-    <string name="dialog_open_background_tab">Abrir em separador de fundo</string>
+    <string name="dialog_open_background_tab">Abrir em separador secundário</string>
     <string name="dialog_open_incognito_tab">Abrir em separador incógnito</string>
     <string name="dialog_remove_bookmark">Remover marcador</string>
     <string name="dialog_edit_bookmark">Editar marcador</string>
@@ -446,10 +446,10 @@
     <string name="notification_incognito_running_description">Notificação permanente do modo incógnito</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Emitido por</string>
-    <string name="ssl_info_issued_to">Emitido para</string>
-    <string name="ssl_info_issued_on">Emitido em</string>
-    <string name="ssl_info_expires_on">Caduca a</string>
+    <string name="ssl_info_issued_by">Emitido por:</string>
+    <string name="ssl_info_issued_to">Emitido para:</string>
+    <string name="ssl_info_issued_on">Emitido em:</string>
+    <string name="ssl_info_expires_on">Caduca a:</string>
     <!-- Search in page -->
     <string name="next">Seguinte</string>
     <string name="previous">Anterior</string>
@@ -475,7 +475,7 @@
     <string name="session_already_exists">Já existe uma sessão com este nome.</string>
     <string name="session_cant_delete_current">Não foi possível apagar a sessão!</string>
     <string name="session_prompt_confirm_deletion_title">Confirmar eliminação</string>
-    <string name="session_prompt_confirm_deletion_message">Tem certeza que deseja eliminar a sessão \"%s\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Tem certeza de que deseja eliminar a sessão \"%s\"?</string>
     <string name="session_switched">Trocar para %s</string>
     <string name="busy">Ocupado, tente mais tarde.</string>
     <string name="invalid_character_removed">Carácter inválido removido!</string>
