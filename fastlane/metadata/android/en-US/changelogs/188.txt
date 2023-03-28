@@ -1,0 +1,9 @@
+Fix ad blocker crash due to malformed regular expression in filter.
+Translations update:
+🇧🇷 Brazilian
+🇫🇷 French
+🇮🇩 Indonesian
+🇮🇹 Italian
+🇵🇹 Portuguese
+🇪🇸 Spanish
+🇷🇺 Russian
