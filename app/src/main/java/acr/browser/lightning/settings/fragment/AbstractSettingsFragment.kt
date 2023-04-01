@@ -202,7 +202,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         prefCat.key = getString(R.string.pref_key_contribute_category)
         prefCat.title = getString(R.string.settings_contribute)
         //prefCat.summary = getString(R.string.pref_summary_subscriptions)
-        //prefCat.order = 1
+        prefCat.order = 1 // Important so that it comes after the subscriptions category
         prefCat.isIconSpaceReserved = true
         preferenceScreen.addPreference(prefCat)
         prefGroup = prefCat

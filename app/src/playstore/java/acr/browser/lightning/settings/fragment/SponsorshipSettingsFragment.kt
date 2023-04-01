@@ -161,6 +161,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         // First remove all preferences
         preferenceScreen.removeAll()
 
+        addCategorySubscriptions()
         populatePreferenceScreenStaticItems()
         populateSubscriptions()
     }
