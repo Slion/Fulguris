@@ -23,6 +23,7 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
+import acr.browser.lightning.settings.preferences.PreferenceCategoryEx
 import acr.browser.lightning.utils.IntentUtils
 import android.content.Intent
 import android.net.Uri
@@ -38,6 +39,8 @@ import androidx.recyclerview.widget.RecyclerView
  */
 abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
 
+    lateinit var prefGroup: PreferenceGroup
+
     /**
      * Provide the XML resource which holds the preferences.
      */
@@ -46,6 +49,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(providePreferencesXmlResource(),rootKey)
+        prefGroup = preferenceScreen
     }
 
     /**
@@ -189,6 +193,21 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+
+    /**
+     *
+     */
+    fun addCategoryContribute() {
+        val prefCat = PreferenceCategoryEx(requireContext())
+        prefCat.key = getString(R.string.pref_key_contribute_category)
+        prefCat.title = getString(R.string.settings_contribute)
+        //prefCat.summary = getString(R.string.pref_summary_subscriptions)
+        //prefCat.order = 1
+        prefCat.isIconSpaceReserved = true
+        preferenceScreen.addPreference(prefCat)
+        prefGroup = prefCat
+    }
+
     /**
      * Add a preference that links to GitHub sponsor.
      */
@@ -204,7 +223,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sponsors/Slion")))
             true
         }
-        preferenceScreen.addPreference(pref)
+        prefGroup.addPreference(pref)
     }
 
     /**
@@ -222,7 +241,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore")))
             true
         }
-        preferenceScreen.addPreference(pref)
+        prefGroup.addPreference(pref)
     }
 
     /**
@@ -240,7 +259,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://crowdin.com/project/fulguris-web-browser")))
             true
         }
-        preferenceScreen.addPreference(pref)
+        prefGroup.addPreference(pref)
     }
 
     /**
@@ -258,7 +277,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
             IntentUtils(requireActivity()).shareUrl(getString(R.string.url_app_home_page), getString(R.string.locale_app_name),R.string.pref_title_contribute_share)
             true
         }
-        preferenceScreen.addPreference(pref)
+        prefGroup.addPreference(pref)
     }
 
     abstract fun titleResourceId() : Int
