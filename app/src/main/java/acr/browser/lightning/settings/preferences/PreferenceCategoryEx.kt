@@ -35,6 +35,8 @@ import androidx.preference.PreferenceViewHolder
 class PreferenceCategoryEx : PreferenceCategory {
     constructor(ctx: Context, attrs: AttributeSet?, defStyle: Int) : super(ctx, attrs, defStyle) {}
     constructor(ctx: Context, attrs: AttributeSet?) : super(ctx, attrs) {}
+    constructor(ctx: Context) : super(ctx) {}
+
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)

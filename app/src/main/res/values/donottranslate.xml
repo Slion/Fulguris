@@ -120,7 +120,7 @@
     <string name="pref_key_debug">pref_key_debug</string>
     <string name="pref_key_webview">pref_key_webview</string>
 
-
+    <string name="pref_key_subscriptions_category">pref_key_subscriptions_category</string>
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>
