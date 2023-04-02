@@ -106,9 +106,9 @@
     <string name="action_show_homepage">Mostrar página inicial</string>
     <string name="action_back">Recuar</string>
     <string name="action_find">Localizar na página</string>
-    <string name="action_find_next">Find next</string>
-    <string name="action_find_previous">Find previous</string>
-    <string name="action_find_selection">Find selection</string>
+    <string name="action_find_next">Localizar seguinte</string>
+    <string name="action_find_previous">Localizar anterior</string>
+    <string name="action_find_selection">Localizar seleção</string>
     <string name="action_print">Imprimir</string>
     <string name="action_translate">Traduzir</string>
     <string name="downloads">Descargas</string>
@@ -177,8 +177,8 @@
     <string name="blocklist_update_now">Atualizar listas agora</string>
     <string name="blocklist_last_update">Última atualização: %s</string>
     <string name="blocklist_updating">A atualizar…</string>
-    <string name="blocklist_update_error">Erro ao atualizar a lista: %s</string>
-    <string name="blocklist_update_error_404">Erro ao atualizar a lista %s: URL não encontrado</string>
+    <string name="blocklist_update_error">Erro ao atualizar a lista %s</string>
+    <string name="blocklist_update_error_404">Erro ao atualizar a lista %s</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Erro ao atualizar a lista %1$s: código de estado %2$s</string>
     <string name="add_blocklist">Adicionar ficheiro de filtros</string>
@@ -295,8 +295,8 @@
     <string name="pref_category_on_tab_close">Ao fechar separador</string>
     <string name="pref_category_on_tab_change">Ao alterar de separador</string>
     <string name="pref_category_on_tab_back_forward">Ao recuar ou avançar</string>
-    <string name="pref_category_subscriptions">Subscriptions</string>
-    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
+    <string name="pref_category_subscriptions">Subscrições</string>
+    <string name="pref_summary_subscriptions">Ativar ou cancelar subscrições</string>
     <string name="pref_title_hide_status_bar">Ocultar barra de estado</string>
     <string name="pref_title_hide_tool_bar">Ocultar barra de ferramentas ao deslocar para baixo</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Mostrar barra de ferramentas ao deslocar para cima</string>
@@ -385,8 +385,8 @@
     <string name="settings_summary_content_control_toggle">Ativar bloqueador de anúncios e filtro de conteúdos</string>
     <string name="settings_title_vertical_tab_bar">Barra de separadores vertical</string>
     <string name="settings_summary_vertical_tab_bar">Desativa a opção para utilizar a barra horizontal</string>
-    <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
-    <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
+    <string name="settings_title_tab_bar_in_drawer">Barra de separadores no menu</string>
+    <string name="settings_summary_tab_bar_in_drawer">Desative para usar a barra vertical</string>
     <string name="settings_title_toolbars_bottom">Barra de ferramentas em cima</string>
     <string name="settings_title_desktop_mode_default">Modo desktop</string>
     <string name="settings_summary_desktop_mode_default">Define que os novos separadores utilizam o modo desktop</string>
