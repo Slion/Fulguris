@@ -106,6 +106,9 @@
     <string name="action_show_homepage">ホームページを表示</string>
     <string name="action_back">戻る</string>
     <string name="action_find">ページ内を検索</string>
+    <string name="action_find_next">Find next</string>
+    <string name="action_find_previous">Find previous</string>
+    <string name="action_find_selection">Find selection</string>
     <string name="action_print">印刷</string>
     <string name="action_translate">翻訳</string>
     <string name="downloads">ダウンロード</string>
@@ -292,6 +295,8 @@
     <string name="pref_category_on_tab_close">タブを閉じたとき</string>
     <string name="pref_category_on_tab_change">タブを変更するとき</string>
     <string name="pref_category_on_tab_back_forward">進むまたは戻る時</string>
+    <string name="pref_category_subscriptions">Subscriptions</string>
+    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">ステータスバーを隠す</string>
     <string name="pref_title_hide_tool_bar">下にスクロールしている間はツールバーを非表示にする</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">上にスクロールするときにツールバーを表示する</string>

@@ -106,6 +106,9 @@
     <string name="action_show_homepage">Показать домашнюю страницу</string>
     <string name="action_back">Назад</string>
     <string name="action_find">Найти на странице</string>
+    <string name="action_find_next">Find next</string>
+    <string name="action_find_previous">Find previous</string>
+    <string name="action_find_selection">Find selection</string>
     <string name="action_print">Печать</string>
     <string name="action_translate">Перевести</string>
     <string name="downloads">Загрузки</string>
@@ -292,6 +295,8 @@
     <string name="pref_category_on_tab_close">При закрытии вкладки</string>
     <string name="pref_category_on_tab_change">При смене вкладки</string>
     <string name="pref_category_on_tab_back_forward">При возвращении или переходе</string>
+    <string name="pref_category_subscriptions">Subscriptions</string>
+    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Скрыть строку состояния</string>
     <string name="pref_title_hide_tool_bar">Скрыть панель инструментов при прокрутке вниз</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Показать панель инструментов при прокрутке вверх</string>

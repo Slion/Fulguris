@@ -106,6 +106,9 @@
     <string name="action_show_homepage">Visa hemsida</string>
     <string name="action_back">Tillbaka</string>
     <string name="action_find">Sök på sidan</string>
+    <string name="action_find_next">Find next</string>
+    <string name="action_find_previous">Find previous</string>
+    <string name="action_find_selection">Find selection</string>
     <string name="action_print">Skriv ut</string>
     <string name="action_translate">Översätt</string>
     <string name="downloads">Nedladdningar</string>
@@ -292,6 +295,8 @@
     <string name="pref_category_on_tab_close">Vid stängning av flik</string>
     <string name="pref_category_on_tab_change">Vid ändring av flik</string>
     <string name="pref_category_on_tab_back_forward">När du går bakåt eller framåt</string>
+    <string name="pref_category_subscriptions">Subscriptions</string>
+    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Dölj statusfält</string>
     <string name="pref_title_hide_tool_bar">Dölj verktygsfältet vid rullning nedåt</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Visa verktygsfältet när du rullar upp</string>

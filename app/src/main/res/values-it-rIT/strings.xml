@@ -106,6 +106,9 @@
     <string name="action_show_homepage">Mostra pagina iniziale</string>
     <string name="action_back">Indietro</string>
     <string name="action_find">Trova nella pagina</string>
+    <string name="action_find_next">Find next</string>
+    <string name="action_find_previous">Find previous</string>
+    <string name="action_find_selection">Find selection</string>
     <string name="action_print">Stampare</string>
     <string name="action_translate">Traduci</string>
     <string name="downloads">Scaricamenti</string>
@@ -292,6 +295,8 @@
     <string name="pref_category_on_tab_close">Quando si chiude la scheda</string>
     <string name="pref_category_on_tab_change">Quando si cambia scheda</string>
     <string name="pref_category_on_tab_back_forward">Quando si torna indietro o in avanti</string>
+    <string name="pref_category_subscriptions">Subscriptions</string>
+    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Nascondi barra di stato</string>
     <string name="pref_title_hide_tool_bar">Nascondi barra navigazione durante lo scorrimento</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Mostra barra degli strumenti quando scorri in alto</string>

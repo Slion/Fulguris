@@ -106,6 +106,9 @@
     <string name="action_show_homepage">Wyświetl stronę główną</string>
     <string name="action_back">Wstecz</string>
     <string name="action_find">Znajdź na stronie</string>
+    <string name="action_find_next">Find next</string>
+    <string name="action_find_previous">Find previous</string>
+    <string name="action_find_selection">Find selection</string>
     <string name="action_print">Drukuj</string>
     <string name="action_translate">Przetłumacz</string>
     <string name="downloads">Pobrane</string>
@@ -292,6 +295,8 @@
     <string name="pref_category_on_tab_close">Przy zamykaniu karty</string>
     <string name="pref_category_on_tab_change">Przy zmianie karty</string>
     <string name="pref_category_on_tab_back_forward">Podczas cofania się lub do przodu</string>
+    <string name="pref_category_subscriptions">Subscriptions</string>
+    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Ukryj pasek stanu</string>
     <string name="pref_title_hide_tool_bar">Ukryj pasek narzędzi podczas przewijania</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Wyświetl pasek narzędzi podczas przewijania w górę</string>

@@ -106,6 +106,9 @@
     <string name="action_show_homepage">Show homepage</string>
     <string name="action_back">Atgal</string>
     <string name="action_find">Rasti puslapyje</string>
+    <string name="action_find_next">Find next</string>
+    <string name="action_find_previous">Find previous</string>
+    <string name="action_find_selection">Find selection</string>
     <string name="action_print">Print</string>
     <string name="action_translate">Translate</string>
     <string name="downloads">Downloads</string>
@@ -292,6 +295,8 @@
     <string name="pref_category_on_tab_close">When closing tab</string>
     <string name="pref_category_on_tab_change">When changing tab</string>
     <string name="pref_category_on_tab_back_forward">When going back or forward</string>
+    <string name="pref_category_subscriptions">Subscriptions</string>
+    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Hide status bar</string>
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
