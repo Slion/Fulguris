@@ -139,7 +139,8 @@ class HistoryDatabase @Inject constructor(
                         "1"
                 ).use {
                     if (it.count > 0) {
-                        database.update(TABLE_HISTORY, item.toContentValues(), "$KEY_URL = ?", arrayOf(item.url))
+                        //Updating entries moves them back in the history if it has been visited after the backup was made, which is unnecessarily confusing.
+                        //database.update(TABLE_HISTORY, item.toContentValues(), "$KEY_URL = ?", arrayOf(item.url))
                     } else {
                         database.insert(TABLE_HISTORY, null, item.toContentValues())
                     }
