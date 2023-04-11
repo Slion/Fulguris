@@ -26,4 +26,6 @@
     <string name="url_contact_us">mailto:support@slions.net?subject=Fulguris</string>
     <string name="url_app_home_page">http://fulguris.slions.net</string>
     <string name="url_app_updates">https://slions.net/resources/fulguris.10/updates</string>
+    <string name="url_privacy_policy">https://slions.net/threads/fulguris-privacy-policy.99/</string>
+    <string name="url_terms_and_conditions">https://slions.net/threads/fulguris-terms-conditions.100/</string>
 </resources>
