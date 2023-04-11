@@ -106,9 +106,9 @@
     <string name="action_show_homepage">显示主页</string>
     <string name="action_back">返回</string>
     <string name="action_find">在页面中查找</string>
-    <string name="action_find_next">Find next</string>
-    <string name="action_find_previous">Find previous</string>
-    <string name="action_find_selection">Find selection</string>
+    <string name="action_find_next">查找下一个</string>
+    <string name="action_find_previous">查找上一个</string>
+    <string name="action_find_selection">查找选中内容</string>
     <string name="action_print">打印</string>
     <string name="action_translate">翻译</string>
     <string name="downloads">下载</string>
@@ -295,8 +295,8 @@
     <string name="pref_category_on_tab_close">标签页关闭时</string>
     <string name="pref_category_on_tab_change">标签页切换时</string>
     <string name="pref_category_on_tab_back_forward">前进后退时</string>
-    <string name="pref_category_subscriptions">Subscriptions</string>
-    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
+    <string name="pref_category_subscriptions">订阅</string>
+    <string name="pref_summary_subscriptions">激活或取消您的订阅</string>
     <string name="pref_title_hide_status_bar">隐藏状态栏</string>
     <string name="pref_title_hide_tool_bar">下翻时隐藏工具栏</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">上翻时显示工具栏</string>
