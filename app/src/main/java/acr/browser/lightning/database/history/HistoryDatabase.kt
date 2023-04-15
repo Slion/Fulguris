@@ -3,6 +3,7 @@
  */
 package acr.browser.lightning.database.history
 
+import acr.browser.lightning.database.History
 import acr.browser.lightning.database.HistoryEntry
 import acr.browser.lightning.database.databaseDelegate
 import acr.browser.lightning.extensions.firstOrNullMap
@@ -121,6 +122,36 @@ class HistoryDatabase @Inject constructor(
         database.insert(TABLE_HISTORY, null, item.toContentValues())
     }
 
+    override fun addHistoryList(historyItems: List<History.Entry>): Completable = Completable.fromAction {
+        database.apply {
+            beginTransaction()
+
+            for (item in historyItems) {
+                database.query(
+                        false,
+                        TABLE_HISTORY,
+                        arrayOf(KEY_ID),
+                        "$KEY_URL = ?",
+                        arrayOf(item.url),
+                        null,
+                        null,
+                        null,
+                        "1"
+                ).use {
+                    if (it.count > 0) {
+                        //Updating entries moves them back in the history if it has been visited after the backup was made, which is unnecessarily confusing.
+                        //database.update(TABLE_HISTORY, item.toContentValues(), "$KEY_URL = ?", arrayOf(item.url))
+                    } else {
+                        database.insert(TABLE_HISTORY, null, item.toContentValues())
+                    }
+                }
+            }
+
+            setTransactionSuccessful()
+            endTransaction()
+        }
+    }
+
     @WorkerThread
     fun getHistoryEntry(url: String): String? =
         database.query(
@@ -147,9 +178,28 @@ class HistoryDatabase @Inject constructor(
         ).useMap { it.bindToHistoryEntry() }
     }
 
+    override fun getAllHistoryEntriesAsSingle(): Single<List<History.Entry>> =
+            Single.fromCallable {
+                database.query(
+                        TABLE_HISTORY,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        "$KEY_TIME_VISITED DESC"
+                ).useMap { it.bindToSingleHistoryEntry() }
+            }
+
     fun getHistoryEntriesCount(): Long = DatabaseUtils.queryNumEntries(database, TABLE_HISTORY)
 
     private fun HistoryEntry.toContentValues() = ContentValues().apply {
+        put(KEY_URL, url)
+        put(KEY_TITLE, title)
+        put(KEY_TIME_VISITED, lastTimeVisited)
+    }
+
+    private fun History.Entry.toContentValues() = ContentValues().apply {
         put(KEY_URL, url)
         put(KEY_TITLE, title)
         put(KEY_TIME_VISITED, lastTimeVisited)
@@ -161,6 +211,11 @@ class HistoryDatabase @Inject constructor(
         lastTimeVisited = getLong(3)
     )
 
+    private fun Cursor.bindToSingleHistoryEntry() = History.Entry(
+            url = getString(1),
+            title = getString(2),
+            lastTimeVisited = getLong(3)
+    )
     companion object {
 
         // Database version

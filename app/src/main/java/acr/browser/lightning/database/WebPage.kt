@@ -25,6 +25,26 @@ data class HistoryEntry(
 ) : WebPage(url, title)
 
 /**
+ * A data type that represents a page that was visited by the user.
+ */
+sealed class History(
+        override val url: String,
+        override val title: String
+) : WebPage(url, title) {
+
+    /**
+     * A data type that represents a page that was visited by the user.
+     *
+     * @param lastTimeVisited The last time the page was visited in milliseconds.
+     */
+    data class Entry(
+            override val url: String,
+            override val title: String,
+            val lastTimeVisited: Long = System.currentTimeMillis()
+    ) : History(url, title)
+}
+
+/**
  * A data type that represents an entity that has been bookmarked by the user or contains a page
  * that has been bookmarked by the user.
  */

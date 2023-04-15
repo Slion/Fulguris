@@ -5,6 +5,7 @@ import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.HistoryEntry
 import acr.browser.lightning.database.SearchSuggestion
 import acr.browser.lightning.database.WebPage
+import acr.browser.lightning.database.History
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.database.history.HistoryRepository
 import acr.browser.lightning.di.*
@@ -132,6 +133,8 @@ class SuggestionsAdapter(
             is Bookmark -> bookmarkIcon
             is SearchSuggestion -> searchIcon
             is HistoryEntry -> webPageIcon
+            //This got added to webPage to allow exporting the history and isn't actually used here
+            is History -> webPageIcon
         }
 
         holder.imageView.setImageDrawable(image)
