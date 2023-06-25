@@ -25,6 +25,23 @@
         </Preference>
 
         <Preference
+            android:title="@string/settings_title_discord"
+            android:summary="@string/settings_summary_discord"
+            app:icon="@drawable/ic_discord"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false" >
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/url_discord">
+                <extra
+                    android:name="SOURCE"
+                    android:value="SELF" />
+            </intent>
+
+        </Preference>
+
+        <Preference
             android:key="pref_version"
             android:title="@string/version"
             app:iconSpaceReserved="false"

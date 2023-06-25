@@ -26,6 +26,7 @@
     <string name="url_app_home_page">https://github.com/anthonycr/Lightning-Browser</string>
     <string name="url_privacy_policy">https://slions.net/threads/fulguris-privacy-policy.99/</string>
     <string name="url_terms_and_conditions">https://slions.net/threads/fulguris-terms-conditions.100/</string>
+    <string name="url_discord">https://discord.com/invite/7M4Ms5dMZE</string>
 
     <!-- Settings keys -->
     <string name="pref_key_hide_status_bar">pref_key_hide_status_bar</string>
