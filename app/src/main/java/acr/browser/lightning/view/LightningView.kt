@@ -41,6 +41,8 @@ import android.view.View.OnScrollChangeListener
 import android.view.View.OnTouchListener
 import android.webkit.CookieManager
 import android.webkit.WebSettings
+import android.webkit.WebSettings.LOAD_DEFAULT
+import android.webkit.WebSettings.LOAD_NO_CACHE
 import android.webkit.WebSettings.LayoutAlgorithm
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
@@ -549,6 +551,13 @@ class LightningView(
     private fun applyDarkMode() {
         val settings = webView?.settings ?: return
 
+        // We needed to add this for force dark mode to work when targeting SDK>=33
+        // See: https://developer.android.com/about/versions/13/behavior-changes-13#webview-color-theme
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+            // For forced dark mode to work on website that do not provide a dark theme we need to enable this
+            WebSettingsCompat.setAlgorithmicDarkeningAllowed(settings, darkMode)
+        }
+
         // If forced dark mode is supported
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK) &&
             // and we are in dark theme or forced dark mode
@@ -614,12 +623,13 @@ class LightningView(
 
             if (!isIncognito || Capabilities.FULL_INCOGNITO.isSupported) {
                 domStorageEnabled = true
-                setAppCacheEnabled(true)
+                cacheMode = LOAD_DEFAULT
                 databaseEnabled = true
                 cacheMode = WebSettings.LOAD_DEFAULT
             } else {
                 domStorageEnabled = false
-                setAppCacheEnabled(false)
+                // TODO: Is this really needed for incognito mode?
+                cacheMode = LOAD_NO_CACHE
                 databaseEnabled = false
                 cacheMode = WebSettings.LOAD_NO_CACHE
             }
@@ -635,12 +645,6 @@ class LightningView(
             // See: https://github.com/Slion/Fulguris/issues/82
             setNeedInitialFocus(false)
 
-            getPathObservable("appcache")
-                .subscribeOn(databaseScheduler)
-                .observeOn(mainScheduler)
-                .subscribe { file ->
-                    setAppCachePath(file.path)
-                }
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 getPathObservable("geolocation")
