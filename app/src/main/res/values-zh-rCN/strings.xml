@@ -284,6 +284,10 @@
     <string name="settings_about">关于</string>
     <string name="settings_contribute">贡献</string>
     <string name="settings_summary_contribute">帮助 Fulguris 成长并成功</string>
+    <string name="settings_title_privacy_policy">Privacy Policy</string>
+    <string name="settings_summary_privacy_policy">See our privacy policy online</string>
+    <string name="settings_title_terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
     <string name="pref_category_general">常规</string>
     <string name="pref_category_panels">面板</string>
     <string name="pref_category_webpage">@string/action_webpage</string>

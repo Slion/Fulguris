@@ -284,6 +284,10 @@
     <string name="settings_about">Acerca</string>
     <string name="settings_contribute">Participar</string>
     <string name="settings_summary_contribute">Ajudar Fulguris a crescer</string>
+    <string name="settings_title_privacy_policy">Política de privacidade</string>
+    <string name="settings_summary_privacy_policy">Consulte nossa política de privacidade</string>
+    <string name="settings_title_terms_and_conditions">Termos e condições</string>
+    <string name="settings_summary_terms_and_conditions">Consulte nossos termos e condições</string>
     <string name="pref_category_general">Geral</string>
     <string name="pref_category_panels">Painéis</string>
     <string name="pref_category_webpage">@string/action_webpage</string>

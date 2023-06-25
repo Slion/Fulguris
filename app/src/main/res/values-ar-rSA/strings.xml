@@ -106,9 +106,9 @@
     <string name="action_show_homepage">إظهار الصفحة الرئيسية</string>
     <string name="action_back">عودة</string>
     <string name="action_find">بحث في الصفحة</string>
-    <string name="action_find_next">Find next</string>
-    <string name="action_find_previous">Find previous</string>
-    <string name="action_find_selection">Find selection</string>
+    <string name="action_find_next">البحث التالي</string>
+    <string name="action_find_previous">اعثر على السابق</string>
+    <string name="action_find_selection">البحث عن اختيار</string>
     <string name="action_print">طباعة</string>
     <string name="action_translate">الترجمة</string>
     <string name="downloads">التحميلات</string>
@@ -135,7 +135,7 @@
     <string name="message_clear_history">تم مسح سجل التصفح</string>
     <string name="message_cookies_cleared">تم مسح ملفات تعريف الارتباط</string>
     <string name="max_tabs">تم الوصول إلى الحد الأقصى لعلامات التبويب. قم بفتح المزيد عن طريق شراء اشتراك.</string>
-    <string name="message_text_copied">Text copied to clipboard</string>
+    <string name="message_text_copied">تم نسخ النص إلى الحافظة</string>
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
     <string name="licenses">Open Source Licenses</string>
@@ -284,6 +284,10 @@
     <string name="settings_about">About</string>
     <string name="settings_contribute">Contribute</string>
     <string name="settings_summary_contribute">Help Fulguris grow and succeed</string>
+    <string name="settings_title_privacy_policy">Privacy Policy</string>
+    <string name="settings_summary_privacy_policy">See our privacy policy online</string>
+    <string name="settings_title_terms_and_conditions">Terms &amp; Conditions</string>
+    <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_panels">Panels</string>
     <string name="pref_category_webpage">@string/action_webpage</string>

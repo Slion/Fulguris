@@ -106,9 +106,9 @@
     <string name="action_show_homepage">Показать домашнюю страницу</string>
     <string name="action_back">Назад</string>
     <string name="action_find">Найти на странице</string>
-    <string name="action_find_next">Find next</string>
-    <string name="action_find_previous">Find previous</string>
-    <string name="action_find_selection">Find selection</string>
+    <string name="action_find_next">Искать далее</string>
+    <string name="action_find_previous">Искать предыдущее</string>
+    <string name="action_find_selection">Найти выбранное</string>
     <string name="action_print">Печать</string>
     <string name="action_translate">Перевести</string>
     <string name="downloads">Загрузки</string>
@@ -284,6 +284,10 @@
     <string name="settings_about">О программе</string>
     <string name="settings_contribute">Внести вклад</string>
     <string name="settings_summary_contribute">Помогите Fulguris расти и достичь успеха</string>
+    <string name="settings_title_privacy_policy">Политика конфиденциальности</string>
+    <string name="settings_summary_privacy_policy">Посмотрите нашу политику конфиденциальности онлайн</string>
+    <string name="settings_title_terms_and_conditions">Условия использования</string>
+    <string name="settings_summary_terms_and_conditions">Смотрите наши условия использования онлайн</string>
     <string name="pref_category_general">Основные настройки</string>
     <string name="pref_category_panels">Панели</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -295,8 +299,8 @@
     <string name="pref_category_on_tab_close">При закрытии вкладки</string>
     <string name="pref_category_on_tab_change">При смене вкладки</string>
     <string name="pref_category_on_tab_back_forward">При возвращении или переходе</string>
-    <string name="pref_category_subscriptions">Subscriptions</string>
-    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
+    <string name="pref_category_subscriptions">Подписки</string>
+    <string name="pref_summary_subscriptions">Активировать или отменить подписки</string>
     <string name="pref_title_hide_status_bar">Скрыть строку состояния</string>
     <string name="pref_title_hide_tool_bar">Скрыть панель инструментов при прокрутке вниз</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Показать панель инструментов при прокрутке вверх</string>
@@ -569,7 +573,7 @@
     <string name="settings_reseted">Все настройки восстановлены</string>
     <string name="suggest">Количество подсказок поиска</string>
     <string name="error_tip">• Проверьте адрес на наличие ошибок, таких как ww.example.com вместо www.example.com</string>
-    <string name="error_tip2">• Если вы не можете загрузить какие-либо страницы, проверьте подключение устройства к моб. интерненту или Wi-Fi.</string>
+    <string name="error_tip2">• Если вы не можете загрузить какие-либо страницы, проверьте подключение устройства к моб. интернету или Wi-Fi.</string>
     <string name="action_cycle_tabs_forwards">Цикл вкладок вперед</string>
     <string name="action_cycle_tabs_backwards">Цикл вкладок назад</string>
     <string name="action_focus_address_bar">Перейти к адресной строке</string>
