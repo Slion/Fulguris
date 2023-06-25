@@ -120,6 +120,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
+
 /**
  *
  */
@@ -334,6 +335,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // Check for update after a short delay, hoping user engagement is better and message more visible
                 mainHandler.postDelayed({ checkForUpdates() }, 3000)
             }
+        } else if (BuildConfig.FLAVOR_BRAND != "slions") {
+            // As per CPAL license show attribution if not slions brand
+            makeSnackbar("",5000, Gravity.TOP).setAction("Powered by ⚡Fulguris") {
+                Intent(Intent.ACTION_VIEW).apply{
+                    data = Uri.parse(getString(R.string.url_fulguris_home_page))
+                    putExtra("SOURCE", "SELF")
+                    startActivity(this)
+                }
+            }.show()
         }
 
         // Welcome new users or notify of updates
