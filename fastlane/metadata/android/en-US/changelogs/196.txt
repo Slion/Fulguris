@@ -1,0 +1,4 @@
+🔒Trust user certificates
+🖥️Support x86 architectures
+💬Link to Discord server in Settings > About
+🪟Target SDK 33
