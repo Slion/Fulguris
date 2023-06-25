@@ -288,6 +288,7 @@
     <string name="settings_summary_privacy_policy">Перегляньте нашу політику конфіденційності онлайн</string>
     <string name="settings_title_terms_and_conditions">Умови та положення</string>
     <string name="settings_summary_terms_and_conditions">Ознайомтесь з нашими умовами та положеннями онлайн</string>
+    <string name="settings_summary_discord">Join our growing community</string>
     <string name="pref_category_general">Загальні</string>
     <string name="pref_category_panels">Панелі</string>
     <string name="pref_category_webpage">@string/action_webpage</string>

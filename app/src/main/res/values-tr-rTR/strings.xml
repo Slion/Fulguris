@@ -288,6 +288,7 @@
     <string name="settings_summary_privacy_policy">See our privacy policy online</string>
     <string name="settings_title_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
+    <string name="settings_summary_discord">Join our growing community</string>
     <string name="pref_category_general">Genel</string>
     <string name="pref_category_panels">Paneller</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
