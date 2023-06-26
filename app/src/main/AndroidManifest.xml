@@ -61,7 +61,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="false"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        >
 
         <!-- Splash screen activity not sure exactly if we need MAIN and DEFAULT intent TBH -->
         <!-- Make it resizable for Multi-Window mode support, such as Samsung Dex
