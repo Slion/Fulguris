@@ -25,6 +25,8 @@
     // Just call our entry point
     main();
 
+    //var skipNextResize = false;
+
     /**
      * This script entry point
      */
@@ -41,13 +43,14 @@
         var metaViewports = document.querySelectorAll('meta[name="viewport"]');
         // Remove all existing meta viewport elements
         metaViewports.forEach((aMetaViewport) => {
-          //console.log("Fulguris: remove meta viewport: " + aMetaViewport.outerHTML);
+          //log("remove meta viewport: " + aMetaViewport.outerHTML);
           if (aMetaViewport.hasAttribute('data-fulguris')) {
             // We already injected our own meta viewport, don't remove it
             metaViewport = aMetaViewport
-            log("Fulguris: found our meta viewport");
+            log("found our meta viewport");
           } else {
             // That meta viewport is not ours, remove it
+            log("remove page viewport");
             aMetaViewport.remove();
           }
         });
@@ -56,23 +59,32 @@
         var head = document.getElementsByTagName('head')[0]
         if (head==null) {
             // No head element to inject our meta viewport, bail out then
-            log("Fulguris: document has no head yet");
+            log("document has no head yet");
             return;
         }
+
+        var widthOrg = window.innerWidth;
 
         // Check if that meta viewport is ours
         if (metaViewport.hasAttribute('data-fulguris')) {
             // We already did our thing, bail out then
-            log("Fulguris: meta viewport already set");
-            return;
+            log("meta viewport already set");
+            widthOrg = metaViewport.getAttribute('data-fulguris');
+            log("set it again anyway");
+            // We notably can't return here for walmart.com otherwise desktop mode ain't working for some reason
+            //return;
         }
 
         // Only fiddle with that once
         //metaViewport.setAttribute('content', 'width='+ width + ', initial-scale=' + (window.innerWidth / width));
-        metaViewport.setAttribute('content', metaViewportContent(width));
+        metaViewport.setAttribute('content', metaViewportContent(width, widthOrg));
         // Mark this meta element as being from us and remember the original width
-        metaViewport.setAttribute('data-fulguris', window.innerWidth);
+        // By saving the original width we avoid growing on every resize
+        // The downside of that is that if there is a genuine activity resize user will need to reload the page for desktop mode to update
+        // TODO: Could we somehow distinguish genuine resize from resize we did trigger and then actually update our original size
+        metaViewport.setAttribute('data-fulguris', widthOrg);
         // Add meta viewport element to our DOM
+        // Setting this will trigger a resize event
         head.appendChild(metaViewport);
     }
 
@@ -80,16 +92,17 @@
      * Construct meta viewport content from provided width percentage by computing width and scale.
      * @param aWidth The viewport width we should use in percentage of our actual width.
      */
-    function metaViewportContent(aWidth) {
-        // Compute our width in device independent pixels (DIP) from its percentage our our original width
-        var computedWidth = (window.innerWidth * aWidth) / 100;
+    function metaViewportContent(aWidthPercent, aWidth) {
+        // Compute our width in device independent pixels (DIP) from its percentage of our original width
+        var computedWidth = (aWidth * aWidthPercent) / 100;
         // Compute our scale to fit our content to our page
-        var scale = window.innerWidth / computedWidth;
+        var scale = aWidth / computedWidth;
         // Some debug logs
-        log("Fulguris: width input: " + aWidth);
-        log("Fulguris: window.innerWidth: " + window.innerWidth);
-        log("Fulguris: computed width: " + computedWidth);
-        log("Fulguris: scale: " + scale);
+        log("width percentage: " + aWidthPercent);
+        log("window.innerWidth: " + window.innerWidth);
+        log("width original: " + aWidth);
+        log("computed width: " + computedWidth);
+        log("scale: " + scale);
         // Construct meta viewport content attribute
         return 'width=' + computedWidth + ', user-scalable=1, initial-scale=' + scale;
     }
@@ -99,7 +112,26 @@
      * @param aString String to log
      */
     function log(aString) {
-        console.log(aString);
+        console.log("Fulguris: " + aString);
     }
+
+    // Reapply our meta viewport again whenever our page is resized
+    // That was needed at least for Google search result page, not sure why though
+    window.addEventListener('resize', (event) => {
+        log("window resized: " + window.innerWidth);
+        //metaViewport.setAttribute('content', 'width='+ width);
+        //metaViewport.setAttribute('content', 'width='+ width + ', initial-scale=' + (window.innerWidth / width));
+        //metaViewport.setAttribute('content', 'width=device-width');
+        main()
+    });
+
+
+    window.addEventListener('load', (event) => {
+        log("window load: " + window.innerWidth);
+        //metaViewport.setAttribute('content', 'width='+ width);
+        //metaViewport.setAttribute('content', 'width='+ width + ', initial-scale=' + (window.innerWidth / width));
+        //metaViewport.setAttribute('content', 'width=device-width');
+        main()
+    });
 
 }
