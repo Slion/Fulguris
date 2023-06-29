@@ -1,1 +1,3 @@
 🖥️ Desktop mode bug fix
+Translations update:
+🇨🇳 Chinese
