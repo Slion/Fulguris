@@ -21,9 +21,11 @@ import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
+import fulguris.TimberReleaseTree
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.plugins.RxJavaPlugins
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
@@ -59,6 +61,13 @@ class BrowserApp : Application() {
         // SL: Use this to debug when launched from another app for instance
         //Debug.waitForDebugger()
         super.onCreate()
+
+        // Setup our log engine according to build configuration
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        } else {
+            Timber.plant(TimberReleaseTree())
+        }
 
         AndroidThreeTen.init(this);
 

@@ -114,6 +114,7 @@ import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import junit.framework.Assert.assertNull
 import org.json.JSONObject
+import timber.log.Timber
 import java.io.IOException
 import java.net.URL
 import java.util.*
@@ -1584,12 +1585,24 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
+    // Needed to workaround that WSA bug:
+    // https://github.com/Slion/Fulguris/issues/484
+    var iCtrlLeftDown: Boolean = false
+    var iCtrlRightDown: Boolean = false
+
     /**
      * Manage our key events.
      */
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
 
+        //Timber.d("dispatchKeyEvent $event")
+
         if (event.action == KeyEvent.ACTION_UP && (event.keyCode==KeyEvent.KEYCODE_CTRL_LEFT||event.keyCode==KeyEvent.KEYCODE_CTRL_RIGHT)) {
+
+            // Keep track of CTRL states
+            if (event.keyCode == KeyEvent.KEYCODE_CTRL_LEFT) iCtrlLeftDown = false
+            if (event.keyCode == KeyEvent.KEYCODE_CTRL_RIGHT) iCtrlRightDown = false
+
             // Exiting CTRL+TAB mode
             tabSwitchStop()
         }
@@ -1664,6 +1677,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     }
                 }
 
+                // Keep track of CTRL states
+                KeyEvent.KEYCODE_CTRL_LEFT -> iCtrlLeftDown = true
+                KeyEvent.KEYCODE_CTRL_RIGHT -> iCtrlRightDown = true
+
+
                 // This is actually being done in onBackPressed and doBackAction
                 //KeyEvent.KEYCODE_BACK -> {
                 //    if (tabsManager.currentTab?.webView?.hasFocus() == true && tabsManager.currentTab?.canGoBack() == true) {
@@ -1708,7 +1726,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
 
             // CTRL+TAB for tab cycling logic
-            if (event.isCtrlPressed && event.keyCode == KeyEvent.KEYCODE_TAB) {
+            if ((event.isCtrlPressed || iCtrlLeftDown || iCtrlRightDown) && event.keyCode == KeyEvent.KEYCODE_TAB) {
 
                 // Entering CTRL+TAB mode
                 tabSwitchStart()
@@ -1727,8 +1745,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     }
 
                     //logger.log(TAG, "Switching to $iRecentTabIndex : $iCapturedRecentTabsIndices")
-
-
 
                 }
 
@@ -2785,6 +2801,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun onPause() {
         super.onPause()
         logger.log(TAG, "onPause")
+
         tabsManager.pauseAll()
 
         // Dismiss any popup menu
@@ -2965,6 +2982,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             it.refreshPreferences()
             it.refreshBookmarks()
         }
+
         tabsManager.resumeAll()
         initializePreferences()
 
@@ -2979,6 +2997,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         setupPullToRefresh(resources.configuration)
         // We think that's needed in case there was a rotation while in the background
         iBinding.drawerLayout.requestLayout()
+
+        //currentTabView?.removeFromParent()?.addView(currentTabView)
 
         //intent?.let {logger.log(TAG, it.toString())}
     }
