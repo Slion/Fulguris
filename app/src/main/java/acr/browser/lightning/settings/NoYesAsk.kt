@@ -16,7 +16,7 @@
  * The Original Developer is the Initial Developer.
  * The Initial Developer of the Original Code is Stéphane Lenclud.
  *
- * All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ * All portions of the code written by Stéphane Lenclud are Copyright © 2023 Stéphane Lenclud.
  * All Rights Reserved.
  */
 
@@ -25,11 +25,14 @@ package acr.browser.lightning.settings
 import acr.browser.lightning.settings.preferences.IntEnum
 
 /**
- * Define where new tab should be spawned
+ * Notably used to define what to do when there is a third-party associated with a web site.
+ *
+ * NOTE: Class name is referenced as strings in our resources.
  */
-enum class NewTabPosition(override val value: Int) : IntEnum {
-    BEFORE_CURRENT_TAB(0),
-    AFTER_CURRENT_TAB(1),
-    START_OF_TAB_LIST(2),
-    END_OF_TAB_LIST(3)
+enum class NoYesAsk(override val value: Int) : IntEnum {
+    NO(0),
+    YES(1),
+    ASK(2)
 }
+
+

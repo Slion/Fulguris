@@ -3,6 +3,8 @@ package acr.browser.lightning.di
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.device.BuildInfo
 import acr.browser.lightning.device.BuildType
+import acr.browser.lightning.extensions.landscapeSharedPreferencesName
+import acr.browser.lightning.extensions.portraitSharedPreferencesName
 import acr.browser.lightning.html.ListPageReader
 import acr.browser.lightning.html.bookmark.BookmarkPageReader
 import acr.browser.lightning.html.homepage.HomePageReader
@@ -15,8 +17,6 @@ import acr.browser.lightning.log.Logger
 import acr.browser.lightning.log.NoOpLogger
 import acr.browser.lightning.search.suggestions.RequestFactory
 import acr.browser.lightning.utils.FileUtils
-import acr.browser.lightning.utils.landscapeSharedPreferencesName
-import acr.browser.lightning.utils.portraitSharedPreferencesName
 import android.app.Application
 import android.app.DownloadManager
 import android.app.NotificationManager
@@ -82,11 +82,11 @@ class AppModule {
 
     @Provides
     @PrefsPortrait
-    fun providePreferencesPortrait(application: Application): SharedPreferences = application.getSharedPreferences(portraitSharedPreferencesName(application), 0)
+    fun providePreferencesPortrait(application: Application): SharedPreferences = application.getSharedPreferences(application.portraitSharedPreferencesName(), 0)
 
     @Provides
     @PrefsLandscape
-    fun providePreferencesLandscape(application: Application): SharedPreferences = application.getSharedPreferences(landscapeSharedPreferencesName(application), 0)
+    fun providePreferencesLandscape(application: Application): SharedPreferences = application.getSharedPreferences(application.landscapeSharedPreferencesName(), 0)
 
     @Provides
     @DevPrefs

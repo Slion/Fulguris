@@ -11,8 +11,8 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.di.HiltEntryPoint
-import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.di.configPrefs
+import acr.browser.lightning.extensions.ihs
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.html.homepage.HomePageFactory
@@ -20,12 +20,13 @@ import acr.browser.lightning.js.InvertPage
 import acr.browser.lightning.js.SetMetaViewport
 import acr.browser.lightning.js.TextReflow
 import acr.browser.lightning.log.Logger
+import acr.browser.lightning.settings.NoYesAsk
+import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTries
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
@@ -47,17 +48,17 @@ import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URISyntaxException
 import java.util.*
-import javax.inject.Inject
 import kotlin.math.abs
-import jp.hazuki.yuzubrowser.adblock.*
+import timber.log.Timber
 
-
+/**
+ *
+ */
 class LightningWebClient(
         private val activity: Activity,
         private val lightningView: LightningView
@@ -175,7 +176,9 @@ class LightningWebClient(
         super.onLoadResource(view, url)
         // Count our resources
         iResourceCount++;
-        logger.log(TAG, "onLoadResource - $iResourceCount - $url")
+        Timber.d("$ihs : onLoadResource - $iResourceCount - $url")
+        val uri  = Uri.parse(url)
+        loadDomainPreferences(uri.host ?: "", false)
 
         // Only do that on the first resource load
         if (iResourceCount==1) {
@@ -198,7 +201,7 @@ class LightningWebClient(
      * Overrides [WebViewClient.onPageFinished]
      */
     override fun onPageFinished(view: WebView, url: String) {
-        logger.log(TAG, "onPageFinished - $url")
+        Timber.d("$ihs : onPageFinished - $url")
 
         // Make sure we apply desktop mode now as it may fail when done from onLoadResource
         // In fact the HTML page may not be loaded yet when we hit our condition in onLoadResource
@@ -243,11 +246,22 @@ class LightningWebClient(
      * You have no guarantee that the root HTML document has been loaded when this is called.
      */
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
-        logger.log(TAG, "onPageStarted - $url")
+        Timber.d("$ihs : onPageStarted - $url")
         // Reset our resource count
         iResourceCount = 0
-
         currentUrl = url
+        val uri  = Uri.parse(url)
+        loadDomainPreferences(uri.host ?: "", true)
+        // TODO: find a way not to bypass tab level settings
+
+        (view as WebViewEx).proxy.apply{
+            // Only apply domain settings dark mode if no bypass
+            if (!darkModeBypassDomainSettings) {
+                darkMode = domainPreferences.darkMode
+            }
+        }
+
+
         // Only set the SSL state if there isn't an error for the current URL.
         if (urlWithSslError != url) {
             sslState = if (URLUtil.isHttpsUrl(url)) {
@@ -476,10 +490,48 @@ class LightningWebClient(
     // We use this to prevent opening such dialogs multiple times
     var exAppLaunchDialog: AlertDialog? = null
 
+    // TODO: Shall this live somewhere else
+    lateinit var domainPreferences: DomainPreferences
+
+    /**
+     * Load and create our domain preferences if needed
+     */
+    private fun loadDomainPreferences(aHost :String, aEntryPoint: Boolean = false) {
+        // Check if we need to load defaults
+        if (!DomainPreferences.exists(aHost)) {
+            // Don't create new preferences when in incognito mode
+            if (lightningView.isIncognito) {
+                // Load default domain settings instead
+                domainPreferences = DomainPreferences(BrowserApp.instance)
+            } else {
+                // First time we came across that domain, load defaults
+                domainPreferences = DomainPreferences.loadDefaults(aHost)
+                // Mark it as known
+                domainPreferences.knownDomain = true
+            }
+        } else {
+            // Load existing prefs
+            domainPreferences = DomainPreferences(BrowserApp.instance, aHost)
+        }
+
+        //
+        if (aEntryPoint &&
+            // Never set default domain as entry point, somehow this was happening
+            // Since we copy the default to create new domain settings that would force all new domains as entry point
+            !domainPreferences.isDefault) {
+            domainPreferences.entryPoint = true
+        }
+
+    }
+
     /**
      * Overrides [WebViewClient.shouldOverrideUrlLoading].
+     * This is not hit for every page. For instance dreamhost default landing page on http://specs.slions.net
      */
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+
+        Timber.d("$ihs : shouldOverrideUrlLoading - ${request.url}")
+
         // Check if configured proxy is available
         if (!proxyUtils.isProxyReady(activity)) {
             // User has been notified
@@ -487,6 +539,7 @@ class LightningWebClient(
         }
 
         val url = request.url.toString()
+        val uri  = Uri.parse(url)
         val headers = lightningView.requestHeaders
 
         if (lightningView.isIncognito) {
@@ -504,46 +557,40 @@ class LightningWebClient(
             return true
         }
 
+        loadDomainPreferences(uri.host ?: "", false)
 
         val intent = intentUtils.intentForUrl(view, url)
         intent?.let {
             // Check if that external app is already known
-            val prefKey = activity.getString(R.string.settings_app_prefix) + Uri.parse(url).host
-            if (preferences.contains(prefKey)) {
-                if (preferences.getBoolean(prefKey, false)) {
-                    // Trusted app, just launch it on the stop and abort loading
-                    intentUtils.startActivityForIntent(intent)
-                    return true
-                } else {
-                    // User does not want use to use this app
-                    return false
-                }
-            }
-
-            // We first encounter that app ask user if we should use it?
-            // We will keep loading even if an external app is available the first time we encounter it.
-            (activity as BrowserActivity).mainHandler.postDelayed({
-                if (exAppLaunchDialog == null) {
-                    exAppLaunchDialog = MaterialAlertDialogBuilder(activity).setTitle(R.string.dialog_title_third_party_app).setMessage(R.string.dialog_message_third_party_app)
+            if (domainPreferences.launchApp == NoYesAsk.YES) {
+                // Trusted app, just launch it on the spot and abort loading
+                intentUtils.startActivityForIntent(intent)
+                return true
+            } else if (domainPreferences.launchApp == NoYesAsk.NO) {
+                // User does not want use to use this app
+                return false
+            } else if (domainPreferences.launchApp == NoYesAsk.ASK) {
+                // We first encounter that app ask user if we should use it?
+                // We will keep loading even if an external app is available the first time we encounter it.
+                (activity as BrowserActivity).mainHandler.postDelayed({
+                    if (exAppLaunchDialog == null) {
+                        exAppLaunchDialog = MaterialAlertDialogBuilder(activity).setTitle(R.string.dialog_title_third_party_app).setMessage(R.string.dialog_message_third_party_app)
                             .setPositiveButton(activity.getText(R.string.yes), DialogInterface.OnClickListener { dialog, id ->
                                 // Handle Ok
                                 intentUtils.startActivityForIntent(intent)
                                 dialog.dismiss()
                                 exAppLaunchDialog = null
-                                // Remember user choice
-                                preferences.edit().putBoolean(prefKey, true).apply()
                             })
                             .setNegativeButton(activity.getText(R.string.no), DialogInterface.OnClickListener { dialog, id ->
                                 // Handle Cancel
                                 dialog.dismiss()
                                 exAppLaunchDialog = null
-                                // Remember user choice
-                                preferences.edit().putBoolean(prefKey, false).apply()
                             })
                             .create()
-                    exAppLaunchDialog?.show()
-                }
-            }, 1000)
+                        exAppLaunchDialog?.show()
+                    }
+                }, 1000)
+            }
         }
 
         // If none of the special conditions was met, continue with loading the url

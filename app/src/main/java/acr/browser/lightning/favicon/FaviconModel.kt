@@ -95,9 +95,13 @@ class FaviconModel @Inject constructor(
             return@create it.onSuccess(cachedFavicon.pad())
         }
 
-        // TODO: That would not work on dark theme for favicons that do not have dark variant
-        // We don't care for now as this function is never used to fetch on dark icons anyway
-        val faviconCacheFile = getFaviconCacheFile(application, uri, aOnDark)
+        // Try get the icon for the theme that was asked
+        var faviconCacheFile = getFaviconCacheFile(application, uri, aOnDark)
+        // If no icon and we ask for the dark variant
+        if (!faviconCacheFile.exists() && aOnDark) {
+            // Try get the light variant then
+            faviconCacheFile = getFaviconCacheFile(application, uri, false)
+        }
 
         if (faviconCacheFile.exists()) {
             val storedFavicon = BitmapFactory.decodeFile(faviconCacheFile.path, loaderOptions)

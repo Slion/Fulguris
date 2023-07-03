@@ -42,7 +42,9 @@ class BrowserApp : Application() {
     //@Inject internal lateinit var buildInfo: BuildInfo
 
     // Used to be able to tell when our application was just started
-    var justStarted: Boolean = true;
+    var justStarted: Boolean = true
+    //Ugly way to pass our domain around for settings
+    var domain: String = ""
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)

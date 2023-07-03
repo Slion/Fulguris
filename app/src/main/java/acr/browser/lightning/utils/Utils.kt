@@ -52,15 +52,6 @@ fun adjustBottomSheet(aDialog : BottomSheetDialog) {
     methodSetPaddingForPosition.invoke(fieldEdgeToEdgeCallback.get(aDialog),fieldBottomField.get(aDialog))
 }
 
-
-fun portraitSharedPreferencesName(context: Context): String {
-    return context.packageName + "_preferences_portrait"
-}
-
-fun landscapeSharedPreferencesName(context: Context): String {
-    return context.packageName + "_preferences_landscape"
-}
-
 /**
  * Workaround reversed layout bug: https://github.com/Slion/Fulguris/issues/212
  */

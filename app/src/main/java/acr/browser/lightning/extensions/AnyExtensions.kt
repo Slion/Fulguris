@@ -14,22 +14,24 @@
  * The Original Code is Fulguris.
  *
  * The Original Developer is the Initial Developer.
- * The Initial Developer of the Original Code is StÃ©phane Lenclud.
+ * The Initial Developer of the Original Code is Stéphane Lenclud.
  *
- * All portions of the code written by StÃ©phane Lenclud are Copyright Â© 2020 StÃ©phane Lenclud.
+ * All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
  * All Rights Reserved.
  */
 
-package acr.browser.lightning.settings
-
-import acr.browser.lightning.settings.preferences.IntEnum
+package acr.browser.lightning.extensions
 
 /**
- * Define where new tab should be spawned
+ * Identity Hash Code
  */
-enum class NewTabPosition(override val value: Int) : IntEnum {
-    BEFORE_CURRENT_TAB(0),
-    AFTER_CURRENT_TAB(1),
-    START_OF_TAB_LIST(2),
-    END_OF_TAB_LIST(3)
-}
+val Any.ihc : Int
+    get() = System.identityHashCode(this)
+
+/**
+ * Identity Hash Code as hexadecimal encoded string.
+ * Notably useful to use in logs for objects with multiple instances.
+ */
+val Any.ihs : String
+    get() = "%08X".format(ihc)
+

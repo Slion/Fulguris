@@ -42,6 +42,7 @@ import acr.browser.lightning.search.SuggestionsAdapter
 import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.settings.activity.SETTINGS_CLASS_NAME
 import acr.browser.lightning.settings.activity.SettingsActivity
+import acr.browser.lightning.settings.fragment.BottomSheetDialogFragment
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import acr.browser.lightning.settings.fragment.SponsorshipSettingsFragment
@@ -114,7 +115,6 @@ import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import junit.framework.Assert.assertNull
 import org.json.JSONObject
-import timber.log.Timber
 import java.io.IOException
 import java.net.URL
 import java.util.*
@@ -219,6 +219,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     //TODO: put that in settings
     private lateinit var tabsDialog: BottomSheetDialog
     private lateinit var bookmarksDialog: BottomSheetDialog
+
+    // Domain settings
+    private val iBottomSheet = BottomSheetDialogFragment(supportFragmentManager)
 
     // Binding
     lateinit var iBinding: ActivityMainBinding
@@ -579,6 +582,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemDarkMode) { dismiss(); executeAction(R.id.action_toggle_dark_mode) }
             onMenuItemClicked(iBinding.menuItemAdBlock) { dismiss(); executeAction(R.id.action_block) }
             onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
+            onMenuItemClicked(iBinding.menuItemDomainSettings) {
+                dismiss()
+                BrowserApp.instance.domain = currentHost()
+                iBottomSheet.setLayout(R.layout.fragment_settings_domain).show()
+            }
             // Popup menu action shortcut icons
             onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
             onMenuItemClicked(iBinding.menuShortcutHome) { dismiss(); executeAction(R.id.action_show_homepage) }
@@ -1113,6 +1121,23 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             //}
         }
     }
+
+    /**
+     *
+     */
+    private fun currentUrl() : String {
+        val currentView = tabsManager.currentTab ?: return ""
+        return currentView.url
+    }
+
+    /**
+     *
+     */
+    private fun currentHost(): String {
+        return Uri.parse(currentUrl()).host.toString()
+    }
+
+
 
     /**
      * Called when search view gains focus

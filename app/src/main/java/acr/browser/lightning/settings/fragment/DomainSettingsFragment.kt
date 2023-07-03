@@ -22,40 +22,48 @@
 
 package acr.browser.lightning.settings.fragment
 
+import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.R
-import acr.browser.lightning.extensions.portraitSharedPreferencesName
-import acr.browser.lightning.settings.preferences.ConfigurationPreferences
-import acr.browser.lightning.settings.preferences.PortraitPreferences
-import android.content.Context.MODE_PRIVATE
+import acr.browser.lightning.settings.preferences.DomainPreferences
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-import javax.inject.Singleton
 
-/**
- * Portrait settings configuration screen.
- * Notably use the correct shared preferences file rather than the default one.
- */
+
+
 @AndroidEntryPoint
-class PortraitSettingsFragment : ConfigurationSettingsFragment() {
-
-    @Inject internal lateinit var portraitPreferences: PortraitPreferences
-
-    override fun providePreferencesXmlResource() = R.xml.preference_configuration
-    override fun configurationPreferences() : ConfigurationPreferences = portraitPreferences
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        //injector.inject(this)
-        // That's the earliest place we can change our preference file as earlier in onCreate the manager has not been created yet
-        preferenceManager.sharedPreferencesName = requireContext().portraitSharedPreferencesName()
-        preferenceManager.sharedPreferencesMode = MODE_PRIVATE
-        super.onCreatePreferences(savedInstanceState,rootKey)
-    }
+class DomainSettingsFragment : AbstractSettingsFragment() {
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.settings_title_portrait
+        //We use a dynamic string instead, see below
+        return -1
+    }
+
+    /**
+     * See [AbstractSettingsFragment.title]
+     */
+    override fun title(): String {
+        return BrowserApp.instance.domain
+    }
+
+    override fun providePreferencesXmlResource() = if (BrowserApp.instance.domain=="") R.xml.preference_domain_default else R.xml.preference_domain
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        // That's the earliest place we can change our preference file as earlier in onCreate the manager has not been created yet
+        preferenceManager.sharedPreferencesName = DomainPreferences.name(BrowserApp.instance.domain)
+        preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
+        super.onCreatePreferences(savedInstanceState, rootKey)
+
+        // Setup link and domain display
+        findPreference<Preference>(getString(R.string.pref_key_visit_domain))?.apply {
+            summary = BrowserApp.instance.domain
+            val uri = "http://" + BrowserApp.instance.domain
+            intent?.data = Uri.parse(uri)
+        }
     }
 }

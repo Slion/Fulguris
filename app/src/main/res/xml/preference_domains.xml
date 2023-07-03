@@ -22,13 +22,40 @@
 -->
 <androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:a="http://schemas.android.com/apk/res-auto">
 
-<PreferenceCategory
-    android:icon="@drawable/ic_apps"
-    android:title="@string/settings_title_apps"
-    app:singleLineTitle="false" >
+<!--
+⚠️: Needed to use orders as the Default domain settings is added on top dynamically
+-->
 
-</PreferenceCategory>
+    <PreferenceCategory
+        a:key="@string/pref_key_domains"
+        a:icon="@drawable/ic_domain"
+        a:title="@string/settings_title_domains"
+        a:singleLineTitle="false"
+        a:initialExpandedChildrenCount="0"
+        a:order="10"/>
+
+    <PreferenceCategory
+        a:key="@string/pref_key_resource_domains"
+        a:icon="@drawable/ic_domain"
+        a:title="@string/settings_title_resource_domains"
+        a:singleLineTitle="false"
+        a:initialExpandedChildrenCount="0"
+        a:order="20"
+        />
+
+    <Preference
+        a:defaultValue="false"
+        a:key="@string/pref_key_delete_all_domains_settings"
+        a:title="@string/settings_title_domains_delete_all"
+        a:summary="@string/settings_summary_domains_delete_all"
+        a:iconSpaceReserved="false"
+        a:icon="@drawable/ic_delete_forever"
+        a:singleLineTitle="false"
+        a:order="30"
+        />
+
+
 
 </androidx.preference.PreferenceScreen>

@@ -27,7 +27,11 @@ class WebViewEx : WebView {
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+
     }
+
+    //
+    lateinit var proxy: LightningView
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
 

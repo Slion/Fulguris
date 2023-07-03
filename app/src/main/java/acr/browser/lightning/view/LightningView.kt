@@ -21,6 +21,7 @@ import acr.browser.lightning.network.NetworkConnectivityModel
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
+import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.webViewEngineVersionDesktop
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.*
@@ -184,6 +185,13 @@ class LightningView(
         }
 
     /**
+     * Enable user to override domain settings dark mode preference at the tab level.
+     * TODO: should we persist that guy?
+     * Maybe not as we could see this as a temporary option
+     */
+    var darkModeBypassDomainSettings = false
+
+    /**
      * Get our find in page search query.
      *
      * @return The find in page search query or an empty string.
@@ -222,6 +230,7 @@ class LightningView(
     val databaseScheduler: Scheduler = hiltEntryPoint.databaseScheduler()
     val mainScheduler: Scheduler = hiltEntryPoint.mainScheduler()
     val networkConnectivityModel: NetworkConnectivityModel = hiltEntryPoint.networkConnectivityModel
+    val defaultDomainSettings = DomainPreferences(activity)
 
     private val networkDisposable: Disposable
 
@@ -331,7 +340,7 @@ class LightningView(
             createWebView()
             initializeContent(tabInitializer)
             desktopMode = userPreferences.desktopModeDefault
-            darkMode = userPreferences.darkModeDefault
+            darkMode = defaultDomainSettings.darkModeDefault
         } else {
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer
@@ -356,6 +365,7 @@ class LightningView(
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
         webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebViewEx;
         webView?.apply {
+            proxy = this@LightningView
             setFindListener(this@LightningView)
             //id = this@LightningView.id
             gestureDetector = GestureDetector(activity, CustomGestureListener(this))
@@ -674,9 +684,10 @@ class LightningView(
     /**
      *
      */
-    fun toggleDarkMode() {
+    fun toggleDarkMode(aBypass: Boolean = true) {
         // Toggle dark mode
         darkMode = !darkMode
+        darkModeBypassDomainSettings = aBypass
     }
 
 

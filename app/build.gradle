@@ -195,6 +195,7 @@ android {
             // Gradle ignores any variants that satisfy the conditions above.
             setIgnore(true)
         }
+
     }
     packagingOptions {
         resources {
@@ -224,6 +225,9 @@ android {
             //customize your app name by using variables
             //outputFileName = "${variantName}.apk"
         }
+
+        // Allow application id access from resources, most useful for explicit intent
+        variant.resValue "string", "application_id", "\"${applicationId}\""
     }
 
 

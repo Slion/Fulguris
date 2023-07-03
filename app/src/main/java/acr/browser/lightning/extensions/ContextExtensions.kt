@@ -11,6 +11,9 @@ import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import java.util.*
 
+// For comments links
+import androidx.preference.PreferenceManager
+
 /**
  * Returns the dimension in pixels.
  *
@@ -63,3 +66,20 @@ fun Context.attrColor( @AttrRes attrColor: Int): Int {
     typedArray.recycle()
     return textColor
 }
+
+
+/**
+ * See [PreferenceManager.getDefaultSharedPreferencesName]
+ */
+fun Context.portraitSharedPreferencesName(): String {
+    return packageName + "_preferences_portrait"
+}
+
+/**
+ * See [PreferenceManager.getDefaultSharedPreferencesName]
+ */
+fun Context.landscapeSharedPreferencesName(): String {
+    return packageName + "_preferences_landscape"
+}
+
+

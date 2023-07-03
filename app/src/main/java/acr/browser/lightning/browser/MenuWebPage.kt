@@ -29,6 +29,7 @@ import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.MenuWebPageBinding
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
+import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isAppScheme
@@ -160,6 +161,7 @@ class MenuWebPage : PopupWindow {
                 // Blocking it is not nice and subscription is more involved I guess
                 // See BookmarksDrawerView.updateBookmarkIndicator
                 //contentView.menuItemAddBookmark.visibility = if (bookmarkModel.isBookmark(tab.url).blockingGet() || tab.url.isSpecialUrl()) View.GONE else View.VISIBLE
+                var isSpecial = false
                 (!(tab.url.isSpecialUrl() || tab.url.isAppScheme())).let {
                     // Those menu items won't be displayed for special URLs
                     iBinding.menuItemDesktopMode.isVisible = it
@@ -169,12 +171,26 @@ class MenuWebPage : PopupWindow {
                     iBinding.menuItemShare.isVisible = it
                     iBinding.menuItemAdBlock.isVisible = it && iUserPreferences.adBlockEnabled
                     iBinding.menuItemTranslate.isVisible = it
+                    iBinding.menuItemDomainSettings.isVisible = it
+                    isSpecial = !it
                 }
+
+                // The point of this is not to show domain settings option for unknown domain in incognito mode
+                // Otherwise it could create new domain settings while in incognito
+                if (!isSpecial) {
+                    val domain = Uri.parse(tab.url).host
+                    if (domain?.isBlank()==true) {
+                        iBinding.menuItemDomainSettings.isVisible = false
+                    } else {
+                        // Only show the option if the domain already exists
+                        iBinding.menuItemDomainSettings.isVisible = (domain != null && DomainPreferences.exists(domain))
+                    }
+                }
+
             }
         }
 
         scrollToStart()
-
     }
 
     /**

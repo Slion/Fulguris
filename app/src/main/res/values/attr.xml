@@ -50,5 +50,9 @@
         <attr name="format" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="EnumListPreference">
+        <attr name="enumClassName" format="string" />
+    </declare-styleable>
+
 
 </resources>

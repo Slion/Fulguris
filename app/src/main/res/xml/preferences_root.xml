@@ -60,10 +60,10 @@
     </Preference>
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.AppsSettingsFragment"
-        app:summary="@string/settings_summary_apps"
-        app:title="@string/settings_title_apps"
-        app:icon="@drawable/ic_apps"
+        app:fragment="acr.browser.lightning.settings.fragment.DomainsSettingsFragment"
+        app:summary="@string/settings_summary_domains"
+        app:title="@string/settings_title_domains"
+        app:icon="@drawable/ic_domain"
         app:singleLineTitle="false"
         />
 

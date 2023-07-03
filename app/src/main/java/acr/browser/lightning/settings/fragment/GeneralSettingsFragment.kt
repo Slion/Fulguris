@@ -49,9 +49,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
     @Inject lateinit var searchEngineProvider: SearchEngineProvider
     @Inject lateinit var userPreferences: UserPreferences
 
-
-    private lateinit var proxyChoices: Array<String>
-
     private lateinit var iPrefSearchCustomImageUrl: Preference
 
     /**
@@ -67,8 +64,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
         //injector.inject(this)
-
-        proxyChoices = resources.getStringArray(R.array.proxy_choices_array)
 
         clickableDynamicPreference(
             preference = SETTINGS_PROXY,

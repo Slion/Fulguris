@@ -78,10 +78,12 @@
     <string name="pref_key_request_save_data">pref_key_request_save_data</string>
     <string name="pref_key_load_images">pref_key_load_images</string>
     <string name="pref_key_desktop_mode_default">pref_key_desktop_mode_default</string>
-    <string name="pref_key_dark_mode_default">pref_key_dark_mode_default</string>
+    <string name="pref_key_dark_mode">pref_key_dark_mode</string>
+    <string name="pref_key_dark_mode_override">pref_key_dark_mode_override</string>
     <string name="pref_key_webrtc">pref_key_webrtc</string>
     <string name="pref_key_content_control">pref_key_content_control</string>
     <string name="pref_key_content_control_filters">pref_key_content_control_filters</string>
+    <string name="pref_key_delete_all_domains_settings">pref_key_delete_all_domains_settings</string>
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>
@@ -108,6 +110,7 @@
 -->
 
     <!-- Settings keys -->
+    <string name="pref_key_visit_domain">pref_key_visit_domain</string>
     <string name="pref_key_contact_us">pref_key_contact_us</string>
     <string name="pref_key_accent">pref_key_accent</string>
     <string name="pref_key_close_drawer">pref_key_close_drawer</string>
@@ -127,6 +130,14 @@
 
     <string name="pref_key_subscriptions_category">pref_key_subscriptions_category</string>
     <string name="pref_key_contribute_category">pref_key_contribute_category</string>
+
+    <!-- Domain settings -->
+    <string name="pref_key_known_domain">pref_key_known_domain</string>
+    <string name="pref_key_launch_app">pref_key_launch_app</string>
+    <string name="pref_key_launch_app_override">pref_key_launch_app_override</string>
+    <string name="pref_key_domains">pref_key_domains</string>
+    <string name="pref_key_entry_point">pref_key_entry_point</string>
+    <string name="pref_key_resource_domains">pref_key_resource_domains</string>
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>

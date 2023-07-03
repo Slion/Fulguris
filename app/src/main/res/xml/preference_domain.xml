@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ (the "License"); you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at:
+ https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ added to cover use of software over a computer network and provide for limited attribution for
+ the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+
+ Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ ANY KIND, either express or implied. See the License for the specific language governing rights
+ and limitations under the License.
+
+ The Original Code is Fulguris.
+
+ The Original Developer is the Initial Developer.
+ The Initial Developer of the Original Code is Stéphane Lenclud.
+
+ All portions of the code written by Stéphane Lenclud are Copyright © 2023 Stéphane Lenclud.
+ All Rights Reserved.
+-->
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:a="http://schemas.android.com/apk/res-auto">
+
+
+    <Preference
+        android:key="@string/pref_key_visit_domain"
+        android:title="@string/action_domain_settings"
+        a:icon="@drawable/ic_link"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        >
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data=""
+            android:targetPackage="@string/application_id"
+            android:targetClass="acr.browser.lightning.MainActivity"
+            >
+
+        </intent>
+
+    </Preference>
+
+
+    <SwitchPreferenceCompat
+        a:key="@string/pref_key_entry_point"
+        a:title="@string/settings_title_entry_point"
+        a:summaryOn="@string/settings_summary_on_entry_point"
+        a:summaryOff="@string/settings_summary_off_entry_point"
+        a:defaultValue="false"
+        a:iconSpaceReserved="false"
+        a:icon="@drawable/ic_sensor_door_outline"
+        a:singleLineTitle="false" />
+
+<!--    <SwitchPreferenceCompat-->
+<!--        a:key="@string/pref_key_known_domain"-->
+<!--        a:title="Known domain"-->
+<!--        a:defaultValue="false"-->
+<!--        a:iconSpaceReserved="false"-->
+<!--        a:icon="@drawable/ic_domain"-->
+<!--        a:singleLineTitle="false" />-->
+
+
+    <PreferenceCategory
+        a:title="@string/settings_title_dark_mode_default">
+
+    <SwitchPreferenceCompat
+        a:defaultValue="false"
+        a:key="@string/pref_key_dark_mode_override"
+        a:title="@string/settings_title_override"
+        a:summaryOn="@string/settings_summary_on_override"
+        a:summaryOff="@string/settings_summary_off_override"
+        a:iconSpaceReserved="true"
+        a:singleLineTitle="false" />
+
+    <SwitchPreferenceCompat
+        a:defaultValue="false"
+        a:key="@string/pref_key_dark_mode"
+        a:title="@string/settings_title_dark_mode_default"
+        a:summary="@string/settings_summary_dark_mode_default"
+        a:dependency="@string/pref_key_dark_mode_override"
+        a:iconSpaceReserved="false"
+        a:icon="@drawable/ic_dark_mode"
+        a:singleLineTitle="false" />
+
+    </PreferenceCategory>
+
+    <acr.browser.lightning.settings.preferences.PreferenceCategoryEx
+        a:title="@string/settings_title_launch_app"
+        a:summary="@string/dialog_message_third_party_app">
+
+        <SwitchPreferenceCompat
+            a:defaultValue="false"
+            a:key="@string/pref_key_launch_app_override"
+            a:title="@string/settings_title_override"
+            a:summaryOn="@string/settings_summary_on_override"
+            a:summaryOff="@string/settings_summary_off_override"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false" />
+
+        <fulguris.preference.EnumListPreference
+            a:key="@string/pref_key_launch_app"
+            a:title="@string/settings_title_launch_app"
+            a:useSimpleSummaryProvider="true"
+            a:defaultValue="ASK"
+            a:entries="@array/NoYesAsk"
+            a:icon="@drawable/ic_apps"
+            a:singleLineTitle="false"
+            a:enumClassName="acr.browser.lightning.settings.NoYesAsk"
+            a:dependency="@string/pref_key_launch_app_override"
+            />
+
+    </acr.browser.lightning.settings.preferences.PreferenceCategoryEx>
+
+</androidx.preference.PreferenceScreen>

@@ -151,7 +151,7 @@ class SettingsActivity : ThemedSettingsActivity() {
     {
         // Needed to update title after language change
         (aFragment as? AbstractSettingsFragment)?.let {
-            setTitle(it.titleResourceId())
+            title = it.title()
         }
     }
 

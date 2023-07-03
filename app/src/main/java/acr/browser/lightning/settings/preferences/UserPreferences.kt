@@ -106,11 +106,6 @@ class UserPreferences @Inject constructor(
     var desktopModeDefault by preferences.booleanPreference(R.string.pref_key_desktop_mode_default, false)
 
     /**
-     * True if dark mode should be enabled by default for new tabs, false otherwise.
-     */
-    var darkModeDefault by preferences.booleanPreference(R.string.pref_key_dark_mode_default, false)
-
-    /**
      * The URL of the selected homepage.
      */
     var homepage by preferences.stringPreference(HOMEPAGE, Uris.AboutBookmarks)

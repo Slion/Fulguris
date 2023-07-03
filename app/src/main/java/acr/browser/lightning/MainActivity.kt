@@ -8,6 +8,7 @@ import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
