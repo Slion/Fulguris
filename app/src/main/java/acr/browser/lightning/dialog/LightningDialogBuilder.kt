@@ -402,19 +402,11 @@ class LightningDialogBuilder @Inject constructor(
                 DialogItem(title = R.string.action_download,
                     // Do not show download option for data URL as we don't support that for now
                     show=!URLUtil.isDataUrl(imageUrl)) {
-                    // Ask for required permissions before starting our download
-                    PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        object : PermissionsResultAction() {
-                            override fun onGranted() {
-                                val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(imageUrl).lowercase(Locale.ROOT))
-                                // Not sure why we should use PNG by default though.
-                                // TODO: I think we have some code somewhere that can download something and then check its mime type from its content.
-                                downloadHandler.onDownloadStart(activity, userPreferences, imageUrl, userAgent, "attachment", mimeType?:"image/png", "")
-                            }
-                            override fun onDenied(permission: String) {
-                                //TODO show message
-                            }
-                        })
+                    // Start download
+                    val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(imageUrl).lowercase(Locale.ROOT))
+                    // Not sure why we should use PNG by default though.
+                    // TODO: I think we have some code somewhere that can download something and then check its mime type from its content.
+                    downloadHandler.onDownloadStart(activity, userPreferences, imageUrl, userAgent, "attachment", mimeType?:"image/png", "")
                 },
                 DialogItem(title = R.string.dialog_copy_link, text = imageUrl) {
                     clipboardManager.copyToClipboard(imageUrl)

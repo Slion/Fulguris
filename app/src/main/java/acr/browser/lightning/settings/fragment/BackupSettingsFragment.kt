@@ -104,13 +104,9 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         super.onCreatePreferences(savedInstanceState, rootKey)
         //injector.inject(this)
 
-        PermissionsManager
-            .getInstance()
-            .requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS, null)
-
         // Bookmarks
-        clickablePreference(preference = SETTINGS_EXPORT, onClick = this::exportBookmarks)
-        clickablePreference(preference = SETTINGS_IMPORT, onClick = this::importBookmarks)
+        clickablePreference(preference = SETTINGS_EXPORT, onClick = this::showExportBookmarksDialog)
+        clickablePreference(preference = SETTINGS_IMPORT, onClick = this::showImportBookmarksDialog)
         clickablePreference(preference = SETTINGS_DELETE_BOOKMARKS, onClick = this::deleteAllBookmarks)
         clickablePreference(preference = SETTINGS_SETTINGS_EXPORT, onClick = this::requestSettingsExport)
         clickablePreference(preference = SETTINGS_SETTINGS_IMPORT, onClick = this::requestSettingsImport)
@@ -175,36 +171,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         bookmarksSortSubscription?.dispose()
     }
 
-    private fun exportBookmarks() {
-        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS,
-            object : PermissionsResultAction() {
-                override fun onGranted() {
-                    showExportBookmarksDialog()
-                }
-
-                override fun onDenied(permission: String) {
-                    val activity = activity
-                    if (activity != null && !activity.isFinishing && isAdded) {
-                        Utils.createInformativeDialog(activity, R.string.title_error, R.string.bookmark_export_failure)
-                    } else {
-                        application.toast(R.string.bookmark_export_failure)
-                    }
-                }
-            })
-    }
-
-    private fun importBookmarks() {
-        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, REQUIRED_PERMISSIONS,
-            object : PermissionsResultAction() {
-                override fun onGranted() {
-                    showImportBookmarksDialog()
-                }
-
-                override fun onDenied(permission: String) {
-                    //TODO Show message
-                }
-            })
-    }
 
     private fun deleteAllBookmarks() {
         showDeleteBookmarksDialog()
@@ -699,8 +665,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_SETTINGS_EXPORT = "export_settings"
         private const val SETTINGS_SETTINGS_IMPORT = "import_settings"
         private const val KSessionMimeType = "application/octet-stream"
-
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
         const val EXPORT_SETTINGS = 0
         const val IMPORT_SETTINGS = 1
