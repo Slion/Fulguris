@@ -8,6 +8,7 @@
         app:singleLineTitle="false" >
 
         <Preference
+            android:key="@string/pref_key_contact_us"
             android:title="@string/pref_title_contact_us"
             android:summary="@string/pref_summary_contact_us"
             app:icon="@drawable/ic_email"

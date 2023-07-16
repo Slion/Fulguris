@@ -108,6 +108,7 @@
 -->
 
     <!-- Settings keys -->
+    <string name="pref_key_contact_us">pref_key_contact_us</string>
     <string name="pref_key_accent">pref_key_accent</string>
     <string name="pref_key_close_drawer">pref_key_close_drawer</string>
     <string name="pref_key_always_incognito">pref_key_always_incognito</string>

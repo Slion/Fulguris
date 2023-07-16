@@ -14,6 +14,10 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 /**
  * About settings page.
@@ -35,7 +39,7 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
 
         clickablePreference(
             preference = SETTINGS_VERSION,
-            summary = versionString()
+            summary = versionString
         )
 
         clickablePreference(
@@ -50,6 +54,12 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
             checkForUpdates()
         }
 
+        // Add body to our email link to provide info about device and software
+        findPreference<Preference>(getString(R.string.pref_key_contact_us))?.apply {
+            var uri = intent?.data.toString()
+            uri += "&body=" + Uri.encode("\n\n\n----------------------------------------\n$versionString\n$androidInfo\n$webViewSummary\n$deviceInfo", Charsets.UTF_8.toString())
+            intent?.data = Uri.parse(uri)
+        }
 
     }
 
@@ -60,8 +70,15 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
         return R.string.settings_about
     }
 
+    val versionString
+        get() = BuildConfig.APPLICATION_ID + " - v" + BuildConfig.VERSION_NAME
 
-    fun versionString() = BuildConfig.APPLICATION_ID + " - v" + BuildConfig.VERSION_NAME
+    val androidInfo
+        get() = "Android ${Build.VERSION.RELEASE} - API ${Build.VERSION.SDK_INT}"
+
+    val deviceInfo
+        get() = "Model ${Build.MODEL} - Brand ${Build.BRAND} - Manufacturer ${Build.MANUFACTURER}"
+
 
     override fun onStop() {
         super.onStop()
@@ -91,7 +108,7 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
                 Response.ErrorListener {error: VolleyError ->
                     findPreference<Preference>(SETTINGS_VERSION)?.apply {
                         title = getString(R.string.update_check_error)
-                        summary = versionString() + "\n" + error.cause.toString() + error.networkResponse?.let{"(" + it.statusCode.toString() + ")"}
+                        summary = versionString + "\n" + error.cause.toString() + error.networkResponse?.let{"(" + it.statusCode.toString() + ")"}
                         // Use the following for network status code
                         // Though networkResponse can be null in flight mode for instance
                         // error.networkResponse.statusCode.toString()
