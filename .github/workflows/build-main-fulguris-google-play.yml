@@ -1,4 +1,4 @@
-name: Build Fulguris Google Play
+name: Google Play
 
 on:
   push:
