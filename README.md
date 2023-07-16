@@ -1,9 +1,11 @@
 # Fulguris
 ⚡Sparkling Android Web Browser⚡
 
-[![Build Fulguris Google Play](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-google-play.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-google-play.yml)\
-[![Build Fulguris Download](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-download.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-download.yml)\
-[![Build Styx](https://github.com/Slion/Fulguris/actions/workflows/build-main-styx.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-styx.yml)
+[![Google Play](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-google-play.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-google-play.yml)
+[![Download](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-download.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-download.yml)
+[![Rebrand](https://github.com/Slion/Fulguris/actions/workflows/build-main-styx.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-styx.yml)
+
+[![Discord Invite](https://img.shields.io/discord/828559272752840713?color=%237289DA&label=chat&logo=discord&logoColor=white)](https://discord.com/invite/7M4Ms5dMZE)
 
 # Download
 
