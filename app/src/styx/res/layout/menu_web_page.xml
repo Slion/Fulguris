@@ -282,6 +282,15 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"
                         app:drawableStartCompat="@drawable/outline_remove_circle_outline_24" />
 
+                    <TextView
+                        android:id="@+id/menuItemDomainSettings"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="visible"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_domain"
+                        android:text="@string/action_domain_settings"
+                        />
+
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
