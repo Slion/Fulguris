@@ -176,7 +176,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     pref.summary = domainReverse
                     pref.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
                     pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                        BrowserApp.instance.domain = domainReverse
+                        BrowserApp.instance.domain = domain
                         false
                     }
 
