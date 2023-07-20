@@ -89,6 +89,7 @@
     <string name="dialog_cookies">Wil je alle browser cookies wissen?</string>
     <string name="action_yes">Ja</string>
     <string name="action_no">Nee</string>
+    <string name="action_ask">Ask</string>
     <string name="title_text_size">Tekst grootte</string>
     <string name="size_largest">Grootst</string>
     <string name="size_large">Groot</string>
@@ -474,6 +475,22 @@
     <string name="action_restore_tab">Restore tab</string>
     <string name="settings_summary_apps">Enable third-party apps</string>
     <string name="settings_title_apps">Apps</string>
+    <string name="settings_title_domains">Domains</string>
+    <string name="settings_summary_domains">Manage domain settings</string>
+    <string name="settings_title_resource_domains">Resource domains</string>
+    <string name="settings_title_override">Override</string>
+    <string name="settings_summary_on_override">Override default settings</string>
+    <string name="settings_summary_off_override">Use default settings</string>
+    <string name="settings_title_launch_app">Launch app</string>
+    <string name="settings_title_entry_point">Entry point</string>
+    <string name="settings_summary_on_entry_point">List as main domain</string>
+    <string name="settings_summary_off_entry_point">List as resource domain</string>
+    <string name="action_domain_settings">Domain</string>
+    <string name="settings_title_domains_delete_all">Delete all</string>
+    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
+    <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
+    <string name="prompt_please_confirm">Please confirm</string>
+    <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Third-party app available</string>
     <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>

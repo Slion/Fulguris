@@ -89,6 +89,7 @@
     <string name="dialog_cookies">Вы хотите очистить все cookie файлы браузера?</string>
     <string name="action_yes">Да</string>
     <string name="action_no">Нет</string>
+    <string name="action_ask">Ask</string>
     <string name="title_text_size">Размер текста</string>
     <string name="size_largest">Огромный</string>
     <string name="size_large">Большой</string>
@@ -476,6 +477,22 @@
     <string name="action_restore_tab">Восстановить вкладку</string>
     <string name="settings_summary_apps">Разрешить сторонние приложения</string>
     <string name="settings_title_apps">Приложения</string>
+    <string name="settings_title_domains">Domains</string>
+    <string name="settings_summary_domains">Manage domain settings</string>
+    <string name="settings_title_resource_domains">Resource domains</string>
+    <string name="settings_title_override">Override</string>
+    <string name="settings_summary_on_override">Override default settings</string>
+    <string name="settings_summary_off_override">Use default settings</string>
+    <string name="settings_title_launch_app">Launch app</string>
+    <string name="settings_title_entry_point">Entry point</string>
+    <string name="settings_summary_on_entry_point">List as main domain</string>
+    <string name="settings_summary_off_entry_point">List as resource domain</string>
+    <string name="action_domain_settings">Domain</string>
+    <string name="settings_title_domains_delete_all">Delete all</string>
+    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
+    <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
+    <string name="prompt_please_confirm">Please confirm</string>
+    <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Доступно стороннее приложение</string>
     <string name="dialog_message_third_party_app">Запустить приложение, связанное с этим веб-сайтом?</string>
