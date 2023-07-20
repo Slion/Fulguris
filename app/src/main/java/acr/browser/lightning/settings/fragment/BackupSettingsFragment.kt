@@ -104,7 +104,11 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         super.onCreatePreferences(savedInstanceState, rootKey)
         //injector.inject(this)
 
-        // Bookmarks
+        sessionsCategory = findPreference(getString(R.string.pref_key_session_export_category))!!
+
+
+
+
         clickablePreference(preference = SETTINGS_EXPORT, onClick = this::showExportBookmarksDialog)
         clickablePreference(preference = SETTINGS_IMPORT, onClick = this::showImportBookmarksDialog)
         clickablePreference(preference = SETTINGS_DELETE_BOOKMARKS, onClick = this::deleteAllBookmarks)
@@ -115,7 +119,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         clickablePreference(preference = getString(R.string.pref_key_sessions_import), onClick = this::showSessionImportDialog)
         //clickablePreference(preference = getString(R.string.pref_key_sessions_reset), onClick = this::deleteAllBookmarks)
 
-        sessionsCategory = findPreference(getString(R.string.pref_key_session_export_category))!!
 
         // Populate our sessions
         tabsManager.iSessions.forEach { s -> addPreferenceSessionExport(s) }
@@ -170,7 +173,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         importSubscription?.dispose()
         bookmarksSortSubscription?.dispose()
     }
-
 
     private fun deleteAllBookmarks() {
         showDeleteBookmarksDialog()
@@ -664,9 +666,8 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         private const val SETTINGS_DELETE_BOOKMARKS = "delete_bookmarks"
         private const val SETTINGS_SETTINGS_EXPORT = "export_settings"
         private const val SETTINGS_SETTINGS_IMPORT = "import_settings"
-        private const val KSessionMimeType = "application/octet-stream"
-
-        const val EXPORT_SETTINGS = 0
-        const val IMPORT_SETTINGS = 1
+        private const val KSessionMimeType = "application/octet-stream"    
+	const val EXPORT_SETTINGS = 0
+	const val IMPORT_SETTINGS = 1
     }
 }

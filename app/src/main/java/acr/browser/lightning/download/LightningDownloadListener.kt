@@ -160,8 +160,25 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
         url: String, userAgent: String,
         contentDisposition: String, mimetype: String, contentLength: Long
     ) {
-        //
-        doDownloadStart(url, userAgent, contentDisposition, mimetype, contentLength)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // No permissions needed anymore from Android 13
+            doDownloadStart(url, userAgent, contentDisposition, mimetype, contentLength)
+        } else {
+            PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(mActivity, arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+                object : PermissionsResultAction() {
+                    override fun onGranted() {
+                        doDownloadStart(url, userAgent, contentDisposition, mimetype, contentLength)
+                    }
+
+                    override fun onDenied(permission: String) {
+                        //TODO show message
+                    }
+                })
+        }
+
 
         // Some download link spawn an empty tab, just close it then
         if (mActivity is BrowserActivity) {

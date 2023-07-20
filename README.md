@@ -88,6 +88,8 @@ The ability of this project to finance itself is what will ultimately determine 
 * `INSTALL_SHORTCUT`: used to add shortcuts with the "Add to home screen" option.
 
 ## Requested only when needed
+* `WRITE_EXTERNAL_STORAGE`: needed to download files and export bookmarks.
+* `READ_EXTERNAL_STORAGE`: needed to download files and import bookmarks.
 * `ACCESS_FINE_LOCATION`: needed for sites like Google Maps, requires "Location access" option to be enabled (default disabled).
 * `RECORD_AUDIO`: needed to support WebRTC, requires "WebRTC Support" option to be enabled (default disabled).
 * `CAMERA`: needed to support WebRTC, requires "WebRTC Support" option to be enabled (default disabled).
