@@ -1,7 +1,7 @@
 # Fulguris
-⚡Sparkling Android Web Browser⚡
-
 [![Discord Invite](https://img.shields.io/discord/828559272752840713?color=%23525dea&label=Chat&logo=discord&logoColor=white)](https://discord.com/invite/7M4Ms5dMZE)
+
+Fulguris is a [web browser] for Android. Through a customizable interface it offers a premium experience on a range of Android devices, Chromebooks or even Windows 11.
 
 # Builds
 [![Google Play](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-google-play.yml/badge.svg)](https://github.com/Slion/Fulguris/actions/workflows/build-main-fulguris-google-play.yml)
@@ -102,3 +102,4 @@ The ability of this project to finance itself is what will ultimately determine 
 [Google Play]: https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore
 [our forums]: https://slions.net
 [Discord]: https://discord.com/invite/7M4Ms5dMZE
+[Web browser]: https://en.wikipedia.org/wiki/Web_browser
