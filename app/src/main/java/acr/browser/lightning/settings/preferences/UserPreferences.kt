@@ -31,7 +31,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class UserPreferences @Inject constructor(
-    @UserPrefs preferences: SharedPreferences,
+    @UserPrefs val preferences: SharedPreferences,
     screenSize: ScreenSize
 ) {
 
@@ -427,6 +427,26 @@ class UserPreferences @Inject constructor(
      * Define if user wants to close the drawer after delete or create an tab automatically.
      */
     var closeDrawer by preferences.booleanPreference(R.string.pref_key_close_drawer, R.bool.pref_default_close_drawer)
+
+    /**
+     * Whether WebView scrollbars should be fading
+     */
+    var scrollbarFading by preferences.booleanPreference(R.string.pref_key_scrollbar_fading, R.bool.pref_default_scrollbar_fading)
+
+    /**
+     * The time it takes for WebView scrollbars to start fading away
+     */
+    var scrollbarDelayBeforeFade by preferences.floatResPreference(R.string.pref_key_scrollbar_delay_before_fade, R.integer.pref_default_scrollbar_delay_before_fade)
+
+    /**
+     * The time it takes for WebView scrollbars to fade away
+     */
+    var scrollbarFadeDuration by preferences.floatResPreference(R.string.pref_key_scrollbar_fade_duration, R.integer.pref_default_scrollbar_fade_duration)
+
+    /**
+     * WebView scrollbars size
+     */
+    var scrollbarSize by preferences.floatResPreference(R.string.pref_key_scrollbar_size, R.integer.pref_default_scrollbar_size)
 
 }
 

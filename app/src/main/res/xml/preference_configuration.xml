@@ -76,8 +76,9 @@
         android:stepSize="25"
         android:value="200"
         app:labelBehavior="gone"
-        app:format="%s%%"
+        app:format="%.0f%%"
         app:singleLineTitle="false"
+        app:allowDividerAbove="false"
         />
 
 </PreferenceScreen>

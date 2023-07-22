@@ -124,6 +124,10 @@
     <string name="pref_key_use_js_block">pref_key_use_js_block</string>
     <string name="pref_key_use_site_block">pref_key_use_site_block</string>
     <string name="pref_key_search_custom_image_url">pref_key_search_custom_image_url</string>
+    <string name="pref_key_scrollbar_fading">pref_key_scrollbar_fading</string>
+    <string name="pref_key_scrollbar_delay_before_fade">pref_key_scrollbar_delay_before_fade</string>
+    <string name="pref_key_scrollbar_fade_duration">pref_key_scrollbar_fade_duration</string>
+    <string name="pref_key_scrollbar_size">pref_key_scrollbar_size</string>
 
     <string name="pref_key_debug">pref_key_debug</string>
     <string name="pref_key_webview">pref_key_webview</string>

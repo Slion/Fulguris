@@ -18,10 +18,10 @@ import acr.browser.lightning.extensions.*
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.network.NetworkConnectivityModel
-import acr.browser.lightning.settings.preferences.UserPreferences
-import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import acr.browser.lightning.settings.preferences.DomainPreferences
+import acr.browser.lightning.settings.preferences.UserPreferences
+import acr.browser.lightning.settings.preferences.userAgent
 import acr.browser.lightning.settings.preferences.webViewEngineVersionDesktop
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.*
@@ -29,6 +29,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.graphics.*
 import android.net.Uri
 import android.net.http.SslCertificate
@@ -55,6 +56,7 @@ import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
+import timber.log.Timber
 import java.lang.ref.WeakReference
 
 /**
@@ -73,7 +75,8 @@ class LightningView(
     private val downloadPageInitializer: DownloadPageInitializer,
     private val historyPageInitializer: HistoryPageInitializer,
     private val logger: Logger
-): WebView.FindListener {
+): WebView.FindListener,
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * The unique ID of the view.
@@ -358,14 +361,42 @@ class LightningView(
     }
 
     /**
+     *
+     */
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        when (key) {
+            activity.getString(R.string.pref_key_scrollbar_size) ->
+                webView?.scrollBarSize = userPreferences.scrollbarSize.px.toInt()
+
+            activity.getString(R.string.pref_key_scrollbar_fading) ->
+                webView?.isScrollbarFadingEnabled = userPreferences.scrollbarFading
+
+            activity.getString(R.string.pref_key_scrollbar_delay_before_fade) ->
+                webView?.scrollBarDefaultDelayBeforeFade = userPreferences.scrollbarDelayBeforeFade.toInt()
+
+            activity.getString(R.string.pref_key_scrollbar_fade_duration) ->
+                webView?.scrollBarFadeDuration = userPreferences.scrollbarFadeDuration.toInt()
+        }
+    }
+
+    /**
      * Create our WebView.
      */
     private fun createWebView() {
+
+        userPreferences.preferences.registerOnSharedPreferenceChangeListener(this)
+
         lightningWebClient = LightningWebClient(activity, this)
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
         webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebViewEx;
         webView?.apply {
             proxy = this@LightningView
+            Timber.d("WebView scrollbar defaults: ${scrollBarSize.toFloat().dp}, $scrollBarDefaultDelayBeforeFade, $scrollBarFadeDuration")
+            scrollBarSize = userPreferences.scrollbarSize.px.toInt()
+            isScrollbarFadingEnabled = userPreferences.scrollbarFading
+            scrollBarDefaultDelayBeforeFade = userPreferences.scrollbarDelayBeforeFade.toInt()
+            scrollBarFadeDuration = userPreferences.scrollbarFadeDuration.toInt()
+
             setFindListener(this@LightningView)
             //id = this@LightningView.id
             gestureDetector = GestureDetector(activity, CustomGestureListener(this))
@@ -987,6 +1018,8 @@ class LightningView(
      * api.
      */
     fun destroy() {
+
+        userPreferences.preferences.unregisterOnSharedPreferenceChangeListener(this)
 
         //See: https://console.firebase.google.com/project/fulguris-b1f69/crashlytics/app/android:net.slions.fulguris.full.playstore/issues/ea99c7ea0c57f66eae6e95532a16859d
         if (iDownloadListener!=null) {

@@ -3,6 +3,7 @@ package acr.browser.lightning.settings.preferences.delegates
 import acr.browser.lightning.BrowserApp
 import android.content.SharedPreferences
 import androidx.annotation.BoolRes
+import androidx.annotation.DimenRes
 import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
 import kotlin.properties.ReadWriteProperty
@@ -48,5 +49,5 @@ fun SharedPreferences.floatPreference(
 fun SharedPreferences.floatResPreference(
     @StringRes stringRes: Int,
     @IntegerRes intRes: Int
-): ReadWriteProperty<Any, Float> = FloatPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), BrowserApp.instance.resources.getFloat(intRes), this)
+): ReadWriteProperty<Any, Float> = FloatPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), BrowserApp.instance.resources.getInteger(intRes).toFloat(), this)
 

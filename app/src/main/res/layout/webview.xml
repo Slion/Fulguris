@@ -50,3 +50,12 @@ android:background="?android:attr/colorBackground"
     android:forceDarkAllowed="true"
     />
 
+<!--
+Our scrollbars are always on top of the WebView content.
+Looks like this one has not effect:
+    android:scrollbarStyle="insideInset"
+
+Those work:
+    android:scrollbarSize="10dp"
+    android:fadeScrollbars="false"
+-->

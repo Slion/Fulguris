@@ -55,4 +55,10 @@
     <bool name="pref_default_save_passwords">true</bool>
     <bool name="pref_default_long_click_tab">true</bool>
     <bool name="pref_default_ssl_dialog">true</bool>
+    <bool name="pref_default_scrollbar_fading">true</bool>
+    <integer name="pref_default_scrollbar_size">4</integer>
+    <integer name="pref_default_scrollbar_fade_duration">250</integer>
+    <integer name="pref_default_scrollbar_delay_before_fade">400</integer>
+
+
 </resources>

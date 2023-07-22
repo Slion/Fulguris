@@ -1,8 +1,11 @@
 package fulguris.preference
 
 import acr.browser.lightning.R
+import acr.browser.lightning.extensions.dp
+import acr.browser.lightning.extensions.px
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Rect
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
@@ -19,6 +22,7 @@ import com.google.android.material.slider.Slider
 import java.lang.Float.max
 import java.lang.Float.min
 import java.util.*
+
 
 /*
 * Copyright 2018 The Android Open Source Project
@@ -59,6 +63,7 @@ import java.util.*
  */
 class SliderPreference @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.sliderStyle, defStyleRes: Int = 0) : Preference(context, attrs, defStyleAttr, defStyleRes) {
+
     var mSeekBarValue = 0F
     //var mMin = 0F
     //private var mMax = 100F
@@ -164,10 +169,19 @@ class SliderPreference @JvmOverloads constructor(
         mSlider = view.findViewById(R.id.slider) as Slider
 
         mSeekBarValueTextView = view.findViewById(R.id.seekbar_value) as TextView
+        val tv = mSeekBarValueTextView!!
+
         if (mShowSeekBarValue) {
-            mSeekBarValueTextView!!.visibility = View.VISIBLE
+            tv.visibility = View.VISIBLE
+            // Compute minimum width of our text view so that the slider does not resize as the label grows and shrinks
+            val bounds = Rect()
+            val longestText = formatter.getFormattedValue(valueTo)
+            tv.paint.getTextBounds(longestText, 0, longestText.length, bounds)
+            // Take into account text width, left and right padding and a small magic constant that we are not exactly sure why it was needed
+            // If we are still having problems just increase that constant a bit
+            tv.minWidth = bounds.width()  + tv.compoundPaddingLeft + tv.compoundPaddingRight + 2.px
         } else {
-            mSeekBarValueTextView!!.visibility = View.GONE
+            tv.visibility = View.GONE
             mSeekBarValueTextView = null
         }
         if (mSlider == null) {
@@ -474,10 +488,10 @@ class SliderPreference @JvmOverloads constructor(
     /**
      * See also [com.google.android.material.slider.BasicLabelFormatter]
      */
-    class MostBasicLabelFormatter(aFormat: String="%s") : LabelFormatter {
+    class MostBasicLabelFormatter(aFormat: String="%.2f") : LabelFormatter {
         private val iFormat = aFormat
         override fun getFormattedValue(value: Float): String {
-            return String.format(iFormat, String.format(if (value.toInt().toFloat() == value) "%.0f" else "%.2f", value))
+            return String.format(iFormat, value)            
         }
     }
 
