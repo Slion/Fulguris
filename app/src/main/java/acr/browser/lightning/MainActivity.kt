@@ -1,18 +1,24 @@
 package acr.browser.lightning
 
 import acr.browser.lightning.browser.activity.BrowserActivity
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
+import androidx.fragment.app.FragmentManager
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
-import timber.log.Timber
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class MainActivity @Inject constructor(): BrowserActivity() {
+class MainActivity @Inject constructor(): BrowserActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     @Suppress("DEPRECATION")
     public override fun updateCookiePreference(): Completable = Completable.fromAction {
@@ -42,6 +48,7 @@ class MainActivity @Inject constructor(): BrowserActivity() {
         moveTaskToBack(true)
     }
 
+
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action == KeyEvent.ACTION_DOWN && event.isCtrlPressed) {
             when (event.keyCode) {
@@ -57,5 +64,23 @@ class MainActivity @Inject constructor(): BrowserActivity() {
         return super.dispatchKeyEvent(event)
     }
 
+    /**
+     * Needed to have animations while navigating our settings.
+     * See [PreferenceFragmentCompat.onPreferenceTreeClick].
+     */
+    @SuppressLint("PrivateResource")
+    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat, preference: Preference): Boolean {
+        val fragmentManager: FragmentManager = caller.parentFragmentManager
+        val args: Bundle = preference.extras
+        val fragment = fragmentManager.fragmentFactory.instantiate(classLoader, preference.fragment!!)
+        fragment.arguments = args
+        fragmentManager.beginTransaction()
+            // Use standard bottom sheet animations
+            .setCustomAnimations(com.google.android.material.R.anim.design_bottom_sheet_slide_in, com.google.android.material.R.anim.design_bottom_sheet_slide_out)
+            .replace((caller.requireView().parent as View).id, fragment)
+            .addToBackStack(null)
+            .commit()
+        return true;
+    }
 
 }
