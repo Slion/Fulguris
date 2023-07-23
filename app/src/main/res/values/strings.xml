@@ -18,6 +18,7 @@
     <string name="enable">Enable</string>
     <string name="disable">Disable</string>
     <string name="settings">Settings</string>
+    <string name="options">Options</string>
     <string name="location">Location access</string>
     <string name="password">Save your passwords</string>
     <string name="agent">User agent</string>
@@ -317,6 +318,7 @@
     <string name="pref_category_on_tab_change">When changing tab</string>
     <string name="pref_category_on_tab_back_forward">When going back or forward</string>
     <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
     <string name="pref_category_subscriptions">Subscriptions</string>
     <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Hide status bar</string>

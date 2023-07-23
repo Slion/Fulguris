@@ -20,10 +20,18 @@
  All portions of the code written by Stéphane Lenclud are Copyright © 2023 Stéphane Lenclud.
  All Rights Reserved.
 -->
-<androidx.preference.PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:a="http://schemas.android.com/apk/res-auto">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:a="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <Preference
+        a:key="@string/pref_key_back"
+        a:title="@string/action_domain_settings"
+        a:summary="@string/settings_summary_domains"
+        a:icon="@drawable/ic_arrow_back_ios"
+        a:fragment="acr.browser.lightning.settings.fragment.OptionsSettingsFragment"
+        a:layout="@layout/preference_category_material"
+        tools:ignore="PrivateResource" />
 
     <Preference
         android:key="@string/pref_key_visit_domain"

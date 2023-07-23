@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="@string/pref_key_back"
+        app:title="@string/pref_category_scrollbars"
+        app:summary="@string/pref_summary_scrollbars"
+        app:icon="@drawable/ic_arrow_back_ios"
+        app:fragment="acr.browser.lightning.settings.fragment.OptionsSettingsFragment"
+        app:layout="@layout/preference_category_material"
+        tools:ignore="PrivateResource" />
+
+    <fulguris.preference.SliderPreference
+        android:layout="@layout/preference_slider"
+        app:key="@string/pref_key_scrollbar_size"
+        app:title="@string/pref_title_scrollbar_size"
+        app:summary="@string/pref_summary_scrollbar_size"
+        app:seekBarIncrement="2"
+        app:showSeekBarValue="true"
+        app:iconSpaceReserved="true"
+        app:updatesContinuously="true"
+        android:valueFrom="0"
+        android:valueTo="30"
+        android:stepSize="2"
+        android:value="4"
+        app:labelBehavior="gone"
+        app:format="%.0f dp"
+        app:singleLineTitle="false"
+        app:allowDividerAbove="false"
+        />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/pref_default_scrollbar_fading"
+        android:key="@string/pref_key_scrollbar_fading"
+        android:title="@string/pref_title_scrollbar_fading"
+        android:summaryOn="@string/pref_summary_on_scrollbar_fading"
+        android:summaryOff="@string/pref_summary_off_scrollbar_fading"
+        app:iconSpaceReserved="true"
+        app:singleLineTitle="false"
+        />
+
+    <fulguris.preference.SliderPreference
+        android:layout="@layout/preference_slider"
+        app:key="@string/pref_key_scrollbar_delay_before_fade"
+        app:dependency="@string/pref_key_scrollbar_fading"
+        app:title="@string/pref_title_scrollbar_delay_before_fade"
+        app:summary="@string/pref_summary_scrollbar_delay_before_fade"
+        app:icon="@drawable/ic_timer"
+        app:seekBarIncrement="100"
+        app:showSeekBarValue="true"
+        app:iconSpaceReserved="true"
+        app:updatesContinuously="true"
+        android:valueFrom="0"
+        android:valueTo="2000"
+        android:stepSize="100"
+        android:value="400"
+        app:labelBehavior="gone"
+        app:format="%.0f ms"
+        app:singleLineTitle="false"
+        app:allowDividerAbove="false"
+        />
+
+    <fulguris.preference.SliderPreference
+        android:layout="@layout/preference_slider"
+        app:key="@string/pref_key_scrollbar_fade_duration"
+        app:dependency="@string/pref_key_scrollbar_fading"
+        app:title="@string/pref_title_scrollbar_fade_duration"
+        app:summary="@string/pref_summary_scrollbar_fade_duration"
+        app:icon="@drawable/ic_timer"
+        app:seekBarIncrement="50"
+        app:showSeekBarValue="true"
+        app:iconSpaceReserved="true"
+        app:updatesContinuously="true"
+        android:valueFrom="0"
+        android:valueTo="1000"
+        android:stepSize="50"
+        android:value="250"
+        app:labelBehavior="gone"
+        app:format="%.0f ms"
+        app:singleLineTitle="false"
+        app:allowDividerAbove="false"
+        />
+
+
+
+</PreferenceScreen>

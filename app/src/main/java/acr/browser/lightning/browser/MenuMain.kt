@@ -123,7 +123,9 @@ class MenuMain : PopupWindow {
         iBinding.menuItemDownloads.isVisible = true
         iBinding.menuItemNewTab.isVisible = true
         iBinding.menuItemIncognito.isVisible = !iIsIncognito
+        iBinding.menuItemOptions.isVisible = true
         iBinding.menuItemSettings.isVisible = !iIsIncognito
+
 
         iBinding.menuItemExit.isVisible = iUserPreferences.menuShowExit || iIsIncognito
         iBinding.menuItemNewTab.isVisible = iUserPreferences.menuShowNewTab

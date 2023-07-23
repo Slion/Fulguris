@@ -365,11 +365,15 @@ class LightningView(
      */
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
-            activity.getString(R.string.pref_key_scrollbar_size) ->
+            activity.getString(R.string.pref_key_scrollbar_size) -> {
                 webView?.scrollBarSize = userPreferences.scrollbarSize.px.toInt()
+                webView?.postInvalidate()
+            }
 
-            activity.getString(R.string.pref_key_scrollbar_fading) ->
+            activity.getString(R.string.pref_key_scrollbar_fading) -> {
                 webView?.isScrollbarFadingEnabled = userPreferences.scrollbarFading
+                webView?.postInvalidate()
+            }
 
             activity.getString(R.string.pref_key_scrollbar_delay_before_fade) ->
                 webView?.scrollBarDefaultDelayBeforeFade = userPreferences.scrollbarDelayBeforeFade.toInt()

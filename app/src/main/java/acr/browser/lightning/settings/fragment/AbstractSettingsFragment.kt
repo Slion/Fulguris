@@ -23,6 +23,7 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
+import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.settings.preferences.PreferenceCategoryEx
 import acr.browser.lightning.utils.IntentUtils
 import android.content.Intent
@@ -47,9 +48,19 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
     @XmlRes
     protected abstract fun providePreferencesXmlResource(): Int
 
+    /**
+     *
+     */
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(providePreferencesXmlResource(),rootKey)
         prefGroup = preferenceScreen
+
+        if (activity is SettingsActivity) {
+            // Hide back button preference in settings activity
+            // Back buttons are there for navigation in options menu bottom sheet
+            findPreference<Preference>(getString(R.string.pref_key_back))?.isVisible = false
+        }
+
     }
 
     /**

@@ -273,16 +273,6 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         android:text="@string/action_add_to_homescreen"
                         />
 
-                    <TextView
-                        android:id="@+id/menuItemDomainSettings"
-                        style="@style/BrowserTextMenuItem"
-                        android:visibility="visible"
-                        tools:visibility="visible"
-                        app:drawableStartCompat="@drawable/ic_domain"
-                        android:text="@string/action_domain_settings"
-                        />
-
-
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

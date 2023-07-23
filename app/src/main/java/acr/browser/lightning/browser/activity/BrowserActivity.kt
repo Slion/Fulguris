@@ -538,6 +538,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemExit) { dismiss(); executeAction(R.id.action_exit) }
             //
             onMenuItemClicked(iBinding.menuItemSettings) { dismiss(); executeAction(R.id.action_settings) }
+            onMenuItemClicked(iBinding.menuItemOptions) {
+                dismiss();
+                BrowserApp.instance.domain = currentHost()
+                iBottomSheet.setLayout(R.layout.fragment_settings_options).show()
+            }
 
             // Popup menu action shortcut icons
             onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
@@ -582,11 +587,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemDarkMode) { dismiss(); executeAction(R.id.action_toggle_dark_mode) }
             onMenuItemClicked(iBinding.menuItemAdBlock) { dismiss(); executeAction(R.id.action_block) }
             onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
-            onMenuItemClicked(iBinding.menuItemDomainSettings) {
-                dismiss()
-                BrowserApp.instance.domain = currentHost()
-                iBottomSheet.setLayout(R.layout.fragment_settings_domain).show()
-            }
             // Popup menu action shortcut icons
             onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
             onMenuItemClicked(iBinding.menuShortcutHome) { dismiss(); executeAction(R.id.action_show_homepage) }
