@@ -17,6 +17,7 @@
     <string name="enable">启用</string>
     <string name="disable">禁用</string>
     <string name="settings">设置</string>
+    <string name="options">Options</string>
     <string name="location">位置信息访问</string>
     <string name="password">保存密码</string>
     <string name="agent">用户代理</string>
@@ -301,6 +302,8 @@
     <string name="pref_category_on_tab_close">标签页关闭时</string>
     <string name="pref_category_on_tab_change">标签页切换时</string>
     <string name="pref_category_on_tab_back_forward">前进后退时</string>
+    <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
     <string name="pref_category_subscriptions">订阅</string>
     <string name="pref_summary_subscriptions">激活或取消您的订阅</string>
     <string name="pref_title_hide_status_bar">隐藏状态栏</string>
@@ -532,6 +535,15 @@
     <string name="pref_title_vibrate">振动</string>
     <string name="pref_title_duration">时长</string>
     <string name="pref_summary_duration">动画时长，单位为一百分之一秒</string>
+    <string name="pref_title_scrollbar_fading">Fading</string>
+    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
+    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
+    <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
+    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
+    <string name="pref_title_scrollbar_size">Size</string>
+    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
     <string name="pref_category_title_session_export">导出会话</string>
     <string name="pref_category_summary_session_export">选择你想导出的会话</string>
     <string name="error_session_file_corrupted">出错：会话文件有问题！</string>

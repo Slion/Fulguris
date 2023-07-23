@@ -17,6 +17,7 @@
     <string name="enable">Дозволити</string>
     <string name="disable">Вимкнути</string>
     <string name="settings">Налаштування</string>
+    <string name="options">Options</string>
     <string name="location">Доступ до місцеперебування</string>
     <string name="password">Зберігати паролі</string>
     <string name="agent">Агент користувача</string>
@@ -301,6 +302,8 @@
     <string name="pref_category_on_tab_close">При закритті вкладки</string>
     <string name="pref_category_on_tab_change">При зміні вкладки</string>
     <string name="pref_category_on_tab_back_forward">При поверненні чи переході</string>
+    <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
     <string name="pref_category_subscriptions">Підписки</string>
     <string name="pref_summary_subscriptions">Застосувати або скасувати підписки</string>
     <string name="pref_title_hide_status_bar">Сховати панель стану</string>
@@ -535,6 +538,15 @@
     <string name="pref_title_vibrate">Вібрація</string>
     <string name="pref_title_duration">Тривалість</string>
     <string name="pref_summary_duration">Тривалість анімації у сентисекундах</string>
+    <string name="pref_title_scrollbar_fading">Fading</string>
+    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
+    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
+    <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
+    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
+    <string name="pref_title_scrollbar_size">Size</string>
+    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
     <string name="pref_category_title_session_export">Експортувати сеанс</string>
     <string name="pref_category_summary_session_export">Виберіть сеанс, який бажаєте експортувати</string>
     <string name="error_session_file_corrupted">Помилка: пошкоджений файл сеансу!</string>

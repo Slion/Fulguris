@@ -17,6 +17,7 @@
     <string name="enable">Włącz</string>
     <string name="disable">Wyłącz</string>
     <string name="settings">Ustawienia</string>
+    <string name="options">Options</string>
     <string name="location">Dostęp do lokalizacji</string>
     <string name="password">Zapisuj hasła</string>
     <string name="agent">Przedstawiaj się jako</string>
@@ -301,6 +302,8 @@
     <string name="pref_category_on_tab_close">Przy zamykaniu karty</string>
     <string name="pref_category_on_tab_change">Przy zmianie karty</string>
     <string name="pref_category_on_tab_back_forward">Podczas cofania się lub do przodu</string>
+    <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
     <string name="pref_category_subscriptions">Subscriptions</string>
     <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Ukryj pasek stanu</string>
@@ -535,6 +538,15 @@
     <string name="pref_title_vibrate">Wibracje</string>
     <string name="pref_title_duration">Czas trwania</string>
     <string name="pref_summary_duration">Czas trwania animacji w centysekundach</string>
+    <string name="pref_title_scrollbar_fading">Fading</string>
+    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
+    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
+    <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
+    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
+    <string name="pref_title_scrollbar_size">Size</string>
+    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
     <string name="pref_category_title_session_export">Eksportuj sesję</string>
     <string name="pref_category_summary_session_export">Wybierz sesję, którą chcesz wyeksportować</string>
     <string name="error_session_file_corrupted">Błąd: uszkodzony plik sesji!</string>

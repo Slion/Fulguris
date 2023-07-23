@@ -17,6 +17,7 @@
     <string name="enable">Enable</string>
     <string name="disable">Disable</string>
     <string name="settings">설정</string>
+    <string name="options">Options</string>
     <string name="location">위치 접근</string>
     <string name="password">암호 저장</string>
     <string name="agent">사용자 에이전트</string>
@@ -301,6 +302,8 @@
     <string name="pref_category_on_tab_close">When closing tab</string>
     <string name="pref_category_on_tab_change">When changing tab</string>
     <string name="pref_category_on_tab_back_forward">When going back or forward</string>
+    <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
     <string name="pref_category_subscriptions">Subscriptions</string>
     <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Hide status bar</string>
@@ -532,6 +535,15 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_title_duration">Duration</string>
     <string name="pref_summary_duration">Animation duration in centiseconds</string>
+    <string name="pref_title_scrollbar_fading">Fading</string>
+    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
+    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
+    <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
+    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
+    <string name="pref_title_scrollbar_size">Size</string>
+    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
     <string name="pref_category_title_session_export">Export session</string>
     <string name="pref_category_summary_session_export">Pick the session you want to export</string>
     <string name="error_session_file_corrupted">Error: corrupted session file!</string>

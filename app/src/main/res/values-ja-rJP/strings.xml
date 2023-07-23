@@ -17,6 +17,7 @@
     <string name="enable">有効化</string>
     <string name="disable">無効化</string>
     <string name="settings">設定</string>
+    <string name="options">Options</string>
     <string name="location">位置情報の使用を許可する</string>
     <string name="password">パスワードを記憶する</string>
     <string name="agent">ユーザーエージェント</string>
@@ -301,6 +302,8 @@
     <string name="pref_category_on_tab_close">タブを閉じたとき</string>
     <string name="pref_category_on_tab_change">タブを変更するとき</string>
     <string name="pref_category_on_tab_back_forward">進むまたは戻る時</string>
+    <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
     <string name="pref_category_subscriptions">Subscriptions</string>
     <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">ステータスバーを隠す</string>
@@ -532,6 +535,15 @@
     <string name="pref_title_vibrate">振動</string>
     <string name="pref_title_duration">長さ</string>
     <string name="pref_summary_duration">アニメーションの時間をセンチ秒単位で指定します。</string>
+    <string name="pref_title_scrollbar_fading">Fading</string>
+    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
+    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
+    <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
+    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
+    <string name="pref_title_scrollbar_size">Size</string>
+    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
     <string name="pref_category_title_session_export">セッションをエクスポート</string>
     <string name="pref_category_summary_session_export">エクスポートするセッションを選択します</string>
     <string name="error_session_file_corrupted">エラー：セッションファイルが破損しています！</string>

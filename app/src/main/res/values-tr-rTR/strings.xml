@@ -17,6 +17,7 @@
     <string name="enable">Etkinleştir</string>
     <string name="disable">Devre Dışı Bırak</string>
     <string name="settings">Ayarlar</string>
+    <string name="options">Options</string>
     <string name="location">Konum erişimi</string>
     <string name="password">Şifrelerinizi kaydedin</string>
     <string name="agent">Tarayıcı kimliği</string>
@@ -301,6 +302,8 @@
     <string name="pref_category_on_tab_close">Sekme kapatıldığında</string>
     <string name="pref_category_on_tab_change">Sekme değiştirildiğinde</string>
     <string name="pref_category_on_tab_back_forward">Geri veya ileri gidildiğinde</string>
+    <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
     <string name="pref_category_subscriptions">Subscriptions</string>
     <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Durum çubuğunu gizle</string>
@@ -533,6 +536,15 @@
     <string name="pref_title_vibrate">Titreşim</string>
     <string name="pref_title_duration">Süre</string>
     <string name="pref_summary_duration">Santisaniyede animasyon süresi</string>
+    <string name="pref_title_scrollbar_fading">Fading</string>
+    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
+    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
+    <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
+    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
+    <string name="pref_title_scrollbar_size">Size</string>
+    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
     <string name="pref_category_title_session_export">Oturumu dışa aktar</string>
     <string name="pref_category_summary_session_export">Dışa aktarmak istediğiniz oturumu seçin</string>
     <string name="error_session_file_corrupted">Hata: bozuk oturum dosyası!</string>
