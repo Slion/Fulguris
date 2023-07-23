@@ -8,7 +8,7 @@
         app:title="@string/pref_category_scrollbars"
         app:summary="@string/pref_summary_scrollbars"
         app:icon="@drawable/ic_arrow_back_ios"
-        app:fragment="acr.browser.lightning.settings.fragment.OptionsSettingsFragment"
+        app:fragment="back"
         app:layout="@layout/preference_category_material"
         tools:ignore="PrivateResource" />
 

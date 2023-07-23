@@ -29,7 +29,7 @@
         a:title="@string/action_domain_settings"
         a:summary="@string/settings_summary_domains"
         a:icon="@drawable/ic_arrow_back_ios"
-        a:fragment="acr.browser.lightning.settings.fragment.OptionsSettingsFragment"
+        a:fragment="back"
         a:layout="@layout/preference_category_material"
         tools:ignore="PrivateResource" />
 

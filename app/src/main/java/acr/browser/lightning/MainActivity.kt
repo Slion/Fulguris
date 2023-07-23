@@ -66,17 +66,29 @@ class MainActivity @Inject constructor(): BrowserActivity(), PreferenceFragmentC
 
     /**
      * Needed to have animations while navigating our settings.
+     * Also used to back up our stack.
      * See [PreferenceFragmentCompat.onPreferenceTreeClick].
      */
     @SuppressLint("PrivateResource")
     override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat, preference: Preference): Boolean {
         val fragmentManager: FragmentManager = caller.parentFragmentManager
+
+        // No actual fragment specified, just a back action
+        if (preference.fragment == "back") {
+            fragmentManager.popBackStack()
+            return true
+        }
+
+        // Launch specified fragment
         val args: Bundle = preference.extras
         val fragment = fragmentManager.fragmentFactory.instantiate(classLoader, preference.fragment!!)
         fragment.arguments = args
         fragmentManager.beginTransaction()
             // Use standard bottom sheet animations
-            .setCustomAnimations(com.google.android.material.R.anim.design_bottom_sheet_slide_in, com.google.android.material.R.anim.design_bottom_sheet_slide_out)
+            .setCustomAnimations(com.google.android.material.R.anim.design_bottom_sheet_slide_in,
+                com.google.android.material.R.anim.design_bottom_sheet_slide_out,
+                com.google.android.material.R.anim.design_bottom_sheet_slide_in,
+                com.google.android.material.R.anim.design_bottom_sheet_slide_out)
             .replace((caller.requireView().parent as View).id, fragment)
             .addToBackStack(null)
             .commit()

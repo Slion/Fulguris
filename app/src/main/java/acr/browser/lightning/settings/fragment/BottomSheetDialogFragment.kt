@@ -3,8 +3,11 @@ package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
 import acr.browser.lightning.utils.Observers
+import android.app.Dialog
 import android.content.DialogInterface
+import android.content.DialogInterface.OnKeyListener
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +48,34 @@ class BottomSheetDialogFragment : BottomSheetDialogFragment {
     constructor() {
         Timber.d("constructor")
     }
+
+    /**
+     * Needed to handle back action and pop our back stack or close our dialog accordingly.
+     */
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dlg = super.onCreateDialog(savedInstanceState)
+        dlg.setOnKeyListener(object: OnKeyListener {
+            override fun onKey(dialog: DialogInterface?, keyCode: Int, event: KeyEvent): Boolean {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+                    // User wants to go back
+                    Timber.d("Back stack entry count: ${childFragmentManager.backStackEntryCount}")
+                    if (childFragmentManager.backStackEntryCount==0) {
+                        // Will close the dialog if we are at the root of our stack
+                        return false
+                    }
+
+                    // Move to previous fragment
+                    childFragmentManager.popBackStack()
+                    return true
+                }
+
+                // We don't handle that key
+                return false
+            }
+        })
+        return dlg
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
