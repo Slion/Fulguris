@@ -196,6 +196,12 @@ TODO: Find a way not to scroll that guy without breaking our layout
                         android:background="?android:attr/listDivider" />
 
                     <TextView
+                        android:id="@+id/menuItemOptions"
+                        style="@style/BrowserTextMenuItem"
+                        app:drawableStartCompat="@drawable/ic_build_outline"
+                        android:text="@string/options" />
+
+                    <TextView
                         android:id="@+id/menuItemSettings"
                         style="@style/BrowserTextMenuItem"
                         android:background="?attr/selectableItemBackground"
