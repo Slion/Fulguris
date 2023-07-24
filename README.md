@@ -17,8 +17,9 @@ Fulguris is a [web browser] for Android. Through a customizable interface it off
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/net.slions.fulguris.full.fdroid/)
-
-[Get it on Slions.net.](http://fulguris.slions.net)
+[<img src="https://slions.net/badge-get-it-on.png"
+     alt="Get it on Slions"
+     height="80">](http://fulguris.slions.net)
 
 ## Release channels
 We have three official release channels linked above. The **Download** release channel tends to be somewhat less stable than the **Google Play** and **F-Droid** release channels. On the other hand you get to test the latest version earlier when using the **Download** release channel. All three variants of the app can be installed at the same time on your device. They are effectively three different albeit similar apps. You can differenciate them in your launcher from their slightly modified icon design.
