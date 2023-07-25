@@ -44,10 +44,18 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         super.onCreatePreferences(savedInstanceState, rootKey)
         //injector.inject(this)
 
-        if (BuildConfig.FLAVOR_PUBLISHER=="fdroid") {
-            // Hide firebase preferences for fdroid
-            findPreference<Preference>(getString(R.string.pref_key_crash_report))?.isVisible = false
+        // Hide analytics option if corresponding Firebase class not present
+        try {
+            Class.forName("com.google.firebase.analytics.FirebaseAnalytics")
+        } catch (ex: Exception) {
             findPreference<Preference>(getString(R.string.pref_key_analytics))?.isVisible = false
+        }
+
+        // Hide crash report option if corresponding Firebase class not present
+        try {
+            Class.forName("com.google.firebase.crashlytics.FirebaseCrashlytics")
+        } catch (ex: Exception) {
+            findPreference<Preference>(getString(R.string.pref_key_crash_report))?.isVisible = false
         }
 
         clickablePreference(preference = SETTINGS_CLEARCACHE, onClick = this::clearCache)
