@@ -44,7 +44,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         super.onCreatePreferences(savedInstanceState, rootKey)
         //injector.inject(this)
 
-        if (BuildConfig.FLAVOR_PUBLISHER=="fdroid") {
+        if (BuildConfig.FLAVOR_PUBLISHER != "download" && BuildConfig.FLAVOR_PUBLISHER != "googlePlay") {
             // Hide firebase preferences for fdroid
             findPreference<Preference>(getString(R.string.pref_key_crash_report))?.isVisible = false
             findPreference<Preference>(getString(R.string.pref_key_analytics))?.isVisible = false
