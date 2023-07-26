@@ -1,7 +1,7 @@
-{"url": "https://slions.net/resources/fulguris.10/", "title": "Fulguris home", "folder": "", "order": 0}
-{"url": "https://github.com/slion/Fulguris/issues", "title": "Fulguris issues", "folder": "", "order": 1}
-{"url": "https://twitter.com/LencludStephane", "title": "Contact Me", "folder": "", "order": 2}
-{"url": "https://www.wikipedia.org/", "title": "Wikipedia", "folder": "", "order": 3}
-{"url": "https://twitter.com/", "title": "Twitter", "folder": "", "order": 4}
-{"url": "https://www.google.com/", "title": "Google", "folder": "", "order": 5}
-{"url": "https://duckduckgo.com/", "title": "DuckDuckGo", "folder": "", "order": 6}
+{"url": "http://fulguris.slions.net", "title": "Fulguris home", "folder": "", "order": 0}
+{"url": "https://github.com/slion/Fulguris", "title": "GitHub", "folder": "Fulguris", "order": 1}
+{"url": "https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore", "title": "Google Play", "folder": "Fulguris", "order": 2}
+{"url": "https://f-droid.org/en/packages/net.slions.fulguris.full.fdroid", "title": "F-Droid", "folder": "Fulguris", "order": 3}
+{"url": "https://discord.com/invite/7M4Ms5dMZE", "title": "Discord", "folder": "Fulguris", "order": 4}
+{"url": "https://github.com/slion/Fulguris/issues", "title": "Issues", "folder": "Fulguris", "order": 5}
+{"url": "https://github.com/sponsors/Slion", "title": "Sponsor", "folder": "Fulguris", "order": 6}
