@@ -23,7 +23,6 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
 import fulguris.TimberReleaseTree
 import io.reactivex.Scheduler
-import io.reactivex.Single
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
 import javax.inject.Inject
@@ -104,6 +103,7 @@ class BrowserApp : Application() {
             }
         }
 
+	// TODO: Remove that once we are done with ReactiveX
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
             if (userPreferences.crashLogs && throwable != null) {
                 FileUtils.writeCrashToStorage(throwable)
@@ -115,20 +115,17 @@ class BrowserApp : Application() {
         val requestLocale = LocaleUtils.requestedLocale(userPreferences.locale)
         LocaleUtils.updateLocale(this, requestLocale)
 
-        Single.fromCallable(bookmarkModel::count)
-            .filter { it == 0L }
-            .flatMapCompletable {
-                val assetsBookmarks = BookmarkExporter.importBookmarksFromAssets(this@BrowserApp)
-                bookmarkModel.addBookmarkList(assetsBookmarks)
-            }
-            .subscribeOn(databaseScheduler)
-            .subscribe()
+        // Import default bookmarks if none present
+        // Now doing this synchronously as on fast devices it could result in not showing the bookmarks on first start
+        if (bookmarkModel.count()==0L) {
+            Timber.d("Create default bookmarks")
+            val assetsBookmarks = BookmarkExporter.importBookmarksFromAssets(this@BrowserApp)
+            bookmarkModel.addBookmarkList(assetsBookmarks)
+        }
 
         if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true)
         }
-
-
 
         registerActivityLifecycleCallbacks(object : MemoryLeakUtils.LifecycleAdapter() {
             override fun onActivityDestroyed(activity: Activity) {
