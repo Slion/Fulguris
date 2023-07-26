@@ -35,8 +35,8 @@ import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.*
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.activity.SettingsActivity
+import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
-import android.Manifest
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
@@ -51,16 +51,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceManager
-import com.anthonycr.grant.PermissionsManager
-import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Scheduler
-import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
+import timber.log.Timber
 import java.io.*
 import java.util.*
 import javax.inject.Inject
@@ -82,6 +85,12 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     @Inject @PrefsLandscape lateinit var prefsLandscape: SharedPreferences
     @Inject @PrefsPortrait lateinit var prefsPortrait: SharedPreferences
     @Inject @AdBlockPrefs lateinit var prefsAdBlock: SharedPreferences
+
+    //
+    @Inject
+    lateinit var userPreferences: UserPreferences
+
+
     //
     @Inject lateinit var tabsManager: TabsManager
 
@@ -378,6 +387,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     }
 
     //
+    @OptIn(DelicateCoroutinesApi::class)
     private val bookmarkImportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -385,39 +395,38 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
             // See:  https://commonsware.com/blog/2016/03/15/how-consume-content-uri.html
             result.data?.data?.let{ uri ->
                 context?.contentResolver?.openInputStream(uri).let { inputStream ->
-                    val mimeType = context?.contentResolver?.getType(uri)
-                    importSubscription?.dispose()
-                    importSubscription = Single.just(inputStream)
-                    .map {
-                        if (mimeType == "text/html") {
-                            netscapeBookmarkFormatImporter.importBookmarks(it)
-                        } else {
-                            legacyBookmarkImporter.importBookmarks(it)
+                    // Launch a coroutine using main dispatcher as we want to be able to display error message if needed
+                    // We don't mind using global scope as it is a fast process anyway and does not need to be cancelled if user exits the fragment or activity really quick
+                    GlobalScope.launch(Dispatchers.Main) {
+                        try {
+                            // Do our processing using IO dispatcher not to block the main thread
+                            val count = withContext(Dispatchers.IO) {
+                                val mimeType = context?.contentResolver?.getType(uri)
+                                inputStream?.let {
+                                    if (mimeType == "text/html") {
+                                        netscapeBookmarkFormatImporter.importBookmarks(it)
+                                    } else {
+                                        legacyBookmarkImporter.importBookmarks(it)
+                                    }
+                                }?.let {
+                                    bookmarkRepository.addBookmarkList(it)
+                                    // Return the number of bookmarks we imported
+                                    it.count()
+                                }
+                            }
+
+                            // Back on the main thread we tell our user what we did
+                            requireActivity().snackbar("$count ${getString(R.string.message_import)}")
+                            // Tell browser activity bookmarks have changed
+                            userPreferences.bookmarksChanged = true
+
+                        } catch (ex: Exception) {
+                            // Our import failed and we are back on the main thread
+                            Timber.d("Error importing bookmarks: ", ex)
+                            // TODO: Could just put a snackbar, though that was useful to test our coroutines as it would crash if not on the main thread
+                            Utils.createInformativeDialog(requireActivity(), R.string.title_error, R.string.import_bookmark_error)
                         }
                     }
-                    .flatMap {
-                        bookmarkRepository.addBookmarkList(it).andThen(Single.just(it.size))
-                    }
-                    .subscribeOn(databaseScheduler)
-                    .observeOn(mainScheduler)
-                    .subscribeBy(
-                        onSuccess = { count ->
-                            activity?.apply {
-                                snackbar("$count ${getString(R.string.message_import)}")
-                                // Tell browser activity bookmarks have changed
-                                (activity as SettingsActivity).userPreferences.bookmarksChanged = true
-                            }
-                        },
-                        onError = {
-                            logger.log(TAG, "onError: importing bookmarks", it)
-                            val activity = activity
-                            if (activity != null && !activity.isFinishing && isAdded) {
-                                Utils.createInformativeDialog(activity, R.string.title_error, R.string.import_bookmark_error)
-                            } else {
-                                application.toast(R.string.import_bookmark_error)
-                            }
-                        }
-                    )
                 }
             }
         }

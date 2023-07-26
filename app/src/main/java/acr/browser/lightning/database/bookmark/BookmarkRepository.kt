@@ -41,14 +41,8 @@ interface BookmarkRepository {
      * Adds a list of bookmarks to the database.
      *
      * @param bookmarkItems the bookmarks to add.
-     * @return an observable that emits a complete event when all the bookmarks have been added.
      */
-    fun addBookmarkList(bookmarkItems: List<Bookmark.Entry>): Completable
-
-    /**
-     *
-     */
-    fun addBookmarkListSync(bookmarkItems: List<Bookmark.Entry>)
+    fun addBookmarkList(bookmarkItems: List<Bookmark.Entry>)
 
     /**
      * Deletes a bookmark from the database. The [Bookmark.Entry.url] is used to delete the

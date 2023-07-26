@@ -148,7 +148,7 @@ class App : Application() {
         if (bookmarkModel.count()==0L) {
             Timber.d("Create default bookmarks")
             val assetsBookmarks = BookmarkExporter.importBookmarksFromAssets(this@App)
-            bookmarkModel.addBookmarkListSync(assetsBookmarks)
+            bookmarkModel.addBookmarkList(assetsBookmarks)
         }
 
         if (BuildConfig.DEBUG) {
