@@ -22,21 +22,14 @@
 
 package acr.browser.lightning.settings.fragment
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import acr.browser.lightning.R
-import acr.browser.lightning.extensions.portraitSharedPreferencesName
-import acr.browser.lightning.settings.preferences.ConfigurationPreferences
 import acr.browser.lightning.settings.preferences.DomainPreferences
-import acr.browser.lightning.settings.preferences.PortraitPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
-import android.content.Context.MODE_PRIVATE
-import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Options settings screen.

@@ -22,7 +22,7 @@
 
 package acr.browser.lightning.settings.fragment
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.settings.preferences.DomainPreferences
 import android.content.Context

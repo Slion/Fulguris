@@ -1,8 +1,7 @@
 package acr.browser.lightning.extensions
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import android.net.Uri
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 
 

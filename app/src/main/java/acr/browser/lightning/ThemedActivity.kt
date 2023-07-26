@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StyleRes
 import dagger.hilt.android.EntryPointAccessors
+import fulguris.BrowserApp
 
 //@AndroidEntryPoint
 abstract class ThemedActivity : LocaleAwareActivity() {

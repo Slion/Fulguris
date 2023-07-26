@@ -1,5 +1,6 @@
-package acr.browser.lightning
+package fulguris
 
+import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.database.bookmark.BookmarkExporter
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.di.DatabaseScheduler
@@ -21,7 +22,6 @@ import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
-import fulguris.TimberReleaseTree
 import io.reactivex.Scheduler
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber

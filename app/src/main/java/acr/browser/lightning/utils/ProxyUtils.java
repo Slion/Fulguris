@@ -15,7 +15,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import acr.browser.lightning.BrowserApp;
+import fulguris.BrowserApp;
 import acr.browser.lightning.R;
 import acr.browser.lightning.browser.ProxyChoice;
 import acr.browser.lightning.di.Injector;

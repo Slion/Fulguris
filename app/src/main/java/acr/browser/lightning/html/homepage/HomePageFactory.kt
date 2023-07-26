@@ -1,6 +1,6 @@
 package acr.browser.lightning.html.homepage
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.UTF8

@@ -1,6 +1,6 @@
 package acr.browser.lightning.view
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlockerManager

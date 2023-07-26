@@ -55,7 +55,7 @@
     </queries>
 
     <application
-        android:name=".BrowserApp"
+        android:name="fulguris.BrowserApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"

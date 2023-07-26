@@ -22,7 +22,7 @@
  
 package acr.browser.lightning.utils
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.toast
 import android.text.InputFilter

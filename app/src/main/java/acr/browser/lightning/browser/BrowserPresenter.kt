@@ -4,13 +4,11 @@
 
 package acr.browser.lightning.browser
 
-import acr.browser.lightning.BrowserApp
 import acr.browser.lightning.Entitlement
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.INTENT_ORIGIN
 import acr.browser.lightning.constant.Uris
-import acr.browser.lightning.extensions.toast
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.html.incognito.IncognitoPageFactory

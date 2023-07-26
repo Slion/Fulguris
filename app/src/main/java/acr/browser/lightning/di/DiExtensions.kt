@@ -2,11 +2,10 @@
 
 package acr.browser.lightning.di
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import acr.browser.lightning.settings.preferences.ConfigurationPreferences
 import android.content.Context
 import android.content.res.Configuration
-import androidx.fragment.app.Fragment
 
 /**
  * Provides access to current configuration settings, typically either portrait or landscape variant.

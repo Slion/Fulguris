@@ -17,7 +17,7 @@
 
 package acr.browser.lightning.utils
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.constant.Uris

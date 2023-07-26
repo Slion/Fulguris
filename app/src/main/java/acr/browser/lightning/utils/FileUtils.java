@@ -15,8 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import acr.browser.lightning.BrowserApp;
-import io.reactivex.Completable;
+import fulguris.BrowserApp;
 
 /**
  * A utility class containing helpful methods

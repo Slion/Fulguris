@@ -1,6 +1,6 @@
 package acr.browser.lightning.html.history
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.database.history.HistoryRepository

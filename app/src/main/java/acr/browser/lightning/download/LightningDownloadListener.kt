@@ -3,7 +3,7 @@
  */
 package acr.browser.lightning.download
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.downloads.DownloadsRepository

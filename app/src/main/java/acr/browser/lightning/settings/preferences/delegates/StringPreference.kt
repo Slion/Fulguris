@@ -1,6 +1,6 @@
 package acr.browser.lightning.settings.preferences.delegates
 
-import acr.browser.lightning.BrowserApp
+import fulguris.BrowserApp
 import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import kotlin.properties.ReadWriteProperty
