@@ -92,7 +92,7 @@ class TabsManager @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         shutdown()
-        BrowserApp.instance.tabsManager = null;
+        app.tabsManager = null;
     }
     */
 

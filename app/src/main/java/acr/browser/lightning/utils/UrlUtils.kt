@@ -17,7 +17,7 @@
 
 package acr.browser.lightning.utils
 
-import fulguris.BrowserApp
+import fulguris.app
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.Schemes
 import acr.browser.lightning.constant.Uris
@@ -116,7 +116,7 @@ fun String?.isHistoryUri(): Boolean =
  */
 fun String?.isSpecialUrl(): Boolean =
     this != null
-            && (this.startsWith(FILE + BrowserApp.instance.filesDir)
+            && (this.startsWith(FILE + app.filesDir)
             && (this.endsWith(BookmarkPageFactory.FILENAME)
             || this.endsWith(DownloadPageFactory.FILENAME)
             || this.endsWith(HistoryPageFactory.FILENAME)

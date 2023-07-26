@@ -22,7 +22,7 @@
 
 package acr.browser.lightning.settings.preferences.delegates
 
-import fulguris.BrowserApp
+import fulguris.app
 import acr.browser.lightning.settings.preferences.IntEnum
 import android.content.SharedPreferences
 import androidx.annotation.StringRes
@@ -75,7 +75,7 @@ inline fun <reified T> SharedPreferences.enumPreference(
         @StringRes stringRes: Int,
         defaultValue: T
 ): ReadWriteProperty<Any, T> where T : Enum<T>, T : IntEnum = EnumPreference(
-        BrowserApp.instance.resources.getString(stringRes),
+        app.resources.getString(stringRes),
         defaultValue,
         T::class.java,
         this

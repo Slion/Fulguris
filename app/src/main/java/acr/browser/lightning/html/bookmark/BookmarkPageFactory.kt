@@ -1,6 +1,5 @@
 package acr.browser.lightning.html.bookmark
 
-import fulguris.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
@@ -21,6 +20,7 @@ import android.app.Application
 import android.graphics.Bitmap
 import androidx.core.net.toUri
 import dagger.Reusable
+import fulguris.App
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import java.io.File
@@ -93,14 +93,14 @@ class BookmarkPageFactory @Inject constructor(
     }
 
     private fun construct(list: List<BookmarkViewModel>): String {
-        val useDarkTheme = (BrowserApp.currentContext() as BrowserActivity).useDarkTheme
+        val useDarkTheme = (App.currentContext() as BrowserActivity).useDarkTheme
         return parse(bookmarkPageReader.provideHtml()
             // Theme our page first
             .replace("\${useDarkTheme}", useDarkTheme.toString()) // Not actually used for now
-            .replace("\${colorBackground}", htmlColor(ThemeUtils.getBackgroundColor(BrowserApp.currentContext())))
-            .replace("\${colorOnBackground}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnSurface)))
-            .replace("\${colorControl}", htmlColor(ThemeUtils.getSearchBarColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext()))))
-            .replace("\${colorBorder}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOutline)))
+            .replace("\${colorBackground}", htmlColor(ThemeUtils.getBackgroundColor(App.currentContext())))
+            .replace("\${colorOnBackground}", htmlColor(ThemeUtils.getColor(App.currentContext(),R.attr.colorOnSurface)))
+            .replace("\${colorControl}", htmlColor(ThemeUtils.getSearchBarColor(ThemeUtils.getSurfaceColor(App.currentContext()))))
+            .replace("\${colorBorder}", htmlColor(ThemeUtils.getColor(App.currentContext(),R.attr.colorOutline)))
         ) andBuild {
             title { title }
             body {

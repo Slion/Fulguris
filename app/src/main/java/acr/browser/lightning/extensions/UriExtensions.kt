@@ -1,6 +1,6 @@
 package acr.browser.lightning.extensions
 
-import fulguris.BrowserApp
+import fulguris.app
 import android.net.Uri
 import android.provider.OpenableColumns
 
@@ -13,7 +13,7 @@ var Uri.fileName : String?
     get() {
         var result: String? = null
         if (scheme.equals("content")) {
-            val cursor = BrowserApp.instance.contentResolver.query(this, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
+            val cursor = app.contentResolver.query(this, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
             try {
                 if (cursor != null && cursor.moveToFirst()) {
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))

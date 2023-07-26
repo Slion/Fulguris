@@ -1,6 +1,6 @@
 package acr.browser.lightning.ssl
 
-import fulguris.BrowserApp
+import fulguris.app
 import acr.browser.lightning.R
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.dialog.BrowserDialog
@@ -23,7 +23,7 @@ fun Activity.showSslDialog(sslCertificate: SslCertificate, sslState: SslState) {
     var issueDate = sslCertificate.validNotBeforeDate
     var expireDate = sslCertificate.validNotAfterDate
     val dateFormat = DateFormat.getDateFormat(applicationContext)
-    val cm = EntryPointAccessors.fromApplication(BrowserApp.instance.applicationContext, HiltEntryPoint::class.java).clipboardManager
+    val cm = EntryPointAccessors.fromApplication(applicationContext, HiltEntryPoint::class.java).clipboardManager
 
     var showAlgorithm = false
     var algoName = ""

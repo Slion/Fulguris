@@ -22,7 +22,7 @@
 
 package acr.browser.lightning.settings.fragment
 
-import fulguris.BrowserApp
+import fulguris.app
 import acr.browser.lightning.R
 import acr.browser.lightning.settings.preferences.DomainPreferences
 import android.content.Context
@@ -48,21 +48,21 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
      * See [AbstractSettingsFragment.title]
      */
     override fun title(): String {
-        return BrowserApp.instance.domain
+        return app.domain
     }
 
-    override fun providePreferencesXmlResource() = if (BrowserApp.instance.domain=="") R.xml.preference_domain_default else R.xml.preference_domain
+    override fun providePreferencesXmlResource() = if (app.domain=="") R.xml.preference_domain_default else R.xml.preference_domain
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         // That's the earliest place we can change our preference file as earlier in onCreate the manager has not been created yet
-        preferenceManager.sharedPreferencesName = DomainPreferences.name(BrowserApp.instance.domain)
+        preferenceManager.sharedPreferencesName = DomainPreferences.name(app.domain)
         preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
         super.onCreatePreferences(savedInstanceState, rootKey)
 
         // Setup link and domain display
         findPreference<Preference>(getString(R.string.pref_key_visit_domain))?.apply {
-            summary = BrowserApp.instance.domain
-            val uri = "http://" + BrowserApp.instance.domain
+            summary = app.domain
+            val uri = "http://" + app.domain
             intent?.data = Uri.parse(uri)
         }
     }

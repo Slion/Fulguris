@@ -3,6 +3,8 @@
  */
 package acr.browser.lightning.utils;
 
+import static fulguris.AppKt.app;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -30,7 +32,6 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import fulguris.BrowserApp;
 import acr.browser.lightning.R;
 import acr.browser.lightning.database.HistoryEntry;
 import acr.browser.lightning.dialog.BrowserDialog;
@@ -230,7 +231,7 @@ public final class Utils {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + '_';
-        File storageDir = BrowserApp.instance.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = app.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return File.createTempFile(imageFileName, /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */

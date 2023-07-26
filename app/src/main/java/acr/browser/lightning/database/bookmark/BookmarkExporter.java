@@ -22,6 +22,7 @@ import acr.browser.lightning.utils.Preconditions;
 import acr.browser.lightning.utils.Utils;
 import androidx.annotation.NonNull;
 import io.reactivex.Completable;
+import timber.log.Timber;
 
 /**
  * The class responsible for importing and exporting
@@ -70,11 +71,11 @@ public final class BookmarkExporter {
                         )
                     );
                 } catch (JSONException e) {
-                    Log.e(TAG, "Can't parse line " + line, e);
+                    Timber.e(e, "Can't parse line %s", line);
                 }
             }
         } catch (IOException e) {
-            Log.e(TAG, "Error reading the bookmarks file", e);
+            Timber.e(e, "Error reading the bookmarks file");
         } finally {
             Utils.close(bookmarksReader);
             Utils.close(inputStream);

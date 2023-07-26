@@ -22,7 +22,7 @@
 
 package acr.browser.lightning.settings.preferences
 
-import fulguris.BrowserApp
+import fulguris.app
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.reverseDomainName
 import acr.browser.lightning.settings.NoYesAsk
@@ -112,7 +112,7 @@ class DomainPreferences constructor(
          *
          */
         fun fileName(domain: String) : String {
-            return BrowserApp.instance.applicationInfo.dataDir + "/shared_prefs/" + name(domain) + ".xml"
+            return app.applicationInfo.dataDir + "/shared_prefs/" + name(domain) + ".xml"
         }
 
         /**
@@ -127,7 +127,7 @@ class DomainPreferences constructor(
                 Timber.d("File copy failed: $ex")
             }
 
-            return DomainPreferences(BrowserApp.instance,domain)
+            return DomainPreferences(app,domain)
         }
 
         /**

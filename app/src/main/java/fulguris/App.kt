@@ -1,3 +1,25 @@
+/*
+ * The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ * (the "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ * https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ * The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ * added to cover use of software over a computer network and provide for limited attribution for
+ * the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ * ANY KIND, either express or implied. See the License for the specific language governing rights
+ * and limitations under the License.
+ *
+ * The Original Code is Fulguris.
+ *
+ * The Original Developer is the Initial Developer.
+ * The Initial Developer of the Original Code is Stéphane Lenclud.
+ *
+ * All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
+ * All Rights Reserved.
+ */
+
 package fulguris
 
 import acr.browser.lightning.BuildConfig
@@ -13,6 +35,7 @@ import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.utils.MemoryLeakUtils
 import acr.browser.lightning.utils.installMultiDex
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.Context
@@ -28,8 +51,11 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
+@SuppressLint("StaticFieldLeak")
+lateinit var app: App
+
 @HiltAndroidApp
-class BrowserApp : Application() {
+class App : Application() {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
     @Inject internal lateinit var userPreferences: UserPreferences
@@ -58,7 +84,7 @@ class BrowserApp : Application() {
 
 
     override fun onCreate() {
-        instance = this
+        app = this
         // SL: Use this to debug when launched from another app for instance
         //Debug.waitForDebugger()
         super.onCreate()
@@ -73,6 +99,7 @@ class BrowserApp : Application() {
         AndroidThreeTen.init(this);
 
         if (BuildConfig.DEBUG) {
+            /*
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                 .detectAll()
                 .penaltyLog()
@@ -81,6 +108,7 @@ class BrowserApp : Application() {
                 .detectAll()
                 .penaltyLog()
                 .build())
+             */
         }
 
         if (Build.VERSION.SDK_INT >= 28) {
@@ -119,8 +147,8 @@ class BrowserApp : Application() {
         // Now doing this synchronously as on fast devices it could result in not showing the bookmarks on first start
         if (bookmarkModel.count()==0L) {
             Timber.d("Create default bookmarks")
-            val assetsBookmarks = BookmarkExporter.importBookmarksFromAssets(this@BrowserApp)
-            bookmarkModel.addBookmarkList(assetsBookmarks)
+            val assetsBookmarks = BookmarkExporter.importBookmarksFromAssets(this@App)
+            bookmarkModel.addBookmarkListSync(assetsBookmarks)
         }
 
         if (BuildConfig.DEBUG) {
@@ -129,8 +157,8 @@ class BrowserApp : Application() {
 
         registerActivityLifecycleCallbacks(object : MemoryLeakUtils.LifecycleAdapter() {
             override fun onActivityDestroyed(activity: Activity) {
-                logger.log(TAG, "Cleaning up after the Android framework")
-                MemoryLeakUtils.clearNextServedView(activity, this@BrowserApp)
+                Timber.d("Cleaning up after the Android framework")
+                MemoryLeakUtils.clearNextServedView(activity, this@App)
             }
 
             // Track current activity
@@ -147,9 +175,10 @@ class BrowserApp : Application() {
 
 
     companion object {
-        private const val TAG = "BrowserApp"
-        lateinit var instance: BrowserApp
+
         // Used to track current activity
+        // Apparently we take care of not leaking it above
+        @SuppressLint("StaticFieldLeak")
         var resumedActivity: Activity? = null
 
         /**
@@ -163,7 +192,7 @@ class BrowserApp : Application() {
             }
             else
             {
-                return instance.applicationContext
+                return app
             }
         }
 
@@ -171,8 +200,8 @@ class BrowserApp : Application() {
          * Was needed to patch issue with Homepage displaying system language when user selected another language
          */
         fun setLocale() {
-            val requestLocale = LocaleUtils.requestedLocale(instance.userPreferences.locale)
-            LocaleUtils.updateLocale(instance, requestLocale)
+            val requestLocale = LocaleUtils.requestedLocale(app.userPreferences.locale)
+            LocaleUtils.updateLocale(app, requestLocale)
         }
 
         init {

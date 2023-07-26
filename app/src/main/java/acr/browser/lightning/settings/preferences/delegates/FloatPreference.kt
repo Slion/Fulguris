@@ -1,6 +1,6 @@
 package acr.browser.lightning.settings.preferences.delegates
 
-import fulguris.BrowserApp
+import fulguris.app
 import android.content.SharedPreferences
 import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
@@ -39,7 +39,7 @@ fun SharedPreferences.floatPreference(
 fun SharedPreferences.floatPreference(
         @StringRes stringRes: Int,
         defaultValue: Float = 0F
-): ReadWriteProperty<Any, Float> = FloatPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), defaultValue, this)
+): ReadWriteProperty<Any, Float> = FloatPreferenceDelegate(app.resources.getString(stringRes), defaultValue, this)
 
 /**
  * Creates a [Float] from [SharedPreferences] with the provide arguments.
@@ -47,5 +47,5 @@ fun SharedPreferences.floatPreference(
 fun SharedPreferences.floatResPreference(
     @StringRes stringRes: Int,
     @IntegerRes intRes: Int
-): ReadWriteProperty<Any, Float> = FloatPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), BrowserApp.instance.resources.getInteger(intRes).toFloat(), this)
+): ReadWriteProperty<Any, Float> = FloatPreferenceDelegate(app.resources.getString(stringRes), app.resources.getInteger(intRes).toFloat(), this)
 

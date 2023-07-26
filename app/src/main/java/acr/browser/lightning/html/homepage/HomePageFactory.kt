@@ -1,6 +1,6 @@
 package acr.browser.lightning.html.homepage
 
-import fulguris.BrowserApp
+import fulguris.App
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.UTF8
@@ -31,14 +31,14 @@ class HomePageFactory @Inject constructor(
     override fun buildPage(): Single<String> = Single
         .just(searchEngineProvider.provideSearchEngine())
         .map { (iconUrl, queryUrl, _) ->
-	    BrowserApp.setLocale() // Make sure locale is set as user specified
+	    App.setLocale() // Make sure locale is set as user specified
             parse(homePageReader.provideHtml()
                 .replace("\${TITLE}", application.getString(R.string.home))
-                .replace("\${backgroundColor}", htmlColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext())))
-                .replace("\${searchBarColor}", htmlColor(ThemeUtils.getSearchBarColor(ThemeUtils.getSurfaceColor(BrowserApp.currentContext()))))
-                .replace("\${searchBarTextColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnSurface)))
-                .replace("\${borderColor}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorOnSecondary)))
-                .replace("\${accent}", htmlColor(ThemeUtils.getColor(BrowserApp.currentContext(),R.attr.colorSecondary)))
+                .replace("\${backgroundColor}", htmlColor(ThemeUtils.getSurfaceColor(App.currentContext())))
+                .replace("\${searchBarColor}", htmlColor(ThemeUtils.getSearchBarColor(ThemeUtils.getSurfaceColor(App.currentContext()))))
+                .replace("\${searchBarTextColor}", htmlColor(ThemeUtils.getColor(App.currentContext(),R.attr.colorOnSurface)))
+                .replace("\${borderColor}", htmlColor(ThemeUtils.getColor(App.currentContext(),R.attr.colorOnSecondary)))
+                .replace("\${accent}", htmlColor(ThemeUtils.getColor(App.currentContext(),R.attr.colorSecondary)))
                 .replace("\${search}", application.getString(R.string.search_homepage))
             ) andBuild {
                 charset { UTF8 }

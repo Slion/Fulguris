@@ -1,5 +1,7 @@
 package acr.browser.lightning.utils;
 
+import static fulguris.AppKt.app;
+
 import android.app.Application;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,8 +16,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-
-import fulguris.BrowserApp;
 
 /**
  * A utility class containing helpful methods
@@ -163,7 +163,7 @@ public final class FileUtils {
      * @return Folder containing our crash logs.
      */
     public static File getFolderCrashLogs() {
-        return BrowserApp.instance.getApplicationContext().getExternalFilesDir("CrashLogs");
+        return app.getApplicationContext().getExternalFilesDir("CrashLogs");
     }
 
     /**

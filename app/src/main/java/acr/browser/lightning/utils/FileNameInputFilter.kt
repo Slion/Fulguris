@@ -22,7 +22,7 @@
  
 package acr.browser.lightning.utils
 
-import fulguris.BrowserApp
+import fulguris.app
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.toast
 import android.text.InputFilter
@@ -50,10 +50,10 @@ class FileNameInputFilter: InputFilter
             // Something was caught by our filter, provide visual feedback
                 if (actualSource.length - filtered.length == 1) {
                     // A single character was removed
-                    BrowserApp.instance.applicationContext.toast(R.string.invalid_character_removed)
+                    app.toast(R.string.invalid_character_removed)
                 } else {
                     // Multiple characters were removed
-                    BrowserApp.instance.applicationContext.toast(R.string.invalid_characters_removed)
+                    app.toast(R.string.invalid_characters_removed)
                 }
             // Provide filtered results then
             filtered

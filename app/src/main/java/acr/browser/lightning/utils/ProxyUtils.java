@@ -15,7 +15,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import fulguris.BrowserApp;
+import fulguris.App;
 import acr.browser.lightning.R;
 import acr.browser.lightning.browser.ProxyChoice;
 import acr.browser.lightning.di.Injector;
@@ -156,7 +156,7 @@ public final class ProxyUtils {
         }
 
         try {
-            WebkitProxy.setProxy(BrowserApp.class.getName(), activity.getApplicationContext(), null, host, port);
+            WebkitProxy.setProxy(App.class.getName(), activity.getApplicationContext(), null, host, port);
         } catch (Exception e) {
             Log.d(TAG, "error enabling web proxying", e);
         }
@@ -182,7 +182,7 @@ public final class ProxyUtils {
             initializeProxy(activity);
         } else {
             try {
-                WebkitProxy.resetProxy(BrowserApp.class.getName(), activity.getApplicationContext());
+                WebkitProxy.resetProxy(App.class.getName(), activity.getApplicationContext());
             } catch (Exception e) {
                 Log.e(TAG, "Unable to reset proxy", e);
             }

@@ -1,6 +1,6 @@
 package acr.browser.lightning.settings.preferences.delegates
 
-import fulguris.BrowserApp
+import fulguris.app
 import android.content.SharedPreferences
 import androidx.annotation.BoolRes
 import androidx.annotation.StringRes
@@ -40,7 +40,7 @@ fun SharedPreferences.booleanPreference(
 fun SharedPreferences.booleanPreference(
         @StringRes stringRes: Int,
         defaultValue: Boolean = false
-): ReadWriteProperty<Any, Boolean> = BooleanPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), defaultValue, this)
+): ReadWriteProperty<Any, Boolean> = BooleanPreferenceDelegate(app.resources.getString(stringRes), defaultValue, this)
 
 /**
  * Creates a [Boolean] from [SharedPreferences] with the provided arguments.
@@ -48,4 +48,4 @@ fun SharedPreferences.booleanPreference(
 fun SharedPreferences.booleanPreference(
         @StringRes stringRes: Int,
         @BoolRes boolRes: Int
-): ReadWriteProperty<Any, Boolean> = BooleanPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), BrowserApp.instance.resources.getBoolean(boolRes), this)
+): ReadWriteProperty<Any, Boolean> = BooleanPreferenceDelegate(app.resources.getString(stringRes), app.resources.getBoolean(boolRes), this)

@@ -11,7 +11,8 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StyleRes
 import dagger.hilt.android.EntryPointAccessors
-import fulguris.BrowserApp
+import fulguris.app
+import fulguris.app
 
 //@AndroidEntryPoint
 abstract class ThemedActivity : LocaleAwareActivity() {
@@ -21,7 +22,7 @@ abstract class ThemedActivity : LocaleAwareActivity() {
      Fortunately we can access our Hilt entry point early as shown below.
      TODO: Move this in the base class after migrating it to Kotlin.
      */
-    private val hiltEntryPoint = EntryPointAccessors.fromApplication(BrowserApp.instance.applicationContext, HiltEntryPoint::class.java)
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(app, HiltEntryPoint::class.java)
     protected val quickUserPrefs: UserPreferences = hiltEntryPoint.userPreferences
     // TODO reduce protected visibility
     protected var accentId: AccentTheme = quickUserPrefs.useAccent

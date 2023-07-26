@@ -2,7 +2,7 @@
 
 package acr.browser.lightning.di
 
-import fulguris.BrowserApp
+import fulguris.App
 import acr.browser.lightning.settings.preferences.ConfigurationPreferences
 import android.content.Context
 import android.content.res.Configuration
@@ -22,9 +22,9 @@ val Context.configPrefs: ConfigurationPreferences
 fun Context.configPrefs(aConfig: Configuration): ConfigurationPreferences
     {
         if (aConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            return (applicationContext as BrowserApp).portraitPreferences
+            return (applicationContext as App).portraitPreferences
         }
         else {
-            return (applicationContext as BrowserApp).landscapePreferences
+            return (applicationContext as App).landscapePreferences
         }
     }

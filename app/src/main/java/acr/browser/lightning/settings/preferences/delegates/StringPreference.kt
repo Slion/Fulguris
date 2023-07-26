@@ -1,6 +1,6 @@
 package acr.browser.lightning.settings.preferences.delegates
 
-import fulguris.BrowserApp
+import fulguris.app
 import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import kotlin.properties.ReadWriteProperty
@@ -40,4 +40,4 @@ fun SharedPreferences.stringPreference(
 fun SharedPreferences.stringPreference(
         @StringRes stringRes: Int,
         defaultValue: String
-): ReadWriteProperty<Any, String> = StringPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), defaultValue, this)
+): ReadWriteProperty<Any, String> = StringPreferenceDelegate(app.resources.getString(stringRes), defaultValue, this)

@@ -110,7 +110,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import fulguris.BrowserApp
+import fulguris.app
+import fulguris.app
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -276,8 +277,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         //
         createKeyboardShortcuts()
 
-        if (BrowserApp.instance.justStarted) {
-            BrowserApp.instance.justStarted = false
+        if (app.justStarted) {
+            app.justStarted = false
             // Since amazingly on Android you can't tell when your app is closed we do exit cleanup on start-up, go figure
             // See: https://github.com/Slion/Fulguris/issues/106
             performExitCleanUp()
@@ -541,7 +542,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             onMenuItemClicked(iBinding.menuItemSettings) { dismiss(); executeAction(R.id.action_settings) }
             onMenuItemClicked(iBinding.menuItemOptions) {
                 dismiss();
-                BrowserApp.instance.domain = currentHost()
+                app.domain = currentHost()
                 iBottomSheet.setLayout(R.layout.fragment_settings_options).show()
             }
 

@@ -3,7 +3,6 @@
  */
 package acr.browser.lightning.download
 
-import fulguris.BrowserApp
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.database.downloads.DownloadsRepository
@@ -36,6 +35,7 @@ import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
+import fulguris.app
 
 //@AndroidEntryPoint
 class LightningDownloadListener     //Injector.getInjector(context).inject(this);
@@ -43,7 +43,7 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
     DownloadListener {
 
     // Could not get injection working in broadcast receiver
-    private val hiltEntryPoint = EntryPointAccessors.fromApplication(BrowserApp.instance.applicationContext, HiltEntryPoint::class.java)
+    private val hiltEntryPoint = EntryPointAccessors.fromApplication(app, HiltEntryPoint::class.java)
 
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
     val downloadHandler: DownloadHandler = hiltEntryPoint.downloadHandler

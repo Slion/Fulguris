@@ -147,6 +147,13 @@ class BookmarkDatabase @Inject constructor(
     }
 
     override fun addBookmarkList(bookmarkItems: List<Bookmark.Entry>): Completable = Completable.fromAction {
+        addBookmarkListSync(bookmarkItems)
+    }
+
+    /**
+     *
+     */
+    override fun addBookmarkListSync(bookmarkItems: List<Bookmark.Entry>) {
         database.apply {
             beginTransaction()
 

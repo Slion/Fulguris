@@ -1,6 +1,6 @@
 package acr.browser.lightning.view
 
-import fulguris.BrowserApp
+import fulguris.app
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlockerManager
@@ -502,7 +502,7 @@ class LightningWebClient(
             // Don't create new preferences when in incognito mode
             if (lightningView.isIncognito) {
                 // Load default domain settings instead
-                domainPreferences = DomainPreferences(BrowserApp.instance)
+                domainPreferences = DomainPreferences(app)
             } else {
                 // First time we came across that domain, load defaults
                 domainPreferences = DomainPreferences.loadDefaults(aHost)
@@ -511,7 +511,7 @@ class LightningWebClient(
             }
         } else {
             // Load existing prefs
-            domainPreferences = DomainPreferences(BrowserApp.instance, aHost)
+            domainPreferences = DomainPreferences(app, aHost)
         }
 
         //

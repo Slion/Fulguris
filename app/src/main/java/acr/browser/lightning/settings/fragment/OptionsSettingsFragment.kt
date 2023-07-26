@@ -22,7 +22,7 @@
 
 package acr.browser.lightning.settings.fragment
 
-import fulguris.BrowserApp
+import fulguris.app
 import acr.browser.lightning.R
 import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -45,10 +45,10 @@ class OptionsSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState,rootKey)
 
-        //Timber.d("Domain: ${BrowserApp.instance.domain}")
+        //Timber.d("Domain: ${app.domain}")
         // Don't show domain settings if it does not exists yet
         // Most important so that we don't create them when in incognito mode
-        findPreference<Preference>(getString(R.string.pref_key_domain))?.isVisible = DomainPreferences.exists(BrowserApp.instance.domain)
+        findPreference<Preference>(getString(R.string.pref_key_domain))?.isVisible = DomainPreferences.exists(app.domain)
     }
 
     /**

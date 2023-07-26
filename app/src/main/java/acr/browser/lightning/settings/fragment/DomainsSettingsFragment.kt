@@ -22,7 +22,7 @@
 
 package acr.browser.lightning.settings.fragment
 
-import fulguris.BrowserApp
+import fulguris.app
 import acr.browser.lightning.R
 import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.di.MainScheduler
@@ -140,7 +140,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         prefDefault.order = 5
         prefDefault.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
         prefDefault.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            BrowserApp.instance.domain = ""
+            app.domain = ""
             false
         }
         preferenceScreen.addPreference(prefDefault)
@@ -176,7 +176,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     pref.summary = domainReverse
                     pref.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
                     pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                        BrowserApp.instance.domain = domain
+                        app.domain = domain
                         false
                     }
 

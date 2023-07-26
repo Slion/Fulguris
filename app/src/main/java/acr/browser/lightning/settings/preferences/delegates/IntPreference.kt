@@ -1,6 +1,6 @@
 package acr.browser.lightning.settings.preferences.delegates
 
-import fulguris.BrowserApp
+import fulguris.app
 import android.content.SharedPreferences
 import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
@@ -39,7 +39,7 @@ fun SharedPreferences.intPreference(
 fun SharedPreferences.intPreference(
         @StringRes stringRes: Int,
         defaultValue: Int = 0
-): ReadWriteProperty<Any, Int> = IntPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), defaultValue, this)
+): ReadWriteProperty<Any, Int> = IntPreferenceDelegate(app.resources.getString(stringRes), defaultValue, this)
 
 /**
  * Creates a [Int] from [SharedPreferences] with the provide arguments.
@@ -47,5 +47,5 @@ fun SharedPreferences.intPreference(
 fun SharedPreferences.intResPreference(
     @StringRes stringRes: Int,
     @IntegerRes intRes: Int
-): ReadWriteProperty<Any, Int> = IntPreferenceDelegate(BrowserApp.instance.resources.getString(stringRes), BrowserApp.instance.resources.getInteger(intRes), this)
+): ReadWriteProperty<Any, Int> = IntPreferenceDelegate(app.resources.getString(stringRes), app.resources.getInteger(intRes), this)
 

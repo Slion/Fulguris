@@ -46,6 +46,11 @@ interface BookmarkRepository {
     fun addBookmarkList(bookmarkItems: List<Bookmark.Entry>): Completable
 
     /**
+     *
+     */
+    fun addBookmarkListSync(bookmarkItems: List<Bookmark.Entry>)
+
+    /**
      * Deletes a bookmark from the database. The [Bookmark.Entry.url] is used to delete the
      * bookmark.
      *
