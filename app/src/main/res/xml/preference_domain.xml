@@ -122,12 +122,12 @@
 
     <SwitchPreferenceCompat
         a:key="@string/pref_key_entry_point"
-        a:title="@string/settings_title_entry_point"
-        a:summaryOn="@string/settings_summary_on_entry_point"
-        a:summaryOff="@string/settings_summary_off_entry_point"
+        a:title="@string/settings_title_category"
+        a:summaryOn="@string/settings_summary_on_category"
+        a:summaryOff="@string/settings_summary_off_category"
         a:defaultValue="false"
         a:iconSpaceReserved="false"
-        a:icon="@drawable/ic_sensor_door_outline"
+        a:icon="@drawable/ic_category_outline"
         a:singleLineTitle="false"
         a:allowDividerAbove="true"
         />

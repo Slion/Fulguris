@@ -175,7 +175,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
                     <TextView
                         android:id="@+id/menuItemOptions"
                         style="@style/BrowserTextMenuItem"
-                        app:drawableStartCompat="@drawable/ic_build_outline"
+                        app:drawableStartCompat="@drawable/ic_build"
                         android:text="@string/options" />
 
                     <TextView
