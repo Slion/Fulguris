@@ -374,6 +374,19 @@ class LightningWebClient(
         //"android.resource://${BuildConfig.APPLICATION_ID}/${R.drawable.ic_about}"
         //"file:///android_res/drawable/ic_about"
 
+        Timber.d("onReceivedError: ${domainPreferences.domain}")
+
+        // Avoid polluting our domain settings from missed typed URLs
+        if (domainPreferences.wasCreated) {
+            Timber.d("onReceivedError: domain settings clean-up")
+            DomainPreferences.delete(domainPreferences.domain)
+            //
+            if (domainPreferences.parentWasCreated) {
+                Timber.d("onReceivedError: domain settings parent clean-up")
+                DomainPreferences.delete(domainPreferences.topPrivateDomain!!)
+            }
+        }
+
         //Encode image to base64 string
         val output = ByteArrayOutputStream()
         val bitmap = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_about, activity.theme)?.toBitmap()
@@ -491,12 +504,22 @@ class LightningWebClient(
     var exAppLaunchDialog: AlertDialog? = null
 
     // TODO: Shall this live somewhere else
-    lateinit var domainPreferences: DomainPreferences
+    // Load default settings
+    var domainPreferences = DomainPreferences(app)
 
     /**
      * Load and create our domain preferences if needed
      */
     private fun loadDomainPreferences(aHost :String, aEntryPoint: Boolean = false) {
+
+        // Don't reload our preferences if we already have it
+        // We hit that a lot actually as we load resources
+        if (domainPreferences.domain==aHost) {
+            Timber.d("loadDomainPreferences: already loaded")
+            setEntryPoint(aEntryPoint)
+            return
+        }
+
         // Check if we need to load defaults
         if (lightningView.isIncognito && !DomainPreferences.exists(aHost)) {
             // Don't create new preferences when in incognito mode
@@ -507,14 +530,19 @@ class LightningWebClient(
             domainPreferences = DomainPreferences(app,aHost)
         }
 
-        //
+        setEntryPoint(aEntryPoint)
+    }
+
+    /**
+     *
+     */
+    private fun setEntryPoint(aEntryPoint: Boolean) {
         if (aEntryPoint &&
             // Never set default domain as entry point, somehow this was happening
             // Since we copy the default to create new domain settings that would force all new domains as entry point
             !domainPreferences.isDefault) {
             domainPreferences.entryPoint = true
         }
-
     }
 
     /**

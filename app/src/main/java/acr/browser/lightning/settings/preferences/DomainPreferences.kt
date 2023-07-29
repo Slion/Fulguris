@@ -51,13 +51,16 @@ class DomainPreferences constructor(
     val domain: String = "",
 ) {
 
+    var wasCreated = false
+    var parentWasCreated = false
+
     init {
         Timber.d("init: $domain")
     }
 
     // Workout top private domain
     val topPrivateDomain = if (domain.isNotEmpty()) {
-        // Had to through HttpUrl object otherwise IP address are acting funny
+        // Had to go through HttpUrl object otherwise IP address are acting funny
         // TODO: Maybe that should be fixed upstream?
         "http://$domain".toHttpUrl().topPrivateDomain()
         /*PublicSuffixDatabase.get().getEffectiveTldPlusOne(domain)*/ } else null
@@ -82,16 +85,19 @@ class DomainPreferences constructor(
             if (!exists(topPrivateDomain!!)) {
                 Timber.d("Create top private domain settings")
                 createFromParent(topPrivateDomain,"")
+                parentWasCreated = true
             }
 
             // If our file does not exist yet, create it from default settings
             if (!exists(domain)) {
                 createFromParent(domain,topPrivateDomain)
+                wasCreated = true
             }
         } else if (!isDefault) {
             // We are either a top level domain or a private address
             if (!exists(domain)) {
                 createFromParent(domain,"")
+                wasCreated = true
             }
         }
     }
