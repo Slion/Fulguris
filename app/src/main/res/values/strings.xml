@@ -540,6 +540,8 @@
     <string name="prompt_please_confirm">Please confirm</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
+    <string name="settings_title_parent">Parent</string>
+    <string name="settings_summary_default_domain_settings">Default domain settings</string>
 
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>

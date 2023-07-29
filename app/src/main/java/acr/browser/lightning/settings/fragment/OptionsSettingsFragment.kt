@@ -40,6 +40,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OptionsSettingsFragment : AbstractSettingsFragment() {
 
+    // Capture that as it could change through navigating our domain settings hierarchy
+    val domain = app.domain
+
     @Inject internal lateinit var userPreferences: UserPreferences
 
     override fun providePreferencesXmlResource() = R.xml.preference_options
@@ -58,7 +61,13 @@ class OptionsSettingsFragment : AbstractSettingsFragment() {
         //Timber.d("Domain: ${app.domain}")
         // Don't show domain settings if it does not exists yet
         // Most important so that we don't create them when in incognito mode
-        find<Preference>(R.string.pref_key_domain)?.isVisible = DomainPreferences.exists(app.domain)
+        find<Preference>(R.string.pref_key_domain)?.apply{
+            isVisible = DomainPreferences.exists(domain)
+            setOnPreferenceClickListener {
+                app.domain = domain
+                false
+            }
+        }
     }
 
 

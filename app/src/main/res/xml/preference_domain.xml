@@ -52,16 +52,13 @@
 
     </Preference>
 
-
-    <SwitchPreferenceCompat
-        a:key="@string/pref_key_entry_point"
-        a:title="@string/settings_title_entry_point"
-        a:summaryOn="@string/settings_summary_on_entry_point"
-        a:summaryOff="@string/settings_summary_off_entry_point"
-        a:defaultValue="false"
-        a:iconSpaceReserved="false"
-        a:icon="@drawable/ic_sensor_door_outline"
-        a:singleLineTitle="false" />
+    <Preference
+        a:fragment="acr.browser.lightning.settings.fragment.DomainSettingsFragment"
+        a:key="@string/pref_key_parent"
+        a:title="@string/settings_title_parent"
+        a:icon="@drawable/ic_domain"
+        a:singleLineTitle="false"
+        />
 
 <!--    <SwitchPreferenceCompat-->
 <!--        a:key="@string/pref_key_known_domain"-->
@@ -123,12 +120,26 @@
 
     </acr.browser.lightning.settings.preferences.PreferenceCategoryEx>
 
+    <SwitchPreferenceCompat
+        a:key="@string/pref_key_entry_point"
+        a:title="@string/settings_title_entry_point"
+        a:summaryOn="@string/settings_summary_on_entry_point"
+        a:summaryOff="@string/settings_summary_off_entry_point"
+        a:defaultValue="false"
+        a:iconSpaceReserved="false"
+        a:icon="@drawable/ic_sensor_door_outline"
+        a:singleLineTitle="false"
+        a:allowDividerAbove="true"
+        />
+
+
     <acr.browser.lightning.settings.preferences.PreferenceEx
         a:key="@string/pref_key_delete"
         a:title="@string/settings_title_delete_domain_settings"
         a:summary="@string/settings_summary_delete_domain_settings"
         a:icon="@drawable/ic_delete"
-        a:layout="@layout/preference_category_material"
         tools:ignore="PrivateResource" />
+
+
 
 </androidx.preference.PreferenceScreen>

@@ -144,6 +144,7 @@
     <string name="pref_key_domain">pref_key_domain</string>
     <string name="pref_key_entry_point">pref_key_entry_point</string>
     <string name="pref_key_resource_domains">pref_key_resource_domains</string>
+    <string name="pref_key_parent">pref_key_parent</string>
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>

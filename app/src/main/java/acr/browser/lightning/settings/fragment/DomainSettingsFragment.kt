@@ -37,6 +37,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DomainSettingsFragment : AbstractSettingsFragment() {
 
+    lateinit var prefs: DomainPreferences
+
+    // Capture that as it could change as we open parent settings
+    val domain = app.domain
+
     /**
      * See [AbstractSettingsFragment.titleResourceId]
      */
@@ -49,27 +54,45 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
      * See [AbstractSettingsFragment.title]
      */
     override fun title(): String {
-        return app.domain
+        return domain
     }
 
-    override fun providePreferencesXmlResource() = if (app.domain=="") R.xml.preference_domain_default else R.xml.preference_domain
+    override fun providePreferencesXmlResource() = if (domain=="") R.xml.preference_domain_default else R.xml.preference_domain
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        prefs = DomainPreferences(requireContext(),app.domain)
         // That's the earliest place we can change our preference file as earlier in onCreate the manager has not been created yet
-        preferenceManager.sharedPreferencesName = DomainPreferences.name(app.domain)
+        preferenceManager.sharedPreferencesName = DomainPreferences.name(domain)
         preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
         super.onCreatePreferences(savedInstanceState, rootKey)
 
         // Setup link and domain display
         find<Preference>(R.string.pref_key_visit_domain)?.apply {
-            summary = app.domain
-            val uri = "http://" + app.domain
+            summary = domain
+            val uri = "http://" + domain
             intent?.data = Uri.parse(uri)
         }
 
+        // Setup parent link
+        find<Preference>(R.string.pref_key_parent)?.apply {
+            if (prefs.isSubDomain) {
+                summary = prefs.parent?.domain
+            } else {
+                summary = getString(R.string.settings_summary_default_domain_settings)
+            }
+
+            setOnPreferenceClickListener {
+                // Set domain setting page to load
+                app.domain = prefs.parent?.domain ?: ""
+                // Still perform default action
+                false
+            }
+        }
+
+
         // Delete this domain settings
         find<Preference>(R.string.pref_key_delete)?.setOnPreferenceClickListener {
-            DomainPreferences.delete(app.domain)
+            DomainPreferences.delete(domain)
             parentFragmentManager.popBackStack()
             true
         }

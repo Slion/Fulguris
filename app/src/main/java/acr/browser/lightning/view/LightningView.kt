@@ -343,7 +343,7 @@ class LightningView(
             createWebView()
             initializeContent(tabInitializer)
             desktopMode = userPreferences.desktopModeDefault
-            darkMode = defaultDomainSettings.darkModeDefault
+            darkMode = defaultDomainSettings.darkModeParent
         } else {
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer

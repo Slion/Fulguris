@@ -27,36 +27,74 @@ import acr.browser.lightning.R
 import acr.browser.lightning.extensions.reverseDomainName
 import acr.browser.lightning.settings.NoYesAsk
 import acr.browser.lightning.settings.preferences.delegates.*
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.MODE_MULTI_PROCESS
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.internal.publicsuffix.PublicSuffixDatabase
 import timber.log.Timber
 import java.io.File
+import kotlin.system.measureTimeMillis
 
 /**
  * Domain preferences
  *
  * TODO: Should we get the default value from the default preferences somehow?
  */
+@SuppressLint("ApplySharedPref")
 class DomainPreferences constructor(
     val context: Context,
     val domain: String = "",
 ) {
 
+    init {
+        Timber.d("init: $domain")
+    }
+
+    // Workout top private domain
+    val topPrivateDomain = if (domain.isNotEmpty()) { PublicSuffixDatabase.get().getEffectiveTldPlusOne(domain) } else null
+
+    /*
+    var tpd: String? = ""
+    Timber.d("getEffectiveTldPlusOne ${measureTimeMillis {
+        tpd = PublicSuffixDatabase.get().getEffectiveTldPlusOne(domain)
+    }} ms")
+    tpd*/
+
     // Remember order matters, do this first
     init {
-        // If our file does not exist yet, create it from default settings
-        if (!exists(domain)) {
-            createFromDefaults(domain)
+
+        if (!exists("")) {
+            Timber.d("Create default domain settings")
+            context.getSharedPreferences(name(""), MODE_PRIVATE).edit().putBoolean(context.getString(R.string.pref_key_entry_point), false).commit()
+        }
+
+        // Make sure parents settings exists
+        if (isSubDomain) {
+            if (!exists(topPrivateDomain!!)) {
+                Timber.d("Create top private domain settings")
+                createFromParent(topPrivateDomain,"")
+            }
+
+            // If our file does not exist yet, create it from default settings
+            if (!exists(domain)) {
+                createFromParent(domain,topPrivateDomain)
+            }
+        } else if (!isDefault) {
+            // We are either a top level domain or a private address
+            if (!exists(domain)) {
+                createFromParent(domain,"")
+            }
         }
     }
 
     // Preferences for this domain
     val preferences: SharedPreferences = context.getSharedPreferences(name(domain), MODE_PRIVATE)
-    // Default domain preferences
-    val default : SharedPreferences = context.getSharedPreferences(name(""),MODE_PRIVATE)
+    // Preferences of the parent, either the top private domain or the default settings
+    val parent: DomainPreferences? = if (isDefault) null else DomainPreferences(context,if (isSubDomain) topPrivateDomain!! else "")
 
     /**
      * Used to distinguish main domain from resource domain
@@ -68,8 +106,8 @@ class DomainPreferences constructor(
      */
     var darkModeOverride by preferences.booleanPreference(R.string.pref_key_dark_mode_override, false)
     var darkModeLocal by preferences.booleanPreference(R.string.pref_key_dark_mode, false)
-    var darkModeDefault by default.booleanPreference(R.string.pref_key_dark_mode, false)
-    val darkMode: Boolean get() { return if (isDefault || !darkModeOverride) { darkModeDefault } else { darkModeLocal } }
+    val darkModeParent: Boolean get() { return parent?.darkMode ?: darkModeLocal}
+    val darkMode: Boolean get() { return if (isDefault || !darkModeOverride) { darkModeParent } else { darkModeLocal } }
 
     /**
      * Define what to do when a third-party app is available:
@@ -79,8 +117,8 @@ class DomainPreferences constructor(
      */
     var launchAppOverride by preferences.booleanPreference(R.string.pref_key_launch_app_override, false)
     var launchAppLocal by preferences.enumPreference(R.string.pref_key_launch_app, NoYesAsk.ASK)
-    var launchAppDefault by default.enumPreference(R.string.pref_key_launch_app, NoYesAsk.ASK)
-    val launchApp: NoYesAsk get() { return if (isDefault || !launchAppOverride) { launchAppDefault } else { launchAppLocal } }
+    val launchAppParent: NoYesAsk get() { return parent?.launchApp ?: launchAppLocal}
+    val launchApp: NoYesAsk get() { return if (isDefault || !launchAppOverride) { launchAppParent } else { launchAppLocal } }
 
     /**
      * Is this the default domain settings?
@@ -88,10 +126,21 @@ class DomainPreferences constructor(
     val isDefault: Boolean get() = domain==""
 
     /**
+     * Is this a subdomain settings?
+     */
+    val isSubDomain: Boolean get() = !isDefault && topPrivateDomain!=null && domain!=topPrivateDomain
+
+    /**
+     * Is this settings for top private domain?
+     */
+    val isTopPrivateDomain: Boolean get() = domain==topPrivateDomain
+
+
+    /**
      * Load the default domain settings
      */
-    private fun createFromDefaults(domain: String) {
-        Timber.d("loadDefaults: $domain")
+    private fun createFromParent(domain: String, parent: String) {
+        Timber.d("createFromParent: $domain")
         val defaultFileName = fileName("")
         val thisFileName = fileName(domain)
         try {

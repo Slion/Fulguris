@@ -150,7 +150,8 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         // Add default domain settings
         val prefDefault = Preference(requireContext())
         prefDefault.isSingleLineTitle = false
-        prefDefault.title = resources.getString(R.string.default_theme)
+        prefDefault.title = getString(R.string.default_theme)
+        prefDefault.summary = getString(R.string.settings_summary_default_domain_settings)
         prefDefault.order = 5
         prefDefault.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
         prefDefault.onPreferenceClickListener = Preference.OnPreferenceClickListener {
