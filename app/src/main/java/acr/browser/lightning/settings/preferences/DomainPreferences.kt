@@ -33,6 +33,7 @@ import android.content.Context.MODE_MULTI_PROCESS
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.internal.publicsuffix.PublicSuffixDatabase
 import timber.log.Timber
@@ -55,7 +56,11 @@ class DomainPreferences constructor(
     }
 
     // Workout top private domain
-    val topPrivateDomain = if (domain.isNotEmpty()) { PublicSuffixDatabase.get().getEffectiveTldPlusOne(domain) } else null
+    val topPrivateDomain = if (domain.isNotEmpty()) {
+        // Had to through HttpUrl object otherwise IP address are acting funny
+        // TODO: Maybe that should be fixed upstream?
+        "http://$domain".toHttpUrl().topPrivateDomain()
+        /*PublicSuffixDatabase.get().getEffectiveTldPlusOne(domain)*/ } else null
 
     /*
     var tpd: String? = ""
