@@ -28,6 +28,7 @@ import acr.browser.lightning.extensions.reverseDomainName
 import acr.browser.lightning.settings.NoYesAsk
 import acr.browser.lightning.settings.preferences.delegates.*
 import android.content.Context
+import android.content.Context.MODE_MULTI_PROCESS
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
@@ -41,18 +42,21 @@ import java.io.File
  */
 class DomainPreferences constructor(
     val context: Context,
-    val domain: String = ""
+    val domain: String = "",
 ) {
 
+    // Remember order matters, do this first
+    init {
+        // If our file does not exist yet, create it from default settings
+        if (!exists(domain)) {
+            createFromDefaults(domain)
+        }
+    }
+
     // Preferences for this domain
-    val preferences: SharedPreferences = context.getSharedPreferences(name(domain),MODE_PRIVATE)
+    val preferences: SharedPreferences = context.getSharedPreferences(name(domain), MODE_PRIVATE)
     // Default domain preferences
     val default : SharedPreferences = context.getSharedPreferences(name(""),MODE_PRIVATE)
-
-    /**
-     * Used to mark if we have already seen this domain
-     */
-    var knownDomain by preferences.booleanPreference(R.string.pref_key_known_domain, false)
 
     /**
      * Used to distinguish main domain from resource domain
@@ -83,6 +87,21 @@ class DomainPreferences constructor(
      */
     val isDefault: Boolean get() = domain==""
 
+    /**
+     * Load the default domain settings
+     */
+    private fun createFromDefaults(domain: String) {
+        Timber.d("loadDefaults: $domain")
+        val defaultFileName = fileName("")
+        val thisFileName = fileName(domain)
+        try {
+            File(defaultFileName).copyTo(File(thisFileName), true)
+            // Make sure cached values are reloaded from disk
+            app.getSharedPreferences(name(domain),MODE_MULTI_PROCESS)
+        } catch (ex: Exception) {
+            Timber.d("File copy failed: $ex")
+        }
+    }
 
     companion object {
 
@@ -112,22 +131,8 @@ class DomainPreferences constructor(
          *
          */
         fun fileName(domain: String) : String {
+            // TODO: use getSharedPreferencesPath
             return app.applicationInfo.dataDir + "/shared_prefs/" + name(domain) + ".xml"
-        }
-
-        /**
-         * Load the default domain settings
-         */
-        fun loadDefaults(domain: String) : DomainPreferences {
-            val defaultFileName = fileName("")
-            val thisFileName = fileName(domain)
-            try {
-                File(defaultFileName).copyTo(File(thisFileName), true)
-            } catch (ex: Exception) {
-                Timber.d("File copy failed: $ex")
-            }
-
-            return DomainPreferences(app,domain)
         }
 
         /**
@@ -143,6 +148,14 @@ class DomainPreferences constructor(
                     Timber.d("Delete ${it.absolutePath}: ${it.delete()}")
                 }
             }
+        }
+
+        /**
+         * Delete the settings file belonging to the specified domain.
+         */
+        fun delete(domain: String) {
+            val file = File(fileName(domain))
+            Timber.d("Delete ${file.absolutePath}: ${file.delete()}")
         }
     }
 }

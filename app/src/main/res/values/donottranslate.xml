@@ -129,6 +129,7 @@
     <string name="pref_key_scrollbar_fade_duration">pref_key_scrollbar_fade_duration</string>
     <string name="pref_key_scrollbar_size">pref_key_scrollbar_size</string>
     <string name="pref_key_back">pref_key_back</string>
+    <string name="pref_key_delete">pref_key_delete</string>
 
     <string name="pref_key_debug">pref_key_debug</string>
     <string name="pref_key_webview">pref_key_webview</string>
@@ -137,7 +138,6 @@
     <string name="pref_key_contribute_category">pref_key_contribute_category</string>
 
     <!-- Domain settings -->
-    <string name="pref_key_known_domain">pref_key_known_domain</string>
     <string name="pref_key_launch_app">pref_key_launch_app</string>
     <string name="pref_key_launch_app_override">pref_key_launch_app_override</string>
     <string name="pref_key_domains">pref_key_domains</string>

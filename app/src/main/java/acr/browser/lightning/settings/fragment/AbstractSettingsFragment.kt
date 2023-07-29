@@ -26,14 +26,24 @@ import acr.browser.lightning.R
 import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.settings.preferences.PreferenceCategoryEx
 import acr.browser.lightning.utils.IntentUtils
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.XmlRes
 import androidx.core.content.res.ResourcesCompat
-import androidx.preference.*
+import androidx.preference.CheckBoxPreference
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragment
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceGroup
+import androidx.preference.PreferenceScreen
+import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.RecyclerView
+import timber.log.Timber
 
 /**
  * An abstract settings fragment which performs wiring for an instance of [PreferenceFragment].
@@ -52,6 +62,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
      *
      */
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        // TODO: Override this method so that our inflater setDefaultPackage can be set and thus we shorten the names our XML tags
         setPreferencesFromResource(providePreferencesXmlResource(),rootKey)
         prefGroup = preferenceScreen
 
@@ -60,8 +71,41 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
             // Back buttons are there for navigation in options menu bottom sheet
             findPreference<Preference>(getString(R.string.pref_key_back))?.isVisible = false
         }
-
     }
+
+    /**
+     * SL: Start here to be able to inflate using shorter XML element tag using setDefaultPackage.
+     * The inflater class would need to be duplicated though.
+     *
+     * Inflates the given XML resource and replaces the current preference hierarchy (if any) with
+     * the preference hierarchy rooted at `key`.
+     *
+     * @param preferencesResId The XML resource ID to inflate
+     * @param key              The preference key of the [PreferenceScreen] to use as the
+     * root of the preference hierarchy, or `null` to use the root
+     * [PreferenceScreen].
+     */
+    /*
+    @SuppressLint("RestrictedApi")
+    override fun setPreferencesFromResource(@XmlRes preferencesResId: Int, key: String?) {
+
+        val xmlRoot = preferenceManager.inflateFromResource(
+            requireContext(),
+            preferencesResId, null
+        )
+        val root: Preference?
+        if (key != null) {
+            root = xmlRoot.findPreference(key)
+            require(root is PreferenceScreen) {
+                ("Preference object with key " + key
+                        + " is not a PreferenceScreen")
+            }
+        } else {
+            root = xmlRoot
+        }
+        preferenceScreen = root
+    }
+    */
 
     /**
      * Called by the framework once our view has been created from its XML definition.
@@ -73,6 +117,11 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         view.findViewById<RecyclerView>(R.id.recycler_view)?.apply{
             isVerticalFadingEdgeEnabled = true
         }
+    }
+
+    override fun onNavigateToScreen(preferenceScreen: PreferenceScreen) {
+        super.onNavigateToScreen(preferenceScreen)
+        Timber.d("onNavigateToScreen")
     }
 
 

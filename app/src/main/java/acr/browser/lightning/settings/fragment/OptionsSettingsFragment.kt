@@ -24,9 +24,11 @@ package acr.browser.lightning.settings.fragment
 
 import fulguris.app
 import acr.browser.lightning.R
+import acr.browser.lightning.extensions.find
 import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.os.Bundle
+import android.view.View
 import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -45,11 +47,20 @@ class OptionsSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState,rootKey)
 
+    }
+
+    /**
+     *
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         //Timber.d("Domain: ${app.domain}")
         // Don't show domain settings if it does not exists yet
         // Most important so that we don't create them when in incognito mode
-        findPreference<Preference>(getString(R.string.pref_key_domain))?.isVisible = DomainPreferences.exists(app.domain)
+        find<Preference>(R.string.pref_key_domain)?.isVisible = DomainPreferences.exists(app.domain)
     }
+
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]

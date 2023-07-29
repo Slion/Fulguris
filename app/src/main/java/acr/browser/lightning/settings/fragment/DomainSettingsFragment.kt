@@ -24,6 +24,7 @@ package acr.browser.lightning.settings.fragment
 
 import fulguris.app
 import acr.browser.lightning.R
+import acr.browser.lightning.extensions.find
 import acr.browser.lightning.settings.preferences.DomainPreferences
 import android.content.Context
 import android.net.Uri
@@ -60,10 +61,17 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
         // Setup link and domain display
-        findPreference<Preference>(getString(R.string.pref_key_visit_domain))?.apply {
+        find<Preference>(R.string.pref_key_visit_domain)?.apply {
             summary = app.domain
             val uri = "http://" + app.domain
             intent?.data = Uri.parse(uri)
+        }
+
+        // Delete this domain settings
+        find<Preference>(R.string.pref_key_delete)?.setOnPreferenceClickListener {
+            DomainPreferences.delete(app.domain)
+            parentFragmentManager.popBackStack()
+            true
         }
     }
 }

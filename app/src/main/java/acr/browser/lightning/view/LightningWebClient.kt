@@ -498,20 +498,13 @@ class LightningWebClient(
      */
     private fun loadDomainPreferences(aHost :String, aEntryPoint: Boolean = false) {
         // Check if we need to load defaults
-        if (!DomainPreferences.exists(aHost)) {
+        if (lightningView.isIncognito && !DomainPreferences.exists(aHost)) {
             // Don't create new preferences when in incognito mode
-            if (lightningView.isIncognito) {
-                // Load default domain settings instead
-                domainPreferences = DomainPreferences(app)
-            } else {
-                // First time we came across that domain, load defaults
-                domainPreferences = DomainPreferences.loadDefaults(aHost)
-                // Mark it as known
-                domainPreferences.knownDomain = true
-            }
+            // Load default domain settings instead
+            domainPreferences = DomainPreferences(app)
         } else {
-            // Load existing prefs
-            domainPreferences = DomainPreferences(app, aHost)
+            // Will load defaults if domain does not exists yet
+            domainPreferences = DomainPreferences(app,aHost)
         }
 
         //

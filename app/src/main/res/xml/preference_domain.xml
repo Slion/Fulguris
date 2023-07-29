@@ -123,4 +123,12 @@
 
     </acr.browser.lightning.settings.preferences.PreferenceCategoryEx>
 
+    <acr.browser.lightning.settings.preferences.PreferenceEx
+        a:key="@string/pref_key_delete"
+        a:title="@string/settings_title_delete_domain_settings"
+        a:summary="@string/settings_summary_delete_domain_settings"
+        a:icon="@drawable/ic_delete"
+        a:layout="@layout/preference_category_material"
+        tools:ignore="PrivateResource" />
+
 </androidx.preference.PreferenceScreen>

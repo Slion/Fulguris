@@ -45,6 +45,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
@@ -128,6 +133,15 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         // Make sure we only do that once
         // Otherwise we would populate duplicates each time we come back from a domain settings page
         if (populated) {
+            Timber.d("populateDomainList populated")
+            // Check if our domain was deleted when coming back from a specific domain preference page
+            if (!DomainPreferences.exists(app.domain)) {
+                Timber.d("Domain does not exists")
+                findPreference<Preference>(app.domain)?.let {
+                    Timber.d("removePreference")
+                    it.parent?.removePreference(it)
+                }
+            }
             return
         }
 
@@ -172,6 +186,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     // TODO: Have a default settings entry
                     val pref = Preference(requireContext())
                     pref.isSingleLineTitle = false
+                    pref.key = domain
                     pref.title = domain
                     pref.summary = domainReverse
                     pref.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
