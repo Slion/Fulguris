@@ -483,8 +483,8 @@
     <string name="settings_summary_domains">Manage domain settings</string>
     <string name="settings_title_resource_domains">Resource domains</string>
     <string name="settings_title_override">Override</string>
-    <string name="settings_summary_on_override">Override default settings</string>
-    <string name="settings_summary_off_override">Use default settings</string>
+    <string name="settings_summary_on_override">Override parent settings</string>
+    <string name="settings_summary_off_override">Use parent settings</string>
     <string name="settings_title_launch_app">Launch app</string>
     <string name="settings_title_entry_point">Entry point</string>
     <string name="settings_summary_on_entry_point">List as main domain</string>

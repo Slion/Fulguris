@@ -57,6 +57,9 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
         return domain
     }
 
+    /**
+     * Select our layout depending if we are showing our default domain settings or not
+     */
     override fun providePreferencesXmlResource() = if (domain=="") R.xml.preference_domain_default else R.xml.preference_domain
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
