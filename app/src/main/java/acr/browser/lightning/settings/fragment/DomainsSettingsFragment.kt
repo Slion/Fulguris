@@ -22,7 +22,6 @@
 
 package acr.browser.lightning.settings.fragment
 
-import fulguris.app
 import acr.browser.lightning.R
 import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.di.MainScheduler
@@ -32,6 +31,7 @@ import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.reverseDomainName
 import acr.browser.lightning.favicon.FaviconModel
 import acr.browser.lightning.settings.preferences.DomainPreferences
+import acr.browser.lightning.settings.preferences.PreferenceEx
 import acr.browser.lightning.utils.Utils
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
@@ -43,12 +43,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import fulguris.app
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber
 import java.io.File
@@ -91,8 +88,9 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
 
         // TODO: Have a custom preference with test input to filter out our list
 
-        catDomains = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_domains))
-        catResources = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_resource_domains))
+        // Disable ordering as added to sort alphabetically by title
+        catDomains = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_domains))?.apply { isOrderingAsAdded = false }
+        catResources = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_resource_domains))?.apply { isOrderingAsAdded = false }
         // Hide resources category while we are filling our preferences otherwise it looks ugly
         catResources?.isVisible = false
 
@@ -137,21 +135,17 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         if (populated) {
             Timber.d("populateDomainList populated")
 
-            // Used to hook up parent next to child when moving parent to child category
-            var related: Preference? = null
-
             // Check if our domain was deleted when coming back from a specific domain preference page
             if (!DomainPreferences.exists(domain)) {
-                Timber.d("Domain does not exists")
+                // Domain settings was deleted remove the preference then
                 findPreference<Preference>(domain)?.let {
-                    Timber.d("removePreference")
                     it.parent?.removePreference(it)
                 }
             } else {
                 // Our setting still exist
+                // Check if it was moved to another category and take action
                 val dp = DomainPreferences(requireContext(),domain)
                 findPreference<Preference>(domain)?.let {
-                    related = it
                     val newParent = if (dp.entryPoint) catDomains else catResources
                     if (newParent!=it.parent) {
                         it.parent?.removePreference(it)
@@ -164,9 +158,8 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
             val tpd = "http://$domain".toHttpUrl().topPrivateDomain()
             if (tpd?.isNotEmpty() == true) {
                 if (!DomainPreferences.exists(tpd)) {
-                    Timber.d("Top private domain does not exists")
+                    // Domain settings was deleted remove the preference then
                     findPreference<Preference>(tpd)?.let {
-                        Timber.d("removePreference")
                         it.parent?.removePreference(it)
                     }
                 } else {
@@ -177,19 +170,11 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                         val newParent = if (dp.entryPoint) catDomains else catResources
                         if (newParent!=it.parent) {
                             it.parent?.removePreference(it)
-                            // Set the same order as related property so that they show up next to each other without having to rebuild the list
-                            related?.let { rp ->
-                                if (rp.parent==newParent) {
-                                    it.order = rp.order
-                                }
-                            }
                             newParent?.addPreference(it)
                         }
                     }
                 }
             }
-
-
             return
         }
 
@@ -214,7 +199,8 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         val directory = File(requireContext().applicationInfo.dataDir, "shared_prefs")
         if (directory.exists() && directory.isDirectory) {
             val list = directory.list { _, name -> name.startsWith(DomainPreferences.prefix) }
-            list?.sortWith ( compareBy(String.CASE_INSENSITIVE_ORDER){it})
+            // Sorting is not needed anymore as we let the PreferenceGroup do it for us now
+            //list?.sortWith ( compareBy(String.CASE_INSENSITIVE_ORDER){it})
             // Sort our domains using reversed string so that subdomains are grouped together
             var delay = 300L
             var delayIncrement = 1L
@@ -233,11 +219,15 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     }
                     // TODO: User should be able to delete any and all domains
                     // TODO: Have a default settings entry
-                    val pref = Preference(requireContext())
+                    val pref = PreferenceEx(requireContext())
+                    // Make sure domains and not reversed domains are shown as titles
+                    pref.swapTitleSummary = true
                     pref.isSingleLineTitle = false
                     pref.key = domain
-                    pref.title = domain
-                    pref.summary = domainReverse
+                    // We are using preference built-in alphabetical sorting by title
+                    // We want sorting to group sub-domains together so we use reverse domain
+                    pref.title = domainReverse
+                    pref.summary = domain
                     pref.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
                     pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                         this.domain = domain

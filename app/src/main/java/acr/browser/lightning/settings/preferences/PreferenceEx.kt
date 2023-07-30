@@ -39,11 +39,24 @@ class PreferenceEx :
     constructor(ctx: Context, attrs: AttributeSet?) : super(ctx, attrs) {}
     constructor(ctx: Context) : super(ctx) {}
 
+    // Use this to swap texts of title and summary
+    // Needed as preferences can only be sorted by titles but wanted them sorted by summary
+    var swapTitleSummary = false
+
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
         val summary = holder.findViewById(android.R.id.summary) as TextView
+        val title = holder.findViewById(android.R.id.title) as TextView
         // Enable multiple line support
         summary.isSingleLine = false
         summary.maxLines = 10 // Just need to be high enough I guess
+
+        if (swapTitleSummary) {
+            // Just do it
+            val tt = title.text
+            title.text = summary.text
+            summary.text = tt
+        }
+
     }
 }
