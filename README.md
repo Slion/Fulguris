@@ -32,7 +32,7 @@ We have three official release channels linked above. The **Download** release c
 
 ## Test
 
-The best way to contribute is to actually use Fulguris. There is no beta test program yet. However releases tend to be published more often on [Slions.net] and it is easy to switch back to an [earlier version] if needed.
+The best way to contribute is to use Fulguris. There is no beta test program yet. However releases tend to be published more often on [Slions.net] and it is easy to switch back to an [earlier version] if needed.
 Please report issues on [GitHub](https://github.com/slion/fulguris/issues).
 
 ## Rate
