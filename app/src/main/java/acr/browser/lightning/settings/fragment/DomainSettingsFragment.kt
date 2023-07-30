@@ -63,7 +63,7 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
     override fun providePreferencesXmlResource() = if (domain=="") R.xml.preference_domain_default else R.xml.preference_domain
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        prefs = DomainPreferences(requireContext(),app.domain)
+        prefs = DomainPreferences(requireContext(),domain)
         // That's the earliest place we can change our preference file as earlier in onCreate the manager has not been created yet
         preferenceManager.sharedPreferencesName = DomainPreferences.name(domain)
         preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE

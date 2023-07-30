@@ -5,6 +5,7 @@ import acr.browser.lightning.settings.activity.SettingsActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceHeaderFragmentCompat
+import timber.log.Timber
 
 
 /**
@@ -37,13 +38,16 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
             pref: Preference
     ): Boolean {
 
+        Timber.d("onPreferenceStartFragment")
+
         iPreference = pref
 
         // We currently do not support more than two breadcrumbs
         // Make sure you pop the last one then otherwise they are accumulating
         // TODO: Do support more breadcrumbs maybe using either AbstractSettingsFragment or addOnBackStackChangedListener
         popBreadcrumbs()
-        pref.title?.let {
+        // Ugly specific case for DomainSettingsFragment, then again that whole thing was a mess before
+        (if (caller is DomainSettingsFragment) pref.summary else pref.title)?.let {
             iBreadcrumbs.add(it.toString())
         }
 
@@ -76,6 +80,9 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
      * - Full screen mode shows only current page title
      */
     fun title(): String {
+
+        Timber.d("title: $iBreadcrumbs")
+
         return if (iRootSettingsFragment.isVisible && !slidingPaneLayout.isSlideable && iBreadcrumbs.count()>1) {
 
             var title = iBreadcrumbs.first()

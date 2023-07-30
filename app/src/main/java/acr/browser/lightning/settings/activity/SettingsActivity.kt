@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 private const val TITLE_TAG = "settingsActivityTitle"
 const val SETTINGS_CLASS_NAME = "ClassName"
@@ -149,8 +150,10 @@ class SettingsActivity : ThemedSettingsActivity() {
      */
     private fun updateTitle(aFragment : Fragment?)
     {
+        Timber.d("updateTitle")
         // Needed to update title after language change
         (aFragment as? AbstractSettingsFragment)?.let {
+            Timber.d("updateTitle done")
             title = it.title()
         }
     }
@@ -206,6 +209,7 @@ class SettingsActivity : ThemedSettingsActivity() {
     }
 
 
+
     override fun onSupportNavigateUp(): Boolean {
         if (supportFragmentManager.popBackStackImmediate()) {
             return true
@@ -225,5 +229,13 @@ class SettingsActivity : ThemedSettingsActivity() {
                 it.onPreferenceTreeClick(pref)
             }
         }
+    }
+
+    /**
+     *
+     */
+    override fun setTitle(title: CharSequence?) {
+        Timber.d("setTitle: $title")
+        super.setTitle(title)
     }
 }
