@@ -80,6 +80,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         return R.string.settings_title_domains
     }
 
+    // Set to the domain settings the user last opened
     var domain: String = ""
 
 
@@ -135,12 +136,27 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         // Otherwise we would populate duplicates each time we come back from a domain settings page
         if (populated) {
             Timber.d("populateDomainList populated")
+
+            // Used to hook up parent next to child when moving parent to child category
+            var related: Preference? = null
+
             // Check if our domain was deleted when coming back from a specific domain preference page
             if (!DomainPreferences.exists(domain)) {
                 Timber.d("Domain does not exists")
                 findPreference<Preference>(domain)?.let {
                     Timber.d("removePreference")
                     it.parent?.removePreference(it)
+                }
+            } else {
+                // Our setting still exist
+                val dp = DomainPreferences(requireContext(),domain)
+                findPreference<Preference>(domain)?.let {
+                    related = it
+                    val newParent = if (dp.entryPoint) catDomains else catResources
+                    if (newParent!=it.parent) {
+                        it.parent?.removePreference(it)
+                        newParent?.addPreference(it)
+                    }
                 }
             }
 
@@ -152,6 +168,23 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     findPreference<Preference>(tpd)?.let {
                         Timber.d("removePreference")
                         it.parent?.removePreference(it)
+                    }
+                } else {
+                    // Our settings still exist
+                    // Check if it was moved to another category and take action
+                    val dp = DomainPreferences(requireContext(),tpd)
+                    findPreference<Preference>(tpd)?.let {
+                        val newParent = if (dp.entryPoint) catDomains else catResources
+                        if (newParent!=it.parent) {
+                            it.parent?.removePreference(it)
+                            // Set the same order as related property so that they show up next to each other without having to rebuild the list
+                            related?.let { rp ->
+                                if (rp.parent==newParent) {
+                                    it.order = rp.order
+                                }
+                            }
+                            newParent?.addPreference(it)
+                        }
                     }
                 }
             }
