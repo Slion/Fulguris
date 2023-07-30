@@ -135,6 +135,12 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         if (populated) {
             Timber.d("populateDomainList populated")
 
+            if (domain.isEmpty()) {
+                // Happens if visiting default domain settings
+                return
+            }
+
+
             // Check if our domain was deleted when coming back from a specific domain preference page
             if (!DomainPreferences.exists(domain)) {
                 // Domain settings was deleted remove the preference then
@@ -188,6 +194,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         prefDefault.order = 5
         prefDefault.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
         prefDefault.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            domain = ""
             app.domain = ""
             false
         }

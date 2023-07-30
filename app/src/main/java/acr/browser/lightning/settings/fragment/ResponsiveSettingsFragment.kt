@@ -20,14 +20,13 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
 
     // Breadcrumbs management
     private var iBreadcrumbs: ArrayList<String> = ArrayList<String>()
-    // Holds last page title
-    private var iLastBreadcrumb: String? = null
-    // Holds page title before the last one
-    private var iPreviousBreadcrumb: String? = null
+    //
+    private var iTitleStack: ArrayList<String> = ArrayList<String>()
+
 
 
     override fun onCreatePreferenceHeader(): PreferenceFragmentCompat {
-
+        iTitleStack.add(requireContext().getString(R.string.settings))
         iBreadcrumbs.add(requireContext().getString(R.string.settings))
         // Provide left pane headers fragment
         return iRootSettingsFragment
@@ -47,7 +46,8 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
         // TODO: Do support more breadcrumbs maybe using either AbstractSettingsFragment or addOnBackStackChangedListener
         popBreadcrumbs()
         // Ugly specific case for DomainSettingsFragment, then again that whole thing was a mess before
-        (if (caller is DomainSettingsFragment) pref.summary else pref.title)?.let {
+        (if (caller is DomainSettingsFragment || caller is DomainsSettingsFragment) pref.summary else pref.title)?.let {
+            iTitleStack.add(it.toString())
             iBreadcrumbs.add(it.toString())
         }
 
@@ -62,13 +62,16 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
      */
     fun popBreadcrumbs(aGoBack: Boolean = false) {
         if (iBreadcrumbs.count()>1) {
-            iPreviousBreadcrumb = iLastBreadcrumb
-            iLastBreadcrumb = iBreadcrumbs.removeLast()
+            iBreadcrumbs.removeLast()
+        }
+
+        if (aGoBack) {
+            iTitleStack.removeLast()
         }
 
         // Needed to restore previous page title when coming back from Portrait and Landscape settings
         if (aGoBack && iRootSettingsFragment.isVisible && !slidingPaneLayout.isSlideable) {
-            iPreviousBreadcrumb?.let {
+            iTitleStack.last().let {
                 iBreadcrumbs.add(it)
             }
         }
@@ -81,7 +84,8 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
      */
     fun title(): String {
 
-        Timber.d("title: $iBreadcrumbs")
+        Timber.d("titles: $iTitleStack")
+        Timber.d("breadcrumbs: $iBreadcrumbs")
 
         return if (iRootSettingsFragment.isVisible && !slidingPaneLayout.isSlideable && iBreadcrumbs.count()>1) {
 
@@ -92,7 +96,7 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
             }
             title
         } else {
-            iBreadcrumbs.last()
+            iTitleStack.last()
         }
     }
 }
