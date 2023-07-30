@@ -189,7 +189,7 @@ class SettingsActivity : ThemedSettingsActivity() {
             finish()
         } else {
             // Do not update title if we exit the activity to avoid showing broken title before exit
-            responsive.popBreadcrumbs(true)
+            responsive.popBreadcrumbs()
             updateTitleOnLayout()
         }
     }
