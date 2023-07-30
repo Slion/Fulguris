@@ -49,6 +49,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
@@ -79,7 +80,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         return R.string.settings_title_domains
     }
 
-
+    var domain: String = ""
 
 
     override fun providePreferencesXmlResource() = R.xml.preference_domains
@@ -135,13 +136,27 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         if (populated) {
             Timber.d("populateDomainList populated")
             // Check if our domain was deleted when coming back from a specific domain preference page
-            if (!DomainPreferences.exists(app.domain)) {
+            if (!DomainPreferences.exists(domain)) {
                 Timber.d("Domain does not exists")
-                findPreference<Preference>(app.domain)?.let {
+                findPreference<Preference>(domain)?.let {
                     Timber.d("removePreference")
                     it.parent?.removePreference(it)
                 }
             }
+
+            // Remove the top private domain if it was deleted
+            val tpd = "http://$domain".toHttpUrl().topPrivateDomain()
+            if (tpd?.isNotEmpty() == true) {
+                if (!DomainPreferences.exists(tpd)) {
+                    Timber.d("Top private domain does not exists")
+                    findPreference<Preference>(tpd)?.let {
+                        Timber.d("removePreference")
+                        it.parent?.removePreference(it)
+                    }
+                }
+            }
+
+
             return
         }
 
@@ -192,6 +207,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     pref.summary = domainReverse
                     pref.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
                     pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                        this.domain = domain
                         app.domain = domain
                         false
                     }
