@@ -21,19 +21,18 @@
  */
 
 
-package acr.browser.lightning.settings.preferences
+package fulguris.preference
 
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceViewHolder
 
 // Used to enable multiple line summary
 // See: https://stackoverflow.com/questions/6729484/android-preference-summary-how-to-set-3-lines-in-summary
-class PreferenceEx :
+class BasicPreference :
     Preference {
     constructor(ctx: Context, attrs: AttributeSet?, defStyle: Int) : super(ctx, attrs, defStyle) {}
     constructor(ctx: Context, attrs: AttributeSet?) : super(ctx, attrs) {}

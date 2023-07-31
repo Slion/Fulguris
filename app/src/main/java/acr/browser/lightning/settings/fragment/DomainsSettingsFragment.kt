@@ -31,7 +31,7 @@ import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.reverseDomainName
 import acr.browser.lightning.favicon.FaviconModel
 import acr.browser.lightning.settings.preferences.DomainPreferences
-import acr.browser.lightning.settings.preferences.PreferenceEx
+import fulguris.preference.BasicPreference
 import acr.browser.lightning.utils.Utils
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
@@ -187,7 +187,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         populated = true
 
         // Add default domain settings
-        val prefDefault = Preference(requireContext())
+        val prefDefault = BasicPreference(requireContext())
         prefDefault.isSingleLineTitle = false
         prefDefault.title = getString(R.string.default_theme)
         prefDefault.summary = getString(R.string.settings_summary_default_domain_settings)
@@ -226,7 +226,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     }
                     // TODO: User should be able to delete any and all domains
                     // TODO: Have a default settings entry
-                    val pref = PreferenceEx(requireContext())
+                    val pref = fulguris.preference.BasicPreference(requireContext())
                     // Make sure domains and not reversed domains are shown as titles
                     pref.swapTitleSummary = true
                     pref.isSingleLineTitle = false

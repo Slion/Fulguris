@@ -133,7 +133,7 @@
         />
 
 
-    <acr.browser.lightning.settings.preferences.PreferenceEx
+    <fulguris.preference.BasicPreference
         a:key="@string/pref_key_delete"
         a:title="@string/settings_title_delete_domain_settings"
         a:summary="@string/settings_summary_delete_domain_settings"
