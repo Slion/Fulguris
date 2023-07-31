@@ -456,7 +456,7 @@ task generateLocaleList {
     }
 }
 
-tasks.whenTaskAdded { task ->
+tasks.configureEach { task ->
     if (name.contains("compile")) {
         task.dependsOn generateLocaleList
     }
