@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
-
     <string name="action_reload">Reload</string>
     <string name="action_menu">More</string>
     <string name="action_new_tab">New tab</string>
@@ -62,7 +61,6 @@
     <string name="dialog_bookmark">What would you like to do with this bookmark?</string>
     <string name="action_delete">Delete</string>
     <string name="action_blank">Blank page</string>
-
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Custom</string>
     <string name="agent_default">Default</string>
@@ -74,7 +72,6 @@
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Desktop)</string>
     <string name="agent_hide_device">Hide device</string>
-
     <string name="title_search_engine">Search engine</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Do you want to download this file? (%1$s)</string>
@@ -150,27 +147,20 @@
     <string name="message_updated">You are now running v%s. Do you want to check release notes online?</string>
     <string name="title_welcome">Welcome to Fulguris</string>
     <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
-
-
     <!-- Ad block -->
     <string name="block_ads">Content control</string>
     <string name="block_ad_source">Hosts file source</string>
     <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
     <string name="block_ad_refresh_now">Refresh hosts now</string>
-
-
-
     <string name="block_remote_frequency_daily">Daily</string>
     <string name="block_remote_frequency_weekly">Weekly</string>
     <string name="block_remote_frequency_monthly">Monthly</string>
-
     <string name="block_source_default">Default hosts</string>
     <string name="block_source_local">Local hosts file</string>
     <string name="block_source_local_description">File: %1$s</string>
     <string name="block_source_remote">Remote hosts file</string>
     <string name="block_source_remote_description">URL: %1$s</string>
     <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
-
     <!-- new ad blocker -->
     <string name="page_blocked">The following page was blocked:</string>
     <string name="page_blocked_reason">because of:</string>
@@ -178,7 +168,6 @@
     <string name="page_blocked_list_user">%s blocked by user rule</string>
     <string name="page_blocked_list_malware">%s on malware filters</string>
     <string name="request_blocked">Request blocked</string>
-
     <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Auto-update mode</string>
     <string name="blocklist_update_on">Auto-update on</string>
@@ -209,10 +198,8 @@
     <string name="use_modify_filters">Modifier filters</string>
     <string name="use_modify_filters_warning">In some cases, modifier filters have been found to break websites in this browser. Until implementation is improved, you can enable them at your own risk. Disabling for main-frame documents only avoids most issues.</string>
     <string name="modify_filters_not_for_main_frame">Disable for main frame only</string>
-
-<!-- Common actions -->
+    <!-- Common actions -->
     <string name="action_message_canceled">Action canceled.</string>
-
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">Don\'t ask again for this browsing session.</string>
     <string name="message_insecure_connection">Connection to this site is not secure:\n%1$s\nProceed anyway?</string>
@@ -222,11 +209,9 @@
     <string name="message_certificate_invalid">Certificate is invalid</string>
     <string name="message_certificate_not_yet_valid">Certificate is not yet valid</string>
     <string name="message_certificate_untrusted">Certificate is not trusted</string>
-
     <!-- permissions request -->
     <string name="title_permission_request">Permission request</string>
     <string name="message_permission_request">%1$s\n\nwould like to use:\n\n%2$s</string>
-
     <string name="title_form_resubmission">Form resubmission</string>
     <string name="message_form_resubmission">Would you like to resend the data?</string>
     <string name="message_location">\nWould like to use your location</string>
@@ -305,14 +290,13 @@
     <string name="settings_summary_privacy_policy">See our privacy policy online</string>
     <string name="settings_title_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
-    <string name="settings_title_discord" translatable="false">Discord</string>
     <string name="settings_summary_discord">Join our growing community</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_panels">Panels</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landscape</string>
     <string name="pref_category_portrait">Portrait</string>
-    <string name="pref_category_menu">@string/action_menu</string>
+    <string name="pref_category_menu">Menu</string>
     <string name="pref_category_filters">Filters</string>
     <string name="pref_category_summary_filters">Local or remote files defining your content control rules</string>
     <string name="pref_category_on_tab_close">When closing tab</string>
@@ -381,7 +365,7 @@
     <string name="new_tab_position_end">End of tab list</string>
     <string name="text_encoding">Text encoding</string>
     <string name="reset_settings">Reset settings</string>
-    <string name="reset_settings_confirmation">You will loose all your settings. Are you sure you want to proceed?</string>
+    <string name="reset_settings_confirmation">You will lose all your settings. Are you sure you want to proceed?</string>
     <string-array name="url_content_array">
         <item>Domain</item>
         <item>URL</item>
@@ -429,19 +413,15 @@
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
     <string name="flash_not_supported">Flash Player is not supported by your system</string>
-
     <string name="message_open_download_fail">This file doesn\'t exist anymore</string>
-
     <string name="faq">FAQ</string>
     <string name="faq_description">Frequently asked questions</string>
-
     <!-- debug strings -->
     <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Please restart the app for the change to take effect</string>
     <string name="pref_title_crash_logs">Crash logs</string>
     <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
-
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Open in new tab</string>
     <string name="dialog_open_background_tab">Open in background tab</string>
@@ -458,37 +438,19 @@
     <string name="dialog_title_close_browser">Close browser</string>
     <string name="dialog_delete_download">Delete download</string>
     <string name="dialog_delete_all_downloads">Delete all downloads</string>
-
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Page tools</string>
     <string name="dialog_toggle_desktop">Toggle desktop user agent</string>
     <string name="dialog_adblock_enable_for_site">Enable ad block for site</string>
     <string name="dialog_adblock_disable_for_site">Disable ad block for site</string>
-
     <!-- Search Engines -->
-    <string name="search_engine_ask" translatable="false">Ask</string>
-    <string name="search_engine_baidu" translatable="false">Baidu</string>
-    <string name="search_engine_bing" translatable="false">Bing</string>
-    <string name="search_engine_brave" translatable="false">Brave</string>
     <string name="search_engine_custom">Custom URL</string>
     <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - No JavaScript</string>
     <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
     <string name="search_engine_duckduckgo_no_js">DuckDuckGo - No JavaScript</string>
-    <string name="search_engine_duckduckgo" translatable="false">DuckDuckGo</string>
-    <string name="search_engine_ecosia" translatable="false">Ecosia</string>
-    <string name="search_engine_ekoru" translatable="false">Ekoru</string>
-    <string name="search_engine_google" translatable="false">Google</string>
-    <string name="search_engine_mojeek" translatable="false">Mojeek</string>
-    <string name="search_engine_naver" translatable="false">Naver</string>
-    <string name="search_engine_qwant" translatable="false">Qwant</string>
     <string name="search_engine_qwant_lite">Qwant Lite</string>
-    <string name="search_engine_searx" translatable="false">Searx</string>
     <string name="search_engine_startpage_mobile">StartPage Mobile</string>
-    <string name="search_engine_startpage" translatable="false">StartPage</string>
     <string name="search_engine_yahoo_no_js">Yahoo - No JavaScript</string>
-    <string name="search_engine_yahoo" translatable="false">Yahoo</string>
-    <string name="search_engine_yandex" translatable="false">Yandex</string>
-
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d incognito tab open</item>
@@ -496,34 +458,26 @@
     </plurals>
     <string name="notification_incognito_running_message">Touch to open</string>
     <string name="notification_incognito_running_description">Ongoing incognito notification</string>
-
     <string name="infinity">∞</string>
-
     <!-- SSL -->
     <string name="ssl_info_issued_by">Issued by:</string>
     <string name="ssl_info_issued_to">Issued to:</string>
     <string name="ssl_info_issued_on">Issued on:</string>
     <string name="ssl_info_expires_on">Expires on:</string>
-
     <!-- Search in page -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="close">Close</string>
-
     <string name="exit">Exit</string>
-
     <!-- Frozen tabs -->
     <string name="tab_frozen">Frozen…</string>
-
     <!-- Search -->
     <string name="search_insert_suggestion">Insert suggestion</string>
-
     <string name="action_close_all_other_tabs">Close all other tabs</string>
     <string name="action_restore_all_tabs">Restore all tabs</string>
     <string name="action_restore_tab">Restore tab</string>
     <string name="settings_summary_apps">Enable third-party apps</string>
     <string name="settings_title_apps">Apps</string>
-
     <string name="settings_title_domains">Domains</string>
     <string name="settings_summary_domains">Manage domain settings</string>
     <string name="settings_title_resource_domains">Resource domains</string>
@@ -543,12 +497,10 @@
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_summary_default_domain_settings">Default domain settings</string>
-
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Third-party app available</string>
     <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
-
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">@string/agent_default</string>
@@ -560,20 +512,15 @@
     <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
     <string name="session_switched">Switched to \"%s\"</string>
     <string name="busy">Busy, try again shortly.</string>
-
     <string name="invalid_character_removed">Invalid character removed!</string>
     <string name="invalid_characters_removed">Invalid characters removed!</string>
-
     <string name="reading_mode_image_copyright">Image attributed to</string>
     <string name="reading_mode_image_caption">Image with caption</string>
-
     <!-- text-to-speech -->
     <string name="tts">Read page</string>
     <string name="stop_tts">Stop reading</string>
-
     <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris Web Browser</string>
-
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
@@ -588,58 +535,40 @@
     <!-- Find in page -->
     <string name="no_match_found">No match found!</string>
     <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
-
     <string name="pref_title_show_snackbar">Show snackbar</string>
     <string name="pref_title_show_animation">Show animation</string>
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_title_duration">Duration</string>
     <string name="pref_summary_duration">Animation duration in centiseconds</string>
-
     <string name="pref_title_scrollbar_fading">Fading</string>
     <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
     <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
-
     <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
     <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
-
     <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
     <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
-
     <string name="pref_title_scrollbar_size">Size</string>
     <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
-
     <string name="pref_category_title_session_export">Export session</string>
     <string name="pref_category_summary_session_export">Pick the session you want to export</string>
-
     <string name="error_session_file_corrupted">Error: corrupted session file!</string>
     <string name="error_recovery_session">Error: a recovery session was created!</string>
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-
-
     <string name="show_ssl">Show SSL warning dialogs</string>
-
     <string name="start_incognito">Permanently behave as if in incognito mode</string>
-
     <string name="force_zoom_summary">Does not work if JavaScript is not enabled</string>
     <string name="force_zoom">Force zoom for websites</string>
-
     <string name="algorithm">Algorithm:</string>
     <string name="oid">Object Identifier (OID):</string>
-
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
-
-
-
     <string name="pref_title_search_custom_image_url">Search page custom image</string>
     <string name="pref_summary_search_custom_image_url">Only for Custom URL</string>
-
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
     <string name="pref_title_close_drawer">Close drawer</string>
     <string name="pref_summary_close_drawer">Automatically close Drawer after creating or deleting a tab</string>
     <string name="block_javascript">Block JavaScript for site</string>
-
     <string name="block_sites_title">Separate sites with a comma</string>
     <string name="listed_javascript">Only allow JavaScript for listed sites</string>
     <string name="unlisted_javascript">Block JavaScript for listed sites</string>
@@ -649,7 +578,6 @@
     <string name="inspect">Inject Javascript</string>
     <string name="edit_cookies">Show site cookies</string>
     <string name="site_cookies">Site cookies</string>
-
     <string name="accent_color">Accent color</string>
     <string name="accent_amber">Amber</string>
     <string name="accent_blue">Blue</string>
@@ -669,20 +597,15 @@
     <string name="accent_yellow">Yellow</string>
     <string name="accent_brown">Brown</string>
     <string name="search_homepage">Search</string>
-
     <string name="search_incognito">Private search</string>
     <string name="incognito">Incognito</string>
     <string name="unknown">Unknown</string>
-
     <string name="settings_export_failure">Sorry, settings could not be exported!</string>
     <string name="settings_exported">Settings exported:</string>
     <string name="settings_reseted">All settings restored</string>
-
     <string name="suggest">Search suggestions (number)</string>
-
     <string name="error_tip">• Check the Address for typing errors such as ww.example.com instead of www.example.com</string>
     <string name="error_tip2">• If you are unable to load any pages, check your devices data or Wi-Fi connection.</string>
-
     <string name="action_cycle_tabs_forwards">Cycle tabs forwards</string>
     <string name="action_cycle_tabs_backwards">Cycle tabs backwards</string>
     <string name="action_focus_address_bar">Focus address bar</string>
@@ -700,5 +623,4 @@
     <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
     <string name="action_switch_to_last_tab">Switch to last tab</string>
     <string name="action_switch_to_last_session">Switch to last session</string>
-
 </resources>

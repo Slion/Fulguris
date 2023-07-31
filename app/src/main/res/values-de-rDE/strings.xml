@@ -136,7 +136,7 @@
     <string name="message_import">Lesezeichen wurden importiert</string>
     <string name="message_clear_history">Verlauf gelöscht</string>
     <string name="message_cookies_cleared">Cookies gelöscht</string>
-    <string name="max_tabs">Maximale Tab-Anzahl erreicht. Entsperre noch mehr Tabs in den Einstellungen unter Unterstützen.</string>
+    <string name="max_tabs">Maximale Tab-Anzahl erreicht. Entsperre noch mehr Tabs, indem du ein Abonnement kaufst.</string>
     <string name="message_text_copied">Text in Zwischenablage kopiert</string>
     <string name="message_link_copied">Link in Zwischenablage kopiert</string>
     <string name="message_blocked_local">Lokale Datei wurde beim Laden blockiert</string>
@@ -160,31 +160,32 @@
     <string name="block_source_local_description">Datei: %1$s</string>
     <string name="block_source_remote">Online Hosts-Datei</string>
     <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Das Laden der Online-Hosts ist fehlgeschlagen.</string>
+    <string name="ad_block_load_failure">Das Laden der Online-Hosts von der Werbungsblockierungsquelle ist fehlgeschlagen.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">Die folgende Seite wurde blockiert:</string>
-    <string name="page_blocked_reason">weil:</string>
+    <string name="page_blocked_reason">Weil:</string>
     <string name="page_blocked_list_ad">%s in der Werbeblocker Filterliste</string>
-    <string name="page_blocked_list_user">%s blockiert durch Benutzerregel</string>
-    <string name="page_blocked_list_malware">%s in der Malware Filterliste</string>
+    <string name="page_blocked_list_user">%s wurde durch eine Benutzerregel blockiert</string>
+    <string name="page_blocked_list_malware">%s wurde auf der Blocklist für Malware gefunden, was bedeutet, dass die Webseite möglicherweise Malware enthält</string>
     <string name="request_blocked">Anfrage blockiert</string>
     <!-- settings for new ad blocker -->
-    <string name="blocklist_update_mode">Automatischer Aktualisierungsmodus</string>
-    <string name="blocklist_update_on">An</string>
-    <string name="blocklist_update_off">Aus</string>
-    <string name="blocklist_update_wifi">Nur über WLAN</string>
+    <string name="blocklist_update_mode">Auto-Update Modus</string>
+    <string name="blocklist_update_on">Auto-Update an</string>
+    <string name="blocklist_update_off">Auto-Update aus</string>
+    <string name="blocklist_update_wifi">Nur über unbegrenzte Verbindungen</string>
     <string name="blocklist_update">Filter aktualisieren</string>
-    <string name="blocklist_update_frequency">Automatisches aktualisieren (Häufigkeit)</string>
-    <string name="blocklist_update_description">Die Aktualisierung erfolgt mit der gewählten Häufigkeit, es sei denn, in der Filterliste ist ein längeres Intervall angegeben.</string>
-    <string name="blocklist_update_now">Listen aktualisieren</string>
+    <string name="blocklist_update_frequency">Auto-Update Häufigkeit</string>
+    <string name="blocklist_update_description">Die Aktualisierung erfolgt mit der gewählten Häufigkeit, es sei denn, in der Filterliste ist ein längeres Intervall angegeben</string>
+    <string name="blocklist_update_now">Jetzt die Listen aktualisieren</string>
     <string name="blocklist_last_update">Letzte Aktualisierung: %s</string>
     <string name="blocklist_updating">Aktualisierung läuft…</string>
     <string name="blocklist_update_error">Fehler beim Aktualisieren der Filterliste %s</string>
-    <string name="blocklist_update_error_404">Fehler beim Aktualisieren der Filterliste %s: URL nicht gefunden</string>
+    <string name="blocklist_update_error_404">Fehler beim Aktualisieren der Filterliste: 
+%s Webadresse nicht gefunden</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Fehler beim Aktualisieren der Filterliste %1$s: Statuscode %2$s</string>
     <string name="add_blocklist">Filterdatei hinzufügen</string>
-    <string name="add_blocklist_hint">Es können Host-Listen oder jede Liste gewählt werden, die mit AdBlockPlus-Regeln arbeiten</string>
+    <string name="add_blocklist_hint">Es können Host-Listen oder jede Liste gewählt werden, die mit AdBlock Plus-Regeln arbeiten</string>
     <string name="enable_blocklist">Diese Liste aktivieren</string>
     <string name="invalid_title">Ungültiger Titel</string>
     <string name="invalid_url">Ungültige URL</string>
@@ -196,22 +197,22 @@
     <string name="local_file_chosen">Datei ausgewählt</string>
     <string name="remote_file">Online</string>
     <string name="use_modify_filters">Modifizierungsfilter</string>
-    <string name="use_modify_filters_warning">In einigen Fällen wurde festgestellt, dass Modifizierungsfilter Webseiten in diesem Browser beschädigen. Bis die Implementierung verbessert wird, kann dies auf eigenes Risiko aktiviert werden. Die Deaktivierung nur für Mainframe-Dokumente vermeidet die meisten Probleme.</string>
+    <string name="use_modify_filters_warning">In einigen Fällen wurde festgestellt, dass Modifizierungsfilter Webseiten in diesem Browser beschädigen. Bis die Implementierung verbessert wird, kann diese Funktion auf eigenes Risiko aktiviert werden. Die Deaktivierung nur für Mainframe-Dokumente vermeidet die meisten Probleme</string>
     <string name="modify_filters_not_for_main_frame">Nur für Haupt-Frame deaktivieren</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Aktion abgebrochen.</string>
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">Während dieser Sitzung nicht mehr nachfragen</string>
-    <string name="message_insecure_connection">Die Verbindung zu dieser Seite ist nicht sicher:\n%1$s\nTrotzdem fortfahren?</string>
+    <string name="message_insecure_connection">Die Verbindung zu dieser Seite ist nicht sicher:\n%1$s\n Wollen sie dennoch fortfahren?</string>
     <string name="message_certificate_date_invalid">Datum des Zertifikats ungültig</string>
     <string name="message_certificate_expired">Zertifikat abgelaufen</string>
     <string name="message_certificate_domain_mismatch">Domain des Zertifikats stimmt nicht mit der Domain der aktuellen Seite überein</string>
     <string name="message_certificate_invalid">Zertifikat ungültig</string>
-    <string name="message_certificate_not_yet_valid">Zertifikat noch nicht gültig</string>
+    <string name="message_certificate_not_yet_valid">Zertifikat noch nicht gültig, zeit und Datum prüfen</string>
     <string name="message_certificate_untrusted">Zertifikat nicht vertrauenswürdig</string>
     <!-- permissions request -->
     <string name="title_permission_request">Berechtigungs-Anfrage</string>
-    <string name="message_permission_request">%1$s\n\nwürde gerne benutzen:\n\n%2$s</string>
+    <string name="message_permission_request">%1$s\n\nwürde gerne \n\n%2$s benutzen.</string>
     <string name="title_form_resubmission">Formularneuzustellung</string>
     <string name="message_form_resubmission">Daten erneut senden?</string>
     <string name="message_location">Meine Position verwenden?</string>
@@ -287,9 +288,9 @@
     <string name="settings_contribute">Unterstützen</string>
     <string name="settings_summary_contribute">Hilf Fulguris, um zu wachsen und erfolgreich zu sein</string>
     <string name="settings_title_privacy_policy">Privacy Policy</string>
-    <string name="settings_summary_privacy_policy">See our privacy policy online</string>
+    <string name="settings_summary_privacy_policy">Online unsere Datenschutzerklärung ansehen</string>
     <string name="settings_title_terms_and_conditions">Terms &amp; Conditions</string>
-    <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
+    <string name="settings_summary_terms_and_conditions">Unsere allgemeinen Bedingungen online ansehen</string>
     <string name="settings_summary_discord">Join our growing community</string>
     <string name="pref_category_general">Allgemein</string>
     <string name="pref_category_panels">Panels</string>
@@ -302,16 +303,16 @@
     <string name="pref_category_on_tab_close">Beim Schließen des Tab</string>
     <string name="pref_category_on_tab_change">Beim Wechseln des Tab</string>
     <string name="pref_category_on_tab_back_forward">Beim Zurück- oder Weitergehen</string>
-    <string name="pref_category_scrollbars">Scrollbars</string>
-    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
+    <string name="pref_category_scrollbars">Scroll-Leisten</string>
+    <string name="pref_summary_scrollbars">Größe und Verhalten der Scroll-Leisten anpassen</string>
     <string name="pref_category_subscriptions">Subscriptions</string>
-    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
+    <string name="pref_summary_subscriptions">Abo aktivieren oder kündigen</string>
     <string name="pref_title_hide_status_bar">Statusleiste ausblenden</string>
     <string name="pref_title_hide_tool_bar">Suchleiste beim Scrollen ausblenden</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Suchleiste beim Scrollen nach oben anzeigen</string>
     <string name="pref_title_show_tool_bar_on_page_top">Suchleiste oben auf der Seite anzeigen</string>
     <string name="pref_title_locked_drawers">Panels sperren</string>
-    <string name="pref_summary_locked_drawers">Tabs- und Lesezeichen-Panels sperren</string>
+    <string name="pref_summary_locked_drawers">Tabs- und Lesezeichen-Panels können nicht verschoben werden</string>
     <string name="pref_title_use_bottom_sheets">Bottom Sheets verwenden</string>
     <string name="pref_summary_use_bottom_sheets">Tabs und Lesezeichen werden unten anstatt in den seitlichen Drawern angezeigt</string>
     <string name="pref_title_tab_list_item_show_close_button">Tab schließen Schaltfläche anzeigen</string>
@@ -370,7 +371,7 @@
         <item>Domain (Standard)</item>
         <item>URL</item>
         <item>Titel</item>
-        <item>Gekürzte URL</item>
+        <item>Verkürzte URL</item>
     </string-array>
     <string name="invert_color">Farben invertieren</string>
     <string name="settings_black_status_bar">Schwarze Statusleiste</string>
@@ -394,8 +395,8 @@
     <string name="settings_summary_content_control_toggle">Werbeblocker und Inhaltsfilterung aktivieren</string>
     <string name="settings_title_vertical_tab_bar">Vertikale Tab-Leiste</string>
     <string name="settings_summary_vertical_tab_bar">Ausschalten um die horizontale Tab-Leiste zu nutzen</string>
-    <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
-    <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
+    <string name="settings_title_tab_bar_in_drawer">Tableiste im Drawer</string>
+    <string name="settings_summary_tab_bar_in_drawer">Ausschalten um die vertikale Tab-Leiste zu nutzen</string>
     <string name="settings_title_toolbars_bottom">Suchleiste nach unten</string>
     <string name="settings_title_desktop_mode_default">Desktop-Modus</string>
     <string name="settings_summary_desktop_mode_default">Neue Tabs standardmäßig im Desktop-Modus verwenden</string>
@@ -479,9 +480,9 @@
     <string name="settings_summary_apps">Anwendungen von Drittanbietern</string>
     <string name="settings_title_apps">Apps</string>
     <string name="settings_title_domains">Domains</string>
-    <string name="settings_summary_domains">Manage domain settings</string>
-    <string name="settings_title_resource_domains">Resource domains</string>
-    <string name="settings_title_override">Override</string>
+    <string name="settings_summary_domains">Domains-Einstellungen</string>
+    <string name="settings_title_resource_domains">Ressourcen-Domains</string>
+    <string name="settings_title_override">Überschreiben</string>
     <string name="settings_summary_on_override">Override parent settings</string>
     <string name="settings_summary_off_override">Use parent settings</string>
     <string name="settings_title_launch_app">Launch app</string>
@@ -489,10 +490,14 @@
     <string name="settings_summary_on_category">Main domain</string>
     <string name="settings_summary_off_category">Resource domain</string>
     <string name="action_domain_settings">Domain</string>
-    <string name="settings_title_domains_delete_all">Delete all</string>
-    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
-    <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
-    <string name="prompt_please_confirm">Please confirm</string>
+    <string name="settings_title_domains_delete_all">Alle löschen</string>
+    <string name="settings_summary_domains_delete_all">Alle Domains-Einstellungen löschen</string>
+    <string name="question_delete_all_domain_settings">Möchten sie alle Domains-Einstellungen löschen?</string>
+    <string name="prompt_please_confirm">Bitte Bestätigen</string>
+    <string name="settings_title_delete_domain_settings">Delete domain settings</string>
+    <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
+    <string name="settings_title_parent">Parent</string>
+    <string name="settings_summary_default_domain_settings">Default domain settings</string>
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">App von Drittanbietern verfügbar</string>
@@ -538,13 +543,13 @@
     <string name="pref_summary_duration">Dauer der Animation in Zentisekunden</string>
     <string name="pref_title_scrollbar_fading">Fading</string>
     <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
-    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
-    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
+    <string name="pref_summary_off_scrollbar_fading">Scroll-Leisten werden bereits angezeigt</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Verzögerung vor dem ausblenden</string>
     <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
     <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
     <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
-    <string name="pref_title_scrollbar_size">Size</string>
-    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
+    <string name="pref_title_scrollbar_size">Größe</string>
+    <string name="pref_summary_scrollbar_size">Definieren sie die Größe (Höhe und Breite) ihrer Scroll-Leisten</string>
     <string name="pref_category_title_session_export">Sitzungen exportieren</string>
     <string name="pref_category_summary_session_export">Wähle eine Sitzung, die exportiert werden soll</string>
     <string name="error_session_file_corrupted">Fehler: Beschädigte Sitzungsdatei!</string>
