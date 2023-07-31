@@ -68,14 +68,16 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
         Timber.d("titles: $iTitleStack")
 
         return if (iRootSettingsFragment.isVisible && !slidingPaneLayout.isSlideable && iTitleStack.count()>1) {
+            // We effectively disabled that algorithm using 100 for full crumb at start and end
+            // We are simply using TextView ellipsis in the middle instead
             // Build our breadcrumbs
             var title = ""
             val sep = " > "
             val short = "…"
             // The last crumb index that should be displayed at the beginning of our title
-            val lastFirst = 1
+            val lastFirst = 100
             // The first crumb index that should be displayed at the end of our title
-            val firstLast = iTitleStack.lastIndex - 1
+            val firstLast = iTitleStack.lastIndex - 100
             // Build our title, it will look like: First > Second > … > … > Before last > Last
             iTitleStack.forEachIndexed { index, crumb ->
                   if (index==0) {

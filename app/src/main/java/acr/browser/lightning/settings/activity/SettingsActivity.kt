@@ -5,24 +5,21 @@ package acr.browser.lightning.settings.activity
 
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.findPreference
+import acr.browser.lightning.extensions.findViewsByType
 import acr.browser.lightning.settings.fragment.AbstractSettingsFragment
 import acr.browser.lightning.settings.fragment.RootSettingsFragment
 import acr.browser.lightning.settings.fragment.ResponsiveSettingsFragment
-import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
-import android.os.PersistableBundle
+import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-private const val TITLE_TAG = "settingsActivityTitle"
 const val SETTINGS_CLASS_NAME = "ClassName"
 
 /**
@@ -39,7 +36,7 @@ class SettingsActivity : ThemedSettingsActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        setTitle(R.string.settings)
+
         responsive = ResponsiveSettingsFragment()
 
         // That could be useful at some point
@@ -57,12 +54,20 @@ class SettingsActivity : ThemedSettingsActivity() {
         // Set our toolbar as action bar so that our title is displayed
         // See: https://stackoverflow.com/questions/27665018/what-is-the-difference-between-action-bar-and-newly-introduced-toolbar
         setSupportActionBar(findViewById(R.id.settings_toolbar))
-
+        setTitle(R.string.settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         //supportActionBar?.setDisplayShowTitleEnabled(true)
 
         iFragmentClassName = savedInstanceState?.getString(SETTINGS_CLASS_NAME)
 
+        // Truncate title in the middle
+        findViewById<ViewGroup>(R.id.settings_toolbar).findViewsByType(TextView::class.java).forEach {
+            //Timber.d("Toolbar text: ${it.text}")
+            it.ellipsize = TextUtils.TruncateAt.MIDDLE
+            // it.ellipsize = TextUtils.TruncateAt.MARQUEE
+            // it.marqueeRepeatLimit = -1
+            // it.isSelected = true
+        }
     }
 
 
