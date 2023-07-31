@@ -140,7 +140,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                 return
             }
 
-
+            // TODO: Have a function instead of duplicating code for sub-domain and its parent
             // Check if our domain was deleted when coming back from a specific domain preference page
             if (!DomainPreferences.exists(domain)) {
                 // Domain settings was deleted remove the preference then
