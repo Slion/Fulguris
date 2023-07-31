@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">Daily</string>
     <string name="block_remote_frequency_weekly">Weekly</string>
     <string name="block_remote_frequency_monthly">Monthly</string>
-    <string name="block_source_default">Default hosts</string>
-    <string name="block_source_local">Local hosts file</string>
-    <string name="block_source_local_description">Arquivo: %1$s</string>
-    <string name="block_source_remote">Remote hosts file</string>
-    <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">Esta página foi bloqueada:</string>
     <string name="page_blocked_reason">because of:</string>

@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">Harian</string>
     <string name="block_remote_frequency_weekly">Mingguan</string>
     <string name="block_remote_frequency_monthly">Bulanan</string>
-    <string name="block_source_default">Host bawaan</string>
-    <string name="block_source_local">Dari perangkat ini</string>
-    <string name="block_source_local_description">File: %1$s</string>
-    <string name="block_source_remote">Dari sumber asing</string>
-    <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Gagal memuat host dari sumber pemblokir iklan.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">Halaman berikut ini diblokir:</string>
     <string name="page_blocked_reason">karena:</string>

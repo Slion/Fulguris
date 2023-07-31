@@ -156,11 +156,6 @@
     <string name="slions_update_check_url">https://slions.net/api/resources/10/versions</string>
     <string name="slions_api_key">eQxvqk5DGEXUBqdt5Y_7rGRxF2m0REdb</string>
 
-    <string-array name="block_ad_source_list">
-        <item>@string/block_source_default</item>
-        <item>@string/block_source_local</item>
-        <item>@string/block_source_remote</item>
-    </string-array>
 
     <string-array name="block_ad_frequency_list">
         <item>@string/block_remote_frequency_daily</item>
@@ -184,5 +179,28 @@
     <string name="license_mpl">Mozilla Public License 2.0</string>
     <string name="license_cpal">Common Public Attribution License 1.0</string>
     <string name="license_apache">Apache License 2.0</string>
+
+    <!-- Search Engines -->
+    <string name="search_engine_ask">Ask</string>
+    <string name="search_engine_baidu">Baidu</string>
+    <string name="search_engine_bing">Bing</string>
+    <string name="search_engine_brave">Brave</string>
+    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - No JavaScript</string>
+    <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
+    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - No JavaScript</string>
+    <string name="search_engine_duckduckgo">DuckDuckGo</string>
+    <string name="search_engine_ecosia">Ecosia</string>
+    <string name="search_engine_ekoru">Ekoru</string>
+    <string name="search_engine_google">Google</string>
+    <string name="search_engine_mojeek">Mojeek</string>
+    <string name="search_engine_naver">Naver</string>
+    <string name="search_engine_qwant">Qwant</string>
+    <string name="search_engine_qwant_lite">Qwant Lite</string>
+    <string name="search_engine_searx">Searx</string>
+    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
+    <string name="search_engine_startpage">StartPage</string>
+    <string name="search_engine_yahoo_no_js">Yahoo - No JavaScript</string>
+    <string name="search_engine_yahoo">Yahoo</string>
+    <string name="search_engine_yandex">Yandex</string>
 
 </resources>

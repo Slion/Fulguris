@@ -158,18 +158,9 @@
     <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
     <string name="block_ad_refresh_now">Refresh hosts now</string>
 
-
-
     <string name="block_remote_frequency_daily">Daily</string>
     <string name="block_remote_frequency_weekly">Weekly</string>
     <string name="block_remote_frequency_monthly">Monthly</string>
-
-    <string name="block_source_default">Default hosts</string>
-    <string name="block_source_local">Local hosts file</string>
-    <string name="block_source_local_description">File: %1$s</string>
-    <string name="block_source_remote">Remote hosts file</string>
-    <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Failed to load hosts from ad blocking source.</string>
 
     <!-- new ad blocker -->
     <string name="page_blocked">The following page was blocked:</string>
@@ -466,28 +457,7 @@
     <string name="dialog_adblock_disable_for_site">Disable ad block for site</string>
 
     <!-- Search Engines -->
-    <string name="search_engine_ask" translatable="false">Ask</string>
-    <string name="search_engine_baidu" translatable="false">Baidu</string>
-    <string name="search_engine_bing" translatable="false">Bing</string>
-    <string name="search_engine_brave" translatable="false">Brave</string>
     <string name="search_engine_custom">Custom URL</string>
-    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - No JavaScript</string>
-    <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
-    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - No JavaScript</string>
-    <string name="search_engine_duckduckgo" translatable="false">DuckDuckGo</string>
-    <string name="search_engine_ecosia" translatable="false">Ecosia</string>
-    <string name="search_engine_ekoru" translatable="false">Ekoru</string>
-    <string name="search_engine_google" translatable="false">Google</string>
-    <string name="search_engine_mojeek" translatable="false">Mojeek</string>
-    <string name="search_engine_naver" translatable="false">Naver</string>
-    <string name="search_engine_qwant" translatable="false">Qwant</string>
-    <string name="search_engine_qwant_lite">Qwant Lite</string>
-    <string name="search_engine_searx" translatable="false">Searx</string>
-    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
-    <string name="search_engine_startpage" translatable="false">StartPage</string>
-    <string name="search_engine_yahoo_no_js">Yahoo - No JavaScript</string>
-    <string name="search_engine_yahoo" translatable="false">Yahoo</string>
-    <string name="search_engine_yandex" translatable="false">Yandex</string>
 
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">

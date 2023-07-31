@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">Günlük</string>
     <string name="block_remote_frequency_weekly">Haftalık</string>
     <string name="block_remote_frequency_monthly">Aylık</string>
-    <string name="block_source_default">Varsayılan sunucu</string>
-    <string name="block_source_local">Yerel sunucu dosyası</string>
-    <string name="block_source_local_description">Dosya: %1$s</string>
-    <string name="block_source_remote">Uzak dosya</string>
-    <string name="block_source_remote_description">Adres: %1$s</string>
-    <string name="ad_block_load_failure">Ana bilgisayarlar reklam engelleme kaynağından yüklenemedi.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">Şu sayfa engellendi:</string>
     <string name="page_blocked_reason">çünkü:</string>

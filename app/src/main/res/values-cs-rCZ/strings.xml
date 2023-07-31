@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">Denně</string>
     <string name="block_remote_frequency_weekly">Týdně</string>
     <string name="block_remote_frequency_monthly">Měsíčně</string>
-    <string name="block_source_default">Výchozí domény</string>
-    <string name="block_source_local">Místní soubor domén</string>
-    <string name="block_source_local_description">Soubor: %1$s</string>
-    <string name="block_source_remote">Vzdálený soubor domén</string>
-    <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Nepodařilo se načíst domény ze zdroje blokování reklam.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">Následující stránka byla zablokována:</string>
     <string name="page_blocked_reason">kvůli:</string>

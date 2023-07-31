@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">Щодня</string>
     <string name="block_remote_frequency_weekly">Щотижня</string>
     <string name="block_remote_frequency_monthly">Щомісяця</string>
-    <string name="block_source_default">Файл hosts за замовчуванням</string>
-    <string name="block_source_local">Локальний файл hosts</string>
-    <string name="block_source_local_description">Файл: %1$s</string>
-    <string name="block_source_remote">Віддалений файл hosts</string>
-    <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Не вдалося завантажити хости з джерела блокування реклами.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">Цю сторінку було заблоковано:</string>
     <string name="page_blocked_reason">через:</string>

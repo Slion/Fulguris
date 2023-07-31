@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">Ежедневно</string>
     <string name="block_remote_frequency_weekly">Еженедельно</string>
     <string name="block_remote_frequency_monthly">Ежемесячно</string>
-    <string name="block_source_default">Файл hosts по умолчанию</string>
-    <string name="block_source_local">Локальный файл hosts</string>
-    <string name="block_source_local_description">Файл: %1$s</string>
-    <string name="block_source_remote">Удаленно расположенный host файл</string>
-    <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Не удалось загрузить хосты из источника блокировки рекламы.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">Следующая страница была заблокирована:</string>
     <string name="page_blocked_reason">по причине:</string>

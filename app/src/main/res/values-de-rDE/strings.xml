@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">Täglich</string>
     <string name="block_remote_frequency_weekly">Wöchentlich</string>
     <string name="block_remote_frequency_monthly">Monatlich</string>
-    <string name="block_source_default">Standard Hosts-Datei</string>
-    <string name="block_source_local">Lokale Hosts-Datei</string>
-    <string name="block_source_local_description">Datei: %1$s</string>
-    <string name="block_source_remote">Online Hosts-Datei</string>
-    <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Das Laden der Online-Hosts von der Werbungsblockierungsquelle ist fehlgeschlagen.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">Die folgende Seite wurde blockiert:</string>
     <string name="page_blocked_reason">Weil:</string>
@@ -180,8 +174,7 @@
     <string name="blocklist_last_update">Letzte Aktualisierung: %s</string>
     <string name="blocklist_updating">Aktualisierung läuft…</string>
     <string name="blocklist_update_error">Fehler beim Aktualisieren der Filterliste %s</string>
-    <string name="blocklist_update_error_404">Fehler beim Aktualisieren der Filterliste: 
-%s Webadresse nicht gefunden</string>
+    <string name="blocklist_update_error_404">Fehler beim Aktualisieren der Filterliste: %s Webadresse nicht gefunden</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Fehler beim Aktualisieren der Filterliste %1$s: Statuscode %2$s</string>
     <string name="add_blocklist">Filterdatei hinzufügen</string>

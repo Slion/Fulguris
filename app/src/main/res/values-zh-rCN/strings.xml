@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">每天</string>
     <string name="block_remote_frequency_weekly">每周</string>
     <string name="block_remote_frequency_monthly">每月</string>
-    <string name="block_source_default">默认 Hosts</string>
-    <string name="block_source_local">本地 Hosts 文件</string>
-    <string name="block_source_local_description">文件：%1$s</string>
-    <string name="block_source_remote">远程 Hosts 文件</string>
-    <string name="block_source_remote_description">网址：%1$s</string>
-    <string name="ad_block_load_failure">从广告屏蔽来源加载 Hosts 失败</string>
     <!-- new ad blocker -->
     <string name="page_blocked">以下页面被阻止：</string>
     <string name="page_blocked_reason">因为：</string>

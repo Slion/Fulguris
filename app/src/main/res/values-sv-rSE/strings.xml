@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">Dagligen</string>
     <string name="block_remote_frequency_weekly">Veckovis</string>
     <string name="block_remote_frequency_monthly">Månadsvis</string>
-    <string name="block_source_default">Standard värdar</string>
-    <string name="block_source_local">Lokal värdfil</string>
-    <string name="block_source_local_description">Fil: %1$s</string>
-    <string name="block_source_remote">Filen för fjärrvärdar</string>
-    <string name="block_source_remote_description">URL: %1$s</string>
-    <string name="ad_block_load_failure">Det gick inte att ladda värdar från annonsblockeringskälla.</string>
     <!-- new ad blocker -->
     <string name="page_blocked">Följande sida blockerades:</string>
     <string name="page_blocked_reason">på grund av:</string>

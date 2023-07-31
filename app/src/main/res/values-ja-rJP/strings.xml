@@ -155,12 +155,6 @@
     <string name="block_remote_frequency_daily">毎日</string>
     <string name="block_remote_frequency_weekly">毎週</string>
     <string name="block_remote_frequency_monthly">毎月</string>
-    <string name="block_source_default">デフォルトのホスト</string>
-    <string name="block_source_local">ローカルホストファイル</string>
-    <string name="block_source_local_description">ファイル：%1$s</string>
-    <string name="block_source_remote">リモートホストファイル</string>
-    <string name="block_source_remote_description">URL：%1$s</string>
-    <string name="ad_block_load_failure">広告ブロックソースからホストを読み込めませんでした。</string>
     <!-- new ad blocker -->
     <string name="page_blocked">次のページがブロックされました:</string>
     <string name="page_blocked_reason">理由は以下の通りです</string>
