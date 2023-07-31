@@ -439,12 +439,6 @@
     <string name="dialog_adblock_disable_for_site">對此站停用廣告封鎖功能</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">自訂網址</string>
-    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - No JavaScript</string>
-    <string name="search_engine_duckduckgo_lite">DuckDuckGo 輕量版</string>
-    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - No JavaScript</string>
-    <string name="search_engine_qwant_lite">Qwant Lite</string>
-    <string name="search_engine_startpage_mobile">StartPage 行動版</string>
-    <string name="search_engine_yahoo_no_js">Yahoo - No JavaScript</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">已開啟 %1$d 個無痕式分頁</item>

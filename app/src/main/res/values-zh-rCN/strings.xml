@@ -439,12 +439,6 @@
     <string name="dialog_adblock_disable_for_site">为此页禁用广告屏蔽</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">自定义 URL</string>
-    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - 无 JavaScript</string>
-    <string name="search_engine_duckduckgo_lite">DuckDuckGo 简版</string>
-    <string name="search_engine_duckduckgo_no_js">DuckDuckGo-无 JavaScript</string>
-    <string name="search_engine_qwant_lite">Qwant Lite</string>
-    <string name="search_engine_startpage_mobile">StartPage 移动版</string>
-    <string name="search_engine_yahoo_no_js">Yahoo - 无 JavaScript</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">打开了 %1$d 个无痕标签页</item>

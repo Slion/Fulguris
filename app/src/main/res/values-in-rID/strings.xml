@@ -439,12 +439,6 @@
     <string name="dialog_adblock_disable_for_site">Jangan blokir iklan untuk halaman ini</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">URL kustom</string>
-    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - Tanpa Javascript</string>
-    <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
-    <string name="search_engine_duckduckgo_no_js">DuckDuckGo Lite - Tanpa Javascript</string>
-    <string name="search_engine_qwant_lite">Qwant Lite</string>
-    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
-    <string name="search_engine_yahoo_no_js">Yahoo - Tanpa JavaScript</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">%1$d tab penyamaran sedang terbuka</item>

@@ -439,12 +439,6 @@
     <string name="dialog_adblock_disable_for_site">Disable ad block for site</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Adresse personnalisée</string>
-    <string name="search_engine_duckduckgo_lite_no_js">DuckDuckGo Lite - No JavaScript</string>
-    <string name="search_engine_duckduckgo_lite">DuckDuckGo Lite</string>
-    <string name="search_engine_duckduckgo_no_js">DuckDuckGo - No JavaScript</string>
-    <string name="search_engine_qwant_lite">Qwant Lite</string>
-    <string name="search_engine_startpage_mobile">StartPage Mobile</string>
-    <string name="search_engine_yahoo_no_js">Yahoo - No JavaScript</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d incognito tab open</item>
