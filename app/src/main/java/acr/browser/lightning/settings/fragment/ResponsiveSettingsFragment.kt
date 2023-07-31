@@ -5,6 +5,7 @@ import acr.browser.lightning.settings.activity.SettingsActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceHeaderFragmentCompat
+import fulguris.preference.BasicPreference
 import timber.log.Timber
 
 
@@ -39,8 +40,8 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
         iPreference = pref
 
         // TODO: Do we still need to use either AbstractSettingsFragment or addOnBackStackChangedListener
-        // Ugly specific case for DomainSettingsFragment, then again that whole thing was a mess before
-        (if (caller is DomainSettingsFragment || caller is DomainsSettingsFragment) pref.summary else pref.title)?.let {
+        // Stack our breadcrumb if any, otherwise just stack our title
+        (if (pref is BasicPreference && pref.breadcrumb.isNotEmpty()) pref.breadcrumb else pref.title)?.let {
             iTitleStack.add(it.toString())
         }
 

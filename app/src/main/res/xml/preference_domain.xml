@@ -52,7 +52,7 @@
 
     </Preference>
 
-    <Preference
+    <fulguris.preference.BasicPreference
         a:fragment="acr.browser.lightning.settings.fragment.DomainSettingsFragment"
         a:key="@string/pref_key_parent"
         a:title="@string/settings_title_parent"

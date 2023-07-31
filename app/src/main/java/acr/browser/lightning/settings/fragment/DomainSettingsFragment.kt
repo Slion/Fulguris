@@ -31,7 +31,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
-
+import fulguris.preference.BasicPreference
 
 
 @AndroidEntryPoint
@@ -77,11 +77,13 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
         }
 
         // Setup parent link
-        find<Preference>(R.string.pref_key_parent)?.apply {
+        find<BasicPreference>(R.string.pref_key_parent)?.apply {
             if (prefs.isSubDomain) {
-                summary = prefs.parent?.domain
+                breadcrumb = prefs.parent?.domain ?: ""
+                summary = breadcrumb
             } else {
-                summary = getString(R.string.settings_summary_default_domain_settings)
+                breadcrumb = getString(R.string.settings_summary_default_domain_settings)
+                summary = breadcrumb
             }
 
             setOnPreferenceClickListener {

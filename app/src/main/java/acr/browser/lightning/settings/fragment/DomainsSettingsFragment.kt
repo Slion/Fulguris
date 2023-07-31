@@ -191,6 +191,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         prefDefault.isSingleLineTitle = false
         prefDefault.title = getString(R.string.default_theme)
         prefDefault.summary = getString(R.string.settings_summary_default_domain_settings)
+        prefDefault.breadcrumb = prefDefault.summary!!
         prefDefault.order = 5
         prefDefault.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
         prefDefault.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -226,7 +227,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     }
                     // TODO: User should be able to delete any and all domains
                     // TODO: Have a default settings entry
-                    val pref = fulguris.preference.BasicPreference(requireContext())
+                    val pref = BasicPreference(requireContext())
                     // Make sure domains and not reversed domains are shown as titles
                     pref.swapTitleSummary = true
                     pref.isSingleLineTitle = false
@@ -235,6 +236,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     // We want sorting to group sub-domains together so we use reverse domain
                     pref.title = domainReverse
                     pref.summary = domain
+                    pref.breadcrumb = domain
                     pref.fragment = "acr.browser.lightning.settings.fragment.DomainSettingsFragment"
                     pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                         this.domain = domain
