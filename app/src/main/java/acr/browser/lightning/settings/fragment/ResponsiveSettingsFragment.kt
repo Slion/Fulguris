@@ -120,10 +120,16 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
 
         childFragmentManager.commit {
             setReorderingAllowed(true)
-            .setCustomAnimations(R.anim.slide_in_from_right,
-                R.anim.fade_out_scale,
-                R.anim.slide_in_from_right,
-                R.anim.fade_out_scale)
+            // Don't do animation when the pane is not open
+            // The opening of the pane itself is the animation
+            if (slidingPaneLayout.isOpen) {
+                setCustomAnimations(
+                    R.anim.slide_in_from_right,
+                    R.anim.fade_out_scale,
+                    R.anim.slide_in_from_right,
+                    R.anim.fade_out_scale
+                )
+            }
             replace(R.id.preferences_detail, fragment!!)
             slidingPaneLayout.openPane()
         }
