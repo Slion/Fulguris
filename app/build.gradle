@@ -119,8 +119,8 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 204
-            versionName "1.9.4"
+            versionCode 205
+            versionName "1.9.5"
         }
 
         styx {

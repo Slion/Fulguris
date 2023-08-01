@@ -1,0 +1,7 @@
+⚙️ Settings navigation animations
+🪲️ Settings breadcrumbs bug fix
+🪲️ Domain settings crash fix
+Translations update:
+🇨🇳 Chinese
+🇩🇪 German
+🇷🇺 Russian
