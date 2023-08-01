@@ -2,6 +2,9 @@ package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
 import acr.browser.lightning.settings.activity.SettingsActivity
+import android.annotation.SuppressLint
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceHeaderFragmentCompat
@@ -30,12 +33,18 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
         return iRootSettingsFragment
     }
 
-    override fun onPreferenceStartFragment(
-            caller: PreferenceFragmentCompat,
-            pref: Preference
-    ): Boolean {
+    /**
+     *
+     */
+    @SuppressLint("MissingSuperCall")
+    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat, pref: Preference): Boolean {
+        //super.onPreferenceStartFragment(caller, pref)
 
-        Timber.d("onPreferenceStartFragment")
+        if (caller.id == R.id.preferences_header) {
+            // A preference was selected in our root/header
+            // That means our breadcrumbs need to be reset to the root level
+            resetBreadcrumbs()
+        }
 
         iPreference = pref
 
@@ -48,14 +57,97 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
         // Trigger title update on next layout
         (activity as? SettingsActivity)?.updateTitleOnLayout()
 
-        return super.onPreferenceStartFragment(caller,pref)
+        // Launch specified fragment
+        // NOTE: This code is taken from the super implementation to which we added the animations
+        if (caller.id == R.id.preferences_header) {
+            Timber.d("onPreferenceStartFragment: caller is header")
+            // Opens the preference header.
+            openPreferenceHeader(pref)
+            return true
+        }
+        if (caller.id == R.id.preferences_detail) {
+            Timber.d("onPreferenceStartFragment: caller is detail")
+            // Opens an preference in detail pane.
+            val frag = childFragmentManager.fragmentFactory.instantiate(
+                requireContext().classLoader,
+                pref.fragment!!
+            )
+            frag.arguments = pref.extras
+
+            childFragmentManager.commit {
+                setReorderingAllowed(true)
+                    .setCustomAnimations(R.anim.slide_in_from_right,
+                        R.anim.fade_out_scale,
+                        R.anim.slide_in_from_right,
+                        R.anim.fade_out_scale)
+                replace(R.id.preferences_detail, frag)
+                addToBackStack(null)
+            }
+            return true
+        }
+        return false
+
+    }
+
+    /**
+     * Taken from base class to add animations
+     */
+    private fun openPreferenceHeader(header: Preference) {
+        if (header.fragment == null) {
+            if (header.intent == null) return
+            // TODO: Change to use WindowManager ActivityView API
+            header.intent?.let {
+                startActivity(it)
+            }
+            return
+        }
+        val fragment = header.fragment?.let {
+            childFragmentManager.fragmentFactory.instantiate(
+                requireContext().classLoader,
+                it
+            )
+        }
+
+        fragment?.apply {
+            arguments = header.extras
+        }
+
+        // Clear back stack
+        if (childFragmentManager.backStackEntryCount > 0) {
+            val entry = childFragmentManager.getBackStackEntryAt(0)
+            childFragmentManager.popBackStack(entry.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+
+        childFragmentManager.commit {
+            setReorderingAllowed(true)
+            .setCustomAnimations(R.anim.slide_in_from_right,
+                R.anim.fade_out_scale,
+                R.anim.slide_in_from_right,
+                R.anim.fade_out_scale)
+            replace(R.id.preferences_detail, fragment!!)
+            slidingPaneLayout.openPane()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun resetBreadcrumbs() {
+        Timber.d("resetBreadcrumbs: ${iTitleStack.count()}")
+        // Only keep our root title
+        while (iTitleStack.count()>1) {
+            iTitleStack.removeLast()
+        }
     }
 
     /**
      * Called by the activity whenever we go back
      */
     fun popBreadcrumbs() {
-        iTitleStack.removeLast()
+        Timber.d("popBreadcrumbs: ${iTitleStack.count()}")
+        if (iTitleStack.count()>1) {
+            iTitleStack.removeLast()
+        }
     }
 
     /**
