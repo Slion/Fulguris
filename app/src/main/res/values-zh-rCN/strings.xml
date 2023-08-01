@@ -169,12 +169,12 @@
     <string name="blocklist_update_wifi">仅用于非按流量计费连接</string>
     <string name="blocklist_update">更新过滤器</string>
     <string name="blocklist_update_frequency">自动更新频率</string>
-    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
+    <string name="blocklist_update_description">更新将以选定的频率完成，除非过滤列表指定了更长的间隔。</string>
     <string name="blocklist_update_now">更新列表</string>
     <string name="blocklist_last_update">上次更新: %s</string>
     <string name="blocklist_updating">更新中...</string>
     <string name="blocklist_update_error">更新过滤规则列表 %s 时出错</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
+    <string name="blocklist_update_error_404">更新过滤规则列表 %s 时出错：未找到 url</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">更新过滤规则列表 %1$s时出错：状态代码 %2$s</string>
     <string name="add_blocklist">添加过滤器文件</string>

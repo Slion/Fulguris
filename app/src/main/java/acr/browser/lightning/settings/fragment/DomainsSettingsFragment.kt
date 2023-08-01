@@ -225,8 +225,8 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                         // We skip the default preferences as it was already added above
                         return@postDelayed
                     }
-                    // TODO: User should be able to delete any and all domains
-                    // TODO: Have a default settings entry
+
+                    // Create domain preference
                     val pref = BasicPreference(requireContext())
                     // Make sure domains and not reversed domains are shown as titles
                     pref.swapTitleSummary = true
