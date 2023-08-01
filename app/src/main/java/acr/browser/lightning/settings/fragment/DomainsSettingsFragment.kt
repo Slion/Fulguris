@@ -244,7 +244,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                         false
                     }
 
-                    faviconModel.faviconForUrl("http://$domain","",(activity as ThemedActivity).useDarkTheme)
+                    faviconModel.faviconForUrl("http://$domain","",(activity as? ThemedActivity)?.useDarkTheme == true)
                         .subscribeOn(networkScheduler)
                         .observeOn(mainScheduler)
                         .subscribeBy(
