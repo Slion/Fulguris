@@ -40,6 +40,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.os.StrictMode
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
@@ -157,17 +158,23 @@ class App : Application() {
 
         registerActivityLifecycleCallbacks(object : MemoryLeakUtils.LifecycleAdapter() {
             override fun onActivityDestroyed(activity: Activity) {
-                Timber.d("Cleaning up after the Android framework")
+                Timber.d("onActivityDestroyed")
                 MemoryLeakUtils.clearNextServedView(activity, this@App)
+            }
+
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                Timber.d("onActivityCreated")
             }
 
             // Track current activity
             override fun onActivityResumed(activity: Activity) {
+                Timber.d("onActivityResumed")
                 resumedActivity = activity
             }
 
             // Track current activity
             override fun onActivityPaused(activity: Activity) {
+                Timber.d("onActivityPaused")
                 resumedActivity = null
             }
         })

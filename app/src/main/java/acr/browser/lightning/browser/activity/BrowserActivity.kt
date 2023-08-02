@@ -117,6 +117,7 @@ import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import junit.framework.Assert.assertNull
 import org.json.JSONObject
+import timber.log.Timber
 import java.io.IOException
 import java.net.URL
 import java.util.*
@@ -2961,6 +2962,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        Timber.d("onRestoreInstanceState")
         super.onRestoreInstanceState(savedInstanceState)
         tabsManager.shutdown()
     }

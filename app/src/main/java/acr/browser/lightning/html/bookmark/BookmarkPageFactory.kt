@@ -93,7 +93,7 @@ class BookmarkPageFactory @Inject constructor(
     }
 
     private fun construct(list: List<BookmarkViewModel>): String {
-        val useDarkTheme = (App.currentContext() as BrowserActivity).useDarkTheme
+        val useDarkTheme = (App.currentContext() as? BrowserActivity)?.useDarkTheme == false
         return parse(bookmarkPageReader.provideHtml()
             // Theme our page first
             .replace("\${useDarkTheme}", useDarkTheme.toString()) // Not actually used for now

@@ -22,6 +22,7 @@ import android.content.Intent
 import android.webkit.URLUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -83,6 +84,7 @@ class BrowserPresenter @Inject constructor(
      * Initializes our tab manager.
      */
     fun setupTabs(aIntent: Intent? = null) {
+        Timber.d("setupTabs")
         iScopeMainThread.launch {
             delay(1L)
             val tabs = tabsModel.initializeTabs(iBrowserView as Activity, isIncognito)
@@ -154,7 +156,7 @@ class BrowserPresenter @Inject constructor(
      * Closes all tabs but the current tab.
      */
     fun closeAllOtherTabs() {
-
+        Timber.d("closeAllOtherTabs")
         while (tabsModel.last() != tabsModel.indexOfCurrentTab()) {
             deleteTab(tabsModel.last())
         }

@@ -17,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import timber.log.Timber;
+
 /**
  * A utility class containing helpful methods
  * pertaining to file storage.
@@ -44,7 +46,7 @@ public final class FileUtils {
      * @param name   the name of the file to store the bundle in.
      */
     public static void writeBundleToStorage(final @NonNull Application app, final Bundle bundle, final @NonNull String name) {
-
+            Timber.d("writeBundleToStorage: %s", name);
             File outputFile = new File(app.getFilesDir(), name);
             FileOutputStream outputStream = null;
             try {
@@ -57,7 +59,7 @@ public final class FileUtils {
                 outputStream.flush();
                 parcel.recycle();
             } catch (IOException e) {
-                Log.e(TAG, "Unable to write bundle to storage");
+                Timber.e("Unable to write bundle to storage");
             } finally {
                 Utils.close(outputStream);
             }
@@ -72,6 +74,7 @@ public final class FileUtils {
      * @param name the name of the file.
      */
     public static void deleteBundleInStorage(final @NonNull Application app, final @NonNull String name) {
+        Timber.d("deleteBundleInStorage: %s", name );
         File outputFile = new File(app.getFilesDir(), name);
         if (outputFile.exists()) {
             outputFile.delete();
@@ -86,6 +89,8 @@ public final class FileUtils {
      * @param aNewName New file name.
      */
     public static void renameBundleInStorage(final @NonNull Application app, final @NonNull String name, final @NonNull String aNewName) {
+        Timber.d("renameBundleInStorage: " + name + " - " + aNewName);
+
         File srcFile = new File(app.getFilesDir(), name);
         if (srcFile.exists()) {
             File destFile = new File(app.getFilesDir(), aNewName);

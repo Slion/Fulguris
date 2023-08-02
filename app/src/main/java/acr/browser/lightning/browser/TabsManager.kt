@@ -16,6 +16,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 import java.io.File
 import java.util.*
@@ -243,7 +244,7 @@ class TabsManager @Inject constructor(
      * TODO: See how you can offload IO to a background thread
      */
     fun initializeTabs(activity: Activity, incognito: Boolean) : MutableList<LightningView> {
-
+        Timber.d("initializeTabs")
         iIsIncognito = incognito
 
         shutdown()
@@ -509,6 +510,7 @@ class TabsManager @Inject constructor(
      * Current tab is also released for garbage collection.
      */
     fun shutdown() {
+        Timber.d("shutdown")
         repeat(tabList.size) { deleteTab(0) }
         savedRecentTabsIndices.clear()
         isInitialized = false
@@ -651,12 +653,18 @@ class TabsManager @Inject constructor(
      * storage and can be unparceled.
      */
     fun saveState() {
+        Timber.d("saveState")
+
+        // Fix bug where all tabs would get lost
+        // See: https://github.com/Slion/Fulguris/issues/193
+        if (!isInitialized) {
+            Timber.d("saveState - Don't do that")
+            return
+        }
+
         // Save sessions info
         saveSessions()
-        // Delete legacy session file if any, could not think of a better place to do that
-        // TODO: Just remove that a few version down the road I guess
-        FileUtils.deleteBundleInStorage(application, FILENAME_SESSION_DEFAULT)
-        // Save our session
+        // Save our session        
         saveCurrentSession(fileNameFromSessionName(iCurrentSessionName))
     }
 
@@ -664,8 +672,8 @@ class TabsManager @Inject constructor(
      * Save current session including WebView tab states and recent tab list in the specified file.
      */
     private fun saveCurrentSession(aFilename: String) {
+        Timber.d("saveCurrentSession - $aFilename")
         val outState = Bundle(ClassLoader.getSystemClassLoader())
-        logger.log(TAG, "Saving tab state")
         tabList
             .withIndex()
             .forEach { (index, tab) ->
@@ -684,7 +692,17 @@ class TabsManager @Inject constructor(
         iScopeThreadPool.launch {
             // Guessing delay is not needed since we do not use the main thread scope anymore
             //delay(1L)
-            FileUtils.writeBundleToStorage(application, outState, aFilename)
+            // Save to current session file
+            FileUtils.writeBundleToStorage(application, outState, FILENAME_CURRENT_SESSION)
+            // Defensively delete session backup, that should never be needed really
+            FileUtils.deleteBundleInStorage(application, FILENAME_BACKUP_SESSION)
+            // Rename our actual session file as backup
+            FileUtils.renameBundleInStorage(application, aFilename, FILENAME_BACKUP_SESSION)
+            // Rename our current session to actual session
+            FileUtils.renameBundleInStorage(application, FILENAME_CURRENT_SESSION, aFilename)
+            // Delete session backup
+            FileUtils.deleteBundleInStorage(application, FILENAME_BACKUP_SESSION)
+
             // We used that loop to test that our jobs are completed no matter what when the app is closed.
             // However long running tasks could run into race condition I guess if we queue it multiple times.
             // I really don't understand what's going on exactly when we close the app twice and we have two instances of that job running.
@@ -744,6 +762,7 @@ class TabsManager @Inject constructor(
      * Save our session list and current session name to disk.
      */
     fun saveSessions() {
+        Timber.d("saveState")
         val bundle = Bundle(javaClass.classLoader)
         bundle.putString(KEY_CURRENT_SESSION, iCurrentSessionName)
         bundle.putParcelableArrayList(KEY_SESSIONS, iSessions)
@@ -877,6 +896,8 @@ class TabsManager @Inject constructor(
         private const val KEY_SESSIONS = "KEY_SESSIONS"
         private const val FILENAME_SESSIONS = "SESSIONS"
         const val FILENAME_SESSION_PREFIX = "SESSION_"
+        const val FILENAME_CURRENT_SESSION = "CURRENT_SESSION"
+        const val FILENAME_BACKUP_SESSION = "BACKUP_SESSION"
 
         private const val RECENT_TAB_INDICES = "RECENT_TAB_INDICES"
 
