@@ -665,14 +665,14 @@ class TabsManager @Inject constructor(
         // Save sessions info
         saveSessions()
         // Save our session        
-        saveCurrentSession(fileNameFromSessionName(iCurrentSessionName))
+        saveCurrentSession(iCurrentSessionName)
     }
 
     /**
      * Save current session including WebView tab states and recent tab list in the specified file.
      */
-    private fun saveCurrentSession(aFilename: String) {
-        Timber.d("saveCurrentSession - $aFilename")
+    private fun saveCurrentSession(aName: String) {
+        Timber.d("saveCurrentSession - $aName")
         val outState = Bundle(ClassLoader.getSystemClassLoader())
         tabList
             .withIndex()
@@ -692,16 +692,20 @@ class TabsManager @Inject constructor(
         iScopeThreadPool.launch {
             // Guessing delay is not needed since we do not use the main thread scope anymore
             //delay(1L)
-            // Save to current session file
-            FileUtils.writeBundleToStorage(application, outState, FILENAME_CURRENT_SESSION)
+            val temp = FILENAME_TEMP_PREFIX + aName
+            val backup = FILENAME_BACKUP_PREFIX + aName
+            val session = FILENAME_SESSION_PREFIX + aName
+
+            // Save to temporary session file
+            FileUtils.writeBundleToStorage(application, outState, temp)
             // Defensively delete session backup, that should never be needed really
-            FileUtils.deleteBundleInStorage(application, FILENAME_BACKUP_SESSION)
-            // Rename our actual session file as backup
-            FileUtils.renameBundleInStorage(application, aFilename, FILENAME_BACKUP_SESSION)
-            // Rename our current session to actual session
-            FileUtils.renameBundleInStorage(application, FILENAME_CURRENT_SESSION, aFilename)
+            FileUtils.deleteBundleInStorage(application, backup)
+            // Rename our session file as backup
+            FileUtils.renameBundleInStorage(application, session, backup)
+            // Rename our temporary session to actual session
+            FileUtils.renameBundleInStorage(application, temp, session)
             // Delete session backup
-            FileUtils.deleteBundleInStorage(application, FILENAME_BACKUP_SESSION)
+            FileUtils.deleteBundleInStorage(application, backup)
 
             // We used that loop to test that our jobs are completed no matter what when the app is closed.
             // However long running tasks could run into race condition I guess if we queue it multiple times.
@@ -896,8 +900,8 @@ class TabsManager @Inject constructor(
         private const val KEY_SESSIONS = "KEY_SESSIONS"
         private const val FILENAME_SESSIONS = "SESSIONS"
         const val FILENAME_SESSION_PREFIX = "SESSION_"
-        const val FILENAME_CURRENT_SESSION = "CURRENT_SESSION"
-        const val FILENAME_BACKUP_SESSION = "BACKUP_SESSION"
+        const val FILENAME_TEMP_PREFIX = "TEMP_SESSION_"
+        const val FILENAME_BACKUP_PREFIX = "BACKUP_SESSION_"
 
         private const val RECENT_TAB_INDICES = "RECENT_TAB_INDICES"
 
