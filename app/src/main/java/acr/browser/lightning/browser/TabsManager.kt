@@ -57,7 +57,7 @@ class TabsManager @Inject constructor(
         set(value) {
             // Most unoptimized way to maintain our current item but that should do for now
             iSessions.forEach { s -> s.isCurrent = false }
-            iSessions.filter { s -> s.name == value}.apply {if (count()>0) get(0).isCurrent = true }
+            iSessions.filter { s -> s.name == value}.apply {if (isNotEmpty()) get(0).isCurrent = true }
             field = value
         }
 
@@ -82,8 +82,8 @@ class TabsManager @Inject constructor(
             //TODO: during shutdown initiated by session switch we get stray events here not matching the proper session since it current session name was changed
             //TODO: it's no big deal and does no harm at all but still not consistent, we may want to fix it at some point
             //TODO: after shutdown our tab counts are fixed by [loadSessions]
-            var session=iSessions.filter { s -> s.name == iCurrentSessionName }
-            if (!session.isNullOrEmpty()) {
+            val session=iSessions.filter { s -> s.name == iCurrentSessionName }
+            if (session.isNotEmpty()) {
                 session[0].tabCount = it
             }
         }

@@ -56,14 +56,15 @@ class BrowserPresenter @Inject constructor(
         // Don't do anything if given session name is already the current one or if such session does not exists
         if (!tabsModel.isInitialized
                 || tabsModel.iCurrentSessionName==aSessionName
-                || tabsModel.iSessions?.filter { s -> s.name == aSessionName }.isNullOrEmpty()) {
+                || tabsModel.iSessions.none { s -> s.name == aSessionName }
+        ) {
             return
         }
 
-        tabsModel.isInitialized = false
-
         // Save current states
         tabsModel.saveState()
+        //
+        tabsModel.isInitialized = false
         // Change current session
         tabsModel.iCurrentSessionName = aSessionName
         // Save it again to preserve new current session name
