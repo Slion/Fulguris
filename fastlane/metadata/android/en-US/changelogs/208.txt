@@ -1,0 +1,1 @@
+🪲️ Fix current session not saved when switching to another session
