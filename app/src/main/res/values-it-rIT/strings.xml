@@ -17,7 +17,7 @@
     <string name="enable">Abilitare</string>
     <string name="disable">Disattivare</string>
     <string name="settings">Impostazioni</string>
-    <string name="options">Options</string>
+    <string name="options">Opzioni</string>
     <string name="location">Posizione</string>
     <string name="password">Salva password</string>
     <string name="agent">User Agent</string>
@@ -90,7 +90,7 @@
     <string name="dialog_cookies">Desideri cancellare tutti i cookie?</string>
     <string name="action_yes">Si</string>
     <string name="action_no">No</string>
-    <string name="action_ask">Ask</string>
+    <string name="action_ask">Chiedi</string>
     <string name="title_text_size">Dimensione dei caratteri</string>
     <string name="size_largest">Massima</string>
     <string name="size_large">Grande</string>
@@ -108,9 +108,9 @@
     <string name="action_show_homepage">Mostra pagina iniziale</string>
     <string name="action_back">Indietro</string>
     <string name="action_find">Trova nella pagina</string>
-    <string name="action_find_next">Find next</string>
-    <string name="action_find_previous">Find previous</string>
-    <string name="action_find_selection">Find selection</string>
+    <string name="action_find_next">Trova successivo</string>
+    <string name="action_find_previous">Trova precedente</string>
+    <string name="action_find_selection">Trova selezione</string>
     <string name="action_print">Stampare</string>
     <string name="action_translate">Traduci</string>
     <string name="downloads">Scaricamenti</string>
@@ -160,7 +160,7 @@
     <string name="page_blocked_reason">a causa di:</string>
     <string name="page_blocked_list_ad">%s sui filtri pubblicitari</string>
     <string name="page_blocked_list_user">%s bloccato dalla regola utente</string>
-    <string name="page_blocked_list_malware">%s on malware filters</string>
+    <string name="page_blocked_list_malware">%s sui filtri malware</string>
     <string name="request_blocked">Richiesta bloccata</string>
     <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Modalità aggiornamento automatico</string>
@@ -169,12 +169,12 @@
     <string name="blocklist_update_wifi">Consenti sincronizzazione con connessione a consumo</string>
     <string name="blocklist_update">Aggiorna filtri</string>
     <string name="blocklist_update_frequency">Frequenza aggiornamento automatico</string>
-    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
+    <string name="blocklist_update_description">Gli aggiornamenti verranno effettuati con la frequenza scelta, a meno che il file filtri non specifichi un intervallo più lungo</string>
     <string name="blocklist_update_now">Aggiorna le liste ora</string>
     <string name="blocklist_last_update">Ultimo aggiornamento: %s</string>
     <string name="blocklist_updating">Aggiornamento…</string>
     <string name="blocklist_update_error">Errore durante l\'aggiornamento dell\'elenco filtri %s</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
+    <string name="blocklist_update_error_404">Errore durante l\'aggiornamento dell\'elenco filtri %s: url non trovato</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Errore durante l\'aggiornamento dell\'elenco filtri %1$s: codice di stato %2$s</string>
     <string name="add_blocklist">Aggiungi file di filtri</string>
@@ -280,10 +280,10 @@
     <string name="settings_about">Informazioni</string>
     <string name="settings_contribute">Contribuire</string>
     <string name="settings_summary_contribute">Aiuta Fulguris a crescere e avere successo</string>
-    <string name="settings_title_privacy_policy">Privacy Policy</string>
-    <string name="settings_summary_privacy_policy">See our privacy policy online</string>
-    <string name="settings_title_terms_and_conditions">Terms &amp; Conditions</string>
-    <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
+    <string name="settings_title_privacy_policy">Informativa sulla privacy</string>
+    <string name="settings_summary_privacy_policy">Vedi la nostra politica sulla privacy online</string>
+    <string name="settings_title_terms_and_conditions">Termini e Condizioni</string>
+    <string name="settings_summary_terms_and_conditions">Vedi i nostri termini e condizioni online</string>
     <string name="settings_summary_discord">Join our growing community</string>
     <string name="pref_category_general">Generale</string>
     <string name="pref_category_panels">Pannelli</string>
@@ -296,10 +296,10 @@
     <string name="pref_category_on_tab_close">Quando si chiude la scheda</string>
     <string name="pref_category_on_tab_change">Quando si cambia scheda</string>
     <string name="pref_category_on_tab_back_forward">Quando si torna indietro o in avanti</string>
-    <string name="pref_category_scrollbars">Scrollbars</string>
-    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
-    <string name="pref_category_subscriptions">Subscriptions</string>
-    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
+    <string name="pref_category_scrollbars">Barre di scorrimento</string>
+    <string name="pref_summary_scrollbars">Regola dimensione e comportamento delle barre di scorrimento</string>
+    <string name="pref_category_subscriptions">Abbonamenti</string>
+    <string name="pref_summary_subscriptions">Attiva o annulla i tuoi abbonamenti</string>
     <string name="pref_title_hide_status_bar">Nascondi barra di stato</string>
     <string name="pref_title_hide_tool_bar">Nascondi barra navigazione durante lo scorrimento</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Mostra barra degli strumenti quando scorri in alto</string>
@@ -345,8 +345,8 @@
     <string name="loading">Caricamento&#8230;</string>
     <string name="loading_failed">Impossibile caricare la pagina web.</string>
     <string name="snacktory">Snacktory</string>
-    <string name="jsoup">jsoup: Java HTML Parser</string>
-    <string name="mit_license">MIT License</string>
+    <string name="jsoup">jsoup: Parser Java HTML</string>
+    <string name="mit_license">Licenza MIT</string>
     <string name="url_contents">Contenuto del campo URL</string>
     <string name="search_in_new_tab">Cerca in nuovo tab</string>
     <string name="url_in_new_tab">Apri in una nuova scheda</string>
@@ -389,33 +389,33 @@
     <string name="settings_title_vertical_tab_bar">Mostra le schede nel menù</string>
     <string name="settings_summary_vertical_tab_bar">Disabilitare per usare la barra delle schede orizzontali</string>
     <string name="settings_title_tab_bar_in_drawer">Barra delle schede nel cassetto</string>
-    <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
-    <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
+    <string name="settings_summary_tab_bar_in_drawer">Disabilita per usare la barra statica delle schede verticali</string>
+    <string name="settings_title_toolbars_bottom">Barre degli strumenti in basso</string>
     <string name="settings_title_desktop_mode_default">Modalità desktop</string>
-    <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
+    <string name="settings_summary_desktop_mode_default">Definisci se i nuovi tab usano la modalità desktop di default</string>
     <string name="settings_title_dark_mode_default">Forza la modalità scura</string>
-    <string name="settings_summary_dark_mode_default">Define if new tabs use force dark mode by default</string>
+    <string name="settings_summary_dark_mode_default">Definisci se i nuovi tab usano la modalità scura di default</string>
     <string name="settings_title_swap_bookmarks_and_tabs">Inverti pannello segnalibri con schede</string>
-    <string name="settings_summary_swap_bookmarks_and_tabs">Tabs and Bookmarks drawers will swap places</string>
+    <string name="settings_summary_swap_bookmarks_and_tabs">Schede e segnalibri cassetti cambieranno i luoghi</string>
     <string name="do_not_track">\"Non tenere traccia\"</string>
     <string name="save_data">Richiedi \'Save-Data\'</string>
     <string name="remove_identifying_headers">Rimuovi header di identificazione</string>
     <string name="pref_title_webrtc">Supporto WebRTC</string>
-    <string name="pref_summary_webrtc">Allows Real Time Communication over the Web using your device camera and microphone</string>
+    <string name="pref_summary_webrtc">Permetti Comunicazione Real Time in Internet usando la videocamera e il microfono del tuo dispositivo</string>
     <string name="action_add_to_homescreen">Aggiungi a schermata Home</string>
     <string name="message_added_to_homescreen">Scorciatoia aggiunta</string>
-    <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
+    <string name="shortcut_message_failed_to_add">Spiacenti, il tuo launcher non supporta le scorciatoie.</string>
     <string name="action_delete_all_bookmarks">Cancella tutti i segnalibri</string>
     <string name="flash_not_supported">Flash Player non è supportato dal tuo sistema</string>
-    <string name="message_open_download_fail">This file doesn\'t exist anymore</string>
+    <string name="message_open_download_fail">Questo file non esiste più</string>
     <string name="faq">Domande frequenti</string>
     <string name="faq_description">Domande più frequenti</string>
     <!-- debug strings -->
     <string name="debug_title">Impostazioni di debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Please restart the app for the change to take effect</string>
+    <string name="app_restart">Si prega di riavviare l\'app per rendere effettive le modifiche</string>
     <string name="pref_title_crash_logs">Registri crash</string>
-    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
+    <string name="pref_summary_crash_logs">Scrivi i log dei crash nel file system.\nTocca per aprire la cartella. Fornisci un file pertinente quando segnala un bug.</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Apri in un\'altra scheda</string>
     <string name="dialog_open_background_tab">Apri in una scheda in background</string>
@@ -434,9 +434,9 @@
     <string name="dialog_delete_all_downloads">Elimina tutti gli scaricamenti</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Strumenti pagina</string>
-    <string name="dialog_toggle_desktop">Toggle desktop user agent</string>
-    <string name="dialog_adblock_enable_for_site">Enable ad block for site</string>
-    <string name="dialog_adblock_disable_for_site">Disable ad block for site</string>
+    <string name="dialog_toggle_desktop">Attiva/disattiva user agent desktop</string>
+    <string name="dialog_adblock_enable_for_site">Abilita Blocco Annunci per il sito</string>
+    <string name="dialog_adblock_disable_for_site">Disabilita Blocco Annunci per il sito</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">URL personalizzato</string>
     <!-- Notifications -->
@@ -466,15 +466,15 @@
     <string name="action_restore_tab">Ripristina scheda</string>
     <string name="settings_summary_apps">Abilita app di terze parti</string>
     <string name="settings_title_apps">Apps</string>
-    <string name="settings_title_domains">Domains</string>
-    <string name="settings_summary_domains">Manage domain settings</string>
-    <string name="settings_title_resource_domains">Resource domains</string>
-    <string name="settings_title_override">Override</string>
-    <string name="settings_summary_on_override">Override parent settings</string>
-    <string name="settings_summary_off_override">Use parent settings</string>
-    <string name="settings_title_launch_app">Launch app</string>
-    <string name="settings_title_category">Category</string>
-    <string name="settings_summary_on_category">Main domain</string>
+    <string name="settings_title_domains">Domini</string>
+    <string name="settings_summary_domains">Gestisci impostazioni dominio</string>
+    <string name="settings_title_resource_domains">Domini delle risorse</string>
+    <string name="settings_title_override">Sovrascrivi</string>
+    <string name="settings_summary_on_override">Sovrascrivi le impostazioni genitore</string>
+    <string name="settings_summary_off_override">Usa impostazioni genitore</string>
+    <string name="settings_title_launch_app">Avvia l’app</string>
+    <string name="settings_title_category">Categoria</string>
+    <string name="settings_summary_on_category">Dominio principale</string>
     <string name="settings_summary_off_category">Resource domain</string>
     <string name="action_domain_settings">Domain</string>
     <string name="settings_title_domains_delete_all">Delete all</string>
