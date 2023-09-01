@@ -383,7 +383,7 @@
     <string name="clear_web_storage_exit">Vaciar almacenamiento web al salir</string>
     <string name="message_web_storage_cleared">El almacenamiento web se ha eliminado</string>
     <string name="hosts_source">Fuente del archivo hosts de bloqueo de anuncios</string>
-    <string name="settings_adblock">@cadena/bloquear_anuncios</string>
+    <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Bloqueo de anuncios y filtrado de contenido</string>
     <string name="settings_summary_content_control_toggle">Activar bloqueo de anuncios y filtrado de contenido</string>
     <string name="settings_title_vertical_tab_bar">Barra de pestañas vertical</string>
