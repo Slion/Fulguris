@@ -73,7 +73,7 @@
     <string name="agent_windows_desktop">Windows (Desktop)</string>
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Search engine</string>
-    <string name="action_ok">Okay</string>
+    <string name="action_ok">OK</string>
     <string name="dialog_download">Do you want to download this file? (%1$s)</string>
     <string name="unknown_size">Unknown size</string>
     <string name="action_cancel">Cancel</string>
@@ -140,7 +140,7 @@
     <string name="message_text_copied">Text copied to clipboard</string>
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
-    <string name="licenses">Open Source Licences</string>
+    <string name="licenses">Open Source Licenses</string>
     <string name="suggestion">Search for</string>
     <string name="checking_for_updates">Checking for updates…</string>
     <string name="title_updated">Fulguris was updated</string>
@@ -256,7 +256,7 @@
     <string name="sync_history">Sync history with Google</string>
     <string name="title_file_chooser">File chooser</string>
     <string name="library_netcipher">NetCipher</string>
-    <string name="license_gnu">GNU Lesser General Public Licence</string>
+    <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Export</string>
     <string name="generic_import">Import</string>
     <string name="generic_reset">Reset</string>
@@ -297,7 +297,7 @@
     <string name="pref_category_on_tab_change">When changing tab</string>
     <string name="pref_category_on_tab_back_forward">When going back or forward</string>
     <string name="pref_category_scrollbars">Scrollbars</string>
-    <string name="pref_summary_scrollbars">Adjust scrollbars size and behaviour</string>
+    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
     <string name="pref_category_subscriptions">Subscriptions</string>
     <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
     <string name="pref_title_hide_status_bar">Hide status bar</string>
@@ -318,7 +318,7 @@
     <string name="pref_title_analytics">Analytics</string>
     <string name="pref_title_pull_to_refresh">Pull to refresh</string>
     <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
-    <string name="pref_summary_color_mode">Apply web page colour to tool and status bar</string>
+    <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
     <string name="pref_title_desktop_width">Desktop width</string>
     <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
     <string name="pref_title_no_sponsorship">In-app sponsorship not available</string>
@@ -335,18 +335,18 @@
     <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
     <string name="pref_title_language">Language</string>
     <string name="language_system_default">System default</string>
-    <string name="settings_about_explain">Details about version, update, author and licence.</string>
+    <string name="settings_about_explain">Details about version, update, author and license.</string>
     <string name="close_tab">Close current tab</string>
     <string name="close_all_tabs">Close all tabs</string>
     <string name="close_other_tabs">Close other tabs</string>
     <string name="third_party">Block 3rd party cookies</string>
-    <string name="color_mode">Colour mode</string>
+    <string name="color_mode">Color mode</string>
     <string name="reading_mode">Reader mode</string>
     <string name="loading">Loading&#8230;</string>
     <string name="loading_failed">Couldn\'t load anything from the page.</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
-    <string name="mit_license">MIT Licence</string>
+    <string name="mit_license">MIT License</string>
     <string name="url_contents">Tool bar shows</string>
     <string name="search_in_new_tab">Search in new tab</string>
     <string name="url_in_new_tab">URL in new tab</string>
@@ -366,7 +366,7 @@
         <item>Title</item>
         <item>Shortened URL</item>
     </string-array>
-    <string name="invert_color">Invert colour</string>
+    <string name="invert_color">Invert color</string>
     <string name="settings_black_status_bar">Black status bar</string>
     <string name="tabs">Tabs</string>
     <string name="theme">Theme</string>
@@ -442,6 +442,8 @@
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d incognito tab open</item>
+        <item quantity="few">%1$d incognito tabs open</item>
+        <item quantity="many">%1$d incognito tabs open</item>
         <item quantity="other">%1$d incognito tabs open</item>
     </plurals>
     <string name="notification_incognito_running_message">Touch to open</string>
@@ -543,7 +545,7 @@
     <string name="error_recovery_session">Error: a recovery session was created!</string>
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">Show SSL warning dialogues</string>
+    <string name="show_ssl">Show SSL warning dialogs</string>
     <string name="start_incognito">Permanently behave as if in incognito mode</string>
     <string name="force_zoom_summary">Does not work if JavaScript is not enabled</string>
     <string name="force_zoom">Force zoom for websites</string>
@@ -566,7 +568,7 @@
     <string name="inspect">Inject Javascript</string>
     <string name="edit_cookies">Show site cookies</string>
     <string name="site_cookies">Site cookies</string>
-    <string name="accent_color">Accent colour</string>
+    <string name="accent_color">Accent color</string>
     <string name="accent_amber">Amber</string>
     <string name="accent_blue">Blue</string>
     <string name="accent_cyan">Cyan</string>
