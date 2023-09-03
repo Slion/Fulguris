@@ -202,7 +202,10 @@ object BrowserDialog {
         // We use a bit of magic there to achieve that.
         // After the initial layout we will be closing that dialog next time its size is changed.
         // TODO: Instead of that workaround, find a way to resize our dialogs properly after screen rotation
-        layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
+        // We used that trick in a couple of other places but on some devices it closes dialogs when it should not
+        // It's better to have broken dialogs layout after resize or rotation than having them not working at all
+        // See: https://github.com/Slion/Fulguris/issues/437
+        // layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
     }
 
 
@@ -264,7 +267,7 @@ object BrowserDialog {
             .resizeAndShow()
 
         // Discard it on screen rotation as it's broken anyway
-        layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
+        //layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
     }
 
     @JvmStatic
