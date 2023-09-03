@@ -19,11 +19,13 @@ import acr.browser.lightning.R
 import acr.browser.lightning.extensions.*
 import acr.browser.lightning.list.RecyclerViewDialogItemAdapter
 import acr.browser.lightning.list.RecyclerViewStringAdapter
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
@@ -199,13 +201,10 @@ object BrowserDialog {
         //builder.resizeAndShow()
 
         // We want our dialog to close after a configuration change since the resizing is not working properly.
-        // We use a bit of magic there to achieve that.
-        // After the initial layout we will be closing that dialog next time its size is changed.
+        // It seems AlertDialog was never designed to handle screen rotation properly
         // TODO: Instead of that workaround, find a way to resize our dialogs properly after screen rotation
-        // We used that trick in a couple of other places but on some devices it closes dialogs when it should not
-        // It's better to have broken dialogs layout after resize or rotation than having them not working at all
         // See: https://github.com/Slion/Fulguris/issues/437
-        // layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
+        layout.onConfigurationChange { dialog.dismiss() }
     }
 
 
@@ -267,7 +266,7 @@ object BrowserDialog {
             .resizeAndShow()
 
         // Discard it on screen rotation as it's broken anyway
-        //layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
+        layout.onConfigurationChange { dialog.dismiss() }
     }
 
     @JvmStatic

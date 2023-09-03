@@ -1,8 +1,10 @@
 package acr.browser.lightning.extensions
 
+import acr.browser.lightning.R
 import acr.browser.lightning.utils.getFilteredColor
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.*
 import android.os.SystemClock
 import android.view.*
@@ -13,6 +15,7 @@ import android.widget.PopupWindow
 import androidx.appcompat.widget.TooltipCompat
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
@@ -415,4 +418,27 @@ fun InputMethodManager.isVirtualKeyboardVisible() : Boolean {
         // This is defensive and should never happen.
         false
     }
+}
+
+
+/**
+ * It seems AlertDialog was never designed to handle screen rotation properly.
+ * This can be used to dismiss them when our configuration is changed.
+ * This must be a ViewGroup otherwise this function as no effect.
+ *
+ * [aRunnable] To be run upon configuration change
+ */
+fun View.onConfigurationChange(aRunnable: () -> Unit) {
+    // We add an invisible anonymous View to this View
+    // It will execute our runnable upon configuration change
+    (this as? ViewGroup)?.apply { addView(object: View(context) {
+        override fun onConfigurationChanged(newConfig: Configuration?) {
+            super.onConfigurationChanged(newConfig)
+            aRunnable()
+        }
+    }.apply {
+        isVisible = false
+        // Could be useful to help understand what's going on when inspecting our views
+        id = R.id.onConfigurationChange
+    }) }
 }

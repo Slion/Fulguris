@@ -270,7 +270,7 @@ class LightningDialogBuilder @Inject constructor(
                     }
                     val dialog = editBookmarkDialog.resizeAndShow()
                     // Discard it on screen rotation as it's broken anyway
-                    //layout.onLayoutChange {layout.onSizeChange {dialog.dismiss()}}
+                    layout.onConfigurationChange { dialog.dismiss() }
                 }
     }
 
