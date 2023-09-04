@@ -1,0 +1,1 @@
+🪲️ Fix bookmark edit and other dialogs closing unexpectedly on some devices
