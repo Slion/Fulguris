@@ -35,6 +35,15 @@
 
     <SwitchPreferenceCompat
         a:defaultValue="false"
+        a:key="@string/pref_key_desktop_mode"
+        a:title="@string/settings_title_desktop_mode_default"
+        a:summary="@string/settings_summary_desktop_mode_default"
+        a:iconSpaceReserved="false"
+        a:icon="@drawable/ic_desktop"
+        a:singleLineTitle="false" />
+
+    <SwitchPreferenceCompat
+        a:defaultValue="false"
         a:key="@string/pref_key_dark_mode"
         a:title="@string/settings_title_dark_mode_default"
         a:summary="@string/settings_summary_dark_mode_default"

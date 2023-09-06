@@ -93,6 +93,31 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        a:title="@string/settings_title_desktop_mode_default">
+
+        <SwitchPreferenceCompat
+            a:defaultValue="false"
+            a:key="@string/pref_key_desktop_mode_override"
+            a:title="@string/settings_title_override"
+            a:summaryOn="@string/settings_summary_on_override"
+            a:summaryOff="@string/settings_summary_off_override"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false" />
+
+        <SwitchPreferenceCompat
+            a:defaultValue="false"
+            a:key="@string/pref_key_desktop_mode"
+            a:title="@string/settings_title_desktop_mode_default"
+            a:summary="@string/settings_summary_desktop_mode_default"
+            a:dependency="@string/pref_key_desktop_mode_override"
+            a:iconSpaceReserved="false"
+            a:icon="@drawable/ic_desktop"
+            a:singleLineTitle="false" />
+
+    </PreferenceCategory>
+
+
     <acr.browser.lightning.settings.preferences.PreferenceCategoryEx
         a:title="@string/settings_title_launch_app"
         a:summary="@string/dialog_message_third_party_app">

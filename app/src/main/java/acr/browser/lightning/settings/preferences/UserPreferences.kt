@@ -101,11 +101,6 @@ class UserPreferences @Inject constructor(
     var newTabPosition by preferences.enumPreference(R.string.pref_key_new_tab_position, NewTabPosition.AFTER_CURRENT_TAB)
 
     /**
-     * True if desktop mode should be enabled by default for new tabs, false otherwise.
-     */
-    var desktopModeDefault by preferences.booleanPreference(R.string.pref_key_desktop_mode_default, false)
-
-    /**
      * The URL of the selected homepage.
      */
     var homepage by preferences.stringPreference(HOMEPAGE, Uris.AboutBookmarks)

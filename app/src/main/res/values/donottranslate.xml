@@ -77,7 +77,8 @@
     <string name="pref_key_javascript">pref_key_javascript</string>
     <string name="pref_key_request_save_data">pref_key_request_save_data</string>
     <string name="pref_key_load_images">pref_key_load_images</string>
-    <string name="pref_key_desktop_mode_default">pref_key_desktop_mode_default</string>
+    <string name="pref_key_desktop_mode">pref_key_desktop_mode</string>
+    <string name="pref_key_desktop_mode_override">pref_key_desktop_mode_override</string>
     <string name="pref_key_dark_mode">pref_key_dark_mode</string>
     <string name="pref_key_dark_mode_override">pref_key_dark_mode_override</string>
     <string name="pref_key_webrtc">pref_key_webrtc</string>

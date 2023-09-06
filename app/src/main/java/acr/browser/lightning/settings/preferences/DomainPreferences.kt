@@ -111,7 +111,16 @@ class DomainPreferences constructor(
      * Used to distinguish main domain from resource domain
      */
     var entryPoint by preferences.booleanPreference(R.string.pref_key_entry_point, false)
-    
+
+
+    /**
+     * True if desktop mode should be enabled by default for new tabs, false otherwise.
+     */
+    var desktopModeOverride by preferences.booleanPreference(R.string.pref_key_desktop_mode_override, false)
+    var desktopModeLocal by preferences.booleanPreference(R.string.pref_key_desktop_mode, false)
+    val desktopModeParent: Boolean get() { return parent?.desktopMode ?: desktopModeLocal}
+    val desktopMode: Boolean get() { return if (isDefault || !desktopModeOverride) { desktopModeParent } else { desktopModeLocal } }
+
     /**
      * True if dark mode should be enabled by default for this domain, false otherwise.
      */

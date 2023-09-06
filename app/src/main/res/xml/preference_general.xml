@@ -108,15 +108,6 @@
             app:icon="@drawable/ic_library_add"
             app:singleLineTitle="false" />
 
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="@string/pref_key_desktop_mode_default"
-            android:title="@string/settings_title_desktop_mode_default"
-            android:summary="@string/settings_summary_desktop_mode_default"
-            app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_desktop"
-            app:singleLineTitle="false" />
-
         <!--
         Disabled as currently not working.
         -->

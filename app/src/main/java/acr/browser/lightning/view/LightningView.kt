@@ -195,6 +195,11 @@ class LightningView(
     var darkModeBypassDomainSettings = false
 
     /**
+     *
+     */
+    var desktopModeBypassDomainSettings = false
+
+    /**
      * Get our find in page search query.
      *
      * @return The find in page search query or an empty string.
@@ -342,7 +347,7 @@ class LightningView(
             //TODO: it looks like our special URLs don't get frozen for some reason
             createWebView()
             initializeContent(tabInitializer)
-            desktopMode = userPreferences.desktopModeDefault
+            desktopMode = defaultDomainSettings.desktopMode
             darkMode = defaultDomainSettings.darkModeParent
         } else {
             // Our WebView will only be created whenever our tab goes to the foreground
@@ -711,9 +716,10 @@ class LightningView(
      * This method is used to toggle the user agent between desktop and the current preference of
      * the user.
      */
-    fun toggleDesktopUserAgent() {
+    fun toggleDesktopUserAgent(aBypass: Boolean = true) {
         // Toggle desktop mode
         desktopMode = !desktopMode
+        desktopModeBypassDomainSettings = aBypass
     }
 
     /**

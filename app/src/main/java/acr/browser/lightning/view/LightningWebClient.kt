@@ -259,6 +259,10 @@ class LightningWebClient(
             if (!darkModeBypassDomainSettings) {
                 darkMode = domainPreferences.darkMode
             }
+
+            if (!desktopModeBypassDomainSettings) {
+                desktopMode = domainPreferences.desktopMode
+            }
         }
 
 
