@@ -58,7 +58,11 @@ class LightningChromeClient(
             lightningView.fetchMetaThemeColorTries = 0
 
             // Extract meta theme-color
-            view?.evaluateJavascript("(function() { return document.querySelector('meta[name=\"theme-color\"]').content; })();") { themeColor ->
+            // TODO: Make this optional
+            view.evaluateJavascript("(function() { " +
+                    "let e = document.querySelector('meta[name=\"theme-color\"]');" +
+                    "if (e==null) return null;" +
+                    "return e.content; })();") { themeColor ->
                 try {
                     lightningView.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"'));
                     // We did find a valid theme-color, tell our controller about it
@@ -79,7 +83,6 @@ class LightningChromeClient(
                     }
                 }
             }
-
         }
     }
 
