@@ -1,0 +1,4 @@
+🌆 Move JavaScript option to domain settings
+🌆 Move desktop mode option to domain settings
+🪲️ Fix framapad.org not loading
+🪲️ Swap search suggestion Baidu and Naver
