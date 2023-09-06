@@ -562,8 +562,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 val currentChoice = when (Suggestions.from(userPreferences.searchSuggestionChoice)) {
                     Suggestions.GOOGLE -> 0
                     Suggestions.DUCK -> 1
-                    Suggestions.NAVER -> 2
-                    Suggestions.BAIDU -> 3
+                    Suggestions.BAIDU -> 2
+                    Suggestions.NAVER -> 3
                     Suggestions.NONE -> 4
                 }
 
@@ -571,8 +571,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     val suggestionsProvider = when (which) {
                         0 -> Suggestions.GOOGLE
                         1 -> Suggestions.DUCK
-                        2 -> Suggestions.NAVER
-                        3 -> Suggestions.BAIDU
+                        2 -> Suggestions.BAIDU
+                        3 -> Suggestions.NAVER
                         4 -> Suggestions.NONE
                         else -> Suggestions.GOOGLE
                     }
