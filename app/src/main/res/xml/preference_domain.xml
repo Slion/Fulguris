@@ -117,6 +117,29 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        a:title="@string/java">
+
+        <SwitchPreferenceCompat
+            a:defaultValue="false"
+            a:key="@string/pref_key_javascript_override"
+            a:title="@string/settings_title_override"
+            a:summaryOn="@string/settings_summary_on_override"
+            a:summaryOff="@string/settings_summary_off_override"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false" />
+
+        <SwitchPreferenceCompat
+            a:defaultValue="true"
+            a:key="@string/pref_key_javascript"
+            a:title="@string/java"
+            a:dependency="@string/pref_key_javascript_override"
+            a:icon="@drawable/ic_script"
+            a:iconSpaceReserved="false"
+            a:singleLineTitle="false" />
+
+    </PreferenceCategory>
+
 
     <acr.browser.lightning.settings.preferences.PreferenceCategoryEx
         a:title="@string/settings_title_launch_app"

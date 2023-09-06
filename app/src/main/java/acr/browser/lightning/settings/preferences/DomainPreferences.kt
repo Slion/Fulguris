@@ -112,6 +112,13 @@ class DomainPreferences constructor(
      */
     var entryPoint by preferences.booleanPreference(R.string.pref_key_entry_point, false)
 
+    /**
+     * True if the browser should allow execution of javascript, false otherwise.
+     */
+    var javaScriptEnabledOverride by preferences.booleanPreference(R.string.pref_key_javascript_override, false)
+    var javaScriptEnabledLocal by preferences.booleanPreference(R.string.pref_key_javascript, true)
+    val javaScriptEnabledParent: Boolean get() { return parent?.javaScriptEnabled ?: javaScriptEnabledLocal}
+    val javaScriptEnabled: Boolean get() { return if (isDefault || !javaScriptEnabledOverride) { javaScriptEnabledParent } else { javaScriptEnabledLocal } }
 
     /**
      * True if desktop mode should be enabled by default for new tabs, false otherwise.

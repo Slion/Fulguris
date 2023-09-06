@@ -41,12 +41,6 @@
         <item>@string/new_tab_position_end_value</item>
     </string-array>
 
-    <string-array name="block_javascript">
-        <item>@string/no</item>
-        <item>@string/unlisted_javascript</item>
-        <item>@string/listed_javascript</item>
-    </string-array>
-
     <string-array name="suggestion_name_array">
         <item>@string/two</item>
         <item>@string/three</item>

@@ -4246,17 +4246,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             return
         }
         val currentTab = tabsManager.currentTab ?: return
-        val arrayOfURLs = userPreferences.javaScriptBlocked
-        val strgs: Array<String> = if (arrayOfURLs.contains(", ")) {
-            arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        } else {
-            arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        }
-        val jsEnabledString = if (userPreferences.javaScriptChoice == JavaScriptChoice.BLACKLIST && !stringContainsItemFromList(currentTab.url, strgs) || userPreferences.javaScriptChoice == JavaScriptChoice.WHITELIST && stringContainsItemFromList(currentTab.url, strgs)) {
-            R.string.allow_javascript
-        } else{
-            R.string.blocked_javascript
-        }
+
         BrowserDialog.showWithIcons(this, this.getString(R.string.dialog_tools_title),
             /*
             DialogItem(
@@ -4300,33 +4290,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 builder.setNegativeButton(R.string.action_cancel) { _, _ -> }
                 builder.setPositiveButton(R.string.action_ok) { _, _ -> currentTab.loadUrl("javascript:(function() {" + codeView.text.toString() + "})()") }
                 builder.show()
-            },
-            DialogItem(
-                icon = this.drawable(R.drawable.outline_script_text_key_outline),
-                colorTint = this.attrColor(R.attr.colorPrimary).takeIf { userPreferences.javaScriptChoice == JavaScriptChoice.BLACKLIST && !stringContainsItemFromList(currentTab.url, strgs) || userPreferences.javaScriptChoice == JavaScriptChoice.WHITELIST && stringContainsItemFromList(currentTab.url, strgs) },
-                title = jsEnabledString) {
-                val url = URL(currentTab.url)
-                if (userPreferences.javaScriptChoice != JavaScriptChoice.NONE) {
-                    if (!stringContainsItemFromList(currentTab.url, strgs)) {
-                        if (userPreferences.javaScriptBlocked == "") {
-                            userPreferences.javaScriptBlocked = url.host
-                        } else {
-                            userPreferences.javaScriptBlocked = userPreferences.javaScriptBlocked + ", " + url.host
-                        }
-                    } else {
-                        if (!userPreferences.javaScriptBlocked.contains(", " + url.host)) {
-                            userPreferences.javaScriptBlocked = userPreferences.javaScriptBlocked.replace(url.host, "")
-                        } else {
-                            userPreferences.javaScriptBlocked = userPreferences.javaScriptBlocked.replace(", " + url.host, "")
-                        }
-                    }
-                } else {
-                    userPreferences.javaScriptChoice = JavaScriptChoice.WHITELIST
-                }
-                tabsManager.currentTab?.reload()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    tabsManager.currentTab?.reload()
-                }, 250)
             },
             DialogItem(
                 icon = this.drawable(R.drawable.cookie_outline),

@@ -111,11 +111,6 @@ class UserPreferences @Inject constructor(
     var incognitoPage by preferences.stringPreference(INCOGNITO, Uris.AboutIncognito)
 
     /**
-     * True if the browser should allow execution of javascript, false otherwise.
-     */
-    var javaScriptEnabled by preferences.booleanPreference(R.string.pref_key_javascript, true)
-
-    /**
      * True if the device location should be accessible by websites, false otherwise.
      *
      * NOTE: If this is enabled, permission will still need to be granted on a per-site basis.
@@ -358,7 +353,6 @@ class UserPreferences @Inject constructor(
      */
     var locale by preferences.stringPreference(R.string.pref_key_locale, "")
 
-
     /**
      * Define behavior for blocklist updates (on, off, only on non-metered connections).
      * Update check is only happening at browser start.
@@ -381,15 +375,6 @@ class UserPreferences @Inject constructor(
     var onTabChangeShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_change_show_animation, R.bool.pref_default_on_tab_change_show_animation)
     var onTabBackShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_back_show_animation, R.bool.pref_default_on_tab_back_show_animation)
     var onTabBackAnimationDuration by preferences.intResPreference(R.string.pref_key_on_tab_back_animation_duration, R.integer.pref_default_animation_duration_tab_back_forward)
-
-    /**
-     * Block JavaScript for Websites
-     */
-    var javaScriptChoice by preferences.enumPreference(R.string.pref_key_use_js_block, JavaScriptChoice.NONE)
-
-    var javaScriptBlocked by preferences.stringPreference(R.string.pref_key_block_js, "")
-
-    var siteBlockNames by preferences.stringPreference(R.string.pref_key_use_site_block, "")
 
     /**
      * Force Zoom for Websites

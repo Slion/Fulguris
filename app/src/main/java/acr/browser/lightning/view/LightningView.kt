@@ -551,7 +551,7 @@ class LightningView(
 
         settings.saveFormData = userPreferences.savePasswordsEnabled && !isIncognito
 
-        if (userPreferences.javaScriptEnabled) {
+        if (defaultDomainSettings.javaScriptEnabled) {
             settings.javaScriptEnabled = true
             settings.javaScriptCanOpenWindowsAutomatically = true
         } else {

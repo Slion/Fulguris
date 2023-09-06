@@ -27,6 +27,7 @@ import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTries
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
@@ -245,6 +246,7 @@ class LightningWebClient(
      * Overrides [WebViewClient.onPageStarted]
      * You have no guarantee that the root HTML document has been loaded when this is called.
      */
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         Timber.d("$ihs : onPageStarted - $url")
         // Reset our resource count
@@ -253,7 +255,6 @@ class LightningWebClient(
         val uri  = Uri.parse(url)
         loadDomainPreferences(uri.host ?: "", true)
         // TODO: find a way not to bypass tab level settings
-
         (view as WebViewEx).proxy.apply{
             // Only apply domain settings dark mode if no bypass
             if (!darkModeBypassDomainSettings) {
@@ -262,6 +263,14 @@ class LightningWebClient(
 
             if (!desktopModeBypassDomainSettings) {
                 desktopMode = domainPreferences.desktopMode
+            }
+
+            if (domainPreferences.javaScriptEnabled) {
+                view.settings.javaScriptEnabled = true
+                view.settings.javaScriptCanOpenWindowsAutomatically = true
+            } else {
+                view.settings.javaScriptEnabled = false
+                view.settings.javaScriptCanOpenWindowsAutomatically = false
             }
         }
 
@@ -282,45 +291,6 @@ class LightningWebClient(
 
         // Try to fetch meta theme color a few times
         lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
-
-        if (userPreferences.javaScriptChoice === JavaScriptChoice.BLACKLIST) {
-            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
-                val arrayOfURLs = userPreferences.javaScriptBlocked
-                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                    .toTypedArray()
-                if (arrayOfURLs.contains(", ")) {
-                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                }
-                if (!stringContainsItemFromList(url, strgs)) {
-                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
-                        return
-                    } else {
-                        view.settings.javaScriptEnabled = false
-                    }
-                }
-                else{ return }
-            }
-        }
-        else  if (userPreferences.javaScriptChoice === JavaScriptChoice.WHITELIST) run {
-            if (userPreferences.javaScriptBlocked !== "" && userPreferences.javaScriptBlocked !== " ") {
-                val arrayOfURLs = userPreferences.javaScriptBlocked
-                var strgs: Array<String> = arrayOfURLs.split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                    .toTypedArray()
-                if (arrayOfURLs.contains(", ")) {
-                    strgs = arrayOfURLs.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                }
-                if (stringContainsItemFromList(url, strgs)) {
-                    if (url.contains("file:///android_asset") or url.contains("about:blank")) {
-                        return
-                    } else {
-                        view.settings.javaScriptEnabled = false
-                    }
-                }
-                else{
-                    return
-                }
-            }
-        }
 
         uiController.tabChanged(lightningView)
     }

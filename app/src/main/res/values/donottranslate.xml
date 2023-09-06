@@ -75,6 +75,7 @@
     <string name="pref_key_cookies">pref_key_cookies</string>
     <string name="pref_key_cookies_incognito">pref_key_cookies_incognito</string>
     <string name="pref_key_javascript">pref_key_javascript</string>
+    <string name="pref_key_javascript_override">pref_key_javascript_override</string>
     <string name="pref_key_request_save_data">pref_key_request_save_data</string>
     <string name="pref_key_load_images">pref_key_load_images</string>
     <string name="pref_key_desktop_mode">pref_key_desktop_mode</string>
@@ -116,14 +117,11 @@
     <string name="pref_key_accent">pref_key_accent</string>
     <string name="pref_key_close_drawer">pref_key_close_drawer</string>
     <string name="pref_key_always_incognito">pref_key_always_incognito</string>
-    <string name="pref_key_block_js">pref_key_block_js</string>
     <string name="pref_key_force_zoom">pref_key_force_zoom</string>
     <string name="pref_key_image_url">pref_key_image_url</string>
     <string name="pref_key_long_click_tab">pref_key_long_click_tab</string>
     <string name="pref_key_search_suggestions_number">pref_key_search_suggestions_number</string>
     <string name="pref_key_ssl_dialog">pref_key_ssl_dialog</string>
-    <string name="pref_key_use_js_block">pref_key_use_js_block</string>
-    <string name="pref_key_use_site_block">pref_key_use_site_block</string>
     <string name="pref_key_search_custom_image_url">pref_key_search_custom_image_url</string>
     <string name="pref_key_scrollbar_fading">pref_key_scrollbar_fading</string>
     <string name="pref_key_scrollbar_delay_before_fade">pref_key_scrollbar_delay_before_fade</string>
