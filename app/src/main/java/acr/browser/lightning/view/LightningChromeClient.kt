@@ -23,11 +23,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.webkit.*
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.toBitmap
 import com.anthonycr.grant.PermissionsManager
 import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.Scheduler
+import timber.log.Timber
 
 class LightningChromeClient(
     private val activity: Activity,
@@ -239,8 +242,13 @@ class LightningChromeClient(
      * @return a Bitmap that can be used as a place holder for videos.
      */
     override fun getDefaultVideoPoster(): Bitmap? {
-        val resources = activity.resources
-        return BitmapFactory.decodeResource(resources, android.R.drawable.spinner_background)
+        Timber.d("getDefaultVideoPoster")
+        // TODO: In theory we could even load site specific icons here or just tint that drawable using the site theme color
+        val bitmap = AppCompatResources.getDrawable(activity, R.drawable.ic_filmstrip)?.toBitmap(1024,1024)
+        if (bitmap==null) {
+            Timber.d("Failed to load video poster")
+        }
+        return bitmap
     }
 
     /**
@@ -250,8 +258,12 @@ class LightningChromeClient(
      * @return A view that should be used to display the state
      * of a video's loading progress.
      */
-    override fun getVideoLoadingProgressView(): View =
-        LayoutInflater.from(activity).inflate(R.layout.video_loading_progress, null)
+    override fun getVideoLoadingProgressView(): View {
+        // Not sure that's ever being used anymore
+        Timber.d("getVideoLoadingProgressView")
+        return LayoutInflater.from(activity).inflate(R.layout.video_loading_progress, null)
+    }
+
 
     override fun onHideCustomView() = uiController.onHideCustomView()
 
@@ -266,8 +278,9 @@ class LightningChromeClient(
      * Needed to display javascript console message in logcat.
      */
     override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+        // TODO: Collect those in the tab so that we could display them
         consoleMessage?.apply {
-            Log.d("Chrome Console", "${messageLevel()} - ${message()} -- from line ${lineNumber()} of ${sourceId()}")
+            Timber.tag("JavaScript").d("${messageLevel()} - ${message()} -- from line ${lineNumber()} of ${sourceId()}")
         }
         return true
     }
