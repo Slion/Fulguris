@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import dagger.hilt.android.AndroidEntryPoint
+import fulguris.app
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -51,6 +52,16 @@ class DebugSettingsFragment : AbstractSettingsFragment() {
                 }
         // We will use this the find our view later on
         ).setViewId(R.id.pref_id_crash_logs)
+
+        //
+        switchPreference(
+            preference = getString(R.string.pref_key_logs),
+            isChecked = userPreferences.logs,
+            onCheckChange = { change ->
+                userPreferences.logs = change
+                app.plantTimberLogs()
+            }
+        )
     }
 
     private fun openCrashLogsFolder() {

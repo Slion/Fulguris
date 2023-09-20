@@ -3,28 +3,15 @@
     android:height="30dp"
     android:viewportWidth="30"
     android:viewportHeight="30"
+    android:tint="?attr/colorControlNormal"
     >
   <group android:scaleX="0.6" android:scaleY="0.6"
       android:translateX="6" android:translateY="6">
 <!--  <group android:scaleX="0.8" android:scaleY="0.8"-->
 <!--      android:translateX="3" android:translateY="3">-->
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M27,5H3C2.449,5 2,5.451 2,6v16c0,0.551 0.449,1 1,1h24c0.549,0 1,-0.449 1,-1V6C28,5.451 27.549,5 27,5zM21.5,6h2v2h-2V6zM18.5,6h2v2h-2V6zM15.5,6h2v2h-2V6zM9.5,6h2v2h-2V6zM6.5,6h2v2h-2V6zM3.5,6h2v2h-2V6zM3.5,9H14v10H3.5V9zM5.5,22h-2v-2h2V22zM8.5,22h-2v-2h2V22zM11.5,22h-2v-2h2V22zM14.5,22h-2v-2h2V22zM14.5,8h-2V6h2V8zM17.5,22h-2v-2h2V22zM20.5,22h-2v-2h2V22zM23.5,22h-2v-2h2V22zM26.5,22h-2v-2h2V22zM26.5,19H16V9h10.5V19zM26.5,8h-2V6h2V8z"
-        android:strokeAlpha="0.3"
-        android:fillAlpha="0.3"/>
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M3,25c-1.103,0 -2,-0.897 -2,-2V7c0,-1.103 0.897,-2 2,-2h24c1.103,0 2,0.897 2,2v16c0,1.103 -0.897,2 -2,2H3z"
-        android:strokeAlpha="0.15"
-        android:fillAlpha="0.15"/>
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M27,6H3C2.449,6 2,6.451 2,7v16c0,0.551 0.449,1 1,1h24c0.549,0 1,-0.449 1,-1V7C28,6.451 27.549,6 27,6zM21.5,7h2v2h-2V7zM18.5,7h2v2h-2V7zM15.5,7h2v2h-2V7zM9.5,7h2v2h-2V7zM6.5,7h2v2h-2V7zM3.5,7h2v2h-2V7zM3.5,10H14v10H3.5V10zM5.5,23h-2v-2h2V23zM8.5,23h-2v-2h2V23zM11.5,23h-2v-2h2V23zM14.5,23h-2v-2h2V23zM14.5,9h-2V7h2V9zM17.5,23h-2v-2h2V23zM20.5,23h-2v-2h2V23zM23.5,23h-2v-2h2V23zM26.5,23h-2v-2h2V23zM26.5,20H16V10h10.5V20zM26.5,9h-2V7h2V9z"
-        android:strokeAlpha="0.15"
-        android:fillAlpha="0.15"/>
+
     <path
         android:pathData="M27,6H3C2.449,6 2,6.451 2,7v16c0,0.551 0.449,1 1,1h24c0.549,0 1,-0.449 1,-1V7C28,6.451 27.549,6 27,6zM21.5,7h2v2h-2V7zM18.5,7h2v2h-2V7zM15.5,7h2v2h-2V7zM9.5,7h2v2h-2V7zM6.5,7h2v2h-2V7zM3.5,7h2v2h-2V7zM3.5,10H14v10H3.5V10zM5.5,23h-2v-2h2V23zM8.5,23h-2v-2h2V23zM11.5,23h-2v-2h2V23zM14.5,23h-2v-2h2V23zM14.5,9h-2V7h2V9zM17.5,23h-2v-2h2V23zM20.5,23h-2v-2h2V23zM23.5,23h-2v-2h2V23zM26.5,23h-2v-2h2V23zM26.5,20H16V10h10.5V20zM26.5,9h-2V7h2V9z"
-        android:fillColor="?attr/colorControlNormal"/>
+        android:fillColor="@android:color/white"/>
   </group>
 </vector>

@@ -1,0 +1,3 @@
+📺 Nicer video placeholder image
+🪲️ Fix rare crash when loading session
+🪲️ Add debug settings option to toggle logs

@@ -20,6 +20,7 @@ import androidx.core.net.toUri
 import androidx.palette.graphics.Palette
 import io.reactivex.Completable
 import io.reactivex.Maybe
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -31,8 +32,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class FaviconModel @Inject constructor(
-    private val application: Application,
-    private val logger: Logger
+    private val application: Application
 ) {
 
     private val loaderOptions = BitmapFactory.Options()
@@ -125,7 +125,7 @@ class FaviconModel @Inject constructor(
     fun cacheFaviconForUrl(favicon: Bitmap, url: String): Completable = Completable.create { emitter ->
         val uri = url.toUri().toValidUri() ?: return@create emitter.onComplete()
 
-        logger.log(TAG, "Caching icon for ${uri.host}")
+        Timber.d("Caching icon for ${uri.host}")
 
         /** TODO: This code was duplicated from [ImageView.setImageForTheme] fix it, somehow */
         // Check if that favicon is dark enough that it needs an inverted variant to be used on dark theme

@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android">
 
 
     <SwitchPreferenceCompat
-        android:key="@string/pref_key_crash_logs"
-        android:title="@string/pref_title_crash_logs"
-        android:id="@+id/pref_id_crash_logs"
-        app:icon="@drawable/ic_folder_open"
-        android:defaultValue="@bool/pref_default_crash_logs"
-        android:summary="@string/pref_summary_crash_logs"
-        app:singleLineTitle="false"
+        a:key="@string/pref_key_logs"
+        a:title="@string/pref_title_logs"
+        a:icon="@drawable/ic_output"
+        a:defaultValue="@bool/pref_default_logs"
+        a:summaryOn="@string/pref_summary_on_logs"
+        a:summaryOff="@string/pref_summary_off_logs"
+        a:singleLineTitle="false"
         />
 
     <SwitchPreferenceCompat
-        app:icon="@drawable/ic_bug"
-        android:defaultValue="false"
-        android:key="leak_canary_enabled"
-        android:title="@string/debug_leak_canary"
-        app:singleLineTitle="false"
+        a:key="@string/pref_key_crash_logs"
+        a:title="@string/pref_title_crash_logs"
+        a:id="@+id/pref_id_crash_logs"
+        a:icon="@drawable/ic_folder_open"
+        a:defaultValue="@bool/pref_default_crash_logs"
+        a:summary="@string/pref_summary_crash_logs"
+        a:singleLineTitle="false"
+        />
+
+    <SwitchPreferenceCompat
+        a:icon="@drawable/ic_bug"
+        a:defaultValue="false"
+        a:key="leak_canary_enabled"
+        a:title="@string/debug_leak_canary"
+        a:singleLineTitle="false"
         />
 
 </PreferenceScreen>

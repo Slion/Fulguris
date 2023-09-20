@@ -201,12 +201,21 @@ class TabsManager @Inject constructor(
      */
     private fun finishInitialization() {
 
-        if (allTabs.size == savedRecentTabsIndices.size) { // Defensive
-            // Populate our recent tab list from our persisted indices
-            iRecentTabs.clear()
-            savedRecentTabsIndices.forEach { iRecentTabs.add(allTabs.elementAt(it))}
-        } else {
-            // Defensive, if we have missing tabs in our recent tab list just reset it
+        try {
+            if (allTabs.size == savedRecentTabsIndices.size) { // Defensive
+                // Populate our recent tab list from our persisted indices
+                iRecentTabs.clear()
+                // Looks like we can somehow persist -1 as a tab index
+                // TODO: That should never be the case. We ought to find out what's causing this.
+                // See: https://console.firebase.google.com/u/0/project/fulguris-b1f69/crashlytics/app/android:net.slions.fulguris.full.playstore/issues/d70a65025a98104878bf2da4aa06287e?time=last-seven-days&sessionEventKey=650AE750014800016260FF77850BA317_1859332239793370743
+                savedRecentTabsIndices.forEach { iRecentTabs.add(allTabs.elementAt(it))}
+            } else {
+                // Defensive, if we have missing tabs in our recent tab list just reset it
+                resetRecentTabsList()
+            }
+        }
+        catch (ex: Exception) {
+            Timber.d("Failed to load recent tab list")
             resetRecentTabsList()
         }
 
@@ -225,6 +234,7 @@ class TabsManager @Inject constructor(
      */
     private fun resetRecentTabsList()
     {
+        Timber.d("resetRecentTabsList")
         // Reset recent tabs list to arbitrary order
         iRecentTabs.clear()
         iRecentTabs.addAll(allTabs)
@@ -349,12 +359,16 @@ class TabsManager @Inject constructor(
      */
     fun renameSession(aOldName: String, aNewName: String) {
 
+        Timber.d("Try rename session $aOldName to $aNewName")
+
         val index = iSessions.indexOf(session(aOldName))
+        Timber.d("Session index $index")
 
         // Check if we can indeed rename that session
-        if (iSessions.isNullOrEmpty() // Check if we have sessions at all
+        if (iSessions.isEmpty() // Check if we have sessions at all
                 or !isValidSessionName(aNewName) // Check if new session name is valid
                 or !(index>=0 && index<iSessions.count())) { // Check if index is in range
+            Timber.d("Session rename aborted")
             return
         }
 
@@ -367,6 +381,7 @@ class TabsManager @Inject constructor(
             iCurrentSessionName = aNewName
         }
 
+        Timber.d("Rename session files $oldName to $aNewName")
         // Rename our session file
         FileUtils.renameBundleInStorage(application, fileNameFromSessionName(oldName), fileNameFromSessionName(aNewName))
 

@@ -84,18 +84,23 @@ class App : Application() {
     }
 
 
+    fun plantTimberLogs() {
+        // Setup our log engine according to user preferences
+        if (userPreferences.logs) {
+            Timber.plant(Timber.DebugTree())
+        } else {
+            Timber.plant(TimberReleaseTree())
+        }
+    }
+
+
     override fun onCreate() {
         app = this
         // SL: Use this to debug when launched from another app for instance
         //Debug.waitForDebugger()
         super.onCreate()
 
-        // Setup our log engine according to build configuration
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        } else {
-            Timber.plant(TimberReleaseTree())
-        }
+        plantTimberLogs()
 
         AndroidThreeTen.init(this);
 

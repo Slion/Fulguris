@@ -86,7 +86,6 @@ class SessionsPopupWindow : PopupWindow {
         // See: https://stackoverflow.com/questions/46872634/close-popupwindow-upon-tapping-outside-or-back-button
         setBackgroundDrawable(ColorDrawable())
 
-
         // Handle click on "add session" button
         aBinding.buttonNewSession.setOnClickListener { view ->
                 val dialogView = LayoutInflater.from(aBinding.root.context).inflate(R.layout.dialog_edit_text, null)
@@ -136,11 +135,11 @@ class SessionsPopupWindow : PopupWindow {
                     setTitle(R.string.session_name_prompt)
                     setView(dialogView)
                     setPositiveButton(R.string.action_ok) { _, _ ->
-                        var name = textView.text.toString()
+                        val name = textView.text.toString()
                         // Check if session exists already
                         if (tabs.isValidSessionName(name)) {
                             // That session does not exist yet, add it then
-                            tabs.iSessions?.let {
+                            tabs.iSessions.let {
                                 // Save current session session first
                                 tabs.saveState()
                                 // Add new session

@@ -322,6 +322,13 @@ class UserPreferences @Inject constructor(
     var crashLogs by preferences.booleanPreference(R.string.pref_key_crash_logs, R.bool.pref_default_crash_logs)
 
     /**
+     * User can disable logs.
+     * When enabled they are written over logcat through Timber.
+     * Notably allows users to enabled logcat in release builds.
+     */
+    var logs by preferences.booleanPreference(R.string.pref_key_logs, R.bool.pref_default_logs)
+
+    /**
      * Toggle visibility of close tab button on drawer tab list items.
      */
     var showCloseTabButton by preferences.booleanPreference(R.string.pref_key_tab_list_item_show_close_button, if (screenSize.isTablet())  R.bool.const_true else R.bool.pref_default_tab_list_item_show_close_button)
