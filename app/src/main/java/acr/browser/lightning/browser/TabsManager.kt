@@ -3,7 +3,6 @@ package acr.browser.lightning.browser
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.sessions.Session
 import acr.browser.lightning.extensions.snackbar
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -39,8 +38,7 @@ class TabsManager @Inject constructor(
         private val historyPageInitializer: HistoryPageInitializer,
         private val downloadPageInitializer: DownloadPageInitializer,
         private val noOpPageInitializer: NoOpInitializer,
-        private val userPreferences: UserPreferences,
-        private val logger: Logger,
+        private val userPreferences: UserPreferences
 ): fulguris.Component() {
 
     private val tabList = arrayListOf<LightningView>()
@@ -442,7 +440,7 @@ class TabsManager @Inject constructor(
             restorePreviousTabs()
         } catch (ex: Throwable) {
             // TODO: report this using firebase or local crash logs
-            logger.log(TAG, ex.toString())
+            Timber.e(ex,"restorePreviousTabs failed")
             activity.snackbar(R.string.error_recovery_session)
             createRecoverySession()
         }
@@ -568,7 +566,7 @@ class TabsManager @Inject constructor(
             isIncognito: Boolean,
             newTabPosition: NewTabPosition
     ): LightningView {
-        logger.log(TAG, "New tab")
+        Timber.i("New tab")
         val tab = LightningView(
                 activity,
                 tabInitializer,
@@ -577,8 +575,7 @@ class TabsManager @Inject constructor(
                 incognitoPageInitializer,
                 bookmarkPageInitializer,
                 downloadPageInitializer,
-                historyPageInitializer,
-                logger
+                historyPageInitializer
         )
 
         // Add our new tab at the specified position
@@ -620,7 +617,7 @@ class TabsManager @Inject constructor(
      * @return returns true if the current tab was deleted, false otherwise.
      */
     fun deleteTab(position: Int): Boolean {
-        logger.log(TAG, "Delete tab: $position")
+        Timber.i("Delete tab: $position")
         val currentTab = currentTab
         val current = positionOf(currentTab)
 
@@ -829,7 +826,7 @@ class TabsManager @Inject constructor(
      */
     private fun recoverSessions() {
         // TODO: report this in firebase or local logs
-        logger.log(TAG, "recoverSessions")
+        Timber.i("recoverSessions")
         //
         iSessions.clear() // Defensive, should already be empty if we get there
         // Search for session files
@@ -885,7 +882,7 @@ class TabsManager @Inject constructor(
      * @return The selected tab we just switched to.
      */
     fun switchToTab(aPosition: Int): LightningView {
-        logger.log(TAG, "switch to tab: $aPosition")
+        Timber.i("switch to tab: $aPosition")
         return tabList[aPosition].also {
                 currentTab = it
                 // Put that tab at the top of our recent tab list
@@ -907,7 +904,6 @@ class TabsManager @Inject constructor(
 
     companion object {
 
-        private const val TAG = "TabsManager"
         private const val TAB_KEY_PREFIX = "TAB_"
         // Preserve this file name for compatibility
         private const val FILENAME_SESSION_DEFAULT = "SAVED_TABS.parcel"

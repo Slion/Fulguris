@@ -19,7 +19,6 @@ import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.js.InvertPage
 import acr.browser.lightning.js.SetMetaViewport
 import acr.browser.lightning.js.TextReflow
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.NoYesAsk
 import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -74,7 +73,6 @@ class LightningWebClient(
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
     val preferences: SharedPreferences = hiltEntryPoint.userSharedPreferences()
     val sslWarningPreferences: SslWarningPreferences = hiltEntryPoint.sslWarningPreferences
-    val logger: Logger = hiltEntryPoint.logger
     val textReflowJs: TextReflow = hiltEntryPoint.textReflowJs
     val invertPageJs: InvertPage = hiltEntryPoint.invertPageJs
     val setMetaViewport: SetMetaViewport = hiltEntryPoint.setMetaViewport
@@ -139,8 +137,8 @@ class LightningWebClient(
                 // See: https://stackoverflow.com/a/60621350/3969362
                 // See: https://stackoverflow.com/a/39642318/3969362
                 // Just pass on user defined viewport width in percentage of the actual viewport to the JavaScript
-                logger.log(TAG, "JavaScript Desktop Mode Hack")
-                aView.settings.useWideViewPort = true;
+                Timber.i("JavaScript Desktop Mode Hack")
+                aView.settings.useWideViewPort = true
                 aView.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$","${aView.context.configPrefs.desktopWidth}"), null)
             }
         }
@@ -329,7 +327,7 @@ class LightningWebClient(
                 val user = name.text.toString()
                 val pass = password.text.toString()
                 handler.proceed(user.trim(), pass.trim())
-                logger.log(TAG, "Attempting HTTP Authentication")
+                Timber.i("Attempting HTTP Authentication")
             }
             setNegativeButton(R.string.action_cancel) { _, _ ->
                 handler.cancel()
@@ -643,7 +641,7 @@ class LightningWebClient(
                 try {
                     activity.startActivity(intent)
                 } catch (e: ActivityNotFoundException) {
-                    logger.log(TAG, "ActivityNotFoundException")
+                    Timber.e(e, "ActivityNotFoundException")
                 }
 
                 return true
@@ -699,9 +697,4 @@ class LightningWebClient(
         return errorCodeMessageCodes
     }
 
-    companion object {
-
-        private const val TAG = "LightningWebClient"
-
-    }
 }

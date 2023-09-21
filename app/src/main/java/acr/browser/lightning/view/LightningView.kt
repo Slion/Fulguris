@@ -73,8 +73,7 @@ class LightningView(
     private val incognitoPageInitializer: IncognitoPageInitializer,
     private val bookmarkPageInitializer: BookmarkPageInitializer,
     private val downloadPageInitializer: DownloadPageInitializer,
-    private val historyPageInitializer: HistoryPageInitializer,
-    private val logger: Logger
+    private val historyPageInitializer: HistoryPageInitializer
 ): WebView.FindListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -566,7 +565,7 @@ class LightningView(
             } catch (e: Exception) {
                 // This shouldn't be necessary, but there are a number
                 // of KitKat devices that crash trying to set this
-                logger.log(TAG, "Problem setting LayoutAlgorithm to TEXT_AUTOSIZING")
+                Timber.e(e,"Problem setting LayoutAlgorithm to TEXT_AUTOSIZING")
             }
         } else {
             settings.layoutAlgorithm = LayoutAlgorithm.NORMAL
@@ -760,7 +759,7 @@ class LightningView(
      */
     fun onPause() {
         webView?.onPause()
-        logger.log(TAG, "WebView onPause: ${webView?.id}")
+        Timber.d("WebView onPause: ${webView?.id}")
     }
 
     /**
@@ -768,7 +767,7 @@ class LightningView(
      */
     fun onResume() {
         webView?.onResume()
-        logger.log(TAG, "WebView onResume: ${webView?.id}")
+        Timber.d("WebView onResume: ${webView?.id}")
     }
 
     /**
@@ -874,7 +873,7 @@ class LightningView(
      */
     fun pauseTimers() {
         webView?.pauseTimers()
-        logger.log(TAG, "Pausing JS timers")
+        Timber.d("Pausing JS timers")
     }
 
     /**
@@ -884,7 +883,7 @@ class LightningView(
      */
     fun resumeTimers() {
         webView?.resumeTimers()
-        logger.log(TAG, "Resuming JS timers")
+        Timber.d("Resuming JS timers")
     }
 
     /**
@@ -1351,8 +1350,6 @@ class LightningView(
 
         public const val KHtmlMetaThemeColorInvalid: Int = Color.TRANSPARENT
         public const val KFetchMetaThemeColorTries: Int = 6
-
-        private const val TAG = "LightningView"
 
         const val HEADER_REQUESTED_WITH = "X-Requested-With"
         const val HEADER_WAP_PROFILE = "X-Wap-Profile"
