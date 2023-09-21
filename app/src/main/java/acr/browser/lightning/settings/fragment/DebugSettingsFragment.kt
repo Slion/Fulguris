@@ -50,18 +50,9 @@ class DebugSettingsFragment : AbstractSettingsFragment() {
                     //activity?.snackbar(R.string.pref_summary_crash_log)
                     userPreferences.crashLogs = change
                 }
-        // We will use this the find our view later on
+        // We will use this to find our view later on
         ).setViewId(R.id.pref_id_crash_logs)
 
-        //
-        switchPreference(
-            preference = getString(R.string.pref_key_logs),
-            isChecked = userPreferences.logs,
-            onCheckChange = { change ->
-                userPreferences.logs = change
-                app.plantTimberLogs()
-            }
-        )
     }
 
     private fun openCrashLogsFolder() {

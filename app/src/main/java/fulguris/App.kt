@@ -23,6 +23,7 @@
 package fulguris
 
 import acr.browser.lightning.BuildConfig
+import acr.browser.lightning.R
 import acr.browser.lightning.database.bookmark.BookmarkExporter
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.di.DatabaseScheduler
@@ -39,9 +40,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.os.StrictMode
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -56,7 +57,7 @@ import kotlin.system.exitProcess
 lateinit var app: App
 
 @HiltAndroidApp
-class App : Application() {
+class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
     @Inject internal lateinit var userPreferences: UserPreferences
@@ -84,13 +85,28 @@ class App : Application() {
     }
 
 
-    fun plantTimberLogs() {
-        // Setup our log engine according to user preferences
+    /**
+     * Setup Timber log engine according to user preferences
+     */
+    private fun plantTimberLogs() {
+
+        // Update Timber
         if (userPreferences.logs) {
-            Timber.plant(Timber.DebugTree())
+            Timber.uprootAll()
+            Timber.plant(TimberLevelTree(userPreferences.logLevel.value))
         } else {
-            Timber.plant(TimberReleaseTree())
+            Timber.uprootAll()
         }
+
+        // Test our logs
+        Timber.v("Log verbose")
+        Timber.d("Log debug")
+        Timber.i("Log info")
+        Timber.w("Log warn")
+        Timber.e("Log error")
+        // We disabled that as we don't want our process to terminate
+        // Though it did not terminate the app in debug configuration on Huawei P30 Pro - Android 10
+        //Timber.wtf("Log assert")
     }
 
 
@@ -99,6 +115,8 @@ class App : Application() {
         // SL: Use this to debug when launched from another app for instance
         //Debug.waitForDebugger()
         super.onCreate()
+        // No need to unregister I suppose cause this is for the life time of the application anyway
+        userPreferences.preferences.registerOnSharedPreferenceChangeListener(this)
 
         plantTimberLogs()
 
@@ -218,6 +236,16 @@ class App : Application() {
 
         init {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT)
+        }
+    }
+
+    /**
+     *
+     */
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == getString(R.string.pref_key_log_level) || key == getString(R.string.pref_key_logs)) {
+            // Update Timber according to changed preferences
+            plantTimberLogs()
         }
     }
 

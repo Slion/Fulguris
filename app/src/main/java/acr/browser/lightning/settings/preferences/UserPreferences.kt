@@ -17,6 +17,7 @@ import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.view.RenderingMode
 import android.content.SharedPreferences
+import fulguris.LogLevel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -327,6 +328,11 @@ class UserPreferences @Inject constructor(
      * Notably allows users to enabled logcat in release builds.
      */
     var logs by preferences.booleanPreference(R.string.pref_key_logs, R.bool.pref_default_logs)
+
+    /**
+     * Specify from which log level we should feed logcat.
+     */
+    var logLevel by preferences.enumPreference(R.string.pref_key_log_level, LogLevel.DEBUG)
 
     /**
      * Toggle visibility of close tab button on drawer tab list items.

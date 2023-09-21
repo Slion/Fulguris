@@ -433,8 +433,9 @@
     <string name="pref_title_crash_logs">Crash logs</string>
     <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
     <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Output all logs over logcat</string>
-    <string name="pref_summary_off_logs">Filter out debug and verbose logs</string>
+    <string name="pref_summary_on_logs">Enabled</string>
+    <string name="pref_summary_off_logs">Disabled</string>
+    <string name="pref_title_log_level">Log level</string>
 
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Open in new tab</string>
@@ -673,5 +674,12 @@
     <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
     <string name="action_switch_to_last_tab">Switch to last tab</string>
     <string name="action_switch_to_last_session">Switch to last session</string>
+
+    <string name="log_level_verbose">Verbose</string>
+    <string name="log_level_debug">Debug</string>
+    <string name="log_level_info">Info</string>
+    <string name="log_level_warn">Warn</string>
+    <string name="log_level_error">Error</string>
+    <string name="log_level_assert">Assert</string>
 
 </resources>
