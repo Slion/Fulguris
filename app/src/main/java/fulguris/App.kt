@@ -28,7 +28,6 @@ import acr.browser.lightning.database.bookmark.BookmarkExporter
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.locale.LocaleUtils
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.DeveloperPreferences
 import acr.browser.lightning.settings.preferences.LandscapePreferences
 import acr.browser.lightning.settings.preferences.PortraitPreferences
@@ -65,7 +64,6 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
     @Inject internal lateinit var landscapePreferences: LandscapePreferences
     @Inject internal lateinit var bookmarkModel: BookmarkRepository
     @Inject @DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
-    @Inject internal lateinit var logger: Logger
     //@Inject internal lateinit var buildInfo: BuildInfo
 
     // Used to be able to tell when our application was just started

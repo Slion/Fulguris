@@ -34,7 +34,6 @@ import acr.browser.lightning.html.history.HistoryPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.html.incognito.IncognitoPageFactory
 import acr.browser.lightning.locale.LocaleUtils
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.notifications.IncognitoNotification
 import acr.browser.lightning.reading.ReadingActivity
 import acr.browser.lightning.search.SearchEngineProvider
@@ -111,7 +110,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
-import fulguris.app
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -119,7 +117,6 @@ import junit.framework.Assert.assertNull
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
-import java.net.URL
 import java.util.*
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -196,7 +193,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     @Inject lateinit var bookmarkPageInitializer: BookmarkPageInitializer
     @Inject @field:MainHandler lateinit var mainHandler: Handler
     @Inject lateinit var proxyUtils: ProxyUtils
-    @Inject lateinit var logger: Logger
     @Inject lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject lateinit var exitCleanup: ExitCleanup
     @Inject lateinit var abpUserRules: AbpUserRules
@@ -440,7 +436,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // Though the GitHub issue specified in that function description is still open.
                     adjustBottomSheet(dialog)
                 } catch (ex: java.lang.Exception) {
-                    logger.log(TAG, "adjustBottomSheet: $ex")
+                    Timber.e(ex, "adjustBottomSheet failed")
                 }
             }
             mainHandler.postDelayed(onSizeChangeRunnable, 100)
@@ -1028,7 +1024,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     protected fun panicClean() {
-        logger.log(TAG, "Closing browser")
+        Timber.d("Closing browser")
         tabsManager.newTab(this, NoOpInitializer(), false, NewTabPosition.END_OF_TAB_LIST)
         tabsManager.switchToTab(0)
         tabsManager.clearSavedState()
@@ -1534,7 +1530,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Fetch snapshot of our recent tab list
         iCapturedRecentTabsIndices = tabsManager.iRecentTabs.toSet()
         iRecentTabIndex = iCapturedRecentTabsIndices?.size?.minus(1) ?: -1
-        //logger.log(TAG, "Recent indices snapshot: iCapturedRecentTabsIndices")
+        //Timber.d("Recent indices snapshot: iCapturedRecentTabsIndices")
     }
 
     /**
@@ -1577,7 +1573,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         iRecentTabIndex = -1;
         iCapturedRecentTabsIndices = null;
-        //logger.log(TAG,"CTRL+TAB: Reset")
+        //Timber.d("CTRL+TAB: Reset")
     }
 
     /**
@@ -1772,11 +1768,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         tabSwitchApply(true)
                     }
 
-                    //logger.log(TAG, "Switching to $iRecentTabIndex : $iCapturedRecentTabsIndices")
+                    //Timber.d("Switching to $iRecentTabIndex : $iCapturedRecentTabsIndices")
 
                 }
 
-                //logger.log(TAG,"Tab: down discarded")
+                //Timber.d("Tab: down discarded")
                 return true
             }
 
@@ -1932,7 +1928,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         && !currentView.url.isSpecialUrl()) {
                     HistoryEntry(currentView.url, currentView.title).also {
                         Utils.createShortcut(this, it, currentView.favicon ?: webPageBitmap!!)
-                        logger.log(TAG, "Creating shortcut: ${it.title} ${it.url}")
+                        Timber.d("Creating shortcut: ${it.title} ${it.url}")
                     }
                 }
                 return true
@@ -2239,7 +2235,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * From [BrowserView].
      */
     override fun notifyTabViewRemoved(position: Int) {
-        logger.log(TAG, "Notify Tab Removed: $position")
+        Timber.d("Notify Tab Removed: $position")
         tabsView?.tabRemoved(position)
 
         if (userPreferences.onTabCloseShowSnackbar) {
@@ -2256,7 +2252,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * From [BrowserView].
      */
     override fun notifyTabViewAdded() {
-        logger.log(TAG, "Notify Tab Added")
+        Timber.d("Notify Tab Added")
         tabsView?.tabAdded()
     }
 
@@ -2264,7 +2260,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * From [BrowserView].
      */
     override fun notifyTabViewChanged(position: Int) {
-        logger.log(TAG, "Notify Tab Changed: $position")
+        Timber.d("Notify Tab Changed: $position")
         tabsView?.tabChanged(position)
         setToolbarColor()
         setupPullToRefresh(resources.configuration)
@@ -2274,7 +2270,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * From [BrowserView].
      */
     override fun notifyTabViewInitialized() {
-        logger.log(TAG, "Notify Tabs Initialized")
+        Timber.d("Notify Tabs Initialized")
         tabsView?.tabsInitialized()
     }
 
@@ -2365,7 +2361,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             return
         }
 
-        logger.log(TAG, "setTabView")
+        Timber.d("setTabView")
 
         aView.removeFromParent() // Just to be safe
 
@@ -2777,7 +2773,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun onConfigurationChanged(aNewConfig: Configuration) {
         super.onConfigurationChanged(aNewConfig)
 
-        logger.log(TAG, "onConfigurationChanged")
+        Timber.d("onConfigurationChanged")
 
         setupDrawers()
         setFullscreenIfNeeded(aNewConfig)
@@ -2828,7 +2824,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     override fun onPause() {
         super.onPause()
-        logger.log(TAG, "onPause")
+        Timber.d("onPause")
 
         tabsManager.pauseAll()
 
@@ -2893,7 +2889,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             bookmarksView?.navigateBack()
         } else {
             if (currentTab != null) {
-                logger.log(TAG, "onBackPressed")
+                Timber.d("onBackPressed")
                 if (searchView.hasFocus()) {
                     currentTab.requestFocus()
                 } else if (currentTab.canGoBack()) {
@@ -2918,7 +2914,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     }
                 }
             } else {
-                logger.log(TAG, "This shouldn't happen ever")
+                Timber.d("This shouldn't happen ever")
                 super.onBackPressed()
             }
         }
@@ -2936,7 +2932,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * NOTE: Moreover when restarting this activity this is called after the onCreate of the new activity.
      */
     override fun onDestroy() {
-        logger.log(TAG, "onDestroy")
+        Timber.d("onDestroy")
 
         queue.cancelAll(TAG)
 
@@ -2972,7 +2968,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     override fun onResume() {
         super.onResume()
-        logger.log(TAG, "onResume")
+        Timber.d("onResume")
         // Check if some settings changes require application restart
         if (swapBookmarksAndTabs != userPreferences.bookmarksAndTabsSwapped
                 || analytics != userPreferences.analytics
@@ -3029,7 +3025,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         //currentTabView?.removeFromParent()?.addView(currentTabView)
 
-        //intent?.let {logger.log(TAG, it.toString())}
+        //intent?.let {Timber.d(it.toString())}
     }
 
     /**
@@ -3658,7 +3654,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             })
         } catch (ex: IOException) {
             // Error occurred while creating the File
-            logger.log(TAG, "Unable to create Image File", ex)
+            Timber.d("Unable to create Image File", ex)
             emptyArray()
         }
 
@@ -3678,7 +3674,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             try {
                 callback.onCustomViewHidden()
             } catch (e: Exception) {
-                logger.log(TAG, "Error hiding custom view", e)
+                Timber.d("Error hiding custom view", e)
             }
 
             return
@@ -3687,7 +3683,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         try {
             view.keepScreenOn = true
         } catch (e: SecurityException) {
-            logger.log(TAG, "WebView is not allowed to keep the screen on")
+            Timber.d("WebView is not allowed to keep the screen on")
         }
 
         originalOrientation = getRequestedOrientation()
@@ -3725,20 +3721,20 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 try {
                     customViewCallback?.onCustomViewHidden()
                 } catch (e: Exception) {
-                    logger.log(TAG, "Error hiding custom view", e)
+                    Timber.d("Error hiding custom view", e)
                 }
 
                 customViewCallback = null
             }
             return
         }
-        logger.log(TAG, "onHideCustomView")
+        Timber.d("onHideCustomView")
         currentTab.setVisibility(VISIBLE)
         currentTab.requestFocus()
         try {
             customView?.keepScreenOn = false
         } catch (e: SecurityException) {
-            logger.log(TAG, "WebView is not allowed to keep the screen on")
+            Timber.d("WebView is not allowed to keep the screen on")
         }
 
         setFullscreenIfNeeded(resources.configuration)
@@ -3751,7 +3747,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         fullscreenContainerView = null
         customView = null
 
-        logger.log(TAG, "VideoView is being stopped")
+        Timber.d("VideoView is being stopped")
         videoView?.stopPlayback()
         videoView?.setOnErrorListener(null)
         videoView?.setOnCompletionListener(null)
@@ -3760,7 +3756,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         try {
             customViewCallback?.onCustomViewHidden()
         } catch (e: Exception) {
-            logger.log(TAG, "Error hiding custom view", e)
+            Timber.d("Error hiding custom view", e)
         }
 
         customViewCallback = null
@@ -3777,7 +3773,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        logger.log(TAG, "onWindowFocusChanged")
+        Timber.d("onWindowFocusChanged")
         if (hasFocus) {
             setFullscreen(hideStatusBar, isImmersiveMode)
         }
@@ -3906,7 +3902,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Display the ActionBar if it was hidden
      */
     override fun showActionBar() {
-        logger.log(TAG, "showActionBar")
+        Timber.d("showActionBar")
         iBinding.toolbarInclude.toolbarLayout.visibility = View.VISIBLE
     }
 
