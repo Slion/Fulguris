@@ -5,7 +5,6 @@ import acr.browser.lightning.constant.UTF8
 import acr.browser.lightning.database.SearchSuggestion
 import acr.browser.lightning.extensions.map
 import acr.browser.lightning.extensions.preferredLocale
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.app.Application
 import io.reactivex.Single
@@ -21,9 +20,8 @@ class BaiduSuggestionsModel(
     okHttpClient: Single<OkHttpClient>,
     requestFactory: RequestFactory,
     application: Application,
-    logger: Logger,
     userPreferences: UserPreferences
-) : BaseSuggestionsModel(okHttpClient, requestFactory, UTF8, application.preferredLocale, logger, userPreferences) {
+) : BaseSuggestionsModel(okHttpClient, requestFactory, UTF8, application.preferredLocale, userPreferences) {
 
     private val searchSubtitle = application.getString(R.string.suggestion)
     private val inputEncoding = "GBK"

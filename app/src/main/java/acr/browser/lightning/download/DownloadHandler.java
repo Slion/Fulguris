@@ -34,7 +34,6 @@ import acr.browser.lightning.di.DatabaseScheduler;
 import acr.browser.lightning.di.MainScheduler;
 import acr.browser.lightning.di.NetworkScheduler;
 import acr.browser.lightning.dialog.BrowserDialog;
-import acr.browser.lightning.log.Logger;
 import acr.browser.lightning.settings.preferences.UserPreferences;
 import acr.browser.lightning.utils.FileUtils;
 import acr.browser.lightning.utils.Utils;
@@ -46,6 +45,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 import static acr.browser.lightning.utils.UrlUtils.guessFileName;
 
@@ -54,9 +54,6 @@ import static acr.browser.lightning.utils.UrlUtils.guessFileName;
  */
 @Singleton
 public class DownloadHandler {
-
-    private static final String TAG = "DownloadHandler";
-
     private static final String COOKIE_REQUEST_HEADER = "Cookie";
     private static final String REFERER_REQUEST_HEADER = "Referer";
     private static final String USERAGENT_REQUEST_HEADER = "User-Agent";
@@ -66,7 +63,6 @@ public class DownloadHandler {
     private final Scheduler databaseScheduler;
     private final Scheduler networkScheduler;
     private final Scheduler mainScheduler;
-    private final Logger logger;
 
     long iDownloadId = 0;
     String iFilename="";
@@ -77,14 +73,12 @@ public class DownloadHandler {
                            DownloadManager downloadManager,
                            @DatabaseScheduler Scheduler databaseScheduler,
                            @NetworkScheduler Scheduler networkScheduler,
-                           @MainScheduler Scheduler mainScheduler,
-                           Logger logger) {
+                           @MainScheduler Scheduler mainScheduler) {
         this.downloadsRepository = downloadsRepository;
         this.downloadManager = downloadManager;
         this.databaseScheduler = databaseScheduler;
         this.networkScheduler = networkScheduler;
         this.mainScheduler = mainScheduler;
-        this.logger = logger;
     }
 
     /**
@@ -101,10 +95,10 @@ public class DownloadHandler {
     public void onDownloadStart(@NonNull Activity context, @NonNull UserPreferences manager, @NonNull String url, String userAgent,
                                 @Nullable String contentDisposition, String mimeType, @NonNull String contentSize) {
 
-        logger.log(TAG, "DOWNLOAD: Trying to download from URL: " + url);
-        logger.log(TAG, "DOWNLOAD: Content disposition: " + contentDisposition);
-        logger.log(TAG, "DOWNLOAD: MimeType: " + mimeType);
-        logger.log(TAG, "DOWNLOAD: User agent: " + userAgent);
+        Timber.d("DOWNLOAD: Trying to download from URL: %s", url);
+        Timber.d("DOWNLOAD: Content disposition: %s", contentDisposition);
+        Timber.d("DOWNLOAD: MimeType: %s", mimeType);
+        Timber.d("DOWNLOAD: User agent: %s", userAgent);
 
         // if we're dealing wih A/V content that's not explicitly marked
         // for download, check if it's streamable.
@@ -221,7 +215,7 @@ public class DownloadHandler {
         } catch (Exception e) {
             // This only happens for very bad urls, we want to catch the
             // exception here
-            logger.log(TAG, "Exception while trying to parse url '" + url + '\'', e);
+            Timber.e(e, "Exception while trying to parse url '" + url + '\'');
             ba.showSnackbar( R.string.problem_download);
             return;
         }
@@ -249,7 +243,7 @@ public class DownloadHandler {
             return;
         }
         String newMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(Utils.guessFileExtension(iFilename));
-        logger.log(TAG, "New mimetype: " + newMimeType);
+        Timber.d("New mimetype: %s", newMimeType);
         request.setMimeType(newMimeType);
         request.setDestinationUri(Uri.parse(Constants.FILE + location + iFilename));
         // let this downloaded file be scanned by MediaScanner - so that it can
@@ -268,7 +262,7 @@ public class DownloadHandler {
 
         //noinspection VariableNotUsedInsideIf
         if (mimetype == null) {
-            logger.log(TAG, "Mimetype is null");
+            Timber.d("Mimetype is null");
             if (TextUtils.isEmpty(addressString)) {
                 return;
             }
@@ -294,12 +288,12 @@ public class DownloadHandler {
                     }
                 });
         } else {
-            logger.log(TAG, "Valid mimetype, attempting to download");
+            Timber.d("Valid mimetype, attempting to download");
             try {
                 iDownloadId = downloadManager.enqueue(request);
             } catch (IllegalArgumentException e) {
                 // Probably got a bad URL or something
-                logger.log(TAG, "Unable to enqueue request", e);
+                Timber.e(e,"Unable to enqueue request");
                 ba.showSnackbar( R.string.cannot_download);
             } catch (SecurityException e) {
                 // TODO write a download utility that downloads files rather than rely on the system
@@ -318,7 +312,7 @@ public class DownloadHandler {
                 .subscribeOn(databaseScheduler)
                 .subscribe(aBoolean -> {
                     if (!aBoolean) {
-                        logger.log(TAG, "error saving download to database");
+                        Timber.d("error saving download to database");
                     }
                 });
         }

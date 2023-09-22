@@ -1,7 +1,6 @@
 package acr.browser.lightning.search
 
 import acr.browser.lightning.di.SuggestionsClient
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.search.engine.*
 import acr.browser.lightning.search.suggestions.*
@@ -20,8 +19,7 @@ class SearchEngineProvider @Inject constructor(
     private val userPreferences: UserPreferences,
     @SuggestionsClient private val okHttpClient: Single<OkHttpClient>,
     private val requestFactory: RequestFactory,
-    private val application: Application,
-    private val logger: Logger
+    private val application: Application
 ) {
 
     /**
@@ -30,11 +28,11 @@ class SearchEngineProvider @Inject constructor(
     fun provideSearchSuggestions(): SuggestionsRepository =
         when (userPreferences.searchSuggestionChoice) {
             0 -> NoOpSuggestionsRepository()
-            1 -> GoogleSuggestionsModel(okHttpClient, requestFactory, application, logger, userPreferences)
-            2 -> DuckSuggestionsModel(okHttpClient, requestFactory, application, logger, userPreferences)
-            3 -> BaiduSuggestionsModel(okHttpClient, requestFactory, application, logger, userPreferences)
-            4 -> NaverSuggestionsModel(okHttpClient, requestFactory, application, logger, userPreferences)
-            else -> GoogleSuggestionsModel(okHttpClient, requestFactory, application, logger, userPreferences)
+            1 -> GoogleSuggestionsModel(okHttpClient, requestFactory, application, userPreferences)
+            2 -> DuckSuggestionsModel(okHttpClient, requestFactory, application, userPreferences)
+            3 -> BaiduSuggestionsModel(okHttpClient, requestFactory, application, userPreferences)
+            4 -> NaverSuggestionsModel(okHttpClient, requestFactory, application, userPreferences)
+            else -> GoogleSuggestionsModel(okHttpClient, requestFactory, application, userPreferences)
         }
 
     /**

@@ -2,13 +2,13 @@ package acr.browser.lightning.search.suggestions
 
 import acr.browser.lightning.database.SearchSuggestion
 import acr.browser.lightning.extensions.safeUse
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import io.reactivex.Single
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.ResponseBody
+import timber.log.Timber
 import java.io.IOException
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -23,7 +23,6 @@ abstract class BaseSuggestionsModel internal constructor(
     private val requestFactory: RequestFactory,
     private val encoding: String,
     locale: Locale,
-    private val logger: Logger,
     private val userPreferences: UserPreferences
 ) : SuggestionsRepository {
 
@@ -52,7 +51,7 @@ abstract class BaseSuggestionsModel internal constructor(
                 val query = try {
                     URLEncoder.encode(rawQuery, encoding)
                 } catch (throwable: UnsupportedEncodingException) {
-                    logger.log(TAG, "Unable to encode the URL", throwable)
+                    Timber.e(throwable, "Unable to encode the URL")
 
                     return@fromCallable emptyList<SearchSuggestion>()
                 }
@@ -78,14 +77,12 @@ abstract class BaseSuggestionsModel internal constructor(
         return try {
             newCall(request).execute()
         } catch (exception: IOException) {
-            logger.log(TAG, "Problem getting search suggestions", exception)
+            Timber.e(exception, "Problem getting search suggestions")
             null
         }
     }
 
     companion object {
-
-        private const val TAG = "BaseSuggestionsModel"
 
         private const val DEFAULT_LANGUAGE = "en"
 

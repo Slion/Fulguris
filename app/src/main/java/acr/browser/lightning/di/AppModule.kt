@@ -12,9 +12,6 @@ import acr.browser.lightning.js.InvertPage
 import acr.browser.lightning.js.TextReflow
 import acr.browser.lightning.js.ThemeColor
 import acr.browser.lightning.js.SetMetaViewport
-import acr.browser.lightning.log.AndroidLogger
-import acr.browser.lightning.log.Logger
-import acr.browser.lightning.log.NoOpLogger
 import acr.browser.lightning.search.suggestions.RequestFactory
 import acr.browser.lightning.utils.FileUtils
 import android.app.Application
@@ -174,14 +171,6 @@ class AppModule {
             .addNetworkInterceptor(createInterceptorWithMaxCacheAge(intervalDay))
             .build()
     }.cache()
-
-    @Provides
-    @Singleton
-    fun provideLogger(buildInfo: BuildInfo): Logger = if (buildInfo.buildType == BuildType.DEBUG) {
-        AndroidLogger()
-    } else {
-        NoOpLogger()
-    }
 
     @Provides
     @Singleton

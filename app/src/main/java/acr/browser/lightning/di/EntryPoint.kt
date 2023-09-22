@@ -15,7 +15,6 @@ import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.js.InvertPage
 import acr.browser.lightning.js.SetMetaViewport
 import acr.browser.lightning.js.TextReflow
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.network.NetworkConnectivityModel
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -54,7 +53,6 @@ interface HiltEntryPoint {
     val searchEngineProvider: SearchEngineProvider
     val proxyUtils: ProxyUtils
     val sslWarningPreferences: SslWarningPreferences
-    val logger: Logger
     val textReflowJs: TextReflow
     val invertPageJs: InvertPage
     val setMetaViewport: SetMetaViewport

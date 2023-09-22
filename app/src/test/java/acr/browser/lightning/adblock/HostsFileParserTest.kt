@@ -2,7 +2,6 @@ package acr.browser.lightning.adblock
 
 import acr.browser.lightning.adblock.parser.HostsFileParser
 import acr.browser.lightning.database.adblock.Host
-import acr.browser.lightning.log.NoOpLogger
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.io.InputStreamReader
@@ -35,7 +34,7 @@ class HostsFileParserTest {
             """
 
         val inputStreamReader = InputStreamReader(testInput.trimIndent().byteInputStream())
-        val hostsFileParser = HostsFileParser(NoOpLogger())
+        val hostsFileParser = HostsFileParser()
         val mutableList = hostsFileParser.parseInput(inputStreamReader)
         val targetList = listOf(
             Host("fake.domain1.com"),

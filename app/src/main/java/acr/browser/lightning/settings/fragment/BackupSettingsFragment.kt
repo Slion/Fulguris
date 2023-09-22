@@ -33,7 +33,6 @@ import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.*
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
@@ -77,7 +76,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     @Inject internal lateinit var legacyBookmarkImporter: LegacyBookmarkImporter
     @Inject @DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
     @Inject @MainScheduler internal lateinit var mainScheduler: Scheduler
-    @Inject internal lateinit var logger: Logger
 
     // Need those to implement settings reset
     @Inject @UserPrefs lateinit var prefsUser: SharedPreferences
@@ -211,7 +209,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         try {
             file.mkdirs()
         } catch (e: SecurityException) {
-            logger.log(TAG, "Unable to make directory", e)
+            Timber.e(e, "Unable to make directory")
         }
 
         return (if (file.exists()) {
@@ -352,7 +350,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                                         }
                                     },
                                     onError = { throwable ->
-                                        logger.log(TAG, "onError: exporting bookmarks", throwable)
+                                        Timber.e(throwable,"onError: exporting bookmarks")
                                         val activity = activity
                                         if (activity != null && !activity.isFinishing && isAdded) {
                                             Utils.createInformativeDialog(activity, R.string.title_error, R.string.bookmark_export_failure)
@@ -667,8 +665,6 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     }
 
     companion object {
-
-        private const val TAG = "BookmarkSettingsFrag"
 
         private const val SETTINGS_EXPORT = "export_bookmark"
         private const val SETTINGS_IMPORT = "import_bookmark"

@@ -4,7 +4,6 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlocker.Companion.addHeader
 import acr.browser.lightning.adblock.AbpBlocker.Companion.removeHeader
 import acr.browser.lightning.constant.FILE
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.isAppScheme
 import acr.browser.lightning.utils.isSpecialUrl
@@ -35,6 +34,7 @@ import okhttp3.*
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.internal.publicsuffix.PublicSuffix
 import okhttp3.internal.toHeaderList
+import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.IOException
@@ -50,7 +50,6 @@ class AbpBlockerManager @Inject constructor(
     abpListUpdater: AbpListUpdater,
     abpUserRules: AbpUserRules,
     val userPreferences: UserPreferences,
-    private val logger: Logger
 ) : AdBlocker {
 
     // use a map of filterContainers instead of several separate containers
@@ -246,11 +245,11 @@ class AbpBlockerManager @Inject constructor(
                     // connection problems
                     // problems when building okhttp Request
                     // problems when creating WebResourceResponse
-                    logger.log(TAG, "error while doing modified request for ${response.url}: ", e)
+                    Timber.e(e,"error while doing modified request for ${response.url}: ")
                     return null // allow webview to try again, even though this should be modified...
                 }
             }
-            else -> logger.log(TAG, "unknown blocker response type: ${response.javaClass}")
+            else -> Timber.d("unknown blocker response type: ${response.javaClass}")
         }
         return null
     }
@@ -281,7 +280,7 @@ class AbpBlockerManager @Inject constructor(
             ABP_PREFIX_IMPORTANT -> application.resources.getString(R.string.page_blocked_list_malware, pattern)
             ABP_PREFIX_DENY -> application.resources.getString(R.string.page_blocked_list_ad, pattern) // should only be ABP_PREFIX_DENY
             else -> {
-                logger.log(TAG, "unexpected blocklist when creating main frame dummy: $blockList")
+                Timber.d("unexpected blocklist when creating main frame dummy: $blockList")
                 application.resources.getString(R.string.page_blocked_list_ad, pattern)
             }
         }
@@ -366,8 +365,6 @@ class AbpBlockerManager @Inject constructor(
         val badfilterPrefixes = blockerPrefixes.map { ABP_PREFIX_BADFILTER + it}
 
         fun isModify(prefix: String) = prefix in listOf(ABP_PREFIX_MODIFY, ABP_PREFIX_MODIFY_EXCEPTION, ABP_PREFIX_REDIRECT, ABP_PREFIX_REDIRECT_EXCEPTION)
-
-        private const val TAG = "AbpBlocker"
 
         private val okHttpAcceptedSchemes = listOf("https", "http", "ws", "wss")
 

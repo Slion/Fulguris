@@ -25,7 +25,6 @@ package acr.browser.lightning.settings.fragment
 import acr.browser.lightning.R
 import acr.browser.lightning.constant.PrefKeys
 import acr.browser.lightning.device.ScreenSize
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.ConfigurationPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
 import android.os.Bundle
@@ -33,6 +32,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.TwoStatePreference
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -42,7 +42,6 @@ import javax.inject.Inject
 abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject internal lateinit var logger: Logger
     @Inject internal lateinit var screenSize: ScreenSize
 
     override fun providePreferencesXmlResource() = R.xml.preference_configuration
@@ -90,7 +89,7 @@ abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
     fun setDefaultIfNeeded(aKey: String, aValue: Any) {
         if (preferenceManager.sharedPreferences!!.contains(aKey)) {
             // User defined to settings option, no need to initialize it's default then
-            logger.log(TAG,"User defined: " + aKey)
+            Timber.d("User defined: $aKey")
         } else {
             // There is no user defined value for this preference therefore we need to set it's value to the default one
             // TODO: extend this if we need to support new kind of preferences or value types
@@ -114,7 +113,4 @@ abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
 
     }
 
-    companion object {
-        private const val TAG = "ConfigurationSettingsFragment"
-    }
 }

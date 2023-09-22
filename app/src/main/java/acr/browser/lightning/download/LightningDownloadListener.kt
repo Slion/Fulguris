@@ -12,7 +12,6 @@ import acr.browser.lightning.dialog.BrowserDialog.setDialogSize
 import acr.browser.lightning.extensions.KDuration
 import acr.browser.lightning.extensions.makeSnackbar
 import acr.browser.lightning.extensions.snackbar
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.guessFileName
@@ -36,6 +35,7 @@ import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
 import fulguris.app
+import timber.log.Timber
 
 //@AndroidEntryPoint
 class LightningDownloadListener     //Injector.getInjector(context).inject(this);
@@ -49,7 +49,6 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
     val downloadHandler: DownloadHandler = hiltEntryPoint.downloadHandler
     val downloadManager: DownloadManager = hiltEntryPoint.downloadManager
     val downloadsRepository: DownloadsRepository = hiltEntryPoint.downloadsRepository
-    val logger: Logger = hiltEntryPoint.logger
 
     // From BroadcastReceiver
     // We use this to receive download complete notifications
@@ -225,13 +224,7 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
                 dialogClickListener
             ).show()
         setDialogSize(mActivity, dialog)
-        logger.log(
-            TAG,
-            "Downloading: $fileName"
-        )
+        Timber.d("Downloading: $fileName")
     }
 
-    companion object {
-        private const val TAG = "LightningDownloader"
-    }
 }
