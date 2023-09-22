@@ -2,16 +2,14 @@ package acr.browser.lightning.adblock.parser
 
 import acr.browser.lightning.database.adblock.Host
 import acr.browser.lightning.extensions.*
-import acr.browser.lightning.log.Logger
+import timber.log.Timber
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 /**
  * A single threaded parser for a hosts file.
  */
-class HostsFileParser(
-    private val logger: Logger
-) {
+class HostsFileParser {
 
     private val lineBuilder = StringBuilder()
 
@@ -30,7 +28,7 @@ class HostsFileParser(
             }
         }
 
-        logger.log(TAG, "Parsed ad list in: ${(System.currentTimeMillis() - time)} ms")
+        Timber.d("Parsed ad list in: ${(System.currentTimeMillis() - time)} ms")
 
         return domains
     }
@@ -84,7 +82,6 @@ class HostsFileParser(
     }
 
     companion object {
-        private const val TAG = "HostsFileParser"
 
         private const val LOCAL_IP_V4 = "127.0.0.1"
         private const val LOCAL_IP_V4_ALT = "0.0.0.0"

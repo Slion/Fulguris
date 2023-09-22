@@ -16,7 +16,6 @@ import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
 import acr.browser.lightning.extensions.*
 import acr.browser.lightning.isSupported
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.network.NetworkConnectivityModel
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import acr.browser.lightning.settings.preferences.DomainPreferences

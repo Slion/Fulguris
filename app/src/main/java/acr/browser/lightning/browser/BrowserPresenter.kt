@@ -12,7 +12,6 @@ import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.html.bookmark.BookmarkPageFactory
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.html.incognito.IncognitoPageFactory
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.isSpecialUrl
@@ -37,8 +36,7 @@ class BrowserPresenter @Inject constructor(
     private val userPreferences: UserPreferences,
     private val homePageFactory: HomePageFactory,
     private val incognitoPageFactory: IncognitoPageFactory,
-    private val bookmarkPageFactory: BookmarkPageFactory,
-    private val logger: Logger
+    private val bookmarkPageFactory: BookmarkPageFactory
 ): fulguris.Component() {
 
     private var currentTab: LightningView? = null
@@ -121,7 +119,7 @@ class BrowserPresenter @Inject constructor(
      * [aGoingBack] Tells in which direction we are going, this can help determine what kind of tab animation will be used.
      */
     private fun onTabChanged(aTab: LightningView, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
-        logger.log(TAG, "On tab changed")
+        Timber.d("On tab changed")
 
         currentTab?.let {
             // TODO: Restore this when Google fixes the bug where the WebView is
@@ -200,7 +198,7 @@ class BrowserPresenter @Inject constructor(
      * @param position the position at which to delete the tab.
      */
     fun deleteTab(position: Int) {
-        logger.log(TAG, "deleting tab...")
+        Timber.d("deleting tab...")
         val tabToDelete = tabsModel.getTabAtPosition(position) ?: return
 
         closedTabs.add(tabToDelete.saveState())
@@ -231,7 +229,7 @@ class BrowserPresenter @Inject constructor(
 
         iBrowserView.updateTabNumber(tabsModel.size())
 
-        logger.log(TAG, "...deleted tab")
+        Timber.d("...deleted tab")
     }
 
     /**
@@ -322,11 +320,11 @@ class BrowserPresenter @Inject constructor(
      */
     fun tabChanged(position: Int, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
         if (position < 0 || position >= tabsModel.size()) {
-            logger.log(TAG, "tabChanged invalid position: $position")
+            Timber.d("tabChanged invalid position: $position")
             return
         }
 
-        logger.log(TAG, "tabChanged: $position")
+        Timber.d("tabChanged: $position")
         onTabChanged(tabsModel.switchToTab(position),false, aPreviousTabClosed, aGoingBack)
     }
 
@@ -347,7 +345,7 @@ class BrowserPresenter @Inject constructor(
             //return false
         }
 
-        logger.log(TAG, "New tab, show: $show")
+        Timber.d("New tab, show: $show")
 
         val startingTab = tabsModel.newTab(iBrowserView as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
         if (tabsModel.size() == 1) {
@@ -374,10 +372,6 @@ class BrowserPresenter @Inject constructor(
 
     fun onAutoCompleteItemPressed() {
         tabsModel.currentTab?.requestFocus()
-    }
-
-    companion object {
-        private const val TAG = "BrowserPresenter"
     }
 
 }

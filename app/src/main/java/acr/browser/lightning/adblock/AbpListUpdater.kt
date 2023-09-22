@@ -21,7 +21,6 @@ import acr.browser.lightning.adblock.AbpBlockerManager.Companion.blockerPrefixes
 import acr.browser.lightning.adblock.AbpBlockerManager.Companion.isModify
 import acr.browser.lightning.adblock.parser.HostsFileParser
 import acr.browser.lightning.extensions.toast
-import acr.browser.lightning.log.Logger
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.settings.preferences.userAgent
 import android.app.Application
@@ -64,7 +63,6 @@ class AbpListUpdater @Inject constructor(val context: Context) {
     }
 
     @Inject internal lateinit var userPreferences: UserPreferences
-    @Inject internal lateinit var logger: Logger
 
     val abpDao = AbpDao(context)
 
@@ -197,7 +195,7 @@ class AbpListUpdater @Inject constructor(val context: Context) {
 
         if (!decoder.checkHeader(reader, charset)) {
             // no adblock plus format, try hosts reader
-            val parser = HostsFileParser(logger)
+            val parser = HostsFileParser()
             // use StartEndFilter, which also matches subdomains
             //  not strictly according to hosts rules, but uBlock does the same (and it makes sense)
             val hostsList = parser.parseInput(reader).map {
