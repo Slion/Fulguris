@@ -220,7 +220,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private lateinit var bookmarksDialog: BottomSheetDialog
 
     // Options settings menu
-    private val iBottomSheet = BottomSheetDialogFragment(supportFragmentManager)
+    val iBottomSheet = BottomSheetDialogFragment(supportFragmentManager)
 
     // Binding
     lateinit var iBinding: ActivityMainBinding
@@ -538,7 +538,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             //
             onMenuItemClicked(iBinding.menuItemSettings) { dismiss(); executeAction(R.id.action_settings) }
             onMenuItemClicked(iBinding.menuItemOptions) {
-                dismiss();
+                dismiss()
                 app.domain = currentHost()
                 iBottomSheet.setLayout(R.layout.fragment_settings_options).show()
             }
@@ -554,6 +554,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // Make it full screen gesture friendly
             setOnDismissListener { justClosedMenuCountdown() }
         }
+    }
+
+    /**
+     * Show settings for the provided domain
+     */
+    fun showDomainSettings(aDomain: String) {
+        app.domain = aDomain
+        iBottomSheet.setLayout(R.layout.fragment_settings_domain).show()
     }
 
     /**

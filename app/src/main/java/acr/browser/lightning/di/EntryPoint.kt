@@ -18,7 +18,6 @@ import acr.browser.lightning.js.TextReflow
 import acr.browser.lightning.network.NetworkConnectivityModel
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.preferences.UserPreferences
-import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.ProxyUtils
 import acr.browser.lightning.view.webrtc.WebRtcPermissionsModel
 import android.app.DownloadManager
@@ -52,7 +51,6 @@ interface HiltEntryPoint {
     @MainScheduler fun mainScheduler(): Scheduler
     val searchEngineProvider: SearchEngineProvider
     val proxyUtils: ProxyUtils
-    val sslWarningPreferences: SslWarningPreferences
     val textReflowJs: TextReflow
     val invertPageJs: InvertPage
     val setMetaViewport: SetMetaViewport

@@ -400,10 +400,8 @@ class UserPreferences @Inject constructor(
     var incognito by preferences.booleanPreference(R.string.pref_key_always_incognito, R.bool.pref_default_always_incognito)
 
     /**
-     * SSL Warn Dialog
+     *
      */
-    var ssl by preferences.booleanPreference(R.string.pref_key_ssl_dialog, R.bool.pref_default_ssl_dialog)
-
     var imageUrlString by preferences.stringPreference(R.string.pref_key_image_url, "")
 
     /**

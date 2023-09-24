@@ -10,8 +10,6 @@ import acr.browser.lightning.database.downloads.DownloadsDatabase
 import acr.browser.lightning.database.downloads.DownloadsRepository
 import acr.browser.lightning.database.history.HistoryDatabase
 import acr.browser.lightning.database.history.HistoryRepository
-import acr.browser.lightning.ssl.SessionSslWarningPreferences
-import acr.browser.lightning.ssl.SslWarningPreferences
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -36,9 +34,6 @@ interface AppBindsModule {
 
     @Binds
     fun bindsHistoryModel(historyDatabase: HistoryDatabase): HistoryRepository
-
-    @Binds
-    fun bindsSslWarningPreferences(sessionSslWarningPreferences: SessionSslWarningPreferences): SslWarningPreferences
 
     @Binds
     fun bindsAbpRulesRepository(apbRulesDatabase: UserRulesDatabase): UserRulesRepository

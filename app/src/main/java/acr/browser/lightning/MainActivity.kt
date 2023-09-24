@@ -75,7 +75,17 @@ class MainActivity @Inject constructor(): BrowserActivity(), PreferenceFragmentC
 
         // No actual fragment specified, just a back action
         if (preference.fragment == "back") {
-            fragmentManager.popBackStack()
+            if (fragmentManager.backStackEntryCount >=1) {
+                // Go back to previous fragment if any
+                fragmentManager.popBackStack()
+            } else {
+                // Close our bottom sheet if not previous fragment
+                // Needed for the case where we jump directly to a domain settings without going through option
+                // Notably happening when security error is set to no and snackbar action is shown
+                // Actually should not be needed now that we hide the back button in that case.
+                iBottomSheet.dismiss()
+            }
+
             return true
         }
 

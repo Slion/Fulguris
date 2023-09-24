@@ -2,6 +2,8 @@
 
 package acr.browser.lightning.extensions
 
+// For comments links
+
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -9,10 +11,9 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import java.util.*
 
-// For comments links
-import androidx.preference.PreferenceManager
 
 /**
  * Returns the dimension in pixels.
@@ -82,4 +83,9 @@ fun Context.landscapeSharedPreferencesName(): String {
     return packageName + "_preferences_landscape"
 }
 
-
+/**
+ * Allows us to have rich text and variable interpolation.
+ */
+fun Context.getText(@StringRes id: Int, vararg args: Any?): CharSequence? {
+    return ContextUtils.getText(this,id,*args)
+}

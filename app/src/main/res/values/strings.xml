@@ -94,6 +94,8 @@
     <string name="action_yes">Yes</string>
     <string name="action_no">No</string>
     <string name="action_ask">Ask</string>
+    <string name="action_proceed">Proceed</string>
+    <string name="action_abort">Abort</string>
     <string name="title_text_size">Text size</string>
     <string name="size_largest">Largest</string>
     <string name="size_large">Large</string>
@@ -206,7 +208,9 @@
 
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">Don\'t ask again for this browsing session.</string>
+    <string name="message_ssl_error_aborted">Security error!\nPage loading aborted.</string>
     <string name="message_insecure_connection">Connection to this site is not secure:\n%1$s\nProceed anyway?</string>
+    <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Date of certificate is invalid</string>
     <string name="message_certificate_expired">Certificate is expired</string>
     <string name="message_certificate_domain_mismatch">Domain in certificate does not match the site domain</string>
@@ -517,6 +521,9 @@
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_summary_default_domain_settings">Default domain settings</string>
+    <string name="settings_title_ssl_error">Security error</string>
+    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
+    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
 
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>

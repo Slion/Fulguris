@@ -66,8 +66,11 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(providePreferencesXmlResource(),rootKey)
         prefGroup = preferenceScreen
 
-        if (activity is SettingsActivity) {
-            // Hide back button preference in settings activity
+        // Hide back button preference in settings activity
+        if (activity is SettingsActivity
+            // Also hide back button when there is nothing to go back to
+            // Notably the case when SSL error settings is set to abort and snackbar is shown with direct access to domain settings
+            || parentFragmentManager.backStackEntryCount == 0) {
             // Back buttons are there for navigation in options menu bottom sheet
             findPreference<Preference>(getString(R.string.pref_key_back))?.isVisible = false
         }

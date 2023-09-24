@@ -148,6 +148,17 @@ class DomainPreferences constructor(
     val launchApp: NoYesAsk get() { return if (isDefault || !launchAppOverride) { launchAppParent } else { launchAppLocal } }
 
     /**
+     * Define what to do when an SSL error is detected
+     * - Yes: Proceed anyway
+     * - No: Abort
+     * - Ask: Ask the user whether to proceed or abort
+     */
+    var sslErrorOverride by preferences.booleanPreference(R.string.pref_key_ssl_error_override, false)
+    var sslErrorLocal by preferences.enumPreference(R.string.pref_key_ssl_error, NoYesAsk.ASK)
+    val sslErrorParent: NoYesAsk get() { return parent?.sslError ?: sslErrorLocal}
+    val sslError: NoYesAsk get() { return if (isDefault || !sslErrorOverride) { sslErrorParent } else { sslErrorLocal } }
+
+    /**
      * Is this the default domain settings?
      */
     val isDefault: Boolean get() = domain==""

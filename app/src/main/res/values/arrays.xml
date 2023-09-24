@@ -59,6 +59,12 @@
         <item>@string/action_ask</item>
     </string-array>
 
+    <string-array name="AbortProceedAsk">
+        <item>@string/action_abort</item>
+        <item>@string/action_proceed</item>
+        <item>@string/action_ask</item>
+    </string-array>
+
     <string-array name="LogLevel">
         <item>@string/log_level_verbose</item>
         <item>@string/log_level_debug</item>

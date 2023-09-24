@@ -23,12 +23,18 @@
 package acr.browser.lightning.extensions
 
 import acr.browser.lightning.R
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.appcompat.content.res.AppCompatResources
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -64,4 +70,30 @@ fun Snackbar.addAction(@LayoutRes aLayoutId: Int, aLabel: String, aListener: Vie
     //extraView.setOnClickListener {this.dispatchDismiss(BaseCallback.DISMISS_EVENT_ACTION); aListener?.onClick(it)}
     button.setOnClickListener {this.dismiss(); aListener?.onClick(it)}
     return this;
+}
+
+/**
+ * Add an icon to this snackbar.
+ * See: https://stackoverflow.com/a/31829381/3969362
+ */
+fun Snackbar.setIcon(drawable: Drawable): Snackbar {
+    return this.apply {
+        //setAction(" ") {}
+        val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+        textView.compoundDrawablePadding = context.resources.getDimensionPixelOffset(com.google.android.material.R.dimen.m3_navigation_item_icon_padding);
+    }
+}
+
+/**
+ *  Add an icon to this snackbar.
+ */
+fun Snackbar.setIcon(@DrawableRes aIcon: Int): Snackbar {
+    return this.apply {
+        AppCompatResources.getDrawable(context, aIcon)?.let {
+            // Apply proper tint so that it works regardless of the theme
+            it.setTint(MaterialColors.getColor(context, com.google.android.material.R.attr.colorOnSurfaceInverse, Color.BLACK))
+            setIcon(it)
+        }
+    }
 }

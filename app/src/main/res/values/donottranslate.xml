@@ -123,7 +123,6 @@
     <string name="pref_key_image_url">pref_key_image_url</string>
     <string name="pref_key_long_click_tab">pref_key_long_click_tab</string>
     <string name="pref_key_search_suggestions_number">pref_key_search_suggestions_number</string>
-    <string name="pref_key_ssl_dialog">pref_key_ssl_dialog</string>
     <string name="pref_key_search_custom_image_url">pref_key_search_custom_image_url</string>
     <string name="pref_key_scrollbar_fading">pref_key_scrollbar_fading</string>
     <string name="pref_key_scrollbar_delay_before_fade">pref_key_scrollbar_delay_before_fade</string>
@@ -146,6 +145,9 @@
     <string name="pref_key_entry_point">pref_key_entry_point</string>
     <string name="pref_key_resource_domains">pref_key_resource_domains</string>
     <string name="pref_key_parent">pref_key_parent</string>
+    <string name="pref_key_ssl_error">pref_key_ssl_error</string>
+    <string name="pref_key_ssl_error_override">pref_key_ssl_error_override</string>
+
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>

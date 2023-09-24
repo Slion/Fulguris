@@ -20,7 +20,7 @@
  All portions of the code written by Stéphane Lenclud are Copyright © 2023 Stéphane Lenclud.
  All Rights Reserved.
 -->
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:a="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -168,6 +168,33 @@
 
     </acr.browser.lightning.settings.preferences.PreferenceCategoryEx>
 
+    <acr.browser.lightning.settings.preferences.PreferenceCategoryEx
+        a:title="@string/settings_title_ssl_error"
+        a:summary="@string/settings_summary_ssl_error">
+
+        <SwitchPreferenceCompat
+            a:defaultValue="false"
+            a:key="@string/pref_key_ssl_error_override"
+            a:title="@string/settings_title_override"
+            a:summaryOn="@string/settings_summary_on_override"
+            a:summaryOff="@string/settings_summary_off_override"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false" />
+
+        <fulguris.preference.EnumListPreference
+            a:key="@string/pref_key_ssl_error"
+            a:title="@string/settings_title_ssl_error"
+            a:useSimpleSummaryProvider="true"
+            a:defaultValue="ASK"
+            a:entries="@array/AbortProceedAsk"
+            a:icon="@drawable/ic_unsecured"
+            a:singleLineTitle="false"
+            a:enumClassName="acr.browser.lightning.settings.NoYesAsk"
+            a:dependency="@string/pref_key_ssl_error_override"
+            />
+
+    </acr.browser.lightning.settings.preferences.PreferenceCategoryEx>
+
     <SwitchPreferenceCompat
         a:key="@string/pref_key_entry_point"
         a:title="@string/settings_title_category"
@@ -190,4 +217,4 @@
 
 
 
-</androidx.preference.PreferenceScreen>
+</PreferenceScreen>

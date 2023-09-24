@@ -6,14 +6,16 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlockerManager
 import acr.browser.lightning.adblock.AdBlocker
 import acr.browser.lightning.adblock.NoOpAdBlocker
-import acr.browser.lightning.browser.JavaScriptChoice
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
+import acr.browser.lightning.extensions.getText
 import acr.browser.lightning.extensions.ihs
+import acr.browser.lightning.extensions.makeSnackbar
 import acr.browser.lightning.extensions.resizeAndShow
+import acr.browser.lightning.extensions.setIcon
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.js.InvertPage
@@ -23,7 +25,6 @@ import acr.browser.lightning.settings.NoYesAsk
 import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslState
-import acr.browser.lightning.ssl.SslWarningPreferences
 import acr.browser.lightning.utils.*
 import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTries
 import android.annotation.SuppressLint
@@ -38,6 +39,7 @@ import android.net.Uri
 import android.net.http.SslError
 import android.os.Message
 import android.util.Base64
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.webkit.*
 import android.widget.CheckBox
@@ -72,7 +74,6 @@ class LightningWebClient(
     val proxyUtils: ProxyUtils = hiltEntryPoint.proxyUtils
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
     val preferences: SharedPreferences = hiltEntryPoint.userSharedPreferences()
-    val sslWarningPreferences: SslWarningPreferences = hiltEntryPoint.sslWarningPreferences
     val textReflowJs: TextReflow = hiltEntryPoint.textReflowJs
     val invertPageJs: InvertPage = hiltEntryPoint.invertPageJs
     val setMetaViewport: SetMetaViewport = hiltEntryPoint.setMetaViewport
@@ -82,7 +83,9 @@ class LightningWebClient(
 
     private var adBlock: AdBlocker
 
-    private var urlWithSslError: String? = null
+    // Needed this to keep track of all SSL error since it seems onReceivedSslError is not called again after you proceed
+    // We use this list to make sure our SSL state is maintained correctly after navigating away and back between various SSL error pages
+    private var sslErrorUrls = arrayListOf<String>()
 
     @Volatile private var isRunning = false
     private var zoomScale = 0.0f
@@ -272,10 +275,13 @@ class LightningWebClient(
             }
         }
 
-
         // Only set the SSL state if there isn't an error for the current URL.
-        if (urlWithSslError != url) {
-            sslState = if (URLUtil.isHttpsUrl(url)) {
+        sslState = if (sslErrorUrls.contains(url)) {
+            // We know this URL has an invalid certificate
+            SslState.Invalid
+        } else {
+            // This URL has either a valid certificate or none
+            if (URLUtil.isHttpsUrl(url)) {
                 SslState.Valid
             } else {
                 SslState.None
@@ -346,7 +352,7 @@ class LightningWebClient(
         //"android.resource://${BuildConfig.APPLICATION_ID}/${R.drawable.ic_about}"
         //"file:///android_res/drawable/ic_about"
 
-        Timber.d("onReceivedError: ${domainPreferences.domain}")
+        Timber.e("onReceivedError: ${domainPreferences.domain}")
 
         // Avoid polluting our domain settings from missed typed URLs
         if (domainPreferences.wasCreated) {
@@ -403,37 +409,54 @@ class LightningWebClient(
         }
     }
 
+    /**
+     * Looks like this comes after our domain preferences have been loaded.
+     * It seems if we proceed once for one issue that callback won't be called again, unless you restart the app.
+     * NOTE: Test that stuff from https://badssl.com
+     *
+     * [webView] Points to the URL we are coming from
+     * [error] Points to the URL we are going to
+     */
+    @SuppressLint("WebViewClientOnReceivedSslError")
     override fun onReceivedSslError(webView: WebView, handler: SslErrorHandler, error: SslError) {
-        val urlMatcher = webView.url?.replace(Regex("^https?:\\/\\/"), "")
-        if (!urlMatcher?.let { error.url.contains(it) }!!) {
-            handler.proceed()
-            webView.url?.let { sslWarningPreferences.rememberBehaviorForDomain(it, SslWarningPreferences.Behavior.PROCEED) }
+        Timber.d("onReceivedSslError")
+        Timber.e("WebView URL: ${webView.url}")
+        Timber.e("SSL error URL: ${error.url}")
+
+        if (!sslErrorUrls.contains(error.url)) {
+            sslErrorUrls.add(error.url)
         }
 
-        urlWithSslError = webView.url
-        sslState = SslState.Invalid(error)
-
-        when (sslWarningPreferences.recallBehaviorForDomain(webView.url)) {
-            SslWarningPreferences.Behavior.PROCEED -> return handler.proceed()
-            SslWarningPreferences.Behavior.CANCEL -> return handler.cancel()
-            null -> Unit
+        when (domainPreferences.sslError) {
+            NoYesAsk.YES -> return handler.proceed()
+            NoYesAsk.NO -> {
+                // TODO: Add a button to open proper domain settings
+                //activity.snackbar(activity.getString(R.string.message_ssl_error_aborted, domainPreferences.domain))
+                // Capture error domain cause it will have changed by the time we run the action
+                val errorDomain = domainPreferences.domain
+                activity.makeSnackbar(activity.getString(R.string.message_ssl_error_aborted),5000, Gravity.BOTTOM)
+                    .setIcon(R.drawable.ic_unsecured)
+                    .setAction(R.string.settings) {
+                        (activity as? BrowserActivity)?.showDomainSettings(errorDomain)
+                    }
+                    .show()
+                return handler.cancel()
+            }
+            else -> {}
         }
+
+        // Ask user what to do then
 
         val errorCodeMessageCodes = getAllSslErrorMessageCodes(error)
 
         val stringBuilder = StringBuilder()
         for (messageCode in errorCodeMessageCodes) {
-            stringBuilder.append(" - ").append(activity.getString(messageCode)).append('\n')
+            stringBuilder.append("❌ ").append(activity.getString(messageCode)).append("\n\n")
         }
-        val alertMessage = activity.getString(R.string.message_insecure_connection, stringBuilder.toString())
 
-        val ba = activity as BrowserActivity
-
-        if (!userPreferences.ssl) {
-            handler.proceed()
-            ba.snackbar(errorCodeMessageCodes[0])
-            return
-        }
+        // Our HTML conversion is a mess when it comes to new lines handling thus that trim and \n
+        // TODO: sort it out at some point
+        val alertMessage = activity.getText(R.string.message_ssl_error, domainPreferences.domain, stringBuilder.toString().trim() + "\n")?.trim()
 
         MaterialAlertDialogBuilder(activity).apply {
             val view = LayoutInflater.from(activity).inflate(R.layout.dialog_ssl_warning, null)
@@ -442,20 +465,34 @@ class LightningWebClient(
             setMessage(alertMessage)
             setCancelable(true)
             setView(view)
+            setIcon(R.drawable.ic_unsecured)
             setOnCancelListener { handler.cancel() }
             setPositiveButton(activity.getString(R.string.action_yes)) { _, _ ->
                 if (dontAskAgain.isChecked) {
-                    sslWarningPreferences.rememberBehaviorForDomain(webView.url as String, SslWarningPreferences.Behavior.PROCEED)
+                    applySslErrorToDomainSettings(NoYesAsk.YES)
                 }
                 handler.proceed()
             }
             setNegativeButton(activity.getString(R.string.action_no)) { _, _ ->
                 if (dontAskAgain.isChecked) {
-                    sslWarningPreferences.rememberBehaviorForDomain(webView.url as String, SslWarningPreferences.Behavior.CANCEL)
+                    applySslErrorToDomainSettings(NoYesAsk.NO)
                 }
                 handler.cancel()
             }
         }.resizeAndShow()
+    }
+
+    /**
+     * Persist user preference on SSL error to domain settings
+     */
+    private fun applySslErrorToDomainSettings(aSslError: NoYesAsk) {
+        // Defensive we should not change default domain settings
+        if (!domainPreferences.isDefault) {
+            domainPreferences.sslErrorOverride = true
+            domainPreferences.sslErrorLocal = aSslError
+        } else {
+            Timber.w("Domain settings should have been loaded already")
+        }
     }
 
     override fun onFormResubmission(view: WebView, dontResend: Message, resend: Message) {
@@ -492,6 +529,7 @@ class LightningWebClient(
             return
         }
 
+        Timber.d("loadDomainPreferences for $aHost")
         // Check if we need to load defaults
         if (lightningView.isIncognito && !DomainPreferences.exists(aHost)) {
             // Don't create new preferences when in incognito mode
@@ -691,6 +729,11 @@ class LightningWebClient(
             errorCodeMessageCodes.add(R.string.message_certificate_untrusted)
         }
         if (error.hasError(SslError.SSL_INVALID)) {
+            errorCodeMessageCodes.add(R.string.message_certificate_invalid)
+        }
+
+        // Used this to test layout of multiple errors in dialog
+        if (BuildConfig.DEBUG) {
             errorCodeMessageCodes.add(R.string.message_certificate_invalid)
         }
 

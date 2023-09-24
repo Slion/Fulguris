@@ -70,4 +70,15 @@
         a:enumClassName="acr.browser.lightning.settings.NoYesAsk"
         />
 
+    <fulguris.preference.EnumListPreference
+        a:key="@string/pref_key_ssl_error"
+        a:title="@string/settings_title_ssl_error"
+        a:useSimpleSummaryProvider="true"
+        a:defaultValue="ASK"
+        a:entries="@array/AbortProceedAsk"
+        a:icon="@drawable/ic_unsecured"
+        a:singleLineTitle="false"
+        a:enumClassName="acr.browser.lightning.settings.NoYesAsk"
+        />
+
 </androidx.preference.PreferenceScreen>
