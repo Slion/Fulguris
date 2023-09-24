@@ -91,6 +91,8 @@
     <string name="action_yes">Igen</string>
     <string name="action_no">Nem</string>
     <string name="action_ask">Ask</string>
+    <string name="action_proceed">Proceed</string>
+    <string name="action_abort">Abort</string>
     <string name="title_text_size">Szöveg méret</string>
     <string name="size_largest">Legnagyobb</string>
     <string name="size_large">Nagy</string>
@@ -196,7 +198,9 @@
     <string name="action_message_canceled">Action canceled.</string>
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">Don\'t ask again for this browsing session.</string>
+    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
     <string name="message_insecure_connection">Kapcsolódás ehhez a weboldalhoz, nem biztonságos:\n%1$s\nFolytatja mindenképpen?</string>
+    <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">az tanúsítvány dátuma érvénytelen</string>
     <string name="message_certificate_expired">a tanúsítvány lejárt</string>
     <string name="message_certificate_domain_mismatch">a domain a tanúsítványban, nem egyezik az domainjével</string>
@@ -416,6 +420,10 @@
     <string name="app_restart">Please restart the app for the change to take effect</string>
     <string name="pref_title_crash_logs">Crash logs</string>
     <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
+    <string name="pref_title_logs">Logs</string>
+    <string name="pref_summary_on_logs">Enabled</string>
+    <string name="pref_summary_off_logs">Disabled</string>
+    <string name="pref_title_log_level">Log level</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Open in new tab</string>
     <string name="dialog_open_background_tab">Open in background tab</string>
@@ -485,6 +493,9 @@
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_summary_default_domain_settings">Default domain settings</string>
+    <string name="settings_title_ssl_error">Security error</string>
+    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
+    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Third-party app available</string>
@@ -611,4 +622,10 @@
     <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
     <string name="action_switch_to_last_tab">Switch to last tab</string>
     <string name="action_switch_to_last_session">Switch to last session</string>
+    <string name="log_level_verbose">Verbose</string>
+    <string name="log_level_debug">Debug</string>
+    <string name="log_level_info">Info</string>
+    <string name="log_level_warn">Warn</string>
+    <string name="log_level_error">Error</string>
+    <string name="log_level_assert">Assert</string>
 </resources>

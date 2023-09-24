@@ -91,6 +91,8 @@
     <string name="action_yes">Tak</string>
     <string name="action_no">Nie</string>
     <string name="action_ask">Ask</string>
+    <string name="action_proceed">Proceed</string>
+    <string name="action_abort">Abort</string>
     <string name="title_text_size">Rozmiar tekstu</string>
     <string name="size_largest">Największy</string>
     <string name="size_large">Duży</string>
@@ -196,7 +198,9 @@
     <string name="action_message_canceled">Czynność anulowana.</string>
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">Nie pytaj więcej w trakcie tej sesji przeglądania.</string>
+    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
     <string name="message_insecure_connection">Połączenie z tą stroną jest niezaufane:\n%1$s\nKontynuuować mimo wszystko?</string>
+    <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">data ważności certyfikatu jest nieprawidłowa</string>
     <string name="message_certificate_expired">data ważności certyfikatu już upłynęła</string>
     <string name="message_certificate_domain_mismatch">domena dla której wystawiono certyfikat jest różna od domeny odwiedzanej strony</string>
@@ -416,6 +420,10 @@
     <string name="app_restart">Uruchom aplikację ponownie, aby zastosować zmiany</string>
     <string name="pref_title_crash_logs">Rejestr awarii</string>
     <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
+    <string name="pref_title_logs">Logs</string>
+    <string name="pref_summary_on_logs">Enabled</string>
+    <string name="pref_summary_off_logs">Disabled</string>
+    <string name="pref_title_log_level">Log level</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Otwórz w nowej karcie</string>
     <string name="dialog_open_background_tab">Otwórz w nowej karcie w tle</string>
@@ -487,6 +495,9 @@
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_summary_default_domain_settings">Default domain settings</string>
+    <string name="settings_title_ssl_error">Security error</string>
+    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
+    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Dostępna zewnętrzna aplikacja</string>
@@ -613,4 +624,10 @@
     <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
     <string name="action_switch_to_last_tab">Przełącz na ostatnią kartę</string>
     <string name="action_switch_to_last_session">Przełącz na ostatnią sesje</string>
+    <string name="log_level_verbose">Verbose</string>
+    <string name="log_level_debug">Debug</string>
+    <string name="log_level_info">Info</string>
+    <string name="log_level_warn">Warn</string>
+    <string name="log_level_error">Error</string>
+    <string name="log_level_assert">Assert</string>
 </resources>

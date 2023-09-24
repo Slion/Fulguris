@@ -91,6 +91,8 @@
     <string name="action_yes">確定</string>
     <string name="action_no">取消</string>
     <string name="action_ask">Ask</string>
+    <string name="action_proceed">Proceed</string>
+    <string name="action_abort">Abort</string>
     <string name="title_text_size">文字大小</string>
     <string name="size_largest">最大</string>
     <string name="size_large">較大</string>
@@ -196,7 +198,9 @@
     <string name="action_message_canceled">Action canceled.</string>
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">不要再詢問此瀏覽階段。</string>
+    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
     <string name="message_insecure_connection">此網站的連線不安全：\n%1$s\n仍要繼續？</string>
+    <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">憑證日期無效</string>
     <string name="message_certificate_expired">憑證已到期</string>
     <string name="message_certificate_domain_mismatch">憑證中的網域與網站中的網域不符</string>
@@ -416,6 +420,10 @@
     <string name="app_restart">請重新啟動此應用程式以使變更生效</string>
     <string name="pref_title_crash_logs">Crash logs</string>
     <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
+    <string name="pref_title_logs">Logs</string>
+    <string name="pref_summary_on_logs">Enabled</string>
+    <string name="pref_summary_off_logs">Disabled</string>
+    <string name="pref_title_log_level">Log level</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">在新分頁開啟</string>
     <string name="dialog_open_background_tab">在背景分頁開啟</string>
@@ -484,6 +492,9 @@
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_summary_default_domain_settings">Default domain settings</string>
+    <string name="settings_title_ssl_error">Security error</string>
+    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
+    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Third-party app available</string>
@@ -610,4 +621,10 @@
     <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
     <string name="action_switch_to_last_tab">Switch to last tab</string>
     <string name="action_switch_to_last_session">Switch to last session</string>
+    <string name="log_level_verbose">Verbose</string>
+    <string name="log_level_debug">Debug</string>
+    <string name="log_level_info">Info</string>
+    <string name="log_level_warn">Warn</string>
+    <string name="log_level_error">Error</string>
+    <string name="log_level_assert">Assert</string>
 </resources>
