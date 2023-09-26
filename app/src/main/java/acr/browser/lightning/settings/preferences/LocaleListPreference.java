@@ -36,9 +36,12 @@ import java.util.Set;
 
 import acr.browser.lightning.locale.LocaleUtils;
 import kotlin.Pair;
+import timber.log.Timber;
 
+/**
+ * Taken from GeckoLocaleList
+ */
 public class LocaleListPreference extends ListPreference {
-    private static final String LOG_TAG = "GeckoLocaleList";
 
     private static final Map<String, String> languageCodeToNameMap = new HashMap<>();
     private static final Map<String, String> localeToNameMap = new HashMap<>();
@@ -184,10 +187,10 @@ public class LocaleListPreference extends ListPreference {
 
     private void initializeLocaleList() {
         final Locale currentLocale = Locale.getDefault();
-        Log.d(LOG_TAG, "Building locales list. Current locale: " + currentLocale);
+        Timber.d("Building locales list. Current locale: " + currentLocale);
 
         if (currentLocale.equals(this.entriesLocale) && getEntries() != null) {
-            Log.v(LOG_TAG, "No need to build list.");
+            Timber.v("No need to build list.");
             return;
         }
 
@@ -236,7 +239,7 @@ public class LocaleListPreference extends ListPreference {
 
             if (TextUtils.isEmpty(displayName)) {
                 // There's nothing sane we can do.
-                Log.w(LOG_TAG, "Display name is empty. Using " + locale.toString());
+                Timber.w("Display name is empty. Using " + locale.toString());
                 this.nativeName = locale.toString();
                 return;
             }
@@ -389,7 +392,7 @@ public class LocaleListPreference extends ListPreference {
             for (int i = 0; i < count; ++i) {
                 final String displayName = descriptors[i].getDisplayName();
                 final String tag = descriptors[i].getTag();
-                Log.v(LOG_TAG, displayName + " => " + tag);
+                Timber.v(displayName + " => " + tag);
                 entries[i + 1] = displayName;
                 values[i + 1] = tag;
             }
@@ -408,7 +411,7 @@ public class LocaleListPreference extends ListPreference {
             for (String tag : shippingLocales) {
                 final LocaleDescriptor descriptor = new LocaleDescriptor(tag);
                 if (!descriptor.isUsable(this.characterValidator)) {
-                    Log.w(LOG_TAG, "Skipping locale " + tag + " on this device.");
+                    Timber.w("Skipping locale " + tag + " on this device.");
                     continue;
                 }
 

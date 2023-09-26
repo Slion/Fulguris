@@ -1,6 +1,5 @@
 package acr.browser.lightning.view
 
-import fulguris.app
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlockerManager
@@ -51,12 +50,14 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
+import fulguris.LogLevel
+import fulguris.app
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URISyntaxException
 import java.util.*
 import kotlin.math.abs
-import timber.log.Timber
 
 /**
  *
@@ -241,6 +242,15 @@ class LightningWebClient(
         }
 
         uiController.tabChanged(lightningView)
+
+        // To prevent potential overhead when logs are not needed
+        if (userPreferences.logs && userPreferences.logLevel== LogLevel.VERBOSE) {
+            val cookies = CookieManager.getInstance().getCookie(url).split(';')
+            Timber.v("Cookies count: ${cookies.count()}")
+            cookies.forEach {
+                Timber.v(it.trim())
+            }
+        }
     }
 
     /**
