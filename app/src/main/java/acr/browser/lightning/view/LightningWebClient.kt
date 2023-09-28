@@ -244,7 +244,7 @@ class LightningWebClient(
         uiController.tabChanged(lightningView)
 
         // To prevent potential overhead when logs are not needed
-        if (userPreferences.logs && userPreferences.logLevel== LogLevel.VERBOSE) {
+        if (userPreferences.isLog(LogLevel.VERBOSE)) {
             val cookies = CookieManager.getInstance().getCookie(url).split(';')
             Timber.v("Cookies count: ${cookies.count()}")
             cookies.forEach {
