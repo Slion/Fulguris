@@ -245,9 +245,9 @@ class LightningWebClient(
 
         // To prevent potential overhead when logs are not needed
         if (userPreferences.isLog(LogLevel.VERBOSE)) {
-            val cookies = CookieManager.getInstance().getCookie(url).split(';')
-            Timber.v("Cookies count: ${cookies.count()}")
-            cookies.forEach {
+            val cookies = CookieManager.getInstance().getCookie(url)?.split(';')
+            Timber.v("Cookies count: ${cookies?.count()}")
+            cookies?.forEach {
                 Timber.v(it.trim())
             }
         }

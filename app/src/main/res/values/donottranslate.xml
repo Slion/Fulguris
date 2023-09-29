@@ -147,6 +147,8 @@
     <string name="pref_key_parent">pref_key_parent</string>
     <string name="pref_key_ssl_error">pref_key_ssl_error</string>
     <string name="pref_key_ssl_error_override">pref_key_ssl_error_override</string>
+    <string name="pref_key_cat_cookies">pref_key_cat_cookies</string>
+    <string name="pref_key_delete_page_cookies">pref_key_delete_page_cookies</string>
 
 
     <!-- See: NewTabPosition -->

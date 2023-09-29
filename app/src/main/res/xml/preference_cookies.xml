@@ -20,40 +20,39 @@
  All portions of the code written by Stéphane Lenclud are Copyright © 2020 Stéphane Lenclud.
  All Rights Reserved.
 -->
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:a="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:a="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 <!--
 ⚠️: Needed to use orders as the Default domain settings is added on top dynamically
 -->
 
-    <PreferenceCategory
-        a:key="@string/pref_key_domains"
-        a:icon="@drawable/ic_domain"
-        a:title="@string/settings_title_domains"
-        a:singleLineTitle="false"
-        a:initialExpandedChildrenCount="0"
-        a:order="10"/>
-
-    <PreferenceCategory
-        a:key="@string/pref_key_resource_domains"
-        a:icon="@drawable/ic_domain"
-        a:title="@string/settings_title_resource_domains"
-        a:singleLineTitle="false"
-        a:initialExpandedChildrenCount="0"
-        a:order="20"
-        />
+    <Preference
+        a:key="@string/pref_key_back"
+        a:title="@string/settings_title_cookies"
+        a:summary="@string/settings_summary_manage_cookies"
+        a:icon="@drawable/ic_arrow_back_ios"
+        a:fragment="back"
+        a:layout="@layout/preference_category_material"
+        tools:ignore="PrivateResource" />
 
     <Preference
-        a:defaultValue="false"
-        a:key="@string/pref_key_delete_all_domains_settings"
-        a:title="@string/settings_title_domains_delete_all"
-        a:summary="@string/settings_summary_domains_delete_all"
+        a:key="@string/pref_key_delete_page_cookies"
+        a:title="@string/settings_title_cookies_delete_all"
+        a:summary="@string/settings_summary_cookies_delete_all"
         a:iconSpaceReserved="false"
         a:icon="@drawable/ic_delete_forever"
         a:singleLineTitle="false"
-        a:order="30"
+        />
+
+
+    <PreferenceCategory
+        a:key="@string/pref_key_cat_cookies"
+        a:icon="@drawable/ic_cookie"
+        a:title="@string/settings_title_cookies"
+        a:summary="@string/settings_summary_cookies"
+        a:singleLineTitle="false"
         />
 
 

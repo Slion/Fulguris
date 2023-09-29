@@ -457,6 +457,9 @@ class AbpBlockerManager @Inject constructor(
     }
 }
 
+/**
+ *
+ */
 private class WebkitCookieManager (private val cookieManager: CookieManager) : CookieJar {
 
     override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {

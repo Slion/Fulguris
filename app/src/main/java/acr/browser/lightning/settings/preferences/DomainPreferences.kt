@@ -105,6 +105,8 @@ class DomainPreferences constructor(
     // Preferences for this domain
     val preferences: SharedPreferences = context.getSharedPreferences(name(domain), MODE_PRIVATE)
     // Preferences of the parent, either the top private domain or the default settings
+    // TODO: I don't think that will be working for sub-sub-domain. It seems we just jump to the top level domain anyway
+    // See: https://github.com/Slion/Fulguris/issues/554
     val parent: DomainPreferences? = if (isDefault) null else DomainPreferences(context,if (isSubDomain) topPrivateDomain!! else "")
 
     /**

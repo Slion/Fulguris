@@ -525,6 +525,24 @@
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
     <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
 
+    <string name="settings_title_cookies">Cookies</string>
+    <string name="settings_summary_cookies">Current page has no cookies</string>
+    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
+    <string name="settings_title_cookies_delete_all">Delete all</string>
+    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
+    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+
+    <plurals name="settings_summary_cookies">
+<!--
+Zero ain't working for english.
+See: https://stackoverflow.com/a/42884713/3969362
+-->
+        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <item quantity="one">Current page has one cookie</item>
+        <item quantity="other">Current page has %d cookies</item>
+    </plurals>
+
+
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Third-party app available</string>

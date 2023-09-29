@@ -14,6 +14,14 @@
             />
 
         <Preference
+            app:fragment="acr.browser.lightning.settings.fragment.CookiesSettingsFragment"
+            app:title="@string/settings_title_cookies"
+            app:summary="@string/settings_summary_manage_cookies"
+            app:icon="@drawable/ic_cookie"
+            app:singleLineTitle="false"
+            />
+
+        <Preference
             app:fragment="acr.browser.lightning.settings.fragment.ScrollbarsSettingsFragment"
             app:title="@string/pref_category_scrollbars"
             app:summary="@string/pref_summary_scrollbars"
