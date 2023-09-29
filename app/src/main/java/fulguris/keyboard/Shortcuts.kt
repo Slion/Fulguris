@@ -33,7 +33,7 @@ import java.util.ArrayList
 
 /**
  * Define our keyboard shortcuts.
- * Allows us to publish our keyboard shortcuts enabling user quick references using Meta+/.
+ * Allows us to publish our keyboard shortcuts enabling user quick references using Meta+/.?
  * TODO: Somehow make BrowserActivity use this to trigger actions then make the shortcuts customizable.
  */
 @RequiresApi(Build.VERSION_CODES.N)
@@ -62,6 +62,7 @@ class Shortcuts(aContext: Context) {
         iList.add(KeyboardShortcutInfo(aContext.getString(R.string.action_open_tab_list), KeyEvent.KEYCODE_P, KeyEvent.META_CTRL_ON ))
         iList.add(KeyboardShortcutInfo(aContext.getString(R.string.action_open_tab_list), KeyEvent.KEYCODE_T, KeyEvent.META_CTRL_ON or KeyEvent.META_SHIFT_ON))
         iList.add(KeyboardShortcutInfo(aContext.getString(R.string.action_new_tab), KeyEvent.KEYCODE_T, KeyEvent.META_CTRL_ON))
+        iList.add(KeyboardShortcutInfo(aContext.getString(R.string.action_duplicate_tab), KeyEvent.KEYCODE_D, KeyEvent.META_CTRL_ON))
         iList.add(KeyboardShortcutInfo(aContext.getString(R.string.action_open_session_list), KeyEvent.KEYCODE_S, KeyEvent.META_CTRL_ON or KeyEvent.META_SHIFT_ON))
         iList.add(KeyboardShortcutInfo(aContext.getString(R.string.exit), KeyEvent.KEYCODE_Q, KeyEvent.META_CTRL_ON))
         iList.add(KeyboardShortcutInfo(aContext.getString(R.string.action_find), KeyEvent.KEYCODE_F, KeyEvent.META_CTRL_ON))

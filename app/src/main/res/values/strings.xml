@@ -4,6 +4,7 @@
     <string name="action_reload">Reload</string>
     <string name="action_menu">More</string>
     <string name="action_new_tab">New tab</string>
+    <string name="action_duplicate_tab">Duplicate tab</string>
     <string name="action_share">Share</string>
     <string name="action_history">History</string>
     <string name="action_bookmarks">Bookmarks</string>

@@ -1807,6 +1807,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         tabSwitchReset()
                         return true
                     }
+                    KeyEvent.KEYCODE_D -> {
+                        // Duplicate tab
+                        tabsManager.currentTab?.let {
+                            presenter.newTab(FreezableBundleInitializer(TabModelFromBundle(it.saveState())),true)
+                            tabSwitchReset()
+                        }
+                        return true
+                    }
                     KeyEvent.KEYCODE_F4,
                     KeyEvent.KEYCODE_W -> {
                         // Close current tab
