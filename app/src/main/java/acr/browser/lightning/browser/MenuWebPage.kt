@@ -53,7 +53,6 @@ class MenuWebPage : PopupWindow {
     val abpUserRules: AbpUserRules
 
     var iBinding: MenuWebPageBinding
-    var iIsIncognito = false
 
     constructor(layoutInflater: LayoutInflater, aBinding: MenuWebPageBinding = MenuWebPage.inflate(layoutInflater))
             : super(aBinding.root, WRAP_CONTENT, WRAP_CONTENT, true) {
@@ -72,17 +71,6 @@ class MenuWebPage : PopupWindow {
         // Needed on Android 5 to make sure our pop-up can be dismissed by tapping outside and back button
         // See: https://stackoverflow.com/questions/46872634/close-popupwindow-upon-tapping-outside-or-back-button
         setBackgroundDrawable(ColorDrawable())
-
-        // Hide incognito menu item if we are already incognito
-        /*
-        iIsIncognito = (aBinding.root.context as BrowserActivity).isIncognito()
-        if (iIsIncognito) {
-            aBinding.menuItemIncognito.isVisible = false
-            // No sessions in incognito mode
-            aBinding.menuItemSessions.isVisible = false
-        }
-
-         */
 
         //val radius: Float = getResources().getDimension(R.dimen.default_corner_radius) //32dp
 
@@ -174,6 +162,17 @@ class MenuWebPage : PopupWindow {
                     isSpecial = !it
                 }
             }
+        }
+
+        if ((iBinding.root.context as? BrowserActivity)?.isIncognito() == true) {
+            // Incognito only works for that activity
+            // So no reader mode as it starts another activity
+            // TODO: We could try get reading mode working in incognito by creating another activity which starts in the same process I guess
+            iBinding.menuItemReaderMode.isVisible = false
+            // Also hide share and print as security feature when in incognito mode
+            iBinding.menuItemShare.isVisible = false
+            iBinding.menuItemPrint.isVisible = false
+            iBinding.menuItemAddToHome.isVisible = false
         }
 
         scrollToStart()
