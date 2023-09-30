@@ -4,9 +4,9 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
+import android.os.Bundle
+import android.view.WindowManager
 import android.webkit.CookieManager
-import android.webkit.CookieSyncManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -18,12 +18,11 @@ class IncognitoActivity @Inject constructor(): BrowserActivity() {
 
     override fun provideAccentThemeOverride(): AccentTheme = AccentTheme.PINK
 
-    @Suppress("DEPRECATION")
+    /**
+     *
+     */
     public override fun updateCookiePreference(): Completable = Completable.fromAction {
         val cookieManager = CookieManager.getInstance()
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.createInstance(this@IncognitoActivity)
-        }
         if (Capabilities.FULL_INCOGNITO.isSupported) {
             cookieManager.setAcceptCookie(userPreferences.cookiesEnabled)
         } else {
@@ -31,10 +30,20 @@ class IncognitoActivity @Inject constructor(): BrowserActivity() {
         }
     }
 
-    @Suppress("RedundantOverride")
+    /**
+     *
+     */
     override fun onNewIntent(intent: Intent) {
         handleNewIntent(intent)
         super.onNewIntent(intent)
+    }
+
+    /**
+     *
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        super.onCreate(savedInstanceState)
     }
 
     @Suppress("RedundantOverride")

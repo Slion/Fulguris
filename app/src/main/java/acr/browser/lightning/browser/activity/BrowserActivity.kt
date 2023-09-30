@@ -268,6 +268,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     protected abstract fun updateCookiePreference(): Completable
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.v("onCreate")
         // Need to go first to inject our components
         super.onCreate(savedInstanceState)
 

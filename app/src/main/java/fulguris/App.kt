@@ -23,6 +23,7 @@
 package fulguris
 
 import acr.browser.lightning.BuildConfig
+import acr.browser.lightning.IncognitoActivity
 import acr.browser.lightning.R
 import acr.browser.lightning.database.bookmark.BookmarkExporter
 import acr.browser.lightning.database.bookmark.BookmarkRepository
@@ -43,7 +44,6 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.webkit.WebView
-import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
 import io.reactivex.Scheduler
@@ -52,11 +52,13 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.system.exitProcess
 
+
 @SuppressLint("StaticFieldLeak")
 lateinit var app: App
 
 @HiltAndroidApp
-class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
+class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
+    Application.ActivityLifecycleCallbacks {
 
     @Inject internal lateinit var developerPreferences: DeveloperPreferences
     @Inject internal lateinit var userPreferences: UserPreferences
@@ -70,6 +72,19 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
     var justStarted: Boolean = true
     //Ugly way to pass our domain around for settings
     var domain: String = ""
+
+    /**
+     * Our app can runs in a different process when using the incognito activity.
+     * This tells us which process it is.
+     * However this is initialized after the activity creation when running on versions before Android 9.
+     */
+    var incognito = false
+        private set(value) {
+            if (value) {
+                Timber.d("Incognito app process")
+            }
+            field = value
+        }
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
@@ -108,8 +123,50 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
     }
 
 
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        Timber.v("onActivityCreated")
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            if (activity is IncognitoActivity) {
+                // Needed as the process check we use below does not work before Android 9
+                incognito = true
+            }
+        }
+    }
+
+    override fun onActivityStarted(activity: Activity) {
+        Timber.v("onActivityStarted")
+    }
+
+    override fun onActivityResumed(activity: Activity) {
+        Timber.v("onActivityResumed")
+        resumedActivity = activity
+    }
+
+    override fun onActivityPaused(activity: Activity) {
+        Timber.v("onActivityPaused")
+        resumedActivity = null
+    }
+
+    override fun onActivityStopped(activity: Activity) {
+        Timber.v("onActivityStopped")
+    }
+
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+        Timber.v("onActivitySaveInstanceState")
+    }
+
+    override fun onActivityDestroyed(activity: Activity) {
+        Timber.v("onActivityDestroyed")
+        MemoryLeakUtils.clearNextServedView(activity, this@App)
+    }
+
+
+    /**
+     *
+     */
     override fun onCreate() {
         app = this
+        registerActivityLifecycleCallbacks(this)
         // SL: Use this to debug when launched from another app for instance
         //Debug.waitForDebugger()
         super.onCreate()
@@ -117,6 +174,7 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
         userPreferences.preferences.registerOnSharedPreferenceChangeListener(this)
 
         plantTimberLogs()
+        Timber.v("onCreate")
 
         AndroidThreeTen.init(this);
 
@@ -133,8 +191,9 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
              */
         }
 
-        if (Build.VERSION.SDK_INT >= 28) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             if (getProcessName() == "$packageName:incognito") {
+                incognito = true
                 WebView.setDataDirectorySuffix("incognito")
             }
         }
@@ -177,28 +236,6 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
             WebView.setWebContentsDebuggingEnabled(true)
         }
 
-        registerActivityLifecycleCallbacks(object : MemoryLeakUtils.LifecycleAdapter() {
-            override fun onActivityDestroyed(activity: Activity) {
-                Timber.d("onActivityDestroyed")
-                MemoryLeakUtils.clearNextServedView(activity, this@App)
-            }
-
-            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                Timber.d("onActivityCreated")
-            }
-
-            // Track current activity
-            override fun onActivityResumed(activity: Activity) {
-                Timber.d("onActivityResumed")
-                resumedActivity = activity
-            }
-
-            // Track current activity
-            override fun onActivityPaused(activity: Activity) {
-                Timber.d("onActivityPaused")
-                resumedActivity = null
-            }
-        })
     }
 
 
@@ -208,20 +245,14 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
         // Apparently we take care of not leaking it above
         @SuppressLint("StaticFieldLeak")
         var resumedActivity: Activity? = null
+            private set
 
         /**
          * Used to get current activity context in order to access current theme.
          */
         fun currentContext() : Context {
-            val act = resumedActivity
-            if (act!=null)
-            {
-                return act
-            }
-            else
-            {
-                return app
-            }
+            return resumedActivity
+                ?: app
         }
 
         /**
@@ -232,9 +263,6 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener {
             LocaleUtils.updateLocale(app, requestLocale)
         }
 
-        init {
-            AppCompatDelegate.setCompatVectorFromResourcesEnabled(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT)
-        }
     }
 
     /**
