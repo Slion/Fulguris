@@ -15,7 +15,7 @@ android:focusableInTouchMode="true"
         android:id="@+id/tab_item_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/material_grid_touch_large"
-        android:layout_marginHorizontal="8dp"
+        android:layout_marginHorizontal="@dimen/material_grid_unit"
         android:layout_marginVertical="2dp"
         android:clickable="true"
         android:focusable="true"
@@ -27,23 +27,25 @@ android:focusableInTouchMode="true"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/material_grid_margin"
             android:weightSum="1">
 
             <fulguris.widget.ImageView
                 android:id="@+id/faviconTab"
                 android:layout_width="@dimen/material_grid_small_icon"
                 android:layout_height="@dimen/material_grid_small_icon"
-                android:layout_marginLeft="@dimen/material_grid_margin"
+                android:layout_marginLeft="0dp"
                 android:layout_marginRight="@dimen/material_grid_margin"
                 android:contentDescription="@null"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                tools:srcCompat="@drawable/ic_web" />
 
             <TextView
                 android:id="@+id/textTab"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/material_grid_margin"
-                android:layout_marginRight="@dimen/material_grid_margin"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif"
@@ -51,17 +53,19 @@ android:focusableInTouchMode="true"
                 android:maxLines="1"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                tools:text="My web page title is too long to fit in here much too long"/>
 
             <fulguris.widget.ImageView
                 android:id="@+id/deleteAction"
                 android:layout_width="@dimen/material_grid_touch_medium"
                 android:layout_height="match_parent"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="-16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/close_tab"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_action_delete" />
+                app:srcCompat="@drawable/ic_action_delete"
+                tools:visibility="visible"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
