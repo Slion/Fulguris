@@ -278,7 +278,7 @@ class LightningView(
      *
      * @return a non-null Bitmap with the current favicon.
      */
-    val favicon: Bitmap?
+    val favicon: Bitmap
         get() = titleInfo.getFavicon()
 
     /**

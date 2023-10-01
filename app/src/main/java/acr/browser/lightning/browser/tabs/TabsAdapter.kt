@@ -60,7 +60,7 @@ abstract class TabsAdapter(val uiController: UIController): RecyclerView.Adapter
         super.onViewRecycled(holder)
         // I'm not convinced that's needed
         //(uiController as BrowserActivity).toast("Recycled: " + holder.tab.title)
-        holder.tab = TabViewState()
+        holder.tab = null
     }
 
     /**

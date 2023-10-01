@@ -210,7 +210,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private lateinit var queue: RequestQueue
 
     // Image
-    private var webPageBitmap: Bitmap? = null
     private val backgroundDrawable = ColorDrawable()
     private var incognitoNotification: IncognitoNotification? = null
 
@@ -726,7 +725,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         iBinding.drawerLayout.addDrawerListener(DrawerLocker())
 
-        webPageBitmap = drawable(R.drawable.ic_webpage).toBitmap()
 
         // Show incognito icon in more menu button
         if (isIncognito()) {
@@ -1950,7 +1948,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         && currentView.url.isNotBlank()
                         && !currentView.url.isSpecialUrl()) {
                     HistoryEntry(currentView.url, currentView.title).also {
-                        Utils.createShortcut(this, it, currentView.favicon ?: webPageBitmap!!)
+                        Utils.createShortcut(this, it, currentView.favicon)
                         Timber.d("Creating shortcut: ${it.title} ${it.url}")
                     }
                 }

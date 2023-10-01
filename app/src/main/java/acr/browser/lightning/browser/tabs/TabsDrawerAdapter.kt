@@ -42,12 +42,10 @@ class TabsDrawerAdapter(
         holder.tab = tab.copy();
     }
 
-    private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap?, isForeground: Boolean) {
+    private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap, isForeground: Boolean) {
         // Apply filter to favicon if needed
-        favicon?.let {
-                val ba = uiController as BrowserActivity
-                viewHolder.favicon.setImageForTheme(it, ba.useDarkTheme)
-        } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
+        val ba = uiController as BrowserActivity
+        viewHolder.favicon.setImageForTheme(favicon, ba.useDarkTheme)
     }
 
     private fun updateViewHolderBackground(viewHolder: TabViewHolder, isForeground: Boolean) {

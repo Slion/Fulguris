@@ -61,21 +61,24 @@ class TabsDesktopAdapter(
         holder.tab = tab.copy();
     }
 
-
+    /**
+     *
+     */
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, tab: TabViewState) {
         // Apply filter to favicon if needed
-        tab.favicon?.let {
-            val ba = uiController as BrowserActivity
-            if (tab.isForeground) {
-                // Make sure that on light theme with dark tab background because color mode we still inverse favicon color if needed, see github.com
-                viewHolder.favicon.setImageForTheme(it, ColorUtils.calculateLuminance(foregroundTabColor)<0.2)
-            }
-            else {
-                viewHolder.favicon.setImageForTheme(it, ba.useDarkTheme)
-            }
-        } ?: viewHolder.favicon.setImageResource(R.drawable.ic_webpage)
+        val ba = uiController as BrowserActivity
+        if (tab.isForeground) {
+            // Make sure that on light theme with dark tab background because color mode we still inverse favicon color if needed, see github.com
+            viewHolder.favicon.setImageForTheme(tab.favicon, ColorUtils.calculateLuminance(foregroundTabColor)<0.2)
+        }
+        else {
+            viewHolder.favicon.setImageForTheme(tab.favicon, ba.useDarkTheme)
+        }
     }
 
+    /**
+     *
+     */
     private fun updateViewHolderAppearance(viewHolder: TabViewHolder, tab: TabViewState) {
 
         // Just to init our default text color
@@ -89,9 +92,9 @@ class TabsDesktopAdapter(
             viewHolder.txtTitle.setTextColor(newTextColor)
             viewHolder.exitButton.findViewById<ImageView>(R.id.deleteButton).setColorFilter(newTextColor)
             // If we just got to the foreground
-            if (tab.isForeground!=viewHolder.tab.isForeground
+            if (tab.isForeground!=viewHolder.tab?.isForeground
                     // or if our theme color changed
-                    || tab.themeColor!=viewHolder.tab.themeColor
+                    || tab.themeColor!=viewHolder.tab?.themeColor
                     // or if our theme color is different than our UI color, i.e. using favicon color instead of meta theme
                     || tab.themeColor!=uiController.getUiColor()) {
 

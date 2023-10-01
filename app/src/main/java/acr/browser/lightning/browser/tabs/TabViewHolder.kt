@@ -27,7 +27,7 @@ class TabViewHolder(
     val iCardView: MaterialCardView = view.findViewById(R.id.tab_item_background)
     // Keep a copy of our tab data to be able to understand what was changed on update
     // TODO: Is that how we should do things?
-    var tab: TabViewState = TabViewState()
+    var tab: TabViewState? = null
 
     init {
         exitButton.setOnClickListener(this)

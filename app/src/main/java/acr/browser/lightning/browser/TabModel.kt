@@ -35,7 +35,7 @@ open class TabModel (
     var title : String,
     var desktopMode: Boolean,
     var darkMode: Boolean,
-    var favicon : Bitmap?,
+    var favicon : Bitmap,
     // Find in page search query
     var searchQuery: String,
     // Define if find in page search was active
@@ -53,7 +53,7 @@ open class TabModel (
                 it.putBoolean(KEY_DARK_MODE, darkMode)
                 it.putString(KEY_SEARCH_QUERY, searchQuery)
                 it.putBoolean(KEY_SEARCH_ACTIVE, searchActive)
-                favicon?.apply {
+                favicon.apply {
                     // Crashlytics was showing our bitmap compression can lead to java.lang.IllegalStateException: Can't compress a recycled bitmap
                     // Therefore we now check if it was recycled before going ahead with compression.
                     // Otherwise we can still proceed without favicon anyway.
@@ -92,10 +92,10 @@ class TabModelFromBundle (
 ): TabModel(
         bundle.getString(URL_KEY)?:"",
         bundle.getString(TAB_TITLE_KEY)?:"",
-        bundle.getBoolean(KEY_DESKTOP_MODE)?:false,
-        bundle.getBoolean(KEY_DARK_MODE)?:false,
-        bundle.getByteArray(TAB_FAVICON_KEY)?.let{BitmapFactory.decodeByteArray(it, 0, it.size)},
+        bundle.getBoolean(KEY_DESKTOP_MODE),
+        bundle.getBoolean(KEY_DARK_MODE),
+        bundle.getByteArray(TAB_FAVICON_KEY).let{BitmapFactory.decodeByteArray(it, 0, it?.size?:0)},
         bundle.getString(KEY_SEARCH_QUERY)?:"",
-        bundle.getBoolean(KEY_SEARCH_ACTIVE)?:false,
+        bundle.getBoolean(KEY_SEARCH_ACTIVE),
         bundle.getBundle(WEB_VIEW_KEY)
 )
