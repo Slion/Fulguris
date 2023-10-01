@@ -26,24 +26,25 @@ import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.Bookmark
-import acr.browser.lightning.database.asFolder
 import acr.browser.lightning.database.bookmark.BookmarkRepository
-import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.extensions.drawable
+import acr.browser.lightning.extensions.isDarkTheme
 import acr.browser.lightning.extensions.setImageForTheme
 import acr.browser.lightning.favicon.FaviconModel
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.resources.MaterialAttributes
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
-import java.util.*
+import timber.log.Timber
+import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
-import javax.inject.Inject
 
 class BookmarksAdapter(
         val context: Context,
@@ -106,6 +107,7 @@ class BookmarksAdapter(
         return BookmarkViewHolder(itemView, this, iShowBookmarkMenu, iOpenBookmark)
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onBindViewHolder(holder: BookmarkViewHolder, position: Int) {
         holder.itemView.jumpDrawablesToCurrentState()
 
@@ -125,16 +127,14 @@ class BookmarksAdapter(
             is Bookmark.Entry -> webpageIcon.also {
                 faviconFetchSubscriptions[url]?.dispose()
                 faviconFetchSubscriptions[url] = faviconModel
-                        // TODO: could we fetch the cached icon for dark theme and remove the inversion below?
-                        .faviconForUrl(url, viewModel.bookmark.title, false)
+                        .faviconForUrl(url, viewModel.bookmark.title, context.isDarkTheme())
                         .subscribeOn(networkScheduler)
                         .observeOn(mainScheduler)
                         .subscribeBy(
                                 onSuccess = { bitmap ->
                                     viewModel.icon = bitmap
                                     if (holder.favicon.tag == url) {
-                                        val ba = context as BrowserActivity
-                                        holder.favicon.setImageForTheme(bitmap, ba.useDarkTheme)
+                                        holder.favicon.setImageForTheme(bitmap, context.isDarkTheme())
                                     }
                                 }
                         )

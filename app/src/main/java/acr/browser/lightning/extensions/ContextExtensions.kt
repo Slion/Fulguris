@@ -4,6 +4,8 @@ package acr.browser.lightning.extensions
 
 // For comments links
 
+import acr.browser.lightning.R
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -12,6 +14,7 @@ import android.widget.Toast
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import com.google.android.material.resources.MaterialAttributes
 import java.util.*
 
 
@@ -88,4 +91,20 @@ fun Context.landscapeSharedPreferencesName(): String {
  */
 fun Context.getText(@StringRes id: Int, vararg args: Any?): CharSequence? {
     return ContextUtils.getText(this,id,*args)
+}
+
+/**
+ *
+ */
+@SuppressLint("RestrictedApi")
+fun Context.isLightTheme(): Boolean {
+    //Timber.v("isLight: $isLight")
+    return MaterialAttributes.resolveBoolean(this, R.attr.isLightTheme, true)
+}
+
+/**
+ *
+ */
+fun Context.isDarkTheme(): Boolean {
+    return !isLightTheme()
 }

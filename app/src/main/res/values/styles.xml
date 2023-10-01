@@ -206,7 +206,7 @@ colorControlNormal:
 <!--        <item name="appColorControlEnabled">@color/md_grey_650</item>-->
 <!--        <item name="appColorControlSelected">?attr/colorOnPrimary</item>-->
 <!--        <item name="appColorControlDisabled">@color/md_grey_400</item>-->
-<!--        <item name="colorControlNormal">@color/state_color_control</item>-->
+        <item name="colorControlNormal">?attr/colorOnSurface</item>
         <!-- Fix dialog issues -->
 <!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
 <!--        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
@@ -381,7 +381,7 @@ colorControlNormal:
 <!--        <item name="appColorControlEnabled">@color/md_grey_350</item>-->
 <!--        <item name="appColorControlSelected">?attr/colorOnPrimary</item>-->
 <!--        <item name="appColorControlDisabled">@color/md_grey_600</item>-->
-<!--        <item name="colorControlNormal">@color/state_color_control</item>-->
+        <item name="colorControlNormal">?attr/colorOnBackground</item>
         <!-- Fix dialog issues -->
 <!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
 <!--        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
@@ -549,7 +549,7 @@ colorControlNormal:
 <!--        <item name="appColorControlEnabled">@color/md_grey_350</item>-->
 <!--        <item name="appColorControlSelected">?attr/colorOnPrimary</item>-->
 <!--        <item name="appColorControlDisabled">@color/md_grey_600</item>-->
-<!--        <item name="colorControlNormal">@color/state_color_control</item>-->
+        <item name="colorControlNormal">?attr/colorOnBackground</item>
         <!-- Fix dialog issues -->
 <!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
 <!--        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
