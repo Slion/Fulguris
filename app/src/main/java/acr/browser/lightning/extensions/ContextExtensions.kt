@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.resources.MaterialAttributes
+import timber.log.Timber
 import java.util.*
 
 
@@ -115,6 +116,7 @@ fun Context.isDarkTheme(): Boolean {
  *
  */
 fun Context.createDefaultFavicon(): Bitmap {
+    Timber.v("createDefaultFavicon")
     //val background = MaterialColors.getColor(context, com.google.android.material.R.attr.colorSurface, Color.BLACK)
     return ResourcesCompat.getDrawable(resources, R.drawable.ic_web, theme)!!.toBitmap(256,256)
 }
