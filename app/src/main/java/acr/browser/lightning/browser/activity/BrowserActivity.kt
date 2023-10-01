@@ -649,7 +649,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private val primaryColor: Int
         get() {
             // If current tab is using forced dark mode and we do not use a dark theme…
-            return if (tabsManager.currentTab?.darkMode == true && !useDarkTheme) {
+            return if (tabsManager.currentTab?.darkMode == true && !isDarkTheme()) {
                 // …then override primary color…
                 Color.BLACK
             } else {
@@ -1231,7 +1231,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     drawerOpening = true
                     // Make sure icons on status bar remain visible
                     // We should really check the primary theme color and work out its luminance but that should do for now
-                    window.setStatusBarIconsColor(!useDarkTheme && !userPreferences.useBlackStatusBar)
+                    window.setStatusBarIconsColor(!isDarkTheme() && !userPreferences.useBlackStatusBar)
                 }
                 else {
                     drawerClosing = true

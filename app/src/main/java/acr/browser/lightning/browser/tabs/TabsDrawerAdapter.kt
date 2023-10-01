@@ -5,7 +5,9 @@ import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.extensions.dimen
 import acr.browser.lightning.extensions.inflater
+import acr.browser.lightning.extensions.isDarkTheme
 import acr.browser.lightning.extensions.setImageForTheme
+import android.content.Context
 import android.graphics.Bitmap
 import android.view.ViewGroup
 import androidx.core.widget.TextViewCompat
@@ -44,8 +46,7 @@ class TabsDrawerAdapter(
 
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap, isForeground: Boolean) {
         // Apply filter to favicon if needed
-        val ba = uiController as BrowserActivity
-        viewHolder.favicon.setImageForTheme(favicon, ba.useDarkTheme)
+        viewHolder.favicon.setImageForTheme(favicon, (uiController as Context).isDarkTheme())
     }
 
     private fun updateViewHolderBackground(viewHolder: TabViewHolder, isForeground: Boolean) {

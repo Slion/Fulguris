@@ -33,8 +33,6 @@ abstract class ThemedActivity : LocaleAwareActivity() {
     // TODO reduce protected visibility
     protected var accentId: AccentTheme = quickUserPrefs.useAccent
     protected var themeId: AppTheme = quickUserPrefs.useTheme
-    private var isDarkTheme: Boolean = false
-    val useDarkTheme get() = isDarkTheme
 
     /**
      * Override this to provide an alternate theme that should be set for every instance of this
@@ -119,21 +117,6 @@ abstract class ThemedActivity : LocaleAwareActivity() {
      */
     private fun applyTheme(themeId: AppTheme) {
         setTheme(themeStyle(themeId))
-        // Check if we have a dark theme
-        isDarkTheme = isDarkTheme(themeId)
-    }
-
-    /**
-     * Tells if the given [themeId] is dark. Takes into account current system theme if needed.
-     * Works even before calling supper.[onCreate].
-     */
-    protected fun isDarkTheme(themeId: AppTheme) : Boolean {
-        val mode = resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
-        return themeId == AppTheme.BLACK // Black qualifies as dark theme
-                || themeId == AppTheme.DARK // Dark is indeed a dark theme
-                // Check if we are using system default theme and it is currently set to dark
-                || (themeId == AppTheme.DEFAULT && mode == Configuration.UI_MODE_NIGHT_YES)
-
     }
 
     /**

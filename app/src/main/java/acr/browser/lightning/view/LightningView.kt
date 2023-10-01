@@ -609,7 +609,7 @@ class LightningView(
         // If forced dark mode is supported
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK) &&
             // and we are in dark theme or forced dark mode
-            ((activity as ThemedActivity).useDarkTheme || darkMode)) {
+            ((activity as ThemedActivity).isDarkTheme() || darkMode)) {
             if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
                 if (darkMode) {
                     // User requested forced dark mode from menu, we need to enable user agent dark mode then.

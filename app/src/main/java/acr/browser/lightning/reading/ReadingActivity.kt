@@ -29,6 +29,7 @@ import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
 import acr.browser.lightning.dialog.BrowserDialog.setDialogSize
+import acr.browser.lightning.extensions.isDarkTheme
 import acr.browser.lightning.utils.Utils
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -94,7 +95,7 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
      * Override our theme as needed according to current theme and invert mode.
      */
     override fun provideThemeOverride(): AppTheme {
-        var applyDarkTheme = isDarkTheme(quickUserPrefs.useTheme)
+        var applyDarkTheme = isDarkTheme()
         applyDarkTheme = (applyDarkTheme && !quickUserPrefs.invertColors) || (!applyDarkTheme && quickUserPrefs.invertColors)
         return if (applyDarkTheme) {
             AppTheme.BLACK

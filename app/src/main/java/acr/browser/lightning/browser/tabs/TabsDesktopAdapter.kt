@@ -72,7 +72,7 @@ class TabsDesktopAdapter(
             viewHolder.favicon.setImageForTheme(tab.favicon, ColorUtils.calculateLuminance(foregroundTabColor)<0.2)
         }
         else {
-            viewHolder.favicon.setImageForTheme(tab.favicon, ba.useDarkTheme)
+            viewHolder.favicon.setImageForTheme(tab.favicon, ba.isDarkTheme())
         }
     }
 

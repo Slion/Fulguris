@@ -27,6 +27,7 @@ import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
 import acr.browser.lightning.di.UserPrefs
+import acr.browser.lightning.extensions.isDarkTheme
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.reverseDomainName
 import acr.browser.lightning.favicon.FaviconModel
@@ -244,7 +245,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                         false
                     }
 
-                    faviconModel.faviconForUrl("http://$domain","",(activity as? ThemedActivity)?.useDarkTheme == true)
+                    faviconModel.faviconForUrl("http://$domain","",(activity as? ThemedActivity)?.isDarkTheme() == true)
                         .subscribeOn(networkScheduler)
                         .observeOn(mainScheduler)
                         .subscribeBy(

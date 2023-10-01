@@ -26,6 +26,7 @@ import acr.browser.lightning.AccentTheme
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
 import acr.browser.lightning.ThemedActivity
+import acr.browser.lightning.extensions.isDarkTheme
 import acr.browser.lightning.extensions.setStatusBarIconsColor
 import acr.browser.lightning.utils.ThemeUtils
 import acr.browser.lightning.utils.foregroundColorFromBackgroundColor
@@ -38,7 +39,7 @@ abstract class ThemedSettingsActivity : ThemedActivity() {
         super.onResume()
         // Make sure icons have the right color
         //window.setStatusBarIconsColor(foregroundColorFromBackgroundColor(ThemeUtils.getPrimaryColor(this)) == Color.BLACK && !userPreferences.useBlackStatusBar)
-        window.setStatusBarIconsColor(!(useDarkTheme || userPreferences.useBlackStatusBar))
+        window.setStatusBarIconsColor(!(isDarkTheme() || userPreferences.useBlackStatusBar))
         resetPreferences()
         if (userPreferences.useTheme != themeId) {
             recreate()

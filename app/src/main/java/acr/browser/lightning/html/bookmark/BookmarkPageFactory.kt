@@ -8,6 +8,7 @@ import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.di.DiskScheduler
 import acr.browser.lightning.di.configPrefs
+import acr.browser.lightning.extensions.isDarkTheme
 import acr.browser.lightning.extensions.safeUse
 import acr.browser.lightning.favicon.FaviconModel
 import acr.browser.lightning.favicon.toValidUri
@@ -93,7 +94,7 @@ class BookmarkPageFactory @Inject constructor(
     }
 
     private fun construct(list: List<BookmarkViewModel>): String {
-        val useDarkTheme = (App.currentContext() as? BrowserActivity)?.useDarkTheme == false
+        val useDarkTheme = (App.currentContext() as? BrowserActivity)?.isDarkTheme() == false
         return parse(bookmarkPageReader.provideHtml()
             // Theme our page first
             .replace("\${useDarkTheme}", useDarkTheme.toString()) // Not actually used for now
