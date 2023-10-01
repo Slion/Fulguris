@@ -10,6 +10,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.utils.Utils
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityManager
 import android.os.Build
 import android.view.Gravity
 import android.view.View
@@ -19,6 +20,8 @@ import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import fulguris.app
+import timber.log.Timber
 
 
 // Define our snackbar popup duration
@@ -89,6 +92,25 @@ fun Window.setStatusBarIconsColor(dark: Boolean)
             decorView.systemUiVisibility = decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         } else {
             decorView.systemUiVisibility = decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+        }
+    }
+}
+
+
+/**
+ *
+ */
+fun Activity.setTaskLabel(aLabel: String?) {
+    Timber.v("setTaskLabel: $aLabel")
+    if (aLabel==null) {
+        return
+    }
+
+    if (!app.incognito) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            setTaskDescription(ActivityManager.TaskDescription.Builder().setLabel(aLabel).build())
+        } else {
+            setTaskDescription(ActivityManager.TaskDescription(aLabel))
         }
     }
 }

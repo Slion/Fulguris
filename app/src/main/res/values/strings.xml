@@ -543,6 +543,7 @@ See: https://stackoverflow.com/a/42884713/3969362
         <item quantity="other">Current page has %d cookies</item>
     </plurals>
 
+    <string name="settings_title_task_label">Task label</string>
 
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
@@ -707,5 +708,12 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
+
+    <string name="label_url">URL</string>
+    <string name="label_short_url">Short URL</string>
+    <string name="label_domain">Domain</string>
+    <string name="label_title">Title</string>
+    <string name="label_app_name">App name</string>
+
 
 </resources>

@@ -54,6 +54,7 @@ import acr.browser.lightning.view.SearchView
 import android.animation.*
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ClipboardManager
@@ -113,6 +114,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
+import fulguris.enums.HeaderInfo
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -3336,17 +3338,50 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     @ColorInt
     override fun getUiColor(): Int = currentUiColor
 
+    /**
+     *
+     */
     override fun updateUrl(url: String?, isLoading: Boolean) {
-        if (url == null || searchView.hasFocus() != false) {
+
+        Timber.d("updateUrl: $url")
+
+        if (url == null) {
+            setTaskLabel(getString(R.string.app_name))
             return
         }
+
         val currentTab = tabsManager.currentTab
         bookmarksView?.handleUpdatedUrl(url)
 
         val currentTitle = currentTab?.title
 
-        searchView.setText(searchBoxModel.getDisplayContent(url, currentTitle, isLoading))
+        if (!searchView.hasFocus()) {
+            Timber.d("updateUrl: $currentTitle - $url")
+            searchView.setText(searchBoxModel.getDisplayContent(url, currentTitle, isLoading))
+        }
+
+        setTaskLabel(getHeaderInfoText(userPreferences.taskLabel))
     }
+
+    /**
+     *
+     */
+    private fun getHeaderInfoText(aInfo: HeaderInfo) : String {
+
+        tabsManager.currentTab?.let {tab ->
+            return when (aInfo) {
+                HeaderInfo.Url -> tab.url
+                HeaderInfo.ShortUrl -> Utils.trimmedProtocolFromURL(tab.url)
+                HeaderInfo.Domain -> Utils.getDisplayDomainName(tab.url)
+                HeaderInfo.Title -> tab.title
+                HeaderInfo.AppName -> getString(R.string.app_name)
+            }
+        }
+
+        // Defensive fallback to application name
+        return getString(R.string.app_name)
+    }
+
 
     override fun updateTabNumber(number: Int) {
         iBindingToolbarContent.tabsButton.updateCount(number)
@@ -4234,7 +4269,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * Implement [BrowserView.setAddressBarText]
      */
     override fun setAddressBarText(aText: String) {
+        Timber.d("setAddressBarText: $aText")
         mainHandler.postDelayed({
+            Timber.d("setAddressBarText: $aText")
             // Emulate tap to open up soft keyboard if needed
             searchView.simulateTap()
             searchView.setText(aText)
@@ -4243,6 +4280,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }, 1000)
     }
 
+    /**
+     *
+     */
     private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
         for (i in items.indices) {
             if (inputStr.contains(items[i])) {

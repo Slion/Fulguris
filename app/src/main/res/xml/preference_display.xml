@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         android:title="@string/settings_display"
-        app:singleLineTitle="false">
+        a:singleLineTitle="false">
 
     <Preference
         android:key="@string/pref_key_theme"
         android:title="@string/theme"
-        app:icon="@drawable/ic_brush"
-        app:singleLineTitle="false"
+        a:icon="@drawable/ic_brush"
+        a:singleLineTitle="false"
         />
 
     <!-- Currently not working, therefore hidden for now -->
     <Preference
         android:key="@string/pref_key_accent"
         android:title="@string/accent_color"
-        app:icon="@drawable/ic_palette"
-        app:isPreferenceVisible="@bool/const_false"
-        app:singleLineTitle="false"
+        a:icon="@drawable/ic_palette"
+        a:isPreferenceVisible="@bool/const_false"
+        a:singleLineTitle="false"
         />
 
     <Preference
         android:key="@string/pref_key_browser_text_size"
         android:title="@string/title_text_size"
-        app:icon="@drawable/ic_text_size"
-        app:singleLineTitle="false"
+        a:icon="@drawable/ic_text_size"
+        a:singleLineTitle="false"
         />
 
     </PreferenceCategory>
@@ -34,42 +34,53 @@
     <PreferenceCategory
         android:title="@string/settings_title_configuration"
         android:summary="@string/settings_summary_configuration"
-        app:singleLineTitle="false"
+        a:singleLineTitle="false"
         >
 
         <Preference
-            app:fragment="acr.browser.lightning.settings.fragment.PortraitSettingsFragment"
-            app:title="@string/settings_title_portrait"
-            app:icon="@drawable/ic_phone"
-            app:singleLineTitle="false"
+            a:fragment="acr.browser.lightning.settings.fragment.PortraitSettingsFragment"
+            a:title="@string/settings_title_portrait"
+            a:icon="@drawable/ic_phone"
+            a:singleLineTitle="false"
             />
 
         <Preference
-            app:fragment="acr.browser.lightning.settings.fragment.LandscapeSettingsFragment"
-            app:title="@string/settings_title_landscape"
-            app:icon="@drawable/ic_landscape"
-            app:singleLineTitle="false"
+            a:fragment="acr.browser.lightning.settings.fragment.LandscapeSettingsFragment"
+            a:title="@string/settings_title_landscape"
+            a:icon="@drawable/ic_landscape"
+            a:singleLineTitle="false"
             />
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/settings_general"
-        app:singleLineTitle="false">
+        a:singleLineTitle="false">
+
+        <fulguris.preference.EnumListPreference
+            a:key="@string/pref_key_task_label"
+            a:title="@string/settings_title_task_label"
+            a:useSimpleSummaryProvider="true"
+            a:defaultValue="AppName"
+            a:entries="@array/HeaderInfo"
+            a:icon="@drawable/ic_label_outline"
+            a:singleLineTitle="false"
+            a:enumClassName="fulguris.enums.HeaderInfo"
+            />
 
     <Preference
         android:key="@string/pref_key_tool_bar_text_display"
         android:title="@string/url_contents"
-        app:icon="@drawable/ic_short_text"
-        app:singleLineTitle="false"
+        a:icon="@drawable/ic_short_text"
+        a:singleLineTitle="false"
         />
 
 
     <Preference
         android:key="@string/pref_key_rendering_mode"
         android:title="@string/rendering_mode"
-        app:icon="@drawable/ic_rendering_mode"
-        app:singleLineTitle="false"
+        a:icon="@drawable/ic_rendering_mode"
+        a:singleLineTitle="false"
         />
 
     <SwitchPreferenceCompat
@@ -77,9 +88,9 @@
         android:key="@string/pref_key_tab_list_item_show_close_button"
         android:title="@string/pref_title_tab_list_item_show_close_button"
         android:summary="@string/pref_summary_tab_list_item_show_close_button"
-        app:icon="@drawable/ic_action_delete"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false"
+        a:icon="@drawable/ic_action_delete"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
         />
 
     <SwitchPreferenceCompat
@@ -87,18 +98,18 @@
         android:key="@string/pref_key_web_page_theme"
         android:title="@string/color_mode"
         android:summary="@string/pref_summary_color_mode"
-        app:icon="@drawable/ic_brush"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false"
+        a:icon="@drawable/ic_brush"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
         />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/pref_key_black_status_bar"
         android:title="@string/settings_black_status_bar"
-        app:icon="@drawable/ic_phone"
-        app:iconSpaceReserved="true"
-        app:singleLineTitle="false"
+        a:icon="@drawable/ic_phone"
+        a:iconSpaceReserved="true"
+        a:singleLineTitle="false"
         />
 
     </PreferenceCategory>
@@ -110,9 +121,9 @@
             android:key="@string/pref_key_menu_show_exit"
             android:title="@string/pref_title_menu_show_exit"
             android:summary="@string/pref_summary_menu_show_exit"
-            app:icon="@drawable/ic_action_delete"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_action_delete"
+            a:iconSpaceReserved="false"
+            a:singleLineTitle="false"
             />
 
         <SwitchPreferenceCompat
@@ -120,9 +131,9 @@
             android:key="@string/pref_key_menu_show_new_tab"
             android:title="@string/pref_title_menu_new_tab"
             android:summary="@string/pref_summary_menu_new_tab"
-            app:icon="@drawable/ic_add"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_add"
+            a:iconSpaceReserved="false"
+            a:singleLineTitle="false"
             />
 
     </PreferenceCategory>
@@ -136,9 +147,9 @@
             android:title="@string/pref_title_use_bottom_sheets"
             android:summary="@string/pref_summary_use_bottom_sheets"
             android:disableDependentsState="true"
-            app:icon="@drawable/ic_fullscreen"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_fullscreen"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
             />
 
         <SwitchPreferenceCompat
@@ -146,9 +157,9 @@
             android:key="@string/pref_key_locked_drawers"
             android:title="@string/pref_title_locked_drawers"
             android:summary="@string/pref_summary_locked_drawers"
-            app:icon="@drawable/ic_block"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_block"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
             />
 
         <SwitchPreferenceCompat
@@ -157,9 +168,9 @@
             android:title="@string/settings_title_swap_bookmarks_and_tabs"
             android:summary="@string/settings_summary_swap_bookmarks_and_tabs"
             android:dependency="@string/pref_key_use_bottom_sheets"
-            app:icon="@drawable/ic_cache"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_cache"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
             />
 
     </PreferenceCategory>
@@ -173,18 +184,18 @@
             android:key="@string/pref_key_overview_mode"
             android:summary="@string/recommended"
             android:title="@string/overViewMode"
-            app:icon="@drawable/ic_eye"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_eye"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
             />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/pref_key_text_reflow"
             android:title="@string/reflow"
-            app:icon="@drawable/ic_text_variant"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_text_variant"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
             />
 
     </PreferenceCategory>
@@ -194,9 +205,9 @@
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_change_show_animation"
             android:title="@string/pref_title_show_animation"
-            app:icon="@drawable/ic_animation"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_animation"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
             />
     </PreferenceCategory>
 
@@ -205,17 +216,17 @@
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_close_show_snackbar"
             android:title="@string/pref_title_show_snackbar"
-            app:icon="@drawable/ic_info"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_info"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
             />
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/pref_key_on_tab_close_vibrate"
             android:title="@string/pref_title_vibrate"
-            app:icon="@drawable/ic_vibrate"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_vibrate"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
             />
     </PreferenceCategory>
 
@@ -224,34 +235,34 @@
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_back_show_animation"
             android:title="@string/pref_title_show_animation"
-            app:icon="@drawable/ic_animation"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false"
+            a:icon="@drawable/ic_animation"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
             />
 
         <SeekBarPreference
-            app:key="@string/pref_key_on_tab_back_animation_duration"
-            app:dependency="@string/pref_key_on_tab_back_show_animation"
-            app:title="@string/pref_title_duration"
-            app:summary="@string/pref_summary_duration"
-            app:icon="@drawable/ic_timer"
-            app:defaultValue="@integer/pref_default_animation_duration_tab_back_forward"
-            app:min="10"
+            a:key="@string/pref_key_on_tab_back_animation_duration"
+            a:dependency="@string/pref_key_on_tab_back_show_animation"
+            a:title="@string/pref_title_duration"
+            a:summary="@string/pref_summary_duration"
+            a:icon="@drawable/ic_timer"
+            a:defaultValue="@integer/pref_default_animation_duration_tab_back_forward"
+            a:min="10"
             android:max="100"
-            app:seekBarIncrement="50"
-            app:showSeekBarValue="true"
-            app:iconSpaceReserved="true"
-            app:updatesContinuously="true"
-            app:singleLineTitle="false"
+            a:seekBarIncrement="50"
+            a:showSeekBarValue="true"
+            a:iconSpaceReserved="true"
+            a:updatesContinuously="true"
+            a:singleLineTitle="false"
             />
     </PreferenceCategory>
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.ScrollbarsSettingsFragment"
-        app:title="@string/pref_category_scrollbars"
-        app:summary="@string/pref_summary_scrollbars"
-        app:icon="@drawable/ic_scroll_vertical"
-        app:singleLineTitle="false"
+        a:fragment="acr.browser.lightning.settings.fragment.ScrollbarsSettingsFragment"
+        a:title="@string/pref_category_scrollbars"
+        a:summary="@string/pref_summary_scrollbars"
+        a:icon="@drawable/ic_scroll_vertical"
+        a:singleLineTitle="false"
         />
 
 

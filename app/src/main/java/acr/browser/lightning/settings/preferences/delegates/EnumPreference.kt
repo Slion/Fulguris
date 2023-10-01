@@ -47,7 +47,7 @@ class EnumPreference<T>(
     private var backingValue: String by preferences.stringPreference(name, defaultValue.toString())
 
     override fun getValue(thisRef: Any, property: KProperty<*>): T {
-        return clazz.enumConstants!!.first { it.toString() == backingValue } ?: defaultValue
+        return clazz.enumConstants!!.firstOrNull { it.toString() == backingValue } ?: defaultValue
     }
 
     override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
@@ -72,11 +72,11 @@ inline fun <reified T> SharedPreferences.enumPreference(
  * Creates a [T] enum from [SharedPreferences] with the provide arguments.
  */
 inline fun <reified T> SharedPreferences.enumPreference(
-        @StringRes stringRes: Int,
-        defaultValue: T
+    @StringRes name: Int,
+    defaultValue: T
 ): ReadWriteProperty<Any, T> where T : Enum<T>, T : IntEnum = EnumPreference(
-        app.resources.getString(stringRes),
-        defaultValue,
-        T::class.java,
-        this
+    app.resources.getString(name),
+    defaultValue,
+    T::class.java,
+    this
 )

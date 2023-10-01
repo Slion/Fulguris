@@ -18,6 +18,7 @@ import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.view.RenderingMode
 import android.content.SharedPreferences
 import fulguris.LogLevel
+import fulguris.enums.HeaderInfo
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -202,6 +203,12 @@ class UserPreferences @Inject constructor(
      * false otherwise.
      */
     var colorModeEnabled by preferences.booleanPreference(R.string.pref_key_web_page_theme, true)
+
+    /**
+     * Define what text should be shown in the Android task switcher.
+     * That's also the window title for WSA on Windows.
+     */
+    var taskLabel by preferences.enumPreference(R.string.pref_key_task_label, HeaderInfo.AppName)
 
     /**
      * The index of the URL/search box display choice/

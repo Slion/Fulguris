@@ -1,6 +1,7 @@
 package acr.browser.lightning
 
 import acr.browser.lightning.di.HiltEntryPoint
+import acr.browser.lightning.extensions.setTaskLabel
 import acr.browser.lightning.locale.LocaleAwareActivity
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
@@ -67,12 +68,14 @@ abstract class ThemedActivity : LocaleAwareActivity() {
         // That's apparently not an issue specific to Fulguris
         applyTheme(provideThemeOverride()?:themeId)
         applyAccent()
+        // Make sure we reset task label when an activity is created
+        setTaskLabel(getString(R.string.app_name))
         // NOTE: https://github.com/Slion/Fulguris/issues/308
         // Only now call on create which will do Hilt injections
         super.onCreate(savedInstanceState)
         resetPreferences()
     }
-
+    
     /**
      *
      */
