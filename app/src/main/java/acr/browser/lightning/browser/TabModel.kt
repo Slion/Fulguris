@@ -21,9 +21,12 @@
  */
  
 package acr.browser.lightning.browser
+import acr.browser.lightning.extensions.createDefaultFavicon
+import acr.browser.lightning.view.LightningViewTitle
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import fulguris.app
 import java.io.ByteArrayOutputStream
 
 /**
@@ -94,7 +97,10 @@ class TabModelFromBundle (
         bundle.getString(TAB_TITLE_KEY)?:"",
         bundle.getBoolean(KEY_DESKTOP_MODE),
         bundle.getBoolean(KEY_DARK_MODE),
-        bundle.getByteArray(TAB_FAVICON_KEY).let{BitmapFactory.decodeByteArray(it, 0, it?.size?:0)},
+        bundle.getByteArray(TAB_FAVICON_KEY)?.let{BitmapFactory.decodeByteArray(it, 0, it.size)}
+            // That was needed for smooth transition was previous model where favicon could be null
+            // Past that transition it is just defensive code and should not execute anymore
+            ?:app.createDefaultFavicon(),
         bundle.getString(KEY_SEARCH_QUERY)?:"",
         bundle.getBoolean(KEY_SEARCH_ACTIVE),
         bundle.getBundle(WEB_VIEW_KEY)

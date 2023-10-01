@@ -1,6 +1,7 @@
 package acr.browser.lightning.view
 
 import acr.browser.lightning.R
+import acr.browser.lightning.extensions.createDefaultFavicon
 import acr.browser.lightning.extensions.pad
 import acr.browser.lightning.extensions.toBitmap
 import android.content.Context
@@ -21,8 +22,7 @@ class LightningViewTitle(context: Context) {
     init {
         // TODO: find a way to update default favicon when the theme changed
         if (defaultFavicon==null) {
-            //val background = MaterialColors.getColor(context, com.google.android.material.R.attr.colorSurface, Color.BLACK)
-            defaultFavicon =  ResourcesCompat.getDrawable(context.resources, R.drawable.ic_web, context.theme)!!.toBitmap(256,256)
+            defaultFavicon = context.createDefaultFavicon()
         }
     }
 
@@ -71,7 +71,7 @@ class LightningViewTitle(context: Context) {
     fun getFavicon(): Bitmap = favicon
 
     companion object {
-        private var defaultFavicon: Bitmap? = null
+        var defaultFavicon: Bitmap? = null
     }
 
 }
