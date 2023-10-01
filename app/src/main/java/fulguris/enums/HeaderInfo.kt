@@ -23,21 +23,20 @@ package fulguris.enums
  */
 
 
-import acr.browser.lightning.settings.preferences.IntEnum
-import android.util.Log
-
 /**
  * Define which information should be displayed in a header such as address bar, task bar and task switcher.
  *
- * NOTE: Class name is referenced as strings in our resources.
+ * NOTES:
+ * - Class name is referenced as string in our resources.
+ * - Enum string values are stored in preferences.
  */
-enum class HeaderInfo(override val value: Int) : IntEnum {
-    Url(0),
-    ShortUrl(1),
-    Domain(2),
-    Title(3),
-    Session(4),
-    AppName(5)
+enum class HeaderInfo {
+    Url,
+    ShortUrl,
+    Domain,
+    Title,
+    Session,
+    AppName
 }
 
 

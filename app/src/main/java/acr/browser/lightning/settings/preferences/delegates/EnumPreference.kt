@@ -41,7 +41,7 @@ class EnumPreference<T>(
     private val defaultValue: T,
     private val clazz: Class<T>,
     preferences: SharedPreferences
-) : ReadWriteProperty<Any, T> where T : Enum<T>, T : IntEnum {
+) : ReadWriteProperty<Any, T> where T : Enum<T> {
 
     //private var backingInt: Int by preferences.intPreference(name, defaultValue.value)
     private var backingValue: String by preferences.stringPreference(name, defaultValue.toString())
@@ -61,7 +61,7 @@ class EnumPreference<T>(
 inline fun <reified T> SharedPreferences.enumPreference(
     name: String,
     defaultValue: T
-): ReadWriteProperty<Any, T> where T : Enum<T>, T : IntEnum = EnumPreference(
+): ReadWriteProperty<Any, T> where T : Enum<T> = EnumPreference(
     name,
     defaultValue,
     T::class.java,
@@ -74,7 +74,7 @@ inline fun <reified T> SharedPreferences.enumPreference(
 inline fun <reified T> SharedPreferences.enumPreference(
     @StringRes name: Int,
     defaultValue: T
-): ReadWriteProperty<Any, T> where T : Enum<T>, T : IntEnum = EnumPreference(
+): ReadWriteProperty<Any, T> where T : Enum<T> = EnumPreference(
     app.resources.getString(name),
     defaultValue,
     T::class.java,
