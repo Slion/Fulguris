@@ -709,10 +709,12 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
 
+    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>
     <string name="label_domain">Domain</string>
     <string name="label_title">Title</string>
+    <string name="label_session">Session</string>
     <string name="label_app_name">App name</string>
 
 

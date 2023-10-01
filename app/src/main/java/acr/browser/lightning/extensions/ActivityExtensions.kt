@@ -98,7 +98,7 @@ fun Window.setStatusBarIconsColor(dark: Boolean)
 
 
 /**
- *
+ * Change the text displayed in task switcher or window title on WSA
  */
 fun Activity.setTaskLabel(aLabel: String?) {
     Timber.v("setTaskLabel: $aLabel")

@@ -36,7 +36,8 @@ enum class HeaderInfo(override val value: Int) : IntEnum {
     ShortUrl(1),
     Domain(2),
     Title(3),
-    AppName(4)
+    Session(4),
+    AppName(5)
 }
 
 

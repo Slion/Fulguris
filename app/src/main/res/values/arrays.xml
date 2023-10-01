@@ -64,6 +64,7 @@
         <item>@string/label_short_url</item>
         <item>@string/label_domain</item>
         <item>@string/label_title</item>
+        <item>@string/label_session</item>
         <item>@string/label_app_name</item>
     </string-array>
 

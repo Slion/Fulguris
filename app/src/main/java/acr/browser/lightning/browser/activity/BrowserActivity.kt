@@ -3364,7 +3364,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     *
+     * Provide the text corresponding to the given [aInfo].
      */
     private fun getHeaderInfoText(aInfo: HeaderInfo) : String {
 
@@ -3374,6 +3374,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 HeaderInfo.ShortUrl -> Utils.trimmedProtocolFromURL(tab.url)
                 HeaderInfo.Domain -> Utils.getDisplayDomainName(tab.url)
                 HeaderInfo.Title -> tab.title
+                HeaderInfo.Session -> tabsManager.iCurrentSessionName
                 HeaderInfo.AppName -> getString(R.string.app_name)
             }
         }

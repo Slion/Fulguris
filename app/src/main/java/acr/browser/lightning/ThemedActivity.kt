@@ -75,7 +75,7 @@ abstract class ThemedActivity : LocaleAwareActivity() {
         super.onCreate(savedInstanceState)
         resetPreferences()
     }
-    
+
     /**
      *
      */
