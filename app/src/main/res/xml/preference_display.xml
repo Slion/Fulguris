@@ -68,6 +68,16 @@
             a:enumClassName="fulguris.enums.HeaderInfo"
             />
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_task_icon"
+            android:title="@string/settings_title_task_icon"
+            android:summaryOn="@string/settings_summary_on_task_icon"
+            android:summaryOff="@string/settings_summary_off_task_icon"
+            a:icon="@drawable/ic_image"
+            a:singleLineTitle="false"
+            />
+
     <Preference
         android:key="@string/pref_key_tool_bar_text_display"
         android:title="@string/url_contents"

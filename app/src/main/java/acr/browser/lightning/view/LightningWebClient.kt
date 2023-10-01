@@ -220,7 +220,7 @@ class LightningWebClient(
         if (view.title == null || (view.title as String).isEmpty()) {
             lightningView.titleInfo.setTitle(activity.getString(R.string.untitled))
         } else {
-            lightningView.titleInfo.setTitle(view.title)
+            view.title?.let {lightningView.titleInfo.setTitle(it)}
         }
         if (lightningView.invertPage) {
             view.evaluateJavascript(invertPageJs.provideJs(), null)
@@ -241,7 +241,7 @@ class LightningWebClient(
             )
         }
 
-        uiController.tabChanged(lightningView)
+        uiController.onTabChanged(lightningView)
 
         // To prevent potential overhead when logs are not needed
         if (userPreferences.isLog(LogLevel.VERBOSE)) {
@@ -297,7 +297,7 @@ class LightningWebClient(
                 SslState.None
             }
         }
-        lightningView.titleInfo.setFavicon(null)
+        lightningView.titleInfo.resetFavicon()
         if (lightningView.isShown) {
             updateUrlIfNeeded(url, true)
             uiController.showActionBar()
@@ -306,7 +306,7 @@ class LightningWebClient(
         // Try to fetch meta theme color a few times
         lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
 
-        uiController.tabChanged(lightningView)
+        uiController.onTabChanged(lightningView)
     }
 
     private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {

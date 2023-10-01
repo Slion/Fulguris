@@ -168,9 +168,19 @@ interface UIController {
     fun setBackButtonEnabled(enabled: Boolean)
 
     /**
-     * Notify the UI that the [tab] should be displayed.
+     * Notify the UI that the [aTab] should be displayed.
      */
-    fun tabChanged(tab: LightningView)
+    fun onTabChanged(aTab: LightningView)
+
+    /**
+     *
+     */
+    fun onTabChangedIcon(aTab: LightningView)
+
+    /**
+     *
+     */
+    fun onTabChangedTitle(aTab: LightningView)
 
     /**
      * Notify the browser that the user pressed the back button.

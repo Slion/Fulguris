@@ -152,6 +152,7 @@
 
 
     <string name="pref_key_task_label">pref_key_task_label</string>
+    <string name="pref_key_task_icon">pref_key_task_icon</string>
 
     <!-- See: NewTabPosition -->
     <string name="new_tab_position_before_value">BEFORE_CURRENT_TAB</string>

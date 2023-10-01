@@ -544,6 +544,9 @@ See: https://stackoverflow.com/a/42884713/3969362
     </plurals>
 
     <string name="settings_title_task_label">Task label</string>
+    <string name="settings_title_task_icon">Task icon</string>
+    <string name="settings_summary_on_task_icon">Use page icon</string>
+    <string name="settings_summary_off_task_icon">Use app icon</string>
 
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>

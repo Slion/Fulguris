@@ -2,8 +2,13 @@ package acr.browser.lightning.view
 
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.pad
+import acr.browser.lightning.extensions.toBitmap
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
+import androidx.core.content.res.ResourcesCompat
+//import androidx.core.graphics.drawable.toBitmap
+import com.google.android.material.color.MaterialColors
 
 /**
  * [LightningViewTitle] acts as a container class
@@ -13,7 +18,15 @@ import android.graphics.Bitmap
  */
 class LightningViewTitle(context: Context) {
 
-    private var favicon: Bitmap? = null
+    init {
+        // TODO: find a way to update default favicon when the theme changed
+        if (defaultFavicon==null) {
+            //val background = MaterialColors.getColor(context, com.google.android.material.R.attr.colorSurface, Color.BLACK)
+            defaultFavicon =  ResourcesCompat.getDrawable(context.resources, R.drawable.ic_web, context.theme)!!.toBitmap(256,256)
+        }
+    }
+
+    private var favicon: Bitmap = defaultFavicon!!
     private var title = context.getString(R.string.action_new_tab)
 
     /**
@@ -22,8 +35,15 @@ class LightningViewTitle(context: Context) {
      *
      * @param favicon the potentially null favicon to set.
      */
-    fun setFavicon(favicon: Bitmap?) {
-        this.favicon = favicon?.pad()
+    fun setFavicon(favicon: Bitmap) {
+        this.favicon = favicon.pad()
+    }
+
+    /**
+     *
+     */
+    fun resetFavicon() {
+        favicon = defaultFavicon!!
     }
 
     /**
@@ -31,15 +51,15 @@ class LightningViewTitle(context: Context) {
      *
      * @return the non-null title.
      */
-    fun getTitle(): String? = title
+    fun getTitle(): String = title
 
     /**
      * Set the current title to a new title. If the title is null, an empty title will be used.
      *
      * @param title the title to set.
      */
-    fun setTitle(title: String?) {
-        this.title = title ?: ""
+    fun setTitle(title: String) {
+        this.title = title
     }
 
     /**
@@ -48,6 +68,10 @@ class LightningViewTitle(context: Context) {
      *
      * @return the favicon or a default if that is null.
      */
-    fun getFavicon(): Bitmap? = favicon
+    fun getFavicon(): Bitmap = favicon
+
+    companion object {
+        private var defaultFavicon: Bitmap? = null
+    }
 
 }

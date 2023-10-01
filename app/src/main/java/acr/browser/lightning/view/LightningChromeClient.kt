@@ -14,12 +14,10 @@ import android.Manifest
 import android.annotation.TargetApi
 import android.app.Activity
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Message
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.webkit.*
@@ -38,17 +36,13 @@ class LightningChromeClient(
 ) : WebChromeClient(), WebRtcPermissionsView {
 
     private val geoLocationPermissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-    private val uiController: UIController
+    private val uiController: UIController = activity as UIController
 
     private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
     val faviconModel: FaviconModel = hiltEntryPoint.faviconModel
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
     val webRtcPermissionsModel: WebRtcPermissionsModel = hiltEntryPoint.webRtcPermissionsModel
     val diskScheduler: Scheduler = hiltEntryPoint.diskScheduler()
-
-    init {
-        uiController = activity as UIController
-    }
 
     override fun onProgressChanged(view: WebView, newProgress: Int) {
         if (lightningView.isShown) {
@@ -69,7 +63,7 @@ class LightningChromeClient(
                 try {
                     lightningView.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"'));
                     // We did find a valid theme-color, tell our controller about it
-                    uiController.tabChanged(lightningView)
+                    uiController.onTabChanged(lightningView)
                 }
                 catch (e: Exception) {
                     if (triesLeft==0 || newProgress==100)
@@ -77,7 +71,7 @@ class LightningChromeClient(
                         // Exhausted all our tries or the page finished loading before we did
                         // Just give up then and reset our theme color
                         lightningView.htmlMetaThemeColor = LightningView.KHtmlMetaThemeColorInvalid
-                        uiController.tabChanged(lightningView)
+                        uiController.onTabChanged(lightningView)
                     }
                     else
                     {
@@ -89,9 +83,12 @@ class LightningChromeClient(
         }
     }
 
+    /**
+     * Called once the favicon is ready
+     */
     override fun onReceivedIcon(view: WebView, icon: Bitmap) {
         lightningView.titleInfo.setFavicon(icon)
-        uiController.tabChanged(lightningView)
+        uiController.onTabChangedIcon(lightningView)
         cacheFavicon(view.url, icon)
     }
 
@@ -110,14 +107,16 @@ class LightningChromeClient(
             .subscribe()
     }
 
-
+    /**
+     *
+     */
     override fun onReceivedTitle(view: WebView?, title: String?) {
         if (title?.isNotEmpty() == true) {
             lightningView.titleInfo.setTitle(title)
         } else {
             lightningView.titleInfo.setTitle(activity.getString(R.string.untitled))
         }
-        uiController.tabChanged(lightningView)
+        uiController.onTabChangedTitle(lightningView)
         if (view != null && view.url != null) {
             uiController.updateHistory(title, view.url as String)
         }

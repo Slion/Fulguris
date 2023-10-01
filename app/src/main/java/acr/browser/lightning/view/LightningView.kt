@@ -150,7 +150,7 @@ class LightningView(
                 // A tab sent to the background is not so new anymore
                 isNewTab = false
             }
-            uiController.tabChanged(this)
+            uiController.onTabChanged(this)
         }
     /**
      * Gets whether or not the page rendering is inverted or not. The main purpose of this is to
@@ -351,7 +351,7 @@ class LightningView(
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer
             titleInfo.setTitle(tabInitializer.tabModel.title)
-            titleInfo.setFavicon(tabInitializer.tabModel.favicon)
+            tabInitializer.tabModel.favicon?.let {titleInfo.setFavicon(it)}
             desktopMode = tabInitializer.tabModel.desktopMode
             darkMode = tabInitializer.tabModel.darkMode
             searchQuery = tabInitializer.tabModel.searchQuery

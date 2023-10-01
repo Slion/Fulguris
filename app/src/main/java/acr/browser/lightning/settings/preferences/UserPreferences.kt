@@ -211,6 +211,12 @@ class UserPreferences @Inject constructor(
     var taskLabel by preferences.enumPreference(R.string.pref_key_task_label, HeaderInfo.AppName)
 
     /**
+     * True means favicon should be shown in task switcher.
+     * False means we show the app icon.
+     */
+    var taskIcon by preferences.booleanPreference(R.string.pref_key_task_icon, false)
+
+    /**
      * The index of the URL/search box display choice/
      *
      * @see SearchBoxModel

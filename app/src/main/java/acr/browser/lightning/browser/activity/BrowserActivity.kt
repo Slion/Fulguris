@@ -110,6 +110,7 @@ import com.android.volley.toolbox.Volley
 import com.anthonycr.grant.PermissionsManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -2280,6 +2281,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     /**
      * From [BrowserView].
+     *
      */
     override fun notifyTabViewChanged(position: Int) {
         Timber.d("Notify Tab Changed: $position")
@@ -2312,12 +2314,47 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         drawable?.let { visibility = VISIBLE } ?: run { visibility = GONE }
     }
 
-    override fun tabChanged(tab: LightningView) {
+    /**
+     *
+     */
+    override fun onTabChanged(aTab: LightningView) {
+        if (tabsManager.currentTab==aTab) {
+            setTaskDescription()
+        }
+
         // SL: Is this being called way too many times?
-        presenter.tabChangeOccurred(tab)
+        // TODO: This is completely silly all it does is calling [notifyTabViewChanged]
+        presenter.tabChangeOccurred(aTab)
         // SL: Putting this here to update toolbar background color was a bad idea
         // That somehow freezes the WebView after switching between a few tabs on F(x)tec Pro1 at least (Android 9)
         //initializePreferences()
+    }
+
+    /**
+     *
+     */
+    override fun onTabChangedIcon(aTab: LightningView) {
+        if (tabsManager.currentTab==aTab) {
+            setTaskDescription()
+        }
+
+        // TODO: optimize for icon only update
+        // TODO: This is completely silly all it does is calling [notifyTabViewChanged]
+        presenter.tabChangeOccurred(aTab)
+    }
+
+    /**
+     *
+     */
+    override fun onTabChangedTitle(aTab: LightningView) {
+        if (tabsManager.currentTab==aTab) {
+            setTaskDescription()
+        }
+
+        // TODO: optimize for title only update
+        // TODO: This is completely silly all it does is calling [notifyTabViewChanged]
+        presenter.tabChangeOccurred(aTab)
+
     }
 
     /**
@@ -3346,7 +3383,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         Timber.d("updateUrl: $url")
 
         if (url == null) {
-            setTaskLabel(getString(R.string.app_name))
             return
         }
 
@@ -3359,8 +3395,26 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             Timber.d("updateUrl: $currentTitle - $url")
             searchView.setText(searchBoxModel.getDisplayContent(url, currentTitle, isLoading))
         }
+    }
 
-        setTaskLabel(getHeaderInfoText(userPreferences.taskLabel))
+    /**
+     *
+     */
+    private fun setTaskDescription() {
+
+        // No changing task description in incognito mode
+        if (isIncognito()) {
+            return
+        }
+
+        tabsManager.currentTab?.let { tab ->
+            if (userPreferences.taskIcon) {
+                val color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface, Color.BLACK)
+                setTaskDescription(ActivityManager.TaskDescription(getHeaderInfoText(userPreferences.taskLabel),tab.favicon,color))
+            } else {
+                setTaskDescription(ActivityManager.TaskDescription(getHeaderInfoText(userPreferences.taskLabel)))
+            }
+        } ?: setTaskDescription(ActivityManager.TaskDescription(getString(R.string.app_name)))
     }
 
     /**

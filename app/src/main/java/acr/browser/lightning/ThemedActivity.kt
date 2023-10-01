@@ -2,18 +2,23 @@ package acr.browser.lightning
 
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.extensions.setTaskLabel
+import acr.browser.lightning.extensions.toBitmap
 import acr.browser.lightning.locale.LocaleAwareActivity
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
+import android.app.ActivityManager
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StyleRes
+import androidx.core.content.res.ResourcesCompat
+import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.EntryPointAccessors
 import fulguris.app
 import fulguris.app
+import timber.log.Timber
 
 //@AndroidEntryPoint
 abstract class ThemedActivity : LocaleAwareActivity() {
@@ -68,8 +73,27 @@ abstract class ThemedActivity : LocaleAwareActivity() {
         // That's apparently not an issue specific to Fulguris
         applyTheme(provideThemeOverride()?:themeId)
         applyAccent()
-        // Make sure we reset task label when an activity is created
-        setTaskLabel(getString(R.string.app_name))
+        // Make sure we reset task description when an activity is created
+        //setTaskLabel(getString(R.string.app_name))
+        // Looks like the new API has no effect Samsung on Tab S8 so weird
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            Timber.v("setTaskDescription")
+//            setTaskDescription(ActivityManager.TaskDescription.Builder()
+//                .setLabel(getString(R.string.app_name))
+//                .setBackgroundColor(color)
+//                .setIcon(R.drawable.ic_lightning)
+//                .build())
+//        }
+
+        if (quickUserPrefs.taskIcon) {
+            val color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface, Color.BLACK)
+            val icon = ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher, theme)!!.toBitmap(256,256)
+            setTaskDescription(ActivityManager.TaskDescription(getString(R.string.app_name),icon, color))
+        } else {
+            setTaskDescription(ActivityManager.TaskDescription(getString(R.string.app_name)))
+        }
+
+
         // NOTE: https://github.com/Slion/Fulguris/issues/308
         // Only now call on create which will do Hilt injections
         super.onCreate(savedInstanceState)

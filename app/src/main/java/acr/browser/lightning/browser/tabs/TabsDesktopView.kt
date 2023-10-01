@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import timber.log.Timber
 import java.lang.Exception
 
 /**
@@ -94,6 +95,7 @@ class TabsDesktopView @JvmOverloads constructor(
         try {
             tabsAdapter.notifyItemChanged(position)
         } catch (e: Exception) {
+            Timber.e(e,"notifyItemChanged")
         }
 
     }
