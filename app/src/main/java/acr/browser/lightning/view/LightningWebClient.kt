@@ -10,6 +10,7 @@ import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
+import acr.browser.lightning.extensions.getDrawable
 import acr.browser.lightning.extensions.getText
 import acr.browser.lightning.extensions.ihs
 import acr.browser.lightning.extensions.makeSnackbar
@@ -377,8 +378,8 @@ class LightningWebClient(
 
         //Encode image to base64 string
         val output = ByteArrayOutputStream()
-        val bitmap = ResourcesCompat.getDrawable(activity.resources, R.drawable.ic_about, activity.theme)?.toBitmap()
-        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, output)
+        val bitmap = activity.getDrawable(R.drawable.ic_about, android.R.attr.state_enabled).toBitmap()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
         val imageBytes: ByteArray = output.toByteArray()
         val imageString = "data:image/png;base64,"+Base64.encodeToString(imageBytes, Base64.NO_WRAP)
 

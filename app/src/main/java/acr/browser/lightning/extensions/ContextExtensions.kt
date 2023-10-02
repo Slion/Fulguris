@@ -117,6 +117,15 @@ fun Context.isDarkTheme(): Boolean {
  */
 fun Context.createDefaultFavicon(): Bitmap {
     Timber.v("createDefaultFavicon")
-    //val background = MaterialColors.getColor(context, com.google.android.material.R.attr.colorSurface, Color.BLACK)
-    return ResourcesCompat.getDrawable(resources, R.drawable.ic_web, theme)!!.toBitmap(256,256)
+    return getDrawable(R.drawable.ic_web, android.R.attr.state_enabled).toBitmap()
+}
+
+/**
+ * Load drawable [aId] from resources using theme and apply given [aStates].
+ *
+ * See drawable state: https://stackoverflow.com/questions/11943795
+ */
+fun Context.getDrawable(@DrawableRes aId: Int, vararg aStates: Int): Drawable {
+    Timber.v("getDrawable")
+    return ResourcesCompat.getDrawable(resources, aId, theme)!!.apply{ state = intArrayOf(*aStates) }
 }

@@ -16,7 +16,6 @@ import androidx.core.graphics.component2
 import androidx.core.graphics.component3
 import androidx.core.graphics.component4
 import androidx.core.graphics.drawable.toBitmapOrNull
-import com.google.android.material.color.MaterialColors
 import java.lang.reflect.Method
 
 /**
@@ -69,7 +68,7 @@ fun StateListDrawable.drawableForState(aState: Int) : Drawable {
  * bitmap
  * @see toBitmapOrNull
  */
-public fun Drawable.toBitmap(
+fun Drawable.toBitmap(
     @Px width: Int = intrinsicWidth,
     @Px height: Int = intrinsicHeight,
     @ColorInt aBackground: Int = Color.TRANSPARENT,

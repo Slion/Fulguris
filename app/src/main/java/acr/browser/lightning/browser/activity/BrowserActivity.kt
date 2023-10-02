@@ -91,7 +91,6 @@ import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
 import androidx.core.view.children
 import androidx.core.view.isVisible
