@@ -96,7 +96,7 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
      */
     override fun provideThemeOverride(): AppTheme {
         var applyDarkTheme = isDarkTheme()
-        applyDarkTheme = (applyDarkTheme && !quickUserPrefs.invertColors) || (!applyDarkTheme && quickUserPrefs.invertColors)
+        applyDarkTheme = (applyDarkTheme && !userPreferences.invertColors) || (!applyDarkTheme && userPreferences.invertColors)
         return if (applyDarkTheme) {
             AppTheme.BLACK
         } else {
@@ -108,7 +108,7 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
         super.onCreate(savedInstanceState)
 
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.fade_out_scale)
-        mInvert = quickUserPrefs.invertColors
+        mInvert = userPreferences.invertColors
         iTtsEngine = TextToSpeech(this, this)
 
         setContentView(R.layout.reading_view)
@@ -117,7 +117,7 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        mTextSize = quickUserPrefs!!.readingTextSize
+        mTextSize = userPreferences!!.readingTextSize
         mBody!!.textSize = getTextSize(mTextSize)
         mTitle!!.text = getString(R.string.untitled)
         mBody!!.text = getString(R.string.loading)
@@ -319,7 +319,7 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.invert_item -> {
-                quickUserPrefs!!.invertColors = !mInvert
+                userPreferences!!.invertColors = !mInvert
                 if (mUrl != null) {
                     launch(this, mUrl!!, file)
                     finish()
@@ -344,7 +344,7 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
                         .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, arg1: Int ->
                             mTextSize = bar.progress
                             mBody!!.textSize = getTextSize(mTextSize)
-                            quickUserPrefs!!.readingTextSize = bar.progress
+                            userPreferences!!.readingTextSize = bar.progress
                         }
                 val dialog: Dialog = builder.show()
                 setDialogSize(this, dialog)

@@ -1,38 +1,24 @@
 package acr.browser.lightning
 
-import acr.browser.lightning.di.HiltEntryPoint
-import acr.browser.lightning.extensions.setTaskLabel
+import acr.browser.lightning.extensions.getDrawable
 import acr.browser.lightning.extensions.toBitmap
 import acr.browser.lightning.locale.LocaleAwareActivity
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
 import android.app.ActivityManager
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StyleRes
-import androidx.core.content.res.ResourcesCompat
-import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.EntryPointAccessors
-import fulguris.app
-import fulguris.app
-import timber.log.Timber
 
 //@AndroidEntryPoint
 abstract class ThemedActivity : LocaleAwareActivity() {
-    /**
-     We need to get our Theme before calling onCreate for settings theme to work.
-     However onCreate does the Hilt injections so we did not have access to [LocaleAwareActivity.userPreferences] early enough.
-     Fortunately we can access our Hilt entry point early as shown below.
-     TODO: Move this in the base class after migrating it to Kotlin.
-     */
-    private val hiltEntryPoint = EntryPointAccessors.fromApplication(app, HiltEntryPoint::class.java)
-    protected val quickUserPrefs: UserPreferences = hiltEntryPoint.userPreferences
-    // TODO reduce protected visibility
-    protected var accentId: AccentTheme = quickUserPrefs.useAccent
-    protected var themeId: AppTheme = quickUserPrefs.useTheme
+
+    // TODO: Do we still need those? Are they working? Do we want to fix them?
+    protected var accentId: AccentTheme = userPreferences.useAccent
+    protected var themeId: AppTheme = userPreferences.useTheme
 
     /**
      * Override this to provide an alternate theme that should be set for every instance of this
@@ -71,6 +57,17 @@ abstract class ThemedActivity : LocaleAwareActivity() {
         // That's apparently not an issue specific to Fulguris
         applyTheme(provideThemeOverride()?:themeId)
         applyAccent()
+        // NOTE: https://github.com/Slion/Fulguris/issues/308
+        // Only now call on create which will do Hilt injections
+        super.onCreate(savedInstanceState)
+        setDefaultTaskDescriptor()
+        resetPreferences()
+    }
+
+    /**
+     *
+     */
+    private fun setDefaultTaskDescriptor() {
         // Make sure we reset task description when an activity is created
         //setTaskLabel(getString(R.string.app_name))
         // Looks like the new API has no effect Samsung on Tab S8 so weird
@@ -83,19 +80,14 @@ abstract class ThemedActivity : LocaleAwareActivity() {
 //                .build())
 //        }
 
-        if (quickUserPrefs.taskIcon) {
-            val color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface, Color.BLACK)
-            val icon = ResourcesCompat.getDrawable(resources, R.mipmap.ic_launcher, theme)!!.toBitmap(256,256)
+        if (userPreferences.taskIcon) {
+            //val color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface, Color.BLACK)
+            val color = getColor(R.color.ic_launcher_background)
+            val icon = getDrawable(R.drawable.ic_lightning_flavored, android.R.attr.state_enabled).toBitmap(aBackground =  color)
             setTaskDescription(ActivityManager.TaskDescription(getString(R.string.app_name),icon, color))
         } else {
             setTaskDescription(ActivityManager.TaskDescription(getString(R.string.app_name)))
         }
-
-
-        // NOTE: https://github.com/Slion/Fulguris/issues/308
-        // Only now call on create which will do Hilt injections
-        super.onCreate(savedInstanceState)
-        resetPreferences()
     }
 
     /**
