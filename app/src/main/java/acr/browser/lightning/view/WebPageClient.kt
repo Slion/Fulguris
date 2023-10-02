@@ -64,7 +64,7 @@ import kotlin.math.abs
  */
 class WebPageClient(
         private val activity: Activity,
-        private val lightningView: WebPageTab
+        private val webPageTab: WebPageTab
 ) : WebViewClient() {
 
     private val uiController: UIController
@@ -133,7 +133,7 @@ class WebPageClient(
         // Just use normal viewport unless we decide otherwise later
         aView.settings.useWideViewPort = false;
 
-        if (lightningView.desktopMode) {
+        if (webPageTab.desktopMode) {
             // Do not hack anything when desktop width is set to 100%
             // In this case desktop mode then only overrides the user agent which is all you should need in most cases really
             if (aView.context.configPrefs.desktopWidth != 100F) {
@@ -196,7 +196,7 @@ class WebPageClient(
     private fun updateUrlIfNeeded(url: String, isLoading: Boolean) {
         // Update URL unless we are dealing with our special internal URL
         (url.isSpecialUrl()). let { dontDoUpdate ->
-            uiController.updateUrl(if (dontDoUpdate) lightningView.url else url, isLoading)
+            uiController.updateUrl(if (dontDoUpdate) webPageTab.url else url, isLoading)
         }
     }
 
@@ -218,11 +218,11 @@ class WebPageClient(
             view.postInvalidate()
         }
         if (view.title == null || (view.title as String).isEmpty()) {
-            lightningView.titleInfo.setTitle(activity.getString(R.string.untitled))
+            webPageTab.titleInfo.setTitle(activity.getString(R.string.untitled))
         } else {
-            view.title?.let {lightningView.titleInfo.setTitle(it)}
+            view.title?.let {webPageTab.titleInfo.setTitle(it)}
         }
-        if (lightningView.invertPage) {
+        if (webPageTab.invertPage) {
             view.evaluateJavascript(invertPageJs.provideJs(), null)
         }
 /*        // TODO: element hiding does not work
@@ -241,7 +241,7 @@ class WebPageClient(
             )
         }
 
-        uiController.onTabChanged(lightningView)
+        uiController.onTabChanged(webPageTab)
 
         // To prevent potential overhead when logs are not needed
         if (userPreferences.isLog(LogLevel.VERBOSE)) {
@@ -297,16 +297,16 @@ class WebPageClient(
                 SslState.None
             }
         }
-        lightningView.titleInfo.resetFavicon()
-        if (lightningView.isShown) {
+        webPageTab.titleInfo.resetFavicon()
+        if (webPageTab.isShown) {
             updateUrlIfNeeded(url, true)
             uiController.showActionBar()
         }
 
         // Try to fetch meta theme color a few times
-        lightningView.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
+        webPageTab.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
 
-        uiController.onTabChanged(lightningView)
+        uiController.onTabChanged(webPageTab)
     }
 
     private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
@@ -405,7 +405,7 @@ class WebPageClient(
 
 
     override fun onScaleChanged(view: WebView, oldScale: Float, newScale: Float) {
-        if (view.isShown && lightningView.userPreferences.textReflowEnabled) {
+        if (view.isShown && webPageTab.userPreferences.textReflowEnabled) {
             if (isRunning)
                 return
             val changeInPercent = abs(100 - 100 / zoomScale * newScale)
@@ -541,7 +541,7 @@ class WebPageClient(
 
         Timber.d("loadDomainPreferences for $aHost")
         // Check if we need to load defaults
-        if (lightningView.isIncognito && !DomainPreferences.exists(aHost)) {
+        if (webPageTab.isIncognito && !DomainPreferences.exists(aHost)) {
             // Don't create new preferences when in incognito mode
             // Load default domain settings instead
             domainPreferences = DomainPreferences(app)
@@ -581,9 +581,9 @@ class WebPageClient(
 
         val url = request.url.toString()
         val uri  = Uri.parse(url)
-        val headers = lightningView.requestHeaders
+        val headers = webPageTab.requestHeaders
 
-        if (lightningView.isIncognito) {
+        if (webPageTab.isIncognito) {
             // If we are in incognito, immediately load, we don't want the url to leave the app
             return continueLoadingUrl(view, url, headers)
         }

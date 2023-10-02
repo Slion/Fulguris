@@ -82,10 +82,7 @@ class WebPageTab(
     val id = View.generateViewId()
 
     /**
-     * Getter for the [WebPageHeader] of the current LightningView instance.
-     *
-     * @return a NonNull instance of LightningViewTitle
-     * @return a NonNull instance of LightningViewTitle
+     * Getter for the [WebPageHeader] of the current [WebPageTab] instance.
      */
     val titleInfo: WebPageHeader
 
@@ -405,7 +402,7 @@ class WebPageTab(
             scrollBarFadeDuration = userPreferences.scrollbarFadeDuration.toInt()
 
             setFindListener(this@WebPageTab)
-            //id = this@LightningView.id
+            //id = this@[WebPageTab].id
             gestureDetector = GestureDetector(activity, CustomGestureListener(this))
 
             isFocusableInTouchMode = true
@@ -779,7 +776,7 @@ class WebPageTab(
     /**
      * This method forces the layer type to hardware, which
      * enables hardware rendering on the WebView instance
-     * of the current LightningView.
+     * of the current [WebPageTab].
      */
     private fun setHardwareRendering() {
         webView?.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
@@ -797,7 +794,7 @@ class WebPageTab(
     /**
      * This method forces the layer type to software, which
      * disables hardware rendering on the WebView instance
-     * of the current LightningView and makes the CPU render
+     * of the current [WebPageTab] and makes the CPU render
      * the view.
      */
     fun setSoftwareRendering() {
@@ -806,7 +803,7 @@ class WebPageTab(
 
     /**
      * Sets the current rendering color of the WebView instance
-     * of the current LightningView. The for modes are normal
+     * of the current [WebPageTab]. The for modes are normal
      * rendering, inverted rendering, grayscale rendering,
      * and inverted grayscale rendering
      *
@@ -1021,7 +1018,7 @@ class WebPageTab(
      * Notify the tab to shutdown and destroy
      * its WebView instance and to remove the reference
      * to it. After this method is called, the current
-     * instance of the LightningView is useless as
+     * instance of the [WebPageTab] is useless as
      * the WebView cannot be recreated using the public
      * api.
      */

@@ -32,7 +32,7 @@ import timber.log.Timber
 
 class WebPageChromeClient(
     private val activity: Activity,
-    private val lightningView: WebPageTab
+    private val webPageTab: WebPageTab
 ) : WebChromeClient(), WebRtcPermissionsView {
 
     private val geoLocationPermissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -45,14 +45,14 @@ class WebPageChromeClient(
     val diskScheduler: Scheduler = hiltEntryPoint.diskScheduler()
 
     override fun onProgressChanged(view: WebView, newProgress: Int) {
-        if (lightningView.isShown) {
+        if (webPageTab.isShown) {
             uiController.updateProgress(newProgress)
         }
 
-        if (newProgress > 10 && lightningView.fetchMetaThemeColorTries > 0)
+        if (newProgress > 10 && webPageTab.fetchMetaThemeColorTries > 0)
         {
-            val triesLeft = lightningView.fetchMetaThemeColorTries - 1
-            lightningView.fetchMetaThemeColorTries = 0
+            val triesLeft = webPageTab.fetchMetaThemeColorTries - 1
+            webPageTab.fetchMetaThemeColorTries = 0
 
             // Extract meta theme-color
             // TODO: Make this optional
@@ -61,22 +61,22 @@ class WebPageChromeClient(
                     "if (e==null) return null;" +
                     "return e.content; })();") { themeColor ->
                 try {
-                    lightningView.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"'));
+                    webPageTab.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"'));
                     // We did find a valid theme-color, tell our controller about it
-                    uiController.onTabChanged(lightningView)
+                    uiController.onTabChanged(webPageTab)
                 }
                 catch (e: Exception) {
                     if (triesLeft==0 || newProgress==100)
                     {
                         // Exhausted all our tries or the page finished loading before we did
                         // Just give up then and reset our theme color
-                        lightningView.htmlMetaThemeColor = WebPageTab.KHtmlMetaThemeColorInvalid
-                        uiController.onTabChanged(lightningView)
+                        webPageTab.htmlMetaThemeColor = WebPageTab.KHtmlMetaThemeColorInvalid
+                        uiController.onTabChanged(webPageTab)
                     }
                     else
                     {
                         // Try it again next time around
-                        lightningView.fetchMetaThemeColorTries = triesLeft
+                        webPageTab.fetchMetaThemeColorTries = triesLeft
                     }
                 }
             }
@@ -87,8 +87,8 @@ class WebPageChromeClient(
      * Called once the favicon is ready
      */
     override fun onReceivedIcon(view: WebView, icon: Bitmap) {
-        lightningView.titleInfo.setFavicon(icon)
-        uiController.onTabChangedIcon(lightningView)
+        webPageTab.titleInfo.setFavicon(icon)
+        uiController.onTabChangedIcon(webPageTab)
         cacheFavicon(view.url, icon)
     }
 
@@ -112,11 +112,11 @@ class WebPageChromeClient(
      */
     override fun onReceivedTitle(view: WebView?, title: String?) {
         if (title?.isNotEmpty() == true) {
-            lightningView.titleInfo.setTitle(title)
+            webPageTab.titleInfo.setTitle(title)
         } else {
-            lightningView.titleInfo.setTitle(activity.getString(R.string.untitled))
+            webPageTab.titleInfo.setTitle(activity.getString(R.string.untitled))
         }
-        uiController.onTabChangedTitle(lightningView)
+        uiController.onTabChangedTitle(webPageTab)
         if (view != null && view.url != null) {
             uiController.updateHistory(title, view.url as String)
         }
@@ -215,7 +215,7 @@ class WebPageChromeClient(
         //return false
     }
 
-    override fun onCloseWindow(window: WebView) = uiController.onCloseWindow(lightningView)
+    override fun onCloseWindow(window: WebView) = uiController.onCloseWindow(webPageTab)
 
     @Suppress("unused", "UNUSED_PARAMETER")
     fun openFileChooser(uploadMsg: ValueCallback<Uri>) = uiController.openFileChooser(uploadMsg)
@@ -251,7 +251,7 @@ class WebPageChromeClient(
     }
 
     /**
-     * Inflate a view to send to a LightningView when it needs to display a video and has to
+     * Inflate a view to send to a [WebPageTab] when it needs to display a video and has to
      * show a loading dialog. Inflates a progress view and returns it.
      *
      * @return A view that should be used to display the state

@@ -3136,7 +3136,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         if ((userPreferences.searchInNewTab && isSearch) or (userPreferences.urlInNewTab && !isSearch)) {
             // Create a new tab according to user preference
             // TODO: URI resolution should not be here really
-            // That's also done in LightningView.loadURL
+            // That's also done in [WebPageTab].loadURL
             when {
                 url.isHomeUri() -> {
                     presenter.newTab(homePageInitializer, true)
@@ -3990,7 +3990,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * is especially helpful when a page creates a redirect and does
      * not need the tab to stay open any longer.
      *
-     * @param tab the LightningView to close, delete it.
+     * @param tab the [WebPageTab] to close, delete it.
      */
     override fun onCloseWindow(tab: WebPageTab) {
         presenter.deleteTab(tabsManager.positionOf(tab))

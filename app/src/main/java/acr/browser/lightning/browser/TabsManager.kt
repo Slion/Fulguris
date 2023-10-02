@@ -872,7 +872,7 @@ class TabsManager @Inject constructor(
      * @return the tab with an identical hash, or null.
      */
     fun getTabForHashCode(hashCode: Int): WebPageTab? =
-        tabList.firstOrNull { lightningView -> lightningView.webView?.let { it.hashCode() == hashCode } == true }
+        tabList.firstOrNull { webPageTab -> webPageTab.webView?.let { it.hashCode() == hashCode } == true }
 
     /**
      * Switch from the current tab to the one at the given [aPosition].
