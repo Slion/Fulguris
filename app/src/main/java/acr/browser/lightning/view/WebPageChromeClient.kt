@@ -30,6 +30,9 @@ import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.Scheduler
 import timber.log.Timber
 
+/**
+ * We have one instance of this per [WebView].
+ */
 class WebPageChromeClient(
     private val activity: Activity,
     private val webPageTab: WebPageTab

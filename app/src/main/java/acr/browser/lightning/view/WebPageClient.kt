@@ -60,7 +60,7 @@ import java.util.*
 import kotlin.math.abs
 
 /**
- *
+ * We have one instance of this per [WebView] and our [WebPageTab] also as a reference to it.
  */
 class WebPageClient(
         private val activity: Activity,
