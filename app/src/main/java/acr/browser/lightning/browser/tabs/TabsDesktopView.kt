@@ -7,7 +7,7 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.TabDesktopViewBinding
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
-import acr.browser.lightning.view.LightningView
+import acr.browser.lightning.view.WebPageTab
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -101,7 +101,7 @@ class TabsDesktopView @JvmOverloads constructor(
     }
 
     private fun displayTabs() {
-        tabsAdapter.showTabs(uiController.getTabModel().allTabs.map(LightningView::asTabViewState))
+        tabsAdapter.showTabs(uiController.getTabModel().allTabs.map(WebPageTab::asTabViewState))
     }
 
     override fun tabsInitialized() {

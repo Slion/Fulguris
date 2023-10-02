@@ -6,10 +6,9 @@ import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.databinding.TabDrawerViewBinding
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.extensions.inflater
-import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
 import acr.browser.lightning.utils.fixScrollBug
-import acr.browser.lightning.view.LightningView
+import acr.browser.lightning.view.WebPageTab
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import javax.inject.Inject
 
 
 /**
@@ -114,7 +112,7 @@ class TabsDrawerView @JvmOverloads constructor(
      * TODO: this is called way to often for my taste and should be optimized somehow.
      */
     private fun displayTabs() {
-        tabsAdapter.showTabs(uiController.getTabModel().allTabs.map(LightningView::asTabViewState))
+        tabsAdapter.showTabs(uiController.getTabModel().allTabs.map(WebPageTab::asTabViewState))
 
         if (fixScrollBug(iBinding.tabsList)) {
             // Scroll bug was fixed trigger a scroll to current item then

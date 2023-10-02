@@ -59,11 +59,11 @@ import timber.log.Timber
 import java.lang.ref.WeakReference
 
 /**
- * [LightningView] acts as a tab for the browser, handling WebView creation and handling logic, as
+ * [WebPageTab] acts as a tab for the browser, handling WebView creation and handling logic, as
  * well as properly initialing it. All interactions with the WebView should be made through this
  * class.
  */
-class LightningView(
+class WebPageTab(
     private val activity: Activity,
     tabInitializer: TabInitializer,
     val isIncognito: Boolean,
@@ -82,12 +82,12 @@ class LightningView(
     val id = View.generateViewId()
 
     /**
-     * Getter for the [LightningViewTitle] of the current LightningView instance.
+     * Getter for the [WebPageHeader] of the current LightningView instance.
      *
      * @return a NonNull instance of LightningViewTitle
      * @return a NonNull instance of LightningViewTitle
      */
-    val titleInfo: LightningViewTitle
+    val titleInfo: WebPageHeader
 
     /**
      * Meta theme-color content value as extracted from page HTML
@@ -113,7 +113,7 @@ class LightningView(
     var webView: WebViewEx? = null
         private set
 
-    private lateinit var lightningWebClient: LightningWebClient
+    private lateinit var webPageClient: WebPageClient
 
     /**
      * The URL we tried to load
@@ -334,7 +334,7 @@ class LightningView(
     init {
         //activity.injector.inject(this)
         uiController = activity as UIController
-        titleInfo = LightningViewTitle(activity)
+        titleInfo = WebPageHeader(activity)
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()
 	
         // Mark our URL
@@ -393,18 +393,18 @@ class LightningView(
 
         userPreferences.preferences.registerOnSharedPreferenceChangeListener(this)
 
-        lightningWebClient = LightningWebClient(activity, this)
+        webPageClient = WebPageClient(activity, this)
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
         webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebViewEx;
         webView?.apply {
-            proxy = this@LightningView
+            proxy = this@WebPageTab
             Timber.d("WebView scrollbar defaults: ${scrollBarSize.toFloat().dp}, $scrollBarDefaultDelayBeforeFade, $scrollBarFadeDuration")
             scrollBarSize = userPreferences.scrollbarSize.px.toInt()
             isScrollbarFadingEnabled = userPreferences.scrollbarFading
             scrollBarDefaultDelayBeforeFade = userPreferences.scrollbarDelayBeforeFade.toInt()
             scrollBarFadeDuration = userPreferences.scrollbarFadeDuration.toInt()
 
-            setFindListener(this@LightningView)
+            setFindListener(this@WebPageTab)
             //id = this@LightningView.id
             gestureDetector = GestureDetector(activity, CustomGestureListener(this))
 
@@ -426,8 +426,8 @@ class LightningView(
 
             isSaveEnabled = true
             setNetworkAvailable(true)
-            webChromeClient = LightningChromeClient(activity, this@LightningView)
-            webViewClient = lightningWebClient
+            webChromeClient = WebPageChromeClient(activity, this@WebPageTab)
+            webViewClient = webPageClient
             // We want to receive download complete notifications
             iDownloadListener = LightningDownloadListener(activity)
             setDownloadListener(iDownloadListener.also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
@@ -447,7 +447,7 @@ class LightningView(
         }
     }
 
-    fun currentSslState(): SslState = lightningWebClient.sslState
+    fun currentSslState(): SslState = webPageClient.sslState
 
     /**
      * This method loads the homepage for the browser. Either it loads the URL stored as the
@@ -506,7 +506,7 @@ class LightningView(
     fun initializePreferences() {
         val settings = webView?.settings ?: return
 
-        lightningWebClient.updatePreferences()
+        webPageClient.updatePreferences()
 
         val modifiesHeaders = userPreferences.doNotTrackEnabled
             || userPreferences.saveDataEnabled
@@ -1329,9 +1329,9 @@ class LightningView(
      * reference to the WebView and therefore will not
      * leak it if the WebView is garbage collected.
      */
-    private class WebViewHandler(view: LightningView) : Handler() {
+    private class WebViewHandler(view: WebPageTab) : Handler() {
 
-        private val reference: WeakReference<LightningView> = WeakReference(view)
+        private val reference: WeakReference<WebPageTab> = WeakReference(view)
 
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)

@@ -1534,7 +1534,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
     // For CTRL+TAB implementation
     var iRecentTabIndex = -1;
-    var iCapturedRecentTabsIndices : Set<LightningView>? = null
+    var iCapturedRecentTabsIndices : Set<WebPageTab>? = null
 
 
     private fun copyRecentTabsList()
@@ -2314,7 +2314,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      *
      */
-    override fun onTabChanged(aTab: LightningView) {
+    override fun onTabChanged(aTab: WebPageTab) {
         if (tabsManager.currentTab==aTab) {
             setTaskDescription()
         }
@@ -2330,7 +2330,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      *
      */
-    override fun onTabChangedIcon(aTab: LightningView) {
+    override fun onTabChangedIcon(aTab: WebPageTab) {
         if (tabsManager.currentTab==aTab) {
             setTaskDescription()
         }
@@ -2343,7 +2343,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      *
      */
-    override fun onTabChangedTitle(aTab: LightningView) {
+    override fun onTabChangedTitle(aTab: WebPageTab) {
         if (tabsManager.currentTab==aTab) {
             setTaskDescription()
         }
@@ -3985,14 +3985,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * Closes the specified [LightningView]. This implements
+     * Closes the specified [WebPageTab]. This implements
      * the JavaScript callback that asks the tab to close itself and
      * is especially helpful when a page creates a redirect and does
      * not need the tab to stay open any longer.
      *
      * @param tab the LightningView to close, delete it.
      */
-    override fun onCloseWindow(tab: LightningView) {
+    override fun onCloseWindow(tab: WebPageTab) {
         presenter.deleteTab(tabsManager.positionOf(tab))
     }
 

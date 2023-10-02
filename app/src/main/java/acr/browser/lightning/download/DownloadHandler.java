@@ -37,7 +37,7 @@ import acr.browser.lightning.dialog.BrowserDialog;
 import acr.browser.lightning.settings.preferences.UserPreferences;
 import acr.browser.lightning.utils.FileUtils;
 import acr.browser.lightning.utils.Utils;
-import acr.browser.lightning.view.LightningView;
+import acr.browser.lightning.view.WebPageTab;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -305,7 +305,7 @@ public class DownloadHandler {
 
         // save download in database
         UIController browserActivity = (UIController) context;
-        LightningView view = browserActivity.getTabModel().getCurrentTab();
+        WebPageTab view = browserActivity.getTabModel().getCurrentTab();
 
         if (view != null && !view.isIncognito()) {
             downloadsRepository.addDownloadIfNotExists(new DownloadEntry(url, iFilename, contentSize))

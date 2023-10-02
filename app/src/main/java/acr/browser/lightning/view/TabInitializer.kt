@@ -24,12 +24,12 @@ import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 /**
- * An initializer that is run on a [LightningView] after it is created.
+ * An initializer that is run on a [WebPageTab] after it is created.
  */
 interface TabInitializer {
 
     /**
-     * Initialize the [WebView] instance held by the [LightningView]. If a url is loaded, the
+     * Initialize the [WebView] instance held by the [WebPageTab]. If a url is loaded, the
      * provided [headers] should be used to load the url.
      */
     fun initialize(webView: WebView, headers: Map<String, String>)
@@ -213,7 +213,7 @@ class ResultMessageInitializer(private val resultMessage: Message) : TabInitiali
 
     override fun url(): String {
         /** We don't know our URL at this stage, it will only be loaded in the WebView by whatever is handling the message sent above.
-         * That's ok though as we implemented a special case to handle this situation in [LightningView.initializeContent]
+         * That's ok though as we implemented a special case to handle this situation in [WebPageTab.initializeContent]
          */
         return ""
     }

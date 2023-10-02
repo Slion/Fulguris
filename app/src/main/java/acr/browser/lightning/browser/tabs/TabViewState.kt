@@ -1,6 +1,6 @@
 package acr.browser.lightning.browser.tabs
 
-import acr.browser.lightning.view.LightningView
+import acr.browser.lightning.view.WebPageTab
 import android.graphics.Bitmap
 import android.graphics.Color
 import timber.log.Timber
@@ -36,9 +36,9 @@ private fun createDefaultBitmap() : Bitmap {
 
 
 /**
- * Converts a [LightningView] to a [TabViewState].
+ * Converts a [WebPageTab] to a [TabViewState].
  */
-fun LightningView.asTabViewState() = TabViewState(
+fun WebPageTab.asTabViewState() = TabViewState(
     id = id,
     title = title,
     favicon = favicon,

@@ -1,7 +1,6 @@
 package acr.browser.lightning.view
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
 import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
 import android.print.PrintJob
@@ -9,11 +8,9 @@ import android.print.PrintManager
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.MotionEvent
-import android.view.MotionEvent.ACTION_HOVER_ENTER
 import android.view.View
 import android.webkit.WebView
 import androidx.annotation.ColorInt
-import timber.log.Timber
 
 /**
  * Specialising  WebView could be useful at some point.
@@ -31,7 +28,7 @@ class WebViewEx : WebView {
     }
 
     //
-    lateinit var proxy: LightningView
+    lateinit var proxy: WebPageTab
 
     override fun dispatchKeyEvent(event: KeyEvent?): Boolean {
 

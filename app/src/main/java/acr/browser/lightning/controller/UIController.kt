@@ -7,7 +7,7 @@ import acr.browser.lightning.browser.TabsManager
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.ssl.SslState
-import acr.browser.lightning.view.LightningView
+import acr.browser.lightning.view.WebPageTab
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -110,7 +110,7 @@ interface UIController {
      * Notify the browser that the website currently being displayed by the [tab] wants to be
      * closed.
      */
-    fun onCloseWindow(tab: LightningView)
+    fun onCloseWindow(tab: WebPageTab)
 
     /**
      * Hide the search bar from view via animation.
@@ -170,17 +170,17 @@ interface UIController {
     /**
      * Notify the UI that the [aTab] should be displayed.
      */
-    fun onTabChanged(aTab: LightningView)
+    fun onTabChanged(aTab: WebPageTab)
 
     /**
      *
      */
-    fun onTabChangedIcon(aTab: LightningView)
+    fun onTabChangedIcon(aTab: WebPageTab)
 
     /**
      *
      */
-    fun onTabChangedTitle(aTab: LightningView)
+    fun onTabChangedTitle(aTab: WebPageTab)
 
     /**
      * Notify the browser that the user pressed the back button.

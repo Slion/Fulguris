@@ -30,9 +30,9 @@ import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.Scheduler
 import timber.log.Timber
 
-class LightningChromeClient(
+class WebPageChromeClient(
     private val activity: Activity,
-    private val lightningView: LightningView
+    private val lightningView: WebPageTab
 ) : WebChromeClient(), WebRtcPermissionsView {
 
     private val geoLocationPermissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -70,7 +70,7 @@ class LightningChromeClient(
                     {
                         // Exhausted all our tries or the page finished loading before we did
                         // Just give up then and reset our theme color
-                        lightningView.htmlMetaThemeColor = LightningView.KHtmlMetaThemeColorInvalid
+                        lightningView.htmlMetaThemeColor = WebPageTab.KHtmlMetaThemeColorInvalid
                         uiController.onTabChanged(lightningView)
                     }
                     else

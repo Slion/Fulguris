@@ -22,7 +22,6 @@
  
 package acr.browser.lightning.browser
 import acr.browser.lightning.extensions.createDefaultFavicon
-import acr.browser.lightning.view.LightningViewTitle
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle

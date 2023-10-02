@@ -1,6 +1,5 @@
 package acr.browser.lightning.settings.fragment
 
-import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
 import acr.browser.lightning.database.history.HistoryRepository
@@ -12,7 +11,7 @@ import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.isSupported
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.WebUtils
-import acr.browser.lightning.view.LightningView
+import acr.browser.lightning.view.WebPageTab
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
@@ -123,7 +122,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         switchPreference(
             preference = SETTINGS_IDENTIFYINGHEADERS,
             isChecked = userPreferences.removeIdentifyingHeadersEnabled,
-            summary = "${LightningView.HEADER_REQUESTED_WITH}, ${LightningView.HEADER_WAP_PROFILE}",
+            summary = "${WebPageTab.HEADER_REQUESTED_WITH}, ${WebPageTab.HEADER_WAP_PROFILE}",
             onCheckChange = { userPreferences.removeIdentifyingHeadersEnabled = it }
         )
 

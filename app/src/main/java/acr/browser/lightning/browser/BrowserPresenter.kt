@@ -39,7 +39,7 @@ class BrowserPresenter @Inject constructor(
     private val bookmarkPageFactory: BookmarkPageFactory
 ): fulguris.Component() {
 
-    private var currentTab: LightningView? = null
+    private var currentTab: WebPageTab? = null
     private var shouldClose: Boolean = false
 
     lateinit var iBrowserView: BrowserView
@@ -107,7 +107,7 @@ class BrowserPresenter @Inject constructor(
      *
      * @param tab the tab that changed, may be null.
      */
-    fun tabChangeOccurred(tab: LightningView?) = tab?.let {
+    fun tabChangeOccurred(tab: WebPageTab?) = tab?.let {
         iBrowserView.notifyTabViewChanged(tabsModel.indexOfTab(it))
     }
 
@@ -118,7 +118,7 @@ class BrowserPresenter @Inject constructor(
      * [aWasTabAdded] True if [aTab] was just created.
      * [aGoingBack] Tells in which direction we are going, this can help determine what kind of tab animation will be used.
      */
-    private fun onTabChanged(aTab: LightningView, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
+    private fun onTabChanged(aTab: WebPageTab, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
         Timber.d("On tab changed")
 
         currentTab?.let {

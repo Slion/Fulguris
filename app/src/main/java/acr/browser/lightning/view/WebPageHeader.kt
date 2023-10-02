@@ -3,21 +3,17 @@ package acr.browser.lightning.view
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.createDefaultFavicon
 import acr.browser.lightning.extensions.pad
-import acr.browser.lightning.extensions.toBitmap
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
-import androidx.core.content.res.ResourcesCompat
 //import androidx.core.graphics.drawable.toBitmap
-import com.google.android.material.color.MaterialColors
 
 /**
- * [LightningViewTitle] acts as a container class
+ * [WebPageHeader] acts as a container class
  * for the favicon and page title, the information used
  * by the tab adapters to show the tabs to the user.
  * TODO: Add HTML meta theme color?
  */
-class LightningViewTitle(context: Context) {
+class WebPageHeader(context: Context) {
 
     init {
         // TODO: find a way to update default favicon when the theme changed

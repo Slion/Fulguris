@@ -26,7 +26,7 @@ import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.ssl.SslState
 import acr.browser.lightning.utils.*
-import acr.browser.lightning.view.LightningView.Companion.KFetchMetaThemeColorTries
+import acr.browser.lightning.view.WebPageTab.Companion.KFetchMetaThemeColorTries
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -47,7 +47,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
@@ -63,9 +62,9 @@ import kotlin.math.abs
 /**
  *
  */
-class LightningWebClient(
+class WebPageClient(
         private val activity: Activity,
-        private val lightningView: LightningView
+        private val lightningView: WebPageTab
 ) : WebViewClient() {
 
     private val uiController: UIController

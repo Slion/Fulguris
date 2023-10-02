@@ -24,7 +24,7 @@ import javax.inject.Singleton
 import kotlin.collections.ArrayList
 
 /**
- * A manager singleton that holds all the [LightningView] and tracks the current tab. It handles
+ * A manager singleton that holds all the [WebPageTab] and tracks the current tab. It handles
  * creation, deletion, restoration, state saving, and switching of tabs and sessions.
  */
 //@HiltViewModel
@@ -41,8 +41,8 @@ class TabsManager @Inject constructor(
         private val userPreferences: UserPreferences
 ): fulguris.Component() {
 
-    private val tabList = arrayListOf<LightningView>()
-    var iRecentTabs = mutableSetOf<LightningView>()
+    private val tabList = arrayListOf<WebPageTab>()
+    var iRecentTabs = mutableSetOf<WebPageTab>()
     // This is just used when loading and saving sessions.
     // TODO: Ideally it should not be a data member.
     val savedRecentTabsIndices = mutableSetOf<Int>()
@@ -60,11 +60,11 @@ class TabsManager @Inject constructor(
         }
 
     /**
-     * Return the current [LightningView] or null if no current tab has been set.
+     * Return the current [WebPageTab] or null if no current tab has been set.
      *
-     * @return a [LightningView] or null if there is no current tab.
+     * @return a [WebPageTab] or null if there is no current tab.
      */
-    var currentTab: LightningView? = null
+    var currentTab: WebPageTab? = null
         private set
 
     private var tabNumberListeners = emptySet<(Int) -> Unit>()
@@ -251,13 +251,13 @@ class TabsManager @Inject constructor(
      *
      * TODO: See how you can offload IO to a background thread
      */
-    fun initializeTabs(activity: Activity, incognito: Boolean) : MutableList<LightningView> {
+    fun initializeTabs(activity: Activity, incognito: Boolean) : MutableList<WebPageTab> {
         Timber.d("initializeTabs")
         iIsIncognito = incognito
 
         shutdown()
 
-        val list = mutableListOf<LightningView>()
+        val list = mutableListOf<WebPageTab>()
 
         if (incognito) {
             list.add(newTab(activity, incognitoPageInitializer, incognito, NewTabPosition.END_OF_TAB_LIST))
@@ -498,7 +498,7 @@ class TabsManager @Inject constructor(
      */
     fun pauseAll() {
         currentTab?.pauseTimers()
-        tabList.forEach(LightningView::onPause)
+        tabList.forEach(WebPageTab::onPause)
     }
 
     /**
@@ -506,16 +506,16 @@ class TabsManager @Inject constructor(
      * range.
      *
      * @param position the index in tabs list
-     * @return the corespondent [LightningView], or null if the index is invalid
+     * @return the corespondent [WebPageTab], or null if the index is invalid
      */
-    fun getTabAtPosition(position: Int): LightningView? =
+    fun getTabAtPosition(position: Int): WebPageTab? =
         if (position < 0 || position >= tabList.size) {
             null
         } else {
             tabList[position]
         }
 
-    val allTabs: List<LightningView>
+    val allTabs: List<WebPageTab>
         get() = tabList
 
     /**
@@ -550,7 +550,7 @@ class TabsManager @Inject constructor(
      *
      * @return the last tab, or null if there are no tabs.
      */
-    fun lastTab(): LightningView? = tabList.lastOrNull()
+    fun lastTab(): WebPageTab? = tabList.lastOrNull()
 
     /**
      * Create and return a new tab. The tab is automatically added to the tabs list.
@@ -565,9 +565,9 @@ class TabsManager @Inject constructor(
             tabInitializer: TabInitializer,
             isIncognito: Boolean,
             newTabPosition: NewTabPosition
-    ): LightningView {
+    ): WebPageTab {
         Timber.i("New tab")
-        val tab = LightningView(
+        val tab = WebPageTab(
                 activity,
                 tabInitializer,
                 isIncognito,
@@ -640,7 +640,7 @@ class TabsManager @Inject constructor(
      * @param tab the tab to look for.
      * @return the position of the tab or -1 if the tab is not in the list.
      */
-    fun positionOf(tab: LightningView?): Int = tabList.indexOf(tab)
+    fun positionOf(tab: WebPageTab?): Int = tabList.indexOf(tab)
 
 
     /**
@@ -863,15 +863,15 @@ class TabsManager @Inject constructor(
      *
      * @return Return the index of the tab, or -1 if the tab isn't in the list.
      */
-    fun indexOfTab(tab: LightningView): Int = tabList.indexOf(tab)
+    fun indexOfTab(tab: WebPageTab): Int = tabList.indexOf(tab)
 
     /**
-     * Returns the [LightningView] with the provided hash, or null if there is no tab with the hash.
+     * Returns the [WebPageTab] with the provided hash, or null if there is no tab with the hash.
      *
      * @param hashCode the hashcode.
      * @return the tab with an identical hash, or null.
      */
-    fun getTabForHashCode(hashCode: Int): LightningView? =
+    fun getTabForHashCode(hashCode: Int): WebPageTab? =
         tabList.firstOrNull { lightningView -> lightningView.webView?.let { it.hashCode() == hashCode } == true }
 
     /**
@@ -881,7 +881,7 @@ class TabsManager @Inject constructor(
      * @exception IndexOutOfBoundsException if the provided index is out of range.
      * @return The selected tab we just switched to.
      */
-    fun switchToTab(aPosition: Int): LightningView {
+    fun switchToTab(aPosition: Int): WebPageTab {
         Timber.i("switch to tab: $aPosition")
         return tabList[aPosition].also {
                 currentTab = it
