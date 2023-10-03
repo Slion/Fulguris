@@ -3,6 +3,7 @@
     <string name="action_reload">Reload</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">新增分頁</string>
+    <string name="action_duplicate_tab">Duplicate tab</string>
     <string name="action_share">分享</string>
     <string name="action_history">歷程記錄</string>
     <string name="action_bookmarks">書籤</string>
@@ -488,6 +489,31 @@
     <string name="settings_title_ssl_error">Security error</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
     <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
+    <string name="settings_title_third_party_cookies">Third-party cookies</string>
+    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
+    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_title_javascript">JavaScript</string>
+    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
+    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_title_cookies">Cookies</string>
+    <string name="settings_summary_cookies">Current page has no cookies</string>
+    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
+    <string name="settings_title_cookies_delete_all">Delete all</string>
+    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
+    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <plurals name="settings_summary_cookies">
+        <!--
+Zero ain't working for english.
+See: https://stackoverflow.com/a/42884713/3969362
+-->
+        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <item quantity="other">Current page has %d cookies</item>
+    </plurals>
+    <string name="settings_title_task_label">Task label</string>
+    <string name="settings_title_task_icon">Task icon</string>
+    <string name="settings_summary_on_task_icon">Use page icon</string>
+    <string name="settings_summary_off_task_icon">Use app icon</string>
+    <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Third-party app available</string>
@@ -620,4 +646,11 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
+    <!-- TODO: link to existing strings -->
+    <string name="label_url">URL</string>
+    <string name="label_short_url">Short URL</string>
+    <string name="label_domain">Domain</string>
+    <string name="label_title">Title</string>
+    <string name="label_session">Session</string>
+    <string name="label_app_name">App name</string>
 </resources>
