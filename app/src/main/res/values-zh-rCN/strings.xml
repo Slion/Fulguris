@@ -91,8 +91,8 @@
     <string name="action_yes">是</string>
     <string name="action_no">否</string>
     <string name="action_ask">询问</string>
-    <string name="action_proceed">Proceed</string>
-    <string name="action_abort">Abort</string>
+    <string name="action_proceed">继续</string>
+    <string name="action_abort">中止</string>
     <string name="title_text_size">文本大小</string>
     <string name="size_largest">最大</string>
     <string name="size_large">大</string>
@@ -198,9 +198,9 @@
     <string name="action_message_canceled">操作已取消</string>
     <!-- SSL warnings -->
     <string name="ssl_warning_dont_ask_again">本次会话中不再询问</string>
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
+    <string name="message_ssl_error_aborted">安全错误！页面加载中止。</string>
     <string name="message_insecure_connection">与此页的连接不安全：\n%1$s\n无论如何都要继续吗？</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
+    <string name="message_ssl_error">安全连接遭破坏：\n<b>%1$s</b>\n\n%2$s你仍要继续连接吗？</string>
     <string name="message_certificate_date_invalid">证书的日期无效</string>
     <string name="message_certificate_expired">证书已过期</string>
     <string name="message_certificate_domain_mismatch">证书中的域名与站点域名不匹配</string>
@@ -420,10 +420,10 @@
     <string name="app_restart">重新启动应用以使更改生效</string>
     <string name="pref_title_crash_logs">崩溃日志记录</string>
     <string name="pref_summary_crash_logs">将崩溃日志写入文件系统。\n轻按打开文件夹。报告错误时请提供相关文件。</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_logs">日志</string>
+    <string name="pref_summary_on_logs">已启用</string>
+    <string name="pref_summary_off_logs">已禁用</string>
+    <string name="pref_title_log_level">日志级别</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">在新标签页中打开</string>
     <string name="dialog_open_background_tab">在后台标签页中打开</string>
@@ -492,9 +492,9 @@
     <string name="settings_summary_delete_domain_settings">下次遇到此域名时将被重新创建</string>
     <string name="settings_title_parent">主设置</string>
     <string name="settings_summary_default_domain_settings">默认域名设置</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
+    <string name="settings_title_ssl_error">安全性错误</string>
+    <string name="settings_summary_ssl_error">检测到 SSL 错误时应做什么</string>
+    <string name="checkbox_remember_domain_choice">记住您对此域名的选择</string>
     <!--  TODO: Remove that -->
     <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">第三方应用程序可用</string>
@@ -621,10 +621,10 @@
     <string name="action_switch_to_tab">转到标签页 1 到 9</string>
     <string name="action_switch_to_last_tab">转到末尾的标签页</string>
     <string name="action_switch_to_last_session">转到末尾的会话</string>
-    <string name="log_level_verbose">Verbose</string>
-    <string name="log_level_debug">Debug</string>
-    <string name="log_level_info">Info</string>
-    <string name="log_level_warn">Warn</string>
-    <string name="log_level_error">Error</string>
-    <string name="log_level_assert">Assert</string>
+    <string name="log_level_verbose">详细</string>
+    <string name="log_level_debug">调试</string>
+    <string name="log_level_info">信息</string>
+    <string name="log_level_warn">警告</string>
+    <string name="log_level_error">错误</string>
+    <string name="log_level_assert">断言 (Assert)</string>
 </resources>
