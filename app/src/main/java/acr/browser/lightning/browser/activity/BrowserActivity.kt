@@ -179,7 +179,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     // The singleton BookmarkManager
     @Inject lateinit var bookmarkManager: BookmarkRepository
     @Inject lateinit var historyModel: HistoryRepository
-    @Inject lateinit var searchBoxModel: SearchBoxModel
     @Inject lateinit var searchEngineProvider: SearchEngineProvider
     @Inject lateinit var inputMethodManager: InputMethodManager
     @Inject lateinit var clipboardManager: ClipboardManager
@@ -3393,7 +3392,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // Set our text but don't perform filtering
             // We don't need filtering as this is just a text update from our engine rather than user performing text input and expecting search results
             // Filter deactivation was introduce to prevent https://github.com/Slion/Fulguris/issues/557
-            searchView.setText(searchBoxModel.getDisplayContent(url, currentTitle, isLoading),false)
+            searchView.setText(getHeaderInfoText(userPreferences.toolbarLabel),false)
         }
     }
 
@@ -3424,11 +3423,16 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private fun getHeaderInfoText(aInfo: HeaderInfo) : String {
 
         tabsManager.currentTab?.let {tab ->
+
+            if (isLoading()) {
+                return tab.url
+            }
+
             return when (aInfo) {
                 HeaderInfo.Url -> tab.url
                 HeaderInfo.ShortUrl -> Utils.trimmedProtocolFromURL(tab.url)
                 HeaderInfo.Domain -> Utils.getDisplayDomainName(tab.url)
-                HeaderInfo.Title -> tab.title
+                HeaderInfo.Title -> tab.title.ifBlank { getString(R.string.untitled) }
                 HeaderInfo.Session -> tabsManager.iCurrentSessionName
                 HeaderInfo.AppName -> getString(R.string.app_name)
             }

@@ -211,11 +211,9 @@ class UserPreferences @Inject constructor(
     var taskIcon by preferences.booleanPreference(R.string.pref_key_task_icon, false)
 
     /**
-     * The index of the URL/search box display choice/
-     *
-     * @see SearchBoxModel
+     * Define which text should be shown on our toolbar.
      */
-    var urlBoxContentChoice by preferences.enumPreference(R.string.pref_key_tool_bar_text_display, SearchBoxDisplayChoice.TITLE)
+    var toolbarLabel by preferences.enumPreference(R.string.pref_key_toolbar_label, HeaderInfo.Title)
 
     /**
      * True if the browser should invert the display colors of the web page content, false

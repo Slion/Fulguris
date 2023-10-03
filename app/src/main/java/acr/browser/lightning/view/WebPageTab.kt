@@ -284,7 +284,7 @@ class WebPageTab(
      * @return the title of the page, or an empty string if there is no title.
      */
     val title: String
-        get() = titleInfo.getTitle() ?: ""
+        get() = titleInfo.getTitle()
 
     /**
      * Get the current [SslCertificate] if there is any associated with the current page.

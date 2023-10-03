@@ -58,6 +58,17 @@
         a:singleLineTitle="false">
 
         <fulguris.preference.EnumListPreference
+            a:key="@string/pref_key_toolbar_label"
+            a:title="@string/settings_title_toolbar_label"
+            a:useSimpleSummaryProvider="true"
+            a:defaultValue="Title"
+            a:entries="@array/HeaderInfo"
+            a:icon="@drawable/ic_label_outline"
+            a:singleLineTitle="false"
+            a:enumClassName="fulguris.enums.HeaderInfo"
+            />
+
+        <fulguris.preference.EnumListPreference
             a:key="@string/pref_key_task_label"
             a:title="@string/settings_title_task_label"
             a:useSimpleSummaryProvider="true"
@@ -77,14 +88,6 @@
             a:icon="@drawable/ic_image"
             a:singleLineTitle="false"
             />
-
-    <Preference
-        android:key="@string/pref_key_tool_bar_text_display"
-        android:title="@string/url_contents"
-        a:icon="@drawable/ic_short_text"
-        a:singleLineTitle="false"
-        />
-
 
     <Preference
         android:key="@string/pref_key_rendering_mode"

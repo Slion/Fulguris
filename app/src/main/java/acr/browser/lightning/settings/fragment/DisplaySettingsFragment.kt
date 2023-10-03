@@ -6,7 +6,6 @@ package acr.browser.lightning.settings.fragment
 import acr.browser.lightning.AccentTheme
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.SearchBoxDisplayChoice
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.withSingleChoiceItems
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -71,47 +70,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                 summary = userPreferences.renderingMode.toDisplayString(),
                 onClick = this::showRenderingDialogPicker
         )
-
-        // Setup tool bar text selection
-        clickableDynamicPreference(
-                preference = getString(R.string.pref_key_tool_bar_text_display),
-                summary = userPreferences.urlBoxContentChoice.toDisplayString(),
-                onClick = this::showUrlBoxDialogPicker
-        )
-
     }
-
-
-    /**
-     * Shows the dialog which allows the user to choose the browser's URL box display options.
-     *
-     * @param summaryUpdater the command which allows the summary to be updated.
-     */
-    private fun showUrlBoxDialogPicker(summaryUpdater: SummaryUpdater) {
-        activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
-            setTitle(resources.getString(R.string.url_contents))
-
-            val items = SearchBoxDisplayChoice.values().map { Pair(it, it.toDisplayString()) }
-
-            withSingleChoiceItems(items, userPreferences.urlBoxContentChoice) {
-                userPreferences.urlBoxContentChoice = it
-                summaryUpdater.updateSummary(it.toDisplayString())
-            }
-            setPositiveButton(resources.getString(R.string.action_ok), null)
-        }?.resizeAndShow()
-    }
-
-
-    private fun SearchBoxDisplayChoice.toDisplayString(): String {
-        val stringArray = resources.getStringArray(R.array.url_content_array)
-        return when (this) {
-            SearchBoxDisplayChoice.DOMAIN -> stringArray[0]
-            SearchBoxDisplayChoice.URL -> stringArray[1]
-            SearchBoxDisplayChoice.TITLE -> stringArray[2]
-            SearchBoxDisplayChoice.TRIMMED -> stringArray[3]
-        }
-    }
-
 
     /**
      * Shows the dialog which allows the user to choose the browser's rendering method.
