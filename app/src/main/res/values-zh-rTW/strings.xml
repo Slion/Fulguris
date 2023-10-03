@@ -9,7 +9,6 @@
     <string name="action_bookmarks">書籤</string>
     <string name="action_downloads">下載</string>
     <string name="action_add_bookmark">新增書籤</string>
-    <string name="action_copy">複製連結</string>
     <string name="action_forward">前往</string>
     <string name="action_sessions">Sessions</string>
     <string name="action_new_session">New session</string>
@@ -22,9 +21,7 @@
     <string name="location">允許網站存取地理位置</string>
     <string name="password">儲存密碼</string>
     <string name="agent">使用者代理</string>
-    <string name="flash">啟用 Adobe Flash</string>
     <string name="home">首頁</string>
-    <string name="fullscreen">全螢幕模式</string>
     <string name="download">下載位置</string>
     <string name="settings_advanced">進階設定</string>
     <string name="version">應用程式版本</string>
@@ -34,7 +31,6 @@
     <string name="show">Show</string>
     <string name="cache">結束時清除快取</string>
     <string name="reflow">啟用文字重排</string>
-    <string name="block">封鎖圖片</string>
     <string name="load_images">Load images</string>
     <string name="window">允許網站開啟新視窗</string>
     <string name="cookies">啟用 Cookies</string>
@@ -45,20 +41,11 @@
     <string name="search_action">@string/search_hint</string>
     <string name="overViewMode">使用概覽模式載入頁面</string>
     <string name="restore_tabs_on_startup">啟動時重新開啟遺失的分頁</string>
-    <string name="supported_browsers_title">支援的瀏覽器</string>
-    <string name="stock_browser">原生瀏覽器</string>
-    <string name="stock_browser_unavailable">尚未偵測出原生瀏覽器</string>
-    <string name="stock_browser_available">偵測出原生瀏覽器</string>
-    <string name="fullScreenOption">瀏覽時隱藏狀態列</string>
     <string name="clear_cookies">清除瀏覽器 Cookies</string>
     <string name="clear_history">清除瀏覽歷程記錄</string>
-    <string name="dialog_image">您想如何處理此圖片？</string>
     <string name="action_download">下載</string>
     <string name="action_open">開啟</string>
-    <string name="dialog_link">您想如何處理此連結？</string>
     <string name="dialog_title_share">分享此頁面</string>
-    <string name="dialog_history_long_press">您想如何處理此歷程記錄？</string>
-    <string name="dialog_bookmark">您想如何處理此書籤？</string>
     <string name="action_delete">刪除</string>
     <string name="action_blank">空白頁面</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
@@ -78,7 +65,6 @@
     <string name="unknown_size">未知大小</string>
     <string name="action_cancel">取消</string>
     <string name="title_warning">警告</string>
-    <string name="dialog_adobe_not_installed">未偵測出 Adobe Flash Player，請安裝。</string>
     <string name="title_user_agent">使用者代理</string>
     <string name="title_download_location">下載位置</string>
     <string name="title_custom_homepage">自訂首頁</string>
@@ -94,19 +80,12 @@
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">文字大小</string>
-    <string name="size_largest">最大</string>
-    <string name="size_large">較大</string>
-    <string name="size_normal">標準</string>
-    <string name="size_small">較小</string>
-    <string name="size_smallest">最小</string>
     <string name="title_error">錯誤</string>
-    <string name="dialog_import_error">未偵測出可匯入書籤的瀏覽器。</string>
     <string name="hint_title">標題</string>
     <string name="hint_url">網址</string>
     <string name="title_edit_bookmark">編輯書籤</string>
     <string name="action_edit">編輯</string>
     <string name="action_incognito">新增無痕式分頁</string>
-    <string name="action_homepage">預設</string>
     <string name="action_show_homepage">Show homepage</string>
     <string name="action_back">返回</string>
     <string name="action_find">在網頁中尋找</string>
@@ -129,9 +108,6 @@
     <string name="download_failed">Download failed</string>
     <string name="incognito_cookies">在無痕模式中啟用 Cookies</string>
     <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
-    <string name="title_flash">Adobe Flash</string>
-    <string name="action_manual">手動</string>
-    <string name="action_auto">自動</string>
     <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">清除快取</string>
     <string name="message_cache_cleared">已清除快取</string>
@@ -151,9 +127,6 @@
     <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
     <!-- Ad block -->
     <string name="block_ads">Content control</string>
-    <string name="block_ad_source">Hosts file source</string>
-    <string name="block_ad_remote_refresh_frequency_description">For remote hosts file</string>
-    <string name="block_ad_refresh_now">Refresh hosts now</string>
     <string name="block_remote_frequency_daily">Daily</string>
     <string name="block_remote_frequency_weekly">Weekly</string>
     <string name="block_remote_frequency_monthly">Monthly</string>
@@ -176,15 +149,12 @@
     <string name="blocklist_last_update">Last update: %s</string>
     <string name="blocklist_updating">Updating…</string>
     <string name="blocklist_update_error">Error while updating filters list %s</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Error while updating filters list %1$s: status code %2$s</string>
     <string name="add_blocklist">Add filters file</string>
     <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
-    <string name="enable_blocklist">Enable this list</string>
     <string name="invalid_title">Invalid title</string>
     <string name="invalid_url">Invalid URL</string>
-    <string name="blocklist_built_in">Built-in filters</string>
     <string name="blocklist_remove">Remove filters file</string>
     <string name="blocklist_remove_confirm">Really remove filters file %s?</string>
     <string name="local_file">Local</string>
@@ -197,9 +167,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Action canceled.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">不要再詢問此瀏覽階段。</string>
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_insecure_connection">此網站的連線不安全：\n%1$s\n仍要繼續？</string>
     <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">憑證日期無效</string>
     <string name="message_certificate_expired">憑證已到期</string>
@@ -257,7 +225,6 @@
     <string name="name_inverted_grayscale">反轉灰階</string>
     <string name="name_increase_contrast">增加對比度</string>
     <string name="name_normal">標準</string>
-    <string name="sync_history">與 Google 同步歷程記錄</string>
     <string name="title_file_chooser">檔案選擇器</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
@@ -289,7 +256,6 @@
     <string name="settings_title_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
     <string name="settings_summary_discord">Join our growing community</string>
-    <string name="pref_category_general">General</string>
     <string name="pref_category_panels">Panels</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landscape</string>
@@ -339,15 +305,12 @@
     <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
     <string name="pref_title_language">Language</string>
     <string name="language_system_default">System default</string>
-    <string name="settings_about_explain">關於版本、作者與授權的詳細資料。</string>
     <string name="close_tab">關閉目前分頁</string>
     <string name="close_all_tabs">關閉所有分頁</string>
     <string name="close_other_tabs">關閉其他分頁</string>
-    <string name="third_party">封鎖第三方 Cookie</string>
     <string name="color_mode">啟用色彩模式</string>
     <string name="reading_mode">閱讀模式</string>
     <string name="loading">正在載入&#8230;</string>
-    <string name="loading_failed">無法載入頁面內容。</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML 解析器</string>
     <string name="mit_license">MIT 授權</string>
@@ -373,13 +336,10 @@
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">資料夾名稱</string>
     <string name="action_folder">資料夾</string>
-    <string name="action_rename">重新命名</string>
     <string name="title_rename_folder">重命名資料夾</string>
-    <string name="dialog_folder">您想如何處理此資料夾？</string>
     <string name="clear_web_storage">清除網頁儲存空間</string>
     <string name="clear_web_storage_exit">結束時清除網頁儲存空間</string>
     <string name="message_web_storage_cleared">網頁儲存空間已清除</string>
-    <string name="hosts_source">Hosts 檔案廣告封鎖來源</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Ad blocker and content filtering</string>
     <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
@@ -403,7 +363,6 @@
     <string name="message_added_to_homescreen">捷徑已新增至主畫面</string>
     <string name="shortcut_message_failed_to_add">很抱歉，您的啟動器不支援捷徑功能。</string>
     <string name="action_delete_all_bookmarks">刪除所有書籤</string>
-    <string name="flash_not_supported">Flash Player 不支援您的系統</string>
     <string name="message_open_download_fail">此檔案不存在</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">常見問題集</string>
@@ -425,19 +384,15 @@
     <string name="dialog_edit_bookmark">編輯書籤</string>
     <string name="dialog_title_bookmark">Bookmark</string>
     <string name="dialog_remove_from_history">自歷程記錄移除</string>
-    <string name="dialog_download_image">下載圖片</string>
     <string name="dialog_copy_link">複製連結</string>
     <string name="dialog_copy_text">Copy text</string>
     <string name="dialog_rename_folder">重新命名資料夾</string>
     <string name="dialog_remove_folder">移除資料夾</string>
     <string name="dialog_title_close_browser">關閉瀏覽器</string>
-    <string name="dialog_delete_download">刪除下載</string>
     <string name="dialog_delete_all_downloads">刪除所有下載</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">頁面工具</string>
     <string name="dialog_toggle_desktop">切換成桌面版使用者代理</string>
-    <string name="dialog_adblock_enable_for_site">對此站啟用廣告封鎖功能</string>
-    <string name="dialog_adblock_disable_for_site">對此站停用廣告封鎖功能</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">自訂網址</string>
     <!-- Notifications -->
@@ -458,14 +413,11 @@
     <string name="close">Close</string>
     <string name="exit">Exit</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Frozen…</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Insert suggestion</string>
     <string name="action_close_all_other_tabs">Close all other tabs</string>
     <string name="action_restore_all_tabs">Restore all tabs</string>
     <string name="action_restore_tab">Restore tab</string>
-    <string name="settings_summary_apps">Enable third-party apps</string>
-    <string name="settings_title_apps">Apps</string>
     <string name="settings_title_domains">Domains</string>
     <string name="settings_summary_domains">Manage domain settings</string>
     <string name="settings_title_resource_domains">Resource domains</string>
@@ -480,7 +432,6 @@
     <string name="settings_title_domains_delete_all">Delete all</string>
     <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
-    <string name="prompt_please_confirm">Please confirm</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
@@ -514,7 +465,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
-    <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Third-party app available</string>
     <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
     <string name="per_month">\u0020/ month</string>
@@ -541,7 +491,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">What do you want to use?</string>
     <string name="button_link">Link</string>
     <string name="button_image">Image</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
@@ -571,7 +520,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Error: a recovery session was created!</string>
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">Show SSL warning dialogs</string>
     <string name="start_incognito">Permanently behave as if in incognito mode</string>
     <string name="force_zoom_summary">Does not work if JavaScript is not enabled</string>
     <string name="force_zoom">Force zoom for websites</string>
@@ -584,13 +532,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Long press on the \"Tab\" icon opens a new tab</string>
     <string name="pref_title_close_drawer">Close drawer</string>
     <string name="pref_summary_close_drawer">Automatically close Drawer after creating or deleting a tab</string>
-    <string name="block_javascript">Block JavaScript for site</string>
-    <string name="block_sites_title">Separate sites with a comma</string>
-    <string name="listed_javascript">Only allow JavaScript for listed sites</string>
-    <string name="unlisted_javascript">Block JavaScript for listed sites</string>
-    <string name="allow_javascript">Allow JavaScript for this site</string>
-    <string name="blocked_javascript">Block JavaScript for this site</string>
-    <string name="page_source">View page source</string>
     <string name="inspect">Inject Javascript</string>
     <string name="edit_cookies">Show site cookies</string>
     <string name="site_cookies">Site cookies</string>
@@ -620,8 +561,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Settings exported:</string>
     <string name="settings_reseted">All settings restored</string>
     <string name="suggest">Search suggestions (number)</string>
-    <string name="error_tip">• Check the Address for typing errors such as ww.example.com instead of www.example.com</string>
-    <string name="error_tip2">• If you are unable to load any pages, check your devices data or Wi-Fi connection.</string>
     <string name="action_cycle_tabs_forwards">Cycle tabs forwards</string>
     <string name="action_cycle_tabs_backwards">Cycle tabs backwards</string>
     <string name="action_focus_address_bar">Focus address bar</string>

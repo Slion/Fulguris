@@ -9,7 +9,6 @@
     <string name="action_bookmarks">Bladwijzers</string>
     <string name="action_downloads">Downloads</string>
     <string name="action_add_bookmark">Bladwijzer toevoegen</string>
-    <string name="action_copy">Kopieer link</string>
     <string name="action_forward">Voorwaarts</string>
     <string name="action_sessions">Sessies</string>
     <string name="action_new_session">Nieuwe workshop</string>
@@ -22,9 +21,7 @@
     <string name="location">Locatie toegang</string>
     <string name="password">Bewaar jouw paswoord</string>
     <string name="agent">Gebruikersagent</string>
-    <string name="flash">Adobe Flash activeren</string>
     <string name="home">Startpagina</string>
-    <string name="fullscreen">Volledig scherm modus</string>
     <string name="download">Download naar locatie</string>
     <string name="settings_advanced">Geavanceerde instellingen</string>
     <string name="version">Application versie</string>
@@ -34,7 +31,6 @@
     <string name="show">Toon</string>
     <string name="cache">Wis cache bij beëindigen</string>
     <string name="reflow">Text herschikking activeren</string>
-    <string name="block">Blokkeer afbeeldingen</string>
     <string name="load_images">Afbeeldingen laden</string>
     <string name="window">Sta sites toe om in een nieuwe pagina te openen</string>
     <string name="cookies">Cookies activeren</string>
@@ -45,20 +41,11 @@
     <string name="search_action">@string/search_hint</string>
     <string name="overViewMode">Laad pagina\'s in overzichtsweergave</string>
     <string name="restore_tabs_on_startup">Herstel tabbladen bij opstart</string>
-    <string name="supported_browsers_title">Ondersteunde browsers</string>
-    <string name="stock_browser">Standaard browser</string>
-    <string name="stock_browser_unavailable">Geen standaard browser gevonden</string>
-    <string name="stock_browser_available">Standaard browser gevonden</string>
-    <string name="fullScreenOption">Verberg status balk tijdens surfen</string>
     <string name="clear_cookies">Wis browser cookies</string>
     <string name="clear_history">Wis browser historiek</string>
-    <string name="dialog_image">Wat wilt u met deze afbeelding doen?</string>
     <string name="action_download">Downloaden</string>
     <string name="action_open">Openen</string>
-    <string name="dialog_link">Wat wilt u met deze link doen?</string>
     <string name="dialog_title_share">Deel deze pagina</string>
-    <string name="dialog_history_long_press">Wat wilt u met dit item doen?</string>
-    <string name="dialog_bookmark">Wat wilt u met deze bladwijzer doen?</string>
     <string name="action_delete">Verwijderen</string>
     <string name="action_blank">Witte pagina</string>
     <string name="agent_android_mobile">Android (Mobiel)</string>
@@ -78,7 +65,6 @@
     <string name="unknown_size">Onbekende grootte</string>
     <string name="action_cancel">Annuleer</string>
     <string name="title_warning">Waarschuwing</string>
-    <string name="dialog_adobe_not_installed">Adobe Flash Player werd niet gevonden.\nGelieve Flash Player te installeren.</string>
     <string name="title_user_agent">User Agent</string>
     <string name="title_download_location">Locatie downloaden</string>
     <string name="title_custom_homepage">Aangepaste startpagina</string>
@@ -94,19 +80,12 @@
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Tekst grootte</string>
-    <string name="size_largest">Grootst</string>
-    <string name="size_large">Groot</string>
-    <string name="size_normal">Normaal</string>
-    <string name="size_small">Smal</string>
-    <string name="size_smallest">Smaller</string>
     <string name="title_error">Fout</string>
-    <string name="dialog_import_error">Er werd geen browser gevonden om bladwijzers van te importeren.</string>
     <string name="hint_title">Titel</string>
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Wijzig bladwijzer</string>
     <string name="action_edit">Wijzig</string>
     <string name="action_incognito">Nieuw incognito tabblad</string>
-    <string name="action_homepage">Standaard</string>
     <string name="action_show_homepage">Homepage tonen</string>
     <string name="action_back">Terug</string>
     <string name="action_find">Vind in pagina</string>
@@ -129,9 +108,6 @@
     <string name="download_failed">Downloaden is mislukt</string>
     <string name="incognito_cookies">Cookies activeren in incognito-modus</string>
     <string name="incognito_cookies_pie">De incognito-modus draait in een apart proces dat na elke sessie wordt gereset. Incognito cookie-voorkeuren worden nu geregeld door de gewone cookie-voorkeuren.</string>
-    <string name="title_flash">Adobe Flash</string>
-    <string name="action_manual">Manueel</string>
-    <string name="action_auto">Automatisch</string>
     <string name="pref_title_contact_us">Neem contact op</string>
     <string name="clear_cache">Wis cache</string>
     <string name="message_cache_cleared">Cache gewist</string>
@@ -151,9 +127,6 @@
     <string name="message_welcome">Bezoek onze homepage voor meer informatie over deze krachtige webbrowser?</string>
     <!-- Ad block -->
     <string name="block_ads">Controle over inhoud</string>
-    <string name="block_ad_source">Hosts bestand bron</string>
-    <string name="block_ad_remote_refresh_frequency_description">Voor hosts op afstand</string>
-    <string name="block_ad_refresh_now">Vernieuw hosts nu</string>
     <string name="block_remote_frequency_daily">Dagelijks</string>
     <string name="block_remote_frequency_weekly">Wekelijks</string>
     <string name="block_remote_frequency_monthly">Maandelijks</string>
@@ -176,15 +149,12 @@
     <string name="blocklist_last_update">Laatste bijwerking: %s</string>
     <string name="blocklist_updating">Aan het updaten…</string>
     <string name="blocklist_update_error">Fout bij het bijwerken van de filterlijst %s</string>
-    <string name="blocklist_update_error_404">Fout bij het bijwerken van de filterlijst %s: url niet gevonden</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Fout bij het bijwerken van de filterlijst %1$s: statuscode %2$s</string>
     <string name="add_blocklist">Filters toevoegen</string>
     <string name="add_blocklist_hint">Je kunt hostlijsten kiezen of elke lijst die compatibel is met de regels van AdBlockPlus</string>
-    <string name="enable_blocklist">Deze lijst inschakelen</string>
     <string name="invalid_title">Ongeldige titel</string>
     <string name="invalid_url">Ongeldige URL</string>
-    <string name="blocklist_built_in">Ingebouwde filters</string>
     <string name="blocklist_remove">Filters verwijderen</string>
     <string name="blocklist_remove_confirm">Filters bestand %s echt verwijderen?</string>
     <string name="local_file">Lokaal</string>
@@ -197,9 +167,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Actie geannuleerd.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Vraag niet opnieuw naar deze browsersessie.</string>
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_insecure_connection">Verbinding met deze site is niet veilig :\n%1$s\nToch doorgaan?</string>
     <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Datum van certificaat is ongeldig</string>
     <string name="message_certificate_expired">Certificaat is vervallen</string>
@@ -257,7 +225,6 @@
     <string name="name_inverted_grayscale">Omgkeerd zwart-wit</string>
     <string name="name_increase_contrast">Contrast vergroten</string>
     <string name="name_normal">Normaal</string>
-    <string name="sync_history">Synchroniseer geschiedenis met Google</string>
     <string name="title_file_chooser">Bestand kiezer</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Kleine Algemene Gebruikerslicentie</string>
@@ -289,7 +256,6 @@
     <string name="settings_title_terms_and_conditions">Algemene voorwaarden</string>
     <string name="settings_summary_terms_and_conditions">Bekijk onze algemene voorwaarden online</string>
     <string name="settings_summary_discord">Join our growing community</string>
-    <string name="pref_category_general">Algemeen</string>
     <string name="pref_category_panels">Panelen</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Liggend</string>
@@ -339,15 +305,12 @@
     <string name="pref_summary_contribute_share">Verblind je vrienden en gemeenschappen door Fulguris met ze te delen.</string>
     <string name="pref_title_language">Taal</string>
     <string name="language_system_default">Systeem default</string>
-    <string name="settings_about_explain">Details over versie, auteur en licensie.</string>
     <string name="close_tab">Sluit tabblad</string>
     <string name="close_all_tabs">Alle tabbladen sluiten</string>
     <string name="close_other_tabs">Alle andere tabbladen sluiten</string>
-    <string name="third_party">Blokkeer derde partij cookies</string>
     <string name="color_mode">Activeer kleurmodus</string>
     <string name="reading_mode">Leesmodus</string>
     <string name="loading">Laden&#8230;</string>
-    <string name="loading_failed">Kon niets van deze pagina laden.</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML-parser</string>
     <string name="mit_license">MIT licensie</string>
@@ -373,13 +336,10 @@
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Map naam</string>
     <string name="action_folder">Map</string>
-    <string name="action_rename">Geef nieuwe naam</string>
     <string name="title_rename_folder">Geef map naam</string>
-    <string name="dialog_folder">Wat wilt u met deze map doen?</string>
     <string name="clear_web_storage">Wis web opslag</string>
     <string name="clear_web_storage_exit">Wis web opslag bij beëindigen</string>
     <string name="message_web_storage_cleared">Web opslag gewist</string>
-    <string name="hosts_source">Bron hosts bestand om advertenties te blokkeren</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Advertentieblokkering en inhoud filteren</string>
     <string name="settings_summary_content_control_toggle">Advertentieblokker en inhoudsfilter activeren</string>
@@ -403,7 +363,6 @@
     <string name="message_added_to_homescreen">Snelkoppeling aan startscherm toegevoegd</string>
     <string name="shortcut_message_failed_to_add">Sorry, je launcher ondersteunt geen snelkoppelingen.</string>
     <string name="action_delete_all_bookmarks">Verwijder alle bladwijzers</string>
-    <string name="flash_not_supported">Flash Player wordt niet ondersteund door uw systeem</string>
     <string name="message_open_download_fail">Dit bestand bestaat niet meer</string>
     <string name="faq">Veelgestelde vragen (FAQ)</string>
     <string name="faq_description">Veelgestelde vragen</string>
@@ -425,19 +384,15 @@
     <string name="dialog_edit_bookmark">Bladwijzer bewerken</string>
     <string name="dialog_title_bookmark">Bladwijzer</string>
     <string name="dialog_remove_from_history">Verwijderen uit geschiedenis</string>
-    <string name="dialog_download_image">Download afbeelding</string>
     <string name="dialog_copy_link">Kopieer link</string>
     <string name="dialog_copy_text">Tekst kopiëren</string>
     <string name="dialog_rename_folder">Hernoem map</string>
     <string name="dialog_remove_folder">Map verwijderen</string>
     <string name="dialog_title_close_browser">Sluit browser</string>
-    <string name="dialog_delete_download">Download verwijderen</string>
     <string name="dialog_delete_all_downloads">Alle downloads verwijderen</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Pagina gereedschappen</string>
     <string name="dialog_toggle_desktop">Schakel bureaublad-gebruikersagent in</string>
-    <string name="dialog_adblock_enable_for_site">Advertentieblok inschakelen voor site</string>
-    <string name="dialog_adblock_disable_for_site">Advertentieblok uitschakelen voor site</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Aangepaste URL</string>
     <!-- Notifications -->
@@ -459,14 +414,11 @@
     <string name="close">Sluiten</string>
     <string name="exit">Beenden</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Bevroren…</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Suggestie invoegen</string>
     <string name="action_close_all_other_tabs">Sluit alle andere tabbladen</string>
     <string name="action_restore_all_tabs">Alle tabbladen herstellen</string>
     <string name="action_restore_tab">Tabblad Herstellen</string>
-    <string name="settings_summary_apps">Apps van derden inschakelen</string>
-    <string name="settings_title_apps">Applicaties</string>
     <string name="settings_title_domains">Domeinen</string>
     <string name="settings_summary_domains">Domeininstellingen beheren</string>
     <string name="settings_title_resource_domains">Hulpbron domeinen</string>
@@ -481,7 +433,6 @@
     <string name="settings_title_domains_delete_all">Verwijder alles</string>
     <string name="settings_summary_domains_delete_all">Alle domeininstellingen verwijderen</string>
     <string name="question_delete_all_domain_settings">Alle domeininstellingen verwijderen?</string>
-    <string name="prompt_please_confirm">Bevestig alsublieft</string>
     <string name="settings_title_delete_domain_settings">Domeininstellingen verwijderen</string>
     <string name="settings_summary_delete_domain_settings">Wordt opnieuw aangemaakt de volgende keer dat dit domein wordt gebruikt</string>
     <string name="settings_title_parent">Bovenliggende</string>
@@ -516,7 +467,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
-    <string name="settings_app_prefix">app_voor_</string>
     <string name="dialog_title_third_party_app">App van derden beschikbaar</string>
     <string name="dialog_message_third_party_app">Wilt u de applicatie starten die bij die website hoort?</string>
     <string name="per_month">\u0020/ maand</string>
@@ -543,7 +493,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">Wat wilt u gebruiken?</string>
     <string name="button_link">Koppeling</string>
     <string name="button_image">Afbeelding</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
@@ -573,7 +522,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Fout: er is een herstelsessie gemaakt!</string>
     <string name="message_session_imported">Geïmporteerde sessie: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Geëxporteerde sessie: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">SSL waarschuwingsvensters tonen</string>
     <string name="start_incognito">Gedraag je permanent alsof je in incognitomodus bent</string>
     <string name="force_zoom_summary">Werkt niet als JavaScript niet is ingeschakeld</string>
     <string name="force_zoom">Zoom forceren voor websites</string>
@@ -586,13 +534,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Lang indrukken van het pictogram \"Tabblad\" opent een nieuw tabblad</string>
     <string name="pref_title_close_drawer">Lade sluiten</string>
     <string name="pref_summary_close_drawer">Lade automatisch sluiten na het maken of verwijderen van een tabblad</string>
-    <string name="block_javascript">JavaScript blokkeren voor site</string>
-    <string name="block_sites_title">Sites scheiden met een komma</string>
-    <string name="listed_javascript">JavaScript alleen toestaan voor vermelde sites</string>
-    <string name="unlisted_javascript">JavaScript blokkeren voor vermelde sites</string>
-    <string name="allow_javascript">JavaScript toestaan voor deze site</string>
-    <string name="blocked_javascript">JavaScript blokkeren voor deze site</string>
-    <string name="page_source">Bekijk pagina bron</string>
     <string name="inspect">Javascript injecteren</string>
     <string name="edit_cookies">Website cookies tonen</string>
     <string name="site_cookies">Site cookies</string>
@@ -622,8 +563,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Instellingen geëxporteerd:</string>
     <string name="settings_reseted">Alle instellingen hersteld</string>
     <string name="suggest">Zoeksuggesties (aantal)</string>
-    <string name="error_tip">- Controleer het adres op typefouten zoals ww.example.com in plaats van www.example.com</string>
-    <string name="error_tip2">- Als je geen pagina\'s kunt laden, controleer dan de gegevens- of Wi-Fi-verbinding van je apparaat.</string>
     <string name="action_cycle_tabs_forwards">Fietstabs vooruit</string>
     <string name="action_cycle_tabs_backwards">Tabbladen achteruit fietsen</string>
     <string name="action_focus_address_bar">Focus adresbalk</string>

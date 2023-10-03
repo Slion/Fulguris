@@ -9,7 +9,6 @@
     <string name="action_bookmarks">Postavke oznaka</string>
     <string name="action_downloads">Preuzimanja</string>
     <string name="action_add_bookmark">Dodaj oznaku</string>
-    <string name="action_copy">Kopiraj poveznicu</string>
     <string name="action_forward">Naprijed</string>
     <string name="action_sessions">Sesije</string>
     <string name="action_new_session">Nova sesija</string>
@@ -22,9 +21,7 @@
     <string name="location">Pristup lokaciji</string>
     <string name="password">Spremi lozinke</string>
     <string name="agent">Identifikacija</string>
-    <string name="flash">Adobe Flash</string>
     <string name="home">Početna stranica</string>
-    <string name="fullscreen">Puni zaslon</string>
     <string name="download">Mapa preuzimanja</string>
     <string name="settings_advanced">Napredne postavke</string>
     <string name="version">Puštanje aplikacije</string>
@@ -34,7 +31,6 @@
     <string name="show">Prikaži</string>
     <string name="cache">Očisti predmemoriju pri zatvaranju</string>
     <string name="reflow">Prilagodba teksta</string>
-    <string name="block">Blokirajte slike</string>
     <string name="load_images">Učitaj slike</string>
     <string name="window">Dopusti web stranicama otvaranje u novim prozorima</string>
     <string name="cookies">Omogući kolačiće</string>
@@ -45,20 +41,11 @@
     <string name="search_action">@string/search_hint</string>
     <string name="overViewMode">Učitaj stranice u režimu pregleda</string>
     <string name="restore_tabs_on_startup">Vratite izgubljene kartice pri pokretanju</string>
-    <string name="supported_browsers_title">Podržani preglednici</string>
-    <string name="stock_browser">Ugrađeni preglednik</string>
-    <string name="stock_browser_unavailable">Nema ugrađenog preglednika</string>
-    <string name="stock_browser_available">Otkriven podržani ugrađeni preglednik</string>
-    <string name="fullScreenOption">Sakrij statusnu traku tijekom pregledavanja</string>
     <string name="clear_cookies">Obriši kolačiće</string>
     <string name="clear_history">Obriši povijest</string>
-    <string name="dialog_image">Što želite učiniti s ovom slikom?</string>
     <string name="action_download">Preuzmite</string>
     <string name="action_open">Otvorite</string>
-    <string name="dialog_link">Što želite učiniti s ovom vezom?</string>
     <string name="dialog_title_share">Podijelite ovu stranicu</string>
-    <string name="dialog_history_long_press">Što želite učiniti s ovim predmetom iz povijesti?</string>
-    <string name="dialog_bookmark">Što želite učiniti s ovom knjižnom oznakom?</string>
     <string name="action_delete">Izbriši</string>
     <string name="action_blank">Prazna stranica</string>
     <string name="agent_android_mobile">Android (mobilno)</string>
@@ -78,7 +65,6 @@
     <string name="unknown_size">Nepoznata veličina</string>
     <string name="action_cancel">Otkaži</string>
     <string name="title_warning">Pozor</string>
-    <string name="dialog_adobe_not_installed">Adobe Flash nije otkriven.\nInstalirajte Flash Player.</string>
     <string name="title_user_agent">Identifikacija</string>
     <string name="title_download_location">Mapa preuzimanja</string>
     <string name="title_custom_homepage">Posebna početna stranica</string>
@@ -94,19 +80,12 @@
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Veličina teksta</string>
-    <string name="size_largest">Najveći</string>
-    <string name="size_large">Veliki</string>
-    <string name="size_normal">Normalan</string>
-    <string name="size_small">Mal</string>
-    <string name="size_smallest">Najmanji</string>
     <string name="title_error">Greška</string>
-    <string name="dialog_import_error">Nije otkriven preglednik za uvoz oznaka.</string>
     <string name="hint_title">Titula</string>
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Uredi oznaku</string>
     <string name="action_edit">Uredi</string>
     <string name="action_incognito">Nova privatna kartica</string>
-    <string name="action_homepage">Zadano</string>
     <string name="action_show_homepage">Prikaži početnu stranicu</string>
     <string name="action_back">Natrag</string>
     <string name="action_find">Pronađite na stranici</string>
@@ -129,9 +108,6 @@
     <string name="download_failed">Preuzimanje neuspješno</string>
     <string name="incognito_cookies">Omogućite kolačiće u privatnom načinu rada</string>
     <string name="incognito_cookies_pie">Način rada bez arhiviranja izvodi se u zasebnom procesu koji se poništava nakon svake sesije. Postavke kolačića bez arhiviranja sada kontroliraju redovne postavke kolačića.</string>
-    <string name="title_flash">Adobe Flash</string>
-    <string name="action_manual">Ručno</string>
-    <string name="action_auto">Automatski</string>
     <string name="pref_title_contact_us">Kontaktirajte nas</string>
     <string name="clear_cache">Očistite predmemoriju</string>
     <string name="message_cache_cleared">Predmemorija je izbrisana</string>
@@ -151,9 +127,6 @@
     <string name="message_welcome">Posjetite našu početnu stranicu kako biste saznali više o ovom moćnom web pregledniku?</string>
     <!-- Ad block -->
     <string name="block_ads">Kontrola sadržaja</string>
-    <string name="block_ad_source">Hostovi izvorne datoteke</string>
-    <string name="block_ad_remote_refresh_frequency_description">Za udaljenu datoteku hostova</string>
-    <string name="block_ad_refresh_now">Osvježi domaćine sada</string>
     <string name="block_remote_frequency_daily">Dnevno</string>
     <string name="block_remote_frequency_weekly">Tjedno</string>
     <string name="block_remote_frequency_monthly">Mjesečno</string>
@@ -176,15 +149,12 @@
     <string name="blocklist_last_update">Zadnje ažuriranje: %s</string>
     <string name="blocklist_updating">Ažuriranje…</string>
     <string name="blocklist_update_error">Pogreška pri ažuriranju popisa filtera %s</string>
-    <string name="blocklist_update_error_404">Pogreška pri ažuriranju popisa filtera %s: url nije pronađen</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Pogreška pri ažuriranju popisa filtera %1$s: statusni kod %2$s</string>
     <string name="add_blocklist">Dodajte datoteku filtra</string>
     <string name="add_blocklist_hint">Možete odabrati popise domaćina ili bilo koji popis skladben s AdBlockPlus pravilima</string>
-    <string name="enable_blocklist">Omogući ovaj popis</string>
     <string name="invalid_title">Nevažeći naslov</string>
     <string name="invalid_url">Nevažeći URL</string>
-    <string name="blocklist_built_in">Ugrađeni filteri</string>
     <string name="blocklist_remove">Uklonite datoteku filtra</string>
     <string name="blocklist_remove_confirm">Želite li stvarno ukloniti datoteku filtra %s?</string>
     <string name="local_file">Lokalni</string>
@@ -197,9 +167,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Akcija je otkazana.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Ne pitaj ponovno za ovu sesiju pregledavanja.</string>
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_insecure_connection">Veza s ovim mjestom nije sigurna:\n%1$s\nTrebam li ipak nastaviti?</string>
     <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Datum potvrde nije valjan</string>
     <string name="message_certificate_expired">Certifikat je istekao</string>
@@ -257,7 +225,6 @@
     <string name="name_inverted_grayscale">Inverzno sivo</string>
     <string name="name_increase_contrast">Povećani kontrast</string>
     <string name="name_normal">Normalan</string>
-    <string name="sync_history">Sinkronizirajte povijest s Googleom</string>
     <string name="title_file_chooser">Birač datoteka</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">Gnuova manja opća javna licenca</string>
@@ -289,7 +256,6 @@
     <string name="settings_title_terms_and_conditions">Odredbe i Uvjeti</string>
     <string name="settings_summary_terms_and_conditions">Pogledajte naše uvjete i odredbe na mreži</string>
     <string name="settings_summary_discord">Join our growing community</string>
-    <string name="pref_category_general">Općenito</string>
     <string name="pref_category_panels">Paneli</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Krajolik</string>
@@ -339,15 +305,12 @@
     <string name="pref_summary_contribute_share">Zadivite svoje prijatelje i zajednice dijeljenjem Fulgurisa s njima.</string>
     <string name="pref_title_language">Jezik</string>
     <string name="language_system_default">Zadana vrijednost sustava</string>
-    <string name="settings_about_explain">Pojedinosti o izdanju, autoru i licenci.</string>
     <string name="close_tab">Zatvorite karticu</string>
     <string name="close_all_tabs">Zatvorite sve kartice</string>
     <string name="close_other_tabs">Zatvorite ostale kartice</string>
-    <string name="third_party">Blokirajte kolačiće trećih strana</string>
     <string name="color_mode">Način rada u boji</string>
     <string name="reading_mode">Način čitanja</string>
     <string name="loading">Učitavam&#8230;</string>
-    <string name="loading_failed">Nisam mogao ništa učitati sa stranice.</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML parser</string>
     <string name="mit_license">MIT licenca</string>
@@ -373,13 +336,10 @@
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Ime mape</string>
     <string name="action_folder">Mapa</string>
-    <string name="action_rename">Preimenovati</string>
     <string name="title_rename_folder">Preimenujte mapu</string>
-    <string name="dialog_folder">Što želite učiniti s ovom mapom?</string>
     <string name="clear_web_storage">Očisti web pohranu</string>
     <string name="clear_web_storage_exit">Očisti web pohranu pri izlasku</string>
     <string name="message_web_storage_cleared">Web pohrana je očišćena</string>
-    <string name="hosts_source">Domaćin izvor datoteke za blokiranje oglasa</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Blokator oglasa i filtriranje sadržaja</string>
     <string name="settings_summary_content_control_toggle">Aktivirajte blokator oglasa i filtriranje sadržaja</string>
@@ -403,7 +363,6 @@
     <string name="message_added_to_homescreen">Prečac dodan na početni zaslon</string>
     <string name="shortcut_message_failed_to_add">Nažalost, vaš pokretač ne podržava prečace.</string>
     <string name="action_delete_all_bookmarks">Obrišite sve oznake</string>
-    <string name="flash_not_supported">Vaš sustav ne podržava Flash Player</string>
     <string name="message_open_download_fail">Ova datoteka više ne postoji</string>
     <string name="faq">Često postavljana pitanja</string>
     <string name="faq_description">Često postavljana pitanja</string>
@@ -425,19 +384,15 @@
     <string name="dialog_edit_bookmark">Uredi oznaku</string>
     <string name="dialog_title_bookmark">Knjižna oznaka</string>
     <string name="dialog_remove_from_history">Ukloni iz povijesti</string>
-    <string name="dialog_download_image">Preuzmite sliku</string>
     <string name="dialog_copy_link">Kopiraj vezu</string>
     <string name="dialog_copy_text">Kopirajte tekst</string>
     <string name="dialog_rename_folder">Preimenujte mapu</string>
     <string name="dialog_remove_folder">Uklonite mapu</string>
     <string name="dialog_title_close_browser">Zatvorite preglednik</string>
-    <string name="dialog_delete_download">Izbriši preuzimanje</string>
     <string name="dialog_delete_all_downloads">Izbriši sva preuzimanja</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Alati stranice</string>
     <string name="dialog_toggle_desktop">Uključite korisnički agent za radnu površinu</string>
-    <string name="dialog_adblock_enable_for_site">Omogućite blokiranje oglasa za web mjesto</string>
-    <string name="dialog_adblock_disable_for_site">Onemogućite blokiranje oglasa za web mjesto</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Posebna adresa</string>
     <!-- Notifications -->
@@ -460,14 +415,11 @@
     <string name="close">Zatvori</string>
     <string name="exit">Izađi</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Smrznuto…</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Umetnite prijedlog</string>
     <string name="action_close_all_other_tabs">Zatvorite sve ostale kartice</string>
     <string name="action_restore_all_tabs">Vrati sve karte</string>
     <string name="action_restore_tab">Povratna karta</string>
-    <string name="settings_summary_apps">Omogućite aplikacije trećih strana</string>
-    <string name="settings_title_apps">Aplikacije</string>
     <string name="settings_title_domains">Domene</string>
     <string name="settings_summary_domains">Upravljajte postavkama svoje domene</string>
     <string name="settings_title_resource_domains">Domene resursa</string>
@@ -482,7 +434,6 @@
     <string name="settings_title_domains_delete_all">Izbrisati sve</string>
     <string name="settings_summary_domains_delete_all">Izbrišite sve postavke domene</string>
     <string name="question_delete_all_domain_settings">Želite li izbrisati sve postavke domene?</string>
-    <string name="prompt_please_confirm">Molim potvrdite</string>
     <string name="settings_title_delete_domain_settings">Izbrišite postavke domene</string>
     <string name="settings_summary_delete_domain_settings">Bit će ponovno kreirana sljedeći put kada se naiđe na ovu domenu</string>
     <string name="settings_title_parent">Roditelj</string>
@@ -518,7 +469,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
-    <string name="settings_app_prefix">app_za_</string>
     <string name="dialog_title_third_party_app">Dostupna aplikacija treće strane</string>
     <string name="dialog_message_third_party_app">Želite li pokrenuti aplikaciju povezanu s tim web mjestom?</string>
     <string name="per_month">\u0020/ mjesecu</string>
@@ -545,7 +495,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">Što želite koristiti?</string>
     <string name="button_link">Poveznica</string>
     <string name="button_image">Slika</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
@@ -575,7 +524,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Pogreška: stvorena je sesija oporavka!</string>
     <string name="message_session_imported">Uvezena sesija:<xliff:g id="session_name" example="News"> %s</xliff:g></string>
     <string name="message_session_exported">Izvezena sesija:<xliff:g id="session_name" example="Cooking"> %s</xliff:g></string>
-    <string name="show_ssl">Prikaži dijaloške okvire SSL upozorenja</string>
     <string name="start_incognito">Uvijek se ponašajte kao da ste u anonimnom načinu rada</string>
     <string name="force_zoom_summary">Ne radi ako JavaScript nije omogućen</string>
     <string name="force_zoom">Prisilno zumiranje za web stranice</string>
@@ -588,13 +536,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Dugi pritisak na tipku \"Tab\" otvara novu karticu</string>
     <string name="pref_title_close_drawer">Zatvori ladicu</string>
     <string name="pref_summary_close_drawer">Automatski zatvori ladicu nakon izrade ili brisanja kartice</string>
-    <string name="block_javascript">Blokiraj JavaScript za ovu stranicu</string>
-    <string name="block_sites_title">Mjesta odvojite zarezom</string>
-    <string name="listed_javascript">Dopusti JavaScript samo za određene stranice</string>
-    <string name="unlisted_javascript">Blokiraj JavaScript za određene stranice</string>
-    <string name="allow_javascript">Omogućite JavaScript za ovu stranicu</string>
-    <string name="blocked_javascript">Blokiraj JavaScript za ovu stranicu</string>
-    <string name="page_source">Prikaži izvor stranice</string>
     <string name="inspect">Umetnite Javascript</string>
     <string name="edit_cookies">Prikaži kolačiće stranice</string>
     <string name="site_cookies">Kolačići stranice</string>
@@ -624,8 +565,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Izvezene postavke:</string>
     <string name="settings_reseted">Sve postavke su vraćene</string>
     <string name="suggest">Prijedlozi za pretraživanje (broj)</string>
-    <string name="error_tip">• Provjerite adresu za greške u pisanju kao što je ww.primjer.hr umjesto www.primjer.hr</string>
-    <string name="error_tip2">• Ako ne možete učitati nijednu stranicu, provjerite podatke uređaja ili Wi-Fi vezu.</string>
     <string name="action_cycle_tabs_forwards">Prebacite kartice naprijed</string>
     <string name="action_cycle_tabs_backwards">Prebacite kartice natrag</string>
     <string name="action_focus_address_bar">Fokusirajte adresnu traku</string>

@@ -9,7 +9,6 @@
     <string name="action_bookmarks">Bokmärken</string>
     <string name="action_downloads">Nedladdningar</string>
     <string name="action_add_bookmark">Lägg till bokmärken</string>
-    <string name="action_copy">Kopiera länkadress</string>
     <string name="action_forward">Framåt</string>
     <string name="action_sessions">Sessioner</string>
     <string name="action_new_session">Ny session</string>
@@ -22,9 +21,7 @@
     <string name="location">Platsåtkomst</string>
     <string name="password">Spara dina lösenord</string>
     <string name="agent">Använderagent</string>
-    <string name="flash">Aktivera Adobe Flash</string>
     <string name="home">Startsida</string>
-    <string name="fullscreen">Helskärmsläge</string>
     <string name="download">Nedladdningsplats</string>
     <string name="settings_advanced">Avancerad</string>
     <string name="version">Appversion</string>
@@ -34,7 +31,6 @@
     <string name="show">Visa</string>
     <string name="cache">Rensa cache vid avslut</string>
     <string name="reflow">Activera textåterflöde</string>
-    <string name="block">Blockera bilder</string>
     <string name="load_images">Ladda bilder</string>
     <string name="window">Tillåt webbplatser att öppna nya fönster</string>
     <string name="cookies">Aktivera kakor</string>
@@ -45,20 +41,11 @@
     <string name="search_action">@string/search_hint</string>
     <string name="overViewMode">Ladda sidor i översiktsläge</string>
     <string name="restore_tabs_on_startup">Återställ flikar på start</string>
-    <string name="supported_browsers_title">Webbläsare som stöds</string>
-    <string name="stock_browser">Standardwebbläsare</string>
-    <string name="stock_browser_unavailable">Ingen standardwebbläsare hittas</string>
-    <string name="stock_browser_available">Standardwebbläsare som stöds upptäckt</string>
-    <string name="fullScreenOption">Dölj statusfältet medan du surfar</string>
     <string name="clear_cookies">Rensa webbläsarens kakor</string>
     <string name="clear_history">Rensa webbläsarens historik</string>
-    <string name="dialog_image">Vad vill du göra med denna bild?</string>
     <string name="action_download">Ladda ned</string>
     <string name="action_open">Öppna</string>
-    <string name="dialog_link">Vad vill du göra med denna länk?</string>
     <string name="dialog_title_share">Dela den här sidan</string>
-    <string name="dialog_history_long_press">Vad vill du göra med detta historikobjekt?</string>
-    <string name="dialog_bookmark">Vad vill du göra med detta bokmärke?</string>
     <string name="action_delete">Radera</string>
     <string name="action_blank">Tom sida</string>
     <string name="agent_android_mobile">Android (Mobil)</string>
@@ -78,7 +65,6 @@
     <string name="unknown_size">Okänd storlek</string>
     <string name="action_cancel">Avbryt</string>
     <string name="title_warning">Varning</string>
-    <string name="dialog_adobe_not_installed">Adobe Flash Player upptäcktes inte.\nInstallera Flash Player.</string>
     <string name="title_user_agent">Använderagent</string>
     <string name="title_download_location">Nedladdningsplats</string>
     <string name="title_custom_homepage">Anpassad hemsida</string>
@@ -94,19 +80,12 @@
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Textstorlek</string>
-    <string name="size_largest">Största</string>
-    <string name="size_large">Stor</string>
-    <string name="size_normal">Normal</string>
-    <string name="size_small">Liten</string>
-    <string name="size_smallest">Minsta</string>
     <string name="title_error">Fel</string>
-    <string name="dialog_import_error">Ingen webbläsare upptäcktes för att importera bokmärken från.</string>
     <string name="hint_title">Rubrik</string>
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Redigera bokmärke</string>
     <string name="action_edit">Redigera</string>
     <string name="action_incognito">Ny incognitoflik</string>
-    <string name="action_homepage">Standard</string>
     <string name="action_show_homepage">Visa hemsida</string>
     <string name="action_back">Tillbaka</string>
     <string name="action_find">Sök på sidan</string>
@@ -129,9 +108,6 @@
     <string name="download_failed">Nedladdning misslyckad</string>
     <string name="incognito_cookies">Aktivera cookies i inkognitoläge</string>
     <string name="incognito_cookies_pie">Inkognito-läget körs i en separat process som återställs efter varje session. Inkognito-cookie-inställningar styrs nu av de vanliga cookie-inställningarna.</string>
-    <string name="title_flash">Adobe Flash</string>
-    <string name="action_manual">Manuell</string>
-    <string name="action_auto">Automatiskt</string>
     <string name="pref_title_contact_us">Kontakta oss</string>
     <string name="clear_cache">Rensa cacheminne</string>
     <string name="message_cache_cleared">Cachen rensad</string>
@@ -151,9 +127,6 @@
     <string name="message_welcome">Besök vår hemsida för att få veta mer om denna kraftfulla webbläsare?</string>
     <!-- Ad block -->
     <string name="block_ads">Innehållskontroll</string>
-    <string name="block_ad_source">Källa för värdar</string>
-    <string name="block_ad_remote_refresh_frequency_description">Filen för fjärrvärdar</string>
-    <string name="block_ad_refresh_now">Uppdatera värdar nu</string>
     <string name="block_remote_frequency_daily">Dagligen</string>
     <string name="block_remote_frequency_weekly">Veckovis</string>
     <string name="block_remote_frequency_monthly">Månadsvis</string>
@@ -176,15 +149,12 @@
     <string name="blocklist_last_update">Senaste uppdatering: %s</string>
     <string name="blocklist_updating">Uppdaterar…</string>
     <string name="blocklist_update_error">Fel vid uppdatering av filterlista %s</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Fel vid uppdatering av filterlista %1$s: statuskod %2$s</string>
     <string name="add_blocklist">Lägg till filtreringsfil</string>
     <string name="add_blocklist_hint">Du kan välja värdlistor eller någon lista som är kompatibel med AdBlockPlus regler</string>
-    <string name="enable_blocklist">Aktivera denna lista</string>
     <string name="invalid_title">Ogiltig titel</string>
     <string name="invalid_url">Ogiltig URL</string>
-    <string name="blocklist_built_in">Inbyggda filter</string>
     <string name="blocklist_remove">Ta bort filtreringsfil</string>
     <string name="blocklist_remove_confirm">Vill du verkligen ta bort filtreringsfilen %s?</string>
     <string name="local_file">Lokalt</string>
@@ -197,9 +167,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Åtgärd avbröts.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Fråga inte igen för denna session.</string>
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_insecure_connection">Anslutningen till denna webbplats är inte säker:\n%1$s\nFortsätt ändå?</string>
     <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Datum för certifikatet är ogiltigt</string>
     <string name="message_certificate_expired">Certifikatet har gått ut</string>
@@ -257,7 +225,6 @@
     <string name="name_inverted_grayscale">Inverterad gråskala</string>
     <string name="name_increase_contrast">Öka kontrast</string>
     <string name="name_normal">Normal</string>
-    <string name="sync_history">Synkronisera historik med Google</string>
     <string name="title_file_chooser">Filväljare</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
@@ -289,7 +256,6 @@
     <string name="settings_title_terms_and_conditions">Terms &amp; Conditions</string>
     <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
     <string name="settings_summary_discord">Join our growing community</string>
-    <string name="pref_category_general">Allmänt</string>
     <string name="pref_category_panels">Fält</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landskap</string>
@@ -339,15 +305,12 @@
     <string name="pref_summary_contribute_share">Blända dina vänner och samhällen genom att dela Fulguris med dem.</string>
     <string name="pref_title_language">Språk</string>
     <string name="language_system_default">Systemstandard</string>
-    <string name="settings_about_explain">Detaljer om version, uppdatering, författare och licens.</string>
     <string name="close_tab">Stäng aktuell flik</string>
     <string name="close_all_tabs">Stäng alla flikar</string>
     <string name="close_other_tabs">Stäng övriga flikar</string>
-    <string name="third_party">Blockera tredjeparts cookies</string>
     <string name="color_mode">Färgläge</string>
     <string name="reading_mode">Läsare läge</string>
     <string name="loading">Laddar &#8230;</string>
-    <string name="loading_failed">Det gick inte att ladda något från sidan.</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT-licens</string>
@@ -373,13 +336,10 @@
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Mapp namn</string>
     <string name="action_folder">Mapp</string>
-    <string name="action_rename">Byt namn</string>
     <string name="title_rename_folder">Byt namn på mapp</string>
-    <string name="dialog_folder">Vad vill du göra med denna mapp?</string>
     <string name="clear_web_storage">Rensa webblagring</string>
     <string name="clear_web_storage_exit">Rensa webblagring vid avslut</string>
     <string name="message_web_storage_cleared">Webblagring rensad</string>
-    <string name="hosts_source">Värdar fil annons blockerande källa</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Annonsblockerare och innehållsfiltrering</string>
     <string name="settings_summary_content_control_toggle">Aktivera annonsblockering och innehållsfiltrering</string>
@@ -403,7 +363,6 @@
     <string name="message_added_to_homescreen">Genväg tillagd till hemskärm</string>
     <string name="shortcut_message_failed_to_add">Tyvärr, din launcher stöder inte genvägar.</string>
     <string name="action_delete_all_bookmarks">Radera alla bokmärken</string>
-    <string name="flash_not_supported">Flash Player stöds inte av ditt system</string>
     <string name="message_open_download_fail">Den här filen finns inte längre</string>
     <string name="faq">Vanliga frågor</string>
     <string name="faq_description">Vanliga frågor (FAQ)</string>
@@ -425,19 +384,15 @@
     <string name="dialog_edit_bookmark">Redigera bokmärke</string>
     <string name="dialog_title_bookmark">Bokmärke</string>
     <string name="dialog_remove_from_history">Ta bort från historik</string>
-    <string name="dialog_download_image">Ladda ned bild</string>
     <string name="dialog_copy_link">Kopiera länk</string>
     <string name="dialog_copy_text">Kopiera text</string>
     <string name="dialog_rename_folder">Döp om mapp</string>
     <string name="dialog_remove_folder">Ta bort mapp</string>
     <string name="dialog_title_close_browser">Stäng webbläsaren</string>
-    <string name="dialog_delete_download">Radera nedladdning</string>
     <string name="dialog_delete_all_downloads">Radera alla nedladdningar</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Verktyg för sidan</string>
     <string name="dialog_toggle_desktop">Växla skrivbords användaragent</string>
-    <string name="dialog_adblock_enable_for_site">Aktivera annonsblock för sajten</string>
-    <string name="dialog_adblock_disable_for_site">Inaktivera annonsblock för sajten</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Anpassad URL</string>
     <!-- Notifications -->
@@ -459,14 +414,11 @@
     <string name="close">Stäng</string>
     <string name="exit">Avsluta</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Frusen…</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Infoga förslag</string>
     <string name="action_close_all_other_tabs">Stäng övriga flikar</string>
     <string name="action_restore_all_tabs">Återställ alla flikar</string>
     <string name="action_restore_tab">Återställ flik</string>
-    <string name="settings_summary_apps">Aktivera tredjepartsappar</string>
-    <string name="settings_title_apps">Appar</string>
     <string name="settings_title_domains">Domains</string>
     <string name="settings_summary_domains">Manage domain settings</string>
     <string name="settings_title_resource_domains">Resource domains</string>
@@ -481,7 +433,6 @@
     <string name="settings_title_domains_delete_all">Delete all</string>
     <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
-    <string name="prompt_please_confirm">Please confirm</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
@@ -516,7 +467,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
-    <string name="settings_app_prefix">app_ för</string>
     <string name="dialog_title_third_party_app">Tredjepartsapp tillgänglig</string>
     <string name="dialog_message_third_party_app">Vill du starta programmet som är kopplat till den webbplatsen?</string>
     <string name="per_month">\u0020/ månad</string>
@@ -543,7 +493,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">Vad vill du använda?</string>
     <string name="button_link">Länk</string>
     <string name="button_image">Bild</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
@@ -573,7 +522,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Fel: en återställningssession har skapats!</string>
     <string name="message_session_imported">Importerad session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exporterade session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">Visa SSL-varningsdialoger</string>
     <string name="start_incognito">Ständigt beter sig som i inkognitoläge</string>
     <string name="force_zoom_summary">Fungerar inte om JavaScript inte är aktiverat</string>
     <string name="force_zoom">Tvinga zoom för webbplatser</string>
@@ -586,13 +534,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Långtryck på \"Flik\" ikonen öppnar en ny flik</string>
     <string name="pref_title_close_drawer">Stäng låda</string>
     <string name="pref_summary_close_drawer">Stäng lådan automatiskt efter att du skapat eller tagit bort en flik</string>
-    <string name="block_javascript">Blockera JavaScript för webbplatsen</string>
-    <string name="block_sites_title">Separera webbplatser med kommatecken</string>
-    <string name="listed_javascript">Tillåt JavaScript endast för listade webbplatser</string>
-    <string name="unlisted_javascript">Blockera JavaScript för listade platser</string>
-    <string name="allow_javascript">Tillåt JavaScript för den här webbplatsen</string>
-    <string name="blocked_javascript">Blockera JavaScript för den här webbplatsen</string>
-    <string name="page_source">Visa sidans källkod</string>
     <string name="inspect">Infoga JavaScript</string>
     <string name="edit_cookies">Visa webbplatscookies</string>
     <string name="site_cookies">Webbplatsens cookies</string>
@@ -622,8 +563,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Inställningar exporterade:</string>
     <string name="settings_reseted">Alla inställningar återställda</string>
     <string name="suggest">Sökförslag (nummer)</string>
-    <string name="error_tip">• Kontrollera adressen för att skriva fel som ww.example.com istället för www.example.com</string>
-    <string name="error_tip2">• Om du inte kan ladda några sidor, kontrollera dina enheters data eller Wi-Fi-anslutning.</string>
     <string name="action_cycle_tabs_forwards">Cykla flikar framåt</string>
     <string name="action_cycle_tabs_backwards">Cykla flikar bakåt</string>
     <string name="action_focus_address_bar">Fokus på adressfältet</string>

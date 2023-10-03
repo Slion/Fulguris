@@ -9,7 +9,6 @@
     <string name="action_bookmarks">Закладки</string>
     <string name="action_downloads">Завантаження</string>
     <string name="action_add_bookmark">Додати закладку</string>
-    <string name="action_copy">Копіювати посилання</string>
     <string name="action_forward">Вперед</string>
     <string name="action_sessions">Сеанси</string>
     <string name="action_new_session">Новий сеанс</string>
@@ -22,9 +21,7 @@
     <string name="location">Доступ до місцеперебування</string>
     <string name="password">Зберігати паролі</string>
     <string name="agent">Агент користувача</string>
-    <string name="flash">Дозволити Adobe Flash</string>
     <string name="home">Домівка</string>
-    <string name="fullscreen">Повноекранний режим</string>
     <string name="download">Тека для завантажень</string>
     <string name="settings_advanced">Розширені</string>
     <string name="version">Версія програми</string>
@@ -34,7 +31,6 @@
     <string name="show">Показати</string>
     <string name="cache">Очистити кеш під час виходу</string>
     <string name="reflow">Увімкнути перекомпонування тексту</string>
-    <string name="block">Блокувати зображення</string>
     <string name="load_images">Завантажувати зображення</string>
     <string name="window">Дозволити сайтам блокувати нові вікна</string>
     <string name="cookies">Дозволити куки</string>
@@ -45,20 +41,11 @@
     <string name="search_action">@string/search_hint</string>
     <string name="overViewMode">Відкривати сторінки в режимі попереднього перегляду</string>
     <string name="restore_tabs_on_startup">Відновлювати вкладки при запуску</string>
-    <string name="supported_browsers_title">Підтримувані браузери</string>
-    <string name="stock_browser">Браузер за замовчуванням</string>
-    <string name="stock_browser_unavailable">Вбудованого браузера не виявлено</string>
-    <string name="stock_browser_available">Знайдено підтримуваний вбудований браузер</string>
-    <string name="fullScreenOption">Ховати статусну панель під час перегляду</string>
     <string name="clear_cookies">Очистити cookie-файли в браузері</string>
     <string name="clear_history">Очистити історію браузера</string>
-    <string name="dialog_image">Що зробити з цим зображенням?</string>
     <string name="action_download">Завантажити</string>
     <string name="action_open">Відкрити</string>
-    <string name="dialog_link">Що зробити з цим посиланням?</string>
     <string name="dialog_title_share">Поділитися цією сторінкою</string>
-    <string name="dialog_history_long_press">Що зробити з цим елементом історії?</string>
-    <string name="dialog_bookmark">Що зробити з цією закладкою?</string>
     <string name="action_delete">Видалити</string>
     <string name="action_blank">Порожня сторінка</string>
     <string name="agent_android_mobile">Android (мобільний)</string>
@@ -78,7 +65,6 @@
     <string name="unknown_size">Невідомий розмір</string>
     <string name="action_cancel">Скасувати</string>
     <string name="title_warning">Попередження</string>
-    <string name="dialog_adobe_not_installed">Adobe Flash Player не виявлено.\nВстановіть Flash-Player.</string>
     <string name="title_user_agent">Агент користувача</string>
     <string name="title_download_location">Тека для завантажень</string>
     <string name="title_custom_homepage">Користувацька домашня сторінка</string>
@@ -94,19 +80,12 @@
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Розмір тексту</string>
-    <string name="size_largest">Найбільший</string>
-    <string name="size_large">Великий</string>
-    <string name="size_normal">Звичайний</string>
-    <string name="size_small">Малий</string>
-    <string name="size_smallest">Найменший</string>
     <string name="title_error">Помилка</string>
-    <string name="dialog_import_error">Не виявлено браузера, з якого можна було б імпортувати закладки.</string>
     <string name="hint_title">Назва</string>
     <string name="hint_url">Адреса</string>
     <string name="title_edit_bookmark">Змінити закладку</string>
     <string name="action_edit">Змінити</string>
     <string name="action_incognito">Нова приватна вкладка</string>
-    <string name="action_homepage">За замовчуванням</string>
     <string name="action_show_homepage">Показати домашню сторінку</string>
     <string name="action_back">Назад</string>
     <string name="action_find">Знайти на сторінці</string>
@@ -129,9 +108,6 @@
     <string name="download_failed">Не вдалося завантажити</string>
     <string name="incognito_cookies">Увімкнути cookies у режимі інкогніто</string>
     <string name="incognito_cookies_pie">Режим інкогніто працює в окремому процесі, який скидається після кожної сесії. Налаштування cookie в режимі інкогніто тепер контролюються звичайними налаштуваннями cookie.</string>
-    <string name="title_flash">Adobe Flash</string>
-    <string name="action_manual">Вручну</string>
-    <string name="action_auto">Автоматично</string>
     <string name="pref_title_contact_us">Звʼяжіться з нами</string>
     <string name="clear_cache">Очистити кеш</string>
     <string name="message_cache_cleared">Кеш очищено</string>
@@ -151,9 +127,6 @@
     <string name="message_welcome">Відвідати нашу домашню сторінку, щоб дізнатися більше про цей потужний веббраузер?</string>
     <!-- Ad block -->
     <string name="block_ads">Керування вмістом</string>
-    <string name="block_ad_source">Джерело файлу hosts</string>
-    <string name="block_ad_remote_refresh_frequency_description">Для віддаленого hosts файлу</string>
-    <string name="block_ad_refresh_now">Оновити файл hosts зараз</string>
     <string name="block_remote_frequency_daily">Щодня</string>
     <string name="block_remote_frequency_weekly">Щотижня</string>
     <string name="block_remote_frequency_monthly">Щомісяця</string>
@@ -176,15 +149,12 @@
     <string name="blocklist_last_update">Останнє оновлення: %s</string>
     <string name="blocklist_updating">Оновлення…</string>
     <string name="blocklist_update_error">Помилка під час оновлення списку фільтрів %s</string>
-    <string name="blocklist_update_error_404">Помилка при оновленні списку фільтрів %s: url не знайдено</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Помилка при оновленні списку фільтрів %1$s: код статусу %2$s</string>
     <string name="add_blocklist">Додати файл фільтрів</string>
     <string name="add_blocklist_hint">Ви можете обрати списки хостів або будь-який список сумісний з правилами AdBlockPlus</string>
-    <string name="enable_blocklist">Ввімкнути цей список</string>
     <string name="invalid_title">Невірний заголовок</string>
     <string name="invalid_url">Невірний URL</string>
-    <string name="blocklist_built_in">Вбудовані фільтри</string>
     <string name="blocklist_remove">Видалити файл фільтрів</string>
     <string name="blocklist_remove_confirm">Ви дійсно бажаєте видалити файл фільтрів %s?</string>
     <string name="local_file">Локальний</string>
@@ -197,9 +167,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Дію скасовано.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Не запитувати знову для цієї сесії.</string>
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_insecure_connection">З\'єднання до цього сайту не є безпечним:\n%1$s\nВсе одно продовжити?</string>
     <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Дата сертифіката недійсна</string>
     <string name="message_certificate_expired">Термін дії сертифікату минув</string>
@@ -257,7 +225,6 @@
     <string name="name_inverted_grayscale">Інвертовані відтінки сірого</string>
     <string name="name_increase_contrast">Збільшений контраст</string>
     <string name="name_normal">Звичайний</string>
-    <string name="sync_history">Синхронізувати історію з Google</string>
     <string name="title_file_chooser">Вибір файлу</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
@@ -289,7 +256,6 @@
     <string name="settings_title_terms_and_conditions">Умови та положення</string>
     <string name="settings_summary_terms_and_conditions">Ознайомтесь з нашими умовами та положеннями онлайн</string>
     <string name="settings_summary_discord">Join our growing community</string>
-    <string name="pref_category_general">Загальні</string>
     <string name="pref_category_panels">Панелі</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Альбомна</string>
@@ -339,15 +305,12 @@
     <string name="pref_summary_contribute_share">Здивуйте своїх друзів та спільноти поділившись із ними Fulguris.</string>
     <string name="pref_title_language">Мова</string>
     <string name="language_system_default">Типова для системи</string>
-    <string name="settings_about_explain">Подробиці про версію, оновлення, автора та ліцензію.</string>
     <string name="close_tab">Закрити поточну вкладку</string>
     <string name="close_all_tabs">Закрити всі вкладки</string>
     <string name="close_other_tabs">Закрити інші вкладки</string>
-    <string name="third_party">Блокувати сторонні cookies</string>
     <string name="color_mode">Кольоровий режим</string>
     <string name="reading_mode">Режим читання</string>
     <string name="loading">Завантаження&#8230;</string>
-    <string name="loading_failed">Не вдалося завантажити сторінку.</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">Ліцензія MIT</string>
@@ -373,13 +336,10 @@
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Назва теки</string>
     <string name="action_folder">Тека</string>
-    <string name="action_rename">Перейменувати</string>
     <string name="title_rename_folder">Перейменувати теку</string>
-    <string name="dialog_folder">Що б ви хотіли зробити з цією текою?</string>
     <string name="clear_web_storage">Очистити вебсховище</string>
     <string name="clear_web_storage_exit">Очищати вебсховище при виході</string>
     <string name="message_web_storage_cleared">Вебсховище очищено</string>
-    <string name="hosts_source">Джерело файлу hosts для блокування реклами</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокування реклами та фільтрування вмісту</string>
     <string name="settings_summary_content_control_toggle">Активувати блокування реклами та фільтрування вмісту</string>
@@ -403,7 +363,6 @@
     <string name="message_added_to_homescreen">Ярлик додано на головний екран</string>
     <string name="shortcut_message_failed_to_add">На жаль, ваш лаунчер не підтримує ярлики.</string>
     <string name="action_delete_all_bookmarks">Видалити всі закладки</string>
-    <string name="flash_not_supported">Ваша система не підтримує Flash Player</string>
     <string name="message_open_download_fail">Цей файл більше не існує</string>
     <string name="faq">ЧаП</string>
     <string name="faq_description">Часто задавані питання</string>
@@ -425,19 +384,15 @@
     <string name="dialog_edit_bookmark">Змінити закладку</string>
     <string name="dialog_title_bookmark">Закладка</string>
     <string name="dialog_remove_from_history">Вилучити з історії</string>
-    <string name="dialog_download_image">Завантажити зображення</string>
     <string name="dialog_copy_link">Копіювати посилання</string>
     <string name="dialog_copy_text">Копіювати текст</string>
     <string name="dialog_rename_folder">Перейменувати теку</string>
     <string name="dialog_remove_folder">Вилучити теку</string>
     <string name="dialog_title_close_browser">Закрити браузер</string>
-    <string name="dialog_delete_download">Видалити завантаження</string>
     <string name="dialog_delete_all_downloads">Видалити всі завантаження</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Засоби сторінки</string>
     <string name="dialog_toggle_desktop">Увімкнути/вимкнути настільний user-agent</string>
-    <string name="dialog_adblock_enable_for_site">Увімкнути блокування реклами для сайту</string>
-    <string name="dialog_adblock_disable_for_site">Вимкнути блокування реклами для сайту</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Власна URL</string>
     <!-- Notifications -->
@@ -461,14 +416,11 @@
     <string name="close">Закрити</string>
     <string name="exit">Вийти</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Заморожено…</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Додати пропозицію</string>
     <string name="action_close_all_other_tabs">Закрити всі інші вкладки</string>
     <string name="action_restore_all_tabs">Відновити всі вкладки</string>
     <string name="action_restore_tab">Відновити вкладку</string>
-    <string name="settings_summary_apps">Дозволити сторонні додатки</string>
-    <string name="settings_title_apps">Додатки</string>
     <string name="settings_title_domains">Домени</string>
     <string name="settings_summary_domains">Керувати налаштуваннями домену</string>
     <string name="settings_title_resource_domains">Домени ресурсів</string>
@@ -483,7 +435,6 @@
     <string name="settings_title_domains_delete_all">Видалити все</string>
     <string name="settings_summary_domains_delete_all">Видалити всі налаштування домену</string>
     <string name="question_delete_all_domain_settings">Видалити всі налаштування домену?</string>
-    <string name="prompt_please_confirm">Будь ласка, підтвердьте</string>
     <string name="settings_title_delete_domain_settings">Видалити налаштування домену</string>
     <string name="settings_summary_delete_domain_settings">Буде повторно створено наступного разу при зіткненні цього домену</string>
     <string name="settings_title_parent">Батьківський</string>
@@ -520,7 +471,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
-    <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Доступний сторонній додаток</string>
     <string name="dialog_message_third_party_app">Ви хочете запустити додаток, пов\'язаний з цим вебсайтом?</string>
     <string name="per_month">\u0020/ місяць</string>
@@ -547,7 +497,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">Що ви бажаєте використати?</string>
     <string name="button_link">Посилання</string>
     <string name="button_image">Зображення</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
@@ -577,7 +526,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Помилка: сеанс відновлення було створено!</string>
     <string name="message_session_imported">Імпортований сеанс: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Експортований сеанс: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">Показати попереджувальні діалоги SSL</string>
     <string name="start_incognito">Завжди поводитися як режим інкогніто</string>
     <string name="force_zoom_summary">Не працює, якщо JavaScript не ввімкнено</string>
     <string name="force_zoom">Примусове масштабування сайтів</string>
@@ -590,13 +538,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Тривале натискання на значок «Вкладка» відкриє нову вкладку</string>
     <string name="pref_title_close_drawer">Закрити меню</string>
     <string name="pref_summary_close_drawer">Автоматично закривати меню після створення або видалення вкладки</string>
-    <string name="block_javascript">Блокувати JavaScript для сайту</string>
-    <string name="block_sites_title">Відокремлювати сайти комою</string>
-    <string name="listed_javascript">Дозволити JavaScript лише для сайтів зі списку</string>
-    <string name="unlisted_javascript">Блокувати JavaScript для сайтів в списку</string>
-    <string name="allow_javascript">Дозволити JavaScript на цьому сайті</string>
-    <string name="blocked_javascript">Блокувати JavaScript на цьому сайті</string>
-    <string name="page_source">Переглянути код сторінки</string>
     <string name="inspect">Ввести JavaScript</string>
     <string name="edit_cookies">Показати файли cookie сайту</string>
     <string name="site_cookies">Файли cookie сайту</string>
@@ -626,8 +567,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Налаштування експортовано:</string>
     <string name="settings_reseted">Всі налаштування відновлено</string>
     <string name="suggest">Пропозиції пошуку (кількість)</string>
-    <string name="error_tip">• Перевірте адресу на помилки, такі як ww.example.com замість www.example.com</string>
-    <string name="error_tip2">• Якщо ви не можете завантажити жодну сторінку, перевірте мобільні або Wi-Fi з\'єднання вашого пристрою.</string>
     <string name="action_cycle_tabs_forwards">Перемикання вкладок вперед</string>
     <string name="action_cycle_tabs_backwards">Перемикання вкладок назад</string>
     <string name="action_focus_address_bar">Перейти в адресний рядок</string>

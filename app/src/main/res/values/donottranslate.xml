@@ -47,7 +47,6 @@
 
     <!-- On tab change -->
     <string name="pref_key_on_tab_change_show_animation">pref_key_on_tab_change_show_animation</string>
-    <string name="pref_key_on_tab_change_vibrate">pref_key_on_tab_change_vibrate</string>
 
     <!-- On tab back -->
     <string name="pref_key_on_tab_back_show_animation">pref_key_on_tab_back_show_animation</string>
@@ -166,12 +165,6 @@
     <string name="slions_update_check_url">https://slions.net/api/resources/10/versions</string>
     <string name="slions_api_key">eQxvqk5DGEXUBqdt5Y_7rGRxF2m0REdb</string>
 
-
-    <string-array name="block_ad_frequency_list">
-        <item>@string/block_remote_frequency_daily</item>
-        <item>@string/block_remote_frequency_weekly</item>
-        <item>@string/block_remote_frequency_monthly</item>
-    </string-array>
 
     <string name="two">2</string>
     <string name="three">3</string>

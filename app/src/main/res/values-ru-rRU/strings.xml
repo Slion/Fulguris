@@ -9,7 +9,6 @@
     <string name="action_bookmarks">Закладки</string>
     <string name="action_downloads">Загрузки</string>
     <string name="action_add_bookmark">Добавить закладку</string>
-    <string name="action_copy">Копировать ссылку</string>
     <string name="action_forward">Вперёд</string>
     <string name="action_sessions">Сессии</string>
     <string name="action_new_session">Новая сессия</string>
@@ -22,9 +21,7 @@
     <string name="location">Доступ к местоположению</string>
     <string name="password">Сохранять пароли</string>
     <string name="agent">User Agent</string>
-    <string name="flash">Включить Adobe Flash</string>
     <string name="home">Новая вкладка</string>
-    <string name="fullscreen">Полноэкранный режим</string>
     <string name="download">Путь загрузки</string>
     <string name="settings_advanced">Дополнительно</string>
     <string name="version">Версия приложения</string>
@@ -34,7 +31,6 @@
     <string name="show">Показать</string>
     <string name="cache">Очищать кэш при выходе</string>
     <string name="reflow">Включить перекомпоновку</string>
-    <string name="block">Блокировать изображения</string>
     <string name="load_images">Загружать изображения</string>
     <string name="window">Разрешить всплывающие окна</string>
     <string name="cookies">Включить cookie</string>
@@ -45,20 +41,11 @@
     <string name="search_action">@string/search_hint</string>
     <string name="overViewMode">Загружать страницы в режиме обзора</string>
     <string name="restore_tabs_on_startup">Восстанавливать вкладки при запуске</string>
-    <string name="supported_browsers_title">Поддерживаемые браузеры</string>
-    <string name="stock_browser">Встроенный браузер</string>
-    <string name="stock_browser_unavailable">Встроенный браузер не обнаружен</string>
-    <string name="stock_browser_available">Обнаружен поддерживаемый встроенный браузер</string>
-    <string name="fullScreenOption">Без строки состояния</string>
     <string name="clear_cookies">Очистить cookie браузера</string>
     <string name="clear_history">Очистить историю</string>
-    <string name="dialog_image">Выберите действие для изображения</string>
     <string name="action_download">Загрузить</string>
     <string name="action_open">Открыть</string>
-    <string name="dialog_link">Выберите действие для адреса</string>
     <string name="dialog_title_share">Поделиться страницей</string>
-    <string name="dialog_history_long_press">Выберите действие для элемента истории</string>
-    <string name="dialog_bookmark">Выберите действие для закладки</string>
     <string name="action_delete">Удалить</string>
     <string name="action_blank">Пустая страница</string>
     <string name="agent_android_mobile">Android (мобильный)</string>
@@ -78,7 +65,6 @@
     <string name="unknown_size">Неизвестный размер</string>
     <string name="action_cancel">Отмена</string>
     <string name="title_warning">Внимание</string>
-    <string name="dialog_adobe_not_installed">Adobe Flash Player не найден.\nУстановите Flash Player</string>
     <string name="title_user_agent">User Agent</string>
     <string name="title_download_location">Путь загрузки</string>
     <string name="title_custom_homepage">Введите адрес</string>
@@ -94,19 +80,12 @@
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Размер текста</string>
-    <string name="size_largest">Огромный</string>
-    <string name="size_large">Большой</string>
-    <string name="size_normal">Обычный</string>
-    <string name="size_small">Небольшой</string>
-    <string name="size_smallest">Маленький</string>
     <string name="title_error">Ошибка</string>
-    <string name="dialog_import_error">Не найден браузер для импорта закладок</string>
     <string name="hint_title">Название</string>
     <string name="hint_url">Адрес</string>
     <string name="title_edit_bookmark">Редактировать закладку</string>
     <string name="action_edit">Редактировать</string>
     <string name="action_incognito">Инкогнито-вкладка</string>
-    <string name="action_homepage">По умолчанию</string>
     <string name="action_show_homepage">Показать домашнюю страницу</string>
     <string name="action_back">Назад</string>
     <string name="action_find">Найти на странице</string>
@@ -129,9 +108,6 @@
     <string name="download_failed">Ошибка загрузки</string>
     <string name="incognito_cookies">Включить cookie в режиме инкогнито</string>
     <string name="incognito_cookies_pie">Режим инкогнито запускается в отдельном процессе, который будет сброшен после каждой сессии. Настройки cookie режима инкогнито теперь контролируются обычными настройками cookie.</string>
-    <string name="title_flash">Adobe Flash</string>
-    <string name="action_manual">Вручную</string>
-    <string name="action_auto">Автоматически</string>
     <string name="pref_title_contact_us">Свяжитесь с нами</string>
     <string name="clear_cache">Очистить кэш</string>
     <string name="message_cache_cleared">Кэш очищен</string>
@@ -151,9 +127,6 @@
     <string name="message_welcome">Посетить нашу домашнюю страницу, чтобы узнать больше об этом мощном веб-браузере?</string>
     <!-- Ad block -->
     <string name="block_ads">Управление содержимым</string>
-    <string name="block_ad_source">Источник файла host</string>
-    <string name="block_ad_remote_refresh_frequency_description">Для удаленно расположенного host файла</string>
-    <string name="block_ad_refresh_now">Обновить host-файл сейчас</string>
     <string name="block_remote_frequency_daily">Ежедневно</string>
     <string name="block_remote_frequency_weekly">Еженедельно</string>
     <string name="block_remote_frequency_monthly">Ежемесячно</string>
@@ -176,15 +149,12 @@
     <string name="blocklist_last_update">Последнее обновление: %s</string>
     <string name="blocklist_updating">Обновление...</string>
     <string name="blocklist_update_error">Сбой при обновлении списка фильтров %s</string>
-    <string name="blocklist_update_error_404">Ошибка при обновлении списка фильтров %s: URL-адрес не найден</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Ошибка при обновлении списка фильтров %1$s: код состояния %2$s</string>
     <string name="add_blocklist">Добавить файл фильтров</string>
     <string name="add_blocklist_hint">Вы можете выбрать списки хостов или любой список, совместимый с правилами AdBlockPlus</string>
-    <string name="enable_blocklist">Включить этот список</string>
     <string name="invalid_title">Недействительное название</string>
     <string name="invalid_url">Неверный URL</string>
-    <string name="blocklist_built_in">Встроенные фильтры</string>
     <string name="blocklist_remove">Удалить файл фильтров</string>
     <string name="blocklist_remove_confirm">Действительно удалить файл фильтров %s?</string>
     <string name="local_file">Локальный</string>
@@ -197,9 +167,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Действие отменено.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Больше не спрашивать об этой сессии браузера.</string>
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_insecure_connection">Соединение не защищено:\n%1$s\nВсё равно продолжить?</string>
     <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Дата сертификата недействительна</string>
     <string name="message_certificate_expired">Истёк срок действия сертификата</string>
@@ -257,7 +225,6 @@
     <string name="name_inverted_grayscale">Инвертированные оттенки серого</string>
     <string name="name_increase_contrast">Повышенный контраст</string>
     <string name="name_normal">Нормальный</string>
-    <string name="sync_history">Синхронизировать историю с Google</string>
     <string name="title_file_chooser">Выбор файла</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
@@ -289,7 +256,6 @@
     <string name="settings_title_terms_and_conditions">Условия использования</string>
     <string name="settings_summary_terms_and_conditions">Смотрите наши условия использования онлайн</string>
     <string name="settings_summary_discord">Join our growing community</string>
-    <string name="pref_category_general">Основные настройки</string>
     <string name="pref_category_panels">Панели</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Альбомная</string>
@@ -339,15 +305,12 @@
     <string name="pref_summary_contribute_share">Ослепите своих друзей и сообщества, поделившись с ними Fulguris.</string>
     <string name="pref_title_language">Язык</string>
     <string name="language_system_default">Системный</string>
-    <string name="settings_about_explain">Подробнее о версии, обновлении, авторе и лицензии.</string>
     <string name="close_tab">Закрыть вкладку</string>
     <string name="close_all_tabs">Закрыть все вкладки</string>
     <string name="close_other_tabs">Закрыть остальные вкладки</string>
-    <string name="third_party">Блокировать сторонние файлы cookie</string>
     <string name="color_mode">Цветовой режим</string>
     <string name="reading_mode">Режим чтения</string>
     <string name="loading">Загрузка&#8230;</string>
-    <string name="loading_failed">Не удалось загрузить страницу.</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">Лицензия MIT</string>
@@ -373,13 +336,10 @@
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Имя папки</string>
     <string name="action_folder">Папка</string>
-    <string name="action_rename">Переименовать</string>
     <string name="title_rename_folder">Переименовать папку</string>
-    <string name="dialog_folder">Выберите действие для папки.</string>
     <string name="clear_web_storage">Очистить интернет-хранилище</string>
     <string name="clear_web_storage_exit">Очищать интернет-хранилище при выходе</string>
     <string name="message_web_storage_cleared">Интернет-хранилище очищено</string>
-    <string name="hosts_source">Источник файла хоста для блокировки рекламы</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокировщик рекламы и фильтрация содержимого</string>
     <string name="settings_summary_content_control_toggle">Включить блокировку рекламы и фильтрацию содержимого</string>
@@ -403,7 +363,6 @@
     <string name="message_added_to_homescreen">Ярлык добавлен на домашний экран</string>
     <string name="shortcut_message_failed_to_add">Извините, ваш лаунчер не поддерживает ярлыки.</string>
     <string name="action_delete_all_bookmarks">Удалить все закладки</string>
-    <string name="flash_not_supported">Flash Player не поддерживается системой</string>
     <string name="message_open_download_fail">Файл не доступен</string>
     <string name="faq">ЧаВо</string>
     <string name="faq_description">Часто задаваемые вопросы</string>
@@ -425,19 +384,15 @@
     <string name="dialog_edit_bookmark">Редактировать закладку</string>
     <string name="dialog_title_bookmark">Закладка</string>
     <string name="dialog_remove_from_history">Удалить из истории</string>
-    <string name="dialog_download_image">Загрузить изображение</string>
     <string name="dialog_copy_link">Скопировать ссылку</string>
     <string name="dialog_copy_text">Скопировать текст</string>
     <string name="dialog_rename_folder">Переименовать папку</string>
     <string name="dialog_remove_folder">Удалить папку</string>
     <string name="dialog_title_close_browser">Закрыть браузер</string>
-    <string name="dialog_delete_download">Удалить загруженное</string>
     <string name="dialog_delete_all_downloads">Удалить все загрузки</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Инструменты страницы</string>
     <string name="dialog_toggle_desktop">Переключить настольный user-agent</string>
-    <string name="dialog_adblock_enable_for_site">Включить блокировку рекламы для сайта</string>
-    <string name="dialog_adblock_disable_for_site">Отключить блокировку рекламы для сайта</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Пользовательский URL</string>
     <!-- Notifications -->
@@ -461,14 +416,11 @@
     <string name="close">Закрыть</string>
     <string name="exit">Выход</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Заморожено…</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Вставить предложение</string>
     <string name="action_close_all_other_tabs">Закрыть остальные вкладки</string>
     <string name="action_restore_all_tabs">Восстановить все вкладки</string>
     <string name="action_restore_tab">Восстановить вкладку</string>
-    <string name="settings_summary_apps">Разрешить сторонние приложения</string>
-    <string name="settings_title_apps">Приложения</string>
     <string name="settings_title_domains">Домены</string>
     <string name="settings_summary_domains">Настройки домена</string>
     <string name="settings_title_resource_domains">Домены ресурсов</string>
@@ -483,7 +435,6 @@
     <string name="settings_title_domains_delete_all">Удалить все</string>
     <string name="settings_summary_domains_delete_all">Удалить все настройки домена</string>
     <string name="question_delete_all_domain_settings">Удалить все настройки домена?</string>
-    <string name="prompt_please_confirm">Пожалуйста, подтвердите</string>
     <string name="settings_title_delete_domain_settings">Удалить настройки домена</string>
     <string name="settings_summary_delete_domain_settings">Будет воссоздано в следующий раз, при обнаружении этого домена</string>
     <string name="settings_title_parent">Родительский</string>
@@ -520,7 +471,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
-    <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Доступно стороннее приложение</string>
     <string name="dialog_message_third_party_app">Запустить приложение, связанное с этим веб-сайтом?</string>
     <string name="per_month">\u0020/ месяц</string>
@@ -547,7 +497,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">Что Вы хотите использовать?</string>
     <string name="button_link">Ссылка</string>
     <string name="button_image">Изображение</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
@@ -577,7 +526,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Ошибка: сессия восстановления создана!</string>
     <string name="message_session_imported">Импортированная сессия: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Экспортированная сессия: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">Показать диалоги предупреждения SSL</string>
     <string name="start_incognito">Постоянно вести себя, как в режиме инкогнито</string>
     <string name="force_zoom_summary">Не работает, если JavaScript не включен</string>
     <string name="force_zoom">Принудительное масштабирование веб-сайтов</string>
@@ -590,13 +538,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Долгое нажатие на значок «Вкладка» открывает новую вкладку</string>
     <string name="pref_title_close_drawer">Закрыть панель инструментов</string>
     <string name="pref_summary_close_drawer">Автоматически закрыть панель инструментов после создания или удаления вкладки</string>
-    <string name="block_javascript">Блокировать JavaScript на сайте</string>
-    <string name="block_sites_title">Разделить сайты запятыми</string>
-    <string name="listed_javascript">Разрешать JavaScript только на перечисленных сайтах</string>
-    <string name="unlisted_javascript">Блокировать JavaScript на перечисленных сайтах</string>
-    <string name="allow_javascript">Разрешить JavaScript для этого сайта</string>
-    <string name="blocked_javascript">Блокировать JavaScript для этого сайта</string>
-    <string name="page_source">Просмотр кода страницы</string>
     <string name="inspect">Внедрение Javascript</string>
     <string name="edit_cookies">Показать cookie сайта</string>
     <string name="site_cookies">Cookie сайта</string>
@@ -626,8 +567,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Настройки экспортированы:</string>
     <string name="settings_reseted">Все настройки восстановлены</string>
     <string name="suggest">Количество подсказок поиска</string>
-    <string name="error_tip">• Проверьте адрес на наличие ошибок, таких как ww.example.com вместо www.example.com</string>
-    <string name="error_tip2">• Если вы не можете загрузить какие-либо страницы, проверьте подключение устройства к моб. интернету или Wi-Fi.</string>
     <string name="action_cycle_tabs_forwards">Цикл вкладок вперед</string>
     <string name="action_cycle_tabs_backwards">Цикл вкладок назад</string>
     <string name="action_focus_address_bar">Перейти к адресной строке</string>

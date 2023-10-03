@@ -39,6 +39,7 @@ import com.android.billingclient.api.*
 import dagger.hilt.android.AndroidEntryPoint
 // See: https://stackoverflow.com/a/54188472/3969362
 import org.threeten.bp.Period;
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -48,8 +49,6 @@ import javax.inject.Inject
 class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         PurchasesUpdatedListener,
         BillingClientStateListener {
-
-    private val LOG_TAG = "SponsorshipSettingsFragment"
 
     val SPONSOR_BRONZE = "sponsor.bronze"
     val SUBS_SKUS = listOf(SPONSOR_BRONZE)
@@ -105,7 +104,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
      * Start connection with Google Play store billing.
      */
     private fun connectToPlayBillingService(): Boolean {
-        Log.d(LOG_TAG, "connectToPlayBillingService")
+        Timber.d( "connectToPlayBillingService")
         if (!playStoreBillingClient.isReady) {
             playStoreBillingClient.startConnection(this)
             return true
@@ -120,7 +119,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
     override fun onBillingSetupFinished(billingResult: BillingResult) {
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                Log.d(LOG_TAG, "onBillingSetupFinished successfully")
+                Timber.d( "onBillingSetupFinished successfully")
                 //querySkuDetailsAsync(BillingClient.SkuType.INAPP, GameSku.INAPP_SKUS)
                 // Ask client for list of available subscriptions
                 populatePreferenceScreen()
@@ -129,12 +128,12 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
             }
             BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
                 //Some apps may choose to make decisions based on this knowledge.
-                Log.d(LOG_TAG, billingResult.debugMessage)
+                Timber.d( billingResult.debugMessage)
             }
             else -> {
                 //do nothing. Someone else will connect it through retry policy.
                 //May choose to send to server though
-                Log.d(LOG_TAG, billingResult.debugMessage)
+                Timber.d( billingResult.debugMessage)
             }
         }
     }
@@ -149,7 +148,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
      *   been called.
      **/
     override fun onBillingServiceDisconnected() {
-        Log.d(LOG_TAG, "onBillingServiceDisconnected")
+        Timber.d( "onBillingServiceDisconnected")
         connectToPlayBillingService()
     }
 
@@ -196,19 +195,19 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         playStoreBillingClient.querySkuDetailsAsync(params) { billingResult, skuDetailsList ->
             when (billingResult.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
-                    Log.d(LOG_TAG, "populateSubscriptions OK")
+                    Timber.d( "populateSubscriptions OK")
                     if (skuDetailsList.orEmpty().isNotEmpty()) {
                         // We got a valid list of SKUs for our subscriptions
                         var purchases = playStoreBillingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS, PurchasesResponseListener { billingResult, purchases ->
                           if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                              //Log.d(LOG_TAG, "Purchases dump: ")
+                              //Timber.d( "Purchases dump: ")
                               if (purchases.isEmpty()) {
                                   // No valid subscriptions anymore, just downgrade then
                                   // We only do this here for now so unless user goes to Sponsorship activity after expiration she should still be able to use her expired subscriptions
                                   userPreferences.sponsorship = Sponsorship.TIN
                               } else {
                                   purchases.forEach {
-                                      //Log.d(LOG_TAG, it.toString())
+                                      //Timber.d( it.toString())
                                       // Take this opportunity to update our entitlements
                                       // That should fix things up for re-installations
                                       if (it.skus.contains(SPONSOR_BRONZE)  && it.isAcknowledged) {
@@ -219,7 +218,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
 
                               // TODO: do we need to check the result?
                               skuDetailsList?.forEach { skuDetails ->
-                                  Log.d(LOG_TAG, skuDetails.toString())
+                                  Timber.d( skuDetails.toString())
                                   val pref = SwitchPreferenceCompat(requireContext())
                                   pref.isSingleLineTitle = false
                                   pref.title = skuDetails.title
@@ -257,15 +256,15 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                                   prefCat.addPreference(pref)
                               }
                           } else {
-                              Log.e(LOG_TAG, "queryPurchasesAsync failed")
-                              Log.e(LOG_TAG, billingResult.debugMessage)
+                              Timber.e( "queryPurchasesAsync failed")
+                              Timber.e( billingResult.debugMessage)
                           }
                         })
                     }
                 }
                 else -> {
-                    Log.e(LOG_TAG, "querySkuDetailsAsync failed")
-                    Log.e(LOG_TAG, billingResult.debugMessage)
+                    Timber.e( "querySkuDetailsAsync failed")
+                    Timber.e( billingResult.debugMessage)
                 }
             }
         }
@@ -336,7 +335,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
      * We need to acknowledge them.
      */
     override fun onPurchasesUpdated(billingResult: BillingResult, purchases: MutableList<Purchase>?) {
-        Log.d(LOG_TAG, "onPurchasesUpdated")
+        Timber.d( "onPurchasesUpdated")
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
                 purchases?.forEach {
@@ -346,7 +345,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                             val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder().setPurchaseToken(it.purchaseToken).build()
                             playStoreBillingClient.acknowledgePurchase(acknowledgePurchaseParams) {
                                 // TODO: Again what should we do with that?
-                                billingResult -> Log.d(LOG_TAG, "onAcknowledgePurchaseResponse: $billingResult")
+                                billingResult -> Timber.d( "onAcknowledgePurchaseResponse: $billingResult")
                                 when (billingResult.responseCode) {
                                     BillingClient.BillingResponseCode.OK -> {
                                         if (it.skus.contains(SPONSOR_BRONZE) ) {
@@ -369,7 +368,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                 connectToPlayBillingService()
             }
             else -> {
-                Log.i(LOG_TAG, billingResult.debugMessage)
+                Timber.w(billingResult.debugMessage)
             }
         }
     }
@@ -385,8 +384,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> connectToPlayBillingService()
             BillingClient.BillingResponseCode.OK -> succeeded = true
-            else -> Log.w(LOG_TAG,
-                    "isSubscriptionSupported() error: ${billingResult.debugMessage}")
+            else -> Timber.w("isSubscriptionSupported() error: ${billingResult.debugMessage}")
         }
         return succeeded
     }

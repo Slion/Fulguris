@@ -9,7 +9,6 @@
     <string name="action_bookmarks">Favoris</string>
     <string name="action_downloads">Téléchargements</string>
     <string name="action_add_bookmark">Ajouter aux favoris</string>
-    <string name="action_copy">Copier l\'adresse</string>
     <string name="action_forward">Transférer</string>
     <string name="action_sessions">Sessions</string>
     <string name="action_new_session">Nouvelle session</string>
@@ -22,9 +21,7 @@
     <string name="location">Accéder à ma position</string>
     <string name="password">Enregistrer les mots de passe</string>
     <string name="agent">Agent utilisateur</string>
-    <string name="flash">Activer Adobe Flash</string>
     <string name="home">Page d\'accueil</string>
-    <string name="fullscreen">Mode plein écran</string>
     <string name="download">Téléchargement</string>
     <string name="settings_advanced">Paramètres avancés</string>
     <string name="version">Version application</string>
@@ -34,7 +31,6 @@
     <string name="show">Afficher</string>
     <string name="cache">Effacer le cache en quittant</string>
     <string name="reflow">Activer repositionnement du texte</string>
-    <string name="block">Bloquer les images</string>
     <string name="load_images">Charger les images</string>
     <string name="window">Autoriser les sites à ouvrir de nouvelles fenêtres</string>
     <string name="cookies">Activer les cookies</string>
@@ -45,20 +41,11 @@
     <string name="search_action">@string/search_hint</string>
     <string name="overViewMode">Charger les pages en mode aperçu</string>
     <string name="restore_tabs_on_startup">Restaurer les onglets perdus au démarrage</string>
-    <string name="supported_browsers_title">Navigateurs pris en charge</string>
-    <string name="stock_browser">Navigateur préinstallé</string>
-    <string name="stock_browser_unavailable">Aucun navigateur préinstallé détecté</string>
-    <string name="stock_browser_available">Navigateur préinstallé compatible détecté</string>
-    <string name="fullScreenOption">Masquer la barre d\'état lors de la navigation</string>
     <string name="clear_cookies">Effacer les cookies du navigateur</string>
     <string name="clear_history">Effacer l\'historique du navigateur</string>
-    <string name="dialog_image">Que voulez-vous faire avec cette image ?</string>
     <string name="action_download">Télécharger</string>
     <string name="action_open">Ouvrir</string>
-    <string name="dialog_link">Que voulez-vous faire avec ce lien ?</string>
     <string name="dialog_title_share">Partager cette page</string>
-    <string name="dialog_history_long_press">Que voulez-vous faire avec cet historique ?</string>
-    <string name="dialog_bookmark">Que voulez-vous faire avec ce favori ?</string>
     <string name="action_delete">Supprimer</string>
     <string name="action_blank">Page vide</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
@@ -78,7 +65,6 @@
     <string name="unknown_size">Taille inconnue</string>
     <string name="action_cancel">Annuler</string>
     <string name="title_warning">Avertissement</string>
-    <string name="dialog_adobe_not_installed">Adobe Flash Player n\'a pas été détecté.\nVeuillez installer Flash Player.</string>
     <string name="title_user_agent">Agent utilisateur</string>
     <string name="title_download_location">Téléchargement</string>
     <string name="title_custom_homepage">Page d\'accueil personnalisée</string>
@@ -94,19 +80,12 @@
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Taille du texte</string>
-    <string name="size_largest">Plus grand</string>
-    <string name="size_large">Grand</string>
-    <string name="size_normal">Normal</string>
-    <string name="size_small">Petit</string>
-    <string name="size_smallest">Plus petit</string>
     <string name="title_error">Erreur</string>
-    <string name="dialog_import_error">Aucun navigateur n\'a été détecté pour importer les favoris.</string>
     <string name="hint_title">Titre</string>
     <string name="hint_url">Adresse</string>
     <string name="title_edit_bookmark">Éditer le favori</string>
     <string name="action_edit">Éditer</string>
     <string name="action_incognito">Onglet incognito</string>
-    <string name="action_homepage">Par défaut</string>
     <string name="action_show_homepage">Afficher la page d\'accueil</string>
     <string name="action_back">Retour</string>
     <string name="action_find">Rechercher dans la page</string>
@@ -129,9 +108,6 @@
     <string name="download_failed">Échec du téléchargement</string>
     <string name="incognito_cookies">Activer les cookies en mode incognito</string>
     <string name="incognito_cookies_pie">Le mode incognito s’exécute dans une fenêtre séparée réinitialisée après chaque session. Les préférences de cookies en mode incognito sont désormais contrôlées par les préférences de cookies générales.</string>
-    <string name="title_flash">Adobe Flash</string>
-    <string name="action_manual">Manuel</string>
-    <string name="action_auto">Auto</string>
     <string name="pref_title_contact_us">Nous contacter</string>
     <string name="clear_cache">Effacer le cache</string>
     <string name="message_cache_cleared">Cache effacé</string>
@@ -151,9 +127,6 @@
     <string name="message_welcome">Visiter notre page d\'accueil pour en savoir plus sur ce puissant navigateur web ?</string>
     <!-- Ad block -->
     <string name="block_ads">Contrôle de contenu</string>
-    <string name="block_ad_source">Source du fichier \'hosts\'</string>
-    <string name="block_ad_remote_refresh_frequency_description">Pour le fichier \'hosts\' distant</string>
-    <string name="block_ad_refresh_now">Actualiser le fichier \'hosts\'</string>
     <string name="block_remote_frequency_daily">Chaque jour</string>
     <string name="block_remote_frequency_weekly">Chaque semaine</string>
     <string name="block_remote_frequency_monthly">Chaque mois</string>
@@ -176,15 +149,12 @@
     <string name="blocklist_last_update">Dernière mise à jour : %s</string>
     <string name="blocklist_updating">Mise à jour…</string>
     <string name="blocklist_update_error">Erreur lors de la mise à jour de la liste de filtres %s</string>
-    <string name="blocklist_update_error_404">Erreur lors de la mise à jour de la liste de filtres %s: url introuvable</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Erreur lors de la mise à jour de la liste de filtres %1$s: code de statut %2$s</string>
     <string name="add_blocklist">Ajouter un fichier de filtres</string>
     <string name="add_blocklist_hint">Vous pouvez choisir des listes d\'hôtes ou n\'importe quelle liste compatible avec les règles AdBlockPlus</string>
-    <string name="enable_blocklist">Activer cette liste</string>
     <string name="invalid_title">Titre invalide</string>
     <string name="invalid_url">URL invalide</string>
-    <string name="blocklist_built_in">Filtres intégrés</string>
     <string name="blocklist_remove">Supprimer le fichier de filtres</string>
     <string name="blocklist_remove_confirm">Voulez-vous vraiment supprimer le fichier de filtres %s?</string>
     <string name="local_file">Local</string>
@@ -197,9 +167,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Action annulée.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Ne plus demander pour cette session de navigation.</string>
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_insecure_connection">La connexion à ce site n\'est pas sécurisée :\n%1$s\nContinuer ?</string>
     <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">la date du certificat est incorrecte</string>
     <string name="message_certificate_expired">le certificat a expiré</string>
@@ -257,7 +225,6 @@
     <string name="name_inverted_grayscale">Niveaux de gris inversés</string>
     <string name="name_increase_contrast">Augmenter le contraste</string>
     <string name="name_normal">Normal</string>
-    <string name="sync_history">Synchroniser l\'historique avec Google</string>
     <string name="title_file_chooser">Explorateur de fichiers</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">Licence GNU Lesser General Public</string>
@@ -289,7 +256,6 @@
     <string name="settings_title_terms_and_conditions">Conditions générales</string>
     <string name="settings_summary_terms_and_conditions">Consulter nos conditions générales en ligne</string>
     <string name="settings_summary_discord">Join our growing community</string>
-    <string name="pref_category_general">Général</string>
     <string name="pref_category_panels">Panneaux</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Paysage</string>
@@ -339,15 +305,12 @@
     <string name="pref_summary_contribute_share">Éblouissez vos amis et vos communautés en partageant Fulguris avec eux.</string>
     <string name="pref_title_language">Langue</string>
     <string name="language_system_default">Valeur par défaut du système</string>
-    <string name="settings_about_explain">En savoir plus sur la version, l\'auteur et la licence.</string>
     <string name="close_tab">Fermer l\'onglet</string>
     <string name="close_all_tabs">Fermer tous les onglets</string>
     <string name="close_other_tabs">Fermer les autres onglets</string>
-    <string name="third_party">Bloquer les cookies tiers</string>
     <string name="color_mode">Mode couleur</string>
     <string name="reading_mode">Mode lecteur</string>
     <string name="loading">Chargement&#8230;</string>
-    <string name="loading_failed">Impossible de charger quoi que ce soit depuis la page.</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup : analyseur HTML Java</string>
     <string name="mit_license">Licence MIT</string>
@@ -373,13 +336,10 @@
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Nom du dossier</string>
     <string name="action_folder">Dossier</string>
-    <string name="action_rename">Renommer</string>
     <string name="title_rename_folder">Renommer le dossier</string>
-    <string name="dialog_folder">Que voulez-vous faire avec ce dossier ?</string>
     <string name="clear_web_storage">Effacer le stockage internet</string>
     <string name="clear_web_storage_exit">Effacer le stockage internet en quittant</string>
     <string name="message_web_storage_cleared">Stockage internet effacé</string>
-    <string name="hosts_source">Fichier Hosts source de blocage des publicités</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Bloqueur de publicités et filtre de contenu</string>
     <string name="settings_summary_content_control_toggle">Activer le bloqueur de publicités et le filtre de contenu</string>
@@ -403,7 +363,6 @@
     <string name="message_added_to_homescreen">Ajouté à l\'écran d\'accueil</string>
     <string name="shortcut_message_failed_to_add">Désolé, votre lanceur d\'applications ne supporte pas les raccourcis.</string>
     <string name="action_delete_all_bookmarks">Supprimer tous les favoris</string>
-    <string name="flash_not_supported">Flash Player n\'est pas pris en charge par votre système</string>
     <string name="message_open_download_fail">Ce fichier n’existe plus</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">Questions fréquemment posées</string>
@@ -425,19 +384,15 @@
     <string name="dialog_edit_bookmark">Éditer le favori</string>
     <string name="dialog_title_bookmark">Ajouter à mes favoris</string>
     <string name="dialog_remove_from_history">Supprimer de l\'historique</string>
-    <string name="dialog_download_image">Télécharger l\'image</string>
     <string name="dialog_copy_link">Copier le lien</string>
     <string name="dialog_copy_text">Copier le texte</string>
     <string name="dialog_rename_folder">Renommer de dossier</string>
     <string name="dialog_remove_folder">Supprimer le dossier</string>
     <string name="dialog_title_close_browser">Fermer le navigateur</string>
-    <string name="dialog_delete_download">Supprimer le téléchargement</string>
     <string name="dialog_delete_all_downloads">Supprimer tous les téléchargements</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Outils de page</string>
     <string name="dialog_toggle_desktop">Activer/désactiver le mode Bureau</string>
-    <string name="dialog_adblock_enable_for_site">Activer le bloqueur de publicités pour ce site</string>
-    <string name="dialog_adblock_disable_for_site">Désactiver le blocage des publicités pour ce site</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Adresse personnalisée</string>
     <!-- Notifications -->
@@ -459,14 +414,11 @@
     <string name="close">Fermer</string>
     <string name="exit">Quitter</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Gelé…</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Insérer une suggestion</string>
     <string name="action_close_all_other_tabs">Fermer tous les autres onglets</string>
     <string name="action_restore_all_tabs">Rétablir tous les onglets</string>
     <string name="action_restore_tab">Rétablir l\'onglet</string>
-    <string name="settings_summary_apps">Activer les applications tierces</string>
-    <string name="settings_title_apps">Applications</string>
     <string name="settings_title_domains">Domaines</string>
     <string name="settings_summary_domains">Gérer les paramètres de domaine</string>
     <string name="settings_title_resource_domains">Domaines ressource</string>
@@ -481,7 +433,6 @@
     <string name="settings_title_domains_delete_all">Tout supprimer</string>
     <string name="settings_summary_domains_delete_all">Supprimer tous les paramètres du domaine</string>
     <string name="question_delete_all_domain_settings">Supprimer tous les paramètres du domaine ?</string>
-    <string name="prompt_please_confirm">Veuillez confirmer</string>
     <string name="settings_title_delete_domain_settings">Supprimer les paramètres du domaine</string>
     <string name="settings_summary_delete_domain_settings">Les paramètres seront recréés la prochaine fois que ce domaine sera rencontré</string>
     <string name="settings_title_parent">Parent</string>
@@ -516,7 +467,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
-    <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Application tierce disponible</string>
     <string name="dialog_message_third_party_app">Souhaitez-vous lancer l\'application associée à ce site web ?</string>
     <string name="per_month">\u0020/ mois</string>
@@ -543,7 +493,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">Que voulez-vous utiliser?</string>
     <string name="button_link">Lien</string>
     <string name="button_image">Image</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
@@ -573,7 +522,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Erreur: une session de récupération a été créée !</string>
     <string name="message_session_imported">Session importée : <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Session exportée : <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">Afficher les alertes SSL</string>
     <string name="start_incognito">Toujours se comporter comme étant en mode Incognito</string>
     <string name="force_zoom_summary">Ne fonctionne pas si JavaScript est desactivé</string>
     <string name="force_zoom">Forcer le zoom pour les sites web</string>
@@ -586,13 +534,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Un appui long sur l\'icône \"Onglets\" ouvre un nouvel onglet</string>
     <string name="pref_title_close_drawer">Replier ce panneau</string>
     <string name="pref_summary_close_drawer">Fermer automatiquement le panneau Onglets après avoir créé ou supprimé un onglet</string>
-    <string name="block_javascript">Bloquer JavaScript pour ce site</string>
-    <string name="block_sites_title">Séparer les URLs par des virgules</string>
-    <string name="listed_javascript">N’autoriser JavaScript que pour les sites listés</string>
-    <string name="unlisted_javascript">Bloquer JavaScript pour les sites listés</string>
-    <string name="allow_javascript">Autoriser JavaScript pour ce site</string>
-    <string name="blocked_javascript">Bloquer JavaScript pour ce site</string>
-    <string name="page_source">Code source de la page</string>
     <string name="inspect">Injecter du code JavaScript</string>
     <string name="edit_cookies">Modifier les cookies du site</string>
     <string name="site_cookies">Cookies du site</string>
@@ -622,8 +563,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Paramètres exportés :</string>
     <string name="settings_reseted">Tous les paramètres ont été restaurés</string>
     <string name="suggest">Suggestions de recherche (nombre)</string>
-    <string name="error_tip">• Vérifiez que l\'adresse ne contient pas d\'erreurs de frappe telles que ww.example.com au lieu de www.example.com</string>
-    <string name="error_tip2">• Si vous ne parvenez pas à charger aucune page, vérifiez les données mobiles de votre appareil ou la connexion Wi-Fi.</string>
     <string name="action_cycle_tabs_forwards">Avancer dans la liste d\'onglets</string>
     <string name="action_cycle_tabs_backwards">Reculer dans la liste d\'onglets</string>
     <string name="action_focus_address_bar">Focaliser la barre d\'adresse</string>

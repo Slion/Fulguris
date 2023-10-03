@@ -9,7 +9,6 @@
     <string name="action_bookmarks">Bookmark</string>
     <string name="action_downloads">Download</string>
     <string name="action_add_bookmark">Tambahkan bookmark</string>
-    <string name="action_copy">Salin tautan</string>
     <string name="action_forward">Teruskan</string>
     <string name="action_sessions">Sesi</string>
     <string name="action_new_session">Sesi baru</string>
@@ -22,9 +21,7 @@
     <string name="location">Akses lokasi</string>
     <string name="password">Simpan sandi Anda</string>
     <string name="agent">Agen pengguna</string>
-    <string name="flash">Aktifkan Adobe Flash</string>
     <string name="home">Beranda</string>
-    <string name="fullscreen">Mode layar penuh</string>
     <string name="download">Lokasi download</string>
     <string name="settings_advanced">Tingkat lanjut</string>
     <string name="version">Versi aplikasi</string>
@@ -34,7 +31,6 @@
     <string name="show">Tampilkan</string>
     <string name="cache">Hapus cache saat keluar</string>
     <string name="reflow">Aktifkan text reflow</string>
-    <string name="block">Blokir gambar</string>
     <string name="load_images">Muat gambar</string>
     <string name="window">Izinkan situs untuk membuka jendela baru</string>
     <string name="cookies">Aktifkan cookie</string>
@@ -45,20 +41,11 @@
     <string name="search_action">@string/search_hint</string>
     <string name="overViewMode">Muat halaman dalam mode ikhtisar</string>
     <string name="restore_tabs_on_startup">Pulihkan tab saat memulai</string>
-    <string name="supported_browsers_title">Browser yang didukung</string>
-    <string name="stock_browser">Browser bawaan</string>
-    <string name="stock_browser_unavailable">Tidak ada browser bawaan yang terdeteksi</string>
-    <string name="stock_browser_available">Terdeteksi browser bawaan yang didukung</string>
-    <string name="fullScreenOption">Sembunyikan status bar ketika menjelajah</string>
     <string name="clear_cookies">Hapus cookie pada browser</string>
     <string name="clear_history">Hapus histori pada browser</string>
-    <string name="dialog_image">Apa yang ingin Anda lakukan dengan gambar ini?</string>
     <string name="action_download">Download</string>
     <string name="action_open">Buka</string>
-    <string name="dialog_link">Apa yang ingin Anda lakukan dengan tautan ini?</string>
     <string name="dialog_title_share">Bagikan halaman ini</string>
-    <string name="dialog_history_long_press">Apa yang ingin Anda lakukan dengan item histori ini?</string>
-    <string name="dialog_bookmark">Apa yang ingin Anda lakukan dengan bookmark ini?</string>
     <string name="action_delete">Hapus</string>
     <string name="action_blank">Halaman kosong</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
@@ -78,7 +65,6 @@
     <string name="unknown_size">Ukuran tak diketahui</string>
     <string name="action_cancel">Batal</string>
     <string name="title_warning">Peringatan</string>
-    <string name="dialog_adobe_not_installed">Adobe Flash Player tidak terdeteksi.\nHarap instal Flash Player.</string>
     <string name="title_user_agent">Agen pengguna</string>
     <string name="title_download_location">Lokasi download</string>
     <string name="title_custom_homepage">Beranda kustom</string>
@@ -94,19 +80,12 @@
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Ukuran teks</string>
-    <string name="size_largest">Lebih besar</string>
-    <string name="size_large">Besar</string>
-    <string name="size_normal">Normal</string>
-    <string name="size_small">Kecil</string>
-    <string name="size_smallest">Lebih kecil</string>
     <string name="title_error">Error</string>
-    <string name="dialog_import_error">Tidak ada browser yang terdeteksi untuk mengimpor bookmark.</string>
     <string name="hint_title">Judul</string>
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Edit bookmark</string>
     <string name="action_edit">Edit</string>
     <string name="action_incognito">Tab samaran</string>
-    <string name="action_homepage">Default</string>
     <string name="action_show_homepage">Tampilkan beranda</string>
     <string name="action_back">Kembali</string>
     <string name="action_find">Cari di halaman</string>
@@ -129,9 +108,6 @@
     <string name="download_failed">Gagal mengunduh</string>
     <string name="incognito_cookies">Izinkan cookies dalam mode menyamar</string>
     <string name="incognito_cookies_pie">Mode menyamar menggunakan proses terpisah yang selalu diatur ulang pada setiap akhir sesi. Mulai sekarang pengunaan cookies dalam mode menyamar mengikuti penggunaan yang seperti biasa.</string>
-    <string name="title_flash">Adobe Flash</string>
-    <string name="action_manual">Secara manual</string>
-    <string name="action_auto">Secara otomatis</string>
     <string name="pref_title_contact_us">Hubungi kami</string>
     <string name="clear_cache">Hapus cache</string>
     <string name="message_cache_cleared">Cache telah dihapus</string>
@@ -151,9 +127,6 @@
     <string name="message_welcome">Mau mengunjungi beranda kami untuk tahu lebih banyak tentang browser ini?</string>
     <!-- Ad block -->
     <string name="block_ads">Pengaturan untuk isi halaman</string>
-    <string name="block_ad_source">Daftar halaman yang ingin diblokir</string>
-    <string name="block_ad_remote_refresh_frequency_description">Untuk file dari host asing</string>
-    <string name="block_ad_refresh_now">Perbarui hostnya sekarang</string>
     <string name="block_remote_frequency_daily">Harian</string>
     <string name="block_remote_frequency_weekly">Mingguan</string>
     <string name="block_remote_frequency_monthly">Bulanan</string>
@@ -176,15 +149,12 @@
     <string name="blocklist_last_update">Pembaruan yang terakhir: %s</string>
     <string name="blocklist_updating">Memperbarui…</string>
     <string name="blocklist_update_error">Terjadi kesalahan saat memperbarui daftar filter %s</string>
-    <string name="blocklist_update_error_404">Error while updating filters list %s: url not found</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Terjadi kesalahan saat memperbarui daftar filter %1$s: kode status %2$s</string>
     <string name="add_blocklist">Tambahkan file penyaring</string>
     <string name="add_blocklist_hint">Anda bisa memilih daftar host atau daftar mana saja yang menuruti aturan AdBlockPlus</string>
-    <string name="enable_blocklist">Gunakan daftar ini</string>
     <string name="invalid_title">Judul tidak valid</string>
     <string name="invalid_url">URL tidak valid</string>
-    <string name="blocklist_built_in">Filter yang telah tersedia</string>
     <string name="blocklist_remove">Hapus file penyaring</string>
     <string name="blocklist_remove_confirm">Yakin ingin menghapus file penyaring %s?</string>
     <string name="local_file">Lokal</string>
@@ -197,9 +167,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Tindakan telah dibatalkan.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Selanjutnya jangan tanya lagi untuk sesi ini.</string>
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_insecure_connection">Hubungan ke halaman in tidak aman:\n%1$s\nLanjut saja?</string>
     <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Tanggal pada sertifikat tidak berlaku</string>
     <string name="message_certificate_expired">Sertifikat ini telah kadaluarsa</string>
@@ -257,7 +225,6 @@
     <string name="name_inverted_grayscale">Kebalikan dari hitam-putih-abu</string>
     <string name="name_increase_contrast">Tingkatkan kontras</string>
     <string name="name_normal">Normal</string>
-    <string name="sync_history">Samakan riwayat dengan Google</string>
     <string name="title_file_chooser">Pemilih file</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">Lisensi Publik Umum GNU Lesser</string>
@@ -289,7 +256,6 @@
     <string name="settings_title_terms_and_conditions">Syarat &amp; Ketentuan</string>
     <string name="settings_summary_terms_and_conditions">Lihat kebijakan privasi kami secara daring</string>
     <string name="settings_summary_discord">Join our growing community</string>
-    <string name="pref_category_general">Umum</string>
     <string name="pref_category_panels">Panel</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Mendatar</string>
@@ -339,15 +305,12 @@
     <string name="pref_summary_contribute_share">Perkenalkan Fulguris kepada orang-orang disekitar anda.</string>
     <string name="pref_title_language">Bahasa</string>
     <string name="language_system_default">Bawaan sistem</string>
-    <string name="settings_about_explain">Rincian versi, update, penulis dan surat izin.</string>
     <string name="close_tab">Tutup tab ini</string>
     <string name="close_all_tabs">Tutup semua tab</string>
     <string name="close_other_tabs">Tutup tab lainnya</string>
-    <string name="third_party">Blokir cookies pihak ketiga</string>
     <string name="color_mode">Pewarnaan</string>
     <string name="reading_mode">Wujud pembaca</string>
     <string name="loading">Sedang memuat&#8230;</string>
-    <string name="loading_failed">Tidak bisa memuat isi halaman ini.</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">Lisensi MIT</string>
@@ -373,13 +336,10 @@
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Nama folder</string>
     <string name="action_folder">Folder</string>
-    <string name="action_rename">Ganti nama</string>
     <string name="title_rename_folder">Ubah nama folder</string>
-    <string name="dialog_folder">Apa yang ingin Anda lakukan dengan folder ini?</string>
     <string name="clear_web_storage">Hapus simpanan dari web</string>
     <string name="clear_web_storage_exit">Hapus simpanan dari web saat keluar</string>
     <string name="message_web_storage_cleared">Simpanan dari web telah dihapus</string>
-    <string name="hosts_source">Sumber file pemblokir iklan</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Pemblokir iklan dan penyaring isi halaman web</string>
     <string name="settings_summary_content_control_toggle">Nyalakan pemblokir iklan dan penyaring isi halaman web</string>
@@ -403,7 +363,6 @@
     <string name="message_added_to_homescreen">Pintasan telah ditambahkan ke layar utama</string>
     <string name="shortcut_message_failed_to_add">Maaf, launcher Anda tidak bisa membuat pintasan ke layar utama.</string>
     <string name="action_delete_all_bookmarks">Hapus semua penanda</string>
-    <string name="flash_not_supported">Flash Player tidak terdukung oleh sistem Anda</string>
     <string name="message_open_download_fail">File ini sudah tidak lagi ada</string>
     <string name="faq">Tanya-jawab</string>
     <string name="faq_description">Hal yang sering ditanyakan</string>
@@ -425,19 +384,15 @@
     <string name="dialog_edit_bookmark">Edit penanda</string>
     <string name="dialog_title_bookmark">Markah</string>
     <string name="dialog_remove_from_history">Hapus dari riwayat</string>
-    <string name="dialog_download_image">Unduh gambar</string>
     <string name="dialog_copy_link">Salin tautan</string>
     <string name="dialog_copy_text">Salin teks</string>
     <string name="dialog_rename_folder">Ubah nama folder</string>
     <string name="dialog_remove_folder">Hapus folder</string>
     <string name="dialog_title_close_browser">Tutup browser</string>
-    <string name="dialog_delete_download">Hapus unduhan</string>
     <string name="dialog_delete_all_downloads">Hapus semua unduhan</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Peralatan Halaman</string>
     <string name="dialog_toggle_desktop">Aktifkan agen pengguna desktop</string>
-    <string name="dialog_adblock_enable_for_site">Izinkan pemblokiran iklan untuk halaman ini</string>
-    <string name="dialog_adblock_disable_for_site">Jangan blokir iklan untuk halaman ini</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">URL kustom</string>
     <!-- Notifications -->
@@ -458,14 +413,11 @@
     <string name="close">Tutup</string>
     <string name="exit">Keluar</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Membeku…</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Sisipkan anjuran</string>
     <string name="action_close_all_other_tabs">Tutup semua tab yang lain</string>
     <string name="action_restore_all_tabs">Kembalikan semua tab</string>
     <string name="action_restore_tab">Kembalikan tab</string>
-    <string name="settings_summary_apps">Izinkan pemakaian aplikasi pihak ketiga</string>
-    <string name="settings_title_apps">Aplikasi</string>
     <string name="settings_title_domains">Domains</string>
     <string name="settings_summary_domains">Manage domain settings</string>
     <string name="settings_title_resource_domains">Resource domains</string>
@@ -480,7 +432,6 @@
     <string name="settings_title_domains_delete_all">Delete all</string>
     <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
-    <string name="prompt_please_confirm">Please confirm</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
@@ -514,7 +465,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
-    <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">Ada aplikasi pihak ketiga yang bisa digunakan</string>
     <string name="dialog_message_third_party_app">Maukah Anda membuka aplikasi yang tertaut dengan halaman itu?</string>
     <string name="per_month">\u0020/ bulan</string>
@@ -541,7 +491,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">Apa yang ingin Anda pakai?</string>
     <string name="button_link">Tautan</string>
     <string name="button_image">Gambar</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
@@ -571,7 +520,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Error: sesi pemilihan telah dibuat!</string>
     <string name="message_session_imported">Sesi yang sudah diimpor: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Sesi yang sudah dibawa keluar: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">Tampilkan dialog peringatan SSL</string>
     <string name="start_incognito">Selalu dalam mode menyamar</string>
     <string name="force_zoom_summary">Tidak berfungsi jika JavaScript tidak dinyalakan</string>
     <string name="force_zoom">Izinkan pembesaran halaman</string>
@@ -584,13 +532,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Tekan lama pada ikon \"Tab\" untuk membuka tab baru</string>
     <string name="pref_title_close_drawer">Tutup <i>Drawer</i></string>
     <string name="pref_summary_close_drawer">Tutup <i>Drawer</i> secara otomatis saat menambah atau menghapus tab</string>
-    <string name="block_javascript">Blokir JavaScript untuk halaman</string>
-    <string name="block_sites_title">Pisahkan halaman dengan tanda koma</string>
-    <string name="listed_javascript">Hanya izinkan JavaScript untuk halaman yang ditentukan</string>
-    <string name="unlisted_javascript">Blokir JavaScript untuk halaman yang ditentukan</string>
-    <string name="allow_javascript">Izinkan JavaScript untuk halaman ini</string>
-    <string name="blocked_javascript">Blokir JavaScript untuk halaman ini</string>
-    <string name="page_source">Lihat sumber halaman</string>
     <string name="inspect">Injeksi Javascript</string>
     <string name="edit_cookies">Tampilkan cookie pada situs</string>
     <string name="site_cookies">Cookie pada situs</string>
@@ -620,8 +561,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Setelan diekspor:</string>
     <string name="settings_reseted">Semua setelan dipulihkan</string>
     <string name="suggest">Saran penelusuran (angka)</string>
-    <string name="error_tip">• Periksa untuk kesalahan pengetikan pada Alamat seperti ww.example.com alih-alih www.example.com</string>
-    <string name="error_tip2">• Jika Anda tidak dapat memuat halaman apapun, periksa koneksi data atau WiFi perangkat Anda.</string>
     <string name="action_cycle_tabs_forwards">Pindah ke tab depan</string>
     <string name="action_cycle_tabs_backwards">Pindah ke tab belakang</string>
     <string name="action_focus_address_bar">Fokus pada bar alamat</string>

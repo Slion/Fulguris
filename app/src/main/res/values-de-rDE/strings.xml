@@ -9,7 +9,6 @@
     <string name="action_bookmarks">Lesezeichen</string>
     <string name="action_downloads">Downloads</string>
     <string name="action_add_bookmark">Lesezeichen hinzufügen</string>
-    <string name="action_copy">Link kopieren</string>
     <string name="action_forward">Weiter</string>
     <string name="action_sessions">Sitzungen</string>
     <string name="action_new_session">Neue Sitzung</string>
@@ -22,9 +21,7 @@
     <string name="location">Standortzugriff erlauben</string>
     <string name="password">Deine Passwörter speichern</string>
     <string name="agent">User-Agent</string>
-    <string name="flash">Adobe Flash aktivieren</string>
     <string name="home">Startseite</string>
-    <string name="fullscreen">Vollbildmodus aktivieren</string>
     <string name="download">Download-Verzeichnis</string>
     <string name="settings_advanced">Erweitert</string>
     <string name="version">App-Version</string>
@@ -34,7 +31,6 @@
     <string name="show">Anzeigen</string>
     <string name="cache">Cache beim Beenden löschen</string>
     <string name="reflow">Textumfluss aktivieren</string>
-    <string name="block">Bilder blockieren</string>
     <string name="load_images">Bilder laden</string>
     <string name="window">Seiten erlauben einen neuen Tab zu öffnen</string>
     <string name="cookies">Cookies aktivieren</string>
@@ -45,20 +41,11 @@
     <string name="search_action">@string/search_hint</string>
     <string name="overViewMode">Seiten in der Übersicht öffnen</string>
     <string name="restore_tabs_on_startup">Tab beim Start wiederherstellen</string>
-    <string name="supported_browsers_title">Unterstützte Browser</string>
-    <string name="stock_browser">Standardbrowser</string>
-    <string name="stock_browser_unavailable">(Kein unterstützter Standardbrowser gefunden)</string>
-    <string name="stock_browser_available">(Unterstützter Standardbrowser gefunden)</string>
-    <string name="fullScreenOption">Statusleiste beim Surfen ausblenden</string>
     <string name="clear_cookies">Cookies löschen</string>
     <string name="clear_history">Verlauf löschen</string>
-    <string name="dialog_image">Was möchten Sie mit diesem Bild tun?</string>
     <string name="action_download">Herunterladen</string>
     <string name="action_open">Öffnen</string>
-    <string name="dialog_link">Was möchten Sie mit diesem Link tun?</string>
     <string name="dialog_title_share">Diese Webseite teilen</string>
-    <string name="dialog_history_long_press">Was möchten Sie mit diesem Verlaufs-Eintrag tun?</string>
-    <string name="dialog_bookmark">Was möchten Sie mit diesem Lesezeichen tun?</string>
     <string name="action_delete">Löschen</string>
     <string name="action_blank">Leere Seite</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
@@ -78,7 +65,6 @@
     <string name="unknown_size">Unbekannte Größe</string>
     <string name="action_cancel">Abbrechen</string>
     <string name="title_warning">Warnung</string>
-    <string name="dialog_adobe_not_installed">Adobe Flash Player wurde nicht erkannt.\nBitte installieren Sie den Flash Player.</string>
     <string name="title_user_agent">User-Agent</string>
     <string name="title_download_location">Download-Verzeichnis festlegen</string>
     <string name="title_custom_homepage">Benutzerdefinierte Startseite</string>
@@ -94,19 +80,12 @@
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Textgröße</string>
-    <string name="size_largest">Sehr groß</string>
-    <string name="size_large">Groß</string>
-    <string name="size_normal">Standard</string>
-    <string name="size_small">Klein</string>
-    <string name="size_smallest">Sehr klein</string>
     <string name="title_error">Fehler</string>
-    <string name="dialog_import_error">Kein Browser zum Importieren der Lesezeichen vorhanden!</string>
     <string name="hint_title">Titel</string>
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Lesezeichen bearbeiten</string>
     <string name="action_edit">Bearbeiten</string>
     <string name="action_incognito">Neuer Inkognito-Tab</string>
-    <string name="action_homepage">Standard</string>
     <string name="action_show_homepage">Startseite</string>
     <string name="action_back">Zurück</string>
     <string name="action_find">Auf Seite suchen</string>
@@ -129,9 +108,6 @@
     <string name="download_failed">Herunterladen fehlgeschlagen</string>
     <string name="incognito_cookies">Cookies im Inkognito-Modus aktivieren</string>
     <string name="incognito_cookies_pie">Der Inkognito-Modus läuft in einem separaten Prozess, der nach jeder Sitzung zurückgesetzt wird. Die Incognito-Cookie-Einstellungen werden jetzt durch die regulären Cookie-Einstellungen gesteuert.</string>
-    <string name="title_flash">Adobe Flash</string>
-    <string name="action_manual">Manuell</string>
-    <string name="action_auto">Automatisch</string>
     <string name="pref_title_contact_us">Kontakt</string>
     <string name="clear_cache">Cache löschen</string>
     <string name="message_cache_cleared">Cache gelöscht</string>
@@ -151,9 +127,6 @@
     <string name="message_welcome">Besuche unsere Webseite um mehr über diesen leistungsstarken Webbrowser zu erfahren.</string>
     <!-- Ad block -->
     <string name="block_ads">Inhaltskontrolle</string>
-    <string name="block_ad_source">Hosts-Datei Quelle</string>
-    <string name="block_ad_remote_refresh_frequency_description">(Online-Hosts Datei)</string>
-    <string name="block_ad_refresh_now">Hosts aktualisieren</string>
     <string name="block_remote_frequency_daily">Täglich</string>
     <string name="block_remote_frequency_weekly">Wöchentlich</string>
     <string name="block_remote_frequency_monthly">Monatlich</string>
@@ -176,15 +149,12 @@
     <string name="blocklist_last_update">Letzte Aktualisierung: %s</string>
     <string name="blocklist_updating">Aktualisierung läuft…</string>
     <string name="blocklist_update_error">Fehler beim Aktualisieren der Filterliste %s</string>
-    <string name="blocklist_update_error_404">Fehler beim Aktualisieren der Filterliste: %s Webadresse nicht gefunden</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Fehler beim Aktualisieren der Filterliste %1$s: Statuscode %2$s</string>
     <string name="add_blocklist">Filterdatei hinzufügen</string>
     <string name="add_blocklist_hint">Es können Host-Listen oder jede Liste gewählt werden, die mit AdBlock Plus-Regeln arbeiten</string>
-    <string name="enable_blocklist">Diese Liste aktivieren</string>
     <string name="invalid_title">Ungültiger Titel</string>
     <string name="invalid_url">Ungültige URL</string>
-    <string name="blocklist_built_in">Integrierte Filter</string>
     <string name="blocklist_remove">Filterdatei entfernen</string>
     <string name="blocklist_remove_confirm">Filterdatei: %s wirklich entfernen?</string>
     <string name="local_file">Lokal</string>
@@ -197,9 +167,7 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Aktion abgebrochen.</string>
     <!-- SSL warnings -->
-    <string name="ssl_warning_dont_ask_again">Während dieser Sitzung nicht mehr nachfragen</string>
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_insecure_connection">Die Verbindung zu dieser Seite ist nicht sicher:\n%1$s\n Wollen sie dennoch fortfahren?</string>
     <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Datum des Zertifikats ungültig</string>
     <string name="message_certificate_expired">Zertifikat abgelaufen</string>
@@ -257,7 +225,6 @@
     <string name="name_inverted_grayscale">Invertierte Graustufen</string>
     <string name="name_increase_contrast">Erhöhter Kontrast</string>
     <string name="name_normal">Normal</string>
-    <string name="sync_history">Verlauf mit Google synchronisieren</string>
     <string name="title_file_chooser">Dateiauswahl</string>
     <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
@@ -289,7 +256,6 @@
     <string name="settings_title_terms_and_conditions">Allgemeine Geschäftsbedingungen</string>
     <string name="settings_summary_terms_and_conditions">Unsere allgemeinen Bedingungen online ansehen</string>
     <string name="settings_summary_discord">Join our growing community</string>
-    <string name="pref_category_general">Allgemein</string>
     <string name="pref_category_panels">Panels</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Querformat</string>
@@ -339,15 +305,12 @@
     <string name="pref_summary_contribute_share">Verblüffe deine Freunde, indem du Fulguris mit ihnen teilst.</string>
     <string name="pref_title_language">Sprache</string>
     <string name="language_system_default">System (Standard)</string>
-    <string name="settings_about_explain">Details über Version, Autor und Lizenz</string>
     <string name="close_tab">Aktuellen Tab schließen</string>
     <string name="close_all_tabs">Alle Tabs schließen</string>
     <string name="close_other_tabs">Andere Tabs schließen</string>
-    <string name="third_party">Drittanbieter Cookies blockieren</string>
     <string name="color_mode">Farbmodus</string>
     <string name="reading_mode">Lesemodus</string>
     <string name="loading">Lade…</string>
-    <string name="loading_failed">Es konnte nichts von der Seite geladen werden.</string>
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT Lizenz</string>
@@ -373,13 +336,10 @@
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Ordnername</string>
     <string name="action_folder">Ordner</string>
-    <string name="action_rename">Umbenennen</string>
     <string name="title_rename_folder">Ordner umbenennen</string>
-    <string name="dialog_folder">Was möchten Sie mit diesem Ordner tun?</string>
     <string name="clear_web_storage">Webinhalte löschen</string>
     <string name="clear_web_storage_exit">Webinhalte beim Beenden löschen</string>
     <string name="message_web_storage_cleared">Webinhalte gelöscht</string>
-    <string name="hosts_source">Quelle für Werbeblocker</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Werbeblocker und Inhaltsfilterung</string>
     <string name="settings_summary_content_control_toggle">Werbeblocker und Inhaltsfilterung aktivieren</string>
@@ -403,7 +363,6 @@
     <string name="message_added_to_homescreen">Verknüpfung wurde zum Startbildschirm hinzugefügt</string>
     <string name="shortcut_message_failed_to_add">Ihr Launcher unterstützt keine Verknüpfungen!</string>
     <string name="action_delete_all_bookmarks">Alle Lesezeichen löschen</string>
-    <string name="flash_not_supported">Flash Player wird von Ihrem System nicht unterstützt!</string>
     <string name="message_open_download_fail">Diese Datei existiert nicht mehr</string>
     <string name="faq">FAQ</string>
     <string name="faq_description">Häufig gestellte Fragen</string>
@@ -425,19 +384,15 @@
     <string name="dialog_edit_bookmark">Lesezeichen bearbeiten</string>
     <string name="dialog_title_bookmark">Lesezeichen</string>
     <string name="dialog_remove_from_history">Aus dem Verlauf entfernen</string>
-    <string name="dialog_download_image">Bild herunterladen</string>
     <string name="dialog_copy_link">Link kopieren</string>
     <string name="dialog_copy_text">Text kopieren</string>
     <string name="dialog_rename_folder">Ordner umbenennen</string>
     <string name="dialog_remove_folder">Ordner löschen</string>
     <string name="dialog_title_close_browser">Browser schließen</string>
-    <string name="dialog_delete_download">Download löschen</string>
     <string name="dialog_delete_all_downloads">Alle Downloads löschen</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Seiten-Tools</string>
     <string name="dialog_toggle_desktop">Auf Desktop-Modus User-Agent wechseln</string>
-    <string name="dialog_adblock_enable_for_site">Werbeblocker für diese Webseite aktivieren</string>
-    <string name="dialog_adblock_disable_for_site">Werbeblocker für diese Webseite deaktivieren</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Benutzerdefinierte URL</string>
     <!-- Notifications -->
@@ -459,14 +414,11 @@
     <string name="close">Schließen</string>
     <string name="exit">Beenden</string>
     <!-- Frozen tabs -->
-    <string name="tab_frozen">Eingefroren…</string>
     <!-- Search -->
     <string name="search_insert_suggestion">Vorschlag einfügen</string>
     <string name="action_close_all_other_tabs">Alle anderen Tabs schließen</string>
     <string name="action_restore_all_tabs">Alle Tabs wiederherstellen</string>
     <string name="action_restore_tab">Tab wiederherstellen</string>
-    <string name="settings_summary_apps">Anwendungen von Drittanbietern</string>
-    <string name="settings_title_apps">Apps</string>
     <string name="settings_title_domains">Domains</string>
     <string name="settings_summary_domains">Domains-Einstellungen</string>
     <string name="settings_title_resource_domains">Ressourcen-Domains</string>
@@ -481,7 +433,6 @@
     <string name="settings_title_domains_delete_all">Alle löschen</string>
     <string name="settings_summary_domains_delete_all">Alle Domains-Einstellungen löschen</string>
     <string name="question_delete_all_domain_settings">Möchten sie alle Domains-Einstellungen löschen?</string>
-    <string name="prompt_please_confirm">Bitte Bestätigen</string>
     <string name="settings_title_delete_domain_settings">Domain-Einstellungen löschen</string>
     <string name="settings_summary_delete_domain_settings">Wird neu erstellt, wenn diese Domäne das nächste Mal aufgesucht wird</string>
     <string name="settings_title_parent">Übergeordnet</string>
@@ -516,7 +467,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
     <!--  TODO: Remove that -->
-    <string name="settings_app_prefix">app_for_</string>
     <string name="dialog_title_third_party_app">App von Drittanbietern verfügbar</string>
     <string name="dialog_message_third_party_app">Möchten Sie die mit dieser Website verbundene Anwendung starten?</string>
     <string name="per_month">\u0020/ Monat</string>
@@ -543,7 +493,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
-    <string name="question_what_do_you_want_to_use">Was soll verwendet werden?</string>
     <string name="button_link">Link</string>
     <string name="button_image">Bild</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
@@ -573,7 +522,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Fehler: Eine Wiederherstellungssitzung wurde erstellt!</string>
     <string name="message_session_imported">Importierte Sitzung: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exportierte Sitzung: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="show_ssl">SSL-Warndialog anzeigen</string>
     <string name="start_incognito">Dauerhaft wie im Inkognito-Modus verhalten</string>
     <string name="force_zoom_summary">(JavaScript muss aktiviert sein)</string>
     <string name="force_zoom">Zoom auf Webseiten erzwingen</string>
@@ -586,13 +534,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Langes Drücken auf das \"Tab\"-Symbol öffnet einen neuen Tab</string>
     <string name="pref_title_close_drawer">Drawer schließen</string>
     <string name="pref_summary_close_drawer">Drawer nach dem Erstellen oder Löschen eines Tabs automatisch schließen</string>
-    <string name="block_javascript">JavaScript für Webseiten blockieren</string>
-    <string name="block_sites_title">Webseiten mit einem Komma trennen!</string>
-    <string name="listed_javascript">JavaScript nur für aufgelistete Sites zulassen</string>
-    <string name="unlisted_javascript">JavaScript für diese Webseiten blockieren</string>
-    <string name="allow_javascript">JavaScript für diese Webseite zulassen</string>
-    <string name="blocked_javascript">JavaScript für diese Webseite blockieren</string>
-    <string name="page_source">Seitenquelltext anzeigen</string>
     <string name="inspect">Javascript injizieren</string>
     <string name="edit_cookies">Webseiten-Cookies anzeigen</string>
     <string name="site_cookies">Webseiten-Cookies</string>
@@ -622,8 +563,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Einstellungen exportiert:</string>
     <string name="settings_reseted">Alle Einstellungen wiederhergestellt</string>
     <string name="suggest">Suchvorschläge (Anzahl)</string>
-    <string name="error_tip">• Bitte überprüfen Sie die Adresse auf Tippfehler, wie ww.example.com statt www.example.com</string>
-    <string name="error_tip2">• Wenn Sie auch keine andere Website aufrufen können, überprüfen Sie bitte die Daten- oder WLAN-Verbindung.</string>
     <string name="action_cycle_tabs_forwards">Tabs vorwärts wechseln</string>
     <string name="action_cycle_tabs_backwards">Tabs rückwärts wechseln</string>
     <string name="action_focus_address_bar">Adressleiste fokussieren </string>
