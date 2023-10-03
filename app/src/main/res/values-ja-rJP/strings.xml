@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT license</string>
-    <string name="url_contents">URL 欄の表示内容</string>
     <string name="search_in_new_tab">新しいタブで検索</string>
     <string name="url_in_new_tab">URLを新しいタブで開く</string>
     <string name="homepage_in_new_tab">新しいタブでホームページを開く</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">テキストエンコーディング</string>
     <string name="reset_settings">設定をリセット</string>
     <string name="reset_settings_confirmation">すべての設定が失われます。続行してもよろしいですか？</string>
-    <string-array name="url_content_array">
-        <item>ドメイン名 (デフォルト)</item>
-        <item>URL</item>
-        <item>タイトル</item>
-        <item>短縮されたURL</item>
-    </string-array>
     <string name="invert_color">色を反転する</string>
     <string name="settings_black_status_bar">ステータスバーを暗色にする</string>
     <string name="tabs">タブ</string>

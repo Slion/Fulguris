@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">Лицензия MIT</string>
-    <string name="url_contents">Содержимое поля URL</string>
     <string name="search_in_new_tab">Искать в новой вкладке</string>
     <string name="url_in_new_tab">Открыть в новой вкладке</string>
     <string name="homepage_in_new_tab">Домашняя страница в новой вкладке</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">Кодировка текста</string>
     <string name="reset_settings">Сбросить настройки</string>
     <string name="reset_settings_confirmation">Вы потеряете все свои настройки. Вы уверены, что хотите продолжить?</string>
-    <string-array name="url_content_array">
-        <item>Доменное имя</item>
-        <item>Адрес</item>
-        <item>Заголовок</item>
-        <item>Сокращённая ссылка</item>
-    </string-array>
     <string name="invert_color">Инвертировать цвета</string>
     <string name="settings_black_status_bar">Тёмная строка состояния</string>
     <string name="tabs">Вкладки</string>

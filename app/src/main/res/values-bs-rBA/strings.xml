@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML parser</string>
     <string name="mit_license">MIT licenca</string>
-    <string name="url_contents">Sadržaj okvira URL-a</string>
     <string name="search_in_new_tab">Pretražite u novoj kartici</string>
     <string name="url_in_new_tab">URL u novoj kartici</string>
     <string name="homepage_in_new_tab">Početna stranica u novoj kartici</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">Kodiranje teksta</string>
     <string name="reset_settings">Poništi postavke</string>
     <string name="reset_settings_confirmation">Izgubit ćete sve postavke. Jeste li sigurni da želite nastaviti?</string>
-    <string-array name="url_content_array">
-        <item>Domena</item>
-        <item>URL</item>
-        <item>Naslov</item>
-        <item>Skraćeni URL</item>
-    </string-array>
     <string name="invert_color">Obrnuta boja</string>
     <string name="settings_black_status_bar">Crna statusna traka</string>
     <string name="tabs">Jezici</string>

@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">Lisensi MIT</string>
-    <string name="url_contents">Tampilan tool bar</string>
     <string name="search_in_new_tab">Mencari pakai tab yang baru</string>
     <string name="url_in_new_tab">Buka URL di tab yang baru</string>
     <string name="homepage_in_new_tab">Buka beranda di tab yang baru</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">Format kode teks</string>
     <string name="reset_settings">Atur ulang pengaturan</string>
     <string name="reset_settings_confirmation">Semua setelan akan terhapus. Lanjut?</string>
-    <string-array name="url_content_array">
-        <item>Domain</item>
-        <item>URL</item>
-        <item>Judul</item>
-        <item>Pendekkan alamat URL</item>
-    </string-array>
     <string name="invert_color">Balik warna</string>
     <string name="settings_black_status_bar">Hitamkan status bar</string>
     <string name="tabs">Tab</string>

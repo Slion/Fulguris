@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT License</string>
-    <string name="url_contents">Conteúdo da caixa do URL</string>
     <string name="search_in_new_tab">Pesquisa em novo separador</string>
     <string name="url_in_new_tab">URL em novo separador</string>
     <string name="homepage_in_new_tab">Página inicial em novo separador</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">Codificação do texto</string>
     <string name="reset_settings">Repor definições</string>
     <string name="reset_settings_confirmation">Está prestes a perder todas as suas definições. Tem a certeza de que deseja continuar?</string>
-    <string-array name="url_content_array">
-        <item>Domínio</item>
-        <item>URL</item>
-        <item>Título</item>
-        <item>URL reduzido</item>
-    </string-array>
     <string name="invert_color">Inverter cores</string>
     <string name="settings_black_status_bar">Barra de estado escura</string>
     <string name="tabs">Separadores</string>

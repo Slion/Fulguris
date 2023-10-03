@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML-parser</string>
     <string name="mit_license">MIT licensie</string>
-    <string name="url_contents">URL box inhoud</string>
     <string name="search_in_new_tab">Zoeken in nieuw tabblad</string>
     <string name="url_in_new_tab">URL in nieuw tabblad</string>
     <string name="homepage_in_new_tab">Homepage in nieuw tabblad</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">Tekst codering</string>
     <string name="reset_settings">Instellingen resetten</string>
     <string name="reset_settings_confirmation">Je verliest dan al je instellingen. Weet je zeker dat je door wilt gaan?</string>
-    <string-array name="url_content_array">
-        <item>Domein (standaard)</item>
-        <item>URL</item>
-        <item>Titel</item>
-        <item>Verkorte URL</item>
-    </string-array>
     <string name="invert_color">Keer kleur om</string>
     <string name="settings_black_status_bar">Zwarte statusbalk</string>
     <string name="tabs">Tabbladen</string>

@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT Licenc</string>
-    <string name="url_contents">URL doboz tartalma</string>
     <string name="search_in_new_tab">Search in new tab</string>
     <string name="url_in_new_tab">URL in new tab</string>
     <string name="homepage_in_new_tab">Homepage in new tab</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">Szöveg Kódolás</string>
     <string name="reset_settings">Reset settings</string>
     <string name="reset_settings_confirmation">You will loose all your settings. Are you sure you want to proceed?</string>
-    <string-array name="url_content_array">
-        <item>Domain (alapértelmezett)</item>
-        <item>URL</item>
-        <item>Cím</item>
-        <item>Shortened URL</item>
-    </string-array>
     <string name="invert_color">Negatív szín</string>
     <string name="settings_black_status_bar">Black status bar</string>
     <string name="tabs">Lapok</string>

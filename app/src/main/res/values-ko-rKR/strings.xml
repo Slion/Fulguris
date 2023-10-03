@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT 라이선스</string>
-    <string name="url_contents">URL 상자에 표시할 내용</string>
     <string name="search_in_new_tab">Search in new tab</string>
     <string name="url_in_new_tab">URL in new tab</string>
     <string name="homepage_in_new_tab">Homepage in new tab</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">텍스트 인코딩</string>
     <string name="reset_settings">Reset settings</string>
     <string name="reset_settings_confirmation">You will loose all your settings. Are you sure you want to proceed?</string>
-    <string-array name="url_content_array">
-        <item>도메인 (기본값)</item>
-        <item>URL</item>
-        <item>페이지 제목</item>
-        <item>Shortened URL</item>
-    </string-array>
     <string name="invert_color">색상 반전</string>
     <string name="settings_black_status_bar">검정 상태표시줄</string>
     <string name="tabs">탭</string>

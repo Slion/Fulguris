@@ -3580,8 +3580,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
     }
 
-
-
     /**
      * Open our tab list, works for both drawers and bottom sheets.
      */

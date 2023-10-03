@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup：Java HTML 解析器</string>
     <string name="mit_license">MIT 许可证</string>
-    <string name="url_contents">地址栏内容</string>
     <string name="search_in_new_tab">在新标签中搜索</string>
     <string name="url_in_new_tab">在新标签页中打开 URL</string>
     <string name="homepage_in_new_tab">新标签页中的主页</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">文字编码</string>
     <string name="reset_settings">重置设置</string>
     <string name="reset_settings_confirmation">您将丢失所有设置。您确定要继续吗？</string>
-    <string-array name="url_content_array">
-        <item>域名（默认）</item>
-        <item>URL</item>
-        <item>标题</item>
-        <item>简写的 URL</item>
-    </string-array>
     <string name="invert_color">反色</string>
     <string name="settings_black_status_bar">黑色状态栏</string>
     <string name="tabs">标签页</string>

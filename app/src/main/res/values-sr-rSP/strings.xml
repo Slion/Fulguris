@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Јава ХТМЛ рашчлањивач</string>
     <string name="mit_license">МИТ лиценца</string>
-    <string name="url_contents">Садржај УРЛ бокса</string>
     <string name="search_in_new_tab">Тражи у новом језичку</string>
     <string name="url_in_new_tab">УРЛ у новом језичку</string>
     <string name="homepage_in_new_tab">Почетна страница у новом језичку</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">Кодирање текста</string>
     <string name="reset_settings">Ресетујте подешавања</string>
     <string name="reset_settings_confirmation">Изгубићете сва подешавања. Да ли сте сигурни да желите да наставите?</string>
-    <string-array name="url_content_array">
-        <item>Домен (подраз.)</item>
-        <item>УРЛ</item>
-        <item>Наслов</item>
-        <item>Скраћени УРЛ</item>
-    </string-array>
     <string name="invert_color">Обрнута боја</string>
     <string name="settings_black_status_bar">Црна статусна трака</string>
     <string name="tabs">Језичци</string>

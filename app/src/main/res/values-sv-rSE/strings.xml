@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT-licens</string>
-    <string name="url_contents">Verktygsfältet visar</string>
     <string name="search_in_new_tab">Sök i ny flik</string>
     <string name="url_in_new_tab">URL i ny flik</string>
     <string name="homepage_in_new_tab">Startsida i ny flik</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">Textkodning</string>
     <string name="reset_settings">Återställ inställningar</string>
     <string name="reset_settings_confirmation">Du kommer förlora alla dina inställningar. Är du säker på att du vill fortsätta?</string>
-    <string-array name="url_content_array">
-        <item>Domän</item>
-        <item>URL</item>
-        <item>Rubrik</item>
-        <item>Förkortad URL</item>
-    </string-array>
     <string name="invert_color">Invertera färg</string>
     <string name="settings_black_status_bar">Svart statusfält</string>
     <string name="tabs">Flikar</string>

@@ -351,7 +351,6 @@
     <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup : analyseur HTML Java</string>
     <string name="mit_license">Licence MIT</string>
-    <string name="url_contents">Contenu du champs adresse</string>
     <string name="search_in_new_tab">Rechercher dans un nouvel onglet</string>
     <string name="url_in_new_tab">URL dans un nouvel onglet</string>
     <string name="homepage_in_new_tab">Page d\'accueil dans un nouvel onglet</string>
@@ -364,12 +363,6 @@
     <string name="text_encoding">Encodage du texte</string>
     <string name="reset_settings">Réinitialiser les paramètres</string>
     <string name="reset_settings_confirmation">Vous perdrez tous vos paramètres. Voulez-vous continuer malgré tout ?</string>
-    <string-array name="url_content_array">
-        <item>Domaine (par défaut)</item>
-        <item>Adresse</item>
-        <item>Titre</item>
-        <item>URL raccourcie</item>
-    </string-array>
     <string name="invert_color">Inverser les couleurs</string>
     <string name="settings_black_status_bar">Barre de statut noire</string>
     <string name="tabs">Onglets</string>
