@@ -1,0 +1,10 @@
+🌆 Move third-party cookies option to domain settings
+🍪 Option to show and delete cookies for current page
+⚙️ Settings option to set task label and icon
+⚙️ Settings option to set toolbar label adjusted
+🌈 Vertical tab items layout adjustments
+⌨️ Add Ctrl+D keyboard shortcut to duplicate tab
+🪲️ Fix potential crash when loading web page
+🪲️ Fix incognito mode crash in options menu
+🤠 Incognito mode use secure window
+🌐 Translations update
