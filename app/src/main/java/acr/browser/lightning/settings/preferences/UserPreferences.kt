@@ -193,12 +193,6 @@ class UserPreferences @Inject constructor(
     var renderingMode by preferences.enumPreference(R.string.pref_key_rendering_mode, RenderingMode.NORMAL)
 
     /**
-     * True if third party cookies should be disallowed by the browser, false if they should be
-     * allowed.
-     */
-    var blockThirdPartyCookiesEnabled by preferences.booleanPreference(BLOCK_THIRD_PARTY, false)
-
-    /**
      * True if the browser should extract the theme color from a website and color the UI with it,
      * false otherwise.
      */
@@ -473,7 +467,6 @@ private const val SEARCH_URL = "searchurl"
 private const val USER_AGENT_STRING = "userAgentString"
 private const val CLEAR_HISTORY_EXIT = "clearHistoryExit"
 private const val CLEAR_COOKIES_EXIT = "clearCookiesExit"
-private const val BLOCK_THIRD_PARTY = "thirdParty"
 private const val INVERT_COLORS = "invertColors"
 private const val READING_TEXT_SIZE = "readingTextSize"
 private const val CLEAR_WEB_STORAGE_EXIT = "clearWebStorageExit"

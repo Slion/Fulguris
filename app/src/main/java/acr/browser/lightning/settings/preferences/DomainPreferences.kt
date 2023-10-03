@@ -123,6 +123,14 @@ class DomainPreferences constructor(
     val javaScriptEnabled: Boolean get() { return if (isDefault || !javaScriptEnabledOverride) { javaScriptEnabledParent } else { javaScriptEnabledLocal } }
 
     /**
+     * Accept or reject third-party cookies
+     */
+    var thirdPartyCookiesOverride by preferences.booleanPreference(R.string.pref_key_third_party_cookies_override, false)
+    var thirdPartyCookiesLocal by preferences.booleanPreference(R.string.pref_key_third_party_cookies, true)
+    val thirdPartyCookiesParent: Boolean get() { return parent?.thirdPartyCookies ?: thirdPartyCookiesLocal}
+    val thirdPartyCookies: Boolean get() { return if (isDefault || !thirdPartyCookiesOverride) { thirdPartyCookiesParent } else { thirdPartyCookiesLocal } }
+
+    /**
      * True if desktop mode should be enabled by default for new tabs, false otherwise.
      */
     var desktopModeOverride by preferences.booleanPreference(R.string.pref_key_desktop_mode_override, false)

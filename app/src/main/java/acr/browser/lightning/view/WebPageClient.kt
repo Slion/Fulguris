@@ -265,17 +265,19 @@ class WebPageClient(
         currentUrl = url
         val uri  = Uri.parse(url)
         loadDomainPreferences(uri.host ?: "", true)
-        // TODO: find a way not to bypass tab level settings
-        (view as WebViewEx).proxy.apply{
+
+        (view as WebViewEx).proxy.apply {
             // Only apply domain settings dark mode if no bypass
             if (!darkModeBypassDomainSettings) {
                 darkMode = domainPreferences.darkMode
             }
 
+            // Only apply domain settings desktop mode if no bypass
             if (!desktopModeBypassDomainSettings) {
                 desktopMode = domainPreferences.desktopMode
             }
 
+            // JavaScript
             if (domainPreferences.javaScriptEnabled) {
                 view.settings.javaScriptEnabled = true
                 view.settings.javaScriptCanOpenWindowsAutomatically = true
@@ -284,6 +286,9 @@ class WebPageClient(
                 view.settings.javaScriptCanOpenWindowsAutomatically = false
             }
         }
+
+        // Third-party cookies
+        CookieManager.getInstance().setAcceptThirdPartyCookies(view, domainPreferences.thirdPartyCookies)
 
         // Only set the SSL state if there isn't an error for the current URL.
         sslState = if (sslErrorUrls.contains(url)) {

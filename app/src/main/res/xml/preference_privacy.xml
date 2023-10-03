@@ -58,14 +58,6 @@
         />
 
     <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="third_party"
-        android:title="@string/third_party"
-        app:icon="@drawable/ic_cookie"
-        app:singleLineTitle="false"
-        />
-
-    <SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="password"
         android:summary="@string/recommended"

@@ -5,6 +5,7 @@ import acr.browser.lightning.utils.Utils.trimCache
 import android.content.Context
 import android.webkit.*
 import io.reactivex.Scheduler
+import timber.log.Timber
 import java.io.File
 
 /**
@@ -13,7 +14,7 @@ import java.io.File
 object WebUtils {
     fun clearCookies() {
         val c = CookieManager.getInstance()
-        c.removeAllCookies(null)
+        c.removeAllCookies { Timber.i("removeAllCookies: $it") }
     }
 
     fun clearWebStorage() {

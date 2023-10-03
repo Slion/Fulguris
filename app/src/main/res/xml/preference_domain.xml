@@ -140,6 +140,30 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        a:title="@string/settings_title_third_party_cookies">
+
+        <SwitchPreferenceCompat
+            a:defaultValue="false"
+            a:key="@string/pref_key_third_party_cookies_override"
+            a:title="@string/settings_title_override"
+            a:summaryOn="@string/settings_summary_on_override"
+            a:summaryOff="@string/settings_summary_off_override"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false" />
+
+        <SwitchPreferenceCompat
+            a:defaultValue="true"
+            a:key="@string/pref_key_third_party_cookies"
+            a:title="@string/settings_title_third_party_cookies"
+            a:summaryOn="@string/settings_summary_on_third_party_cookies"
+            a:summaryOff="@string/settings_summary_off_third_party_cookies"
+            a:dependency="@string/pref_key_third_party_cookies_override"
+            a:icon="@drawable/ic_cookie"
+            a:iconSpaceReserved="false"
+            a:singleLineTitle="false" />
+
+    </PreferenceCategory>
 
     <acr.browser.lightning.settings.preferences.PreferenceCategoryEx
         a:title="@string/settings_title_launch_app"

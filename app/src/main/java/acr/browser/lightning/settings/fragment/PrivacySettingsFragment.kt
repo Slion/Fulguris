@@ -69,13 +69,6 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         )
 
         switchPreference(
-            preference = SETTINGS_THIRDPCOOKIES,
-            isChecked = userPreferences.blockThirdPartyCookiesEnabled,
-            isEnabled = Capabilities.THIRD_PARTY_COOKIE_BLOCKING.isSupported,
-            onCheckChange = { userPreferences.blockThirdPartyCookiesEnabled = it }
-        )
-
-        switchPreference(
             preference = SETTINGS_SAVEPASSWORD,
             isChecked = userPreferences.savePasswordsEnabled,
             onCheckChange = { userPreferences.savePasswordsEnabled = it }
@@ -204,7 +197,6 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     companion object {
         private const val SETTINGS_LOCATION = "location"
-        private const val SETTINGS_THIRDPCOOKIES = "third_party"
         private const val SETTINGS_SAVEPASSWORD = "password"
         private const val SETTINGS_CACHEEXIT = "clear_cache_exit"
         private const val SETTINGS_HISTORYEXIT = "clear_history_exit"

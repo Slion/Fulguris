@@ -59,6 +59,16 @@
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
+    <SwitchPreferenceCompat
+        a:defaultValue="true"
+        a:key="@string/pref_key_third_party_cookies"
+        a:title="@string/settings_title_third_party_cookies"
+        a:summaryOn="@string/settings_summary_on_third_party_cookies"
+        a:summaryOff="@string/settings_summary_off_third_party_cookies"
+        a:icon="@drawable/ic_cookie"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
+
     <fulguris.preference.EnumListPreference
         a:key="@string/pref_key_launch_app"
         a:title="@string/settings_title_launch_app"

@@ -16,12 +16,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity @Inject constructor(): BrowserActivity() {
 
-    @Suppress("DEPRECATION")
+
     public override fun updateCookiePreference(): Completable = Completable.fromAction {
         val cookieManager = CookieManager.getInstance()
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.createInstance(this@MainActivity)
-        }
         cookieManager.setAcceptCookie(userPreferences.cookiesEnabled)
     }
 

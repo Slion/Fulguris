@@ -575,10 +575,9 @@ class WebPageTab(
 
         settings.textZoom = userPreferences.browserTextSize +  MIN_BROWSER_TEXT_SIZE
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            CookieManager.getInstance().setAcceptThirdPartyCookies(webView,
-                !userPreferences.blockThirdPartyCookiesEnabled)
-        }
+        // Apply default settings for third-party cookies
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, defaultDomainSettings.thirdPartyCookies)
+
 
         applyDarkMode();
     }
