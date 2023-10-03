@@ -528,7 +528,9 @@
     <string name="settings_title_third_party_cookies">Third-party cookies</string>
     <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
     <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
-
+    <string name="settings_title_javascript">JavaScript</string>
+    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
+    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Current page has no cookies</string>
     <string name="settings_summary_manage_cookies">Manage current page cookies</string>

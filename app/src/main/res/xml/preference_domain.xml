@@ -118,7 +118,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        a:title="@string/java">
+        a:title="@string/settings_title_javascript">
 
         <SwitchPreferenceCompat
             a:defaultValue="false"
@@ -132,7 +132,9 @@
         <SwitchPreferenceCompat
             a:defaultValue="true"
             a:key="@string/pref_key_javascript"
-            a:title="@string/java"
+            a:title="@string/settings_title_javascript"
+            a:summaryOn="@string/settings_summary_on_javascript"
+            a:summaryOff="@string/settings_summary_off_javascript"
             a:dependency="@string/pref_key_javascript_override"
             a:icon="@drawable/ic_script"
             a:iconSpaceReserved="false"
