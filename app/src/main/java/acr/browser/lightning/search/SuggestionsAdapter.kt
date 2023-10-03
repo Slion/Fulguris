@@ -24,6 +24,7 @@ import dagger.hilt.android.EntryPointAccessors
 import io.reactivex.*
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -229,19 +230,30 @@ class SuggestionsAdapter(
 
         fun input(): Observable<CharSequence> = publishSubject.hide()
 
+        /**
+         *
+         */
         override fun performFiltering(constraint: CharSequence?): FilterResults {
+            Timber.v("performFiltering")
             if (constraint?.isBlank() != false) {
                 return FilterResults()
             }
-            publishSubject.onNext(constraint.trim())
 
+            Timber.v("Constraint: $constraint")
+            publishSubject.onNext(constraint.trim())
             return FilterResults().apply { count = 1 }
         }
 
         override fun convertResultToString(resultValue: Any) = (resultValue as WebPage).url
 
-        override fun publishResults(constraint: CharSequence?, results: FilterResults?) =
-            suggestionsAdapter.publishResults(null)
+        /**
+         *
+         */
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            Timber.v("publishResults")
+            return suggestionsAdapter.publishResults(null)
+        }
+
     }
 
 }

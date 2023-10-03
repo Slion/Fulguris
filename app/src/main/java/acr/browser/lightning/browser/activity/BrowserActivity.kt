@@ -3373,7 +3373,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun getUiColor(): Int = currentUiColor
 
     /**
-     *
+     * Called when current URL needs to be updated
      */
     override fun updateUrl(url: String?, isLoading: Boolean) {
 
@@ -3390,7 +3390,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         if (!searchView.hasFocus()) {
             Timber.d("updateUrl: $currentTitle - $url")
-            searchView.setText(searchBoxModel.getDisplayContent(url, currentTitle, isLoading))
+            // Set our text but don't perform filtering
+            // We don't need filtering as this is just a text update from our engine rather than user performing text input and expecting search results
+            // Filter deactivation was introduce to prevent https://github.com/Slion/Fulguris/issues/557
+            searchView.setText(searchBoxModel.getDisplayContent(url, currentTitle, isLoading),false)
         }
     }
 
@@ -3476,8 +3479,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         getUrl.setAdapter(suggestionsAdapter)
     }
 
-
+    /**
+     *
+     */
     private fun doSearchSuggestionAction(getUrl: AutoCompleteTextView, position: Int) {
+        Timber.v("doSearchSuggestionAction")
         val url = when (val selection = suggestionsAdapter?.getItem(position) as WebPage) {
             is HistoryEntry,
             is Bookmark.Entry -> selection.url
