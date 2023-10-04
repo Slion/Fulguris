@@ -64,6 +64,7 @@
         android:requestLegacyExternalStorage="false"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:theme="@style/Theme.App.Black"
         >
 
         <!-- Splash screen activity not sure exactly if we need MAIN and DEFAULT intent TBH -->

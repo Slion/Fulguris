@@ -92,6 +92,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.net.toUri
+import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.customview.widget.ViewDragHelper
@@ -109,7 +110,6 @@ import com.android.volley.toolbox.Volley
 import com.anthonycr.grant.PermissionsManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -124,6 +124,7 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.abs
 import kotlin.system.exitProcess
 
 
@@ -572,6 +573,20 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      */
     private fun showMenuMain() {
+        // Hide web page menu
+        iMenuWebPage.dismiss()
+        // Web page is loosing focus as we open our menu
+        // Should notably hide the virtual keyboard
+        currentTabView?.clearFocus()
+        searchView.clearFocus()
+        // Show popup menu once our virtual keyboard is hidden
+        doOnceVirtualKeyboardIsGone { doShowMenuMain() }
+    }
+
+    /**
+     *
+     */
+    private fun doShowMenuMain() {
         // Make sure back and forward buttons are in correct state
         setForwardButtonEnabled(tabsManager.currentTab?.canGoForward()?:false)
         setBackButtonEnabled(tabsManager.currentTab?.canGoBack()?:false)
@@ -586,7 +601,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iMenuWebPage = MenuWebPage(layoutInflater)
         // TODO: could use data binding instead
         iMenuWebPage.apply {
-            onMenuItemClicked(iBinding.menuItemMainMenu) { dismiss(); showMenuMain() }
+            onMenuItemClicked(iBinding.menuItemMainMenu) { dismiss(); doShowMenuMain() }
             // Web page actions
             onMenuItemClicked(iBinding.menuItemShare) { dismiss(); executeAction(R.id.action_share) }
             onMenuItemClicked(iBinding.menuItemAddBookmark) { dismiss(); executeAction(R.id.action_add_bookmark) }
@@ -615,6 +630,21 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *
      */
     private fun showMenuWebPage() {
+        // Hide main menu
+        iMenuMain.dismiss()
+        // Web page is loosing focus as we open our menu
+        // Should notably hide the virtual keyboard
+        currentTabView?.clearFocus()
+        searchView.clearFocus()
+        // Show popup menu once our virtual keyboard is hidden
+        doOnceVirtualKeyboardIsGone { doShowMenuWebPage() }
+    }
+
+
+    /**
+     *
+     */
+    private fun doShowMenuWebPage() {
         iMenuWebPage.show(iBindingToolbarContent.buttonMore)
     }
 
@@ -661,7 +691,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * See below.
      */
     private val iDisableFabs : Runnable = Runnable {
-        iBinding.fabContainer.isVisible = false
+        iBinding.fabInclude.fabContainer.isVisible = false
         tabSwitchStop()
     }
 
@@ -688,6 +718,82 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private fun cancelDisableFabsCountdown() {
         mainHandler.removeCallbacks(iDisableFabs)
     }
+
+    /**
+     * Maximum distance touch event can travel on the off axis before we abort swipe gesture.
+     */
+    val kMaxSwipeDistance = 40.px
+
+    /**
+     * Minimum distance touch event must travel before we register swipe gesture in DP
+     */
+    val kMinSwipeDistance = 60.px
+
+    /**
+     * Maximum duration of a swipe gesture
+     */
+    val kMaxSwipeTime = 800
+
+    /**
+     *
+     */
+    private fun createToolbar() {
+        // Create our toolbar and hook it to its parent
+        iBindingToolbarContent = ToolbarContentBinding.inflate(layoutInflater, iBinding.toolbarInclude.toolbar, true)
+
+        // Create a gesture detector to catch horizontal swipes our on toolbar
+        val toolbarSwipeDetector = GestureDetectorCompat(this, object : GestureDetector.SimpleOnGestureListener() {
+
+            override fun onFling(event1: MotionEvent, event2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+
+                // No swipe action when our text field is focused
+                if (searchView.hasFocus()) {
+                    return false
+                }
+
+                // No swipe when too long, that allows scrolling page title text for instance
+                if ((event2.eventTime - event1.eventTime) > kMaxSwipeTime) {
+                    return false
+                }
+
+                //Timber.d("onFling: $event1 $event2")
+                val dX = abs(event1.x - event2.x)
+                val dY = abs(event1.y - event2.y)
+                Timber.d("onFling toolbar: $velocityX ; $velocityY : $dX ; $dY : $kMinSwipeDistance ; $kMaxSwipeDistance")
+                if (dX > kMinSwipeDistance && dY < kMaxSwipeDistance) {
+                    if (velocityX < 0) {
+                        // Swipe left
+                        if (!tabSwitchInProgress()) {
+                            easyTabSwitcherStart()
+                        }
+                        easyTabSwitcherBack()
+                        // Needed otherwise the text field can gain focus
+                        return true
+
+                    } else {
+                        // Swipe right
+                        if (!tabSwitchInProgress()) {
+                            easyTabSwitcherStart()
+                        }
+                        easyTabSwitcherForward()
+                        // Needed otherwise the text field can gain focus
+                        return true
+                    }
+                }
+                return false
+            }
+        })
+
+        // Hook in our gesture detector
+        iBinding.toolbarInclude.toolbar.setOnTouchInterceptor { v, event ->
+            if (toolbarSwipeDetector.onTouchEvent(event)) {
+                v.performClick()
+                return@setOnTouchInterceptor true
+            }
+            false
+        }
+    }
+
     /**
      *
      */
@@ -696,8 +802,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         createNotificationChannel()
 
-        // Create our toolbar and hook it to its parent
-        iBindingToolbarContent = ToolbarContentBinding.inflate(layoutInflater, iBinding.toolbarInclude.toolbar, true)
+        createToolbar()
 
         // TODO: disable those for incognito mode?
         analytics = userPreferences.analytics
@@ -739,11 +844,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Define tabs button clicks handlers
         iBindingToolbarContent.tabsButton.setOnClickListener(this)
         iBindingToolbarContent.tabsButton.setOnLongClickListener { view ->
-            iBinding.fabContainer.isVisible = true
             iTabsButtonLongPressed = true
-            iEasyTabSwitcherWasUsed = false
-            cancelDisableFabsCountdown()
-            tabSwitchStart()
+            easyTabSwitcherStart()
             // We still want tooltip to show so return false here
             false
         }
@@ -774,7 +876,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // Close current tab during tab switch
         // TODO: What if a tab is opened during tab switch?
-        iBinding.fabTabClose.setOnClickListener {
+        iBinding.fabInclude.fabTabClose.setOnClickListener {
             iEasyTabSwitcherWasUsed = true
             restartDisableFabsCountdown()
             tabsManager.let { presenter.deleteTab(it.indexOfCurrentTab()) }
@@ -782,19 +884,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // Switch back in our tab list
-        iBinding.fabBack.setOnClickListener {
-            iEasyTabSwitcherWasUsed = true
-            restartDisableFabsCountdown()
-            tabSwitchBack()
-            tabSwitchApply(true)
+        iBinding.fabInclude.fabBack.setOnClickListener {
+            easyTabSwitcherBack()
         }
 
         // Switch forward in our tab list
-        iBinding.fabForward.setOnClickListener{
-            iEasyTabSwitcherWasUsed = true
-            restartDisableFabsCountdown()
-            tabSwitchForward()
-            tabSwitchApply(false)
+        iBinding.fabInclude.fabForward.setOnClickListener{
+            easyTabSwitcherForward()
         }
 
 
@@ -874,16 +970,95 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding.uiLayout.layoutTransition.disableTransitionType(LayoutTransition.CHANGE_APPEARING)
 
 
-        iBindingToolbarContent.buttonMore.setOnClickListener(OnClickListener {
-            // Web page is loosing focus as we open our menu
-            // Should notably hide the virtual keyboard
-            currentTabView?.clearFocus()
-            searchView.clearFocus()
-            // Set focus to menu button
-            it.requestFocus()
-            // Show popup menu once our virtual keyboard is hidden
-            showPopupMenuWhenReady()
+        setupButtonMore()
+    }
+
+    /**
+     *
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupButtonMore() {
+
+        iBindingToolbarContent.buttonMore.setOnClickListener {
+            // Without that handler we don't get audio feedback on F(x)tec Pro¹
+        }
+
+        val menuSwipeDetector = GestureDetectorCompat(this, object : GestureDetector.SimpleOnGestureListener() {
+
+            override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+                Timber.d("onDoubleTapEvent menu")
+                showMenuWebPage()
+                return true
+            }
+
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                Timber.d("onSingleTapUp menu")
+                showMenuMain()
+                return true
+            }
+
+//            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+//                Timber.d("onSingleTapConfirmed menu")
+//                showMenuMain()
+//                return true
+//            }
+
+            override fun onFling(event1: MotionEvent, event2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+                // No swipe when too long
+                if ((event2.eventTime - event1.eventTime) > kMaxSwipeTime) {
+                    return false
+                }
+                //Timber.d("onFling: $event1 $event2")
+                val dX = abs(event1.x - event2.x)
+                val dY = abs(event1.y - event2.y)
+                Timber.d("onFling menu: $velocityX ; $velocityY : $dX ; $dY : $kMinSwipeDistance ; $kMaxSwipeDistance")
+                if (dY > kMinSwipeDistance && dX < kMaxSwipeDistance) {
+                    showMenuWebPage()
+                    return true
+                }
+                return false
+            }
         })
+
+        iBindingToolbarContent.buttonMore.setOnTouchListener { v, event ->
+            if (menuSwipeDetector.onTouchEvent(event)) {
+                v.performClick()
+                // Set focus to menu button
+                v.requestFocus()
+                return@setOnTouchListener true
+            }
+            false
+        }
+    }
+
+    /**
+     *
+     */
+    private fun easyTabSwitcherStart() {
+        iBinding.fabInclude.fabContainer.isVisible = true
+        iEasyTabSwitcherWasUsed = false
+        cancelDisableFabsCountdown()
+        tabSwitchStart()
+    }
+
+    /**
+     *
+     */
+    private fun easyTabSwitcherBack() {
+        iEasyTabSwitcherWasUsed = true
+        restartDisableFabsCountdown()
+        tabSwitchBack()
+        tabSwitchApply(true)
+    }
+
+    /**
+     *
+     */
+    private fun easyTabSwitcherForward() {
+        iEasyTabSwitcherWasUsed = true
+        restartDisableFabsCountdown()
+        tabSwitchForward()
+        tabSwitchApply(false)
     }
 
     // Make sure we will show our popup menu at some point
@@ -895,16 +1070,16 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * This was designed so that popup menu does not remain in the middle of the screen once virtual keyboard is hidden,
      * notably when using toolbars at the bottom option.
      */
-    private fun showPopupMenuWhenReady() {
+    private fun doOnceVirtualKeyboardIsGone(runnable: Runnable) {
         // Check if virtual keyboard is showing and if we have another try to wait for it to close
         if (inputMethodManager.isVirtualKeyboardVisible() && iPopupMenuTries<kMaxPopupMenuTries) {
             // Increment our tries counter
             iPopupMenuTries++
             // Open our menu with a slight delay giving enough time for our virtual keyboard to close
-            mainHandler.postDelayed({ showPopupMenuWhenReady() }, 100)
+            mainHandler.postDelayed({ doOnceVirtualKeyboardIsGone(runnable) }, 100)
         } else {
             //Display our popup menu instantly
-            showMenuMain()
+            runnable.run()
             // Reset tries counter for the next time around
             iPopupMenuTries = 0
         }
@@ -1372,13 +1547,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 searchView.dropDownAnchor = R.id.address_bar_include
 
                 // Floating Action Buttons at the bottom
-                iBinding.fabContainer.apply {setGravityBottom(layoutParams as CoordinatorLayout.LayoutParams)}
+                iBinding.fabInclude.fabContainer.apply {setGravityBottom(layoutParams as CoordinatorLayout.LayoutParams)}
 
                 // FAB tab close button at the bottom
-                iBinding.fabTabClose.apply {setGravityBottom(layoutParams as LinearLayout.LayoutParams)}
+                iBinding.fabInclude.fabTabClose.apply {setGravityBottom(layoutParams as LinearLayout.LayoutParams)}
 
                 // ctrlTabBack at the top
-                iBinding.fabBack.apply{removeFromParent()?.addView(this, 0)}
+                iBinding.fabInclude.fabBack.apply{removeFromParent()?.addView(this, 0)}
             } else {
                 // Move search in page to top
                 iBinding.findInPageInclude.root.let {
@@ -1454,13 +1629,13 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 searchView.dropDownAnchor = R.id.toolbar_include
 
                 // Floating Action Buttons at the top
-                iBinding.fabContainer.apply {setGravityTop(layoutParams as CoordinatorLayout.LayoutParams)}
+                iBinding.fabInclude.fabContainer.apply {setGravityTop(layoutParams as CoordinatorLayout.LayoutParams)}
 
                 // FAB tab close button at the bottom
-                iBinding.fabTabClose.apply {setGravityTop(layoutParams as LinearLayout.LayoutParams)}
+                iBinding.fabInclude.fabTabClose.apply {setGravityTop(layoutParams as LinearLayout.LayoutParams)}
 
                 // ctrlTabBack at the bottom
-                iBinding.fabBack.apply{removeFromParent()?.addView(this)}
+                iBinding.fabInclude.fabBack.apply{removeFromParent()?.addView(this)}
             }
         }
 
@@ -1532,9 +1707,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     // For CTRL+TAB implementation
-    var iRecentTabIndex = -1;
-    var iCapturedRecentTabsIndices : Set<WebPageTab>? = null
+    private var iRecentTabIndex = -1;
+    private var iCapturedRecentTabsIndices : Set<WebPageTab>? = null
 
+    private fun tabSwitchInProgress() = iRecentTabIndex!=-1
 
     private fun copyRecentTabsList()
     {
@@ -1967,7 +2143,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 return true
             }
             R.id.action_reload -> {
-                if (searchView.hasFocus() == true) {
+                if (searchView.hasFocus()) {
                     // SL: Not sure why?
                     searchView.setText("")
                 } else {
@@ -2301,7 +2477,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun updateSslState(sslState: SslState) {
         iBindingToolbarContent.addressBarInclude.searchSslStatus.setImageDrawable(createSslDrawableForState(sslState))
 
-        if (searchView.hasFocus() == false) {
+        if (!searchView.hasFocus()) {
             iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
         }
     }
@@ -4091,7 +4267,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      *  That should also animate the transition I guess.
      */
     private fun setIsLoading(isLoading: Boolean) {
-        if (searchView.hasFocus() == false) {
+        if (!searchView.hasFocus()) {
             iBindingToolbarContent.addressBarInclude.searchSslStatus.updateVisibilityForContent()
         }
 
