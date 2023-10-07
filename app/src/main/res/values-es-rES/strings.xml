@@ -168,7 +168,7 @@
     <string name="action_message_canceled">Acción cancelada.</string>
     <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<b>%1$s</b>\n\n%2$sDo you still want to proceed?</string>
+    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
     <string name="message_certificate_date_invalid">La fecha del certificado es inválida</string>
     <string name="message_certificate_expired">El certificado está caducado</string>
     <string name="message_certificate_domain_mismatch">El dominio del certificado y el del sitio web no coinciden</string>
