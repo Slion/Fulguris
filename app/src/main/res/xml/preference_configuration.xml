@@ -57,10 +57,13 @@
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_toolbars_bottom"
-        android:title="@string/settings_title_toolbars_bottom"
-        a:icon="@drawable/ic_bottom"
+        android:title="@string/settings_title_toolbars_position"
+        android:summaryOn="@string/settings_summary_on_toolbars_position"
+        android:summaryOff="@string/settings_summary_off_toolbars_position"
+        a:icon="@drawable/ic_power_input"
         a:iconSpaceReserved="false"
-        a:singleLineTitle="false" />
+        a:singleLineTitle="false"
+        tools:defaultValue="true" />
 
 
     <SwitchPreferenceCompat
