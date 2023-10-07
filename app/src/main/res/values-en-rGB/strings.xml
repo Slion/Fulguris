@@ -477,7 +477,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">A session with that name already exists!</string>
     <string name="session_cant_delete_current">Can\'t delete current session!</string>
     <string name="session_prompt_confirm_deletion_title">Confirm deletion</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"%s\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Switched to \"%s\"</string>
     <string name="busy">Busy, try again shortly.</string>
     <string name="invalid_character_removed">Invalid character removed!</string>
