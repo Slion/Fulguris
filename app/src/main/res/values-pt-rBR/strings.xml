@@ -343,6 +343,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Ad blocker and content filtering</string>
     <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
+    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
+    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
+    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
+    <string name="settings_title_toolbars_position">Toolbars position</string>
+    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Desktop mode</string>
     <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
     <string name="settings_title_dark_mode_default">Forçar modo escuro</string>
@@ -588,4 +597,5 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_title">Title</string>
     <string name="label_session">Session</string>
     <string name="label_app_name">App name</string>
+    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
 </resources>

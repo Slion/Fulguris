@@ -343,6 +343,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">アドブロッカーとコンテンツフィルター</string>
     <string name="settings_summary_content_control_toggle">アドブロッカーとコンテンツフィルターを有効にする</string>
+    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
+    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
+    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
+    <string name="settings_title_toolbars_position">Toolbars position</string>
+    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">デスクトップモード</string>
     <string name="settings_summary_desktop_mode_default">新しいタブでデスクトップモードを既定で使用するかを決める</string>
     <string name="settings_title_dark_mode_default">強制ダークモード</string>
@@ -470,7 +479,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">その名前のセッションは既に存在します!</string>
     <string name="session_cant_delete_current">現在のセッションは削除できません!</string>
     <string name="session_prompt_confirm_deletion_title">削除の確認</string>
-    <string name="session_prompt_confirm_deletion_message">本当にセッション「%s」を削除してよろしいですか?</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">「%s」に切り替えました</string>
     <string name="busy">ビジーです。少し間を開けて再試行してください。</string>
     <string name="invalid_character_removed">無効な文字が削除されました!</string>
@@ -586,4 +595,5 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_title">Title</string>
     <string name="label_session">Session</string>
     <string name="label_app_name">App name</string>
+    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
 </resources>

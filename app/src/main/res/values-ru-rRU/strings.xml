@@ -168,7 +168,7 @@
     <string name="action_message_canceled">Действие отменено.</string>
     <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Ошибка безопасности! Загрузка страницы прервана.</string>
-    <string name="message_ssl_error">Защищенное соединение нарушено:\n<b>%1$s</b>\n\n%2$sВы все еще хотите продолжить?</string>
+    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Дата сертификата недействительна</string>
     <string name="message_certificate_expired">Истёк срок действия сертификата</string>
     <string name="message_certificate_domain_mismatch">Домен в сертификате не соответствует домену сайта</string>
@@ -343,6 +343,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокировщик рекламы и фильтрация содержимого</string>
     <string name="settings_summary_content_control_toggle">Включить блокировку рекламы и фильтрацию содержимого</string>
+    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
+    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
+    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
+    <string name="settings_title_toolbars_position">Toolbars position</string>
+    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Режим \"Настольный ПК\"</string>
     <string name="settings_summary_desktop_mode_default">Определяет, используют ли новые вкладки режим для настольного компьютера по умолчанию</string>
     <string name="settings_title_dark_mode_default">Использовать тёмную тему</string>
@@ -456,8 +465,8 @@ See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
         <item quantity="one">Текущая страница содержит один файл cookie</item>
-        <item quantity="few">Current page has %d cookies</item>
-        <item quantity="many">Current page has %d cookies</item>
+        <item quantity="few">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="many">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
         <item quantity="other">Текущая страница содержит %d файлов cookie</item>
     </plurals>
     <string name="settings_title_task_label">Ярлык задачи</string>
@@ -476,7 +485,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Сессия с таким именем уже существует!</string>
     <string name="session_cant_delete_current">Невозможно удалить текущую сессию!</string>
     <string name="session_prompt_confirm_deletion_title">Подтвердите удаление</string>
-    <string name="session_prompt_confirm_deletion_message">Вы уверены, что хотите удалить сессию \"%s\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Переключено на \"%s\"</string>
     <string name="busy">Занято, попробуйте еще раз в ближайшее время.</string>
     <string name="invalid_character_removed">Недействительный символ удалён!</string>
@@ -592,4 +601,5 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_title">Заголовок</string>
     <string name="label_session">Сессия</string>
     <string name="label_app_name">Название приложения</string>
+    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
 </resources>

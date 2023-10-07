@@ -343,6 +343,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Ad blocker and content filtering</string>
     <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
+    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
+    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
+    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
+    <string name="settings_title_toolbars_position">Toolbars position</string>
+    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Masaüstü modu</string>
     <string name="settings_summary_desktop_mode_default">Define if new tabs use desktop mode by default</string>
     <string name="settings_title_dark_mode_default">Force dark mode</string>
@@ -472,7 +481,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Bu isimde bir oturum zaten var!</string>
     <string name="session_cant_delete_current">Mevcut oturum silinemez!</string>
     <string name="session_prompt_confirm_deletion_title">Silmeyi onayla</string>
-    <string name="session_prompt_confirm_deletion_message">\"%s\" Oturumunu silmek istediğinize emin misiniz?</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">\"%s\" olarak değiştirildi</string>
     <string name="busy">Şu an meşgul, kısa süre sonra tekrar deneyin.</string>
     <string name="invalid_character_removed">Geçersiz karakter kaldırıldı!</string>
@@ -588,4 +597,5 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_title">Title</string>
     <string name="label_session">Session</string>
     <string name="label_app_name">App name</string>
+    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
 </resources>

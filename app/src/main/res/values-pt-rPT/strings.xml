@@ -343,6 +343,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Bloqueio de anúncios e de conteúdos</string>
     <string name="settings_summary_content_control_toggle">Ativar bloqueador de anúncios e filtro de conteúdos</string>
+    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
+    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
+    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
+    <string name="settings_title_toolbars_position">Toolbars position</string>
+    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Modo desktop</string>
     <string name="settings_summary_desktop_mode_default">Define que os novos separadores utilizam o modo desktop</string>
     <string name="settings_title_dark_mode_default">Impor tema escuro</string>
@@ -472,7 +481,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Já existe uma sessão com este nome.</string>
     <string name="session_cant_delete_current">Não foi possível apagar a sessão!</string>
     <string name="session_prompt_confirm_deletion_title">Confirmar eliminação</string>
-    <string name="session_prompt_confirm_deletion_message">Tem certeza de que deseja eliminar a sessão \"%s\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Trocar para %s</string>
     <string name="busy">Ocupado, tente mais tarde.</string>
     <string name="invalid_character_removed">Carácter inválido removido!</string>
@@ -588,4 +597,5 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_title">Title</string>
     <string name="label_session">Session</string>
     <string name="label_app_name">App name</string>
+    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
 </resources>

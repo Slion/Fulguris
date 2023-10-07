@@ -3,7 +3,7 @@
     <string name="action_reload">Neu laden</string>
     <string name="action_menu">Mehr</string>
     <string name="action_new_tab">Neuer Tab</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Tab Duplizieren</string>
     <string name="action_share">Teilen</string>
     <string name="action_history">Verlauf</string>
     <string name="action_bookmarks">Lesezeichen</string>
@@ -77,8 +77,8 @@
     <string name="action_yes">Ja</string>
     <string name="action_no">Nein</string>
     <string name="action_ask">Fragen</string>
-    <string name="action_proceed">Proceed</string>
-    <string name="action_abort">Abort</string>
+    <string name="action_proceed">Weiter</string>
+    <string name="action_abort">Abbruch</string>
     <string name="title_text_size">Textgröße</string>
     <string name="title_error">Fehler</string>
     <string name="hint_title">Titel</string>
@@ -167,8 +167,8 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Aktion abgebrochen.</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error_aborted">Sicherheits Error! Laden der Seite abgebrochen.</string>
+    <string name="message_ssl_error">Geschützte Verbindung verloren:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Willst du immer noch fortfahren?</string>
     <string name="message_certificate_date_invalid">Datum des Zertifikats ungültig</string>
     <string name="message_certificate_expired">Zertifikat abgelaufen</string>
     <string name="message_certificate_domain_mismatch">Domain des Zertifikats stimmt nicht mit der Domain der aktuellen Seite überein</string>
@@ -343,6 +343,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Werbeblocker und Inhaltsfilterung</string>
     <string name="settings_summary_content_control_toggle">Werbeblocker und Inhaltsfilterung aktivieren</string>
+    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
+    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
+    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
+    <string name="settings_title_toolbars_position">Toolbars position</string>
+    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Desktop-Modus</string>
     <string name="settings_summary_desktop_mode_default">Neue Tabs standardmäßig im Desktop-Modus verwenden</string>
     <string name="settings_title_dark_mode_default">Dunkel-Modus für Webseiten</string>
@@ -367,7 +376,7 @@
     <string name="app_restart">Bitte starten Sie die App neu, damit die Änderung wirksam wird.</string>
     <string name="pref_title_crash_logs">Absturzberichte</string>
     <string name="pref_summary_crash_logs">Schreibe Absturzprotokolle in das Dateisystem.\nTippe um den Ordner zu öffnen. Bitte gib eine entsprechende Datei an, wenn du einen Fehler meldest.</string>
-    <string name="pref_title_logs">Logs</string>
+    <string name="pref_title_logs">Verlauf</string>
     <string name="pref_summary_on_logs">Enabled</string>
     <string name="pref_summary_off_logs">Disabled</string>
     <string name="pref_title_log_level">Log level</string>
@@ -433,9 +442,9 @@
     <string name="settings_title_parent">Übergeordnet</string>
     <string name="settings_summary_default_domain_settings">Standard-Domäneneinstellungen</string>
     <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
+    <string name="settings_summary_ssl_error">Was tun wenn ein SSL-Error aufgetreten ist</string>
     <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
+    <string name="settings_title_third_party_cookies">Third-Party Cookies</string>
     <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
     <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
     <string name="settings_title_javascript">JavaScript</string>
@@ -472,7 +481,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Es existiert bereits eine Sitzung mit diesem Namen!</string>
     <string name="session_cant_delete_current">Die aktuelle Sitzung kann nicht gelöscht werden!</string>
     <string name="session_prompt_confirm_deletion_title">Löschen bestätigen</string>
-    <string name="session_prompt_confirm_deletion_message">Sind Sie sicher, dass Sie die Sitzung \"%s\" löschen möchten?</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Zu \"%s\" gewechselt</string>
     <string name="busy">Beschäftigt, versuche es in Kürze wieder</string>
     <string name="invalid_character_removed">Ungültiges Zeichen entfernt!</string>
@@ -588,4 +597,5 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_title">Title</string>
     <string name="label_session">Session</string>
     <string name="label_app_name">App name</string>
+    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
 </resources>

@@ -343,6 +343,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Annonsblockerare och innehållsfiltrering</string>
     <string name="settings_summary_content_control_toggle">Aktivera annonsblockering och innehållsfiltrering</string>
+    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
+    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
+    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
+    <string name="settings_title_toolbars_position">Toolbars position</string>
+    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Stationära datorläge</string>
     <string name="settings_summary_desktop_mode_default">Definiera om nya flikar använder stationära datorläge som standard</string>
     <string name="settings_title_dark_mode_default">Tvinga mörkt tema</string>
@@ -472,7 +481,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">En session med detta namn finns redan!</string>
     <string name="session_cant_delete_current">Kan inte ta bort nuvarande session!</string>
     <string name="session_prompt_confirm_deletion_title">Bekräfta radering</string>
-    <string name="session_prompt_confirm_deletion_message">Är du säker på att du vill ta bort sessionen \"%s\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Byt till %s</string>
     <string name="busy">Upptagen, försök igen inom kort.</string>
     <string name="invalid_character_removed">Ogiltigt tecken borttagen!</string>
@@ -588,4 +597,5 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_title">Title</string>
     <string name="label_session">Session</string>
     <string name="label_app_name">App name</string>
+    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
 </resources>

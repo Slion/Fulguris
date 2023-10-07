@@ -343,6 +343,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Blokowanie reklam i filtrowanie treści</string>
     <string name="settings_summary_content_control_toggle">Aktywuj blokowanie reklam i filtrowanie treści</string>
+    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
+    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
+    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
+    <string name="settings_title_toolbars_position">Toolbars position</string>
+    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Wersja komputerowa</string>
     <string name="settings_summary_desktop_mode_default">Określ, czy nowe karty mają być domyślnie wyświetlane w wersji komputerowej</string>
     <string name="settings_title_dark_mode_default">Wymuś tryb ciemny</string>
@@ -456,8 +465,8 @@ See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
         <item quantity="one">Current page has one cookie</item>
-        <item quantity="few">Current page has %d cookies</item>
-        <item quantity="many">Current page has %d cookies</item>
+        <item quantity="few">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="many">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
         <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
     <string name="settings_title_task_label">Task label</string>
@@ -476,7 +485,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Sesja o tej nazwie już istnieje!</string>
     <string name="session_cant_delete_current">Nie można usunąć bieżącej sesji!</string>
     <string name="session_prompt_confirm_deletion_title">Potwierdź usunięcie</string>
-    <string name="session_prompt_confirm_deletion_message">Czy na pewno chcesz usunąć sesję \"%s\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Przełączono na \"%s\"</string>
     <string name="busy">Busy, try again shortly.</string>
     <string name="invalid_character_removed">Nieprawidłowy znak usunięty!</string>
@@ -592,4 +601,5 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_title">Title</string>
     <string name="label_session">Session</string>
     <string name="label_app_name">App name</string>
+    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
 </resources>
