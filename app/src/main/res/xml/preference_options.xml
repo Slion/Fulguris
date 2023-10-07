@@ -38,7 +38,7 @@
             a:icon="@drawable/ic_landscape"
             a:singleLineTitle="false"
             />
-        
+
         <Preference
             a:fragment="acr.browser.lightning.settings.fragment.ScrollbarsSettingsFragment"
             a:title="@string/pref_category_scrollbars"

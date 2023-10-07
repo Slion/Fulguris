@@ -33,14 +33,16 @@
         a:layout="@layout/preference_category_material"
         tools:ignore="PrivateResource" />
 
-
     <SwitchPreferenceCompat
         android:key="@string/pref_key_tab_bar_vertical"
-        android:title="@string/settings_title_vertical_tab_bar"
-        android:summary="@string/settings_summary_vertical_tab_bar"
-        a:icon="@drawable/ic_desktop"
+        android:title="@string/settings_title_tab_bar_orientation"
+        android:summaryOn="@string/settings_summary_on_tab_bar_orientation"
+        android:summaryOff="@string/settings_summary_off_tab_bar_orientation"
+        a:icon="@drawable/ic_screen_rotation_alt"
         a:iconSpaceReserved="false"
-        a:singleLineTitle="false" />
+        a:singleLineTitle="false"
+        tools:defaultValue="false"
+        />
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_tab_bar_in_drawer"
