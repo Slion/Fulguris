@@ -463,7 +463,7 @@ See: https://stackoverflow.com/a/42884713/3969362
         <item quantity="one">Current page has one cookie</item>
         <item quantity="two">Current page has %d cookies</item>
         <item quantity="many">Current page has %d cookies</item>
-        <item quantity="other">Current page has %d cookies</item>
+        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
     <string name="settings_title_task_label">Task label</string>
     <string name="settings_title_task_icon">Task icon</string>
