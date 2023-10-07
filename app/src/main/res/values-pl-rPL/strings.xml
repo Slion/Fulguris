@@ -343,7 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Blokowanie reklam i filtrowanie treści</string>
     <string name="settings_summary_content_control_toggle">Aktywuj blokowanie reklam i filtrowanie treści</string>
-    <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
     <string name="settings_title_desktop_mode_default">Wersja komputerowa</string>
     <string name="settings_summary_desktop_mode_default">Określ, czy nowe karty mają być domyślnie wyświetlane w wersji komputerowej</string>
     <string name="settings_title_dark_mode_default">Wymuś tryb ciemny</string>

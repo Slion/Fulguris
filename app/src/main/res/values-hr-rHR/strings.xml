@@ -343,7 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Blokator oglasa i filtriranje sadržaja</string>
     <string name="settings_summary_content_control_toggle">Aktivirajte blokator oglasa i filtriranje sadržaja</string>
-    <string name="settings_title_toolbars_bottom">Alatne trake na dnu</string>
     <string name="settings_title_desktop_mode_default">Računalni način rada</string>
     <string name="settings_summary_desktop_mode_default">Odredite hoće li nove kartice prema zadanim postavkama koristiti radnu površinu</string>
     <string name="settings_title_dark_mode_default">Prisilni tamni način rada</string>

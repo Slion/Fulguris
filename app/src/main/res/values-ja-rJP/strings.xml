@@ -343,7 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">アドブロッカーとコンテンツフィルター</string>
     <string name="settings_summary_content_control_toggle">アドブロッカーとコンテンツフィルターを有効にする</string>
-    <string name="settings_title_toolbars_bottom">下部に配置</string>
     <string name="settings_title_desktop_mode_default">デスクトップモード</string>
     <string name="settings_summary_desktop_mode_default">新しいタブでデスクトップモードを既定で使用するかを決める</string>
     <string name="settings_title_dark_mode_default">強制ダークモード</string>

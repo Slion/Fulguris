@@ -343,7 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Annonsblockerare och innehållsfiltrering</string>
     <string name="settings_summary_content_control_toggle">Aktivera annonsblockering och innehållsfiltrering</string>
-    <string name="settings_title_toolbars_bottom">Verktygsfälten längst ner</string>
     <string name="settings_title_desktop_mode_default">Stationära datorläge</string>
     <string name="settings_summary_desktop_mode_default">Definiera om nya flikar använder stationära datorläge som standard</string>
     <string name="settings_title_dark_mode_default">Tvinga mörkt tema</string>

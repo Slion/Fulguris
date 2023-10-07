@@ -343,7 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">广告拦截器和内容过滤</string>
     <string name="settings_summary_content_control_toggle">激活广告拦截器和内容过滤</string>
-    <string name="settings_title_toolbars_bottom">把工具栏置于底部</string>
     <string name="settings_title_desktop_mode_default">桌面模式</string>
     <string name="settings_summary_desktop_mode_default">设置新建的标签页下是否要默认浏览桌面版网站</string>
     <string name="settings_title_dark_mode_default">强行套用暗色模式</string>

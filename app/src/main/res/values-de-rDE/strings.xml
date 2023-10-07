@@ -343,7 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Werbeblocker und Inhaltsfilterung</string>
     <string name="settings_summary_content_control_toggle">Werbeblocker und Inhaltsfilterung aktivieren</string>
-    <string name="settings_title_toolbars_bottom">Suchleiste nach unten</string>
     <string name="settings_title_desktop_mode_default">Desktop-Modus</string>
     <string name="settings_summary_desktop_mode_default">Neue Tabs standardmäßig im Desktop-Modus verwenden</string>
     <string name="settings_title_dark_mode_default">Dunkel-Modus für Webseiten</string>

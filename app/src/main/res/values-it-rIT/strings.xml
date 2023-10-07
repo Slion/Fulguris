@@ -343,7 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Blocco pubblicità e filtraggio dei contenuti</string>
     <string name="settings_summary_content_control_toggle">Attiva blocco pubblicità e filtraggio contenuti</string>
-    <string name="settings_title_toolbars_bottom">Barre degli strumenti in basso</string>
     <string name="settings_title_desktop_mode_default">Modalità desktop</string>
     <string name="settings_summary_desktop_mode_default">Definisci se i nuovi tab usano la modalità desktop di default</string>
     <string name="settings_title_dark_mode_default">Forza la modalità scura</string>

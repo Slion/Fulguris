@@ -362,7 +362,6 @@
     <string name="settings_title_tab_bar_placement">Tab bar placement</string>
     <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
     <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>
     <string name="settings_title_toolbars_position">Toolbars position</string>
     <string name="settings_summary_on_toolbars_position">Bottom</string>
     <string name="settings_summary_off_toolbars_position">Top</string>

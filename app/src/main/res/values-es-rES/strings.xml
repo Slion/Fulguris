@@ -343,7 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Bloqueo de anuncios y filtrado de contenido</string>
     <string name="settings_summary_content_control_toggle">Activar bloqueo de anuncios y filtrado de contenido</string>
-    <string name="settings_title_toolbars_bottom">Barra de herramientas inferior</string>
     <string name="settings_title_desktop_mode_default">Modo escritorio</string>
     <string name="settings_summary_desktop_mode_default">Definir si las nuevas pestañas usan el modo escritorio por defecto</string>
     <string name="settings_title_dark_mode_default">Forzar modo oscuro</string>

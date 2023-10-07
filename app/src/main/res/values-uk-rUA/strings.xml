@@ -343,7 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокування реклами та фільтрування вмісту</string>
     <string name="settings_summary_content_control_toggle">Активувати блокування реклами та фільтрування вмісту</string>
-    <string name="settings_title_toolbars_bottom">Панелі інструментів знизу</string>
     <string name="settings_title_desktop_mode_default">Режим компʼютера</string>
     <string name="settings_summary_desktop_mode_default">Визначає, чи нові вкладки використовують режим компʼютера за замовчуванням</string>
     <string name="settings_title_dark_mode_default">Примусовий темний режим</string>
