@@ -137,9 +137,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     // Notifications
     lateinit var CHANNEL_ID: String
 
-    // Current tab view being displayed
-    // Should always be a [WebViewEx] but that could change
-    private var currentTabView: View? = null
+    // Tab view being currently displayed
+    private val currentTabView: WebViewEx?
+        get () = tabsManager.currentTab?.webView
+
+    // Only used to avoid setting up the same tab again
+    // Don't use it for anything else as it can potentially get destroyed anytime
+    private var lastTabView: View? = null
+
     // Our tab view back and front containers
     // We swap them as needed to make sure our view animations are performed smoothly and without flicker
     private lateinit var iTabViewContainerBack: PullRefreshLayout
@@ -1839,6 +1844,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         // Ctrl + F3 means use current selection to perform a search
                         // We fetch current selection from WebView using JavaScript
                         // TODO: Move JavaScript to WebViewEx
+                        Timber.w("evaluateJavascript: text selection extraction")
                         (currentTabView as? WebViewEx)?.evaluateJavascript("(function(){return window.getSelection().toString()})()",
                                 ValueCallback<String> {
                                     aSelection ->
@@ -2588,7 +2594,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      */
     override fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
 
-        if (currentTabView == aView) {
+        if (lastTabView == aView) {
+            Timber.d("setTabView: tab already set")
             return
         }
 
@@ -2623,7 +2630,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Remove existing focus change observer before we change our tab
         currentTabView?.onFocusChangeListener = null
         // Change our tab
-        currentTabView = aView
+        lastTabView = aView
         // Close virtual keyboard if we loose focus
         currentTabView.onFocusLost { inputMethodManager.hideSoftInputFromWindow(iBinding.uiLayout.windowToken, 0) }
         // Now everything is ready below our image snapshot of current view
@@ -3177,7 +3184,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Actually even that is a bad idea since it could already be in used by another instance of that activity.
         //removeTabView()
         // That would do, not strictly needed though
-        currentTabView = null
+        lastTabView = null
 
         //
         super.onDestroy()

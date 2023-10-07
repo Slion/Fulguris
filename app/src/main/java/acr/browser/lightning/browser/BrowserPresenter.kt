@@ -119,7 +119,7 @@ class BrowserPresenter @Inject constructor(
      * [aGoingBack] Tells in which direction we are going, this can help determine what kind of tab animation will be used.
      */
     private fun onTabChanged(aTab: WebPageTab, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
-        Timber.d("On tab changed")
+        Timber.d("onTabChanged")
 
         currentTab?.let {
             // TODO: Restore this when Google fixes the bug where the WebView is
@@ -327,6 +327,9 @@ class BrowserPresenter @Inject constructor(
         Timber.d("tabChanged: $position")
         onTabChanged(tabsModel.switchToTab(position),false, aPreviousTabClosed, aGoingBack)
     }
+
+
+
 
     /**
      * Open a new tab with the specified URL. You can choose to show the tab or load it in the

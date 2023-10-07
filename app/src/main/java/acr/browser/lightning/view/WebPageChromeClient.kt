@@ -52,34 +52,37 @@ class WebPageChromeClient(
             uiController.updateProgress(newProgress)
         }
 
-        if (newProgress > 10 && webPageTab.fetchMetaThemeColorTries > 0)
-        {
-            val triesLeft = webPageTab.fetchMetaThemeColorTries - 1
-            webPageTab.fetchMetaThemeColorTries = 0
+        // We don't need to run that when color mode is disabled
+        if (userPreferences.colorModeEnabled) {
+            if (newProgress > 10 && webPageTab.fetchMetaThemeColorTries > 0)
+            {
+                val triesLeft = webPageTab.fetchMetaThemeColorTries - 1
+                webPageTab.fetchMetaThemeColorTries = 0
 
-            // Extract meta theme-color
-            // TODO: Make this optional
-            view.evaluateJavascript("(function() { " +
-                    "let e = document.querySelector('meta[name=\"theme-color\"]');" +
-                    "if (e==null) return null;" +
-                    "return e.content; })();") { themeColor ->
-                try {
-                    webPageTab.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"'));
-                    // We did find a valid theme-color, tell our controller about it
-                    uiController.onTabChanged(webPageTab)
-                }
-                catch (e: Exception) {
-                    if (triesLeft==0 || newProgress==100)
-                    {
-                        // Exhausted all our tries or the page finished loading before we did
-                        // Just give up then and reset our theme color
-                        webPageTab.htmlMetaThemeColor = WebPageTab.KHtmlMetaThemeColorInvalid
+                // Extract meta theme-color
+                Timber.w("evaluateJavascript: theme color extraction")
+                view.evaluateJavascript("(function() { " +
+                        "let e = document.querySelector('meta[name=\"theme-color\"]');" +
+                        "if (e==null) return null;" +
+                        "return e.content; })();") { themeColor ->
+                    try {
+                        webPageTab.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"'));
+                        // We did find a valid theme-color, tell our controller about it
                         uiController.onTabChanged(webPageTab)
                     }
-                    else
-                    {
-                        // Try it again next time around
-                        webPageTab.fetchMetaThemeColorTries = triesLeft
+                    catch (e: Exception) {
+                        if (triesLeft==0 || newProgress==100)
+                        {
+                            // Exhausted all our tries or the page finished loading before we did
+                            // Just give up then and reset our theme color
+                            webPageTab.htmlMetaThemeColor = WebPageTab.KHtmlMetaThemeColorInvalid
+                            uiController.onTabChanged(webPageTab)
+                        }
+                        else
+                        {
+                            // Try it again next time around
+                            webPageTab.fetchMetaThemeColorTries = triesLeft
+                        }
                     }
                 }
             }

@@ -141,8 +141,8 @@ class WebPageClient(
                 // See: https://stackoverflow.com/a/60621350/3969362
                 // See: https://stackoverflow.com/a/39642318/3969362
                 // Just pass on user defined viewport width in percentage of the actual viewport to the JavaScript
-                Timber.i("JavaScript Desktop Mode Hack")
                 aView.settings.useWideViewPort = true
+                Timber.w("evaluateJavascript: desktop mode")
                 aView.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$","${aView.context.configPrefs.desktopWidth}"), null)
             }
         }
@@ -223,6 +223,7 @@ class WebPageClient(
             view.title?.let {webPageTab.titleInfo.setTitle(it)}
         }
         if (webPageTab.invertPage) {
+            Timber.w("evaluateJavascript: invert page colors")
             view.evaluateJavascript(invertPageJs.provideJs(), null)
         }
 /*        // TODO: element hiding does not work
@@ -395,8 +396,8 @@ class WebPageClient(
         document.getElementsByTagName('style')[0].innerHTML += "body { margin: 10px; background-color: ${htmlColor(ThemeUtils.getSurfaceColor(activity))}; color: ${htmlColor(ThemeUtils.getOnSurfaceColor(activity))};}"
         var img = document.getElementsByTagName('img')[0]
         img.src = "$imageString"
-        img.width = ${bitmap?.width}
-        img.height = ${bitmap?.height}
+        img.width = ${bitmap.width}
+        img.height = ${bitmap.height}
         })()"""
 
         // Run our script once, did not help anything apparently
@@ -405,6 +406,7 @@ class WebPageClient(
         // That works better than post or post delayed
         Thread.sleep(100)
         // Just run that script now
+        Timber.w("evaluateJavascript: error page theming")
         webview.evaluateJavascript(script) {}
     }
 
@@ -417,6 +419,7 @@ class WebPageClient(
             if (changeInPercent > 2.5f && !isRunning) {
                 isRunning = view.postDelayed({
                     zoomScale = newScale
+                    Timber.w("evaluateJavascript: text reflow")
                     view.evaluateJavascript(textReflowJs.provideJs()) { isRunning = false }
                 }, 100)
             }
@@ -755,4 +758,13 @@ class WebPageClient(
         return errorCodeMessageCodes
     }
 
+    /**
+     *
+     *
+     * See: https://developer.android.com/develop/ui/views/layout/webapps/managing-webview#termination-handle
+     */
+    override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
+        Timber.e("onRenderProcessGone")
+        return webPageTab.onRenderProcessGone(view,detail)
+    }
 }

@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import androidx.annotation.ColorInt
+import timber.log.Timber
 
 /**
  * Specialising  WebView could be useful at some point.
@@ -64,7 +65,8 @@ class WebViewEx : WebView {
     /**
      * We shied away from overriding [WebView.destroy] so here we have that function instead.
      */
-    fun destruction() {
+    private fun destruction() {
+        Timber.d("destruction")
         stopLoading()
         onPause()
         clearHistory()
@@ -83,6 +85,7 @@ class WebViewEx : WebView {
      * Does just that.
      */
     fun destroyIfNeeded() {
+        Timber.d("destroyIfNeeded: $iNeedDestruction")
         if (iNeedDestruction) {
             destruction()
         }
@@ -93,6 +96,7 @@ class WebViewEx : WebView {
      * This is was needed to accommodate for WebView animation.
      */
     fun autoDestruction() {
+        Timber.d("autoDestruction: $parent")
         if (parent!=null) {
             // There is probably still an animation running
             iNeedDestruction = true

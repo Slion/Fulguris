@@ -9,6 +9,7 @@ import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
 import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabModel
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.di.*
@@ -41,6 +42,7 @@ import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.View.OnScrollChangeListener
 import android.view.View.OnTouchListener
 import android.webkit.CookieManager
+import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebSettings
 import android.webkit.WebSettings.LOAD_DEFAULT
 import android.webkit.WebSettings.LOAD_NO_CACHE
@@ -348,7 +350,7 @@ class WebPageTab(
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer
             titleInfo.setTitle(tabInitializer.tabModel.title)
-            tabInitializer.tabModel.favicon?.let {titleInfo.setFavicon(it)}
+            tabInitializer.tabModel.favicon.let {titleInfo.setFavicon(it)}
             desktopMode = tabInitializer.tabModel.desktopMode
             darkMode = tabInitializer.tabModel.darkMode
             searchQuery = tabInitializer.tabModel.searchQuery
@@ -392,7 +394,7 @@ class WebPageTab(
 
         webPageClient = WebPageClient(activity, this)
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
-        webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebViewEx;
+        webView = activity.layoutInflater.inflate(R.layout.webview, null) as WebViewEx
         webView?.apply {
             proxy = this@WebPageTab
             Timber.d("WebView scrollbar defaults: ${scrollBarSize.toFloat().dp}, $scrollBarDefaultDelayBeforeFade, $scrollBarFadeDuration")
@@ -425,9 +427,9 @@ class WebPageTab(
             setNetworkAvailable(true)
             webChromeClient = WebPageChromeClient(activity, this@WebPageTab)
             webViewClient = webPageClient
-            // We want to receive download complete notifications
-            iDownloadListener = LightningDownloadListener(activity)
-            setDownloadListener(iDownloadListener.also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
+
+            createDownloadListener()
+
             // For older devices show Tool Bar On Page Top won't work after fling to top.
             // Who cares? I mean those devices are probably from 2014 or older.
             val tl = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) TouchListener().also { setOnScrollChangeListener(it) } else TouchListenerLollipop()
@@ -443,6 +445,28 @@ class WebPageTab(
             find(searchQuery)
         }
     }
+
+    /**
+     *
+     */
+    private fun createDownloadListener() {
+        // We want to receive download complete notifications
+        iDownloadListener = LightningDownloadListener(activity)
+        webView?.setDownloadListener(iDownloadListener.also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
+    }
+
+    /**
+     *
+     */
+    private fun destroyDownloadListener() {
+        //See: https://console.firebase.google.com/project/fulguris-b1f69/crashlytics/app/android:net.slions.fulguris.full.playstore/issues/ea99c7ea0c57f66eae6e95532a16859d
+        if (iDownloadListener!=null) {
+            webView?.setDownloadListener(null)
+            activity.unregisterReceiver(iDownloadListener)
+            iDownloadListener = null
+        }
+    }
+
 
     fun currentSslState(): SslState = webPageClient.sslState
 
@@ -744,10 +768,15 @@ class WebPageTab(
         }
 
     /**
+     *
+     */
+    fun getModel() = TabModel(url, title, desktopMode, darkMode, favicon, searchQuery, searchActive, webViewState())
+
+    /**
      * Save the state of this tab and return it as a [Bundle].
      */
     fun saveState(): Bundle {
-         return TabModel(url, title, desktopMode, darkMode, favicon, searchQuery, searchActive, webViewState()).toBundle()
+         return getModel().toBundle()
     }
     /**
      * Pause the current WebView instance.
@@ -1022,16 +1051,19 @@ class WebPageTab(
      * api.
      */
     fun destroy() {
-
-        userPreferences.preferences.unregisterOnSharedPreferenceChangeListener(this)
-
-        //See: https://console.firebase.google.com/project/fulguris-b1f69/crashlytics/app/android:net.slions.fulguris.full.playstore/issues/ea99c7ea0c57f66eae6e95532a16859d
-        if (iDownloadListener!=null) {
-            activity.unregisterReceiver(iDownloadListener)
-            iDownloadListener = null
-        }
+        destroyWebView()
         networkDisposable.dispose()
+    }
+
+    /**
+     * Destroy our WebView after we unregister from all various handlers and listener as needed
+     */
+    private fun destroyWebView() {
+        userPreferences.preferences.unregisterOnSharedPreferenceChangeListener(this)
+        destroyDownloadListener()
+        // No need to do anything for the touch listeners they are owned by the WebView anyway
         webView?.autoDestruction()
+        webView = null
     }
 
     /**
@@ -1188,6 +1220,55 @@ class WebPageTab(
             uiController.showActionBar()
         }
     }
+
+    /**
+     * Our render process crashed, we must destroy our WebView.
+     */
+    fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
+
+        // Defensive
+        if (view!=webView) {
+            Timber.w("onRenderProcessGone: Not our WebView")
+            // Still don't want to crash the app
+            return true
+        }
+
+        // Refreeze our tab before destroying it's WebView
+        // Tested that against Bookmarks page and it worked fine too
+        latentTabInitializer = FreezableBundleInitializer(getModel())
+        val vg = webView?.removeFromParent()
+        destroyWebView()
+
+        vg?.let {
+            // That should run if the current tab lost its render process
+            // TODO: Proper dialog with bug report link?
+            // TODO: Firebase report?
+            // Would be nice to have ACRA: https://github.com/ACRA/acra
+            // Show user a message if this is our current tab
+            iSnackbar = activity.makeSnackbar(
+                activity.getString(R.string.message_render_process_crashed),
+                5000, if (activity.configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                /*.setAction(R.string.button_dismiss) {
+                    iSnackbar?.dismiss()
+                }*/.setIcon(R.drawable.ic_warn)
+
+            iSnackbar?.show()
+
+            // TODO: Another broken workflow, just refactor our tab manager and presenter
+            // We could not get presenter injection to work so we just use the one from our activity
+            (activity as? BrowserActivity)?.apply {
+                // Trigger the recreation of our tab
+                presenter.tabChanged(presenter.tabsModel.indexOfTab(this@WebPageTab),false,false)
+            }
+        }
+
+        // Needed I guess in case the current tab was using another render process
+        uiController.onTabChanged(this)
+
+        // We don't want to crash the app
+        return true
+    }
+
 
     /**
      * The OnTouchListener used by the WebView so we can

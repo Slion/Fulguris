@@ -656,4 +656,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">App name</string>
 
 
+    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+
+
 </resources>
