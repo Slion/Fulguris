@@ -27,7 +27,6 @@
     <Preference
         a:key="@string/pref_key_back"
         a:title="@string/settings_title_configuration"
-        a:summary="@string/settings_summary_domains"
         a:icon="@drawable/ic_arrow_back_ios"
         a:fragment="back"
         a:layout="@layout/preference_category_material"
@@ -46,11 +45,15 @@
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_tab_bar_in_drawer"
-        android:title="@string/settings_title_tab_bar_in_drawer"
-        android:summary="@string/settings_summary_tab_bar_in_drawer"
-        a:icon="@drawable/ic_web"
+        android:title="@string/settings_title_tab_bar_placement"
+        android:summaryOn="@string/settings_summary_on_tab_bar_placement"
+        android:summaryOff="@string/settings_summary_off_tab_bar_placement"
+        a:icon="@drawable/ic_view_quilt_outline"
         a:iconSpaceReserved="false"
-        a:singleLineTitle="false" />
+        a:singleLineTitle="false"
+        a:dependency="@string/pref_key_tab_bar_vertical"
+        tools:defaultValue="true"
+        />
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_toolbars_bottom"
