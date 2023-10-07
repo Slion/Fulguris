@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Bloqueur de publicités et filtre de contenu</string>
     <string name="settings_summary_content_control_toggle">Activer le bloqueur de publicités et le filtre de contenu</string>
-    <string name="settings_title_vertical_tab_bar">Barre d\'onglets verticale</string>
-    <string name="settings_summary_vertical_tab_bar">Désactiver pour utiliser la barre d\'onglets horizontale</string>
     <string name="settings_title_tab_bar_in_drawer">Barre d\'onglets dans un panneau latéral</string>
     <string name="settings_summary_tab_bar_in_drawer">Désactiver pour utiliser la barre d\'onglets statique verticale</string>
     <string name="settings_title_toolbars_bottom">Barres d\'outils en bas</string>

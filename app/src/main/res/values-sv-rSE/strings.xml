@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Annonsblockerare och innehållsfiltrering</string>
     <string name="settings_summary_content_control_toggle">Aktivera annonsblockering och innehållsfiltrering</string>
-    <string name="settings_title_vertical_tab_bar">Vertikal flikrad</string>
-    <string name="settings_summary_vertical_tab_bar">Inaktivera den för att använda horisontell flikrad</string>
     <string name="settings_title_tab_bar_in_drawer">Flikbar i applistan</string>
     <string name="settings_summary_tab_bar_in_drawer">Inaktivera den för att använda statisk vertikal flikrad</string>
     <string name="settings_title_toolbars_bottom">Verktygsfälten längst ner</string>

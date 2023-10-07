@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Ad blocker and content filtering</string>
     <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
-    <string name="settings_title_vertical_tab_bar">Oldalak mutatása a navigációs fiókban</string>
-    <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
     <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
     <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
     <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>

@@ -359,8 +359,6 @@
     <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_vertical_tab_bar">Vertical tab bar</string>
-    <string name="settings_summary_vertical_tab_bar">Disable it to use horizontal tab bar</string>
     <string name="settings_title_tab_bar_in_drawer">Tab bar in drawer</string>
     <string name="settings_summary_tab_bar_in_drawer">Disable it to use static vertical tab bar</string>
     <string name="settings_title_toolbars_bottom">Toolbars at the bottom</string>

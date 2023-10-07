@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Pemblokir iklan dan penyaring isi halaman web</string>
     <string name="settings_summary_content_control_toggle">Nyalakan pemblokir iklan dan penyaring isi halaman web</string>
-    <string name="settings_title_vertical_tab_bar">Tab bar menurun</string>
-    <string name="settings_summary_vertical_tab_bar">Tab bar menjadi mendatar ketika ditutup</string>
     <string name="settings_title_tab_bar_in_drawer">Bar tab pada drawer</string>
     <string name="settings_summary_tab_bar_in_drawer">Nonaktifkan untuk menggunakan bar tab vertikal secara statis</string>
     <string name="settings_title_toolbars_bottom">Tempatkan toolbar di bawah</string>

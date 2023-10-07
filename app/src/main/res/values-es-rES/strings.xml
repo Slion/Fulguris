@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Bloqueo de anuncios y filtrado de contenido</string>
     <string name="settings_summary_content_control_toggle">Activar bloqueo de anuncios y filtrado de contenido</string>
-    <string name="settings_title_vertical_tab_bar">Barra de pestañas vertical</string>
-    <string name="settings_summary_vertical_tab_bar">Desactivar para usar la barra de pestañas horizontal</string>
     <string name="settings_title_tab_bar_in_drawer">Barra de pestañas en el cajón</string>
     <string name="settings_summary_tab_bar_in_drawer">Deshabilite para usar la barra de pestañas estática vertical</string>
     <string name="settings_title_toolbars_bottom">Barra de herramientas inferior</string>

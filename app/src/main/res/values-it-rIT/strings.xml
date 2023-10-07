@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Blocco pubblicità e filtraggio dei contenuti</string>
     <string name="settings_summary_content_control_toggle">Attiva blocco pubblicità e filtraggio contenuti</string>
-    <string name="settings_title_vertical_tab_bar">Mostra le schede nel menù</string>
-    <string name="settings_summary_vertical_tab_bar">Disabilitare per usare la barra delle schede orizzontali</string>
     <string name="settings_title_tab_bar_in_drawer">Barra delle schede nel cassetto</string>
     <string name="settings_summary_tab_bar_in_drawer">Disabilita per usare la barra statica delle schede verticali</string>
     <string name="settings_title_toolbars_bottom">Barre degli strumenti in basso</string>

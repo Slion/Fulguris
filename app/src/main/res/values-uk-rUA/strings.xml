@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокування реклами та фільтрування вмісту</string>
     <string name="settings_summary_content_control_toggle">Активувати блокування реклами та фільтрування вмісту</string>
-    <string name="settings_title_vertical_tab_bar">Вертикальна панель вкладок</string>
-    <string name="settings_summary_vertical_tab_bar">Вимкніть, щоб використовувати горизонтальну панель вкладок</string>
     <string name="settings_title_tab_bar_in_drawer">Панель вкладок у меню</string>
     <string name="settings_summary_tab_bar_in_drawer">Вимкніть, щоб використовувати статичну вертикальну панель вкладок</string>
     <string name="settings_title_toolbars_bottom">Панелі інструментів знизу</string>

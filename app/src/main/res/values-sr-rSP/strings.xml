@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокатор огласа и филтрирање садржаја</string>
     <string name="settings_summary_content_control_toggle">Активирајте блокатор огласа и филтрирање садржаја</string>
-    <string name="settings_title_vertical_tab_bar">Језичци у фиоци навигације</string>
-    <string name="settings_summary_vertical_tab_bar">Онемогућите га да бисте користили хоризонталну траку са језичцима</string>
     <string name="settings_title_tab_bar_in_drawer">Језична трака у фиоци</string>
     <string name="settings_summary_tab_bar_in_drawer">Онемогућите га да бисте користили статичку вертикалну траку језичцима</string>
     <string name="settings_title_toolbars_bottom">Траке са алаткама на дну</string>

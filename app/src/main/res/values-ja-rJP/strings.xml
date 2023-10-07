@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">アドブロッカーとコンテンツフィルター</string>
     <string name="settings_summary_content_control_toggle">アドブロッカーとコンテンツフィルターを有効にする</string>
-    <string name="settings_title_vertical_tab_bar">タブをドロワーで表示する</string>
-    <string name="settings_summary_vertical_tab_bar">水平タブバーを使用するには無効にしてください</string>
     <string name="settings_title_tab_bar_in_drawer">タブバーをドロワー内に表示</string>
     <string name="settings_summary_tab_bar_in_drawer">固定垂直タブバーを使用するには無効にしてください</string>
     <string name="settings_title_toolbars_bottom">下部に配置</string>

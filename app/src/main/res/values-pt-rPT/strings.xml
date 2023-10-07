@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Bloqueio de anúncios e de conteúdos</string>
     <string name="settings_summary_content_control_toggle">Ativar bloqueador de anúncios e filtro de conteúdos</string>
-    <string name="settings_title_vertical_tab_bar">Barra de separadores vertical</string>
-    <string name="settings_summary_vertical_tab_bar">Desativa a opção para utilizar a barra horizontal</string>
     <string name="settings_title_tab_bar_in_drawer">Barra de separadores no menu</string>
     <string name="settings_summary_tab_bar_in_drawer">Desative para usar a barra vertical</string>
     <string name="settings_title_toolbars_bottom">Barra de ferramentas em cima</string>

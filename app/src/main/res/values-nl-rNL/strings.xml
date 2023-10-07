@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Advertentieblokkering en inhoud filteren</string>
     <string name="settings_summary_content_control_toggle">Advertentieblokker en inhoudsfilter activeren</string>
-    <string name="settings_title_vertical_tab_bar">Toon tabbladen in navigatie lade</string>
-    <string name="settings_summary_vertical_tab_bar">Uitschakelen om horizontale tabbalk te gebruiken</string>
     <string name="settings_title_tab_bar_in_drawer">Tabbalk in lade</string>
     <string name="settings_summary_tab_bar_in_drawer">Uitschakelen om statische verticale tabbalk te gebruiken</string>
     <string name="settings_title_toolbars_bottom">Werkbalken onderaan</string>
