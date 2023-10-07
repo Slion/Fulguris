@@ -1,0 +1,6 @@
+👆 Swipe toolbar to switch tabs
+👆 Swipe or double tap more button to access page settings directly
+⚙️ Configuration settings options
+🌈 Configuration settings text and icon improvements
+🚑 Recover when render process crashes
+🌐 Translations update
