@@ -77,7 +77,7 @@
     <string name="action_yes">Si</string>
     <string name="action_no">No</string>
     <string name="action_ask">Chiedi</string>
-    <string name="action_proceed">Proceed</string>
+    <string name="action_proceed">Continua</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Dimensione dei caratteri</string>
     <string name="title_error">Errore</string>
