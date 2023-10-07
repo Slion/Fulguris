@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокировщик рекламы и фильтрация содержимого</string>
     <string name="settings_summary_content_control_toggle">Включить блокировку рекламы и фильтрацию содержимого</string>
-    <string name="settings_title_tab_bar_in_drawer">Панель вкладок в ящике</string>
-    <string name="settings_summary_tab_bar_in_drawer">Когда отключенные вертикальные вкладки будут отображаться рядом с содержимым текущей вкладки</string>
     <string name="settings_title_toolbars_bottom">Панель инструментов внизу</string>
     <string name="settings_title_desktop_mode_default">Режим \"Настольный ПК\"</string>
     <string name="settings_summary_desktop_mode_default">Определяет, используют ли новые вкладки режим для настольного компьютера по умолчанию</string>

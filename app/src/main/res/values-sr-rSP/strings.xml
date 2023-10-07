@@ -343,8 +343,6 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокатор огласа и филтрирање садржаја</string>
     <string name="settings_summary_content_control_toggle">Активирајте блокатор огласа и филтрирање садржаја</string>
-    <string name="settings_title_tab_bar_in_drawer">Језична трака у фиоци</string>
-    <string name="settings_summary_tab_bar_in_drawer">Онемогућите га да бисте користили статичку вертикалну траку језичцима</string>
     <string name="settings_title_toolbars_bottom">Траке са алаткама на дну</string>
     <string name="settings_title_desktop_mode_default">Рацунарски режим</string>
     <string name="settings_summary_desktop_mode_default">Дефинишите да ли нови језичци подразумевано користе режим радне површине</string>
