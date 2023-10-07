@@ -1,84 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<!--
+ The contents of this file are subject to the Common Public Attribution License Version 1.0.
+ (the "License"); you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at:
+ https://github.com/Slion/Fulguris/blob/main/LICENSE.CPAL-1.0.
+ The License is based on the Mozilla Public License Version 1.1, but Sections 14 and 15 have been
+ added to cover use of software over a computer network and provide for limited attribution for
+ the Original Developer. In addition, Exhibit A has been modified to be consistent with Exhibit B.
+
+ Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+ ANY KIND, either express or implied. See the License for the specific language governing rights
+ and limitations under the License.
+
+ The Original Code is Fulguris.
+
+ The Original Developer is the Initial Developer.
+ The Initial Developer of the Original Code is Stéphane Lenclud.
+
+ All portions of the code written by Stéphane Lenclud are Copyright © 2023 Stéphane Lenclud.
+ All Rights Reserved.
+-->
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <Preference
+        a:key="@string/pref_key_back"
+        a:title="@string/settings_title_configuration"
+        a:summary="@string/settings_summary_domains"
+        a:icon="@drawable/ic_arrow_back_ios"
+        a:fragment="back"
+        a:layout="@layout/preference_category_material"
+        tools:ignore="PrivateResource" />
+
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_tab_bar_vertical"
         android:title="@string/settings_title_vertical_tab_bar"
         android:summary="@string/settings_summary_vertical_tab_bar"
-        app:icon="@drawable/ic_desktop"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false" />
+        a:icon="@drawable/ic_desktop"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_tab_bar_in_drawer"
         android:title="@string/settings_title_tab_bar_in_drawer"
         android:summary="@string/settings_summary_tab_bar_in_drawer"
-        app:icon="@drawable/ic_web"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false" />
+        a:icon="@drawable/ic_web"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_toolbars_bottom"
         android:title="@string/settings_title_toolbars_bottom"
-        app:icon="@drawable/ic_bottom"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false" />
+        a:icon="@drawable/ic_bottom"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
 
 
     <SwitchPreferenceCompat
         android:key="@string/pref_key_pull_to_refresh"
         android:title="@string/pref_title_pull_to_refresh"
-        app:icon="@drawable/ic_action_refresh"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false" />
+        a:icon="@drawable/ic_action_refresh"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
-        app:key="@string/pref_key_hide_status_bar"
-        app:title="@string/pref_title_hide_status_bar"
-        app:icon="@drawable/ic_fullscreen"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false" />
+        a:key="@string/pref_key_hide_status_bar"
+        a:title="@string/pref_title_hide_status_bar"
+        a:icon="@drawable/ic_fullscreen"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
-        app:key="@string/pref_key_hide_tool_bar"
-        app:title="@string/pref_title_hide_tool_bar"
-        app:icon="@drawable/ic_baseline_aspect_ratio_24"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false" />
+        a:key="@string/pref_key_hide_tool_bar"
+        a:title="@string/pref_title_hide_tool_bar"
+        a:icon="@drawable/ic_baseline_aspect_ratio_24"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
-        app:key="@string/pref_key_show_tool_bar_on_scroll_up"
-        app:title="@string/pref_title_show_tool_bar_when_scroll_up"
-        app:icon="@drawable/ic_eye"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false" />
+        a:key="@string/pref_key_show_tool_bar_on_scroll_up"
+        a:title="@string/pref_title_show_tool_bar_when_scroll_up"
+        a:icon="@drawable/ic_eye"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
-        app:key="@string/pref_key_show_tool_bar_on_page_top"
-        app:title="@string/pref_title_show_tool_bar_on_page_top"
-        app:icon="@drawable/ic_vertical_align"
-        app:iconSpaceReserved="false"
-        app:singleLineTitle="false" />
+        a:key="@string/pref_key_show_tool_bar_on_page_top"
+        a:title="@string/pref_title_show_tool_bar_on_page_top"
+        a:icon="@drawable/ic_vertical_align"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
 
     <fulguris.preference.SliderPreference
         android:layout="@layout/preference_slider"
-        app:key="@string/pref_key_desktop_width"
-        app:title="@string/pref_title_desktop_width"
-        app:summary="@string/pref_summary_desktop_width"
-        app:icon="@drawable/ic_desktop"
-        app:seekBarIncrement="25"
-        app:showSeekBarValue="true"
-        app:iconSpaceReserved="false"
-        app:updatesContinuously="true"
+        a:key="@string/pref_key_desktop_width"
+        a:title="@string/pref_title_desktop_width"
+        a:summary="@string/pref_summary_desktop_width"
+        a:icon="@drawable/ic_desktop"
+        a:seekBarIncrement="25"
+        a:showSeekBarValue="true"
+        a:iconSpaceReserved="false"
+        a:updatesContinuously="true"
         android:valueFrom="100"
         android:valueTo="400"
         android:stepSize="25"
         android:value="200"
-        app:labelBehavior="gone"
-        app:format="%.0f%%"
-        app:singleLineTitle="false"
-        app:allowDividerAbove="false"
+        a:labelBehavior="gone"
+        a:format="%.0f%%"
+        a:singleLineTitle="false"
+        a:allowDividerAbove="false"
         />
 
 </PreferenceScreen>

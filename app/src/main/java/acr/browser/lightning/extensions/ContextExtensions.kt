@@ -6,7 +6,9 @@ package acr.browser.lightning.extensions
 
 import acr.browser.lightning.R
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -129,3 +131,13 @@ fun Context.getDrawable(@DrawableRes aId: Int, vararg aStates: Int): Drawable {
     Timber.v("getDrawable")
     return ResourcesCompat.getDrawable(resources, aId, theme)!!.apply{ state = intArrayOf(*aStates) }
 }
+
+/**
+ *
+ */
+val Context.isPortrait: Boolean get() = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+
+/**
+ *
+ */
+val Context.isLandscape: Boolean get() = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE

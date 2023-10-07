@@ -28,6 +28,7 @@ import acr.browser.lightning.settings.preferences.ConfigurationPreferences
 import acr.browser.lightning.settings.preferences.LandscapePreferences
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
+import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -49,6 +50,9 @@ class LandscapeSettingsFragment : ConfigurationSettingsFragment() {
         preferenceManager.sharedPreferencesName = requireContext().landscapeSharedPreferencesName()
         preferenceManager.sharedPreferencesMode = MODE_PRIVATE
         super.onCreatePreferences(savedInstanceState,rootKey)
+
+        // For access through options we show which configuration is currently loaded
+        findPreference<Preference>(getString(R.string.pref_key_back))?.summary = getString(R.string.settings_title_landscape)
     }
 
     /**

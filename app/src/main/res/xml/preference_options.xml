@@ -1,32 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:a="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/options">
 
         <Preference
-            app:fragment="acr.browser.lightning.settings.fragment.DomainSettingsFragment"
-            app:key="@string/pref_key_domain"
-            app:title="@string/action_domain_settings"
-            app:summary="@string/settings_summary_domains"
-            app:icon="@drawable/ic_domain"
-            app:singleLineTitle="false"
+            a:fragment="acr.browser.lightning.settings.fragment.DomainSettingsFragment"
+            a:key="@string/pref_key_domain"
+            a:title="@string/action_domain_settings"
+            a:summary="@string/settings_summary_domains"
+            a:icon="@drawable/ic_domain"
+            a:singleLineTitle="false"
             />
 
         <Preference
-            app:fragment="acr.browser.lightning.settings.fragment.CookiesSettingsFragment"
-            app:title="@string/settings_title_cookies"
-            app:summary="@string/settings_summary_manage_cookies"
-            app:icon="@drawable/ic_cookie"
-            app:singleLineTitle="false"
+            a:fragment="acr.browser.lightning.settings.fragment.CookiesSettingsFragment"
+            a:title="@string/settings_title_cookies"
+            a:summary="@string/settings_summary_manage_cookies"
+            a:icon="@drawable/ic_cookie"
+            a:singleLineTitle="false"
             />
 
         <Preference
-            app:fragment="acr.browser.lightning.settings.fragment.ScrollbarsSettingsFragment"
-            app:title="@string/pref_category_scrollbars"
-            app:summary="@string/pref_summary_scrollbars"
-            app:icon="@drawable/ic_scroll_vertical"
-            app:singleLineTitle="false"
+            a:key="@string/pref_key_portrait"
+            a:fragment="acr.browser.lightning.settings.fragment.PortraitSettingsFragment"
+            a:title="@string/settings_title_configuration"
+            a:summary="@string/settings_title_portrait"
+            a:icon="@drawable/ic_phone"
+            a:singleLineTitle="false"
+            />
+
+        <Preference
+            a:key="@string/pref_key_landscape"
+            a:fragment="acr.browser.lightning.settings.fragment.LandscapeSettingsFragment"
+            a:title="@string/settings_title_configuration"
+            a:summary="@string/settings_title_landscape"
+            a:icon="@drawable/ic_landscape"
+            a:singleLineTitle="false"
+            />
+        
+        <Preference
+            a:fragment="acr.browser.lightning.settings.fragment.ScrollbarsSettingsFragment"
+            a:title="@string/pref_category_scrollbars"
+            a:summary="@string/pref_summary_scrollbars"
+            a:icon="@drawable/ic_scroll_vertical"
+            a:singleLineTitle="false"
             />
 
     </PreferenceCategory>

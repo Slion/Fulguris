@@ -60,6 +60,7 @@ import android.app.NotificationManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -209,6 +210,14 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     //
     @Inject lateinit var tabsManager: TabsManager
     @Inject lateinit var presenter: BrowserPresenter
+
+    // To be notified when preference are changed
+    @Inject @PrefsPortrait lateinit var portraitSharedPrefs: SharedPreferences
+    @Inject @PrefsLandscape lateinit var landscapeSharedPrefs: SharedPreferences
+    // Need to keep reference of listener otherwise they get carbadge collected
+    private lateinit var portraitPrefsListener: SharedPreferences.OnSharedPreferenceChangeListener
+    private lateinit var landscapePrefsListener: SharedPreferences.OnSharedPreferenceChangeListener
+
 
     // HTTP
     private lateinit var queue: RequestQueue
@@ -383,6 +392,58 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // Hook in buttons with onClick handler
         iBindingToolbarContent.buttonReload.setOnClickListener(this)
+
+
+        portraitPrefsListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            Timber.d("Portrait prefs changed")
+            if (isPortrait) {
+                updateConfiguration()
+            }
+        }
+        portraitSharedPrefs.registerOnSharedPreferenceChangeListener(portraitPrefsListener)
+
+        landscapePrefsListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            Timber.d("Landscape prefs changed")
+            if (isLandscape) {
+                updateConfiguration()
+            }
+        }
+        landscapeSharedPrefs.registerOnSharedPreferenceChangeListener(landscapePrefsListener)
+    }
+
+    /**
+     * Update our views according to current configuration.
+     * Notably called when the configuration changes or when configuration preferences are adjusted.
+     */
+    private fun updateConfiguration(aConfig: Configuration = resources.configuration) {
+        Timber.d("updateConfiguration")
+
+        setupDrawers()
+        setFullscreenIfNeeded(aConfig)
+        if (!setupTabBar(aConfig)) {
+            // useBottomsheets settings could have changed
+            addTabsViewToParent()
+        }
+
+        setupToolBar(aConfig)
+        setupBookmarksView()
+
+        // Can't find a proper event to do that after the configuration changes were applied so we just delay it
+        mainHandler.postDelayed({
+            setupToolBar()
+            setupPullToRefresh(aConfig)
+            // For embedded tab bars modes
+            scrollToCurrentTab()
+
+            iBinding.drawerLayout.requestLayout()
+        },500);
+
+        //TODO: on Samsung Galaxy Tab S8 Ultra after turn on status bar in options configuration is does not render properly until we change tab
+        // The thing below did not help for some reason. Would be nice to find a fix for that.
+//        tabsManager.currentTab?.let{
+//            presenter.tabChanged(presenter.tabsModel.indexOfTab(it),false,false)
+//        }
+
     }
 
     /**
@@ -3013,19 +3074,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         Timber.d("onConfigurationChanged")
 
-        setupDrawers()
-        setFullscreenIfNeeded(aNewConfig)
-        setupTabBar(aNewConfig)
-        setupToolBar(aNewConfig)
-        setupBookmarksView()
+        updateConfiguration(aNewConfig)
 
-        // Can't find a proper event to do that after the configuration changes were applied so we just delay it
-        mainHandler.postDelayed({
-            setupToolBar()
-            setupPullToRefresh(aNewConfig)
-            // For embedded tab bars modes
-            scrollToCurrentTab()
-        }, 300)
         iMenuMain.dismiss() // As it wont update somehow
         iMenuWebPage.dismiss()
         // Make sure our drawers adjust accordingly
@@ -3172,6 +3222,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     override fun onDestroy() {
         Timber.d("onDestroy")
 
+        // Defensive, should not even be needed
+        portraitSharedPrefs.unregisterOnSharedPreferenceChangeListener(portraitPrefsListener)
+        landscapeSharedPrefs.unregisterOnSharedPreferenceChangeListener(landscapePrefsListener)
+        //
         queue.cancelAll(TAG)
 
         incognitoNotification?.hide()
@@ -3249,15 +3303,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.resumeAll()
         initializePreferences()
 
-        setupDrawers()
-        if (!setupTabBar(resources.configuration)) {
-            // useBottomsheets settings could have changed
-            addTabsViewToParent()
-        }
-        setupBookmarksView()
-        setupToolBar(resources.configuration)
-        mainHandler.postDelayed({ setupToolBar() }, 500)
-        setupPullToRefresh(resources.configuration)
+        updateConfiguration()
+
         // We think that's needed in case there was a rotation while in the background
         iBinding.drawerLayout.requestLayout()
 

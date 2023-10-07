@@ -25,8 +25,11 @@ package acr.browser.lightning.settings.fragment
 import fulguris.app
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.find
+import acr.browser.lightning.extensions.isLandscape
+import acr.browser.lightning.extensions.isPortrait
 import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
@@ -50,6 +53,21 @@ class OptionsSettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState,rootKey)
 
+        setupConfiguration()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        setupConfiguration()
+    }
+
+    /**
+     * Only show the configuration options for the current configuration
+     */
+    private fun setupConfiguration() {
+        findPreference<Preference>(getString(R.string.pref_key_portrait))?.isVisible =  requireActivity().isPortrait
+        findPreference<Preference>(getString(R.string.pref_key_landscape))?.isVisible =  requireActivity().isLandscape
     }
 
     /**
@@ -68,6 +86,9 @@ class OptionsSettingsFragment : AbstractSettingsFragment() {
                 false
             }
         }
+
+        // Need when coming back from sub menu after rotation for instance
+        setupConfiguration()
     }
 
 

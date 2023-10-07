@@ -79,10 +79,12 @@ class AppModule {
 
     @Provides
     @PrefsPortrait
+    @Singleton
     fun providePreferencesPortrait(application: Application): SharedPreferences = application.getSharedPreferences(application.portraitSharedPreferencesName(), 0)
 
     @Provides
     @PrefsLandscape
+    @Singleton
     fun providePreferencesLandscape(application: Application): SharedPreferences = application.getSharedPreferences(application.landscapeSharedPreferencesName(), 0)
 
     @Provides

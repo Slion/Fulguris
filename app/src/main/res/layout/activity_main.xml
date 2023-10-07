@@ -30,7 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".browser.activity.BrowserActivity"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:fitsSystemWindows="true">
 
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_layout"
