@@ -266,7 +266,10 @@
     <string name="pref_category_on_tab_close">Ao fechar separador</string>
     <string name="pref_category_on_tab_change">Ao alterar de separador</string>
     <string name="pref_category_on_tab_back_forward">Ao recuar ou avançar</string>
+    <string name="settings_category_on_follow_link">When following a link</string>
     <string name="pref_category_scrollbars">Barras de deslocação</string>
+    <string name="settings_title_tab">Tab</string>
+    <string name="settings_summary_tab">Animations, feedback and appearance</string>
     <string name="pref_summary_scrollbars">Tamanho e comportamento das barras de deslocação</string>
     <string name="pref_category_subscriptions">Subscrições</string>
     <string name="pref_summary_subscriptions">Ativar ou cancelar subscrições</string>
@@ -510,6 +513,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">Mostrar animação</string>
     <string name="pref_title_vibrate">Vibrar</string>
     <string name="pref_title_duration">Duração</string>
+    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_summary_animation_duration">Animation duration in milliseconds</string>
     <string name="pref_title_scrollbar_fading">Desvanecimento</string>
     <string name="pref_summary_on_scrollbar_fading">Desvanecer barras de deslocação</string>
     <string name="pref_summary_off_scrollbar_fading">Mostrar sempre barras de deslocação</string>
