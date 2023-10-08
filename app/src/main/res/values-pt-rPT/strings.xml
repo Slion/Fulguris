@@ -514,7 +514,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_vibrate">Vibrar</string>
     <string name="pref_title_duration">Duração</string>
     <string name="settings_title_animation_duration">Animation duration</string>
-    <string name="settings_summary_animation_duration">Animation duration in milliseconds</string>
     <string name="pref_title_scrollbar_fading">Desvanecimento</string>
     <string name="pref_summary_on_scrollbar_fading">Desvanecer barras de deslocação</string>
     <string name="pref_summary_off_scrollbar_fading">Mostrar sempre barras de deslocação</string>

@@ -512,7 +512,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_vibrate">振動</string>
     <string name="pref_title_duration">長さ</string>
     <string name="settings_title_animation_duration">Animation duration</string>
-    <string name="settings_summary_animation_duration">Animation duration in milliseconds</string>
     <string name="pref_title_scrollbar_fading">フェード</string>
     <string name="pref_summary_on_scrollbar_fading">スクロールバーがフェードアウトします</string>
     <string name="pref_summary_off_scrollbar_fading">スクロールバーは常に表示されます</string>

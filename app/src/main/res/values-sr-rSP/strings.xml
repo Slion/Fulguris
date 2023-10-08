@@ -516,7 +516,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_vibrate">Вибрирај</string>
     <string name="pref_title_duration">Трајање</string>
     <string name="settings_title_animation_duration">Animation duration</string>
-    <string name="settings_summary_animation_duration">Animation duration in milliseconds</string>
     <string name="pref_title_scrollbar_fading">Бледи</string>
     <string name="pref_summary_on_scrollbar_fading">Траке за померање нестају</string>
     <string name="pref_summary_off_scrollbar_fading">Траке за померање су увек приказане</string>
