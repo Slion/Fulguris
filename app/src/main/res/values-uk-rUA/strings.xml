@@ -514,7 +514,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">Показувати анімацію</string>
     <string name="pref_title_vibrate">Вібрація</string>
     <string name="pref_title_duration">Тривалість</string>
-    <string name="pref_summary_duration">Тривалість анімації у сентисекундах</string>
     <string name="pref_title_scrollbar_fading">Загасання</string>
     <string name="pref_summary_on_scrollbar_fading">Смуги прокрутки згасають</string>
     <string name="pref_summary_off_scrollbar_fading">Смуги прокрутки зображуються завжди</string>

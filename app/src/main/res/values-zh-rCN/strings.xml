@@ -508,7 +508,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">显示动画</string>
     <string name="pref_title_vibrate">振动</string>
     <string name="pref_title_duration">时长</string>
-    <string name="pref_summary_duration">动画时长，单位为一百分之一秒</string>
     <string name="pref_title_scrollbar_fading">淡出</string>
     <string name="pref_summary_on_scrollbar_fading">滚动条正在淡出</string>
     <string name="pref_summary_off_scrollbar_fading">滚动条始终显示</string>

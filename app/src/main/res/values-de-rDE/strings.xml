@@ -510,7 +510,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">Animation anzeigen</string>
     <string name="pref_title_vibrate">Vibrieren</string>
     <string name="pref_title_duration">Dauer</string>
-    <string name="pref_summary_duration">Dauer der Animation in Zentisekunden</string>
     <string name="pref_title_scrollbar_fading">Ausblenden</string>
     <string name="pref_summary_on_scrollbar_fading">Bildlaufleisten werden ausgeblendet</string>
     <string name="pref_summary_off_scrollbar_fading">Scroll-Leisten werden bereits angezeigt</string>
