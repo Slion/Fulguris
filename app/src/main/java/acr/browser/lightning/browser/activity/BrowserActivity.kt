@@ -2820,7 +2820,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             it.scaleY = 0f
             // Put our incoming frame on top
             // This replaces swapTabViewsFrontToBack for this special case
-            it.removeFromParent()?.addView(it)
+            // Still must not be on top of floating action buttons (FAB) touch tab switcher
+            it.removeFromParent()?.addView(it,1)
             // Animate it
             iTabAnimator = it.animate()
                     .scaleY(1f)
