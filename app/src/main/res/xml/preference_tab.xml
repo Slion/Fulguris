@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/pref_default_tab_list_item_show_close_button"
+        android:key="@string/pref_key_tab_list_item_show_close_button"
+        android:title="@string/pref_title_tab_list_item_show_close_button"
+        android:summary="@string/pref_summary_tab_list_item_show_close_button"
+        a:icon="@drawable/ic_action_delete"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false"
+        />
+
+    <PreferenceCategory android:title="@string/pref_category_on_tab_change">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_change_show_animation"
+            android:title="@string/pref_title_show_animation"
+            a:icon="@drawable/ic_animation"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_on_tab_close">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_close_show_snackbar"
+            android:title="@string/pref_title_show_snackbar"
+            a:icon="@drawable/ic_info"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
+            />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_key_on_tab_close_vibrate"
+            android:title="@string/pref_title_vibrate"
+            a:icon="@drawable/ic_vibrate"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_on_tab_back_forward">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_tab_back_show_animation"
+            android:title="@string/pref_title_show_animation"
+            a:icon="@drawable/ic_animation"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
+            />
+
+        <fulguris.preference.SliderPreference
+            android:layout="@layout/preference_slider"
+            a:key="@string/pref_key_on_tab_flip_animation_duration"
+            a:dependency="@string/pref_key_on_tab_back_show_animation"
+            a:title="@string/settings_title_animation_duration"
+            a:icon="@drawable/ic_timer"
+            a:seekBarIncrement="25"
+            a:showSeekBarValue="true"
+            a:iconSpaceReserved="false"
+            a:updatesContinuously="true"
+            android:valueFrom="100"
+            android:valueTo="1000"
+            android:stepSize="50"
+            android:value="@integer/pref_default_animation_duration_flip"
+            a:labelBehavior="gone"
+            a:format="%.0fms"
+            a:singleLineTitle="false"
+            a:allowDividerAbove="false"
+            a:allowDividerBelow="true"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_category_on_follow_link">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_page_started_show_animation"
+            android:title="@string/pref_title_show_animation"
+            a:icon="@drawable/ic_animation"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false"
+            />
+
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

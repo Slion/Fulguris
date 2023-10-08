@@ -281,6 +281,8 @@
     <string name="pref_category_on_tab_back_forward">When going back or forward</string>
     <string name="settings_category_on_follow_link">When following a link</string>
     <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="settings_title_tab">Tab</string>
+    <string name="settings_summary_tab">Animations, feedback and appearance</string>
     <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
     <string name="pref_category_subscriptions">Subscriptions</string>
     <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
