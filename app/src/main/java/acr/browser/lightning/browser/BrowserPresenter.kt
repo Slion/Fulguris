@@ -135,7 +135,6 @@ class BrowserPresenter @Inject constructor(
         aTab.resumeTimers()
         aTab.onResume()
 
-        iBrowserView.updateProgress(aTab.progress)
         iBrowserView.setBackButtonEnabled(aTab.canGoBack())
         iBrowserView.setForwardButtonEnabled(aTab.canGoForward())
         iBrowserView.updateUrl(aTab.url, false)

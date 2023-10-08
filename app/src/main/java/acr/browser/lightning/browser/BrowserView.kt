@@ -23,8 +23,6 @@ interface BrowserView {
 
     fun updateUrl(url: String?, isLoading: Boolean)
 
-    fun updateProgress(progress: Int)
-
     fun updateTabNumber(number: Int)
 
     /**

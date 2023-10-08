@@ -48,9 +48,9 @@ class WebPageChromeClient(
     val diskScheduler: Scheduler = hiltEntryPoint.diskScheduler()
 
     override fun onProgressChanged(view: WebView, newProgress: Int) {
-        if (webPageTab.isShown) {
-            uiController.updateProgress(newProgress)
-        }
+        Timber.v("onProgressChanged: $newProgress")
+
+        uiController.onProgressChanged(webPageTab, newProgress)
 
         // We don't need to run that when color mode is disabled
         if (userPreferences.colorModeEnabled) {
@@ -93,6 +93,7 @@ class WebPageChromeClient(
      * Called once the favicon is ready
      */
     override fun onReceivedIcon(view: WebView, icon: Bitmap) {
+        Timber.d("onReceivedIcon")
         webPageTab.titleInfo.setFavicon(icon)
         uiController.onTabChangedIcon(webPageTab)
         cacheFavicon(view.url, icon)
@@ -117,6 +118,7 @@ class WebPageChromeClient(
      *
      */
     override fun onReceivedTitle(view: WebView?, title: String?) {
+        Timber.d("onReceivedTitle")
         if (title?.isNotEmpty() == true) {
             webPageTab.titleInfo.setTitle(title)
         } else {
@@ -126,7 +128,69 @@ class WebPageChromeClient(
         if (view != null && view.url != null) {
             uiController.updateHistory(title, view.url as String)
         }
+    }
 
+    /**
+     * This is some sort of alternate favicon. F-Droid and Wikipedia have one for instance.
+     * BBC has lots of them.
+     * Possibly higher resolution than your typical favicon?
+     */
+    override fun onReceivedTouchIconUrl(view: WebView?, url: String?, precomposed: Boolean) {
+        Timber.d("onReceivedTouchIconUrl: $url")
+        super.onReceivedTouchIconUrl(view, url, precomposed)
+    }
+
+    /**
+     *
+     */
+    override fun onRequestFocus(view: WebView?) {
+        Timber.d("onRequestFocus")
+        super.onRequestFocus(view)
+    }
+
+    /**
+     *
+     */
+    override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+        // TODO: implement nicer dialog
+        Timber.d("onJsAlert")
+        return super.onJsAlert(view, url, message, result)
+    }
+
+    /**
+     *
+     */
+    override fun onJsConfirm(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+        // TODO: implement nicer dialog
+        Timber.d("onJsConfirm")
+        return super.onJsConfirm(view, url, message, result)
+    }
+
+    /**
+     *
+     */
+    override fun onJsPrompt(view: WebView?, url: String?, message: String?, defaultValue: String?, result: JsPromptResult?): Boolean {
+        // TODO: implement nicer dialog
+        Timber.d("onJsPrompt")
+        return super.onJsPrompt(view, url, message, defaultValue, result)
+    }
+
+    /**
+     *
+     */
+    override fun onJsBeforeUnload(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+        // TODO: implement nicer dialog
+        Timber.d("onJsBeforeUnload")
+        return super.onJsBeforeUnload(view, url, message, result)
+    }
+
+    /**
+     *
+     */
+    override fun onJsTimeout(): Boolean {
+        // Should never get there
+        Timber.d("onJsTimeout")
+        return super.onJsTimeout()
     }
 
     /**
@@ -177,6 +241,7 @@ class WebPageChromeClient(
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onPermissionRequest(request: PermissionRequest) {
+        Timber.d("onPermissionRequest")
         if (userPreferences.webRtcEnabled) {
             webRtcPermissionsModel.requestPermission(request, this)
         } else {
@@ -212,8 +277,8 @@ class WebPageChromeClient(
                 Unit
         })
 
-    override fun onCreateWindow(view: WebView, isDialog: Boolean, isUserGesture: Boolean,
-                                resultMsg: Message): Boolean {
+    override fun onCreateWindow(view: WebView, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message): Boolean {
+        Timber.d("onCreateWindow")
         // TODO: redo that
         uiController.onCreateWindow(resultMsg)
         //TODO: surely that can't be right,
@@ -221,7 +286,10 @@ class WebPageChromeClient(
         //return false
     }
 
-    override fun onCloseWindow(window: WebView) = uiController.onCloseWindow(webPageTab)
+    override fun onCloseWindow(window: WebView) {
+        Timber.d("onCloseWindow")
+        uiController.onCloseWindow(webPageTab)
+    }
 
     @Suppress("unused", "UNUSED_PARAMETER")
     fun openFileChooser(uploadMsg: ValueCallback<Uri>) = uiController.openFileChooser(uploadMsg)
@@ -270,14 +338,22 @@ class WebPageChromeClient(
     }
 
 
-    override fun onHideCustomView() = uiController.onHideCustomView()
+    override fun onHideCustomView() {
+        Timber.d("onHideCustomView")
+        uiController.onHideCustomView()
+    }
 
-    override fun onShowCustomView(view: View, callback: CustomViewCallback) =
+    override fun onShowCustomView(view: View, callback: CustomViewCallback) {
+        Timber.d("onShowCustomView")
         uiController.onShowCustomView(view, callback)
+    }
 
-    override fun onShowCustomView(view: View, requestedOrientation: Int,
-                                  callback: CustomViewCallback) =
+
+    override fun onShowCustomView(view: View, requestedOrientation: Int, callback: CustomViewCallback) {
+        Timber.d("onShowCustomView: $requestedOrientation")
         uiController.onShowCustomView(view, callback, requestedOrientation)
+    }
+
 
     /**
      * Needed to display javascript console message in logcat.
@@ -285,7 +361,16 @@ class WebPageChromeClient(
     override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
         // TODO: Collect those in the tab so that we could display them
         consoleMessage?.apply {
-            Timber.tag("JavaScript").d("${messageLevel()} - ${message()} -- from line ${lineNumber()} of ${sourceId()}")
+            val tag = "JavaScript";
+            val log = "${messageLevel()} - ${message()} -- from line ${lineNumber()} of ${sourceId()}"
+            when (messageLevel()) {
+                ConsoleMessage.MessageLevel.DEBUG -> Timber.tag(tag).d(log)
+                ConsoleMessage.MessageLevel.WARNING -> Timber.tag(tag).w(log)
+                ConsoleMessage.MessageLevel.ERROR -> Timber.tag(tag).e(log)
+                ConsoleMessage.MessageLevel.TIP -> Timber.tag(tag).i(log)
+                ConsoleMessage.MessageLevel.LOG -> Timber.tag(tag).v(log)
+                null -> Timber.tag(tag).d(log)
+            }
         }
         return true
     }

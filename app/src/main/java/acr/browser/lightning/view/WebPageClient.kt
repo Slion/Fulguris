@@ -40,6 +40,7 @@ import android.net.http.SslError
 import android.os.Message
 import android.util.Base64
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.webkit.*
 import android.widget.CheckBox
@@ -154,6 +155,7 @@ class WebPageClient(
      *   comment Helium314: adBLock.shouldBock always never blocks if url.isSpecialUrl() or url.isAppScheme(), could be moved here
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
+        Timber.d("shouldInterceptRequest")
         // returns some dummy response if blocked, null if not blocked
 
         val response = adBlock.shouldBlock(request, currentUrl)
@@ -312,7 +314,8 @@ class WebPageClient(
         // Try to fetch meta theme color a few times
         webPageTab.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
 
-        uiController.onTabChanged(webPageTab)
+        //uiController.onTabChanged(webPageTab)
+        uiController.onPageStarted(webPageTab)
     }
 
     private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
@@ -327,12 +330,21 @@ class WebPageClient(
     /**
      *
      */
+    override fun onReceivedClientCertRequest(view: WebView?, request: ClientCertRequest?) {
+        Timber.d("onReceivedClientCertRequest")
+        super.onReceivedClientCertRequest(view, request)
+    }
+
+    /**
+     *
+     */
     override fun onReceivedHttpAuthRequest(
             view: WebView,
             handler: HttpAuthHandler,
             host: String,
             realm: String
     ) {
+        Timber.d("onReceivedHttpAuthRequest")
         MaterialAlertDialogBuilder(activity).apply {
             val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_auth_request, null)
 
@@ -411,7 +423,11 @@ class WebPageClient(
     }
 
 
+    /**
+     *
+     */
     override fun onScaleChanged(view: WebView, oldScale: Float, newScale: Float) {
+        Timber.d("onScaleChanged")
         if (view.isShown && webPageTab.userPreferences.textReflowEnabled) {
             if (isRunning)
                 return
@@ -514,6 +530,7 @@ class WebPageClient(
     }
 
     override fun onFormResubmission(view: WebView, dontResend: Message, resend: Message) {
+        Timber.d("onFormResubmission")
         MaterialAlertDialogBuilder(activity).apply {
             setTitle(activity.getString(R.string.title_form_resubmission))
             setMessage(activity.getString(R.string.message_form_resubmission))
@@ -767,4 +784,61 @@ class WebPageClient(
         Timber.e("onRenderProcessGone")
         return webPageTab.onRenderProcessGone(view,detail)
     }
+
+    /**
+     * Should we use this to build our history?
+     * Though to be fair the system we had thus far seems to be working fine too.
+     *
+     * See: https://stackoverflow.com/a/56395424/3969362
+     */
+    override fun doUpdateVisitedHistory(view: WebView, url: String, isReload: Boolean) {
+        Timber.d("doUpdateVisitedHistory: $isReload - $url - ${view.url}")
+        super.doUpdateVisitedHistory(view, url, isReload)
+
+        if (webPageTab.lastUrl!=url) {
+            webPageTab.lastUrl=url
+            uiController.onTabChangedUrl(webPageTab)
+        }
+    }
+
+    /**
+     *
+     */
+    override fun onPageCommitVisible(view: WebView?, url: String?) {
+        Timber.d("onPageCommitVisible: $url")
+        super.onPageCommitVisible(view, url)
+    }
+
+    /**
+     *
+     */
+    override fun shouldOverrideKeyEvent(view: WebView?, event: KeyEvent?): Boolean {
+        Timber.d("shouldOverrideKeyEvent: $event")
+        return super.shouldOverrideKeyEvent(view, event)
+    }
+
+    /**
+     *
+     */
+    override fun onUnhandledKeyEvent(view: WebView?, event: KeyEvent?) {
+        Timber.d("onUnhandledKeyEvent: $event")
+        super.onUnhandledKeyEvent(view, event)
+    }
+
+    /**
+     *
+     */
+    override fun onReceivedLoginRequest(view: WebView?, realm: String?, account: String?, args: String?) {
+        Timber.d("onReceivedLoginRequest: $realm")
+        super.onReceivedLoginRequest(view, realm, account, args)
+    }
+
+    /**
+     *
+     */
+    override fun onSafeBrowsingHit(view: WebView?, request: WebResourceRequest?, threatType: Int, callback: SafeBrowsingResponse?) {
+        Timber.d("onSafeBrowsingHit: $threatType")
+        super.onSafeBrowsingHit(view, request, threatType, callback)
+    }
 }
+

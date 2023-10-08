@@ -253,22 +253,41 @@
             a:singleLineTitle="false"
             />
 
-        <SeekBarPreference
-            a:key="@string/pref_key_on_tab_back_animation_duration"
+        <fulguris.preference.SliderPreference
+            android:layout="@layout/preference_slider"
+            a:key="@string/pref_key_on_tab_flip_animation_duration"
             a:dependency="@string/pref_key_on_tab_back_show_animation"
-            a:title="@string/pref_title_duration"
-            a:summary="@string/pref_summary_duration"
+            a:title="@string/settings_title_animation_duration"
             a:icon="@drawable/ic_timer"
-            a:defaultValue="@integer/pref_default_animation_duration_tab_back_forward"
-            a:min="10"
-            android:max="100"
-            a:seekBarIncrement="50"
+            a:seekBarIncrement="25"
             a:showSeekBarValue="true"
-            a:iconSpaceReserved="true"
+            a:iconSpaceReserved="false"
             a:updatesContinuously="true"
+            android:valueFrom="100"
+            android:valueTo="1000"
+            android:stepSize="50"
+            android:value="@integer/pref_default_animation_duration_flip"
+            a:labelBehavior="gone"
+            a:format="%.0fms"
+            a:singleLineTitle="false"
+            a:allowDividerAbove="false"
+            a:allowDividerBelow="true"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_category_on_follow_link">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_on_page_started_show_animation"
+            android:title="@string/pref_title_show_animation"
+            a:icon="@drawable/ic_animation"
+            a:iconSpaceReserved="true"
             a:singleLineTitle="false"
             />
+
     </PreferenceCategory>
+
 
     <Preference
         a:fragment="acr.browser.lightning.settings.fragment.ScrollbarsSettingsFragment"
@@ -276,6 +295,7 @@
         a:summary="@string/pref_summary_scrollbars"
         a:icon="@drawable/ic_scroll_vertical"
         a:singleLineTitle="false"
+        a:allowDividerAbove="true"
         />
 
 

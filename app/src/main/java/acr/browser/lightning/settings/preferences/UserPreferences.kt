@@ -397,7 +397,8 @@ class UserPreferences @Inject constructor(
     var onTabCloseVibrate by preferences.booleanPreference(R.string.pref_key_on_tab_close_vibrate, R.bool.pref_default_on_tab_close_vibrate)
     var onTabChangeShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_change_show_animation, R.bool.pref_default_on_tab_change_show_animation)
     var onTabBackShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_back_show_animation, R.bool.pref_default_on_tab_back_show_animation)
-    var onTabBackAnimationDuration by preferences.intResPreference(R.string.pref_key_on_tab_back_animation_duration, R.integer.pref_default_animation_duration_tab_back_forward)
+    var onTabBackAnimationDuration by preferences.floatResPreference(R.string.pref_key_on_tab_flip_animation_duration, R.integer.pref_default_animation_duration_flip)
+    var onPageStartedShowAnimation by preferences.booleanPreference(R.string.pref_key_on_page_started_show_animation, R.bool.pref_default_on_tab_back_show_animation)
 
     /**
      * Force Zoom for Websites

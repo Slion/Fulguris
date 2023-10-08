@@ -48,7 +48,9 @@
 
     <integer name="pref_default_portrait_desktop_width">1024</integer>
     <integer name="pref_default_landscape_desktop_width">1440</integer>
-    <integer name="pref_default_animation_duration_tab_back_forward">50</integer>
+    <integer name="pref_default_animation_duration_flip">500</integer>
+
+
 
     <bool name="pref_default_always_incognito">false</bool>
     <bool name="pref_default_close_drawer">false</bool>

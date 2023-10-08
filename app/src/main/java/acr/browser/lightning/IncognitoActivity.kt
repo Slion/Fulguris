@@ -14,7 +14,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class IncognitoActivity @Inject constructor(): BrowserActivity() {
 
-    override fun provideThemeOverride(): AppTheme? = AppTheme.BLACK
+    override fun provideThemeOverride(): AppTheme = AppTheme.BLACK
 
     override fun provideAccentThemeOverride(): AccentTheme = AccentTheme.PINK
 

@@ -48,6 +48,8 @@ import android.webkit.WebSettings.LOAD_DEFAULT
 import android.webkit.WebSettings.LOAD_NO_CACHE
 import android.webkit.WebSettings.LayoutAlgorithm
 import android.webkit.WebView
+import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
+import android.webkit.WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
 import androidx.webkit.WebSettingsCompat
@@ -309,6 +311,11 @@ class WebPageTab(
                 webView!!.url as String
             }
         }
+
+    /**
+     * Used to check if our URL really changed
+     */
+    var lastUrl: String = ""
 
     /**
      * Return true if this tab is frozen, meaning it was not yet loaded from its bundle
@@ -1397,6 +1404,14 @@ class WebPageTab(
          */
         override fun onShowPress(e: MotionEvent) {
             canTriggerLongPress = true
+        }
+
+        /**
+         *
+         */
+        override fun onSingleTapUp(e: MotionEvent): Boolean {
+            uiController.onSingleTapUp(this@WebPageTab)
+            return false
         }
     }
 

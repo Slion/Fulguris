@@ -50,7 +50,8 @@
 
     <!-- On tab back -->
     <string name="pref_key_on_tab_back_show_animation">pref_key_on_tab_back_show_animation</string>
-    <string name="pref_key_on_tab_back_animation_duration">pref_key_on_tab_back_animation_duration</string>
+    <string name="pref_key_on_tab_flip_animation_duration">pref_key_on_tab_flip_animation_duration</string>
+    <string name="pref_key_on_page_started_show_animation">pref_key_on_page_started_show_animation</string>
 
     <string name="pref_key_browser_text_size">pref_key_browser_text_size</string>
     <string name="pref_key_overview_mode">pref_key_overview_mode</string>

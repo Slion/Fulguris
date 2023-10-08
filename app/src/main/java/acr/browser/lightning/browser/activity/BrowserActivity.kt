@@ -82,6 +82,8 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.CookieManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient.CustomViewCallback
+import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
+import android.webkit.WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
@@ -2444,8 +2446,17 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Disable pull to refresh if no vertical scroll as it bugs with frame internal scroll
         // See: https://github.com/Slion/Lightning-Browser/projects/1
         iTabViewContainerFront.isEnabled = currentTabView?.canScrollVertically()?:false
+
+        updateReloadButton()
+    }
+
+    /**
+     *
+     */
+    private fun updateReloadButton() {
         // Don't show reload button if pull-to-refresh is enabled and once we are not loading
-        iBindingToolbarContent.buttonReload.visibility = if (iTabViewContainerFront.isEnabled && !isLoading()) View.GONE else View.VISIBLE
+        iBindingToolbarContent.buttonReload.isVisible = !iTabViewContainerFront.isEnabled || isLoading()
+        iBindingToolbarContent.buttonReload.setImageResource(if (isLoading()) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
     }
 
     /**
@@ -2556,6 +2567,36 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     /**
      *
      */
+    override fun onPageStarted(aTab: WebPageTab) {
+        if (tabsManager.currentTab==aTab) {
+            setTaskDescription()
+        }
+
+        // SL: Is this being called way too many times?
+        // TODO: This is completely silly all it does is calling [notifyTabViewChanged]
+        presenter.tabChangeOccurred(aTab)
+        // SL: Putting this here to update toolbar background color was a bad idea
+        // That somehow freezes the WebView after switching between a few tabs on F(x)tec Pro1 at least (Android 9)
+        //initializePreferences()
+
+    }
+
+    /**
+     *
+     */
+    override fun onTabChangedUrl(aTab: WebPageTab) {
+        Timber.d("onTabChangedUrl")
+
+        if (tabsManager.currentTab==aTab) {
+            setTaskDescription()
+            updateUrl(aTab.url,isLoading())
+        }
+
+    }
+
+    /**
+     *
+     */
     override fun onTabChanged(aTab: WebPageTab) {
         if (tabsManager.currentTab==aTab) {
             setTaskDescription()
@@ -2594,6 +2635,35 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // TODO: This is completely silly all it does is calling [notifyTabViewChanged]
         presenter.tabChangeOccurred(aTab)
 
+    }
+
+
+    private var iTappedTab : WebPageTab? = null
+
+    /**
+     *
+     */
+    override fun onSingleTapUp(aTab: WebPageTab) {
+        if (aTab!=tabsManager.currentTab) {
+            return
+        }
+
+        // TODO: Discard anchor links hit? Like the one from BBC menu drawer.
+        aTab.webView?.hitTestResult?.let {
+            Timber.i("onSingleTapUp: ${it.type}")
+            if (it.type==SRC_ANCHOR_TYPE || it.type==SRC_IMAGE_ANCHOR_TYPE) {
+                // Remember the tapped tab and we will start animation if that results in a page load from onProgressChanged with short delay
+                // GitHub page navigation notably needed more 600ms from tap progress notification
+                iTappedTab = aTab
+                mainHandler.postDelayed({
+                    iTappedTab = null
+                },1000)
+                // Animate our tab
+//                if (iTabAnimator==null && userPreferences.onPageStartedShowAnimation && aTab.isLoading) {
+//                    animateTabFlipLeft(iTabViewContainerFront)
+//                }
+            }
+        }
     }
 
     /**
@@ -2919,7 +2989,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             it.cameraDistance = it.width * scale * 2
             iTabAnimator = it.animate()
                     .rotationY(360f)
-                    .setDuration(userPreferences.onTabBackAnimationDuration.toLong()*10)
+                    .setDuration(userPreferences.onTabBackAnimationDuration.toLong())
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             it.rotationY = 0f
@@ -2943,7 +3013,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
             iTabAnimator = it.animate()
                     .rotationY(-360f)
-                    .setDuration(userPreferences.onTabBackAnimationDuration.toLong()*10)
+                    .setDuration(userPreferences.onTabBackAnimationDuration.toLong())
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             it.rotationY = 0f
@@ -3677,11 +3747,27 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBindingToolbarContent.tabsButton.updateCount(number)
     }
 
-    override fun updateProgress(progress: Int) {
-        setIsLoading(progress < 100)
-        iBinding.toolbarInclude.progressView.progress = progress
+    /**
+     *
+     */
+    override fun onProgressChanged(aTab: WebPageTab, aProgress: Int) {
+
+        if (aTab!=tabsManager.currentTab) {
+            return
+        }
+
+        if (iTappedTab == aTab && iTabAnimator==null && userPreferences.onPageStartedShowAnimation) {
+            animateTabFlipLeft(iTabViewContainerFront)
+            iTappedTab = null
+        }
+
+        setIsLoading(aProgress < 100)
+        iBinding.toolbarInclude.progressView.progress = aProgress
     }
 
+    /**
+     *
+     */
     protected fun addItemToHistory(title: String?, url: String) {
         if (url.isSpecialUrl()) {
             return
@@ -4327,7 +4413,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
 
         // Set stop or reload icon according to current load status
         //setMenuItemIcon(R.id.action_reload, if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh)
-        iBindingToolbarContent.buttonReload.setImageResource(if (isLoading) R.drawable.ic_action_delete else R.drawable.ic_action_refresh);
+        updateReloadButton()
 
         // That fancy animation would be great but somehow it looks like it is causing issues making the button unresponsive.
         // I'm guessing it is conflicting with animations from layout change.

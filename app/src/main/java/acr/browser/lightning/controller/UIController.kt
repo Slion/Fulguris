@@ -62,9 +62,9 @@ interface UIController {
     /**
      * Update the loading progress of the page.
      *
-     * @param progress the loading progress of the page, an integer between 0 and 100.
+     * @param aProgress the loading progress of the page, an integer between 0 and 100.
      */
-    fun updateProgress(progress: Int)
+    fun onProgressChanged(aTab: WebPageTab, aProgress: Int)
 
     /**
      * Notify the controller that a [url] has been visited.
@@ -173,6 +173,16 @@ interface UIController {
     fun onTabChanged(aTab: WebPageTab)
 
     /**
+     * Notify the UI that [aTab] started loading a page.
+     */
+    fun onPageStarted(aTab: WebPageTab)
+
+    /**
+     *
+     */
+    fun onTabChangedUrl(aTab: WebPageTab)
+
+    /**
      *
      */
     fun onTabChangedIcon(aTab: WebPageTab)
@@ -233,4 +243,9 @@ interface UIController {
      * Sort out that mess.
      */
     fun updateSslState(sslState: SslState)
+
+    /**
+     *
+     */
+    fun onSingleTapUp(aTab: WebPageTab)
 }
