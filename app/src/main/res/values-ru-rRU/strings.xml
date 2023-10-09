@@ -168,7 +168,7 @@
     <string name="action_message_canceled">Действие отменено.</string>
     <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Ошибка безопасности! Загрузка страницы прервана.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error">Безопасное соединение нарушено:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Вы все еще хотите продолжить?</string>
     <string name="message_certificate_date_invalid">Дата сертификата недействительна</string>
     <string name="message_certificate_expired">Истёк срок действия сертификата</string>
     <string name="message_certificate_domain_mismatch">Домен в сертификате не соответствует домену сайта</string>
@@ -266,10 +266,10 @@
     <string name="pref_category_on_tab_close">При закрытии вкладки</string>
     <string name="pref_category_on_tab_change">При смене вкладки</string>
     <string name="pref_category_on_tab_back_forward">При возвращении или переходе</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
+    <string name="settings_category_on_follow_link">При переходе по ссылке</string>
     <string name="pref_category_scrollbars">Полосы прокрутки</string>
-    <string name="settings_title_tab">Tab</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
+    <string name="settings_title_tab">Вкладка</string>
+    <string name="settings_summary_tab">Анимации, обратная связь и внешний вид</string>
     <string name="pref_summary_scrollbars">Изменить размер и поведение полос прокрутки</string>
     <string name="pref_category_subscriptions">Подписки</string>
     <string name="pref_summary_subscriptions">Активировать или отменить подписки</string>
@@ -346,15 +346,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокировщик рекламы и фильтрация содержимого</string>
     <string name="settings_summary_content_control_toggle">Включить блокировку рекламы и фильтрацию содержимого</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
-    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
-    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
-    <string name="settings_summary_off_toolbars_position">Top</string>
+    <string name="settings_title_tab_bar_orientation">Ориентация панели вкладок</string>
+    <string name="settings_summary_on_tab_bar_orientation">Вертикальная</string>
+    <string name="settings_summary_off_tab_bar_orientation">Горизонтальная</string>
+    <string name="settings_title_tab_bar_placement">Размещение панели вкладок</string>
+    <string name="settings_summary_on_tab_bar_placement">Выдвижная панель</string>
+    <string name="settings_summary_off_tab_bar_placement">Всегда на экране</string>
+    <string name="settings_title_toolbars_position">Положение панели инструментов</string>
+    <string name="settings_summary_on_toolbars_position">Вниз</string>
+    <string name="settings_summary_off_toolbars_position">Наверх</string>
     <string name="settings_title_desktop_mode_default">Режим \"Настольный ПК\"</string>
     <string name="settings_summary_desktop_mode_default">Определяет, используют ли новые вкладки режим для настольного компьютера по умолчанию</string>
     <string name="settings_title_dark_mode_default">Использовать тёмную тему</string>
@@ -488,7 +488,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Сессия с таким именем уже существует!</string>
     <string name="session_cant_delete_current">Невозможно удалить текущую сессию!</string>
     <string name="session_prompt_confirm_deletion_title">Подтвердите удаление</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Вы уверены, что хотите удалить сеанс \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Переключено на \"%s\"</string>
     <string name="busy">Занято, попробуйте еще раз в ближайшее время.</string>
     <string name="invalid_character_removed">Недействительный символ удалён!</string>
@@ -517,7 +517,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">Показывать анимацию</string>
     <string name="pref_title_vibrate">Вибрация</string>
     <string name="pref_title_duration">Продолжительность</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_title_animation_duration">Продолжительность анимации</string>
     <string name="pref_title_scrollbar_fading">Исчезновение</string>
     <string name="pref_summary_on_scrollbar_fading">Полосы прокрутки исчезают</string>
     <string name="pref_summary_off_scrollbar_fading">Полосы прокрутки отображаются всегда</string>
@@ -604,5 +604,5 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_title">Заголовок</string>
     <string name="label_session">Сессия</string>
     <string name="label_app_name">Название приложения</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="message_render_process_crashed">Процесс рендеринга завершился сбоем. Возможно, вам придется перезагрузить некоторые веб-страницы.</string>
 </resources>
