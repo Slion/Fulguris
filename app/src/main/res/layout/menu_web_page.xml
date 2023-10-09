@@ -167,6 +167,12 @@ TODO: Find a way not to scroll that guy without breaking our layout
                     -->
 
                     <TextView
+                        android:id="@+id/menuItemPageHistory"
+                        style="@style/BrowserTextMenuItem"
+                        app:drawableStartCompat="@drawable/ic_history"
+                        android:text="@string/settings_title_page_history" />
+
+                    <TextView
                         android:id="@+id/menuItemShare"
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"

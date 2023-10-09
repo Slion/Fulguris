@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:a="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        a:key="@string/pref_key_page_history"
+        a:title="@string/settings_title_page_history">
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

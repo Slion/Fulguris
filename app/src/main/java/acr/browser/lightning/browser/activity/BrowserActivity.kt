@@ -240,7 +240,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     private lateinit var bookmarksDialog: BottomSheetDialog
 
     // Options settings menu
-    val iBottomSheet = BottomSheetDialogFragment(supportFragmentManager)
+    private val iBottomSheet = BottomSheetDialogFragment(supportFragmentManager)
 
     // Binding
     lateinit var iBinding: ActivityMainBinding
@@ -671,6 +671,10 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iMenuWebPage.apply {
             onMenuItemClicked(iBinding.menuItemMainMenu) { dismiss(); doShowMenuMain() }
             // Web page actions
+            onMenuItemClicked(iBinding.menuItemPageHistory) {
+                dismiss()
+                iBottomSheet.setLayout(R.layout.fragment_settings_page_history).show()
+            }
             onMenuItemClicked(iBinding.menuItemShare) { dismiss(); executeAction(R.id.action_share) }
             onMenuItemClicked(iBinding.menuItemAddBookmark) { dismiss(); executeAction(R.id.action_add_bookmark) }
             onMenuItemClicked(iBinding.menuItemFind) { dismiss(); executeAction(R.id.action_find) }
