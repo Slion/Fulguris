@@ -1,0 +1,5 @@
+⏱️ Page history navigation panel
+🌈 Optional tab animation when following a link
+⚙️ Dedicated page for tab settings in Look & feel
+🪲 Fix touch tab switcher floating action buttons not showing after opening new tab
+🌐 Translations update
