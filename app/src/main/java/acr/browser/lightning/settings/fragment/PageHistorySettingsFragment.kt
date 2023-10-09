@@ -25,6 +25,7 @@ package acr.browser.lightning.settings.fragment
 import acr.browser.lightning.R
 import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabsManager
+import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
 import acr.browser.lightning.extensions.findPreference
@@ -121,6 +122,15 @@ class PageHistorySettingsFragment : AbstractSettingsFragment() {
                 pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     // Compute to which item we should jump to
                     val steps = i - currentIndex
+
+                    if (steps>0) {
+                        // Going forward
+                        (activity as BrowserActivity).animateTabFlipLeft()
+                    } else if (steps<0) {
+                        // Going back
+                        (activity as BrowserActivity).animateTabFlipRight()
+                    }
+
                     tabsManager.currentTab?.webView?.goBackOrForward(steps)
                     // Remove tick from former current item
                     category.findPreference<Preference>("item$currentIndex")?.title = history.getItemAtIndex(currentIndex).title

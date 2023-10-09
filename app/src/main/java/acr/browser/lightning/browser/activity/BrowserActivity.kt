@@ -3026,14 +3026,27 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         iTabAnimator = null;
                         }
                     })
-
-
-
-
-
         }
     }
 
+
+    /**
+     * Used when going forward in page history
+     */
+    fun animateTabFlipLeft() {
+        if (iTabAnimator==null && userPreferences.onTabBackShowAnimation) {
+            animateTabFlipLeft(iTabViewContainerFront)
+        }
+    }
+
+    /**
+     * Used when going backward in page history
+     */
+    fun animateTabFlipRight() {
+        if (iTabAnimator==null && userPreferences.onTabBackShowAnimation) {
+            animateTabFlipRight(iTabViewContainerFront)
+        }
+    }
 
     override fun showBlockedLocalFileDialog(onPositiveClick: Function0<Unit>) {
         MaterialAlertDialogBuilder(this)
@@ -3761,6 +3774,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             return
         }
 
+        // Make sure we play forward animation when user tapped a link
         if (iTappedTab == aTab && iTabAnimator==null && userPreferences.onPageStartedShowAnimation) {
             animateTabFlipLeft(iTabViewContainerFront)
             iTappedTab = null
