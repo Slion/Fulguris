@@ -266,11 +266,11 @@
     <string name="pref_category_on_tab_close">标签页关闭时</string>
     <string name="pref_category_on_tab_change">标签页切换时</string>
     <string name="pref_category_on_tab_back_forward">前进后退时</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
+    <string name="settings_category_on_follow_link">跟随链接时</string>
     <string name="pref_category_scrollbars">滚动条</string>
-    <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
+    <string name="settings_title_tab">标签页</string>
+    <string name="settings_title_page_history">页面历史记录</string>
+    <string name="settings_summary_tab">动画、反馈和外观</string>
     <string name="pref_summary_scrollbars">调整滚动条大小和行为</string>
     <string name="pref_category_subscriptions">订阅</string>
     <string name="pref_summary_subscriptions">激活或取消您的订阅</string>
@@ -512,7 +512,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">显示动画</string>
     <string name="pref_title_vibrate">振动</string>
     <string name="pref_title_duration">时长</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_title_animation_duration">动画持续时间</string>
     <string name="pref_title_scrollbar_fading">淡出</string>
     <string name="pref_summary_on_scrollbar_fading">滚动条正在淡出</string>
     <string name="pref_summary_off_scrollbar_fading">滚动条始终显示</string>
