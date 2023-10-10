@@ -1912,7 +1912,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         // We fetch current selection from WebView using JavaScript
                         // TODO: Move JavaScript to WebViewEx
                         Timber.w("evaluateJavascript: text selection extraction")
-                        (currentTabView as? WebViewEx)?.evaluateJavascript("(function(){return window.getSelection().toString()})()",
+                        currentTabView?.evaluateJavascript("(function(){return window.getSelection().toString()})()",
                                 ValueCallback<String> {
                                     aSelection ->
                                     // Our selection is within double quotes
@@ -2156,8 +2156,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // Had to delay that otherwise we could get there too early on the url still contains the download link
         // URL is later on reset to null by WebView internal mechanics.
         mainHandler.postDelayed({
-            if ((currentTabView as? WebViewEx)?.url.isNullOrBlank()) {
-                tabsManager.let { presenter.deleteTab(it.indexOfCurrentTab()) }
+            if (currentTabView?.url.isNullOrBlank()) {
+                presenter.deleteTab(tabsManager.indexOfCurrentTab())
             }
         }, 500);
     }
@@ -2294,7 +2294,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             }
 
             R.id.action_print -> {
-                (currentTabView as WebViewEx).print()
+                currentTabView?.print()
                 return true
             }
             R.id.action_reading_mode -> {
@@ -2728,13 +2728,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * [aView] Input is in fact a [WebViewEx].
      */
     override fun setTabView(aView: View, aWasTabAdded: Boolean, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
-
+        Timber.i("setTabView")
         if (lastTabView == aView) {
             Timber.d("setTabView: tab already set")
             return
         }
-
-        Timber.d("setTabView")
 
         aView.removeFromParent() // Just to be safe
 
@@ -2743,7 +2741,6 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 // …or if we already have a tab animation running
                 || iTabAnimator!=null
 
-
         // If we have not swapped our views yet
         if (skipAnimation) {
             // Just perform our layout changes in our front view container then
@@ -2751,7 +2748,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             // In fact Web pages using popup and side menu will be broken as those elements background won't render, it'd look just transparent.
             // Issue could be reproduced on firebase console side menu and some BBC consent pop-up
             iTabViewContainerFront.addView(aView,0, MATCH_PARENT)
-            currentTabView?.removeFromParent()
+            lastTabView?.removeFromParent()
             iTabViewContainerFront.resetTarget() // Needed to make it work together with swipe to refresh
             aView.requestFocus()
         } else {
@@ -2763,7 +2760,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // Remove existing focus change observer before we change our tab
-        currentTabView?.onFocusChangeListener = null
+        lastTabView?.onFocusChangeListener = null
         // Change our tab
         lastTabView = aView
         // Close virtual keyboard if we loose focus
@@ -3542,9 +3539,8 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // TODO: Investigate what's going on here, as that should not be the case and could lead to other issues
         iTabViewContainerBack.setBackgroundColor(color)
 
-        val webViewEx: WebViewEx? = currentTabView as? WebViewEx
 
-        webViewEx?.let {
+        currentTabView?.let {
             // Now also set WebView background color otherwise it is just white and we don't want that.
             // This one is going to be a problem as it will break some websites such as bbc.com.
             // Make sure we reset our background color after page load, thanks bbc.com and bbc.com/news for not defining background color.
@@ -3552,11 +3548,11 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     // Don't reset background color back to white on empty urls, that prevents displaying large empty white pages and blinding users in dark mode.
                     // When opening some download links a tab is spawned first with the download URL and later that URL is set back to null.
                     // Luckily our delayed call and the absence of invalidate prevents a flicker to white screen.
-                    && !webViewEx.url.isNullOrBlank()) {
+                    && !it.url.isNullOrBlank()) {
                 // We delay that to avoid some web sites including default startup page to flash white on app startup
                 mainHandler.removeCallbacks(resetBackgroundColorRunnable)
                 resetBackgroundColorRunnable = Runnable {
-                    webViewEx.setBackgroundColor(Color.WHITE)
+                    it.setBackgroundColor(Color.WHITE)
                     // We do not want to apply that color on the spot though.
                     // It does not make sense anyway since it is a delayed call.
                     // It also still causes a flicker notably when a tab is spawned by a download link.
@@ -3565,9 +3561,9 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                 mainHandler.postDelayed(resetBackgroundColorRunnable, 750);
             } else {
                 mainHandler.removeCallbacks(resetBackgroundColorRunnable)
-                webViewEx.setBackgroundColor(color)
+                it.setBackgroundColor(color)
                 // Make sure that color is applied on the spot for earlier color change when loading tabs
-                webViewEx.invalidate()
+                it.invalidate()
             }
         }
 
