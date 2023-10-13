@@ -916,29 +916,27 @@ class TabsManager @Inject constructor(
     lateinit var iBrowserView: BrowserView
     var isIncognito: Boolean = false
     lateinit var closedTabs: RecentTabsModel
-    // TODO: Remove this left over from presenter
-    private val tabsModel: TabsManager = this
 
     /**
      * Switch to the session with the given name
      */
     fun switchToSession(aSessionName: String) {
         // Don't do anything if given session name is already the current one or if such session does not exists
-        if (!tabsModel.isInitialized
-            || tabsModel.iCurrentSessionName==aSessionName
-            || tabsModel.iSessions.none { s -> s.name == aSessionName }
+        if (!isInitialized
+            || iCurrentSessionName==aSessionName
+            || iSessions.none { s -> s.name == aSessionName }
         ) {
             return
         }
 
         // Save current states
-        tabsModel.saveState()
+        saveState()
         //
-        tabsModel.isInitialized = false
+        isInitialized = false
         // Change current session
-        tabsModel.iCurrentSessionName = aSessionName
+        iCurrentSessionName = aSessionName
         // Save it again to preserve new current session name
-        tabsModel.saveSessions()
+        saveSessions()
         // Then reload our tabs
         setupTabs()
 
@@ -958,12 +956,12 @@ class TabsManager @Inject constructor(
         Timber.d("setupTabs")
         iScopeMainThread.launch {
             delay(1L)
-            val tabs = tabsModel.initializeTabs(iBrowserView as Activity, isIncognito)
+            val tabs = initializeTabs(iBrowserView as Activity, isIncognito)
             // At this point we always have at least a tab in the tab manager
             iBrowserView.notifyTabViewInitialized()
-            iBrowserView.updateTabNumber(tabsModel.size())
+            iBrowserView.updateTabNumber(size())
             // Switch to persisted current tab
-            tabChanged(if (tabsModel.savedRecentTabsIndices.isNotEmpty()) tabsModel.savedRecentTabsIndices.last() else tabsModel.positionOf(tabs.last()),false, false)
+            tabChanged(if (savedRecentTabsIndices.isNotEmpty()) savedRecentTabsIndices.last() else positionOf(tabs.last()),false, false)
             // Only then can we open tab from external app on startup otherwise it is opened in the background somehow
             aIntent?.let {onNewIntent(aIntent)}
 
@@ -1001,9 +999,9 @@ class TabsManager @Inject constructor(
         iBrowserView.setForwardButtonEnabled(aTab.canGoForward())
         iBrowserView.updateUrl(aTab.url, false)
         iBrowserView.setTabView(aTab.webView!!,aWasTabAdded,aPreviousTabClosed, aGoingBack)
-        val index = tabsModel.indexOfTab(aTab)
+        val index = indexOfTab(aTab)
         if (index >= 0) {
-            iBrowserView.notifyTabViewChanged(tabsModel.indexOfTab(aTab))
+            iBrowserView.notifyTabViewChanged(indexOfTab(aTab))
         }
 
         // Must come late as it needs a webview
@@ -1017,11 +1015,11 @@ class TabsManager @Inject constructor(
      */
     fun closeAllOtherTabs() {
         Timber.d("closeAllOtherTabs")
-        while (tabsModel.last() != tabsModel.indexOfCurrentTab()) {
-            deleteTab(tabsModel.last())
+        while (last() != indexOfCurrentTab()) {
+            deleteTab(last())
         }
 
-        while (0 != tabsModel.indexOfCurrentTab()) {
+        while (0 != indexOfCurrentTab()) {
             deleteTab(0)
         }
     }
@@ -1032,13 +1030,13 @@ class TabsManager @Inject constructor(
      */
     fun closeAllTabs() {
         // That should never be the case though
-        if (tabsModel.allTabs.count()==0) return
+        if (allTabs.count()==0) return
 
-        while (tabsModel.allTabs.count() > 1) {
-            deleteTab(tabsModel.last())
+        while (allTabs.count() > 1) {
+            deleteTab(last())
         }
 
-        //deleteTab(tabsModel.last())
+        //deleteTab(last())
     }
 
     /**
@@ -1048,27 +1046,27 @@ class TabsManager @Inject constructor(
      */
     fun deleteTab(position: Int) {
         Timber.d("deleteTab")
-        val tabToDelete = tabsModel.getTabAtPosition(position) ?: return
+        val tabToDelete = getTabAtPosition(position) ?: return
 
         closedTabs.add(tabToDelete.saveState())
 
         val isShown = tabToDelete.isShown
         val shouldClose = shouldClose && isShown && tabToDelete.isNewTab
-        val beforeTab = tabsModel.currentTab
+        val beforeTab = currentTab
 
-        val currentDeleted = tabsModel.doDeleteTab(position)
+        val currentDeleted = doDeleteTab(position)
         if (currentDeleted) {
-            tabChanged(tabsModel.indexOfCurrentTab(), isShown, false)
+            tabChanged(indexOfCurrentTab(), isShown, false)
         }
 
-        val afterTab = tabsModel.currentTab
+        val afterTab = currentTab
         iBrowserView.notifyTabViewRemoved(position)
 
         if (afterTab == null) {
             iBrowserView.closeBrowser()
             return
         } else if (afterTab !== beforeTab) {
-            iBrowserView.notifyTabViewChanged(tabsModel.indexOfCurrentTab())
+            iBrowserView.notifyTabViewChanged(indexOfCurrentTab())
         }
 
         if (shouldClose && !isIncognito) {
@@ -1076,7 +1074,7 @@ class TabsManager @Inject constructor(
             iBrowserView.closeActivity()
         }
 
-        iBrowserView.updateTabNumber(tabsModel.size())
+        iBrowserView.updateTabNumber(size())
 
         Timber.d("deleteTab - end")
     }
@@ -1086,9 +1084,9 @@ class TabsManager @Inject constructor(
      * TODO: That implementation is so ugly… try and improve that.
      * @param intent the intent to handle, may be null.
      */
-    fun onNewIntent(intent: Intent?) = tabsModel.doOnceAfterInitialization {
+    fun onNewIntent(intent: Intent?) = doOnceAfterInitialization {
         val url = if (intent?.action == Intent.ACTION_WEB_SEARCH) {
-            tabsModel.extractSearchFromIntent(intent)
+            extractSearchFromIntent(intent)
         }
         else if (intent?.action == Intent.ACTION_SEND) {
             // User shared text with our app
@@ -1107,18 +1105,18 @@ class TabsManager @Inject constructor(
         val tabHashCode = intent?.extras?.getInt(INTENT_ORIGIN, 0) ?: 0
 
         if (tabHashCode != 0 && url != null) {
-            tabsModel.getTabForHashCode(tabHashCode)?.loadUrl(url)
+            getTabForHashCode(tabHashCode)?.loadUrl(url)
         } else if (url != null) {
             if (URLUtil.isFileUrl(url)) {
                 iBrowserView.showBlockedLocalFileDialog {
                     newTab(UrlInitializer(url), true)
                     shouldClose = true
-                    tabsModel.lastTab()?.isNewTab = true
+                    lastTab()?.isNewTab = true
                 }
             } else {
                 newTab(UrlInitializer(url), true)
                 shouldClose = true
-                tabsModel.lastTab()?.isNewTab = true
+                lastTab()?.isNewTab = true
             }
         }
     }
@@ -1131,7 +1129,7 @@ class TabsManager @Inject constructor(
             TabModelFromBundle(bundle).let {
                 if (it.url.isSpecialUrl()) {
                     // That's a special URL
-                    newTab(tabsModel.tabInitializerForSpecialUrl(it.url), show)
+                    newTab(tabInitializerForSpecialUrl(it.url), show)
                 } else {
                     // That's an actual WebView bundle
                     newTab(FreezableBundleInitializer(it), show)
@@ -1156,7 +1154,7 @@ class TabsManager @Inject constructor(
      * @param url the URL to load, must not be null.
      */
     fun loadUrlInCurrentView(url: String) {
-        tabsModel.currentTab?.loadUrl(url)
+        currentTab?.loadUrl(url)
     }
 
     /**
@@ -1168,13 +1166,13 @@ class TabsManager @Inject constructor(
      * [aGoingBack] Tells in which direction we are going, this can help determine what kind of tab animation will be used.
      */
     fun tabChanged(position: Int, aPreviousTabClosed: Boolean, aGoingBack: Boolean) {
-        if (position < 0 || position >= tabsModel.size()) {
+        if (position < 0 || position >= size()) {
             Timber.d("tabChanged invalid position: $position")
             return
         }
 
         Timber.d("tabChanged: $position")
-        onTabChanged(tabsModel.switchToTab(position),false, aPreviousTabClosed, aGoingBack)
+        onTabChanged(switchToTab(position),false, aPreviousTabClosed, aGoingBack)
     }
 
 
@@ -1190,7 +1188,7 @@ class TabsManager @Inject constructor(
      */
     fun newTab(tabInitializer: TabInitializer, show: Boolean): Boolean {
         // Limit number of tabs according to sponsorship level
-        if (tabsModel.size() >= Entitlement.maxTabCount(userPreferences.sponsorship)) {
+        if (size() >= Entitlement.maxTabCount(userPreferences.sponsorship)) {
             iBrowserView.onMaxTabReached()
             // Still allow spawning more tabs for the time being.
             // That means not having a valid subscription will only spawn that annoying message above.
@@ -1199,24 +1197,24 @@ class TabsManager @Inject constructor(
 
         Timber.d("New tab, show: $show")
 
-        val startingTab = tabsModel.newTab(iBrowserView as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
-        if (tabsModel.size() == 1) {
+        val startingTab = newTab(iBrowserView as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
+        if (size() == 1) {
             startingTab.resumeTimers()
         }
 
         iBrowserView.notifyTabViewAdded()
-        iBrowserView.updateTabNumber(tabsModel.size())
+        iBrowserView.updateTabNumber(size())
 
         if (show) {
-            onTabChanged(tabsModel.switchToTab(tabsModel.indexOfTab(startingTab)),true, false, false)
+            onTabChanged(switchToTab(indexOfTab(startingTab)),true, false, false)
         }
         else {
             // We still need to add it to our recent tabs
             // Adding at the beginning of a Set is doggy though
-            val recentTabs = tabsModel.iRecentTabs.toSet()
-            tabsModel.iRecentTabs.clear()
-            tabsModel.iRecentTabs.add(startingTab)
-            tabsModel.iRecentTabs.addAll(recentTabs)
+            val recentTabs = iRecentTabs.toSet()
+            iRecentTabs.clear()
+            iRecentTabs.add(startingTab)
+            iRecentTabs.addAll(recentTabs)
         }
 
         return true
