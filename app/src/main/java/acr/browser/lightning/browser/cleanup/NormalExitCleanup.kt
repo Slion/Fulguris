@@ -1,6 +1,6 @@
 package acr.browser.lightning.browser.cleanup
 
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.database.history.HistoryDatabase
 import acr.browser.lightning.di.DatabaseScheduler
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -18,7 +18,7 @@ class NormalExitCleanup @Inject constructor(
     private val historyDatabase: HistoryDatabase,
     @DatabaseScheduler private val databaseScheduler: Scheduler
 ) : ExitCleanup {
-    override fun cleanUp(webView: WebView?, context: BrowserActivity) {
+    override fun cleanUp(webView: WebView?, context: WebBrowserActivity) {
         if (userPreferences.clearCacheExit) {
             WebUtils.clearCache(webView, context)
             Timber.i("Cache Cleared")

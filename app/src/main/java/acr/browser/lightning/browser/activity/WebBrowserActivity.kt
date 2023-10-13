@@ -134,7 +134,7 @@ import kotlin.system.exitProcess
  *
  */
 @AndroidEntryPoint
-abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickListener, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClickListener, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     // Notifications
     lateinit var CHANNEL_ID: String
@@ -343,7 +343,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
         tabsManager.addTabNumberChangedListener(::updateTabNumber)
 
         // Setup our presenter
-        tabsManager.iUIController = this
+        tabsManager.iWebBrowser = this
         tabsManager.closedTabs = RecentTabsModel()
         tabsManager.isIncognito = isIncognito()
 
@@ -2505,7 +2505,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
     }
 
     /**
-     * From [UIController].
+     * From [WebBrowser].
      */
     override fun notifyTabViewRemoved(position: Int) {
         Timber.d("Notify Tab Removed: $position")
@@ -2522,7 +2522,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
     }
 
     /**
-     * From [UIController].
+     * From [WebBrowser].
      */
     override fun notifyTabViewAdded() {
         Timber.d("Notify Tab Added")
@@ -2530,7 +2530,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
     }
 
     /**
-     * From [UIController].
+     * From [WebBrowser].
      *
      */
     override fun notifyTabViewChanged(position: Int) {
@@ -2541,7 +2541,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
     }
 
     /**
-     * From [UIController].
+     * From [WebBrowser].
      */
     override fun notifyTabViewInitialized() {
         Timber.d("Notify Tabs Initialized")
@@ -2549,7 +2549,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
     }
 
     /**
-     * TODO: Defined both in [UIController] and [UIController]
+     * TODO: Defined both in [WebBrowser] and [WebBrowser]
      * Sort out that mess.
      */
     override fun updateSslState(sslState: SslState) {
@@ -2720,7 +2720,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
     var iSkipNextSearchQueryUpdate = false
 
     /**
-     * From [UIController].
+     * From [WebBrowser].
      * This function is central to browser tab switching.
      * It swaps our previous WebView with our new WebView.
      *
@@ -3623,7 +3623,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
 
 
     /**
-     * Overrides [UIController.changeToolbarBackground]
+     * Overrides [WebBrowser.changeToolbarBackground]
      *
      * Animates the color of the toolbar from one color to another. Optionally animates
      * the color of the tab background, for use when the tabs are displayed on the top
@@ -4639,7 +4639,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
     }
 
     /**
-     * Implement [UIController.onMaxTabReached]
+     * Implement [WebBrowser.onMaxTabReached]
      */
     override fun onMaxTabReached() {
         // Show a message telling the user to contribute.
@@ -4657,7 +4657,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickL
     }
 
     /**
-     * Implement [UIController.setAddressBarText]
+     * Implement [WebBrowser.setAddressBarText]
      */
     override fun setAddressBarText(aText: String) {
         Timber.d("setAddressBarText: $aText")

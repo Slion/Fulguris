@@ -23,8 +23,8 @@
 package acr.browser.lightning.browser.sessions
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.activity.WebBrowserActivity
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.databinding.SessionListBinding
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.toast
@@ -54,7 +54,7 @@ import javax.inject.Inject
  */
 class SessionsPopupWindow : PopupWindow {
 
-    var iUiController: UIController
+    var iWebBrowser: WebBrowser
     var iAdapter: SessionsAdapter
     var iBinding: SessionListBinding
     private var iItemTouchHelper: ItemTouchHelper? = null
@@ -76,8 +76,8 @@ class SessionsPopupWindow : PopupWindow {
         elevation = 100F
 
         iBinding = aBinding
-        iUiController = aBinding.root.context as UIController
-        iAdapter = SessionsAdapter(iUiController)
+        iWebBrowser = aBinding.root.context as WebBrowser
+        iAdapter = SessionsAdapter(iWebBrowser)
 
         animationStyle = R.style.AnimationMenu
         //animationStyle = android.R.style.Animation_Dialog
@@ -99,12 +99,12 @@ class SessionsPopupWindow : PopupWindow {
                     setPositiveButton(R.string.action_ok) { _, _ ->
                         val name = textView.text.toString()
                         // Check if session exists already
-                        if (iUiController.getTabModel().isValidSessionName(name)) {
+                        if (iWebBrowser.getTabModel().isValidSessionName(name)) {
                             // That session does not exist yet, add it then
-                            iUiController.getTabModel().iSessions.let {
+                            iWebBrowser.getTabModel().iSessions.let {
                                 it.add(Session(name, 1))
                                 // Switch to our newly added session
-                                (view.context as BrowserActivity).apply {
+                                (view.context as WebBrowserActivity).apply {
                                     tabsManager.switchToSession(name)
                                     // Close session dialog after creating and switching to new session
                                     if (!isEditModeEnabled()) {
@@ -130,7 +130,7 @@ class SessionsPopupWindow : PopupWindow {
             // Make sure user can only enter valid filename characters
             textView.filters = arrayOf<InputFilter>(FileNameInputFilter())
 
-            iUiController.getTabModel().let { tabs ->
+            iWebBrowser.getTabModel().let { tabs ->
                 BrowserDialog.showCustomDialog(aBinding.root.context as Activity) {
                     setTitle(R.string.session_name_prompt)
                     setView(dialogView)
@@ -149,7 +149,7 @@ class SessionsPopupWindow : PopupWindow {
                                 // Save current tabs that our newly added session
                                 tabs.saveState()
                                 // Switch to our newly added session
-                                (view.context as BrowserActivity).apply {
+                                (view.context as WebBrowserActivity).apply {
                                     // Close session dialog after creating and switching to new session
                                     if (!isEditModeEnabled()) {
                                         iMenuSessions.dismiss()
@@ -191,7 +191,7 @@ class SessionsPopupWindow : PopupWindow {
                 // Just close and reopen our menu as our layout change animation is really ugly
                 dismiss()
                 iAnchor?.let {
-                    (iUiController as BrowserActivity).mainHandler.post { show(it,!editModeEnabled,false) }
+                    (iWebBrowser as WebBrowserActivity).mainHandler.post { show(it,!editModeEnabled,false) }
                 }
 
                 // We still broadcast the change above and do a post to avoid getting some items caught not fully animated, even though animations are disabled.
@@ -259,7 +259,7 @@ class SessionsPopupWindow : PopupWindow {
             //val gravity = if (configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.LEFT else Gravity.TOP or Gravity.LEFT
             val gravity = if (configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.LEFT else Gravity.TOP or Gravity.LEFT
             val xOffset = anchorLoc[0]
-            val yOffset = if (configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] - (aAnchor.height * 0.15).toInt() else anchorLoc[1] + (aAnchor.height * 0.85).toInt()
+            val yOffset = if (configPrefs.toolbarsBottom) (contentView.context as WebBrowserActivity).iBinding.root.height - anchorLoc[1] - (aAnchor.height * 0.15).toInt() else anchorLoc[1] + (aAnchor.height * 0.85).toInt()
             // Show our popup menu from the right side of the screen below our anchor
             showAtLocation(aAnchor, gravity,
                     // Offset from the left screen edge
@@ -270,7 +270,7 @@ class SessionsPopupWindow : PopupWindow {
         } else {
             //
             val gravity = if (configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
-            val yOffset = if (configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] else anchorLoc[1] + aAnchor.height
+            val yOffset = if (configPrefs.toolbarsBottom) (contentView.context as WebBrowserActivity).iBinding.root.height - anchorLoc[1] else anchorLoc[1] + aAnchor.height
             // Show our popup menu from the right side of the screen below our anchor
             showAtLocation(aAnchor, gravity,
                     // Offset from the right screen edge
@@ -293,7 +293,7 @@ class SessionsPopupWindow : PopupWindow {
      *
      */
     fun scrollToCurrentSession() {
-        iBinding.recyclerViewSessions.smoothScrollToPosition(iUiController.getTabModel().currentSessionIndex())
+        iBinding.recyclerViewSessions.smoothScrollToPosition(iWebBrowser.getTabModel().currentSessionIndex())
     }
 
     /**
@@ -304,7 +304,7 @@ class SessionsPopupWindow : PopupWindow {
         // I'm guessing isComputingLayout is not needed anymore since we moved our update after tab manager initialization
         // TODO: remove it and switch quickly between sessions to see if that still works
         if (!iBinding.recyclerViewSessions.isComputingLayout) {
-            iAdapter.showSessions(iUiController.getTabModel().iSessions)
+            iAdapter.showSessions(iWebBrowser.getTabModel().iSessions)
         }
     }
 

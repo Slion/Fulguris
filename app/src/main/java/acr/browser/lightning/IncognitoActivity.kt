@@ -1,6 +1,6 @@
 package acr.browser.lightning
 
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -12,7 +12,7 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class IncognitoActivity @Inject constructor(): BrowserActivity() {
+class IncognitoActivity @Inject constructor(): WebBrowserActivity() {
 
     override fun provideThemeOverride(): AppTheme = AppTheme.BLACK
 

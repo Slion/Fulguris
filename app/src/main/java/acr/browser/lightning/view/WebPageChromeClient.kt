@@ -1,7 +1,7 @@
 package acr.browser.lightning.view
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
@@ -39,7 +39,7 @@ class WebPageChromeClient(
 ) : WebChromeClient(), WebRtcPermissionsView {
 
     private val geoLocationPermissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-    private val uiController: UIController = activity as UIController
+    private val webBrowser: WebBrowser = activity as WebBrowser
 
     private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
     val faviconModel: FaviconModel = hiltEntryPoint.faviconModel
@@ -50,7 +50,7 @@ class WebPageChromeClient(
     override fun onProgressChanged(view: WebView, newProgress: Int) {
         Timber.v("onProgressChanged: $newProgress")
 
-        uiController.onProgressChanged(webPageTab, newProgress)
+        webBrowser.onProgressChanged(webPageTab, newProgress)
 
         // We don't need to run that when color mode is disabled
         if (userPreferences.colorModeEnabled) {
@@ -68,7 +68,7 @@ class WebPageChromeClient(
                     try {
                         webPageTab.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"'));
                         // We did find a valid theme-color, tell our controller about it
-                        uiController.onTabChanged(webPageTab)
+                        webBrowser.onTabChanged(webPageTab)
                     }
                     catch (e: Exception) {
                         if (triesLeft==0 || newProgress==100)
@@ -76,7 +76,7 @@ class WebPageChromeClient(
                             // Exhausted all our tries or the page finished loading before we did
                             // Just give up then and reset our theme color
                             webPageTab.htmlMetaThemeColor = WebPageTab.KHtmlMetaThemeColorInvalid
-                            uiController.onTabChanged(webPageTab)
+                            webBrowser.onTabChanged(webPageTab)
                         }
                         else
                         {
@@ -95,7 +95,7 @@ class WebPageChromeClient(
     override fun onReceivedIcon(view: WebView, icon: Bitmap) {
         Timber.d("onReceivedIcon")
         webPageTab.titleInfo.setFavicon(icon)
-        uiController.onTabChangedIcon(webPageTab)
+        webBrowser.onTabChangedIcon(webPageTab)
         cacheFavicon(view.url, icon)
     }
 
@@ -124,9 +124,9 @@ class WebPageChromeClient(
         } else {
             webPageTab.titleInfo.setTitle(activity.getString(R.string.untitled))
         }
-        uiController.onTabChangedTitle(webPageTab)
+        webBrowser.onTabChangedTitle(webPageTab)
         if (view != null && view.url != null) {
-            uiController.updateHistory(title, view.url as String)
+            webBrowser.updateHistory(title, view.url as String)
         }
     }
 
@@ -280,7 +280,7 @@ class WebPageChromeClient(
     override fun onCreateWindow(view: WebView, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message): Boolean {
         Timber.d("onCreateWindow")
         // TODO: redo that
-        uiController.onCreateWindow(resultMsg)
+        webBrowser.onCreateWindow(resultMsg)
         //TODO: surely that can't be right,
         return true
         //return false
@@ -288,23 +288,23 @@ class WebPageChromeClient(
 
     override fun onCloseWindow(window: WebView) {
         Timber.d("onCloseWindow")
-        uiController.onCloseWindow(webPageTab)
+        webBrowser.onCloseWindow(webPageTab)
     }
 
     @Suppress("unused", "UNUSED_PARAMETER")
-    fun openFileChooser(uploadMsg: ValueCallback<Uri>) = uiController.openFileChooser(uploadMsg)
+    fun openFileChooser(uploadMsg: ValueCallback<Uri>) = webBrowser.openFileChooser(uploadMsg)
 
     @Suppress("unused", "UNUSED_PARAMETER")
     fun openFileChooser(uploadMsg: ValueCallback<Uri>, acceptType: String) =
-        uiController.openFileChooser(uploadMsg)
+        webBrowser.openFileChooser(uploadMsg)
 
     @Suppress("unused", "UNUSED_PARAMETER")
     fun openFileChooser(uploadMsg: ValueCallback<Uri>, acceptType: String, capture: String) =
-        uiController.openFileChooser(uploadMsg)
+        webBrowser.openFileChooser(uploadMsg)
 
     override fun onShowFileChooser(webView: WebView, filePathCallback: ValueCallback<Array<Uri>>,
                                    fileChooserParams: FileChooserParams): Boolean {
-        uiController.showFileChooser(filePathCallback)
+        webBrowser.showFileChooser(filePathCallback)
         return true
     }
 
@@ -340,18 +340,18 @@ class WebPageChromeClient(
 
     override fun onHideCustomView() {
         Timber.d("onHideCustomView")
-        uiController.onHideCustomView()
+        webBrowser.onHideCustomView()
     }
 
     override fun onShowCustomView(view: View, callback: CustomViewCallback) {
         Timber.d("onShowCustomView")
-        uiController.onShowCustomView(view, callback)
+        webBrowser.onShowCustomView(view, callback)
     }
 
 
     override fun onShowCustomView(view: View, requestedOrientation: Int, callback: CustomViewCallback) {
         Timber.d("onShowCustomView: $requestedOrientation")
-        uiController.onShowCustomView(view, callback, requestedOrientation)
+        webBrowser.onShowCustomView(view, callback, requestedOrientation)
     }
 
 

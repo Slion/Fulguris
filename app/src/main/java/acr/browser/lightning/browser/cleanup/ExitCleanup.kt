@@ -1,6 +1,6 @@
 package acr.browser.lightning.browser.cleanup
 
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import android.webkit.WebView
 
 /**
@@ -13,6 +13,6 @@ interface ExitCleanup {
     /**
      * Clean up the instance of the browser with the provided [webView] and [context].
      */
-    fun cleanUp(webView: WebView?, context: BrowserActivity)
+    fun cleanUp(webView: WebView?, context: WebBrowserActivity)
 
 }

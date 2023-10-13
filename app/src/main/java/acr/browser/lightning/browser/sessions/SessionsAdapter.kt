@@ -23,7 +23,7 @@
 package acr.browser.lightning.browser.sessions
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import android.view.View
@@ -42,7 +42,7 @@ import java.util.*
  * TODO: consider using [ListAdapter] instead of [RecyclerView.Adapter]
  */
 class SessionsAdapter(
-        private val uiController: UIController
+        private val webBrowser: WebBrowser
 ) : RecyclerView.Adapter<SessionViewHolder>(), ItemDragDropSwipeAdapter {
 
     // Current sessions shown in our dialog
@@ -77,7 +77,7 @@ class SessionsAdapter(
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): SessionViewHolder {
         val view = viewGroup.context.inflater.inflate(R.layout.session_list_item, viewGroup, false)
-        return SessionViewHolder(view, uiController).apply {
+        return SessionViewHolder(view, webBrowser).apply {
             // Ask our newly created view holder to observe our edit mode status
             // Thus buttons on our items will be shown or hidden
             iEditModeSubscriptions.add(observeEditMode(iEditModeEnabledObservable))
@@ -118,11 +118,11 @@ class SessionsAdapter(
         // Swap local list position
         Collections.swap(iSessions, fromPosition, toPosition)
         // Swap model list position
-        Collections.swap(uiController.getTabModel().iSessions, fromPosition, toPosition)
+        Collections.swap(webBrowser.getTabModel().iSessions, fromPosition, toPosition)
         // Tell base class an item was moved
         notifyItemMoved(fromPosition, toPosition)
         // Persist our changes
-        uiController.getTabModel().saveSessions()
+        webBrowser.getTabModel().saveSessions()
         return true
     }
 

@@ -2,7 +2,7 @@ package acr.browser.lightning.browser.cleanup
 
 import acr.browser.lightning.Capabilities
 import acr.browser.lightning.MainActivity
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.isSupported
 import android.webkit.WebView
 import javax.inject.Inject
@@ -16,7 +16,7 @@ class DelegatingExitCleanup @Inject constructor(
     private val enhancedIncognitoExitCleanup: EnhancedIncognitoExitCleanup,
     private val normalExitCleanup: NormalExitCleanup
 ) : ExitCleanup {
-    override fun cleanUp(webView: WebView?, context: BrowserActivity) {
+    override fun cleanUp(webView: WebView?, context: WebBrowserActivity) {
         when {
             context is MainActivity -> normalExitCleanup.cleanUp(webView, context)
             Capabilities.FULL_INCOGNITO.isSupported -> enhancedIncognitoExitCleanup.cleanUp(webView, context)

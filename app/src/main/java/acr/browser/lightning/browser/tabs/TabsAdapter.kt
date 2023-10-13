@@ -22,19 +22,17 @@
 
 package acr.browser.lightning.browser.tabs
 
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import java.util.*
 
 /**
  * Abstract base tabs adapter.
  * Implement functionality common to our concrete tabs adapters.
  */
-abstract class TabsAdapter(val uiController: UIController): RecyclerView.Adapter<TabViewHolder>(), ItemDragDropSwipeAdapter {
+abstract class TabsAdapter(val webBrowser: WebBrowser): RecyclerView.Adapter<TabViewHolder>(), ItemDragDropSwipeAdapter {
 
     protected var tabList: List<TabViewState> = emptyList()
 
@@ -73,7 +71,7 @@ abstract class TabsAdapter(val uiController: UIController): RecyclerView.Adapter
         // Swap local list position
         Collections.swap(tabList, fromPosition, toPosition)
         // Swap model list position
-        Collections.swap(uiController.getTabModel().allTabs, fromPosition, toPosition)
+        Collections.swap(webBrowser.getTabModel().allTabs, fromPosition, toPosition)
         // Tell base class an item was moved
         notifyItemMoved(fromPosition, toPosition)
         return true
@@ -85,7 +83,7 @@ abstract class TabsAdapter(val uiController: UIController): RecyclerView.Adapter
      */
     override fun onItemDismiss(position: Int)
     {
-        uiController.tabCloseClicked(position)
+        webBrowser.tabCloseClicked(position)
     }
 
 

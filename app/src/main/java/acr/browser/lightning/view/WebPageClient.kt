@@ -5,8 +5,8 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlockerManager
 import acr.browser.lightning.adblock.AdBlocker
 import acr.browser.lightning.adblock.NoOpAdBlocker
-import acr.browser.lightning.browser.UIController
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.WebBrowser
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
@@ -68,7 +68,7 @@ class WebPageClient(
         private val webPageTab: WebPageTab
 ) : WebViewClient() {
 
-    private val uiController: UIController
+    private val webBrowser: WebBrowser
     private val intentUtils = IntentUtils(activity)
 
     private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
@@ -102,13 +102,13 @@ class WebPageClient(
     var sslState: SslState = SslState.None
         private set(value) {
             field = value
-            uiController.updateSslState(field)
+            webBrowser.updateSslState(field)
         }
 
 
     init {
         //activity.injector.inject(this)
-        uiController = activity as UIController
+        webBrowser = activity as WebBrowser
         adBlock = chooseAdBlocker()
     }
 
@@ -198,7 +198,7 @@ class WebPageClient(
     private fun updateUrlIfNeeded(url: String, isLoading: Boolean) {
         // Update URL unless we are dealing with our special internal URL
         (url.isSpecialUrl()). let { dontDoUpdate ->
-            uiController.updateUrl(if (dontDoUpdate) webPageTab.url else url, isLoading)
+            webBrowser.updateUrl(if (dontDoUpdate) webPageTab.url else url, isLoading)
         }
     }
 
@@ -215,8 +215,8 @@ class WebPageClient(
 
         if (view.isShown) {
             updateUrlIfNeeded(url, false)
-            uiController.setBackButtonEnabled(view.canGoBack())
-            uiController.setForwardButtonEnabled(view.canGoForward())
+            webBrowser.setBackButtonEnabled(view.canGoBack())
+            webBrowser.setForwardButtonEnabled(view.canGoForward())
             view.postInvalidate()
         }
         if (view.title == null || (view.title as String).isEmpty()) {
@@ -244,7 +244,7 @@ class WebPageClient(
             )
         }
 
-        uiController.onTabChanged(webPageTab)
+        webBrowser.onTabChanged(webPageTab)
 
         // To prevent potential overhead when logs are not needed
         if (userPreferences.isLog(LogLevel.VERBOSE)) {
@@ -308,14 +308,14 @@ class WebPageClient(
         webPageTab.titleInfo.resetFavicon()
         if (webPageTab.isShown) {
             updateUrlIfNeeded(url, true)
-            uiController.showActionBar()
+            webBrowser.showActionBar()
         }
 
         // Try to fetch meta theme color a few times
         webPageTab.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
 
         //uiController.onTabChanged(webPageTab)
-        uiController.onPageStarted(webPageTab)
+        webBrowser.onPageStarted(webPageTab)
     }
 
     private fun stringContainsItemFromList(inputStr: String, items: Array<String>): Boolean {
@@ -471,7 +471,7 @@ class WebPageClient(
                 activity.makeSnackbar(activity.getString(R.string.message_ssl_error_aborted),5000, Gravity.BOTTOM)
                     .setIcon(R.drawable.ic_unsecured)
                     .setAction(R.string.settings) {
-                        (activity as? BrowserActivity)?.showDomainSettings(errorDomain)
+                        (activity as? WebBrowserActivity)?.showDomainSettings(errorDomain)
                     }
                     .show()
                 return handler.cancel()
@@ -638,7 +638,7 @@ class WebPageClient(
             } else if (domainPreferences.launchApp == NoYesAsk.ASK) {
                 // We first encounter that app ask user if we should use it?
                 // We will keep loading even if an external app is available the first time we encounter it.
-                (activity as BrowserActivity).mainHandler.postDelayed({
+                (activity as WebBrowserActivity).mainHandler.postDelayed({
                     if (exAppLaunchDialog == null) {
                         exAppLaunchDialog = MaterialAlertDialogBuilder(activity).setTitle(R.string.dialog_title_third_party_app).setMessage(R.string.dialog_message_third_party_app)
                             .setPositiveButton(activity.getText(R.string.yes), DialogInterface.OnClickListener { dialog, id ->
@@ -797,7 +797,7 @@ class WebPageClient(
 
         if (webPageTab.lastUrl!=url) {
             webPageTab.lastUrl=url
-            uiController.onTabChangedUrl(webPageTab)
+            webBrowser.onTabChangedUrl(webPageTab)
         }
     }
 

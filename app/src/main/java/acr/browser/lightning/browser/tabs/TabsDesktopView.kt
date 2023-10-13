@@ -2,8 +2,8 @@ package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabsView
-import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.activity.WebBrowserActivity
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.databinding.TabDesktopViewBinding
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper
@@ -29,7 +29,7 @@ class TabsDesktopView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr), TabsView {
 
-    private val uiController = context as UIController
+    private val webBrowser = context as WebBrowser
     private val tabsAdapter: TabsDesktopAdapter
     private val tabList: RecyclerView
     private var iItemTouchHelper: ItemTouchHelper? = null
@@ -38,12 +38,12 @@ class TabsDesktopView @JvmOverloads constructor(
 
     init {
         // Provide UI controller
-        iBinding.uiController = uiController
+        iBinding.uiController = webBrowser
 
         val layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
 
-        tabsAdapter = TabsDesktopAdapter(context, context.resources, uiController)
+        tabsAdapter = TabsDesktopAdapter(context, context.resources, webBrowser)
 
         tabList = findViewById<RecyclerView>(R.id.tabs_list).apply {
             setLayerType(View.LAYER_TYPE_NONE, null)
@@ -66,13 +66,13 @@ class TabsDesktopView @JvmOverloads constructor(
      */
     private fun updateTabActionButtons() {
         // If more than one tab, enable close all tabs button
-        iBinding.actionCloseAllTabs.isEnabled = uiController.getTabModel().allTabs.count()>1
+        iBinding.actionCloseAllTabs.isEnabled = webBrowser.getTabModel().allTabs.count()>1
         // If we have more than one tab in our closed tabs list enable restore all pages button
-        iBinding.actionRestoreAllPages.isEnabled = ((uiController as BrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 1
+        iBinding.actionRestoreAllPages.isEnabled = ((webBrowser as WebBrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 1
         // If we have at least one tab in our closed tabs list enable restore page button
-        iBinding.actionRestorePage.isEnabled = ((uiController as BrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 0
+        iBinding.actionRestorePage.isEnabled = ((webBrowser as WebBrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 0
         // No sessions in incognito mode
-        if (uiController.isIncognito()) {
+        if (webBrowser.isIncognito()) {
             iBinding.actionSessions.visibility = View.GONE
         }
     }
@@ -101,7 +101,7 @@ class TabsDesktopView @JvmOverloads constructor(
     }
 
     private fun displayTabs() {
-        tabsAdapter.showTabs(uiController.getTabModel().allTabs.map(WebPageTab::asTabViewState))
+        tabsAdapter.showTabs(webBrowser.getTabModel().allTabs.map(WebPageTab::asTabViewState))
     }
 
     override fun tabsInitialized() {

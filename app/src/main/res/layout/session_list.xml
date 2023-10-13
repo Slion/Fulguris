@@ -27,7 +27,7 @@
     <data>
         <variable
             name="uiController"
-            type="acr.browser.lightning.browser.UIController"/>
+            type="acr.browser.lightning.browser.WebBrowser"/>
     </data>
 
         <LinearLayout

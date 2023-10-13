@@ -1,8 +1,8 @@
 package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.activity.WebBrowserActivity
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.extensions.*
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import acr.browser.lightning.utils.ThemeUtils
@@ -10,7 +10,6 @@ import acr.browser.lightning.view.BackgroundDrawable
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -24,8 +23,8 @@ import androidx.recyclerview.widget.RecyclerView
 class TabsDesktopAdapter(
     context: Context,
     private val resources: Resources,
-    uiController: UIController
-) : TabsAdapter(uiController), ItemDragDropSwipeAdapter {
+    webBrowser: WebBrowser
+) : TabsAdapter(webBrowser), ItemDragDropSwipeAdapter {
 
 
     private var textColor = Color.TRANSPARENT
@@ -43,7 +42,7 @@ class TabsDesktopAdapter(
         val view = viewGroup.context.inflater.inflate(R.layout.tab_list_item_horizontal, viewGroup, false)
         view.background = BackgroundDrawable(view.context)
         //val tab = tabList[i]
-        return TabViewHolder(view, uiController)
+        return TabViewHolder(view, webBrowser)
     }
 
     /**
@@ -66,7 +65,7 @@ class TabsDesktopAdapter(
      */
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, tab: TabViewState) {
         // Apply filter to favicon if needed
-        val ba = uiController as BrowserActivity
+        val ba = webBrowser as WebBrowserActivity
         if (tab.isForeground) {
             // Make sure that on light theme with dark tab background because color mode we still inverse favicon color if needed, see github.com
             viewHolder.favicon.setImageForTheme(tab.favicon, ColorUtils.calculateLuminance(foregroundTabColor)<0.2)
@@ -88,7 +87,7 @@ class TabsDesktopAdapter(
 	
         if (tab.isForeground) {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
-            val newTextColor = (uiController as BrowserActivity).currentToolBarTextColor
+            val newTextColor = (webBrowser as WebBrowserActivity).currentToolBarTextColor
             viewHolder.txtTitle.setTextColor(newTextColor)
             viewHolder.exitButton.findViewById<ImageView>(R.id.deleteButton).setColorFilter(newTextColor)
             // If we just got to the foreground
@@ -96,19 +95,19 @@ class TabsDesktopAdapter(
                     // or if our theme color changed
                     || tab.themeColor!=viewHolder.tab?.themeColor
                     // or if our theme color is different than our UI color, i.e. using favicon color instead of meta theme
-                    || tab.themeColor!=uiController.getUiColor()) {
+                    || tab.themeColor!=webBrowser.getUiColor()) {
 
                 val backgroundColor = ThemeUtils.getColor(viewHolder.iCardView.context, R.attr.colorSurface)
 
                 // Pick our color according to settings and states
-                foregroundTabColor = if (uiController.isColorMode())
+                foregroundTabColor = if (webBrowser.isColorMode())
                     if (tab.themeColor!=Color.TRANSPARENT)
                     // Use meta theme color if we have one
                         tab.themeColor
                     else
-                        if (uiController.getUiColor()!=backgroundColor)
+                        if (webBrowser.getUiColor()!=backgroundColor)
                         // Use favicon extracted color if there is one
-                            uiController.getUiColor()
+                            webBrowser.getUiColor()
                         else
                         // Otherwise use default theme color
                             backgroundColor

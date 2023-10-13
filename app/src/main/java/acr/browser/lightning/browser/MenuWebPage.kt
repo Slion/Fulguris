@@ -24,12 +24,11 @@ package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpUserRules
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.MenuWebPageBinding
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
-import acr.browser.lightning.settings.preferences.DomainPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import acr.browser.lightning.utils.isAppScheme
@@ -43,7 +42,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import dagger.hilt.android.EntryPointAccessors
-import javax.inject.Inject
 
 
 class MenuWebPage : PopupWindow {
@@ -143,7 +141,7 @@ class MenuWebPage : PopupWindow {
         // Show option to go back to main menu
         iBinding.menuItemMainMenu.isVisible = true
 
-        (contentView.context as BrowserActivity).tabsManager.let { tm ->
+        (contentView.context as WebBrowserActivity).tabsManager.let { tm ->
             tm.currentTab?.let { tab ->
                 // Let user add multiple times the same URL I guess, for now anyway
                 // Blocking it is not nice and subscription is more involved I guess
@@ -164,7 +162,7 @@ class MenuWebPage : PopupWindow {
             }
         }
 
-        if ((iBinding.root.context as? BrowserActivity)?.isIncognito() == true) {
+        if ((iBinding.root.context as? WebBrowserActivity)?.isIncognito() == true) {
             // Incognito only works for that activity
             // So no reader mode as it starts another activity
             // TODO: We could try get reading mode working in incognito by creating another activity which starts in the same process I guess
@@ -186,7 +184,7 @@ class MenuWebPage : PopupWindow {
         applyMainMenuItemVisibility()
 
 
-        (contentView.context as BrowserActivity).tabsManager.let {
+        (contentView.context as WebBrowserActivity).tabsManager.let {
             // Set desktop mode checkbox according to current tab
             iBinding.menuItemDesktopMode.isChecked = it.currentTab?.desktopMode ?: false
             // Same with dark mode
@@ -200,7 +198,7 @@ class MenuWebPage : PopupWindow {
         aAnchor.getLocationInWindow(anchorLoc)
         // Show our popup menu from the right side of the screen below our anchor
         val gravity = if (contentView.context.configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
-        val yOffset = if (contentView.context.configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] - aAnchor.height else anchorLoc[1]
+        val yOffset = if (contentView.context.configPrefs.toolbarsBottom) (contentView.context as WebBrowserActivity).iBinding.root.height - anchorLoc[1] - aAnchor.height else anchorLoc[1]
         showAtLocation(aAnchor, gravity,
                 // Offset from the right screen edge
                 Utils.dpToPx(10F),

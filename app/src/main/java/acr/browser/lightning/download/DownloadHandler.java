@@ -25,9 +25,9 @@ import javax.inject.Singleton;
 import acr.browser.lightning.BuildConfig;
 import acr.browser.lightning.MainActivity;
 import acr.browser.lightning.R;
-import acr.browser.lightning.browser.activity.BrowserActivity;
+import acr.browser.lightning.browser.activity.WebBrowserActivity;
 import acr.browser.lightning.constant.Constants;
-import acr.browser.lightning.browser.UIController;
+import acr.browser.lightning.browser.WebBrowser;
 import acr.browser.lightning.database.downloads.DownloadEntry;
 import acr.browser.lightning.database.downloads.DownloadsRepository;
 import acr.browser.lightning.di.DatabaseScheduler;
@@ -182,7 +182,7 @@ public class DownloadHandler {
                                          String contentDisposition, @Nullable String mimetype, @NonNull String contentSize) {
         iFilename = guessFileName(url, contentDisposition, mimetype, null);
 
-        BrowserActivity ba = (BrowserActivity)context;
+        WebBrowserActivity ba = (WebBrowserActivity)context;
 
         // Check to see if we have an SDCard
         String status = Environment.getExternalStorageState();
@@ -304,7 +304,7 @@ public class DownloadHandler {
         }
 
         // save download in database
-        UIController browserActivity = (UIController) context;
+        WebBrowser browserActivity = (WebBrowser) context;
         WebPageTab view = browserActivity.getTabModel().getCurrentTab();
 
         if (view != null && !view.isIncognito()) {

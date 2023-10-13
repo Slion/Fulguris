@@ -1,8 +1,7 @@
 package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.extensions.dimen
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.extensions.isDarkTheme
@@ -18,15 +17,15 @@ import timber.log.Timber
  * The adapter for vertical mobile style browser tabs.
  */
 class TabsDrawerAdapter(
-        uiController: UIController
-) : TabsAdapter(uiController) {
+    webBrowser: WebBrowser
+) : TabsAdapter(webBrowser) {
 
     /**
      * From [RecyclerView.Adapter]
      */
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TabViewHolder {
         val view = viewGroup.context.inflater.inflate(R.layout.tab_list_item, viewGroup, false)
-        return TabViewHolder(view, uiController) //.apply { setIsRecyclable(false) }
+        return TabViewHolder(view, webBrowser) //.apply { setIsRecyclable(false) }
     }
 
     /**
@@ -47,7 +46,7 @@ class TabsDrawerAdapter(
 
     private fun updateViewHolderFavicon(viewHolder: TabViewHolder, favicon: Bitmap, isForeground: Boolean) {
         // Apply filter to favicon if needed
-        viewHolder.favicon.setImageForTheme(favicon, (uiController as Context).isDarkTheme())
+        viewHolder.favicon.setImageForTheme(favicon, (webBrowser as Context).isDarkTheme())
     }
 
     private fun updateViewHolderBackground(viewHolder: TabViewHolder, isForeground: Boolean) {
@@ -66,7 +65,7 @@ class TabsDrawerAdapter(
     private fun updateViewHolderAppearance(viewHolder: TabViewHolder, tab: TabViewState) {
         if (tab.isForeground) {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.boldText)
-            uiController.changeToolbarBackground(tab.favicon, tab.themeColor, null)
+            webBrowser.changeToolbarBackground(tab.favicon, tab.themeColor, null)
         } else if (tab.isFrozen) {
             TextViewCompat.setTextAppearance(viewHolder.txtTitle, R.style.italicText)
         }

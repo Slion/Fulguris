@@ -23,21 +23,15 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabsManager
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
-import acr.browser.lightning.extensions.findPreference
 import acr.browser.lightning.extensions.isDarkTheme
-import acr.browser.lightning.extensions.portraitSharedPreferencesName
 import acr.browser.lightning.favicon.FaviconModel
-import acr.browser.lightning.settings.preferences.ConfigurationPreferences
-import acr.browser.lightning.settings.preferences.PortraitPreferences
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import android.annotation.SuppressLint
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.webkit.WebBackForwardList
 import androidx.core.graphics.drawable.toDrawable
@@ -45,12 +39,10 @@ import androidx.core.graphics.scale
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import dagger.hilt.android.AndroidEntryPoint
-import fulguris.app
 import fulguris.preference.BasicPreference
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Page history screen
@@ -125,10 +117,10 @@ class PageHistorySettingsFragment : AbstractSettingsFragment() {
 
                     if (steps>0) {
                         // Going forward
-                        (activity as BrowserActivity).animateTabFlipLeft()
+                        (activity as WebBrowserActivity).animateTabFlipLeft()
                     } else if (steps<0) {
                         // Going back
-                        (activity as BrowserActivity).animateTabFlipRight()
+                        (activity as WebBrowserActivity).animateTabFlipRight()
                     }
 
                     tabsManager.currentTab?.webView?.goBackOrForward(steps)

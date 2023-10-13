@@ -9,9 +9,9 @@ import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
 import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabModel
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.constant.*
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
@@ -48,8 +48,6 @@ import android.webkit.WebSettings.LOAD_DEFAULT
 import android.webkit.WebSettings.LOAD_NO_CACHE
 import android.webkit.WebSettings.LayoutAlgorithm
 import android.webkit.WebView
-import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
-import android.webkit.WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
 import androidx.webkit.WebSettingsCompat
@@ -121,7 +119,7 @@ class WebPageTab(
      */
     private var iTargetUrl: Uri = Uri.parse("")
 
-    private val uiController: UIController
+    private val webBrowser: WebBrowser
     private lateinit var gestureDetector: GestureDetector
     private val paint = Paint()
 
@@ -151,7 +149,7 @@ class WebPageTab(
                 // A tab sent to the background is not so new anymore
                 isNewTab = false
             }
-            uiController.onTabChanged(this)
+            webBrowser.onTabChanged(this)
         }
     /**
      * Gets whether or not the page rendering is inverted or not. The main purpose of this is to
@@ -339,7 +337,7 @@ class WebPageTab(
      */
     init {
         //activity.injector.inject(this)
-        uiController = activity as UIController
+        webBrowser = activity as WebBrowser
         titleInfo = WebPageHeader(activity)
         maxFling = ViewConfiguration.get(activity).scaledMaximumFlingVelocity.toFloat()
 	
@@ -1115,21 +1113,21 @@ class WebPageTab(
         if (currentUrl != null && currentUrl.isSpecialUrl()) {
             if (currentUrl.isHistoryUrl()) {
                 if (url != null) {
-                    dialogBuilder.showLongPressedHistoryLinkDialog(activity, uiController, url)
+                    dialogBuilder.showLongPressedHistoryLinkDialog(activity, webBrowser, url)
                 } else if (newUrl != null) {
-                    dialogBuilder.showLongPressedHistoryLinkDialog(activity, uiController, newUrl)
+                    dialogBuilder.showLongPressedHistoryLinkDialog(activity, webBrowser, newUrl)
                 }
             } else if (currentUrl.isBookmarkUrl()) {
                 if (url != null) {
-                    dialogBuilder.showLongPressedDialogForBookmarkUrl(activity, uiController, url)
+                    dialogBuilder.showLongPressedDialogForBookmarkUrl(activity, webBrowser, url)
                 } else if (newUrl != null) {
-                    dialogBuilder.showLongPressedDialogForBookmarkUrl(activity, uiController, newUrl)
+                    dialogBuilder.showLongPressedDialogForBookmarkUrl(activity, webBrowser, newUrl)
                 }
             } else if (currentUrl.isDownloadsUrl()) {
                 if (url != null) {
-                    dialogBuilder.showLongPressedDialogForDownloadUrl(activity, uiController, url)
+                    dialogBuilder.showLongPressedDialogForDownloadUrl(activity, webBrowser, url)
                 } else if (newUrl != null) {
-                    dialogBuilder.showLongPressedDialogForDownloadUrl(activity, uiController, newUrl)
+                    dialogBuilder.showLongPressedDialogForDownloadUrl(activity, webBrowser, newUrl)
                 }
             }
         } else {
@@ -1138,19 +1136,19 @@ class WebPageTab(
             result?.extra?.let { extraUrl ->
                 if (result.type == WebView.HitTestResult.IMAGE_TYPE) {
                     dialogBuilder.showLongPressLinkImageDialog(
-                        activity, uiController, "", extraUrl, text, userAgent,
+                        activity, webBrowser, "", extraUrl, text, userAgent,
                         showLinkTab = false,
                         showImageTab = true
                     )
                 } else if (result.type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
                     dialogBuilder.showLongPressLinkImageDialog(
-                        activity, uiController, url ?: "", extraUrl, text, userAgent,
+                        activity, webBrowser, url ?: "", extraUrl, text, userAgent,
                         showLinkTab = true,
                         showImageTab = true
                     )
                 } else if (result.type == WebView.HitTestResult.SRC_ANCHOR_TYPE) {
                     dialogBuilder.showLongPressLinkImageDialog(
-                        activity, uiController, extraUrl, "", text, userAgent,
+                        activity, webBrowser, extraUrl, "", text, userAgent,
                         showLinkTab = true,
                         showImageTab = false
                     )
@@ -1215,7 +1213,7 @@ class WebPageTab(
      */
     fun showToolBarOnScrollUpIfNeeded() {
         if (webView?.context?.configPrefs?.showToolBarOnScrollUp == true) {
-            uiController.showActionBar()
+            webBrowser.showActionBar()
         }
     }
 
@@ -1224,7 +1222,7 @@ class WebPageTab(
      */
     fun showToolBarOnPageTopIfNeeded() {
         if (webView?.context?.configPrefs?.showToolBarOnPageTop == true) {
-            uiController.showActionBar()
+            webBrowser.showActionBar()
         }
     }
 
@@ -1263,14 +1261,14 @@ class WebPageTab(
 
             // TODO: Another broken workflow, just refactor our tab manager and presenter
             // We could not get presenter injection to work so we just use the one from our activity
-            (activity as? BrowserActivity)?.apply {
+            (activity as? WebBrowserActivity)?.apply {
                 // Trigger the recreation of our tab
                 tabsManager.tabChanged(tabsManager.indexOfTab(this@WebPageTab),false,false)
             }
         }
 
         // Needed I guess in case the current tab was using another render process
-        uiController.onTabChanged(this)
+        webBrowser.onTabChanged(this)
 
         // We don't want to crash the app
         return true
@@ -1316,7 +1314,7 @@ class WebPageTab(
                     showToolBarOnPageTopIfNeeded()
                 } else if (distance < -SCROLL_UP_THRESHOLD) {
                     // Aggressive hiding of tool bar
-                    uiController.hideActionBar()
+                    webBrowser.hideActionBar()
                 }
                 location = 0f
             }
@@ -1369,7 +1367,7 @@ class WebPageTab(
         override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
             val power = (velocityY * 100 / maxFling).toInt()
             if (power < -10) {
-                uiController.hideActionBar()
+                webBrowser.hideActionBar()
             } else if (power > 15
                     // Touch input won't show tool bar again if no top level vertical scroll
                     // It can still be accessed using the back button
@@ -1410,7 +1408,7 @@ class WebPageTab(
          *
          */
         override fun onSingleTapUp(e: MotionEvent): Boolean {
-            uiController.onSingleTapUp(this@WebPageTab)
+            webBrowser.onSingleTapUp(this@WebPageTab)
             return false
         }
     }

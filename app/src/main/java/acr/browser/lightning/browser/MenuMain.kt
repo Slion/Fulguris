@@ -1,7 +1,7 @@
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.MenuMainBinding
 import acr.browser.lightning.di.HiltEntryPoint
@@ -16,7 +16,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import dagger.hilt.android.EntryPointAccessors
-import javax.inject.Inject
 
 /**
  * That's our browser main navigation menu.
@@ -45,7 +44,7 @@ class MenuMain : PopupWindow {
         setBackgroundDrawable(ColorDrawable())
 
         // Incognito status will be used to manage menu items visibility
-        iIsIncognito = (aBinding.root.context as BrowserActivity).isIncognito()
+        iIsIncognito = (aBinding.root.context as WebBrowserActivity).isIncognito()
 
         //val radius: Float = getResources().getDimension(R.dimen.default_corner_radius) //32dp
 
@@ -143,7 +142,7 @@ class MenuMain : PopupWindow {
         aAnchor.getLocationInWindow(anchorLoc)
         // Show our popup menu from the right side of the screen below our anchor
         val gravity = if (contentView.context.configPrefs.toolbarsBottom) Gravity.BOTTOM or Gravity.RIGHT else Gravity.TOP or Gravity.RIGHT
-        val yOffset = if (contentView.context.configPrefs.toolbarsBottom) (contentView.context as BrowserActivity).iBinding.root.height - anchorLoc[1] - aAnchor.height else anchorLoc[1]
+        val yOffset = if (contentView.context.configPrefs.toolbarsBottom) (contentView.context as WebBrowserActivity).iBinding.root.height - anchorLoc[1] - aAnchor.height else anchorLoc[1]
         showAtLocation(aAnchor, gravity,
                 // Offset from the right screen edge
                 Utils.dpToPx(10F),

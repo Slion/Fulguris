@@ -2,7 +2,7 @@ package acr.browser.lightning.dialog
 
 import acr.browser.lightning.MainActivity
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.asFolder
 import acr.browser.lightning.database.bookmark.BookmarkRepository
@@ -69,14 +69,14 @@ class LightningDialogBuilder @Inject constructor(
     // TODO allow individual downloads to be deleted.
     fun showLongPressedDialogForDownloadUrl(
         activity: Activity,
-        uiController: UIController,
+        webBrowser: WebBrowser,
         url: String
     ) = BrowserDialog.show(activity, R.string.action_downloads,
         DialogItem(title = R.string.dialog_delete_all_downloads) {
             downloadsModel.deleteAllDownloads()
                 .subscribeOn(databaseScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(uiController::handleDownloadDeleted)
+                .subscribe(webBrowser::handleDownloadDeleted)
         })
 
     /**
@@ -87,23 +87,23 @@ class LightningDialogBuilder @Inject constructor(
      * @param url      the long pressed url
      */
     fun showLongPressedDialogForBookmarkUrl(
-            activity: Activity,
-            uiController: UIController,
-            url: String
+        activity: Activity,
+        webBrowser: WebBrowser,
+        url: String
     ) {
         if (url.isBookmarkUrl()) {
             // TODO hacky, make a better bookmark mechanism in the future
             val uri = url.toUri()
             val filename = requireNotNull(uri.lastPathSegment) { "Last segment should always exist for bookmark file" }
             val folderTitle = filename.substring(0, filename.length - BookmarkPageFactory.FILENAME.length - 1)
-            showBookmarkFolderLongPressedDialog(activity, uiController, folderTitle.asFolder())
+            showBookmarkFolderLongPressedDialog(activity, webBrowser, folderTitle.asFolder())
         } else {
             bookmarkManager.findBookmarkForUrl(url)
                 .subscribeOn(databaseScheduler)
                 .observeOn(mainScheduler)
                 .subscribe { historyItem ->
                     // TODO: 6/14/17 figure out solution to case where slashes get appended to root urls causing the item to not exist
-                    showLongPressedDialogForBookmarkUrl(activity, uiController, historyItem)
+                    showLongPressedDialogForBookmarkUrl(activity, webBrowser, historyItem)
                 }
         }
     }
@@ -112,21 +112,21 @@ class LightningDialogBuilder @Inject constructor(
      * Show bookmark context menu.
      */
     fun showLongPressedDialogForBookmarkUrl(
-            activity: Activity,
-            uiController: UIController,
-            entry: Bookmark.Entry
+        activity: Activity,
+        webBrowser: WebBrowser,
+        entry: Bookmark.Entry
     ) = BrowserDialog.show(activity, null, "",false, DialogTab(show=true, icon=R.drawable.ic_bookmark, title=R.string.dialog_title_bookmark,items=arrayOf(
             DialogItem(title = R.string.dialog_open_new_tab) {
-                uiController.handleNewTab(NewTab.FOREGROUND, entry.url)
+                webBrowser.handleNewTab(NewTab.FOREGROUND, entry.url)
             },
             DialogItem(title = R.string.dialog_open_background_tab) {
-                uiController.handleNewTab(NewTab.BACKGROUND, entry.url)
+                webBrowser.handleNewTab(NewTab.BACKGROUND, entry.url)
             },
             DialogItem(
                     title = R.string.dialog_open_incognito_tab,
                     show = activity is MainActivity
             ) {
-                uiController.handleNewTab(NewTab.INCOGNITO, entry.url)
+                webBrowser.handleNewTab(NewTab.INCOGNITO, entry.url)
             },
             DialogItem(title = R.string.action_share) {
                 IntentUtils(activity).shareUrl(entry.url, entry.title)
@@ -140,21 +140,21 @@ class LightningDialogBuilder @Inject constructor(
                         .observeOn(mainScheduler)
                         .subscribe { success ->
                             if (success) {
-                                uiController.handleBookmarkDeleted(entry)
+                                webBrowser.handleBookmarkDeleted(entry)
                             }
                         }
             },
             DialogItem(title = R.string.dialog_edit_bookmark) {
-                showEditBookmarkDialog(activity, uiController, entry)
+                showEditBookmarkDialog(activity, webBrowser, entry)
             })))
 
     /**
      * Show the add bookmark dialog. Shows a dialog with the title and URL pre-populated.
      */
     fun showAddBookmarkDialog(
-            activity: Activity,
-            uiController: UIController,
-            entry: Bookmark.Entry
+        activity: Activity,
+        webBrowser: WebBrowser,
+        entry: Bookmark.Entry
     ) {
         val editBookmarkDialog = MaterialAlertDialogBuilder(activity)
         editBookmarkDialog.setTitle(R.string.action_add_bookmark)
@@ -195,7 +195,7 @@ class LightningDialogBuilder @Inject constructor(
                                             .subscribeBy(
                                                     onSuccess = { success ->
                                                         if (success) {
-                                                            uiController.handleBookmarksChange()
+                                                            webBrowser.handleBookmarksChange()
                                                             activity.toast(R.string.message_bookmark_added)
                                                         } else {
                                                             activity.toast(R.string.message_bookmark_not_added)
@@ -211,9 +211,9 @@ class LightningDialogBuilder @Inject constructor(
     }
 
     private fun showEditBookmarkDialog(
-            activity: Activity,
-            uiController: UIController,
-            entry: Bookmark.Entry
+        activity: Activity,
+        webBrowser: WebBrowser,
+        entry: Bookmark.Entry
     ) {
         val editBookmarkDialog = MaterialAlertDialogBuilder(activity)
         editBookmarkDialog.setTitle(R.string.title_edit_bookmark)
@@ -251,7 +251,7 @@ class LightningDialogBuilder @Inject constructor(
                                         bookmarkManager.editBookmark(entry, editedItem)
                                                 .subscribeOn(databaseScheduler)
                                                 .observeOn(mainScheduler)
-                                                .subscribe(uiController::handleBookmarksChange)
+                                                .subscribe(webBrowser::handleBookmarksChange)
                                     }
                             )
                         } else {
@@ -265,7 +265,7 @@ class LightningDialogBuilder @Inject constructor(
                             bookmarkManager.editBookmark(entry, editedItem)
                                     .subscribeOn(databaseScheduler)
                                     .observeOn(mainScheduler)
-                                    .subscribe(uiController::handleBookmarksChange)
+                                    .subscribe(webBrowser::handleBookmarksChange)
                         }
                     }
                     val dialog = editBookmarkDialog.resizeAndShow()
@@ -275,26 +275,26 @@ class LightningDialogBuilder @Inject constructor(
     }
 
     fun showBookmarkFolderLongPressedDialog(
-            activity: Activity,
-            uiController: UIController,
-            folder: Bookmark.Folder
+        activity: Activity,
+        webBrowser: WebBrowser,
+        folder: Bookmark.Folder
     ) = BrowserDialog.show(activity, null, "", false, DialogTab(show=true, icon=R.drawable.ic_folder, title=R.string.action_folder,items=arrayOf(
             DialogItem(title = R.string.dialog_rename_folder) {
-                showRenameFolderDialog(activity, uiController, folder)
+                showRenameFolderDialog(activity, webBrowser, folder)
             },
             DialogItem(title = R.string.dialog_remove_folder) {
                 bookmarkManager.deleteFolder(folder.title)
                         .subscribeOn(databaseScheduler)
                         .observeOn(mainScheduler)
                         .subscribe {
-                            uiController.handleBookmarkDeleted(folder)
+                            webBrowser.handleBookmarkDeleted(folder)
                         }
             })))
 
     private fun showRenameFolderDialog(
-            activity: Activity,
-            uiController: UIController,
-            folder: Bookmark.Folder
+        activity: Activity,
+        webBrowser: WebBrowser,
+        folder: Bookmark.Folder
     ) = BrowserDialog.showEditText(activity,
             R.string.title_rename_folder,
             R.string.hint_title,
@@ -305,7 +305,7 @@ class LightningDialogBuilder @Inject constructor(
             bookmarkManager.renameFolder(oldTitle, text)
                 .subscribeOn(databaseScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(uiController::handleBookmarksChange)
+                .subscribe(webBrowser::handleBookmarksChange)
         }
     }
 
@@ -313,21 +313,21 @@ class LightningDialogBuilder @Inject constructor(
      * Menu shown when doing a long press on an history list item.
      */
     fun showLongPressedHistoryLinkDialog(
-            activity: Activity,
-            uiController: UIController,
-            url: String
+        activity: Activity,
+        webBrowser: WebBrowser,
+        url: String
     ) = BrowserDialog.show(activity, null, "", false, DialogTab(show=true, icon=R.drawable.ic_history, title=R.string.action_history,items=arrayOf(
             DialogItem(title = R.string.dialog_open_new_tab) {
-                uiController.handleNewTab(NewTab.FOREGROUND, url)
+                webBrowser.handleNewTab(NewTab.FOREGROUND, url)
             },
             DialogItem(title = R.string.dialog_open_background_tab) {
-                uiController.handleNewTab(NewTab.BACKGROUND, url)
+                webBrowser.handleNewTab(NewTab.BACKGROUND, url)
             },
             DialogItem(
                     title = R.string.dialog_open_incognito_tab,
                     show = activity is MainActivity
             ) {
-                uiController.handleNewTab(NewTab.INCOGNITO, url)
+                webBrowser.handleNewTab(NewTab.INCOGNITO, url)
             },
             DialogItem(title = R.string.action_share) {
                 IntentUtils(activity).shareUrl(url, null)
@@ -339,7 +339,7 @@ class LightningDialogBuilder @Inject constructor(
                 historyModel.deleteHistoryEntry(url)
                         .subscribeOn(databaseScheduler)
                         .observeOn(mainScheduler)
-                        .subscribe(uiController::handleHistoryChange)
+                        .subscribe(webBrowser::handleHistoryChange)
             })))
 
     /**
@@ -347,7 +347,7 @@ class LightningDialogBuilder @Inject constructor(
      */
     fun showLongPressLinkImageDialog(
         activity: Activity,
-        uiController: UIController,
+        webBrowser: WebBrowser,
         linkUrl: String,
         imageUrl: String,
         text: String?,
@@ -357,16 +357,16 @@ class LightningDialogBuilder @Inject constructor(
     ) = BrowserDialog.show(activity, null, "", false,
         //Link tab
         DialogTab(show=showLinkTab, icon=R.drawable.ic_link, title=R.string.button_link,items=arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
-            uiController.handleNewTab(NewTab.FOREGROUND, linkUrl)
+            webBrowser.handleNewTab(NewTab.FOREGROUND, linkUrl)
             },
             DialogItem(title = R.string.dialog_open_background_tab) {
-                uiController.handleNewTab(NewTab.BACKGROUND, linkUrl)
+                webBrowser.handleNewTab(NewTab.BACKGROUND, linkUrl)
             },
             DialogItem(
                 title = R.string.dialog_open_incognito_tab,
                 show = activity is MainActivity
             ) {
-                uiController.handleNewTab(NewTab.INCOGNITO, linkUrl)
+                webBrowser.handleNewTab(NewTab.INCOGNITO, linkUrl)
             },
             DialogItem(title = R.string.action_share) {
                 IntentUtils(activity).shareUrl(linkUrl, null)
@@ -387,16 +387,16 @@ class LightningDialogBuilder @Inject constructor(
         // Image tab
         DialogTab(show=showImageTab, icon=R.drawable.ic_image, title = R.string.button_image,
             items = arrayOf(DialogItem(title = R.string.dialog_open_new_tab) {
-                uiController.handleNewTab(NewTab.FOREGROUND, imageUrl)
+                webBrowser.handleNewTab(NewTab.FOREGROUND, imageUrl)
                 },
                 DialogItem(title = R.string.dialog_open_background_tab) {
-                    uiController.handleNewTab(NewTab.BACKGROUND, imageUrl)
+                    webBrowser.handleNewTab(NewTab.BACKGROUND, imageUrl)
                 },
                 DialogItem(
                     title = R.string.dialog_open_incognito_tab,
                     show = activity is MainActivity
                 ) {
-                    uiController.handleNewTab(NewTab.INCOGNITO, imageUrl)
+                    webBrowser.handleNewTab(NewTab.INCOGNITO, imageUrl)
                 },
                 DialogItem(title = R.string.action_share) {
                     IntentUtils(activity).shareUrl(imageUrl, null)

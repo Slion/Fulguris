@@ -4,7 +4,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.animation.AnimationUtils
 import acr.browser.lightning.browser.BookmarksView
 import acr.browser.lightning.browser.TabsManager
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.BookmarkDrawerViewBinding
@@ -12,7 +12,6 @@ import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.dialog.LightningDialogBuilder
-import acr.browser.lightning.extensions.color
 import acr.browser.lightning.extensions.drawable
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.favicon.FaviconModel
@@ -50,7 +49,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
     @Inject
     lateinit var iUserPreferences: UserPreferences
 
-    private val uiController: UIController = context as UIController
+    private val webBrowser: WebBrowser = context as WebBrowser
 
     // Adapter
     private var iAdapter: BookmarksAdapter
@@ -67,7 +66,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
     var iBinding: BookmarkDrawerViewBinding = BookmarkDrawerViewBinding.inflate(context.inflater,this, true)
 
     init {
-        iBinding.uiController = uiController
+        iBinding.uiController = webBrowser
 
 
         iBinding.bookmarkBackButton.setOnClickListener {
@@ -79,7 +78,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
 
         iAdapter = BookmarksAdapter(
                 context,
-                uiController,
+                webBrowser,
                 bookmarkModel,
                 faviconModel,
                 networkScheduler,
@@ -113,7 +112,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
         iAdapter?.cleanupSubscriptions()
     }
 
-    private fun getTabsManager(): TabsManager = uiController.getTabModel()
+    private fun getTabsManager(): TabsManager = webBrowser.getTabModel()
 
     // TODO: apply that logic to the add bookmark menu item from main pop-up menu
     // SL: I guess this is of no use here anymore since we removed the add bookmark button
@@ -185,8 +184,8 @@ class BookmarksDrawerView @JvmOverloads constructor(
     private fun showBookmarkMenu(bookmark: Bookmark): Boolean {
         (context as Activity?)?.let {
             when (bookmark) {
-                is Bookmark.Folder -> bookmarksDialogBuilder.showBookmarkFolderLongPressedDialog(it, uiController, bookmark)
-                is Bookmark.Entry -> bookmarksDialogBuilder.showLongPressedDialogForBookmarkUrl(it, uiController, bookmark)
+                is Bookmark.Folder -> bookmarksDialogBuilder.showBookmarkFolderLongPressedDialog(it, webBrowser, bookmark)
+                is Bookmark.Entry -> bookmarksDialogBuilder.showLongPressedDialogForBookmarkUrl(it, webBrowser, bookmark)
             }
         }
         return true
@@ -200,7 +199,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
             scrollIndex = (iBinding.listBookmarks.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             setBookmarksShown(bookmark.title, true)
         }
-        is Bookmark.Entry -> uiController.bookmarkItemClicked(bookmark)
+        is Bookmark.Entry -> webBrowser.bookmarkItemClicked(bookmark)
     }
 
 
@@ -226,7 +225,7 @@ class BookmarksDrawerView @JvmOverloads constructor(
 
     override fun navigateBack() {
         if (uiModel.isCurrentFolderRoot()) {
-            uiController.onBackButtonPressed()
+            webBrowser.onBackButtonPressed()
         } else {
             setBookmarksShown(null, true)
             iBinding.listBookmarks.layoutManager?.scrollToPosition(scrollIndex)

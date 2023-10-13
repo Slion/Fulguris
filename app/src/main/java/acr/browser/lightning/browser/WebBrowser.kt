@@ -19,7 +19,7 @@ import androidx.annotation.StringRes
 /**
  * TODO: Find a proper name for that class
  */
-interface UIController {
+interface WebBrowser {
 
     /**
      * Called when our current tab view needs to be changed.

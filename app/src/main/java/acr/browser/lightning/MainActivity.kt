@@ -1,11 +1,9 @@
 package acr.browser.lightning
 
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import android.content.Intent
-import android.os.Build
 import android.view.KeyEvent
 import android.webkit.CookieManager
-import android.webkit.CookieSyncManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -14,7 +12,7 @@ import javax.inject.Inject
  * Not used in incognito mode
  */
 @AndroidEntryPoint
-class MainActivity @Inject constructor(): BrowserActivity() {
+class MainActivity @Inject constructor(): WebBrowserActivity() {
 
 
     public override fun updateCookiePreference(): Completable = Completable.fromAction {

@@ -1,8 +1,8 @@
 package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.activity.WebBrowserActivity
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.utils.ItemDragDropSwipeViewHolder
 import android.view.View
@@ -17,7 +17,7 @@ import com.google.android.material.card.MaterialCardView
  */
 class TabViewHolder(
     view: View,
-    private val uiController: UIController
+    private val webBrowser: WebBrowser
 ) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener, ItemDragDropSwipeViewHolder {
 
     // Using view binding won't give us much
@@ -37,14 +37,14 @@ class TabViewHolder(
         // If not showing horizontal desktop tab bar, this one always shows close button.
         // Apply settings preference for showing close button on tabs.
         exitButton.visibility = if (!view.context.configPrefs.verticalTabBar
-                || (view.context as BrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
+                || (view.context as WebBrowserActivity).userPreferences.showCloseTabButton) View.VISIBLE else View.GONE
     }
 
     override fun onClick(v: View) {
         if (v === exitButton) {
-            uiController.tabCloseClicked(adapterPosition)
+            webBrowser.tabCloseClicked(adapterPosition)
         } else if (v === iCardView) {
-            uiController.tabClicked(adapterPosition)
+            webBrowser.tabClicked(adapterPosition)
         }
     }
 

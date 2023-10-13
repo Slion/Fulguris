@@ -23,34 +23,21 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.ThemedActivity
-import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.NetworkScheduler
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.extensions.resizeAndShow
-import acr.browser.lightning.extensions.reverseDomainName
-import acr.browser.lightning.favicon.FaviconModel
-import acr.browser.lightning.settings.preferences.DomainPreferences
-import fulguris.preference.BasicPreference
-import acr.browser.lightning.utils.Utils
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.webkit.CookieManager
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.graphics.scale
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
-import io.reactivex.Scheduler
-import io.reactivex.rxkotlin.subscribeBy
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber
-import java.io.File
 import javax.inject.Inject
 
 
@@ -119,7 +106,7 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
      */
     private fun deleteAllPageCookies() {
         Timber.v("Domain: $domain")
-        (requireActivity() as? BrowserActivity)?.let { browser ->
+        (requireActivity() as? WebBrowserActivity)?.let { browser ->
             browser.tabsManager.currentTab?.url?.let { url ->
                 Timber.d("URL: $url")
                 val httpUrl = url.toHttpUrl()
@@ -183,7 +170,7 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
 
         var cookiesCount = 0
 
-        (requireActivity() as? BrowserActivity)?.let { browser ->
+        (requireActivity() as? WebBrowserActivity)?.let { browser ->
             browser.tabsManager.currentTab?.url?.let { url ->
                 Timber.d("URL: $url")
                 // Build our list of cookies

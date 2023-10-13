@@ -1,7 +1,7 @@
 package acr.browser.lightning.html.bookmark
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
@@ -94,7 +94,7 @@ class BookmarkPageFactory @Inject constructor(
     }
 
     private fun construct(list: List<BookmarkViewModel>): String {
-        val useDarkTheme = (App.currentContext() as? BrowserActivity)?.isDarkTheme() == false
+        val useDarkTheme = (App.currentContext() as? WebBrowserActivity)?.isDarkTheme() == false
         return parse(bookmarkPageReader.provideHtml()
             // Theme our page first
             .replace("\${useDarkTheme}", useDarkTheme.toString()) // Not actually used for now

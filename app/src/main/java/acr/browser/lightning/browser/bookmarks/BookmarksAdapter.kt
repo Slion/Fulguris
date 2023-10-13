@@ -23,7 +23,7 @@
 package acr.browser.lightning.browser.bookmarks
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.extensions.drawable
@@ -37,17 +37,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.resources.MaterialAttributes
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
-import timber.log.Timber
 import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
 
 class BookmarksAdapter(
     val context: Context,
-    val uiController: UIController,
+    val webBrowser: WebBrowser,
     private val bookmarksRepository: BookmarkRepository,
     private val faviconModel: FaviconModel,
     private val networkScheduler: Scheduler,
@@ -185,7 +183,7 @@ class BookmarksAdapter(
                         } else {
                             // Broadcast update only for our last operation
                             // Though I have no idea if our operations are FIFO
-                            it.subscribe(uiController::handleBookmarksChange)
+                            it.subscribe(webBrowser::handleBookmarksChange)
                         }
                     }
                 }

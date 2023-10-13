@@ -1,8 +1,8 @@
 package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.browser.TabsView
-import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.browser.UIController
+import acr.browser.lightning.browser.activity.WebBrowserActivity
+import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.databinding.TabDrawerViewBinding
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.extensions.inflater
@@ -28,7 +28,7 @@ class TabsDrawerView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), TabsView {
 
-    private val uiController = context as UIController
+    private val webBrowser = context as WebBrowser
     private val tabsAdapter: TabsDrawerAdapter
 
     private var mItemTouchHelper: ItemTouchHelper? = null
@@ -46,9 +46,9 @@ class TabsDrawerView @JvmOverloads constructor(
         // Inflate our layout with binding support
         iBinding = TabDrawerViewBinding.inflate(context.inflater,this, true)
         // Provide UI controller for data binding to work
-        iBinding.uiController = uiController
+        iBinding.uiController = webBrowser
 
-        tabsAdapter = TabsDrawerAdapter(uiController)
+        tabsAdapter = TabsDrawerAdapter(webBrowser)
 
         iBinding.tabsList.apply {
             //setLayerType(View.LAYER_TYPE_NONE, null)
@@ -80,13 +80,13 @@ class TabsDrawerView @JvmOverloads constructor(
      */
     private fun updateTabActionButtons() {
         // If more than one tab, enable close all tabs button
-        iBinding.actionCloseAllTabs.isEnabled = uiController.getTabModel().allTabs.count()>1
+        iBinding.actionCloseAllTabs.isEnabled = webBrowser.getTabModel().allTabs.count()>1
         // If we have more than one tab in our closed tabs list enable restore all pages button
-        iBinding.actionRestoreAllPages.isEnabled = ((uiController as BrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 1
+        iBinding.actionRestoreAllPages.isEnabled = ((webBrowser as WebBrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 1
         // If we have at least one tab in our closed tabs list enable restore page button
-        iBinding.actionRestorePage.isEnabled = ((uiController as BrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 0
+        iBinding.actionRestorePage.isEnabled = ((webBrowser as WebBrowserActivity).tabsManager.closedTabs.bundleStack.count() ?: 0) > 0
         // No sessions in incognito mode
-        if (uiController.isIncognito()) {
+        if (webBrowser.isIncognito()) {
             iBinding.actionSessions.visibility = View.GONE
         }
 
@@ -112,11 +112,11 @@ class TabsDrawerView @JvmOverloads constructor(
      * TODO: this is called way to often for my taste and should be optimized somehow.
      */
     private fun displayTabs() {
-        tabsAdapter.showTabs(uiController.getTabModel().allTabs.map(WebPageTab::asTabViewState))
+        tabsAdapter.showTabs(webBrowser.getTabModel().allTabs.map(WebPageTab::asTabViewState))
 
         if (fixScrollBug(iBinding.tabsList)) {
             // Scroll bug was fixed trigger a scroll to current item then
-            (context as BrowserActivity).apply {
+            (context as WebBrowserActivity).apply {
                 mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
             }
         }

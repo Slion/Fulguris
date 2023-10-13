@@ -4,7 +4,7 @@
 package acr.browser.lightning.download
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.BrowserActivity
+import acr.browser.lightning.browser.activity.WebBrowserActivity
 import acr.browser.lightning.database.downloads.DownloadsRepository
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
@@ -104,7 +104,7 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
                     pendingIntent = PendingIntent.getActivity(mActivity, 0, downloadsIntent, flags)
                 }
                 val builder =
-                    NotificationCompat.Builder(mActivity, (mActivity as BrowserActivity).CHANNEL_ID)
+                    NotificationCompat.Builder(mActivity, (mActivity as WebBrowserActivity).CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_file_download) // TODO: different icon for failure?
                         .setContentTitle(contentTitle) //
                         .setContentText(contentText) //
@@ -180,7 +180,7 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
 
 
         // Some download link spawn an empty tab, just close it then
-        if (mActivity is BrowserActivity) {
+        if (mActivity is WebBrowserActivity) {
             mActivity.closeCurrentTabIfEmpty()
         }
     }

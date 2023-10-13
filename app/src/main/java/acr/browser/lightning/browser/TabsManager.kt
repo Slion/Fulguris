@@ -913,7 +913,7 @@ class TabsManager @Inject constructor(
     private var currentTabFromPresenter: WebPageTab? = null
     private var shouldClose: Boolean = false
 
-    lateinit var iUIController: UIController
+    lateinit var iWebBrowser: WebBrowser
     var isIncognito: Boolean = false
     lateinit var closedTabs: RecentTabsModel
 
@@ -956,10 +956,10 @@ class TabsManager @Inject constructor(
         Timber.d("setupTabs")
         iScopeMainThread.launch {
             delay(1L)
-            val tabs = initializeTabs(iUIController as Activity, isIncognito)
+            val tabs = initializeTabs(iWebBrowser as Activity, isIncognito)
             // At this point we always have at least a tab in the tab manager
-            iUIController.notifyTabViewInitialized()
-            iUIController.updateTabNumber(size())
+            iWebBrowser.notifyTabViewInitialized()
+            iWebBrowser.updateTabNumber(size())
             // Switch to persisted current tab
             tabChanged(if (savedRecentTabsIndices.isNotEmpty()) savedRecentTabsIndices.last() else positionOf(tabs.last()),false, false)
             // Only then can we open tab from external app on startup otherwise it is opened in the background somehow
@@ -995,17 +995,17 @@ class TabsManager @Inject constructor(
         aTab.resumeTimers()
         aTab.onResume()
 
-        iUIController.setBackButtonEnabled(aTab.canGoBack())
-        iUIController.setForwardButtonEnabled(aTab.canGoForward())
-        iUIController.updateUrl(aTab.url, false)
-        iUIController.setTabView(aTab.webView!!,aWasTabAdded,aPreviousTabClosed, aGoingBack)
+        iWebBrowser.setBackButtonEnabled(aTab.canGoBack())
+        iWebBrowser.setForwardButtonEnabled(aTab.canGoForward())
+        iWebBrowser.updateUrl(aTab.url, false)
+        iWebBrowser.setTabView(aTab.webView!!,aWasTabAdded,aPreviousTabClosed, aGoingBack)
         val index = indexOfTab(aTab)
         if (index >= 0) {
-            iUIController.notifyTabViewChanged(indexOfTab(aTab))
+            iWebBrowser.notifyTabViewChanged(indexOfTab(aTab))
         }
 
         // Must come late as it needs a webview
-        iUIController.updateSslState(aTab.currentSslState() ?: SslState.None)
+        iWebBrowser.updateSslState(aTab.currentSslState() ?: SslState.None)
 
         currentTabFromPresenter = aTab
     }
@@ -1060,21 +1060,21 @@ class TabsManager @Inject constructor(
         }
 
         val afterTab = currentTab
-        iUIController.notifyTabViewRemoved(position)
+        iWebBrowser.notifyTabViewRemoved(position)
 
         if (afterTab == null) {
-            iUIController.closeBrowser()
+            iWebBrowser.closeBrowser()
             return
         } else if (afterTab !== beforeTab) {
-            iUIController.notifyTabViewChanged(indexOfCurrentTab())
+            iWebBrowser.notifyTabViewChanged(indexOfCurrentTab())
         }
 
         if (shouldClose && !isIncognito) {
             this.shouldClose = false
-            iUIController.closeActivity()
+            iWebBrowser.closeActivity()
         }
 
-        iUIController.updateTabNumber(size())
+        iWebBrowser.updateTabNumber(size())
 
         Timber.d("deleteTab - end")
     }
@@ -1094,7 +1094,7 @@ class TabsManager @Inject constructor(
                 // Get shared text
                 val clue = intent.getStringExtra(Intent.EXTRA_TEXT)
                 // Put it in the address bar if any
-                clue?.let { iUIController.setAddressBarText(it) }
+                clue?.let { iWebBrowser.setAddressBarText(it) }
             }
             // Cancel other operation as we won't open a tab here
             null
@@ -1108,7 +1108,7 @@ class TabsManager @Inject constructor(
             getTabForHashCode(tabHashCode)?.loadUrl(url)
         } else if (url != null) {
             if (URLUtil.isFileUrl(url)) {
-                iUIController.showBlockedLocalFileDialog {
+                iWebBrowser.showBlockedLocalFileDialog {
                     newTab(UrlInitializer(url), true)
                     shouldClose = true
                     lastTab()?.isNewTab = true
@@ -1135,7 +1135,7 @@ class TabsManager @Inject constructor(
                     newTab(FreezableBundleInitializer(it), show)
                 }
             }
-            iUIController.showSnackbar(R.string.reopening_recent_tab)
+            iWebBrowser.showSnackbar(R.string.reopening_recent_tab)
         }
     }
 
@@ -1189,7 +1189,7 @@ class TabsManager @Inject constructor(
     fun newTab(tabInitializer: TabInitializer, show: Boolean): Boolean {
         // Limit number of tabs according to sponsorship level
         if (size() >= Entitlement.maxTabCount(userPreferences.sponsorship)) {
-            iUIController.onMaxTabReached()
+            iWebBrowser.onMaxTabReached()
             // Still allow spawning more tabs for the time being.
             // That means not having a valid subscription will only spawn that annoying message above.
             //return false
@@ -1197,13 +1197,13 @@ class TabsManager @Inject constructor(
 
         Timber.d("New tab, show: $show")
 
-        val startingTab = newTab(iUIController as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
+        val startingTab = newTab(iWebBrowser as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
         if (size() == 1) {
             startingTab.resumeTimers()
         }
 
-        iUIController.notifyTabViewAdded()
-        iUIController.updateTabNumber(size())
+        iWebBrowser.notifyTabViewAdded()
+        iWebBrowser.updateTabNumber(size())
 
         if (show) {
             onTabChanged(switchToTab(indexOfTab(startingTab)),true, false, false)
