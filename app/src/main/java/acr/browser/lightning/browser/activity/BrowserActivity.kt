@@ -2574,8 +2574,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // SL: Is this being called way too many times?
-        // TODO: This is completely silly all it does is calling [notifyTabViewChanged]
-        tabsManager.tabChangeOccurred(aTab)
+        doTabUpdate(aTab)
         // SL: Putting this here to update toolbar background color was a bad idea
         // That somehow freezes the WebView after switching between a few tabs on F(x)tec Pro1 at least (Android 9)
         //initializePreferences()
@@ -2604,8 +2603,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // SL: Is this being called way too many times?
-        // TODO: This is completely silly all it does is calling [notifyTabViewChanged]
-        tabsManager.tabChangeOccurred(aTab)
+        doTabUpdate(aTab)
         // SL: Putting this here to update toolbar background color was a bad idea
         // That somehow freezes the WebView after switching between a few tabs on F(x)tec Pro1 at least (Android 9)
         //initializePreferences()
@@ -2620,8 +2618,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // TODO: optimize for icon only update
-        // TODO: This is completely silly all it does is calling [notifyTabViewChanged]
-        tabsManager.tabChangeOccurred(aTab)
+        doTabUpdate(aTab)
     }
 
     /**
@@ -2633,9 +2630,15 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
 
         // TODO: optimize for title only update
-        // TODO: This is completely silly all it does is calling [notifyTabViewChanged]
-        tabsManager.tabChangeOccurred(aTab)
+        doTabUpdate(aTab)
+    }
 
+
+    /**
+     *
+     */
+    private fun doTabUpdate(aTab: WebPageTab) {
+        notifyTabViewChanged(tabsManager.indexOfTab(aTab))
     }
 
 

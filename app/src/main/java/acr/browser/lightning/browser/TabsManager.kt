@@ -976,16 +976,6 @@ class TabsManager @Inject constructor(
     }
 
     /**
-     * Notify the presenter that a change occurred to the current tab. Currently doesn't do anything
-     * other than tell the view to notify the adapter about the change.
-     *
-     * @param tab the tab that changed, may be null.
-     */
-    fun tabChangeOccurred(tab: WebPageTab?) = tab?.let {
-        iBrowserView.notifyTabViewChanged(tabsModel.indexOfTab(it))
-    }
-
-    /**
      * Called when the foreground is changing.
      *
      * [aTab] The tab we are switching to.
