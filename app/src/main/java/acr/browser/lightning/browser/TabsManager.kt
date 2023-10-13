@@ -1234,9 +1234,6 @@ class TabsManager @Inject constructor(
         return true
     }
 
-    fun onAutoCompleteItemPressed() {
-        tabsModel.currentTab?.requestFocus()
-    }
     companion object {
 
         private const val TAB_KEY_PREFIX = "TAB_"

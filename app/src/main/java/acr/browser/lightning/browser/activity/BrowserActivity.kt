@@ -3825,7 +3825,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         getUrl.setText(url)
         searchTheWeb(url)
         inputMethodManager.hideSoftInputFromWindow(getUrl.windowToken, 0)
-        tabsManager.onAutoCompleteItemPressed()
+        tabsManager.currentTab?.requestFocus()
     }
 
     /**
