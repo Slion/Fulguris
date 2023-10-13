@@ -1,4 +1,4 @@
-package acr.browser.lightning
+package fulguris
 
 /**
  * The SDK version that should be used by robolectric.

@@ -1,7 +1,7 @@
-package acr.browser.lightning.search.suggestions
+package fulguris.search.suggestions
 
-import acr.browser.lightning.settings.preferences.UserPreferences
-import acr.browser.lightning.unimplemented
+import fulguris.settings.preferences.UserPreferences
+import fulguris.unimplemented
 import android.app.Application
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -9,6 +9,7 @@ import android.os.LocaleList
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import fulguris.search.suggestions.RequestFactory
 import io.reactivex.Single
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -20,7 +21,8 @@ import java.util.*
 class BaiduSuggestionsModelTest {
 
     private val httpClient = Single.just(OkHttpClient.Builder().build())
-    private val requestFactory = object : RequestFactory {
+    private val requestFactory = object :
+        RequestFactory {
         override fun createSuggestionsRequest(httpUrl: HttpUrl, encoding: String) = unimplemented()
     }
     private val mockConfiguration = mock<Configuration> {

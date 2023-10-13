@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE")
 
-package acr.browser.lightning
+package fulguris
 
 /**
  * Use to implement an unimplemented method.

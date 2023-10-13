@@ -59,11 +59,11 @@ Defines a dialog containing tabs
         app:tabInlineLabel="true"/>
 
 <!--
-acr.browser.lightning.view.DynamicHeightViewPager
+fulguris.view.DynamicHeightViewPager
 androidx.viewpager.widget.ViewPager
 -->
 
-        <acr.browser.lightning.view.DynamicHeightViewPager
+        <fulguris.view.DynamicHeightViewPager
             android:id="@+id/dialog_viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

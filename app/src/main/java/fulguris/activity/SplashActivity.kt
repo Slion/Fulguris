@@ -22,7 +22,7 @@
  
 package fulguris.activity
 
-import acr.browser.lightning.R
+import fulguris.R
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build

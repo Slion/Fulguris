@@ -22,9 +22,8 @@
 
 package fulguris.preference
 
-import acr.browser.lightning.R
-import acr.browser.lightning.extensions.dp
-import acr.browser.lightning.extensions.px
+import fulguris.R
+import fulguris.extensions.px
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Rect

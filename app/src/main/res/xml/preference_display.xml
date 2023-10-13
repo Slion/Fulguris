@@ -38,14 +38,14 @@
         >
 
         <Preference
-            a:fragment="acr.browser.lightning.settings.fragment.PortraitSettingsFragment"
+            a:fragment="fulguris.settings.fragment.PortraitSettingsFragment"
             a:title="@string/settings_title_portrait"
             a:icon="@drawable/ic_phone"
             a:singleLineTitle="false"
             />
 
         <Preference
-            a:fragment="acr.browser.lightning.settings.fragment.LandscapeSettingsFragment"
+            a:fragment="fulguris.settings.fragment.LandscapeSettingsFragment"
             a:title="@string/settings_title_landscape"
             a:icon="@drawable/ic_landscape"
             a:singleLineTitle="false"
@@ -58,7 +58,7 @@
         a:singleLineTitle="false">
 
         <Preference
-            a:fragment="acr.browser.lightning.settings.fragment.TabSettingsFragment"
+            a:fragment="fulguris.settings.fragment.TabSettingsFragment"
             a:title="@string/settings_title_tab"
             a:summary="@string/settings_summary_tab"
             a:icon="@drawable/ic_tab"
@@ -210,7 +210,7 @@
             />
 
         <Preference
-            a:fragment="acr.browser.lightning.settings.fragment.ScrollbarsSettingsFragment"
+            a:fragment="fulguris.settings.fragment.ScrollbarsSettingsFragment"
             a:title="@string/pref_category_scrollbars"
             a:summary="@string/pref_summary_scrollbars"
             a:icon="@drawable/ic_scroll_vertical"

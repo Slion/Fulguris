@@ -1,7 +1,8 @@
-package acr.browser.lightning.extensions
+package fulguris.extensions
 
-import acr.browser.lightning.SDK_VERSION
-import acr.browser.lightning.TestApplication
+import fulguris.SDK_VERSION
+import fulguris.TestApplication
+import fulguris.extensions.map
 import org.assertj.core.api.Assertions.assertThat
 import org.json.JSONArray
 import org.junit.Test

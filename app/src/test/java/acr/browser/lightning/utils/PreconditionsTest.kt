@@ -1,4 +1,4 @@
-package acr.browser.lightning.utils
+package fulguris.utils
 
 import org.junit.Test
 
@@ -8,8 +8,8 @@ import org.junit.Test
 class PreconditionsTest {
 
     @Test(expected = RuntimeException::class)
-    fun `checkNonNull throws exception for null param`() = Preconditions.checkNonNull(null)
+    fun `checkNonNull throws exception for null param`() = fulguris.utils.Preconditions.checkNonNull(null)
 
     @Test
-    fun `checkNonNull succeeds for non null param`() = Preconditions.checkNonNull(Any())
+    fun `checkNonNull succeeds for non null param`() = fulguris.utils.Preconditions.checkNonNull(Any())
 }

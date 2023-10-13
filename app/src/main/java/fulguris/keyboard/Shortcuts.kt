@@ -22,7 +22,7 @@
 
 package fulguris.keyboard
 
-import acr.browser.lightning.R
+import fulguris.R
 import android.content.Context
 import android.graphics.drawable.Icon
 import android.os.Build

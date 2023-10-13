@@ -1,6 +1,7 @@
-package acr.browser.lightning.adblock
+package fulguris.adblock
 
 import android.net.Uri
+import fulguris.adblock.NoOpAdBlocker
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 

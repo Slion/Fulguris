@@ -22,8 +22,8 @@
 
 package fulguris.activity
 
-import acr.browser.lightning.AccentTheme
-import acr.browser.lightning.R
+import fulguris.AccentTheme
+import fulguris.R
 import android.os.Bundle
 
 //@AndroidEntryPoint

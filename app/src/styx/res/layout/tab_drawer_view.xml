@@ -7,7 +7,7 @@
     <data>
         <variable
             name="uiController"
-            type="acr.browser.lightning.browser.WebBrowser"/>
+            type="fulguris.browser.WebBrowser"/>
     </data>
 
 <LinearLayout

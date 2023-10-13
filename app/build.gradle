@@ -47,12 +47,12 @@ android.productFlavors.all { flavor ->
 }
 
 // TODO: Find a way to put it the variant/type folder such as: generated/source/locale/slionsFullDownload/debug/acr/browser/lightning/locale
-def generatedLocaleListDir = layout.buildDirectory.dir('generated/source/locale/acr/browser/lightning/locale')
+def generatedLocaleListDir = layout.buildDirectory.dir('generated/source/locale/fulguris/locale')
 
 android {
     compileSdkVersion project.targetSdkVersion
     // Specify namespace for generated R and BuildConfig classes
-    namespace 'acr.browser.lightning'
+    namespace 'fulguris'
 
     defaultConfig {
         minSdkVersion project.minSdkVersion
@@ -133,7 +133,7 @@ android {
         /*
         lightning {
             dimension "BRAND"
-            applicationId "acr.browser.lightning"
+            applicationId "fulguris"
             versionCode 101
             versionName "5.1.0"
         }
@@ -443,7 +443,7 @@ task generateLocaleList {
 
         localeList.delete()
         localeList.createNewFile()
-        localeList << "package acr.browser.lightning.locale;" << "\n" << "\n"
+        localeList << "package fulguris.locale;" << "\n" << "\n"
         localeList << "import java.util.Arrays;" << "\n"
         localeList << "import java.util.Collections;" << "\n"
         localeList << "import java.util.List;" << "\n"

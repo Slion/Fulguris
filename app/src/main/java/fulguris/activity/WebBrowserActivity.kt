@@ -5,49 +5,49 @@
 
 package fulguris.activity
 
-import acr.browser.lightning.*
-import acr.browser.lightning.BuildConfig
-import acr.browser.lightning.R
-import acr.browser.lightning.adblock.AbpUserRules
-import acr.browser.lightning.browser.*
-import acr.browser.lightning.utils.StyleRemovingTextWatcher
-import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
-import acr.browser.lightning.browser.cleanup.ExitCleanup
-import acr.browser.lightning.browser.sessions.SessionsPopupWindow
-import acr.browser.lightning.browser.tabs.TabsDesktopView
-import acr.browser.lightning.browser.tabs.TabsDrawerView
-import acr.browser.lightning.database.Bookmark
-import acr.browser.lightning.database.HistoryEntry
-import acr.browser.lightning.database.SearchSuggestion
-import acr.browser.lightning.database.WebPage
-import acr.browser.lightning.database.bookmark.BookmarkRepository
-import acr.browser.lightning.database.history.HistoryRepository
-import acr.browser.lightning.databinding.ActivityMainBinding
-import acr.browser.lightning.databinding.ToolbarContentBinding
-import acr.browser.lightning.di.*
-import acr.browser.lightning.dialog.BrowserDialog
-import acr.browser.lightning.dialog.DialogItem
-import acr.browser.lightning.dialog.LightningDialogBuilder
-import acr.browser.lightning.extensions.*
-import acr.browser.lightning.html.bookmark.BookmarkPageFactory
-import acr.browser.lightning.html.history.HistoryPageFactory
-import acr.browser.lightning.html.homepage.HomePageFactory
-import acr.browser.lightning.html.incognito.IncognitoPageFactory
-import acr.browser.lightning.locale.LocaleUtils
-import acr.browser.lightning.notifications.IncognitoNotification
-import acr.browser.lightning.search.SearchEngineProvider
-import acr.browser.lightning.search.SuggestionsAdapter
-import acr.browser.lightning.settings.NewTabPosition
-import acr.browser.lightning.settings.fragment.BottomSheetDialogFragment
-import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
-import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
-import acr.browser.lightning.settings.fragment.SponsorshipSettingsFragment
-import acr.browser.lightning.ssl.SslState
-import acr.browser.lightning.ssl.createSslDrawableForState
-import acr.browser.lightning.ssl.showSslDialog
-import acr.browser.lightning.utils.*
-import acr.browser.lightning.view.*
-import acr.browser.lightning.view.SearchView
+import fulguris.*
+import fulguris.BuildConfig
+import fulguris.R
+import fulguris.adblock.AbpUserRules
+import fulguris.browser.*
+import fulguris.utils.StyleRemovingTextWatcher
+import fulguris.browser.bookmarks.BookmarksDrawerView
+import fulguris.browser.cleanup.ExitCleanup
+import fulguris.browser.sessions.SessionsPopupWindow
+import fulguris.browser.tabs.TabsDesktopView
+import fulguris.browser.tabs.TabsDrawerView
+import fulguris.database.Bookmark
+import fulguris.database.HistoryEntry
+import fulguris.database.SearchSuggestion
+import fulguris.database.WebPage
+import fulguris.database.bookmark.BookmarkRepository
+import fulguris.database.history.HistoryRepository
+import fulguris.databinding.ActivityMainBinding
+import fulguris.databinding.ToolbarContentBinding
+import fulguris.di.*
+import fulguris.dialog.BrowserDialog
+import fulguris.dialog.DialogItem
+import fulguris.dialog.LightningDialogBuilder
+import fulguris.extensions.*
+import fulguris.html.bookmark.BookmarkPageFactory
+import fulguris.html.history.HistoryPageFactory
+import fulguris.html.homepage.HomePageFactory
+import fulguris.html.incognito.IncognitoPageFactory
+import fulguris.locale.LocaleUtils
+import fulguris.notifications.IncognitoNotification
+import fulguris.search.SearchEngineProvider
+import fulguris.search.SuggestionsAdapter
+import fulguris.settings.NewTabPosition
+import fulguris.settings.fragment.BottomSheetDialogFragment
+import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
+import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
+import fulguris.settings.fragment.SponsorshipSettingsFragment
+import fulguris.ssl.SslState
+import fulguris.ssl.createSslDrawableForState
+import fulguris.ssl.showSslDialog
+import fulguris.utils.*
+import fulguris.view.*
+import fulguris.view.SearchView
 import android.animation.*
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -114,7 +114,72 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
+import fulguris.browser.MenuMain
+import fulguris.browser.MenuWebPage
+import fulguris.browser.RecentTabsModel
+import fulguris.browser.TabModelFromBundle
+import fulguris.browser.TabsManager
+import fulguris.browser.TabsView
+import fulguris.browser.WebBrowser
+import fulguris.di.DatabaseScheduler
+import fulguris.di.DiskScheduler
+import fulguris.di.MainHandler
+import fulguris.di.MainScheduler
+import fulguris.di.PrefsLandscape
+import fulguris.di.PrefsPortrait
+import fulguris.di.configPrefs
 import fulguris.enums.HeaderInfo
+import fulguris.extensions.canScrollVertically
+import fulguris.extensions.copyToClipboard
+import fulguris.extensions.dimen
+import fulguris.extensions.doOnLayout
+import fulguris.extensions.drawable
+import fulguris.extensions.drawableForState
+import fulguris.extensions.isDarkTheme
+import fulguris.extensions.isLandscape
+import fulguris.extensions.isPortrait
+import fulguris.extensions.isVirtualKeyboardVisible
+import fulguris.extensions.makeSnackbar
+import fulguris.extensions.onFocusLost
+import fulguris.extensions.onSizeChange
+import fulguris.extensions.onceOnScrollStateIdle
+import fulguris.extensions.px
+import fulguris.extensions.removeFromParent
+import fulguris.extensions.resetTarget
+import fulguris.extensions.resizeAndShow
+import fulguris.extensions.setGravityBottom
+import fulguris.extensions.setGravityTop
+import fulguris.extensions.setStatusBarIconsColor
+import fulguris.extensions.simulateTap
+import fulguris.extensions.snackbar
+import fulguris.extensions.tint
+import fulguris.extensions.toast
+import fulguris.utils.QUERY_PLACE_HOLDER
+import fulguris.utils.ThemeUtils
+import fulguris.utils.WebUtils
+import fulguris.utils.adjustBottomSheet
+import fulguris.utils.foregroundColorFromBackgroundColor
+import fulguris.utils.isBookmarkUri
+import fulguris.utils.isBookmarkUrl
+import fulguris.utils.isDownloadsUrl
+import fulguris.utils.isHistoryUri
+import fulguris.utils.isHomeUri
+import fulguris.utils.isIncognitoUri
+import fulguris.utils.isSpecialUrl
+import fulguris.utils.smartUrlFilter
+import fulguris.view.BookmarkPageInitializer
+import fulguris.view.CodeView
+import fulguris.view.DownloadPageInitializer
+import fulguris.view.FreezableBundleInitializer
+import fulguris.view.HistoryPageInitializer
+import fulguris.view.HomePageInitializer
+import fulguris.view.IncognitoPageInitializer
+import fulguris.view.NoOpInitializer
+import fulguris.view.PullRefreshLayout
+import fulguris.view.ResultMessageInitializer
+import fulguris.view.UrlInitializer
+import fulguris.view.WebPageTab
+import fulguris.view.WebViewEx
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -132,7 +197,8 @@ import kotlin.system.exitProcess
  *
  */
 @AndroidEntryPoint
-abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClickListener, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+abstract class WebBrowserActivity : ThemedBrowserActivity(),
+    WebBrowser, OnClickListener, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     // Notifications
     lateinit var CHANNEL_ID: String
@@ -189,9 +255,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
     @Inject lateinit var inputMethodManager: InputMethodManager
     @Inject lateinit var clipboardManager: ClipboardManager
     @Inject lateinit var notificationManager: NotificationManager
-    @Inject @field:DiskScheduler lateinit var diskScheduler: Scheduler
-    @Inject @field:DatabaseScheduler lateinit var databaseScheduler: Scheduler
-    @Inject @field:MainScheduler lateinit var mainScheduler: Scheduler
+    @Inject @field:DiskScheduler
+    lateinit var diskScheduler: Scheduler
+    @Inject @field:DatabaseScheduler
+    lateinit var databaseScheduler: Scheduler
+    @Inject @field:MainScheduler
+    lateinit var mainScheduler: Scheduler
     @Inject lateinit var homePageFactory: HomePageFactory
     @Inject lateinit var incognitoPageFactory: IncognitoPageFactory
     @Inject lateinit var incognitoPageInitializer: IncognitoPageInitializer
@@ -201,8 +270,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
     @Inject lateinit var downloadPageInitializer: DownloadPageInitializer
     @Inject lateinit var homePageInitializer: HomePageInitializer
     @Inject lateinit var bookmarkPageInitializer: BookmarkPageInitializer
-    @Inject @field:MainHandler lateinit var mainHandler: Handler
-    @Inject lateinit var proxyUtils: ProxyUtils
+    @Inject @field:MainHandler
+    lateinit var mainHandler: Handler
+    @Inject lateinit var proxyUtils: fulguris.utils.ProxyUtils
     @Inject lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject lateinit var exitCleanup: ExitCleanup
     @Inject lateinit var abpUserRules: AbpUserRules
@@ -210,8 +280,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
     @Inject lateinit var tabsManager: TabsManager
 
     // To be notified when preference are changed
-    @Inject @PrefsPortrait lateinit var portraitSharedPrefs: SharedPreferences
-    @Inject @PrefsLandscape lateinit var landscapeSharedPrefs: SharedPreferences
+    @Inject @PrefsPortrait
+    lateinit var portraitSharedPrefs: SharedPreferences
+    @Inject @PrefsLandscape
+    lateinit var landscapeSharedPrefs: SharedPreferences
     // Need to keep reference of listener otherwise they get carbadge collected
     private lateinit var portraitPrefsListener: SharedPreferences.OnSharedPreferenceChangeListener
     private lateinit var landscapePrefsListener: SharedPreferences.OnSharedPreferenceChangeListener
@@ -2189,7 +2261,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
                         && currentView.url.isNotBlank()
                         && !currentView.url.isSpecialUrl()) {
                     HistoryEntry(currentView.url, currentView.title).also {
-                        Utils.createShortcut(this, it, currentView.favicon)
+                        fulguris.utils.Utils.createShortcut(this, it, currentView.favicon)
                         Timber.d("Creating shortcut: ${it.title} ${it.url}")
                     }
                 }
@@ -2224,7 +2296,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
                 return true
             }
             R.id.action_share -> {
-                IntentUtils(this).shareUrl(currentUrl, currentView?.title)
+                fulguris.utils.IntentUtils(this).shareUrl(currentUrl, currentView?.title)
                 return true
             }
             R.id.action_bookmarks -> {
@@ -2269,7 +2341,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
 
             R.id.action_translate -> {
                 // Get our local
-                val locale = LocaleUtils.requestedLocale(userPreferences.locale)
+                val locale = fulguris.locale.LocaleUtils.requestedLocale(userPreferences.locale)
                 // For most languages Google just wants the two letters code
                 // Using the full language tag such as fr-FR will actually prevent Google translate…
                 // …to display the target language name even though the translation is actually working
@@ -2499,7 +2571,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
                 DialogItem(title = R.string.close_other_tabs) {
                     tabsManager.closeAllOtherTabs()
                 },
-                DialogItem(title = R.string.close_all_tabs, onClick = this::closeBrowser))
+                DialogItem(title = R.string.close_all_tabs, onClick = this::closeBrowser)
+        )
     }
 
     /**
@@ -3503,7 +3576,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
         currentToolBarTextColor = foregroundColorFromBackgroundColor(color)
         // Change search view text color
         searchView.setTextColor(currentToolBarTextColor)
-        searchView.setHintTextColor(DrawableUtils.mixColor(0.5f, currentToolBarTextColor, color))
+        searchView.setHintTextColor(fulguris.utils.DrawableUtils.mixColor(0.5f, currentToolBarTextColor, color))
         // Change tab counter color
         iBindingToolbarContent.tabsButton.apply {
             textColor = currentToolBarTextColor
@@ -3572,7 +3645,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
         setSearchBarColors(color)
 
         // Progress bar background color
-        DrawableUtils.mixColor(0.5f, color, Color.WHITE).let {
+        fulguris.utils.DrawableUtils.mixColor(0.5f, color, Color.WHITE).let {
             // Set progress bar background color making sure it isn't too bright
             // That's notably making it more visible on lequipe.fr and bbc.com/sport
             // We hope this is going to work with most white themed website too
@@ -3741,8 +3814,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
 
             return when (aInfo) {
                 HeaderInfo.Url -> tab.url
-                HeaderInfo.ShortUrl -> Utils.trimmedProtocolFromURL(tab.url)
-                HeaderInfo.Domain -> Utils.getDisplayDomainName(tab.url)
+                HeaderInfo.ShortUrl -> fulguris.utils.Utils.trimmedProtocolFromURL(tab.url)
+                HeaderInfo.Domain -> fulguris.utils.Utils.getDisplayDomainName(tab.url)
                 HeaderInfo.Title -> tab.title.ifBlank { getString(R.string.untitled) }
                 HeaderInfo.Session -> tabsManager.iCurrentSessionName
                 HeaderInfo.AppName -> getString(R.string.app_name)
@@ -3842,7 +3915,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
      * Display downloads folder one way or another
      */
     private fun openDownloads() {
-        startActivity(Utils.getIntentForDownloads(this, userPreferences.downloadDirectory))
+        startActivity(fulguris.utils.Utils.getIntentForDownloads(this, userPreferences.downloadDirectory))
         // Our built-in downloads list did not display downloaded items properly
         // Not sure why, consider fixing it or just removing it altogether at some point
         //tabsManager.newTab(downloadPageInitializer,true)
@@ -4091,7 +4164,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
                 putExtra("PhotoPath", cameraPhotoPath)
                 putExtra(
                         MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(Utils.createImageFile().also { file ->
+                        Uri.fromFile(fulguris.utils.Utils.createImageFile().also { file ->
                             cameraPhotoPath = "file:${file.absolutePath}"
                         })
                 )
@@ -4771,7 +4844,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(), WebBrowser, OnClick
             },
             DialogItem(
                 icon = this.drawable(R.drawable.round_clear_24),
-                title = R.string.exit, onClick = this::closeBrowser))
+                title = R.string.exit, onClick = this::closeBrowser)
+        )
     }
 
 

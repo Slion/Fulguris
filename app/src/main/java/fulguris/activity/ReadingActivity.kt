@@ -23,13 +23,13 @@
 package fulguris.activity
 
 
-import acr.browser.lightning.AppTheme
-import acr.browser.lightning.R
-import acr.browser.lightning.di.MainScheduler
-import acr.browser.lightning.di.NetworkScheduler
-import acr.browser.lightning.dialog.BrowserDialog.setDialogSize
-import acr.browser.lightning.extensions.isDarkTheme
-import acr.browser.lightning.utils.Utils
+import fulguris.AppTheme
+import fulguris.R
+import fulguris.di.MainScheduler
+import fulguris.di.NetworkScheduler
+import fulguris.dialog.BrowserDialog.setDialogSize
+import fulguris.extensions.isDarkTheme
+import fulguris.utils.Utils
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
@@ -245,7 +245,7 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
             return false
         }
         if (supportActionBar != null) {
-            supportActionBar!!.title = Utils.getDisplayDomainName(mUrl)
+            supportActionBar!!.title = fulguris.utils.Utils.getDisplayDomainName(mUrl)
         }
 
         // Build progress dialog

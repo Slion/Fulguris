@@ -30,7 +30,7 @@
             android:focusable="false"
             android:contentDescription="@null" />
 
-        <acr.browser.lightning.view.SearchView
+        <fulguris.view.SearchView
             android:id="@+id/search"
             android:layout_width="0dp"
             android:layout_height="match_parent"

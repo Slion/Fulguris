@@ -1,4 +1,4 @@
-package acr.browser.lightning
+package fulguris
 
 import android.app.Application
 

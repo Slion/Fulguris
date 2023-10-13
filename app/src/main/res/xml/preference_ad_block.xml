@@ -36,12 +36,12 @@
 
         </PreferenceCategory>
 
-        <acr.browser.lightning.settings.preferences.PreferenceCategoryEx
+        <fulguris.settings.preferences.PreferenceCategoryEx
             android:key="@string/pref_key_content_control_filters"
             android:title="@string/pref_category_filters"
             android:summary="@string/pref_category_summary_filters"
             android:dependency="@string/pref_key_content_control"
             app:singleLineTitle="false">
-        </acr.browser.lightning.settings.preferences.PreferenceCategoryEx>
+        </fulguris.settings.preferences.PreferenceCategoryEx>
 
 </androidx.preference.PreferenceScreen>

@@ -1,7 +1,7 @@
-package acr.browser.lightning.extensions
+package fulguris.extensions
 
-import acr.browser.lightning.SDK_VERSION
-import acr.browser.lightning.TestApplication
+import fulguris.SDK_VERSION
+import fulguris.TestApplication
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions

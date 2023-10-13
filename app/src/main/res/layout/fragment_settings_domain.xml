@@ -5,6 +5,6 @@
         android:id="@+id/fragmentContainerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="acr.browser.lightning.settings.fragment.DomainSettingsFragment"/>
+        android:name="fulguris.settings.fragment.DomainSettingsFragment"/>
 
 </layout>

@@ -1,8 +1,9 @@
-package acr.browser.lightning.rx
+package fulguris.rx
 
-import acr.browser.lightning.SDK_VERSION
-import acr.browser.lightning.TestApplication
+import fulguris.SDK_VERSION
+import fulguris.TestApplication
 import android.content.Intent
+import fulguris.rx.BroadcastReceiverObservable
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner

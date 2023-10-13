@@ -1,8 +1,10 @@
-package acr.browser.lightning.view.webrtc
+package fulguris.view.webrtc
 
 import android.net.Uri
 import android.webkit.PermissionRequest
 import com.nhaarman.mockito_kotlin.*
+import fulguris.view.webrtc.WebRtcPermissionsModel
+import fulguris.view.webrtc.WebRtcPermissionsView
 import org.junit.Test
 
 /**

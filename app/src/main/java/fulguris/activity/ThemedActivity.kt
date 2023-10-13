@@ -1,11 +1,11 @@
 package fulguris.activity
 
-import acr.browser.lightning.AccentTheme
-import acr.browser.lightning.AppTheme
-import acr.browser.lightning.R
-import acr.browser.lightning.extensions.getDrawable
-import acr.browser.lightning.extensions.toBitmap
-import acr.browser.lightning.utils.ThemeUtils
+import fulguris.AccentTheme
+import fulguris.AppTheme
+import fulguris.R
+import fulguris.extensions.getDrawable
+import fulguris.extensions.toBitmap
+import fulguris.utils.ThemeUtils
 import android.app.ActivityManager
 import android.content.Intent
 import android.graphics.Color

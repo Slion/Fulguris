@@ -16,7 +16,7 @@
 
 package jp.hazuki.yuzubrowser.adblock.core
 
-import acr.browser.lightning.adblock.AbpBlockerManager.Companion.isModify
+import fulguris.adblock.AbpBlockerManager.Companion.isModify
 import jp.hazuki.yuzubrowser.adblock.filter.abp.ABP_PREFIX_ELEMENT
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.ElementReader
 import jp.hazuki.yuzubrowser.adblock.filter.unified.io.FilterReader

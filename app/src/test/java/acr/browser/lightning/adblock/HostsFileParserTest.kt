@@ -1,7 +1,7 @@
-package acr.browser.lightning.adblock
+package fulguris.adblock
 
-import acr.browser.lightning.adblock.parser.HostsFileParser
-import acr.browser.lightning.database.adblock.Host
+import fulguris.adblock.parser.HostsFileParser
+import fulguris.database.adblock.Host
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.io.InputStreamReader

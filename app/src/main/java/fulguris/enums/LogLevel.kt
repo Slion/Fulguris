@@ -23,7 +23,7 @@ package fulguris.enums
  */
 
 
-import acr.browser.lightning.settings.preferences.IntEnum
+import fulguris.settings.preferences.IntEnum
 import android.util.Log
 
 /**
@@ -31,7 +31,8 @@ import android.util.Log
  *
  * NOTE: Class name is referenced as strings in our resources.
  */
-enum class LogLevel(override val value: Int) : IntEnum {
+enum class LogLevel(override val value: Int) :
+    IntEnum {
     VERBOSE(Log.VERBOSE),
     DEBUG(Log.DEBUG),
     INFO(Log.INFO),

@@ -1,7 +1,8 @@
-package acr.browser.lightning.dialog
+package fulguris.dialog
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import fulguris.dialog.DialogItem
 import org.junit.Test
 
 /**

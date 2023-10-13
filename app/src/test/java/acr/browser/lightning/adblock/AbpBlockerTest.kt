@@ -1,12 +1,18 @@
-package acr.browser.lightning.adblock
+package fulguris.adblock
 
-import acr.browser.lightning.adblock.AbpBlocker.Companion.getQueryParameterMap
-import acr.browser.lightning.adblock.AbpBlockerManager.Companion.blockerPrefixes
-import acr.browser.lightning.adblock.AbpBlockerManager.Companion.isModify
+import fulguris.adblock.AbpBlocker.Companion.getQueryParameterMap
+import fulguris.adblock.AbpBlockerManager.Companion.blockerPrefixes
+import fulguris.adblock.AbpBlockerManager.Companion.isModify
 import android.net.Uri
 import android.webkit.WebResourceRequest
 import androidx.core.net.toUri
 import androidx.core.util.PatternsCompat
+import fulguris.adblock.AbpBlocker
+import fulguris.adblock.BlockResourceResponse
+import fulguris.adblock.BlockResponse
+import fulguris.adblock.ModifyResponse
+import fulguris.adblock.RES_1X1
+import fulguris.adblock.RES_NOOP_MP4
 import jp.hazuki.yuzubrowser.adblock.core.ContentRequest
 import jp.hazuki.yuzubrowser.adblock.core.FilterContainer
 import jp.hazuki.yuzubrowser.adblock.filter.ContentFilter

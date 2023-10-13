@@ -3,10 +3,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package fulguris.activity
 
-import acr.browser.lightning.di.HiltEntryPoint
-import acr.browser.lightning.di.UserPrefs
-import acr.browser.lightning.locale.LocaleUtils
-import acr.browser.lightning.settings.preferences.UserPreferences
+import fulguris.di.HiltEntryPoint
+import fulguris.di.UserPrefs
+import fulguris.locale.LocaleUtils
+import fulguris.settings.preferences.UserPreferences
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -46,8 +46,8 @@ abstract class LocaleAwareActivity :
     abstract fun onLocaleChanged()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mLastLocale = LocaleUtils.requestedLocale(userPreferences.locale)
-        LocaleUtils.updateLocale(this, mLastLocale)
+        mLastLocale = fulguris.locale.LocaleUtils.requestedLocale(userPreferences.locale)
+        fulguris.locale.LocaleUtils.updateLocale(this, mLastLocale)
         setLayoutDirection(window.decorView, mLastLocale)
     }
 
@@ -60,7 +60,7 @@ abstract class LocaleAwareActivity :
      * @param newConfig
      */
     override fun onConfigurationChanged(newConfig: Configuration) {
-        val requestedLocale = LocaleUtils.requestedLocale(userPreferences.locale)
+        val requestedLocale = fulguris.locale.LocaleUtils.requestedLocale(userPreferences.locale)
         Timber.v("Config changed - Last locale: $mLastLocale")
         Timber.v("Config changed - Requested locale: $requestedLocale")
         Timber.v("Config changed - New config locale (ignored): " + newConfig.locale)
@@ -68,7 +68,7 @@ abstract class LocaleAwareActivity :
         // Check if our request local was changed
         if (requestedLocale == mLastLocale) {
             // Requested locale is the same make sure we apply it anew as it was reset in our new config
-            LocaleUtils.updateLocale(this, mLastLocale)
+            fulguris.locale.LocaleUtils.updateLocale(this, mLastLocale)
             setLayoutDirection(window.decorView, mLastLocale)
         } else {
             // Requested locale was changed, we will need to restart our activity then
@@ -98,7 +98,7 @@ abstract class LocaleAwareActivity :
 
     override fun onResume() {
         super.onResume()
-        val requestedLocale = LocaleUtils.requestedLocale(userPreferences.locale)
+        val requestedLocale = fulguris.locale.LocaleUtils.requestedLocale(userPreferences.locale)
         Timber.v("Resume - Last locale: $mLastLocale")
         Timber.v("Resume - Requested locale: $requestedLocale")
 

@@ -1,8 +1,10 @@
-package acr.browser.lightning.favicon
+package fulguris.favicon
 
-import acr.browser.lightning.SDK_VERSION
-import acr.browser.lightning.TestApplication
+import fulguris.SDK_VERSION
+import fulguris.TestApplication
 import androidx.core.net.toUri
+import fulguris.favicon.ValidUri
+import fulguris.favicon.toValidUri
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith

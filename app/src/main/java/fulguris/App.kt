@@ -22,20 +22,20 @@
 
 package fulguris
 
-import acr.browser.lightning.BuildConfig
+import fulguris.BuildConfig
 import fulguris.activity.IncognitoActivity
-import acr.browser.lightning.R
-import acr.browser.lightning.database.bookmark.BookmarkExporter
-import acr.browser.lightning.database.bookmark.BookmarkRepository
-import acr.browser.lightning.di.DatabaseScheduler
-import acr.browser.lightning.locale.LocaleUtils
-import acr.browser.lightning.settings.preferences.DeveloperPreferences
-import acr.browser.lightning.settings.preferences.LandscapePreferences
-import acr.browser.lightning.settings.preferences.PortraitPreferences
-import acr.browser.lightning.settings.preferences.UserPreferences
-import acr.browser.lightning.utils.FileUtils
-import acr.browser.lightning.utils.MemoryLeakUtils
-import acr.browser.lightning.utils.installMultiDex
+import fulguris.R
+import fulguris.database.bookmark.BookmarkExporter
+import fulguris.database.bookmark.BookmarkRepository
+import fulguris.di.DatabaseScheduler
+import fulguris.locale.LocaleUtils
+import fulguris.settings.preferences.DeveloperPreferences
+import fulguris.settings.preferences.LandscapePreferences
+import fulguris.settings.preferences.PortraitPreferences
+import fulguris.settings.preferences.UserPreferences
+import fulguris.utils.FileUtils
+import fulguris.utils.MemoryLeakUtils
+import fulguris.utils.installMultiDex
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
@@ -65,7 +65,8 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
     @Inject internal lateinit var portraitPreferences: PortraitPreferences
     @Inject internal lateinit var landscapePreferences: LandscapePreferences
     @Inject internal lateinit var bookmarkModel: BookmarkRepository
-    @Inject @DatabaseScheduler internal lateinit var databaseScheduler: Scheduler
+    @Inject @DatabaseScheduler
+    internal lateinit var databaseScheduler: Scheduler
     //@Inject internal lateinit var buildInfo: BuildInfo
 
     // Used to be able to tell when our application was just started
@@ -157,7 +158,7 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
 
     override fun onActivityDestroyed(activity: Activity) {
         Timber.v("onActivityDestroyed")
-        MemoryLeakUtils.clearNextServedView(activity, this@App)
+        fulguris.utils.MemoryLeakUtils.clearNextServedView(activity, this@App)
     }
 
 
@@ -202,7 +203,7 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
 
         Thread.setDefaultUncaughtExceptionHandler { thread, ex ->
             if (userPreferences.crashLogs) {
-                FileUtils.writeCrashToStorage(ex)
+                fulguris.utils.FileUtils.writeCrashToStorage(ex)
             }
 
             if (defaultHandler != null) {
@@ -215,14 +216,14 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
 	// TODO: Remove that once we are done with ReactiveX
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
             if (userPreferences.crashLogs && throwable != null) {
-                FileUtils.writeCrashToStorage(throwable)
+                fulguris.utils.FileUtils.writeCrashToStorage(throwable)
                 throw throwable
             }
         }
 
         // Apply locale
-        val requestLocale = LocaleUtils.requestedLocale(userPreferences.locale)
-        LocaleUtils.updateLocale(this, requestLocale)
+        val requestLocale = fulguris.locale.LocaleUtils.requestedLocale(userPreferences.locale)
+        fulguris.locale.LocaleUtils.updateLocale(this, requestLocale)
 
         // Import default bookmarks if none present
         // Now doing this synchronously as on fast devices it could result in not showing the bookmarks on first start
@@ -259,8 +260,8 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
          * Was needed to patch issue with Homepage displaying system language when user selected another language
          */
         fun setLocale() {
-            val requestLocale = LocaleUtils.requestedLocale(app.userPreferences.locale)
-            LocaleUtils.updateLocale(app, requestLocale)
+            val requestLocale = fulguris.locale.LocaleUtils.requestedLocale(app.userPreferences.locale)
+            fulguris.locale.LocaleUtils.updateLocale(app, requestLocale)
         }
 
     }

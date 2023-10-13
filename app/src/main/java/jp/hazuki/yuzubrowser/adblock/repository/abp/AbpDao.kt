@@ -16,7 +16,7 @@
 
 package jp.hazuki.yuzubrowser.adblock.repository.abp
 
-import acr.browser.lightning.adblock.AbpListUpdater
+import fulguris.adblock.AbpListUpdater
 import android.content.Context
 
 class AbpDao(val context: Context) {

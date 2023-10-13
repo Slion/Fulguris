@@ -9,7 +9,7 @@
 
         <!-- Empty default: we use an empty string to indicate "system default" language being selected -->
         <!--suppress AndroidDomInspection -->
-        <acr.browser.lightning.settings.preferences.LocaleListPreference
+        <fulguris.settings.preferences.LocaleListPreference
             android:defaultValue=""
             android:key="@string/pref_key_locale"
             android:title="@string/pref_title_language"

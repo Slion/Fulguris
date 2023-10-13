@@ -5,21 +5,21 @@
 
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.GeneralSettingsFragment"
+        app:fragment="fulguris.settings.fragment.GeneralSettingsFragment"
         app:title="@string/settings_general"
         app:icon="@drawable/ic_settings"
         app:singleLineTitle="false"
         />
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.DisplaySettingsFragment"
+        app:fragment="fulguris.settings.fragment.DisplaySettingsFragment"
         app:title="@string/settings_display"
         app:icon="@drawable/ic_palette"
         app:singleLineTitle="false"
         />
     
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.AdBlockSettingsFragment"
+        app:fragment="fulguris.settings.fragment.AdBlockSettingsFragment"
         app:title="@string/settings_adblock"
         app:summary="@string/settings_summary_content_control"
         app:icon="@drawable/ic_block"
@@ -27,14 +27,14 @@
         />
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.PrivacySettingsFragment"
+        app:fragment="fulguris.settings.fragment.PrivacySettingsFragment"
         app:title="@string/settings_privacy"
         app:icon="@drawable/ic_security"
         app:singleLineTitle="false"
         />
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.BackupSettingsFragment"
+        app:fragment="fulguris.settings.fragment.BackupSettingsFragment"
         app:title="@string/settings_backup"
         app:icon="@drawable/ic_cloud_upload"
         app:singleLineTitle="false"
@@ -42,7 +42,7 @@
 
     <!-- Advanced settings are now empty, remove them at some point -->
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.AdvancedSettingsFragment"
+        app:fragment="fulguris.settings.fragment.AdvancedSettingsFragment"
         app:isPreferenceVisible="false"
         app:title="@string/settings_advanced"
         app:singleLineTitle="false"
@@ -60,7 +60,7 @@
     </Preference>
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.DomainsSettingsFragment"
+        app:fragment="fulguris.settings.fragment.DomainsSettingsFragment"
         app:summary="@string/settings_summary_domains"
         app:title="@string/settings_title_domains"
         app:icon="@drawable/ic_domain"
@@ -68,7 +68,7 @@
         />
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.DebugSettingsFragment"
+        app:fragment="fulguris.settings.fragment.DebugSettingsFragment"
         app:key="@string/pref_key_debug"
         app:title="@string/debug_title"
         app:icon="@drawable/ic_bug"
@@ -76,7 +76,7 @@
         />
 
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.SponsorshipSettingsFragment"
+        app:fragment="fulguris.settings.fragment.SponsorshipSettingsFragment"
         app:title="@string/settings_contribute"
         app:summary="@string/settings_summary_contribute"
         app:icon="@drawable/ic_giftcard"
@@ -85,7 +85,7 @@
 
     <!-- About is traditionally last -->
     <Preference
-        app:fragment="acr.browser.lightning.settings.fragment.AboutSettingsFragment"
+        app:fragment="fulguris.settings.fragment.AboutSettingsFragment"
         app:title="@string/settings_about"
         app:icon="@drawable/ic_about"
         app:singleLineTitle="false"

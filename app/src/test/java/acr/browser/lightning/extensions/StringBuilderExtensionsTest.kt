@@ -1,5 +1,9 @@
-package acr.browser.lightning.extensions
+package fulguris.extensions
 
+import fulguris.extensions.inlineReplace
+import fulguris.extensions.inlineTrim
+import fulguris.extensions.stringEquals
+import fulguris.extensions.substringToBuilder
 import org.junit.Assert
 import org.junit.Test
 

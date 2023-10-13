@@ -1,7 +1,9 @@
-package acr.browser.lightning.adblock
+package fulguris.adblock
 
-import acr.browser.lightning.database.adblock.UserRulesRepository
+import fulguris.database.adblock.UserRulesRepository
 import androidx.core.net.toUri
+import fulguris.adblock.AbpUserRules
+import fulguris.adblock.UnifiedFilterResponse
 import org.junit.Assert
 import org.junit.Test
 
@@ -19,7 +21,8 @@ class AbpUserRulesTest {
 
 }
 
-private class NoUserRulesRepository: UserRulesRepository {
+private class NoUserRulesRepository:
+    UserRulesRepository {
     override fun addRules(rules: List<UnifiedFilterResponse>) {}
     override fun removeAllRules() {}
     override fun removeRule(rule: UnifiedFilterResponse) {}

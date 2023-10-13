@@ -11,9 +11,9 @@
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
--keep public class acr.browser.lightning.reading.*
--keep public class acr.browser.lightning.settings.fragment.*
--keep public class acr.browser.lightning.settings.NoYesAsk
+-keep public class fulguris.reading.*
+-keep public class fulguris.settings.fragment.*
+-keep public class fulguris.settings.NoYesAsk
 -keep public class fulguris.enums.LogLevel
 -keep public class fulguris.enums.*
 

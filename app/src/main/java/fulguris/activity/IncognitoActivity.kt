@@ -1,9 +1,9 @@
 package fulguris.activity
 
-import acr.browser.lightning.AccentTheme
-import acr.browser.lightning.AppTheme
-import acr.browser.lightning.Capabilities
-import acr.browser.lightning.isSupported
+import fulguris.AccentTheme
+import fulguris.AppTheme
+import fulguris.Capabilities
+import fulguris.isSupported
 import android.content.Context
 import android.content.Intent
 import android.net.Uri

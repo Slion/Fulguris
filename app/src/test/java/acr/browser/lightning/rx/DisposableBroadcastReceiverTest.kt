@@ -1,12 +1,13 @@
-package acr.browser.lightning.rx
+package fulguris.rx
 
-import acr.browser.lightning.SDK_VERSION
-import acr.browser.lightning.TestApplication
+import fulguris.SDK_VERSION
+import fulguris.TestApplication
 import android.content.BroadcastReceiver
 import android.content.Context
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import fulguris.rx.BroadcastReceiverDisposable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith

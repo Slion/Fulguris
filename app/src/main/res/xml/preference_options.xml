@@ -5,7 +5,7 @@
     <PreferenceCategory android:title="@string/options">
 
         <Preference
-            a:fragment="acr.browser.lightning.settings.fragment.DomainSettingsFragment"
+            a:fragment="fulguris.settings.fragment.DomainSettingsFragment"
             a:key="@string/pref_key_domain"
             a:title="@string/action_domain_settings"
             a:summary="@string/settings_summary_domains"
@@ -14,7 +14,7 @@
             />
 
         <Preference
-            a:fragment="acr.browser.lightning.settings.fragment.CookiesSettingsFragment"
+            a:fragment="fulguris.settings.fragment.CookiesSettingsFragment"
             a:title="@string/settings_title_cookies"
             a:summary="@string/settings_summary_manage_cookies"
             a:icon="@drawable/ic_cookie"
@@ -23,7 +23,7 @@
 
         <Preference
             a:key="@string/pref_key_portrait"
-            a:fragment="acr.browser.lightning.settings.fragment.PortraitSettingsFragment"
+            a:fragment="fulguris.settings.fragment.PortraitSettingsFragment"
             a:title="@string/settings_title_configuration"
             a:summary="@string/settings_title_portrait"
             a:icon="@drawable/ic_phone"
@@ -32,7 +32,7 @@
 
         <Preference
             a:key="@string/pref_key_landscape"
-            a:fragment="acr.browser.lightning.settings.fragment.LandscapeSettingsFragment"
+            a:fragment="fulguris.settings.fragment.LandscapeSettingsFragment"
             a:title="@string/settings_title_configuration"
             a:summary="@string/settings_title_landscape"
             a:icon="@drawable/ic_landscape"
@@ -40,7 +40,7 @@
             />
 
         <Preference
-            a:fragment="acr.browser.lightning.settings.fragment.ScrollbarsSettingsFragment"
+            a:fragment="fulguris.settings.fragment.ScrollbarsSettingsFragment"
             a:title="@string/pref_category_scrollbars"
             a:summary="@string/pref_summary_scrollbars"
             a:icon="@drawable/ic_scroll_vertical"

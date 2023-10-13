@@ -1,10 +1,11 @@
-package acr.browser.lightning.extensions
+package fulguris.extensions
 
 import android.view.View
 import android.view.ViewGroup
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import fulguris.extensions.removeFromParent
 import org.junit.Test
 
 /**

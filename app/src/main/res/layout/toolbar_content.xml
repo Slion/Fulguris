@@ -98,7 +98,7 @@
         android:nextFocusDown="@id/web_view"
         />
 
-    <acr.browser.lightning.icon.TabCountView
+    <fulguris.icon.TabCountView
         android:id="@+id/tabs_button"
         style="?android:attr/actionButtonStyle"
         android:layout_width="@dimen/material_grid_touch_medium"

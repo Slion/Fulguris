@@ -95,7 +95,7 @@
                             android:layout_weight="1"
                             android:animateLayoutChanges="false">
 
-                            <acr.browser.lightning.view.PullRefreshLayout
+                            <fulguris.view.PullRefreshLayout
                                 android:id="@+id/tabViewContainerOne"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -103,7 +103,7 @@
                                 android:clipChildren="true"
                                 android:animateLayoutChanges="false" />
 
-                            <acr.browser.lightning.view.PullRefreshLayout
+                            <fulguris.view.PullRefreshLayout
                                 android:id="@+id/tabViewContainerTwo"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"

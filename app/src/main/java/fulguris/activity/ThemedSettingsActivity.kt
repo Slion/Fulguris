@@ -22,11 +22,10 @@
 
 package fulguris.activity
 
-import acr.browser.lightning.AccentTheme
-import acr.browser.lightning.R
-import fulguris.activity.ThemedActivity
-import acr.browser.lightning.extensions.isDarkTheme
-import acr.browser.lightning.extensions.setStatusBarIconsColor
+import fulguris.AccentTheme
+import fulguris.R
+import fulguris.extensions.isDarkTheme
+import fulguris.extensions.setStatusBarIconsColor
 
 
 abstract class ThemedSettingsActivity : ThemedActivity() {

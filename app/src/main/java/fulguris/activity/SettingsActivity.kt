@@ -3,12 +3,12 @@
  */
 package fulguris.activity
 
-import acr.browser.lightning.R
-import acr.browser.lightning.extensions.findPreference
-import acr.browser.lightning.extensions.findViewsByType
-import acr.browser.lightning.settings.fragment.AbstractSettingsFragment
-import acr.browser.lightning.settings.fragment.RootSettingsFragment
-import acr.browser.lightning.settings.fragment.ResponsiveSettingsFragment
+import fulguris.R
+import fulguris.extensions.findPreference
+import fulguris.extensions.findViewsByType
+import fulguris.settings.fragment.AbstractSettingsFragment
+import fulguris.settings.fragment.RootSettingsFragment
+import fulguris.settings.fragment.ResponsiveSettingsFragment
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.MenuItem

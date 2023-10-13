@@ -53,7 +53,7 @@
     </Preference>
 
     <fulguris.preference.BasicPreference
-        a:fragment="acr.browser.lightning.settings.fragment.DomainSettingsFragment"
+        a:fragment="fulguris.settings.fragment.DomainSettingsFragment"
         a:key="@string/pref_key_parent"
         a:title="@string/settings_title_parent"
         a:icon="@drawable/ic_domain"
@@ -167,7 +167,7 @@
 
     </PreferenceCategory>
 
-    <acr.browser.lightning.settings.preferences.PreferenceCategoryEx
+    <fulguris.settings.preferences.PreferenceCategoryEx
         a:title="@string/settings_title_launch_app"
         a:summary="@string/dialog_message_third_party_app">
 
@@ -188,13 +188,13 @@
             a:entries="@array/NoYesAsk"
             a:icon="@drawable/ic_apps"
             a:singleLineTitle="false"
-            a:enumClassName="acr.browser.lightning.settings.NoYesAsk"
+            a:enumClassName="fulguris.settings.NoYesAsk"
             a:dependency="@string/pref_key_launch_app_override"
             />
 
-    </acr.browser.lightning.settings.preferences.PreferenceCategoryEx>
+    </fulguris.settings.preferences.PreferenceCategoryEx>
 
-    <acr.browser.lightning.settings.preferences.PreferenceCategoryEx
+    <fulguris.settings.preferences.PreferenceCategoryEx
         a:title="@string/settings_title_ssl_error"
         a:summary="@string/settings_summary_ssl_error">
 
@@ -215,11 +215,11 @@
             a:entries="@array/AbortProceedAsk"
             a:icon="@drawable/ic_unsecured"
             a:singleLineTitle="false"
-            a:enumClassName="acr.browser.lightning.settings.NoYesAsk"
+            a:enumClassName="fulguris.settings.NoYesAsk"
             a:dependency="@string/pref_key_ssl_error_override"
             />
 
-    </acr.browser.lightning.settings.preferences.PreferenceCategoryEx>
+    </fulguris.settings.preferences.PreferenceCategoryEx>
 
     <SwitchPreferenceCompat
         a:key="@string/pref_key_entry_point"
