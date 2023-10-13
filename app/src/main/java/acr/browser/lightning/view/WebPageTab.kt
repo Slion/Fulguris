@@ -11,7 +11,7 @@ import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.*
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener

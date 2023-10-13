@@ -4,7 +4,7 @@ import acr.browser.lightning.R
 import acr.browser.lightning.animation.AnimationUtils
 import acr.browser.lightning.browser.BookmarksView
 import acr.browser.lightning.browser.TabsManager
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.BookmarkDrawerViewBinding

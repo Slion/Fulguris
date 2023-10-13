@@ -22,7 +22,7 @@
 
 package acr.browser.lightning.browser.tabs
 
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil

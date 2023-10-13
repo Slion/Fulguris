@@ -23,7 +23,7 @@
 package acr.browser.lightning.browser.sessions
 
 import acr.browser.lightning.R
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import android.view.View

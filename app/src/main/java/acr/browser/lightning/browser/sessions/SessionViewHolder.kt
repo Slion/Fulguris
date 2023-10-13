@@ -24,7 +24,7 @@ package acr.browser.lightning.browser.sessions
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.extensions.resizeAndShow
 import acr.browser.lightning.extensions.toast

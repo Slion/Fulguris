@@ -15,7 +15,6 @@ import acr.browser.lightning.browser.cleanup.ExitCleanup
 import acr.browser.lightning.browser.sessions.SessionsPopupWindow
 import acr.browser.lightning.browser.tabs.TabsDesktopView
 import acr.browser.lightning.browser.tabs.TabsDrawerView
-import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.HistoryEntry
 import acr.browser.lightning.database.SearchSuggestion
@@ -135,7 +134,7 @@ import kotlin.system.exitProcess
  *
  */
 @AndroidEntryPoint
-abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIController, OnClickListener, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+abstract class BrowserActivity : ThemedBrowserActivity(), UIController, OnClickListener, PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     // Notifications
     lateinit var CHANNEL_ID: String
@@ -344,7 +343,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         tabsManager.addTabNumberChangedListener(::updateTabNumber)
 
         // Setup our presenter
-        tabsManager.iBrowserView = this
+        tabsManager.iUIController = this
         tabsManager.closedTabs = RecentTabsModel()
         tabsManager.isIncognito = isIncognito()
 
@@ -2506,7 +2505,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * From [BrowserView].
+     * From [UIController].
      */
     override fun notifyTabViewRemoved(position: Int) {
         Timber.d("Notify Tab Removed: $position")
@@ -2523,7 +2522,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * From [BrowserView].
+     * From [UIController].
      */
     override fun notifyTabViewAdded() {
         Timber.d("Notify Tab Added")
@@ -2531,7 +2530,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * From [BrowserView].
+     * From [UIController].
      *
      */
     override fun notifyTabViewChanged(position: Int) {
@@ -2542,7 +2541,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * From [BrowserView].
+     * From [UIController].
      */
     override fun notifyTabViewInitialized() {
         Timber.d("Notify Tabs Initialized")
@@ -2550,7 +2549,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * TODO: Defined both in [BrowserView] and [UIController]
+     * TODO: Defined both in [UIController] and [UIController]
      * Sort out that mess.
      */
     override fun updateSslState(sslState: SslState) {
@@ -2721,7 +2720,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     var iSkipNextSearchQueryUpdate = false
 
     /**
-     * From [BrowserView].
+     * From [UIController].
      * This function is central to browser tab switching.
      * It swaps our previous WebView with our new WebView.
      *
@@ -4640,7 +4639,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * Implement [BrowserView.onMaxTabReached]
+     * Implement [UIController.onMaxTabReached]
      */
     override fun onMaxTabReached() {
         // Show a message telling the user to contribute.
@@ -4658,7 +4657,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     }
 
     /**
-     * Implement [BrowserView.setAddressBarText]
+     * Implement [UIController.setAddressBarText]
      */
     override fun setAddressBarText(aText: String) {
         Timber.d("setAddressBarText: $aText")

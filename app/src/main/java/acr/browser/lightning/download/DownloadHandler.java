@@ -27,7 +27,7 @@ import acr.browser.lightning.MainActivity;
 import acr.browser.lightning.R;
 import acr.browser.lightning.browser.activity.BrowserActivity;
 import acr.browser.lightning.constant.Constants;
-import acr.browser.lightning.controller.UIController;
+import acr.browser.lightning.browser.UIController;
 import acr.browser.lightning.database.downloads.DownloadEntry;
 import acr.browser.lightning.database.downloads.DownloadsRepository;
 import acr.browser.lightning.di.DatabaseScheduler;

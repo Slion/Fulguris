@@ -2,7 +2,7 @@ package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.browser.TabsView
 import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.databinding.TabDrawerViewBinding
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.extensions.inflater

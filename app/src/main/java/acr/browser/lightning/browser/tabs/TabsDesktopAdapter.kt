@@ -2,7 +2,7 @@ package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.extensions.*
 import acr.browser.lightning.utils.ItemDragDropSwipeAdapter
 import acr.browser.lightning.utils.ThemeUtils

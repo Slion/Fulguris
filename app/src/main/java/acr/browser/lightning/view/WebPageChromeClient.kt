@@ -1,7 +1,7 @@
 package acr.browser.lightning.view
 
 import acr.browser.lightning.R
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem

@@ -3,7 +3,7 @@ package acr.browser.lightning.browser.tabs
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabsView
 import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.databinding.TabDesktopViewBinding
 import acr.browser.lightning.extensions.inflater
 import acr.browser.lightning.utils.ItemDragDropSwipeHelper

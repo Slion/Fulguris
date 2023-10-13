@@ -5,9 +5,9 @@ import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpBlockerManager
 import acr.browser.lightning.adblock.AdBlocker
 import acr.browser.lightning.adblock.NoOpAdBlocker
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.browser.activity.BrowserActivity
 import acr.browser.lightning.constant.FILE
-import acr.browser.lightning.controller.UIController
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.extensions.getDrawable

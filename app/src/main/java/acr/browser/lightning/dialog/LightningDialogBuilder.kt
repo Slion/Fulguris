@@ -2,7 +2,7 @@ package acr.browser.lightning.dialog
 
 import acr.browser.lightning.MainActivity
 import acr.browser.lightning.R
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.asFolder
 import acr.browser.lightning.database.bookmark.BookmarkRepository

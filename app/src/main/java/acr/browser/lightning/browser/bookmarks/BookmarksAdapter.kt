@@ -23,8 +23,7 @@
 package acr.browser.lightning.browser.bookmarks
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.BrowserActivity
-import acr.browser.lightning.controller.UIController
+import acr.browser.lightning.browser.UIController
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.extensions.drawable
@@ -47,15 +46,15 @@ import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
 
 class BookmarksAdapter(
-        val context: Context,
-        val uiController: UIController,
-        private val bookmarksRepository: BookmarkRepository,
-        private val faviconModel: FaviconModel,
-        private val networkScheduler: Scheduler,
-        private val mainScheduler: Scheduler,
-        private val databaseScheduler: Scheduler,
-        private val iShowBookmarkMenu: (Bookmark) -> Boolean,
-        private val iOpenBookmark: (Bookmark) -> Unit
+    val context: Context,
+    val uiController: UIController,
+    private val bookmarksRepository: BookmarkRepository,
+    private val faviconModel: FaviconModel,
+    private val networkScheduler: Scheduler,
+    private val mainScheduler: Scheduler,
+    private val databaseScheduler: Scheduler,
+    private val iShowBookmarkMenu: (Bookmark) -> Boolean,
+    private val iOpenBookmark: (Bookmark) -> Unit
 ) : RecyclerView.Adapter<BookmarkViewHolder>(), ItemDragDropSwipeAdapter {
 
     private var bookmarks: List<BookmarksViewModel> = listOf()
