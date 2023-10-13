@@ -22,7 +22,7 @@ Fulguris is a [web browser] for Android. Through a customizable interface it off
      height="80">](https://f-droid.org/packages/net.slions.fulguris.full.fdroid/)
 
 ## Release channels
-We have three official public release channels linked above and described below. While we strive to produce stable releases, the Fulguris project is a very small operation. Ultimately the community is responsible for doing the testing and validation of releases. All three variants of the app can be installed at the same time on your device. They are effectively three distinct similar apps. You can differenciate them in your launcher from their slightly modified icon design. Which versions you use and how you manage your updates will define your experience with Fulguris. Update often to help catch bugs before it reaches too many users. Make sure you wait a couple of weeks and check for known issues before updating if you want to have fewer surprises and a more stable experience.
+We have three official public release channels linked above and described below. While we strive to produce stable releases, the Fulguris project is a very small operation. Ultimately the community is responsible for doing the testing and validation of releases. All three variants of the app can be installed at the same time on your device. They are effectively three distinct similar apps. You can differenciate them in your launcher from their slightly modified icon design. Which versions you use and how you manage your updates will define your experience with Fulguris. Update often to help catch bugs before they reach too many users. Wait a couple of weeks and check for known issues before updating if you want to have fewer surprises and a more stable experience.
 
 ### 🟢 Google Play
 
