@@ -948,7 +948,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         iBinding.fabInclude.fabTabClose.setOnClickListener {
             iEasyTabSwitcherWasUsed = true
             restartDisableFabsCountdown()
-            tabsManager.let { tabsManager.deleteTabFromPresenter(it.indexOfCurrentTab()) }
+            tabsManager.let { tabsManager.deleteTab(it.indexOfCurrentTab()) }
             tabSwitchReset()
         }
 
@@ -2067,7 +2067,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                     KeyEvent.KEYCODE_F4,
                     KeyEvent.KEYCODE_W -> {
                         // Close current tab
-                        tabsManager.let { tabsManager.deleteTabFromPresenter(it.indexOfCurrentTab()) }
+                        tabsManager.let { tabsManager.deleteTab(it.indexOfCurrentTab()) }
                         tabSwitchReset()
                         return true
                     }
@@ -2154,7 +2154,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         // URL is later on reset to null by WebView internal mechanics.
         mainHandler.postDelayed({
             if (currentTabView?.url.isNullOrBlank()) {
-                tabsManager.deleteTabFromPresenter(tabsManager.indexOfCurrentTab())
+                tabsManager.deleteTab(tabsManager.indexOfCurrentTab())
             }
         }, 500);
     }
@@ -2497,7 +2497,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
         }
         BrowserDialog.show(this, R.string.dialog_title_close_browser,
                 DialogItem(title = R.string.close_tab) {
-                    tabsManager.deleteTabFromPresenter(position)
+                    tabsManager.deleteTab(position)
                 },
                 DialogItem(title = R.string.close_other_tabs) {
                     tabsManager.closeAllOtherTabs()
@@ -3060,7 +3060,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
     fun showSnackbar(aMessage: String) = snackbar(aMessage, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
 
     override fun tabCloseClicked(position: Int) {
-        tabsManager.deleteTabFromPresenter(position)
+        tabsManager.deleteTab(position)
     }
 
     override fun tabClicked(position: Int) {
@@ -3280,7 +3280,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
                         onHideCustomView()
                     } else {
                         if (isToolBarVisible()) {
-                            tabsManager.deleteTabFromPresenter(tabsManager.positionOf(currentTab))
+                            tabsManager.deleteTab(tabsManager.positionOf(currentTab))
                         } else {
                             showActionBar()
                         }
@@ -4235,7 +4235,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             if (currentTab?.canGoBack() == true) {
                 currentTabGoBack()
             } else if (currentTab != null) {
-                tabsManager.let { tabsManager.deleteTabFromPresenter(it.positionOf(currentTab)) }
+                tabsManager.let { tabsManager.deleteTab(it.positionOf(currentTab)) }
             }
         } else if (closeBookmarksPanelIfOpen()) {
             // Don't do anything other than close the bookmarks drawer when the activity is being
@@ -4333,7 +4333,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
      * @param tab the [WebPageTab] to close, delete it.
      */
     override fun onCloseWindow(tab: WebPageTab) {
-        tabsManager.deleteTabFromPresenter(tabsManager.positionOf(tab))
+        tabsManager.deleteTab(tabsManager.positionOf(tab))
     }
 
     /**
@@ -4765,7 +4765,7 @@ abstract class BrowserActivity : ThemedBrowserActivity(), BrowserView, UIControl
             DialogItem(
                 icon = this.drawable(R.drawable.ic_tabs),
                 title = R.string.close_tab) {
-                tabsManager.deleteTabFromPresenter(position)
+                tabsManager.deleteTab(position)
             },
             DialogItem(
                 icon = this.drawable(R.drawable.ic_delete_forever),

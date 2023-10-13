@@ -3,9 +3,7 @@ package acr.browser.lightning.browser
 import acr.browser.lightning.Entitlement
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.sessions.Session
-import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.constant.INTENT_ORIGIN
-import acr.browser.lightning.constant.Uris
 import acr.browser.lightning.extensions.snackbar
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.settings.NewTabPosition
@@ -531,7 +529,7 @@ class TabsManager @Inject constructor(
      */
     fun shutdown() {
         Timber.d("shutdown")
-        repeat(tabList.size) { deleteTab(0) }
+        repeat(tabList.size) { doDeleteTab(0) }
         savedRecentTabsIndices.clear()
         isInitialized = false
         currentTab = null
@@ -623,8 +621,8 @@ class TabsManager @Inject constructor(
      * @param position the position of the tab to delete.
      * @return returns true if the current tab was deleted, false otherwise.
      */
-    fun deleteTab(position: Int): Boolean {
-        Timber.i("Delete tab: $position")
+    private fun doDeleteTab(position: Int): Boolean {
+        Timber.i("doDeleteTab: $position")
         val currentTab = currentTab
         val current = positionOf(currentTab)
 
@@ -1020,11 +1018,11 @@ class TabsManager @Inject constructor(
     fun closeAllOtherTabs() {
         Timber.d("closeAllOtherTabs")
         while (tabsModel.last() != tabsModel.indexOfCurrentTab()) {
-            deleteTabFromPresenter(tabsModel.last())
+            deleteTab(tabsModel.last())
         }
 
         while (0 != tabsModel.indexOfCurrentTab()) {
-            deleteTabFromPresenter(0)
+            deleteTab(0)
         }
     }
 
@@ -1037,7 +1035,7 @@ class TabsManager @Inject constructor(
         if (tabsModel.allTabs.count()==0) return
 
         while (tabsModel.allTabs.count() > 1) {
-            deleteTabFromPresenter(tabsModel.last())
+            deleteTab(tabsModel.last())
         }
 
         //deleteTab(tabsModel.last())
@@ -1048,8 +1046,8 @@ class TabsManager @Inject constructor(
      *
      * @param position the position at which to delete the tab.
      */
-    fun deleteTabFromPresenter(position: Int) {
-        Timber.d("deleting tab...")
+    fun deleteTab(position: Int) {
+        Timber.d("deleteTab")
         val tabToDelete = tabsModel.getTabAtPosition(position) ?: return
 
         closedTabs.add(tabToDelete.saveState())
@@ -1058,7 +1056,7 @@ class TabsManager @Inject constructor(
         val shouldClose = shouldClose && isShown && tabToDelete.isNewTab
         val beforeTab = tabsModel.currentTab
 
-        val currentDeleted = tabsModel.deleteTab(position)
+        val currentDeleted = tabsModel.doDeleteTab(position)
         if (currentDeleted) {
             tabChanged(tabsModel.indexOfCurrentTab(), isShown, false)
         }
@@ -1080,7 +1078,7 @@ class TabsManager @Inject constructor(
 
         iBrowserView.updateTabNumber(tabsModel.size())
 
-        Timber.d("...deleted tab")
+        Timber.d("deleteTab - end")
     }
 
     /**
