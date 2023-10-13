@@ -1,9 +1,10 @@
-package acr.browser.lightning
+package fulguris.activity
 
+import acr.browser.lightning.AccentTheme
+import acr.browser.lightning.AppTheme
+import acr.browser.lightning.R
 import acr.browser.lightning.extensions.getDrawable
 import acr.browser.lightning.extensions.toBitmap
-import acr.browser.lightning.locale.LocaleAwareActivity
-import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.ThemeUtils
 import android.app.ActivityManager
 import android.content.Intent
@@ -11,7 +12,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StyleRes
-import dagger.hilt.android.EntryPointAccessors
 
 //@AndroidEntryPoint
 abstract class ThemedActivity : LocaleAwareActivity() {
@@ -43,7 +43,7 @@ abstract class ThemedActivity : LocaleAwareActivity() {
     fun themeStyle(aTheme: AppTheme): Int {
         return when (aTheme) {
             AppTheme.LIGHT -> R.style.Theme_App_Light
-            AppTheme.DARK ->  R.style.Theme_App_Dark
+            AppTheme.DARK -> R.style.Theme_App_Dark
             AppTheme.BLACK -> R.style.Theme_App_Black
             AppTheme.DEFAULT -> R.style.Theme_App_DayNight
         }

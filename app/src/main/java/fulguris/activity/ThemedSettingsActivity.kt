@@ -20,45 +20,32 @@
  * All Rights Reserved.
  */
 
-package acr.browser.lightning.browser.activity
+package fulguris.activity
 
 import acr.browser.lightning.AccentTheme
-import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
-import acr.browser.lightning.ThemedActivity
-import android.os.Bundle
+import fulguris.activity.ThemedActivity
+import acr.browser.lightning.extensions.isDarkTheme
+import acr.browser.lightning.extensions.setStatusBarIconsColor
 
-//@AndroidEntryPoint
-abstract class ThemedBrowserActivity : ThemedActivity() {
 
-    private var shouldRunOnResumeActions = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        //injector.inject(this)
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus && shouldRunOnResumeActions) {
-            shouldRunOnResumeActions = false
-            onWindowVisibleToUserAfterResume()
-        }
-    }
+abstract class ThemedSettingsActivity : ThemedActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Make sure icons have the right color
+        //window.setStatusBarIconsColor(foregroundColorFromBackgroundColor(ThemeUtils.getPrimaryColor(this)) == Color.BLACK && !userPreferences.useBlackStatusBar)
+        window.setStatusBarIconsColor(!(isDarkTheme() || userPreferences.useBlackStatusBar))
         resetPreferences()
-        shouldRunOnResumeActions = true
-        if (themeId != userPreferences.useTheme) {
-            restart()
+        if (userPreferences.useTheme != themeId) {
+            recreate()
         }
 
-        if (accentId != userPreferences.useAccent) {
-            restart()
+        if (userPreferences.useAccent != accentId) {
+            recreate()
         }
     }
-
+    
     override fun accentStyle(accentTheme: AccentTheme): Int? {
         return when (accentTheme) {
             AccentTheme.DEFAULT_ACCENT -> null
@@ -80,5 +67,4 @@ abstract class ThemedBrowserActivity : ThemedActivity() {
             AccentTheme.BROWN -> R.style.Accent_Brown
         }
     }
-
 }

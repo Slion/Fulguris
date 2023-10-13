@@ -1,7 +1,7 @@
 package acr.browser.lightning.browser.tabs
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.WebBrowserActivity
 import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.di.configPrefs
 import acr.browser.lightning.utils.ItemDragDropSwipeViewHolder

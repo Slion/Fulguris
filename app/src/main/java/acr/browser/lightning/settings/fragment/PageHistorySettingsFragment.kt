@@ -24,7 +24,7 @@ package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.TabsManager
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.WebBrowserActivity
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
 import acr.browser.lightning.extensions.isDarkTheme

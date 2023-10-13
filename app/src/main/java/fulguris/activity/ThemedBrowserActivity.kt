@@ -20,36 +20,43 @@
  * All Rights Reserved.
  */
 
-package acr.browser.lightning.settings.activity
+package fulguris.activity
 
 import acr.browser.lightning.AccentTheme
-import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
-import acr.browser.lightning.ThemedActivity
-import acr.browser.lightning.extensions.isDarkTheme
-import acr.browser.lightning.extensions.setStatusBarIconsColor
-import acr.browser.lightning.utils.ThemeUtils
-import acr.browser.lightning.utils.foregroundColorFromBackgroundColor
-import android.graphics.Color
+import android.os.Bundle
 
+//@AndroidEntryPoint
+abstract class ThemedBrowserActivity : ThemedActivity() {
 
-abstract class ThemedSettingsActivity : ThemedActivity() {
+    private var shouldRunOnResumeActions = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        //injector.inject(this)
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus && shouldRunOnResumeActions) {
+            shouldRunOnResumeActions = false
+            onWindowVisibleToUserAfterResume()
+        }
+    }
 
     override fun onResume() {
         super.onResume()
-        // Make sure icons have the right color
-        //window.setStatusBarIconsColor(foregroundColorFromBackgroundColor(ThemeUtils.getPrimaryColor(this)) == Color.BLACK && !userPreferences.useBlackStatusBar)
-        window.setStatusBarIconsColor(!(isDarkTheme() || userPreferences.useBlackStatusBar))
         resetPreferences()
-        if (userPreferences.useTheme != themeId) {
-            recreate()
+        shouldRunOnResumeActions = true
+        if (themeId != userPreferences.useTheme) {
+            restart()
         }
 
-        if (userPreferences.useAccent != accentId) {
-            recreate()
+        if (accentId != userPreferences.useAccent) {
+            restart()
         }
     }
-    
+
     override fun accentStyle(accentTheme: AccentTheme): Int? {
         return when (accentTheme) {
             AccentTheme.DEFAULT_ACCENT -> null
@@ -71,4 +78,5 @@ abstract class ThemedSettingsActivity : ThemedActivity() {
             AccentTheme.BROWN -> R.style.Accent_Brown
         }
     }
+
 }

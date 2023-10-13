@@ -1,6 +1,6 @@
-package acr.browser.lightning
+package fulguris.activity
 
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import acr.browser.lightning.R
 import android.content.Intent
 import android.view.KeyEvent
 import android.webkit.CookieManager

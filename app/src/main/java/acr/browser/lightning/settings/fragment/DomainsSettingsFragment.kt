@@ -23,7 +23,7 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.ThemedActivity
+import fulguris.activity.ThemedActivity
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
 import acr.browser.lightning.di.UserPrefs

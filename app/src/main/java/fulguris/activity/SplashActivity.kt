@@ -20,9 +20,9 @@
  * All Rights Reserved.
  */
  
-package acr.browser.lightning
+package fulguris.activity
 
-import acr.browser.lightning.locale.LocaleAwareActivity
+import acr.browser.lightning.R
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build

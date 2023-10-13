@@ -17,7 +17,7 @@ import acr.browser.lightning.settings.NewTabPosition
 import acr.browser.lightning.utils.FileUtils
 import acr.browser.lightning.view.RenderingMode
 import android.content.SharedPreferences
-import fulguris.LogLevel
+import fulguris.enums.LogLevel
 import fulguris.enums.HeaderInfo
 import javax.inject.Inject
 import javax.inject.Singleton

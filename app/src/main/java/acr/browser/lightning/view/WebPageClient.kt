@@ -6,7 +6,7 @@ import acr.browser.lightning.adblock.AbpBlockerManager
 import acr.browser.lightning.adblock.AdBlocker
 import acr.browser.lightning.adblock.NoOpAdBlocker
 import acr.browser.lightning.browser.WebBrowser
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.WebBrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.di.HiltEntryPoint
 import acr.browser.lightning.di.configPrefs
@@ -51,7 +51,7 @@ import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
-import fulguris.LogLevel
+import fulguris.enums.LogLevel
 import fulguris.app
 import timber.log.Timber
 import java.io.ByteArrayOutputStream

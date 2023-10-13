@@ -1,7 +1,7 @@
 /*
  * Copyright 2014 A.C.R. Development
  */
-package acr.browser.lightning.settings.activity
+package fulguris.activity
 
 import acr.browser.lightning.R
 import acr.browser.lightning.extensions.findPreference

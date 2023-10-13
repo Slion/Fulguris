@@ -23,7 +23,7 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.WebBrowserActivity
 import acr.browser.lightning.di.UserPrefs
 import acr.browser.lightning.extensions.resizeAndShow
 import android.annotation.SuppressLint

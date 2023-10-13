@@ -23,7 +23,7 @@
 package fulguris
 
 import acr.browser.lightning.BuildConfig
-import acr.browser.lightning.IncognitoActivity
+import fulguris.activity.IncognitoActivity
 import acr.browser.lightning.R
 import acr.browser.lightning.database.bookmark.BookmarkExporter
 import acr.browser.lightning.database.bookmark.BookmarkRepository

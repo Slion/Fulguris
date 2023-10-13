@@ -1,4 +1,4 @@
-package acr.browser.lightning.browser.activity
+package acr.browser.lightning.utils
 
 import android.text.Editable
 import android.text.TextWatcher

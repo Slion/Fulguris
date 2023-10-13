@@ -3,13 +3,14 @@
  * Copyright 2015 Anthony Restaino
  */
 
-package acr.browser.lightning.browser.activity
+package fulguris.activity
 
 import acr.browser.lightning.*
 import acr.browser.lightning.BuildConfig
 import acr.browser.lightning.R
 import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.browser.*
+import acr.browser.lightning.utils.StyleRemovingTextWatcher
 import acr.browser.lightning.browser.bookmarks.BookmarksDrawerView
 import acr.browser.lightning.browser.cleanup.ExitCleanup
 import acr.browser.lightning.browser.sessions.SessionsPopupWindow
@@ -34,12 +35,9 @@ import acr.browser.lightning.html.homepage.HomePageFactory
 import acr.browser.lightning.html.incognito.IncognitoPageFactory
 import acr.browser.lightning.locale.LocaleUtils
 import acr.browser.lightning.notifications.IncognitoNotification
-import acr.browser.lightning.reading.ReadingActivity
 import acr.browser.lightning.search.SearchEngineProvider
 import acr.browser.lightning.search.SuggestionsAdapter
 import acr.browser.lightning.settings.NewTabPosition
-import acr.browser.lightning.settings.activity.SETTINGS_CLASS_NAME
-import acr.browser.lightning.settings.activity.SettingsActivity
 import acr.browser.lightning.settings.fragment.BottomSheetDialogFragment
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
 import acr.browser.lightning.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE

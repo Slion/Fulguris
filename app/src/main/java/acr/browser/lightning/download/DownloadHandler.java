@@ -23,9 +23,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import acr.browser.lightning.BuildConfig;
-import acr.browser.lightning.MainActivity;
+import fulguris.activity.MainActivity;
 import acr.browser.lightning.R;
-import acr.browser.lightning.browser.activity.WebBrowserActivity;
+import fulguris.activity.WebBrowserActivity;
 import acr.browser.lightning.constant.Constants;
 import acr.browser.lightning.browser.WebBrowser;
 import acr.browser.lightning.database.downloads.DownloadEntry;

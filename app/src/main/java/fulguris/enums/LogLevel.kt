@@ -1,4 +1,4 @@
-package fulguris
+package fulguris.enums
 
 /*
  * The contents of this file are subject to the Common Public Attribution License Version 1.0.

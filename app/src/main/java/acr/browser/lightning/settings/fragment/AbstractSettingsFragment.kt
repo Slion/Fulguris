@@ -23,10 +23,9 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.settings.activity.SettingsActivity
+import fulguris.activity.SettingsActivity
 import acr.browser.lightning.settings.preferences.PreferenceCategoryEx
 import acr.browser.lightning.utils.IntentUtils
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle

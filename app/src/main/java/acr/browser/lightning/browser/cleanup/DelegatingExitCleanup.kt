@@ -1,8 +1,8 @@
 package acr.browser.lightning.browser.cleanup
 
 import acr.browser.lightning.Capabilities
-import acr.browser.lightning.MainActivity
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.MainActivity
+import fulguris.activity.WebBrowserActivity
 import acr.browser.lightning.isSupported
 import android.webkit.WebView
 import javax.inject.Inject

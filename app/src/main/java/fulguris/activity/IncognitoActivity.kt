@@ -1,6 +1,9 @@
-package acr.browser.lightning
+package fulguris.activity
 
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import acr.browser.lightning.AccentTheme
+import acr.browser.lightning.AppTheme
+import acr.browser.lightning.Capabilities
+import acr.browser.lightning.isSupported
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -14,9 +17,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class IncognitoActivity @Inject constructor(): WebBrowserActivity() {
 
-    override fun provideThemeOverride(): AppTheme = AppTheme.BLACK
+    override fun provideThemeOverride(): AppTheme =
+        AppTheme.BLACK
 
-    override fun provideAccentThemeOverride(): AccentTheme = AccentTheme.PINK
+    override fun provideAccentThemeOverride(): AccentTheme =
+        AccentTheme.PINK
 
     /**
      *

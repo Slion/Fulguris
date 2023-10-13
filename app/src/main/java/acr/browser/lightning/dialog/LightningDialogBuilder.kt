@@ -1,6 +1,6 @@
 package acr.browser.lightning.dialog
 
-import acr.browser.lightning.MainActivity
+import fulguris.activity.MainActivity
 import acr.browser.lightning.R
 import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.database.Bookmark

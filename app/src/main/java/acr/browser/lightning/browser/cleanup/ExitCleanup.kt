@@ -1,6 +1,6 @@
 package acr.browser.lightning.browser.cleanup
 
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.WebBrowserActivity
 import android.webkit.WebView
 
 /**

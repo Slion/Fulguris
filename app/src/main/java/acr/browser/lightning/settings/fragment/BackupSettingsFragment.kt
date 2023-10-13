@@ -33,7 +33,7 @@ import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.BrowserDialog
 import acr.browser.lightning.dialog.DialogItem
 import acr.browser.lightning.extensions.*
-import acr.browser.lightning.settings.activity.SettingsActivity
+import fulguris.activity.SettingsActivity
 import acr.browser.lightning.settings.preferences.UserPreferences
 import acr.browser.lightning.utils.Utils
 import android.app.Activity

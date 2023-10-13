@@ -20,12 +20,11 @@
  * All Rights Reserved.
  */
 
-package acr.browser.lightning.reading
+package fulguris.activity
 
 
 import acr.browser.lightning.AppTheme
 import acr.browser.lightning.R
-import acr.browser.lightning.ThemedActivity
 import acr.browser.lightning.di.MainScheduler
 import acr.browser.lightning.di.NetworkScheduler
 import acr.browser.lightning.dialog.BrowserDialog.setDialogSize

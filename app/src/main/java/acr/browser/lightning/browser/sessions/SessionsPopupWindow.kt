@@ -23,7 +23,7 @@
 package acr.browser.lightning.browser.sessions
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.WebBrowserActivity
 import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.databinding.SessionListBinding
 import acr.browser.lightning.dialog.BrowserDialog

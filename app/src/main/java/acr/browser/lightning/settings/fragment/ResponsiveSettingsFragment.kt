@@ -1,7 +1,7 @@
 package acr.browser.lightning.settings.fragment
 
 import acr.browser.lightning.R
-import acr.browser.lightning.settings.activity.SettingsActivity
+import fulguris.activity.SettingsActivity
 import android.annotation.SuppressLint
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit

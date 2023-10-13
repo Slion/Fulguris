@@ -1,7 +1,7 @@
 package acr.browser.lightning.html.bookmark
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.WebBrowserActivity
 import acr.browser.lightning.constant.FILE
 import acr.browser.lightning.database.Bookmark
 import acr.browser.lightning.database.bookmark.BookmarkRepository

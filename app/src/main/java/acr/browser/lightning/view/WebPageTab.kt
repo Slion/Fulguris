@@ -7,9 +7,9 @@ package acr.browser.lightning.view
 
 import acr.browser.lightning.Capabilities
 import acr.browser.lightning.R
-import acr.browser.lightning.ThemedActivity
+import fulguris.activity.ThemedActivity
 import acr.browser.lightning.browser.TabModel
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.WebBrowserActivity
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.browser.WebBrowser
 import acr.browser.lightning.di.*

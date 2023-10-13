@@ -1,6 +1,6 @@
 package acr.browser.lightning.notifications
 
-import acr.browser.lightning.IncognitoActivity
+import fulguris.activity.IncognitoActivity
 import acr.browser.lightning.R
 import android.annotation.TargetApi
 import android.app.NotificationChannel

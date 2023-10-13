@@ -1,7 +1,7 @@
 package acr.browser.lightning.browser
 
 import acr.browser.lightning.R
-import acr.browser.lightning.browser.activity.WebBrowserActivity
+import fulguris.activity.WebBrowserActivity
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.databinding.MenuMainBinding
 import acr.browser.lightning.di.HiltEntryPoint
