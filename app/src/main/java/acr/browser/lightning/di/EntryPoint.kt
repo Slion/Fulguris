@@ -3,7 +3,6 @@ package acr.browser.lightning.di
 import acr.browser.lightning.adblock.AbpBlockerManager
 import acr.browser.lightning.adblock.AbpUserRules
 import acr.browser.lightning.adblock.NoOpAdBlocker
-import acr.browser.lightning.browser.BrowserPresenter
 import acr.browser.lightning.browser.TabsManager
 import acr.browser.lightning.database.bookmark.BookmarkRepository
 import acr.browser.lightning.database.downloads.DownloadsRepository
@@ -66,7 +65,6 @@ interface HiltEntryPoint {
     val downloadManager: DownloadManager
     val downloadsRepository: DownloadsRepository
     var tabsManager: TabsManager
-    var presenter: BrowserPresenter
     var clipboardManager: ClipboardManager
 
 }

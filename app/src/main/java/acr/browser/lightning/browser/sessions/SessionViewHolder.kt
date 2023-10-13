@@ -161,7 +161,7 @@ class SessionViewHolder(
             // User wants to switch session
             session().name.let { sessionName ->
                 (it.context as BrowserActivity).apply {
-                    presenter?.switchToSession(sessionName)
+                    tabsManager.switchToSession(sessionName)
                     if (!isEditModeEnabled()) {
                         iMenuSessions.dismiss()
                     } else {

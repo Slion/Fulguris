@@ -105,7 +105,7 @@ class SessionsPopupWindow : PopupWindow {
                                 it.add(Session(name, 1))
                                 // Switch to our newly added session
                                 (view.context as BrowserActivity).apply {
-                                    presenter.switchToSession(name)
+                                    tabsManager.switchToSession(name)
                                     // Close session dialog after creating and switching to new session
                                     if (!isEditModeEnabled()) {
                                         iMenuSessions.dismiss()

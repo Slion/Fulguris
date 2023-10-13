@@ -1265,7 +1265,7 @@ class WebPageTab(
             // We could not get presenter injection to work so we just use the one from our activity
             (activity as? BrowserActivity)?.apply {
                 // Trigger the recreation of our tab
-                presenter.tabChanged(presenter.tabsModel.indexOfTab(this@WebPageTab),false,false)
+                tabsManager.tabChanged(tabsManager.indexOfTab(this@WebPageTab),false,false)
             }
         }
 

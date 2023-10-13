@@ -12,6 +12,7 @@ import android.graphics.Bitmap
 import android.view.ViewGroup
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import timber.log.Timber
 
 /**
  * The adapter for vertical mobile style browser tabs.
@@ -51,6 +52,7 @@ class TabsDrawerAdapter(
 
     private fun updateViewHolderBackground(viewHolder: TabViewHolder, isForeground: Boolean) {
 
+        Timber.d("updateViewHolderBackground: $isForeground - ${viewHolder.txtTitle.text}")
         viewHolder.iCardView.apply {
             isChecked = isForeground
             // Adjust tab item height depending of foreground state
