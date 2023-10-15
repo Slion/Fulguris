@@ -26,7 +26,7 @@ import fulguris.R
 import fulguris.bookmark.LegacyBookmarkImporter
 import fulguris.bookmark.NetscapeBookmarkFormatImporter
 import fulguris.browser.TabsManager
-import fulguris.browser.sessions.Session
+import acr.browser.lightning.browser.sessions.Session
 import fulguris.database.bookmark.BookmarkExporter
 import fulguris.database.bookmark.BookmarkRepository
 import fulguris.di.*

@@ -20,7 +20,11 @@
  * All Rights Reserved.
  */
 
-package fulguris.browser.sessions
+//package fulguris.browser.sessions
+// We kept this package otherwise it fails to load persisted bundles
+// See: https://stackoverflow.com/questions/77292533/load-bundle-from-parcelable-class-after-refactoring
+// Could not find an easy solution for it, custom ClassLoader did not work
+package acr.browser.lightning.browser.sessions
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -28,6 +32,7 @@ import android.os.Parcelable
 /**
  * You can easily regenerate that parcelable implementation.
  * See: https://stackoverflow.com/a/49426012/3969362
+ * We could also use @Parcelize: https://stackoverflow.com/a/69027267/3969362
  */
 data class Session (
     var name: String = "",

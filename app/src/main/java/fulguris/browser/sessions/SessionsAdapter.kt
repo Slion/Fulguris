@@ -22,6 +22,7 @@
 
 package fulguris.browser.sessions
 
+import acr.browser.lightning.browser.sessions.Session
 import fulguris.R
 import fulguris.browser.WebBrowser
 import fulguris.extensions.inflater

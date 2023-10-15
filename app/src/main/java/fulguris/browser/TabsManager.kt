@@ -2,7 +2,7 @@ package fulguris.browser
 
 import fulguris.Entitlement
 import fulguris.R
-import fulguris.browser.sessions.Session
+import acr.browser.lightning.browser.sessions.Session
 import fulguris.constant.INTENT_ORIGIN
 import fulguris.extensions.snackbar
 import fulguris.search.SearchEngineProvider
@@ -812,7 +812,7 @@ class TabsManager @Inject constructor(
         iScopeThreadPool.launch {
             // Guessing delay is not needed since we do not use the main thread scope anymore
             //delay(1L)
-            fulguris.utils.FileUtils.writeBundleToStorage(application, bundle, FILENAME_SESSIONS)
+            FileUtils.writeBundleToStorage(application, bundle, FILENAME_SESSIONS)
         }
     }
 
@@ -820,14 +820,14 @@ class TabsManager @Inject constructor(
      * Just the sessions list really
      */
     fun deleteSessions() {
-        fulguris.utils.FileUtils.deleteBundleInStorage(application, FILENAME_SESSIONS)
+        FileUtils.deleteBundleInStorage(application, FILENAME_SESSIONS)
     }
 
     /**
      * Load our session list and current session name from disk.
      */
     private fun loadSessions() {
-        val bundle = fulguris.utils.FileUtils.readBundleFromStorage(application, FILENAME_SESSIONS)
+        val bundle = FileUtils.readBundleFromStorage(application, FILENAME_SESSIONS)
 
         bundle?.apply{
             getParcelableArrayList<Session>(KEY_SESSIONS)?.let { iSessions = it}
@@ -838,10 +838,10 @@ class TabsManager @Inject constructor(
         // Somehow we lost that file again :)
         // That crazy bug we keep chasing after
         // TODO: consider running recovery even when our session list was loaded
-        if (iSessions.isNullOrEmpty()) {
+        if (iSessions.isEmpty()) {
             recoverSessions()
             // Set the first one as current one
-            if (!iSessions.isNullOrEmpty()) {
+            if (iSessions.isNotEmpty()) {
                 iCurrentSessionName = iSessions[0].name
             }
         }

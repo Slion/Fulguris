@@ -25,8 +25,6 @@ import timber.log.Timber;
  */
 public final class FileUtils {
 
-    private static final String TAG = "FileUtils";
-
     // SL: Is this still ok even with scope storage?
     // We think so since system download manager is doing our download for us.
     public static final String DEFAULT_DOWNLOAD_PATH =
@@ -58,8 +56,8 @@ public final class FileUtils {
                 outputStream.write(parcel.marshall());
                 outputStream.flush();
                 parcel.recycle();
-            } catch (IOException e) {
-                Timber.e("Unable to write bundle to storage");
+            } catch (Exception e) {
+                Timber.e(e, "Unable to write bundle to storage");
             } finally {
                 Utils.close(outputStream);
             }
@@ -102,7 +100,7 @@ public final class FileUtils {
 
     /**
      * Reads a bundle from the file with the specified
-     * name in the peristent storage files directory.
+     * name in the persistent storage files directory.
      * This method is a blocking operation.
      *
      * @param app  the application needed to obtain the files directory.
@@ -128,10 +126,8 @@ public final class FileUtils {
             out.putAll(out);
             parcel.recycle();
             return out;
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "Unable to read bundle from storage");
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to read bundle from storage", e);
+        } catch (Exception e) {
+            Timber.e(e,"Unable to read bundle from storage");
         } finally {
             //noinspection ResultOfMethodCallIgnored
             Utils.close(inputStream);
@@ -156,7 +152,7 @@ public final class FileUtils {
             throwable.printStackTrace(new PrintStream(outputStream));
             outputStream.flush();
         } catch (IOException e) {
-            Log.e(TAG, "Unable to write bundle to storage");
+            Timber.e("Unable to write bundle to storage");
         } finally {
             Utils.close(outputStream);
         }
