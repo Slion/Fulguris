@@ -53,7 +53,6 @@
             />
 
         <fulguris.preference.SliderPreference
-            android:layout="@layout/preference_slider"
             a:key="@string/pref_key_on_tab_flip_animation_duration"
             a:dependency="@string/pref_key_on_tab_back_show_animation"
             a:title="@string/settings_title_animation_duration"
@@ -69,8 +68,6 @@
             a:labelBehavior="gone"
             a:format="%.0fms"
             a:singleLineTitle="false"
-            a:allowDividerAbove="false"
-            a:allowDividerBelow="true"
             />
 
     </PreferenceCategory>

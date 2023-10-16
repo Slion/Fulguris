@@ -33,6 +33,9 @@ import android.os.Parcelable
  * You can easily regenerate that parcelable implementation.
  * See: https://stackoverflow.com/a/49426012/3969362
  * We could also use @Parcelize: https://stackoverflow.com/a/69027267/3969362
+ *
+ * TODO: Don't use Parcelable as it saves the class name in the Bundle and you can't refactor.
+ * Instead do it like we did with [fulguris.browser.TabModel].
  */
 data class Session (
     var name: String = "",

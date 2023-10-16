@@ -13,7 +13,6 @@
         tools:ignore="PrivateResource" />
 
     <fulguris.preference.SliderPreference
-        android:layout="@layout/preference_slider"
         app:key="@string/pref_key_scrollbar_size"
         app:title="@string/pref_title_scrollbar_size"
         app:summary="@string/pref_summary_scrollbar_size"
@@ -28,7 +27,6 @@
         app:labelBehavior="gone"
         app:format="%.0f dp"
         app:singleLineTitle="false"
-        app:allowDividerAbove="false"
         />
 
     <SwitchPreferenceCompat
@@ -42,7 +40,6 @@
         />
 
     <fulguris.preference.SliderPreference
-        android:layout="@layout/preference_slider"
         app:key="@string/pref_key_scrollbar_delay_before_fade"
         app:dependency="@string/pref_key_scrollbar_fading"
         app:title="@string/pref_title_scrollbar_delay_before_fade"
@@ -59,11 +56,9 @@
         app:labelBehavior="gone"
         app:format="%.0f ms"
         app:singleLineTitle="false"
-        app:allowDividerAbove="false"
         />
 
     <fulguris.preference.SliderPreference
-        android:layout="@layout/preference_slider"
         app:key="@string/pref_key_scrollbar_fade_duration"
         app:dependency="@string/pref_key_scrollbar_fading"
         app:title="@string/pref_title_scrollbar_fade_duration"
@@ -80,7 +75,6 @@
         app:labelBehavior="gone"
         app:format="%.0f ms"
         app:singleLineTitle="false"
-        app:allowDividerAbove="false"
         />
 
 

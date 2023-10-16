@@ -240,6 +240,8 @@ colorControlNormal:
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="enableEdgeToEdge">true</item>
 
+        <item name="sliderPreferenceStyle">@style/Preference.SliderPreference</item>
+
     </style>
 
     <!-- Dark theme -->
@@ -412,6 +414,8 @@ colorControlNormal:
         <!-- Needed for full screen material design bottom sheets -->
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="enableEdgeToEdge">true</item>
+
+        <item name="sliderPreferenceStyle">@style/Preference.SliderPreference</item>
     </style>
 
     <style name="Theme.App.Black" parent="Theme.Material3.Dark">
@@ -580,6 +584,8 @@ colorControlNormal:
         <!-- Needed for full screen material design bottom sheets -->
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="enableEdgeToEdge">true</item>
+
+        <item name="sliderPreferenceStyle">@style/Preference.SliderPreference</item>
     </style>
 
     <!-- Day theme to be used when following system default dark theme -->
@@ -715,6 +721,15 @@ colorControlNormal:
         <item name="cornerSize">8dp</item>
     </style>
 
+    <!-- Define default values for our SliderPreference, notably the layout -->
+    <style name="Preference.SliderPreference">
+        <item name="android:layout">@layout/preference_slider</item>
+        <item name="adjustable">true</item>
+        <item name="showSeekBarValue">false</item>
+        <item name="allowDividerAbove">false</item>
+        <item name="allowDividerBelow">true</item>
+        <item name="iconSpaceReserved">true</item>
+    </style>
 
     <style name="Accent_Pink">
         <item name="colorSecondary">#E91E63</item>

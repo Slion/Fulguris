@@ -30,7 +30,6 @@ import android.graphics.Rect
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.SeekBar
@@ -40,6 +39,7 @@ import androidx.preference.PreferenceViewHolder
 import androidx.preference.SeekBarPreference
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.Slider
+import timber.log.Timber
 import java.lang.Float.max
 import java.lang.Float.min
 import java.util.*
@@ -63,6 +63,7 @@ import java.util.*
 
 /**
  * SL: Taken from Jetpack AndroidX and converted to Kotlin
+ * See: [androidx.preference.SeekBarPreference]
  *
  * Preference based on android.preference.SeekBarPreference but uses support preference as a base
  * . It contains a title and a [SeekBar] and an optional SeekBar value [TextView].
@@ -82,8 +83,8 @@ import java.util.*
  * max`)
  * can be set directly on the preference widget layout.
  */
-class SliderPreference @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.sliderStyle, defStyleRes: Int = 0) : Preference(context, attrs, defStyleAttr, defStyleRes) {
+class SliderPreference @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.sliderPreferenceStyle, defStyleRes: Int = 0) :
+    Preference(context, attrs, defStyleAttr, defStyleRes) {
 
     var mSeekBarValue = 0F
     //var mMin = 0F
@@ -177,7 +178,7 @@ class SliderPreference @JvmOverloads constructor(
                 return false
             }
             if (mSlider == null) {
-                Log.e(TAG, "SeekBar view is null and hence cannot be adjusted.")
+                Timber.e("Slider view is null and hence cannot be adjusted.")
                 return false
             }
             return mSlider!!.onKeyDown(keyCode, event)
@@ -206,7 +207,7 @@ class SliderPreference @JvmOverloads constructor(
             mSeekBarValueTextView = null
         }
         if (mSlider == null) {
-            Log.e(TAG, "SeekBar view is null in onBindViewHolder.")
+            Timber.e("Slider view is null in onBindViewHolder.")
             return
         }
 
@@ -515,11 +516,6 @@ class SliderPreference @JvmOverloads constructor(
             return String.format(iFormat, value)            
         }
     }
-
-    companion object {
-        private const val TAG = "SeekBarPreference"
-    }
-
 
     var valueFrom: Float
     var valueTo: Float
