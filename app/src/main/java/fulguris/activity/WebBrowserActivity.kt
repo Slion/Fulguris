@@ -2903,7 +2903,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                             it.scaleX = 1f
                             it.scaleY = 1f
                             iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                removeFromParent()
+                                post {
+                                    removeFromParent()
+                                }
+
                                 //destroyIfNeeded()
                             }
                             //
@@ -2962,7 +2965,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                             swapTabViewsFrontToBack()
                                 // Animation is complete unhook that tab then
                             it.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                removeFromParent()
+                                post {
+                                    removeFromParent()
+                                }
                                 //destroyIfNeeded()
                             }
                             // Reset our properties
@@ -2993,7 +2998,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                             swapTabViewsFrontToBack()
                             // Animation is complete unhook that tab then
                             it.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                removeFromParent()
+                                post {
+                                    removeFromParent()
+                                }
                                 //destroyIfNeeded()
                             }
                             // Reset our properties
