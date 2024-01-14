@@ -1,0 +1,17 @@
+🔨 Major refactoring
+🪲 Bug fixing
+
+Translations update:
+
+🇸🇦 Arabic
+🇧🇷 Brazilian
+🇨🇳 Chinese
+🇫🇷 French
+🇩🇪 German
+🇯🇵 Japanese
+🇵🇱 Polish
+🇵🇹 Portuguese
+🇷🇺 Russian
+🇪🇸 Spanish
+🇺🇦 Ukrainian
+🇻🇳 Vietnamese
