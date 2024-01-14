@@ -269,7 +269,7 @@
     <string name="settings_category_on_follow_link">При переходе по ссылке</string>
     <string name="pref_category_scrollbars">Полосы прокрутки</string>
     <string name="settings_title_tab">Вкладка</string>
-    <string name="settings_title_page_history">Page history</string>
+    <string name="settings_title_page_history">История страницы</string>
     <string name="settings_summary_tab">Анимации, обратная связь и внешний вид</string>
     <string name="pref_summary_scrollbars">Изменить размер и поведение полос прокрутки</string>
     <string name="pref_category_subscriptions">Подписки</string>
@@ -469,9 +469,9 @@ See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
         <item quantity="one">Текущая страница содержит один файл cookie</item>
-        <item quantity="few">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
-        <item quantity="many">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
-        <item quantity="other">Текущая страница содержит %d файлов cookie</item>
+        <item quantity="few">На текущей странице мало файлов cookie</item>
+        <item quantity="many">Текущая страница содержит много файлов cookie</item>
+        <item quantity="other">Текущая страница содержит файлы cookie <xliff:g id="cookies_count" example="2">%d</xliff:g></item>
     </plurals>
     <string name="settings_title_task_label">Ярлык задачи</string>
     <string name="settings_title_task_icon">Значок задачи</string>

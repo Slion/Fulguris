@@ -3,7 +3,7 @@
     <string name="action_reload">再読み込み</string>
     <string name="action_menu">メニュー</string>
     <string name="action_new_tab">新しいタブ</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">タブを複製</string>
     <string name="action_share">共有</string>
     <string name="action_history">履歴</string>
     <string name="action_bookmarks">ブックマーク</string>
@@ -77,8 +77,8 @@
     <string name="action_yes">はい</string>
     <string name="action_no">いいえ</string>
     <string name="action_ask">尋ねる</string>
-    <string name="action_proceed">Proceed</string>
-    <string name="action_abort">Abort</string>
+    <string name="action_proceed">続行</string>
+    <string name="action_abort">中止</string>
     <string name="title_text_size">文字サイズ</string>
     <string name="title_error">エラー</string>
     <string name="hint_title">タイトル</string>
@@ -167,8 +167,8 @@
     <!-- Common actions -->
     <string name="action_message_canceled">操作が取り消されました</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error_aborted">セキュリティエラー！ページの読み込みが中止されました。</string>
+    <string name="message_ssl_error">安全な接続:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>続行しますか？</string>
     <string name="message_certificate_date_invalid">証明書の日付が無効です</string>
     <string name="message_certificate_expired">証明書の期限が切れました</string>
     <string name="message_certificate_domain_mismatch">証明書のドメインとサイトのドメインが一致しません</string>
@@ -266,11 +266,11 @@
     <string name="pref_category_on_tab_close">タブを閉じたとき</string>
     <string name="pref_category_on_tab_change">タブを変更するとき</string>
     <string name="pref_category_on_tab_back_forward">進むまたは戻る時</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
+    <string name="settings_category_on_follow_link">リンクをたどるとき</string>
     <string name="pref_category_scrollbars">スクロールバー</string>
-    <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
+    <string name="settings_title_tab">タブ</string>
+    <string name="settings_title_page_history">ページ履歴</string>
+    <string name="settings_summary_tab">アニメーション、フィードバック、外観</string>
     <string name="pref_summary_scrollbars">スクロールバーのサイズと動作を調整する</string>
     <string name="pref_category_subscriptions">講読</string>
     <string name="pref_summary_subscriptions">購読を有効化・無効化する</string>
@@ -347,15 +347,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">アドブロッカーとコンテンツフィルター</string>
     <string name="settings_summary_content_control_toggle">アドブロッカーとコンテンツフィルターを有効にする</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
-    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
-    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
-    <string name="settings_summary_off_toolbars_position">Top</string>
+    <string name="settings_title_tab_bar_orientation">タブバーの向き</string>
+    <string name="settings_summary_on_tab_bar_orientation">縦</string>
+    <string name="settings_summary_off_tab_bar_orientation">横</string>
+    <string name="settings_title_tab_bar_placement">タブバーの配置</string>
+    <string name="settings_summary_on_tab_bar_placement">収納可能なパネル</string>
+    <string name="settings_summary_off_tab_bar_placement">常に画面表示</string>
+    <string name="settings_title_toolbars_position">ツールバーの位置</string>
+    <string name="settings_summary_on_toolbars_position">下部</string>
+    <string name="settings_summary_off_toolbars_position">上部</string>
     <string name="settings_title_desktop_mode_default">デスクトップモード</string>
     <string name="settings_summary_desktop_mode_default">新しいタブでデスクトップモードを既定で使用するかを決める</string>
     <string name="settings_title_dark_mode_default">強制ダークモード</string>
@@ -380,10 +380,10 @@
     <string name="app_restart">変更を反映するにはアプリを再起動してください</string>
     <string name="pref_title_crash_logs">クラッシュログ</string>
     <string name="pref_summary_crash_logs">クラッシュログをファイルシステムに書き込みます。\nタップしてフォルダを開きます。バグを報告する際に関連するファイルを提供してください。</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_logs">ログ</string>
+    <string name="pref_summary_on_logs">有効</string>
+    <string name="pref_summary_off_logs">無効</string>
+    <string name="pref_title_log_level">ログレベル</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">新しいタブで開く</string>
     <string name="dialog_open_background_tab">バックグラウンドのタブで開く</string>
@@ -444,34 +444,34 @@
     <string name="settings_summary_delete_domain_settings">次回このドメインが見つかったときに再作成されます。</string>
     <string name="settings_title_parent">親</string>
     <string name="settings_summary_default_domain_settings">既定のドメイン設定</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_title_ssl_error">セキュリティエラー</string>
+    <string name="settings_summary_ssl_error">SSLエラーが検出されたときの対処方法</string>
+    <string name="checkbox_remember_domain_choice">このドメインの選択を記憶する</string>
+    <string name="settings_title_third_party_cookies">サードパーティのクッキー</string>
+    <string name="settings_summary_on_third_party_cookies">複数のウェブサイトで行動を追跡するために使用されるクッキーを受け入れます</string>
+    <string name="settings_summary_off_third_party_cookies">複数のウェブサイトで行動を追跡するために使用されるクッキーを拒否します</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
-    <string name="settings_title_cookies">Cookies</string>
-    <string name="settings_summary_cookies">Current page has no cookies</string>
-    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
-    <string name="settings_title_cookies_delete_all">Delete all</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
-    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <string name="settings_summary_on_javascript">すべてのウェブサイトとブラウザの機能は動作するはずです</string>
+    <string name="settings_summary_off_javascript">一部のウェブサイトやブラウザの機能は動作しません</string>
+    <string name="settings_title_cookies">クッキー</string>
+    <string name="settings_summary_cookies">現在のページにはクッキーがありません</string>
+    <string name="settings_summary_manage_cookies">現在のページのクッキーを管理</string>
+    <string name="settings_title_cookies_delete_all">すべて削除</string>
+    <string name="settings_summary_cookies_delete_all">現在のページの Cookie をすべて削除します</string>
+    <string name="question_delete_all_page_cookies">現在のページのすべてのクッキーを削除しますか？</string>
     <plurals name="settings_summary_cookies">
         <!--
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="other">現在のページには <xliff:g id="cookies_count" example="2">%d</xliff:g> クッキー があります</item>
     </plurals>
-    <string name="settings_title_task_label">Task label</string>
-    <string name="settings_title_task_icon">Task icon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
-    <string name="settings_title_toolbar_label">Toolbar label</string>
+    <string name="settings_title_task_label">タスクラベル</string>
+    <string name="settings_title_task_icon">タスクアイコン</string>
+    <string name="settings_summary_on_task_icon">ページアイコンを使用</string>
+    <string name="settings_summary_off_task_icon">アプリのアイコンを使用</string>
+    <string name="settings_title_toolbar_label">ツールバーのラベル</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">サードパーティーのアプリが利用可能です</string>
     <string name="dialog_message_third_party_app">そのウェブサイトに関連付けられたアプリを起動しますか?</string>
@@ -483,7 +483,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">その名前のセッションは既に存在します!</string>
     <string name="session_cant_delete_current">現在のセッションは削除できません!</string>
     <string name="session_prompt_confirm_deletion_title">削除の確認</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="session_prompt_confirm_deletion_message">セッション \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" を削除してもよろしいですか？</string>
     <string name="session_switched">「%s」に切り替えました</string>
     <string name="busy">ビジーです。少し間を開けて再試行してください。</string>
     <string name="invalid_character_removed">無効な文字が削除されました!</string>
@@ -512,7 +512,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">アニメーションを表示</string>
     <string name="pref_title_vibrate">振動</string>
     <string name="pref_title_duration">長さ</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_title_animation_duration">アニメーションの時間</string>
     <string name="pref_title_scrollbar_fading">フェード</string>
     <string name="pref_summary_on_scrollbar_fading">スクロールバーがフェードアウトします</string>
     <string name="pref_summary_off_scrollbar_fading">スクロールバーは常に表示されます</string>
@@ -586,18 +586,18 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="action_switch_to_tab">タブ1から9に切り替える</string>
     <string name="action_switch_to_last_tab">最後のタブに切り替える</string>
     <string name="action_switch_to_last_session">最後のセッションに切り替える</string>
-    <string name="log_level_verbose">Verbose</string>
-    <string name="log_level_debug">Debug</string>
-    <string name="log_level_info">Info</string>
-    <string name="log_level_warn">Warn</string>
-    <string name="log_level_error">Error</string>
-    <string name="log_level_assert">Assert</string>
+    <string name="log_level_verbose">詳細</string>
+    <string name="log_level_debug">デバッグ</string>
+    <string name="log_level_info">情報</string>
+    <string name="log_level_warn">警告</string>
+    <string name="log_level_error">エラー</string>
+    <string name="log_level_assert">アサート</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
-    <string name="label_domain">Domain</string>
-    <string name="label_title">Title</string>
-    <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_short_url">短縮URL</string>
+    <string name="label_domain">ドメイン</string>
+    <string name="label_title">タイトル</string>
+    <string name="label_session">セッション</string>
+    <string name="label_app_name">アプリ名</string>
+    <string name="message_render_process_crashed">レンダリング処理がクラッシュしました。ウェブページを再読み込みする必要があるかもしれません。</string>
 </resources>

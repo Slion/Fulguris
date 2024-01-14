@@ -3,7 +3,7 @@
     <string name="action_reload">Recarregar</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Novo separador</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Duplicar separador</string>
     <string name="action_share">Partilhar</string>
     <string name="action_history">Histórico</string>
     <string name="action_bookmarks">Marcadores</string>
@@ -77,8 +77,8 @@
     <string name="action_yes">Sim</string>
     <string name="action_no">Não</string>
     <string name="action_ask">Perguntar</string>
-    <string name="action_proceed">Proceed</string>
-    <string name="action_abort">Abort</string>
+    <string name="action_proceed">Avançar</string>
+    <string name="action_abort">Cancelar</string>
     <string name="title_text_size">Tamanho do texto</string>
     <string name="title_error">Erro</string>
     <string name="hint_title">Título</string>
@@ -97,11 +97,11 @@
     <string name="downloads">Descargas</string>
     <string name="downloads_notification_description">Mostrar ao terminar a descarga</string>
     <string name="download_pending">A descarregar:</string>
-    <string name="cannot_download">Apenas possível para os URL \"http\" ou \"https\".</string>
+    <string name="cannot_download">Apenas possível para os URL \"http\" ou \"https\"</string>
     <string name="problem_download">URL inválido e a descarga não é possível</string>
     <string name="problem_location_download">Não é possível descarregar da localização especificada</string>
     <string name="download_no_sdcard_dlg_title">Cartão SD não encontrado</string>
-    <string name="download_no_sdcard_dlg_msg">Requer um cartão SD para guardar o ficheiro descarregado.</string>
+    <string name="download_no_sdcard_dlg_msg">Requer um cartão SD para guardar o ficheiro descarregado</string>
     <string name="download_sdcard_busy_dlg_title">Cartão SD não disponível</string>
     <string name="download_sdcard_busy_dlg_msg">O cartão SD está ocupado. Para descarregar ficheiros, toque em \"Desativar armazenamento USB\" na notificação.</string>
     <string name="download_complete">Descarga terminada</string>
@@ -135,7 +135,7 @@
     <string name="page_blocked_reason">porque:</string>
     <string name="page_blocked_list_ad">%s está na lista de filtros</string>
     <string name="page_blocked_list_user">%s está bloqueada por uma regra do utilizador</string>
-    <string name="page_blocked_list_malware">%s está na lista de filtros importantes</string>
+    <string name="page_blocked_list_malware">%s está na lista de malware</string>
     <string name="request_blocked">Pedido bloqueado</string>
     <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Atualização automática</string>
@@ -167,10 +167,10 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Ação cancelada</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error_aborted">Erro de segurança. A página não foi carregada.</string>
+    <string name="message_ssl_error">Ligação segura comprometida:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Deseja continuar?</string>
     <string name="message_certificate_date_invalid">Data de certificado inválida</string>
-    <string name="message_certificate_expired">Certificado expirado</string>
+    <string name="message_certificate_expired">Certificado caducado</string>
     <string name="message_certificate_domain_mismatch">Domínio do certificado não coincide com o domínio do site</string>
     <string name="message_certificate_invalid">Certificado inválido</string>
     <string name="message_certificate_not_yet_valid">Certificado ainda não válido</string>
@@ -206,8 +206,8 @@
     <string name="use_tor_prompt">Parece que tem Orbot instalado. Gostaria de utilizar a rede Tor?</string>
     <string name="use_i2p_prompt">Parece que tem I2P instalado. Gostaria de utilizar a rede I2P?</string>
     <string name="install_orbot">Por favor instale Orbot para poder utilizar a rede Tor.</string>
-    <string name="i2p_not_running">I2P não está em execução.</string>
-    <string name="i2p_tunnels_not_ready">Os canais I2P ainda não estão prontos.</string>
+    <string name="i2p_not_running">I2P não está em execução</string>
+    <string name="i2p_tunnels_not_ready">Os canais I2P ainda não estão prontos</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="clear_cookies_exit">Limpar cookies ao sair</string>
@@ -237,8 +237,8 @@
     <string name="bookmark_export_failure">Não foi possível exportar os marcadores!</string>
     <string name="bookmark_settings">Marcadores</string>
     <string name="import_bookmark_error">Não foi possível importar os marcadores!</string>
-    <string name="message_bookmark_added">Marcador adicionado.</string>
-    <string name="message_bookmark_not_added">O marcador já existe!</string>
+    <string name="message_bookmark_added">Marcador adicionado</string>
+    <string name="message_bookmark_not_added">O marcador já existe</string>
     <string name="title_chooser">Escolha um ficheiro</string>
     <string name="settings_general">Gerais</string>
     <string name="settings_display">Exibição</string>
@@ -255,7 +255,7 @@
     <string name="settings_summary_privacy_policy">Consulte nossa política de privacidade</string>
     <string name="settings_title_terms_and_conditions">Termos e condições</string>
     <string name="settings_summary_terms_and_conditions">Consulte nossos termos e condições</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_summary_discord">Junte-se à nossa comunidade</string>
     <string name="pref_category_panels">Painéis</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Horizontal</string>
@@ -266,11 +266,11 @@
     <string name="pref_category_on_tab_close">Ao fechar separador</string>
     <string name="pref_category_on_tab_change">Ao alterar de separador</string>
     <string name="pref_category_on_tab_back_forward">Ao recuar ou avançar</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
+    <string name="settings_category_on_follow_link">Ao seguir uma ligação</string>
     <string name="pref_category_scrollbars">Barras de deslocação</string>
-    <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
+    <string name="settings_title_tab">Separador</string>
+    <string name="settings_title_page_history">Histórico</string>
+    <string name="settings_summary_tab">Animações, respostas e aparêcnia</string>
     <string name="pref_summary_scrollbars">Tamanho e comportamento das barras de deslocação</string>
     <string name="pref_category_subscriptions">Subscrições</string>
     <string name="pref_summary_subscriptions">Ativar ou cancelar subscrições</string>
@@ -279,34 +279,34 @@
     <string name="pref_title_show_tool_bar_when_scroll_up">Mostrar barra de ferramentas ao deslocar para cima</string>
     <string name="pref_title_show_tool_bar_on_page_top">Mostrar barra de ferramentas no topo da página</string>
     <string name="pref_title_locked_drawers">Painéis bloqueados</string>
-    <string name="pref_summary_locked_drawers">Os painéis Separadores e Marcadores não podem ser arrastados.</string>
+    <string name="pref_summary_locked_drawers">Os painéis Separadores e Marcadores não podem ser arrastados</string>
     <string name="pref_title_use_bottom_sheets">Painéis em baixo</string>
-    <string name="pref_summary_use_bottom_sheets">Os painéis Separadores e Marcadores serão mostrados em baixo ao invés dos painéis laterais</string>
+    <string name="pref_summary_use_bottom_sheets">Os painéis Separadores e Marcadores serão mostrados em baixo e não nos painéis laterais</string>
     <string name="pref_title_tab_list_item_show_close_button">Mostrar botão de fecho</string>
     <string name="pref_summary_tab_list_item_show_close_button">Mostrar botão para fechar separadores nos itens de lista</string>
     <string name="pref_title_menu_show_exit">Mostrar botão para sair</string>
     <string name="pref_summary_menu_show_exit">Mostrar botão para sair da aplicação. O modo incógnito mostra-o sempre.</string>
     <string name="pref_title_menu_new_tab">Mostrar botão Novo separador</string>
-    <string name="pref_summary_menu_new_tab">Mostrar um item de menu para criar um separador</string>
-    <string name="pref_title_crash_report">Relatório de falhas</string>
+    <string name="pref_summary_menu_new_tab">Mostrar item de menu para criar um separador</string>
+    <string name="pref_title_crash_report">Relatório de erro</string>
     <string name="pref_title_analytics">Analytics</string>
-    <string name="pref_title_pull_to_refresh">Puxe para atualizar</string>
-    <string name="pref_summary_recommended_anonymous">Recomendado, os dados são anónimos.</string>
+    <string name="pref_title_pull_to_refresh">Puxe para recarregar</string>
+    <string name="pref_summary_recommended_anonymous">Recomendado, os dados são anónimos</string>
     <string name="pref_summary_color_mode">Aplicar cor da página web às barras de ferramentas e de estado</string>
     <string name="pref_title_desktop_width">Largura da janela</string>
     <string name="pref_summary_desktop_width">Largura da janela no modo desktop, valores mais altos para conteúdo menor</string>
     <string name="pref_title_no_sponsorship">Patrocínio na aplicação indisponível</string>
-    <string name="pref_summary_no_sponsorship">Instale Fulguris a partir da Google Play para nos apoiar.</string>
+    <string name="pref_summary_no_sponsorship">Instale Fulguris a partir da Google Play para nos apoiar</string>
     <string name="pref_title_free_download">Descarga gratuita</string>
     <string name="pref_summary_free_download">Fulguris é Open Source Software. Pode descarregar a nossa versão Free que inclui um conjunto de funcionalidades.</string>
     <string name="pref_title_sponsorship_github">Patrocínio no GitHub</string>
-    <string name="pref_summary_sponsorship_github">Pode apoiar o nosso trabalho no GitHub para nos ajudar a melhorar a aplicação.</string>
-    <string name="pref_title_sponsorship_five_stars">Avaliar como 5 estrelas</string>
-    <string name="pref_summary_sponsorship_five_stars">Uma avaliação de 5 estrelas na Google Play é uma excelente forma de nos ajudar.</string>
+    <string name="pref_summary_sponsorship_github">Pode apoiar o nosso trabalho no GitHub e ajudar a melhorar a aplicação</string>
+    <string name="pref_title_sponsorship_five_stars">Avaliar com 5 estrelas</string>
+    <string name="pref_summary_sponsorship_five_stars">Uma avaliação 5 estrelas na Google Play é uma excelente forma de nos ajudar</string>
     <string name="pref_title_contribute_translations">Traduções</string>
-    <string name="pref_summary_contribute_translations">Pode ajudar a traduzir a aplicação na plataforma Crowdin.</string>
+    <string name="pref_summary_contribute_translations">Pode ajudar a traduzir a aplicação na plataforma Crowdin</string>
     <string name="pref_title_contribute_share">Espalhe a palavra</string>
-    <string name="pref_summary_contribute_share">Informe os seus amigos e colegas partilhando a aplicação.</string>
+    <string name="pref_summary_contribute_share">Informe os seus amigos e colegas partilhando a aplicação</string>
     <string name="pref_title_language">Idioma</string>
     <string name="language_system_default">Padrão do sistema</string>
     <string name="close_tab">Fechar separador</string>
@@ -326,7 +326,7 @@
     <string name="new_tab_position_before">Antes do separador atual</string>
     <string name="new_tab_position_after">Após o separador atual</string>
     <string name="new_tab_position_start">No início da lista de separadores</string>
-    <string name="new_tab_position_end">Final da lista de separadores</string>
+    <string name="new_tab_position_end">No fim da lista de separadores</string>
     <string name="text_encoding">Codificação do texto</string>
     <string name="reset_settings">Repor definições</string>
     <string name="reset_settings_confirmation">Está prestes a perder todas as suas definições. Tem a certeza de que deseja continuar?</string>
@@ -345,17 +345,17 @@
     <string name="clear_web_storage_exit">Limpar armazenamento web ao sair</string>
     <string name="message_web_storage_cleared">Armazenamento web removido</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Bloqueio de anúncios e de conteúdos</string>
-    <string name="settings_summary_content_control_toggle">Ativar bloqueador de anúncios e filtro de conteúdos</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_summary_content_control">Bloqueio de anúncios e de conteúdo</string>
+    <string name="settings_summary_content_control_toggle">Ativar bloqueador de anúncios e filtro de conteúdo</string>
+    <string name="settings_title_tab_bar_orientation">Orientação da barra de separadores</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
-    <string name="settings_summary_off_toolbars_position">Top</string>
+    <string name="settings_title_tab_bar_placement">Posição da barra de separadores</string>
+    <string name="settings_summary_on_tab_bar_placement">Painel retrátil</string>
+    <string name="settings_summary_off_tab_bar_placement">Sempre no ecrã</string>
+    <string name="settings_title_toolbars_position">Posição da barra de ferramentas</string>
+    <string name="settings_summary_on_toolbars_position">Baixo</string>
+    <string name="settings_summary_off_toolbars_position">Cima</string>
     <string name="settings_title_desktop_mode_default">Modo desktop</string>
     <string name="settings_summary_desktop_mode_default">Define que os novos separadores utilizam o modo desktop</string>
     <string name="settings_title_dark_mode_default">Impor tema escuro</string>
@@ -363,10 +363,10 @@
     <string name="settings_title_swap_bookmarks_and_tabs">Trocar menus de navegação</string>
     <string name="settings_summary_swap_bookmarks_and_tabs">Inverter posição dos menus Separadores e Marcadores</string>
     <string name="do_not_track">Pedidos \'Do Not Track\'</string>
-    <string name="save_data">Solicitar \'Save-Data\'</string>
+    <string name="save_data">Pedido \'Save-Data\'</string>
     <string name="remove_identifying_headers">Remover cabeçalhos de identificação</string>
     <string name="pref_title_webrtc">Suporte WebRTC</string>
-    <string name="pref_summary_webrtc">Permitir Real Time Communication através da Web utilizando a sua câmara e o seu microfone.</string>
+    <string name="pref_summary_webrtc">Permitir Real Time Communication através da Web utilizando a sua câmara e o seu microfone</string>
     <string name="action_add_to_homescreen">Adicionar ao ecrã</string>
     <string name="message_added_to_homescreen">Atalho adicionado ao ecrã</string>
     <string name="shortcut_message_failed_to_add">Lamentamos mas o seu launcher não permite atalhos.</string>
@@ -377,13 +377,13 @@
     <!-- debug strings -->
     <string name="debug_title">Depuração</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Por favor, reinicie a aplicação para aplicar as alterações</string>
+    <string name="app_restart">Reinicie a aplicação para aplicar as alterações</string>
     <string name="pref_title_crash_logs">Relatórios de erro</string>
     <string name="pref_summary_crash_logs">Escrever relatórios no sistema de ficheiros.\nToque para abrir a pasta. Ao reportar um erro, envie o ficheiro de registo correspondente.</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_logs">Registos</string>
+    <string name="pref_summary_on_logs">Ativado</string>
+    <string name="pref_summary_off_logs">Desativado</string>
+    <string name="pref_title_log_level">Nível dos registos</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Abrir em novo separador</string>
     <string name="dialog_open_background_tab">Abrir em separador secundário</string>
@@ -394,7 +394,7 @@
     <string name="dialog_remove_from_history">Remover do histórico</string>
     <string name="dialog_copy_link">Copiar ligação</string>
     <string name="dialog_copy_text">Copiar texto</string>
-    <string name="dialog_rename_folder">Renomear pasta</string>
+    <string name="dialog_rename_folder">Mudar nome da pasta</string>
     <string name="dialog_remove_folder">Remover pasta</string>
     <string name="dialog_title_close_browser">Fechar navegador</string>
     <string name="dialog_delete_all_downloads">Apagar todas as descargas</string>
@@ -438,42 +438,42 @@
     <string name="settings_summary_on_category">Domínio principal</string>
     <string name="settings_summary_off_category">Domínio de recurso</string>
     <string name="action_domain_settings">Domínio</string>
-    <string name="settings_title_domains_delete_all">Eliminar tudo</string>
-    <string name="settings_summary_domains_delete_all">Eliminar todas as definições</string>
-    <string name="question_delete_all_domain_settings">Eliminar todas as definições?</string>
-    <string name="settings_title_delete_domain_settings">Eliminar definições de domínio</string>
+    <string name="settings_title_domains_delete_all">Apagar tudo</string>
+    <string name="settings_summary_domains_delete_all">Apagar todas as definições</string>
+    <string name="question_delete_all_domain_settings">Apagar todas as definições?</string>
+    <string name="settings_title_delete_domain_settings">Apagar definições de domínio</string>
     <string name="settings_summary_delete_domain_settings">As definições serão recriadas assim que este domínio for encontrado</string>
     <string name="settings_title_parent">Principal</string>
     <string name="settings_summary_default_domain_settings">Definições padrão de domínios</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_title_ssl_error">Erro de segurança</string>
+    <string name="settings_summary_ssl_error">O que fazer ao detetar um erro SSL</string>
+    <string name="checkbox_remember_domain_choice">Memorizar escolha para este domínio</string>
+    <string name="settings_title_third_party_cookies">Cookies de terceiros</string>
+    <string name="settings_summary_on_third_party_cookies">Aceitar cookies usados para rastrear suas atividades nos sites</string>
+    <string name="settings_summary_off_third_party_cookies">Rejeitar cookies usados para rastrear suas atividades em sites</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_summary_on_javascript">Todas as funcionalidades dos sites e do navegador devem funcionar</string>
+    <string name="settings_summary_off_javascript">Algumas funcionalidades dos sites e do navegador podem não funcionar</string>
     <string name="settings_title_cookies">Cookies</string>
-    <string name="settings_summary_cookies">Current page has no cookies</string>
-    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
-    <string name="settings_title_cookies_delete_all">Delete all</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
-    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <string name="settings_summary_cookies">A página atual não possui cookies</string>
+    <string name="settings_summary_manage_cookies">Gerir cookies da página atual</string>
+    <string name="settings_title_cookies_delete_all">Apagar tudo</string>
+    <string name="settings_summary_cookies_delete_all">Apagar todos os cookies da página atual</string>
+    <string name="question_delete_all_page_cookies">Apagar todos os cookies da página atual?</string>
     <plurals name="settings_summary_cookies">
         <!--
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
-        <item quantity="one">Current page has one cookie</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="one">A página atual possui um cookie</item>
+        <item quantity="other">A página atual possui <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
-    <string name="settings_title_task_label">Task label</string>
-    <string name="settings_title_task_icon">Task icon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
-    <string name="settings_title_toolbar_label">Toolbar label</string>
+    <string name="settings_title_task_label">Texto da tarefa</string>
+    <string name="settings_title_task_icon">Ícone da tarefa</string>
+    <string name="settings_summary_on_task_icon">Usar ícone da página</string>
+    <string name="settings_summary_off_task_icon">Usar ícone da aplicação</string>
+    <string name="settings_title_toolbar_label">Texto da barra de ferramentas</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Aplicação externa disponível</string>
     <string name="dialog_message_third_party_app">Deseja abrir a aplicação associada a este site web?</string>
@@ -482,12 +482,12 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_default">@string/agent_default</string>
     <string name="session_recovery">Recuperação</string>
     <string name="session_name_prompt">Digite o nome da sessão:</string>
-    <string name="session_already_exists">Já existe uma sessão com este nome.</string>
+    <string name="session_already_exists">Já existe uma sessão com este nome</string>
     <string name="session_cant_delete_current">Não foi possível apagar a sessão!</string>
     <string name="session_prompt_confirm_deletion_title">Confirmar eliminação</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Tem a certeza de que pretende apagar a sessão \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Trocar para %s</string>
-    <string name="busy">Ocupado, tente mais tarde.</string>
+    <string name="busy">Ocupado, tente mais tarde</string>
     <string name="invalid_character_removed">Carácter inválido removido!</string>
     <string name="invalid_characters_removed">Caracteres inválidos removidos!</string>
     <string name="reading_mode_image_copyright">Imagem atribuída a</string>
@@ -514,14 +514,14 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">Mostrar animação</string>
     <string name="pref_title_vibrate">Vibrar</string>
     <string name="pref_title_duration">Duração</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_title_animation_duration">Duração da animação</string>
     <string name="pref_title_scrollbar_fading">Desvanecimento</string>
     <string name="pref_summary_on_scrollbar_fading">Desvanecer barras de deslocação</string>
     <string name="pref_summary_off_scrollbar_fading">Mostrar sempre barras de deslocação</string>
     <string name="pref_title_scrollbar_delay_before_fade">Atraso antes de desvanecer</string>
     <string name="pref_summary_scrollbar_delay_before_fade">Tempo após o qual as barras começam a desvanecer</string>
     <string name="pref_title_scrollbar_fade_duration">Duração do desvanecimento</string>
-    <string name="pref_summary_scrollbar_fade_duration">Tempo que demora para que as barras desvaneçam</string>
+    <string name="pref_summary_scrollbar_fade_duration">Tempo durante o qual a barra de deslocação desaparece</string>
     <string name="pref_title_scrollbar_size">Tamanho</string>
     <string name="pref_summary_scrollbar_size">Defina a largura e a altura das barras de deslocação</string>
     <string name="pref_category_title_session_export">Exportar sessão</string>
@@ -537,7 +537,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="oid">Identificador de objeto (OID):</string>
     <string name="export_settings">Exportar definições para backup</string>
     <string name="import_settings">Importar definições de um backup</string>
-    <string name="pref_title_search_custom_image_url">Imagem personalizada para página de pesquisa</string>
+    <string name="pref_title_search_custom_image_url">Imagem personalizada na página de pesquisa</string>
     <string name="pref_summary_search_custom_image_url">Apenas para URL personalizado</string>
     <string name="long_press_tab">Toque longo no ícone \"Separador\" abre um novo separador</string>
     <string name="pref_title_close_drawer">Fechar painel</string>
@@ -573,7 +573,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="suggest">Sugestões de pesquisa (número)</string>
     <string name="action_cycle_tabs_forwards">Percorrer separadores para a frente</string>
     <string name="action_cycle_tabs_backwards">Percorrer separadores para trás</string>
-    <string name="action_focus_address_bar">Focar barra de endereço</string>
+    <string name="action_focus_address_bar">Foco na barra de endereço</string>
     <string name="action_tab_history_forward">Avançar no histórico de separadores</string>
     <string name="action_toggle_toolbar">Alternar barra de ferramentas</string>
     <string name="action_toggle_status_bar">Alternar barra de estado</string>
@@ -588,18 +588,18 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="action_switch_to_tab">Trocar entre separador 1 a 9</string>
     <string name="action_switch_to_last_tab">Trocar para o último separador</string>
     <string name="action_switch_to_last_session">Trocar para a última sessão</string>
-    <string name="log_level_verbose">Verbose</string>
-    <string name="log_level_debug">Debug</string>
-    <string name="log_level_info">Info</string>
-    <string name="log_level_warn">Warn</string>
-    <string name="log_level_error">Error</string>
-    <string name="log_level_assert">Assert</string>
+    <string name="log_level_verbose">Detalhado</string>
+    <string name="log_level_debug">Depuração</string>
+    <string name="log_level_info">Informação</string>
+    <string name="log_level_warn">Aviso</string>
+    <string name="log_level_error">Erro</string>
+    <string name="log_level_assert">Declaração</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
-    <string name="label_domain">Domain</string>
-    <string name="label_title">Title</string>
-    <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_short_url">URL curto</string>
+    <string name="label_domain">Domínio</string>
+    <string name="label_title">Título</string>
+    <string name="label_session">Sessão</string>
+    <string name="label_app_name">Nome da aplicação</string>
+    <string name="message_render_process_crashed">Falha no processo. Talvez seja necessário recarregar algumas páginas da web.</string>
 </resources>

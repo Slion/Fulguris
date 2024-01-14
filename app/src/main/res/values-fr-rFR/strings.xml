@@ -3,7 +3,7 @@
     <string name="action_reload">Recharger</string>
     <string name="action_menu">Plus</string>
     <string name="action_new_tab">Nouvel onglet</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Dupliquer l\'onglet</string>
     <string name="action_share">Partager</string>
     <string name="action_history">Historique</string>
     <string name="action_bookmarks">Favoris</string>
@@ -77,8 +77,8 @@
     <string name="action_yes">Oui</string>
     <string name="action_no">Non</string>
     <string name="action_ask">Demander</string>
-    <string name="action_proceed">Proceed</string>
-    <string name="action_abort">Abort</string>
+    <string name="action_proceed">Procéder</string>
+    <string name="action_abort">Annuler</string>
     <string name="title_text_size">Taille du texte</string>
     <string name="title_error">Erreur</string>
     <string name="hint_title">Titre</string>
@@ -114,7 +114,7 @@
     <string name="message_import">Favoris ont été importés</string>
     <string name="message_clear_history">Historique effacé</string>
     <string name="message_cookies_cleared">Cookies effacés</string>
-    <string name="max_tabs">Onglets maximuns atteint</string>
+    <string name="max_tabs">Maximum d\'onglets atteint. Déverrouillez en achetant un abonnement.</string>
     <string name="message_text_copied">Texte copié dans le presse-papiers</string>
     <string name="message_link_copied">Adresse copiée dans le presse-papiers</string>
     <string name="message_blocked_local">Le fichier local a été bloqué au chargement</string>
@@ -167,14 +167,14 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Action annulée.</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
-    <string name="message_certificate_date_invalid">la date du certificat est incorrecte</string>
-    <string name="message_certificate_expired">le certificat a expiré</string>
-    <string name="message_certificate_domain_mismatch">le domaine du certificat ne correspond pas au domaine du site</string>
-    <string name="message_certificate_invalid">le certificat est incorrect</string>
-    <string name="message_certificate_not_yet_valid">le certificat n\'est toujours pas correct</string>
-    <string name="message_certificate_untrusted">le certificat n\'est pas approuvé</string>
+    <string name="message_ssl_error_aborted">Erreur de sécurité ! Le chargement de la page a été interrompu.</string>
+    <string name="message_ssl_error">Connexion sécurisée compromise :\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Voulez-vous quand même continuer ?</string>
+    <string name="message_certificate_date_invalid">La date du certificat est invalide</string>
+    <string name="message_certificate_expired">Le certificat est expiré</string>
+    <string name="message_certificate_domain_mismatch">Le domaine du certificat ne correspond pas au domaine du site</string>
+    <string name="message_certificate_invalid">Le certificat est invalide</string>
+    <string name="message_certificate_not_yet_valid">Le certificat n’est pas encore valide</string>
+    <string name="message_certificate_untrusted">Le certificat n\'est pas approuvé</string>
     <!-- permissions request -->
     <string name="title_permission_request">Demande de permissions</string>
     <string name="message_permission_request">%1$s\n\nsouhaite utiliser :\n\n%2$s</string>
@@ -203,9 +203,9 @@
     <string name="manual_proxy">Proxy manuel</string>
     <string name="host">Host :</string>
     <string name="port">Port :</string>
-    <string name="use_tor_prompt">Il semble que vous avez installé Orbot. Voulez-vous utiliser Tor ?</string>
+    <string name="use_tor_prompt">Il semblerait qu’Orbot soit installé. Voulez-vous utiliser Tor ?</string>
     <string name="use_i2p_prompt">Il semble que vous avez installé I2P. Voulez-vous utiliser I2P ?</string>
-    <string name="install_orbot">Veuillez installer Orbot comme proxy avec Tor.</string>
+    <string name="install_orbot">Veuillez installer Orbot afin d\'utiliser le proxy avec Tor.</string>
     <string name="i2p_not_running">I2P n\'est pas exécution.</string>
     <string name="i2p_tunnels_not_ready">Les tunnels I2P ne sont pas encore prêts.</string>
     <string name="yes">Oui</string>
@@ -218,7 +218,7 @@
     <string name="freeware">Gratuiciel</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="hphosts_ad_server_list">Liste de serveurs publicitaires hpHosts</string>
-    <string name="reopening_recent_tab">Réouvrir l\'ancien onglet</string>
+    <string name="reopening_recent_tab">Onglet récupéré</string>
     <string name="rendering_mode">Mode de rendu</string>
     <string name="name_inverted">Inversé</string>
     <string name="name_grayscale">Niveaux de gris</string>
@@ -266,11 +266,11 @@
     <string name="pref_category_on_tab_close">À la fermeture de l\'onglet</string>
     <string name="pref_category_on_tab_change">Au changement d\'onglet</string>
     <string name="pref_category_on_tab_back_forward">En revenant en arrière ou en avant</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
+    <string name="settings_category_on_follow_link">Lorsque vous suivez un lien</string>
     <string name="pref_category_scrollbars">Barres de défilement</string>
-    <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
+    <string name="settings_title_tab">Onglet</string>
+    <string name="settings_title_page_history">Historique de page</string>
+    <string name="settings_summary_tab">Animations, rétroaction et apparence</string>
     <string name="pref_summary_scrollbars">Régler la taille et le comportement des barres de défilement</string>
     <string name="pref_category_subscriptions">Abonnements</string>
     <string name="pref_summary_subscriptions">Activer ou annuler votre abonnement</string>
@@ -347,15 +347,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Bloqueur de publicités et filtre de contenu</string>
     <string name="settings_summary_content_control_toggle">Activer le bloqueur de publicités et le filtre de contenu</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
-    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
-    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
-    <string name="settings_summary_off_toolbars_position">Top</string>
+    <string name="settings_title_tab_bar_orientation">Orientation de la barre d\'onglets</string>
+    <string name="settings_summary_on_tab_bar_orientation">Verticale</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontale</string>
+    <string name="settings_title_tab_bar_placement">Emplacement de la barre d\'onglets</string>
+    <string name="settings_summary_on_tab_bar_placement">Panneau rétractable</string>
+    <string name="settings_summary_off_tab_bar_placement">Toujours à l\'écran</string>
+    <string name="settings_title_toolbars_position">Position des barres d’outils</string>
+    <string name="settings_summary_on_toolbars_position">Bas</string>
+    <string name="settings_summary_off_toolbars_position">Haut</string>
     <string name="settings_title_desktop_mode_default">Mode Bureau</string>
     <string name="settings_summary_desktop_mode_default">Définir si les nouveaux onglets utilisent le mode Bureau par défaut</string>
     <string name="settings_title_dark_mode_default">Forcer le thème sombre</string>
@@ -364,7 +364,7 @@
     <string name="settings_summary_swap_bookmarks_and_tabs">Les panneaux Onglets et Favoris échangeront de place</string>
     <string name="do_not_track">Demander de \'Ne pas pister\'</string>
     <string name="save_data">Envoyer l’en-tête \'Save-Data\'</string>
-    <string name="remove_identifying_headers">Supprimer les en-têtes d\'dentification</string>
+    <string name="remove_identifying_headers">Supprimer les en-têtes d\'identification</string>
     <string name="pref_title_webrtc">Prise en charge de WebRTC</string>
     <string name="pref_summary_webrtc">Permet la communication en temps réel sur le Web en utilisant la caméra et le microphone de votre appareil</string>
     <string name="action_add_to_homescreen">Ajouter à l\'écran d\'accueil</string>
@@ -380,10 +380,10 @@
     <string name="app_restart">Veuillez redémarrer l\'application pour prendre en compte les changements</string>
     <string name="pref_title_crash_logs">Journaux de plantage</string>
     <string name="pref_summary_crash_logs">Écrire les journaux de plantage dans le système de fichiers.\n Appuyez pour ouvrir le dossier. Veuillez fournir le fichier adéquat lorsque vous signalez un bug.</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_logs">Journaux</string>
+    <string name="pref_summary_on_logs">Activé</string>
+    <string name="pref_summary_off_logs">Désactivé</string>
+    <string name="pref_title_log_level">Niveau de détail du journal</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Ouvrir dans un nouvel onglet</string>
     <string name="dialog_open_background_tab">Ouvrir en arrière plan</string>
@@ -412,10 +412,10 @@
     <string name="notification_incognito_running_description">Notification permanente de session incognito</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Issued by</string>
-    <string name="ssl_info_issued_to">Issued to</string>
-    <string name="ssl_info_issued_on">Issued on</string>
-    <string name="ssl_info_expires_on">Expires on</string>
+    <string name="ssl_info_issued_by">Émis par :</string>
+    <string name="ssl_info_issued_to">Délivré à :</string>
+    <string name="ssl_info_issued_on">Date d\'émission :</string>
+    <string name="ssl_info_expires_on">Date d\'expiration :</string>
     <!-- Search in page -->
     <string name="next">Suivant</string>
     <string name="previous">Précédent</string>
@@ -431,8 +431,8 @@
     <string name="settings_summary_domains">Gérer les paramètres de domaine</string>
     <string name="settings_title_resource_domains">Domaines ressource</string>
     <string name="settings_title_override">Forcer</string>
-    <string name="settings_summary_on_override">Remplacer les paramètres parent</string>
-    <string name="settings_summary_off_override">Utiliser les paramètres parent</string>
+    <string name="settings_summary_on_override">Remplacer les paramètres parents</string>
+    <string name="settings_summary_off_override">Utiliser les paramètres parents</string>
     <string name="settings_title_launch_app">Ouvrir une application</string>
     <string name="settings_title_category">Catégorie</string>
     <string name="settings_summary_on_category">Domaine principal</string>
@@ -445,35 +445,35 @@
     <string name="settings_summary_delete_domain_settings">Les paramètres seront recréés la prochaine fois que ce domaine sera rencontré</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_summary_default_domain_settings">Paramètres de domaine par défaut</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_title_ssl_error">Erreur de sécurité</string>
+    <string name="settings_summary_ssl_error">Que faire si une erreur SSL est détectée</string>
+    <string name="checkbox_remember_domain_choice">Se souvenir de votre choix pour ce domaine</string>
+    <string name="settings_title_third_party_cookies">Cookies de tiers</string>
+    <string name="settings_summary_on_third_party_cookies">Accepter les cookies utilisés pour suivre vos activités à travers les sites Web</string>
+    <string name="settings_summary_off_third_party_cookies">Accepter les cookies utilisés pour suivre vos activités à travers les sites Web</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_summary_on_javascript">Toutes les fonctionnalités des sites web et du navigateur devraient fonctionner</string>
+    <string name="settings_summary_off_javascript">Certaines fonctionnalités des sites web et du navigateur ne fonctionneront pas</string>
     <string name="settings_title_cookies">Cookies</string>
-    <string name="settings_summary_cookies">Current page has no cookies</string>
-    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
-    <string name="settings_title_cookies_delete_all">Delete all</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
-    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <string name="settings_summary_cookies">La page actuelle ne contient aucun cookie</string>
+    <string name="settings_summary_manage_cookies">Gérer les cookies de la page actuelle</string>
+    <string name="settings_title_cookies_delete_all">Tout supprimer</string>
+    <string name="settings_summary_cookies_delete_all">Supprimer tous les cookies de la page actuelle</string>
+    <string name="question_delete_all_page_cookies">Supprimer tous les cookies de la page actuelle ?</string>
     <plurals name="settings_summary_cookies">
         <!--
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
-        <item quantity="one">Current page has one cookie</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="one">La page actuelle contient un cookie</item>
+        <item quantity="other">La page actuelle contient <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
-    <string name="settings_title_task_label">Task label</string>
-    <string name="settings_title_task_icon">Task icon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
-    <string name="settings_title_toolbar_label">Toolbar label</string>
+    <string name="settings_title_task_label">Libellé de la tâche</string>
+    <string name="settings_title_task_icon">Icône de la tâche</string>
+    <string name="settings_summary_on_task_icon">Utiliser l\'icône de la page</string>
+    <string name="settings_summary_off_task_icon">Utiliser l\'icône de l\'app</string>
+    <string name="settings_title_toolbar_label">Libellé de la barre d\'outils</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Application tierce disponible</string>
     <string name="dialog_message_third_party_app">Souhaitez-vous lancer l\'application associée à ce site web ?</string>
@@ -485,7 +485,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Une session portant ce nom existe déjà !</string>
     <string name="session_cant_delete_current">Impossible de supprimer la session en cours !</string>
     <string name="session_prompt_confirm_deletion_title">Confirmez la suppression</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Êtes-vous sûr de vouloir supprimer la session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" ?</string>
     <string name="session_switched">Basculé vers \"%s\"</string>
     <string name="busy">Occupé, réessayez ultérieurement.</string>
     <string name="invalid_character_removed">Caractère non valide supprimé !</string>
@@ -514,7 +514,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">Afficher l\'animation</string>
     <string name="pref_title_vibrate">Vibrer</string>
     <string name="pref_title_duration">Durée</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_title_animation_duration">Durée des animations</string>
     <string name="pref_title_scrollbar_fading">Fondu</string>
     <string name="pref_summary_on_scrollbar_fading">Les barres de défilement s\'estompent</string>
     <string name="pref_summary_off_scrollbar_fading">Les barres de défilement sont toujours affichées</string>
@@ -527,14 +527,14 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_category_title_session_export">Exporter la session</string>
     <string name="pref_category_summary_session_export">Choisissez la session que vous souhaitez exporter</string>
     <string name="error_session_file_corrupted">Erreur : fichier de session corrompu !</string>
-    <string name="error_recovery_session">Erreur: une session de récupération a été créée !</string>
+    <string name="error_recovery_session">Erreur : une session de récupération a été créée !</string>
     <string name="message_session_imported">Session importée : <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Session exportée : <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="start_incognito">Toujours se comporter comme étant en mode Incognito</string>
-    <string name="force_zoom_summary">Ne fonctionne pas si JavaScript est desactivé</string>
+    <string name="force_zoom_summary">Ne fonctionne pas si JavaScript est désactivé</string>
     <string name="force_zoom">Forcer le zoom pour les sites web</string>
     <string name="algorithm">Algorithme :</string>
-    <string name="oid">Identificateur d\'objet (OID):</string>
+    <string name="oid">Identificateur d\'objet (OID) :</string>
     <string name="export_settings">Exporter les paramètres vers une sauvegarde</string>
     <string name="import_settings">Importer les paramètres depuis une sauvegarde</string>
     <string name="pref_title_search_custom_image_url">Image personnalisée de page de recherche</string>
@@ -589,17 +589,17 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="action_switch_to_last_tab">Basculer vers le dernier onglet</string>
     <string name="action_switch_to_last_session">Basculer vers la dernière session</string>
     <string name="log_level_verbose">Verbose</string>
-    <string name="log_level_debug">Debug</string>
+    <string name="log_level_debug">Débug</string>
     <string name="log_level_info">Info</string>
-    <string name="log_level_warn">Warn</string>
-    <string name="log_level_error">Error</string>
+    <string name="log_level_warn">Avertissements</string>
+    <string name="log_level_error">Erreurs</string>
     <string name="log_level_assert">Assert</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
-    <string name="label_domain">Domain</string>
-    <string name="label_title">Title</string>
+    <string name="label_short_url">URL court</string>
+    <string name="label_domain">Domaine</string>
+    <string name="label_title">Titre</string>
     <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_app_name">Nom de l\'app</string>
+    <string name="message_render_process_crashed">Le processus de rendu a planté. Vous devrez peut-être recharger certaines pages web.</string>
 </resources>

@@ -350,7 +350,7 @@
     <string name="settings_title_tab_bar_orientation">标签栏方向</string>
     <string name="settings_summary_on_tab_bar_orientation">垂直</string>
     <string name="settings_summary_off_tab_bar_orientation">水平</string>
-    <string name="settings_title_tab_bar_placement">标签栏位置</string>
+    <string name="settings_title_tab_bar_placement">标签栏布局</string>
     <string name="settings_summary_on_tab_bar_placement">可收回的面板</string>
     <string name="settings_summary_off_tab_bar_placement">总是在屏幕上</string>
     <string name="settings_title_toolbars_position">工具栏位置</string>

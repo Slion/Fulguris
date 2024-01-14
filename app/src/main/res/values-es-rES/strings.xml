@@ -3,7 +3,7 @@
     <string name="action_reload">Recargar</string>
     <string name="action_menu">Menú</string>
     <string name="action_new_tab">Nueva pestaña</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Duplicar pestaña</string>
     <string name="action_share">Compartir</string>
     <string name="action_history">Historial</string>
     <string name="action_bookmarks">Marcadores</string>
@@ -30,12 +30,12 @@
     <string name="up_to_date">Esta es la versión más reciente</string>
     <string name="show">Mostrar</string>
     <string name="cache">Vaciar caché al salir</string>
-    <string name="reflow">Activar la recolocación dinámica de texto</string>
+    <string name="reflow">Activar el reajuste dinámico de texto</string>
     <string name="load_images">Cargar imágenes</string>
     <string name="window">Permitir a los sitios abrir nuevas ventanas</string>
     <string name="cookies">Activar cookies</string>
     <string name="size">Tamaño del texto</string>
-    <string name="recommended">(Recomendado)</string>
+    <string name="recommended">Recomendado</string>
     <string name="search">Motor de búsqueda</string>
     <string name="search_hint">Buscar</string>
     <string name="search_action">Buscar</string>
@@ -77,8 +77,8 @@
     <string name="action_yes">Sí</string>
     <string name="action_no">No</string>
     <string name="action_ask">Preguntar</string>
-    <string name="action_proceed">Proceed</string>
-    <string name="action_abort">Abort</string>
+    <string name="action_proceed">Proceder</string>
+    <string name="action_abort">Abortar</string>
     <string name="title_text_size">Tamaño del texto</string>
     <string name="title_error">Error</string>
     <string name="hint_title">Título</string>
@@ -150,7 +150,7 @@
     <string name="blocklist_updating">Actualizando…</string>
     <string name="blocklist_update_error">Error al actualizar la lista de filtros %s</string>
     <!-- not used any more, generic error for all non-successful codes -->
-    <string name="blocklist_update_error_code">Error mientras se actualizaba la lista de filtros %1$s: Código de Estado %2$s</string>
+    <string name="blocklist_update_error_code">Error al actualizar la lista de filtros %1$s: Código de estado %2$s</string>
     <string name="add_blocklist">Añadir archivo de filtros</string>
     <string name="add_blocklist_hint">Puede elegir listas de hosts o cualquier lista compatible con las reglas de AdBlockPlus</string>
     <string name="invalid_title">Título inválido</string>
@@ -162,13 +162,13 @@
     <string name="local_file_chosen">archivo seleccionado</string>
     <string name="remote_file">Remoto</string>
     <string name="use_modify_filters">Filtros modificadores</string>
-    <string name="use_modify_filters_warning">En algunos casos, Filtros modificadores han sido encontrados responsables de romper sitios web en este navegador. Hasta que su implementación sea mejorada, tú puedes habilitarlo bajo tu propio riesgo. Deshabilitarlo para los documentos del marco principal solo evita la mayoría de los problemas.</string>
-    <string name="modify_filters_not_for_main_frame">Deshabilitarlo solo para el marco principal</string>
+    <string name="use_modify_filters_warning">En algunos casos, los filtros modificadores han hecho que algunos sitios web se rompan en este navegador. Hasta que se mejore su implementación, puedes activarlo bajo tu responsabilidad. Desactivarlo para los documentos del marco principal solo evita la mayoría de los problemas.</string>
+    <string name="modify_filters_not_for_main_frame">Desactivarlo solo para el marco principal</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Acción cancelada.</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error_aborted">¡Error de seguridad! Carga de página cancelada.</string>
+    <string name="message_ssl_error">Conexión segura comprometida:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>¿Aún quieres continuar?</string>
     <string name="message_certificate_date_invalid">La fecha del certificado es inválida</string>
     <string name="message_certificate_expired">El certificado está caducado</string>
     <string name="message_certificate_domain_mismatch">El dominio del certificado y el del sitio web no coinciden</string>
@@ -252,9 +252,9 @@
     <string name="settings_contribute">Contribuir</string>
     <string name="settings_summary_contribute">Ayude a Fulguris a crecer y tener éxito</string>
     <string name="settings_title_privacy_policy">Política de Privacidad</string>
-    <string name="settings_summary_privacy_policy">Ver nuestra política de privacidad en línea</string>
+    <string name="settings_summary_privacy_policy">Vea nuestra política de privacidad en línea</string>
     <string name="settings_title_terms_and_conditions">Términos &amp; Condiciones</string>
-    <string name="settings_summary_terms_and_conditions">Ver nuestros términos y condiciones en línea</string>
+    <string name="settings_summary_terms_and_conditions">Vea nuestros términos y condiciones en línea</string>
     <string name="settings_summary_discord">Join our growing community</string>
     <string name="pref_category_panels">Paneles</string>
     <string name="pref_category_webpage">Página web</string>
@@ -266,11 +266,11 @@
     <string name="pref_category_on_tab_close">Al cerrar la pestaña</string>
     <string name="pref_category_on_tab_change">Al cambiar la pestaña</string>
     <string name="pref_category_on_tab_back_forward">Al regresar o avanzar</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
+    <string name="settings_category_on_follow_link">Al seguir un enlace</string>
     <string name="pref_category_scrollbars">Barras de desplazamiento</string>
-    <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
+    <string name="settings_title_tab">Pestaña</string>
+    <string name="settings_title_page_history">Historial de la página</string>
+    <string name="settings_summary_tab">Animaciones, vibración y apariencia</string>
     <string name="pref_summary_scrollbars">Ajustar el tamaño y comportamiento de las barras de desplazamiento</string>
     <string name="pref_category_subscriptions">Suscripciones</string>
     <string name="pref_summary_subscriptions">Activar o cancelar sus suscripciones</string>
@@ -294,7 +294,7 @@
     <string name="pref_summary_recommended_anonymous">Recomendado, los datos recolectados son anónimos</string>
     <string name="pref_summary_color_mode">Aplicar el color de la página web a la barra de herramientas y de estado</string>
     <string name="pref_title_desktop_width">Anchura del escritorio</string>
-    <string name="pref_summary_desktop_width">Anchura de la vista del modo escritorio, cuanto mas ancha sea, mas pequeño se verá el contenido</string>
+    <string name="pref_summary_desktop_width">Anchura de la vista del modo escritorio, cuanto más ancha sea, más pequeño se verá el contenido</string>
     <string name="pref_title_no_sponsorship">Patrocinio en aplicación no disponible</string>
     <string name="pref_summary_no_sponsorship">Utilice Fulguris de Google Play para apoyarnos.</string>
     <string name="pref_title_free_download">Descarga gratuita</string>
@@ -344,18 +344,18 @@
     <string name="clear_web_storage">Limpiar almacenamiento web</string>
     <string name="clear_web_storage_exit">Vaciar almacenamiento web al salir</string>
     <string name="message_web_storage_cleared">El almacenamiento web se ha eliminado</string>
-    <string name="settings_adblock">@string/block_ads</string>
+    <string name="settings_adblock">@cadena/bloquar_anuncios</string>
     <string name="settings_summary_content_control">Bloqueo de anuncios y filtrado de contenido</string>
     <string name="settings_summary_content_control_toggle">Activar bloqueo de anuncios y filtrado de contenido</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
+    <string name="settings_title_tab_bar_orientation">Orientación de la barra de pestañas</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
-    <string name="settings_summary_off_toolbars_position">Top</string>
+    <string name="settings_title_tab_bar_placement">Posición de la barra de pestañas</string>
+    <string name="settings_summary_on_tab_bar_placement">Panel desplegable</string>
+    <string name="settings_summary_off_tab_bar_placement">Siempre en pantalla</string>
+    <string name="settings_title_toolbars_position">Posición de la barra de herramientas</string>
+    <string name="settings_summary_on_toolbars_position">Abajo</string>
+    <string name="settings_summary_off_toolbars_position">Arriba</string>
     <string name="settings_title_desktop_mode_default">Modo escritorio</string>
     <string name="settings_summary_desktop_mode_default">Definir si las nuevas pestañas usan el modo escritorio por defecto</string>
     <string name="settings_title_dark_mode_default">Forzar modo oscuro</string>
@@ -378,19 +378,19 @@
     <string name="debug_title">Ajustes de depuración</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Por favor reinicie la aplicación para que el cambio tenga efecto</string>
-    <string name="pref_title_crash_logs">Registros de fallos</string>
-    <string name="pref_summary_crash_logs">Escriba registro de errores en el sistema de archivos.\nPulsa para abrir la carpeta. Por favor provee el archivo relevante cuando estés reportando un bug.</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_crash_logs">Registros de errores</string>
+    <string name="pref_summary_crash_logs">Escriba el registro de errores en el sistema de archivos.\nPulse para abrir la carpeta. Por favor adjunte el archivo relevante cuando reporte un error.</string>
+    <string name="pref_title_logs">Registros</string>
+    <string name="pref_summary_on_logs">Activado</string>
+    <string name="pref_summary_off_logs">Desactivado</string>
+    <string name="pref_title_log_level">Nivel de registro</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Abrir en una nueva pestaña</string>
     <string name="dialog_open_background_tab">Abrir en una pestaña de fondo</string>
     <string name="dialog_open_incognito_tab">Abrir en una pestaña de incógnito</string>
     <string name="dialog_remove_bookmark">Eliminar marcador</string>
     <string name="dialog_edit_bookmark">Editar marcador</string>
-    <string name="dialog_title_bookmark">Marcar como favorito</string>
+    <string name="dialog_title_bookmark">Marcador</string>
     <string name="dialog_remove_from_history">Eliminar del historial</string>
     <string name="dialog_copy_link">Copiar enlace</string>
     <string name="dialog_copy_text">Copiar texto</string>
@@ -405,7 +405,7 @@
     <string name="search_engine_custom">Dirección personalizada</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d pestaña de incógnito abierta</item>
+        <item quantity="one">%1$d pestañas de incógnito abiertas</item>
         <item quantity="other">%1$d pestañas de incógnito abiertas</item>
     </plurals>
     <string name="notification_incognito_running_message">Tocar para abrir</string>
@@ -431,49 +431,49 @@
     <string name="settings_summary_domains">Gestionar ajustes de dominio</string>
     <string name="settings_title_resource_domains">Dominios de recursos</string>
     <string name="settings_title_override">Sobrescribir</string>
-    <string name="settings_summary_on_override">Sobreescribir configuración padre</string>
-    <string name="settings_summary_off_override">Usar configuración padre</string>
+    <string name="settings_summary_on_override">Sobreescribir configuración heredada</string>
+    <string name="settings_summary_off_override">Usar configuración heredada</string>
     <string name="settings_title_launch_app">Iniciar aplicación</string>
     <string name="settings_title_category">Categoría</string>
     <string name="settings_summary_on_category">Dominio principal</string>
-    <string name="settings_summary_off_category">Dominios de recursos</string>
+    <string name="settings_summary_off_category">Dominio de recursos</string>
     <string name="action_domain_settings">Dominio</string>
     <string name="settings_title_domains_delete_all">Borrar todo</string>
     <string name="settings_summary_domains_delete_all">Borrar todos los ajustes del dominio</string>
-    <string name="question_delete_all_domain_settings">¿Borrar todos los ajustes del dominio?</string>
+    <string name="question_delete_all_domain_settings">¿Quiere borrar todos los ajustes del dominio?</string>
     <string name="settings_title_delete_domain_settings">Borrar todos los ajustes del dominio</string>
     <string name="settings_summary_delete_domain_settings">Será recreado la próxima vez que se encuentre este dominio</string>
     <string name="settings_title_parent">Padre</string>
-    <string name="settings_summary_default_domain_settings">Configuración de dominio predeterminado</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_summary_default_domain_settings">Configuración de dominio predeterminada</string>
+    <string name="settings_title_ssl_error">Error de seguridad</string>
+    <string name="settings_summary_ssl_error">Qué hacer cuando se detecte un error SSL</string>
+    <string name="checkbox_remember_domain_choice">Recordar su elección para este dominio</string>
+    <string name="settings_title_third_party_cookies">Cookies de terceros</string>
+    <string name="settings_summary_on_third_party_cookies">Aceptar cookies utilizadas para rastrear su actividad a través de distintos sitios web</string>
+    <string name="settings_summary_off_third_party_cookies">Rechazar cookies utilizadas para rastrear su actividad a través de distintos sitios web</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_summary_on_javascript">Todas las funciones de los sitios web y el navegador deberían funcionar</string>
+    <string name="settings_summary_off_javascript">Algunas características del navegador y distintos sitios web no funcionarán</string>
     <string name="settings_title_cookies">Cookies</string>
-    <string name="settings_summary_cookies">Current page has no cookies</string>
-    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
-    <string name="settings_title_cookies_delete_all">Delete all</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
-    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <string name="settings_summary_cookies">La página actual no tiene cookies</string>
+    <string name="settings_summary_manage_cookies">Administrar las cookies de la página actual</string>
+    <string name="settings_title_cookies_delete_all">Borrar todo</string>
+    <string name="settings_summary_cookies_delete_all">Borrar todas las cookies de la página actual</string>
+    <string name="question_delete_all_page_cookies">¿Quiere borrar todas las cookies de la página actual?</string>
     <plurals name="settings_summary_cookies">
         <!--
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
-        <item quantity="one">Current page has one cookie</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="one">La página actual tiene 1 cookie</item>
+        <item quantity="other">La página actual contiene <xliff:g id="cookies_count" example="2">%d</xliff:g></item>
     </plurals>
-    <string name="settings_title_task_label">Task label</string>
-    <string name="settings_title_task_icon">Task icon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
-    <string name="settings_title_toolbar_label">Toolbar label</string>
+    <string name="settings_title_task_label">Etiqueta de la tarea</string>
+    <string name="settings_title_task_icon">Icono de la tarea</string>
+    <string name="settings_summary_on_task_icon">Usar icono de la página</string>
+    <string name="settings_summary_off_task_icon">Usar ícono de la aplicación</string>
+    <string name="settings_title_toolbar_label">Etiqueta de la barra de herramientas</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Aplicación de terceros disponible</string>
     <string name="dialog_message_third_party_app">¿Quiere iniciar la aplicación asociada a ese sitio web?</string>
@@ -485,9 +485,9 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">¡Ya existe una sesión con ese nombre!</string>
     <string name="session_cant_delete_current">¡La sesión actual no se puede eliminar!</string>
     <string name="session_prompt_confirm_deletion_title">Confirmar eliminación</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="session_prompt_confirm_deletion_message">¿Está seguro de que quiere eliminar la sesión \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Cambiada a \"%s\"</string>
-    <string name="busy">Ocupado, inténtelo de nuevo en breve.\"</string>
+    <string name="busy">Ocupado, inténtelo de nuevo en breve.</string>
     <string name="invalid_character_removed">¡Carácter inválido eliminado!</string>
     <string name="invalid_characters_removed">¡Caracteres inválidos eliminados!</string>
     <string name="reading_mode_image_copyright">Imagen atribuida a</string>
@@ -508,26 +508,26 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="button_undo">Deshacer</string>
     <string name="button_dismiss">Rechazar</string>
     <!-- Find in page -->
-    <string name="no_match_found">No se encontró ninguna coincidencia!</string>
-    <string name="match_x_of_n">Iguala <xliff:g id="current_match" example="1">%1$d</xliff:g> en <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="no_match_found">¡No se encontró ninguna coincidencia!</string>
+    <string name="match_x_of_n">Coincidencia <xliff:g id="current_match" example="1">%1$d</xliff:g> de <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Mostrar snackbar</string>
     <string name="pref_title_show_animation">Mostrar animación</string>
     <string name="pref_title_vibrate">Vibrar</string>
     <string name="pref_title_duration">Duración</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_title_animation_duration">Duración de la animación</string>
     <string name="pref_title_scrollbar_fading">Desvaneciendo</string>
     <string name="pref_summary_on_scrollbar_fading">Las barras de desplazamiento se están desvaneciendo</string>
     <string name="pref_summary_off_scrollbar_fading">Las barras de desplazamiento siempre se muestran</string>
     <string name="pref_title_scrollbar_delay_before_fade">Retraso antes de desvanecer</string>
     <string name="pref_summary_scrollbar_delay_before_fade">Tiempo tras el cual las barras de desplazamiento comenzarán a desvanecerse</string>
     <string name="pref_title_scrollbar_fade_duration">Duración del desvanecimiento</string>
-    <string name="pref_summary_scrollbar_fade_duration">El tiempo que tarda en desvanecer las barras de desplazamiento</string>
+    <string name="pref_summary_scrollbar_fade_duration">El tiempo que tardan en desvanecer las barras de desplazamiento</string>
     <string name="pref_title_scrollbar_size">Tamaño</string>
     <string name="pref_summary_scrollbar_size">Define ancho y alto de las barras de desplazamiento</string>
     <string name="pref_category_title_session_export">Exportar sesión</string>
     <string name="pref_category_summary_session_export">Elija la sesión que quiere exportar</string>
     <string name="error_session_file_corrupted">Error: ¡archivo de sesión corrompido!</string>
-    <string name="error_recovery_session">¡Error: Una sesión de recuperación ha sido creada!</string>
+    <string name="error_recovery_session">Error: ¡Se ha creado una sesión de recuperación!</string>
     <string name="message_session_imported">Sesión importada: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Sesión exportada: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="start_incognito">Actuar permanentemente como en modo incógnito</string>
@@ -537,7 +537,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="oid">Identificador de Objeto (OID):</string>
     <string name="export_settings">Exportar ajustes a una copia de seguridad</string>
     <string name="import_settings">Importar ajustes desde una copia de seguridad</string>
-    <string name="pref_title_search_custom_image_url">Imagen personalizada de la pagina de búsqueda</string>
+    <string name="pref_title_search_custom_image_url">Imagen personalizada de la página de búsqueda</string>
     <string name="pref_summary_search_custom_image_url">Solo para URL personalizada</string>
     <string name="long_press_tab">Pulsación larga en el icono \"Pestaña\" abre una nueva pestaña</string>
     <string name="pref_title_close_drawer">Cerrar cajón</string>
@@ -571,12 +571,12 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_exported">Ajustes exportados:</string>
     <string name="settings_reseted">Todos los ajustes restaurados</string>
     <string name="suggest">Sugerencias de búsqueda (número)</string>
-    <string name="action_cycle_tabs_forwards">Ciclo de pestañas hacía adelante</string>
-    <string name="action_cycle_tabs_backwards">Ciclo de pestañas hacia atrás</string>
-    <string name="action_focus_address_bar">Enfoca la barra de direcciones</string>
-    <string name="action_tab_history_forward">Avanzar en el historial</string>
-    <string name="action_toggle_toolbar">Alterna la barra de herramientas</string>
-    <string name="action_toggle_status_bar">Activa/desactiva la barra de estado</string>
+    <string name="action_cycle_tabs_forwards">Avanzar por las pestañas</string>
+    <string name="action_cycle_tabs_backwards">Retroceder por las pestañas</string>
+    <string name="action_focus_address_bar">Enfocar la barra de direcciones</string>
+    <string name="action_tab_history_forward">Avanzar por el historial de pestañas</string>
+    <string name="action_toggle_toolbar">Alternar la barra de herramientas</string>
+    <string name="action_toggle_status_bar">Alternar la barra de estado</string>
     <string name="action_text_size_increment">Aumentar tamaño de texto</string>
     <string name="action_text_size_decrement">Reducir tamaño de texto</string>
     <string name="action_text_size_small_increment">Aumentar un poco el tamaño del texto</string>
@@ -588,18 +588,18 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="action_switch_to_tab">Ir de la pestaña 1 a la 9</string>
     <string name="action_switch_to_last_tab">Ir a la última pestaña</string>
     <string name="action_switch_to_last_session">Ir a la última sesión</string>
-    <string name="log_level_verbose">Verbose</string>
-    <string name="log_level_debug">Debug</string>
-    <string name="log_level_info">Info</string>
-    <string name="log_level_warn">Warn</string>
+    <string name="log_level_verbose">Verboso</string>
+    <string name="log_level_debug">Depurar</string>
+    <string name="log_level_info">Información</string>
+    <string name="log_level_warn">Advertencia</string>
     <string name="log_level_error">Error</string>
-    <string name="log_level_assert">Assert</string>
+    <string name="log_level_assert">Afirmar</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
-    <string name="label_domain">Domain</string>
-    <string name="label_title">Title</string>
-    <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_short_url">URL corta</string>
+    <string name="label_domain">Dominio</string>
+    <string name="label_title">Título</string>
+    <string name="label_session">Sesión</string>
+    <string name="label_app_name">Nombre de la aplicación</string>
+    <string name="message_render_process_crashed">El proceso de renderizado falló. Es posible que necesites recargar algunas páginas web.</string>
 </resources>
