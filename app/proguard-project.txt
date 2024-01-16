@@ -3,7 +3,11 @@
 -dontskipnonpubliclibraryclasses
 -dontpreverify
 -verbose
+# Do not obfuscate, we are open source anyway so we have nothing to hide.
+# Obfuscation scrambles our crash logs with no benefit.
+-dontobfuscate
 
+# Classes we need to explicitly keep are notably the ones not referenced in code but loaded dynamically from resources or manifest usage
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
