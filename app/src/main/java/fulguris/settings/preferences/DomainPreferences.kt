@@ -61,7 +61,15 @@ class DomainPreferences constructor(
     val topPrivateDomain = if (domain.isNotEmpty()) {
         // Had to go through HttpUrl object otherwise IP address are acting funny
         // TODO: Maybe that should be fixed upstream?
-        "http://$domain".toHttpUrl().topPrivateDomain()
+        // Needed to catch in case we get malformed domain
+        // See: https://github.com/Slion/Fulguris/issues/596
+        try {
+            "http://$domain".toHttpUrl().topPrivateDomain()
+        } catch (ex: Exception) {
+            Timber.d("Malformed domain", ex)
+            // Fallback to default settings then
+            null
+        }
         /*PublicSuffixDatabase.get().getEffectiveTldPlusOne(domain)*/ } else null
 
     /*
@@ -74,6 +82,7 @@ class DomainPreferences constructor(
     // Remember order matters, do this first
     init {
 
+        // Make sure default domain settings exists
         if (!exists("")) {
             Timber.d("Create default domain settings")
             context.getSharedPreferences(name(""), MODE_PRIVATE).edit().putBoolean(context.getString(R.string.pref_key_entry_point), false).commit()
