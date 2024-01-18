@@ -31,7 +31,7 @@
     <string name="show">Wyświetl</string>
     <string name="cache">Wyczyść pamięć podręczną po zamknięciu</string>
     <string name="reflow">Zawijaj tekst do rozmiaru ekranu</string>
-    <string name="load_images">Wczytuj obrazy</string>
+    <string name="load_images">Ładuj obrazy</string>
     <string name="window">Zezwalaj witrynom na otwieranie nowych okien</string>
     <string name="cookies">Włącz pliki cookie</string>
     <string name="size">Rozmiar tekstu</string>
@@ -67,7 +67,7 @@
     <string name="title_warning">Ostrzeżenie</string>
     <string name="title_user_agent">Przedstawiaj się jako</string>
     <string name="title_download_location">Miejsce zapisu pobieranych plików</string>
-    <string name="title_custom_homepage">Adres strony domowej</string>
+    <string name="title_custom_homepage">Adres strony głównej</string>
     <string name="action_webpage">Strona WWW</string>
     <string name="action_main_menu">Menu główne</string>
     <string name="title_clear_history">Wyczyść historię</string>
@@ -76,7 +76,7 @@
     <string name="dialog_cookies">Czy chciałbyś wyczyścić wszystkie pliki cookie?</string>
     <string name="action_yes">Tak</string>
     <string name="action_no">Nie</string>
-    <string name="action_ask">Pytanie</string>
+    <string name="action_ask">Pytaj</string>
     <string name="action_proceed">Kontynuuj</string>
     <string name="action_abort">Odrzuć</string>
     <string name="title_text_size">Rozmiar tekstu</string>
@@ -96,7 +96,7 @@
     <string name="action_translate">Przetłumacz</string>
     <string name="downloads">Pobrane</string>
     <string name="downloads_notification_description">Jest aktywowane po zakończeniu pobierania</string>
-    <string name="download_pending">Rozpoczynanie pobieraniau2026</string>
+    <string name="download_pending">Pobieranie:</string>
     <string name="cannot_download">Pliki mogą być pobierane tylko z odnośników zaczynających się od \"http\" lub \"https\".</string>
     <string name="problem_download">Nie można pobrać - nieprawidłowy URL</string>
     <string name="problem_location_download">Nie można pobrać pliku do wskazanej lokalizacji</string>
@@ -139,8 +139,8 @@
     <string name="request_blocked">Żądanie zablokowane</string>
     <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Automatyczna aktualizacja</string>
-    <string name="blocklist_update_on">Auto. aktualizacje wł.</string>
-    <string name="blocklist_update_off">Auto. aktualizacje wył.</string>
+    <string name="blocklist_update_on">Auto. aktualizacje włączone</string>
+    <string name="blocklist_update_off">Auto. aktualizacje wyłączone</string>
     <string name="blocklist_update_wifi">Tylko na połączeniach bez opłat</string>
     <string name="blocklist_update">Aktualizuj filtry</string>
     <string name="blocklist_update_frequency">Częstotliwość aktualizacji</string>
@@ -258,8 +258,8 @@
     <string name="settings_summary_discord">Join our growing community</string>
     <string name="pref_category_panels">Panele</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
-    <string name="pref_category_landscape">Poziomo</string>
-    <string name="pref_category_portrait">Pionowo</string>
+    <string name="pref_category_landscape">Pozioma</string>
+    <string name="pref_category_portrait">Pionowa</string>
     <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filtry</string>
     <string name="pref_category_summary_filters">Lokalne lub zdalne pliki definiujące zasady kontrolowania treści</string>
@@ -271,7 +271,7 @@
     <string name="settings_title_tab">Karta</string>
     <string name="settings_title_page_history">Historia strony</string>
     <string name="settings_summary_tab">Animacje, opinie i wygląd</string>
-    <string name="pref_summary_scrollbars">Dostosuj rozmiar i zachowanie pasków przewijania</string>
+    <string name="pref_summary_scrollbars">Dostosuj rozmiar i ich zachowanie</string>
     <string name="pref_category_subscriptions">Subskrypcje</string>
     <string name="pref_summary_subscriptions">Aktywuj lub anuluj subskrypcje</string>
     <string name="pref_title_hide_status_bar">Ukryj pasek stanu</string>
@@ -302,7 +302,7 @@
     <string name="pref_title_sponsorship_github">Wspieraj nas poprzez GitHub</string>
     <string name="pref_summary_sponsorship_github">Możesz sponsorować naszą pracę na GitHubie, aby ten projekt zakończył się sukcesem.</string>
     <string name="pref_title_sponsorship_five_stars">Recenzja na pięć gwiazdek</string>
-    <string name="pref_summary_sponsorship_five_stars">Danie nam pięciu gwiazdek recenzji w Google Play jest świetnym sposobem na pomoc temu projektowi.</string>
+    <string name="pref_summary_sponsorship_five_stars">Danie nam pięciu gwiazdek w Google Play jest świetnym sposobem na pomoc temu projektowi.</string>
     <string name="pref_title_contribute_translations">Tłumaczenia</string>
     <string name="pref_summary_contribute_translations">Możesz pomóc w tłumaczeniu na swój język w Crowdin.</string>
     <string name="pref_title_contribute_share">Rozpowszechnij</string>
@@ -326,7 +326,7 @@
     <string name="new_tab_position_before">Przed bieżącą kartą</string>
     <string name="new_tab_position_after">Po bieżącej karcie</string>
     <string name="new_tab_position_start">Na początku listy kart</string>
-    <string name="new_tab_position_end">Koniec listy kart</string>
+    <string name="new_tab_position_end">Na końcu listy kart</string>
     <string name="text_encoding">Kodowanie tekstu</string>
     <string name="reset_settings">Wyzeruj ustawienia</string>
     <string name="reset_settings_confirmation">Utracisz wszystkie swoje ustawienia. Czy na pewno chcesz kontynuować?</string>
@@ -348,8 +348,8 @@
     <string name="settings_summary_content_control">Blokowanie reklam i filtrowanie treści</string>
     <string name="settings_summary_content_control_toggle">Aktywuj blokowanie reklam i filtrowanie treści</string>
     <string name="settings_title_tab_bar_orientation">Orientacja paska kart</string>
-    <string name="settings_summary_on_tab_bar_orientation">Pionowo</string>
-    <string name="settings_summary_off_tab_bar_orientation">Poziomo</string>
+    <string name="settings_summary_on_tab_bar_orientation">Pionowa</string>
+    <string name="settings_summary_off_tab_bar_orientation">Pozioma</string>
     <string name="settings_title_tab_bar_placement">Położenie paska kart</string>
     <string name="settings_summary_on_tab_bar_placement">Wysuwany panel</string>
     <string name="settings_summary_off_tab_bar_placement">Zawsze na ekranie</string>
@@ -430,7 +430,7 @@
     <string name="action_restore_all_tabs">Przywróć wszystkie karty</string>
     <string name="action_restore_tab">Przywróć kartę</string>
     <string name="settings_title_domains">Domeny</string>
-    <string name="settings_summary_domains">Zarządzaj ustawieniami domeny</string>
+    <string name="settings_summary_domains">Zarządzaj ustawieniami domen</string>
     <string name="settings_title_resource_domains">Domeny zasobowe</string>
     <string name="settings_title_override">Nadpisz</string>
     <string name="settings_summary_on_override">Nadpisz ustawienia nadrzędne</string>
@@ -441,12 +441,12 @@
     <string name="settings_summary_off_category">Domena zasobowa</string>
     <string name="action_domain_settings">Domena</string>
     <string name="settings_title_domains_delete_all">Usuń wszystko</string>
-    <string name="settings_summary_domains_delete_all">Usuń wszystkie ustawienia domeny</string>
-    <string name="question_delete_all_domain_settings">Usunąć wszystkie ustawienia domeny?</string>
+    <string name="settings_summary_domains_delete_all">Usuń wszystkie ustawienia domen</string>
+    <string name="question_delete_all_domain_settings">Usunąć wszystkie ustawienia domen?</string>
     <string name="settings_title_delete_domain_settings">Usuń ustawienia domeny</string>
-    <string name="settings_summary_delete_domain_settings">Zostanie ponownie utworzony przy napotkaniu tej domeny</string>
+    <string name="settings_summary_delete_domain_settings">Zostaną ponownie utworzone przy napotkaniu tej domeny</string>
     <string name="settings_title_parent">Nadrzędne</string>
-    <string name="settings_summary_default_domain_settings">Domyślne ustawienia domeny</string>
+    <string name="settings_summary_default_domain_settings">Domyślne ustawienia domen</string>
     <string name="settings_title_ssl_error">Błąd bezpieczeństwa</string>
     <string name="settings_summary_ssl_error">Co zrobić, gdy wykryty został błąd SSL</string>
     <string name="checkbox_remember_domain_choice">Zapamiętaj swój wybór dla tej domeny</string>
@@ -513,7 +513,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="button_dismiss">Odrzuć</string>
     <!-- Find in page -->
     <string name="no_match_found">Nic nie znaleziono!</string>
-    <string name="match_x_of_n">Dopasuj <xliff:g id="current_match" example="1">%1$d</xliff:g> do <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="match_x_of_n">Znaleziono <xliff:g id="current_match" example="1">%1$d</xliff:g> z <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Pokaż snackbar</string>
     <string name="pref_title_show_animation">Pokaż animację</string>
     <string name="pref_title_vibrate">Wibracje</string>
