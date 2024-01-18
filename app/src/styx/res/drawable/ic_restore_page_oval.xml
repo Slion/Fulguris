@@ -14,5 +14,5 @@
         android:right="6dp"
         android:top="6dp"
         android:bottom="6dp"
-        android:drawable="@drawable/ic_restore_page" />
+        android:drawable="@drawable/ic_restore_from_trash" />
 </layer-list>

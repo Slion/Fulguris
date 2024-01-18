@@ -48,7 +48,7 @@
             android:contentDescription="@string/action_restore_all_tabs"
             app:tooltipText="@{@string/action_restore_all_tabs}"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_restore_from_trash"
+            app:srcCompat="@drawable/ic_recycling"
             android:onClick="@{(view) -> uiController.executeAction(view.id)}" />
 
         <ImageButton
