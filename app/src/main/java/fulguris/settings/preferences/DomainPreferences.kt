@@ -66,7 +66,7 @@ class DomainPreferences constructor(
         try {
             "http://$domain".toHttpUrl().topPrivateDomain()
         } catch (ex: Exception) {
-            Timber.d("Malformed domain", ex)
+            Timber.w(ex,"Malformed domain")
             // Fallback to default settings then
             null
         }
