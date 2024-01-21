@@ -108,6 +108,13 @@ The ability of this project to finance itself is what will ultimately determine 
 * `CAMERA`: needed to support WebRTC, requires "WebRTC Support" option to be enabled (default disabled).
 * `MODIFY_AUDIO_SETTINGS`: needed to support WebRTC, requires "WebRTC Support" option to be enabled (default disabled).
 
+# Tools
+
+Here are some of the tools we use to develop Fulguris:
+
+* [Android Studio]
+* [SVG path editor]: Most useful to quickly modify icons
+* [Affinity Designer]: Vector graphics
 
 
 [slions.net]: https://slions.net/resources/fulguris.10/
@@ -117,3 +124,6 @@ The ability of this project to finance itself is what will ultimately determine 
 [Discord]: https://discord.com/invite/7M4Ms5dMZE
 [Web browser]: https://en.wikipedia.org/wiki/Web_browser
 [Firebase]: https://firebase.google.com
+[SVG path editor]: https://yqnn.github.io/svg-path-editor/
+[Android Studio]: https://developer.android.com/studio
+[Affinity Designer]: https://affinity.serif.com/en-us/designer/
