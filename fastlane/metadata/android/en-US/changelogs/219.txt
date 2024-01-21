@@ -1,0 +1,9 @@
+🪲 Fix cookies deletion
+🪲 Fix crash when asked to load resource with malformed URL
+🪵 Do not obfuscate code for better error logs
+
+Translations update:
+
+🇵🇱 Polish
+🇮🇳 Santali
+
