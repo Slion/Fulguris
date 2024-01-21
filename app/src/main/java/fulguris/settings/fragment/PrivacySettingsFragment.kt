@@ -153,11 +153,12 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
             title = R.string.title_clear_cookies,
             message = R.string.dialog_cookies,
             positiveButton = DialogItem(title = R.string.action_yes) {
-                clearCookies()
-                    .subscribeOn(databaseScheduler)
-                    .observeOn(mainScheduler)
-                    .subscribe {
-                        (activity as Activity).snackbar(R.string.message_cookies_cleared)
+                WebUtils.clearCookies {
+                        if (it) {
+                            (activity as Activity).snackbar(R.string.message_cookies_cleared)
+                        } else {
+                            (activity as Activity).snackbar(R.string.message_cookies_clear_error)
+                        }
                     }
             },
             negativeButton = DialogItem(title = R.string.action_no) {},
@@ -180,15 +181,6 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
             WebUtils.clearHistory(activity, historyRepository, databaseScheduler)
         } else {
             throw RuntimeException("Activity was null in clearHistory")
-        }
-    }
-
-    private fun clearCookies(): Completable = Completable.fromAction {
-        val activity = activity
-        if (activity != null) {
-            WebUtils.clearCookies()
-        } else {
-            throw RuntimeException("Activity was null in clearCookies")
         }
     }
 

@@ -117,6 +117,7 @@
     <string name="message_import">Bookmarks were imported</string>
     <string name="message_clear_history">History cleared</string>
     <string name="message_cookies_cleared">Cookies cleared</string>
+    <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">Max tabs reached. Unlock more by purchasing a subscription.</string>
     <string name="message_text_copied">Text copied to clipboard</string>
     <string name="message_link_copied">Link copied to clipboard</string>
