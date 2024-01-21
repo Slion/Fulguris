@@ -3,7 +3,7 @@
     <string name="action_reload">ᱫᱩᱦᱲᱟᱹ ᱞᱟᱫᱮ</string>
     <string name="action_menu">ᱰᱷᱮᱨ</string>
     <string name="action_new_tab">ᱱᱟᱶᱟ ᱴᱮᱵᱽ</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">ᱴᱮᱵᱽ ᱰᱩᱯᱞᱤᱠᱮᱴ ᱢᱮ</string>
     <string name="action_share">ᱦᱟᱹᱴᱤᱧ</string>
     <string name="action_history">ᱦᱤᱛᱟᱞ</string>
     <string name="action_bookmarks">ᱵᱩᱠᱢᱟᱨᱠ ᱠᱚ</string>
@@ -20,7 +20,7 @@
     <string name="options">ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
     <string name="location">ᱡᱟᱭᱜᱟ ᱟᱫᱮᱨ</string>
     <string name="password">ᱟᱢᱟᱜ ᱫᱚᱱᱟᱝᱥᱟᱵᱟᱫᱠᱚ ᱥᱟᱧᱪᱟᱣ ᱢᱮ</string>
-    <string name="agent">User agent</string>
+    <string name="agent">ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱮᱡᱮᱱᱴ</string>
     <string name="home">Homepage</string>
     <string name="download">Download location</string>
     <string name="settings_advanced">Advanced</string>

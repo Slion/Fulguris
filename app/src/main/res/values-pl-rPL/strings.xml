@@ -68,7 +68,7 @@
     <string name="title_user_agent">Przedstawiaj się jako</string>
     <string name="title_download_location">Miejsce zapisu pobieranych plików</string>
     <string name="title_custom_homepage">Adres strony głównej</string>
-    <string name="action_webpage">Strona WWW</string>
+    <string name="action_webpage">Strona</string>
     <string name="action_main_menu">Menu główne</string>
     <string name="title_clear_history">Wyczyść historię</string>
     <string name="title_clear_cookies">Wyczyść pliki cookie</string>
@@ -255,7 +255,7 @@
     <string name="settings_summary_privacy_policy">Zobacz naszą politykę prywatności online</string>
     <string name="settings_title_terms_and_conditions">Zasady &amp; Warunki</string>
     <string name="settings_summary_terms_and_conditions">Zobacz nasze zasady i warunki online</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_summary_discord">Dołącz do naszej rosnącej społeczności</string>
     <string name="pref_category_panels">Panele</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Pozioma</string>
