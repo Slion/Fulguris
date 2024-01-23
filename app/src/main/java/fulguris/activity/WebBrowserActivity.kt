@@ -5,49 +5,6 @@
 
 package fulguris.activity
 
-import fulguris.*
-import fulguris.BuildConfig
-import fulguris.R
-import fulguris.adblock.AbpUserRules
-import fulguris.browser.*
-import fulguris.utils.StyleRemovingTextWatcher
-import fulguris.browser.bookmarks.BookmarksDrawerView
-import fulguris.browser.cleanup.ExitCleanup
-import fulguris.browser.sessions.SessionsPopupWindow
-import fulguris.browser.tabs.TabsDesktopView
-import fulguris.browser.tabs.TabsDrawerView
-import fulguris.database.Bookmark
-import fulguris.database.HistoryEntry
-import fulguris.database.SearchSuggestion
-import fulguris.database.WebPage
-import fulguris.database.bookmark.BookmarkRepository
-import fulguris.database.history.HistoryRepository
-import fulguris.databinding.ActivityMainBinding
-import fulguris.databinding.ToolbarContentBinding
-import fulguris.di.*
-import fulguris.dialog.BrowserDialog
-import fulguris.dialog.DialogItem
-import fulguris.dialog.LightningDialogBuilder
-import fulguris.extensions.*
-import fulguris.html.bookmark.BookmarkPageFactory
-import fulguris.html.history.HistoryPageFactory
-import fulguris.html.homepage.HomePageFactory
-import fulguris.html.incognito.IncognitoPageFactory
-import fulguris.locale.LocaleUtils
-import fulguris.notifications.IncognitoNotification
-import fulguris.search.SearchEngineProvider
-import fulguris.search.SuggestionsAdapter
-import fulguris.settings.NewTabPosition
-import fulguris.settings.fragment.BottomSheetDialogFragment
-import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
-import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
-import fulguris.settings.fragment.SponsorshipSettingsFragment
-import fulguris.ssl.SslState
-import fulguris.ssl.createSslDrawableForState
-import fulguris.ssl.showSslDialog
-import fulguris.utils.*
-import fulguris.view.*
-import fulguris.view.SearchView
 import android.animation.*
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -71,6 +28,7 @@ import android.os.*
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.view.View.*
 import android.view.ViewGroup.LayoutParams
@@ -113,73 +71,50 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import fulguris.app
-import fulguris.browser.MenuMain
-import fulguris.browser.MenuWebPage
-import fulguris.browser.RecentTabsModel
-import fulguris.browser.TabModelFromBundle
-import fulguris.browser.TabsManager
-import fulguris.browser.TabsView
-import fulguris.browser.WebBrowser
-import fulguris.di.DatabaseScheduler
-import fulguris.di.DiskScheduler
-import fulguris.di.MainHandler
-import fulguris.di.MainScheduler
-import fulguris.di.PrefsLandscape
-import fulguris.di.PrefsPortrait
-import fulguris.di.configPrefs
+import fulguris.*
+import fulguris.BuildConfig
+import fulguris.R
+import fulguris.adblock.AbpUserRules
+import fulguris.browser.*
+import fulguris.browser.bookmarks.BookmarksDrawerView
+import fulguris.browser.cleanup.ExitCleanup
+import fulguris.browser.sessions.SessionsPopupWindow
+import fulguris.browser.tabs.TabsDesktopView
+import fulguris.browser.tabs.TabsDrawerView
+import fulguris.database.Bookmark
+import fulguris.database.HistoryEntry
+import fulguris.database.SearchSuggestion
+import fulguris.database.WebPage
+import fulguris.database.bookmark.BookmarkRepository
+import fulguris.database.history.HistoryRepository
+import fulguris.databinding.ActivityMainBinding
+import fulguris.databinding.ToolbarContentBinding
+import fulguris.di.*
+import fulguris.dialog.BrowserDialog
+import fulguris.dialog.DialogItem
+import fulguris.dialog.LightningDialogBuilder
 import fulguris.enums.HeaderInfo
-import fulguris.extensions.canScrollVertically
-import fulguris.extensions.copyToClipboard
-import fulguris.extensions.dimen
-import fulguris.extensions.doOnLayout
-import fulguris.extensions.drawable
-import fulguris.extensions.drawableForState
-import fulguris.extensions.isDarkTheme
-import fulguris.extensions.isLandscape
-import fulguris.extensions.isPortrait
-import fulguris.extensions.isVirtualKeyboardVisible
-import fulguris.extensions.makeSnackbar
-import fulguris.extensions.onFocusLost
-import fulguris.extensions.onSizeChange
-import fulguris.extensions.onceOnScrollStateIdle
-import fulguris.extensions.px
-import fulguris.extensions.removeFromParent
-import fulguris.extensions.resetTarget
+import fulguris.extensions.*
 import fulguris.extensions.resizeAndShow
-import fulguris.extensions.setGravityBottom
-import fulguris.extensions.setGravityTop
-import fulguris.extensions.setStatusBarIconsColor
-import fulguris.extensions.simulateTap
 import fulguris.extensions.snackbar
-import fulguris.extensions.tint
-import fulguris.extensions.toast
-import fulguris.utils.QUERY_PLACE_HOLDER
-import fulguris.utils.ThemeUtils
-import fulguris.utils.WebUtils
-import fulguris.utils.adjustBottomSheet
-import fulguris.utils.foregroundColorFromBackgroundColor
-import fulguris.utils.isBookmarkUri
-import fulguris.utils.isBookmarkUrl
-import fulguris.utils.isDownloadsUrl
-import fulguris.utils.isHistoryUri
-import fulguris.utils.isHomeUri
-import fulguris.utils.isIncognitoUri
-import fulguris.utils.isSpecialUrl
-import fulguris.utils.smartUrlFilter
-import fulguris.view.BookmarkPageInitializer
-import fulguris.view.CodeView
-import fulguris.view.DownloadPageInitializer
-import fulguris.view.FreezableBundleInitializer
-import fulguris.view.HistoryPageInitializer
-import fulguris.view.HomePageInitializer
-import fulguris.view.IncognitoPageInitializer
-import fulguris.view.NoOpInitializer
-import fulguris.view.PullRefreshLayout
-import fulguris.view.ResultMessageInitializer
-import fulguris.view.UrlInitializer
-import fulguris.view.WebPageTab
-import fulguris.view.WebViewEx
+import fulguris.html.bookmark.BookmarkPageFactory
+import fulguris.html.history.HistoryPageFactory
+import fulguris.html.homepage.HomePageFactory
+import fulguris.html.incognito.IncognitoPageFactory
+import fulguris.notifications.IncognitoNotification
+import fulguris.search.SearchEngineProvider
+import fulguris.search.SuggestionsAdapter
+import fulguris.settings.NewTabPosition
+import fulguris.settings.fragment.BottomSheetDialogFragment
+import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
+import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
+import fulguris.settings.fragment.SponsorshipSettingsFragment
+import fulguris.ssl.SslState
+import fulguris.ssl.createSslDrawableForState
+import fulguris.ssl.showSslDialog
+import fulguris.utils.*
+import fulguris.view.*
+import fulguris.view.SearchView
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
@@ -2900,17 +2835,17 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                     .setDuration(iTabAnimationDuration)
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
-                            it.scaleX = 1f
-                            it.scaleY = 1f
-                            iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                post {
-                                    removeFromParent()
+                            //Timber.d(Log.getStackTraceString(Exception()))
+                            aTab.post {
+                                it.scaleX = 1f
+                                it.scaleY = 1f
+                                iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                     removeFromParent()
+                                     //destroyIfNeeded()
                                 }
-
-                                //destroyIfNeeded()
+                                //
+                                iTabAnimator = null;
                             }
-                            //
-                            iTabAnimator = null;
                         }
                     })
         }
@@ -2928,18 +2863,24 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                     .setDuration(iTabAnimationDuration)
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
-                            // Time to swap our frames
-                            swapTabViewsFrontToBack()
-                            // Now do the clean-up
-                            iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                removeFromParent()
-                                destroyIfNeeded()
+                            //Timber.d(Log.getStackTraceString(Exception()))
+
+                            aTab.post {
+                                // Time to swap our frames
+                                swapTabViewsFrontToBack()
+
+                                // Now do the clean-up
+                                iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
+                                    removeFromParent()
+                                    destroyIfNeeded()
+                                }
+
+                                // Reset our properties
+                                it.scaleX = 1.0f
+                                it.scaleY = 1.0f
+                                //
+                                iTabAnimator = null;
                             }
-                            // Reset our properties
-                            it.scaleX = 1.0f
-                            it.scaleY = 1.0f
-                            //
-                            iTabAnimator = null;
                         }
                     })
         }
@@ -2961,19 +2902,22 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                         .setDuration(iTabAnimationDuration)
                         .setListener(object : AnimatorListenerAdapter() {
                             override fun onAnimationEnd(animation: Animator) {
-                            // Put outgoing frame in the back
-                            swapTabViewsFrontToBack()
-                                // Animation is complete unhook that tab then
-                            it.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                post {
-                                    removeFromParent()
+                                //Timber.d(Log.getStackTraceString(Exception()))
+
+                                aTab.post {
+                                    // Put outgoing frame in the back
+                                    swapTabViewsFrontToBack()
+                                        // Animation is complete unhook that tab then
+                                    it.findViewById<WebViewEx>(R.id.web_view)?.apply {
+                                        removeFromParent()
+                                        //destroyIfNeeded()
+                                    }
+
+                                    // Reset our properties
+                                    it.translationX = 0f
+                                    //
+                                    iTabAnimator = null
                                 }
-                                //destroyIfNeeded()
-                            }
-                            // Reset our properties
-                            it.translationX = 0f
-                            //
-                            iTabAnimator = null;
                             }
                         })
         }
@@ -2994,19 +2938,21 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                     .setDuration(iTabAnimationDuration)
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
-                            // Put outgoing frame in the back
-                            swapTabViewsFrontToBack()
-                            // Animation is complete unhook that tab then
-                            it.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                post {
+                            //Timber.d(Log.getStackTraceString(Exception()))
+                            aTab.post{
+                                // Put outgoing frame in the back
+                                swapTabViewsFrontToBack()
+                                // Animation is complete unhook that tab then
+                                it.findViewById<WebViewEx>(R.id.web_view)?.apply{
                                     removeFromParent()
+                                    //destroyIfNeeded()
                                 }
-                                //destroyIfNeeded()
+
+                                // Reset our properties
+                                it.translationX = 0f
+                                //
+                                iTabAnimator = null;
                             }
-                            // Reset our properties
-                            it.translationX = 0f
-                            //
-                            iTabAnimator = null;
                         }
                     })
         }
