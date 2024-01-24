@@ -1,0 +1,1 @@
+🪲 Fix tab animation crash when mouse hovers web page
