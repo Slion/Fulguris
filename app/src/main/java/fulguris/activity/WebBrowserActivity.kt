@@ -28,7 +28,6 @@ import android.os.*
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import android.view.View.*
 import android.view.ViewGroup.LayoutParams
@@ -264,6 +263,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         //showCloseDialog(tabsManager.positionOf(tabsManager.currentTab))
     }
 
+    // We had to use that to avoid crashes when using tab animations
+    private var iPlaceHolder: Space? = null
+
     /**
      * Determines if the current browser instance is in incognito mode or not.
      */
@@ -296,6 +298,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         lifecycle.addObserver(tabsManager)
         //
         createKeyboardShortcuts()
+
+       iPlaceHolder = Space(this).apply{ isVisible = false}
 
         if (app.justStarted) {
             app.justStarted = false
@@ -2759,6 +2763,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         } else {
             // Prepare our back view container then
             iTabViewContainerBack.resetTarget() // Needed to make it work together with swipe to refresh
+            // Remove place holder
+            iTabViewContainerBack.removeAllViews()
             // Same as above, make sure you specify layout params when adding you web view
             iTabViewContainerBack.addView(aView, MATCH_PARENT)
             aView.requestFocus()
@@ -2840,7 +2846,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                                 it.scaleX = 1f
                                 it.scaleY = 1f
                                 iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                     removeFromParent()
+                                     removeFromParent()?.addView(iPlaceHolder)
                                      //destroyIfNeeded()
                                 }
                                 //
@@ -2871,7 +2877,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
                                 // Now do the clean-up
                                 iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                    removeFromParent()
+                                    removeFromParent()?.addView(iPlaceHolder)
                                     destroyIfNeeded()
                                 }
 
@@ -2909,7 +2915,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                                     swapTabViewsFrontToBack()
                                         // Animation is complete unhook that tab then
                                     it.findViewById<WebViewEx>(R.id.web_view)?.apply {
-                                        removeFromParent()
+                                        removeFromParent()?.addView(iPlaceHolder)
                                         //destroyIfNeeded()
                                     }
 
@@ -2944,7 +2950,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                                 swapTabViewsFrontToBack()
                                 // Animation is complete unhook that tab then
                                 it.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                    removeFromParent()
+                                    removeFromParent()?.addView(iPlaceHolder)
                                     //destroyIfNeeded()
                                 }
 
@@ -3329,6 +3335,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     override fun onDestroy() {
         Timber.d("onDestroy")
+
+        // Break cycling references that would trip GC
+        // Must be needed since View holds a reference to this as a context
+        // Though I'm pretty sure this activity is locked in some other ways, probably a lost cause at this stage...
+        iPlaceHolder = null
 
         // Defensive, should not even be needed
         portraitSharedPrefs.unregisterOnSharedPreferenceChangeListener(portraitPrefsListener)
