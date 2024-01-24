@@ -28,10 +28,10 @@ import android.os.*
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import android.view.View.*
 import android.view.ViewGroup.LayoutParams
+import android.view.accessibility.AccessibilityManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.CookieManager
@@ -264,6 +264,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         //showCloseDialog(tabsManager.positionOf(tabsManager.currentTab))
     }
 
+    // We had to use that to avoid crashes when using tab animations
+    private lateinit var iPlaceHolder: Space
+
     /**
      * Determines if the current browser instance is in incognito mode or not.
      */
@@ -296,6 +299,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         lifecycle.addObserver(tabsManager)
         //
         createKeyboardShortcuts()
+
+       iPlaceHolder = Space(this).apply{ isVisible = false}
 
         if (app.justStarted) {
             app.justStarted = false
@@ -2759,6 +2764,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         } else {
             // Prepare our back view container then
             iTabViewContainerBack.resetTarget() // Needed to make it work together with swipe to refresh
+            // Remove place holder
+            iTabViewContainerBack.removeAllViews()
             // Same as above, make sure you specify layout params when adding you web view
             iTabViewContainerBack.addView(aView, MATCH_PARENT)
             aView.requestFocus()
@@ -2840,7 +2847,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                                 it.scaleX = 1f
                                 it.scaleY = 1f
                                 iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                     removeFromParent()
+                                     removeFromParent()?.addView(iPlaceHolder)
                                      //destroyIfNeeded()
                                 }
                                 //
@@ -2871,7 +2878,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
                                 // Now do the clean-up
                                 iTabViewContainerBack.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                    removeFromParent()
+                                    removeFromParent()?.addView(iPlaceHolder)
                                     destroyIfNeeded()
                                 }
 
@@ -2909,7 +2916,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                                     swapTabViewsFrontToBack()
                                         // Animation is complete unhook that tab then
                                     it.findViewById<WebViewEx>(R.id.web_view)?.apply {
-                                        removeFromParent()
+                                        removeFromParent()?.addView(iPlaceHolder)
                                         //destroyIfNeeded()
                                     }
 
@@ -2944,7 +2951,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                                 swapTabViewsFrontToBack()
                                 // Animation is complete unhook that tab then
                                 it.findViewById<WebViewEx>(R.id.web_view)?.apply{
-                                    removeFromParent()
+                                    removeFromParent()?.addView(iPlaceHolder)
                                     //destroyIfNeeded()
                                 }
 
@@ -4652,6 +4659,23 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     override fun dispatchTouchEvent(anEvent: MotionEvent?): Boolean {
 
+        if (iTabAnimator!=null) {
+
+            val action = anEvent?.actionMasked
+
+            if (action == MotionEvent.ACTION_HOVER_ENTER
+                || action == MotionEvent.ACTION_HOVER_MOVE
+                || action == MotionEvent.ACTION_HOVER_EXIT)
+            {
+                anEvent.action = MotionEvent.ACTION_CANCEL
+            }
+
+
+            //val manager: AccessibilityManager = AccessibilityManager.getInstance(mContext)
+            //manager.isEnabled = false
+            //return false
+        }
+
         when (anEvent?.action) {
             MotionEvent.ACTION_UP -> {
                 iLastTouchUpPosition.x = anEvent.x.toInt()
@@ -4661,6 +4685,23 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
         return super.dispatchTouchEvent(anEvent)
     }
+
+    /**
+     *
+     */
+    override fun dispatchGenericMotionEvent(ev: MotionEvent?): Boolean {
+
+        if (iTabAnimator!=null) {
+            return false
+        }
+
+        return super.dispatchGenericMotionEvent(ev)
+    }
+
+    /**
+     *
+     */
+    //override fun dis
 
     /**
      * Implement [WebBrowser.onMaxTabReached]

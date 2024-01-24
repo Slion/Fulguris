@@ -24,6 +24,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <fulguris.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <!-- Don't put a background here as it breaks our status bar color -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
@@ -168,8 +172,8 @@
         </androidx.drawerlayout.widget.DrawerLayout>
 
 
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </fulguris.widget.LinearLayout>
 </layout>
