@@ -2761,10 +2761,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             iTabViewContainerFront.resetTarget() // Needed to make it work together with swipe to refresh
             aView.requestFocus()
         } else {
+            // Remove place holder
+            iPlaceHolder?.removeFromParent()
             // Prepare our back view container then
             iTabViewContainerBack.resetTarget() // Needed to make it work together with swipe to refresh
-            // Remove place holder
-            iTabViewContainerBack.removeAllViews()
             // Same as above, make sure you specify layout params when adding you web view
             iTabViewContainerBack.addView(aView, MATCH_PARENT)
             aView.requestFocus()
