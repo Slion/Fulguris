@@ -22,6 +22,7 @@
 
 package fulguris.preference
 
+import android.annotation.SuppressLint
 import fulguris.R
 import fulguris.extensions.px
 import android.content.Context
@@ -144,10 +145,12 @@ class SliderPreference @JvmOverloads constructor(context: Context, attrs: Attrib
             }
         }
 
+        @SuppressLint("RestrictedApi")
         override fun onStartTrackingTouch(aSlider: Slider) {
             mTrackingTouch = true
         }
 
+        @SuppressLint("RestrictedApi")
         override fun onStopTrackingTouch(aSlider: Slider) {
             mTrackingTouch = false
             //TODO: review logic there
