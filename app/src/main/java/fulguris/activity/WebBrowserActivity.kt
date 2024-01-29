@@ -40,6 +40,8 @@ import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
 import android.webkit.WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
@@ -206,7 +208,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     @Inject lateinit var bookmarkPageInitializer: BookmarkPageInitializer
     @Inject @field:MainHandler
     lateinit var mainHandler: Handler
-    @Inject lateinit var proxyUtils: fulguris.utils.ProxyUtils
+    @Inject lateinit var proxyUtils: ProxyUtils
     @Inject lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject lateinit var exitCleanup: ExitCleanup
     @Inject lateinit var abpUserRules: AbpUserRules
@@ -2200,7 +2202,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                         && currentView.url.isNotBlank()
                         && !currentView.url.isSpecialUrl()) {
                     HistoryEntry(currentView.url, currentView.title).also {
-                        fulguris.utils.Utils.createShortcut(this, it, currentView.favicon)
+                        Utils.createShortcut(this, it, currentView.favicon)
                         Timber.d("Creating shortcut: ${it.title} ${it.url}")
                     }
                 }
@@ -2235,7 +2237,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 return true
             }
             R.id.action_share -> {
-                fulguris.utils.IntentUtils(this).shareUrl(currentUrl, currentView?.title)
+                IntentUtils(this).shareUrl(currentUrl, currentView?.title)
                 return true
             }
             R.id.action_bookmarks -> {
@@ -3540,7 +3542,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         currentToolBarTextColor = foregroundColorFromBackgroundColor(color)
         // Change search view text color
         searchView.setTextColor(currentToolBarTextColor)
-        searchView.setHintTextColor(fulguris.utils.DrawableUtils.mixColor(0.5f, currentToolBarTextColor, color))
+        searchView.setHintTextColor(DrawableUtils.mixColor(0.5f, currentToolBarTextColor, color))
         // Change tab counter color
         iBindingToolbarContent.tabsButton.apply {
             textColor = currentToolBarTextColor
@@ -3609,7 +3611,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         setSearchBarColors(color)
 
         // Progress bar background color
-        fulguris.utils.DrawableUtils.mixColor(0.5f, color, Color.WHITE).let {
+        DrawableUtils.mixColor(0.5f, color, Color.WHITE).let {
             // Set progress bar background color making sure it isn't too bright
             // That's notably making it more visible on lequipe.fr and bbc.com/sport
             // We hope this is going to work with most white themed website too
@@ -3778,8 +3780,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
             return when (aInfo) {
                 HeaderInfo.Url -> tab.url
-                HeaderInfo.ShortUrl -> fulguris.utils.Utils.trimmedProtocolFromURL(tab.url)
-                HeaderInfo.Domain -> fulguris.utils.Utils.getDisplayDomainName(tab.url)
+                HeaderInfo.ShortUrl -> Utils.trimmedProtocolFromURL(tab.url)
+                HeaderInfo.Domain -> Utils.getDisplayDomainName(tab.url)
                 HeaderInfo.Title -> tab.title.ifBlank { getString(R.string.untitled) }
                 HeaderInfo.Session -> tabsManager.iCurrentSessionName
                 HeaderInfo.AppName -> getString(R.string.app_name)
@@ -3879,7 +3881,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * Display downloads folder one way or another
      */
     private fun openDownloads() {
-        startActivity(fulguris.utils.Utils.getIntentForDownloads(this, userPreferences.downloadDirectory))
+        startActivity(Utils.getIntentForDownloads(this, userPreferences.downloadDirectory))
         // Our built-in downloads list did not display downloaded items properly
         // Not sure why, consider fixing it or just removing it altogether at some point
         //tabsManager.newTab(downloadPageInitializer,true)
@@ -4128,7 +4130,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 putExtra("PhotoPath", cameraPhotoPath)
                 putExtra(
                         MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(fulguris.utils.Utils.createImageFile().also { file ->
+                        Uri.fromFile(Utils.createImageFile().also { file ->
                             cameraPhotoPath = "file:${file.absolutePath}"
                         })
                 )

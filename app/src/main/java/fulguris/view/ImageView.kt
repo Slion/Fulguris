@@ -20,7 +20,7 @@
  * All Rights Reserved.
  */
 
-package fulguris.widget
+package fulguris.view
 
 import android.content.Context
 import android.graphics.Canvas

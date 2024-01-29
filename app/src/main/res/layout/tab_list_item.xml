@@ -30,7 +30,7 @@ android:focusableInTouchMode="true"
             android:layout_marginHorizontal="@dimen/material_grid_margin"
             android:weightSum="1">
 
-            <fulguris.widget.ImageView
+            <fulguris.view.ImageView
                 android:id="@+id/faviconTab"
                 android:layout_width="@dimen/material_grid_small_icon"
                 android:layout_height="@dimen/material_grid_small_icon"
@@ -56,7 +56,7 @@ android:focusableInTouchMode="true"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 tools:text="My web page title is too long to fit in here much too long"/>
 
-            <fulguris.widget.ImageView
+            <fulguris.view.ImageView
                 android:id="@+id/deleteAction"
                 android:layout_width="@dimen/material_grid_touch_medium"
                 android:layout_height="match_parent"

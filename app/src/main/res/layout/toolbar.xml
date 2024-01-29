@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <fulguris.widget.LinearLayout
+        <fulguris.view.LinearLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"

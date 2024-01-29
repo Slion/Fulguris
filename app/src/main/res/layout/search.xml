@@ -48,7 +48,7 @@
         android:focusable="true"
         >
 
-        <fulguris.widget.ImageView
+        <fulguris.view.ImageView
             android:id="@+id/search_ssl_status"
             android:layout_width="@dimen/material_grid_touch_small"
             android:layout_height="match_parent"

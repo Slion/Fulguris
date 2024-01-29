@@ -1,4 +1,4 @@
-package fulguris.widget
+package fulguris.view
 
 import android.content.Context
 import android.util.AttributeSet
