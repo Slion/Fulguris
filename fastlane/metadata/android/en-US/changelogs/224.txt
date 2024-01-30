@@ -1,0 +1,1 @@
+🪲 Fix crash on start-up when trying to scroll to current tab
