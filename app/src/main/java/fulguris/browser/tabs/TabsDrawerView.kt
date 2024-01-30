@@ -118,7 +118,7 @@ class TabsDrawerView @JvmOverloads constructor(
         if (fixScrollBug(iBinding.tabsList)) {
             // Scroll bug was fixed trigger a scroll to current item then
             (context as WebBrowserActivity).apply {
-                mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
+                mainHandler.postDelayed({ tryScrollToCurrentTab() }, 0)
             }
         }
     }

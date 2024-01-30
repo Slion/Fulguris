@@ -442,7 +442,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             setupToolBar()
             setupPullToRefresh(aConfig)
             // For embedded tab bars modes
-            scrollToCurrentTab()
+            tryScrollToCurrentTab()
 
             iBinding.drawerLayout.requestLayout()
         },500);
@@ -536,7 +536,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // See: https://github.com/material-components/material-components-android/issues/2168
         tabsDialog = createBottomSheetDialog(tabsView as View)
         // Once our bottom sheet is open we want it to scroll to current tab
-        tabsDialog.setOnShowListener { scrollToCurrentTab() }
+        tabsDialog.setOnShowListener { tryScrollToCurrentTab() }
         /*
         tabsDialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -2486,7 +2486,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // Tab bar style changed recreate our tab bar then
             createTabsView(configuration)
             tabsView?.tabsInitialized()
-            mainHandler.postDelayed({ scrollToCurrentTab() }, 1000)
+            mainHandler.postDelayed({ tryScrollToCurrentTab() }, 1000)
             return true
         }
 
@@ -2807,7 +2807,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
         showActionBar()
         // Make sure current tab is visible in tab list
-        scrollToCurrentTab()
+        tryScrollToCurrentTab()
         //mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
 
         // Current tab was already set by the time we get here
@@ -3980,7 +3980,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             iBinding.drawerLayout.openDrawer(getTabDrawer())
             //iBinding.drawerLayout.onceOnDrawerOpened {
             // Looks like we can do that without delays for drawers
-            scrollToCurrentTab()
+            tryScrollToCurrentTab()
             //}
 
         }
@@ -3988,13 +3988,26 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     * Scroll to current tab.
+     * Try to scroll to current tab and ignore any failure as this is not a critical operation.
+     * We did that to workaround an issue where somehow our tab list is messed up I'm guessing.
+     * I had that crash on start-up and could not use the app anymore, I would have had to reset all data if it was not for that fix.
      */
-    fun scrollToCurrentTab() {
+    fun tryScrollToCurrentTab() {
+        try {
+            scrollToCurrentTab()
+        } catch (ex: Exception) {
+            Timber.w(ex,"scrollToCurrentTab exception")
+        }
+    }
 
+    /**
+     * Never call that function direction.
+     * Just call [tryScrollToCurrentTab] instead.
+     */
+    private fun scrollToCurrentTab() {
         /*if (userPreferences.useBottomSheets && tabsView is TabsDrawerView && !(tabsDialog.isShowing && tabsDialog.behavior.state == BottomSheetBehavior.STATE_EXPANDED)) {
-            return
-        }*/
+       return
+   }*/
 
         val tabListView = (tabsView as ViewGroup).findViewById<RecyclerView>(R.id.tabs_list)
         // Set focus
