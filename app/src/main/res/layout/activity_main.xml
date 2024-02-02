@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="fulguris.activity.WebBrowserActivity"
+
         android:animateLayoutChanges="true"
         android:fitsSystemWindows="true">
 
@@ -147,7 +148,16 @@
                 android:fitsSystemWindows="true"
                 android:weightSum="1"
                 android:layout_marginLeft="-64dp"
-                android:clickable="true" />
+                android:clickable="true" >
+
+                <!--  We added the content for cutout support to be able to set margins conveniently -->
+                <FrameLayout
+                    android:id="@+id/leftDrawerContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/colorBackground" />
+
+            </FrameLayout>
 
             <!--
             - android:clickable="true":
@@ -163,7 +173,17 @@
                 android:fitsSystemWindows="true"
                 android:weightSum="1"
                 android:layout_marginLeft="-64dp"
-                android:clickable="true" />
+                android:clickable="true">
+
+                <!--  We added the content for cutout support to be able to set margins conveniently -->
+                <FrameLayout
+                    android:id="@+id/rightDrawerContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/colorBackground" />
+
+            </FrameLayout>
+
 
         </androidx.drawerlayout.widget.DrawerLayout>
 

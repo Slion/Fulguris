@@ -16,6 +16,8 @@ import android.view.View
 import android.view.Window
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import fulguris.app
@@ -85,6 +87,9 @@ fun Activity.makeSnackbar(message: String, aDuration: Int, aGravity: Int): Snack
  */
 fun Window.setStatusBarIconsColor(dark: Boolean)
 {
+    // That's the new API we should use but we had no joy with it on Honor Magic V2
+    //WindowCompat.getInsetsController(this, decorView).isAppearanceLightNavigationBars = !dark
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         if (dark) {
             decorView.systemUiVisibility = decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR

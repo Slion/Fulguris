@@ -52,8 +52,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.net.toUri
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.customview.widget.ViewDragHelper
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -295,6 +299,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         Timber.v("onCreate")
         // Need to go first to inject our components
         super.onCreate(savedInstanceState)
+        // We want to control our decor
+        WindowCompat.setDecorFitsSystemWindows(window,false)
 
         // Register lifecycle observers
         lifecycle.addObserver(tabsManager)
@@ -311,6 +317,50 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
 
         iBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        // Setup a callback when we need to apply window insets
+        ViewCompat.setOnApplyWindowInsetsListener(iBinding.root) { view, windowInsets ->
+            Timber.d("OnApplyWindowInsetsListener")
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            Timber.d("System insets: $insets")
+            //val imeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
+            val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                // Don't apply vertical margins here as it would break our drawers status bar color
+                // Apply horizontal margin to our root view so that we fill the cutout in on Honor Magic V2
+                leftMargin = insets.left
+                rightMargin = insets.right
+                // Make sure our UI does not get stuck below the IME virtual keyboard
+                // TODO: Do animation synchronization, see:
+                bottomMargin = imeHeight
+            }
+
+            iBinding.uiLayout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                // Apply vertical margins for status and navigation bar to our UI layout
+                // Thus the drawers are still showing below the status bar
+                topMargin = insets.top
+                bottomMargin = insets.bottom
+            }
+
+            iBinding.leftDrawerContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                // Apply vertical margins for status and navigation bar to our drawer content
+                // Thus drawer content does not overlap with system UI
+                topMargin = insets.top
+                bottomMargin = insets.bottom
+            }
+
+            iBinding.rightDrawerContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                // Apply vertical margins for status and navigation bar to our drawer content
+                // Thus drawer content does not overlap with system UI
+                topMargin = insets.top
+                bottomMargin = insets.bottom
+            }
+
+            //windowInsets
+            WindowInsetsCompat.CONSUMED
+        }
+
         iTabViewContainerBack = iBinding.tabViewContainerOne
         iTabViewContainerFront = iBinding.tabViewContainerTwo
 
@@ -1231,7 +1281,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     private fun addTabsViewToParent() {
         val v = (tabsView as View)
-        if (verticalTabBar && userPreferences.useBottomSheets) {
+        // Use bottom sheet if desired unless tab bar is always on screen, vertically or horizontally
+        if (verticalTabBar && tabBarInDrawer && userPreferences.useBottomSheets) {
             // Check if our tabs list already belongs to our bottom sheet
             if (tabsDialog.findViewById<ViewGroup>(R.id.tabs_list) != v.findViewById<ViewGroup>(R.id.tabs_list)) {
                 // It was not found, just put it there then
@@ -1249,9 +1300,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     private fun getBookmarksContainer(): ViewGroup = if (swapBookmarksAndTabs) {
-        iBinding.leftDrawer
+        iBinding.leftDrawerContent
     } else {
-        iBinding.rightDrawer
+        iBinding.rightDrawerContent
     }
 
     /**
@@ -1261,13 +1312,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             if (verticalTabBar) {
                 if (swapBookmarksAndTabs) {
                     if (tabBarInDrawer) {
-                        iBinding.rightDrawer
+                        iBinding.rightDrawerContent
                     } else {
                         iBinding.layoutTabsRight
                     }
                 } else {
                     if (tabBarInDrawer) {
-                        iBinding.leftDrawer
+                        iBinding.leftDrawerContent
                     } else {
                         iBinding.layoutTabsLeft
                     }
@@ -4335,6 +4386,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * @param immersive true to enable immersive mode, false otherwise
      */
     private fun setFullscreen(enabled: Boolean, immersive: Boolean) {
+
+        // In theory we should be able to use those new APIs
+        //WindowCompat.getInsetsController(window,window.decorView).show(WindowInsetsCompat.Type.systemBars())
+
         hideStatusBar = enabled
         isImmersiveMode = immersive
         val window = window
@@ -4359,6 +4414,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         tabsDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         bookmarksDialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
         bookmarksDialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+
     }
 
     /**

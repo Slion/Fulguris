@@ -197,6 +197,7 @@
             android:name="fulguris.activity.IncognitoActivity"
             android:alwaysRetainTaskState="true"
             android:colorMode="wideColorGamut"
+            android:resizeableActivity="true"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
@@ -214,6 +215,7 @@
         <activity
             android:name="fulguris.activity.SettingsActivity"
             android:colorMode="wideColorGamut"
+            android:resizeableActivity="true"
             android:label="@string/settings"
             android:parentActivityName="fulguris.activity.MainActivity"
             android:theme="@style/Theme.App.DayNight"
@@ -227,6 +229,7 @@
         <activity
             android:name="fulguris.activity.ReadingActivity"
             android:colorMode="wideColorGamut"
+            android:resizeableActivity="true"
             android:label="@string/reading_mode"
             android:theme="@style/Theme.App.DayNight"
             android:exported="false">

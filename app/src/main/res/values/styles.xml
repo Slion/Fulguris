@@ -69,7 +69,7 @@ colorControlNormal:
 
 
     <!-- Light theme -->
-    <style name="Theme.App.Light" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.App.Light.Base" parent="Theme.Material3.Light.NoActionBar">
 
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
@@ -242,10 +242,13 @@ colorControlNormal:
 
         <item name="sliderPreferenceStyle">@style/Preference.SliderPreference</item>
 
+<!--        <item name="android:windowFullscreen">true</item>-->
+
     </style>
 
+
     <!-- Dark theme -->
-    <style name="Theme.App.Dark" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Theme.App.Dark.Base" parent="Theme.Material3.Dark.NoActionBar">
 
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
@@ -416,9 +419,12 @@ colorControlNormal:
         <item name="enableEdgeToEdge">true</item>
 
         <item name="sliderPreferenceStyle">@style/Preference.SliderPreference</item>
+
+<!--        <item name="android:windowFullscreen">true</item>-->
     </style>
 
-    <style name="Theme.App.Black" parent="Theme.Material3.Dark">
+
+    <style name="Theme.App.Black.Base" parent="Theme.Material3.Dark">
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
         -->
@@ -586,6 +592,17 @@ colorControlNormal:
         <item name="enableEdgeToEdge">true</item>
 
         <item name="sliderPreferenceStyle">@style/Preference.SliderPreference</item>
+
+<!--        <item name="android:windowFullscreen">true</item>-->
+    </style>
+
+    <style name="Theme.App.Light" parent="Theme.App.Light.Base">
+    </style>>
+
+    <style name="Theme.App.Dark" parent="Theme.App.Dark.Base">
+    </style>
+
+    <style name="Theme.App.Black" parent="Theme.App.Black.Base">
     </style>
 
     <!-- Day theme to be used when following system default dark theme -->
