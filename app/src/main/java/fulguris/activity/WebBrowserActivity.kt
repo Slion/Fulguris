@@ -326,13 +326,16 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             //val imeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
             val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
 
+            val gestureInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
+            Timber.d("Gesture insets: $gestureInsets")
+
             view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 // Don't apply vertical margins here as it would break our drawers status bar color
                 // Apply horizontal margin to our root view so that we fill the cutout in on Honor Magic V2
-                leftMargin = insets.left
-                rightMargin = insets.right
+                leftMargin = insets.left //+ gestureInsets.left
+                rightMargin = insets.right //+ gestureInsets.right
                 // Make sure our UI does not get stuck below the IME virtual keyboard
-                // TODO: Do animation synchronization, see:
+                // TODO: Do animation synchronization, see: https://developer.android.com/develop/ui/views/layout/sw-keyboard#synchronize-animation
                 bottomMargin = imeHeight
             }
 
@@ -340,7 +343,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 // Apply vertical margins for status and navigation bar to our UI layout
                 // Thus the drawers are still showing below the status bar
                 topMargin = insets.top
-                bottomMargin = insets.bottom
+                bottomMargin = insets.bottom //+ gestureInsets.bottom
+                //leftMargin = gestureInsets.left
+                //rightMargin = gestureInsets.right
             }
 
             iBinding.leftDrawerContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
