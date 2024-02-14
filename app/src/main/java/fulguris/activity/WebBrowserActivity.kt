@@ -301,6 +301,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         super.onCreate(savedInstanceState)
         // We want to control our decor
         WindowCompat.setDecorFitsSystemWindows(window,false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.attributes.layoutInDisplayCutoutMode = configPrefs.cutoutMode.value
+        }
 
         // Register lifecycle observers
         lifecycle.addObserver(tabsManager)
@@ -482,6 +485,16 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun updateConfiguration(aConfig: Configuration = resources.configuration) {
         Timber.d("updateConfiguration")
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (window.attributes.layoutInDisplayCutoutMode != configPrefs.cutoutMode.value) {
+                // We don't seem to be able to apply that without restarting the activity
+                window.attributes.layoutInDisplayCutoutMode = configPrefs.cutoutMode.value
+                // This makes sure the newly set cutout mode is applied
+                window.attributes = window.attributes
+                // TODO adjust attributes for all our dialog windows
+            }
+        }
+
         setupDrawers()
         setFullscreenIfNeeded(aConfig)
         if (!setupTabBar(aConfig)) {
@@ -534,6 +547,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Set up BottomSheetDialog
         dialog.window?.decorView?.systemUiVisibility = window.decorView.systemUiVisibility
         dialog.window?.setFlags(window.attributes.flags, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        // TODO: All windows should have consistent cutout modes
+        //dialog.window?.let {WindowCompat.setDecorFitsSystemWindows(it,false)}
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        //    dialog.window?.attributes?.layoutInDisplayCutoutMode = configPrefs.cutoutMode.value
+        //}
         //dialog.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         //dialog.window?.setFlags(dialog.window?.attributes!!.flags, WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         //dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

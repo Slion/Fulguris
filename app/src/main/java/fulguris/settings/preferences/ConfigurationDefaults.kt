@@ -22,6 +22,8 @@
 
 package fulguris.settings.preferences
 
+import fulguris.enums.CutoutMode
+
 /**
  * Provide access to settings default values.
  * That was needed as our instantiated configuration settings can not rely on defaults defined in XML.
@@ -45,8 +47,14 @@ interface ConfigurationDefaults {
     fun getDefaultFloat(aKey: String) : Float
 
     /**
+     *
+     */
+    fun getDefaultCutoutMode() : CutoutMode
+
+    /**
      * Provide a map of settings preference keys to their default values.
      */
     fun getDefaults() : Map<String,Any>
+
 
 }

@@ -292,6 +292,7 @@
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
+    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_locked_drawers">Locked panels</string>
     <string name="pref_summary_locked_drawers">Tabs and Bookmarks panels can\'t be dragged</string>
     <string name="pref_title_use_bottom_sheets">Use bottom sheets</string>
@@ -655,6 +656,11 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
+
+    <string name="cutout_mode_default">Default</string>
+    <string name="cutout_mode_short_edges">Short edges</string>
+    <string name="cutout_mode_never">Never</string>
+    <string name="cutout_mode_always">Always</string>
 
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>

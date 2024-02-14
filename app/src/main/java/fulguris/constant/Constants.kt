@@ -50,6 +50,10 @@ object Uris {
     const val AboutHistory = "${Schemes.About}:${Hosts.History}"
 }
 
+/**
+ * Not sure why we needed those here now.
+ * Could have been needed for our configuration preferences architecture.
+ */
 object PrefKeys {
     const val HideStatusBar = "pref_key_hide_status_bar"
     const val HideToolBar = "pref_key_hide_tool_bar"

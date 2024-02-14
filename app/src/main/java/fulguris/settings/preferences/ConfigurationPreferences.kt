@@ -27,6 +27,7 @@ import fulguris.constant.PrefKeys
 import fulguris.device.ScreenSize
 import android.content.SharedPreferences
 import fulguris.settings.preferences.delegates.booleanPreference
+import fulguris.settings.preferences.delegates.enumPreference
 import fulguris.settings.preferences.delegates.floatPreference
 
 /**
@@ -87,6 +88,15 @@ abstract class ConfigurationPreferences constructor(
      * When set to something other than 100% we will enable wide viewport mode and inject JS code to set HTML meta viewport element accordingly.
      */
     var desktopWidth by preferences.floatPreference(R.string.pref_key_desktop_width, getDefaultFloat(PrefKeys.DesktopWidth))
+
+
+    /**
+     * Define if we render around display cutouts.
+     *
+     * See: https://developer.android.com/reference/android/view/WindowManager.LayoutParams
+     * See: https://developer.android.com/reference/android/view/WindowManager.LayoutParams#LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+     */
+    var cutoutMode by preferences.enumPreference(R.string.pref_key_cutout_mode, getDefaultCutoutMode())
 
 }
 

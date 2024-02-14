@@ -6,24 +6,26 @@
     See: https://github.com/Slion/Fulguris/issues/603
     However I reckon we better do that in code and make it configurable.
     See: https://stackoverflow.com/a/58361683/3969362
+
+    We are now indeed doing that in code and using a configuration option.
     -->
 
         <style name="Theme.App.Light" parent="Theme.App.Light.Base">
-            <item name="android:windowLayoutInDisplayCutoutMode">
-                shortEdges <!-- default, shortEdges, or never -->
-            </item>
+<!--            <item name="android:windowLayoutInDisplayCutoutMode">-->
+<!--                shortEdges &lt;!&ndash; default, shortEdges, or never &ndash;&gt;-->
+<!--            </item>-->
         </style>>
 
         <style name="Theme.App.Dark" parent="Theme.App.Dark.Base">
-            <item name="android:windowLayoutInDisplayCutoutMode">
-                shortEdges <!-- default, shortEdges, or never -->
-            </item>
+<!--            <item name="android:windowLayoutInDisplayCutoutMode">-->
+<!--                shortEdges &lt;!&ndash; default, shortEdges, or never &ndash;&gt;-->
+<!--            </item>-->
         </style>
 
         <style name="Theme.App.Black" parent="Theme.App.Black.Base">
-            <item name="android:windowLayoutInDisplayCutoutMode">
-                shortEdges <!-- default, shortEdges, or never -->
-            </item>
+<!--            <item name="android:windowLayoutInDisplayCutoutMode">-->
+<!--                shortEdges &lt;!&ndash; default, shortEdges, or never &ndash;&gt;-->
+<!--            </item>-->
         </style>
 
 </resources>
