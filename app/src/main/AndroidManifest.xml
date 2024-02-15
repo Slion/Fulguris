@@ -67,6 +67,18 @@
         android:theme="@style/Theme.App.Black"
         >
 
+        <!--
+            Support super narrow Samsung cover display on early Z Fold models, see:
+            https://developer.samsung.com/sdp/blog/en/2019/01/31/how-to-update-your-apps-for-foldable-displays
+            https://developer.samsung.com/sdp/blog/en/2019/04/05/seven-mistakes-to-avoid-when-developing-for-the-galaxy-fold
+        -->
+        <meta-data android:name="android.max_aspect" android:value="3.0" />
+        <!--
+            Make sure you start fullscreen on Huawei/Honor foldable internal display, see:
+            https://developer.huawei.com/consumer/en/doc/90101
+        -->
+        <meta-data android:name="android.min_aspect" android:value="1.0" />
+
         <!-- Splash screen activity not sure exactly if we need MAIN and DEFAULT intent TBH -->
         <!-- Make it resizable for Multi-Window mode support, such as Samsung Dex
         Needed to be in the root activity which is our splash screen apparently.
@@ -85,9 +97,6 @@
         <meta-data
             android:name="android.webkit.WebView.MetricsOptOut"
             android:value="true" />
-        <meta-data
-            android:name="android.max_aspect"
-            android:value="2.1" />
 
         <activity
             android:name="fulguris.activity.MainActivity"
