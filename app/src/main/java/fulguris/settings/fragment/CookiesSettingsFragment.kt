@@ -88,6 +88,8 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
                         deleteAllPageCookies()
                     }
                     .resizeAndShow()
+
+                true
             }
         )
     }

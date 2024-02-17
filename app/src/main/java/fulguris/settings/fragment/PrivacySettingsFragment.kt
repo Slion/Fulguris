@@ -129,7 +129,7 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
 
     }
 
-    private fun clearHistoryDialog() {
+    private fun clearHistoryDialog() : Boolean {
         BrowserDialog.showPositiveNegativeDialog(
             aContext = activity as Activity,
             title = R.string.title_clear_history,
@@ -145,9 +145,10 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
             negativeButton = DialogItem(title = R.string.action_no) {},
             onCancel = {}
         )
+        return true
     }
 
-    private fun clearCookiesDialog() {
+    private fun clearCookiesDialog() : Boolean {
         BrowserDialog.showPositiveNegativeDialog(
             aContext = activity as Activity,
             title = R.string.title_clear_cookies,
@@ -164,14 +165,17 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
             negativeButton = DialogItem(title = R.string.action_no) {},
             onCancel = {}
         )
+
+        return true
     }
 
-    private fun clearCache() {
+    private fun clearCache() : Boolean {
         WebView(requireNotNull(activity)).apply {
             clearCache(true)
             destroy()
         }
         (activity as Activity).snackbar(R.string.message_cache_cleared)
+        return true
     }
 
     private fun clearHistory(): Completable = Completable.fromAction {
@@ -184,9 +188,10 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    private fun clearWebStorage() {
+    private fun clearWebStorage() : Boolean {
         WebUtils.clearWebStorage()
         (activity as Activity).snackbar(R.string.message_web_storage_cleared)
+        return true
     }
 
     companion object {

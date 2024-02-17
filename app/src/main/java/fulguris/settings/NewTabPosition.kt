@@ -26,6 +26,8 @@ import fulguris.settings.preferences.IntEnum
 
 /**
  * Define where new tab should be spawned
+ *
+ * TODO: Move this to enum package
  */
 enum class NewTabPosition(override val value: Int) :
     IntEnum {

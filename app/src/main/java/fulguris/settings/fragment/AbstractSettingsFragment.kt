@@ -166,7 +166,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         preference: String,
         isEnabled: Boolean = true,
         summary: String? = null,
-        onClick: (() -> Unit)? = null
+        onClick: (() -> Boolean)? = null
     ): Preference = clickableDynamicPreference(
         preference = preference,
         isEnabled = isEnabled,
@@ -189,7 +189,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         preference: String,
         isEnabled: Boolean = true,
         summary: String? = null,
-        onClick: ((SummaryUpdater) -> Unit)?
+        onClick: ((SummaryUpdater) -> Boolean)?
     ): Preference = (findPreference<Preference>(preference) as Preference).apply {
         this.isEnabled = isEnabled
         summary?.let {
@@ -200,7 +200,6 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
             val summaryUpdate = SummaryUpdater(this)
             onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 onClick(summaryUpdate)
-                true
             }
         }
     }

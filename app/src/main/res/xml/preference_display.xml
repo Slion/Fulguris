@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:a="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <PreferenceCategory
         android:title="@string/settings_display"
@@ -32,6 +33,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        a:key="@string/pref_key_configurations"
         android:title="@string/settings_title_configuration"
         android:summary="@string/settings_summary_configuration"
         a:singleLineTitle="false"
@@ -49,6 +51,15 @@
             a:title="@string/settings_title_landscape"
             a:icon="@drawable/ic_landscape"
             a:singleLineTitle="false"
+            />
+
+        <Preference
+            a:key="@string/pref_key_add_configuration"
+            a:title="@string/settings_title_add_configuration"
+            a:icon="@drawable/ic_add"
+            a:singleLineTitle="false"
+            a:isPreferenceVisible="false"
+            tools:isPreferenceVisible="true"
             />
 
     </PreferenceCategory>

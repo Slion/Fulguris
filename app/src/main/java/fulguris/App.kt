@@ -22,19 +22,14 @@
 
 package fulguris
 
-import fulguris.BuildConfig
 import fulguris.activity.IncognitoActivity
-import fulguris.R
 import fulguris.database.bookmark.BookmarkExporter
 import fulguris.database.bookmark.BookmarkRepository
 import fulguris.di.DatabaseScheduler
-import fulguris.locale.LocaleUtils
 import fulguris.settings.preferences.DeveloperPreferences
 import fulguris.settings.preferences.LandscapePreferences
 import fulguris.settings.preferences.PortraitPreferences
 import fulguris.settings.preferences.UserPreferences
-import fulguris.utils.FileUtils
-import fulguris.utils.MemoryLeakUtils
 import fulguris.utils.installMultiDex
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -46,6 +41,8 @@ import android.os.Bundle
 import android.webkit.WebView
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
+import fulguris.settings.Config
+import fulguris.settings.preferences.ConfigurationPreferences
 import io.reactivex.Scheduler
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
@@ -67,12 +64,18 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
     @Inject internal lateinit var bookmarkModel: BookmarkRepository
     @Inject @DatabaseScheduler
     internal lateinit var databaseScheduler: Scheduler
+
+    // Provide global access to current configuration preferences
+    internal var configPreferences: ConfigurationPreferences? = null
+
     //@Inject internal lateinit var buildInfo: BuildInfo
 
     // Used to be able to tell when our application was just started
     var justStarted: Boolean = true
     //Ugly way to pass our domain around for settings
     var domain: String = ""
+    //Ugly way to pass our config around for settings
+    var config = Config("")
 
     /**
      * Our app can runs in a different process when using the incognito activity.

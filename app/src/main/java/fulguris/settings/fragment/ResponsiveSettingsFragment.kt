@@ -48,6 +48,20 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
 
         iPreference = pref
 
+        // No actual fragment specified, just a back action
+        // Notably used when deleting custom configuration
+        if (pref.fragment == "back") {
+            if (childFragmentManager.backStackEntryCount >=1) {
+                // Go back to previous fragment if any
+                childFragmentManager.popBackStack()
+                // Adjust and update our breadcrumb
+                iTitleStack.removeLast()
+                (activity as? SettingsActivity)?.updateTitleOnLayout()
+            }
+
+            return true
+        }
+
         // TODO: Do we still need to use either AbstractSettingsFragment or addOnBackStackChangedListener
         // Stack our breadcrumb if any, otherwise just stack our title
         (if (pref is BasicPreference && pref.breadcrumb.isNotEmpty()) pref.breadcrumb else pref.title)?.let {

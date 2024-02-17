@@ -180,7 +180,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
      *
      * @param summaryUpdater the command which allows the summary to be updated.
      */
-    private fun showTextEncodingDialogPicker(summaryUpdater: SummaryUpdater) {
+    private fun showTextEncodingDialogPicker(summaryUpdater: SummaryUpdater) : Boolean {
         activity?.let {
             MaterialAlertDialogBuilder(it).apply {
                 setTitle(resources.getString(R.string.text_encoding))
@@ -194,6 +194,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 setPositiveButton(resources.getString(R.string.action_ok), null)
             }.resizeAndShow()
         }
+
+        return true
     }
 
 
@@ -207,7 +209,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    private fun showProxyPicker(summaryUpdater: SummaryUpdater) {
+    private fun showProxyPicker(summaryUpdater: SummaryUpdater) : Boolean {
         BrowserDialog.showCustomDialog(activity as Activity) {
             setTitle(R.string.http_proxy)
             val stringArray = resources.getStringArray(R.array.proxy_choices_array)
@@ -224,6 +226,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             }
             setPositiveButton(R.string.action_ok, null)
         }
+
+        return true
     }
 
     private fun updateProxyChoice(choice: ProxyChoice, activity: Activity, summaryUpdater: SummaryUpdater) {
@@ -235,7 +239,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         userPreferences.proxyChoice = sanitizedChoice
         summaryUpdater.updateSummary(sanitizedChoice.toSummary())
     }
-    private fun showSuggestionNumPicker(summaryUpdater: SummaryUpdater) {
+    private fun showSuggestionNumPicker(summaryUpdater: SummaryUpdater) : Boolean {
         BrowserDialog.showCustomDialog(activity as AppCompatActivity) {
             setTitle(R.string.suggest)
             val stringArray = resources.getStringArray(R.array.suggestion_name_array)
@@ -257,6 +261,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             }
             setPositiveButton(R.string.action_ok, null)
         }
+
+        return true
     }
 
     private fun updateSearchNum(choice: SuggestionNumChoice, summaryUpdater: SummaryUpdater) {
@@ -300,7 +306,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    private fun showImageUrlPicker() {
+    private fun showImageUrlPicker() : Boolean {
         activity?.let {
             BrowserDialog.showEditText(it as AppCompatActivity,
                 R.string.pref_title_search_custom_image_url,
@@ -310,13 +316,15 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 userPreferences.imageUrlString = s
             }
         }
+
+        return true
     }
 
     private fun userAgentSummary() =
         resources.getString(USER_AGENTS_ORDERED[userPreferences.userAgentChoice] ?: R.string.agent_default) +
                 activity?.application?.let { ":\n" + userPreferences.userAgent(it) }
 
-    private fun showUserAgentChooserDialog(summaryUpdater: SummaryUpdater) {
+    private fun showUserAgentChooserDialog(summaryUpdater: SummaryUpdater) : Boolean {
         activity?.let { activity ->
             val userAgentChoices = USER_AGENTS_ORDERED.keys.toTypedArray()
             val currentAgentIndex = userAgentChoices.indexOf(userPreferences.userAgentChoice).
@@ -336,6 +344,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 setPositiveButton(resources.getString(R.string.action_ok), null)
             }
         }
+
+        return true
     }
 
     private fun showCustomUserAgentPicker() {
@@ -350,7 +360,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    private fun showDownloadLocationDialog(summaryUpdater: SummaryUpdater) {
+    private fun showDownloadLocationDialog(summaryUpdater: SummaryUpdater) : Boolean {
         activity?.let {
             BrowserDialog.showCustomDialog(it) {
             setTitle(resources.getString(R.string.title_download_location))
@@ -374,6 +384,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             setPositiveButton(resources.getString(R.string.action_ok), null)
         }
         }
+
+        return true
     }
 
 
@@ -428,7 +440,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         else -> url
     }
 
-    private fun showHomePageDialog(summaryUpdater: SummaryUpdater) {
+    private fun showHomePageDialog(summaryUpdater: SummaryUpdater) : Boolean {
         activity?.let {
             BrowserDialog.showCustomDialog(it as AppCompatActivity) {
                 setTitle(R.string.home)
@@ -461,6 +473,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 setPositiveButton(resources.getString(R.string.action_ok), null)
             }
         }
+
+        return true
     }
 
     private fun showCustomHomePagePicker(summaryUpdater: SummaryUpdater) {
@@ -493,7 +507,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
     private fun convertSearchEngineToString(searchEngines: List<BaseSearchEngine>): Array<CharSequence> =
         searchEngines.map { getString(it.titleRes) }.toTypedArray()
 
-    private fun showSearchProviderDialog(summaryUpdater: SummaryUpdater) {
+    private fun showSearchProviderDialog(summaryUpdater: SummaryUpdater) : Boolean {
         activity?.let {
             BrowserDialog.showCustomDialog(it as AppCompatActivity) {
                 setTitle(resources.getString(R.string.title_search_engine))
@@ -524,6 +538,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 setPositiveButton(R.string.action_ok, null)
             }
         }
+
+        return true
     }
 
     private fun showCustomSearchDialog(customSearch: CustomSearch, summaryUpdater: SummaryUpdater) {
@@ -550,7 +566,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             Suggestions.BAIDU -> getString(R.string.powered_by_baidu)
         }
 
-    private fun showSearchSuggestionsDialog(summaryUpdater: SummaryUpdater) {
+    private fun showSearchSuggestionsDialog(summaryUpdater: SummaryUpdater) : Boolean {
         activity?.let {
             BrowserDialog.showCustomDialog(it as AppCompatActivity) {
                 setTitle(resources.getString(R.string.search_suggestions))
@@ -578,6 +594,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 setPositiveButton(resources.getString(R.string.action_ok), null)
             }
         }
+
+        return true
     }
 
     companion object {

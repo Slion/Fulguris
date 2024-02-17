@@ -224,10 +224,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     lateinit var portraitSharedPrefs: SharedPreferences
     @Inject @PrefsLandscape
     lateinit var landscapeSharedPrefs: SharedPreferences
-    // Need to keep reference of listener otherwise they get carbadge collected
-    private lateinit var portraitPrefsListener: SharedPreferences.OnSharedPreferenceChangeListener
-    private lateinit var landscapePrefsListener: SharedPreferences.OnSharedPreferenceChangeListener
-
+    // Need to keep reference of listener otherwise they get garbage collected
+    // Used to apply changes live when configuration preferences are adjusted from options settings
+    private val configPrefsListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+        Timber.d("Config prefs changed")
+        updateConfiguration()
+    }
 
     // HTTP
     private lateinit var queue: RequestQueue
@@ -299,6 +301,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         Timber.v("onCreate")
         // Need to go first to inject our components
         super.onCreate(savedInstanceState)
+        //
+        updateConfigurationSharedPreferences()
         // We want to control our decor
         WindowCompat.setDecorFitsSystemWindows(window,false)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -460,22 +464,19 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Hook in buttons with onClick handler
         iBindingToolbarContent.buttonReload.setOnClickListener(this)
 
+    }
 
-        portraitPrefsListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-            Timber.d("Portrait prefs changed")
-            if (isPortrait) {
-                updateConfiguration()
-            }
-        }
-        portraitSharedPrefs.registerOnSharedPreferenceChangeListener(portraitPrefsListener)
-
-        landscapePrefsListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-            Timber.d("Landscape prefs changed")
-            if (isLandscape) {
-                updateConfiguration()
-            }
-        }
-        landscapeSharedPrefs.registerOnSharedPreferenceChangeListener(landscapePrefsListener)
+    /**
+     * Call this whenever our configuration could have changed.
+     * It takes care of setting our global configPrefs and make sure we are listening to changes.
+     */
+    private fun updateConfigurationSharedPreferences() {
+        //
+        updateConfigPrefs()
+        // I reckon that should prevent accumulating listeners
+        // Single unneeded notifications should not impact performance and functionality
+        configPrefs.preferences.unregisterOnSharedPreferenceChangeListener(configPrefsListener)
+        configPrefs.preferences.registerOnSharedPreferenceChangeListener(configPrefsListener)
     }
 
     /**
@@ -496,7 +497,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
 
         setupDrawers()
-        setFullscreenIfNeeded(aConfig)
+        setFullscreenIfNeeded()
         if (!setupTabBar(aConfig)) {
             // useBottomsheets settings could have changed
             addTabsViewToParent()
@@ -1051,7 +1052,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         iBindingToolbarContent.buttonActionForward.setOnClickListener{executeAction(R.id.action_forward)}
 
         //setFullscreenIfNeeded(resources.configuration) // As that's needed before bottom sheets creation
-        createTabsView(resources.configuration)
+        createTabsView()
         //createTabsDialog()
         bookmarksView = BookmarksDrawerView(this)
         //createBookmarksDialog()
@@ -1256,10 +1257,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     /**
      * Used to create or recreate our tabs view according to current settings.
      */
-    private fun createTabsView(configuration: Configuration) {
+    private fun createTabsView() {
 
-        verticalTabBar = configPrefs(configuration).verticalTabBar
-        tabBarInDrawer = configPrefs(configuration).tabBarInDrawer
+        verticalTabBar = configPrefs.verticalTabBar
+        tabBarInDrawer = configPrefs.tabBarInDrawer
 
         // Was needed when resizing on Windows 11 and changing from horizontal to vertical tab bar
         mainHandler.postDelayed( {closePanels()},100)
@@ -1604,8 +1605,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     /**
      *
      */
-    private fun initFullScreen(configuration: Configuration) {
-        isFullScreen = configPrefs(configuration).hideToolBar
+    private fun initFullScreen() {
+        isFullScreen = configPrefs.hideToolBar
     }
 
 
@@ -1614,13 +1615,15 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     /**
      * Setup our tool bar as collapsible or always-on according to orientation and user preferences.
      * Also manipulate our layout according to toolbars-at-bottom user preferences.
+     *
+     * TODO: Configuration parameter should not be needed. Remove it at some point
      */
     private fun setupToolBar(configuration: Configuration) {
-        initFullScreen(configuration)
+        initFullScreen()
         initializeToolbarHeight(configuration)
         showActionBar()
         setToolbarColor()
-        setFullscreenIfNeeded(configuration)
+        setFullscreenIfNeeded()
 
         // Put our toolbar where it belongs, top or bottom according to user preferences
         iBinding.toolbarInclude.apply {
@@ -2521,7 +2524,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * Enable or disable pull-to-refresh according to user preferences and state
      */
     private fun setupPullToRefresh(configuration: Configuration) {
-        if (!configPrefs(configuration).pullToRefresh) {
+        if (!configPrefs.pullToRefresh) {
             // User does not want to use pull to refresh
             iTabViewContainerFront.isEnabled = false
             iBindingToolbarContent.buttonReload.visibility = View.VISIBLE
@@ -2550,15 +2553,15 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     private fun setupTabBar(configuration: Configuration): Boolean {
         // Check if our tab bar style changed
-        if (verticalTabBar!=configPrefs(configuration).verticalTabBar
-                || tabBarInDrawer!=configPrefs(configuration).tabBarInDrawer
+        if (verticalTabBar!=configPrefs.verticalTabBar
+                || tabBarInDrawer!=configPrefs.tabBarInDrawer
                 // Our bottom sheets dialog needs to be recreated with proper window decor state, with or without status bar that is.
                 // Looks like that was also needed for the bottom sheets top padding to be in sync? Go figure…
                 || userPreferences.useBottomSheets) {
             // We either coming or going to desktop like horizontal tab bar, tabs panel should be closed then
             mainHandler.post {closePanelTabs()}
             // Tab bar style changed recreate our tab bar then
-            createTabsView(configuration)
+            createTabsView()
             tabsView?.tabsInitialized()
             mainHandler.postDelayed({ tryScrollToCurrentTab() }, 1000)
             return true
@@ -3260,11 +3263,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * See: [Activity.onConfigurationChanged]
      */
     override fun onConfigurationChanged(aNewConfig: Configuration) {
+        Timber.d("onConfigurationChanged - $configId")
+        updateConfigurationSharedPreferences()
+
         super.onConfigurationChanged(aNewConfig)
 
-        Timber.d("onConfigurationChanged")
-
-        updateConfiguration(aNewConfig)
+        updateConfiguration()
 
         iMenuMain.dismiss() // As it wont update somehow
         iMenuWebPage.dismiss()
@@ -3416,10 +3420,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Must be needed since View holds a reference to this as a context
         // Though I'm pretty sure this activity is locked in some other ways, probably a lost cause at this stage...
         iPlaceHolder = null
-
-        // Defensive, should not even be needed
-        portraitSharedPrefs.unregisterOnSharedPreferenceChangeListener(portraitPrefsListener)
-        landscapeSharedPrefs.unregisterOnSharedPreferenceChangeListener(landscapePrefsListener)
         //
         queue.cancelAll(TAG)
 
@@ -3454,6 +3454,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      *
      */
     override fun onResume() {
+        updateConfigurationSharedPreferences()
         super.onResume()
         Timber.d("onResume")
         // Check if some settings changes require application restart
@@ -4307,7 +4308,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             Timber.d("WebView is not allowed to keep the screen on")
         }
 
-        setFullscreenIfNeeded(resources.configuration)
+        setFullscreenIfNeeded()
         if (fullscreenContainerView != null) {
             val parent = fullscreenContainerView?.parent as ViewGroup
             parent.removeView(fullscreenContainerView)
@@ -4390,8 +4391,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     /**
      * Hide the status bar according to orientation and user preferences
      */
-    private fun setFullscreenIfNeeded(configuration: Configuration) {
-        setFullscreen(configPrefs(configuration).hideStatusBar, false)
+    private fun setFullscreenIfNeeded() {
+        setFullscreen(configPrefs.hideStatusBar, false)
     }
 
 
