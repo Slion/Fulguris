@@ -52,7 +52,9 @@ import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
-
+/**
+ * Settings page displaying all visited domains to enable access to domain settings
+ */
 @AndroidEntryPoint
 class DomainsSettingsFragment : AbstractSettingsFragment() {
 
@@ -110,6 +112,8 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                         catResources?.removeAll()
                     }
                     .resizeAndShow()
+
+                true
             }
         ).apply { isVisible = false }
     }

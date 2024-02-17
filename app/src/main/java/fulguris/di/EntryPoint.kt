@@ -54,7 +54,7 @@ interface HiltEntryPoint {
     @MainScheduler
     fun mainScheduler(): Scheduler
     val searchEngineProvider: SearchEngineProvider
-    val proxyUtils: fulguris.utils.ProxyUtils
+    val proxyUtils: ProxyUtils
     val textReflowJs: TextReflow
     val invertPageJs: InvertPage
     val setMetaViewport: SetMetaViewport
@@ -66,7 +66,7 @@ interface HiltEntryPoint {
     val faviconModel: FaviconModel
     val webRtcPermissionsModel: WebRtcPermissionsModel
     val abpUserRules: AbpUserRules
-    val downloadHandler: fulguris.download.DownloadHandler
+    val downloadHandler: DownloadHandler
     val downloadManager: DownloadManager
     val downloadsRepository: DownloadsRepository
     var tabsManager: TabsManager

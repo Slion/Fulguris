@@ -35,7 +35,7 @@ import fulguris.settings.preferences.delegates.floatPreference
  * Derived class notably includes Portrait and Landscape variants.
  */
 abstract class ConfigurationPreferences constructor(
-    preferences: SharedPreferences,
+    val preferences: SharedPreferences,
     screenSize: ScreenSize
 ) : ConfigurationDefaults {
 

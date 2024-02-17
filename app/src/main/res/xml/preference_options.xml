@@ -40,6 +40,15 @@
             />
 
         <Preference
+            a:key="@string/pref_key_configuration_custom"
+            a:fragment="fulguris.settings.fragment.ConfigurationCustomSettingsFragment"
+            a:title="@string/settings_title_configuration"
+            a:summary="@string/agent_custom"
+            a:icon="@drawable/ic_conf_settings"
+            a:singleLineTitle="false"
+            />
+
+        <Preference
             a:fragment="fulguris.settings.fragment.ScrollbarsSettingsFragment"
             a:title="@string/pref_category_scrollbars"
             a:summary="@string/pref_summary_scrollbars"

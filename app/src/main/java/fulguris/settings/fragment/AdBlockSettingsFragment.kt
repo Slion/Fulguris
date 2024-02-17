@@ -110,6 +110,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             }
                             setPositiveButton(resources.getString(R.string.action_ok), null)
                         }?.resizeAndShow()
+                    true
                 }
             )
 
@@ -137,6 +138,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             updateFilterList(null, true)
                         }
                     }?.resizeAndShow()
+                    true
                 }
             )
 
@@ -161,6 +163,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                         }
                         setPositiveButton(R.string.action_ok, null)
                     }?.resizeAndShow()
+                    true
                 }
             )
 

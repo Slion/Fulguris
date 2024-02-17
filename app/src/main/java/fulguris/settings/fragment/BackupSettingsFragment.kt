@@ -200,8 +200,9 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         bookmarksSortSubscription?.dispose()
     }
 
-    private fun deleteAllBookmarks() {
+    private fun deleteAllBookmarks() : Boolean {
         showDeleteBookmarksDialog()
+        return true
     }
 
     private fun showDeleteBookmarksDialog() {
@@ -260,7 +261,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     /**
      * Start bookmarks export workflow by showing file creation dialog.
      */
-    private fun showExportBookmarksDialog() {
+    private fun showExportBookmarksDialog() : Boolean {
         //TODO: specify default path
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
@@ -338,6 +339,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         }
         bookmarkExportFilePicker.launch(intent)
         // See bookmarkExportFilePicker declaration below for result handler
+        return true
     }
 
     //
@@ -387,7 +389,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     /**
      * Starts bookmarks import workflow by showing file selection dialog.
      */
-    private fun showImportBookmarksDialog() {
+    private fun showImportBookmarksDialog() : Boolean {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "*/*" // That's needed for some reason, crashes otherwise
@@ -401,6 +403,8 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         }
         bookmarkImportFilePicker.launch(intent)
         // See bookmarkImportFilePicker declaration below for result handler
+
+        return true
     }
 
     //
@@ -452,7 +456,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     /**
      * @param summaryUpdater the command which allows the summary to be updated.
      */
-    private fun resetSettings(summaryUpdater: SummaryUpdater) {
+    private fun resetSettings(summaryUpdater: SummaryUpdater): Boolean {
         // Show confirmation dialog and proceed if needed
         MaterialAlertDialogBuilder(requireContext())
                 .setCancelable(true)
@@ -472,6 +476,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                 }
                 .resizeAndShow()
 
+        return true
     }
 
     /**
@@ -527,7 +532,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     /**
      *
      */
-    private fun showSessionImportDialog() {
+    private fun showSessionImportDialog() : Boolean {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "*/*" // That's needed for some reason, crashes otherwise
@@ -540,6 +545,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
         }
         sessionImportFilePicker.launch(intent)
         // See bookmarkImportFilePicker declaration below for result handler
+        return true
     }
 
     private val sessionImportFilePicker = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -586,16 +592,17 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
     }
 
     @Suppress("DEPRECATION")
-    private fun requestSettingsImport() {
+    private fun requestSettingsImport() : Boolean {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "text/plain"
         }
         startActivityForResult(intent, IMPORT_SETTINGS)
+        return true
     }
 
     @Suppress("DEPRECATION")
-    private fun requestSettingsExport() {
+    private fun requestSettingsExport() : Boolean {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "text/plain"
@@ -608,6 +615,8 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
             putExtra(Intent.EXTRA_TITLE, "StyxSettings$timeStamp.txt")
         }
         startActivityForResult(intent, EXPORT_SETTINGS)
+
+        return true
     }
 
     private fun exportSettings(uri: Uri) {

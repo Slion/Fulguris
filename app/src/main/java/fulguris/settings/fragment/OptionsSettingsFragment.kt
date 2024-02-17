@@ -34,11 +34,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
+import fulguris.di.configPrefs
+import fulguris.extensions.configId
+import fulguris.settings.Config
+import fulguris.settings.preferences.ConfigurationCustomPreferences
 import javax.inject.Inject
 
 /**
  * Options settings screen.
- * Typically displayed in a bottom sheet.
+ * Typically displayed in a bottom sheet from the browser activity.
  */
 @AndroidEntryPoint
 class OptionsSettingsFragment : AbstractSettingsFragment() {
@@ -66,8 +70,21 @@ class OptionsSettingsFragment : AbstractSettingsFragment() {
      * Only show the configuration options for the current configuration
      */
     private fun setupConfiguration() {
-        findPreference<Preference>(getString(R.string.pref_key_portrait))?.isVisible =  requireActivity().isPortrait
-        findPreference<Preference>(getString(R.string.pref_key_landscape))?.isVisible =  requireActivity().isLandscape
+        // TODO: Just setup a preference using our configPrefs instead of dealing with visibility of those three preferences?
+        if (requireContext().configPrefs is ConfigurationCustomPreferences) {
+            // Tell our configuration settings fragment to open the proper file
+            app.config = Config(requireContext().configId)
+            findPreference<Preference>(getString(R.string.pref_key_portrait))?.isVisible =  false
+            findPreference<Preference>(getString(R.string.pref_key_landscape))?.isVisible =  false
+            findPreference<Preference>(getString(R.string.pref_key_configuration_custom))?.apply {
+                isVisible = true
+                summary = app.config.name(requireContext())
+            }
+        } else {
+            findPreference<Preference>(getString(R.string.pref_key_portrait))?.isVisible =  requireActivity().isPortrait
+            findPreference<Preference>(getString(R.string.pref_key_landscape))?.isVisible =  requireActivity().isLandscape
+            findPreference<Preference>(getString(R.string.pref_key_configuration_custom))?.isVisible =  false
+        }
     }
 
     /**

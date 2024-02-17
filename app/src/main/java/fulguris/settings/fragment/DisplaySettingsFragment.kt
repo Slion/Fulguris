@@ -3,32 +3,43 @@
  */
 package fulguris.settings.fragment
 
+import android.annotation.SuppressLint
 import fulguris.AccentTheme
 import fulguris.AppTheme
 import fulguris.R
 import fulguris.extensions.resizeAndShow
 import fulguris.extensions.withSingleChoiceItems
 import fulguris.settings.preferences.UserPreferences
-import fulguris.utils.Utils
 import fulguris.view.RenderingMode
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
+import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import fulguris.app
+import fulguris.extensions.configId
+import fulguris.preference.BasicPreference
+import fulguris.settings.Config
+import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     @Inject internal lateinit var userPreferences: UserPreferences
+
+    private var catConfigurations: PreferenceCategory? = null
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
@@ -41,6 +52,9 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
+
+
+        catConfigurations = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_configurations))?.apply { isOrderingAsAdded = true }
 
         //injector.inject(this)
 
@@ -70,6 +84,97 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                 summary = userPreferences.renderingMode.toDisplayString(),
                 onClick = this::showRenderingDialogPicker
         )
+
+        // Hook in our add configuration button
+        clickableDynamicPreference(
+            preference = getString(R.string.pref_key_add_configuration),
+            summary = Config(requireContext().configId).name(requireContext()),
+            onClick = ::addConfiguration
+        )
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Add specific configurations
+        populateConfigurations()
+    }
+
+    /**
+     * Create an empty configuration file and repopulate our configs
+     */
+    @SuppressLint("ApplySharedPref")
+    private fun addConfiguration(summaryUpdater: SummaryUpdater) : Boolean {
+
+        // Need to use commit to do it on the spot
+        app.getSharedPreferences(Config(requireContext().configId).fileName, 0).edit().commit()
+        //
+        populateConfigurations()
+
+        return true
+    }
+
+    /**
+     *
+     */
+    private fun populateConfigurations() {
+
+        // Remove all existing custom config, they are the ones with keys starting with [Config]
+        for (i in catConfigurations!!.preferenceCount-1 downTo 0) {
+            catConfigurations?.getPreference(i)?.let {
+                if (it.key?.startsWith(Config.filePrefix) == true) {
+                    catConfigurations?.removePreference(it)
+                }
+            }
+        }
+
+        var foundCurrentConfig = false
+
+        // Build our list of configurations
+        val directory = File(requireContext().applicationInfo.dataDir, "shared_prefs")
+        if (directory.exists() && directory.isDirectory) {
+            val list = directory.list { _, name -> name.startsWith(Config.filePrefix) }
+            // Fill our list
+            // We expect only a handful of custom configurations so no need to do that asynchronously like we did for domains
+            list?.forEach {
+                // Create preferences entry
+                // Workout our domain name from the file name, skip [Domain] prefix and drop .xml suffix
+                val config = Config(it)
+
+                // Check if we found the current config, used later to manage the visibility of the add config button
+                if (config.id == requireContext().configId) {
+                    foundCurrentConfig = true
+                }
+
+                // Create configuration preference
+                val pref = BasicPreference(requireContext())
+                pref.isSingleLineTitle = false
+                pref.key = config.id
+                // Get user friendly name
+                pref.title = config.name(requireContext())
+                //pref.summary = domain
+                //pref.breadcrumb = domain
+                pref.fragment = "fulguris.settings.fragment.ConfigurationCustomSettingsFragment"
+                pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_conf_settings, activity?.theme)
+
+                pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                    app.config = Config(pref.key)
+                    false
+                }
+
+                catConfigurations?.addPreference(pref)
+            }
+        }
+
+        // Put our add configuration button at the bottom
+        findPreference<Preference>(getString(R.string.pref_key_add_configuration))?.let { addPref ->
+            catConfigurations?.removePreference(addPref)
+            addPref.order = 10000 //(catConfigurations?.preferenceCount?.plus(1)) ?: 0
+            catConfigurations?.addPreference(addPref)
+            // Make add configuration button visible if current configuration was not found
+            addPref.isVisible = !foundCurrentConfig
+        }
     }
 
     /**
@@ -77,7 +182,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
      *
      * @param summaryUpdater the command which allows the summary to be updated.
      */
-    private fun showRenderingDialogPicker(summaryUpdater: SummaryUpdater) {
+    private fun showRenderingDialogPicker(summaryUpdater: SummaryUpdater) : Boolean {
         activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
             setTitle(resources.getString(R.string.rendering_mode))
 
@@ -89,6 +194,8 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             }
             setPositiveButton(resources.getString(R.string.action_ok), null)
         }?.resizeAndShow()
+
+        return true
     }
 
     private fun RenderingMode.toDisplayString(): String = getString(when (this) {
@@ -99,7 +206,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
         RenderingMode.INCREASE_CONTRAST -> R.string.name_increase_contrast
     })
 
-    private fun showTextSizePicker(summaryUpdater: SummaryUpdater) {
+    private fun showTextSizePicker(summaryUpdater: SummaryUpdater) : Boolean {
         MaterialAlertDialogBuilder(activity as Activity).apply {
             val layoutInflater = (activity as Activity).layoutInflater
             val customView = (layoutInflater.inflate(R.layout.dialog_seek_bar, null) as LinearLayout).apply {
@@ -125,9 +232,11 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                 summaryUpdater.updateSummary((seekBar.progress + MIN_BROWSER_TEXT_SIZE).toString() + "%")
             }
         }.resizeAndShow()
+
+        return true
     }
 
-    private fun showThemePicker(summaryUpdater: SummaryUpdater) {
+    private fun showThemePicker(summaryUpdater: SummaryUpdater) : Boolean {
         val currentTheme = userPreferences.useTheme
         MaterialAlertDialogBuilder(activity as Activity).apply {
             setTitle(resources.getString(R.string.theme))
@@ -148,6 +257,8 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                 }
             }
         }.resizeAndShow()
+
+        return true
     }
 
     private fun AppTheme.toDisplayString(): String = getString(when (this) {
@@ -157,7 +268,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
         AppTheme.DEFAULT -> R.string.default_theme
     })
 
-    private fun showAccentPicker(summaryUpdater: SummaryUpdater) {
+    private fun showAccentPicker(summaryUpdater: SummaryUpdater) : Boolean {
         val currentAccent = userPreferences.useAccent
         MaterialAlertDialogBuilder(activity as AppCompatActivity).apply {
             setTitle(resources.getString(R.string.accent_color))
@@ -177,6 +288,8 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                 }
             }
         }.resizeAndShow()
+
+        return true
     }
 
     private fun AccentTheme.toDisplayString(): String = getString(when (this) {

@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.resources.MaterialAttributes
+import fulguris.settings.Config
 import timber.log.Timber
 import java.util.*
 
@@ -140,3 +141,16 @@ val Context.isPortrait: Boolean get() = resources.configuration.orientation == C
  *
  */
 val Context.isLandscape: Boolean get() = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+/**
+ * Provide the id of the current config
+ */
+val Context.configId: String get()  {
+
+    val rotation = display?.rotation?.times(90)
+
+    return "${Config.filePrefix}${if (isLandscape) "landscape" else "portrait"}-$rotation-sw${resources.configuration.smallestScreenWidthDp}"
+}
+
+
+

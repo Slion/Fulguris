@@ -36,7 +36,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 /**
- * Configuration settings of the app.
+ * Configuration settings abstract base class
  */
 @AndroidEntryPoint
 abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
@@ -51,15 +51,7 @@ abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         //injector.inject(this)
         super.onCreate(savedInstanceState)
-        // At this stage our preferences have been created
-        // Go through our defaults and set them as needed
-        configurationPreferences().getDefaults().forEach {
-            setDefaultIfNeeded(it.key,it.value)
-        }
 
-        // Handle special case for vertical tab default which is only known at runtime
-        setDefaultIfNeeded(PrefKeys.TabBarVertical,!screenSize.isTablet())
-        setDefaultIfNeeded(PrefKeys.TabBarInDrawer,!screenSize.isTablet())
 
         /*
         // Sample to loop through our preference store
@@ -105,11 +97,20 @@ abstract class ConfigurationSettingsFragment : AbstractSettingsFragment() {
     }
 
     /**
-     * Called from from [PreferenceFragmentCompat.onCreate]
+     * Called from [PreferenceFragmentCompat.onCreate]
      */
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
+        // At this stage our preferences have been created
+        // Go through our defaults and set them as needed
+        configurationPreferences().getDefaults().forEach {
+            setDefaultIfNeeded(it.key,it.value)
+        }
+
+        // Handle special case for vertical tab default which is only known at runtime
+        setDefaultIfNeeded(PrefKeys.TabBarVertical,!screenSize.isTablet())
+        setDefaultIfNeeded(PrefKeys.TabBarInDrawer,!screenSize.isTablet())
 
     }
 
