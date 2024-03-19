@@ -30,7 +30,10 @@ fun UserPreferences.userAgent(application: Application): String =
         USER_AGENT_IOS_MOBILE -> IOS_MOBILE_USER_AGENT
         USER_AGENT_SYSTEM -> System.getProperty("http.agent") ?: " "
         USER_AGENT_WEB_VIEW -> WebSettings.getDefaultUserAgent(application)
-        USER_AGENT_CUSTOM -> userAgentString.takeIf(String::isNotEmpty) ?: " "
+        USER_AGENT_CUSTOM -> userAgentString
+            .takeIf { it.isNotEmpty() }
+            ?.replace(Regex("[\r\n]"), "")
+            ?: " "
         USER_AGENT_HIDE_DEVICE -> "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE})" +
                 webViewEngineVersion(application)
         else -> throw UnsupportedOperationException("Unknown userAgentChoice: $choice")
