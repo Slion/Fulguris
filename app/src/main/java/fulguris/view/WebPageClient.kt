@@ -608,7 +608,7 @@ class WebPageClient(
         }
 
         val url = request.url.toString()
-        val uri  = Uri.parse(url)
+        val uri = Uri.parse(url)
         val headers = webPageTab.requestHeaders
 
         if (webPageTab.isIncognito) {
@@ -621,52 +621,87 @@ class WebPageClient(
             return continueLoadingUrl(view, url, headers)
         }
 
-        if (isMailOrTelOrIntent(url, view)) {
-            // If it was a mailto: link, or an intent, or could be launched elsewhere, do that
+        loadDomainPreferences(uri.host ?: "", false)
+        Timber.d("Stack 0")
+
+
+        val customIntent = intentUtils.handleSpecialSchemes(activity, url, view)
+        if (handleExternalAppIntent(view, customIntent)) {
+            Timber.d("handleSpecialSchemes: $customIntent")
             return true
         }
 
-        loadDomainPreferences(uri.host ?: "", false)
+        Timber.d("Stack 1")
 
-        val intent = intentUtils.intentForUrl(view, url)
-        intent?.let {
-            // Check if that external app is already known
-            if (domainPreferences.launchApp == NoYesAsk.YES) {
-                // Trusted app, just launch it on the spot and abort loading
-                intentUtils.startActivityForIntent(intent)
-                return true
-            } else if (domainPreferences.launchApp == NoYesAsk.NO) {
-                // User does not want use to use this app
-                return false
-            } else if (domainPreferences.launchApp == NoYesAsk.ASK) {
-                // We first encounter that app ask user if we should use it?
-                // We will keep loading even if an external app is available the first time we encounter it.
-                (activity as WebBrowserActivity).mainHandler.postDelayed({
-                    if (exAppLaunchDialog == null) {
-                        exAppLaunchDialog = MaterialAlertDialogBuilder(activity).setTitle(R.string.dialog_title_third_party_app).setMessage(R.string.dialog_message_third_party_app)
-                            .setPositiveButton(activity.getText(R.string.yes), DialogInterface.OnClickListener { dialog, id ->
-                                // Handle Ok
-                                intentUtils.startActivityForIntent(intent)
-                                dialog.dismiss()
-                                exAppLaunchDialog = null
-                            })
-                            .setNegativeButton(activity.getText(R.string.no), DialogInterface.OnClickListener { dialog, id ->
-                                // Handle Cancel
-                                dialog.dismiss()
-                                exAppLaunchDialog = null
-                            })
-                            .create()
-                        exAppLaunchDialog?.show()
-                    }
-                }, 1000)
-            }
+        val intentUrl = intentUtils.intentForUrl(view, url)
+        if (handleExternalAppIntent(view, intentUrl)) {
+            Timber.d("intentForUrl: $intentUrl")
+            return true
         }
+
+        Timber.d("Stack 2")
 
         // If none of the special conditions was met, continue with loading the url
         return continueLoadingUrl(view, url, headers)
 
         // Don't override, keep on loading that page
-        //return false
+        // return false
+    }
+
+    /**
+     * Handles the decision-making process for launching an external application based on the given intent.
+     * This method checks the user's preference on whether to launch external applications directly,
+     * ask the user before launching, or not launch at all. It also presents a dialog to the user if necessary.
+     *
+     * @param view The WebView that is currently displaying content.
+     * @param intent The Intent that has been created to potentially launch an external application.
+     * @return A Boolean indicating whether the URL loading should be overridden (true) or not (false).
+     *         Returning true means the current WebView loading will be stopped, and the external application
+     *         will be handled according to the user's preference or the dialog's outcome.
+     */
+    private fun handleExternalAppIntent(view: WebView, intent: Intent?): Boolean {
+        if (intent == null) {
+            Timber.d("Received null intent, not handling external app launch.")
+            return false
+        }
+
+        when (domainPreferences.launchApp) {
+            NoYesAsk.YES -> {
+                Timber.d("intentForUrl: launch app")
+                intentUtils.startActivityWithFallback(view, intent, false)
+                return true
+            }
+            NoYesAsk.NO -> {
+                Timber.d("intentForUrl: do not launch app")
+                return false
+            }
+            NoYesAsk.ASK -> {
+                Timber.d("intentForUrl: ask user")
+                var shouldOverrideUrlLoading = true
+                if (exAppLaunchDialog == null) {
+                    exAppLaunchDialog = MaterialAlertDialogBuilder(activity)
+                        .setTitle(R.string.dialog_title_third_party_app)
+                        .setMessage(R.string.dialog_message_third_party_app)
+                        .setPositiveButton(activity.getText(R.string.yes)) { dialog, _ ->
+                            intentUtils.startActivityWithFallback(view, intent, false)
+                            dialog.dismiss()
+                            exAppLaunchDialog = null
+                            shouldOverrideUrlLoading = true
+                        }
+                        .setNegativeButton(activity.getText(R.string.no)) { dialog, _ ->
+                            intentUtils.startActivityWithFallback(view, intent, true)
+                            dialog.dismiss()
+                            exAppLaunchDialog = null
+                            shouldOverrideUrlLoading = false
+                        }
+                        .create()
+                    exAppLaunchDialog?.show()
+                }
+                Timber.d("intentForUrl: shouldOverrideUrlLoading: $shouldOverrideUrlLoading")
+                return shouldOverrideUrlLoading
+            }
+            else -> return false
+        }
     }
 
     /**
