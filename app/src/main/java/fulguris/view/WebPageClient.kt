@@ -622,8 +622,6 @@ class WebPageClient(
         }
 
         loadDomainPreferences(uri.host ?: "", false)
-        Timber.d("Stack 0")
-
 
         val customIntent = intentUtils.handleSpecialSchemes(activity, url, view)
         if (handleExternalAppIntent(view, customIntent)) {
@@ -631,15 +629,11 @@ class WebPageClient(
             return true
         }
 
-        Timber.d("Stack 1")
-
         val intentUrl = intentUtils.intentForUrl(view, url)
         if (handleExternalAppIntent(view, intentUrl)) {
             Timber.d("intentForUrl: $intentUrl")
             return true
         }
-
-        Timber.d("Stack 2")
 
         // If none of the special conditions was met, continue with loading the url
         return continueLoadingUrl(view, url, headers)
