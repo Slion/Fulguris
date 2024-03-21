@@ -30,7 +30,6 @@ import fulguris.view.WebPageTab.Companion.KFetchMetaThemeColorTries
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
@@ -621,14 +620,18 @@ class WebPageClient(
 
         loadDomainPreferences(uri.host ?: "", false)
 
-        val customIntent = activity.handleSpecialSchemes(url, view)
+        val customIntent = activity.intentForScheme(url)
         if (handleExternalAppIntent(view, customIntent)) {
             Timber.d("handleSpecialSchemes: $customIntent")
             return true
         }
 
         val intentUrl = activity.intentForUrl(view, url)
-        if (handleExternalAppIntent(view, intentUrl)) {
+        if (intentUrl!=null
+            // Don't prompt user to launch an app when it's not installed
+            // When visiting https://t.me/durov for instance and Telegram is not installed
+            && activity.isSpecializedHandlerAvailable(intentUrl)
+            && handleExternalAppIntent(view, intentUrl)) {
             Timber.d("intentForUrl: $intentUrl")
             return true
         }
@@ -717,64 +720,9 @@ class WebPageClient(
         }
     }
 
-    private fun isMailOrTelOrIntent(url: String, view: WebView): Boolean {
-        if (url.startsWith("mailto:")) {
-            val mailTo = MailTo.parse(url)
-            val i = fulguris.utils.Utils.newEmailIntent(mailTo.to, mailTo.subject, mailTo.body, mailTo.cc)
-            activity.startActivity(i)
-            view.reload()
-            return true
-        } else if (url.startsWith("tel:")) {
-            val i = Intent(Intent.ACTION_DIAL)
-            i.data = Uri.parse(url)
-            activity.startActivity(i)
-            view.reload()
-            return true
-        } else if (url.startsWith("intent://")) {
-            val intent = try {
-                Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
-            } catch (ignored: URISyntaxException) {
-                null
-            }
-
-            if (intent != null) {
-                intent.addCategory(Intent.CATEGORY_BROWSABLE)
-                intent.component = null
-                intent.selector = null
-                try {
-                    activity.startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
-                    Timber.e(e, "ActivityNotFoundException")
-                }
-
-                return true
-            }
-        } else if (URLUtil.isFileUrl(url) && !url.isSpecialUrl()) {
-            val file = File(url.replace(FILE, ""))
-
-            if (file.exists()) {
-                val newMimeType = MimeTypeMap.getSingleton()
-                    .getMimeTypeFromExtension(fulguris.utils.Utils.guessFileExtension(file.toString()))
-
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                val contentUri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".fileprovider", file)
-                intent.setDataAndType(contentUri, newMimeType)
-
-                try {
-                    activity.startActivity(intent)
-                } catch (e: Exception) {
-                    println("LightningWebClient: cannot open downloaded file")
-                }
-
-            } else {
-                activity.snackbar(R.string.message_open_download_fail)
-            }
-            return true
-        }
-        return false
-    }
-
+    /**
+     *
+     */
     private fun getAllSslErrorMessageCodes(error: SslError): List<Int> {
         val errorCodeMessageCodes = ArrayList<Int>(1)
 

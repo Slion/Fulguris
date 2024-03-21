@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.MailTo
 import android.net.Uri
-import android.util.Log
 import android.webkit.MimeTypeMap
 import android.webkit.URLUtil
 import android.webkit.WebView
@@ -111,7 +110,7 @@ import java.util.regex.Pattern
      * Search for intent handlers that are specific to this URL aka, specialized
      * apps like google maps or youtube
      */
-    private fun Activity.isSpecializedHandlerAvailable(intent: Intent): Boolean {
+    fun Activity.isSpecializedHandlerAvailable(intent: Intent): Boolean {
         val pm = packageManager
         val handlers = pm.queryIntentActivities(
             intent,
@@ -146,34 +145,30 @@ import java.util.regex.Pattern
      * file URLs by creating an Intent to open the file. If the URL does not match any
      * special scheme or if an error occurs (e.g., URISyntaxException), null is returned.
      *
-     * @param activity The Activity context used to access package manager and resources.
      * @param url The URL to be handled. It can be a special scheme URL or a file URL.
-     * @param view The WebView that may be used for additional context or actions.
      * @return An Intent that corresponds to the action required by the URL's scheme,
      * or null if the URL does not match a special scheme or an error occurs.
      */
-    fun Activity.handleSpecialSchemes(url: String, view: WebView?): Intent? {
+    fun Activity.intentForScheme(url: String): Intent? {
         val uri = Uri.parse(url)
         Timber.d("Handling special schemes for URL: $url")
         val scheme = uri.scheme!!.lowercase()
         Timber.d("Detected scheme: $scheme")
         return when (scheme) {
             "mailto" -> {
-                Timber.d("Detected mailto scheme.")
+                Timber.d("Detected mailto scheme")
                 val mailTo = MailTo.parse(url)
                 Utils.newEmailIntent(mailTo.to, mailTo.subject, mailTo.body, mailTo.cc)
             }
 
             "tel" -> {
-                Timber.d("Detected tel scheme.")
-                val intentTel = Intent(Intent.ACTION_DIAL)
-                intentTel.setData(Uri.parse(url))
-                intentTel
+                Timber.d("Detected tel scheme")
+                Intent(Intent.ACTION_DIAL).setData(Uri.parse(url))
             }
 
             "intent" -> {
                 return try {
-                    Timber.d("Detected intent scheme.")
+                    Timber.d("Detected intent scheme")
                     val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
                     intent.addCategory(Intent.CATEGORY_BROWSABLE)
                     intent.setComponent(null)
@@ -187,7 +182,7 @@ import java.util.regex.Pattern
 
             else -> {
                 if (URLUtil.isFileUrl(url) && !url.isSpecialUrl()) {
-                    Timber.d("Detected file URL.")
+                    Timber.d("Detected file URL")
                     val file = File(url.replace("file://", ""))
                     return if (file.exists()) {
                         val newMimeType = MimeTypeMap.getSingleton()
