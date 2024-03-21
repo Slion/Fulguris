@@ -159,9 +159,11 @@ class DomainPreferences constructor(
      * - Yes: Launch the app
      * - No: Do not launch the app
      * - Ask: Ask the user whether or not to launch the app
+     *
+     * Must remain YES by default as this is the expected behaviour of browsers on Android.
      */
     var launchAppOverride by preferences.booleanPreference(R.string.pref_key_launch_app_override, false)
-    var launchAppLocal by preferences.enumPreference(R.string.pref_key_launch_app, NoYesAsk.NO)
+    var launchAppLocal by preferences.enumPreference(R.string.pref_key_launch_app, NoYesAsk.YES)
     val launchAppParent: NoYesAsk get() { return parent?.launchApp ?: launchAppLocal}
     val launchApp: NoYesAsk get() { return if (isDefault || !launchAppOverride) { launchAppParent } else { launchAppLocal } }
 
