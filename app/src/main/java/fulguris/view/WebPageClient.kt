@@ -71,12 +71,11 @@ class WebPageClient(
         private val webPageTab: WebPageTab
 ) : WebViewClient() {
 
-    private val webBrowser: WebBrowser
-    private val intentUtils = fulguris.utils.IntentUtils(activity)
+    private val webBrowser: WebBrowser = activity as WebBrowser
 
     private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
 
-    val proxyUtils: fulguris.utils.ProxyUtils = hiltEntryPoint.proxyUtils
+    val proxyUtils: ProxyUtils = hiltEntryPoint.proxyUtils
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
     val preferences: SharedPreferences = hiltEntryPoint.userSharedPreferences()
     val textReflowJs: TextReflow = hiltEntryPoint.textReflowJs
@@ -111,7 +110,6 @@ class WebPageClient(
 
     init {
         //activity.injector.inject(this)
-        webBrowser = activity as WebBrowser
         adBlock = chooseAdBlocker()
     }
 
@@ -623,13 +621,13 @@ class WebPageClient(
 
         loadDomainPreferences(uri.host ?: "", false)
 
-        val customIntent = intentUtils.handleSpecialSchemes(activity, url, view)
+        val customIntent = activity.handleSpecialSchemes(url, view)
         if (handleExternalAppIntent(view, customIntent)) {
             Timber.d("handleSpecialSchemes: $customIntent")
             return true
         }
 
-        val intentUrl = intentUtils.intentForUrl(view, url)
+        val intentUrl = activity.intentForUrl(view, url)
         if (handleExternalAppIntent(view, intentUrl)) {
             Timber.d("intentForUrl: $intentUrl")
             return true
@@ -662,7 +660,7 @@ class WebPageClient(
         when (domainPreferences.launchApp) {
             NoYesAsk.YES -> {
                 Timber.d("intentForUrl: launch app")
-                intentUtils.startActivityWithFallback(view, intent, false)
+                activity.startActivityWithFallback(view, intent, false)
                 return true
             }
             NoYesAsk.NO -> {
@@ -677,13 +675,13 @@ class WebPageClient(
                         .setTitle(R.string.dialog_title_third_party_app)
                         .setMessage(R.string.dialog_message_third_party_app)
                         .setPositiveButton(activity.getText(R.string.yes)) { dialog, _ ->
-                            intentUtils.startActivityWithFallback(view, intent, false)
+                            activity.startActivityWithFallback(view, intent, false)
                             dialog.dismiss()
                             exAppLaunchDialog = null
                             shouldOverrideUrlLoading = true
                         }
                         .setNegativeButton(activity.getText(R.string.no)) { dialog, _ ->
-                            intentUtils.startActivityWithFallback(view, intent, true)
+                            activity.startActivityWithFallback(view, intent, true)
                             dialog.dismiss()
                             exAppLaunchDialog = null
                             shouldOverrideUrlLoading = false

@@ -25,7 +25,6 @@ package fulguris.settings.fragment
 import fulguris.R
 import fulguris.activity.SettingsActivity
 import fulguris.settings.preferences.PreferenceCategoryEx
-import fulguris.utils.IntentUtils
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -42,6 +41,7 @@ import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreference
 import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.RecyclerView
+import fulguris.utils.shareUrl
 import timber.log.Timber
 
 /**
@@ -335,7 +335,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
         pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_share, activity?.theme)
         pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             // Share Fulguris
-            fulguris.utils.IntentUtils(requireActivity()).shareUrl(getString(R.string.url_app_home_page), getString(R.string.locale_app_name),R.string.pref_title_contribute_share)
+            requireActivity().shareUrl(getString(R.string.url_app_home_page), getString(R.string.locale_app_name),R.string.pref_title_contribute_share)
             true
         }
         prefGroup.addPreference(pref)

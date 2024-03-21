@@ -2314,7 +2314,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 return true
             }
             R.id.action_share -> {
-                IntentUtils(this).shareUrl(currentUrl, currentView?.title)
+                shareUrl(currentUrl, currentView?.title)
                 return true
             }
             R.id.action_bookmarks -> {

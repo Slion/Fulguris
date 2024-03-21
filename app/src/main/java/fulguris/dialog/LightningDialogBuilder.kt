@@ -10,11 +10,9 @@ import fulguris.database.downloads.DownloadsRepository
 import fulguris.database.history.HistoryRepository
 import fulguris.di.DatabaseScheduler
 import fulguris.di.MainScheduler
-import fulguris.download.DownloadHandler
 import fulguris.extensions.*
 import fulguris.html.bookmark.BookmarkPageFactory
 import fulguris.settings.preferences.UserPreferences
-import fulguris.utils.IntentUtils
 import fulguris.utils.isBookmarkUrl
 import android.Manifest
 import android.app.Activity
@@ -37,6 +35,7 @@ import fulguris.extensions.onFocusGained
 import fulguris.extensions.resizeAndShow
 import fulguris.extensions.snackbar
 import fulguris.extensions.toast
+import fulguris.utils.shareUrl
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import timber.log.Timber
@@ -139,7 +138,7 @@ class LightningDialogBuilder @Inject constructor(
                         webBrowser.handleNewTab(NewTab.INCOGNITO, entry.url)
                     },
                     DialogItem(title = R.string.action_share) {
-                        fulguris.utils.IntentUtils(activity).shareUrl(entry.url, entry.title)
+                        activity.shareUrl(entry.url, entry.title)
                     },
                     DialogItem(title = R.string.dialog_copy_link) {
                         clipboardManager.copyToClipboard(entry.url)
@@ -353,7 +352,7 @@ class LightningDialogBuilder @Inject constructor(
                         webBrowser.handleNewTab(NewTab.INCOGNITO, url)
                     },
                     DialogItem(title = R.string.action_share) {
-                        fulguris.utils.IntentUtils(activity).shareUrl(url, null)
+                        activity.shareUrl(url, null)
                     },
                     DialogItem(title = R.string.dialog_copy_link) {
                         clipboardManager.copyToClipboard(url)
@@ -396,7 +395,7 @@ class LightningDialogBuilder @Inject constructor(
                     webBrowser.handleNewTab(NewTab.INCOGNITO, linkUrl)
                 },
                 DialogItem(title = R.string.action_share) {
-                    fulguris.utils.IntentUtils(activity).shareUrl(linkUrl, null)
+                    activity.shareUrl(linkUrl, null)
                 },
                 // Show copy text dialog item if we have some text
                 DialogItem(title = R.string.dialog_copy_text, show = !text.isNullOrEmpty()) {
@@ -426,7 +425,7 @@ class LightningDialogBuilder @Inject constructor(
                         webBrowser.handleNewTab(NewTab.INCOGNITO, imageUrl)
                     },
                     DialogItem(title = R.string.action_share) {
-                        fulguris.utils.IntentUtils(activity).shareUrl(imageUrl, null)
+                        activity.shareUrl(imageUrl, null)
                     },
                     DialogItem(
                         title = R.string.action_download,

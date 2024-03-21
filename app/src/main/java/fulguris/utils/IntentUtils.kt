@@ -19,7 +19,6 @@ import java.io.File
 import java.net.URISyntaxException
 import java.util.regex.Pattern
 
-class IntentUtils(private val mActivity: Activity) {
 
     /**
      *
@@ -27,7 +26,7 @@ class IntentUtils(private val mActivity: Activity) {
      * @param url
      * @return
      */
-    fun intentForUrl(tab: WebView?, url: String): Intent? {
+    fun Activity.intentForUrl(tab: WebView?, url: String): Intent? {
         val intent: Intent = try {
             Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
         } catch (ex: URISyntaxException) {
@@ -62,13 +61,13 @@ class IntentUtils(private val mActivity: Activity) {
     /**
      *
      */
-    private fun startActivityForIntent(aIntent: Intent?): Boolean {
+    private fun Activity.startActivityForIntent(aIntent: Intent?): Boolean {
         var intent = aIntent
-        if (mActivity.packageManager.resolveActivity(intent!!, 0) == null) {
+        if (packageManager.resolveActivity(intent!!, 0) == null) {
             intent = handleUnresolvableIntent(intent)
         }
         try {
-            if (mActivity.startActivityIfNeeded(intent!!, -1)) {
+            if (startActivityIfNeeded(intent!!, -1)) {
                 return true
             }
         } catch (exception: Exception) {
@@ -81,7 +80,7 @@ class IntentUtils(private val mActivity: Activity) {
     /**
      *
      */
-    fun startActivityForUrl(tab: WebView?, url: String): Boolean {
+    fun Activity.startActivityForUrl(tab: WebView?, url: String): Boolean {
         val intent = intentForUrl(tab, url)
         return startActivityForIntent(intent)
     }
@@ -89,7 +88,7 @@ class IntentUtils(private val mActivity: Activity) {
     /**
      *
      */
-    fun startActivityWithFallback(tab: WebView?, intent: Intent, onlyFallback: Boolean): Boolean {
+    fun Activity.startActivityWithFallback(tab: WebView?, intent: Intent, onlyFallback: Boolean): Boolean {
         if (!onlyFallback && startActivityForIntent(intent)) {
             Timber.d("Intent successfully started.")
             // Intent was successfully handled
@@ -112,8 +111,8 @@ class IntentUtils(private val mActivity: Activity) {
      * Search for intent handlers that are specific to this URL aka, specialized
      * apps like google maps or youtube
      */
-    private fun isSpecializedHandlerAvailable(intent: Intent): Boolean {
-        val pm = mActivity.packageManager
+    private fun Activity.isSpecializedHandlerAvailable(intent: Intent): Boolean {
+        val pm = packageManager
         val handlers = pm.queryIntentActivities(
             intent,
             PackageManager.GET_RESOLVED_FILTER
@@ -153,7 +152,7 @@ class IntentUtils(private val mActivity: Activity) {
      * @return An Intent that corresponds to the action required by the URL's scheme,
      * or null if the URL does not match a special scheme or an error occurs.
      */
-    fun handleSpecialSchemes(activity: Activity?, url: String, view: WebView?): Intent? {
+    fun Activity.handleSpecialSchemes(url: String, view: WebView?): Intent? {
         val uri = Uri.parse(url)
         Timber.d("Handling special schemes for URL: $url")
         val scheme = uri.scheme!!.lowercase()
@@ -195,7 +194,7 @@ class IntentUtils(private val mActivity: Activity) {
                             .getMimeTypeFromExtension(Utils.guessFileExtension(file.toString()))
                         val intentFile = Intent(Intent.ACTION_VIEW)
                         intentFile.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        val contentUri = FileProvider.getUriForFile(activity!!, BuildConfig.APPLICATION_ID + ".fileprovider", file)
+                        val contentUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", file)
                         intentFile.setDataAndType(contentUri, newMimeType)
                         intentFile
                     } else {
@@ -217,7 +216,7 @@ class IntentUtils(private val mActivity: Activity) {
      * @param title the title of the URL to share. This
      * is optional.
      */
-    fun shareUrl(url: String?, title: String?, @StringRes aTitleId: Int = R.string.dialog_title_share) {
+    fun Activity.shareUrl(url: String?, title: String?, @StringRes aTitleId: Int = R.string.dialog_title_share) {
         if (url != null && !url.isSpecialUrl()) {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.setType("text/plain")
@@ -225,18 +224,21 @@ class IntentUtils(private val mActivity: Activity) {
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
             }
             shareIntent.putExtra(Intent.EXTRA_TEXT, url)
-            mActivity.startActivity(Intent.createChooser(shareIntent, mActivity.getString(aTitleId)))
+            startActivity(Intent.createChooser(shareIntent, getString(aTitleId)))
         }
     }
 
-    companion object {
-        private val ACCEPTED_URI_SCHEMA = Pattern.compile(
-            "(?i)"
-                    +  // switch on case insensitive matching
-                    '('
-                    +  // begin group for schema
-                    "(?:http|https|file)://" + "|(?:inline|data|about|javascript):" + "|(?:.*:.*@)"
-                    + ')' + "(.*)"
-        )
-    }
-}
+
+    /**
+     *
+     */
+    private val ACCEPTED_URI_SCHEMA = Pattern.compile(
+        "(?i)"
+                +  // switch on case insensitive matching
+                '('
+                +  // begin group for schema
+                "(?:http|https|file)://" + "|(?:inline|data|about|javascript):" + "|(?:.*:.*@)"
+                + ')' + "(.*)"
+    )
+
+
