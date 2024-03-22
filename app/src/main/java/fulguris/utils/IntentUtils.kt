@@ -20,25 +20,35 @@ import java.util.regex.Pattern
 
 
     /**
+     * Provide the intent corresponding to the give URL.
+     * Returns null if the candidate intent would do noop such as when the corresponding app is not available.
      *
      * @param tab
      * @param url
      * @return
      */
-    fun Activity.intentForUrl(tab: WebView?, url: String): Intent? {
-        val intent: Intent = try {
-            Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+    fun Activity.intentForUrl(tab: WebView?, uri: Uri): Intent? {
+
+        // If it's a special scheme provide it
+        intentForScheme(uri)?.let {return it}
+
+        // Otherwise try build a generic intent
+        val intent = try {
+            Intent.parseUri(uri.toString(), Intent.URI_INTENT_SCHEME)
         } catch (ex: URISyntaxException) {
-            Timber.w("Browser", "Bad URI " + url + ": " + ex.message)
+            Timber.w(ex, "Bad URI: $uri")
             return null
         }
         intent.addCategory(Intent.CATEGORY_BROWSABLE)
         intent.setComponent(null)
         intent.selector = null
         if (tab != null) {
-            intent.putExtra(INTENT_ORIGIN, tab.hashCode())
+            intent?.putExtra(INTENT_ORIGIN, tab.hashCode())
         }
-        return if (ACCEPTED_URI_SCHEMA.matcher(url).matches() && !isSpecializedHandlerAvailable(intent)) {
+
+        // Allows us to not ask to launch an app that's not installed on the device
+        // To test it you could for instance visit https://t.me/durov if you don't have Telegram installed and Launch app option is set to ASK
+        return if (!isSpecializedHandlerAvailable(intent)) {
             null
         } else intent
     }
@@ -79,13 +89,13 @@ import java.util.regex.Pattern
     /**
      *
      */
-    fun Activity.startActivityForUrl(tab: WebView?, url: String): Boolean {
+    fun Activity.startActivityForUrl(tab: WebView?, url: Uri): Boolean {
         val intent = intentForUrl(tab, url)
         return startActivityForIntent(intent)
     }
 
     /**
-     *
+     * TODO: Review and test that fallback logic
      */
     fun Activity.startActivityWithFallback(tab: WebView?, intent: Intent, onlyFallback: Boolean): Boolean {
         if (!onlyFallback && startActivityForIntent(intent)) {
@@ -107,10 +117,10 @@ import java.util.regex.Pattern
     }
 
     /**
-     * Search for intent handlers that are specific to this URL aka, specialized
-     * apps like google maps or youtube
+     * Search for intent handlers that are specific to this URL, such as specialized apps like google maps or youtube.
+     * Notably avoid asking user if she wants to launch an app when we don't have one.
      */
-    fun Activity.isSpecializedHandlerAvailable(intent: Intent): Boolean {
+    private fun Activity.isSpecializedHandlerAvailable(intent: Intent): Boolean {
         val pm = packageManager
         val handlers = pm.queryIntentActivities(
             intent,
@@ -140,18 +150,17 @@ import java.util.regex.Pattern
     }
 
     /**
-     * Handles URLs with special schemes such as mailto, tel, and intent by creating
-     * and returning an appropriate Intent based on the scheme. This method also handles
-     * file URLs by creating an Intent to open the file. If the URL does not match any
+     * Handles URLs with special schemes such as mailto, tel, intent and file by
+     * providing corresponding Intent. If the URL does not match any
      * special scheme or if an error occurs (e.g., URISyntaxException), null is returned.
      *
      * @param url The URL to be handled. It can be a special scheme URL or a file URL.
      * @return An Intent that corresponds to the action required by the URL's scheme,
      * or null if the URL does not match a special scheme or an error occurs.
      */
-    fun Activity.intentForScheme(url: String): Intent? {
-        val uri = Uri.parse(url)
-        Timber.d("Handling special schemes for URL: $url")
+    private fun Activity.intentForScheme(uri: Uri): Intent? {
+        val url = uri.toString()
+        Timber.d("Handling special schemes for URL: $uri")
         val scheme = uri.scheme!!.lowercase()
         Timber.d("Detected scheme: $scheme")
         return when (scheme) {
@@ -163,7 +172,7 @@ import java.util.regex.Pattern
 
             "tel" -> {
                 Timber.d("Detected tel scheme")
-                Intent(Intent.ACTION_DIAL).setData(Uri.parse(url))
+                Intent(Intent.ACTION_DIAL).setData(uri)
             }
 
             "intent" -> {
@@ -175,7 +184,7 @@ import java.util.regex.Pattern
                     intent.selector = null
                     intent
                 } catch (e: URISyntaxException) {
-                    Timber.e("URISyntaxException for URL: $url", e)
+                    Timber.e(e,"URISyntaxException for URL: $url")
                     null
                 }
             }
@@ -222,18 +231,5 @@ import java.util.regex.Pattern
             startActivity(Intent.createChooser(shareIntent, getString(aTitleId)))
         }
     }
-
-
-    /**
-     *
-     */
-    private val ACCEPTED_URI_SCHEMA = Pattern.compile(
-        "(?i)"
-                +  // switch on case insensitive matching
-                '('
-                +  // begin group for schema
-                "(?:http|https|file)://" + "|(?:inline|data|about|javascript):" + "|(?:.*:.*@)"
-                + ')' + "(.*)"
-    )
 
 

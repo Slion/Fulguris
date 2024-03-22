@@ -7,7 +7,6 @@ import fulguris.adblock.AdBlocker
 import fulguris.adblock.NoOpAdBlocker
 import fulguris.browser.WebBrowser
 import fulguris.activity.WebBrowserActivity
-import fulguris.constant.FILE
 import fulguris.di.HiltEntryPoint
 import fulguris.di.configPrefs
 import fulguris.extensions.getDrawable
@@ -16,7 +15,6 @@ import fulguris.extensions.ihs
 import fulguris.extensions.makeSnackbar
 import fulguris.extensions.resizeAndShow
 import fulguris.extensions.setIcon
-import fulguris.extensions.snackbar
 import fulguris.html.homepage.HomePageFactory
 import fulguris.js.InvertPage
 import fulguris.js.SetMetaViewport
@@ -29,11 +27,9 @@ import fulguris.utils.*
 import fulguris.view.WebPageTab.Companion.KFetchMetaThemeColorTries
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
-import android.net.MailTo
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Message
@@ -46,7 +42,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
@@ -57,8 +52,6 @@ import fulguris.utils.htmlColor
 import fulguris.utils.isSpecialUrl
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.net.URISyntaxException
 import java.util.*
 import kotlin.math.abs
 
@@ -545,7 +538,8 @@ class WebPageClient(
     }
 
     // We use this to prevent opening such dialogs multiple times
-    var exAppLaunchDialog: AlertDialog? = null
+    // Notably on Google Play app pages
+    var appLaunchDialog: AlertDialog? = null
 
     // TODO: Shall this live somewhere else
     // Load default settings
@@ -590,6 +584,9 @@ class WebPageClient(
         }
     }
 
+    // Used to debounce app launch
+    private var debounceLaunch: Runnable? = null
+
     /**
      * Overrides [WebViewClient.shouldOverrideUrlLoading].
      * This is not hit for every page. For instance dreamhost default landing page on http://specs.slions.net
@@ -620,23 +617,25 @@ class WebPageClient(
 
         loadDomainPreferences(uri.host ?: "", false)
 
-        val customIntent = activity.intentForScheme(url)
-        if (handleExternalAppIntent(view, customIntent)) {
-            Timber.d("handleSpecialSchemes: $customIntent")
-            return true
+        // Regardless of app launch we do not cancel URL loading
+        // Doing so would require we deal with empty pages in new tab and such issues
+        activity.intentForUrl(view, uri)?.let {
+            // That debounce logic allows us launch our app ASAP while cancelling repeat launch
+            if (debounceLaunch==null) {
+                // No pending debounce, just launch our app then
+                launchAppIfNeeded(view, it)
+            }
+            // Cancel debounce if any
+            view.removeCallbacks(debounceLaunch)
+            // Create a new one
+            debounceLaunch = Runnable {
+                debounceLaunch = null
+            }
+            // Schedule our debounce
+            view.postDelayed(debounceLaunch,1000)
         }
 
-        val intentUrl = activity.intentForUrl(view, url)
-        if (intentUrl!=null
-            // Don't prompt user to launch an app when it's not installed
-            // When visiting https://t.me/durov for instance and Telegram is not installed
-            && activity.isSpecializedHandlerAvailable(intentUrl)
-            && handleExternalAppIntent(view, intentUrl)) {
-            Timber.d("intentForUrl: $intentUrl")
-            return true
-        }
-
-        // If none of the special conditions was met, continue with loading the url
+        // Continue with loading the url
         return continueLoadingUrl(view, url, headers)
 
         // Don't override, keep on loading that page
@@ -650,11 +649,12 @@ class WebPageClient(
      *
      * The [view] currently displaying content.
      * The [intent] that has been created to potentially launch an external application.
-     * @return A Boolean indicating whether the URL loading should be overridden (true) or not (false).
-     *         Returning true means the current WebView loading will be stopped, and the external application
-     *         will be handled according to the user's preference or the dialog's outcome.
+     * @return
      */
-    private fun handleExternalAppIntent(view: WebView, intent: Intent?): Boolean {
+    private fun launchAppIfNeeded(view: WebView, intent: Intent?): Boolean {
+
+        Timber.d("launchAppIfNeeded: $intent")
+
         if (intent == null) {
             Timber.d("Received null intent, not handling external app launch.")
             return false
@@ -662,38 +662,68 @@ class WebPageClient(
 
         when (domainPreferences.launchApp) {
             NoYesAsk.YES -> {
-                Timber.d("intentForUrl: launch app")
+                Timber.d("Launch app")
                 activity.startActivityWithFallback(view, intent, false)
+                // Still load the page when not launching
+                // Otherwise you can end up with empty page which is not nice
                 return true
             }
             NoYesAsk.NO -> {
-                Timber.d("intentForUrl: do not launch app")
+                Timber.d("Do not launch app")
+                // Still load the page when not launching
                 return false
             }
             NoYesAsk.ASK -> {
-                Timber.d("intentForUrl: ask user")
-                var shouldOverrideUrlLoading = true
-                if (exAppLaunchDialog == null) {
-                    exAppLaunchDialog = MaterialAlertDialogBuilder(activity)
+                Timber.d("Ask user")
+
+                if (appLaunchDialog == null) {
+
+                    // Sadly nested loop trick from here crashes after exiting the loop
+                    // Possibly a threading issue?
+                    // See: https://stackoverflow.com/a/10358260/3969362
+                    // Make a handler that throws a runtime exception when a message is received
+                    // That allows us to exit our nested loop
+                    // TODO: Make that nested loop thingy pretty using extensions?
+//                    val handler = Handler(Looper.myLooper()!!) {
+//                        throw RuntimeException()
+//                    }
+
+                    appLaunchDialog = MaterialAlertDialogBuilder(activity)
                         .setTitle(R.string.dialog_title_third_party_app)
                         .setMessage(R.string.dialog_message_third_party_app)
                         .setPositiveButton(activity.getText(R.string.yes)) { dialog, _ ->
                             activity.startActivityWithFallback(view, intent, false)
-                            dialog.dismiss()
-                            exAppLaunchDialog = null
-                            shouldOverrideUrlLoading = true
+                            //dialog.dismiss()
+                            appLaunchDialog = null
+                            // Exit our nested event loop
+                            //handler.sendMessage(handler.obtainMessage())
                         }
                         .setNegativeButton(activity.getText(R.string.no)) { dialog, _ ->
                             activity.startActivityWithFallback(view, intent, true)
-                            dialog.dismiss()
-                            exAppLaunchDialog = null
-                            shouldOverrideUrlLoading = false
-                        }
-                        .create()
-                    exAppLaunchDialog?.show()
+                            //dialog.dismiss()
+                            appLaunchDialog = null
+                            // Exit our nested event loop
+                            //handler.sendMessage(handler.obtainMessage())
+                        }.setOnCancelListener {
+                            appLaunchDialog = null
+                            // Exit our nested event loop
+                            //handler.sendMessage(handler.obtainMessage())
+                        }.create()
+                    appLaunchDialog?.show()
+
+                    // Start nested event loop as we don't want to return before user resolves above dialog
+//                    try {
+//                        Looper.loop()
+//                    } catch (ex: RuntimeException) {
+//                        // We need to make sure the dialog can't be dismissed without exiting our nested loop as we don't want to accumulate them
+//                        Timber.d("Loop exited")
+//                    }
+
+                    //exAppLaunchDialog = null
                 }
-                Timber.d("intentForUrl: shouldOverrideUrlLoading: $shouldOverrideUrlLoading")
-                return shouldOverrideUrlLoading
+
+                // Still load the page when asking
+                return false
             }
             else -> return false
         }
