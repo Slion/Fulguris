@@ -4,8 +4,8 @@ package fulguris.extensions
 
 // For comments links
 
-import fulguris.R
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Bitmap
@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.resources.MaterialAttributes
+import fulguris.R
 import fulguris.settings.Config
 import timber.log.Timber
 import java.util.*
@@ -147,7 +148,11 @@ val Context.isLandscape: Boolean get() = resources.configuration.orientation == 
  */
 val Context.configId: String get()  {
 
-    val rotation = display?.rotation?.times(90)
+    val rotation = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        display?.rotation?.times(90)
+    } else {
+        (this as? Activity)?.windowManager?.defaultDisplay?.rotation?.times(90)
+    }
 
     return "${Config.filePrefix}${if (isLandscape) "landscape" else "portrait"}-$rotation-sw${resources.configuration.smallestScreenWidthDp}"
 }
