@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
-    <string name="action_reload">Odśwież</string>
-    <string name="action_menu">Menu</string>
-    <string name="action_new_tab">Nowa karta</string>
-    <string name="action_duplicate_tab">Duplikuj kartę</string>
-    <string name="action_share">Udostępnij</string>
+    <string name="action_reload">Przeładuj</string>
+    <string name="action_menu">Więcej</string>
+    <string name="action_new_tab">Nowa</string>
+    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_share">Udostępniaj</string>
     <string name="action_history">Historia</string>
     <string name="action_bookmarks">Zakładki</string>
     <string name="action_downloads">Pobrane</string>

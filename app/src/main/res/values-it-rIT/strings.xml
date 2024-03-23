@@ -3,7 +3,7 @@
     <string name="action_reload">Ricaricare</string>
     <string name="action_menu">Menù</string>
     <string name="action_new_tab">Nuova scheda</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Duplica scheda</string>
     <string name="action_share">Condividi</string>
     <string name="action_history">Cronologia</string>
     <string name="action_bookmarks">Segnalibri</string>
@@ -78,7 +78,7 @@
     <string name="action_no">No</string>
     <string name="action_ask">Chiedi</string>
     <string name="action_proceed">Continua</string>
-    <string name="action_abort">Abort</string>
+    <string name="action_abort">Interrompi</string>
     <string name="title_text_size">Dimensione dei caratteri</string>
     <string name="title_error">Errore</string>
     <string name="hint_title">Titolo</string>
@@ -167,8 +167,8 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Azione annullata.</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error_aborted">Errore di sicurezza! Caricamento pagina interrotto.</string>
+    <string name="message_ssl_error">Connessione sicura compromessa:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Vuoi ancora procedere?</string>
     <string name="message_certificate_date_invalid">la data del certificato non è valida</string>
     <string name="message_certificate_expired">il certificato è scaduto</string>
     <string name="message_certificate_domain_mismatch">il dominio nel certificato differisce dal dominio del sito</string>
@@ -255,7 +255,7 @@
     <string name="settings_summary_privacy_policy">Vedi la nostra politica sulla privacy online</string>
     <string name="settings_title_terms_and_conditions">Termini e Condizioni</string>
     <string name="settings_summary_terms_and_conditions">Vedi i nostri termini e condizioni online</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_summary_discord">Unisciti alla nostra comunità in crescita</string>
     <string name="pref_category_panels">Pannelli</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Paesaggio</string>
@@ -266,11 +266,11 @@
     <string name="pref_category_on_tab_close">Quando si chiude la scheda</string>
     <string name="pref_category_on_tab_change">Quando si cambia scheda</string>
     <string name="pref_category_on_tab_back_forward">Quando si torna indietro o in avanti</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
+    <string name="settings_category_on_follow_link">Quando si segue un collegamento</string>
     <string name="pref_category_scrollbars">Barre di scorrimento</string>
-    <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
+    <string name="settings_title_tab">Scheda</string>
+    <string name="settings_title_page_history">Cronologia pagine</string>
+    <string name="settings_summary_tab">Animazioni, riscontri e aspetto</string>
     <string name="pref_summary_scrollbars">Regola dimensione e comportamento delle barre di scorrimento</string>
     <string name="pref_category_subscriptions">Abbonamenti</string>
     <string name="pref_summary_subscriptions">Attiva o annulla i tuoi abbonamenti</string>
@@ -323,8 +323,8 @@
     <string name="homepage_in_new_tab">Pagina iniziale in una nuova scheda</string>
     <string name="bookmark_in_new_tab">Segnalibro in una nuova scheda</string>
     <string name="new_tab_position">Nuova posizione della scheda</string>
-    <string name="new_tab_position_before">Prima della scheda corrente</string>
-    <string name="new_tab_position_after">Dopo la scheda corrente</string>
+    <string name="new_tab_position_before">Prima della scheda attuale</string>
+    <string name="new_tab_position_after">Dopo la scheda attuale</string>
     <string name="new_tab_position_start">Inizio elenco tabulazioni</string>
     <string name="new_tab_position_end">Fine dell\'elenco delle schede</string>
     <string name="text_encoding">Codifica del testo</string>
@@ -347,15 +347,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Blocco pubblicità e filtraggio dei contenuti</string>
     <string name="settings_summary_content_control_toggle">Attiva blocco pubblicità e filtraggio contenuti</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
-    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
-    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
-    <string name="settings_summary_off_toolbars_position">Top</string>
+    <string name="settings_title_tab_bar_orientation">Orientamento barra delle schede</string>
+    <string name="settings_summary_on_tab_bar_orientation">Verticale</string>
+    <string name="settings_summary_off_tab_bar_orientation">Orizzontale</string>
+    <string name="settings_title_tab_bar_placement">Posizionamento barra delle schede</string>
+    <string name="settings_summary_on_tab_bar_placement">Pannello retrattile</string>
+    <string name="settings_summary_off_tab_bar_placement">Sempre sullo schermo</string>
+    <string name="settings_title_toolbars_position">Posizione barre strumenti</string>
+    <string name="settings_summary_on_toolbars_position">Fondo</string>
+    <string name="settings_summary_off_toolbars_position">Alto</string>
     <string name="settings_title_desktop_mode_default">Modalità desktop</string>
     <string name="settings_summary_desktop_mode_default">Definisci se i nuovi tab usano la modalità desktop di default</string>
     <string name="settings_title_dark_mode_default">Forza la modalità scura</string>
@@ -380,10 +380,10 @@
     <string name="app_restart">Si prega di riavviare l\'app per rendere effettive le modifiche</string>
     <string name="pref_title_crash_logs">Registri crash</string>
     <string name="pref_summary_crash_logs">Scrivi i log dei crash nel file system.\nTocca per aprire la cartella. Fornisci un file pertinente quando segnala un bug.</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_logs">Tracce</string>
+    <string name="pref_summary_on_logs">Abilitato</string>
+    <string name="pref_summary_off_logs">Disabilitato</string>
+    <string name="pref_title_log_level">Livello tracce</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Apri in un\'altra scheda</string>
     <string name="dialog_open_background_tab">Apri in una scheda in background</string>
@@ -406,7 +406,7 @@
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d scheda in incognito aperta</item>
-        <item quantity="other">%1$d incognito tabs open</item>
+        <item quantity="other">%1$d schede in incognito aperte</item>
     </plurals>
     <string name="notification_incognito_running_message">Toccare per aprire</string>
     <string name="notification_incognito_running_description">Notifica in incognito in corso</string>
@@ -436,56 +436,56 @@
     <string name="settings_title_launch_app">Avvia l’app</string>
     <string name="settings_title_category">Categoria</string>
     <string name="settings_summary_on_category">Dominio principale</string>
-    <string name="settings_summary_off_category">Resource domain</string>
-    <string name="action_domain_settings">Domain</string>
-    <string name="settings_title_domains_delete_all">Delete all</string>
-    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
-    <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
-    <string name="settings_title_delete_domain_settings">Delete domain settings</string>
-    <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
+    <string name="settings_summary_off_category">Dominio risorsa</string>
+    <string name="action_domain_settings">Dominio</string>
+    <string name="settings_title_domains_delete_all">Elimina tutto</string>
+    <string name="settings_summary_domains_delete_all">Elimina tutte le impostazioni di dominio</string>
+    <string name="question_delete_all_domain_settings">Eliminare tutte le impostazioni di dominio?</string>
+    <string name="settings_title_delete_domain_settings">Elimina impostazioni dominio</string>
+    <string name="settings_summary_delete_domain_settings">Sarà ricreato la prossima volta che questo dominio è incontrato</string>
     <string name="settings_title_parent">Parent</string>
-    <string name="settings_summary_default_domain_settings">Default domain settings</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_summary_default_domain_settings">Impostazioni dominio predefinite</string>
+    <string name="settings_title_ssl_error">Errore di sicurezza</string>
+    <string name="settings_summary_ssl_error">Cosa fare quando un errore SSL è rilevato</string>
+    <string name="checkbox_remember_domain_choice">Ricorda la scelta per questo dominio</string>
+    <string name="settings_title_third_party_cookies">Cookie di terze parti</string>
+    <string name="settings_summary_on_third_party_cookies">Accetta i cookie usati per tracciare le tue attività su siti web</string>
+    <string name="settings_summary_off_third_party_cookies">Rifiuta i cookie usati per tracciare le tue attività su siti web</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
-    <string name="settings_title_cookies">Cookies</string>
-    <string name="settings_summary_cookies">Current page has no cookies</string>
-    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
-    <string name="settings_title_cookies_delete_all">Delete all</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
-    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <string name="settings_summary_on_javascript">Le funzionalità di siti web e browser dovrebbero funzionare</string>
+    <string name="settings_summary_off_javascript">Le funzionalità di alcuni siti web e del browser non funzioneranno</string>
+    <string name="settings_title_cookies">Cookie</string>
+    <string name="settings_summary_cookies">La pagina attuale non ha cookie</string>
+    <string name="settings_summary_manage_cookies">Gestisci i cookie della pagina attuale</string>
+    <string name="settings_title_cookies_delete_all">Elimina tutto</string>
+    <string name="settings_summary_cookies_delete_all">Elimina tutti i cookie per la pagina attuale</string>
+    <string name="question_delete_all_page_cookies">Elimina tutti i cookie per la pagina attuale?</string>
     <plurals name="settings_summary_cookies">
         <!--
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
-        <item quantity="one">Current page has one cookie</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="one">La pagina attuale ha un cookie</item>
+        <item quantity="other">La pagina attuale ha <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
-    <string name="settings_title_task_label">Task label</string>
-    <string name="settings_title_task_icon">Task icon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
-    <string name="settings_title_toolbar_label">Toolbar label</string>
+    <string name="settings_title_task_label">Etichetta attività</string>
+    <string name="settings_title_task_icon">Icona attività</string>
+    <string name="settings_summary_on_task_icon">Usa icona della pagina</string>
+    <string name="settings_summary_off_task_icon">Usa icona app</string>
+    <string name="settings_title_toolbar_label">Etichetta barra strumenti</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Applicazione di terze parti disponibile</string>
     <string name="dialog_message_third_party_app">Vuoi lanciare l\'applicazione associata a quel sito web?</string>
-    <string name="per_month">\u0020/ month</string>
-    <string name="per_year">\u0020/ year</string>
+    <string name="per_month">\u0020/ mese</string>
+    <string name="per_year">\u0020/ anno</string>
     <string name="session_default">@string/agent_default</string>
     <string name="session_recovery">Recupero</string>
     <string name="session_name_prompt">Inserisci nome sessione:</string>
     <string name="session_already_exists">Una sessione con quel nome esiste già!</string>
-    <string name="session_cant_delete_current">Impossibile eliminare sessione corrente!</string>
+    <string name="session_cant_delete_current">Impossibile eliminare la sessione attuale!</string>
     <string name="session_prompt_confirm_deletion_title">Conferma eliminazione</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="session_prompt_confirm_deletion_message">Sei sicuro di voler eliminare la sessione \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="session_switched">Passato a \"%s\"</string>
     <string name="busy">Servizio occupato, riprova tra poco.</string>
     <string name="invalid_character_removed">Carattere invalido rimosso!</string>
@@ -514,16 +514,16 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">Mostra animazione</string>
     <string name="pref_title_vibrate">Vibrazione</string>
     <string name="pref_title_duration">Durata</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
-    <string name="pref_title_scrollbar_fading">Fading</string>
-    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
-    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
-    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
-    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
-    <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
-    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
-    <string name="pref_title_scrollbar_size">Size</string>
-    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
+    <string name="settings_title_animation_duration">Durata animazione</string>
+    <string name="pref_title_scrollbar_fading">Dissolvenza</string>
+    <string name="pref_summary_on_scrollbar_fading">Le barre di scorrimento scompariranno</string>
+    <string name="pref_summary_off_scrollbar_fading">Le barre di scorrimento sono sempre visibili</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Ritardo prima di scomparire</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">Il tempo dopo il quale le barre di scorrimento inizieranno a scomparire</string>
+    <string name="pref_title_scrollbar_fade_duration">Durata della scomparsa</string>
+    <string name="pref_summary_scrollbar_fade_duration">Il tempo necessario affinché le barre di scorrimento scompaiano</string>
+    <string name="pref_title_scrollbar_size">Grandezza</string>
+    <string name="pref_summary_scrollbar_size">Definisci larghezza e altezza delle barre di scorrimento</string>
     <string name="pref_category_title_session_export">Esporta sessione</string>
     <string name="pref_category_summary_session_export">Scegli la sessione che vuoi esportare</string>
     <string name="error_session_file_corrupted">Errore: file di sessione corrotto!</string>
@@ -570,7 +570,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_export_failure">Scusa, le impostazioni non possono essere esportate!</string>
     <string name="settings_exported">Impostazioni esportate:</string>
     <string name="settings_reseted">Tutte le impostazioni ripristinate</string>
-    <string name="suggest">Search suggestions (number)</string>
+    <string name="suggest">Suggerimenti ricerca (numero)</string>
     <string name="action_cycle_tabs_forwards">Schede ciclo in avanti</string>
     <string name="action_cycle_tabs_backwards">Schede ciclo all\'indietro</string>
     <string name="action_focus_address_bar">Barra degli indirizzi del focus</string>
@@ -588,18 +588,18 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="action_switch_to_tab">Passa alla scheda da 1 a 9</string>
     <string name="action_switch_to_last_tab">Passa all\'ultima scheda</string>
     <string name="action_switch_to_last_session">Passa all\'ultima sessione</string>
-    <string name="log_level_verbose">Verbose</string>
+    <string name="log_level_verbose">Dettagliato</string>
     <string name="log_level_debug">Debug</string>
-    <string name="log_level_info">Info</string>
-    <string name="log_level_warn">Warn</string>
-    <string name="log_level_error">Error</string>
-    <string name="log_level_assert">Assert</string>
+    <string name="log_level_info">Informaz.</string>
+    <string name="log_level_warn">Avviso</string>
+    <string name="log_level_error">Errore</string>
+    <string name="log_level_assert">Asserisci</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
-    <string name="label_domain">Domain</string>
-    <string name="label_title">Title</string>
-    <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_short_url">URL breve</string>
+    <string name="label_domain">Dominio</string>
+    <string name="label_title">Titolo</string>
+    <string name="label_session">Sessione</string>
+    <string name="label_app_name">Nome app</string>
+    <string name="message_render_process_crashed">Esecuzione processo interrotta. Puoi aver bisogno di ricaricare alcune pagine web.</string>
 </resources>

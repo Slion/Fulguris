@@ -255,7 +255,7 @@
     <string name="settings_summary_privacy_policy">在线查看我们的隐私政策</string>
     <string name="settings_title_terms_and_conditions">使用条款&amp; 细则</string>
     <string name="settings_summary_terms_and_conditions">在线查看我们的条款和细则</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_summary_discord">加入我们成长中的社区</string>
     <string name="pref_category_panels">面板</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">横屏</string>
