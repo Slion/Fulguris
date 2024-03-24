@@ -296,7 +296,7 @@ dependencies {
     //implementation group: 'com.google.android.material', name: 'material', version: '1.6.0-alpha01'
 
     // Play Store billing
-    playstoreImplementation 'com.android.billingclient:billing:5.1.0'
+    playstoreImplementation 'com.android.billingclient:billing:6.2.0'
 
     // html parsing for reading mode
     implementation 'org.jsoup:jsoup:1.13.1'
