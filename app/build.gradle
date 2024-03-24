@@ -345,11 +345,11 @@ dependencies {
 
     // Firebase
     // Recommended: Add the Firebase SDK for Google Analytics.
-    playstoreImplementation 'com.google.firebase:firebase-analytics:20.0.2'
-    downloadImplementation 'com.google.firebase:firebase-analytics:20.0.2'
+    playstoreImplementation 'com.google.firebase:firebase-analytics:21.6.1'
+    downloadImplementation 'com.google.firebase:firebase-analytics:21.6.1'
     // Add the Firebase SDK for Crashlytics.
-    playstoreImplementation 'com.google.firebase:firebase-crashlytics:18.2.6'
-    downloadImplementation 'com.google.firebase:firebase-crashlytics:18.2.6'
+    playstoreImplementation 'com.google.firebase:firebase-crashlytics:18.6.3'
+    downloadImplementation 'com.google.firebase:firebase-crashlytics:18.6.3'
 
 
     // Volley HTTP request
