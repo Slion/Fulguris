@@ -114,6 +114,7 @@
     <string name="message_import">Yer işaretleri içe aktarıldı</string>
     <string name="message_clear_history">Geçmiş temizlendi</string>
     <string name="message_cookies_cleared">Çerezler temizlendi</string>
+    <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">En yüksek sekme sınırına ulaşıldı</string>
     <string name="message_text_copied">Metin panoya kopyalandı</string>
     <string name="message_link_copied">Bağlantı panoya kopyalandı</string>
@@ -245,8 +246,10 @@
     <string name="settings_backup">Yedek</string>
     <string name="settings_title_configuration">Yapılandırma</string>
     <string name="settings_summary_configuration">Dikey ve yatay ayarları</string>
+    <string name="settings_title_delete_configuration">Delete configuration</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
+    <string name="settings_title_add_configuration">Add configuration</string>
     <string name="settings_privacy">Gizlilik ayarları</string>
     <string name="settings_about">Hakkında</string>
     <string name="settings_contribute">Katkıda bulun</string>
@@ -278,6 +281,7 @@
     <string name="pref_title_hide_tool_bar">Aşağı kaydırırken araç çubuğunu gizle</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Yukarı kaydırırken araç çubuğunu göster</string>
     <string name="pref_title_show_tool_bar_on_page_top">Sayfanın başında araç çubuğunu göster</string>
+    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_locked_drawers">Locked panels</string>
     <string name="pref_summary_locked_drawers">Sekme ve Yer İşaretleri panelleri sürüklenemez</string>
     <string name="pref_title_use_bottom_sheets">Use bottom sheets</string>
@@ -486,6 +490,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">Mevcut oturum silinemez!</string>
     <string name="session_prompt_confirm_deletion_title">Silmeyi onayla</string>
     <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
     <string name="session_switched">\"%s\" olarak değiştirildi</string>
     <string name="busy">Şu an meşgul, kısa süre sonra tekrar deneyin.</string>
     <string name="invalid_character_removed">Geçersiz karakter kaldırıldı!</string>
@@ -594,6 +599,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
+    <string name="cutout_mode_default">Default</string>
+    <string name="cutout_mode_short_edges">Short edges</string>
+    <string name="cutout_mode_never">Never</string>
+    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>

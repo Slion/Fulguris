@@ -114,6 +114,7 @@
     <string name="message_import">ブックマークをインポートしました</string>
     <string name="message_clear_history">履歴を消去しました</string>
     <string name="message_cookies_cleared">Cookie を消去しました</string>
+    <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">これ以上タブは開けません</string>
     <string name="message_text_copied">テキストをクリップボードにコピーしました</string>
     <string name="message_link_copied">リンクをクリップボードにコピーしました</string>
@@ -245,8 +246,10 @@
     <string name="settings_backup">バックアップ</string>
     <string name="settings_title_configuration">設定</string>
     <string name="settings_summary_configuration">縦向きと横向きの設定</string>
+    <string name="settings_title_delete_configuration">Delete configuration</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
+    <string name="settings_title_add_configuration">Add configuration</string>
     <string name="settings_privacy">プライバシー</string>
     <string name="settings_about">このアプリについて</string>
     <string name="settings_contribute">貢献する</string>
@@ -278,6 +281,7 @@
     <string name="pref_title_hide_tool_bar">下にスクロールしている間はツールバーを非表示にする</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">上にスクロールするときにツールバーを表示する</string>
     <string name="pref_title_show_tool_bar_on_page_top">ページ最上部でツールバーを表示する</string>
+    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_locked_drawers">ロックされたパネル</string>
     <string name="pref_summary_locked_drawers">タブとブックマークパネルをドラッグすることはできません</string>
     <string name="pref_title_use_bottom_sheets">ボトムシートを使う</string>
@@ -484,6 +488,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">現在のセッションは削除できません!</string>
     <string name="session_prompt_confirm_deletion_title">削除の確認</string>
     <string name="session_prompt_confirm_deletion_message">セッション \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" を削除してもよろしいですか？</string>
+    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
     <string name="session_switched">「%s」に切り替えました</string>
     <string name="busy">ビジーです。少し間を開けて再試行してください。</string>
     <string name="invalid_character_removed">無効な文字が削除されました!</string>
@@ -592,6 +597,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">警告</string>
     <string name="log_level_error">エラー</string>
     <string name="log_level_assert">アサート</string>
+    <string name="cutout_mode_default">Default</string>
+    <string name="cutout_mode_short_edges">Short edges</string>
+    <string name="cutout_mode_never">Never</string>
+    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">短縮URL</string>

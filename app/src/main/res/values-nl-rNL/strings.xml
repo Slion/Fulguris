@@ -114,6 +114,7 @@
     <string name="message_import">Bladwijzers zijn geïmporteerd</string>
     <string name="message_clear_history">Historiek gewist</string>
     <string name="message_cookies_cleared">Cookies gewist</string>
+    <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">Max tabs bereikt. Schaf een abonnement aan om meer te ontgrendelen.</string>
     <string name="message_text_copied">Tekst gekopieerd naar klembord</string>
     <string name="message_link_copied">Link gekopieerd naar klembord</string>
@@ -245,8 +246,10 @@
     <string name="settings_backup">Back-up</string>
     <string name="settings_title_configuration">Instellingen</string>
     <string name="settings_summary_configuration">Portret- en landschapsinstellingen</string>
+    <string name="settings_title_delete_configuration">Delete configuration</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
+    <string name="settings_title_add_configuration">Add configuration</string>
     <string name="settings_privacy">Privacy instellingen</string>
     <string name="settings_about">Over</string>
     <string name="settings_contribute">Help mee</string>
@@ -278,6 +281,7 @@
     <string name="pref_title_hide_tool_bar">Verberg werkbalk bij naar beneden scrollen</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Toon werkbalk bij omhoog scrollen</string>
     <string name="pref_title_show_tool_bar_on_page_top">Toon de werkbalk bovenaan de pagina</string>
+    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_locked_drawers">Vergrendelde panelen</string>
     <string name="pref_summary_locked_drawers">Tabbladen en Bladwijzerpanelen kunnen niet worden versleept</string>
     <string name="pref_title_use_bottom_sheets">Bodemplaten gebruiken</string>
@@ -486,6 +490,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">Kan huidige sessie niet verwijderen!</string>
     <string name="session_prompt_confirm_deletion_title">Verwijdering bevestigen</string>
     <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
     <string name="session_switched">Overgeschakeld naar \"%s\"</string>
     <string name="busy">Bezig, probeer het binnenkort nog eens.</string>
     <string name="invalid_character_removed">Ongeldig teken verwijderd!</string>
@@ -594,6 +599,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
+    <string name="cutout_mode_default">Default</string>
+    <string name="cutout_mode_short_edges">Short edges</string>
+    <string name="cutout_mode_never">Never</string>
+    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>

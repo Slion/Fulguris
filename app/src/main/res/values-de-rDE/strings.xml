@@ -114,6 +114,7 @@
     <string name="message_import">Lesezeichen wurden importiert</string>
     <string name="message_clear_history">Verlauf gelöscht</string>
     <string name="message_cookies_cleared">Cookies gelöscht</string>
+    <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">Maximale Tab-Anzahl erreicht. Entsperre noch mehr Tabs, indem du ein Abonnement kaufst.</string>
     <string name="message_text_copied">Text in Zwischenablage kopiert</string>
     <string name="message_link_copied">Link in Zwischenablage kopiert</string>
@@ -245,8 +246,10 @@
     <string name="settings_backup">Sicherung</string>
     <string name="settings_title_configuration">Konfiguration</string>
     <string name="settings_summary_configuration">Hoch- und Querformat Einstellungen</string>
+    <string name="settings_title_delete_configuration">Delete configuration</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
+    <string name="settings_title_add_configuration">Add configuration</string>
     <string name="settings_privacy">Privatsphäre</string>
     <string name="settings_about">Über</string>
     <string name="settings_contribute">Unterstützen</string>
@@ -278,6 +281,7 @@
     <string name="pref_title_hide_tool_bar">Suchleiste beim Scrollen ausblenden</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Suchleiste beim Scrollen nach oben anzeigen</string>
     <string name="pref_title_show_tool_bar_on_page_top">Suchleiste oben auf der Seite anzeigen</string>
+    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_locked_drawers">Panels sperren</string>
     <string name="pref_summary_locked_drawers">Tabs- und Lesezeichen-Panels können nicht verschoben werden</string>
     <string name="pref_title_use_bottom_sheets">Bottom Sheets verwenden</string>
@@ -486,6 +490,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">Die aktuelle Sitzung kann nicht gelöscht werden!</string>
     <string name="session_prompt_confirm_deletion_title">Löschen bestätigen</string>
     <string name="session_prompt_confirm_deletion_message">Sind Sie sicher, dass Sie die Sitzung \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" löschen möchten?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
     <string name="session_switched">Zu \"%s\" gewechselt</string>
     <string name="busy">Beschäftigt, versuche es in Kürze wieder</string>
     <string name="invalid_character_removed">Ungültiges Zeichen entfernt!</string>
@@ -594,6 +599,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warnung</string>
     <string name="log_level_error">Fehler</string>
     <string name="log_level_assert">Assert</string>
+    <string name="cutout_mode_default">Default</string>
+    <string name="cutout_mode_short_edges">Short edges</string>
+    <string name="cutout_mode_never">Never</string>
+    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Kurz-URL</string>
