@@ -43,7 +43,7 @@ class ImageView : androidx.appcompat.widget.AppCompatImageView {
     constructor(context: Context): super(context) {
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         try {
             super.onDraw(canvas)
         } catch (e: Exception) {

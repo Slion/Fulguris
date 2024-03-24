@@ -388,7 +388,7 @@ class WebPageTab(
     /**
      *
      */
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         when (key) {
             activity.getString(R.string.pref_key_scrollbar_size) -> {
                 webView?.scrollBarSize = userPreferences.scrollbarSize.px.toInt()
@@ -1383,7 +1383,12 @@ class WebPageTab(
          */
         private var canTriggerLongPress = true
 
-        override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+
+            if (e1==null) {
+                return false
+            }
+
             val power = (velocityY * 100 / maxFling).toInt()
             if (power < -10) {
                 webBrowser.hideActionBar()

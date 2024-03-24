@@ -897,7 +897,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Create a gesture detector to catch horizontal swipes our on toolbar
         val toolbarSwipeDetector = GestureDetectorCompat(this, object : GestureDetector.SimpleOnGestureListener() {
 
-            override fun onFling(event1: MotionEvent, event2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+            override fun onFling(event1: MotionEvent?, event2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+
+                if (event1==null) {
+                    return false
+                }
 
                 // No swipe action when our text field is focused
                 if (searchView.hasFocus()) {
@@ -1156,7 +1160,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 //                return true
 //            }
 
-            override fun onFling(event1: MotionEvent, event2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+            override fun onFling(event1: MotionEvent?, event2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+
+                if (event1==null) {
+                    return false
+                }
+
                 // No swipe when too long
                 if ((event2.eventTime - event1.eventTime) > kMaxSwipeTime) {
                     return false
