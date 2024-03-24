@@ -47,8 +47,9 @@ import java.util.regex.Pattern
         }
 
         // Allows us to not ask to launch an app that's not installed on the device
-        // To test it you could for instance visit https://t.me/durov if you don't have Telegram installed and Launch app option is set to ASK
-        return if (!isSpecializedHandlerAvailable(intent)) {
+        // To test it you could for instance visit https://t.me/durov while Telegram app is not installed and launch app option set to ASK
+        // Skipping HTTP and HTTPS schemes can be useful to debug but is not the expected behaviour
+        return if (/*uri.scheme=="http" || uri.scheme=="https" ||*/ !isSpecializedHandlerAvailable(intent)) {
             null
         } else intent
     }
@@ -98,6 +99,7 @@ import java.util.regex.Pattern
      * TODO: Review and test that fallback logic
      */
     fun Activity.startActivityWithFallback(tab: WebView?, intent: Intent, onlyFallback: Boolean): Boolean {
+        Timber.d("startActivityWithFallback")
         if (!onlyFallback && startActivityForIntent(intent)) {
             Timber.d("Intent successfully started.")
             // Intent was successfully handled

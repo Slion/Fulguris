@@ -2234,13 +2234,19 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     * Used to close empty tab after opening link.
+     * Used to skip the undo tab close option for empty tabs we closed automatically
+     */
+    private var skipNextTabClosedSnackbar : Boolean = false
+
+    /**
+     * Used to close empty tab after opening download link or launching app.
      */
     fun closeCurrentTabIfEmpty() {
         // Had to delay that otherwise we could get there too early on the url still contains the download link
         // URL is later on reset to null by WebView internal mechanics.
         mainHandler.postDelayed({
             if (currentTabView?.url.isNullOrBlank()) {
+                skipNextTabClosedSnackbar = true
                 tabsManager.deleteTab(tabsManager.indexOfCurrentTab())
             }
         }, 500);
@@ -2600,7 +2606,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         Timber.d("Notify Tab Removed: $position")
         tabsView?.tabRemoved(position)
 
-        if (userPreferences.onTabCloseShowSnackbar) {
+        if (userPreferences.onTabCloseShowSnackbar && !skipNextTabClosedSnackbar) {
             // Notify user a tab was closed with an option to recover it
             makeSnackbar(
                     getString(R.string.notify_tab_closed), Snackbar.LENGTH_SHORT, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
@@ -2608,6 +2614,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                         tabsManager.recoverClosedTab()
                     }.show()
         }
+        skipNextTabClosedSnackbar = false
     }
 
     /**

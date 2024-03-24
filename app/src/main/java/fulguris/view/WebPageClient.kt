@@ -617,23 +617,40 @@ class WebPageClient(
 
         loadDomainPreferences(uri.host ?: "", false)
 
-        // Regardless of app launch we do not cancel URL loading
-        // Doing so would require we deal with empty pages in new tab and such issues
-        activity.intentForUrl(view, uri)?.let {
-            // That debounce logic allows us launch our app ASAP while cancelling repeat launch
-            if (debounceLaunch==null) {
-                // No pending debounce, just launch our app then
-                launchAppIfNeeded(view, it)
+        // Don't launch apps from background tab
+        if (webPageTab.isForeground) {
+            // Regardless of app launch we do not cancel URL loading
+            // Doing so would require we deal with empty pages in new tab and such issues
+            activity.intentForUrl(view, uri)?.let {
+
+                var appLaunched = false
+
+                // That debounce logic allows us launch our app ASAP while cancelling repeat launch
+                if (debounceLaunch==null) {
+                    // No pending debounce, just launch our app then
+                    appLaunched = launchAppIfNeeded(view, it)
+                }
+                // Cancel debounce if any
+                view.removeCallbacks(debounceLaunch)
+                // Create a new one
+                debounceLaunch = Runnable {
+                    debounceLaunch = null
+                }
+                // Schedule our debounce
+                view.postDelayed(debounceLaunch,1000)
+
+                if (appLaunched) {
+                    Timber.d("Override loading after app launch")
+                    view.stopLoading()
+                    if (activity is WebBrowserActivity) {
+                        activity.closeCurrentTabIfEmpty()
+                    }
+                    return true
+                }
             }
-            // Cancel debounce if any
-            view.removeCallbacks(debounceLaunch)
-            // Create a new one
-            debounceLaunch = Runnable {
-                debounceLaunch = null
-            }
-            // Schedule our debounce
-            view.postDelayed(debounceLaunch,1000)
         }
+
+
 
         // Continue with loading the url
         return continueLoadingUrl(view, url, headers)
@@ -643,89 +660,49 @@ class WebPageClient(
     }
 
     /**
-     * Handles the decision-making process for launching an external application based on the given intent.
-     * This method checks the user's preference on whether to launch external applications directly,
-     * ask the user before launching, or not launch at all. It also presents a dialog to the user if necessary.
-     *
-     * The [view] currently displaying content.
-     * The [intent] that has been created to potentially launch an external application.
-     * @return
+     * Check domain settings to decide whether to launch an app
+     * The [view] this request is coming from
+     * The [intent] defining the application we should launch
+     * @return True if an app was launched on the spot, false otherwise.
      */
-    private fun launchAppIfNeeded(view: WebView, intent: Intent?): Boolean {
+    private fun launchAppIfNeeded(view: WebView, intent: Intent): Boolean {
 
         Timber.d("launchAppIfNeeded: $intent")
 
-        if (intent == null) {
-            Timber.d("Received null intent, not handling external app launch.")
-            return false
-        }
-
         when (domainPreferences.launchApp) {
             NoYesAsk.YES -> {
-                Timber.d("Launch app")
-                activity.startActivityWithFallback(view, intent, false)
-                // Still load the page when not launching
-                // Otherwise you can end up with empty page which is not nice
-                return true
+                Timber.d("Launch app - YES")
+                return activity.startActivityWithFallback(view, intent, false)
             }
             NoYesAsk.NO -> {
-                Timber.d("Do not launch app")
+                Timber.d("Launch app - NO")
                 // Still load the page when not launching
                 return false
             }
             NoYesAsk.ASK -> {
-                Timber.d("Ask user")
+                Timber.d("Launch app - ASK")
 
                 if (appLaunchDialog == null) {
-
-                    // Sadly nested loop trick from here crashes after exiting the loop
-                    // Possibly a threading issue?
-                    // See: https://stackoverflow.com/a/10358260/3969362
-                    // Make a handler that throws a runtime exception when a message is received
-                    // That allows us to exit our nested loop
-                    // TODO: Make that nested loop thingy pretty using extensions?
-//                    val handler = Handler(Looper.myLooper()!!) {
-//                        throw RuntimeException()
-//                    }
 
                     appLaunchDialog = MaterialAlertDialogBuilder(activity)
                         .setTitle(R.string.dialog_title_third_party_app)
                         .setMessage(R.string.dialog_message_third_party_app)
-                        .setPositiveButton(activity.getText(R.string.yes)) { dialog, _ ->
+                        .setPositiveButton(activity.getText(R.string.yes)) { _, _ ->
                             activity.startActivityWithFallback(view, intent, false)
-                            //dialog.dismiss()
                             appLaunchDialog = null
-                            // Exit our nested event loop
-                            //handler.sendMessage(handler.obtainMessage())
                         }
-                        .setNegativeButton(activity.getText(R.string.no)) { dialog, _ ->
+                        .setNegativeButton(activity.getText(R.string.no)) { _, _ ->
                             activity.startActivityWithFallback(view, intent, true)
-                            //dialog.dismiss()
                             appLaunchDialog = null
-                            // Exit our nested event loop
-                            //handler.sendMessage(handler.obtainMessage())
                         }.setOnCancelListener {
                             appLaunchDialog = null
-                            // Exit our nested event loop
-                            //handler.sendMessage(handler.obtainMessage())
                         }.create()
                     appLaunchDialog?.show()
-
-                    // Start nested event loop as we don't want to return before user resolves above dialog
-//                    try {
-//                        Looper.loop()
-//                    } catch (ex: RuntimeException) {
-//                        // We need to make sure the dialog can't be dismissed without exiting our nested loop as we don't want to accumulate them
-//                        Timber.d("Loop exited")
-//                    }
-
-                    //exAppLaunchDialog = null
                 }
 
                 // Still load the page when asking
                 return false
             }
-            else -> return false
         }
     }
 
@@ -733,6 +710,7 @@ class WebPageClient(
      * SL: Looks like this does the opposite of what it looks like.
      */
     private fun continueLoadingUrl(webView: WebView, url: String, headers: Map<String, String>): Boolean {
+        Timber.d("continueLoadingUrl")
         if (!URLUtil.isNetworkUrl(url)
             && !URLUtil.isFileUrl(url)
             && !URLUtil.isAboutUrl(url)
