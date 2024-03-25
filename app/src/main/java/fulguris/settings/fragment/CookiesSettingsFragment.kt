@@ -27,15 +27,25 @@ import fulguris.activity.WebBrowserActivity
 import fulguris.di.UserPrefs
 import fulguris.extensions.resizeAndShow
 import android.annotation.SuppressLint
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.webkit.CookieManager
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
+import androidx.webkit.CookieManagerCompat
+import androidx.webkit.WebViewFeature
+import androidx.webkit.WebViewFeature.GET_COOKIE_INFO
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
+import fulguris.extensions.copyToClipboard
+import fulguris.extensions.snackbar
+import fulguris.extensions.toast
+import fulguris.preference.BasicPreference
+import fulguris.utils.WebUtils
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber
 import javax.inject.Inject
@@ -104,7 +114,7 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
     }
 
     /**
-     *
+     * Try that stuff against http://setcookie.net which conveniently allows you to specify a path too
      */
     private fun deleteAllPageCookies() {
         Timber.v("Domain: $domain")
@@ -112,7 +122,7 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
             browser.tabsManager.currentTab?.url?.let { url ->
                 Timber.d("URL: $url")
                 val httpUrl = url.toHttpUrl()
-                val paths = httpUrl.encodedPathSegments.scan("/") { prefix, segment -> "$prefix$segment/" }
+                val paths = httpUrl.encodedPathSegments.scan("") { prefix, segment -> "$prefix/$segment" }
                 Timber.d("Paths: $paths")
                 val domains = ArrayList<String>()
                 var host = httpUrl.host
@@ -132,14 +142,22 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
 
                 // Build our list of cookies
                 val cm = CookieManager.getInstance()
-                val cookies = cm.getCookie(url)?.split(';')
-                Timber.v("Cookies count: ${cookies?.count()}")
-                cookies?.forEach { cookie ->
+                val cookies = WebUtils.getCookies(url)
+                Timber.v("Cookies count: ${cookies.count()}")
+                cookies.forEach { cookie ->
                     Timber.v(cookie.trim())
-                    val parsed = cookie.split('=', limit = 2)
-                    if (parsed.isNotEmpty()) {
+
+                    val attrs = cookie.split(";").map { it.split("=", limit=2) }.map { it[0].trim() to if (it.count()==2) it[1].trim() else null }
+                    val name = attrs[0].first
+                    val value = attrs[0].second
+                    val pathAttr = attrs.find { it.first.equals("path",true)  }
+                    val domainAttr = attrs.find { it.first.equals("domain",true)  }
+
+                    // If we have a path attribute we don't need to use brut force
+                    if (pathAttr==null || domainAttr==null) {
+                    //if (true) {
+                        // Use legacy brut force way to delete cookies
                         // See: https://stackoverflow.com/q/35390590/3969362
-                        val cookieName = parsed[0].trim()
                         // In our chain of domains delete all cookies on our path
                         // That's the only way to make sure we hit the cookie cause we can't tell where it was defined
                         // See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
@@ -147,11 +165,31 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
                         // I wonder how that works with our WebkitCookieManager?
                         domains.forEach { domain ->
                             paths.forEach { path ->
-                                cm.setCookie(url,"$cookieName=;Domain=$domain;Path=$path;Max-Age=0") {
-                                    Timber.v("Cookie $cookieName deleted: $it")
+                                val delCookie = "$name=;Domain=$domain;Path=$path;Max-Age=0"
+                                Timber.d("Delete cookie: $delCookie")
+                                cm.setCookie(url,delCookie) {
+                                    Timber.v("Cookie $name deleted: $it")
                                 }
                             }
                         }
+                    } else {
+                        // New slightly more sane way to delete cookies
+                        // Do it once without domain as this is needed when a path is specified
+                        var delCookie = "$name=;Path=${pathAttr.second};Max-Age=0"
+                        Timber.d("Delete cookie: $delCookie")
+                        cm.setCookie(url,delCookie) {
+                            Timber.v("Cookie $name deleted: $it")
+                        }
+
+                        // Do it once with domain as this is needed path is root /
+                        delCookie = "$name=;Domain=${domainAttr.second};Path=${pathAttr.second};Max-Age=0"
+                        //val delCookie = "$name=;Path=${pathAttr.second};Max-Age=0"
+                        Timber.d("Delete cookie: $delCookie")
+                        cm.setCookie(url,delCookie) {
+                            Timber.v("Cookie $name deleted: $it")
+                        }
+
+                        // Just don't ask
                     }
                 }
 
@@ -168,44 +206,52 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
     fun populateCookieList() {
 
         catCookies?.removeAll()
-
-
         var cookiesCount = 0
 
         (requireActivity() as? WebBrowserActivity)?.let { browser ->
             browser.tabsManager.currentTab?.url?.let { url ->
                 Timber.d("URL: $url")
                 // Build our list of cookies
-                val cookies = CookieManager.getInstance().getCookie(url)?.apply{Timber.v("Raw cookies: $this")}?.split(';')
-                Timber.v("Cookies count: ${cookies?.count()}")
-                cookiesCount = cookies?.count() ?: 0
-                cookies?.forEach { cookie ->
+                val cookies = WebUtils.getCookies(url)
+
+                Timber.v("Cookies count: ${cookies.count()}")
+                cookiesCount = cookies.count() ?: 0
+                cookies.forEach { cookie ->
                     Timber.v(cookie.trim())
-                    val parsed = cookie.split('=', limit = 2)
-                    if (parsed.count() == 2) {
-
-                            // Create cookie preference
-                            val pref = Preference(requireContext())
-                            // Make sure domains and not reversed domains are shown as titles
-                            pref.isSingleLineTitle = false
-                            //pref.key = title
-                            // We are using preference built-in alphabetical sorting by title
-                            // We want sorting to group sub-domains together so we use reverse domain
-                            pref.title = parsed[0].trim()
-                            pref.summary = parsed[1].trim()
-                            //pref.breadcrumb = domain
-
-                            catCookies?.addPreference(pref)
-
-                            /*
-                            pref.fragment = "fulguris.settings.fragment.DomainSettingsFragment"
-                            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                                this.domain = domain
-                                app.domain = domain
-                                false
-                            }*/
-
+                    // Create cookie preference
+                    val pref = BasicPreference(requireContext())
+                    // Make sure domains and not reversed domains are shown as titles
+                    pref.isSingleLineTitle = false
+                    //pref
+                    var summary = ""
+                    // For each attribute of that cookie
+                    cookie.split(';').forEach { attr ->
+                        if (pref.title.isNullOrEmpty()) {
+                            // First deal with name and value
+                            attr.split('=', limit = 2).forEach { comp ->
+                                if (pref.title.isNullOrEmpty()) {
+                                    pref.title = comp.trim()
+                                } else {
+                                    summary = comp.trim()
+                                }
+                            }
+                        } else {
+                            // We do not parse attributes beyond name and value
+                            // Just display them as they are then
+                            summary += "\n${attr.trim()}"
+                        }
                     }
+
+                    // Tapping on the preference copies the cookie to the clipboard
+                    pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                        val clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                        clipboard.copyToClipboard(cookie,"Cookie")
+                        activity?.toast(R.string.message_cookie_copied)
+                        false
+                    }
+                    pref.summary = summary
+                    catCookies?.addPreference(pref)
+
                 }
             }
         }

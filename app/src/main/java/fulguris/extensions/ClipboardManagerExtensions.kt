@@ -6,6 +6,6 @@ import android.content.ClipboardManager
 /**
  * Copies the [text] to the clipboard with the label `URL`.
  */
-fun ClipboardManager.copyToClipboard(text: String) {
-    setPrimaryClip(ClipData.newPlainText("URL", text))
+fun ClipboardManager.copyToClipboard(text: String, label: String = "URL") {
+    setPrimaryClip(ClipData.newPlainText(label, text))
 }

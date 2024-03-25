@@ -80,7 +80,7 @@ class BasicPreference :
         val title = holder.findViewById(android.R.id.title) as TextView
         // Enable multiple line support
         summary.isSingleLine = false
-        summary.maxLines = 10 // Just need to be high enough I guess
+        summary.maxLines = 100 // Just need to be high enough I guess
 
         if (swapTitleSummary) {
             // Just do it

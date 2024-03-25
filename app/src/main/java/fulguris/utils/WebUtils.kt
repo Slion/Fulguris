@@ -28,6 +28,8 @@ import fulguris.database.history.HistoryRepository
 import fulguris.utils.Utils.trimCache
 import android.content.Context
 import android.webkit.*
+import androidx.webkit.CookieManagerCompat
+import androidx.webkit.WebViewFeature
 import io.reactivex.Scheduler
 import timber.log.Timber
 import java.io.File
@@ -36,6 +38,21 @@ import java.io.File
  * Some web utility functions
  */
 object WebUtils {
+
+    /**
+     * Provide a list of cookies either using newest API which provides all cookie attributes or using legacy method which only provides cookie name and value
+     */
+    fun getCookies(url: String): List<String> {
+        val cm = CookieManager.getInstance()
+
+        return if (WebViewFeature.isFeatureSupported(WebViewFeature.GET_COOKIE_INFO) /*&& false*/) {
+            // New way provides all cookies attributes
+            CookieManagerCompat.getCookieInfo(cm,url)
+        } else {
+            // Legacy method provides only cookie name and value
+            cm.getCookie(url)?.apply{Timber.v("Raw cookies: $this")}?.split(';') ?: emptyList()
+        }
+    }
 
     fun clearCookies(callback: ValueCallback<Boolean>? = null) {
         val c = CookieManager.getInstance()
