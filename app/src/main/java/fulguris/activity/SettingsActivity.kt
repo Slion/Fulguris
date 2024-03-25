@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import fulguris.extensions.ihs
 import timber.log.Timber
 
 const val SETTINGS_CLASS_NAME = "ClassName"
@@ -71,8 +72,11 @@ class SettingsActivity : ThemedSettingsActivity() {
     }
 
 
-
+    /**
+     *
+     */
     override fun onResume() {
+        Timber.d("$ihs : onResume")
         super.onResume()
 
         // At this stage our preferences have been created
@@ -94,6 +98,16 @@ class SettingsActivity : ThemedSettingsActivity() {
         }
 
         updateTitleOnLayout()
+    }
+
+    /**
+     *
+     */
+    override fun onDestroy() {
+        Timber.d("$ihs : onDestroy")
+        super.onDestroy()
+
+        //responsive = null
     }
 
     /**
