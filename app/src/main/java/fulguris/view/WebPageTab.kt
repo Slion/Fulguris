@@ -60,6 +60,7 @@ import fulguris.constant.Uris
 import fulguris.constant.WINDOWS_DESKTOP_USER_AGENT_PREFIX
 import fulguris.di.HiltEntryPoint
 import fulguris.di.configPrefs
+import fulguris.enums.LayerType
 import fulguris.extensions.canScrollVertically
 import fulguris.extensions.dp
 import fulguris.extensions.isDarkTheme
@@ -249,13 +250,18 @@ class WebPageTab(
 
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
     val dialogBuilder: LightningDialogBuilder = hiltEntryPoint.dialogBuilder
-    val proxyUtils: fulguris.utils.ProxyUtils = hiltEntryPoint.proxyUtils
+    val proxyUtils: ProxyUtils = hiltEntryPoint.proxyUtils
     val databaseScheduler: Scheduler = hiltEntryPoint.databaseScheduler()
     val mainScheduler: Scheduler = hiltEntryPoint.mainScheduler()
     val networkConnectivityModel: NetworkConnectivityModel = hiltEntryPoint.networkConnectivityModel
     val defaultDomainSettings = DomainPreferences(activity)
 
     private val networkDisposable: Disposable
+
+    /**
+     * Will decide to enable hardware acceleration and WebGL or not
+     */
+    private var layerType = LayerType.Hardware
 
     /**
      * This method determines whether the current tab is visible or not.
@@ -577,6 +583,7 @@ class WebPageTab(
         }
 
         settings.defaultTextEncodingName = userPreferences.textEncoding
+        layerType = userPreferences.layerType
         setColorMode(userPreferences.renderingMode)
 
         if (!isIncognito) {
@@ -823,6 +830,14 @@ class WebPageTab(
     fun stopLoading() {
         webView?.stopLoading()
     }
+    
+    /**
+     * Layer type notably determines if we use hardware acceleration and WebGL
+     */
+    private fun setLayerType() {
+        Timber.d("$ihs : setLayerType: $layerType")
+        webView?.setLayerType(layerType.value, paint)
+    }
 
     /**
      * This method forces the layer type to hardware, which
@@ -830,7 +845,8 @@ class WebPageTab(
      * of the current [WebPageTab].
      */
     private fun setHardwareRendering() {
-        webView?.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
+        //webView?.setLayerType(View.LAYER_TYPE_SOFTWARE, paint)
+        webView?.setLayerType(View.LAYER_TYPE_SOFTWARE, paint)
     }
 
     /**
@@ -839,7 +855,7 @@ class WebPageTab(
      * the layers when necessary.
      */
     private fun setNormalRendering() {
-        webView?.setLayerType(View.LAYER_TYPE_NONE, null)
+        webView?.setLayerType(View.LAYER_TYPE_NONE, paint)
     }
 
     /**
@@ -849,7 +865,7 @@ class WebPageTab(
      * the view.
      */
     fun setSoftwareRendering() {
-        webView?.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        webView?.setLayerType(View.LAYER_TYPE_SOFTWARE, paint)
     }
 
     /**
@@ -873,14 +889,14 @@ class WebPageTab(
                 //setNormalRendering()
                 // SL: enabled that and the performance gain is very noticeable on  F(x)tec Pro1
                 // Notably on: https://www.bbc.com/worklife
-                setHardwareRendering()
+                setLayerType()
             }
             RenderingMode.INVERTED -> {
                 val filterInvert = ColorMatrixColorFilter(
                     negativeColorArray
                 )
                 paint.colorFilter = filterInvert
-                setHardwareRendering()
+                setLayerType()
 
                 invertPage = true
             }
@@ -889,7 +905,7 @@ class WebPageTab(
                 cm.setSaturation(0f)
                 val filterGray = ColorMatrixColorFilter(cm)
                 paint.colorFilter = filterGray
-                setHardwareRendering()
+                setLayerType()
             }
             RenderingMode.INVERTED_GRAYSCALE -> {
                 val matrix = ColorMatrix()
@@ -900,7 +916,7 @@ class WebPageTab(
                 concat.setConcat(matrix, matrixGray)
                 val filterInvertGray = ColorMatrixColorFilter(concat)
                 paint.colorFilter = filterInvertGray
-                setHardwareRendering()
+                setLayerType()
 
                 invertPage = true
             }
@@ -908,7 +924,7 @@ class WebPageTab(
             RenderingMode.INCREASE_CONTRAST -> {
                 val increaseHighContrast = ColorMatrixColorFilter(increaseContrastColorArray)
                 paint.colorFilter = increaseHighContrast
-                setHardwareRendering()
+                setLayerType()
             }
         }
 

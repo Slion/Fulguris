@@ -59,6 +59,12 @@
         <item>@string/action_ask</item>
     </string-array>
 
+    <string-array name="LayerTypes">
+        <item>@string/layer_type_none</item>
+        <item>@string/layer_type_software</item>
+        <item>@string/layer_type_hardware</item>
+    </string-array>
+
     <string-array name="HeaderInfo">
         <item>@string/label_url</item>
         <item>@string/label_short_url</item>

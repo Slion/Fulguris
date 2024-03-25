@@ -161,7 +161,7 @@
     <string name="pref_key_toolbar_label">pref_key_toolbar_label</string>
     <string name="pref_key_add_configuration">pref_key_add_configuration</string>
     <string name="pref_key_configurations">pref_key_configurations</string>
-
+    <string name="pref_key_layer_type">pref_key_layer_type</string>
 
 
     <string name="pref_key_portrait">pref_key_portrait</string>

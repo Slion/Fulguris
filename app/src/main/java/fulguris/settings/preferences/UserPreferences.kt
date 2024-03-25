@@ -21,6 +21,7 @@ import fulguris.browser.ProxyChoice
 import fulguris.browser.SuggestionNumChoice
 import fulguris.enums.LogLevel
 import fulguris.enums.HeaderInfo
+import fulguris.enums.LayerType
 import fulguris.settings.preferences.delegates.booleanPreference
 import fulguris.settings.preferences.delegates.enumPreference
 import fulguris.settings.preferences.delegates.floatResPreference
@@ -193,6 +194,11 @@ class UserPreferences @Inject constructor(
      * True if the browser should clear the browser cookies on app exit, false otherwise.
      */
     var clearCookiesExitEnabled by preferences.booleanPreference(CLEAR_COOKIES_EXIT, false)
+
+    /**
+     * Determine if we use hardware acceleration and WebGL.
+     */
+    var layerType by preferences.enumPreference(R.string.pref_key_layer_type, LayerType.Hardware)
 
     /**
      * The index of the rendering mode that should be used by the browser.

@@ -193,6 +193,17 @@
 
     <PreferenceCategory android:title="@string/pref_category_webpage">
 
+        <fulguris.preference.EnumListPreference
+            a:key="@string/pref_key_layer_type"
+            a:title="@string/settings_title_layer_type"
+            a:useSimpleSummaryProvider="true"
+            a:defaultValue="Hardware"
+            a:entries="@array/LayerTypes"
+            a:icon="@drawable/ic_layers"
+            a:singleLineTitle="false"
+            a:enumClassName="fulguris.enums.LayerType"
+            />
+
         <Preference
             android:key="@string/pref_key_rendering_mode"
             android:title="@string/rendering_mode"
