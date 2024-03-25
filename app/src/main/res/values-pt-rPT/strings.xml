@@ -77,6 +77,9 @@
     <string name="action_yes">Sim</string>
     <string name="action_no">Não</string>
     <string name="action_ask">Perguntar</string>
+    <string name="layer_type_none">None</string>
+    <string name="layer_type_software">Software - WebGL off</string>
+    <string name="layer_type_hardware">Hardware - WebGL on</string>
     <string name="action_proceed">Avançar</string>
     <string name="action_abort">Cancelar</string>
     <string name="title_text_size">Tamanho do texto</string>
@@ -114,7 +117,7 @@
     <string name="message_import">Marcadores importados</string>
     <string name="message_clear_history">Histórico removido</string>
     <string name="message_cookies_cleared">Cookies removidos</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">Não foi possível limpar os cookies</string>
     <string name="max_tabs">Atingiu o número máximo de separadores. Pode desbloquear este limite com uma subscrição.</string>
     <string name="message_text_copied">Texto copiado para a área de transferência</string>
     <string name="message_link_copied">Ligação copiada para a área de transferência</string>
@@ -246,10 +249,10 @@
     <string name="settings_backup">Backup</string>
     <string name="settings_title_configuration">Configuração</string>
     <string name="settings_summary_configuration">Definições do modo vertical ou horizontal</string>
-    <string name="settings_title_delete_configuration">Delete configuration</string>
+    <string name="settings_title_delete_configuration">Eliminar configuração</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
-    <string name="settings_title_add_configuration">Add configuration</string>
+    <string name="settings_title_add_configuration">Adicionar configuração</string>
     <string name="settings_privacy">Privacidade</string>
     <string name="settings_about">Acerca</string>
     <string name="settings_contribute">Participar</string>
@@ -281,7 +284,7 @@
     <string name="pref_title_hide_tool_bar">Ocultar barra de ferramentas ao deslocar para baixo</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Mostrar barra de ferramentas ao deslocar para cima</string>
     <string name="pref_title_show_tool_bar_on_page_top">Mostrar barra de ferramentas no topo da página</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
+    <string name="pref_title_cutout_mode">Modo de recorte</string>
     <string name="pref_title_locked_drawers">Painéis bloqueados</string>
     <string name="pref_summary_locked_drawers">Os painéis Separadores e Marcadores não podem ser arrastados</string>
     <string name="pref_title_use_bottom_sheets">Painéis em baixo</string>
@@ -431,6 +434,7 @@
     <string name="action_close_all_other_tabs">Fechar os outros separadores</string>
     <string name="action_restore_all_tabs">Restaurar todos os separadores</string>
     <string name="action_restore_tab">Restaurar separador</string>
+    <string name="settings_title_layer_type">Layer type</string>
     <string name="settings_title_domains">Domínios</string>
     <string name="settings_summary_domains">Gerir definições de domínios</string>
     <string name="settings_title_resource_domains">Domínios de recurso</string>
@@ -490,7 +494,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">Não foi possível apagar a sessão!</string>
     <string name="session_prompt_confirm_deletion_title">Confirmar eliminação</string>
     <string name="session_prompt_confirm_deletion_message">Tem a certeza de que pretende apagar a sessão \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Tem a certeza de que deseja eliminar a configuração \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Trocar para %s</string>
     <string name="busy">Ocupado, tente mais tarde</string>
     <string name="invalid_character_removed">Carácter inválido removido!</string>
@@ -599,10 +603,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Aviso</string>
     <string name="log_level_error">Erro</string>
     <string name="log_level_assert">Declaração</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
+    <string name="cutout_mode_default">Padrão</string>
+    <string name="cutout_mode_short_edges">Margens reduzidas</string>
+    <string name="cutout_mode_never">Nunca</string>
+    <string name="cutout_mode_always">Sempre</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">URL curto</string>

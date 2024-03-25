@@ -77,6 +77,9 @@
     <string name="action_yes">Si</string>
     <string name="action_no">No</string>
     <string name="action_ask">Chiedi</string>
+    <string name="layer_type_none">None</string>
+    <string name="layer_type_software">Software - WebGL off</string>
+    <string name="layer_type_hardware">Hardware - WebGL on</string>
     <string name="action_proceed">Continua</string>
     <string name="action_abort">Interrompi</string>
     <string name="title_text_size">Dimensione dei caratteri</string>
@@ -431,6 +434,7 @@
     <string name="action_close_all_other_tabs">Chiudi tutte le altre schede</string>
     <string name="action_restore_all_tabs">Ripristina tutte le schede</string>
     <string name="action_restore_tab">Ripristina scheda</string>
+    <string name="settings_title_layer_type">Layer type</string>
     <string name="settings_title_domains">Domini</string>
     <string name="settings_summary_domains">Gestisci impostazioni dominio</string>
     <string name="settings_title_resource_domains">Domini delle risorse</string>

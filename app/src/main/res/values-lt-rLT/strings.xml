@@ -77,6 +77,9 @@
     <string name="action_yes">Taip</string>
     <string name="action_no">Ne</string>
     <string name="action_ask">Ask</string>
+    <string name="layer_type_none">None</string>
+    <string name="layer_type_software">Software - WebGL off</string>
+    <string name="layer_type_hardware">Hardware - WebGL on</string>
     <string name="action_proceed">Proceed</string>
     <string name="action_abort">Abort</string>
     <string name="title_text_size">Text size</string>
@@ -433,6 +436,7 @@
     <string name="action_close_all_other_tabs">Close all other tabs</string>
     <string name="action_restore_all_tabs">Restore all tabs</string>
     <string name="action_restore_tab">Restore tab</string>
+    <string name="settings_title_layer_type">Layer type</string>
     <string name="settings_title_domains">Domains</string>
     <string name="settings_summary_domains">Manage domain settings</string>
     <string name="settings_title_resource_domains">Resource domains</string>
