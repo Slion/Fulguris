@@ -1,0 +1,5 @@
+⚙️ Layer type settings options - GPU WebGL on/off
+🔨 Target Android 14
+🔧 Dependencies upgrade
+Translations update:
+🇵🇹 Portuguese
