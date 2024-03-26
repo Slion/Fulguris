@@ -1,0 +1,2 @@
+🪲 Fix start-up crash on Android 14
+🍪 Cookies options improvements
