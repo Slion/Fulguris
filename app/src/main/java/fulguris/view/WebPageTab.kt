@@ -28,6 +28,7 @@ import fulguris.utils.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
+import android.content.Context
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.graphics.*
@@ -481,7 +482,14 @@ class WebPageTab(
     private fun createDownloadListener() {
         // We want to receive download complete notifications
         iDownloadListener = LightningDownloadListener(activity)
-        webView?.setDownloadListener(iDownloadListener.also { activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) })
+        webView?.setDownloadListener(iDownloadListener.also {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                // We need to export it otherwise we don't get download ready notifications
+                activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), Context.RECEIVER_EXPORTED)
+            } else {
+                activity.registerReceiver(it, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+            }
+        })
     }
 
     /**
