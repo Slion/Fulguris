@@ -1,6 +1,6 @@
 buildscript {
-    ext.kotlinVersion = '1.9.20'
-    ext.daggerVersion = '2.46.1'
+    ext.kotlinVersion = '1.9.23'
+    ext.daggerVersion = '2.51'
     repositories {
         google()
         mavenCentral()
