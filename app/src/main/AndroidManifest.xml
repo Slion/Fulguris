@@ -230,8 +230,15 @@
             android:theme="@style/Theme.App.DayNight"
             android:exported="true">
             <intent-filter>
+                <!--
+                Enable settings access from the App info system settings page, through the gear icon usually.
+                That notably let user access settings even if the browser is crashing for instance.
+                        HONOR Magic V2: App info gear icon, top right corner next to app icon and name
+                        Samsung Galaxy Tab S8 Ultra: App info page bottom click on 'In-app notification settings'
+                 -->
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+                <!-- Not sure what that does -->
                 <action android:name="android.intent.action.SETTINGS" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
