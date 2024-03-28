@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
-    <string name="action_reload">Ricaricare</string>
-    <string name="action_menu">Menù</string>
+    <string name="action_reload">Ricarica</string>
+    <string name="action_menu">Altro</string>
     <string name="action_new_tab">Nuova scheda</string>
     <string name="action_duplicate_tab">Duplica scheda</string>
     <string name="action_share">Condividi</string>
@@ -77,9 +77,9 @@
     <string name="action_yes">Si</string>
     <string name="action_no">No</string>
     <string name="action_ask">Chiedi</string>
-    <string name="layer_type_none">None</string>
-    <string name="layer_type_software">Software - WebGL off</string>
-    <string name="layer_type_hardware">Hardware - WebGL on</string>
+    <string name="layer_type_none">Nessuno</string>
+    <string name="layer_type_software">Software - WebGL disattivato</string>
+    <string name="layer_type_hardware">Hardware - WebGL attivato</string>
     <string name="action_proceed">Continua</string>
     <string name="action_abort">Interrompi</string>
     <string name="title_text_size">Dimensione dei caratteri</string>
@@ -117,7 +117,7 @@
     <string name="message_import">Segnalibri importati</string>
     <string name="message_clear_history">Cronologia cancellata</string>
     <string name="message_cookies_cleared">Cookies cancellati</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">Impossibile eliminare i cookie</string>
     <string name="max_tabs">Hai raggiunto il numero massimo di schede apribili</string>
     <string name="message_text_copied">Testo copiato negli appunti</string>
     <string name="message_link_copied">Link copiato negli appunti</string>
@@ -249,10 +249,10 @@
     <string name="settings_backup">Backup</string>
     <string name="settings_title_configuration">Configurazione</string>
     <string name="settings_summary_configuration">Impostazioni ritratto e paesaggio</string>
-    <string name="settings_title_delete_configuration">Delete configuration</string>
+    <string name="settings_title_delete_configuration">Elimina configurazione</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
-    <string name="settings_title_add_configuration">Add configuration</string>
+    <string name="settings_title_add_configuration">Aggiungi configurazione</string>
     <string name="settings_privacy">Privacy</string>
     <string name="settings_about">Informazioni</string>
     <string name="settings_contribute">Contribuire</string>
@@ -284,7 +284,7 @@
     <string name="pref_title_hide_tool_bar">Nascondi barra navigazione durante lo scorrimento</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Mostra barra degli strumenti quando scorri in alto</string>
     <string name="pref_title_show_tool_bar_on_page_top">Mostra la barra degli strumenti in cima alla pagina</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
+    <string name="pref_title_cutout_mode">Modalità ritaglio</string>
     <string name="pref_title_locked_drawers">Pannelli bloccati</string>
     <string name="pref_summary_locked_drawers">I pannelli di schede e segnalibri non possono essere trascinati</string>
     <string name="pref_title_use_bottom_sheets">Usa schede inferiori</string>
@@ -434,7 +434,7 @@
     <string name="action_close_all_other_tabs">Chiudi tutte le altre schede</string>
     <string name="action_restore_all_tabs">Ripristina tutte le schede</string>
     <string name="action_restore_tab">Ripristina scheda</string>
-    <string name="settings_title_layer_type">Layer type</string>
+    <string name="settings_title_layer_type">Tipo del layer</string>
     <string name="settings_title_domains">Domini</string>
     <string name="settings_summary_domains">Gestisci impostazioni dominio</string>
     <string name="settings_title_resource_domains">Domini delle risorse</string>
@@ -494,7 +494,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">Impossibile eliminare la sessione attuale!</string>
     <string name="session_prompt_confirm_deletion_title">Conferma eliminazione</string>
     <string name="session_prompt_confirm_deletion_message">Sei sicuro di voler eliminare la sessione \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Sei sicuro di voler eliminare la configurazione \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Passato a \"%s\"</string>
     <string name="busy">Servizio occupato, riprova tra poco.</string>
     <string name="invalid_character_removed">Carattere invalido rimosso!</string>
@@ -603,10 +603,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Avviso</string>
     <string name="log_level_error">Errore</string>
     <string name="log_level_assert">Asserisci</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
+    <string name="cutout_mode_default">Predefinito</string>
+    <string name="cutout_mode_short_edges">Bordi corti</string>
+    <string name="cutout_mode_never">Mai</string>
+    <string name="cutout_mode_always">Sempre</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">URL breve</string>

@@ -77,9 +77,9 @@
     <string name="action_yes">Да</string>
     <string name="action_no">Нет</string>
     <string name="action_ask">Спросить</string>
-    <string name="layer_type_none">None</string>
-    <string name="layer_type_software">Software - WebGL off</string>
-    <string name="layer_type_hardware">Hardware - WebGL on</string>
+    <string name="layer_type_none">Никто</string>
+    <string name="layer_type_software">Программное обеспечение WebGL отключено</string>
+    <string name="layer_type_hardware">Аппаратный WebGL включен</string>
     <string name="action_proceed">Продолжить</string>
     <string name="action_abort">Прервать</string>
     <string name="title_text_size">Размер текста</string>
@@ -117,7 +117,7 @@
     <string name="message_import">Закладки импортированы</string>
     <string name="message_clear_history">История очищена</string>
     <string name="message_cookies_cleared">Cookie очищены</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">Не удалось очистить файлы cookies</string>
     <string name="max_tabs">Достигнуто максимальное количество вкладок. Разблокируйте больше, купив подписку.</string>
     <string name="message_text_copied">Текст скопирован в буфер обмена</string>
     <string name="message_link_copied">Ссылка скопирована в буфер обмена</string>
@@ -249,10 +249,10 @@
     <string name="settings_backup">Резервное копирование</string>
     <string name="settings_title_configuration">Конфигурация</string>
     <string name="settings_summary_configuration">Настройки портретной и альбомной ориентации</string>
-    <string name="settings_title_delete_configuration">Delete configuration</string>
+    <string name="settings_title_delete_configuration">Удалить конфигурацию</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
-    <string name="settings_title_add_configuration">Add configuration</string>
+    <string name="settings_title_add_configuration">Добавить конфигурацию</string>
     <string name="settings_privacy">Конфиденциальность</string>
     <string name="settings_about">О программе</string>
     <string name="settings_contribute">Внести вклад</string>
@@ -284,7 +284,7 @@
     <string name="pref_title_hide_tool_bar">Скрыть панель инструментов при прокрутке вниз</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Показать панель инструментов при прокрутке вверх</string>
     <string name="pref_title_show_tool_bar_on_page_top">Показывать панель инструментов в верхней части страницы</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
+    <string name="pref_title_cutout_mode">Режим выреза</string>
     <string name="pref_title_locked_drawers">Заблокированные панели</string>
     <string name="pref_summary_locked_drawers">Вкладки и панели закладок нельзя перетащить</string>
     <string name="pref_title_use_bottom_sheets">Использовать нижние панели</string>
@@ -436,7 +436,7 @@
     <string name="action_close_all_other_tabs">Закрыть остальные вкладки</string>
     <string name="action_restore_all_tabs">Восстановить все вкладки</string>
     <string name="action_restore_tab">Восстановить вкладку</string>
-    <string name="settings_title_layer_type">Layer type</string>
+    <string name="settings_title_layer_type">Тип слоя</string>
     <string name="settings_title_domains">Домены</string>
     <string name="settings_summary_domains">Настройки домена</string>
     <string name="settings_title_resource_domains">Домены ресурсов</string>
@@ -498,7 +498,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">Невозможно удалить текущую сессию!</string>
     <string name="session_prompt_confirm_deletion_title">Подтвердите удаление</string>
     <string name="session_prompt_confirm_deletion_message">Вы уверены, что хотите удалить сеанс \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Вы уверены, что хотите удалить конфигурацию \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Переключено на \"%s\"</string>
     <string name="busy">Занято, попробуйте еще раз в ближайшее время.</string>
     <string name="invalid_character_removed">Недействительный символ удалён!</string>
@@ -607,10 +607,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Предупреждение</string>
     <string name="log_level_error">Ошибка</string>
     <string name="log_level_assert">Утверждение</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
+    <string name="cutout_mode_default">По умолчанию</string>
+    <string name="cutout_mode_short_edges">Короткие края</string>
+    <string name="cutout_mode_never">Никогда</string>
+    <string name="cutout_mode_always">Всегда</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL-адрес</string>
     <string name="label_short_url">Короткий URL-адрес</string>

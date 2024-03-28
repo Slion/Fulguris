@@ -77,9 +77,9 @@
     <string name="action_yes">是</string>
     <string name="action_no">否</string>
     <string name="action_ask">询问</string>
-    <string name="layer_type_none">None</string>
-    <string name="layer_type_software">Software - WebGL off</string>
-    <string name="layer_type_hardware">Hardware - WebGL on</string>
+    <string name="layer_type_none">无</string>
+    <string name="layer_type_software">软件 - 关闭 WebGL</string>
+    <string name="layer_type_hardware">硬件-WebGL 开启</string>
     <string name="action_proceed">继续</string>
     <string name="action_abort">中止</string>
     <string name="title_text_size">文本大小</string>
@@ -117,7 +117,7 @@
     <string name="message_import">书签已经导入</string>
     <string name="message_clear_history">历史记录已清除</string>
     <string name="message_cookies_cleared">Cookie 已清除</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">无法清除 cookie</string>
     <string name="max_tabs">达到了最大标签页数量</string>
     <string name="message_text_copied">文本已复制到剪切板</string>
     <string name="message_link_copied">链接已复制到剪切板</string>
@@ -249,10 +249,10 @@
     <string name="settings_backup">备份</string>
     <string name="settings_title_configuration">设置</string>
     <string name="settings_summary_configuration">横竖屏设置</string>
-    <string name="settings_title_delete_configuration">Delete configuration</string>
+    <string name="settings_title_delete_configuration">删除配置</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
-    <string name="settings_title_add_configuration">Add configuration</string>
+    <string name="settings_title_add_configuration">添加配置</string>
     <string name="settings_privacy">隐私设置</string>
     <string name="settings_about">关于</string>
     <string name="settings_contribute">贡献</string>
@@ -284,7 +284,7 @@
     <string name="pref_title_hide_tool_bar">下翻时隐藏工具栏</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">上翻时显示工具栏</string>
     <string name="pref_title_show_tool_bar_on_page_top">在页面顶部显示工具栏</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
+    <string name="pref_title_cutout_mode">刘海模式</string>
     <string name="pref_title_locked_drawers">锁定的面板</string>
     <string name="pref_summary_locked_drawers">不能拖动标签和书签面板</string>
     <string name="pref_title_use_bottom_sheets">嵌入底部表单</string>
@@ -433,7 +433,7 @@
     <string name="action_close_all_other_tabs">关闭其他的全部标签页</string>
     <string name="action_restore_all_tabs">复原全部标签页</string>
     <string name="action_restore_tab">复原刚删除的标签页</string>
-    <string name="settings_title_layer_type">Layer type</string>
+    <string name="settings_title_layer_type">图层类型</string>
     <string name="settings_title_domains">域名</string>
     <string name="settings_summary_domains">管理域设置</string>
     <string name="settings_title_resource_domains">资源域</string>
@@ -492,7 +492,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">无法删除当前会话！</string>
     <string name="session_prompt_confirm_deletion_title">确认删除</string>
     <string name="session_prompt_confirm_deletion_message">您确定要删除会话 \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\'吗？</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="configuration_prompt_confirm_deletion_message">您确定要删除\"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"配置吗？</string>
     <string name="session_switched">已切换到\"%s\"</string>
     <string name="busy">忙，请稍后再试。</string>
     <string name="invalid_character_removed">无效字符已删除！</string>
@@ -581,7 +581,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="action_cycle_tabs_forwards">向前循环标签</string>
     <string name="action_cycle_tabs_backwards">向后循环标签</string>
     <string name="action_focus_address_bar">聚焦地址栏</string>
-    <string name="action_tab_history_forward">Forward in tab history</string>
+    <string name="action_tab_history_forward">标签页历史中下一项</string>
     <string name="action_toggle_toolbar">显示/隐藏工具栏</string>
     <string name="action_toggle_status_bar">显示/隐藏状态栏</string>
     <string name="action_text_size_increment">增大文本字号</string>
@@ -601,10 +601,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">警告</string>
     <string name="log_level_error">错误</string>
     <string name="log_level_assert">断言 (Assert)</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
+    <string name="cutout_mode_default">默认</string>
+    <string name="cutout_mode_short_edges">短边</string>
+    <string name="cutout_mode_never">永不</string>
+    <string name="cutout_mode_always">总是</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">短网址</string>
