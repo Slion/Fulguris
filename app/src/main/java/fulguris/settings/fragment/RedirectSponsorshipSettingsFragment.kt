@@ -59,12 +59,12 @@ abstract class RedirectSponsorshipSettingsFragment : AbstractSettingsFragment() 
      * Add a preference that opens up our play store page.
      */
     private fun addPreferenceLinkToGooglePlayStore() {
-        // We invite user to installer our Google Play Store release
+        // We invite user to install our Google Play Store release
         val pref = Preference(requireContext())
         pref.isSingleLineTitle = false
         pref.title = resources.getString(R.string.pref_title_no_sponsorship)
         pref.summary = resources.getString(R.string.pref_summary_no_sponsorship)
-        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_play_arrow, activity?.theme)
+        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_google_play, activity?.theme)
         pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             // Open up Fulguris play store page
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore")))
