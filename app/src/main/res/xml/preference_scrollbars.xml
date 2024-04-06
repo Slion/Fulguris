@@ -12,7 +12,7 @@
         app:layout="@layout/preference_category_material"
         tools:ignore="PrivateResource" />
 
-    <fulguris.preference.SliderPreference
+    <slions.SliderPreference
         app:key="@string/pref_key_scrollbar_size"
         app:title="@string/pref_title_scrollbar_size"
         app:summary="@string/pref_summary_scrollbar_size"
@@ -39,7 +39,7 @@
         app:singleLineTitle="false"
         />
 
-    <fulguris.preference.SliderPreference
+    <slions.SliderPreference
         app:key="@string/pref_key_scrollbar_delay_before_fade"
         app:dependency="@string/pref_key_scrollbar_fading"
         app:title="@string/pref_title_scrollbar_delay_before_fade"
@@ -58,7 +58,7 @@
         app:singleLineTitle="false"
         />
 
-    <fulguris.preference.SliderPreference
+    <slions.SliderPreference
         app:key="@string/pref_key_scrollbar_fade_duration"
         app:dependency="@string/pref_key_scrollbar_fading"
         app:title="@string/pref_title_scrollbar_fade_duration"

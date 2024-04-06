@@ -32,7 +32,7 @@ import fulguris.extensions.resizeAndShow
 import fulguris.extensions.reverseDomainName
 import fulguris.favicon.FaviconModel
 import fulguris.settings.preferences.DomainPreferences
-import fulguris.preference.BasicPreference
+import slions.BasicPreference
 import fulguris.utils.Utils
 import android.annotation.SuppressLint
 import android.content.SharedPreferences

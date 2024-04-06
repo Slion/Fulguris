@@ -31,7 +31,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
-import fulguris.preference.BasicPreference
+import slions.BasicPreference
 
 
 @AndroidEntryPoint

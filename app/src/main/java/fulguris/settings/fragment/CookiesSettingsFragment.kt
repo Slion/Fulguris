@@ -44,7 +44,7 @@ import fulguris.app
 import fulguris.extensions.copyToClipboard
 import fulguris.extensions.snackbar
 import fulguris.extensions.toast
-import fulguris.preference.BasicPreference
+import slions.BasicPreference
 import fulguris.utils.WebUtils
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber

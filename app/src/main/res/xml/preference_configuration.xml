@@ -101,7 +101,7 @@
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
-    <fulguris.preference.EnumListPreference
+    <slions.EnumListPreference
         a:key="@string/pref_key_cutout_mode"
         a:title="@string/pref_title_cutout_mode"
         a:useSimpleSummaryProvider="true"
@@ -112,7 +112,7 @@
         a:enumClassName="fulguris.enums.CutoutMode"
         />
 
-    <fulguris.preference.SliderPreference
+    <slions.SliderPreference
         a:key="@string/pref_key_desktop_width"
         a:title="@string/pref_title_desktop_width"
         a:summary="@string/pref_summary_desktop_width"

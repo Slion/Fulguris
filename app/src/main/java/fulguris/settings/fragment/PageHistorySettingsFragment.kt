@@ -39,7 +39,7 @@ import androidx.core.graphics.scale
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import dagger.hilt.android.AndroidEntryPoint
-import fulguris.preference.BasicPreference
+import slions.BasicPreference
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject

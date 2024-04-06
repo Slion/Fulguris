@@ -35,7 +35,7 @@
         a:singleLineTitle="false"
         />
 
-    <fulguris.preference.EnumListPreference
+    <slions.EnumListPreference
         a:key="@string/pref_key_log_level"
         a:dependency="@string/pref_key_logs"
         a:title="@string/pref_title_log_level"
