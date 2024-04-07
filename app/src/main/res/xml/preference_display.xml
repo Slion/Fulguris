@@ -76,7 +76,7 @@
             a:singleLineTitle="false"
             />
 
-        <slions.EnumListPreference
+        <slions.pref.EnumListPreference
             a:key="@string/pref_key_toolbar_label"
             a:title="@string/settings_title_toolbar_label"
             a:useSimpleSummaryProvider="true"
@@ -87,7 +87,7 @@
             a:enumClassName="fulguris.enums.HeaderInfo"
             />
 
-        <slions.EnumListPreference
+        <slions.pref.EnumListPreference
             a:key="@string/pref_key_task_label"
             a:title="@string/settings_title_task_label"
             a:useSimpleSummaryProvider="true"
@@ -193,7 +193,7 @@
 
     <PreferenceCategory android:title="@string/pref_category_webpage">
 
-        <slions.EnumListPreference
+        <slions.pref.EnumListPreference
             a:key="@string/pref_key_layer_type"
             a:title="@string/settings_title_layer_type"
             a:useSimpleSummaryProvider="true"

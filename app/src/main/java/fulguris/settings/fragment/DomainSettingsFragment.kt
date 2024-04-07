@@ -31,7 +31,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
-import slions.BasicPreference
+import slions.pref.BasicPreference
 
 
 @AndroidEntryPoint

@@ -52,7 +52,7 @@
 
     </Preference>
 
-    <slions.BasicPreference
+    <slions.pref.BasicPreference
         a:fragment="fulguris.settings.fragment.DomainSettingsFragment"
         a:key="@string/pref_key_parent"
         a:title="@string/settings_title_parent"
@@ -180,7 +180,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false" />
 
-        <slions.EnumListPreference
+        <slions.pref.EnumListPreference
             a:key="@string/pref_key_launch_app"
             a:title="@string/settings_title_launch_app"
             a:useSimpleSummaryProvider="true"
@@ -207,7 +207,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false" />
 
-        <slions.EnumListPreference
+        <slions.pref.EnumListPreference
             a:key="@string/pref_key_ssl_error"
             a:title="@string/settings_title_ssl_error"
             a:useSimpleSummaryProvider="true"
@@ -234,7 +234,7 @@
         />
 
 
-    <slions.BasicPreference
+    <slions.pref.BasicPreference
         a:key="@string/pref_key_delete"
         a:title="@string/settings_title_delete_domain_settings"
         a:summary="@string/settings_summary_delete_domain_settings"

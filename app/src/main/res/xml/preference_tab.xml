@@ -52,7 +52,7 @@
             a:singleLineTitle="false"
             />
 
-        <slions.SliderPreference
+        <slions.pref.SliderPreference
             a:key="@string/pref_key_on_tab_flip_animation_duration"
             a:dependency="@string/pref_key_on_tab_back_show_animation"
             a:title="@string/settings_title_animation_duration"

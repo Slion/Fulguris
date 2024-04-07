@@ -8,7 +8,7 @@ import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceHeaderFragmentCompat
-import slions.BasicPreference
+import slions.pref.BasicPreference
 import timber.log.Timber
 
 

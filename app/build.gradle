@@ -296,7 +296,7 @@ dependencies {
     //implementation group: 'com.google.android.material', name: 'material', version: '1.6.0-alpha01'
 
     //
-    implementation "net.slions.android:preference:0.0.4"
+    implementation "net.slions.android:preference:0.0.5"
 
     // Play Store billing
     playstoreImplementation 'com.android.billingclient:billing:6.2.0'

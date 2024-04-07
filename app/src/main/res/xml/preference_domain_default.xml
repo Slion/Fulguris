@@ -71,7 +71,7 @@
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
-    <slions.EnumListPreference
+    <slions.pref.EnumListPreference
         a:key="@string/pref_key_launch_app"
         a:title="@string/settings_title_launch_app"
         a:useSimpleSummaryProvider="true"
@@ -82,7 +82,7 @@
         a:enumClassName="fulguris.settings.NoYesAsk"
         />
 
-    <slions.EnumListPreference
+    <slions.pref.EnumListPreference
         a:key="@string/pref_key_ssl_error"
         a:title="@string/settings_title_ssl_error"
         a:useSimpleSummaryProvider="true"
