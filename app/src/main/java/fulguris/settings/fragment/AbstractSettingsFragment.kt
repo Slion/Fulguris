@@ -34,20 +34,19 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.PreferenceFragment
-import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
 import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreference
 import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.RecyclerView
 import fulguris.utils.shareUrl
+import slions.pref.PreferenceFragmentBase
 import timber.log.Timber
 
 /**
- * An abstract settings fragment which performs wiring for an instance of [PreferenceFragment].
+ * An abstract settings fragment which performs wiring for an instance of [PreferenceFragmentBase].
  */
-abstract class AbstractSettingsFragment : PreferenceFragmentCompat() {
+abstract class AbstractSettingsFragment : PreferenceFragmentBase() {
 
     lateinit var prefGroup: PreferenceGroup
 

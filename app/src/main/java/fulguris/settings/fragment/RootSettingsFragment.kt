@@ -3,12 +3,12 @@ package fulguris.settings.fragment
 import fulguris.BuildConfig
 import fulguris.R
 import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
+import slions.pref.PreferenceFragmentBase
 
 /**
  * TODO: Derive from [AbstractSettingsFragment]
  */
-class RootSettingsFragment : PreferenceFragmentCompat() {
+class RootSettingsFragment : PreferenceFragmentBase() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences_root, rootKey)

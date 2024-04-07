@@ -240,8 +240,6 @@ colorControlNormal:
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="enableEdgeToEdge">true</item>
 
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Slions</item>
-
 <!--        <item name="android:windowFullscreen">true</item>-->
 
     </style>
@@ -418,8 +416,6 @@ colorControlNormal:
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="enableEdgeToEdge">true</item>
 
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Slions</item>
-
 <!--        <item name="android:windowFullscreen">true</item>-->
     </style>
 
@@ -590,8 +586,6 @@ colorControlNormal:
         <!-- Needed for full screen material design bottom sheets -->
         <item name="android:navigationBarColor">@color/transparent</item>
         <item name="enableEdgeToEdge">true</item>
-
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Slions</item>
 
 <!--        <item name="android:windowFullscreen">true</item>-->
     </style>
