@@ -273,6 +273,15 @@ class TabsManager @Inject constructor(
     }
 
     /**
+     *
+     */
+    private fun launchNewTabAndActivate(url: String) {
+        newTab(UrlInitializer(url), true)
+        shouldClose = true
+        lastTab()?.isNewTab = true
+    }
+
+    /**
      * Initialize the state of the [TabsManager] based on previous state of the browser.
      *
      * TODO: See how you can offload IO to a background thread
@@ -1114,8 +1123,14 @@ class TabsManager @Inject constructor(
             if ("text/plain" == intent.type) {
                 // Get shared text
                 val clue = intent.getStringExtra(Intent.EXTRA_TEXT)
-                // Put it in the address bar if any
-                clue?.let { iWebBrowser.setAddressBarText(it) }
+
+                //Fix for #628 - Handle when a link is long pressed on another app and shared to Fulguris
+                if (clue != null && URLUtil.isNetworkUrl(clue.trim())) {
+                    launchNewTabAndActivate(clue)
+                } else {
+                    // Put it in the address bar if any
+                    clue?.let { iWebBrowser.setAddressBarText(it) }
+                }
             }
             // Cancel other operation as we won't open a tab here
             null
@@ -1135,9 +1150,7 @@ class TabsManager @Inject constructor(
                     lastTab()?.isNewTab = true
                 }
             } else {
-                newTab(UrlInitializer(url), true)
-                shouldClose = true
-                lastTab()?.isNewTab = true
+                launchNewTabAndActivate(url)
             }
         }
     }
