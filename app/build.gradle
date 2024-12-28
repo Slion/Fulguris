@@ -162,25 +162,25 @@ android {
         // Undefined publisher do not add application ID suffix
         undef {
             dimension "PUBLISHER"
-            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
+            buildConfigField "fulguris.Sponsorship", "SPONSORSHIP", "fulguris.Sponsorship.BRONZE"
         }
 
         playstore {
             dimension "PUBLISHER"
             applicationIdSuffix ".playstore"
-            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.TIN"
+            buildConfigField "fulguris.Sponsorship", "SPONSORSHIP", "fulguris.Sponsorship.TIN"
         }
 
         download {
             dimension "PUBLISHER"
             applicationIdSuffix ".download"
-            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
+            buildConfigField "fulguris.Sponsorship", "SPONSORSHIP", "fulguris.Sponsorship.BRONZE"
         }
 
         fdroid {
             dimension "PUBLISHER"
             applicationIdSuffix ".fdroid"
-            buildConfigField "Sponsorship", "SPONSORSHIP", "Sponsorship.BRONZE"
+            buildConfigField "fulguris.Sponsorship", "SPONSORSHIP", "fulguris.Sponsorship.BRONZE"
         }
 
     }
@@ -309,8 +309,15 @@ dependencies {
 
     // file reading
     final def mezzanineVersion = '1.1.1'
-    implementation "com.anthonycr.mezzanine:mezzanine:$mezzanineVersion"
-    kapt "com.anthonycr.mezzanine:mezzanine-compiler:$mezzanineVersion"
+    // Available on JitPack: https://jitpack.io/#anthonycr/Mezzanine
+    implementation "com.github.anthonycr.Mezzanine:mezzanine:$mezzanineVersion"
+    kapt "com.github.anthonycr.Mezzanine:mezzanine-compiler:$mezzanineVersion"
+    // Just using the local JAR won't work as is since the compiler has other unresolved dependencies
+    // We notably get java.lang.ClassNotFoundException: org.apache.commons.lang3.StringEscapeUtils when compiling
+    // See: https://stackoverflow.com/questions/28504174/noclassdeffounderror-org-apache-commons-lang3-stringutils
+    // Those dependencies are defined in the POM XML of the mezzanine-compiler package
+    //implementation files("libs/mezzanine-${mezzanineVersion}.jar")
+    //kapt files("libs/mezzanine-compiler-${mezzanineVersion}.jar")
 
     // dependency injection
     implementation "com.google.dagger:dagger:$daggerVersion"
@@ -321,7 +328,12 @@ dependencies {
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
     // permissions
-    implementation 'com.anthonycr.grant:permissions:1.1.2'
+    //implementation 'com.anthonycr.grant:permissions:1.1.2'
+    // JitPack build fails see: https://jitpack.io/#anthonycr/Grant
+    //implementation 'com.github.anthonycr:Grant:v1.1.2'
+    // Use local library binary instead
+    // TODO: Update that library or remove it
+    implementation files('libs/permissions-1.1.2.aar')
 
     // proxy support
     implementation 'net.i2p.android:client:0.9.49'
@@ -337,7 +349,10 @@ dependencies {
     // tor proxy
     implementation "info.guardianproject.netcipher:netcipher:2.1.0"
     // Updating this breaks our build
-    implementation "info.guardianproject.netcipher:netcipher-webkit:2.0.0-alpha1"
+    //implementation "info.guardianproject.netcipher:netcipher-webkit:2.0.0-alpha1"
+    // Use local library binary
+    // TODO: Update that library or remove it
+    implementation files('libs/netcipher-webkit-2.0.0-alpha1.jar')
 
     // memory leak analysis
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
