@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 /*
  * The contents of this file are subject to the Common Public Attribution License Version 1.0.
  * (the "License"); you may not use this file except in compliance with the License.
@@ -195,8 +197,8 @@ android {
             // Gradle ignores any variants that satisfy the conditions above.
             setIgnore(true)
         }
-
     }
+
     packagingOptions {
         resources {
             excludes += ['.readme']
@@ -205,8 +207,8 @@ android {
 
     // Taken from: https://stackoverflow.com/a/59583066/3969362
     // Needed to customize our APK file name per flavor
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
             //def appId = variant.applicationId// com.exampleFree.app OR com.examplePaid.app
             def versionName = variant.versionName
             //def versionCode = variant.versionCode // e.g 1.0
@@ -239,6 +241,8 @@ android {
     buildFeatures {
         // That should give us both view and data binding
         dataBinding true
+        // We notably use build config to define our sponsorships
+        buildConfig true
     }
     lint {
         abortOnError true
@@ -388,7 +392,7 @@ kapt {
     }
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+tasks.withType(KotlinCompile).configureEach {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 
