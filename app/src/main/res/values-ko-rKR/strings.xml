@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">쿠키를 지웠습니다</string>
     <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">최대 탭 수에 도달했습니다</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">텍스트가 클립보드로 복사되었습니다</string>
     <string name="message_link_copied">링크가 클립보드로 복사되었습니다</string>
     <string name="message_blocked_local">로컬 파일 불러오기가 차단되었습니다</string>

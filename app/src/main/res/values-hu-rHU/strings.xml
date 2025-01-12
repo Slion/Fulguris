@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">Cookie-k törölve</string>
     <string name="message_cookies_clear_error">Nem tudtuk törölni a Sütiket</string>
     <string name="max_tabs">Maximálisan megnyitható lapok száma elérve</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">Szöveg másolva a vágólapra</string>
     <string name="message_link_copied">Link másolva a vágólapra</string>
     <string name="message_blocked_local">Helyi fájl betöltése blokkolva</string>

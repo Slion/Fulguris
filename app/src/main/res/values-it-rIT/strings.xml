@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">Cookies cancellati</string>
     <string name="message_cookies_clear_error">Impossibile eliminare i cookie</string>
     <string name="max_tabs">Hai raggiunto il numero massimo di schede apribili</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">Testo copiato negli appunti</string>
     <string name="message_link_copied">Link copiato negli appunti</string>
     <string name="message_blocked_local">Caricamento file locale bloccato</string>

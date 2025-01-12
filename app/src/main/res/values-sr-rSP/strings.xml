@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">Колачићи су очишћени</string>
     <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">Достигнут је максимални број картица. Откључајте више куповином претплате.</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">Текст копиран на клипборд</string>
     <string name="message_link_copied">Веза копирана на клипборд</string>
     <string name="message_blocked_local">Учитавање локалног фајла је блокирано</string>

@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">Cookies vymazány</string>
     <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">Max tabs reached. Unlock more from Settings &gt; Sponsorship.</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">Text zkopírován do schránky</string>
     <string name="message_link_copied">Odkaz zkopírován do schránky</string>
     <string name="message_blocked_local">Načítání místního souboru bylo zablokováno</string>

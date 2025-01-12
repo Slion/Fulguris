@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">Cookies очищено</string>
     <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">Max tabs reached. Unlock more from Settings &gt; Sponsorship.</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">Текст скопійовано до буфера</string>
     <string name="message_link_copied">Посилання скопійовано до буфера</string>
     <string name="message_blocked_local">Локальний файл було заблоковано для завантаження</string>

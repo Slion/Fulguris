@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">已清除 cookies</string>
     <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">已達最高分頁數量</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">文字已複製至剪貼簿</string>
     <string name="message_link_copied">連結已複製至剪貼簿</string>
     <string name="message_blocked_local">本機檔已被封鎖載入</string>

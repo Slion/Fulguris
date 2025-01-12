@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">تم مسح ملفات تعريف الارتباط</string>
     <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">تم الوصول إلى الحد الأقصى لعلامات التبويب. قم بفتح المزيد عن طريق شراء اشتراك.</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">تم نسخ النص إلى الحافظة</string>
     <string name="message_link_copied">تم نسخ الرابط إلى الحافظة</string>
     <string name="message_blocked_local">تم حظر المِلَفّ المحلي من التحميل</string>

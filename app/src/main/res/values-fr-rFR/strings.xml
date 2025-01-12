@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">Cookies effacés</string>
     <string name="message_cookies_clear_error">Could not clear cookies</string>
     <string name="max_tabs">Maximum d\'onglets atteint. Déverrouillez en achetant un abonnement.</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">Texte copié dans le presse-papiers</string>
     <string name="message_link_copied">Adresse copiée dans le presse-papiers</string>
     <string name="message_blocked_local">Le fichier local a été bloqué au chargement</string>

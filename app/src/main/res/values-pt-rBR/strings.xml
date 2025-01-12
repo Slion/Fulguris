@@ -119,6 +119,7 @@
     <string name="message_cookies_cleared">Cookies removidos</string>
     <string name="message_cookies_clear_error">Falha ao limpar cookies</string>
     <string name="max_tabs">Atingido número máximo de abas</string>
+    <string name="message_cookie_copied">Cookie copied to clipboard</string>
     <string name="message_text_copied">Texto copiado para a área de transferência</string>
     <string name="message_link_copied">Link copiado para a área de transferência</string>
     <string name="message_blocked_local">Bloqueado o carregamento do arquivo local</string>
