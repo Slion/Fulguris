@@ -77,9 +77,9 @@
     <string name="action_yes">Sim</string>
     <string name="action_no">Não</string>
     <string name="action_ask">Perguntar</string>
-    <string name="layer_type_none">None</string>
-    <string name="layer_type_software">Software - WebGL off</string>
-    <string name="layer_type_hardware">Hardware - WebGL on</string>
+    <string name="layer_type_none">Nenhuma</string>
+    <string name="layer_type_software">Software - WebGL desativado</string>
+    <string name="layer_type_hardware">Hardware - WebGL ativado</string>
     <string name="action_proceed">Prosseguir</string>
     <string name="action_abort">Abortar</string>
     <string name="title_text_size">Tamanho do texto</string>
@@ -108,7 +108,7 @@
     <string name="download_sdcard_busy_dlg_title">Cartão SD não disponível</string>
     <string name="download_sdcard_busy_dlg_msg">O cartão SD está ocupado. Para poder transferir arquivos, desative a opção Desativar armazenamento USB na notificação.</string>
     <string name="download_complete">Download completo</string>
-    <string name="download_failed">Falha em baixar</string>
+    <string name="download_failed">Falha no download</string>
     <string name="incognito_cookies">Permitir cookies no modo anônimo</string>
     <string name="incognito_cookies_pie">O modo anônimo é executado em um processo separado que após cada sessão é redefinido. Preferências de cookies no modo anônimo são agora gerenciados nas preferências regulares de cookies.</string>
     <string name="pref_title_contact_us">Fale conosco</string>
@@ -117,7 +117,7 @@
     <string name="message_import">Favoritos importados</string>
     <string name="message_clear_history">Histórico removido</string>
     <string name="message_cookies_cleared">Cookies removidos</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">Falha ao limpar cookies</string>
     <string name="max_tabs">Atingido número máximo de abas</string>
     <string name="message_text_copied">Texto copiado para a área de transferência</string>
     <string name="message_link_copied">Link copiado para a área de transferência</string>
@@ -249,10 +249,10 @@
     <string name="settings_backup">Cópia de Segurança</string>
     <string name="settings_title_configuration">Configuração</string>
     <string name="settings_summary_configuration">Configurações de retrato e paisagem</string>
-    <string name="settings_title_delete_configuration">Delete configuration</string>
+    <string name="settings_title_delete_configuration">Excluir configuração</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
-    <string name="settings_title_add_configuration">Add configuration</string>
+    <string name="settings_title_add_configuration">Adicionar configuração</string>
     <string name="settings_privacy">Configurações de privacidade</string>
     <string name="settings_about">Sobre</string>
     <string name="settings_contribute">Contribuir</string>
@@ -261,7 +261,7 @@
     <string name="settings_summary_privacy_policy">Veja nossa política de privacidade online</string>
     <string name="settings_title_terms_and_conditions">Termos &amp; Condições</string>
     <string name="settings_summary_terms_and_conditions">Consulte nossos termos e condições online</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_summary_discord">Junte-se à nossa comunidade em crescimento</string>
     <string name="pref_category_panels">Painéis</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Paisagem</string>
@@ -277,31 +277,31 @@
     <string name="settings_title_tab">Aba</string>
     <string name="settings_title_page_history">Histórico da página</string>
     <string name="settings_summary_tab">Animações, sugestões e aparência</string>
-    <string name="pref_summary_scrollbars">Ajustar tamanho e comportamento da barra de rolagem</string>
+    <string name="pref_summary_scrollbars">Ajustar tamanho e comportamento</string>
     <string name="pref_category_subscriptions">Inscrições</string>
     <string name="pref_summary_subscriptions">Ativar ou cancelar suas inscrições</string>
-    <string name="pref_title_hide_status_bar">Ocultar a barra de estado</string>
+    <string name="pref_title_hide_status_bar">Ocultar barra de status</string>
     <string name="pref_title_hide_tool_bar">Ocultar barra de ferramentas ao deslizar para baixo</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Mostrar barra de ferramentas ao deslizar para cima</string>
     <string name="pref_title_show_tool_bar_on_page_top">Mostrar barra de ferramentas na parte superior da página</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
+    <string name="pref_title_cutout_mode">Modo de recorte</string>
     <string name="pref_title_locked_drawers">Painéis bloqueados</string>
     <string name="pref_summary_locked_drawers">Os painéis de Abas e Favoritos não poderão ser arrastados</string>
     <string name="pref_title_use_bottom_sheets">Usar folha inferior</string>
-    <string name="pref_summary_use_bottom_sheets">Abas e Favoritos serão exibidos em painéis inferiores em vez de painéis laterais</string>
-    <string name="pref_title_tab_list_item_show_close_button">Mostrar botão fechar aba</string>
-    <string name="pref_summary_tab_list_item_show_close_button">Mostrar botões de fechar aba na lista de itens da aba</string>
+    <string name="pref_summary_use_bottom_sheets">Abas e Favoritos serão exibidos em folhas inferiores em vez de painéis laterais</string>
+    <string name="pref_title_tab_list_item_show_close_button">Mostrar botão de fechar aba</string>
+    <string name="pref_summary_tab_list_item_show_close_button">Mostrar botão de fechar aba nos itens da lista de abas</string>
     <string name="pref_title_menu_show_exit">Item de menu Sair</string>
-    <string name="pref_summary_menu_show_exit">Mostrar a opção Sair do aplicativo no menu. O modo incógnito sempre a exibe, invariavelmente.</string>
+    <string name="pref_summary_menu_show_exit">Exibir opção de sair do aplicativo no menu. O modo anônimo sempre a exibe.</string>
     <string name="pref_title_menu_new_tab">Item de menu Nova Aba</string>
-    <string name="pref_summary_menu_new_tab">Mostrar a opção Nova Aba no menu</string>
-    <string name="pref_title_crash_report">Relatório de falhas</string>
+    <string name="pref_summary_menu_new_tab">Exibir opção de abrir nova aba no menu</string>
+    <string name="pref_title_crash_report">Relatórios de erros</string>
     <string name="pref_title_analytics">Analytics</string>
-    <string name="pref_title_pull_to_refresh">Arraste para atualizar</string>
+    <string name="pref_title_pull_to_refresh">Puxar para atualizar</string>
     <string name="pref_summary_recommended_anonymous">Recomendado, os dados coletados são anônimos</string>
     <string name="pref_summary_color_mode">Aplicar a cor da página web à barra de ferramentas e de status</string>
     <string name="pref_title_desktop_width">Largura do desktop</string>
-    <string name="pref_summary_desktop_width">Largura da janela no modo desktop, use valores mais altos para conteúdo menor</string>
+    <string name="pref_summary_desktop_width">Largura da janela no modo desktop, valores maiores reduzem o conteúdo</string>
     <string name="pref_title_no_sponsorship">Patrocínio no aplicativo não disponível</string>
     <string name="pref_summary_no_sponsorship">Use Fulguris a partir do Google Play para nos apoiar.</string>
     <string name="pref_title_free_download">Download gratuito</string>
@@ -359,7 +359,7 @@
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
     <string name="settings_title_tab_bar_placement">Posicionamento da barra abas</string>
     <string name="settings_summary_on_tab_bar_placement">Painel retrátil</string>
-    <string name="settings_summary_off_tab_bar_placement">Tela sempre ativa</string>
+    <string name="settings_summary_off_tab_bar_placement">Sempre visível</string>
     <string name="settings_title_toolbars_position">Posição da barra de ferramentas</string>
     <string name="settings_summary_on_toolbars_position">Inferior</string>
     <string name="settings_summary_off_toolbars_position">Superior</string>
@@ -434,17 +434,17 @@
     <string name="action_close_all_other_tabs">Fechar todas as outras abas</string>
     <string name="action_restore_all_tabs">Restaurar todas as abas</string>
     <string name="action_restore_tab">Restaurar aba</string>
-    <string name="settings_title_layer_type">Layer type</string>
+    <string name="settings_title_layer_type">Tipo de camada</string>
     <string name="settings_title_domains">Domínios</string>
     <string name="settings_summary_domains">Gerenciar configurações de domínio</string>
-    <string name="settings_title_resource_domains">Domínios do recurso</string>
+    <string name="settings_title_resource_domains">Recursos de domínio</string>
     <string name="settings_title_override">Sobrescrever</string>
-    <string name="settings_summary_on_override">Sobrescrever configurações pai</string>
-    <string name="settings_summary_off_override">Usar configurações pai</string>
+    <string name="settings_summary_on_override">Sobrescrever configurações principais</string>
+    <string name="settings_summary_off_override">Usar configurações principais</string>
     <string name="settings_title_launch_app">Abrir aplicativo</string>
     <string name="settings_title_category">Categoria</string>
     <string name="settings_summary_on_category">Domínio principal</string>
-    <string name="settings_summary_off_category">Domínio do recurso</string>
+    <string name="settings_summary_off_category">Recurso de domínio</string>
     <string name="action_domain_settings">Domínio</string>
     <string name="settings_title_domains_delete_all">Excluir tudo</string>
     <string name="settings_summary_domains_delete_all">Excluir todas as configurações do domínio</string>
@@ -481,7 +481,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="settings_title_task_icon">Ícone da tarefa</string>
     <string name="settings_summary_on_task_icon">Usar ícone da página</string>
     <string name="settings_summary_off_task_icon">Usar ícone do aplicativo</string>
-    <string name="settings_title_toolbar_label">Nome da barra de ferramentas</string>
+    <string name="settings_title_toolbar_label">Rótulo da barra de ferramentas</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Aplicativo externo disponível</string>
     <string name="dialog_message_third_party_app">Deseja abrir o aplicativo associado a este site?</string>
@@ -494,7 +494,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">Não foi possível excluir a sessão atual!</string>
     <string name="session_prompt_confirm_deletion_title">Confirmar exclusão</string>
     <string name="session_prompt_confirm_deletion_message">Tem certeza de que deseja excluir a sessão \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Tem certeza de que deseja excluir a configuração \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Alternado para \"%s\"</string>
     <string name="busy">Ocupado, tente novamente mais tarde.</string>
     <string name="invalid_character_removed">Caractere inválido removido!</string>
@@ -593,8 +593,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="action_open_bookmark_list">Abrir lista de favoritos</string>
     <string name="action_open_tab_list">Abrir lista de abas</string>
     <string name="action_open_session_list">Abrir lista de sessões</string>
-    <string name="action_switch_to_session">Switch to session 1 to 9</string>
-    <string name="action_switch_to_tab">Switch to tab 1 to 9</string>
+    <string name="action_switch_to_session">Mudar para a sessão 1 a 9</string>
+    <string name="action_switch_to_tab">Mudar para a aba 1 a 9</string>
     <string name="action_switch_to_last_tab">Alternar para última aba</string>
     <string name="action_switch_to_last_session">Alternar para última sessão</string>
     <string name="log_level_verbose">Verbose</string>
@@ -603,10 +603,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
+    <string name="cutout_mode_default">Padrão</string>
+    <string name="cutout_mode_short_edges">Bordas curtas</string>
+    <string name="cutout_mode_never">Nunca</string>
+    <string name="cutout_mode_always">Sempre</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">URL Curto</string>

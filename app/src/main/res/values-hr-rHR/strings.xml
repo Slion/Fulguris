@@ -77,7 +77,7 @@
     <string name="action_yes">Da</string>
     <string name="action_no">Ne</string>
     <string name="action_ask">Pitajte</string>
-    <string name="layer_type_none">None</string>
+    <string name="layer_type_none">Ništa</string>
     <string name="layer_type_software">Software - WebGL off</string>
     <string name="layer_type_hardware">Hardware - WebGL on</string>
     <string name="action_proceed">Proceed</string>

@@ -65,7 +65,7 @@
     <string name="unknown_size">Неизвестный размер</string>
     <string name="action_cancel">Отмена</string>
     <string name="title_warning">Внимание</string>
-    <string name="title_user_agent">User Agent</string>
+    <string name="title_user_agent">Агент пользователя</string>
     <string name="title_download_location">Путь загрузки</string>
     <string name="title_custom_homepage">Введите адрес</string>
     <string name="action_webpage">Веб-страница</string>
@@ -106,7 +106,7 @@
     <string name="download_no_sdcard_dlg_title">Нет карты памяти</string>
     <string name="download_no_sdcard_dlg_msg">Для загрузки файла необходим USB-накопитель.</string>
     <string name="download_sdcard_busy_dlg_title">USB-накопитель недоступен</string>
-    <string name="download_sdcard_busy_dlg_msg">Карта памяти подключена к ПК. Для начала загрузки отключите её от ПК, нажав на уведомление.</string>
+    <string name="download_sdcard_busy_dlg_msg">Хранилище занято. Чтобы разрешить загрузку, нажмите «Отключить USB-накопитель» в уведомлении.</string>
     <string name="download_complete">Загрузка завершена</string>
     <string name="download_failed">Ошибка загрузки</string>
     <string name="incognito_cookies">Включить cookie в режиме инкогнито</string>
@@ -121,8 +121,8 @@
     <string name="max_tabs">Достигнуто максимальное количество вкладок. Разблокируйте больше, купив подписку.</string>
     <string name="message_text_copied">Текст скопирован в буфер обмена</string>
     <string name="message_link_copied">Ссылка скопирована в буфер обмена</string>
-    <string name="message_blocked_local">Локальный файл недоступен для загрузки</string>
-    <string name="licenses">Лицензии открытого ПО</string>
+    <string name="message_blocked_local">Загрузка локального файла заблокирована</string>
+    <string name="licenses">Лицензии с открытым исходным кодом</string>
     <string name="suggestion">Искать</string>
     <string name="checking_for_updates">Проверка обновлений...</string>
     <string name="title_updated">Fulguris обновлён</string>
@@ -138,7 +138,7 @@
     <string name="page_blocked">Следующая страница была заблокирована:</string>
     <string name="page_blocked_reason">по причине:</string>
     <string name="page_blocked_list_ad">%s в рекламных фильтрах</string>
-    <string name="page_blocked_list_user">%s заблокировано правилами пользователя</string>
+    <string name="page_blocked_list_user">%s заблокирован правилом пользователя</string>
     <string name="page_blocked_list_malware">%s в фильтрах вредоносного ПО</string>
     <string name="request_blocked">Запрос заблокирован</string>
     <!-- settings for new ad blocker -->
@@ -147,12 +147,12 @@
     <string name="blocklist_update_off">Автообновление выкл.</string>
     <string name="blocklist_update_wifi">Только на неограниченных соединениях</string>
     <string name="blocklist_update">Обновить фильтры</string>
-    <string name="blocklist_update_frequency">Частота автообновлений</string>
+    <string name="blocklist_update_frequency">Частота автообновления</string>
     <string name="blocklist_update_description">Обновления будут выполняться с выбранной периодичностью, если в файле фильтров не указан более длительный интервал</string>
     <string name="blocklist_update_now">Обновить списки сейчас</string>
     <string name="blocklist_last_update">Последнее обновление: %s</string>
     <string name="blocklist_updating">Обновление...</string>
-    <string name="blocklist_update_error">Сбой при обновлении списка фильтров %s</string>
+    <string name="blocklist_update_error">Ошибка при обновлении списка фильтров %s</string>
     <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Ошибка при обновлении списка фильтров %1$s: код состояния %2$s</string>
     <string name="add_blocklist">Добавить файл фильтров</string>
@@ -182,22 +182,22 @@
     <!-- permissions request -->
     <string name="title_permission_request">Запрос разрешения</string>
     <string name="message_permission_request">%1$s\n\nхотел бы использовать:\n\n%2$s</string>
-    <string name="title_form_resubmission">Отправка формы</string>
-    <string name="message_form_resubmission">Вы действительно хотите повторно отправить данные?</string>
+    <string name="title_form_resubmission">Повторная отправка формы</string>
+    <string name="message_form_resubmission">Хотите отправить данные повторно?</string>
     <string name="message_location">\nХотите использовать своё местоположение?</string>
     <string name="action_allow">Разрешить</string>
     <string name="action_dont_allow">Не разрешать</string>
     <string name="title_sign_in">Войти</string>
-    <string name="label_realm">Серверное сообщение: %s</string>
+    <string name="label_realm">Сообщение сервера: %s</string>
     <string name="hint_username">Имя пользователя</string>
     <string name="hint_password">Пароль</string>
-    <string name="search_suggestions">Подсказки поиска</string>
+    <string name="search_suggestions">Поисковые предложения</string>
     <string name="powered_by_google">Используя Google</string>
     <string name="powered_by_duck">Используя DuckDuckGo</string>
     <string name="powered_by_baidu">Используя Baidu</string>
     <string name="powered_by_naver">На базе Naver</string>
-    <string name="search_suggestions_off">Без поисковых подсказок</string>
-    <string name="http_proxy">HTTP прокси</string>
+    <string name="search_suggestions_off">Нет поисковых предложений</string>
+    <string name="http_proxy">HTTP-прокси</string>
     <string-array name="proxy_choices_array">
         <item>Без прокси</item>
         <item>Orbot</item>
@@ -220,8 +220,8 @@
     <string name="folder_custom">Выбрать</string>
     <string name="untitled">Без названия</string>
     <string name="freeware">Бесплатное ПО</string>
-    <string name="android_open_source_project">Android Open Source Project</string>
-    <string name="hphosts_ad_server_list">Список рекламных серверов</string>
+    <string name="android_open_source_project">Проект Android с открытым исходным кодом</string>
+    <string name="hphosts_ad_server_list">Список рекламных серверов hpHosts</string>
     <string name="reopening_recent_tab">Вкладка восстановлена</string>
     <string name="rendering_mode">Режим рендеринга</string>
     <string name="name_inverted">Инвертированный</string>
@@ -268,7 +268,7 @@
     <string name="pref_category_portrait">Портретная</string>
     <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Фильтры</string>
-    <string name="pref_category_summary_filters">Локальные или размещенные удалённо файлы, определяющие ваши правила управления содержимым</string>
+    <string name="pref_category_summary_filters">Локальные или удалённые файлы, определяющие ваши правила управления содержимым</string>
     <string name="pref_category_on_tab_close">При закрытии вкладки</string>
     <string name="pref_category_on_tab_change">При смене вкладки</string>
     <string name="pref_category_on_tab_back_forward">При возвращении или переходе</string>
@@ -336,9 +336,9 @@
     <string name="new_tab_position_end">Конец списка вкладок</string>
     <string name="text_encoding">Кодировка текста</string>
     <string name="reset_settings">Сбросить настройки</string>
-    <string name="reset_settings_confirmation">Вы потеряете все свои настройки. Вы уверены, что хотите продолжить?</string>
+    <string name="reset_settings_confirmation">Вы потеряете все настройки. Вы уверены, что хотите продолжить?</string>
     <string name="invert_color">Инвертировать цвета</string>
-    <string name="settings_black_status_bar">Тёмная строка состояния</string>
+    <string name="settings_black_status_bar">Черная строка состояния</string>
     <string name="tabs">Вкладки</string>
     <string name="theme">Тема приложения</string>
     <string name="light_theme">Светлая</string>
@@ -348,9 +348,9 @@
     <string name="folder">Имя папки</string>
     <string name="action_folder">Папка</string>
     <string name="title_rename_folder">Переименовать папку</string>
-    <string name="clear_web_storage">Очистить интернет-хранилище</string>
-    <string name="clear_web_storage_exit">Очищать интернет-хранилище при выходе</string>
-    <string name="message_web_storage_cleared">Интернет-хранилище очищено</string>
+    <string name="clear_web_storage">Очистить веб-хранилище</string>
+    <string name="clear_web_storage_exit">Очистить веб-хранилище при выходе</string>
+    <string name="message_web_storage_cleared">Веб-хранилище очищено</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокировщик рекламы и фильтрация содержимого</string>
     <string name="settings_summary_content_control_toggle">Включить блокировку рекламы и фильтрацию содержимого</string>
@@ -407,7 +407,7 @@
     <string name="dialog_delete_all_downloads">Удалить все загрузки</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Инструменты страницы</string>
-    <string name="dialog_toggle_desktop">Переключить настольный user-agent</string>
+    <string name="dialog_toggle_desktop">Переключить агент пользователя рабочего стола</string>
     <!-- Search Engines -->
     <string name="search_engine_custom">Пользовательский URL</string>
     <!-- Notifications -->
@@ -439,14 +439,14 @@
     <string name="settings_title_layer_type">Тип слоя</string>
     <string name="settings_title_domains">Домены</string>
     <string name="settings_summary_domains">Настройки домена</string>
-    <string name="settings_title_resource_domains">Домены ресурсов</string>
-    <string name="settings_title_override">Перезапись</string>
+    <string name="settings_title_resource_domains">Ресурсные домены</string>
+    <string name="settings_title_override">Переопределить</string>
     <string name="settings_summary_on_override">Переопределить родительские настройки</string>
     <string name="settings_summary_off_override">Использовать родительские настройки</string>
     <string name="settings_title_launch_app">Запуск приложения</string>
     <string name="settings_title_category">Категория</string>
     <string name="settings_summary_on_category">Основной домен</string>
-    <string name="settings_summary_off_category">Домен ресурсов</string>
+    <string name="settings_summary_off_category">Домен ресурса</string>
     <string name="action_domain_settings">Домен</string>
     <string name="settings_title_domains_delete_all">Удалить все</string>
     <string name="settings_summary_domains_delete_all">Удалить все настройки домена</string>
