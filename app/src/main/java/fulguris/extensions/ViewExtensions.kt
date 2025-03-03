@@ -1,12 +1,11 @@
 package fulguris.extensions
 
-import fulguris.R
-import fulguris.utils.getFilteredColor
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.*
 import android.os.SystemClock
+import android.util.DisplayMetrics
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -19,10 +18,14 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.palette.graphics.Palette
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import fulguris.R
+import fulguris.utils.getFilteredColor
+import timber.log.Timber
 import java.lang.reflect.Method
-import java.util.ArrayList
 
 
 /**
@@ -212,6 +215,96 @@ inline fun RecyclerView?.onceOnScrollStateIdle(crossinline runnable: () -> Unit)
     addOnScrollListener(object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {if (newState==RecyclerView.SCROLL_STATE_IDLE) {runnable(); removeOnScrollListener(this)}}
     })
+}
+
+/**
+ * If needed it triggers a scroll animation to show the specified item in this [RecyclerView].
+ * Unfortunately [LinearSmoothScroller] won't let us define the exact duration of the animation.
+ *
+ * [aPosition] The index of the item you want to scroll to.
+ * [aDurationInMs] The rough duration of the scroll animation in milliseconds.
+ * [aOvershot] Specify if you want your scroll animation to overshot in order to put the target item roughly in the middle of this view, as opposed than on the edge.
+ * [aSnapMode] See [LinearSmoothScroller].
+ *
+ * Returns true if a scroll was triggered, false otherwise.
+ * Improved from: https://stackoverflow.com/a/65489113/3969362
+ */
+fun RecyclerView.smoothScrollToPositionEx(aPosition: Int, aDurationInMs: Int = 1000) : Boolean {
+
+    // First of all, check if we should be scrolling at all
+    if (scrollState != RecyclerView.SCROLL_STATE_IDLE) {
+        Timber.d("Already scrolling, skip it for now")
+        return false
+    }
+
+    // Can't do it without adapter
+    adapter?.let { adaptor ->
+
+        val count = adaptor.itemCount
+        var index = aPosition
+
+
+        //adaptor.getItemViewType()
+
+        val lm = layoutManager as LinearLayoutManager
+        // Check if current item is currently visible
+        val minIndex = lm.findFirstCompletelyVisibleItemPosition()
+        val maxIndex = lm.findLastCompletelyVisibleItemPosition()
+
+        // Check if our item is already visible
+        if ( minIndex <= index && index <= maxIndex) {
+            Timber.d("No need to scroll")
+            return false
+        }
+
+        val scrollDown = (index<minIndex) // && !configPrefs.toolbarsBottom
+        val scrollFrom = if (scrollDown) minIndex else maxIndex
+
+        val scrollRange = if (scrollFrom>index) scrollFrom - index else index - scrollFrom
+        Timber.d("Scroll range: $scrollRange")
+
+        // Trigger our scroll animation
+        val smoothScroller = object : LinearSmoothScroller(this.context) {
+
+            // Center on our target item
+            // See: https://stackoverflow.com/a/53756296/3969362
+            override fun calculateDtToFit(viewStart: Int, viewEnd: Int, boxStart: Int, boxEnd: Int, snapPreference: Int): Int {
+                return (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
+            }
+
+            // We disabled our speed tweak as it is really tricky to get it right for various use cases
+            // Various tabs list variant, number of tabs or screen DPI...
+            // The default implementation appears to be a good compromise after all.
+            /*
+            override fun calculateSpeedPerPixel(displayMetrics: DisplayMetrics?): Float {
+                // Compute our speed as function of the distance we need to scroll
+                var speed = if ((layoutManager as? LinearLayoutManager)?.orientation == LinearLayoutManager.VERTICAL) {
+                    aDurationInMs.toFloat() / ((computeVerticalScrollRange().toFloat() / count) * scrollRange)
+                } else {
+                    aDurationInMs.toFloat() / ((computeHorizontalScrollRange().toFloat() / count) * scrollRange)
+                }
+
+                Timber.d("Scroll speed: $speed ms/pixel")
+
+                // Speed is expressed in ms/pixel so in fact min speed is the fastest one and max speed is the slowest one
+                val minSpeed = 0.001f    // Fastest
+                val maxSpeed = 0.05f     // Slowest
+                // Make sure we don't go too fast or too slow, going too fast can break the LinearSmoothScroller and cause endless animation jitter
+                if (speed<minSpeed) speed = minSpeed
+                if (speed>maxSpeed) speed = maxSpeed
+
+                return speed
+            }
+            */
+
+        }
+        smoothScroller.targetPosition = index
+        layoutManager?.startSmoothScroll(smoothScroller)
+
+        return true
+    }
+
+    return false
 }
 
 /**
@@ -442,3 +535,4 @@ fun View.onConfigurationChange(aRunnable: () -> Unit) {
         id = R.id.onConfigurationChange
     }) }
 }
+

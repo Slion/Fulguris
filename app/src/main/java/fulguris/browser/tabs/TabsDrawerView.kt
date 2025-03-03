@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import timber.log.Timber
 
 
 /**
@@ -110,9 +111,10 @@ class TabsDrawerView @JvmOverloads constructor(
     }
 
     /**
-     * TODO: this is called way to often for my taste and should be optimized somehow.
+     * TODO: this is called way too often for my taste and should be optimized somehow.
      */
     private fun displayTabs() {
+        Timber.d("displayTabs");
         tabsAdapter.showTabs(webBrowser.getTabModel().allTabs.map(WebPageTab::asTabViewState))
 
         if (fixScrollBug(iBinding.tabsList)) {

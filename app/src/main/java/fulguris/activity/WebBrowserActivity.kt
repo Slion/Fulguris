@@ -131,6 +131,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.system.exitProcess
+import kotlin.time.TimeSource
 
 
 /**
@@ -463,7 +464,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         // Hook in buttons with onClick handler
         iBindingToolbarContent.buttonReload.setOnClickListener(this)
-
     }
 
     /**
@@ -510,9 +510,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         mainHandler.postDelayed({
             setupToolBar()
             setupPullToRefresh(aConfig)
-            // For embedded tab bars modes
-            tryScrollToCurrentTab()
-
             iBinding.drawerLayout.requestLayout()
         },500);
 
@@ -610,7 +607,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // See: https://github.com/material-components/material-components-android/issues/2168
         tabsDialog = createBottomSheetDialog(tabsView as View)
         // Once our bottom sheet is open we want it to scroll to current tab
-        tabsDialog.setOnShowListener { tryScrollToCurrentTab() }
+        tabsDialog.setOnShowListener {
+            tryScrollToCurrentTab()
+        }
         /*
         tabsDialog.behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -2901,7 +2900,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         showActionBar()
         // Make sure current tab is visible in tab list
         tryScrollToCurrentTab()
-        //mainHandler.postDelayed({ scrollToCurrentTab() }, 0)
+        //mainHandler.postDelayed({ tryScrollToCurrentTab() }, 0)
 
         // Current tab was already set by the time we get here
         tabsManager.currentTab?.let {
@@ -4092,32 +4091,36 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     * Never call that function direction.
+     * Never call that function directly.
      * Just call [tryScrollToCurrentTab] instead.
      */
     private fun scrollToCurrentTab() {
         /*if (userPreferences.useBottomSheets && tabsView is TabsDrawerView && !(tabsDialog.isShowing && tabsDialog.behavior.state == BottomSheetBehavior.STATE_EXPANDED)) {
-       return
-   }*/
+            return
+        }*/
+        //Thread.dumpStack()
 
-        val tabListView = (tabsView as ViewGroup).findViewById<RecyclerView>(R.id.tabs_list)
-        // Set focus
         // Find our recycler list view
+        val tabListView = (tabsView as ViewGroup).findViewById<RecyclerView>(R.id.tabs_list)
+
         tabListView?.apply {
-            // Get current tab index and layout manager
-            val index = tabsManager.indexOfCurrentTab()
-            val lm = layoutManager as LinearLayoutManager
-            // Check if current item is currently visible
-            if (lm.findFirstCompletelyVisibleItemPosition() <= index && index <= lm.findLastCompletelyVisibleItemPosition()) {
+            if (smoothScrollToPositionEx(tabsManager.indexOfCurrentTab())) {
+                // Our current item is not completely visible, we need to scroll then
+                // Once scroll is complete we will focus our current item
+                val timeSource = TimeSource.Monotonic
+                val mark = timeSource.markNow();
+                onceOnScrollStateIdle {
+                    // For some reason we need to try again to scroll to current tab as sometimes it fails on first or even second try,
+                    // and lands somewhere else when we have over 600 tabs in our bottom sheet. Hopefully it won't get stuck in endless tries.
+                    val elapsed = timeSource.markNow() - mark;
+                    Timber.d("Scroll time: ${elapsed.inWholeMilliseconds} ms")
+                    tryScrollToCurrentTab()
+                    findViewHolderForAdapterPosition(tabsManager.indexOfCurrentTab())?.itemView?.requestFocus()
+                }
+            } else {
                 // We don't need to scroll as current item is already visible
                 // Just focus our current item then for best keyboard navigation experience
                 findViewHolderForAdapterPosition(tabsManager.indexOfCurrentTab())?.itemView?.requestFocus()
-            } else {
-                // Our current item is not completely visible, we need to scroll then
-                // Once scroll is complete we will focus our current item
-                onceOnScrollStateIdle { findViewHolderForAdapterPosition(tabsManager.indexOfCurrentTab())?.itemView?.requestFocus() }
-                // Trigger scroll
-                smoothScrollToPosition(index)
             }
         }
     }
