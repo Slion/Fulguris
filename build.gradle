@@ -17,12 +17,12 @@ buildscript {
         // Firebase stuff
         // Check that you have the Google Services Gradle plugin v4.3.2 or later
         // (if not, add it).
-        classpath 'com.google.gms:google-services:4.4.1'
+        classpath 'com.google.gms:google-services:4.4.3'
         // Add the Crashlytics Gradle plugin.
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
         //
         //classpath("com.github.triplet.gradle:play-publisher:3.4.0-agp7.0")
-        classpath 'com.github.bjoernq:unmockplugin:0.7.9'
+        classpath 'com.github.bjoernq:unmockplugin:0.9.0'
         // Hilt: https://developer.android.com/training/dependency-injection/hilt-android#groovy
         classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerVersion"
         classpath 'com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.2.10-2.0.2'
