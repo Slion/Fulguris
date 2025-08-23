@@ -35,7 +35,7 @@ class ElementContainer {
     }
 
     operator fun get(url: Uri, isUseGeneric: Boolean): List<ElementFilter> {
-        val host = (url.host ?: return emptyList()).toLowerCase(Locale.ROOT)
+        val host = (url.host ?: return emptyList()).lowercase(Locale.ROOT)
         val tldRemoved = host.removeEffectiveTld()
 
         val list = mutableListOf<ElementFilter>()

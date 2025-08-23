@@ -157,7 +157,7 @@ class SuggestionsAdapter(
             val choice: Int = userPreferences.suggestionChoice.value + 2
 
             (allBookmarks.filter {
-                it.title.toLowerCase(Locale.getDefault()).startsWith(query)
+                it.title.lowercase(Locale.getDefault()).startsWith(query)
             } + allBookmarks.filter {
                 it.url.contains(query)
             }).distinct().take(choice)
@@ -165,7 +165,7 @@ class SuggestionsAdapter(
 
     private fun Observable<CharSequence>.results(): Flowable<List<WebPage>> = this
         .toFlowable(BackpressureStrategy.LATEST)
-        .map { it.toString().toLowerCase(Locale.getDefault()).trim() }
+        .map { it.toString().lowercase(Locale.getDefault()).trim() }
         .filter(String::isNotEmpty)
         .share()
         .compose { upstream ->

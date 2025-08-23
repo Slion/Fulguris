@@ -31,7 +31,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
-import com.anthonycr.mezzanine.MezzanineGenerator
+import com.anthonycr.mezzanine.mezzanine
 import fulguris.html.incognito.IncognitoPageReader
 import dagger.Module
 import dagger.Provides
@@ -178,28 +178,28 @@ class AppModule {
     fun provideI2PAndroidHelper(application: Application): I2PAndroidHelper = I2PAndroidHelper(application)
 
     @Provides
-    fun providesListPageReader(): ListPageReader = MezzanineGenerator.ListPageReader()
+    fun providesListPageReader(): ListPageReader = mezzanine<ListPageReader>()
 
     @Provides
-    fun providesHomePageReader(): HomePageReader = MezzanineGenerator.HomePageReader()
+    fun providesHomePageReader(): HomePageReader = mezzanine<HomePageReader>()
 
     @Provides
-    fun providesIncognitoPageReader(): IncognitoPageReader = MezzanineGenerator.IncognitoPageReader()
+    fun providesIncognitoPageReader(): IncognitoPageReader = mezzanine<IncognitoPageReader>()
 
     @Provides
-    fun providesBookmarkPageReader(): BookmarkPageReader = MezzanineGenerator.BookmarkPageReader()
+    fun providesBookmarkPageReader(): BookmarkPageReader = mezzanine<BookmarkPageReader>()
 
     @Provides
-    fun providesTextReflow(): TextReflow = MezzanineGenerator.TextReflow()
+    fun providesTextReflow(): TextReflow = mezzanine<TextReflow>()
 
     @Provides
-    fun providesThemeColor(): ThemeColor = MezzanineGenerator.ThemeColor()
+    fun providesThemeColor(): ThemeColor = mezzanine<ThemeColor>()
 
     @Provides
-    fun providesInvertPage(): InvertPage = MezzanineGenerator.InvertPage()
+    fun providesInvertPage(): InvertPage = mezzanine<InvertPage>()
 
     @Provides
-    fun providesSetMetaViewport(): SetMetaViewport = MezzanineGenerator.SetMetaViewport()
+    fun providesSetMetaViewport(): SetMetaViewport = mezzanine<SetMetaViewport>()
 }
 
 @Qualifier

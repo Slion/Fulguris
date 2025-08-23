@@ -31,6 +31,8 @@ plugins {
     id 'jacoco'
     id 'com.github.ben-manes.versions'
     id 'de.mobilej.unmock'
+    id 'com.google.devtools.ksp'
+    id("com.anthonycr.plugins.mezzanine") version "2.1.0"
 }
 
 // See: https://stackoverflow.com/a/53408667/3969362
@@ -236,8 +238,8 @@ android {
 
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     buildFeatures {
@@ -316,10 +318,10 @@ dependencies {
     implementation 'net.dankito.readability4j:readability4j:1.0.8'
 
     // file reading
-    final def mezzanineVersion = '1.1.1'
     // Available on JitPack: https://jitpack.io/#anthonycr/Mezzanine
-    implementation "com.github.anthonycr.Mezzanine:mezzanine:$mezzanineVersion"
-    kapt "com.github.anthonycr.Mezzanine:mezzanine-compiler:$mezzanineVersion"
+    implementation("com.anthonycr.mezzanine:core:2.1.0")
+    ksp("com.anthonycr.mezzanine:processor:2.1.0")
+
     // Just using the local JAR won't work as is since the compiler has other unresolved dependencies
     // We notably get java.lang.ClassNotFoundException: org.apache.commons.lang3.StringEscapeUtils when compiling
     // See: https://stackoverflow.com/questions/28504174/noclassdeffounderror-org-apache-commons-lang3-stringutils
@@ -387,26 +389,6 @@ dependencies {
 
     // Logs
     implementation 'com.jakewharton.timber:timber:5.0.1'
-}
-
-kapt {
-    correctErrorTypes true
-    arguments {
-        arg("mezzanine.projectPath", project.rootDir)
-    }
-}
-
-tasks.withType(KotlinCompile).configureEach {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-
-    kotlinOptions {
-        jvmTarget = '1.8'
-        kotlinOptions {
-            freeCompilerArgs += ['-XXLanguage:+InlineClasses']
-            freeCompilerArgs += ['-progressive']
-        }
-    }
 }
 
 
@@ -492,3 +474,20 @@ clean.doLast {
     file(generatedLocaleListDir).deleteDir()
 }
 
+mezzanine {
+    files = files(
+            "src/main/js/TextReflow.js",
+            "src/main/html/list.html",
+            "src/main/html/bookmarks.html",
+            "src/main/html/homepage.html",
+            "src/main/html/private.html",
+            "src/main/js/InvertPage.js",
+            "src/main/js/SetMetaViewport.js",
+            "src/main/js/ThemeColor.js"
+    )
+}
+
+
+kotlin {
+    jvmToolchain(17)
+}

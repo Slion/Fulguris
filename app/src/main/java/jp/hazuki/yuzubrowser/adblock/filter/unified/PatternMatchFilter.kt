@@ -115,7 +115,7 @@ class PatternMatchFilter(
                             continue@loop
                         }
                         '^' -> if (!nu.checkSeparator()) continue@loop
-                        else -> if (!ignoreCase || nu.toUpperCase() != np.toUpperCase()) {
+                        else -> if (!ignoreCase || nu.uppercaseChar() != np.uppercaseChar()) {
                             if (isStartWith) {
                                 val next = url.nextPoint(i)
                                 if (next < 0) return false
@@ -136,7 +136,7 @@ class PatternMatchFilter(
         for (i in start until length) {
             val c2 = this[i]
             if (c == c2) return i
-            if (ignoreCase && c.toUpperCase() == c2.toUpperCase()) return i
+            if (ignoreCase && c.uppercaseChar() == c2.uppercaseChar()) return i
         }
         return -1
     }
