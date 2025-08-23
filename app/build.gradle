@@ -282,14 +282,15 @@ dependencies {
 
     // Jetpack AndroidX libraries
     implementation "androidx.palette:palette-ktx:1.0.0"
-    implementation "androidx.annotation:annotation:1.7.1"
-    implementation "androidx.vectordrawable:vectordrawable-animated:1.1.0"
-    implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.recyclerview:recyclerview:1.3.2"
-    implementation "androidx.core:core-ktx:1.12.0"
+    implementation "androidx.annotation:annotation:1.9.1"
+    implementation "androidx.vectordrawable:vectordrawable-animated:1.2.0"
+    implementation "androidx.appcompat:appcompat:1.7.1"
+    implementation "androidx.recyclerview:recyclerview:1.4.0"
+    // Needs to upgrade target SDK
+    implementation "androidx.core:core-ktx:1.16.0"
     implementation 'androidx.core:core-splashscreen:1.0.1'
-    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    implementation "androidx.fragment:fragment-ktx:1.6.2"
+    implementation "androidx.constraintlayout:constraintlayout:2.2.1"
+    implementation "androidx.fragment:fragment-ktx:1.8.9"
     implementation "androidx.drawerlayout:drawerlayout:1.2.0"
     implementation 'androidx.preference:preference-ktx:1.2.1'
     // Webkit: https://developer.android.com/jetpack/androidx/releases/webkit
@@ -302,7 +303,7 @@ dependencies {
     // In code we use reflection to access some bottom sheet private class, methods and fields
     // Whenever you update that library you will need to review those hacks, see adjustBottomSheet.
     // Also search the code for BottomSheetDialog::class
-    implementation "com.google.android.material:material:1.11.0"
+    implementation "com.google.android.material:material:1.12.0"
     //implementation group: 'com.google.android.material', name: 'material', version: '1.6.0-alpha01'
 
     //

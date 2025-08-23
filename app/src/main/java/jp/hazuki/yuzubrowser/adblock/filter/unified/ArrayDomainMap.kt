@@ -23,6 +23,15 @@ class ArrayDomainMap(size: Int, override var wildcard: Boolean) : SimpleArrayMap
     override val size: Int
         get() = size()
 
+    /// SL: Introduced to be compatible with older prototype where default value could be null
+    private fun getOrDefaultCompat(key: String, defaultValue: Boolean?): Boolean? {
+        val index = indexOfKey(key)
+        return when {
+            index >= 0 -> valueAt(index)
+            else -> defaultValue
+        }
+    }
+
     // see https://adblockplus.org/en/filter-cheatsheet: also matches subdomains
     override fun get(domain: String): Boolean? {
         if (wildcard) {
@@ -33,10 +42,10 @@ class ArrayDomainMap(size: Int, override var wildcard: Boolean) : SimpleArrayMap
         }
         var d = domain
         while (d.contains('.')) {
-            getOrDefault(d, null)?.let { return it }
+            getOrDefaultCompat(d, null)?.let { return it }
             d = d.substringAfter('.')
         }
-        return getOrDefault(domain, null)
+        return getOrDefaultCompat(domain, null)
     }
 
     operator fun set(domain: String, value: Boolean) {
