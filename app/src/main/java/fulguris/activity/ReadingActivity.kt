@@ -56,6 +56,7 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import fulguris.extensions.applyWindowInsets
 import io.reactivex.Scheduler
 import net.dankito.readability4j.Readability4J
 import org.jsoup.Jsoup
@@ -130,6 +131,8 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+
+        applyWindowInsets()
     }
 
     @SuppressLint("RestrictedApi")

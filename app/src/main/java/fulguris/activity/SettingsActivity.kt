@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import fulguris.extensions.applyWindowInsets
 import fulguris.extensions.ihs
 import timber.log.Timber
 
@@ -69,6 +70,9 @@ class SettingsActivity : ThemedSettingsActivity() {
             // it.marqueeRepeatLimit = -1
             // it.isSelected = true
         }
+
+        applyWindowInsets()
+
     }
 
 

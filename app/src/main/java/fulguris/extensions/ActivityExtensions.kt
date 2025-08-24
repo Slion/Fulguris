@@ -18,6 +18,7 @@ import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import fulguris.app
@@ -114,6 +115,21 @@ fun Activity.setTaskLabel(aLabel: String?) {
             setTaskDescription(ActivityManager.TaskDescription.Builder().setLabel(aLabel).build())
         } else {
             setTaskDescription(ActivityManager.TaskDescription(aLabel))
+        }
+    }
+}
+
+/**
+ * Make sure our view does not extends over system bars from API 35 onwards
+ */
+fun Activity.applyWindowInsets() {
+    // From API 35 we need to make room for status bars ourselves
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        // Handle window insets to add padding for system bars
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(insets.left, insets.top, insets.right, insets.bottom)
+            WindowInsetsCompat.CONSUMED
         }
     }
 }
