@@ -75,8 +75,6 @@
     </string-array>
 
 
-
-
     <string-array name="AbortProceedAsk">
         <item>@string/action_abort</item>
         <item>@string/action_proceed</item>
@@ -90,13 +88,6 @@
         <item>@string/log_level_warn</item>
         <item>@string/log_level_error</item>
         <item>@string/log_level_assert</item>
-    </string-array>
-
-    <string-array name="CutoutMode">
-        <item>@string/cutout_mode_default</item>
-        <item>@string/cutout_mode_short_edges</item>
-        <item>@string/cutout_mode_never</item>
-        <item>@string/cutout_mode_always</item>
     </string-array>
 
 </resources>

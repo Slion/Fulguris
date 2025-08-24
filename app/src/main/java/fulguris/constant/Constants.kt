@@ -64,6 +64,7 @@ object PrefKeys {
     const val TabBarVertical = "pref_key_tab_bar_vertical"
     const val TabBarInDrawer = "pref_key_tab_bar_in_drawer"
     const val ToolbarsBottom = "pref_key_toolbars_bottom"
+    const val UseCutoutArea = "pref_key_use_cutout_area"
 }
 
 

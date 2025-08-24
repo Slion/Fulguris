@@ -40,6 +40,7 @@
     <string name="pref_key_tab_bar_in_drawer">pref_key_tab_bar_in_drawer</string>
     <string name="pref_key_toolbars_bottom">pref_key_toolbars_bottom</string>
     <string name="pref_key_cutout_mode">pref_key_cutout_mode</string>
+    <string name="pref_key_use_cutout_area">pref_key_use_cutout_area</string>
     <string name="pref_key_user_agent">pref_key_user_agent</string>
 
 

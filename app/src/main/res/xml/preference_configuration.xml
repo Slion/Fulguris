@@ -101,15 +101,14 @@
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
-    <slions.pref.EnumListPreference
-        a:key="@string/pref_key_cutout_mode"
-        a:title="@string/pref_title_cutout_mode"
-        a:useSimpleSummaryProvider="true"
-        a:defaultValue="Default"
-        a:entries="@array/CutoutMode"
+    <SwitchPreferenceCompat
+        a:key="@string/pref_key_use_cutout_area"
+        a:title="@string/pref_title_use_cutout_area"
+        a:summaryOn="@string/pref_summary_on_use_cutout_area"
+        a:summaryOff="@string/pref_summary_off_use_cutout_area"
         a:icon="@drawable/ic_short_text"
         a:singleLineTitle="false"
-        a:enumClassName="fulguris.enums.CutoutMode"
+        a:defaultValue="true"
         />
 
     <slions.pref.SliderPreference

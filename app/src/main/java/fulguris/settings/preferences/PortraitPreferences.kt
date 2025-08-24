@@ -26,7 +26,6 @@ import fulguris.constant.PrefKeys
 import fulguris.device.ScreenSize
 import fulguris.di.PrefsPortrait
 import android.content.SharedPreferences
-import fulguris.enums.CutoutMode
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -54,10 +53,6 @@ import javax.inject.Singleton
         return LandscapePreferences.iDefaults[aKey] as Float
     }
 
-    override fun getDefaultCutoutMode(): CutoutMode {
-        return CutoutMode.Default
-    }
-
     override fun getDefaults(): Map<String, Any> {
         return iDefaults
     }
@@ -72,7 +67,8 @@ import javax.inject.Singleton
             PrefKeys.ShowToolBarOnPageTop to true,
             PrefKeys.PullToRefresh to true,
             PrefKeys.ToolbarsBottom to false,
-            PrefKeys.DesktopWidth to 200F
+            PrefKeys.DesktopWidth to 200F,
+            PrefKeys.UseCutoutArea to true,
             // Omitted the following as they have non static default values specified in the base class
             //PrefKeys.TabBarVertical to !screenSize.isTablet(),
             //PrefKeys.TabBarInDrawer to !screenSize.isTablet(),

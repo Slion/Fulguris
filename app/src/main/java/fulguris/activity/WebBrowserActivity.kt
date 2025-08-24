@@ -306,9 +306,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         updateConfigurationSharedPreferences()
         // We want to control our decor
         WindowCompat.setDecorFitsSystemWindows(window,false)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            window.attributes.layoutInDisplayCutoutMode = configPrefs.cutoutMode.value
-        }
 
         // Register lifecycle observers
         lifecycle.addObserver(tabsManager)
@@ -329,46 +326,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Setup a callback when we need to apply window insets
         ViewCompat.setOnApplyWindowInsetsListener(iBinding.root) { view, windowInsets ->
             Timber.d("OnApplyWindowInsetsListener")
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            Timber.d("System insets: $insets")
-            //val imeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
-            val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
 
-            val gestureInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
-            Timber.d("Gesture insets: $gestureInsets")
-
-            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                // Don't apply vertical margins here as it would break our drawers status bar color
-                // Apply horizontal margin to our root view so that we fill the cutout in on Honor Magic V2
-                leftMargin = insets.left //+ gestureInsets.left
-                rightMargin = insets.right //+ gestureInsets.right
-                // Make sure our UI does not get stuck below the IME virtual keyboard
-                // TODO: Do animation synchronization, see: https://developer.android.com/develop/ui/views/layout/sw-keyboard#synchronize-animation
-                bottomMargin = imeHeight
-            }
-
-            iBinding.uiLayout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                // Apply vertical margins for status and navigation bar to our UI layout
-                // Thus the drawers are still showing below the status bar
-                topMargin = insets.top
-                bottomMargin = insets.bottom //+ gestureInsets.bottom
-                //leftMargin = gestureInsets.left
-                //rightMargin = gestureInsets.right
-            }
-
-            iBinding.leftDrawerContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                // Apply vertical margins for status and navigation bar to our drawer content
-                // Thus drawer content does not overlap with system UI
-                topMargin = insets.top
-                bottomMargin = insets.bottom
-            }
-
-            iBinding.rightDrawerContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                // Apply vertical margins for status and navigation bar to our drawer content
-                // Thus drawer content does not overlap with system UI
-                topMargin = insets.top
-                bottomMargin = insets.bottom
-            }
+            applyWindowInsets(view, windowInsets)
 
             //windowInsets
             WindowInsetsCompat.CONSUMED
@@ -467,6 +426,66 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
+     *
+     */
+    private fun applyWindowInsets(view: View, windowInsets: WindowInsetsCompat) {
+        val systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+        Timber.d("System insets: $systemBars")
+        //val imeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
+        val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+
+        val gestureInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
+        Timber.d("Gesture insets: $gestureInsets")
+
+        val cutout = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
+        Timber.d("Cutout insets: $cutout")
+
+        // Workout our insets according to configuration
+        // From API 35 layoutInDisplayCutoutMode is useless, instead of relying on the root window we need to adjust our layout ourselves
+        val insets = windowInsets.getInsets(if (!configPrefs.useCutoutArea) {
+            // Exclude display cutout
+            WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+        }
+        else {
+            // Only exclude system bars
+            WindowInsetsCompat.Type.systemBars()
+        })
+
+        view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            // Don't apply vertical margins here as it would break our drawers status bar color
+            // Apply horizontal margin to our root view so that we fill the cutout in on Honor Magic V2
+            leftMargin = insets.left //+ gestureInsets.left
+            rightMargin = insets.right //+ gestureInsets.right
+            // Make sure our UI does not get stuck below the IME virtual keyboard
+            // TODO: Do animation synchronization, see: https://developer.android.com/develop/ui/views/layout/sw-keyboard#synchronize-animation
+            bottomMargin = imeHeight
+        }
+
+        iBinding.uiLayout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            // Apply vertical margins for status and navigation bar to our UI layout
+            // Thus the drawers are still showing below the status bar
+            topMargin = insets.top
+            bottomMargin = insets.bottom //+ gestureInsets.bottom
+            //leftMargin = gestureInsets.left
+            //rightMargin = gestureInsets.right
+        }
+
+        iBinding.leftDrawerContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            // Apply vertical margins for status and navigation bar to our drawer content
+            // Thus drawer content does not overlap with system UI
+            topMargin = insets.top
+            bottomMargin = insets.bottom
+        }
+
+        iBinding.rightDrawerContent.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            // Apply vertical margins for status and navigation bar to our drawer content
+            // Thus drawer content does not overlap with system UI
+            topMargin = insets.top
+            bottomMargin = insets.bottom
+        }
+    }
+
+    /**
      * Call this whenever our configuration could have changed.
      * It takes care of setting our global configPrefs and make sure we are listening to changes.
      */
@@ -486,15 +505,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun updateConfiguration(aConfig: Configuration = resources.configuration) {
         Timber.d("updateConfiguration")
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            if (window.attributes.layoutInDisplayCutoutMode != configPrefs.cutoutMode.value) {
-                // We don't seem to be able to apply that without restarting the activity
-                window.attributes.layoutInDisplayCutoutMode = configPrefs.cutoutMode.value
-                // This makes sure the newly set cutout mode is applied
-                window.attributes = window.attributes
-                // TODO adjust attributes for all our dialog windows
-            }
-        }
+        ViewCompat.getRootWindowInsets(iBinding.root)?.let{applyWindowInsets(iBinding.root, it)}
 
         setupDrawers()
         setFullscreenIfNeeded()

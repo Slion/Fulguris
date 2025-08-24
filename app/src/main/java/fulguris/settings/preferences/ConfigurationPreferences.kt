@@ -89,14 +89,10 @@ abstract class ConfigurationPreferences constructor(
      */
     var desktopWidth by preferences.floatPreference(R.string.pref_key_desktop_width, getDefaultFloat(PrefKeys.DesktopWidth))
 
-
     /**
-     * Define if we render around display cutouts.
-     *
-     * See: https://developer.android.com/reference/android/view/WindowManager.LayoutParams
-     * See: https://developer.android.com/reference/android/view/WindowManager.LayoutParams#LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+     * True if we render around display cutouts, false otherwise
      */
-    var cutoutMode by preferences.enumPreference(R.string.pref_key_cutout_mode, getDefaultCutoutMode())
+    var useCutoutArea by preferences.booleanPreference(R.string.pref_key_use_cutout_area, getDefaultBoolean(PrefKeys.ToolbarsBottom))
 
 }
 
