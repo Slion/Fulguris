@@ -2,7 +2,6 @@ package fulguris.settings.fragment
 
 import fulguris.Capabilities
 import fulguris.R
-import fulguris.browser.ProxyChoice
 import fulguris.browser.SuggestionNumChoice
 import fulguris.constant.TEXT_ENCODINGS
 import fulguris.constant.Uris
@@ -11,14 +10,11 @@ import fulguris.dialog.BrowserDialog
 import fulguris.extensions.resizeAndShow
 import fulguris.extensions.withSingleChoiceItems
 import fulguris.isSupported
-import fulguris.locale.LocaleUtils
 import fulguris.search.SearchEngineProvider
 import fulguris.search.Suggestions
 import fulguris.search.engine.BaseSearchEngine
 import fulguris.search.engine.CustomSearch
 import fulguris.settings.preferences.*
-import fulguris.utils.FileUtils
-import fulguris.utils.ProxyUtils
 import fulguris.utils.ThemeUtils
 import android.app.Activity
 import android.os.Bundle
@@ -66,12 +62,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
         //injector.inject(this)
-
-        clickableDynamicPreference(
-            preference = SETTINGS_PROXY,
-            summary = userPreferences.proxyChoice.toSummary(),
-            onClick = ::showProxyPicker
-        )
 
         clickableDynamicPreference(
             preference = SETTINGS_USER_AGENT,
@@ -198,47 +188,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         return true
     }
 
-
-    private fun ProxyChoice.toSummary(): String {
-        val stringArray = resources.getStringArray(R.array.proxy_choices_array)
-        return when (this) {
-            ProxyChoice.NONE -> stringArray[0]
-            ProxyChoice.ORBOT -> stringArray[1]
-            ProxyChoice.I2P -> stringArray[2]
-            ProxyChoice.MANUAL -> "${userPreferences.proxyHost}:${userPreferences.proxyPort}"
-        }
-    }
-
-    private fun showProxyPicker(summaryUpdater: SummaryUpdater) : Boolean {
-        BrowserDialog.showCustomDialog(activity as Activity) {
-            setTitle(R.string.http_proxy)
-            val stringArray = resources.getStringArray(R.array.proxy_choices_array)
-            val values = ProxyChoice.values().map {
-                Pair(it, when (it) {
-                    ProxyChoice.NONE -> stringArray[0]
-                    ProxyChoice.ORBOT -> stringArray[1]
-                    ProxyChoice.I2P -> stringArray[2]
-                    ProxyChoice.MANUAL -> stringArray[3]
-                })
-            }
-            withSingleChoiceItems(values, userPreferences.proxyChoice) {
-                updateProxyChoice(it, activity as Activity, summaryUpdater)
-            }
-            setPositiveButton(R.string.action_ok, null)
-        }
-
-        return true
-    }
-
-    private fun updateProxyChoice(choice: ProxyChoice, activity: Activity, summaryUpdater: SummaryUpdater) {
-        val sanitizedChoice = fulguris.utils.ProxyUtils.sanitizeProxyChoice(choice, activity)
-        if (sanitizedChoice == ProxyChoice.MANUAL) {
-            showManualProxyPicker(activity, summaryUpdater)
-        }
-
-        userPreferences.proxyChoice = sanitizedChoice
-        summaryUpdater.updateSummary(sanitizedChoice.toSummary())
-    }
     private fun showSuggestionNumPicker(summaryUpdater: SummaryUpdater) : Boolean {
         BrowserDialog.showCustomDialog(activity as AppCompatActivity) {
             setTitle(R.string.suggest)
@@ -270,40 +219,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
         userPreferences.suggestionChoice = choice
         summaryUpdater.updateSummary(stringArray[choice.value])
-    }
-
-    private fun showManualProxyPicker(activity: Activity, summaryUpdater: SummaryUpdater) {
-        val v = activity.layoutInflater.inflate(R.layout.dialog_manual_proxy, null)
-        val eProxyHost = v.findViewById<TextView>(R.id.proxyHost)
-        val eProxyPort = v.findViewById<TextView>(R.id.proxyPort)
-
-        // Limit the number of characters since the port needs to be of type int
-        // Use input filters to limit the EditText length and determine the max
-        // length by using length of integer MAX_VALUE
-        val maxCharacters = Integer.MAX_VALUE.toString().length
-        eProxyPort.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxCharacters - 1))
-
-        eProxyHost.text = userPreferences.proxyHost
-        eProxyPort.text = userPreferences.proxyPort.toString()
-
-        BrowserDialog.showCustomDialog(activity) {
-            setTitle(R.string.manual_proxy)
-            setView(v)
-            setPositiveButton(R.string.action_ok) { _, _ ->
-                val proxyHost = eProxyHost.text.toString()
-                val proxyPort = try {
-                    // Try/Catch in case the user types an empty string or a number
-                    // larger than max integer
-                    Integer.parseInt(eProxyPort.text.toString())
-                } catch (ignored: NumberFormatException) {
-                    userPreferences.proxyPort
-                }
-
-                userPreferences.proxyHost = proxyHost
-                userPreferences.proxyPort = proxyPort
-                summaryUpdater.updateSummary("$proxyHost:$proxyPort")
-            }
-        }
     }
 
     private fun showImageUrlPicker() : Boolean {
@@ -599,7 +514,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
     }
 
     companion object {
-        private const val SETTINGS_PROXY = "proxy"
         private const val SETTINGS_SUGGESTIONS_NUM = "suggestions_number"
         private const val SETTINGS_USER_AGENT = "agent"
         private const val SETTINGS_DOWNLOAD = "download"

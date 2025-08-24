@@ -17,7 +17,6 @@ import fulguris.js.TextReflow
 import fulguris.network.NetworkConnectivityModel
 import fulguris.search.SearchEngineProvider
 import fulguris.settings.preferences.UserPreferences
-import fulguris.utils.ProxyUtils
 import fulguris.view.webrtc.WebRtcPermissionsModel
 import android.app.DownloadManager
 import android.content.ClipboardManager
@@ -54,7 +53,6 @@ interface HiltEntryPoint {
     @MainScheduler
     fun mainScheduler(): Scheduler
     val searchEngineProvider: SearchEngineProvider
-    val proxyUtils: ProxyUtils
     val textReflowJs: TextReflow
     val invertPageJs: InvertPage
     val setMetaViewport: SetMetaViewport

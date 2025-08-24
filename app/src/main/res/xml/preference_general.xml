@@ -196,12 +196,6 @@
             app:singleLineTitle="false" />
 
         <Preference
-            android:key="proxy"
-            android:title="@string/http_proxy"
-            app:iconSpaceReserved="true"
-            app:singleLineTitle="false" />
-
-        <Preference
             android:key="agent"
             android:title="@string/agent"
             app:icon="@drawable/ic_about"

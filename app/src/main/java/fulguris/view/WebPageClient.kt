@@ -67,7 +67,6 @@ class WebPageClient(
 
     private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
 
-    val proxyUtils: ProxyUtils = hiltEntryPoint.proxyUtils
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
     val preferences: SharedPreferences = hiltEntryPoint.userSharedPreferences()
     val textReflowJs: TextReflow = hiltEntryPoint.textReflowJs
@@ -594,12 +593,6 @@ class WebPageClient(
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
 
         Timber.d("$ihs : shouldOverrideUrlLoading - ${request.url}")
-
-        // Check if configured proxy is available
-        if (!proxyUtils.isProxyReady(activity)) {
-            // User has been notified
-            return true
-        }
 
         val url = request.url.toString()
         val uri = Uri.parse(url)

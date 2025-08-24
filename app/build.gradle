@@ -357,14 +357,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
 
-    // tor proxy
-    implementation "info.guardianproject.netcipher:netcipher:2.1.0"
-    // Updating this breaks our build
-    //implementation "info.guardianproject.netcipher:netcipher-webkit:2.0.0-alpha1"
-    // Use local library binary
-    // TODO: Update that library or remove it
-    implementation files('libs/netcipher-webkit-2.0.0-alpha1.jar')
-
     // memory leak analysis
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
 

@@ -251,7 +251,6 @@ class WebPageTab(
 
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
     val dialogBuilder: LightningDialogBuilder = hiltEntryPoint.dialogBuilder
-    val proxyUtils: ProxyUtils = hiltEntryPoint.proxyUtils
     val databaseScheduler: Scheduler = hiltEntryPoint.databaseScheduler()
     val mainScheduler: Scheduler = hiltEntryPoint.mainScheduler()
     val networkConnectivityModel: NetworkConnectivityModel = hiltEntryPoint.networkConnectivityModel
@@ -986,11 +985,6 @@ class WebPageTab(
      * proxy must start before the load occurs.
      */
     fun reload() {
-        // Check if configured proxy is available
-        if (!proxyUtils.isProxyReady(activity)) {
-            // User has been notified
-            return
-        }
 
         // Handle the case where we display error page for instance
         loadUrl(url)
@@ -1230,10 +1224,6 @@ class WebPageTab(
      * the WebView.
      */
     fun loadUrl(aUrl: String) {
-        // Check if configured proxy is available
-        if (!proxyUtils.isProxyReady(activity)) {
-            return
-        }
 
         iTargetUrl = Uri.parse(aUrl)
 

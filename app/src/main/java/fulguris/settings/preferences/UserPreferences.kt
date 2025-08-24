@@ -5,19 +5,16 @@ import fulguris.AppTheme
 import fulguris.BuildConfig
 import fulguris.R
 import fulguris.adblock.AbpUpdateMode
-import fulguris.browser.*
 import fulguris.constant.DEFAULT_ENCODING
 import fulguris.constant.Uris
 import fulguris.device.ScreenSize
 import fulguris.di.UserPrefs
-import fulguris.settings.preferences.delegates.*
 import fulguris.search.SearchEngineProvider
 import fulguris.search.engine.GoogleSearch
 import fulguris.settings.NewTabPosition
 import fulguris.utils.FileUtils
 import fulguris.view.RenderingMode
 import android.content.SharedPreferences
-import fulguris.browser.ProxyChoice
 import fulguris.browser.SuggestionNumChoice
 import fulguris.enums.LogLevel
 import fulguris.enums.HeaderInfo
@@ -303,21 +300,6 @@ class UserPreferences @Inject constructor(
     var useBlackStatusBar by preferences.booleanPreference(R.string.pref_key_black_status_bar, false)
 
     /**
-     * The index of the proxy choice.
-     */
-    var proxyChoice by preferences.enumPreference(PROXY_CHOICE, ProxyChoice.NONE)
-
-    /**
-     * The proxy host used when [proxyChoice] is [ProxyChoice.MANUAL].
-     */
-    var proxyHost by preferences.stringPreference(USE_PROXY_HOST, "localhost")
-
-    /**
-     * The proxy port used when [proxyChoice] is [ProxyChoice.MANUAL].
-     */
-    var proxyPort by preferences.intPreference(USE_PROXY_PORT, 8118)
-
-    /**
      * The index of the search suggestion choice.
      *
      * @see SearchEngineProvider
@@ -485,7 +467,6 @@ private const val CLEAR_WEB_STORAGE_EXIT = "clearWebStorageExit"
 private const val DO_NOT_TRACK = "doNotTrack"
 private const val IDENTIFYING_HEADERS = "removeIdentifyingHeaders"
 private const val BOOKMARKS_CHANGED = "bookmarksChanged"
-private const val PROXY_CHOICE = "proxyChoice"
 private const val USE_PROXY_HOST = "useProxyHost"
 private const val USE_PROXY_PORT = "useProxyPort"
 private const val SEARCH_SUGGESTIONS = "searchSuggestionsChoice"

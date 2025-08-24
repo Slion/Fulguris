@@ -213,7 +213,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     @Inject lateinit var bookmarkPageInitializer: BookmarkPageInitializer
     @Inject @field:MainHandler
     lateinit var mainHandler: Handler
-    @Inject lateinit var proxyUtils: ProxyUtils
     @Inject lateinit var bookmarksDialogBuilder: LightningDialogBuilder
     @Inject lateinit var exitCleanup: ExitCleanup
     @Inject lateinit var abpUserRules: AbpUserRules
@@ -1116,7 +1115,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // However that would require we careful setup our UI anew from an already loaded session
             tabsManager.setupTabs(intent)
             setIntent(null)
-            proxyUtils.checkForProxy(this)
         }
 
         // Enable swipe to refresh
@@ -1844,7 +1842,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         searchText = currentSearchEngine.queryUrl
 
         updateCookiePreference().subscribeOn(diskScheduler).subscribe()
-        proxyUtils.updateProxySettings(this)
     }
 
     public override fun onWindowVisibleToUserAfterResume() {
@@ -3430,7 +3427,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
     override fun onStop() {
         super.onStop()
-        proxyUtils.onStop()
     }
 
     /**
@@ -3467,7 +3463,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
     override fun onStart() {
         super.onStart()
-        proxyUtils.onStart(this)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
