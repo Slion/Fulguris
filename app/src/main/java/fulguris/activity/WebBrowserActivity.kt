@@ -3860,7 +3860,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         tabsManager.currentTab?.let { tab ->
             if (userPreferences.taskIcon) {
                 //val color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface, Color.BLACK)
-                val color = getColor(R.color.ic_launcher_background)
+                val color = ContextCompat.getColor(this, R.color.ic_launcher_background)
                 setTaskDescription(ActivityManager.TaskDescription(getHeaderInfoText(userPreferences.taskLabel),tab.favicon,color))
             } else {
                 setTaskDescription(ActivityManager.TaskDescription(getHeaderInfoText(userPreferences.taskLabel)))

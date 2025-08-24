@@ -12,6 +12,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.StyleRes
+import androidx.core.content.ContextCompat
 
 //@AndroidEntryPoint
 abstract class ThemedActivity : LocaleAwareActivity() {
@@ -82,7 +83,7 @@ abstract class ThemedActivity : LocaleAwareActivity() {
 
         if (userPreferences.taskIcon) {
             //val color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface, Color.BLACK)
-            val color = getColor(R.color.ic_launcher_background)
+            val color = ContextCompat.getColor(this, R.color.ic_launcher_background)
             val icon = getDrawable(R.drawable.ic_lightning_flavored, android.R.attr.state_enabled).toBitmap(aBackground =  color)
             setTaskDescription(ActivityManager.TaskDescription(getString(R.string.app_name),icon, color))
         } else {
