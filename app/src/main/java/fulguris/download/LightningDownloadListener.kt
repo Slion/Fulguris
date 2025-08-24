@@ -30,11 +30,11 @@ import android.view.Gravity
 import android.webkit.DownloadListener
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.anthonycr.grant.PermissionsManager
-import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
 import fulguris.app
+import fulguris.permissions.PermissionsManager
+import fulguris.permissions.PermissionsResultAction
 import timber.log.Timber
 
 //@AndroidEntryPoint

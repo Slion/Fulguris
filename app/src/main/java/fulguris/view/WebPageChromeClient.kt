@@ -23,10 +23,10 @@ import android.view.View
 import android.webkit.*
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
-import com.anthonycr.grant.PermissionsManager
-import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
+import fulguris.permissions.PermissionsManager
+import fulguris.permissions.PermissionsResultAction
 import io.reactivex.Scheduler
 import timber.log.Timber
 

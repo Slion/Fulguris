@@ -70,7 +70,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.anthonycr.grant.PermissionsManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -107,6 +106,7 @@ import fulguris.html.history.HistoryPageFactory
 import fulguris.html.homepage.HomePageFactory
 import fulguris.html.incognito.IncognitoPageFactory
 import fulguris.notifications.IncognitoNotification
+import fulguris.permissions.PermissionsManager
 import fulguris.search.SearchEngineProvider
 import fulguris.search.SuggestionsAdapter
 import fulguris.settings.NewTabPosition

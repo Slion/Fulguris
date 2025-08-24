@@ -25,8 +25,6 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.core.net.toUri
-import com.anthonycr.grant.PermissionsManager
-import com.anthonycr.grant.PermissionsResultAction
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Reusable
 import fulguris.extensions.copyToClipboard
@@ -35,6 +33,8 @@ import fulguris.extensions.onFocusGained
 import fulguris.extensions.resizeAndShow
 import fulguris.extensions.snackbar
 import fulguris.extensions.toast
+import fulguris.permissions.PermissionsManager
+import fulguris.permissions.PermissionsResultAction
 import fulguris.utils.shareUrl
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy

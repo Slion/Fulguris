@@ -338,14 +338,6 @@ dependencies {
 
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
-    // permissions
-    //implementation 'com.anthonycr.grant:permissions:1.1.2'
-    // JitPack build fails see: https://jitpack.io/#anthonycr/Grant
-    //implementation 'com.github.anthonycr:Grant:v1.1.2'
-    // Use local library binary instead
-    // TODO: Update that library or remove it
-    implementation files('libs/permissions-1.1.2.aar')
-
     // proxy support
     implementation 'net.i2p.android:client:0.9.49'
     implementation 'net.i2p.android:helper:0.9.5'
