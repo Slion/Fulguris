@@ -18,4 +18,9 @@ class RootSettingsFragment : PreferenceFragmentBase() {
             //findPreference<Preference>(getString(R.string.pref_key_debug))?.isVisible = false
         }
     }
+
+    override fun titleResourceId(): Int {
+        // TODO: Remove possible redundant usage of R.string.settings in places as we now provide it from here
+        return R.string.settings
+    }
 }

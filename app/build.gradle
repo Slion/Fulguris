@@ -307,7 +307,9 @@ dependencies {
     //implementation group: 'com.google.android.material', name: 'material', version: '1.6.0-alpha01'
 
     //
-    implementation "net.slions.android:preference:0.1.0"
+    //implementation "net.slions.android:preference:0.1.0"
+    implementation project(path: ":Preference")
+    //implementation project(path: ":Preference", configuration: "release")
 
     // Play Store billing
     playstoreImplementation 'com.android.billingclient:billing:6.2.0'
@@ -318,8 +320,7 @@ dependencies {
     // reading mode
     implementation 'net.dankito.readability4j:readability4j:1.0.8'
 
-    // file reading
-    // Available on JitPack: https://jitpack.io/#anthonycr/Mezzanine
+    // Built-in files support
     implementation("com.anthonycr.mezzanine:core:2.1.0")
     ksp("com.anthonycr.mezzanine:processor:2.1.0")
 

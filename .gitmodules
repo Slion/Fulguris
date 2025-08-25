@@ -1,0 +1,3 @@
+[submodule "subs/Preference"]
+	path = subs/Preference
+	url = https://github.com/Slion/Preference

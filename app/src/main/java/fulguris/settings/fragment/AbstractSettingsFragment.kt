@@ -340,10 +340,6 @@ abstract class AbstractSettingsFragment : PreferenceFragmentBase() {
         prefGroup.addPreference(pref)
     }
 
-    abstract fun titleResourceId() : Int
-
-    open fun title() : String = resources.getString(titleResourceId())
-
     override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is ListPreference) {
             showListPreferenceDialog(preference)
