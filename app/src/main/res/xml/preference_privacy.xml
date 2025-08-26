@@ -7,7 +7,7 @@
         app:singleLineTitle="false"
         >
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="@bool/pref_default_webrtc"
         android:key="@string/pref_key_webrtc"
         android:title="@string/pref_title_webrtc"
@@ -20,7 +20,7 @@
     Not currently used as it does not make much sense,
     it just deletes cookies but all tabs are restored.
     -->
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="false"
         android:key="start_incognito"
         android:title="@string/start_incognito"
@@ -29,7 +29,7 @@
         app:isPreferenceVisible="@bool/const_false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="@bool/pref_default_crash_report"
         android:key="@string/pref_key_crash_report"
         android:title="@string/pref_title_crash_report"
@@ -39,7 +39,7 @@
         app:singleLineTitle="false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="@bool/pref_default_analytics"
         android:key="@string/pref_key_analytics"
         android:title="@string/pref_title_analytics"
@@ -49,7 +49,7 @@
         app:singleLineTitle="false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="true"
         android:key="location"
         android:title="@string/location"
@@ -57,7 +57,7 @@
         app:singleLineTitle="false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="true"
         android:key="password"
         android:summary="@string/recommended"
@@ -66,7 +66,7 @@
         app:singleLineTitle="false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="false"
         android:key="do_not_track"
         android:title="@string/do_not_track"
@@ -74,7 +74,7 @@
         app:singleLineTitle="false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="false"
         android:key="remove_identifying_headers"
         android:title="@string/remove_identifying_headers"
@@ -87,7 +87,7 @@
     <PreferenceCategory
         android:title="@string/settings_general">
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="false"
         android:key="clear_cache_exit"
         android:title="@string/cache"
@@ -95,7 +95,7 @@
         app:singleLineTitle="false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="false"
         android:key="clear_history_exit"
         android:title="@string/clear_history_exit"
@@ -103,7 +103,7 @@
         app:singleLineTitle="false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="false"
         android:key="clear_cookies_exit"
         android:title="@string/clear_cookies_exit"
@@ -111,7 +111,7 @@
         app:singleLineTitle="false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="false"
         android:key="clear_webstorage_exit"
         android:title="@string/clear_web_storage_exit"

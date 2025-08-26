@@ -37,7 +37,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
 import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreference
-import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.RecyclerView
 import fulguris.utils.shareUrl
 import slions.pref.PreferenceFragmentBase
@@ -218,7 +217,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentBase() {
         isVisible: Boolean = true,
         summary: String? = null,
         onCheckChange: (Boolean) -> Unit
-    ): SwitchPreferenceCompat = (findPreference<SwitchPreferenceCompat>(preference) as SwitchPreferenceCompat).apply {
+    ): slions.pref.SwitchPreference = (findPreference<slions.pref.SwitchPreference>(preference) as slions.pref.SwitchPreference).apply {
         this.isChecked = isChecked
         this.isEnabled = isEnabled
         this.isVisible = isVisible

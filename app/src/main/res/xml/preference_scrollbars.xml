@@ -29,7 +29,7 @@
         app:singleLineTitle="false"
         />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="@bool/pref_default_scrollbar_fading"
         android:key="@string/pref_key_scrollbar_fading"
         android:title="@string/pref_title_scrollbar_fading"

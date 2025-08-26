@@ -70,7 +70,9 @@ colorControlNormal:
 
     <!-- Light theme -->
     <style name="Theme.App.Light.Base" parent="Theme.Material3.Light.NoActionBar">
-
+        <!--        Use this for larger preferences titles and summaries-->
+        <!--        <item name="android:textAppearanceListItem">@style/TextAppearance.Material3.TitleLarge</item>-->
+        <!--        <item name="android:textAppearanceListItemSecondary">@style/TextAppearance.Material3.BodyLarge</item>-->
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
         -->
@@ -247,7 +249,9 @@ colorControlNormal:
 
     <!-- Dark theme -->
     <style name="Theme.App.Dark.Base" parent="Theme.Material3.Dark.NoActionBar">
-
+        <!--        Use this for larger preferences titles and summaries-->
+        <!--        <item name="android:textAppearanceListItem">@style/TextAppearance.Material3.TitleLarge</item>-->
+        <!--        <item name="android:textAppearanceListItemSecondary">@style/TextAppearance.Material3.BodyLarge</item>-->
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
         -->
@@ -421,6 +425,9 @@ colorControlNormal:
 
 
     <style name="Theme.App.Black.Base" parent="Theme.Material3.Dark">
+<!--        Use this for larger preferences titles and summaries-->
+<!--        <item name="android:textAppearanceListItem">@style/TextAppearance.Material3.TitleLarge</item>-->
+<!--        <item name="android:textAppearanceListItemSecondary">@style/TextAppearance.Material3.BodyLarge</item>-->
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
         -->

@@ -33,7 +33,7 @@
         a:layout="@layout/preference_category_material"
         tools:ignore="PrivateResource" />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         a:defaultValue="false"
         a:key="@string/pref_key_dark_mode"
         a:title="@string/settings_title_dark_mode_default"
@@ -42,7 +42,7 @@
         a:icon="@drawable/ic_dark_mode"
         a:singleLineTitle="false" />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         a:defaultValue="false"
         a:key="@string/pref_key_desktop_mode"
         a:title="@string/settings_title_desktop_mode_default"
@@ -51,7 +51,7 @@
         a:icon="@drawable/ic_desktop"
         a:singleLineTitle="false" />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         a:defaultValue="true"
         a:key="@string/pref_key_javascript"
         a:title="@string/settings_title_javascript"
@@ -61,7 +61,7 @@
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         a:defaultValue="true"
         a:key="@string/pref_key_third_party_cookies"
         a:title="@string/settings_title_third_party_cookies"

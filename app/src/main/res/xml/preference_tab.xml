@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:a="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreferenceCompat
+    <slions.pref.SwitchPreference
         android:defaultValue="@bool/pref_default_tab_list_item_show_close_button"
         android:key="@string/pref_key_tab_list_item_show_close_button"
         android:title="@string/pref_title_tab_list_item_show_close_button"
@@ -13,7 +13,7 @@
         />
 
     <PreferenceCategory android:title="@string/pref_category_on_tab_change">
-        <SwitchPreferenceCompat
+        <slions.pref.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_change_show_animation"
             android:title="@string/pref_title_show_animation"
@@ -24,7 +24,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_on_tab_close">
-        <SwitchPreferenceCompat
+        <slions.pref.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_close_show_snackbar"
             android:title="@string/pref_title_show_snackbar"
@@ -32,7 +32,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false"
             />
-        <SwitchPreferenceCompat
+        <slions.pref.SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_key_on_tab_close_vibrate"
             android:title="@string/pref_title_vibrate"
@@ -43,7 +43,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_on_tab_back_forward">
-        <SwitchPreferenceCompat
+        <slions.pref.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_back_show_animation"
             android:title="@string/pref_title_show_animation"
@@ -73,7 +73,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_category_on_follow_link">
-        <SwitchPreferenceCompat
+        <slions.pref.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_page_started_show_animation"
             android:title="@string/pref_title_show_animation"

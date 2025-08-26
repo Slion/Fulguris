@@ -356,8 +356,8 @@
     <color name="md_blue_grey_900">#263238</color>
 
     <!-- Material You Light Theme Colors -->
-    <color name="md_theme_light_primary">#407FEA</color>
-    <color name="md_theme_light_onPrimary">#2B559D</color>
+    <color name="md_theme_light_primary">#284C8A</color>
+    <color name="md_theme_light_onPrimary">#91B0E4</color>
     <color name="md_theme_light_primaryContainer">#CEDFFB</color>
     <color name="md_theme_light_onPrimaryContainer">#2B4266</color>
 
@@ -389,9 +389,9 @@
     <color name="md_theme_light_inverseSurface">#303033</color>
     <color name="md_theme_light_primaryInverse">#ADC6FF</color>
 
-    <color name="md_theme_dark_primary">#407FEA</color>
-    <color name="md_theme_dark_onPrimary">#2B559D</color>
-    <color name="md_theme_dark_primaryContainer">#2B4266</color>
+    <color name="md_theme_dark_primary">#729DE4</color>
+    <color name="md_theme_dark_onPrimary">#1E3A6B</color>
+    <color name="md_theme_dark_primaryContainer">#425676</color>
     <color name="md_theme_dark_onPrimaryContainer">#D8E2FF</color>
 
     <color name="md_theme_dark_secondary">#407FEA</color>

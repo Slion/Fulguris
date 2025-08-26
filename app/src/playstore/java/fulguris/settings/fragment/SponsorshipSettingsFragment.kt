@@ -34,7 +34,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.preference.Preference
-import androidx.preference.SwitchPreferenceCompat
 import com.android.billingclient.api.*
 import dagger.hilt.android.AndroidEntryPoint
 // See: https://stackoverflow.com/a/54188472/3969362
@@ -219,7 +218,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                               // TODO: do we need to check the result?
                               skuDetailsList?.forEach { skuDetails ->
                                   Timber.d( skuDetails.toString())
-                                  val pref = SwitchPreferenceCompat(requireContext())
+                                  val pref = slions.pref.SwitchPreference(requireContext())
                                   pref.isSingleLineTitle = false
                                   pref.title = skuDetails.title
                                   pref.summary = skuDetails.price + formatPeriod(skuDetails.subscriptionPeriod) + "\n" + skuDetails.description

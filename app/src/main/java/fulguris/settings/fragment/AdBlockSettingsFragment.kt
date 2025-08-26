@@ -17,13 +17,11 @@ import android.text.InputType
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
-import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import jp.hazuki.yuzubrowser.adblock.repository.abp.AbpDao
@@ -36,6 +34,7 @@ import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject
 import androidx.preference.PreferenceViewHolder
+import com.google.android.material.materialswitch.MaterialSwitch
 
 /**
  * Settings for the ad block mechanic.
@@ -460,7 +459,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     }
 
     // class necessary to allow separate onClickListener for the switch
-    private inner class FilterListSwitchPreference(context : Context?, val entity: AbpEntity) : SwitchPreferenceCompat(requireContext()) {
+    private inner class FilterListSwitchPreference(context : Context?, val entity: AbpEntity) : slions.pref.SwitchPreference(requireContext()) {
 
         init {
             isSingleLineTitle = false
@@ -468,10 +467,10 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         override fun onBindViewHolder(holder: PreferenceViewHolder) {
             super.onBindViewHolder(holder)
-            val switch: SwitchCompat? = holder?.itemView?.findViewById(R.id.filter_list_switch_widget)
+            val switch: MaterialSwitch? = holder?.itemView?.findViewById(R.id.filter_list_switch_widget)
             switch?.isChecked = entity.enabled
             switch?.setOnClickListener {
-                isChecked = (it as SwitchCompat).isChecked
+                isChecked = (it as MaterialSwitch).isChecked
                 entity.enabled = isChecked
                 abpDao.update(entity)
                 if (isChecked)
