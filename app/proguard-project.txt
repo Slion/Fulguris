@@ -87,3 +87,37 @@
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
 -dontwarn org.slf4j.impl.StaticLoggerBinder
+-dontwarn org.slf4j.impl.StaticMDCBinder
+-dontwarn org.slf4j.impl.StaticMarkerBinder
+
+# Mezzanine library rules
+-keep class com.anthonycr.mezzanine.** { *; }
+-keepclasseswithmembernames class * {
+    @com.anthonycr.mezzanine.FileStream <methods>;
+}
+-keepclassmembers enum * {
+    @com.anthonycr.mezzanine.FileStream *;
+}
+-keep class com.anthonycr.mezzanine._Mezzanine_HomePageReader { *; }
+# End Mezzanine library rules
+
+# Keep Hilt modules and their @Provides methods
+-keep class * implements dagger.hilt.InstallIn { <fields>; <methods>; }
+-keep class * { @dagger.hilt.android.lifecycle.HiltViewModel <methods>; }
+-keep class * { @dagger.Module <methods>; }
+-keepclassmembers class * { @dagger.Provides *; }
+-keep @dagger.hilt.android.HiltAndroidApp class * { *; }
+-keep @dagger.hilt.components.SingletonComponent class * { *; }
+-keep @dagger.hilt.DefineComponent class * { *; }
+
+# Specifically keep AppModule and its provider methods that return Mezzanine readers
+-keep class fulguris.di.AppModule {
+    public static com.anthonycr.mezzanine._Mezzanine_BookmarkPageReader providesBookmarkPageReader();
+    public static com.anthonycr.mezzanine._Mezzanine_HomePageReader providesHomePageReader();
+    public static com.anthonycr.mezzanine._Mezzanine_IncognitoPageReader providesIncognitoPageReader();
+    public static com.anthonycr.mezzanine._Mezzanine_InvertPage providesInvertPage();
+    public static com.anthonycr.mezzanine._Mezzanine_ListPageReader providesListPageReader();
+    public static com.anthonycr.mezzanine._Mezzanine_SetMetaViewport providesSetMetaViewport();
+    public static com.anthonycr.mezzanine._Mezzanine_TextReflow providesTextReflow();
+}
+# End Hilt specific rules

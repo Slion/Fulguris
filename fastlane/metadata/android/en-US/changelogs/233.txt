@@ -1,0 +1,12 @@
+🔧 Maintenance changes
+📚 Switch to preference library
+🎨 Update Google Play icon
+Translations update:
+🇧🇷 Brazilian
+🇭🇷 Croatian
+🇩🇪 German
+🇭🇺 Hungarian
+🇵🇹 Portuguese
+🇪🇸 Spanish
+🇷🇺 Russian
+🇻🇳 Vietnamese
