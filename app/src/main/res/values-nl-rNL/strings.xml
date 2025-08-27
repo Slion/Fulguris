@@ -3,7 +3,7 @@
     <string name="action_reload">Ververs</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Nieuw Tabblad</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Tabblad Duplicaten</string>
     <string name="action_share">Deel</string>
     <string name="action_history">Geschiedenis</string>
     <string name="action_bookmarks">Bladwijzers</string>
@@ -77,11 +77,11 @@
     <string name="action_yes">Ja</string>
     <string name="action_no">Nee</string>
     <string name="action_ask">Vraag</string>
-    <string name="layer_type_none">None</string>
-    <string name="layer_type_software">Software - WebGL off</string>
-    <string name="layer_type_hardware">Hardware - WebGL on</string>
-    <string name="action_proceed">Proceed</string>
-    <string name="action_abort">Abort</string>
+    <string name="layer_type_none">Geen</string>
+    <string name="layer_type_software">Software - WebGL uit</string>
+    <string name="layer_type_hardware">Hardware - WebGL op</string>
+    <string name="action_proceed">Doorgaan</string>
+    <string name="action_abort">Afbreken</string>
     <string name="title_text_size">Tekst grootte</string>
     <string name="title_error">Fout</string>
     <string name="hint_title">Titel</string>
@@ -117,9 +117,9 @@
     <string name="message_import">Bladwijzers zijn geïmporteerd</string>
     <string name="message_clear_history">Historiek gewist</string>
     <string name="message_cookies_cleared">Cookies gewist</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">Kon cookies niet wissen</string>
     <string name="max_tabs">Max tabs bereikt. Schaf een abonnement aan om meer te ontgrendelen.</string>
-    <string name="message_cookie_copied">Cookie copied to clipboard</string>
+    <string name="message_cookie_copied">Cookie gekopieerd naar klembord</string>
     <string name="message_text_copied">Tekst gekopieerd naar klembord</string>
     <string name="message_link_copied">Link gekopieerd naar klembord</string>
     <string name="message_blocked_local">Lokaal bestand werd geblokkeerd</string>
@@ -172,8 +172,8 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Actie geannuleerd.</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error_aborted">Beveiligingsfout! Laden van pagina afgebroken.</string>
+    <string name="message_ssl_error">Beveiligde verbinding gecompromitteerd<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Wilt u nog steeds doorgaan?</string>
     <string name="message_certificate_date_invalid">Datum van certificaat is ongeldig</string>
     <string name="message_certificate_expired">Certificaat is vervallen</string>
     <string name="message_certificate_domain_mismatch">Domein in certificaat komt niet overeen met site domein</string>
@@ -250,10 +250,10 @@
     <string name="settings_backup">Back-up</string>
     <string name="settings_title_configuration">Instellingen</string>
     <string name="settings_summary_configuration">Portret- en landschapsinstellingen</string>
-    <string name="settings_title_delete_configuration">Delete configuration</string>
+    <string name="settings_title_delete_configuration">Configuratie verwijderen</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
-    <string name="settings_title_add_configuration">Add configuration</string>
+    <string name="settings_title_add_configuration">Configuratie toevoegen</string>
     <string name="settings_privacy">Privacy instellingen</string>
     <string name="settings_about">Over</string>
     <string name="settings_contribute">Help mee</string>
@@ -262,7 +262,7 @@
     <string name="settings_summary_privacy_policy">Bekijk ons privacybeleid online</string>
     <string name="settings_title_terms_and_conditions">Algemene voorwaarden</string>
     <string name="settings_summary_terms_and_conditions">Bekijk onze algemene voorwaarden online</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_summary_discord">Sluit je aan bij onze groeiende gemeenschap</string>
     <string name="pref_category_panels">Panelen</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Liggend</string>
@@ -273,11 +273,11 @@
     <string name="pref_category_on_tab_close">Bij het sluiten van een tabblad</string>
     <string name="pref_category_on_tab_change">Bij het veranderen van tab</string>
     <string name="pref_category_on_tab_back_forward">Wanneer je terug of vooruit gaat</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
+    <string name="settings_category_on_follow_link">Bij het volgen van een link</string>
     <string name="pref_category_scrollbars">Scrollbalken</string>
-    <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
+    <string name="settings_title_tab">Tabblad</string>
+    <string name="settings_title_page_history">Pagina geschiedenis</string>
+    <string name="settings_summary_tab">Animaties, feedback en uiterlijk</string>
     <string name="pref_summary_scrollbars">Grootte en gedrag van schuifbalken aanpassen</string>
     <string name="pref_category_subscriptions">Abonnementen</string>
     <string name="pref_summary_subscriptions">Abonnementen activeren of opzeggen</string>
@@ -285,7 +285,7 @@
     <string name="pref_title_hide_tool_bar">Verberg werkbalk bij naar beneden scrollen</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Toon werkbalk bij omhoog scrollen</string>
     <string name="pref_title_show_tool_bar_on_page_top">Toon de werkbalk bovenaan de pagina</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
+    <string name="pref_title_cutout_mode">Uitschakelmodus</string>
     <string name="pref_title_locked_drawers">Vergrendelde panelen</string>
     <string name="pref_summary_locked_drawers">Tabbladen en Bladwijzerpanelen kunnen niet worden versleept</string>
     <string name="pref_title_use_bottom_sheets">Bodemplaten gebruiken</string>
@@ -355,14 +355,14 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Advertentieblokkering en inhoud filteren</string>
     <string name="settings_summary_content_control_toggle">Advertentieblokker en inhoudsfilter activeren</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
-    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
-    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_title_tab_bar_orientation">Tabbalkoriëntatie</string>
+    <string name="settings_summary_on_tab_bar_orientation">Verticaal</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horizontaal</string>
+    <string name="settings_title_tab_bar_placement">Plaatsing tabbalk</string>
+    <string name="settings_summary_on_tab_bar_placement">Intrekbaar paneel</string>
+    <string name="settings_summary_off_tab_bar_placement">Altijd op het scherm</string>
+    <string name="settings_title_toolbars_position">Positie werkbalken</string>
+    <string name="settings_summary_on_toolbars_position">Onderkant</string>
     <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Desktopmodus</string>
     <string name="settings_summary_desktop_mode_default">Definieer of nieuwe tabbladen standaard bureaubladmodus gebruiken</string>
@@ -388,10 +388,10 @@
     <string name="app_restart">Start de app opnieuw op om de wijziging door te voeren</string>
     <string name="pref_title_crash_logs">Crashlogs</string>
     <string name="pref_summary_crash_logs">Crashlogs naar bestandssysteem schrijven. \nTap om de folder te openen. Geef het relevante bestand door bij het rapporteren van een bug.</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_logs">Logboeken</string>
+    <string name="pref_summary_on_logs">Ingeschakeld</string>
+    <string name="pref_summary_off_logs">Uitgeschakeld</string>
+    <string name="pref_title_log_level">Logniveau</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Open in een nieuw tabblad</string>
     <string name="dialog_open_background_tab">Open in een achtergrond tabblad</string>
@@ -435,7 +435,7 @@
     <string name="action_close_all_other_tabs">Sluit alle andere tabbladen</string>
     <string name="action_restore_all_tabs">Alle tabbladen herstellen</string>
     <string name="action_restore_tab">Tabblad Herstellen</string>
-    <string name="settings_title_layer_type">Layer type</string>
+    <string name="settings_title_layer_type">Type laag</string>
     <string name="settings_title_domains">Domeinen</string>
     <string name="settings_summary_domains">Domeininstellingen beheren</string>
     <string name="settings_title_resource_domains">Hulpbron domeinen</string>
@@ -454,35 +454,35 @@
     <string name="settings_summary_delete_domain_settings">Wordt opnieuw aangemaakt de volgende keer dat dit domein wordt gebruikt</string>
     <string name="settings_title_parent">Bovenliggende</string>
     <string name="settings_summary_default_domain_settings">Standaard domeininstellingen</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_title_ssl_error">Beveiligingsfout</string>
+    <string name="settings_summary_ssl_error">Wat te doen als er een SSL-fout is gedetecteerd</string>
+    <string name="checkbox_remember_domain_choice">Onthoud je keuze voor dit domein</string>
+    <string name="settings_title_third_party_cookies">Cookies van derden</string>
+    <string name="settings_summary_on_third_party_cookies">Cookies accepteren die worden gebruikt om uw activiteiten op websites te volgen</string>
+    <string name="settings_summary_off_third_party_cookies">Cookies weigeren die worden gebruikt om uw activiteiten op verschillende websites te volgen</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
-    <string name="settings_title_cookies">Cookies</string>
-    <string name="settings_summary_cookies">Current page has no cookies</string>
-    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
-    <string name="settings_title_cookies_delete_all">Delete all</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
-    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <string name="settings_summary_on_javascript">Alle functies van websites en browsers moeten werken</string>
+    <string name="settings_summary_off_javascript">Sommige functies van websites en browsers werken niet</string>
+    <string name="settings_title_cookies">Koekjes</string>
+    <string name="settings_summary_cookies">Huidige pagina bevat geen cookies</string>
+    <string name="settings_summary_manage_cookies">Cookies voor huidige pagina beheren</string>
+    <string name="settings_title_cookies_delete_all">Verwijder alles</string>
+    <string name="settings_summary_cookies_delete_all">Alle cookies voor de huidige pagina verwijderen</string>
+    <string name="question_delete_all_page_cookies">Alle cookies voor de huidige pagina verwijderen?</string>
     <plurals name="settings_summary_cookies">
         <!--
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
-        <item quantity="one">Current page has one cookie</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="one">Huidige pagina heeft één cookie</item>
+        <item quantity="other">Huidige pagina heeft <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
-    <string name="settings_title_task_label">Task label</string>
-    <string name="settings_title_task_icon">Task icon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
-    <string name="settings_title_toolbar_label">Toolbar label</string>
+    <string name="settings_title_task_label">Taaklabel</string>
+    <string name="settings_title_task_icon">Taakpictogram</string>
+    <string name="settings_summary_on_task_icon">Pagina-icoon gebruiken</string>
+    <string name="settings_summary_off_task_icon">App-pictogram gebruiken</string>
+    <string name="settings_title_toolbar_label">Label werkbalk</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">App van derden beschikbaar</string>
     <string name="dialog_message_third_party_app">Wilt u de applicatie starten die bij die website hoort?</string>
@@ -494,8 +494,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Er bestaat al een sessie met die naam!</string>
     <string name="session_cant_delete_current">Kan huidige sessie niet verwijderen!</string>
     <string name="session_prompt_confirm_deletion_title">Verwijdering bevestigen</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="session_prompt_confirm_deletion_message">Weet je zeker dat je sessie \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Weet je zeker dat je \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuratie wilt verwijderen?</string>
     <string name="session_switched">Overgeschakeld naar \"%s\"</string>
     <string name="busy">Bezig, probeer het binnenkort nog eens.</string>
     <string name="invalid_character_removed">Ongeldig teken verwijderd!</string>
@@ -524,7 +524,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_animation">Animatie tonen</string>
     <string name="pref_title_vibrate">Trillen</string>
     <string name="pref_title_duration">Duur</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_title_animation_duration">Animatieduur</string>
     <string name="pref_title_scrollbar_fading">Vervagend</string>
     <string name="pref_summary_on_scrollbar_fading">Scrollbalken vervagen</string>
     <string name="pref_summary_off_scrollbar_fading">Scrollbalken worden altijd weergegeven</string>
@@ -598,22 +598,22 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="action_switch_to_tab">Overschakelen naar tabblad 1 tot 9</string>
     <string name="action_switch_to_last_tab">Naar het laatste tabblad gaan</string>
     <string name="action_switch_to_last_session">Overschakelen naar de laatste sessie</string>
-    <string name="log_level_verbose">Verbose</string>
+    <string name="log_level_verbose">Breedsprakig</string>
     <string name="log_level_debug">Debug</string>
     <string name="log_level_info">Info</string>
-    <string name="log_level_warn">Warn</string>
-    <string name="log_level_error">Error</string>
-    <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
+    <string name="log_level_warn">Waarschuwen</string>
+    <string name="log_level_error">Fout</string>
+    <string name="log_level_assert">Bevestigen</string>
+    <string name="cutout_mode_default">Standaard</string>
+    <string name="cutout_mode_short_edges">Korte randen</string>
+    <string name="cutout_mode_never">Nooit</string>
+    <string name="cutout_mode_always">Altijd</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
-    <string name="label_domain">Domain</string>
-    <string name="label_title">Title</string>
-    <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_short_url">Verkorte URL</string>
+    <string name="label_domain">Domein</string>
+    <string name="label_title">Titel</string>
+    <string name="label_session">Sessie</string>
+    <string name="label_app_name">Naam app</string>
+    <string name="message_render_process_crashed">Renderproces is gecrasht. Mogelijk moet u sommige webpagina\'s opnieuw laden.</string>
 </resources>

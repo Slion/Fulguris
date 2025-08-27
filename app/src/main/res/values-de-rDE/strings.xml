@@ -119,7 +119,7 @@
     <string name="message_cookies_cleared">Cookies gelöscht</string>
     <string name="message_cookies_clear_error">Cookies konnten nicht gelöscht werden</string>
     <string name="max_tabs">Maximale Tab-Anzahl erreicht. Entsperre noch mehr Tabs, indem du ein Abonnement kaufst.</string>
-    <string name="message_cookie_copied">Cookie copied to clipboard</string>
+    <string name="message_cookie_copied">Keks in die Zwischenablage kopiert</string>
     <string name="message_text_copied">Text in Zwischenablage kopiert</string>
     <string name="message_link_copied">Link in Zwischenablage kopiert</string>
     <string name="message_blocked_local">Lokale Datei wurde beim Laden blockiert</string>
@@ -476,7 +476,7 @@ See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Current page has no cookies</item> -->
         <item quantity="one">Aktuelle Seite enthält ein Cookie</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="other">Die aktuelle Seite hat <xliff:g id="cookies_count" example="2">%d</xliff:g> Kekse</item>
     </plurals>
     <string name="settings_title_task_label">Aufgabenbezeichnung</string>
     <string name="settings_title_task_icon">Aufgabensymbol</string>

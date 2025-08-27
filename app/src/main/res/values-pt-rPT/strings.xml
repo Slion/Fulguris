@@ -119,7 +119,7 @@
     <string name="message_cookies_cleared">Cookies removidos</string>
     <string name="message_cookies_clear_error">Não foi possível limpar os cookies</string>
     <string name="max_tabs">Atingiu o número máximo de separadores. Pode desbloquear este limite com uma subscrição.</string>
-    <string name="message_cookie_copied">Cookie copied to clipboard</string>
+    <string name="message_cookie_copied">Cookie copiado para a área de transferência</string>
     <string name="message_text_copied">Texto copiado para a área de transferência</string>
     <string name="message_link_copied">Ligação copiada para a área de transferência</string>
     <string name="message_blocked_local">Bloqueado o carregamento do ficheiro local</string>

@@ -213,8 +213,8 @@
     <string name="install_orbot">Please install Orbot in order to proxy with Tor.</string>
     <string name="i2p_not_running">I2P is not running.</string>
     <string name="i2p_tunnels_not_ready">I2P tunnels are not ready yet.</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
     <string name="clear_cookies_exit">Clear cookies on exit</string>
     <string name="clear_history_exit">Clear history on exit</string>
     <string name="folder_default">الافتراضي</string>
