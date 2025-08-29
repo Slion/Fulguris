@@ -1,0 +1,2 @@
+🪲 Fix history page crash
+🪲 Fix default notch areas option
