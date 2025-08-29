@@ -98,7 +98,36 @@
 -keepclassmembers enum * {
     @com.anthonycr.mezzanine.FileStream *;
 }
+
+# Keep all Mezzanine generated classes
+-keep class **._Mezzanine_* { *; }
+
+# Keep all classes that have @FileStream annotations
+-keep @com.anthonycr.mezzanine.FileStream class * { *; }
+-keep class * {
+    @com.anthonycr.mezzanine.FileStream *;
+}
+
+# Specifically keep all the generated Mezzanine reader classes
 -keep class com.anthonycr.mezzanine._Mezzanine_HomePageReader { *; }
+-keep class com.anthonycr.mezzanine._Mezzanine_BookmarkPageReader { *; }
+-keep class com.anthonycr.mezzanine._Mezzanine_IncognitoPageReader { *; }
+-keep class com.anthonycr.mezzanine._Mezzanine_ListPageReader { *; }
+-keep class com.anthonycr.mezzanine._Mezzanine_InvertPage { *; }
+-keep class com.anthonycr.mezzanine._Mezzanine_SetMetaViewport { *; }
+-keep class com.anthonycr.mezzanine._Mezzanine_TextReflow { *; }
+-keep class com.anthonycr.mezzanine._Mezzanine_ThemeColor { *; }
+
+# Keep MezzanineReader utility methods
+-keep class com.anthonycr.mezzanine.MezzanineReaderKt { *; }
+-keep class com.anthonycr.mezzanine.MezzanineReader { *; }
+
+# Keep all interface methods that provide HTML content
+-keepclassmembers interface * {
+    @com.anthonycr.mezzanine.FileStream *;
+    java.lang.String provideHtml();
+    java.lang.String provideJs();
+}
 # End Mezzanine library rules
 
 # Keep Hilt modules and their @Provides methods
