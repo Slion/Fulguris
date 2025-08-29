@@ -90,9 +90,9 @@ abstract class ConfigurationPreferences constructor(
     var desktopWidth by preferences.floatPreference(R.string.pref_key_desktop_width, getDefaultFloat(PrefKeys.DesktopWidth))
 
     /**
-     * True if we render around display cutouts, false otherwise
+     * True if we render around display cutouts and notches, false otherwise
      */
-    var useCutoutArea by preferences.booleanPreference(R.string.pref_key_use_cutout_area, getDefaultBoolean(PrefKeys.ToolbarsBottom))
+    var useCutoutArea by preferences.booleanPreference(R.string.pref_key_use_cutout_area, getDefaultBoolean(PrefKeys.UseCutoutArea))
 
 }
 
