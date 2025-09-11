@@ -156,7 +156,7 @@ class WebPageClient(
         // TODO: We should really collect all intercepts to be able to display them to the user
 //        if (response!=null)
 //        {
-//            logger.log(TAG, "Request hijacked: " + request.url
+//            Timber.d( "Request hijacked: " + request.url
 //                    + "\n Reason phrase:" + response.reasonPhrase
 //                    + "\n Status code:" + response.statusCode
 //            )

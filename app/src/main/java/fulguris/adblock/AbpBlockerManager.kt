@@ -198,6 +198,10 @@ class AbpBlockerManager @Inject constructor(
         // blocker shouldBlock
         val response = blocker.shouldBlock(contentRequest) ?: return null
 
+        // TODO: Collect those and make it accessible to the user somehow
+        // I believe we can't really tell from which list a filter came from as they are possibly combined into one blocker
+        Timber.d("Blocked:\n" + contentRequest.url + "by:\n" + response.toString())
+
         when (response) {
             is BlockResponse -> {
                 return if (request.isForMainFrame)
