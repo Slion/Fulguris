@@ -61,9 +61,9 @@ You can engage with us on [our forums], on [GitHub](https://github.com/slion/ful
 Please go ahead and translate on [CrowdIn](https://crowdin.com/project/fulguris-web-browser).
 
 ## Code
-Code contributions are of course welcome, both bug fix and features.
-Please understand that code quality, design and architecture are extremely important as the foremost priority of this project is to deliver a premium browsing experience.
-We do our best to avoid treating users as beta testers. Therefore if you want to deliver a new feature expect it to take several iterations before it reaches maturity and is ready for production.
+We welcome code contributions, bug fix, new features and improvements.
+We demand high quality code, design and architecture to deliver a premium web browsing experience.
+We do our best to avoid treating users as beta testers. Therefore, if you want to deliver a new feature, expect it to take several iterations before it reaches maturity and is ready for production.
 
 ## Finance
 
