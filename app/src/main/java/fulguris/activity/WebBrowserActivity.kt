@@ -31,6 +31,8 @@ import android.text.TextWatcher
 import android.view.*
 import android.view.View.*
 import android.view.ViewGroup.LayoutParams
+import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.CookieManager
@@ -428,6 +430,20 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      *
      */
     private fun applyWindowInsets(view: View, windowInsets: WindowInsetsCompat) {
+
+        // That's still needed before API 35, it was at least needed for Android 13 on Samsung Galaxy A22
+        // See: https://github.com/Slion/Fulguris/issues/686
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val cutoutMode = if (configPrefs.useCutoutArea) LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS else LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER
+            if (window.attributes.layoutInDisplayCutoutMode != cutoutMode) {
+                // We did not seem to be able to apply that without restarting the activity,
+                window.attributes.layoutInDisplayCutoutMode = cutoutMode
+                // This makes sure the newly set cutout mode is applied, without restarting activity I guess
+                window.attributes = window.attributes
+                // TODO adjust attributes for all our dialog windows
+            }
+        }
+
         val systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
         Timber.d("System insets: $systemBars")
         //val imeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
