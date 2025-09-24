@@ -538,7 +538,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">エラー：リカバリセッションが作成されました！</string>
     <string name="message_session_imported">インポートされたセッション: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">エクスポートされたセッション: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">常にシークレットモードのように動作する</string>
+
     <string name="force_zoom_summary">JavaScriptが有効でない場合は動作しません</string>
     <string name="force_zoom">ウェブサイトを強制的にズーム</string>
     <string name="algorithm">アルゴリズム:</string>

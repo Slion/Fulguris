@@ -540,7 +540,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Fout: er is een herstelsessie gemaakt!</string>
     <string name="message_session_imported">Geïmporteerde sessie: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Geëxporteerde sessie: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Gedraag je permanent alsof je in incognitomodus bent</string>
+
     <string name="force_zoom_summary">Werkt niet als JavaScript niet is ingeschakeld</string>
     <string name="force_zoom">Zoom forceren voor websites</string>
     <string name="algorithm">Algoritme:</string>

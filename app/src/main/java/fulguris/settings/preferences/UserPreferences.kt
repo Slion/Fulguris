@@ -401,11 +401,6 @@ class UserPreferences @Inject constructor(
     var forceZoom by preferences.booleanPreference(R.string.pref_key_force_zoom, R.bool.pref_default_force_zoom)
 
     /**
-     * Always in Incognito mode
-     */
-    var incognito by preferences.booleanPreference(R.string.pref_key_always_incognito, R.bool.pref_default_always_incognito)
-
-    /**
      *
      */
     var imageUrlString by preferences.stringPreference(R.string.pref_key_image_url, "")

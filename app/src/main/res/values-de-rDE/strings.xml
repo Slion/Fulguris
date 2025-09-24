@@ -540,7 +540,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Fehler: Eine Wiederherstellungssitzung wurde erstellt!</string>
     <string name="message_session_imported">Importierte Sitzung: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exportierte Sitzung: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Dauerhaft wie im Inkognito-Modus verhalten</string>
+
     <string name="force_zoom_summary">(JavaScript muss aktiviert sein)</string>
     <string name="force_zoom">Zoom auf Webseiten erzwingen</string>
     <string name="algorithm">Algorithmus:</string>

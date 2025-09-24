@@ -544,7 +544,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Помилка: сеанс відновлення було створено!</string>
     <string name="message_session_imported">Імпортований сеанс: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Експортований сеанс: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Завжди поводитися як режим інкогніто</string>
+
     <string name="force_zoom_summary">Не працює, якщо JavaScript не ввімкнено</string>
     <string name="force_zoom">Примусове масштабування сайтів</string>
     <string name="algorithm">Алгоритм:</string>

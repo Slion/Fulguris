@@ -540,7 +540,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Hata: bir kurtarma oturumu oluşturuldu!</string>
     <string name="message_session_imported">İçe aktarılan oturum: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Dışa aktarılan oturum: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Kalıcı olarak gizli moddaymış gibi davran</string>
+
     <string name="force_zoom_summary">JavaScript etkin değilse çalışmaz</string>
     <string name="force_zoom">Web siteleri için yakınlaştırmayı zorla</string>
     <string name="algorithm">Algoritma:</string>

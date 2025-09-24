@@ -542,7 +542,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Грешка: сесија опоравка је направљена!</string>
     <string name="message_session_imported">Увезена сесија:<xliff:g id="session_name" example="News"> %s</xliff:g></string>
     <string name="message_session_exported">Извезена сесија:<xliff:g id="session_name" example="Cooking"> %s</xliff:g></string>
-    <string name="start_incognito">Трајно се понашајте као у анонимном режиму</string>
+
     <string name="force_zoom_summary">Не ради ако JavaScript није омогућен</string>
     <string name="force_zoom">Присилно зумирање за веб локације</string>
     <string name="algorithm">Алгоритам:</string>

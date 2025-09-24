@@ -16,19 +16,6 @@
         app:singleLineTitle="false"
         />
 
-    <!--
-    Not currently used as it does not make much sense,
-    it just deletes cookies but all tabs are restored.
-    -->
-    <slions.pref.SwitchPreference
-        android:defaultValue="false"
-        android:key="start_incognito"
-        android:title="@string/start_incognito"
-        app:singleLineTitle="false"
-        app:icon="@drawable/ic_incognito"
-        app:isPreferenceVisible="@bool/const_false"
-        />
-
     <slions.pref.SwitchPreference
         android:defaultValue="@bool/pref_default_crash_report"
         android:key="@string/pref_key_crash_report"

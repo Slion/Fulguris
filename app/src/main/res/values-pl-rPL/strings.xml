@@ -544,7 +544,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Błąd: utworzono sesję zapasową!</string>
     <string name="message_session_imported">Zaimportowano sesję: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Wyeksportowano sesję: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Zawsze zachowuj się jak w trybie Incognito</string>
+
     <string name="force_zoom_summary">Nie działa, gdy JavaScript jest wyłączony</string>
     <string name="force_zoom">Wymuś powiększenie stron</string>
     <string name="algorithm">Algorytm:</string>

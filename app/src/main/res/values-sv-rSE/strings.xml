@@ -540,7 +540,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Fel: en återställningssession har skapats!</string>
     <string name="message_session_imported">Importerad session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exporterade session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Ständigt beter sig som i inkognitoläge</string>
+
     <string name="force_zoom_summary">Fungerar inte om JavaScript inte är aktiverat</string>
     <string name="force_zoom">Tvinga zoom för webbplatser</string>
     <string name="algorithm">Algoritm:</string>

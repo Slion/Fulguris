@@ -538,7 +538,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Error: sesi pemilihan telah dibuat!</string>
     <string name="message_session_imported">Sesi yang sudah diimpor: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Sesi yang sudah dibawa keluar: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Selalu dalam mode menyamar</string>
+
     <string name="force_zoom_summary">Tidak berfungsi jika JavaScript tidak dinyalakan</string>
     <string name="force_zoom">Izinkan pembesaran halaman</string>
     <string name="algorithm">Algoritma:</string>

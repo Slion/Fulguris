@@ -544,7 +544,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Ошибка: сессия восстановления создана!</string>
     <string name="message_session_imported">Импортированная сессия: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Экспортированная сессия: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Постоянно вести себя, как в режиме инкогнито</string>
+
     <string name="force_zoom_summary">Не работает, если JavaScript не включен</string>
     <string name="force_zoom">Принудительное масштабирование веб-сайтов</string>
     <string name="algorithm">Алгоритм:</string>

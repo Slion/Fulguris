@@ -542,7 +542,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Greška: sesija oporavka je napravljena!</string>
     <string name="message_session_imported">Uvezena sesija:<xliff:g id="session_name" example="News"> %s</xliff:g></string>
     <string name="message_session_exported">Izvezena sesija:<xliff:g id="session_name" example="Cooking"> %s</xliff:g></string>
-    <string name="start_incognito">Trajno se ponašajte kao u anonimnom režimu</string>
+
     <string name="force_zoom_summary">Ne radi ako JavaScript nije omogućen</string>
     <string name="force_zoom">Prisilno zumiranje za veb lokacije</string>
     <string name="algorithm">Algoritam:</string>

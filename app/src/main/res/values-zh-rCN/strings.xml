@@ -538,7 +538,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">出错：恢复会话已经创建！</string>
     <string name="message_session_imported">导入的会话：<xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">导入的会话：<xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">无论在什么模式下都使用无痕模式的机制</string>
+
     <string name="force_zoom_summary">没启用 JavaScript 时是无效的</string>
     <string name="force_zoom">允许强行缩放网页</string>
     <string name="algorithm">算法：</string>

@@ -540,7 +540,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Errore: è stata creata una sessione di ripristino!</string>
     <string name="message_session_imported">Sessione importata: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Sessione esportata: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Mantini permanentemente modalità incognito</string>
+
     <string name="force_zoom_summary">Non funziona se JavaScript non è abilitato</string>
     <string name="force_zoom">Forza zoom per i siti web</string>
     <string name="algorithm">Algoritmo:</string>

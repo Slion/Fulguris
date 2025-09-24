@@ -538,7 +538,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Error: a recovery session was created!</string>
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Permanently behave as if in incognito mode</string>
+
     <string name="force_zoom_summary">Does not work if JavaScript is not enabled</string>
     <string name="force_zoom">Force zoom for websites</string>
     <string name="algorithm">Algorithm:</string>

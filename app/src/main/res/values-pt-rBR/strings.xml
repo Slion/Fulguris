@@ -540,7 +540,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Erro: uma sessão de recuperação foi criada!</string>
     <string name="message_session_imported">Sessão importada: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Sessão exportada: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-    <string name="start_incognito">Sempre operar como se estivesse em modo anônimo</string>
+
     <string name="force_zoom_summary">Não funciona se o JavaScript não estiver habilitado</string>
     <string name="force_zoom">Forçar zoom em websites</string>
     <string name="algorithm">Algoritmo:</string>
