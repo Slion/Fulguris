@@ -6,8 +6,9 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
     <!-- Replace application icon -->
     <application
-        tools:replace="icon, roundIcon"
+        tools:replace="icon, roundIcon, label"
         android:icon="@mipmap/ic_launcher_debug"
+        android:label="@string/app_name_debug"
         android:roundIcon="@mipmap/ic_launcher_debug_round"> </application>
 
 

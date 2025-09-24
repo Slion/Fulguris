@@ -22,6 +22,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Fulguris</string>
+    <string name="app_name_debug">Fulguris Debug</string>
     <string name="pref_summary_contact_us">support@slions.net</string>
     <string name="url_contact_us">mailto:support@slions.net?subject=Fulguris</string>
     <string name="url_app_home_page">http://fulguris.slions.net</string>
