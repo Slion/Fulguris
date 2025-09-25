@@ -89,8 +89,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.APP_BROWSER" />
             </intent-filter>
         </activity>
 
@@ -98,6 +100,7 @@
             android:name="android.webkit.WebView.MetricsOptOut"
             android:value="true" />
 
+        <!-- No MAIN intent filter as this is launched through our splash screen -->
         <activity
             android:name="fulguris.activity.MainActivity"
             android:alwaysRetainTaskState="true"
@@ -109,12 +112,7 @@
             android:theme="@style/Theme.App.DayNight"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.APP_BROWSER" />
-            </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -201,6 +199,8 @@
             </intent-filter>
 
         </activity>
+
+        <!-- TODO: Launch this through spalsh screen too -->
         <activity
             android:name="fulguris.activity.IncognitoActivity"
             android:alwaysRetainTaskState="true"
