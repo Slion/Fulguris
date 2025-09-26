@@ -213,7 +213,8 @@
             android:theme="@style/Theme.App.DayNight"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true"
-            android:icon="@drawable/ic_incognito"
+            android:icon="@mipmap/ic_launcher_incognito"
+            android:roundIcon="@mipmap/ic_launcher_incognito_round"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
