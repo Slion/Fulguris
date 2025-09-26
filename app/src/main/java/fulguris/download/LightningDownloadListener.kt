@@ -94,10 +94,10 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
                     contentText = downloadHandler.iFilename
                 } else {
                     // Create pending intent to open downloads folder when tapping notification
-                    var flags = 0
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        // Was needed for Android 12
-                        flags = PendingIntent.FLAG_IMMUTABLE
+                    val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        PendingIntent.FLAG_IMMUTABLE
+                    } else {
+                        PendingIntent.FLAG_UPDATE_CURRENT
                     }
                     downloadsIntent =
                         fulguris.utils.Utils.getIntentForDownloads(mActivity, userPreferences.downloadDirectory)
