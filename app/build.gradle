@@ -310,6 +310,9 @@ dependencies {
     implementation project(path: ":Preference")
     //implementation project(path: ":Preference", configuration: "release")
 
+    // AppIntro library
+    implementation project(path: ":AppIntro")
+
     // Play Store billing
     playstoreImplementation 'com.android.billingclient:billing:6.2.0'
 

@@ -1,3 +1,6 @@
 [submodule "subs/Preference"]
 	path = subs/Preference
 	url = https://github.com/Slion/Preference
+[submodule "subs/AppIntro"]
+	path = subs/AppIntro
+	url = https://github.com/Slion/AppIntro

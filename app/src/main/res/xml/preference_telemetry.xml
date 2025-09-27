@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This is loaded and displayed by our telemetry settings onboarding intro slide.
+Contains crash reports and analytics toggles moved from the accept terms slide.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <slions.pref.SwitchPreference
+        android:key="@string/pref_key_crash_report"
+        android:title="@string/pref_title_crash_report"
+        android:summaryOn="@string/pref_summary_on_crash_reports"
+        android:summaryOff="@string/pref_summary_off_crash_reports"
+        app:icon="@drawable/ic_bug_report_outline"
+        android:defaultValue="true"
+        app:iconSpaceReserved="true"
+        app:singleLineTitle="false" />
+
+    <slions.pref.SwitchPreference
+        android:key="@string/pref_key_analytics"
+        android:title="@string/pref_title_analytics"
+        android:summaryOn="@string/pref_summary_on_analytics"
+        android:summaryOff="@string/pref_summary_off_analytics"
+        app:icon="@drawable/ic_analytics_outline"
+        android:defaultValue="true"
+        app:iconSpaceReserved="true"
+        app:singleLineTitle="false" />
+
+</PreferenceScreen>

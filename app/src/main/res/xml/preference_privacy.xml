@@ -20,9 +20,10 @@
         android:defaultValue="@bool/pref_default_crash_report"
         android:key="@string/pref_key_crash_report"
         android:title="@string/pref_title_crash_report"
-        android:summary="@string/pref_summary_recommended_anonymous"
+        android:summaryOn="@string/pref_summary_on_crash_reports"
+        android:summaryOff="@string/pref_summary_off_crash_reports"
         app:iconSpaceReserved="false"
-        app:icon="@drawable/ic_bug"
+        app:icon="@drawable/ic_bug_report_outline"
         app:singleLineTitle="false"
         />
 
@@ -30,9 +31,10 @@
         android:defaultValue="@bool/pref_default_analytics"
         android:key="@string/pref_key_analytics"
         android:title="@string/pref_title_analytics"
-        android:summary="@string/pref_summary_recommended_anonymous"
+        android:summaryOn="@string/pref_summary_on_analytics"
+        android:summaryOff="@string/pref_summary_off_analytics"
         app:iconSpaceReserved="false"
-        app:icon="@drawable/ic_query"
+        app:icon="@drawable/ic_analytics_outline"
         app:singleLineTitle="false"
         />
 

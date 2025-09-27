@@ -202,6 +202,14 @@
 
         </activity>
 
+        <!-- App Introduction Activity
+             Force dark theme for intro regardless of system and user preferences
+        -->
+        <activity
+            android:name="fulguris.activity.IntroActivity"
+            android:theme="@style/Theme.App.Dark"
+            android:exported="false" />
+
         <!-- TODO: Launch this through spalsh screen too -->
         <activity
             android:name="fulguris.activity.IncognitoActivity"

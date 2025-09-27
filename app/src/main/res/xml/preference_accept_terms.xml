@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This is loaded and displayed by our terms and conditions acceptance onboarding intro slide.
+It is not intended to be shown in application menu or settings.
+Should only be shown on first application start-up.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <Preference
+        android:key="@string/pref_key_terms_and_conditions"
+        android:title="@string/settings_title_terms_and_conditions"
+        android:summary="@string/settings_summary_terms_and_conditions"
+        app:iconSpaceReserved="false"
+        app:icon="@drawable/ic_assignment_outline"
+        app:singleLineTitle="false" />
+
+    <Preference
+        android:key="@string/pref_key_privacy_policy"
+        android:title="@string/settings_title_privacy_policy"
+        android:summary="@string/settings_summary_privacy_policy"
+        app:iconSpaceReserved="false"
+        app:icon="@drawable/ic_privacy_tip_outline"
+        app:singleLineTitle="false" />
+
+    <slions.pref.SwitchPreference
+        android:key="@string/pref_key_accept_terms"
+        android:title="@string/pref_title_accept_terms"
+        android:summaryOn="@string/pref_summary_on_accept_terms"
+        android:summaryOff="@string/pref_summary_off_accept_terms"
+        app:icon="@drawable/ic_handshake_outline"
+        android:defaultValue="false"
+        app:iconSpaceReserved="true"
+        app:singleLineTitle="false" />
+
+
+</PreferenceScreen>

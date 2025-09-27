@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 <!--
  The contents of this file are subject to the Common Public Attribution License Version 1.0.
  (the "License"); you may not use this file except in compliance with the License.
@@ -42,4 +42,16 @@
 
     <dimen name="progress_bar_height">2dp</dimen>
     <dimen name="menu_corner_radius">10dp</dimen>
+
+    <!-- Fragment max width for better readability on wide screens -->
+    <dimen name="max_fragment_width">600dp</dimen>
+
+    <!-- Override some AppIntro dimensions -->
+    <dimen name="appintro_statusbar_height" tools:ignore="DuplicateDefinition">0dp</dimen>
+    <dimen name="appintro2_bottombar_height" tools:ignore="DuplicateDefinition">64dp</dimen>
+    <dimen name="appintro2_fab_inset">8dp</dimen>
+    <dimen name="appintro2_fab_size">64dp</dimen>
+    <dimen name="appintro2_fab_bg_size">48dp</dimen>
+    <dimen name="appintro_indicator_size">5dp</dimen>
+
 </resources>

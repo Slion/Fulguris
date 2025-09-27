@@ -303,6 +303,15 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         Timber.v("onCreate")
         // Need to go first to inject our components
         super.onCreate(savedInstanceState)
+        // Check if terms have been accepted
+        if (!userPreferences.acceptTerms) {
+            // Show app introduction for first-time users
+            startActivity(Intent(this, IntroActivity::class.java))
+            // User will have to restart incognito mode himself if this was an incognito activity
+            finish()
+            // Not sure why but if we return here we crash even after IntroActivity is shown
+            //return
+        }
         //
         updateConfigurationSharedPreferences()
         // We want to control our decor

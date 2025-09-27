@@ -307,6 +307,11 @@ class UserPreferences @Inject constructor(
     var searchSuggestionChoice by preferences.intPreference(SEARCH_SUGGESTIONS, 1)
 
     /**
+     * Tells if user has accepted our terms and conditions.
+     */
+    var acceptTerms by preferences.booleanPreference(R.string.pref_key_accept_terms, false)
+
+    /**
      * User can disable Firebase Google Analytics.
      */
     var analytics by preferences.booleanPreference(R.string.pref_key_analytics, R.bool.pref_default_analytics)

@@ -67,6 +67,10 @@
     <string name="pref_key_tab_list_item_show_close_button">pref_key_tab_list_item_show_close_button</string>
     <string name="pref_key_menu_show_exit">pref_key_menu_show_exit</string>
     <string name="pref_key_menu_show_new_tab">pref_key_menu_show_new_tab</string>
+    <!-- Privacy -->
+    <string name="pref_key_accept_terms">pref_key_accept_terms</string>
+    <string name="pref_key_terms_and_conditions">pref_key_terms_and_conditions</string>
+    <string name="pref_key_privacy_policy">pref_key_privacy_policy</string>
     <string name="pref_key_crash_report">pref_key_crash_report</string>
     <string name="pref_key_analytics">pref_key_analytics</string>
     <string name="pref_key_crash_logs">pref_key_crash_logs</string>
@@ -221,5 +225,7 @@
     <string name="search_engine_yahoo_no_js">Yahoo - No JavaScript</string>
     <string name="search_engine_yahoo">Yahoo</string>
     <string name="search_engine_yandex">Yandex</string>
+
+
 
 </resources>

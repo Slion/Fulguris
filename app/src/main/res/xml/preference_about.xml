@@ -111,6 +111,24 @@
 
         </Preference>
 
+        <Preference
+            android:title="@string/settings_title_introduction"
+            android:summary="@string/settings_summary_introduction"
+            app:iconSpaceReserved="false"
+            app:icon="@drawable/ic_slideshow_outline"
+            app:singleLineTitle="false">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="fulguris.activity.IntroActivity"
+                android:targetPackage="@string/application_id">
+                <extra
+                    android:name="SOURCE"
+                    android:value="SELF" />
+            </intent>
+
+        </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/licenses">

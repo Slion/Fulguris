@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/appintro_statusbar_height"
+        android:paddingBottom="@dimen/appintro2_bottombar_height"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/content"
+            tools:ignore="UselessParent">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/AppIntroDefaultHeading"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_weight="2"
+                android:text="@string/intro_title_telemetry" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:name="fulguris.fragment.TelemetryPreferenceFragment"
+                android:layout_weight="8"
+                android:maxWidth="400dp"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

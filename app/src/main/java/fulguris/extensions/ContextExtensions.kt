@@ -157,5 +157,25 @@ val Context.configId: String get()  {
     return "${Config.filePrefix}${if (isLandscape) "landscape" else "portrait"}-$rotation-sw${resources.configuration.smallestScreenWidthDp}"
 }
 
+/**
+ * Opens a URL using the custom browser chooser that works on all devices including Samsung.
+ * Shows a Material Design bottom sheet with browser icons and friendly names.
+ *
+ * @param url The URL to open in a browser
+ * @param excludeThisApp Whether to exclude the current app from the browser list (default: true)
+ */
+fun Context.openBrowserChooser(url: String, excludeThisApp: Boolean = true) {
+    fulguris.utils.BrowserChooser.open(this, url, excludeThisApp)
+}
 
-
+/**
+ * Opens a URL using the custom browser chooser that works on all devices including Samsung.
+ * Shows a Material Design bottom sheet with browser icons and friendly names.
+ *
+ * @param urlRes The string resource ID containing the URL to open
+ * @param excludeThisApp Whether to exclude the current app from the browser list (default: true)
+ */
+fun Context.openBrowserChooser(@StringRes urlRes: Int, excludeThisApp: Boolean = true) {
+    val url = getString(urlRes)
+    fulguris.utils.BrowserChooser.open(this, url, excludeThisApp)
+}

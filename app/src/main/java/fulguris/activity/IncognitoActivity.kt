@@ -47,7 +47,8 @@ class IncognitoActivity @Inject constructor(): WebBrowserActivity() {
      *
      */
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        // Prevent screenshots and screen recordings
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         super.onCreate(savedInstanceState)
     }
 

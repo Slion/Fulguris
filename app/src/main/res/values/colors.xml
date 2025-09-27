@@ -424,5 +424,10 @@
     <color name="seed">#5487ED</color>
     <color name="error">#BA1B1B</color>
 
+<!--    We needed something greenish but still very blue so we don't have to define a special theme for our into-->
+<!--    This one does not go too bad with the toggle/widget blue of our dark theme-->
+    <color name="intro_accept_terms_background">#003D5D</color>
+
+    <color name="intro_telemetry_background">#005D5D</color>
 
 </resources>
