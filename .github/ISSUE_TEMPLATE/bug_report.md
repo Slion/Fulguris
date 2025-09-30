@@ -14,6 +14,7 @@ A clear and concise description of what the bug is.
  - Device: [e.g. F(x)tec Pro¹ - QX1000]
  - OS: [e.g. Android 9]
  - Version: [e.g. 1.1.3]
+ - WebView: [e.g. com.android.webview - v140.0.7339.207 - Find it from Menu > Settings > About > WebView]
 
 # To reproduce
 Steps to reproduce the behaviour:
