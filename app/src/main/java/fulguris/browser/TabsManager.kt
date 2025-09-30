@@ -10,7 +10,6 @@ import fulguris.settings.NewTabPosition
 import fulguris.settings.preferences.UserPreferences
 import fulguris.ssl.SslState
 import fulguris.utils.*
-import fulguris.view.*
 import android.app.Activity
 import android.app.Application
 import android.app.SearchManager
@@ -983,7 +982,7 @@ class TabsManager @Inject constructor(
             iWebBrowser.updateTabNumber(size())
             // Switch to persisted current tab
             tabChanged(if (savedRecentTabsIndices.isNotEmpty()) savedRecentTabsIndices.last() else positionOf(tabs.last()),false, false)
-            // Only then can we open tab from external app on startup otherwise it is opened in the background somehow
+            // Only then can we create tab from external app on startup otherwise it is opened before we switch to the current tab
             aIntent?.let {onNewIntent(aIntent)}
 
             //logger.log(TAG,"After from coroutine")
@@ -1066,14 +1065,20 @@ class TabsManager @Inject constructor(
      * @param position the position at which to delete the tab.
      */
     fun deleteTab(position: Int) {
-        Timber.d("deleteTab")
+        Timber.d("deleteTab - START: position=$position")
         val tabToDelete = getTabAtPosition(position) ?: return
+
+        Timber.d("deleteTab - Tab to delete: url=${tabToDelete.url}, isNewTab=${tabToDelete.isNewTab}")
+        Timber.d("deleteTab - creatingIntent=${tabToDelete.iIntent}")
+        Timber.d("deleteTab - creatingIntent component=${tabToDelete.iIntent?.component}")
 
         closedTabs.add(tabToDelete.saveState())
 
         val isShown = tabToDelete.isShown
         val shouldClose = shouldClose && isShown && tabToDelete.isNewTab
         val beforeTab = currentTab
+
+        Timber.d("deleteTab - isShown=$isShown, shouldClose=$shouldClose, beforeTab=${beforeTab?.url}")
 
         val currentDeleted = doDeleteTab(position)
         if (currentDeleted) {
@@ -1083,21 +1088,62 @@ class TabsManager @Inject constructor(
         val afterTab = currentTab
         iWebBrowser.notifyTabViewRemoved(position)
 
+        Timber.d("deleteTab - currentDeleted=$currentDeleted, afterTab=${afterTab?.url}")
+
         if (afterTab == null) {
+            Timber.d("deleteTab - No tabs left, closing browser")
             iWebBrowser.closeBrowser()
             return
         } else if (afterTab !== beforeTab) {
             iWebBrowser.notifyTabViewChanged(indexOfCurrentTab())
         }
 
+        // Check if we should return to the originating app
+        if (tabToDelete.iIntent != null && tabToDelete.isNewTab) {
+            Timber.d("deleteTab - Tab has creatingIntent and isNewTab=true, attempting to return to originating app")
+            // This tab was created from an external app intent, return to that app
+            try {
+                val sourceComponent = tabToDelete.iIntent?.component
+                Timber.d("deleteTab - sourceComponent=$sourceComponent")
+                if (sourceComponent != null) {
+                    Timber.d("deleteTab - Creating return intent to component: $sourceComponent")
+                    // Create an intent to return to the originating app
+                    val returnIntent = Intent().apply {
+                        component = sourceComponent
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    }
+                    Timber.d("deleteTab - Starting activity with return intent")
+                    (iWebBrowser as Activity).startActivity(returnIntent)
+                    // Close Fulguris after returning to the originating app
+                    this.shouldClose = false
+                    Timber.d("deleteTab - Closing Fulguris activity")
+                    iWebBrowser.closeActivity()
+                    return
+                } else {
+                    Timber.d("deleteTab - No source component found, closing Fulguris as fallback")
+                    // Fallback: if we can't identify the source component, just close Fulguris
+                    // This will typically return the user to their previous app through the task stack
+                    this.shouldClose = false
+                    iWebBrowser.closeActivity()
+                    return
+                }
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to return to originating app")
+                // Continue with normal flow if we can't return to the originating app
+            }
+        } else {
+            Timber.d("deleteTab - Not returning to originating app: creatingIntent=${tabToDelete.iIntent}, isNewTab=${tabToDelete.isNewTab}")
+        }
+
         if (shouldClose && !isIncognito) {
+            Timber.d("deleteTab - Closing activity due to shouldClose=true")
             this.shouldClose = false
             iWebBrowser.closeActivity()
         }
 
         iWebBrowser.updateTabNumber(size())
 
-        Timber.d("deleteTab - end")
+        Timber.d("deleteTab - END")
     }
 
     /**
@@ -1125,20 +1171,35 @@ class TabsManager @Inject constructor(
 
         val tabHashCode = intent?.extras?.getInt(INTENT_ORIGIN, 0) ?: 0
 
+        Timber.d("onNewIntent - URL: $url, tabHashCode: $tabHashCode, intent: $intent")
+
         if (tabHashCode != 0 && url != null) {
+            Timber.d("onNewIntent - Loading URL in existing tab with hashCode: $tabHashCode")
             getTabForHashCode(tabHashCode)?.loadUrl(url)
         } else if (url != null) {
             if (URLUtil.isFileUrl(url)) {
+                Timber.d("onNewIntent - Creating new tab for file URL: $url")
                 iWebBrowser.showBlockedLocalFileDialog {
-                    newTab(UrlInitializer(url), true)
+                    val newTab = newTab(UrlInitializer(url), true)
                     shouldClose = true
-                    lastTab()?.isNewTab = true
+                    newTab.apply {
+                        isNewTab = true
+                        iIntent = intent
+                        Timber.d("onNewIntent - Set creatingIntent for file URL tab: $iIntent")
+                    }
                 }
             } else {
-                newTab(UrlInitializer(url), true)
+                Timber.d("onNewIntent - Creating new tab for URL: $url")
+                val newTab = newTab(UrlInitializer(url), true)
                 shouldClose = true
-                lastTab()?.isNewTab = true
+                newTab.apply {
+                    isNewTab = true
+                    iIntent = intent
+                    Timber.d("onNewIntent - Set creatingIntent for new tab: $iIntent")
+                }
             }
+        } else {
+            Timber.d("onNewIntent - No URL to process")
         }
     }
 
@@ -1205,40 +1266,37 @@ class TabsManager @Inject constructor(
      *
      * @param tabInitializer the tab initializer to run after the tab as been created.
      * @param show whether or not to switch to this tab after opening it.
-     * @return true if we successfully created the tab, false if we have hit max tabs.
+     * @return The newly created tab instance
      */
-    fun newTab(tabInitializer: TabInitializer, show: Boolean): Boolean {
+    fun newTab(tabInitializer: TabInitializer, show: Boolean): WebPageTab {
         // Limit number of tabs according to sponsorship level
         if (size() >= Entitlement.maxTabCount(userPreferences.sponsorship)) {
             iWebBrowser.onMaxTabReached()
-            // Still allow spawning more tabs for the time being.
-            // That means not having a valid subscription will only spawn that annoying message above.
-            //return false
         }
 
         Timber.d("New tab, show: $show")
 
-        val startingTab = newTab(iWebBrowser as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
+        val newTab = newTab(iWebBrowser as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
         if (size() == 1) {
-            startingTab.resumeTimers()
+            newTab.resumeTimers()
         }
 
         iWebBrowser.notifyTabViewAdded()
         iWebBrowser.updateTabNumber(size())
 
         if (show) {
-            onTabChanged(switchToTab(indexOfTab(startingTab)),true, false, false)
+            onTabChanged(switchToTab(indexOfTab(newTab)),true, false, false)
         }
         else {
             // We still need to add it to our recent tabs
             // Adding at the beginning of a Set is doggy though
             val recentTabs = iRecentTabs.toSet()
             iRecentTabs.clear()
-            iRecentTabs.add(startingTab)
+            iRecentTabs.add(newTab)
             iRecentTabs.addAll(recentTabs)
         }
 
-        return true
+        return newTab
     }
 
     companion object {

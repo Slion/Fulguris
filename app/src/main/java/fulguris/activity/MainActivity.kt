@@ -7,6 +7,7 @@ import android.webkit.CookieManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * Not used in incognito mode
@@ -23,8 +24,10 @@ class MainActivity @Inject constructor(): WebBrowserActivity() {
 
     override fun onNewIntent(intent: Intent) =
         if (intent.action == INTENT_PANIC_TRIGGER) {
+            Timber.d("onNewIntent - Panic trigger")
             panicClean()
         } else {
+            Timber.d("onNewIntent - Handling new intent: $intent")
             handleNewIntent(intent)
             super.onNewIntent(intent)
         }

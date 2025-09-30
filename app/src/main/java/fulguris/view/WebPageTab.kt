@@ -10,9 +10,7 @@ import fulguris.R
 import fulguris.activity.ThemedActivity
 import fulguris.browser.TabModel
 import fulguris.activity.WebBrowserActivity
-import fulguris.constant.*
 import fulguris.browser.WebBrowser
-import fulguris.di.*
 import fulguris.dialog.LightningDialogBuilder
 import fulguris.download.LightningDownloadListener
 import fulguris.extensions.*
@@ -24,7 +22,6 @@ import fulguris.settings.preferences.UserPreferences
 import fulguris.settings.preferences.userAgent
 import fulguris.settings.preferences.webViewEngineVersionDesktop
 import fulguris.ssl.SslState
-import fulguris.utils.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
@@ -150,6 +147,19 @@ class WebPageTab(
     var isNewTab: Boolean = false
 
     /**
+     * The intent that created this tab if any.
+     * Used to return to the originating app when closing the tab.
+     */
+    var iIntent: android.content.Intent? = null
+        set(value) {
+            field = value
+            Timber.d("WebPageTab.creatingIntent SET to: $value for tab: ${this.url}")
+            if (value != null) {
+                Timber.d("WebPageTab.creatingIntent - Component: ${value.component}, Action: ${value.action}, Data: ${value.data}")
+            }
+        }
+
+    /**
      * This method sets the tab as the foreground tab or a background tab.
      */
     var isForeground: Boolean = false
@@ -167,7 +177,13 @@ class WebPageTab(
                 }
             } else {
                 // A tab sent to the background is not so new anymore
-                isNewTab = false
+                // But only if it wasn't created from an external intent
+                if (iIntent == null) {
+                    Timber.d("Setting isNewTab=false for tab going to background (no creating intent): ${this.url}")
+                    isNewTab = false
+                } else {
+                    Timber.d("Keeping isNewTab=true for tab with creating intent going to background: ${this.url}")
+                }
             }
             webBrowser.onTabChanged(this)
         }
@@ -1053,6 +1069,7 @@ class WebPageTab(
             iNumberOfMatches = numberOfMatches
 
             // Empty search query just dismisses any results previously displayed
+            // Notably useful when doing backspace on the search field until no characters are left
             if (searchQuery.isEmpty()) {
                 // Hide last snackbar to avoid having outdated stats lingering
                 // Notably useful when doing backspace on the search field until no characters are left
