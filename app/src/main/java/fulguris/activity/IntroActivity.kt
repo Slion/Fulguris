@@ -15,7 +15,6 @@ import com.github.appintro.AppIntroPageTransformerType
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.BuildConfig
 import fulguris.R
-import fulguris.extensions.isFdroid
 import fulguris.fragment.AcceptTermsSlideFragment
 import fulguris.fragment.TelemetrySlideFragment
 import timber.log.Timber
@@ -70,7 +69,7 @@ class IntroActivity : AppIntro2() {
         addSlide(createWelcomeSlide())
         addSlide(AcceptTermsSlideFragment.newInstance())
         // Don't add telemetry slide for F-Droid variant
-        if (!isFdroid()) {
+        if (!fulguris.Variant.isFdroid()) {
             addSlide(TelemetrySlideFragment.newInstance())
         }
         // TODO: Could add a variant specific slide here
