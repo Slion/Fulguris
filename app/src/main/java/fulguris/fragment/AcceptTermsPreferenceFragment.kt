@@ -66,6 +66,13 @@ class AcceptTermsPreferenceFragment: PreferenceFragmentCompat() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        // Cancel pending navigation when user navigates away from this slide
+        view?.removeCallbacks(pendingNavigation)
+        Timber.d("onPause: Cancelled pending navigation")
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         return view

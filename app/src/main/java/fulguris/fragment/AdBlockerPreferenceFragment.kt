@@ -39,12 +39,19 @@ class AdBlockerPreferenceFragment: PreferenceFragmentCompat() {
             if (newValue == true) {
                 Timber.d("User enabled ad blocker, scheduling navigation to next slide")
                 // Post with delay to allow the preference animation to complete
-                view?.postDelayed(pendingNavigation, 1000)
+                view?.postDelayed(pendingNavigation, 500)
             } else {
                 Timber.d("User disabled ad blocker")
             }
             true
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Cancel pending navigation when user navigates away from this slide
+        view?.removeCallbacks(pendingNavigation)
+        Timber.d("onPause: Cancelled pending navigation")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -57,4 +64,3 @@ class AdBlockerPreferenceFragment: PreferenceFragmentCompat() {
         super.onDestroyView()
     }
 }
-
