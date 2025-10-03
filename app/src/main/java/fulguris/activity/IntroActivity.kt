@@ -13,7 +13,6 @@ import com.github.appintro.AppIntro2
 import com.github.appintro.AppIntroFragment
 import com.github.appintro.AppIntroPageTransformerType
 import dagger.hilt.android.AndroidEntryPoint
-import fulguris.BuildConfig
 import fulguris.R
 import fulguris.fragment.AcceptTermsSlideFragment
 import fulguris.fragment.TelemetrySlideFragment
@@ -37,6 +36,13 @@ class IntroActivity : AppIntro2() {
     private var welcomeFragment: Fragment? = null
     // Track the current slide position for configuration changes
     private var currentSlidePosition = 0
+
+    /**
+     * Public method to allow fragments to navigate to the next slide
+     */
+    fun nextSlide() {
+        goToNextSlide()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

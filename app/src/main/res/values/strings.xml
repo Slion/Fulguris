@@ -326,7 +326,7 @@
     <string name="pref_summary_off_analytics">Usage data will not be sent</string>
     <string name="pref_title_accept_terms">I want to use Fulguris</string>
     <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Please accept our terms and conditions to continue</string>
+    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
 
     <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
     <string name="pref_title_desktop_width">Desktop width</string>
