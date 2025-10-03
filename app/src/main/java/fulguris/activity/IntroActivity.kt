@@ -362,4 +362,20 @@ class IntroActivity : AppIntro2() {
         currentSlidePosition = savedInstanceState.getInt(KEY_CURRENT_SLIDE_POSITION, 0)
         Timber.d("onRestoreInstanceState: Restored slide position=$currentSlidePosition")
     }
+
+    // Handle permission request result
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        //Timber.d("onRequestPermissionsResult: requestCode=$requestCode, permissions=${permissions.joinToString()}, grantResults=${grantResults.joinToString()}")
+
+        // For now only our last slide requests permissions
+        // and we don't want user to have to push done again after the permission request
+        // we just finish our intro here no matter what
+        finishIntro()
+    }
+
 }
