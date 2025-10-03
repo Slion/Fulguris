@@ -549,7 +549,8 @@ class TabsManager @Inject constructor(
      */
     fun shutdown() {
         Timber.d("shutdown")
-        repeat(tabList.size) { doDeleteTab(0) }
+        // Deleting from the top of the array should be more efficient
+        repeat(tabList.size) { doDeleteTab(tabList.size-1) }
         savedRecentTabsIndices.clear()
         isInitialized = false
         currentTab = null
@@ -638,25 +639,29 @@ class TabsManager @Inject constructor(
      * Deletes a tab from the manager. If the tab being deleted is the current tab, this method will
      * switch the current tab to a new valid tab.
      *
-     * @param position the position of the tab to delete.
+     * @param aIndex the position of the tab to delete.
      * @return returns true if the current tab was deleted, false otherwise.
      */
-    private fun doDeleteTab(position: Int): Boolean {
-        Timber.i("doDeleteTab: $position")
+    private fun doDeleteTab(aIndex: Int, aShutdown: Boolean = false): Boolean {
+        Timber.i("doDeleteTab: $aIndex")
         val currentTab = currentTab
         val current = positionOf(currentTab)
 
-        if (current == position) {
+        if (current == aIndex) {
             when {
                 size() == 1 -> this.currentTab = null
-                // Switch to previous tab
-                else -> switchToTab(indexOfTab(iRecentTabs.elementAt(iRecentTabs.size - 2)))
+                // Switch to previous tab, but not during shutdown
+                !aShutdown -> switchToTab(indexOfTab(iRecentTabs.elementAt(iRecentTabs.size - 2)))
             }
         }
 
-        removeTab(position)
-        tabNumberListeners.forEach { it(size()) }
-        return current == position
+        removeTab(aIndex)
+        // Skip notifications during shutdown, except the last one
+        // tabNumberListeners is used by UI to update tab count display and incognito notification
+        if (!aShutdown || size()==0) {
+            tabNumberListeners.forEach { it(size()) }
+        }
+        return current == aIndex
     }
 
     /**
@@ -906,8 +911,15 @@ class TabsManager @Inject constructor(
      * @exception IndexOutOfBoundsException if the provided index is out of range.
      * @return The selected tab we just switched to.
      */
-    fun switchToTab(aPosition: Int): WebPageTab {
+    fun switchToTab(aPosition: Int): WebPageTab? {
         Timber.i("switch to tab: $aPosition")
+
+        // Be defensive here
+        if (aPosition < 0 || aPosition >= tabList.size) {
+            Timber.w("Tab out of range: $aPosition / ${tabList.size}")
+            return null
+        }
+
         return tabList[aPosition].also {
                 currentTab = it
                 // Put that tab at the top of our recent tab list
@@ -1202,7 +1214,7 @@ class TabsManager @Inject constructor(
         }
 
         Timber.d("tabChanged: $position")
-        onTabChanged(switchToTab(position),false, aPreviousTabClosed, aGoingBack)
+        switchToTab(position)?.let { onTabChanged(it,false, aPreviousTabClosed, aGoingBack) }
     }
 
 
@@ -1233,7 +1245,7 @@ class TabsManager @Inject constructor(
         iWebBrowser.updateTabNumber(size())
 
         if (show) {
-            onTabChanged(switchToTab(indexOfTab(newTab)),true, false, false)
+            switchToTab(indexOfTab(newTab))?.let { onTabChanged(it,true, false, false)}
         }
         else {
             // We still need to add it to our recent tabs
