@@ -12,7 +12,7 @@ import com.github.appintro.SlideBackgroundColorHolder
 import com.github.appintro.SlidePolicy
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
-import fulguris.extensions.toast
+import fulguris.extensions.flash
 import fulguris.settings.preferences.UserPreferences
 import javax.inject.Inject
 
@@ -67,7 +67,11 @@ class AcceptTermsSlideFragment: Fragment(), SlidePolicy, SlideBackgroundColorHol
 
     // Display error message if user tries to go forward without accepting terms
     override fun onUserIllegallyRequestedNextPage() {
-        context?.toast("Accept terms to continue")
+        // Trigger ripple effect on the accept terms switch to draw attention
+        val preferenceFragment = childFragmentManager.findFragmentById(R.id.fragmentContainerView)
+            as? AcceptTermsPreferenceFragment
+
+        preferenceFragment?.flash(R.string.pref_key_accept_terms)
     }
 
     companion object {
