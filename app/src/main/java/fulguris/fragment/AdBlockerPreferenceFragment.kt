@@ -35,14 +35,14 @@ class AdBlockerPreferenceFragment: PreferenceFragmentCompat() {
             // Cancel any pending navigation
             view?.removeCallbacks(pendingNavigation)
 
-            // When user enables ad blocker, automatically advance to next slide
-            if (newValue == true) {
-                Timber.d("User enabled ad blocker, scheduling navigation to next slide")
-                // Post with delay to allow the preference animation to complete
-                view?.postDelayed(pendingNavigation, 500)
-            } else {
-                Timber.d("User disabled ad blocker")
-            }
+//            // When user enables ad blocker, automatically advance to next slide
+//            if (newValue == true) {
+//                Timber.d("User enabled ad blocker, scheduling navigation to next slide")
+//                // Post with delay to allow the preference animation to complete
+//                view?.postDelayed(pendingNavigation, 500)
+//            } else {
+//                Timber.d("User disabled ad blocker")
+//            }
             true
         }
     }

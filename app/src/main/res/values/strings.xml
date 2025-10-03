@@ -708,7 +708,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
 
     <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, distraction-free web experience</string>
+    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
     <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
 
 
