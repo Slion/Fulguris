@@ -15,6 +15,7 @@ import com.github.appintro.AppIntroPageTransformerType
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
 import fulguris.fragment.AcceptTermsSlideFragment
+import fulguris.fragment.AdBlockerSlideFragment
 import fulguris.fragment.TelemetrySlideFragment
 import timber.log.Timber
 
@@ -78,6 +79,8 @@ class IntroActivity : AppIntro2() {
         if (!fulguris.Variant.isFdroid()) {
             addSlide(TelemetrySlideFragment.newInstance())
         }
+        // Add ad blocker slide
+        addSlide(AdBlockerSlideFragment.newInstance())
         // TODO: Could add a variant specific slide here
 
         // Request notification permission on the permissions slide (Android 13+)
@@ -90,7 +93,7 @@ class IntroActivity : AppIntro2() {
                 // Then ask for permissions on that slide using the actual slide count
                 askForPermissions(
                     permissions = arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    // The permissions slide (1-indexed: Welcome=1, Terms=2, Telemetry=3, Permissions=4)
+                    // The permissions slide (1-indexed: Welcome=1, Terms=2, Telemetry=3, AdBlocker=4, Permissions=5)
                     slideNumber = totalSlidesNumber,
                     required = false // Make it optional, not required to proceed
                 )
