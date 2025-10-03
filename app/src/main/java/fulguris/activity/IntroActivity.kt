@@ -13,8 +13,9 @@ import com.github.appintro.AppIntro2
 import com.github.appintro.AppIntroFragment
 import com.github.appintro.AppIntroPageTransformerType
 import dagger.hilt.android.AndroidEntryPoint
+import fulguris.BuildConfig
 import fulguris.R
-import fulguris.activity.MainActivity
+import fulguris.extensions.isFdroid
 import fulguris.fragment.AcceptTermsSlideFragment
 import fulguris.fragment.TelemetrySlideFragment
 import timber.log.Timber
@@ -68,20 +69,24 @@ class IntroActivity : AppIntro2() {
         // Add introduction slides
         addSlide(createWelcomeSlide())
         addSlide(AcceptTermsSlideFragment.newInstance())
-        addSlide(TelemetrySlideFragment.newInstance())
+        // Don't add telemetry slide for F-Droid variant
+        if (!isFdroid()) {
+            addSlide(TelemetrySlideFragment.newInstance())
+        }
+        // TODO: Could add a variant specific slide here
 
         // Request notification permission on the permissions slide (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Check if POST_NOTIFICATIONS permission is already granted
+            // Only add permissions slide if permission is not already granted
             val notificationPermission = checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
-
             if (notificationPermission != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                // Only add permissions slide if permission is not already granted
+                // Add the permissions slide first
                 addSlide(createPermissionsSlide())
-
+                // Then ask for permissions on that slide using the actual slide count
                 askForPermissions(
                     permissions = arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    slideNumber = 4, // The permissions slide (1-indexed: Welcome=1, Terms=2, Telemetry=3, Permissions=4)
+                    // The permissions slide (1-indexed: Welcome=1, Terms=2, Telemetry=3, Permissions=4)
+                    slideNumber = totalSlidesNumber,
                     required = false // Make it optional, not required to proceed
                 )
             }
