@@ -56,7 +56,7 @@ object BrowserChooser {
             Timber.d("DBG: Found ${allResolveInfos.size} total apps that can handle URLs")
 
             allResolveInfos.forEachIndexed { index, resolveInfo ->
-                Timber.d("DBG: App $index: ${resolveInfo.activityInfo.packageName} - ${resolveInfo.loadLabel(packageManager)}")
+                Timber.d("DBG: App $index: ${resolveInfo.activityInfo.packageName}/${resolveInfo.activityInfo.name} - ${resolveInfo.loadLabel(packageManager)}")
             }
 
             val resolveInfos = allResolveInfos.filter { resolveInfo ->
@@ -65,11 +65,12 @@ object BrowserChooser {
 
                 Timber.d("DBG: Filtering ${packageName}: isOurApp=$isOurApp")
 
-                // Filter to only include actual browsers, not our own app
+                // Filter out our own app if excludeThisApp is true
+                // Otherwise include all activities (even multiple from same package)
                 !isOurApp || !excludeThisApp
             }
 
-            Timber.d("DBG: After filtering: ${resolveInfos.size} browser apps found")
+            Timber.d("DBG: After filtering: ${resolveInfos.size} activities found")
 
             when {
                 resolveInfos.isEmpty() -> {
@@ -79,9 +80,14 @@ object BrowserChooser {
 
                 resolveInfos.size == 1 -> {
                     // Only one browser available, open directly
-                    Timber.d("DBG: Only one browser found: ${resolveInfos[0].activityInfo.packageName}, opening directly")
+                    val resolveInfo = resolveInfos[0]
+                    Timber.d("DBG: Only one browser found: ${resolveInfo.activityInfo.packageName}/${resolveInfo.activityInfo.name}, opening directly")
                     val targetIntent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
-                        setPackage(resolveInfos[0].activityInfo.packageName)
+                        // Use setComponent instead of setPackage to specify exact activity
+                        component = android.content.ComponentName(
+                            resolveInfo.activityInfo.packageName,
+                            resolveInfo.activityInfo.name
+                        )
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }
                     context.startActivity(targetIntent)
@@ -115,16 +121,20 @@ object BrowserChooser {
 
     /**
      * Save a browser as most recently used
+     * Uses full component name (package/activity) for uniqueness
      */
-    private fun saveMruBrowser(context: Context, packageName: String) {
+    private fun saveMruBrowser(context: Context, packageName: String, activityName: String) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val currentMru = getMruBrowsers(context).toMutableList()
 
+        // Use full component name for uniqueness
+        val componentName = "$packageName/$activityName"
+
         // Remove if already exists (to move it to front)
-        currentMru.remove(packageName)
+        currentMru.remove(componentName)
 
         // Add to front
-        currentMru.add(0, packageName)
+        currentMru.add(0, componentName)
 
         // Keep only MAX_MRU_SIZE items
         while (currentMru.size > MAX_MRU_SIZE) {
@@ -135,23 +145,25 @@ object BrowserChooser {
         val mruString = currentMru.joinToString(",")
         prefs.edit { putString(MRU_LIST_KEY, mruString) }
 
-        Timber.d("DBG: Saved MRU browser: $packageName, MRU list: $mruString")
+        Timber.d("DBG: Saved MRU browser: $componentName, MRU list: $mruString")
     }
 
     private fun createBrowserBottomSheet(context: Context, url: String, resolveInfos: List<android.content.pm.ResolveInfo>) {
         Timber.d("DBG: createBrowserBottomSheet called with ${resolveInfos.size} browsers")
         val packageManager = context.packageManager
 
-        // Create browser items with icons and friendly names
+        // Create browser items with icons, friendly names, and activity names
         val allBrowserItems = resolveInfos.map { resolveInfo ->
             val packageName = resolveInfo.activityInfo.packageName
+            val activityName = resolveInfo.activityInfo.name
             val appName = resolveInfo.loadLabel(packageManager).toString()
             val icon = resolveInfo.loadIcon(packageManager)
 
             // Process app name: split PascalCase and clean up
             val displayName = splitPascalCase(appName)
 
-            Triple(displayName, packageName, icon)
+            // Store as Quadruple: (displayName, packageName, activityName, icon)
+            BrowserInfo(displayName, packageName, activityName, icon)
         }
 
         // Get MRU browsers and sort the list
@@ -159,12 +171,15 @@ object BrowserChooser {
         Timber.d("DBG: MRU browsers: $mruBrowsers")
 
         // Separate MRU and non-MRU browsers
-        val mruItems = mutableListOf<Triple<String, String, android.graphics.drawable.Drawable>>()
-        val otherItems = mutableListOf<Triple<String, String, android.graphics.drawable.Drawable>>()
+        val mruItems = mutableListOf<BrowserInfo>()
+        val otherItems = mutableListOf<BrowserInfo>()
 
         // First, add MRU browsers in order (maintaining MRU order)
-        for (mruPackage in mruBrowsers) {
-            val mruItem = allBrowserItems.find { it.second == mruPackage }
+        for (mruComponentName in mruBrowsers) {
+            // MRU now stores full component names (package/activity)
+            val mruItem = allBrowserItems.find {
+                "${it.packageName}/${it.activityName}" == mruComponentName
+            }
             if (mruItem != null) {
                 mruItems.add(mruItem)
             }
@@ -172,16 +187,17 @@ object BrowserChooser {
 
         // Then add remaining browsers alphabetically
         for (item in allBrowserItems) {
-            if (!mruBrowsers.contains(item.second)) {
+            val componentName = "${item.packageName}/${item.activityName}"
+            if (!mruBrowsers.contains(componentName)) {
                 otherItems.add(item)
             }
         }
-        otherItems.sortBy { it.first } // Sort alphabetically
+        otherItems.sortBy { it.displayName } // Sort alphabetically
 
         // Combine: MRU first, then others
         val browserItems = mruItems + otherItems
 
-        Timber.d("DBG: Final browser order - MRU: ${mruItems.map { it.first }}, Others: ${otherItems.map { it.first }}")
+        Timber.d("DBG: Final browser order - MRU: ${mruItems.map { it.displayName }}, Others: ${otherItems.map { it.displayName }}")
 
         // Create bottom sheet dialog
         val bottomSheetDialog = BottomSheetDialog(context)
@@ -192,16 +208,21 @@ object BrowserChooser {
             adapter = BrowserBottomSheetAdapter(context, browserItems) { selectedBrowser ->
                 try {
                     // Save as MRU before launching
-                    saveMruBrowser(context, selectedBrowser.second)
+                    saveMruBrowser(context, selectedBrowser.packageName, selectedBrowser.activityName)
 
                     val targetIntent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
-                        setPackage(selectedBrowser.second)
+                        // Use setComponent instead of setPackage to specify exact activity
+                        component = android.content.ComponentName(
+                            selectedBrowser.packageName,
+                            selectedBrowser.activityName
+                        )
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     }
+                    Timber.d("DBG: Launching browser: ${selectedBrowser.packageName}/${selectedBrowser.activityName}")
                     context.startActivity(targetIntent)
                     bottomSheetDialog.dismiss()
                 } catch (e: Exception) {
-                    Timber.e(e, "Failed to launch browser: ${selectedBrowser.first}")
+                    Timber.e(e, "Failed to launch browser: ${selectedBrowser.displayName}")
                     android.widget.Toast.makeText(context, "Failed to open browser", android.widget.Toast.LENGTH_SHORT).show()
                 }
             }
@@ -274,11 +295,19 @@ object BrowserChooser {
         bottomSheetDialog.show()
     }
 
+    // Data class to hold browser information including activity name
+    private data class BrowserInfo(
+        val displayName: String,
+        val packageName: String,
+        val activityName: String,
+        val icon: android.graphics.drawable.Drawable
+    )
+
     // Custom adapter for RecyclerView to show browser icons with names
     private class BrowserBottomSheetAdapter(
         private val context: Context,
-        private val browsers: List<Triple<String, String, android.graphics.drawable.Drawable>>,
-        private val onBrowserClick: (Triple<String, String, android.graphics.drawable.Drawable>) -> Unit
+        private val browsers: List<BrowserInfo>,
+        private val onBrowserClick: (BrowserInfo) -> Unit
     ) : RecyclerView.Adapter<BrowserBottomSheetAdapter.BrowserViewHolder>() {
 
         inner class BrowserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -351,10 +380,10 @@ object BrowserChooser {
             val browser = browsers[position]
 
             // Set the browser icon
-            holder.iconView.setImageDrawable(browser.third)
+            holder.iconView.setImageDrawable(browser.icon)
 
             // Set the browser name
-            holder.textView.text = browser.first
+            holder.textView.text = browser.displayName
         }
 
         override fun getItemCount(): Int = browsers.size
