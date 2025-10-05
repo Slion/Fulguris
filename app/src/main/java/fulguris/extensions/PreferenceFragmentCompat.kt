@@ -29,34 +29,32 @@ fun PreferenceFragmentCompat.flash(@StringRes preferenceKeyResId: Int) {
  * @param preferenceKey The string of the preference key to highlight
  */
 fun PreferenceFragmentCompat.flash(aKey: String) {
-    view?.post {
-        val preference = findPreference<Preference>(aKey)
+    val preference = findPreference<Preference>(aKey)
 
-        preference?.let { pref ->
-            // Get the RecyclerView that holds the preferences
-            val recyclerView = listView
+    preference?.let { pref ->
+        // Get the RecyclerView that holds the preferences
+        val recyclerView = listView
 
-            // Find the preference's position in the adapter
-            val preferenceScreen = preferenceScreen
-            var position = -1
-            for (i in 0 until preferenceScreen.preferenceCount) {
-                if (preferenceScreen.getPreference(i) == pref) {
-                    position = i
-                    break
-                }
+        // Find the preference's position in the adapter
+        val preferenceScreen = preferenceScreen
+        var position = -1
+        for (i in 0 until preferenceScreen.preferenceCount) {
+            if (preferenceScreen.getPreference(i) == pref) {
+                position = i
+                break
             }
-
-            if (position >= 0 && position < recyclerView.childCount) {
-                val targetView = recyclerView.getChildAt(position)
-                // Trigger ripple animation by simulating press state
-                targetView.isPressed = true
-                targetView.isPressed = false
-                Timber.d("Triggered ripple effect on preference at position $position (key: $aKey)")
-            } else {
-                Timber.w("Could not find preference view at position $position (childCount=${recyclerView.childCount}, key: $aKey")
-            }
-        } ?: run {
-            Timber.w("Could not find preference with key: $aKey")
         }
+
+        if (position >= 0 && position < recyclerView.childCount) {
+            val targetView = recyclerView.getChildAt(position)
+            // Trigger ripple animation by simulating press state
+            targetView.isPressed = true
+            targetView.isPressed = false
+            Timber.d("Triggered ripple effect on preference at position $position (key: $aKey)")
+        } else {
+            Timber.w("Could not find preference view at position $position (childCount=${recyclerView.childCount}, key: $aKey")
+        }
+    } ?: run {
+        Timber.w("Could not find preference with key: $aKey")
     }
 }
