@@ -59,7 +59,6 @@ class IncognitoActivity @Inject constructor(): WebBrowserActivity() {
 
     override fun isIncognito() = true
 
-    override fun closeActivity() = closeBrowser()
 
     companion object {
         /**

@@ -33,13 +33,6 @@ class MainActivity @Inject constructor(): WebBrowserActivity() {
 
     override fun isIncognito() = false
 
-    // TODO: review how this is used and get rid of it
-    override fun closeActivity() {
-        performExitCleanUp()
-        moveTaskToBack(true)
-    }
-
-
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action == KeyEvent.ACTION_DOWN && event.isCtrlPressed) {
             when (event.keyCode) {

@@ -282,9 +282,18 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     public abstract fun isIncognito(): Boolean
 
     /**
-     * Choose the behavior when the controller closes the view.
+     * Only called when the current tab just opened from an external app through ACTION_VIEW intent is closed
      */
-    abstract override fun closeActivity()
+    override fun closeActivity() {
+        //performExitCleanUp()
+
+        // That works for most cases
+        // But it does not work if the tab was opened by ourselves from another activity
+        // TODO: Find a way to know if we were opened by ourselves or another app
+        // I guess we need to keep the intent in the WebPageTab
+        moveTaskToBack(true)
+    }
+
 
     /**
      * Choose what to do when the browser visits a website.

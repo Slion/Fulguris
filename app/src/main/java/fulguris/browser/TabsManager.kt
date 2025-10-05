@@ -1108,7 +1108,7 @@ class TabsManager @Inject constructor(
             iWebBrowser.notifyTabViewChanged(indexOfCurrentTab())
         }
 
-        if (shouldClose && !isIncognito) {
+        if (shouldClose) {
             Timber.d("deleteTab - Closing activity due to shouldClose=true")
             this.shouldClose = false
             iWebBrowser.closeActivity()

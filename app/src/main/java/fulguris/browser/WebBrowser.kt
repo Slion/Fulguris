@@ -38,6 +38,10 @@ interface WebBrowser {
 
     fun closeBrowser()
 
+    /**
+     * Only called when the current tab just opened from an external app through ACTION_VIEW intent is closed
+     * TODO: Rename that to something more explicit
+     */
     fun closeActivity()
 
     fun showBlockedLocalFileDialog(onPositiveClick: () -> Unit)
