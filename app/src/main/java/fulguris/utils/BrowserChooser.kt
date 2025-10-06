@@ -320,9 +320,6 @@ object BrowserChooser {
             if (onDismiss != null) {
                 Timber.d("DBG: Bottom sheet dismissed, executing callback")
                 onDismiss()
-            } else if (context is Activity) {
-                Timber.d("DBG: Bottom sheet dismissed, finishing activity")
-                context.finish()
             }
         }
 
