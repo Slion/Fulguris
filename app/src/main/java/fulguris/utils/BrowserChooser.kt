@@ -3,7 +3,6 @@ package fulguris.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
@@ -35,15 +34,14 @@ object BrowserChooser {
      * @param context The context to show the bottom sheet
      * @param url     The URL to open
      * @param excludeThisApp Whether to exclude the current app from the browser list (default: true)
-     * @param forceIncludeIncognito Whether to force include the incognito activity even if excludeThisApp is true (default: false)
      * @param onDismiss Optional callback to be executed when the dialog is dismissed
      */
-    fun open(context: Context, url: String, excludeThisApp: Boolean = true, forceIncludeIncognito: Boolean = false, onDismiss: (() -> Unit)? = null) {
-        Timber.d("DBG: BrowserChooser.open called with URL: $url, excludeThisApp: $excludeThisApp, forceIncludeIncognito: $forceIncludeIncognito")
-        showBrowserChooserBottomSheet(context, url, excludeThisApp, forceIncludeIncognito, onDismiss)
+    fun open(context: Context, url: String, excludeThisApp: Boolean = true, onDismiss: (() -> Unit)? = null) {
+        Timber.d("DBG: BrowserChooser.open called with URL: $url, excludeThisApp: $excludeThisApp")
+        showBrowserChooserBottomSheet(context, url, excludeThisApp, onDismiss)
     }
 
-    private fun showBrowserChooserBottomSheet(context: Context, url: String, excludeThisApp: Boolean, forceIncludeIncognito: Boolean, onDismiss: (() -> Unit)?) {
+    private fun showBrowserChooserBottomSheet(context: Context, url: String, excludeThisApp: Boolean, onDismiss: (() -> Unit)?) {
         try {
             Timber.d("DBG: showBrowserChooserBottomSheet starting for URL: $url")
             val intent = Intent(Intent.ACTION_VIEW, url.toUri())
@@ -65,34 +63,66 @@ object BrowserChooser {
             // Filter based on excludeThisApp setting
             val resolveInfos = allResolveInfos.filter { resolveInfo ->
                 val packageName = resolveInfo.activityInfo.packageName
+                val activityName = resolveInfo.activityInfo.name
                 val isOurApp = packageName == context.packageName
-                // Filter out our own app if excludeThisApp is true
+
+                // Always exclude SelectBrowserActivity
+                if (isOurApp && activityName == "fulguris.activity.SelectBrowserActivity") {
+                    return@filter false
+                }
+
+                // If excludeThisApp is true, filter out all our activities
+                // If excludeThisApp is false, include MainActivity and IncognitoActivity
                 !isOurApp || !excludeThisApp
             }.toMutableList()
 
-            // If forceIncludeIncognito is true, manually add the IncognitoActivity
-            if (forceIncludeIncognito) {
-                try {
-                    // Create an explicit intent for IncognitoActivity
-                    val incognitoIntent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
-                        setClassName(context.packageName, "fulguris.activity.IncognitoActivity")
-                    }
-                    val incognitoResolveInfo = packageManager.resolveActivity(incognitoIntent, 0)
+            // If excludeThisApp is false, force add MainActivity and IncognitoActivity if not already present
+            if (!excludeThisApp) {
+                val mainActivityName = "fulguris.activity.MainActivity"
+                val incognitoActivityName = "fulguris.activity.IncognitoActivity"
 
-                    if (incognitoResolveInfo != null) {
-                        // Check if it's not already in the list
-                        val alreadyExists = resolveInfos.any {
-                            it.activityInfo.packageName == context.packageName &&
-                            it.activityInfo.name == "fulguris.activity.IncognitoActivity"
+                // Check if MainActivity is already in the list
+                val hasMainActivity = resolveInfos.any {
+                    it.activityInfo.packageName == context.packageName &&
+                    it.activityInfo.name == mainActivityName
+                }
+
+                // Add MainActivity if not present
+                if (!hasMainActivity) {
+                    try {
+                        val mainIntent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
+                            setClassName(context.packageName, mainActivityName)
                         }
+                        val mainResolveInfo = packageManager.resolveActivity(mainIntent, 0)
+                        if (mainResolveInfo != null) {
+                            resolveInfos.add(mainResolveInfo)
+                            Timber.d("DBG: Manually added MainActivity to browser list")
+                        }
+                    } catch (e: Exception) {
+                        Timber.e(e, "DBG: Failed to add MainActivity to browser list")
+                    }
+                }
 
-                        if (!alreadyExists) {
+                // Check if IncognitoActivity is already in the list
+                val hasIncognitoActivity = resolveInfos.any {
+                    it.activityInfo.packageName == context.packageName &&
+                    it.activityInfo.name == incognitoActivityName
+                }
+
+                // Add IncognitoActivity if not present
+                if (!hasIncognitoActivity) {
+                    try {
+                        val incognitoIntent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
+                            setClassName(context.packageName, incognitoActivityName)
+                        }
+                        val incognitoResolveInfo = packageManager.resolveActivity(incognitoIntent, 0)
+                        if (incognitoResolveInfo != null) {
                             resolveInfos.add(incognitoResolveInfo)
                             Timber.d("DBG: Manually added IncognitoActivity to browser list")
                         }
+                    } catch (e: Exception) {
+                        Timber.e(e, "DBG: Failed to add IncognitoActivity to browser list")
                     }
-                } catch (e: Exception) {
-                    Timber.e(e, "DBG: Failed to add IncognitoActivity to browser list")
                 }
             }
 
@@ -242,8 +272,6 @@ object BrowserChooser {
                             selectedBrowser.packageName,
                             selectedBrowser.activityName
                         )
-                        // Mark that this intent comes from our app
-                        putExtra("source_package", context.packageName)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     }
                     Timber.d("DBG: Launching browser: ${selectedBrowser.packageName}/${selectedBrowser.activityName}")

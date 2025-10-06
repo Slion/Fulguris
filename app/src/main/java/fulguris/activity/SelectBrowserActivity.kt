@@ -23,7 +23,6 @@
 package fulguris.activity
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import fulguris.utils.BrowserChooser
 import timber.log.Timber
@@ -49,30 +48,10 @@ class SelectBrowserActivity : Activity() {
             return
         }
 
-        // Check if the intent comes from our own app
-        val callingPackage = callingActivity?.packageName ?: intent?.getStringExtra("source_package")
-        val isFromOurApp = callingPackage == packageName
-
-        Timber.d("SelectBrowserActivity: Calling package = $callingPackage, isFromOurApp = $isFromOurApp")
-
-        if (isFromOurApp) {
-            // Intent comes from Fulguris itself, forward directly to MainActivity
-            Timber.d("SelectBrowserActivity: Forwarding to MainActivity")
-            val forwardIntent = Intent(this, MainActivity::class.java).apply {
-                action = Intent.ACTION_VIEW
-                data = intent.data
-                // Copy any extras from the original intent
-                intent.extras?.let { putExtras(it) }
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
-            startActivity(forwardIntent)
-            finish()
-            return
-        }
-
-        // Show the browser chooser dialog for external intents
-        // Force include incognito activity to give users the option to open in incognito mode
-        BrowserChooser.open(this, url, excludeThisApp = false, forceIncludeIncognito = true) {
+        // Show the browser chooser dialog
+        // excludeThisApp is false, so both MainActivity and IncognitoActivity will be included
+        // SelectBrowserActivity is always excluded automatically
+        BrowserChooser.open(this, url, excludeThisApp = false) {
             // Finish this activity when the dialog is dismissed
             finish()
         }

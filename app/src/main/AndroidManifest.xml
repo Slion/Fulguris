@@ -315,7 +315,9 @@
             android:theme="@style/Theme.App.Transparent"
             android:exported="true"
             android:excludeFromRecents="true"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:launchMode="singleInstance">
 
             <!-- Handle VIEW intents to show browser chooser -->
             <intent-filter>
