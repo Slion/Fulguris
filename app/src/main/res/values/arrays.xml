@@ -41,6 +41,18 @@
         <item>@string/new_tab_position_end_value</item>
     </string-array>
 
+    <string-array name="incoming_view_actions">
+        <item>@string/incoming_view_action_new_tab</item>
+        <item>@string/incoming_view_action_incognito_tab</item>
+        <item>@string/incoming_view_action_ask</item>
+    </string-array>
+
+    <string-array name="incoming_view_action_values">
+        <item>@string/incoming_view_action_new_tab_value</item>
+        <item>@string/incoming_view_action_incognito_tab_value</item>
+        <item>@string/incoming_view_action_ask_value</item>
+    </string-array>
+
     <string-array name="suggestion_name_array">
         <item>@string/two</item>
         <item>@string/three</item>

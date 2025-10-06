@@ -1,5 +1,6 @@
 package fulguris.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -34,13 +35,14 @@ object BrowserChooser {
      * @param context The context to show the bottom sheet
      * @param url     The URL to open
      * @param excludeThisApp Whether to exclude the current app from the browser list (default: true)
+     * @param onDismiss Optional callback to be executed when the dialog is dismissed
      */
-    fun open(context: Context, url: String, excludeThisApp: Boolean = true) {
+    fun open(context: Context, url: String, excludeThisApp: Boolean = true, onDismiss: (() -> Unit)? = null) {
         Timber.d("DBG: BrowserChooser.open called with URL: $url, excludeThisApp: $excludeThisApp")
-        showBrowserChooserBottomSheet(context, url, excludeThisApp)
+        showBrowserChooserBottomSheet(context, url, excludeThisApp, onDismiss)
     }
 
-    private fun showBrowserChooserBottomSheet(context: Context, url: String, excludeThisApp: Boolean) {
+    private fun showBrowserChooserBottomSheet(context: Context, url: String, excludeThisApp: Boolean, onDismiss: (() -> Unit)?) {
         try {
             Timber.d("DBG: showBrowserChooserBottomSheet starting for URL: $url")
             val intent = Intent(Intent.ACTION_VIEW, url.toUri())
@@ -96,7 +98,7 @@ object BrowserChooser {
                 else -> {
                     // Multiple browsers - show bottom sheet with icons
                     Timber.d("DBG: Multiple browsers found (${resolveInfos.size}), showing bottom sheet")
-                    createBrowserBottomSheet(context, url, resolveInfos)
+                    createBrowserBottomSheet(context, url, resolveInfos, onDismiss)
                 }
             }
 
@@ -148,7 +150,7 @@ object BrowserChooser {
         Timber.d("DBG: Saved MRU browser: $componentName, MRU list: $mruString")
     }
 
-    private fun createBrowserBottomSheet(context: Context, url: String, resolveInfos: List<android.content.pm.ResolveInfo>) {
+    private fun createBrowserBottomSheet(context: Context, url: String, resolveInfos: List<android.content.pm.ResolveInfo>, onDismiss: (() -> Unit)?) {
         Timber.d("DBG: createBrowserBottomSheet called with ${resolveInfos.size} browsers")
         val packageManager = context.packageManager
 
@@ -216,6 +218,8 @@ object BrowserChooser {
                             selectedBrowser.packageName,
                             selectedBrowser.activityName
                         )
+                        // Mark that this intent comes from our app
+                        putExtra("source_package", context.packageName)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     }
                     Timber.d("DBG: Launching browser: ${selectedBrowser.packageName}/${selectedBrowser.activityName}")
@@ -258,6 +262,17 @@ object BrowserChooser {
         containerView.addView(recyclerView)
 
         bottomSheetDialog.setContentView(containerView)
+
+        // Execute the provided callback when the dialog is dismissed, or finish activity if no callback provided
+        bottomSheetDialog.setOnDismissListener {
+            if (onDismiss != null) {
+                Timber.d("DBG: Bottom sheet dismissed, executing callback")
+                onDismiss()
+            } else if (context is Activity) {
+                Timber.d("DBG: Bottom sheet dismissed, finishing activity")
+                context.finish()
+            }
+        }
 
         // Ensure the bottom sheet respects the max width by setting it on the parent as well
         bottomSheetDialog.setOnShowListener {

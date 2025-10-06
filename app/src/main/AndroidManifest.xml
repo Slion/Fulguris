@@ -115,23 +115,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:exported="true">
 
-            <!--  Handle various URL scheme and allow being used as default browser -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:scheme="file" />
-                <data android:scheme="inline" />
-                <data android:scheme="about" />
-                <data android:scheme="javascript" />
-                <data android:scheme="fulguris" />
-
-            </intent-filter>
-
             <!--  Handle various mime types and allow being used as default viewer -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -190,8 +173,7 @@
         </activity>
 
         <!--
-        Incognito activity can now be used exactly like the main activity:
-
+        Incognito activity can now be used exactly like the main activity
         -->
         <!-- TODO: Launch this through splash screen too? -->
         <activity
@@ -219,29 +201,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_BROWSER" />
-            </intent-filter>
-
-
-            <!--
-            Handle various URL scheme and allow being used as default browser
-            Though Android only supports listing one entry per package as default browser.
-            So setting incognito as default browser is not working.
-            It only picks up the first one from the manifest, which is our main activity.
-            -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:scheme="file" />
-                <data android:scheme="inline" />
-                <data android:scheme="about" />
-                <data android:scheme="javascript" />
-                <data android:scheme="fulguris" />
-
             </intent-filter>
 
             <!--  Handle various mime types and allow being used as default viewer -->
@@ -301,6 +260,74 @@
 
         </activity>
 
+        <activity-alias
+            android:name="fulguris.alias.default.BrowserActivity"
+            android:targetActivity="fulguris.activity.MainActivity"
+            android:exported="true"
+            android:enabled="false">
+
+            <!--  Handle various URL scheme and allow being used as default browser -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="file" />
+                <data android:scheme="inline" />
+                <data android:scheme="about" />
+                <data android:scheme="javascript" />
+                <data android:scheme="fulguris" />
+
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name="fulguris.alias.default.IncognitoActivity"
+            android:targetActivity="fulguris.activity.IncognitoActivity"
+            android:exported="true"
+            android:enabled="false">
+
+            <!--  Handle various URL scheme and allow being used as default browser -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="file" />
+                <data android:scheme="inline" />
+                <data android:scheme="about" />
+                <data android:scheme="javascript" />
+                <data android:scheme="fulguris" />
+
+            </intent-filter>
+        </activity-alias>
+
+
+        <!-- Transparent activity for browser selection dialog -->
+        <activity
+            android:name="fulguris.activity.SelectBrowserActivity"
+            android:theme="@style/Theme.App.Transparent"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true">
+
+            <!-- Handle VIEW intents to show browser chooser -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+            </intent-filter>
+        </activity>
 
         <!-- App Introduction Activity
              Force dark theme for intro regardless of system and user preferences

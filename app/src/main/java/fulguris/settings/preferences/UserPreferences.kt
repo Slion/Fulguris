@@ -18,6 +18,7 @@ import android.content.SharedPreferences
 import fulguris.browser.SuggestionNumChoice
 import fulguris.enums.LogLevel
 import fulguris.enums.HeaderInfo
+import fulguris.enums.IncomingViewAction
 import fulguris.enums.LayerType
 import fulguris.settings.preferences.delegates.booleanPreference
 import fulguris.settings.preferences.delegates.enumPreference
@@ -106,6 +107,14 @@ class UserPreferences @Inject constructor(
      * @see NewTabPosition
      */
     var newTabPosition by preferences.enumPreference(R.string.pref_key_new_tab_position, NewTabPosition.AFTER_CURRENT_TAB)
+
+    /**
+     * Value of our incoming view action enum.
+     * Defines how VIEW intents from other apps should be handled.
+     *
+     * @see IncomingViewAction
+     */
+    var incomingViewAction by preferences.enumPreference(R.string.pref_key_incoming_view_action, IncomingViewAction.OPEN_IN_NEW_TAB)
 
     /**
      * The URL of the selected homepage.

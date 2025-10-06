@@ -240,6 +240,9 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
             WebView.setWebContentsDebuggingEnabled(true)
         }
 
+        // Set up the correct activity alias based on the incoming view action preference
+        fulguris.utils.ActivityAliasManager.updateEnabledActivity(this, userPreferences.incomingViewAction)
+
     }
 
 
@@ -276,6 +279,11 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
         if (key == getString(R.string.pref_key_log_level) || key == getString(R.string.pref_key_logs)) {
             // Update Timber according to changed preferences
             plantTimberLogs()
+        }
+
+        if (key == getString(R.string.pref_key_incoming_view_action)) {
+            // Update which activity/alias is enabled for handling VIEW intents
+            fulguris.utils.ActivityAliasManager.updateEnabledActivity(this, userPreferences.incomingViewAction)
         }
     }
 
