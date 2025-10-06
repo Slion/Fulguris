@@ -81,7 +81,7 @@
             android:title="@string/settings_title_terms_and_conditions"
             android:summary="@string/settings_summary_terms_and_conditions"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_handshake"
+            app:icon="@drawable/ic_assignment_outline"
             app:singleLineTitle="false">
 
             <intent
@@ -98,7 +98,7 @@
             android:title="@string/settings_title_privacy_policy"
             android:summary="@string/settings_summary_privacy_policy"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_privacy_tip"
+            app:icon="@drawable/ic_privacy_tip_outline"
             app:singleLineTitle="false">
 
             <intent

@@ -69,8 +69,6 @@
     <string name="pref_key_menu_show_new_tab">pref_key_menu_show_new_tab</string>
     <!-- Privacy -->
     <string name="pref_key_accept_terms">pref_key_accept_terms</string>
-    <string name="pref_key_terms_and_conditions">pref_key_terms_and_conditions</string>
-    <string name="pref_key_privacy_policy">pref_key_privacy_policy</string>
     <string name="pref_key_crash_report">pref_key_crash_report</string>
     <string name="pref_key_analytics">pref_key_analytics</string>
     <string name="pref_key_crash_logs">pref_key_crash_logs</string>

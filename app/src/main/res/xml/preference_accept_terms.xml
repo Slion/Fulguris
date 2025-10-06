@@ -9,20 +9,33 @@ Should only be shown on first application start-up.
     xmlns:tools="http://schemas.android.com/tools">
 
     <Preference
-        android:key="@string/pref_key_terms_and_conditions"
         android:title="@string/settings_title_terms_and_conditions"
         android:summary="@string/settings_summary_terms_and_conditions"
         app:iconSpaceReserved="false"
         app:icon="@drawable/ic_assignment_outline"
-        app:singleLineTitle="false" />
+        app:singleLineTitle="false">
+
+        <intent
+            android:targetPackage="@string/application_id"
+            android:targetClass="fulguris.activity.SelectOtherBrowserActivity"
+            android:data="@string/url_terms_and_conditions" />
+
+    </Preference>
 
     <Preference
-        android:key="@string/pref_key_privacy_policy"
         android:title="@string/settings_title_privacy_policy"
         android:summary="@string/settings_summary_privacy_policy"
         app:iconSpaceReserved="false"
         app:icon="@drawable/ic_privacy_tip_outline"
-        app:singleLineTitle="false" />
+        app:singleLineTitle="false">
+
+        <intent
+            android:targetPackage="@string/application_id"
+            android:targetClass="fulguris.activity.SelectOtherBrowserActivity"
+            android:data="@string/url_privacy_policy" />
+
+    </Preference>
+
 
     <slions.pref.SwitchPreference
         android:key="@string/pref_key_accept_terms"

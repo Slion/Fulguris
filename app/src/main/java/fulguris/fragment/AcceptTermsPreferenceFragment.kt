@@ -27,25 +27,8 @@ class AcceptTermsPreferenceFragment: PreferenceFragmentCompat() {
         Timber.Forest.d("AcceptTermsFragment")
         setPreferencesFromResource(R.xml.preference_accept_terms, rootKey)
 
-        // Set up click listeners for terms and privacy policy
-        setupPreferenceClickListeners()
-
         // Set up listener for accept terms toggle
         setupAcceptTermsListener()
-    }
-
-    private fun setupPreferenceClickListeners() {
-        // Terms and Conditions preference
-        findPreference<Preference>(getString(R.string.pref_key_terms_and_conditions))?.setOnPreferenceClickListener {
-            context?.openBrowserChooser( R.string.url_terms_and_conditions)
-            true
-        }
-
-        // Privacy Policy preference
-        findPreference<Preference>(getString(R.string.pref_key_privacy_policy))?.setOnPreferenceClickListener {
-            context?.openBrowserChooser(R.string.url_privacy_policy)
-            true
-        }
     }
 
     private fun setupAcceptTermsListener() {

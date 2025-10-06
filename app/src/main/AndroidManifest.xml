@@ -331,6 +331,19 @@
             </intent-filter>
         </activity>
 
+        <!--
+        Transparent activity for selecting OTHER browsers (excludes this app)
+        Used during onboarding to make sure links are opened in other browsers so as not to break our workflow.
+        -->
+        <activity
+            android:name="fulguris.activity.SelectOtherBrowserActivity"
+            android:theme="@style/Theme.App.Transparent"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:launchMode="singleInstance" />
+
         <!-- App Introduction Activity
              Force dark theme for intro regardless of system and user preferences
         -->
