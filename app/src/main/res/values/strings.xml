@@ -61,7 +61,6 @@
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Desktop)</string>
     <string name="agent_hide_device">Hide device</string>
-
     <string name="title_search_engine">Search engine</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Do you want to download this file? (%1$s)</string>
@@ -367,6 +366,8 @@
     <string name="incoming_view_action_new_tab">New tab</string>
     <string name="incoming_view_action_incognito_tab">Incognito tab</string>
     <string name="incoming_view_action_select_browser">Select browser</string>
+
+    <string name="pref_title_default_browser">Default browser</string>
 
     <string name="text_encoding">Text encoding</string>
     <string name="reset_settings">Reset settings</string>

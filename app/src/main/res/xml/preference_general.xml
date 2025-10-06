@@ -50,6 +50,31 @@
     </PreferenceCategory>
 
 
+    <PreferenceCategory
+        android:title="@string/agent_system"
+        app:singleLineTitle="false">
+
+        <Preference
+            android:key="@string/pref_key_default_browser"
+            android:title="@string/pref_title_default_browser"
+            app:icon="@drawable/ic_apps"
+            app:singleLineTitle="false" />
+
+
+        <slions.pref.EnumListPreference
+            app:key="@string/pref_key_incoming_view_action"
+            app:title="@string/incoming_view_action"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="NEW_TAB"
+            app:entries="@array/incoming_view_actions"
+            app:icon="@drawable/ic_baseline_open_in_new_24"
+            app:singleLineTitle="false"
+            app:enumClassName="fulguris.enums.IncomingViewAction" />
+
+    </PreferenceCategory>
+
+
     <PreferenceCategory android:title="@string/tabs">
 
         <!-- This option is broken since we introduced sessions.
@@ -107,19 +132,6 @@
             app:entryValues="@array/new_tab_position_values"
             app:icon="@drawable/ic_library_add"
             app:singleLineTitle="false" />
-
-        <slions.pref.EnumListPreference
-            app:key="@string/pref_key_incoming_view_action"
-            app:title="@string/incoming_view_action"
-            app:iconSpaceReserved="false"
-            app:useSimpleSummaryProvider="true"
-            app:defaultValue="NEW_TAB"
-            app:entries="@array/incoming_view_actions"
-            app:icon="@drawable/ic_baseline_open_in_new_24"
-            app:singleLineTitle="false"
-            app:enumClassName="fulguris.enums.IncomingViewAction" />
-
-
 
         <!--
         Disabled as currently not working.

@@ -17,8 +17,12 @@ import fulguris.search.engine.CustomSearch
 import fulguris.settings.preferences.*
 import fulguris.utils.ThemeUtils
 import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.Settings
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -32,11 +36,16 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import fulguris.extensions.px
 import fulguris.settings.preferences.USER_AGENTS_ORDERED
 import fulguris.settings.preferences.USER_AGENT_CUSTOM
 import fulguris.settings.preferences.UserPreferences
 import fulguris.settings.preferences.userAgent
 import javax.inject.Inject
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.net.toUri
+import fulguris.extensions.find
 
 /**
  * The general settings of the app.
@@ -48,6 +57,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
     @Inject lateinit var userPreferences: UserPreferences
 
     private lateinit var iPrefSearchCustomImageUrl: Preference
+    private var defaultBrowserPreference: Preference? = null
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
@@ -155,7 +165,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             onCheckChange = { userPreferences.forceZoom = it }
         )
 
-
         iPrefSearchCustomImageUrl = clickablePreference(
             preference = getString(R.string.pref_key_search_custom_image_url),
             onClick = ::showImageUrlPicker
@@ -163,6 +172,63 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
         // Only visible when using custom URL instead of predefined search engines
         iPrefSearchCustomImageUrl.isVisible = (userPreferences.searchChoice == 0)
+
+        // Default browser preference
+        defaultBrowserPreference = find<Preference>(R.string.pref_key_default_browser)?.apply {
+
+            // Looks like this is done from onResume() anyway
+            //updateDefaultBrowserInfo()
+
+            // Handle click to open default apps settings
+            setOnPreferenceClickListener {
+                try {
+                    val settingsIntent = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                        Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS)
+                    } else {
+                        Intent(Settings.ACTION_SETTINGS)
+                    }
+                    startActivity(settingsIntent)
+                } catch (_: Exception) {
+                    // Fallback for devices that don't support this intent
+                    try {
+                        val settingsIntent = Intent(Settings.ACTION_SETTINGS)
+                        startActivity(settingsIntent)
+                    } catch (_: Exception) {
+                        // Last resort - do nothing
+                    }
+                }
+                true
+            }
+        }
+    }
+
+    /**
+     * Update default browser preference with current system default browser info
+     */
+    private fun Preference.updateDefaultBrowserInfo() {
+        val intent = Intent(Intent.ACTION_VIEW, "http://www.example.com".toUri())
+        val pm = requireContext().packageManager
+        val resolveInfo = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+
+        if (resolveInfo != null) {
+            val appInfo = resolveInfo.activityInfo.applicationInfo
+            val browserName = pm.getApplicationLabel(appInfo).toString()
+            val browserIcon = pm.getApplicationIcon(appInfo)
+            val packageName = appInfo.packageName
+
+            // Set summary and icon
+            summary = "$browserName\n$packageName"
+
+            // Resize icon
+            val iconSize = 32.px
+            val bitmap = createBitmap(iconSize, iconSize)
+            val canvas = android.graphics.Canvas(bitmap)
+            browserIcon.setBounds(0, 0, iconSize, iconSize)
+            browserIcon.draw(canvas)
+            icon = bitmap.toDrawable(resources)
+        } else {
+            summary = getString(R.string.unknown)
+        }
     }
 
     /**
@@ -511,6 +577,12 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         }
 
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Update default browser preference summary when returning to settings screen
+        defaultBrowserPreference?.updateDefaultBrowserInfo()
     }
 
     companion object {
