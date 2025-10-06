@@ -71,7 +71,8 @@ class SelectBrowserActivity : Activity() {
         }
 
         // Show the browser chooser dialog for external intents
-        BrowserChooser.open(this, url, false) {
+        // Force include incognito activity to give users the option to open in incognito mode
+        BrowserChooser.open(this, url, excludeThisApp = false, forceIncludeIncognito = true) {
             // Finish this activity when the dialog is dismissed
             finish()
         }
