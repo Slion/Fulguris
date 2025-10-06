@@ -39,6 +39,10 @@ object ActivityAliasManager {
 
     /**
      * Updates which activity/alias is enabled for handling VIEW intents based on the user's preference.
+     * Activities declared from your manifest can be enabled/disabled at runtime using PackageManager.
+     * We use this to configure the action taken when a VIEW intent is received based on user preference.
+     * It defines what we do when our app is selected as the default browser app by the user.
+     * It's actually the only way we could configure that since Android default browser app only selects a package rather than a specific activity.
      *
      * @param context The application context
      * @param action The incoming view action preference
