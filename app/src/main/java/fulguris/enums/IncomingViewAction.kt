@@ -28,8 +28,7 @@ import fulguris.settings.preferences.IntEnum
  * Define how incoming view actions (VIEW intents from other apps) should be handled
  */
 enum class IncomingViewAction(override val value: Int) : IntEnum {
-    OPEN_IN_NEW_TAB(0),
-    OPEN_IN_INCOGNITO_TAB(1),
-    ASK(2)
+    NEW_TAB(0),
+    INCOGNITO_TAB(1),
+    SELECT_BROWSER(2)
 }
-

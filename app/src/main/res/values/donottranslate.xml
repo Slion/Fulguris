@@ -183,9 +183,9 @@
     <string name="new_tab_position_end_value">END_OF_TAB_LIST</string>
 
     <!-- See: IncomingViewAction -->
-    <string name="incoming_view_action_new_tab_value">OPEN_IN_NEW_TAB</string>
-    <string name="incoming_view_action_incognito_tab_value">OPEN_IN_INCOGNITO_TAB</string>
-    <string name="incoming_view_action_ask_value">ASK</string>
+    <string name="incoming_view_action_new_tab_value">NEW_TAB</string>
+    <string name="incoming_view_action_incognito_tab_value">INCOGNITO_TAB</string>
+    <string name="incoming_view_action_select_browser_value">SELECT_BROWSER</string>
 
     <string name="slions_update_check_url">https://slions.net/api/resources/10/versions</string>
     <string name="slions_api_key">eQxvqk5DGEXUBqdt5Y_7rGRxF2m0REdb</string>

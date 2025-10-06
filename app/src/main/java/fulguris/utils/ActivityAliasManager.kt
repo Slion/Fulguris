@@ -55,15 +55,15 @@ object ActivityAliasManager {
 
         // Enable the appropriate one based on preference
         when (action) {
-            IncomingViewAction.OPEN_IN_NEW_TAB -> {
+            IncomingViewAction.NEW_TAB -> {
                 setComponentEnabled(packageManager, context, ALIAS_BROWSER_ACTIVITY, true)
                 Timber.d("Enabled BrowserActivity alias for incoming VIEW intents")
             }
-            IncomingViewAction.OPEN_IN_INCOGNITO_TAB -> {
+            IncomingViewAction.INCOGNITO_TAB -> {
                 setComponentEnabled(packageManager, context, ALIAS_INCOGNITO_ACTIVITY, true)
                 Timber.d("Enabled IncognitoActivity alias for incoming VIEW intents")
             }
-            IncomingViewAction.ASK -> {
+            IncomingViewAction.SELECT_BROWSER -> {
                 setComponentEnabled(packageManager, context, SELECT_BROWSER_ACTIVITY, true)
                 Timber.d("Enabled SelectBrowserActivity for incoming VIEW intents")
             }
@@ -97,4 +97,3 @@ object ActivityAliasManager {
         }
     }
 }
-

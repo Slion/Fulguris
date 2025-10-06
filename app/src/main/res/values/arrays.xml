@@ -44,13 +44,13 @@
     <string-array name="incoming_view_actions">
         <item>@string/incoming_view_action_new_tab</item>
         <item>@string/incoming_view_action_incognito_tab</item>
-        <item>@string/incoming_view_action_ask</item>
+        <item>@string/incoming_view_action_select_browser</item>
     </string-array>
 
     <string-array name="incoming_view_action_values">
         <item>@string/incoming_view_action_new_tab_value</item>
         <item>@string/incoming_view_action_incognito_tab_value</item>
-        <item>@string/incoming_view_action_ask_value</item>
+        <item>@string/incoming_view_action_select_browser_value</item>
     </string-array>
 
     <string-array name="suggestion_name_array">

@@ -114,7 +114,7 @@ class UserPreferences @Inject constructor(
      *
      * @see IncomingViewAction
      */
-    var incomingViewAction by preferences.enumPreference(R.string.pref_key_incoming_view_action, IncomingViewAction.OPEN_IN_NEW_TAB)
+    var incomingViewAction by preferences.enumPreference(R.string.pref_key_incoming_view_action, IncomingViewAction.NEW_TAB)
 
     /**
      * The URL of the selected homepage.
