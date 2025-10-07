@@ -17,6 +17,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.webkit.URLUtil
 import androidx.lifecycle.LifecycleOwner
+import fulguris.BuildConfig
 import fulguris.Component
 import fulguris.utils.QUERY_PLACE_HOLDER
 import fulguris.utils.isBookmarkUrl
@@ -129,7 +130,7 @@ class TabsManager @Inject constructor(
      */
     override fun onStop(owner: LifecycleOwner) {
         // Once we go background make sure the current tab is not new anymore
-        currentTab?.isNewTab = false
+        currentTab?.iIntent = null
         saveIfNeeded()
     }
 
@@ -1085,6 +1086,7 @@ class TabsManager @Inject constructor(
         closedTabs.add(tabToDelete.saveState())
 
         val isShown = tabToDelete.isShown
+        val intent = tabToDelete.iIntent
         val shouldClose = shouldClose && isShown && tabToDelete.isNewTab
         val beforeTab = currentTab
 
@@ -1111,7 +1113,8 @@ class TabsManager @Inject constructor(
         if (shouldClose) {
             Timber.d("deleteTab - Closing activity due to shouldClose=true")
             this.shouldClose = false
-            iWebBrowser.closeActivity()
+            // Defensive: We must have an intent if going through here but using let saves us from using !!
+            intent?.let { iWebBrowser.closeActivity(it) }
         }
 
         iWebBrowser.updateTabNumber(size())
@@ -1142,6 +1145,7 @@ class TabsManager @Inject constructor(
             intent?.dataString
         }
 
+        // TODO: Not sure what we use that for exactly
         val tabHashCode = intent?.extras?.getInt(INTENT_ORIGIN, 0) ?: 0
 
         Timber.d("onNewIntent - URL: $url, tabHashCode: $tabHashCode, intent: $intent")
@@ -1153,11 +1157,11 @@ class TabsManager @Inject constructor(
             if (URLUtil.isFileUrl(url)) {
                 Timber.d("onNewIntent - Creating new tab for file URL: $url")
                 iWebBrowser.showBlockedLocalFileDialog {
-                    newTab(UrlInitializer(url), true).isNewTab = true
+                    newTab(UrlInitializer(url), true).iIntent = intent
                     shouldClose = true
                 }
             } else {
-                newTab(UrlInitializer(url), true).isNewTab = true
+                newTab(UrlInitializer(url), true).iIntent = intent
                 shouldClose = true
             }
         }

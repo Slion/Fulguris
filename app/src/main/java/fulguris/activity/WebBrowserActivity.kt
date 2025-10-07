@@ -43,7 +43,6 @@ import android.webkit.WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView.OnEditorActionListener
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
@@ -101,8 +100,6 @@ import fulguris.dialog.DialogItem
 import fulguris.dialog.LightningDialogBuilder
 import fulguris.enums.HeaderInfo
 import fulguris.extensions.*
-import fulguris.extensions.resizeAndShow
-import fulguris.extensions.snackbar
 import fulguris.html.bookmark.BookmarkPageFactory
 import fulguris.html.history.HistoryPageFactory
 import fulguris.html.homepage.HomePageFactory
@@ -134,6 +131,7 @@ import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.system.exitProcess
 import kotlin.time.TimeSource
+import kotlin.toString
 
 
 /**
@@ -282,16 +280,34 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     public abstract fun isIncognito(): Boolean
 
     /**
-     * Only called when the current tab just opened from an external app through ACTION_VIEW intent is closed
+     * Only called when the current tab just opened from an ACTION_VIEW intent is closed
+     * Tab could have been opened by another app or by ourselves from another activity
      */
-    override fun closeActivity() {
+    override fun closeActivity(aIntent: Intent) {
         //performExitCleanUp()
 
-        // That works for most cases
-        // But it does not work if the tab was opened by ourselves from another activity
-        // TODO: Find a way to know if we were opened by ourselves or another app
-        // I guess we need to keep the intent in the WebPageTab
-        moveTaskToBack(true)
+        // TODO: All extras name in one place
+        try {
+            val fromSelf = aIntent.getStringExtra("PACKAGE") == packageName
+            val className = aIntent.getStringExtra("ACTIVITY")
+            val fragment = aIntent.getStringExtra(FRAGMENT_CLASS_NAME)
+            // Check if the tab was open by ourselves
+            if (fromSelf && className != null) {
+                // Go back to the activity that opened the closing tab
+                val intent: Intent = Intent(this, Class.forName(className)).apply {
+                    // For settings to open the proper page
+                    putExtra(FRAGMENT_CLASS_NAME, fragment)
+                }
+                // You can notably test this code path through Settings > About > Privacy Policy
+                startActivity(intent)
+            } else {
+                // Opening tab intent did not belong to us, just send ourselves to the background for user to resume where it was
+                moveTaskToBack(true)
+            }
+        }
+        catch (ex: Throwable) {
+            Timber.w(ex, "Workflow issue after closing new tab");
+        }
     }
 
 
@@ -4836,7 +4852,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                     val i = Intent(this, SettingsActivity::class.java)
                     /** See [SettingsActivity.onResume] for details of how this is handled on the other side */
                     // Tell our settings activity to load our Contribute/Sponsorship fragment
-                    i.putExtra(SETTINGS_CLASS_NAME, SponsorshipSettingsFragment::class.java.name)
+                    i.putExtra(FRAGMENT_CLASS_NAME, SponsorshipSettingsFragment::class.java.name)
                     startActivity(i)
                 }).show()
     }

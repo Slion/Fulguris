@@ -29,6 +29,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.graphics.*
@@ -147,7 +148,10 @@ class WebPageTab(
      * Sets whether this tab was the result of a new intent sent to the browser.
      * That's notably used to decide if we close our activity when closing this tab thus going back to the app which opened it.
      */
-    var isNewTab: Boolean = false
+    val isNewTab: Boolean get() = iIntent!=null
+    //val fromSelf: Boolean get() = iIntent?.getStringExtra("PACKAGE") == activity.packageName;
+
+    var iIntent: Intent? = null
 
     /**
      * This method sets the tab as the foreground tab or a background tab.
@@ -167,7 +171,7 @@ class WebPageTab(
                 }
             } else {
                 // A tab sent to the background is not so new anymore
-                isNewTab = false
+                iIntent = null
             }
             webBrowser.onTabChanged(this)
         }

@@ -88,8 +88,16 @@
                 android:action="android.intent.action.VIEW"
                 android:data="@string/url_terms_and_conditions">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
+
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
             </intent>
 
         </Preference>
@@ -105,8 +113,16 @@
                 android:action="android.intent.action.VIEW"
                 android:data="@string/url_privacy_policy">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
+
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
             </intent>
 
         </Preference>

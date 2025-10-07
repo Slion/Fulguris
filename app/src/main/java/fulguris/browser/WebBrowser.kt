@@ -1,5 +1,6 @@
 package fulguris.browser
 
+import android.content.Intent
 import fulguris.database.Bookmark
 import fulguris.dialog.LightningDialogBuilder
 import fulguris.ssl.SslState
@@ -42,7 +43,7 @@ interface WebBrowser {
      * Only called when the current tab just opened from an external app through ACTION_VIEW intent is closed
      * TODO: Rename that to something more explicit
      */
-    fun closeActivity()
+    fun closeActivity(aIntent: Intent)
 
     fun showBlockedLocalFileDialog(onPositiveClick: () -> Unit)
 

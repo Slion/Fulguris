@@ -22,7 +22,7 @@ import fulguris.extensions.applyWindowInsets
 import fulguris.extensions.ihs
 import timber.log.Timber
 
-const val SETTINGS_CLASS_NAME = "ClassName"
+const val FRAGMENT_CLASS_NAME = "FRAGMENT"
 
 /**
  * TODO: Review title update implementation for both single and dual pane modes
@@ -36,6 +36,7 @@ class SettingsActivity : ThemedSettingsActivity() {
     private var iFragmentClassName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.d("$ihs : onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
@@ -60,7 +61,7 @@ class SettingsActivity : ThemedSettingsActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         //supportActionBar?.setDisplayShowTitleEnabled(true)
 
-        iFragmentClassName = savedInstanceState?.getString(SETTINGS_CLASS_NAME)
+        iFragmentClassName = savedInstanceState?.getString(FRAGMENT_CLASS_NAME)
 
         // Truncate title in the middle
         findViewById<ViewGroup>(R.id.settings_toolbar).findViewsByType(TextView::class.java).forEach {
@@ -80,16 +81,18 @@ class SettingsActivity : ThemedSettingsActivity() {
      *
      */
     override fun onResume() {
-        Timber.d("$ihs : onResume")
+        Timber.d("$ihs : onResume - $iFragmentClassName")
         super.onResume()
 
         // At this stage our preferences have been created
         try {
             // Start specified fragment if any
             if (iFragmentClassName == null) {
-                val className = intent.extras!!.getString(SETTINGS_CLASS_NAME)
-                val classType = Class.forName(className!!)
-                startFragment(classType)
+                intent.getStringExtra(FRAGMENT_CLASS_NAME)?.let{
+                    Timber.d("$ihs : Intent fragment: - $it")
+                    val classType = Class.forName(it)
+                    startFragment(classType)
+                }
             } else {
                 val classType = Class.forName(iFragmentClassName)
                 startFragment(classType)
@@ -99,6 +102,7 @@ class SettingsActivity : ThemedSettingsActivity() {
         }
         catch(ex: Exception) {
             // Just ignore
+            Timber.w(ex, "Could not restore settings fragment")
         }
 
         updateTitleOnLayout()
@@ -219,6 +223,7 @@ class SettingsActivity : ThemedSettingsActivity() {
 
 
     override fun onSaveInstanceState(outState: Bundle) {
+        Timber.d("$ihs : onSaveInstanceState")
         // Save current activity title so we can set it again after a configuration change
         //outState.putCharSequence(TITLE_TAG, title)
         super.onSaveInstanceState(outState)
@@ -226,7 +231,7 @@ class SettingsActivity : ThemedSettingsActivity() {
         // Persist current fragment to restore it after screen rotation for instance
         // TODO: For some reason that does not work with Portrait and Landscape pages
         responsive.iPreference?.fragment.let {
-            outState.putString(SETTINGS_CLASS_NAME, it)
+            outState.putString(FRAGMENT_CLASS_NAME, it)
         }
 
     }
