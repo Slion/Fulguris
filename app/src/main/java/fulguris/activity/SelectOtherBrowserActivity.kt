@@ -30,9 +30,8 @@ import timber.log.Timber
 /**
  * A transparent activity that shows a browser chooser dialog and forwards the intent to other browsers.
  * This activity excludes the current app from the browser list, showing only external browsers.
- * This activity has no content and uses a transparent theme.
  * It is not exported and can only be launched from within the app.
- * We had to create another activity as Preference does not support adding extra flags to the intent.
+ * In theory we should be able to support that in SelectBrowserActivity using extra parameters in intent but we could not get it working for some reason.
  */
 class SelectOtherBrowserActivity : Activity() {
 
