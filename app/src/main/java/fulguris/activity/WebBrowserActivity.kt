@@ -275,11 +275,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private var iPlaceHolder: Space? = null
 
     /**
-     * Determines if the current browser instance is in incognito mode or not.
-     */
-    public abstract fun isIncognito(): Boolean
-
-    /**
      * Only called when the current tab just opened from an ACTION_VIEW intent is closed
      * Tab could have been opened by another app or by ourselves from another activity
      */
@@ -413,7 +408,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Setup our presenter
         tabsManager.iWebBrowser = this
         tabsManager.closedTabs = RecentTabsModel()
-        tabsManager.isIncognito = isIncognito()
 
 
         initialize(savedInstanceState)
@@ -1432,7 +1426,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
     protected fun panicClean() {
         Timber.d("Closing browser")
-        tabsManager.newTab(this, NoOpInitializer(), false, NewTabPosition.END_OF_TAB_LIST)
+        tabsManager.newTab(this, NoOpInitializer(), NewTabPosition.END_OF_TAB_LIST)
         tabsManager.switchToTab(0)
         tabsManager.clearSavedState()
 

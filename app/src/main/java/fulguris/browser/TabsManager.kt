@@ -17,7 +17,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.webkit.URLUtil
 import androidx.lifecycle.LifecycleOwner
-import fulguris.BuildConfig
 import fulguris.Component
 import fulguris.utils.QUERY_PLACE_HOLDER
 import fulguris.utils.isBookmarkUrl
@@ -70,7 +69,11 @@ class TabsManager @Inject constructor(
     // This is just used when loading and saving sessions.
     // TODO: Ideally it should not be a data member.
     val savedRecentTabsIndices = mutableSetOf<Int>()
-    private var iIsIncognito = false;
+
+
+
+
+
 
     // Our persisted list of sessions
     // TODO: Consider using a map instead of an array
@@ -277,20 +280,20 @@ class TabsManager @Inject constructor(
      *
      * TODO: See how you can offload IO to a background thread
      */
-    fun initializeTabs(activity: Activity, incognito: Boolean) : MutableList<WebPageTab> {
+    fun initializeTabs(activity: Activity) : MutableList<WebPageTab> {
         Timber.d("initializeTabs")
-        iIsIncognito = incognito
 
         shutdown()
 
         val list = mutableListOf<WebPageTab>()
 
-        if (incognito) {
-            list.add(newTab(activity, incognitoPageInitializer, incognito, NewTabPosition.END_OF_TAB_LIST))
-        } else {
+        if (iWebBrowser.isIncognito()) {
+            list.add(newTab(activity, incognitoPageInitializer, NewTabPosition.END_OF_TAB_LIST))
+        }
+        else {
             tryRestorePreviousTabs(activity).forEach {
                 try {
-                    list.add(newTab(activity, it, incognito, NewTabPosition.END_OF_TAB_LIST))
+                    list.add(newTab(activity, it, NewTabPosition.END_OF_TAB_LIST))
                 } catch (ex: Throwable) {
                     // That's a corrupted session file, can happen when importing garbage.
                     activity.snackbar(R.string.error_session_file_corrupted)
@@ -299,7 +302,7 @@ class TabsManager @Inject constructor(
 
             // Make sure we have one tab
             if (list.isEmpty()) {
-                list.add(newTab(activity, homePageInitializer, incognito, NewTabPosition.END_OF_TAB_LIST))
+                list.add(newTab(activity, homePageInitializer, NewTabPosition.END_OF_TAB_LIST))
             }
         }
 
@@ -584,20 +587,18 @@ class TabsManager @Inject constructor(
      *
      * @param activity the activity needed to create the tab.
      * @param tabInitializer the initializer to run on the tab after it's been created.
-     * @param isIncognito whether the tab is an incognito tab or not.
      * @return a valid initialized tab.
      */
     fun newTab(
         activity: Activity,
         tabInitializer: TabInitializer,
-        isIncognito: Boolean,
         newTabPosition: NewTabPosition
     ): WebPageTab {
         Timber.i("New tab")
         val tab = WebPageTab(
                 activity,
                 tabInitializer,
-                isIncognito,
+    iWebBrowser.isIncognito(),
                 homePageInitializer,
                 incognitoPageInitializer,
                 bookmarkPageInitializer,
@@ -678,7 +679,7 @@ class TabsManager @Inject constructor(
      * Save our states if needed.
      */
     private fun saveIfNeeded() {
-        if (iIsIncognito) {
+        if (iWebBrowser.isIncognito()) {
             // We don't persist anything when browsing incognito
             return
         }
@@ -942,12 +943,8 @@ class TabsManager @Inject constructor(
     ///////////////////
     // From here we have the former browser presenter stuff
     ///////////////////
-
     private var currentTabFromPresenter: WebPageTab? = null
-    private var shouldClose: Boolean = false
-
     lateinit var iWebBrowser: WebBrowser
-    var isIncognito: Boolean = false
     lateinit var closedTabs: RecentTabsModel
 
     /**
@@ -984,19 +981,20 @@ class TabsManager @Inject constructor(
 
     /**
      * Initializes our tab manager.
+     * Called when the activity is created and when switching sessions.
      */
     fun setupTabs(aIntent: Intent? = null) {
         Timber.d("setupTabs")
         iScopeMainThread.launch {
             delay(1L)
-            val tabs = initializeTabs(iWebBrowser as Activity, isIncognito)
-            // At this point we always have at least a tab in the tab manager
+            val tabs = initializeTabs(iWebBrowser as Activity)
+            // At this point we always have at least one tab in the tab manager
             iWebBrowser.notifyTabViewInitialized()
             iWebBrowser.updateTabNumber(size())
             // Switch to persisted current tab
             tabChanged(if (savedRecentTabsIndices.isNotEmpty()) savedRecentTabsIndices.last() else positionOf(tabs.last()),false, false)
             // Only then can we create tab from external app on startup otherwise it is opened before we switch to the current tab
-            aIntent?.let {onNewIntent(aIntent)}
+            aIntent?.let {onNewIntent(aIntent, iWebBrowser.isIncognito())}
 
             //logger.log(TAG,"After from coroutine")
         }
@@ -1087,7 +1085,7 @@ class TabsManager @Inject constructor(
 
         val isShown = tabToDelete.isShown
         val intent = tabToDelete.iIntent
-        val shouldClose = shouldClose && isShown && tabToDelete.isNewTab
+        val shouldClose = isShown && tabToDelete.isNewTab
         val beforeTab = currentTab
 
         Timber.v("deleteTab - isShown=$isShown, shouldClose=$shouldClose, beforeTab=${beforeTab?.url}")
@@ -1112,7 +1110,6 @@ class TabsManager @Inject constructor(
 
         if (shouldClose) {
             Timber.d("deleteTab - Closing activity due to shouldClose=true")
-            this.shouldClose = false
             // Defensive: We must have an intent if going through here but using let saves us from using !!
             intent?.let { iWebBrowser.closeActivity(it) }
         }
@@ -1125,44 +1122,55 @@ class TabsManager @Inject constructor(
     /**
      * Handle a new intent from the the main BrowserActivity.
      * TODO: That implementation is so ugly… try and improve that.
-     * @param intent the intent to handle, may be null.
+     * @param aIntent the intent to handle, may be null.
+     * @param aIncognitoStartup True if the intent is received at incognito startup, meaning we need to close the initial tab.
      */
-    fun onNewIntent(intent: Intent?) = doOnceAfterInitialization {
-        val url = if (intent?.action == Intent.ACTION_WEB_SEARCH) {
-            extractSearchFromIntent(intent)
+    fun onNewIntent(aIntent: Intent?, aIncognitoStartup: Boolean = false) = doOnceAfterInitialization {
+        val url = if (aIntent?.action == Intent.ACTION_WEB_SEARCH) {
+            extractSearchFromIntent(aIntent)
         }
-        else if (intent?.action == Intent.ACTION_SEND) {
+        else if (aIntent?.action == Intent.ACTION_SEND) {
             // User shared text with our app
-            if ("text/plain" == intent.type) {
+            if ("text/plain" == aIntent.type) {
                 // Get shared text
-                val clue = intent.getStringExtra(Intent.EXTRA_TEXT)
+                val clue = aIntent.getStringExtra(Intent.EXTRA_TEXT)
                 // Put it in the address bar if any
                 clue?.let { iWebBrowser.setAddressBarText(it) }
             }
             // Cancel other operation as we won't open a tab here
             null
         } else {
-            intent?.dataString
+            aIntent?.dataString
         }
 
         // TODO: Not sure what we use that for exactly
-        val tabHashCode = intent?.extras?.getInt(INTENT_ORIGIN, 0) ?: 0
+        val tabHashCode = aIntent?.extras?.getInt(INTENT_ORIGIN, 0) ?: 0
 
-        Timber.d("onNewIntent - URL: $url, tabHashCode: $tabHashCode, intent: $intent")
+        Timber.d("onNewIntent - URL: $url, tabHashCode: $tabHashCode, intent: $aIntent")
 
         if (tabHashCode != 0 && url != null) {
             Timber.d("onNewIntent - Loading URL in existing tab with hashCode: $tabHashCode")
             getTabForHashCode(tabHashCode)?.loadUrl(url)
         } else if (url != null) {
+
+            // Define a lambda we can reuse below
+            val createNewTab = {
+                newTab(UrlInitializer(url), true).iIntent = aIntent
+                // Avoid showing two tabs when starting incognito mode
+                if (aIncognitoStartup) {
+                    // Delete the default tab that was created at startup
+                    deleteTab(0)
+                }
+            }
+
             if (URLUtil.isFileUrl(url)) {
                 Timber.d("onNewIntent - Creating new tab for file URL: $url")
                 iWebBrowser.showBlockedLocalFileDialog {
-                    newTab(UrlInitializer(url), true).iIntent = intent
-                    shouldClose = true
+                    createNewTab()
                 }
             } else {
-                newTab(UrlInitializer(url), true).iIntent = intent
-                shouldClose = true
+                Timber.d("onNewIntent - Creating new tab for URL: $url")
+                createNewTab()
             }
         }
     }
@@ -1240,7 +1248,7 @@ class TabsManager @Inject constructor(
 
         Timber.d("New tab, show: $show")
 
-        val newTab = newTab(iWebBrowser as Activity, tabInitializer, isIncognito, userPreferences.newTabPosition)
+        val newTab = newTab(iWebBrowser as Activity, tabInitializer,userPreferences.newTabPosition)
         if (size() == 1) {
             newTab.resumeTimers()
         }

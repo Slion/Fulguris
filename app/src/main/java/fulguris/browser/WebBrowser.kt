@@ -293,4 +293,9 @@ interface WebBrowser {
      */
     fun onSingleTapUp(aTab: WebPageTab)
 
+    /**
+     * Determines if the current browser instance is in incognito mode or not.
+     */
+    fun isIncognito(): Boolean
+
 }
