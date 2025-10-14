@@ -1126,12 +1126,20 @@ class TabsManager @Inject constructor(
      * @param aIncognitoStartup True if the intent is received at incognito startup, meaning we need to close the initial tab.
      */
     fun onNewIntent(aIntent: Intent?, aIncognitoStartup: Boolean = false) = doOnceAfterInitialization {
+
+        // Obtain a URL from the intent
         val url = if (aIntent?.action == Intent.ACTION_WEB_SEARCH) {
+            // User performed a web search
+            // Build search URL according to user preferences
             extractSearchFromIntent(aIntent)
         }
         else if (aIntent?.action == Intent.ACTION_SEND) {
+            // TODO: Check if we received a valid URL, if so check the domain settings options
+            // If it is not a URL we could fallback to a search I guess
+            // See: https://github.com/Slion/Fulguris/issues/710
+            // See: https://github.com/Slion/Fulguris/issues/628
             // User shared text with our app
-            if ("text/plain" == aIntent.type) {
+            if ("text/plain" == aIntent.type || "text/x-uri" == aIntent.type) {
                 // Get shared text
                 val clue = aIntent.getStringExtra(Intent.EXTRA_TEXT)
                 // Put it in the address bar if any
@@ -1140,6 +1148,7 @@ class TabsManager @Inject constructor(
             // Cancel other operation as we won't open a tab here
             null
         } else {
+            // Most likely Intent.ACTION_VIEW
             aIntent?.dataString
         }
 
