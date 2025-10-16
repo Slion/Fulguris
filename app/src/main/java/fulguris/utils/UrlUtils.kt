@@ -78,6 +78,25 @@ fun smartUrlFilter(url: String, canBeSearch: Boolean, searchUrl: String): Pair<S
 }
 
 /**
+ * Extracts the first URL found in a text string.
+ * This is useful for processing ACTION_SEND intents where URLs may be embedded in text.
+ *
+ * @param text the text to search for URLs
+ * @return the first URL found, or null if no URL is found
+ */
+fun extractUrlFromText(text: String?): String? {
+    if (text.isNullOrBlank()) return null
+
+    // First try to match http(s):// URLs
+    val matcher = Patterns.WEB_URL.matcher(text)
+    if (matcher.find()) {
+        return matcher.group()
+    }
+
+    return null
+}
+
+/**
  * Determines if the url is a url for the bookmark page.
  *
  * @return true if the url is a bookmark url, false otherwise.

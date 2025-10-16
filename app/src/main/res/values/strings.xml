@@ -363,12 +363,11 @@
     <string name="new_tab_position_start">Start of tab list</string>
     <string name="new_tab_position_end">End of tab list</string>
     <string name="incoming_view_action">Incoming view action</string>
-    <string name="incoming_view_action_new_tab">New tab</string>
-    <string name="incoming_view_action_incognito_tab">Incognito tab</string>
-    <string name="incoming_view_action_select_browser">Select browser</string>
+    <string name="action_incognito_tab">Incognito tab</string>
+    <string name="action_select_browser">Select browser</string>
+    <string name="action_block">Block</string>
 
     <string name="pref_title_default_browser">Default browser</string>
-
     <string name="text_encoding">Text encoding</string>
     <string name="reset_settings">Reset settings</string>
     <string name="reset_settings_confirmation">You will loose all your settings. Are you sure you want to proceed?</string>
@@ -443,6 +442,9 @@
     <string name="dialog_rename_folder">Rename folder</string>
     <string name="dialog_remove_folder">Remove folder</string>
     <string name="dialog_title_close_browser">Close browser</string>
+    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="message_blocked_domain">Blocked %1$s</string>
     <string name="dialog_delete_all_downloads">Delete all downloads</string>
 
     <!-- Tools dialog -->
@@ -506,6 +508,8 @@
     <string name="settings_summary_default_domain_settings">Default domain settings</string>
     <string name="settings_title_ssl_error">Security error</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
+    <string name="settings_title_incoming_url_action">Incoming link action</string>
+    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
     <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
     <string name="settings_title_third_party_cookies">Third-party cookies</string>
     <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>

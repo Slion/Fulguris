@@ -26,6 +26,7 @@ import fulguris.app
 import fulguris.R
 import fulguris.extensions.reverseDomainName
 import fulguris.settings.NoYesAsk
+import fulguris.enums.IncomingUrlAction
 import fulguris.settings.preferences.delegates.*
 import android.annotation.SuppressLint
 import android.content.Context
@@ -179,6 +180,17 @@ class DomainPreferences constructor(
     val sslError: NoYesAsk get() { return if (isDefault || !sslErrorOverride) { sslErrorParent } else { sslErrorLocal } }
 
     /**
+     * Define what to do with incoming URLs
+     * - NEW_TAB: Open in new tab
+     * - INCOGNITO_TAB: Open in incognito tab
+     * - ASK: Ask the user what to do
+     */
+    var incomingUrlActionOverride by preferences.booleanPreference(R.string.pref_key_incoming_url_action_override, false)
+    var incomingUrlActionLocal by preferences.enumPreference(R.string.pref_key_incoming_url_action, IncomingUrlAction.NEW_TAB)
+    val incomingUrlActionParent: IncomingUrlAction get() { return parent?.incomingUrlAction ?: incomingUrlActionLocal}
+    val incomingUrlAction: IncomingUrlAction get() { return if (isDefault || !incomingUrlActionOverride) { incomingUrlActionParent } else { incomingUrlActionLocal } }
+
+    /**
      * Is this the default domain settings?
      */
     val isDefault: Boolean get() = domain==""
@@ -266,4 +278,3 @@ class DomainPreferences constructor(
         }
     }
 }
-

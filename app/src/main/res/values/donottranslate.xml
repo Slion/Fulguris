@@ -155,6 +155,8 @@
     <string name="pref_key_parent">pref_key_parent</string>
     <string name="pref_key_ssl_error">pref_key_ssl_error</string>
     <string name="pref_key_ssl_error_override">pref_key_ssl_error_override</string>
+    <string name="pref_key_incoming_url_action">pref_key_incoming_url_action</string>
+    <string name="pref_key_incoming_url_action_override">pref_key_incoming_url_action_override</string>
     <string name="pref_key_cat_cookies">pref_key_cat_cookies</string>
     <string name="pref_key_delete_page_cookies">pref_key_delete_page_cookies</string>
 
@@ -181,10 +183,6 @@
     <string name="new_tab_position_start_value">START_OF_TAB_LIST</string>
     <string name="new_tab_position_end_value">END_OF_TAB_LIST</string>
 
-    <!-- See: IncomingViewAction -->
-    <string name="incoming_view_action_new_tab_value">NEW_TAB</string>
-    <string name="incoming_view_action_incognito_tab_value">INCOGNITO_TAB</string>
-    <string name="incoming_view_action_select_browser_value">SELECT_BROWSER</string>
 
     <string name="slions_update_check_url">https://slions.net/api/resources/10/versions</string>
     <string name="slions_api_key">eQxvqk5DGEXUBqdt5Y_7rGRxF2m0REdb</string>

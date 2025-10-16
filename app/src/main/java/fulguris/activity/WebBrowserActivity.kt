@@ -3317,7 +3317,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     protected fun handleNewIntent(intent: Intent) {
-        tabsManager.onNewIntent(intent)
+        tabsManager.doOnNewIntent(intent)
     }
 
     protected fun performExitCleanUp() {

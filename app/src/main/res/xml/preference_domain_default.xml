@@ -93,4 +93,15 @@
         a:enumClassName="fulguris.settings.NoYesAsk"
         />
 
+    <slions.pref.EnumListPreference
+        a:key="@string/pref_key_incoming_url_action"
+        a:title="@string/settings_title_incoming_url_action"
+        a:useSimpleSummaryProvider="true"
+        a:defaultValue="NEW_TAB"
+        a:entries="@array/incoming_url_actions"
+        a:icon="@drawable/ic_baseline_open_in_new_24"
+        a:singleLineTitle="false"
+        a:enumClassName="fulguris.enums.IncomingUrlAction"
+        />
+
 </androidx.preference.PreferenceScreen>

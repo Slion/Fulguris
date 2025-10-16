@@ -22,6 +22,8 @@ import java.util.regex.Pattern
     /**
      * Provide the intent corresponding to the give URL.
      * Returns null if the candidate intent would do noop such as when the corresponding app is not available.
+     * Exclusively used to launch app associated with a given URL.
+     * Notably needed to make hooks with Google login work if I recall well.
      *
      * @param tab
      * @param url

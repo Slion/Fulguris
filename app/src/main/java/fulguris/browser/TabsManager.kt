@@ -5,6 +5,8 @@ import fulguris.R
 import acr.browser.lightning.browser.sessions.Session
 import fulguris.constant.INTENT_ORIGIN
 import fulguris.extensions.snackbar
+import fulguris.extensions.topPrivateDomain
+import fulguris.extensions.log
 import fulguris.search.SearchEngineProvider
 import fulguris.settings.NewTabPosition
 import fulguris.settings.preferences.UserPreferences
@@ -18,6 +20,8 @@ import android.os.Bundle
 import android.webkit.URLUtil
 import androidx.lifecycle.LifecycleOwner
 import fulguris.Component
+import fulguris.app
+import fulguris.settings.preferences.DomainPreferences
 import fulguris.utils.QUERY_PLACE_HOLDER
 import fulguris.utils.isBookmarkUrl
 import fulguris.utils.isDownloadsUrl
@@ -45,6 +49,10 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.collections.ArrayList
+import androidx.core.net.toUri
+import fulguris.enums.IncomingUrlAction
+import fulguris.activity.IncognitoActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * A manager singleton that holds all the [WebPageTab] and tracks the current tab. It handles
@@ -994,7 +1002,7 @@ class TabsManager @Inject constructor(
             // Switch to persisted current tab
             tabChanged(if (savedRecentTabsIndices.isNotEmpty()) savedRecentTabsIndices.last() else positionOf(tabs.last()),false, false)
             // Only then can we create tab from external app on startup otherwise it is opened before we switch to the current tab
-            aIntent?.let {onNewIntent(aIntent, iWebBrowser.isIncognito())}
+            aIntent?.let {doOnNewIntent(aIntent, iWebBrowser.isIncognito())}
 
             //logger.log(TAG,"After from coroutine")
         }
@@ -1122,10 +1130,15 @@ class TabsManager @Inject constructor(
     /**
      * Handle a new intent from the the main BrowserActivity.
      * TODO: That implementation is so ugly… try and improve that.
+     * TODO: Move this to the activity maybe?
      * @param aIntent the intent to handle, may be null.
      * @param aIncognitoStartup True if the intent is received at incognito startup, meaning we need to close the initial tab.
      */
-    fun onNewIntent(aIntent: Intent?, aIncognitoStartup: Boolean = false) = doOnceAfterInitialization {
+    fun doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolean = false) = doOnceAfterInitialization {
+        // Log intent details for debugging
+        aIntent?.log("doOnNewIntent")
+
+        var subject: String = app.getString(R.string.unknown)
 
         // Obtain a URL from the intent
         val url = if (aIntent?.action == Intent.ACTION_WEB_SEARCH) {
@@ -1142,21 +1155,32 @@ class TabsManager @Inject constructor(
             if ("text/plain" == aIntent.type || "text/x-uri" == aIntent.type) {
                 // Get shared text
                 val clue = aIntent.getStringExtra(Intent.EXTRA_TEXT)
-                // Put it in the address bar if any
-                clue?.let { iWebBrowser.setAddressBarText(it) }
+                aIntent.getStringExtra(Intent.EXTRA_SUBJECT)?.let { subject = it }
+
+                Timber.d("ACTION_SEND - Processing shared text: $clue")
+
+                // Try to extract URL from the text first (handles cases where URL is embedded in text)
+                val extractedUrl = extractUrlFromText(clue)
+                if (extractedUrl != null) {
+                    Timber.d("ACTION_SEND - Extracted URL: $extractedUrl")
+                    extractedUrl
+                } else {
+                    // Fallback to trying to parse the entire text as URI
+                    subject?.let { iWebBrowser.setAddressBarText(it) }
+                    // Cancel other operation as we won't open a tab here
+                    null
+                }
+            } else {
+                null
             }
-            // Cancel other operation as we won't open a tab here
-            null
         } else {
             // Most likely Intent.ACTION_VIEW
             aIntent?.dataString
         }
 
-        // TODO: Not sure what we use that for exactly
+        // I believe this is used to debounce
         val tabHashCode = aIntent?.extras?.getInt(INTENT_ORIGIN, 0) ?: 0
-
-        Timber.d("onNewIntent - URL: $url, tabHashCode: $tabHashCode, intent: $aIntent")
-
+        Timber.d("onNewIntent - URL: $url, tabHashCode: $tabHashCode")
         if (tabHashCode != 0 && url != null) {
             Timber.d("onNewIntent - Loading URL in existing tab with hashCode: $tabHashCode")
             getTabForHashCode(tabHashCode)?.loadUrl(url)
@@ -1171,8 +1195,64 @@ class TabsManager @Inject constructor(
                     deleteTab(0)
                 }
             }
+            val uri = url.toUri()
 
-            if (URLUtil.isFileUrl(url)) {
+            if (aIntent?.action != Intent.ACTION_WEB_SEARCH && uri.host != null) {
+
+                // Will load defaults if domain does not exists yet
+                val domainPreferences = DomainPreferences(app, uri.host!!)
+                var action = domainPreferences.incomingUrlAction
+                if (iWebBrowser.isIncognito() && action != IncomingUrlAction.BLOCK) {
+                    // In incognito mode we just open that tab unless blocked
+                    action = IncomingUrlAction.NEW_TAB
+                }
+
+                when (action) {
+                    IncomingUrlAction.NEW_TAB -> {
+                        Timber.d("onNewIntent - Creating new tab as per domain settings: $url")
+                        createNewTab()
+                    }
+
+                    IncomingUrlAction.INCOGNITO_TAB -> {
+                        Timber.d("onNewIntent - Opening URL in incognito tab as per domain settings: $url")
+                        // Open in incognito - need to start IncognitoActivity
+                        val incognitoIntent = IncognitoActivity.createIntent(iWebBrowser as Activity, uri)
+                        (iWebBrowser as Activity).startActivity(incognitoIntent)
+                    }
+
+                    IncomingUrlAction.BLOCK -> {
+                        Timber.d("onNewIntent - Blocking URL as per domain settings: $url")
+                        // Display snackbar to inform user
+                        (iWebBrowser as Activity).runOnUiThread {
+                            val host = uri.host ?: "unknown"
+                            val domain = host.topPrivateDomain ?: host
+                            (iWebBrowser as Activity).snackbar((iWebBrowser as Activity).getString(R.string.message_blocked_domain, domain))
+                        }
+                    }
+
+                    IncomingUrlAction.ASK -> {
+                        Timber.d("onNewIntent - Showing dialog for user to choose action: $url")
+                        // Show dialog asking user what to do
+                        (iWebBrowser as Activity).runOnUiThread {
+                            // Use String extension to extract effective TLD+1 (e.g., "example.com" from "www.example.com")
+                            val host = uri.host ?: "unknown"
+                            val domain = host.topPrivateDomain ?: host
+                            MaterialAlertDialogBuilder(iWebBrowser as Activity)
+                                .setTitle((iWebBrowser as Activity).getString(R.string.dialog_title_incoming_url, domain))
+                                .setMessage((iWebBrowser as Activity).getString(R.string.dialog_message_incoming_url, subject, url))
+                                .setPositiveButton(R.string.action_open) { _, _ ->
+                                    createNewTab()
+                                }
+                                .setNeutralButton(R.string.incognito) { _, _ ->
+                                    val incognitoIntent = IncognitoActivity.createIntent(iWebBrowser as Activity, uri)
+                                    (iWebBrowser as Activity).startActivity(incognitoIntent)
+                                }
+                                .setNegativeButton(R.string.action_cancel, null)
+                                .show()
+                        }
+                    }
+                }
+            } else if (URLUtil.isFileUrl(url)) {
                 Timber.d("onNewIntent - Creating new tab for file URL: $url")
                 iWebBrowser.showBlockedLocalFileDialog {
                     createNewTab()
@@ -1182,6 +1262,8 @@ class TabsManager @Inject constructor(
                 createNewTab()
             }
         }
+
+        // TODO: Display something when URL is null?
     }
 
     /**

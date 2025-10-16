@@ -221,6 +221,33 @@
 
     </fulguris.settings.preferences.PreferenceCategoryEx>
 
+    <fulguris.settings.preferences.PreferenceCategoryEx
+        a:title="@string/settings_title_incoming_url_action"
+        a:summary="@string/settings_summary_incoming_url_action">
+
+        <slions.pref.SwitchPreference
+            a:defaultValue="false"
+            a:key="@string/pref_key_incoming_url_action_override"
+            a:title="@string/settings_title_override"
+            a:summaryOn="@string/settings_summary_on_override"
+            a:summaryOff="@string/settings_summary_off_override"
+            a:iconSpaceReserved="true"
+            a:singleLineTitle="false" />
+
+        <slions.pref.EnumListPreference
+            a:key="@string/pref_key_incoming_url_action"
+            a:title="@string/settings_title_incoming_url_action"
+            a:useSimpleSummaryProvider="true"
+            a:defaultValue="NEW_TAB"
+            a:entries="@array/incoming_url_actions"
+            a:icon="@drawable/ic_baseline_open_in_new_24"
+            a:singleLineTitle="false"
+            a:enumClassName="fulguris.enums.IncomingUrlAction"
+            a:dependency="@string/pref_key_incoming_url_action_override"
+            />
+
+    </fulguris.settings.preferences.PreferenceCategoryEx>
+
     <slions.pref.SwitchPreference
         a:key="@string/pref_key_entry_point"
         a:title="@string/settings_title_category"
