@@ -74,7 +74,9 @@ fun WebBrowserActivity.applyWindowInsets(view: View, windowInsets: WindowInsetsC
         // Apply vertical margins for status and navigation bar to our UI layout
         // Thus the drawers are still showing below the status bar
         topMargin = insets.top
-        bottomMargin = insets.bottom //+ gestureInsets.bottom
+        bottomMargin = insets.bottom + (gestureInsets.bottom * configPrefs.systemGestureClearance / 100).toInt()
+
+
         //leftMargin = gestureInsets.left
         //rightMargin = gestureInsets.right
     }

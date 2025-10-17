@@ -94,5 +94,9 @@ abstract class ConfigurationPreferences constructor(
      */
     var useCutoutArea by preferences.booleanPreference(R.string.pref_key_use_cutout_area, getDefaultBoolean(PrefKeys.UseCutoutArea))
 
-}
+    /**
+     * Percentage of screen edges reserved for system gestures clearance (0-100%)
+     */
+    var systemGestureClearance by preferences.floatPreference(R.string.pref_key_system_gesture_clearance, getDefaultFloat(PrefKeys.SystemGestureClearance))
 
+}

@@ -97,7 +97,7 @@
     <slions.pref.SwitchPreference
         a:key="@string/pref_key_show_tool_bar_on_page_top"
         a:title="@string/pref_title_show_tool_bar_on_page_top"
-        a:icon="@drawable/ic_vertical_align"
+        a:icon="@drawable/ic_bottom_app_bar_outline"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
@@ -106,9 +106,27 @@
         a:title="@string/pref_title_use_cutout_area"
         a:summaryOn="@string/pref_summary_on_use_cutout_area"
         a:summaryOff="@string/pref_summary_off_use_cutout_area"
-        a:icon="@drawable/ic_short_text"
+        a:icon="@drawable/ic_mobile_camera_outline"
         a:singleLineTitle="false"
         a:defaultValue="true"
+        />
+
+    <slions.pref.SliderPreference
+        a:key="@string/pref_key_system_gesture_clearance"
+        a:title="@string/pref_title_system_gesture_clearance"
+        a:summary="@string/pref_summary_system_gesture_clearance"
+        a:icon="@drawable/ic_bottom_navigation_outline"
+        a:seekBarIncrement="5"
+        a:showSeekBarValue="true"
+        a:iconSpaceReserved="false"
+        a:updatesContinuously="true"
+        android:valueFrom="0"
+        android:valueTo="100"
+        android:stepSize="5"
+        android:value="0"
+        a:labelBehavior="gone"
+        a:format="%.0f%%"
+        a:singleLineTitle="false"
         />
 
     <slions.pref.SliderPreference

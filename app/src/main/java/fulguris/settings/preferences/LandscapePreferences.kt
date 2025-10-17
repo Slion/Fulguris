@@ -66,6 +66,7 @@ class LandscapePreferences @Inject constructor(
             PrefKeys.ToolbarsBottom to false,
             PrefKeys.DesktopWidth to 200F,
             PrefKeys.UseCutoutArea to true,
+            PrefKeys.SystemGestureClearance to 0F,
             // Omitted the following as they have non static default values specified in the base class
             //PrefKeys.TabBarVertical to !screenSize.isTablet(),
             //PrefKeys.TabBarInDrawer to !screenSize.isTablet(),
@@ -73,4 +74,3 @@ class LandscapePreferences @Inject constructor(
 
     }
 }
-
