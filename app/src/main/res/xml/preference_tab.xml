@@ -21,6 +21,24 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false"
             />
+
+        <slions.pref.SliderPreference
+            a:key="@string/pref_key_on_tab_change_animation_duration"
+            a:dependency="@string/pref_key_on_tab_change_show_animation"
+            a:title="@string/settings_title_animation_duration"
+            a:icon="@drawable/ic_timer"
+            a:seekBarIncrement="25"
+            a:showSeekBarValue="true"
+            a:iconSpaceReserved="false"
+            a:updatesContinuously="true"
+            android:valueFrom="100"
+            android:valueTo="1000"
+            android:stepSize="50"
+            android:value="@integer/pref_default_animation_duration_tab_change"
+            a:labelBehavior="gone"
+            a:format="%.0fms"
+            a:singleLineTitle="false"
+            />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_on_tab_close">

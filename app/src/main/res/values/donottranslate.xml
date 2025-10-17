@@ -50,6 +50,7 @@
 
     <!-- On tab change -->
     <string name="pref_key_on_tab_change_show_animation">pref_key_on_tab_change_show_animation</string>
+    <string name="pref_key_on_tab_change_animation_duration">pref_key_on_tab_change_animation_duration</string>
 
     <!-- On tab back -->
     <string name="pref_key_on_tab_back_show_animation">pref_key_on_tab_back_show_animation</string>

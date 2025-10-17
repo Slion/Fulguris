@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright © 2020 Stéphane Lenclud. All Rights Reserved.
  * Copyright 2015 Anthony Restaino
  */
@@ -309,7 +309,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 Timber.w(ex, "Workflow issue after closing new tab")
             }
         // Have a delay so that user gets to see the tab close animation and the task switcher preview is refreshed
-        }, if (userPreferences.onTabChangeShowAnimation) iTabAnimationDuration + 50 else 50)
+        }, if (userPreferences.onTabChangeShowAnimation) userPreferences.onTabChangeAnimationDuration.toLong() + 50 else 50)
     }
 
 
@@ -2780,7 +2780,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 doOnNewIntent(it, isIncognito())
             // Even with half second extra delay animation would not trigger on HONOR Magic V2 so we settled for 1 second
             // Largish delay is fine here as this is only the edge case where a tab is opened from external app while Fulguris is not running
-            }, if (userPreferences.onTabChangeShowAnimation) iTabAnimationDuration+1000 else 0)
+            }, if (userPreferences.onTabChangeShowAnimation) userPreferences.onTabChangeAnimationDuration.toLong()+1000 else 0)
         }
     }
 
@@ -2984,10 +2984,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
     }
 
-    // Used for all tab change animations: scale up/down and slide in/out
-    // TODO: Move this to settings like we need for onTabBackAnimationDuration
-    private val iTabAnimationDuration: Long = 300
-
     /**
      * That's intended to show the user a new tab was created
      */
@@ -3006,7 +3002,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             iTabAnimator = it.animate()
                     .scaleY(1f)
                     .scaleX(1f)
-                    .setDuration(iTabAnimationDuration)
+                    .setDuration(userPreferences.onTabChangeAnimationDuration.toLong())
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             //Timber.d(Log.getStackTraceString(Exception()))
@@ -3034,7 +3030,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             iTabAnimator = it.animate()
                     .scaleY(0f)
                     .scaleX(0f)
-                    .setDuration(iTabAnimationDuration)
+                    .setDuration(userPreferences.onTabChangeAnimationDuration.toLong())
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             //Timber.d(Log.getStackTraceString(Exception()))
@@ -3073,7 +3069,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             iTabAnimator = it.animate()
                         // Move our tab outside of the screen to the right
                         .translationX(it.width.toFloat())
-                        .setDuration(iTabAnimationDuration)
+                        .setDuration(userPreferences.onTabChangeAnimationDuration.toLong())
                         .setListener(object : AnimatorListenerAdapter() {
                             override fun onAnimationEnd(animation: Animator) {
                                 //Timber.d(Log.getStackTraceString(Exception()))
@@ -3109,7 +3105,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             iTabAnimator = it.animate()
                     // Move our tab outside of the screen to the left
                     .translationX(-it.width.toFloat())
-                    .setDuration(iTabAnimationDuration)
+                    .setDuration(userPreferences.onTabChangeAnimationDuration.toLong())
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             //Timber.d(Log.getStackTraceString(Exception()))
@@ -3143,7 +3139,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             it.animate()
                     // Move our tab outside of the screen to the right
                     .translationX(0f)
-                    .setDuration(iTabAnimationDuration)
+                    .setDuration(userPreferences.onTabChangeAnimationDuration.toLong())
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             // Animation is complete
@@ -3165,7 +3161,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             it.animate()
                 // Move our tab to its default layout position on the screen
                 .translationX(0f)
-                .setDuration(iTabAnimationDuration)
+                .setDuration(userPreferences.onTabChangeAnimationDuration.toLong())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         // Animation is complete

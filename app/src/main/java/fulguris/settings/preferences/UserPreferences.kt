@@ -405,6 +405,7 @@ class UserPreferences @Inject constructor(
     var onTabCloseShowSnackbar by preferences.booleanPreference(R.string.pref_key_on_tab_close_show_snackbar, R.bool.pref_default_on_tab_close_show_snackbar)
     var onTabCloseVibrate by preferences.booleanPreference(R.string.pref_key_on_tab_close_vibrate, R.bool.pref_default_on_tab_close_vibrate)
     var onTabChangeShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_change_show_animation, R.bool.pref_default_on_tab_change_show_animation)
+    var onTabChangeAnimationDuration by preferences.floatResPreference(R.string.pref_key_on_tab_change_animation_duration, R.integer.pref_default_animation_duration_tab_change)
     var onTabBackShowAnimation by preferences.booleanPreference(R.string.pref_key_on_tab_back_show_animation, R.bool.pref_default_on_tab_back_show_animation)
     var onTabBackAnimationDuration by preferences.floatResPreference(R.string.pref_key_on_tab_flip_animation_duration, R.integer.pref_default_animation_duration_flip)
     var onPageStartedShowAnimation by preferences.booleanPreference(R.string.pref_key_on_page_started_show_animation, R.bool.pref_default_on_tab_back_show_animation)
