@@ -28,14 +28,25 @@ fun WebBrowserActivity.applyWindowInsets(view: View, windowInsets: WindowInsetsC
         }
     }
 
+    // On HONOR Magic V2 with gesture navigation in portrait outer screen you get:
+    // System insets: Insets{left=0, top=99, right=0, bottom=0}
     val systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
     Timber.d("System insets: $systemBars")
     //val imeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
     val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
 
+    // On HONOR Magic V2 with gesture navigation in portrait outer screen you get:
+    // Gesture insets: Insets{left=45, top=99, right=45, bottom=120}
     val gestureInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemGestures())
     Timber.d("Gesture insets: $gestureInsets")
 
+    // On HONOR Magic V2 with gesture navigation in portrait outer screen you get:
+    // Mandatory gesture insets: Insets{left=0, top=99, right=0, bottom=120}
+    val mandatoryGestureInsets = windowInsets.getInsets(WindowInsetsCompat.Type.mandatorySystemGestures())
+    Timber.d("Mandatory gesture insets: $mandatoryGestureInsets")
+
+    // On HONOR Magic V2 with gesture navigation in portrait outer screen you get:
+    // Cutout insets: Insets{left=0, top=99, right=0, bottom=0}
     val cutout = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
     Timber.d("Cutout insets: $cutout")
 
@@ -44,8 +55,7 @@ fun WebBrowserActivity.applyWindowInsets(view: View, windowInsets: WindowInsetsC
     val insets = windowInsets.getInsets(if (!configPrefs.useCutoutArea) {
         // Exclude display cutout
         WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
-    }
-    else {
+    } else {
         // Only exclude system bars
         WindowInsetsCompat.Type.systemBars()
     })
