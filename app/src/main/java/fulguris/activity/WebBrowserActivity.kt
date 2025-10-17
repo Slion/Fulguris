@@ -11,6 +11,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.SearchManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -36,6 +37,7 @@ import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEV
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.CookieManager
+import android.webkit.URLUtil
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient.CustomViewCallback
 import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
@@ -86,6 +88,7 @@ import fulguris.browser.cleanup.ExitCleanup
 import fulguris.browser.sessions.SessionsPopupWindow
 import fulguris.browser.tabs.TabsDesktopView
 import fulguris.browser.tabs.TabsDrawerView
+import fulguris.constant.INTENT_ORIGIN
 import fulguris.database.Bookmark
 import fulguris.database.HistoryEntry
 import fulguris.database.SearchSuggestion
@@ -99,6 +102,7 @@ import fulguris.dialog.BrowserDialog
 import fulguris.dialog.DialogItem
 import fulguris.dialog.LightningDialogBuilder
 import fulguris.enums.HeaderInfo
+import fulguris.enums.IncomingUrlAction
 import fulguris.extensions.*
 import fulguris.html.bookmark.BookmarkPageFactory
 import fulguris.html.history.HistoryPageFactory
@@ -113,6 +117,7 @@ import fulguris.settings.fragment.BottomSheetDialogFragment
 import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
 import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import fulguris.settings.fragment.SponsorshipSettingsFragment
+import fulguris.settings.preferences.DomainPreferences
 import fulguris.ssl.SslState
 import fulguris.ssl.createSslDrawableForState
 import fulguris.ssl.showSslDialog
@@ -281,28 +286,30 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     override fun closeActivity(aIntent: Intent) {
         //performExitCleanUp()
 
-        // TODO: All extras name in one place
-        try {
-            val fromSelf = aIntent.getStringExtra("PACKAGE") == packageName
-            val className = aIntent.getStringExtra("ACTIVITY")
-            val fragment = aIntent.getStringExtra(FRAGMENT_CLASS_NAME)
-            // Check if the tab was open by ourselves
-            if (fromSelf && className != null) {
-                // Go back to the activity that opened the closing tab
-                val intent: Intent = Intent(this, Class.forName(className)).apply {
-                    // For settings to open the proper page
-                    putExtra(FRAGMENT_CLASS_NAME, fragment)
+        mainHandler.postDelayed({
+            // TODO: All extras name in one place
+            try {
+                val fromSelf = aIntent.getStringExtra("PACKAGE") == packageName
+                val className = aIntent.getStringExtra("ACTIVITY")
+                val fragment = aIntent.getStringExtra(FRAGMENT_CLASS_NAME)
+                // Check if the tab was open by ourselves
+                if (fromSelf && className != null) {
+                    // Go back to the activity that opened the closing tab
+                    val intent: Intent = Intent(this, Class.forName(className)).apply {
+                        // For settings to open the proper page
+                        putExtra(FRAGMENT_CLASS_NAME, fragment)
+                    }
+                    // You can notably test this code path through Settings > About > Privacy Policy
+                    startActivity(intent)
+                } else {
+                    // Opening tab intent did not belong to us, just send ourselves to the background for user to resume where it was
+                    moveTaskToBack(true)
                 }
-                // You can notably test this code path through Settings > About > Privacy Policy
-                startActivity(intent)
-            } else {
-                // Opening tab intent did not belong to us, just send ourselves to the background for user to resume where it was
-                moveTaskToBack(true)
+            } catch (ex: Throwable) {
+                Timber.w(ex, "Workflow issue after closing new tab")
             }
-        }
-        catch (ex: Throwable) {
-            Timber.w(ex, "Workflow issue after closing new tab");
-        }
+        // Have a delay so that user gets to see the tab close animation and the task switcher preview is refreshed
+        }, if (userPreferences.onTabChangeShowAnimation) iTabAnimationDuration + 50 else 50)
     }
 
 
@@ -1138,6 +1145,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // initialize search background color
         setSearchBarColors(primaryColor)
 
+        // Wierd stuff?
         var intent: Intent? = if (savedInstanceState == null) {
             intent
         } else {
@@ -1157,8 +1165,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             // TODO: Consider not reloading our session if it is already loaded.
             // That could be the case notably when the activity is restarted after theme change in settings
             // However that would require we careful setup our UI anew from an already loaded session
-            tabsManager.setupTabs(intent)
-            setIntent(null)
+            tabsManager.setupTabs()
         }
 
         // Enable swipe to refresh
@@ -2746,7 +2753,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             setTaskDescription()
             updateUrl(aTab.url,isLoading())
         }
-
     }
 
     /**
@@ -2762,6 +2768,20 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // SL: Putting this here to update toolbar background color was a bad idea
         // That somehow freezes the WebView after switching between a few tabs on F(x)tec Pro1 at least (Android 9)
         //initializePreferences()
+
+        // Should only run when the activity is first started with an intent
+        // Only then can we create tab from external app on startup otherwise it is opened before we switch to the current tab
+        intent?.let {
+            // Make sure we don't go recursive by clearing our intent before calling doOnNewIntent
+            intent = null
+            // Without post the intent tab was still opened below the current tab on start-up and the recycler list view was showing two current tabs
+            // It would work fine without delay but adding the delay makes sure user gets a glimpse at the tab animation
+            mainHandler.postDelayed( {
+                doOnNewIntent(it, isIncognito())
+            // Even with half second extra delay animation would not trigger on HONOR Magic V2 so we settled for 1 second
+            // Largish delay is fine here as this is only the edge case where a tab is opened from external app while Fulguris is not running
+            }, if (userPreferences.onTabChangeShowAnimation) iTabAnimationDuration+1000 else 0)
+        }
     }
 
     /**
@@ -2964,6 +2984,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         }
     }
 
+    // Used for all tab change animations: scale up/down and slide in/out
+    // TODO: Move this to settings like we need for onTabBackAnimationDuration
     private val iTabAnimationDuration: Long = 300
 
     /**
@@ -3316,8 +3338,161 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 .subscribeBy(onSuccess = { tabsManager.currentTab?.reload() })
     }
 
-    protected fun handleNewIntent(intent: Intent) {
-        tabsManager.doOnNewIntent(intent)
+    protected fun handleNewIntent(aIntent: Intent) {
+        doOnNewIntent(aIntent)
+    }
+
+    /**
+     * Returns the URL for a search [Intent].
+     * If the query is empty, then a null URL will be returned.
+     */
+    fun extractSearchFromIntent(intent: Intent): String? {
+        val query = intent.getStringExtra(SearchManager.QUERY)
+        val searchUrl = "${searchEngineProvider.provideSearchEngine().queryUrl}$QUERY_PLACE_HOLDER"
+
+        return if (query?.isNotBlank() == true) {
+            smartUrlFilter(query, true, searchUrl).first
+        } else {
+            null
+        }
+    }
+
+    /**
+     * Handle a new intent from the the main BrowserActivity.
+     * TODO: That implementation is so ugly… try and improve that.
+     * @param aIntent the intent to handle, may be null.
+     * @param aIncognitoStartup True if the intent is received at incognito startup, meaning we need to close the initial tab.
+     */
+    fun doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolean = false)  {
+        // Log intent details for debugging
+        aIntent?.log("doOnNewIntent")
+
+        var subject: String = app.getString(R.string.unknown)
+
+        // Obtain a URL from the intent
+        val url = if (aIntent?.action == Intent.ACTION_WEB_SEARCH) {
+            // User performed a web search
+            // Build search URL according to user preferences
+            extractSearchFromIntent(aIntent)
+        }
+        else if (aIntent?.action == Intent.ACTION_SEND) {
+            // TODO: Check if we received a valid URL, if so check the domain settings options
+            // If it is not a URL we could fallback to a search I guess
+            // See: https://github.com/Slion/Fulguris/issues/710
+            // See: https://github.com/Slion/Fulguris/issues/628
+            // User shared text with our app
+            if ("text/plain" == aIntent.type || "text/x-uri" == aIntent.type) {
+                // Get shared text
+                val clue = aIntent.getStringExtra(Intent.EXTRA_TEXT)
+                aIntent.getStringExtra(Intent.EXTRA_SUBJECT)?.let { subject = it }
+
+                Timber.d("ACTION_SEND - Processing shared text: $clue")
+
+                // Try to extract URL from the text first (handles cases where URL is embedded in text)
+                val extractedUrl = extractUrlFromText(clue)
+                if (extractedUrl != null) {
+                    Timber.d("ACTION_SEND - Extracted URL: $extractedUrl")
+                    extractedUrl
+                } else {
+                    // Fallback to trying to parse the entire text as URI
+                    subject?.let { setAddressBarText(it) }
+                    // Cancel other operation as we won't open a tab here
+                    null
+                }
+            } else {
+                null
+            }
+        } else {
+            // Most likely Intent.ACTION_VIEW
+            aIntent?.dataString
+        }
+
+        // I believe this is used to debounce
+        val tabHashCode = aIntent?.extras?.getInt(INTENT_ORIGIN, 0) ?: 0
+        Timber.d("onNewIntent - URL: $url, tabHashCode: $tabHashCode")
+        if (tabHashCode != 0 && url != null) {
+            Timber.d("onNewIntent - Loading URL in existing tab with hashCode: $tabHashCode")
+            tabsManager.getTabForHashCode(tabHashCode)?.loadUrl(url)
+        } else if (url != null) {
+
+            // Define a lambda we can reuse below
+            val createNewTab = {
+                tabsManager.newTab(UrlInitializer(url), true).iIntent = aIntent
+                // Avoid showing two tabs when starting incognito mode
+                if (aIncognitoStartup) {
+                    // Delete the default tab that was created at startup
+                    tabsManager.deleteTab(0)
+                }
+            }
+            val uri = url.toUri()
+
+            if (aIntent?.action != Intent.ACTION_WEB_SEARCH && uri.host != null) {
+
+                // Will load defaults if domain does not exists yet
+                val domainPreferences = DomainPreferences(app, uri.host!!)
+                var action = domainPreferences.incomingUrlAction
+                if (isIncognito() && action != IncomingUrlAction.BLOCK) {
+                    // In incognito mode we just open that tab unless blocked
+                    action = IncomingUrlAction.NEW_TAB
+                }
+
+                when (action) {
+                    IncomingUrlAction.NEW_TAB -> {
+                        Timber.d("onNewIntent - Creating new tab as per domain settings: $url")
+                        createNewTab()
+                    }
+
+                    IncomingUrlAction.INCOGNITO_TAB -> {
+                        Timber.d("onNewIntent - Opening URL in incognito tab as per domain settings: $url")
+                        // Open in incognito - need to start IncognitoActivity
+                        val incognitoIntent = IncognitoActivity.createIntent(this, uri)
+                        startActivity(incognitoIntent)
+                    }
+
+                    IncomingUrlAction.BLOCK -> {
+                        Timber.d("onNewIntent - Blocking URL as per domain settings: $url")
+                        // Display snackbar to inform user
+                        runOnUiThread {
+                            val host = uri.host ?: "unknown"
+                            val domain = host.topPrivateDomain ?: host
+                            snackbar(getString(R.string.message_blocked_domain, domain))
+                        }
+                    }
+
+                    IncomingUrlAction.ASK -> {
+                        Timber.d("onNewIntent - Showing dialog for user to choose action: $url")
+                        // Show dialog asking user what to do
+                        runOnUiThread {
+                            // Use String extension to extract effective TLD+1 (e.g., "example.com" from "www.example.com")
+                            val host = uri.host ?: "unknown"
+                            val domain = host.topPrivateDomain ?: host
+                            MaterialAlertDialogBuilder(this)
+                                .setTitle(getString(R.string.dialog_title_incoming_url, domain))
+                                .setMessage(getString(R.string.dialog_message_incoming_url, subject, url))
+                                .setPositiveButton(R.string.action_open) { _, _ ->
+                                    createNewTab()
+                                }
+                                .setNeutralButton(R.string.incognito) { _, _ ->
+                                    val incognitoIntent = IncognitoActivity.createIntent(this, uri)
+                                    startActivity(incognitoIntent)
+                                }
+                                .setNegativeButton(R.string.action_cancel, null)
+                                .show()
+                        }
+                    }
+                }
+            } else if (URLUtil.isFileUrl(url)) {
+                Timber.d("onNewIntent - Creating new tab for file URL: $url")
+                showBlockedLocalFileDialog {
+                    createNewTab()
+                }
+            } else {
+                Timber.d("onNewIntent - Creating new tab for URL: $url")
+                createNewTab()
+            }
+        }
+
+        // TODO: Display something when URL is null?
     }
 
     protected fun performExitCleanUp() {
