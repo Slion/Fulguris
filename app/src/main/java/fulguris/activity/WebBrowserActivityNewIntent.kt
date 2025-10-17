@@ -2,15 +2,18 @@ package fulguris.activity
 
 import android.app.SearchManager
 import android.content.Intent
+import android.view.Gravity
 import android.webkit.URLUtil
 import androidx.core.net.toUri
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import fulguris.R
 import fulguris.app
 import fulguris.constant.INTENT_ORIGIN
+import fulguris.di.configPrefs
 import fulguris.enums.IncomingUrlAction
 import fulguris.extensions.log
-import fulguris.extensions.snackbar
+import fulguris.extensions.makeSnackbar
 import fulguris.extensions.topPrivateDomain
 import fulguris.settings.preferences.DomainPreferences
 import fulguris.utils.QUERY_PLACE_HOLDER
@@ -132,7 +135,11 @@ fun WebBrowserActivity.doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolea
                     runOnUiThread {
                         val host = uri.host ?: "unknown"
                         val domain = host.topPrivateDomain ?: host
-                        snackbar(getString(R.string.message_blocked_domain, domain))
+                        makeSnackbar(getString(R.string.message_blocked_domain, domain), Snackbar.LENGTH_LONG, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
+                            .setAction(R.string.settings) {
+                                showDomainSettings(domain)
+                            }
+                            .show()
                     }
                 }
 
