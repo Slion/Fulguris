@@ -9,6 +9,7 @@ import fulguris.constant.IOS_MOBILE_USER_AGENT
 import fulguris.constant.LINUX_DESKTOP_USER_AGENT
 import fulguris.constant.MACOS_DESKTOP_USER_AGENT
 import fulguris.constant.WINDOWS_DESKTOP_USER_AGENT_PREFIX
+import timber.log.Timber
 
 /**
  * Return the user agent chosen by the user or the custom user agent entered by the user.
@@ -18,9 +19,23 @@ fun UserPreferences.userAgent(application: Application): String =
         // WebSettings default identifies us as WebView and as WebView Google is preventing us to login to its services.
         // Clearly we don't want that so we just modify default user agent by removing the WebView specific parts.
         // That should make us look like Chrome, which we are really.
+        // We also reduce fingerprinting by removing device-specific details.
         USER_AGENT_DEFAULT -> {
-            var userAgent = Regex(" Build/.+; wv").replace(WebSettings.getDefaultUserAgent(application),"")
-            userAgent = Regex("Version/.+? ").replace(userAgent,"")
+            var userAgent = WebSettings.getDefaultUserAgent(application)
+            //Timber.d("WebSettings.getDefaultUserAgent: $userAgent")
+            // Remove WebView specific parts: Build info and wv marker
+            userAgent = Regex(" Build/.+; wv").replace(userAgent, "")
+            // Remove Version/x.x part
+            userAgent = Regex("Version/.+? ").replace(userAgent, "")
+            // Replace device name with generic "K" while keeping actual Android version
+            // Actually Chrome and DDG hardcode Android 10 - tested on newer and older Android versions
+            //userAgent = Regex("Android ([^;)]+);[^)]*\\)").replace(userAgent, "Android $1; K)")
+            userAgent = Regex("Android ([^;)]+);[^)]*\\)").replace(userAgent, "Android 10; K)")
+            // Zero out Chrome build numbers (keep major version only)
+            // Chrome major version however is not hardcoded and varies depending on the actual WebView version on the device
+            userAgent = Regex("Chrome/(\\d+)\\.\\d+\\.\\d+\\.\\d+").replace(userAgent, "Chrome/$1.0.0.0")
+            // Remove "Mobile " to reduce fingerprinting
+            //userAgent = userAgent.replace(" Mobile ", " ")
             userAgent
         }
         USER_AGENT_WINDOWS_DESKTOP -> WINDOWS_DESKTOP_USER_AGENT_PREFIX + webViewEngineVersionDesktop(application)
