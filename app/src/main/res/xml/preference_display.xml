@@ -211,6 +211,24 @@
             a:singleLineTitle="false"
             />
 
+        <slions.pref.SliderPreference
+            a:key="@string/pref_key_long_press_delay"
+            a:title="@string/pref_title_long_press_delay"
+            a:summary="@string/pref_summary_long_press_delay"
+            a:icon="@drawable/ic_touch_long_outline"
+            a:seekBarIncrement="50"
+            a:showSeekBarValue="true"
+            a:iconSpaceReserved="true"
+            a:updatesContinuously="true"
+            android:valueFrom="100"
+            android:valueTo="2000"
+            android:stepSize="50"
+            android:value="500"
+            a:labelBehavior="gone"
+            a:format="%.0f ms"
+            a:singleLineTitle="false"
+            />
+
         <!-- SL: not sure what that does -->
         <slions.pref.SwitchPreference
             android:defaultValue="true"

@@ -137,4 +137,15 @@ class WebViewEx : WebView {
         return super.dispatchTouchEvent(event)
     }
 
+    /**
+     * Override performLongClick to prevent WebView's built-in long press behavior
+     * (text selection, drag mode). We handle long press ourselves with custom timing
+     * in WebPageTab via CustomGestureListener.
+     */
+    override fun performLongClick(): Boolean {
+        // Return false to indicate we didn't handle the long click
+        // This prevents the WebView from showing its default context menu or drag handles
+        return false
+    }
+
 }

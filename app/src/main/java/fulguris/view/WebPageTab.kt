@@ -38,6 +38,7 @@ import android.net.http.SslCertificate
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import android.view.*
 import android.view.GestureDetector.SimpleOnGestureListener
@@ -142,6 +143,7 @@ class WebPageTab(
 
     private val webBrowser: WebBrowser
     private lateinit var gestureDetector: GestureDetector
+    private lateinit var customGestureListener: CustomGestureListener
     private val paint = Paint()
 
     /**
@@ -438,7 +440,14 @@ class WebPageTab(
 
             setFindListener(this@WebPageTab)
             //id = this@[WebPageTab].id
-            gestureDetector = GestureDetector(activity, CustomGestureListener(this))
+            customGestureListener = CustomGestureListener(this)
+            gestureDetector = GestureDetector(activity, customGestureListener)
+            // Disable GestureDetector's built-in long press so we can use our custom timing
+            gestureDetector.setIsLongpressEnabled(false)
+
+            // Disable the default WebView long click listener to prevent drag mode
+            // We handle long press ourselves with custom timing
+            isLongClickable = false
 
             isFocusableInTouchMode = true
             isFocusable = true
@@ -1057,9 +1066,9 @@ class WebPageTab(
             iNumberOfMatches = numberOfMatches
 
             // Empty search query just dismisses any results previously displayed
+            // Notably useful when doing backspace on the search field until no characters are left
             if (searchQuery.isEmpty()) {
                 // Hide last snackbar to avoid having outdated stats lingering
-                // Notably useful when doing backspace on the search field until no characters are left
                 iSnackbar?.dismiss()
             }
             // Check if our search is reporting any match
@@ -1341,9 +1350,12 @@ class WebPageTab(
                 touchingScreen=true
             }
             // Only show or hide tool bar when the user stop touching the screen otherwise that looks ugly
-            else if (action == MotionEvent.ACTION_UP) {
+            else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
                 val distance = y - location
                 touchingScreen=false
+                // Cancel any pending long press when touch is released
+                customGestureListener.cancelLongPress()
+                gestureDetector.onTouchEvent(arg1)
                 if (view.scrollY < SCROLL_DOWN_THRESHOLD
                         // Touch input won't show tool bar again if no vertical scroll
                         // It can still be accessed using the back button
@@ -1354,6 +1366,7 @@ class WebPageTab(
                     webBrowser.hideActionBar()
                 }
                 location = 0f
+                return false
             }
 
             // Handle tool bar visibility upon fling gesture
@@ -1384,10 +1397,7 @@ class WebPageTab(
     }
 
     /**
-     * The SimpleOnGestureListener used by the [TouchListener]
-     * in order to delegate show/hide events to the action bar when
-     * the user flings the page. Also handles long press events so
-     * that we can capture them accurately.
+     * Handles gesture events for the WebView, including custom long press timing.
      */
     private inner class CustomGestureListener(private val view: View) : SimpleOnGestureListener() {
 
@@ -1400,6 +1410,32 @@ class WebPageTab(
          * zooming, it shouldn't matter how much fingers the user's using.
          */
         private var canTriggerLongPress = true
+
+        /**
+         * Handler for custom long press timing based on user preferences
+         */
+        private val longPressHandler = Handler(Looper.getMainLooper())
+
+        /**
+         * Runnable that triggers the long press action after the configured delay
+         */
+        private val longPressRunnable = Runnable {
+            if (canTriggerLongPress) {
+                val msg = webViewHandler.obtainMessage()
+                if (msg != null) {
+                    msg.target = webViewHandler
+                    webView?.requestFocusNodeHref(msg)
+                }
+            }
+        }
+
+        /**
+         * Cancel any pending long press
+         */
+        fun cancelLongPress() {
+            canTriggerLongPress = false
+            longPressHandler.removeCallbacks(longPressRunnable)
+        }
 
         override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
 
@@ -1420,13 +1456,26 @@ class WebPageTab(
         }
 
         override fun onLongPress(e: MotionEvent) {
-            if (canTriggerLongPress) {
-                val msg = webViewHandler.obtainMessage()
-                if (msg != null) {
-                    msg.target = webViewHandler
-                    webView?.requestFocusNodeHref(msg)
-                }
-            }
+            // Return true to consume the event and prevent WebView's default drag behavior
+            // The actual long press is handled via our custom Handler with configurable timing
+        }
+
+        /**
+         * Called when user starts a new press - cancel any pending long press
+         */
+        override fun onDown(e: MotionEvent): Boolean {
+            // Cancel any pending long press from a previous touch
+            cancelLongPress()
+            return super.onDown(e)
+        }
+
+        /**
+         * Called when user scrolls - cancel long press as they're clearly scrolling, not long pressing
+         */
+        override fun onScroll(e1: MotionEvent?, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
+            // User is scrolling, cancel long press
+            cancelLongPress()
+            return super.onScroll(e1, e2, distanceX, distanceY)
         }
 
         /**
@@ -1434,22 +1483,25 @@ class WebPageTab(
          * case means that he is zooming.
          */
         override fun onDoubleTapEvent(e: MotionEvent): Boolean {
-            canTriggerLongPress = false
+            cancelLongPress()
             return false
         }
 
         /**
          * Is called when something is starting being pressed, always before
-         * onLongPress.
+         * onLongPress. We use this to start our custom long press timer.
          */
         override fun onShowPress(e: MotionEvent) {
             canTriggerLongPress = true
+            // Start custom long press timer with user's preferred delay
+            longPressHandler.postDelayed(longPressRunnable, userPreferences.longPressDelay.toLong())
         }
 
         /**
-         *
+         * Called when user lifts their finger - cancel long press
          */
         override fun onSingleTapUp(e: MotionEvent): Boolean {
+            cancelLongPress()
             webBrowser.onSingleTapUp(this@WebPageTab)
             return false
         }

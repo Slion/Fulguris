@@ -22,6 +22,7 @@ import fulguris.enums.IncomingViewAction
 import fulguris.enums.LayerType
 import fulguris.settings.preferences.delegates.booleanPreference
 import fulguris.settings.preferences.delegates.enumPreference
+import fulguris.settings.preferences.delegates.floatPreference
 import fulguris.settings.preferences.delegates.floatResPreference
 import fulguris.settings.preferences.delegates.intPreference
 import fulguris.settings.preferences.delegates.stringPreference
@@ -249,6 +250,13 @@ class UserPreferences @Inject constructor(
      * The index of the theme used by the application.
      */
     var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.DEFAULT)
+
+    /**
+     * Long press delay in milliseconds for WebView context menu.
+     * Default is 500ms (standard Android long press timeout).
+     * Lower values make long press more responsive but may trigger accidentally.
+     */
+    var longPressDelay by preferences.floatPreference(R.string.pref_key_long_press_delay, 500f)
 
     var useAccent by preferences.enumPreference(R.string.pref_key_accent, AccentTheme.DEFAULT_ACCENT)
 

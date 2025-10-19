@@ -104,6 +104,7 @@
     <string name="pref_key_new_tab_position">pref_key_new_tab_position</string>
     <string name="pref_key_incoming_view_action">pref_key_incoming_view_action</string>
     <string name="pref_key_theme">pref_key_theme</string>
+    <string name="pref_key_long_press_delay">pref_key_long_press_delay</string>
     <string name="pref_key_sponsorship">pref_key_sponsorship</string>
     <string name="pref_key_version_code">pref_key_version_code</string>
     <string name="pref_key_reset_settings">pref_key_reset_settings</string>
