@@ -10,6 +10,7 @@ import fulguris.constant.LINUX_DESKTOP_USER_AGENT
 import fulguris.constant.MACOS_DESKTOP_USER_AGENT
 import fulguris.constant.WINDOWS_DESKTOP_USER_AGENT_PREFIX
 import timber.log.Timber
+import androidx.annotation.RequiresApi
 
 /**
  * Return the user agent chosen by the user or the custom user agent entered by the user.
@@ -85,3 +86,73 @@ val USER_AGENTS_ORDERED = linkedMapOf(
     USER_AGENT_WEB_VIEW to R.string.agent_web_view,
     USER_AGENT_CUSTOM to R.string.agent_custom,
 )
+
+/**
+ * Configure Client Hints to match our reduced User-Agent for privacy.
+ * Client Hints are HTTP headers that provide information about the user's device.
+ * We reduce them to match our privacy-focused User-Agent string.
+ * This uses androidx.webkit.WebSettingsCompat for compatibility.
+ */
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@Suppress("DEPRECATION")
+@android.annotation.SuppressLint("RequiresFeature")
+fun WebSettings.setReducedClientHints() {
+    // Check if User-Agent Metadata (Client Hints) is supported
+    if (!androidx.webkit.WebViewFeature.isFeatureSupported(androidx.webkit.WebViewFeature.USER_AGENT_METADATA)) {
+        Timber.d("Client Hints not supported on this device/WebView version")
+        return
+    }
+
+    try {
+        // Get the current UserAgentMetadata from WebSettingsCompat
+        val metadata = androidx.webkit.WebSettingsCompat.getUserAgentMetadata(this)
+
+        // Extract Chrome major version from the first brand (use getMajorVersion() method)
+        val chromeMajorVersion = metadata.brandVersionList.firstOrNull()?.getMajorVersion() ?: "120"
+
+        // Build reduced brand list matching our User-Agent
+        val reducedBrandList = listOf(
+            androidx.webkit.UserAgentMetadata.BrandVersion.Builder()
+                .setBrand("Chromium")
+                .setMajorVersion(chromeMajorVersion)
+                .setFullVersion("$chromeMajorVersion.0.0.0")
+                .build(),
+            androidx.webkit.UserAgentMetadata.BrandVersion.Builder()
+                .setBrand("Google Chrome")
+                .setMajorVersion(chromeMajorVersion)
+                .setFullVersion("$chromeMajorVersion.0.0.0")
+                .build(),
+            androidx.webkit.UserAgentMetadata.BrandVersion.Builder()
+                .setBrand("Not_A Brand")
+                .setMajorVersion("99")
+                .setFullVersion("99.0.0.0")
+                .build()
+        )
+
+        Timber.d("Client Hints original brand list: ${metadata.brandVersionList}")
+        Timber.d("Client Hints reduced brand list: $reducedBrandList")
+
+        // Create reduced metadata matching our User-Agent: Android 10, model "K"
+        val reducedMetadata = androidx.webkit.UserAgentMetadata.Builder()
+            .setPlatform("Android")
+            // Hardcode Android 10.0.0 to match our reduced User-Agent
+            .setPlatformVersion("10.0.0")
+            // Zero out the full version to match our reduced UA
+            .setFullVersion("$chromeMajorVersion.0.0.0")
+            // Generic model "K" matching our User-Agent
+            .setModel("K")
+            // Don't expose bitness
+            .setBitness(0)
+            // Remove architecture info for privacy
+            .setArchitecture("")
+            .setWow64(false)
+            .setMobile(true)
+            .setBrandVersionList(reducedBrandList)
+            .build()
+
+        androidx.webkit.WebSettingsCompat.setUserAgentMetadata(this, reducedMetadata)
+        Timber.d("Client Hints configured for privacy: Android 10, model K, Chrome $chromeMajorVersion.0.0.0")
+    } catch (e: Exception) {
+        Timber.e(e, "Failed to set Client Hints")
+    }
+}

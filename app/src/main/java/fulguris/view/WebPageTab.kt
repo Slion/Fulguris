@@ -23,6 +23,7 @@ import fulguris.settings.preferences.DomainPreferences
 import fulguris.settings.preferences.UserPreferences
 import fulguris.settings.preferences.userAgent
 import fulguris.settings.preferences.webViewEngineVersionDesktop
+import fulguris.settings.preferences.setReducedClientHints
 import fulguris.ssl.SslState
 import fulguris.utils.*
 import android.annotation.SuppressLint
@@ -795,7 +796,10 @@ class WebPageTab(
      * This method sets the user agent of the current tab based on the user's preference
      */
     private fun setUserAgentForPreference(userPreferences: UserPreferences) {
-        webView?.settings?.userAgentString = userPreferences.userAgent(activity.application)
+        webView?.settings?.let { settings ->
+            settings.userAgentString = userPreferences.userAgent(activity.application)
+            settings.setReducedClientHints()
+        }
     }
 
     /**
