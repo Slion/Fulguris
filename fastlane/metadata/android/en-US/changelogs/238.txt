@@ -1,0 +1,11 @@
+✨ New onboarding experience
+🔏 Reduce default User-Agent fingerprinting
+⚙️ Easy access to default browser from Settings > General > System
+🛠️ Settings option for incoming view action
+🔧 Domain settings option for incoming link action
+⚡ Improve handling of incoming links
+🔗 Fix links from Settings > About
+🔧 Settings option for tab switch animation duration
+🛠️ Configuration option for bottom gestures clearance
+🪲 Fix crash on Settings > About
+🪲 Fix notifications and newer Android versions
