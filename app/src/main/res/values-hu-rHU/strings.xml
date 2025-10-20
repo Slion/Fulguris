@@ -222,7 +222,6 @@
     <string name="untitled">Névtelen</string>
     <string name="freeware">Szabad szoftver</string>
     <string name="android_open_source_project">Android Nyílt-Forráskódú Projekt</string>
-    <string name="hphosts_ad_server_list">hpHosts Ad Server Lista</string>
     <string name="reopening_recent_tab">Régi lapok megnyitása</string>
     <string name="rendering_mode">Megjelenítési mód</string>
     <string name="name_inverted">Negatív</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">Kontraszt Növelése</string>
     <string name="name_normal">Normál</string>
     <string name="title_file_chooser">Fájl választó</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Exportálás</string>
     <string name="generic_import">Importálás</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">Színes mód engedélyezése</string>
     <string name="reading_mode">Olvasó mód</string>
     <string name="loading">Betöltés&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT Licenc</string>
     <string name="search_in_new_tab">Keresés új lapon</string>

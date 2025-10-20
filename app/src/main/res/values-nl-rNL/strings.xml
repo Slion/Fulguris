@@ -222,7 +222,6 @@
     <string name="untitled">Geen titel</string>
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open-bron Project</string>
-    <string name="hphosts_ad_server_list">hpHosts Ad Server Lijst</string>
     <string name="reopening_recent_tab">Oud tabblad heropend</string>
     <string name="rendering_mode">Render modus</string>
     <string name="name_inverted">Omgekeerd</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">Contrast vergroten</string>
     <string name="name_normal">Normaal</string>
     <string name="title_file_chooser">Bestand kiezer</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Kleine Algemene Gebruikerslicentie</string>
     <string name="generic_export">Exportieren</string>
     <string name="generic_import">Importeren</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">Activeer kleurmodus</string>
     <string name="reading_mode">Leesmodus</string>
     <string name="loading">Laden&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML-parser</string>
     <string name="mit_license">MIT licensie</string>
     <string name="search_in_new_tab">Zoeken in nieuw tabblad</string>

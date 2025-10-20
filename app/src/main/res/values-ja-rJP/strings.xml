@@ -222,7 +222,6 @@
     <string name="untitled">タイトルなし</string>
     <string name="freeware">フリーウェア</string>
     <string name="android_open_source_project">Android Open Source Project</string>
-    <string name="hphosts_ad_server_list">hpHosts Ad Server List</string>
     <string name="reopening_recent_tab">閉じたタブを元に戻す</string>
     <string name="rendering_mode">レンダリングモード</string>
     <string name="name_inverted">色の反転</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">高コントラスト</string>
     <string name="name_normal">通常</string>
     <string name="title_file_chooser">ファイルの選択</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">エクスポート</string>
     <string name="generic_import">インポート</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">カラーモードを有効にする</string>
     <string name="reading_mode">リーダーモード</string>
     <string name="loading">読み込み中&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT license</string>
     <string name="search_in_new_tab">新しいタブで検索</string>

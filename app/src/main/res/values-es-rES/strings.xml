@@ -222,7 +222,6 @@
     <string name="untitled">Sin título</string>
     <string name="freeware">Software gratuito</string>
     <string name="android_open_source_project">Proyecto Android de código abierto</string>
-    <string name="hphosts_ad_server_list">Lista de servidores de anuncios hpHosts</string>
     <string name="reopening_recent_tab">Pestaña reabierta</string>
     <string name="rendering_mode">Modo de renderizado</string>
     <string name="name_inverted">Invertido</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">Aumentar contraste</string>
     <string name="name_normal">Normal</string>
     <string name="title_file_chooser">Selector de archivos</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">Licencia Pública General Reducida de GNU</string>
     <string name="generic_export">Exportar</string>
     <string name="generic_import">Importar</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">Modo de color</string>
     <string name="reading_mode">Modo de lectura</string>
     <string name="loading">Cargando&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Analizador HTML Java</string>
     <string name="mit_license">Licencia MIT</string>
     <string name="search_in_new_tab">Buscar en una nueva pestaña</string>

@@ -222,7 +222,6 @@
     <string name="untitled">Chưa đặt tên</string>
     <string name="freeware">Phần mềm miễn phí</string>
     <string name="android_open_source_project">Dự án mã nguồn mở Android</string>
-    <string name="hphosts_ad_server_list">danh sách máy chủ quảng cáo hpHosts</string>
     <string name="reopening_recent_tab">Đã khôi phục tab</string>
     <string name="rendering_mode">Chế độ kết xuất</string>
     <string name="name_inverted">Đảo ngược</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">Tăng độ tương phản</string>
     <string name="name_normal">Bình thường</string>
     <string name="title_file_chooser">Trình chọn tệp</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">Giấy phép Công cộng Chung GNU Hạn chế</string>
     <string name="generic_export">Xuất khẩu</string>
     <string name="generic_import">Nhập khẩu</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">Chế độ màu</string>
     <string name="reading_mode">Chế độ đọc</string>
     <string name="loading">Đang tải&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Trình phân tích cú pháp HTML Java</string>
     <string name="mit_license">Giấy phép MIT</string>
     <string name="search_in_new_tab">Tìm kiếm trong tab mới</string>

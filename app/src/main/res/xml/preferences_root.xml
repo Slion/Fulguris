@@ -47,17 +47,6 @@
         app:title="@string/settings_advanced"
         app:singleLineTitle="false"
         />
-    <!-- Just hide Lightning FAQ for now -->
-    <Preference
-        app:summary="@string/faq_description"
-        app:isPreferenceVisible="false"
-        app:title="@string/faq"
-        app:singleLineTitle="false">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="http://acrdevelopment.org/lightning/faq">
-        </intent>
-    </Preference>
 
     <Preference
         app:fragment="fulguris.settings.fragment.DomainsSettingsFragment"

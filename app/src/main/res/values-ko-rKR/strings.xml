@@ -222,7 +222,6 @@
     <string name="untitled">제목 없음</string>
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
-    <string name="hphosts_ad_server_list">hpHosts 광고 서버 목록</string>
     <string name="reopening_recent_tab">다시 열어놓은 기존의 탭</string>
     <string name="rendering_mode">렌더링 모드</string>
     <string name="name_inverted">반전</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">대비 증가</string>
     <string name="name_normal">보통</string>
     <string name="title_file_chooser">파일 선택기</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Export</string>
     <string name="generic_import">Import</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">색상 모드 사용</string>
     <string name="reading_mode">읽기 모드</string>
     <string name="loading">불러오는 중&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT 라이선스</string>
     <string name="search_in_new_tab">Search in new tab</string>

@@ -222,7 +222,6 @@
     <string name="untitled">Ingen titel</string>
     <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source-projekt</string>
-    <string name="hphosts_ad_server_list">Lista över hpHosts annonsserver</string>
     <string name="reopening_recent_tab">Fliken återställd</string>
     <string name="rendering_mode">Renderingsläge</string>
     <string name="name_inverted">Inverterad</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">Öka kontrast</string>
     <string name="name_normal">Normal</string>
     <string name="title_file_chooser">Filväljare</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Exportera</string>
     <string name="generic_import">Importera</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">Färgläge</string>
     <string name="reading_mode">Läsare läge</string>
     <string name="loading">Laddar &#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">MIT-licens</string>
     <string name="search_in_new_tab">Sök i ny flik</string>

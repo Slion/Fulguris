@@ -222,7 +222,6 @@
     <string name="untitled">Neimenovano</string>
     <string name="freeware">Friver</string>
     <string name="android_open_source_project">Android projekt otvorenog koda</string>
-    <string name="hphosts_ad_server_list">hpHosts popis poslužitelja za oglašavanje</string>
     <string name="reopening_recent_tab">Ponovno je otvorena prethodna kartica</string>
     <string name="rendering_mode">Plotanje</string>
     <string name="name_inverted">Obrnuto</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">Povećani kontrast</string>
     <string name="name_normal">Normalan</string>
     <string name="title_file_chooser">Birač datoteka</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">Gnuova manja opća javna licenca</string>
     <string name="generic_export">Izvoz</string>
     <string name="generic_import">Uvezi</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">Način rada u boji</string>
     <string name="reading_mode">Način čitanja</string>
     <string name="loading">Učitavam&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML parser</string>
     <string name="mit_license">MIT licenca</string>
     <string name="search_in_new_tab">Traži u novoj kartici</string>

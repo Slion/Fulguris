@@ -222,7 +222,6 @@
     <string name="untitled">未命名</string>
     <string name="freeware">自由软件</string>
     <string name="android_open_source_project">Android 开源项目</string>
-    <string name="hphosts_ad_server_list">hpHosts 广告服务器列表</string>
     <string name="reopening_recent_tab">重新打开了之前的标签页</string>
     <string name="rendering_mode">渲染模式</string>
     <string name="name_inverted">反色</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">高对比度</string>
     <string name="name_normal">正常</string>
     <string name="title_file_chooser">文件选择器</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU 较宽松通用公共许可证</string>
     <string name="generic_export">导出</string>
     <string name="generic_import">导入</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">启用色彩模式</string>
     <string name="reading_mode">阅读模式</string>
     <string name="loading">加载中&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup：Java HTML 解析器</string>
     <string name="mit_license">MIT 许可证</string>
     <string name="search_in_new_tab">在新标签中搜索</string>

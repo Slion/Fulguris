@@ -222,7 +222,6 @@
     <string name="untitled">Başlıksız</string>
     <string name="freeware">Ücretsiz Yazılım</string>
     <string name="android_open_source_project">Android Açık Kaynak Projesi</string>
-    <string name="hphosts_ad_server_list">hpHosts Reklam Sunucusu Listesi</string>
     <string name="reopening_recent_tab">Sekme kurtarıldı</string>
     <string name="rendering_mode">Oluşturma modu</string>
     <string name="name_inverted">Ters çevrilmiş</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">Kontrastı artır</string>
     <string name="name_normal">Normal</string>
     <string name="title_file_chooser">Dosya seçici</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Kısıtlı Genel Kamu Lisansı</string>
     <string name="generic_export">Dışa aktar</string>
     <string name="generic_import">İçe aktar</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">Renk modu</string>
     <string name="reading_mode">Okuma modu</string>
     <string name="loading">Yükleniyor…</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Ayrıştırıcı</string>
     <string name="mit_license">MIT Lisansı</string>
     <string name="search_in_new_tab">Yeni sekmede ara</string>

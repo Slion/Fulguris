@@ -222,7 +222,6 @@
     <string name="untitled">Без названия</string>
     <string name="freeware">Бесплатное ПО</string>
     <string name="android_open_source_project">Проект Android с открытым исходным кодом</string>
-    <string name="hphosts_ad_server_list">Список рекламных серверов hpHosts</string>
     <string name="reopening_recent_tab">Вкладка восстановлена</string>
     <string name="rendering_mode">Режим рендеринга</string>
     <string name="name_inverted">Инвертированный</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">Повышенный контраст</string>
     <string name="name_normal">Нормальный</string>
     <string name="title_file_chooser">Выбор файла</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Экспортировать</string>
     <string name="generic_import">Импортировать</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">Цветовой режим</string>
     <string name="reading_mode">Режим чтения</string>
     <string name="loading">Загрузка&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
     <string name="mit_license">Лицензия MIT</string>
     <string name="search_in_new_tab">Искать в новой вкладке</string>

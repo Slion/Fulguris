@@ -19,8 +19,17 @@
                 android:action="android.intent.action.VIEW"
                 android:data="@string/url_contact_us">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
+
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+
             </intent>
 
         </Preference>
@@ -36,8 +45,17 @@
                 android:action="android.intent.action.VIEW"
                 android:data="@string/url_discord">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
+
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+
             </intent>
 
         </Preference>
@@ -53,8 +71,17 @@
                 android:action="android.intent.action.VIEW"
                 android:data="@string/url_app_home_page">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
+
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+
             </intent>
 
         </Preference>
@@ -160,8 +187,16 @@
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/Slion/Fulguris/blob/main/LICENSE-CPAL-1.0">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
+
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
 
             </intent>
 
@@ -178,8 +213,16 @@
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/anthonycr/Lightning-Browser/blob/dev/LICENSE">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
+
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
 
             </intent>
 
@@ -196,9 +239,16 @@
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/hazuki0x0/YuzuBrowser/blob/dev/LICENSE">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
 
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
             </intent>
 
         </Preference>
@@ -214,63 +264,17 @@
                 android:action="android.intent.action.VIEW"
                 android:data="http://www.apache.org/licenses/LICENSE-2.0">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
 
-            </intent>
-
-        </Preference>
-
-        <Preference
-            android:summary="@string/freeware"
-            android:title="@string/hphosts_ad_server_list"
-            app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false">
-
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="http://hosts-file.net/">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
 
-            </intent>
-
-        </Preference>
-
-        <Preference
-            android:summary="@string/license_gnu"
-            android:title="@string/library_netcipher"
-            app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false">
-
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="http://www.gnu.org/licenses/lgpl.html">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
             </intent>
-
-        </Preference>
-
-        <Preference
-            android:summary="@string/license_apache"
-            android:title="@string/snacktory"
-            app:icon="@drawable/ic_library"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false">
-
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="http://www.apache.org/licenses/LICENSE-2.0">
-                <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
-            </intent>
-
         </Preference>
 
         <Preference
@@ -284,10 +288,17 @@
                 android:action="android.intent.action.VIEW"
                 android:data="http://jsoup.org/license">
                 <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
-            </intent>
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
 
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+            </intent>
         </Preference>
 
     </PreferenceCategory>

@@ -222,7 +222,6 @@
     <string name="untitled">無標題</string>
     <string name="freeware">免費軟體</string>
     <string name="android_open_source_project">Android 開放原始碼計畫 (AOSP)</string>
-    <string name="hphosts_ad_server_list">hpHosts 廣告伺服器清單</string>
     <string name="reopening_recent_tab">還原舊分頁</string>
     <string name="rendering_mode">轉換模式</string>
     <string name="name_inverted">反轉</string>
@@ -231,7 +230,6 @@
     <string name="name_increase_contrast">增加對比度</string>
     <string name="name_normal">標準</string>
     <string name="title_file_chooser">檔案選擇器</string>
-    <string name="library_netcipher">NetCipher</string>
     <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Export</string>
     <string name="generic_import">Import</string>
@@ -323,7 +321,6 @@
     <string name="color_mode">啟用色彩模式</string>
     <string name="reading_mode">閱讀模式</string>
     <string name="loading">正在載入&#8230;</string>
-    <string name="snacktory">Snacktory</string>
     <string name="jsoup">jsoup: Java HTML 解析器</string>
     <string name="mit_license">MIT 授權</string>
     <string name="search_in_new_tab">Search in new tab</string>
