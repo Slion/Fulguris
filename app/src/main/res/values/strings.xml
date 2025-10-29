@@ -711,6 +711,12 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
     <string name="intro_title_terms">Let\'s Get Started!</string>
     <string name="intro_title_telemetry">Help Us, Help You!</string>
+    <string name="intro_title_configuration">Configure Your Experience</string>
+    <string name="intro_description_configuration">Customize your browser settings to match your preferences. You can always change these later in the settings menu.</string>
+
+    <string name="pref_title_enable_configuration">Configuration options</string>
+    <string name="pref_summary_on_enable_configuration">Enjoy a personalized browsing experience</string>
+    <string name="pref_summary_off_enable_configuration">Use default browser settings</string>
     <string name="intro_title_ad_blocker">Be Safe!</string>
     <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
     <string name="intro_notification_permission_title">Notification permission</string>

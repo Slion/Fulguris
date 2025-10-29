@@ -95,6 +95,7 @@
     <string name="pref_key_webrtc">pref_key_webrtc</string>
     <string name="pref_key_content_control">pref_key_content_control</string>
     <string name="pref_key_content_control_filters">pref_key_content_control_filters</string>
+    <string name="pref_key_configuration">pref_key_configuration</string>
     <string name="pref_key_delete_all_domains_settings">pref_key_delete_all_domains_settings</string>
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>

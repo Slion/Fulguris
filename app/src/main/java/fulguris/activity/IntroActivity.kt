@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
 import fulguris.fragment.AcceptTermsSlideFragment
 import fulguris.fragment.AdBlockerSlideFragment
+import fulguris.fragment.ConfigurationSlideFragment
 import fulguris.fragment.TelemetrySlideFragment
 import timber.log.Timber
 
@@ -81,6 +82,8 @@ class IntroActivity : AppIntro2() {
         }
         // Add ad blocker slide
         addSlide(AdBlockerSlideFragment.newInstance())
+        // Add configuration slide
+        addSlide(ConfigurationSlideFragment.newInstance())
         // TODO: Could add a variant specific slide here
 
         // Request notification permission on the permissions slide (Android 13+)

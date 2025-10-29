@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This is loaded and displayed by our configuration onboarding intro slide.
+It is not intended to be shown in application menu or settings.
+Should only be shown on first application start-up.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        android:key="configuration_description"
+        android:title="@string/intro_description_configuration"
+        android:selectable="false"
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" />
+
+    <slions.pref.SwitchPreference
+        android:key="@string/pref_key_configuration"
+        android:title="@string/pref_title_enable_configuration"
+        android:summaryOn="@string/pref_summary_on_enable_configuration"
+        android:summaryOff="@string/pref_summary_off_enable_configuration"
+        app:icon="@drawable/ic_settings"
+        android:defaultValue="false"
+        app:iconSpaceReserved="true"
+        app:singleLineTitle="false" />
+
+</PreferenceScreen>
