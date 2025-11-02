@@ -47,6 +47,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
 import fulguris.enums.LogLevel
 import fulguris.app
+import fulguris.extensions.log
 import fulguris.utils.ThemeUtils
 import fulguris.utils.htmlColor
 import fulguris.utils.isSpecialUrl
@@ -615,7 +616,7 @@ class WebPageClient(
             // Regardless of app launch we do not cancel URL loading
             // Doing so would require we deal with empty pages in new tab and such issues
             activity.intentForUrl(view, uri)?.let {
-
+                it.log("intentForUrl")
                 var appLaunched = false
 
                 // That debounce logic allows us launch our app ASAP while cancelling repeat launch

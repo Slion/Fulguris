@@ -12,11 +12,9 @@ import androidx.annotation.StringRes
 import androidx.core.content.FileProvider
 import fulguris.BuildConfig
 import fulguris.R
-import fulguris.constant.INTENT_ORIGIN
 import timber.log.Timber
 import java.io.File
 import java.net.URISyntaxException
-import java.util.regex.Pattern
 
 
     /**
@@ -34,19 +32,39 @@ import java.util.regex.Pattern
         // If it's a special scheme provide it
         intentForScheme(uri)?.let {return it}
 
-        // Otherwise try build a generic intent
-        val intent = try {
-            Intent.parseUri(uri.toString(), Intent.URI_INTENT_SCHEME)
-        } catch (ex: URISyntaxException) {
-            Timber.w(ex, "Bad URI: $uri")
-            return null
+        // For simple http/https URLs, create a clean intent like Chrome does
+        // instead of using Intent.parseUri which might add unwanted extras
+        val intent = if (uri.scheme == "http" || uri.scheme == "https") {
+            Timber.d("intentForUrl: Creating simple VIEW intent for http(s) URL")
+            Intent(Intent.ACTION_VIEW, uri).apply {
+                addCategory(Intent.CATEGORY_BROWSABLE)
+                // Don't add EXTRA_REFERRER or NEW_TASK flags as they might cause GitHub app
+                // to show browser picker instead of handling the OAuth directly
+            }
+        } else {
+            // For other schemes, use parseUri to handle intent:// URLs properly
+            try {
+                Timber.d("intentForUrl: Using parseUri for non-http(s) URL")
+                val parsedIntent = Intent.parseUri(uri.toString(), Intent.URI_INTENT_SCHEME)
+                parsedIntent.addCategory(Intent.CATEGORY_BROWSABLE)
+                parsedIntent.setComponent(null)
+                parsedIntent.selector = null
+                parsedIntent
+            } catch (ex: URISyntaxException) {
+                Timber.w(ex, "Bad URI: $uri")
+                return null
+            }
         }
-        intent.addCategory(Intent.CATEGORY_BROWSABLE)
-        intent.setComponent(null)
-        intent.selector = null
-        if (tab != null) {
-            intent?.putExtra(INTENT_ORIGIN, tab.hashCode())
-        }
+
+        Timber.d("intentForUrl: Intent details:")
+        Timber.d("  Action: ${intent.action}")
+        Timber.d("  Data: ${intent.data}")
+        Timber.d("  Type: ${intent.type}")
+        Timber.d("  Package: ${intent.`package`}")
+        Timber.d("  Component: ${intent.component}")
+        Timber.d("  Categories: ${intent.categories}")
+        Timber.d("  Flags: ${intent.flags}")
+        Timber.d("  Extras: ${intent.extras?.keySet()?.joinToString()}")
 
         // Allows us to not ask to launch an app that's not installed on the device
         // To test it you could for instance visit https://t.me/durov while Telegram app is not installed and launch app option set to ASK
@@ -75,14 +93,22 @@ import java.util.regex.Pattern
      */
     private fun Activity.startActivityForIntent(aIntent: Intent?): Boolean {
         var intent = aIntent
+        Timber.d("startActivityForIntent: intent=${intent?.data}")
+
         if (packageManager.resolveActivity(intent!!, 0) == null) {
+            Timber.d("startActivityForIntent: No activity found to handle intent, trying fallback")
             intent = handleUnresolvableIntent(intent)
         }
+
         try {
-            if (startActivityIfNeeded(intent!!, -1)) {
-                return true
-            }
+            // Use regular startActivity() instead of startActivityIfNeeded() to match Chrome's behavior
+            // startActivityIfNeeded() only starts if the current activity can't handle it,
+            // which might confuse apps like GitHub that check the calling activity
+            Timber.d("startActivityForIntent: Launching activity with startActivity()")
+            startActivity(intent!!)
+            return true
         } catch (exception: Exception) {
+            Timber.e(exception, "startActivityForIntent: Failed to start activity")
             exception.printStackTrace()
             // TODO: 6/5/17 fix case where this could throw a FileUriExposedException due to file:// urls
         }
@@ -123,21 +149,52 @@ import java.util.regex.Pattern
     /**
      * Search for intent handlers that are specific to this URL, such as specialized apps like google maps or youtube.
      * Notably avoid asking user if she wants to launch an app when we don't have one.
+     * Filters out browsers to only detect truly specialized handlers.
      */
     private fun Activity.isSpecializedHandlerAvailable(intent: Intent): Boolean {
+        Timber.d("isSpecializedHandlerAvailable: Checking intent for URL: ${intent.data}")
         val pm = packageManager
         val handlers = pm.queryIntentActivities(
             intent,
             PackageManager.GET_RESOLVED_FILTER
         )
+        Timber.d("isSpecializedHandlerAvailable: Found ${handlers.size} handler(s)")
         if (handlers.isEmpty()) {
+            Timber.d("isSpecializedHandlerAvailable: No handlers found, returning false")
             return false
         }
+
+        // Create a test intent to identify browsers
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"))
+        val browserResolveInfos = pm.queryIntentActivities(browserIntent, 0)
+        Timber.d("isSpecializedHandlerAvailable: Found ${browserResolveInfos.size} apps that handle http://")
+        browserResolveInfos.forEach {
+            Timber.d("isSpecializedHandlerAvailable: Browser candidate: ${it.activityInfo.packageName}/${it.activityInfo.name}")
+        }
+        val browsers = browserResolveInfos
+            .map { it.activityInfo.packageName }
+            .toSet()
+        Timber.d("isSpecializedHandlerAvailable: Identified ${browsers.size} unique browser package(s): $browsers")
+
         for (resolveInfo in handlers) {
+            val packageName = resolveInfo.activityInfo.packageName
+            val activityName = resolveInfo.activityInfo.name
+            Timber.d("isSpecializedHandlerAvailable: Checking handler: $packageName/$activityName")
+
             val filter = resolveInfo.filter
-                ?: // No intent filter matches this intent?
-                // Error on the side of staying in the browser, ignore
+            if (filter == null) {
+                Timber.d("isSpecializedHandlerAvailable: No filter for $packageName, skipping")
                 continue
+            }
+
+            Timber.d("isSpecializedHandlerAvailable: Filter has ${filter.countDataAuthorities()} authorities, ${filter.countDataPaths()} paths")
+
+            // Skip if this is a browser
+            if (packageName in browsers) {
+                Timber.d("isSpecializedHandlerAvailable: $packageName is a browser, skipping")
+                continue
+            }
+
             // NOTICE: Use of && instead of || will cause the browser
             // to launch a new intent for every URL, using OR only
             // launches a new one if there is a non-browser app that
@@ -145,11 +202,14 @@ import java.util.regex.Pattern
             // Previously we checked the number of data paths, but it is unnecessary
             // filter.countDataAuthorities() == 0 || filter.countDataPaths() == 0
             if (filter.countDataAuthorities() == 0) {
-                // Generic handler, skip
+                Timber.d("isSpecializedHandlerAvailable: $packageName has no authorities (generic handler), skipping")
                 continue
             }
+
+            Timber.d("isSpecializedHandlerAvailable: Found specialized handler: $packageName/$activityName, returning true")
             return true
         }
+        Timber.d("isSpecializedHandlerAvailable: No specialized non-browser handlers found, returning false")
         return false
     }
 
