@@ -8,4 +8,4 @@
 🔧 Settings option for tab switch animation duration
 🛠️ Configuration option for bottom gestures clearance
 🪲 Fix crash on Settings > About
-🪲 Fix notifications and newer Android versions
+🪲 Fix notifications on newer Android versions
