@@ -16,15 +16,13 @@ def show_help():
     print("LOCALIZATION (L10N) CHECK TOOL")
     print("=" * 80)
     print("\nSupported Commands:")
-    print("\n  python l10n.py")
-    print("    Check all languages (shows first 20 issues per language)")
-    print("\n  python l10n.py <language_code>")
-    print("    Check specific language and show ALL issues")
+    print("\n  python l10n.py --check [language_code]")
+    print("    Check translations for all languages or a specific language")
     print("    Examples:")
-    print("      python l10n.py ru-rRU     # Check Russian")
-    print("      python l10n.py uk-rUA     # Check Ukrainian")
-    print("      python l10n.py fr-rFR     # Check French")
-    print("      python l10n.py de-rDE     # Check German")
+    print("      python l10n.py --check          # Check all languages (first 20 issues per lang)")
+    print("      python l10n.py --check ru-rRU   # Check Russian (show ALL issues)")
+    print("      python l10n.py --check uk-rUA   # Check Ukrainian")
+    print("      python l10n.py --check fr-rFR   # Check French")
     print("\n  python l10n.py --list")
     print("    List all available language codes")
     print("\n  python l10n.py --help, -h")
@@ -40,9 +38,9 @@ def show_help():
     print("    Example:")
     print("      python l10n.py --get ru-rRU locale_app_name")
     print("\nOutput Information:")
-    print("  • Untranslated strings that match English")
-    print("  • Placeholder mismatches (e.g., missing %s, %1$s)")
-    print("  • Technical terms (Android, iOS, Linux, etc.) are excluded")
+    print("  - Untranslated strings that match English")
+    print("  - Placeholder mismatches (e.g., missing %s, %1$s)")
+    print("  - Technical terms (Android, iOS, Linux, etc.) are excluded")
     print("=" * 80)
     sys.exit(0)
 
@@ -146,19 +144,21 @@ def list_languages():
 show_all_for_lang = None
 summary_only = False
 
+# Show help if no arguments provided
+if len(sys.argv) == 1:
+    show_help()
+
 if len(sys.argv) > 1:
     arg = sys.argv[1]
 
     # Handle help commands
     if arg in ['--help', '-h', 'help']:
         show_help()
-
     # Handle list command
-    if arg == '--list':
+    elif arg == '--list':
         list_languages()
-
     # Handle get command
-    if arg == '--get':
+    elif arg == '--get':
         if len(sys.argv) < 4:
             print("Error: --get requires 2 arguments: <language> <string_id>")
             print("Example: python l10n.py --get ru-rRU locale_app_name")
@@ -166,9 +166,8 @@ if len(sys.argv) > 1:
         language = sys.argv[2]
         string_id = sys.argv[3]
         get_string_value(language, string_id)
-
     # Handle set command
-    if arg == '--set':
+    elif arg == '--set':
         if len(sys.argv) < 5:
             print("Error: --set requires 3 arguments: <language> <string_id> <value>")
             print("Example: python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
@@ -177,13 +176,21 @@ if len(sys.argv) > 1:
         string_id = sys.argv[3]
         new_value = sys.argv[4]
         set_string_value(language, string_id, new_value)
-
+    # Handle check command
+    elif arg == '--check':
+        if len(sys.argv) > 2 and not sys.argv[2].startswith('--'):
+            # Check specific language
+            show_all_for_lang = sys.argv[2]
+            print(f"Will show ALL issues for language: {show_all_for_lang}\n")
+        # else: check all languages (default behavior)
     # Handle summary command
-    if arg == '--summary':
+    elif arg == '--summary':
         summary_only = True
+    # Unknown command
     else:
-        show_all_for_lang = arg
-        print(f"Will show ALL issues for language: {show_all_for_lang}\n")
+        print(f"Error: Unknown command '{arg}'")
+        print("Run 'python l10n.py --help' for usage information")
+        sys.exit(1)
 
 # Parse main English strings.xml
 main_strings_file = Path('app/src/main/res/values/strings.xml')
@@ -315,8 +322,8 @@ print(f"Languages with potential issues: {len(issues_found)}")
 print(f"Languages with clean translations: {len(lang_dirs) - len(issues_found)}")
 print("\nNote: Some 'untranslated' strings may be intentional (proper nouns, etc.)")
 print("\nUsage:")
-print("  python l10n.py                           # Check all languages")
-print("  python l10n.py <lang>                    # Check specific language (e.g., ru-rRU)")
+print("  python l10n.py --check                   # Check all languages")
+print("  python l10n.py --check <lang>            # Check specific language (e.g., ru-rRU)")
 print("  python l10n.py --list                    # List all available languages")
 print("  python l10n.py --help                    # Show detailed help")
 print("="*80)
