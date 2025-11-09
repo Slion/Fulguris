@@ -77,9 +77,9 @@
     <string name="action_yes">Так</string>
     <string name="action_no">Ні</string>
     <string name="action_ask">Запитувати</string>
-    <string name="layer_type_none">None</string>
-    <string name="layer_type_software">Software - WebGL off</string>
-    <string name="layer_type_hardware">Hardware - WebGL on</string>
+    <string name="layer_type_none">Немає</string>
+    <string name="layer_type_software">Програмний - WebGL вимкнено</string>
+    <string name="layer_type_hardware">Апаратний - WebGL увімкнено</string>
     <string name="action_proceed">Продовжити</string>
     <string name="action_abort">Скасувати</string>
     <string name="title_text_size">Розмір тексту</string>
@@ -117,9 +117,9 @@
     <string name="message_import">Закладки імпортовано</string>
     <string name="message_clear_history">Історію очищено</string>
     <string name="message_cookies_cleared">Cookies очищено</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">Не вдалося очистити файли cookie</string>
     <string name="max_tabs">Max tabs reached. Unlock more from Settings &gt; Sponsorship.</string>
-    <string name="message_cookie_copied">Cookie copied to clipboard</string>
+    <string name="message_cookie_copied">Cookie скопійовано до буфера обміну</string>
     <string name="message_text_copied">Текст скопійовано до буфера</string>
     <string name="message_link_copied">Посилання скопійовано до буфера</string>
     <string name="message_blocked_local">Локальний файл було заблоковано для завантаження</string>
@@ -172,8 +172,8 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Дію скасовано.</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error_aborted">Помилка безпеки! Завантаження сторінки перервано.</string>
+    <string name="message_ssl_error">Захищене з\'єднання скомпрометовано:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Ви все ще хочете продовжити?</string>
     <string name="message_certificate_date_invalid">Дата сертифіката недійсна</string>
     <string name="message_certificate_expired">Термін дії сертифікату минув</string>
     <string name="message_certificate_domain_mismatch">Домен в сертифікаті не збігається з доменом сайту</string>
@@ -264,11 +264,11 @@
     <string name="pref_category_on_tab_close">При закритті вкладки</string>
     <string name="pref_category_on_tab_change">При зміні вкладки</string>
     <string name="pref_category_on_tab_back_forward">При поверненні чи переході</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
+    <string name="settings_category_on_follow_link">При переході за посиланням</string>
     <string name="pref_category_scrollbars">Смуги прокрутки</string>
     <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
+    <string name="settings_title_page_history">Історія сторінок</string>
+    <string name="settings_summary_tab">Анімації, зворотний зв\'язок та зовнішній вигляд</string>
     <string name="pref_summary_scrollbars">Налаштування розміру і поведінки смуги прокрутки</string>
     <string name="pref_category_subscriptions">Підписки</string>
     <string name="pref_summary_subscriptions">Застосувати або скасувати підписки</string>
@@ -360,14 +360,14 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Блокування реклами та фільтрування вмісту</string>
     <string name="settings_summary_content_control_toggle">Активувати блокування реклами та фільтрування вмісту</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
-    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
-    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_title_tab_bar_orientation">Орієнтація панелі вкладок</string>
+    <string name="settings_summary_on_tab_bar_orientation">Вертикальна</string>
+    <string name="settings_summary_off_tab_bar_orientation">Горизонтальна</string>
+    <string name="settings_title_tab_bar_placement">Розташування панелі вкладок</string>
+    <string name="settings_summary_on_tab_bar_placement">Висувна панель</string>
+    <string name="settings_summary_off_tab_bar_placement">Завжди на екрані</string>
+    <string name="settings_title_toolbars_position">Розташування панелей інструментів</string>
+    <string name="settings_summary_on_toolbars_position">Внизу</string>
     <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Режим компʼютера</string>
     <string name="settings_summary_desktop_mode_default">Визначає, чи нові вкладки використовують режим компʼютера за замовчуванням</string>
@@ -390,10 +390,10 @@
     <string name="app_restart">Перезапустіть додаток, щоб зміни набрали чинності</string>
     <string name="pref_title_crash_logs">Журнали збоїв</string>
     <string name="pref_summary_crash_logs">Записувати журнали помилок у файлову систему.\nНатисніть для відкриття теки. Будь ласка, надайте відповідний файл під час надсилання помилки.</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_logs">Журнали</string>
+    <string name="pref_summary_on_logs">Увімкнено</string>
+    <string name="pref_summary_off_logs">Вимкнено</string>
+    <string name="pref_title_log_level">Рівень журналування</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Відкрити в новій вкладці</string>
     <string name="dialog_open_background_tab">Відкрити у фоновій вкладці</string>
@@ -443,7 +443,7 @@
     <string name="action_close_all_other_tabs">Закрити всі інші вкладки</string>
     <string name="action_restore_all_tabs">Відновити всі вкладки</string>
     <string name="action_restore_tab">Відновити вкладку</string>
-    <string name="settings_title_layer_type">Layer type</string>
+    <string name="settings_title_layer_type">Тип шару</string>
     <string name="settings_title_domains">Домени</string>
     <string name="settings_summary_domains">Керувати налаштуваннями домену</string>
     <string name="settings_title_resource_domains">Домени ресурсів</string>
@@ -462,23 +462,23 @@
     <string name="settings_summary_delete_domain_settings">Буде повторно створено наступного разу при зіткненні цього домену</string>
     <string name="settings_title_parent">Батьківський</string>
     <string name="settings_summary_default_domain_settings">Налаштування домену за замовчуванням</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
+    <string name="settings_title_ssl_error">Помилка безпеки</string>
+    <string name="settings_summary_ssl_error">Що робити при виявленні помилки SSL</string>
     <string name="settings_title_incoming_url_action">Дія вхідного посилання</string>
     <string name="settings_summary_incoming_url_action">Як обробляти посилання з інших програм</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="checkbox_remember_domain_choice">Запам\'ятати ваш вибір для цього домену</string>
+    <string name="settings_title_third_party_cookies">Сторонні cookies</string>
+    <string name="settings_summary_on_third_party_cookies">Приймати cookies, які використовуються для відстеження вашої активності на веб-сайтах</string>
+    <string name="settings_summary_off_third_party_cookies">Відхиляти cookies, які використовуються для відстеження вашої активності на веб-сайтах</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_summary_on_javascript">Всі функції веб-сайтів та браузера повинні працювати</string>
+    <string name="settings_summary_off_javascript">Деякі функції веб-сайтів та браузера не працюватимуть</string>
     <string name="settings_title_cookies">Cookies</string>
-    <string name="settings_summary_cookies">Current page has no cookies</string>
-    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
-    <string name="settings_title_cookies_delete_all">Delete all</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
-    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <string name="settings_summary_cookies">Поточна сторінка не має cookies</string>
+    <string name="settings_summary_manage_cookies">Керування cookies поточної сторінки</string>
+    <string name="settings_title_cookies_delete_all">Видалити все</string>
+    <string name="settings_summary_cookies_delete_all">Видалити всі cookies для поточної сторінки</string>
+    <string name="question_delete_all_page_cookies">Видалити всі cookies для поточної сторінки?</string>
     <plurals name="settings_summary_cookies">
         <!--
 Zero ain't working for english.
@@ -490,11 +490,11 @@ See: https://stackoverflow.com/a/42884713/3969362
         <item quantity="many">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
         <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
-    <string name="settings_title_task_label">Task label</string>
-    <string name="settings_title_task_icon">Task icon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
-    <string name="settings_title_toolbar_label">Toolbar label</string>
+    <string name="settings_title_task_label">Мітка завдання</string>
+    <string name="settings_title_task_icon">Значок завдання</string>
+    <string name="settings_summary_on_task_icon">Використовувати значок сторінки</string>
+    <string name="settings_summary_off_task_icon">Використовувати значок програми</string>
+    <string name="settings_title_toolbar_label">Мітка панелі інструментів</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Доступний сторонній додаток</string>
     <string name="dialog_message_third_party_app">Ви хочете запустити додаток, пов\'язаний з цим вебсайтом?</string>
@@ -506,8 +506,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Сеанс із такою назвою вже існує!</string>
     <string name="session_cant_delete_current">Неможливо видалити поточний сеанс!</string>
     <string name="session_prompt_confirm_deletion_title">Підтвердити видалення</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="session_prompt_confirm_deletion_message">Ви впевнені, що хочете видалити сеанс \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Ви впевнені, що хочете видалити конфігурацію \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Перемкнуто на \"%s\"</string>
     <string name="busy">Зайнято, спробуйте ще раз пізніше.</string>
     <string name="invalid_character_removed">Неприпустимий символ видалено!</string>
@@ -518,7 +518,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="tts">Прочитати сторінку</string>
     <string name="stop_tts">Зупинити читання</string>
     <!-- Application name which can be translated -->
-    <string name="locale_app_name">Fulguris Web Browser</string>
+    <string name="locale_app_name">Веб-браузер Fulguris</string>
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
@@ -535,7 +535,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Показувати snackbar</string>
     <string name="pref_title_show_animation">Показувати анімацію</string>
     <string name="pref_title_vibrate">Вібрація</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_title_animation_duration">Тривалість анімації</string>
     <string name="pref_title_scrollbar_fading">Загасання</string>
     <string name="pref_summary_on_scrollbar_fading">Смуги прокрутки згасають</string>
     <string name="pref_summary_off_scrollbar_fading">Смуги прокрутки зображуються завжди</string>
@@ -616,12 +616,12 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_assert">Assert</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
-    <string name="label_domain">Domain</string>
-    <string name="label_title">Title</string>
+    <string name="label_short_url">Короткий URL</string>
+    <string name="label_domain">Домен</string>
+    <string name="label_title">Заголовок</string>
     <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_app_name">Назва програми</string>
+    <string name="message_render_process_crashed">Процес рендерингу завершився збоєм. Можливо, вам потрібно перезавантажити деякі веб-сторінки.</string>
     <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Ласкаво просимо до Fulguris</string>
     <string name="intro_welcome_description">Відчуйте швидкий, безпечний і налаштовуваний веб-браузер з розширеними функціями конфіденційності та сучасним дизайном.</string>

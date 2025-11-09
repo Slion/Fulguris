@@ -3,7 +3,7 @@
     <string name="action_reload">Osvježi</string>
     <string name="action_menu">Prikaži više</string>
     <string name="action_new_tab">Nova kartica</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Dupliciraj karticu</string>
     <string name="action_share">Podijeli</string>
     <string name="action_history">Povijest</string>
     <string name="action_bookmarks">Postavke oznaka</string>
