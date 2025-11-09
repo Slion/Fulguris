@@ -518,7 +518,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="tts">Прочитать страницу</string>
     <string name="stop_tts">Остановить чтение</string>
     <!-- Application name which can be translated -->
-    <string name="locale_app_name">Fulguris Web Browser</string>
+    <string name="locale_app_name">Веб-браузер Fulguris</string>
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
