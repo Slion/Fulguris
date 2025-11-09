@@ -39,7 +39,7 @@ files: [
     # The dest allows you to specify a file name in Crowdin
     # e.g. "/messages.json"
     #
-    "dest": "strings.xml",
+    "dest": "/app/src/main/res/values/strings.xml",
 
     #
     # File type
