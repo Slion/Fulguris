@@ -37,6 +37,14 @@ def show_help():
     print("    Get a string value from a specific language")
     print("    Example:")
     print("      python l10n.py --get ru-rRU locale_app_name")
+    print("\n  python l10n.py --add <string_id> <value>")
+    print("    Add a string to all language files (uses English value)")
+    print("    Example:")
+    print("      python l10n.py --add new_feature_name \"New Feature\"")
+    print("\n  python l10n.py --remove <string_id>")
+    print("    Remove a string from all language files")
+    print("    Example:")
+    print("      python l10n.py --remove obsolete_string")
     print("\nOutput Information:")
     print("  - Untranslated strings that match English")
     print("  - Placeholder mismatches (e.g., missing %s, %1$s)")
@@ -113,7 +121,7 @@ def set_string_value(language, string_id, new_value):
     try:
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
-        print(f"✓ Successfully updated {language}:{string_id}")
+        print(f"[OK] Successfully updated {language}:{string_id}")
         print(f"  New value: {new_value}")
     except Exception as e:
         print(f"Error writing file: {e}")
@@ -139,6 +147,142 @@ def list_languages():
 
     print("=" * 80)
     sys.exit(0)
+
+def add_string_to_all(string_id, value):
+    """Add a string to all language files."""
+    res_dir = Path('app/src/main/res')
+
+    # Get all language directories including English
+    all_dirs = [d for d in res_dir.glob('values*')
+                if d.is_dir() and 'night' not in d.name and 'v27' not in d.name and 'v30' not in d.name]
+
+    success_count = 0
+    skip_count = 0
+    error_count = 0
+
+    print("=" * 80)
+    print(f"ADDING STRING: {string_id}")
+    print("=" * 80)
+    print(f"Value: {value}\n")
+
+    for lang_dir in sorted(all_dirs):
+        strings_file = lang_dir / 'strings.xml'
+        lang_name = lang_dir.name
+
+        if not strings_file.exists():
+            print(f"[SKIP] {lang_name}: strings.xml not found")
+            skip_count += 1
+            continue
+
+        try:
+            # Read the file
+            with open(strings_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+
+            # Check if string already exists
+            escaped_id = re.escape(string_id)
+            if re.search(f'<string name="{escaped_id}">', content):
+                print(f"[SKIP] {lang_name}: string already exists")
+                skip_count += 1
+                continue
+
+            # Find the position to insert (before </resources>)
+            if '</resources>' not in content:
+                print(f"[ERROR] {lang_name}: Invalid XML structure")
+                error_count += 1
+                continue
+
+            # Insert the new string before </resources>
+            new_string_line = f'    <string name="{string_id}">{value}</string>\n'
+            content = content.replace('</resources>', f'{new_string_line}</resources>')
+
+            # Write back
+            with open(strings_file, 'w', encoding='utf-8') as f:
+                f.write(content)
+
+            print(f"[OK] Added to {lang_name}")
+            success_count += 1
+
+        except Exception as e:
+            print(f"[ERROR] {lang_name}: {e}")
+            error_count += 1
+
+    print("\n" + "=" * 80)
+    print("SUMMARY")
+    print("=" * 80)
+    print(f"Successfully added: {success_count}")
+    print(f"Skipped: {skip_count}")
+    print(f"Errors: {error_count}")
+    print("=" * 80)
+    sys.exit(0 if error_count == 0 else 1)
+
+def remove_string_from_all(string_id):
+    """Remove a string from all language files."""
+    res_dir = Path('app/src/main/res')
+
+    # Get all language directories including English
+    all_dirs = [d for d in res_dir.glob('values*')
+                if d.is_dir() and 'night' not in d.name and 'v27' not in d.name and 'v30' not in d.name]
+
+    success_count = 0
+    skip_count = 0
+    error_count = 0
+
+    print("=" * 80)
+    print(f"REMOVING STRING: {string_id}")
+    print("=" * 80)
+    print()
+
+    for lang_dir in sorted(all_dirs):
+        strings_file = lang_dir / 'strings.xml'
+        lang_name = lang_dir.name
+
+        if not strings_file.exists():
+            print(f"[SKIP] {lang_name}: strings.xml not found")
+            skip_count += 1
+            continue
+
+        try:
+            # Read the file
+            with open(strings_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+
+            # Check if string exists
+            escaped_id = re.escape(string_id)
+            pattern = f'\\s*<string name="{escaped_id}">.*?</string>\\n?'
+
+            if not re.search(pattern, content):
+                print(f"[SKIP] {lang_name}: string not found")
+                skip_count += 1
+                continue
+
+            # Remove the string
+            new_content = re.sub(pattern, '', content)
+
+            # Ensure </resources> is on its own line
+            new_content = re.sub(r'([^\n])(</resources>)', r'\1\n\2', new_content)
+            # Remove any duplicate newlines before </resources>
+            new_content = re.sub(r'\n{3,}(</resources>)', r'\n\1', new_content)
+
+            # Write back
+            with open(strings_file, 'w', encoding='utf-8') as f:
+                f.write(new_content)
+
+            print(f"[OK] Removed from {lang_name}")
+            success_count += 1
+
+        except Exception as e:
+            print(f"[ERROR] {lang_name}: {e}")
+            error_count += 1
+
+    print("\n" + "=" * 80)
+    print("SUMMARY")
+    print("=" * 80)
+    print(f"Successfully removed: {success_count}")
+    print(f"Skipped: {skip_count}")
+    print(f"Errors: {error_count}")
+    print("=" * 80)
+    sys.exit(0 if error_count == 0 else 1)
 
 # Check for command-line argument
 show_all_for_lang = None
@@ -176,6 +320,23 @@ if len(sys.argv) > 1:
         string_id = sys.argv[3]
         new_value = sys.argv[4]
         set_string_value(language, string_id, new_value)
+    # Handle add command
+    elif arg == '--add':
+        if len(sys.argv) < 4:
+            print("Error: --add requires 2 arguments: <string_id> <value>")
+            print("Example: python l10n.py --add new_feature_name \"New Feature\"")
+            sys.exit(1)
+        string_id = sys.argv[2]
+        value = sys.argv[3]
+        add_string_to_all(string_id, value)
+    # Handle remove command
+    elif arg == '--remove':
+        if len(sys.argv) < 3:
+            print("Error: --remove requires 1 argument: <string_id>")
+            print("Example: python l10n.py --remove obsolete_string")
+            sys.exit(1)
+        string_id = sys.argv[2]
+        remove_string_from_all(string_id)
     # Handle check command
     elif arg == '--check':
         if len(sys.argv) > 2 and not sys.argv[2].startswith('--'):
