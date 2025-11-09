@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">Aangedreven door Baidu</string>
     <string name="powered_by_naver">Aangedreven door Naver</string>
     <string name="search_suggestions_off">Geen zoeksuggesties</string>
-    <string name="http_proxy">HTTP Proxy</string>
     <string-array name="proxy_choices_array">
         <item>Geen</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Handmatig</item>
     </string-array>
-    <string name="manual_proxy">Manuele proxy</string>
-    <string name="host">Host:</string>
     <string name="port">Poort:</string>
-    <string name="use_tor_prompt">Je lijkt Orbit te hebben geïnstalleerd. Wilt u Tor gebruiken?</string>
-    <string name="use_i2p_prompt">Je lijkt I2P te hebben geïnstalleerd. Wilt u I2P gebruiken?</string>
-    <string name="install_orbot">Gelieve Orbot te installeren om proxies te doen met Tor.</string>
-    <string name="i2p_not_running">I2P draait niet.</string>
-    <string name="i2p_tunnels_not_ready">I2P tunnels zijn niet klaar.</string>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
     <string name="clear_cookies_exit">Wis cookies bij beëindigen</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">Standaard</string>
     <string name="folder_custom">Aangepast</string>
     <string name="untitled">Geen titel</string>
-    <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open-bron Project</string>
     <string name="reopening_recent_tab">Oud tabblad heropend</string>
     <string name="rendering_mode">Render modus</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Contrast vergroten</string>
     <string name="name_normal">Normaal</string>
     <string name="title_file_chooser">Bestand kiezer</string>
-    <string name="license_gnu">GNU Kleine Algemene Gebruikerslicentie</string>
     <string name="generic_export">Exportieren</string>
     <string name="generic_import">Importeren</string>
     <string name="generic_reset">Herstel</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Verberg werkbalk bij naar beneden scrollen</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Toon werkbalk bij omhoog scrollen</string>
     <string name="pref_title_show_tool_bar_on_page_top">Toon de werkbalk bovenaan de pagina</string>
-    <string name="pref_title_cutout_mode">Uitschakelmodus</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Statistieken</string>
     <string name="pref_title_pull_to_refresh">Trekken om te verversen</string>
-    <string name="pref_summary_recommended_anonymous">Aanbevolen, verzamelde gegevens zijn anoniem</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Snelkoppeling aan startscherm toegevoegd</string>
     <string name="shortcut_message_failed_to_add">Sorry, je launcher ondersteunt geen snelkoppelingen.</string>
     <string name="action_delete_all_bookmarks">Verwijder alle bladwijzers</string>
-    <string name="message_open_download_fail">Dit bestand bestaat niet meer</string>
-    <string name="faq">Veelgestelde vragen (FAQ)</string>
-    <string name="faq_description">Veelgestelde vragen</string>
     <!-- debug strings -->
     <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -546,7 +531,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Toon snoepbar</string>
     <string name="pref_title_show_animation">Animatie tonen</string>
     <string name="pref_title_vibrate">Trillen</string>
-    <string name="pref_title_duration">Duur</string>
     <string name="settings_title_animation_duration">Animatieduur</string>
     <string name="pref_title_scrollbar_fading">Vervagend</string>
     <string name="pref_summary_on_scrollbar_fading">Scrollbalken vervagen</string>
@@ -626,10 +610,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Waarschuwen</string>
     <string name="log_level_error">Fout</string>
     <string name="log_level_assert">Bevestigen</string>
-    <string name="cutout_mode_default">Standaard</string>
-    <string name="cutout_mode_short_edges">Korte randen</string>
-    <string name="cutout_mode_never">Nooit</string>
-    <string name="cutout_mode_always">Altijd</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Verkorte URL</string>

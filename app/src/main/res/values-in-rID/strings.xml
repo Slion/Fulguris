@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">dengan Baidu</string>
     <string name="powered_by_naver">dengan Naver</string>
     <string name="search_suggestions_off">Tidak ada anjuran pencarian</string>
-    <string name="http_proxy">HTTP proxy</string>
     <string-array name="proxy_choices_array">
         <item>Tidak ada</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Manual</item>
     </string-array>
-    <string name="manual_proxy">Manual proxy</string>
-    <string name="host">Host:</string>
     <string name="port">Port:</string>
-    <string name="use_tor_prompt">Kelihatannya Anda sudah mempunyai Orbot. Maukah Anda menggunakan Tor?</string>
-    <string name="use_i2p_prompt">Kelihatannya Anda sudah mempunyai I2P. Maukah Anda menggunakannya?</string>
-    <string name="install_orbot">Silahkan install Orbot untuk menggunakan Tor sebagai proxy.</string>
-    <string name="i2p_not_running">Aplikasi I2P tidak berjalan.</string>
-    <string name="i2p_tunnels_not_ready">I2P tunnel belum siap.</string>
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
     <string name="clear_cookies_exit">Hapus cookies pada saat keluar</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">Bawaan</string>
     <string name="folder_custom">Buat khas sendiri</string>
     <string name="untitled">Tanpa judul</string>
-    <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="reopening_recent_tab">Tan terpulihkan</string>
     <string name="rendering_mode">Warna tampilan</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Tingkatkan kontras</string>
     <string name="name_normal">Normal</string>
     <string name="title_file_chooser">Pemilih file</string>
-    <string name="license_gnu">Lisensi Publik Umum GNU Lesser</string>
     <string name="generic_export">Ekspor</string>
     <string name="generic_import">Impor</string>
     <string name="generic_reset">Atur ulang</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Samarkan tool bar saat turun halaman</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Tampilkan tool bar saat naik halaman</string>
     <string name="pref_title_show_tool_bar_on_page_top">Tampilkan tool bar pada awal halaman</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analitik</string>
     <string name="pref_title_pull_to_refresh">Tarik untuk memperbarui</string>
-    <string name="pref_summary_recommended_anonymous">Dianjurkan, data yang dikumpulkan tidak akan mengandung nama Anda</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Pintasan telah ditambahkan ke layar utama</string>
     <string name="shortcut_message_failed_to_add">Maaf, launcher Anda tidak bisa membuat pintasan ke layar utama.</string>
     <string name="action_delete_all_bookmarks">Hapus semua penanda</string>
-    <string name="message_open_download_fail">File ini sudah tidak lagi ada</string>
-    <string name="faq">Tanya-jawab</string>
-    <string name="faq_description">Hal yang sering ditanyakan</string>
     <!-- debug strings -->
     <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -544,7 +529,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Tampilkan snackbar</string>
     <string name="pref_title_show_animation">Tampilkan animasi</string>
     <string name="pref_title_vibrate">Bergetar</string>
-    <string name="pref_title_duration">Tempo</string>
     <string name="settings_title_animation_duration">Animation duration</string>
     <string name="pref_title_scrollbar_fading">Fading</string>
     <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
@@ -624,10 +608,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>

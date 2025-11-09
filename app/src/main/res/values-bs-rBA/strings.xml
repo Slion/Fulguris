@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">Pokreće Baidu</string>
     <string name="powered_by_naver">Pokreće Naver</string>
     <string name="search_suggestions_off">Nema prijedloga za pretraživanje</string>
-    <string name="http_proxy">HTTP proxy</string>
     <string-array name="proxy_choices_array">
         <item>Ništa</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Ručno</item>
     </string-array>
-    <string name="manual_proxy">Ručna podešavanja proxyja</string>
-    <string name="host">Domaćin:</string>
     <string name="port">Luka:</string>
-    <string name="use_tor_prompt">Izgleda da imate instaliran Orbot. Želite koristiti Tor?</string>
-    <string name="use_i2p_prompt">Izgleda da imate instaliran I2P. Želite li koristiti I2P?</string>
-    <string name="install_orbot">Instalirajte Orbot da koristite Tor.</string>
-    <string name="i2p_not_running">I2P ne radi.</string>
-    <string name="i2p_tunnels_not_ready">I2P tuneli još nisu spremni.</string>
     <string name="yes">Da</string>
     <string name="no">Ne</string>
     <string name="clear_cookies_exit">Očistite kolačiće po zatvaranju</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">Zadano</string>
     <string name="folder_custom">Posebno</string>
     <string name="untitled">Neimenovano</string>
-    <string name="freeware">Friver</string>
     <string name="android_open_source_project">Android projekat otvorenog koda</string>
     <string name="reopening_recent_tab">Prethodna kartica je ponovo otvorena</string>
     <string name="rendering_mode">Plotanje</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Povećani kontrast</string>
     <string name="name_normal">Normalno</string>
     <string name="title_file_chooser">Birač datoteka</string>
-    <string name="license_gnu">Gnu manja opšta javna licenca</string>
     <string name="generic_export">Izvoz</string>
     <string name="generic_import">Uvezi</string>
     <string name="generic_reset">Resetuj</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Sakrij traku sa alatkama kada se pomičete prema dolje</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Prikaži traku sa alatkama prilikom pomeranja prema gore</string>
     <string name="pref_title_show_tool_bar_on_page_top">Prikaži traku sa alatkama na vrhu stranice</string>
-    <string name="pref_title_cutout_mode">Režim izreza</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analitika</string>
     <string name="pref_title_pull_to_refresh">Prevucite prstom da osvježite</string>
-    <string name="pref_summary_recommended_anonymous">Preporučeno, prikupljeni podaci su anonimni</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Prečica je dodana na početni ekran</string>
     <string name="shortcut_message_failed_to_add">Nažalost, vaš pokretač ne podržava prečice.</string>
     <string name="action_delete_all_bookmarks">Obriši sve oznake</string>
-    <string name="message_open_download_fail">Ovaj fajl više ne postoji</string>
-    <string name="faq">Često Postavljena Pitanja</string>
-    <string name="faq_description">Često Postavljena Pitanja</string>
     <!-- debug strings -->
     <string name="debug_title">Otklanjanje grešaka</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -548,7 +533,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Pokažite poslastičarnicu</string>
     <string name="pref_title_show_animation">Pokažite animaciju</string>
     <string name="pref_title_vibrate">Vibriranje</string>
-    <string name="pref_title_duration">Trajanje</string>
     <string name="settings_title_animation_duration">Trajanje animacije</string>
     <string name="pref_title_scrollbar_fading">Blijedi</string>
     <string name="pref_summary_on_scrollbar_fading">Trake za pomicanje nestaju</string>
@@ -628,10 +612,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Upozorenje</string>
     <string name="log_level_error">Greška</string>
     <string name="log_level_assert">Tvrdnja</string>
-    <string name="cutout_mode_default">Uobičajeno</string>
-    <string name="cutout_mode_short_edges">Kratke ivice</string>
-    <string name="cutout_mode_never">Nikad</string>
-    <string name="cutout_mode_always">Uvijek</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Kratki URL</string>

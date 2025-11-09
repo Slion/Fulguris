@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">A Baidu erejével</string>
     <string name="powered_by_naver">A Naver erejével</string>
     <string name="search_suggestions_off">Nincs keresési javaslat</string>
-    <string name="http_proxy">HTTP Proxy</string>
     <string-array name="proxy_choices_array">
         <item>Egyik sem</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Manuális</item>
     </string-array>
-    <string name="manual_proxy">Manuális proxy</string>
-    <string name="host">Hoszt:</string>
     <string name="port">Port:</string>
-    <string name="use_tor_prompt">Úgy tűnik, hogy önnek telepítve van az Orbot. Szeretné használni a Tor-t?</string>
-    <string name="use_i2p_prompt">Úgy tűnik, hogy önnek telepítve van az I2P. Szeretné használni az I2P-t?</string>
-    <string name="install_orbot">Kérjük telepítse az Orbot-ot annak érdekében, hogy működjön a proxy a Tor-ral.</string>
-    <string name="i2p_not_running">I2P, nem fut.</string>
-    <string name="i2p_tunnels_not_ready">I2P alagútak, nem állnak készen még.</string>
     <string name="yes">Igen</string>
     <string name="no">Nem</string>
     <string name="clear_cookies_exit">Cookie-ek törlése kilépéskor</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">Alapértelmezett</string>
     <string name="folder_custom">Egyéni</string>
     <string name="untitled">Névtelen</string>
-    <string name="freeware">Szabad szoftver</string>
     <string name="android_open_source_project">Android Nyílt-Forráskódú Projekt</string>
     <string name="reopening_recent_tab">Régi lapok megnyitása</string>
     <string name="rendering_mode">Megjelenítési mód</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Kontraszt Növelése</string>
     <string name="name_normal">Normál</string>
     <string name="title_file_chooser">Fájl választó</string>
-    <string name="license_gnu">GNU Lesser Nyilvános Licensz</string>
     <string name="generic_export">Exportálás</string>
     <string name="generic_import">Importálás</string>
     <string name="generic_reset">Visszaállítás</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Eszköztár elrejtése lefelé lapozáskor</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Eszköztár megjelenítése felfelé lapozáskor</string>
     <string name="pref_title_show_tool_bar_on_page_top">Eszköztár az oldal tetején</string>
-    <string name="pref_title_cutout_mode">Kivágás mód</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Elemzések</string>
     <string name="pref_title_pull_to_refresh">Húzza le a frissítéshez</string>
-    <string name="pref_summary_recommended_anonymous">Ajánlott, a gyűjtött adatok névtelenek</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Parancsikon hozzáadva a kezdőképernyőhöz</string>
     <string name="shortcut_message_failed_to_add">Sajnos az alkalmazásindítód nem támogatja a gyorsindító parancsikonokat.</string>
     <string name="action_delete_all_bookmarks">Összes könyvjelző törlése</string>
-    <string name="message_open_download_fail">A fájl már nem létezik</string>
-    <string name="faq">GyIK</string>
-    <string name="faq_description">Gyakran Ismételt Kérdések</string>
     <!-- debug strings -->
     <string name="debug_title">Hibakeresés</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -546,7 +531,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Show snackbar</string>
     <string name="pref_title_show_animation">Animáció mutatása</string>
     <string name="pref_title_vibrate">Rezgés</string>
-    <string name="pref_title_duration">Időtartam</string>
     <string name="settings_title_animation_duration">Animáció időtartam</string>
     <string name="pref_title_scrollbar_fading">Áttűnő</string>
     <string name="pref_summary_on_scrollbar_fading">Görgetők áttűnnek</string>
@@ -626,10 +610,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>

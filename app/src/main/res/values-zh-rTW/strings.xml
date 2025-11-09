@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">由百度提供技術支援</string>
     <string name="powered_by_naver">由 Naver 提供技術支援</string>
     <string name="search_suggestions_off">關閉搜尋建議</string>
-    <string name="http_proxy">HTTP 代理伺服器</string>
     <string-array name="proxy_choices_array">
         <item>無</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>手動設定</item>
     </string-array>
-    <string name="manual_proxy">手動設定代理</string>
-    <string name="host">主機位址：</string>
     <string name="port">連線埠：</string>
-    <string name="use_tor_prompt">看起來您已經安裝了 Orbot，您想使用 Tor 嗎？</string>
-    <string name="use_i2p_prompt">看起來您已經安裝 I2P。您想使用 I2P 嗎？</string>
-    <string name="install_orbot">請安裝 Orbot 以便透過 Tor 使用 Proxy。</string>
-    <string name="i2p_not_running">I2P 非執行中</string>
-    <string name="i2p_tunnels_not_ready">尚未準備好 I2P Tunnel。</string>
     <string name="yes">確定</string>
     <string name="no">取消</string>
     <string name="clear_cookies_exit">結束時清除 Cookies</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">預設</string>
     <string name="folder_custom">自訂</string>
     <string name="untitled">無標題</string>
-    <string name="freeware">免費軟體</string>
     <string name="android_open_source_project">Android 開放原始碼計畫 (AOSP)</string>
     <string name="reopening_recent_tab">還原舊分頁</string>
     <string name="rendering_mode">轉換模式</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">增加對比度</string>
     <string name="name_normal">標準</string>
     <string name="title_file_chooser">檔案選擇器</string>
-    <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Export</string>
     <string name="generic_import">Import</string>
     <string name="generic_reset">Reset</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analytics</string>
     <string name="pref_title_pull_to_refresh">Pull to refresh</string>
-    <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">捷徑已新增至主畫面</string>
     <string name="shortcut_message_failed_to_add">很抱歉，您的啟動器不支援捷徑功能。</string>
     <string name="action_delete_all_bookmarks">刪除所有書籤</string>
-    <string name="message_open_download_fail">此檔案不存在</string>
-    <string name="faq">FAQ</string>
-    <string name="faq_description">常見問題集</string>
     <!-- debug strings -->
     <string name="debug_title">偵錯設定</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -544,7 +529,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Show snackbar</string>
     <string name="pref_title_show_animation">Show animation</string>
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="pref_title_duration">Duration</string>
     <string name="settings_title_animation_duration">Animation duration</string>
     <string name="pref_title_scrollbar_fading">Fading</string>
     <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
@@ -624,10 +608,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>

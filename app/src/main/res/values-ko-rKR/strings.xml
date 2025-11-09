@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">Baidu 제공</string>
     <string name="powered_by_naver">네이버 제공</string>
     <string name="search_suggestions_off">검색 제안 없음</string>
-    <string name="http_proxy">HTTP 프록시</string>
     <string-array name="proxy_choices_array">
         <item>None</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Manual</item>
     </string-array>
-    <string name="manual_proxy">수동 프록시</string>
-    <string name="host">호스트:</string>
     <string name="port">포트:</string>
-    <string name="use_tor_prompt">Orbot이 설치되어 있습니다. Tor를 사용할까요?</string>
-    <string name="use_i2p_prompt">I2P가 설치되어 있습니다. I2P를 사용할까요?</string>
-    <string name="install_orbot">Tor를 사용하려면 Orbot을 설치하세요.</string>
-    <string name="i2p_not_running">I2P가 실행 중이지 않습니다.</string>
-    <string name="i2p_tunnels_not_ready">I2P 터널이 준비되지 않았습니다.</string>
     <string name="yes">예</string>
     <string name="no">아니오</string>
     <string name="clear_cookies_exit">종료할 때 쿠키 지우기</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">기본값</string>
     <string name="folder_custom">임의의 위치</string>
     <string name="untitled">제목 없음</string>
-    <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="reopening_recent_tab">다시 열어놓은 기존의 탭</string>
     <string name="rendering_mode">렌더링 모드</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">대비 증가</string>
     <string name="name_normal">보통</string>
     <string name="title_file_chooser">파일 선택기</string>
-    <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Export</string>
     <string name="generic_import">Import</string>
     <string name="generic_reset">Reset</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analytics</string>
     <string name="pref_title_pull_to_refresh">Pull to refresh</string>
-    <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">홈 화면에 바로가기를 추가했습니다</string>
     <string name="shortcut_message_failed_to_add">죄송합니다, 홈 화면이 바로가기를 지원하지 않습니다.</string>
     <string name="action_delete_all_bookmarks">모든 즐겨찾기 삭제</string>
-    <string name="message_open_download_fail">파일이 더 이상 존재하지 않습니다</string>
-    <string name="faq">FAQ</string>
-    <string name="faq_description">자주 묻는 질문</string>
     <!-- debug strings -->
     <string name="debug_title">디버그 설정</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -544,7 +529,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Show snackbar</string>
     <string name="pref_title_show_animation">Show animation</string>
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="pref_title_duration">Duration</string>
     <string name="settings_title_animation_duration">Animation duration</string>
     <string name="pref_title_scrollbar_fading">Fading</string>
     <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
@@ -624,10 +608,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>

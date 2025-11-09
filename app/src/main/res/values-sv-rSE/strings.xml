@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">Drivs av Baidu</string>
     <string name="powered_by_naver">Drivs av Naver</string>
     <string name="search_suggestions_off">Inga sökförslag</string>
-    <string name="http_proxy">HTTP-proxy</string>
     <string-array name="proxy_choices_array">
         <item>Inga</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Manuell</item>
     </string-array>
-    <string name="manual_proxy">Manuell proxy</string>
-    <string name="host">Värd:</string>
     <string name="port">Port:</string>
-    <string name="use_tor_prompt">Det ser ut som du har Orbot installerat. Vill du använda Tor?</string>
-    <string name="use_i2p_prompt">Det verkar som om du har I2P installerad. Vill du använda I2P?</string>
-    <string name="install_orbot">Installera Orbot för att kunna proxy med Tor.</string>
-    <string name="i2p_not_running">I2P körs inte.</string>
-    <string name="i2p_tunnels_not_ready">I2P-tunnlar är ännu inte klara.</string>
     <string name="yes">Ja</string>
     <string name="no">Nej</string>
     <string name="clear_cookies_exit">Rensa cookies vid avslut</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">Standard</string>
     <string name="folder_custom">Anpassad</string>
     <string name="untitled">Ingen titel</string>
-    <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source-projekt</string>
     <string name="reopening_recent_tab">Fliken återställd</string>
     <string name="rendering_mode">Renderingsläge</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Öka kontrast</string>
     <string name="name_normal">Normal</string>
     <string name="title_file_chooser">Filväljare</string>
-    <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Exportera</string>
     <string name="generic_import">Importera</string>
     <string name="generic_reset">Återställ</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Dölj verktygsfältet vid rullning nedåt</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Visa verktygsfältet när du rullar upp</string>
     <string name="pref_title_show_tool_bar_on_page_top">Visa verktygsfältet överst på sidan</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analytiker</string>
     <string name="pref_title_pull_to_refresh">Dra för att uppdatera</string>
-    <string name="pref_summary_recommended_anonymous">Rekommenderad, insamlad data är anonym</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Genväg tillagd till hemskärm</string>
     <string name="shortcut_message_failed_to_add">Tyvärr, din launcher stöder inte genvägar.</string>
     <string name="action_delete_all_bookmarks">Radera alla bokmärken</string>
-    <string name="message_open_download_fail">Den här filen finns inte längre</string>
-    <string name="faq">Vanliga frågor</string>
-    <string name="faq_description">Vanliga frågor (FAQ)</string>
     <!-- debug strings -->
     <string name="debug_title">Felsöka</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -546,7 +531,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Visa snackbar</string>
     <string name="pref_title_show_animation">Visa animation</string>
     <string name="pref_title_vibrate">Vibrera</string>
-    <string name="pref_title_duration">Varaktighet</string>
     <string name="settings_title_animation_duration">Animation duration</string>
     <string name="pref_title_scrollbar_fading">Fading</string>
     <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
@@ -626,10 +610,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>

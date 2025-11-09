@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">Alimentado por Baidu</string>
     <string name="powered_by_naver">Alimentado por Naver</string>
     <string name="search_suggestions_off">Sem sugestões de pesquisa</string>
-    <string name="http_proxy">Proxy HTTP</string>
     <string-array name="proxy_choices_array">
         <item>Não</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Manual</item>
     </string-array>
-    <string name="manual_proxy">Proxy manual</string>
-    <string name="host">Servidor:</string>
     <string name="port">Porta:</string>
-    <string name="use_tor_prompt">Parece que você tem o Orbot instalado. Gostaria de utilizar a rede Tor?</string>
-    <string name="use_i2p_prompt">Parece que você tem o I2P instalado. Gostaria de utilizar a rede I2P?</string>
-    <string name="install_orbot">Por favor instale o Orbot para poder utilizar a rede Tor.</string>
-    <string name="i2p_not_running">I2P não está em execução.</string>
-    <string name="i2p_tunnels_not_ready">Os canais I2P ainda não estão prontos.</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="clear_cookies_exit">Limpar cookies ao sair</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">Padrão</string>
     <string name="folder_custom">Personalizado</string>
     <string name="untitled">Sem título</string>
-    <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Projeto Android Open Source</string>
     <string name="reopening_recent_tab">Reabrir última aba</string>
     <string name="rendering_mode">Modo de renderização</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Aumentar contraste</string>
     <string name="name_normal">Normal</string>
     <string name="title_file_chooser">Seletor de arquivos</string>
-    <string name="license_gnu">Licença Pública Geral Menor GNU</string>
     <string name="generic_export">Exportar</string>
     <string name="generic_import">Importar</string>
     <string name="generic_reset">Redefinir</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Ocultar barra de ferramentas ao deslizar para baixo</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Mostrar barra de ferramentas ao deslizar para cima</string>
     <string name="pref_title_show_tool_bar_on_page_top">Mostrar barra de ferramentas na parte superior da página</string>
-    <string name="pref_title_cutout_mode">Modo de recorte</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analytics</string>
     <string name="pref_title_pull_to_refresh">Puxar para atualizar</string>
-    <string name="pref_summary_recommended_anonymous">Recomendado, os dados coletados são anônimos</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Atalho adicionado à tela inicial</string>
     <string name="shortcut_message_failed_to_add">Desculpe, seu launcher não suporta atalhos.</string>
     <string name="action_delete_all_bookmarks">Excluir todos os favoritos</string>
-    <string name="message_open_download_fail">Este arquivo não existe mais</string>
-    <string name="faq">FAQ</string>
-    <string name="faq_description">Perguntas frequentes</string>
     <!-- debug strings -->
     <string name="debug_title">Depuração</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -546,7 +531,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Mostrar snackbar</string>
     <string name="pref_title_show_animation">Mostrar animação</string>
     <string name="pref_title_vibrate">Vibrar</string>
-    <string name="pref_title_duration">Duração</string>
     <string name="settings_title_animation_duration">Duração da animação</string>
     <string name="pref_title_scrollbar_fading">Esmaecimento</string>
     <string name="pref_summary_on_scrollbar_fading">Barras de rolagem esmaecem</string>
@@ -626,10 +610,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Padrão</string>
-    <string name="cutout_mode_short_edges">Bordas curtas</string>
-    <string name="cutout_mode_never">Nunca</string>
-    <string name="cutout_mode_always">Sempre</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">URL Curto</string>

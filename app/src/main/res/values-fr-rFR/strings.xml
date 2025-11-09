@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">Propulsé par Baidu</string>
     <string name="powered_by_naver">Propulsé par Naver</string>
     <string name="search_suggestions_off">Pas de suggestions de recherche</string>
-    <string name="http_proxy">Proxy HTTP</string>
     <string-array name="proxy_choices_array">
         <item>Aucun</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Manuel</item>
     </string-array>
-    <string name="manual_proxy">Proxy manuel</string>
-    <string name="host">Host :</string>
     <string name="port">Port :</string>
-    <string name="use_tor_prompt">Il semblerait qu’Orbot soit installé. Voulez-vous utiliser Tor ?</string>
-    <string name="use_i2p_prompt">Il semble que vous avez installé I2P. Voulez-vous utiliser I2P ?</string>
-    <string name="install_orbot">Veuillez installer Orbot afin d\'utiliser le proxy avec Tor.</string>
-    <string name="i2p_not_running">I2P n\'est pas en cours d\'exécution.</string>
-    <string name="i2p_tunnels_not_ready">Les tunnels I2P ne sont pas encore prêts.</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="clear_cookies_exit">Effacer les cookies en quittant</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">Par défaut</string>
     <string name="folder_custom">Personnalisé</string>
     <string name="untitled">Sans titre</string>
-    <string name="freeware">Gratuiciel</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="reopening_recent_tab">Onglet récupéré</string>
     <string name="rendering_mode">Mode de rendu</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Augmenter le contraste</string>
     <string name="name_normal">Normal</string>
     <string name="title_file_chooser">Explorateur de fichiers</string>
-    <string name="license_gnu">Licence GNU Lesser General Public</string>
     <string name="generic_export">Exporter</string>
     <string name="generic_import">Importer</string>
     <string name="generic_reset">Réinitialiser</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Masquer la barre d\'outils lors du défilement vers le bas</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Afficher la barre d\'outils lors du défilement vers le haut</string>
     <string name="pref_title_show_tool_bar_on_page_top">Afficher la barre d\'outils en haut de la page</string>
-    <string name="pref_title_cutout_mode">Mode d\'encoche</string>
     <string name="pref_title_use_cutout_area">Utiliser les zones d\'encoche</string>
     <string name="pref_summary_on_use_cutout_area">Permettre au contenu de s\'étendre dans les régions d\'encoche pour un affichage plein écran</string>
     <string name="pref_summary_off_use_cutout_area">Empêcher le contenu de chevaucher les régions d\'encoche</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Rapports de plantage</string>
     <string name="pref_title_analytics">Analytiques</string>
     <string name="pref_title_pull_to_refresh">Tirer pour actualiser</string>
-    <string name="pref_summary_recommended_anonymous">Recommandé, les données recueillies sont anonymes</string>
     <string name="pref_summary_on_crash_reports">Aidez à améliorer l\'application en envoyant des rapports de plantage</string>
     <string name="pref_summary_off_crash_reports">Les rapports de plantage ne seront pas envoyés</string>
     <string name="pref_summary_on_analytics">Aidez à améliorer l\'application en envoyant des données d\'utilisation</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Ajouté à l\'écran d\'accueil</string>
     <string name="shortcut_message_failed_to_add">Désolé, votre lanceur d\'applications ne supporte pas les raccourcis.</string>
     <string name="action_delete_all_bookmarks">Supprimer tous les favoris</string>
-    <string name="message_open_download_fail">Ce fichier n’existe plus</string>
-    <string name="faq">FAQ</string>
-    <string name="faq_description">Questions fréquemment posées</string>
     <!-- debug strings -->
     <string name="debug_title">Paramètres de déboggage</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -546,7 +531,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Montrer une snackbar (barre d\'info)</string>
     <string name="pref_title_show_animation">Afficher l\'animation</string>
     <string name="pref_title_vibrate">Vibrer</string>
-    <string name="pref_title_duration">Durée</string>
     <string name="settings_title_animation_duration">Durée des animations</string>
     <string name="pref_title_scrollbar_fading">Fondu</string>
     <string name="pref_summary_on_scrollbar_fading">Les barres de défilement s\'estompent</string>
@@ -626,10 +610,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Avertissements</string>
     <string name="log_level_error">Erreurs</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Par défaut</string>
-    <string name="cutout_mode_short_edges">Bords courts</string>
-    <string name="cutout_mode_never">Jamais</string>
-    <string name="cutout_mode_always">Toujours</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">URL court</string>

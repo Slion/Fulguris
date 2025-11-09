@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">Powered by Baidu</string>
     <string name="powered_by_naver">Powered by Naver</string>
     <string name="search_suggestions_off">No search suggestions</string>
-    <string name="http_proxy">HTTP proxy</string>
     <string-array name="proxy_choices_array">
         <item>None</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Manual</item>
     </string-array>
-    <string name="manual_proxy">Manual proxy</string>
-    <string name="host">Host:</string>
     <string name="port">Port:</string>
-    <string name="use_tor_prompt">It looks like you have Orbot installed. Do you want to use Tor?</string>
-    <string name="use_i2p_prompt">It looks like you have I2P installed. Do you want to use I2P?</string>
-    <string name="install_orbot">Please install Orbot in order to proxy with Tor.</string>
-    <string name="i2p_not_running">I2P is not running.</string>
-    <string name="i2p_tunnels_not_ready">I2P tunnels are not ready yet.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="clear_cookies_exit">Clear cookies on exit</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">Default</string>
     <string name="folder_custom">Custom</string>
     <string name="untitled">Untitled</string>
-    <string name="freeware">Freeware</string>
     <string name="android_open_source_project">Android Open Source Project</string>
     <string name="reopening_recent_tab">Tab recovered</string>
     <string name="rendering_mode">Rendering mode</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Increase contrast</string>
     <string name="name_normal">Normal</string>
     <string name="title_file_chooser">File chooser</string>
-    <string name="license_gnu">GNU Lesser General Public Licence</string>
     <string name="generic_export">Export</string>
     <string name="generic_import">Import</string>
     <string name="generic_reset">Reset</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Hide tool bar when scrolling down</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Show tool bar when scrolling up</string>
     <string name="pref_title_show_tool_bar_on_page_top">Show tool bar at the top of the page</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analytics</string>
     <string name="pref_title_pull_to_refresh">Pull to refresh</string>
-    <string name="pref_summary_recommended_anonymous">Recommended, collected data is anonymous</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
-    <string name="message_open_download_fail">This file doesn\'t exist anymore</string>
-    <string name="faq">FAQ</string>
-    <string name="faq_description">Frequently asked questions</string>
     <!-- debug strings -->
     <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -546,7 +531,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Show snackbar</string>
     <string name="pref_title_show_animation">Show animation</string>
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="pref_title_duration">Duration</string>
     <string name="settings_title_animation_duration">Animation duration</string>
     <string name="pref_title_scrollbar_fading">Fading</string>
     <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
@@ -626,10 +610,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>

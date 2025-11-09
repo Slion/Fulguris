@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">Baidu tarafından desteklenmektedir</string>
     <string name="powered_by_naver">Naver tarafından desteklenmektedir</string>
     <string name="search_suggestions_off">Arama önerisi yok</string>
-    <string name="http_proxy">HTTP proxy</string>
     <string-array name="proxy_choices_array">
         <item>Hiçbiri</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Manuel</item>
     </string-array>
-    <string name="manual_proxy">Manuel proxy</string>
-    <string name="host">Sunucu:</string>
     <string name="port">Port:</string>
-    <string name="use_tor_prompt">Görünüşe göre Orbot yüklü. Tor kullanmak ister misiniz?</string>
-    <string name="use_i2p_prompt">Görünüşe göre I2P yüklü. I2P kullanmak ister misiniz?</string>
-    <string name="install_orbot">Tor ile proxy kullanmak için lütfen Orbot\'u yükleyin.</string>
-    <string name="i2p_not_running">I2P çalışmıyor.</string>
-    <string name="i2p_tunnels_not_ready">I2P tünelleri henüz hazır değil.</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
     <string name="clear_cookies_exit">Çıkışta çerezleri temizle</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">Varsayılan</string>
     <string name="folder_custom">Özel</string>
     <string name="untitled">Başlıksız</string>
-    <string name="freeware">Ücretsiz Yazılım</string>
     <string name="android_open_source_project">Android Açık Kaynak Projesi</string>
     <string name="reopening_recent_tab">Sekme kurtarıldı</string>
     <string name="rendering_mode">Oluşturma modu</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Kontrastı artır</string>
     <string name="name_normal">Normal</string>
     <string name="title_file_chooser">Dosya seçici</string>
-    <string name="license_gnu">GNU Kısıtlı Genel Kamu Lisansı</string>
     <string name="generic_export">Dışa aktar</string>
     <string name="generic_import">İçe aktar</string>
     <string name="generic_reset">Sıfırla</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Aşağı kaydırırken araç çubuğunu gizle</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Yukarı kaydırırken araç çubuğunu göster</string>
     <string name="pref_title_show_tool_bar_on_page_top">Sayfanın en üstünde araç çubuğunu göster</string>
-    <string name="pref_title_cutout_mode">Ekran çentiği modu</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analitik</string>
     <string name="pref_title_pull_to_refresh">Yenilemek için çek</string>
-    <string name="pref_summary_recommended_anonymous">Önerilen, toplanan veriler anonimdir</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Kısayol ana ekrana eklendi</string>
     <string name="shortcut_message_failed_to_add">Üzgünüz, başlatıcınız kısayolları desteklemiyor.</string>
     <string name="action_delete_all_bookmarks">Tüm yer imlerini sil</string>
-    <string name="message_open_download_fail">Bu dosya artık mevcut değil</string>
-    <string name="faq">SSS</string>
-    <string name="faq_description">Sıkça sorulan sorular</string>
     <!-- debug strings -->
     <string name="debug_title">Hata Ayıklama</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -546,7 +531,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Bilgi çubuğunu göster</string>
     <string name="pref_title_show_animation">Animasyon göster</string>
     <string name="pref_title_vibrate">Titreşim</string>
-    <string name="pref_title_duration">Süre</string>
     <string name="settings_title_animation_duration">Animasyon süresi</string>
     <string name="pref_title_scrollbar_fading">Kaybolma</string>
     <string name="pref_summary_on_scrollbar_fading">Kaydırma çubukları kaybolur</string>
@@ -626,10 +610,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Uyarı</string>
     <string name="log_level_error">Hata</string>
     <string name="log_level_assert">Doğrulama</string>
-    <string name="cutout_mode_default">Varsayılan</string>
-    <string name="cutout_mode_short_edges">Kısa kenarlar</string>
-    <string name="cutout_mode_never">Asla</string>
-    <string name="cutout_mode_always">Her zaman</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Kısa URL</string>

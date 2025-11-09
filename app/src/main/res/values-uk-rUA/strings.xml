@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">На основі Baidu</string>
     <string name="powered_by_naver">На основі Naver</string>
     <string name="search_suggestions_off">Нема пропозицій пошуку</string>
-    <string name="http_proxy">HTTP проксі</string>
     <string-array name="proxy_choices_array">
         <item>Без проксі</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>Вручну</item>
     </string-array>
-    <string name="manual_proxy">Ручний проксі</string>
-    <string name="host">Хост:</string>
     <string name="port">Порт:</string>
-    <string name="use_tor_prompt">Схоже, що у вас встановлено Orbot. Ви хочете використовувати Tor?</string>
-    <string name="use_i2p_prompt">Схоже, що у вас встановлено I2P. Ви хочете використовувати I2P?</string>
-    <string name="install_orbot">Будь ласка, встановіть Orbot, щоб увімкнути Tor.</string>
-    <string name="i2p_not_running">I2P не запущений.</string>
-    <string name="i2p_tunnels_not_ready">I2P тунелі ще не готові.</string>
     <string name="yes">Так</string>
     <string name="no">Ні</string>
     <string name="clear_cookies_exit">Очистити куки під час виходу</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">За замовчуванням</string>
     <string name="folder_custom">Власний</string>
     <string name="untitled">Без назви</string>
-    <string name="freeware">Безкоштовне ПЗ</string>
     <string name="android_open_source_project">Проєкт із відкритим кодом для Android</string>
     <string name="reopening_recent_tab">Вкладку відновлено</string>
     <string name="rendering_mode">Режим відображення</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">Збільшений контраст</string>
     <string name="name_normal">Звичайний</string>
     <string name="title_file_chooser">Вибір файлу</string>
-    <string name="license_gnu">GNU Lesser General Public License</string>
     <string name="generic_export">Експортувати</string>
     <string name="generic_import">Імпортувати</string>
     <string name="generic_reset">Скинути</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">Ховати панель інструментів при прокрученні вниз</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Показувати панель інструментів при прокручуванні вгору</string>
     <string name="pref_title_show_tool_bar_on_page_top">Показувати панель інструментів зверху сторінки</string>
-    <string name="pref_title_cutout_mode">Cutout mode</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Аналітика</string>
     <string name="pref_title_pull_to_refresh">Потягніть, щоб оновити</string>
-    <string name="pref_summary_recommended_anonymous">Рекомендовано, зібрані дані є анонімними</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">Ярлик додано на головний екран</string>
     <string name="shortcut_message_failed_to_add">На жаль, ваш лаунчер не підтримує ярлики.</string>
     <string name="action_delete_all_bookmarks">Видалити всі закладки</string>
-    <string name="message_open_download_fail">Цей файл більше не існує</string>
-    <string name="faq">ЧаП</string>
-    <string name="faq_description">Часто задавані питання</string>
     <!-- debug strings -->
     <string name="debug_title">Налагодження</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -550,7 +535,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Показувати snackbar</string>
     <string name="pref_title_show_animation">Показувати анімацію</string>
     <string name="pref_title_vibrate">Вібрація</string>
-    <string name="pref_title_duration">Тривалість</string>
     <string name="settings_title_animation_duration">Animation duration</string>
     <string name="pref_title_scrollbar_fading">Загасання</string>
     <string name="pref_summary_on_scrollbar_fading">Смуги прокрутки згасають</string>
@@ -630,10 +614,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <string name="cutout_mode_default">Default</string>
-    <string name="cutout_mode_short_edges">Short edges</string>
-    <string name="cutout_mode_never">Never</string>
-    <string name="cutout_mode_always">Always</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>

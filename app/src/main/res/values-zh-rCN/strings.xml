@@ -198,21 +198,13 @@
     <string name="powered_by_baidu">由百度提供</string>
     <string name="powered_by_naver">由 Naver 提供</string>
     <string name="search_suggestions_off">不显示搜索建议</string>
-    <string name="http_proxy">HTTP 代理</string>
     <string-array name="proxy_choices_array">
         <item>无</item>
         <item>Orbot</item>
         <item>I2P</item>
         <item>手动</item>
     </string-array>
-    <string name="manual_proxy">手动设置代理</string>
-    <string name="host">主机：</string>
     <string name="port">端口：</string>
-    <string name="use_tor_prompt">看起来你安装了 Orbot。要使用 Tor 代理吗？</string>
-    <string name="use_i2p_prompt">看起来你安装了 I2P。要使用 I2P 代理吗？</string>
-    <string name="install_orbot">要使用 Tor 代理，请安装 Orbot</string>
-    <string name="i2p_not_running">I2P 未在运行</string>
-    <string name="i2p_tunnels_not_ready">I2P 隧道尚未就绪</string>
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="clear_cookies_exit">退出时清除 cookie</string>
@@ -220,7 +212,6 @@
     <string name="folder_default">默认</string>
     <string name="folder_custom">自定义</string>
     <string name="untitled">未命名</string>
-    <string name="freeware">自由软件</string>
     <string name="android_open_source_project">Android 开源项目</string>
     <string name="reopening_recent_tab">重新打开了之前的标签页</string>
     <string name="rendering_mode">渲染模式</string>
@@ -230,7 +221,6 @@
     <string name="name_increase_contrast">高对比度</string>
     <string name="name_normal">正常</string>
     <string name="title_file_chooser">文件选择器</string>
-    <string name="license_gnu">GNU 较宽松通用公共许可证</string>
     <string name="generic_export">导出</string>
     <string name="generic_import">导入</string>
     <string name="generic_reset">重置</string>
@@ -286,7 +276,6 @@
     <string name="pref_title_hide_tool_bar">下翻时隐藏工具栏</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">上翻时显示工具栏</string>
     <string name="pref_title_show_tool_bar_on_page_top">在页面顶部显示工具栏</string>
-    <string name="pref_title_cutout_mode">刘海模式</string>
     <string name="pref_title_use_cutout_area">Use notch areas</string>
     <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
     <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
@@ -305,7 +294,6 @@
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">统计数据</string>
     <string name="pref_title_pull_to_refresh">下拉刷新</string>
-    <string name="pref_summary_recommended_anonymous">推荐，收集的数据是匿名的</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
@@ -396,9 +384,6 @@
     <string name="message_added_to_homescreen">快捷方式已添加到桌面</string>
     <string name="shortcut_message_failed_to_add">抱歉，你的桌面应用不支持快捷方式</string>
     <string name="action_delete_all_bookmarks">删除所有书签</string>
-    <string name="message_open_download_fail">文件不存在</string>
-    <string name="faq">常见问题</string>
-    <string name="faq_description">常见问题</string>
     <!-- debug strings -->
     <string name="debug_title">调试设置</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -544,7 +529,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">显示撤销条</string>
     <string name="pref_title_show_animation">显示动画</string>
     <string name="pref_title_vibrate">振动</string>
-    <string name="pref_title_duration">时长</string>
     <string name="settings_title_animation_duration">动画持续时间</string>
     <string name="pref_title_scrollbar_fading">淡出</string>
     <string name="pref_summary_on_scrollbar_fading">滚动条正在淡出</string>
@@ -624,10 +608,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">警告</string>
     <string name="log_level_error">错误</string>
     <string name="log_level_assert">断言 (Assert)</string>
-    <string name="cutout_mode_default">默认</string>
-    <string name="cutout_mode_short_edges">短边</string>
-    <string name="cutout_mode_never">永不</string>
-    <string name="cutout_mode_always">总是</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">短网址</string>
