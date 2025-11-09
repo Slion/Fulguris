@@ -243,6 +243,7 @@
     <string name="message_bookmark_added">Đã thêm dấu trang.</string>
     <string name="message_bookmark_not_added">Dấu trang đã tồn tại.</string>
     <string name="title_chooser">Chọn một tệp</string>
+    <string name="open_with">Open with</string>
     <string name="settings_general">Tổng quan</string>
     <string name="settings_display">Hình thức &amp; cảm nhận</string>
     <string name="settings_backup">Sao lưu</string>
@@ -260,6 +261,8 @@
     <string name="settings_summary_privacy_policy">Xem chính sách bảo mật của chúng tôi trực tuyến</string>
     <string name="settings_title_terms_and_conditions">Điều khoản &amp; Điều kiện</string>
     <string name="settings_summary_terms_and_conditions">Xem các điều khoản và điều kiện của chúng tôi trực tuyến</string>
+    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_summary_introduction">Launch the onboarding experience</string>
     <string name="settings_summary_discord">Tham gia cộng đồng đang phát triển của chúng tôi</string>
     <string name="pref_category_panels">Bảng điều khiển</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -284,6 +287,11 @@
     <string name="pref_title_show_tool_bar_when_scroll_up">Hiển thị thanh công cụ khi cuộn lên</string>
     <string name="pref_title_show_tool_bar_on_page_top">Hiển thị thanh công cụ ở đầu trang</string>
     <string name="pref_title_cutout_mode">Chế độ cắt bỏ</string>
+    <string name="pref_title_use_cutout_area">Use notch areas</string>
+    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
+    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
+    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
+    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
     <string name="pref_title_locked_drawers">Bảng bị khóa</string>
     <string name="pref_summary_locked_drawers">Không thể kéo được bảng Tab và Dấu trang</string>
     <string name="pref_title_use_bottom_sheets">Sử dụng trang dưới cùng</string>
@@ -294,10 +302,17 @@
     <string name="pref_summary_menu_show_exit">Hiển thị tùy chọn Thoát ứng dụng trong thực đơn. Chế độ ẩn danh luôn hiển thị nó bất kể.</string>
     <string name="pref_title_menu_new_tab">Mục thực đơn tab mới</string>
     <string name="pref_summary_menu_new_tab">Hiển thị tùy chọn tab mới trong thực đơn</string>
-    <string name="pref_title_crash_report">Báo cáo sự cố</string>
+    <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Phân tích</string>
     <string name="pref_title_pull_to_refresh">Kéo để làm mới</string>
     <string name="pref_summary_recommended_anonymous">Dữ liệu được đề xuất, thu thập là ẩn danh</string>
+    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
+    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
+    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
+    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
+    <string name="pref_title_accept_terms">I want to use Fulguris</string>
+    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
+    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
     <string name="pref_summary_color_mode">Áp dụng màu trang web cho công cụ và thanh trạng thái</string>
     <string name="pref_title_desktop_width">Desktop width</string>
     <string name="pref_summary_desktop_width">Chiều rộng khung nhìn của chế độ máy tính để bàn, đặt nó cao hơn cho nội dung nhỏ hơn</string>
@@ -332,6 +347,11 @@
     <string name="new_tab_position_after">Sau tab hiện tại</string>
     <string name="new_tab_position_start">Đầu danh sách tab</string>
     <string name="new_tab_position_end">Cuối danh sách tab</string>
+    <string name="incoming_view_action">Incoming view action</string>
+    <string name="action_incognito_tab">Incognito tab</string>
+    <string name="action_select_browser">Select browser</string>
+    <string name="action_block">Block</string>
+    <string name="pref_title_default_browser">Default browser</string>
     <string name="text_encoding">Mã hóa văn bản</string>
     <string name="reset_settings">Đặt lại thiết đặt</string>
     <string name="reset_settings_confirmation">Bạn sẽ mất tất cả các cài đặt của mình. Bạn có chắc muốn tiếp tục?</string>
@@ -402,6 +422,9 @@
     <string name="dialog_rename_folder">Đổi tên thư mục</string>
     <string name="dialog_remove_folder">Loại bỏ thư mục</string>
     <string name="dialog_title_close_browser">Đóng trình duyệt</string>
+    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="message_blocked_domain">Blocked %1$s</string>
     <string name="dialog_delete_all_downloads">Xóa mọi bản tải xuống</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Công cụ trang</string>
@@ -413,7 +436,8 @@
         <item quantity="other">%1$d tab ẩn danh đang mở</item>
     </plurals>
     <string name="notification_incognito_running_message">Chạm để mở</string>
-    <string name="notification_incognito_running_description">Thông báo ẩn danh đang diễn ra</string>
+    <!-- Shown in system app notification settings -->
+    <string name="notification_incognito_running_description">Ongoing incognito session</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Issued by</string>
@@ -452,6 +476,8 @@
     <string name="settings_summary_default_domain_settings">Thiết đặt tên miền mặc định</string>
     <string name="settings_title_ssl_error">Lỗi an ninh</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
+    <string name="settings_title_incoming_url_action">Incoming link action</string>
+    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
     <string name="checkbox_remember_domain_choice">Hãy nhớ lựa chọn của bạn cho tên miền này</string>
     <string name="settings_title_third_party_cookies">Cookie của bên thứ ba</string>
     <string name="settings_summary_on_third_party_cookies">Chấp nhận cookie được sử dụng để theo dõi hoạt động của bạn trên các trang web</string>
@@ -535,7 +561,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Lỗi: phiên khôi phục đã được tạo!</string>
     <string name="message_session_imported">Đã nhập phiên: <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Đã xuất phiên: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-
     <string name="force_zoom_summary">Không hoạt động nếu JavaScript không được kích hoạt</string>
     <string name="force_zoom">Buộc thu phóng cho các trang web</string>
     <string name="algorithm">Algorithm:</string>
@@ -611,4 +636,16 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_session">Phiên</string>
     <string name="label_app_name">App name</string>
     <string name="message_render_process_crashed">Quá trình kết xuất bị lỗi. Bạn có thể cần phải tải lại một số trang web.</string>
+    <!-- App Introduction Strings -->
+    <string name="intro_welcome_title">Welcome to Fulguris</string>
+    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
+    <string name="intro_title_terms">Let\'s Get Started!</string>
+    <string name="intro_title_telemetry">Help Us, Help You!</string>
+    <string name="intro_title_ad_blocker">Be Safe!</string>
+    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
+    <string name="intro_notification_permission_title">Notification permission</string>
+    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
+    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
+    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
+    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
 </resources>

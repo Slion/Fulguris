@@ -243,6 +243,7 @@
     <string name="message_bookmark_added">Ajouté aux favoris.</string>
     <string name="message_bookmark_not_added">Le favori existe déjà.</string>
     <string name="title_chooser">Choisir un fichier</string>
+    <string name="open_with">Open with</string>
     <string name="settings_general">Général</string>
     <string name="settings_display">Affichage</string>
     <string name="settings_backup">Sauvegarde</string>
@@ -260,6 +261,8 @@
     <string name="settings_summary_privacy_policy">Consulter notre politique de confidentialité en ligne</string>
     <string name="settings_title_terms_and_conditions">Conditions générales</string>
     <string name="settings_summary_terms_and_conditions">Consulter nos conditions générales en ligne</string>
+    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_summary_introduction">Launch the onboarding experience</string>
     <string name="settings_summary_discord">Join our growing community</string>
     <string name="pref_category_panels">Panneaux</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -284,6 +287,11 @@
     <string name="pref_title_show_tool_bar_when_scroll_up">Afficher la barre d\'outils lors du défilement vers le haut</string>
     <string name="pref_title_show_tool_bar_on_page_top">Afficher la barre d\'outils en haut de la page</string>
     <string name="pref_title_cutout_mode">Cutout mode</string>
+    <string name="pref_title_use_cutout_area">Use notch areas</string>
+    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
+    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
+    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
+    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
     <string name="pref_title_locked_drawers">Panneaux verrouillés</string>
     <string name="pref_summary_locked_drawers">Les panneaux Onglets et Favoris ne peuvent être déplacés</string>
     <string name="pref_title_use_bottom_sheets">Utiliser le panneau inférieur</string>
@@ -294,10 +302,17 @@
     <string name="pref_summary_menu_show_exit">Afficher l\'option Quitter l\'application dans le menu. Le mode incognito l\'affiche en permanence.</string>
     <string name="pref_title_menu_new_tab">Élément Nouvel onglet du menu principal</string>
     <string name="pref_summary_menu_new_tab">Afficher l\'option Nouvel onglet dans le menu principal</string>
-    <string name="pref_title_crash_report">Rapport d\'incident</string>
+    <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analytiques</string>
     <string name="pref_title_pull_to_refresh">Tirer pour actualiser</string>
     <string name="pref_summary_recommended_anonymous">Recommandé, les données recueillies sont anonymes</string>
+    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
+    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
+    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
+    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
+    <string name="pref_title_accept_terms">I want to use Fulguris</string>
+    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
+    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
     <string name="pref_summary_color_mode">Appliquer la couleur de la page web à la barre d\'état et d\'outils</string>
     <string name="pref_title_desktop_width">Largeur du bureau</string>
     <string name="pref_summary_desktop_width">Largeur de la fenêtre d\'affichage du mode Bureau, augmentez sa valeur pour un contenu plus petit</string>
@@ -332,6 +347,11 @@
     <string name="new_tab_position_after">Après l\'onglet actuel</string>
     <string name="new_tab_position_start">Début de la liste d\'onglets</string>
     <string name="new_tab_position_end">Fin de la liste d\'onglets</string>
+    <string name="incoming_view_action">Incoming view action</string>
+    <string name="action_incognito_tab">Incognito tab</string>
+    <string name="action_select_browser">Select browser</string>
+    <string name="action_block">Block</string>
+    <string name="pref_title_default_browser">Default browser</string>
     <string name="text_encoding">Encodage du texte</string>
     <string name="reset_settings">Réinitialiser les paramètres</string>
     <string name="reset_settings_confirmation">Vous perdrez tous vos paramètres. Voulez-vous continuer malgré tout ?</string>
@@ -402,6 +422,9 @@
     <string name="dialog_rename_folder">Renommer de dossier</string>
     <string name="dialog_remove_folder">Supprimer le dossier</string>
     <string name="dialog_title_close_browser">Fermer le navigateur</string>
+    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="message_blocked_domain">Blocked %1$s</string>
     <string name="dialog_delete_all_downloads">Supprimer tous les téléchargements</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Outils de page</string>
@@ -414,7 +437,8 @@
         <item quantity="other">%1$d onglets incognito ouverts</item>
     </plurals>
     <string name="notification_incognito_running_message">Appuyer pour ouvrir</string>
-    <string name="notification_incognito_running_description">Notification permanente de session incognito</string>
+    <!-- Shown in system app notification settings -->
+    <string name="notification_incognito_running_description">Ongoing incognito session</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Émis par :</string>
@@ -453,6 +477,8 @@
     <string name="settings_summary_default_domain_settings">Paramètres de domaine par défaut</string>
     <string name="settings_title_ssl_error">Erreur de sécurité</string>
     <string name="settings_summary_ssl_error">Que faire si une erreur SSL est détectée</string>
+    <string name="settings_title_incoming_url_action">Incoming link action</string>
+    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
     <string name="checkbox_remember_domain_choice">Se souvenir de votre choix pour ce domaine</string>
     <string name="settings_title_third_party_cookies">Cookies de tiers</string>
     <string name="settings_summary_on_third_party_cookies">Accepter les cookies utilisés pour suivre vos activités à travers les sites Web</string>
@@ -537,7 +563,6 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="error_recovery_session">Erreur : une session de récupération a été créée !</string>
     <string name="message_session_imported">Session importée : <xliff:g id="session_name" example="News">%s</xliff:g></string>
     <string name="message_session_exported">Session exportée : <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
-
     <string name="force_zoom_summary">Ne fonctionne pas si JavaScript est désactivé</string>
     <string name="force_zoom">Forcer le zoom pour les sites web</string>
     <string name="algorithm">Algorithme :</string>
@@ -613,4 +638,16 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_session">Session</string>
     <string name="label_app_name">Nom de l\'app</string>
     <string name="message_render_process_crashed">Le processus de rendu a planté. Vous devrez peut-être recharger certaines pages web.</string>
+    <!-- App Introduction Strings -->
+    <string name="intro_welcome_title">Welcome to Fulguris</string>
+    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
+    <string name="intro_title_terms">Let\'s Get Started!</string>
+    <string name="intro_title_telemetry">Help Us, Help You!</string>
+    <string name="intro_title_ad_blocker">Be Safe!</string>
+    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
+    <string name="intro_notification_permission_title">Notification permission</string>
+    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
+    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
+    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
+    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
 </resources>
