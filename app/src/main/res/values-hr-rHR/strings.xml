@@ -233,7 +233,7 @@
     <string name="message_bookmark_added">Knjižna oznaka dodana.</string>
     <string name="message_bookmark_not_added">Oznaka već postoji.</string>
     <string name="title_chooser">Odaberite datoteku</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">Otvori s</string>
     <string name="settings_general">Općenito</string>
     <string name="settings_display">Postavke zaslona</string>
     <string name="settings_backup">Sigurnosna kopija</string>
@@ -252,7 +252,7 @@
     <string name="settings_title_terms_and_conditions">Odredbe i Uvjeti</string>
     <string name="settings_summary_terms_and_conditions">Pogledajte naše uvjete i odredbe na mreži</string>
     <string name="settings_title_introduction">Introduction</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
+    <string name="settings_summary_introduction">Pokreni iskustvo upoznavanja</string>
     <string name="settings_summary_discord">Join our growing community</string>
     <string name="pref_category_panels">Paneli</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -276,11 +276,11 @@
     <string name="pref_title_hide_tool_bar">Sakrij alatnu traku kada se pomičete prema dolje</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Prikaži alatnu traku pri pomicanju prema gore</string>
     <string name="pref_title_show_tool_bar_on_page_top">Prikaži alatnu traku na vrhu stranice</string>
-    <string name="pref_title_use_cutout_area">Use notch areas</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
-    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_title_use_cutout_area">Koristi područja izreza</string>
+    <string name="pref_summary_on_use_cutout_area">Dozvoli sadržaju da se proširi u područja izreza za prikaz preko cijelog ekrana</string>
+    <string name="pref_summary_off_use_cutout_area">Spriječi sadržaj da se preklapa s područjima izreza</string>
+    <string name="pref_title_system_gesture_clearance">Razmak za sistemske geste</string>
+    <string name="pref_summary_system_gesture_clearance">Drži sadržaj daleko od donjih gesti</string>
     <string name="pref_title_locked_drawers">Zaključane ploče</string>
     <string name="pref_summary_locked_drawers">Kartice i ploče knjižnih oznaka ne mogu se povlačiti</string>
     <string name="pref_title_use_bottom_sheets">Koristite donje listove</string>
@@ -291,16 +291,16 @@
     <string name="pref_summary_menu_show_exit">Prikaži opciju Izađi iz aplikacije u izborniku. Bez obzira na to, privatna kartica ga uvijek prikazuje.</string>
     <string name="pref_title_menu_new_tab">Nova stavka izbornika kartice</string>
     <string name="pref_summary_menu_new_tab">Prikaži opciju Nova kartica u izborniku</string>
-    <string name="pref_title_crash_report">Crash reports</string>
+    <string name="pref_title_crash_report">Izvještaji o padovima</string>
     <string name="pref_title_analytics">Analitika</string>
     <string name="pref_title_pull_to_refresh">Prijeđite prstom za osvježavanje</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
-    <string name="pref_title_accept_terms">I want to use Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
+    <string name="pref_summary_on_crash_reports">Pomozite poboljšati aplikaciju slanjem izvještaja o padovima</string>
+    <string name="pref_summary_off_crash_reports">Izvještaji o padovima neće biti poslani</string>
+    <string name="pref_summary_on_analytics">Pomozite poboljšati aplikaciju slanjem podataka o korištenju</string>
+    <string name="pref_summary_off_analytics">Podaci o korištenju neće biti poslani</string>
+    <string name="pref_title_accept_terms">Želim koristiti Fulguris</string>
+    <string name="pref_summary_on_accept_terms">Prihvatili ste naše uvjete</string>
+    <string name="pref_summary_off_accept_terms">Prihvatite naše uvjete za nastavak</string>
     <string name="pref_summary_color_mode">Primijenite boju web stranice na alatnu traku i statusnu traku</string>
     <string name="pref_title_desktop_width">Širina radne površine</string>
     <string name="pref_summary_desktop_width">Širina prozora za prikaz u načinu rada, postavite je na veću za manji sadržaj</string>
@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">Nakon trenutne kartice</string>
     <string name="new_tab_position_start">Početak popisa kartica</string>
     <string name="new_tab_position_end">Kraj popisa kartica</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Akcija dolaznog prikaza</string>
+    <string name="action_incognito_tab">Inkognito kartica</string>
+    <string name="action_select_browser">Odaberi preglednik</string>
+    <string name="action_block">Blokiraj</string>
+    <string name="pref_title_default_browser">Zadani preglednik</string>
     <string name="text_encoding">Kodiranje teksta</string>
     <string name="reset_settings">Resetiraj postavke</string>
     <string name="reset_settings_confirmation">Izgubit ćete sve svoje postavke. Jeste li sigurni da želite nastaviti?</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Preimenujte mapu</string>
     <string name="dialog_remove_folder">Uklonite mapu</string>
     <string name="dialog_title_close_browser">Zatvorite preglednik</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">Otvori %1$s</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">Blokirano %1$s</string>
     <string name="dialog_delete_all_downloads">Izbriši sva preuzimanja</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Alati stranice</string>
@@ -424,7 +424,7 @@
     </plurals>
     <string name="notification_incognito_running_message">Dodirnite za otvaranje</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Tekuća inkognito sesija</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Izdano od:</string>
@@ -463,8 +463,8 @@
     <string name="settings_summary_default_domain_settings">Zadane postavke domene</string>
     <string name="settings_title_ssl_error">Security error</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_title_incoming_url_action">Akcija dolazećeg linka</string>
+    <string name="settings_summary_incoming_url_action">Kako rukovati linkovima iz drugih aplikacija</string>
     <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
     <string name="settings_title_third_party_cookies">Third-party cookies</string>
     <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
@@ -621,15 +621,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">App name</string>
     <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Dobrodošli u Fulguris</string>
+    <string name="intro_welcome_description">Doživite brzo, sigurno i prilagodljivo pregledavanje weba s naprednim funkcijama privatnosti i modernim dizajnom.</string>
+    <string name="intro_title_terms">Počnimo!</string>
+    <string name="intro_title_telemetry">Pomozite nam da vam pomognemo!</string>
+    <string name="intro_title_ad_blocker">Budite sigurni!</string>
+    <string name="intro_description_ad_blocker">Omogućite naš moćan blokator oglasa za brže, sigurnije pregledavanje s manje ometanja. Uvijek možete promijeniti ovo kasnije u postavkama.</string>
+    <string name="intro_notification_permission_title">Dozvola za obavijesti</string>
+    <string name="intro_notification_permission_description">Dopustite Fulgurisu slanje obavijesti, posebno za završetak preuzimanja i tijekom inkognito sesija.</string>
+    <string name="pref_title_enable_ad_blocker">Blokator oglasa</string>
+    <string name="pref_summary_on_enable_ad_blocker">Uživajte u čistijem i sigurnijem web iskustvu</string>
+    <string name="pref_summary_off_enable_ad_blocker">Uživajte u nefilitriranoj, originalnoj verziji weba</string>
 </resources>

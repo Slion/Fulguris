@@ -233,7 +233,7 @@
     <string name="message_bookmark_added">Yer imi eklendi.</string>
     <string name="message_bookmark_not_added">Yer imi zaten mevcut.</string>
     <string name="title_chooser">Bir dosya seçin</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">Şununla aç</string>
     <string name="settings_general">Genel</string>
     <string name="settings_display">Görünüm</string>
     <string name="settings_backup">Yedekleme</string>
@@ -252,7 +252,7 @@
     <string name="settings_title_terms_and_conditions">Şartlar ve Koşullar</string>
     <string name="settings_summary_terms_and_conditions">Şartlar ve koşullarımızı çevrimiçi görün</string>
     <string name="settings_title_introduction">Introduction</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
+    <string name="settings_summary_introduction">İlk kullanım deneyimini başlat</string>
     <string name="settings_summary_discord">Büyüyen topluluğumuza katılın</string>
     <string name="pref_category_panels">Paneller</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -276,11 +276,11 @@
     <string name="pref_title_hide_tool_bar">Aşağı kaydırırken araç çubuğunu gizle</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Yukarı kaydırırken araç çubuğunu göster</string>
     <string name="pref_title_show_tool_bar_on_page_top">Sayfanın en üstünde araç çubuğunu göster</string>
-    <string name="pref_title_use_cutout_area">Use notch areas</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
-    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_title_use_cutout_area">Çentik alanlarını kullan</string>
+    <string name="pref_summary_on_use_cutout_area">İçeriğin tam ekran görüntüleme için çentik bölgelerine uzanmasına izin ver</string>
+    <string name="pref_summary_off_use_cutout_area">İçeriğin çentik bölgeleriyle örtüşmesini önle</string>
+    <string name="pref_title_system_gesture_clearance">Sistem jest alanı</string>
+    <string name="pref_summary_system_gesture_clearance">İçeriği alt jestlerden uzak tut</string>
     <string name="pref_title_locked_drawers">Kilitli paneller</string>
     <string name="pref_summary_locked_drawers">Sekmeler ve Yer İmleri panelleri sürüklenemez</string>
     <string name="pref_title_use_bottom_sheets">Alt panelleri kullan</string>
@@ -291,16 +291,16 @@
     <string name="pref_summary_menu_show_exit">Menüde Uygulamadan Çık seçeneğini göster. Gizli mod bu ayardan bağımsız olarak her zaman gösterir.</string>
     <string name="pref_title_menu_new_tab">Yeni sekme menü öğesi</string>
     <string name="pref_summary_menu_new_tab">Menüde Yeni Sekme seçeneğini göster</string>
-    <string name="pref_title_crash_report">Crash reports</string>
+    <string name="pref_title_crash_report">Çökme raporları</string>
     <string name="pref_title_analytics">Analitik</string>
     <string name="pref_title_pull_to_refresh">Yenilemek için çek</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
-    <string name="pref_title_accept_terms">I want to use Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
+    <string name="pref_summary_on_crash_reports">Çökme raporları göndererek uygulamayı geliştirmeye yardımcı olun</string>
+    <string name="pref_summary_off_crash_reports">Çökme raporları gönderilmeyecek</string>
+    <string name="pref_summary_on_analytics">Kullanım verileri göndererek uygulamayı geliştirmeye yardımcı olun</string>
+    <string name="pref_summary_off_analytics">Kullanım verileri gönderilmeyecek</string>
+    <string name="pref_title_accept_terms">Fulguris kullanmak istiyorum</string>
+    <string name="pref_summary_on_accept_terms">Şartlarımızı ve koşullarımızı kabul ettiniz</string>
+    <string name="pref_summary_off_accept_terms">Devam etmek için şartlarımızı ve koşullarımızı kabul edin</string>
     <string name="pref_summary_color_mode">Web sayfası rengini araç ve durum çubuğuna uygula</string>
     <string name="pref_title_desktop_width">Masaüstü genişliği</string>
     <string name="pref_summary_desktop_width">Masaüstü modu görünüm alanı genişliği, daha küçük içerik için daha yükseğe ayarlayın</string>
@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">Mevcut sekmenin sonrası</string>
     <string name="new_tab_position_start">Sekme listesinin başı</string>
     <string name="new_tab_position_end">Sekme listesinin sonu</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Gelen görünüm eylemi</string>
+    <string name="action_incognito_tab">Gizli sekme</string>
+    <string name="action_select_browser">Tarayıcı seç</string>
+    <string name="action_block">Engelle</string>
+    <string name="pref_title_default_browser">Varsayılan tarayıcı</string>
     <string name="text_encoding">Metin kodlaması</string>
     <string name="reset_settings">Ayarları sıfırla</string>
     <string name="reset_settings_confirmation">Tüm ayarlarınızı kaybedeceksiniz. Devam etmek istediğinizden emin misiniz?</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Klasörü yeniden adlandır</string>
     <string name="dialog_remove_folder">Klasörü kaldır</string>
     <string name="dialog_title_close_browser">Tarayıcıyı kapat</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">%1$s aç</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">%1$s engellendi</string>
     <string name="dialog_delete_all_downloads">Tüm indirilenleri sil</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Sayfa araçları</string>
@@ -423,7 +423,7 @@
     </plurals>
     <string name="notification_incognito_running_message">Açmak için dokunun</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Devam eden gizli oturum</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Veren kuruluş</string>
@@ -462,8 +462,8 @@
     <string name="settings_summary_default_domain_settings">Varsayılan alan adı ayarları</string>
     <string name="settings_title_ssl_error">Güvenlik hatası</string>
     <string name="settings_summary_ssl_error">Bir SSL hatası algılandığında ne yapılmalı</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_title_incoming_url_action">Gelen bağlantı eylemi</string>
+    <string name="settings_summary_incoming_url_action">Diğer uygulamalardan gelen bağlantıların nasıl işleneceği</string>
     <string name="checkbox_remember_domain_choice">Bu alan adı için seçimimi hatırla</string>
     <string name="settings_title_third_party_cookies">Üçüncü taraf çerezleri</string>
     <string name="settings_summary_on_third_party_cookies">Web siteleri arasındaki etkinliklerinizi izlemek için kullanılan çerezleri kabul et</string>
@@ -619,15 +619,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">Uygulama adı</string>
     <string name="message_render_process_crashed">İşleme süreci çöktü. Bazı web sayfalarını yeniden yüklemeniz gerekebilir.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Fulguris\'e Hoş Geldiniz</string>
+    <string name="intro_welcome_description">Gelişmiş gizlilik özellikleri ve modern tasarımla hızlı, güvenli ve özelleştirilebilir web tarama deneyimi yaşayın.</string>
+    <string name="intro_title_terms">Başlayalım!</string>
+    <string name="intro_title_telemetry">Bize Yardım Edin, Size Yardım Edelim!</string>
+    <string name="intro_title_ad_blocker">Güvende Kalın!</string>
+    <string name="intro_description_ad_blocker">Daha hızlı, daha güvenli ve daha az dikkat dağıtıcı şekilde gezinmek için güçlü reklam engelleyicimizi etkinleştirin. Bunu daha sonra ayarlardan her zaman değiştirebilirsiniz.</string>
+    <string name="intro_notification_permission_title">Bildirim izni</string>
+    <string name="intro_notification_permission_description">Fulguris\'in özellikle indirme tamamlama ve gizli oturumlar sırasında bildirim göndermesine izin verin.</string>
+    <string name="pref_title_enable_ad_blocker">Reklam engelleyici</string>
+    <string name="pref_summary_on_enable_ad_blocker">Daha temiz, daha güvenli bir web deneyiminin keyfini çıkarın</string>
+    <string name="pref_summary_off_enable_ad_blocker">Web\'in filtrelenmemiş, orijinal sürümünün keyfini çıkarın</string>
 </resources>

@@ -233,7 +233,7 @@
     <string name="message_bookmark_added">Könyvjelző hozzáadva.</string>
     <string name="message_bookmark_not_added">Ez a könyvjelző már létezik.</string>
     <string name="title_chooser">Válasszon egy fájlt</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">Megnyitás ezzel</string>
     <string name="settings_general">Általános Beállítások</string>
     <string name="settings_display">Megjelenítési Beállítások</string>
     <string name="settings_backup">Biztonsági Mentés</string>
@@ -252,7 +252,7 @@
     <string name="settings_title_terms_and_conditions">Szerződési &amp; Feltételek</string>
     <string name="settings_summary_terms_and_conditions">Nézze meg szerződési feltételeinket online</string>
     <string name="settings_title_introduction">Introduction</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
+    <string name="settings_summary_introduction">Kezdd el a bevezető élményt</string>
     <string name="settings_summary_discord">Csatlakozzon növekvő közösségünkhöz</string>
     <string name="pref_category_panels">Panelek</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -276,11 +276,11 @@
     <string name="pref_title_hide_tool_bar">Eszköztár elrejtése lefelé lapozáskor</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Eszköztár megjelenítése felfelé lapozáskor</string>
     <string name="pref_title_show_tool_bar_on_page_top">Eszköztár az oldal tetején</string>
-    <string name="pref_title_use_cutout_area">Use notch areas</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
-    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_title_use_cutout_area">Használd a vágási területeket</string>
+    <string name="pref_summary_on_use_cutout_area">Engedd meg a tartalomnak, hogy a vágási területekre is kiterjedjen teljes képernyős megjelenítéshez</string>
+    <string name="pref_summary_off_use_cutout_area">Akadályozd meg, hogy a tartalom átfedje a vágási területeket</string>
+    <string name="pref_title_system_gesture_clearance">Rendszerkezdeményezések távolsága</string>
+    <string name="pref_summary_system_gesture_clearance">Tartsad a tartalmat távol az alsó kézmozdulat</string>
     <string name="pref_title_locked_drawers">Zárolt panelek</string>
     <string name="pref_summary_locked_drawers">A Lapok és Könyvjelzők panelek nem mozgathatóak</string>
     <string name="pref_title_use_bottom_sheets">Használjon alsó lapokat</string>
@@ -291,16 +291,16 @@
     <string name="pref_summary_menu_show_exit">Mutasson Alkalmazás bezárása opciót a menüben. Inkognitó módban ettől függetlenül mindíg van.</string>
     <string name="pref_title_menu_new_tab">Új lap menüelem</string>
     <string name="pref_summary_menu_new_tab">Mutasson Új lap opciót a menüben</string>
-    <string name="pref_title_crash_report">Crash reports</string>
+    <string name="pref_title_crash_report">Összeomlási jelentések</string>
     <string name="pref_title_analytics">Elemzések</string>
     <string name="pref_title_pull_to_refresh">Húzza le a frissítéshez</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
-    <string name="pref_title_accept_terms">I want to use Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
+    <string name="pref_summary_on_crash_reports">Segítsd az alkalmazás fejlesztését összeomlási jelentések küldésével</string>
+    <string name="pref_summary_off_crash_reports">Az összeomlási jelentések nem lesznek elküldve</string>
+    <string name="pref_summary_on_analytics">Segítsd az alkalmazás fejlesztését használati adatok küldésével</string>
+    <string name="pref_summary_off_analytics">A használati adatok nem lesznek elküldve</string>
+    <string name="pref_title_accept_terms">Szeretném használni a Fulgurist</string>
+    <string name="pref_summary_on_accept_terms">Elfogadtad a feltételeinket és kikötéseinket</string>
+    <string name="pref_summary_off_accept_terms">Fogadd el a feltételeinket és kikötéseinket a folytatáshoz</string>
     <string name="pref_summary_color_mode">Alkalmazza az oldal színét az eszköztárra és az értesítési sávra is</string>
     <string name="pref_title_desktop_width">Asztal szélesség</string>
     <string name="pref_summary_desktop_width">Asztali mód szélesség, állítsa magasabbra a kisebb tartalomért</string>
@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">Jelenlegi lap után</string>
     <string name="new_tab_position_start">Lap lista kezdete</string>
     <string name="new_tab_position_end">Lap lista vége</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Bejövő nézet művelet</string>
+    <string name="action_incognito_tab">Inkognitó lap</string>
+    <string name="action_select_browser">Böngésző kiválasztása</string>
+    <string name="action_block">Letiltás</string>
+    <string name="pref_title_default_browser">Alapértelmezett böngésző</string>
     <string name="text_encoding">Szöveg Kódolás</string>
     <string name="reset_settings">Beállítások visszaállítása</string>
     <string name="reset_settings_confirmation">El fog veszteni minden beállítást. Biztos folytatni akarja?</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Mappa átnevezése</string>
     <string name="dialog_remove_folder">Mappa törlése</string>
     <string name="dialog_title_close_browser">Böngésző bezárása</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">%1$s megnyitása</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">%1$s letiltva</string>
     <string name="dialog_delete_all_downloads">Összes letöltés törlése</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Oldal eszközök</string>
@@ -423,7 +423,7 @@
     </plurals>
     <string name="notification_incognito_running_message">Koppintson a megnyitáshoz</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Folyamatban lévő inkognitó munkamenet</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Issued by</string>
@@ -462,8 +462,8 @@
     <string name="settings_summary_default_domain_settings">Alapértelmezett tartománybeállítások</string>
     <string name="settings_title_ssl_error">Biztonsági hiba</string>
     <string name="settings_summary_ssl_error">Mit tegyen, ha SSL hibát tapasztal</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_title_incoming_url_action">Bejövő link művelet</string>
+    <string name="settings_summary_incoming_url_action">Hogyan kezeld a más alkalmazásokból származó linkeket</string>
     <string name="checkbox_remember_domain_choice">Jegyezze meg döntésemet ezen tartományhoz</string>
     <string name="settings_title_third_party_cookies">Harmadik felek sütijei</string>
     <string name="settings_summary_on_third_party_cookies">Azon sütik elfogadása, amelyek más weboldalakon is követnek</string>
@@ -619,15 +619,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">App name</string>
     <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Üdvözöljük a Fulgurisban</string>
+    <string name="intro_welcome_description">Tapasztalja meg a gyors, biztonságos és testreszabható webböngészést fejlett adatvédelmi funkciókkal és modern dizájnnal.</string>
+    <string name="intro_title_terms">Kezdjük el!</string>
+    <string name="intro_title_telemetry">Segíts nekünk, hogy segíthessünk neked!</string>
+    <string name="intro_title_ad_blocker">Légy biztonságban!</string>
+    <string name="intro_description_ad_blocker">Engedélyezd az erős hirdetésblokkolónkat a gyorsabb, biztonságosabb böngészéshez kevesebb zavaró elemmel. Ezt később bármikor megváltoztathatod a beállításokban.</string>
+    <string name="intro_notification_permission_title">Értesítési engedély</string>
+    <string name="intro_notification_permission_description">Engedd meg a Fulgurisnak, hogy értesítéseket küldjön, különösen a letöltések befejeződésekor és az inkognitó munkamenetek során.</string>
+    <string name="pref_title_enable_ad_blocker">Hirdetésblokkoló</string>
+    <string name="pref_summary_on_enable_ad_blocker">Élvezd a tisztább, biztonságosabb webes élményt</string>
+    <string name="pref_summary_off_enable_ad_blocker">Élvezd a szűretlen, eredeti web verzióját</string>
 </resources>

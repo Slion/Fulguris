@@ -233,7 +233,7 @@
     <string name="message_bookmark_added">ブックマークが追加されました。</string>
     <string name="message_bookmark_not_added">ブックマークが既に存在します。</string>
     <string name="title_chooser">ファイルを選択してください</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">次で開く</string>
     <string name="settings_general">全般</string>
     <string name="settings_display">表示</string>
     <string name="settings_backup">バックアップ</string>
@@ -252,7 +252,7 @@
     <string name="settings_title_terms_and_conditions">利用規約</string>
     <string name="settings_summary_terms_and_conditions">オンラインで利用規約を見る</string>
     <string name="settings_title_introduction">Introduction</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
+    <string name="settings_summary_introduction">オンボーディング体験を開始</string>
     <string name="settings_summary_discord">成長中のコミュニティに参加する</string>
     <string name="pref_category_panels">パネル</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -276,11 +276,11 @@
     <string name="pref_title_hide_tool_bar">下にスクロールしている間はツールバーを非表示にする</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">上にスクロールするときにツールバーを表示する</string>
     <string name="pref_title_show_tool_bar_on_page_top">ページ最上部でツールバーを表示する</string>
-    <string name="pref_title_use_cutout_area">Use notch areas</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
-    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_title_use_cutout_area">ノッチ領域を使用</string>
+    <string name="pref_summary_on_use_cutout_area">ノッチ領域にコンテンツを拡張して全画面表示を可能にする</string>
+    <string name="pref_summary_off_use_cutout_area">コンテンツがノッチ領域と重ならないようにする</string>
+    <string name="pref_title_system_gesture_clearance">システムジェスチャーの余白</string>
+    <string name="pref_summary_system_gesture_clearance">下部のジェスチャーからコンテンツを離す</string>
     <string name="pref_title_locked_drawers">ロックされたパネル</string>
     <string name="pref_summary_locked_drawers">タブとブックマークパネルをドラッグすることはできません</string>
     <string name="pref_title_use_bottom_sheets">ボトムシートを使う</string>
@@ -291,16 +291,16 @@
     <string name="pref_summary_menu_show_exit">メニューにアプリの終了を表示します。 シークレットモードでは常に表示します。</string>
     <string name="pref_title_menu_new_tab">メニューに新しいタブを表示</string>
     <string name="pref_summary_menu_new_tab">新しいタブをメニューに表示する</string>
-    <string name="pref_title_crash_report">Crash reports</string>
+    <string name="pref_title_crash_report">クラッシュレポート</string>
     <string name="pref_title_analytics">統計情報</string>
     <string name="pref_title_pull_to_refresh">画面を引き下げて更新</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
-    <string name="pref_title_accept_terms">I want to use Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
+    <string name="pref_summary_on_crash_reports">クラッシュレポートを送信してアプリの改善に協力する</string>
+    <string name="pref_summary_off_crash_reports">クラッシュレポートは送信されません</string>
+    <string name="pref_summary_on_analytics">使用データを送信してアプリの改善に協力する</string>
+    <string name="pref_summary_off_analytics">使用データは送信されません</string>
+    <string name="pref_title_accept_terms">Fulgurisを使用したい</string>
+    <string name="pref_summary_on_accept_terms">利用規約に同意しました</string>
+    <string name="pref_summary_off_accept_terms">続行するには利用規約に同意してください</string>
     <string name="pref_summary_color_mode">ツールとステータスバーにウェブページの色を適用する</string>
     <string name="pref_title_desktop_width">デスクトップの幅</string>
     <string name="pref_summary_desktop_width">デスクトップモードの横幅の表示領域です。小さいコンテンツには高く設定します。</string>
@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">現在のタブの次</string>
     <string name="new_tab_position_start">タブリストの最初</string>
     <string name="new_tab_position_end">タブリストの最後</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">受信ビューアクション</string>
+    <string name="action_incognito_tab">シークレットタブ</string>
+    <string name="action_select_browser">ブラウザを選択</string>
+    <string name="action_block">ブロック</string>
+    <string name="pref_title_default_browser">デフォルトブラウザ</string>
     <string name="text_encoding">テキストエンコーディング</string>
     <string name="reset_settings">設定をリセット</string>
     <string name="reset_settings_confirmation">すべての設定が失われます。続行してもよろしいですか？</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">フォルダ名を変更する</string>
     <string name="dialog_remove_folder">フォルダを削除する</string>
     <string name="dialog_title_close_browser">タブの消去</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">%1$sを開く</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">%1$sをブロックしました</string>
     <string name="dialog_delete_all_downloads">ダウンロードの全削除</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">ページツール</string>
@@ -422,7 +422,7 @@
     </plurals>
     <string name="notification_incognito_running_message">タップすると開きます</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">進行中のシークレットセッション</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">発行元:</string>
@@ -461,8 +461,8 @@
     <string name="settings_summary_default_domain_settings">既定のドメイン設定</string>
     <string name="settings_title_ssl_error">セキュリティエラー</string>
     <string name="settings_summary_ssl_error">SSLエラーが検出されたときの対処方法</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_title_incoming_url_action">受信リンクアクション</string>
+    <string name="settings_summary_incoming_url_action">他のアプリからのリンクの処理方法</string>
     <string name="checkbox_remember_domain_choice">このドメインの選択を記憶する</string>
     <string name="settings_title_third_party_cookies">サードパーティのクッキー</string>
     <string name="settings_summary_on_third_party_cookies">複数のウェブサイトで行動を追跡するために使用されるクッキーを受け入れます</string>
@@ -617,15 +617,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">アプリ名</string>
     <string name="message_render_process_crashed">レンダリング処理がクラッシュしました。ウェブページを再読み込みする必要があるかもしれません。</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Fulgurisへようこそ</string>
+    <string name="intro_welcome_description">高度なプライバシー機能とモダンなデザインで、高速で安全なカスタマイズ可能なウェブブラウジングを体験してください。</string>
+    <string name="intro_title_terms">始めましょう！</string>
+    <string name="intro_title_telemetry">ご協力をお願いします！</string>
+    <string name="intro_title_ad_blocker">安全に！</string>
+    <string name="intro_description_ad_blocker">強力な広告ブロッカーを有効にして、より速く、より安全に、邪魔されずにブラウジングできます。この設定はいつでも変更できます。</string>
+    <string name="intro_notification_permission_title">通知の許可</string>
+    <string name="intro_notification_permission_description">Fulgurisが通知を送信できるようにします。特にダウンロード完了時やシークレットセッション中に必要です。</string>
+    <string name="pref_title_enable_ad_blocker">広告ブロッカー</string>
+    <string name="pref_summary_on_enable_ad_blocker">よりクリーンで安全なウェブ体験をお楽しみください</string>
+    <string name="pref_summary_off_enable_ad_blocker">フィルタリングされていない本来のウェブをお楽しみください</string>
 </resources>

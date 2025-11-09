@@ -233,7 +233,7 @@
     <string name="message_bookmark_added">Закладка добавлена</string>
     <string name="message_bookmark_not_added">Закладка уже существует.</string>
     <string name="title_chooser">Выберите файл</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">Открыть с помощью</string>
     <string name="settings_general">Основные настройки</string>
     <string name="settings_display">Настройки отображения</string>
     <string name="settings_backup">Резервное копирование</string>
@@ -252,7 +252,7 @@
     <string name="settings_title_terms_and_conditions">Условия использования</string>
     <string name="settings_summary_terms_and_conditions">Смотрите наши условия использования онлайн</string>
     <string name="settings_title_introduction">Introduction</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
+    <string name="settings_summary_introduction">Запустить процесс адаптации</string>
     <string name="settings_summary_discord">Присоединяйтесь к нашему растущему сообществу</string>
     <string name="pref_category_panels">Панели</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -276,11 +276,11 @@
     <string name="pref_title_hide_tool_bar">Скрыть панель инструментов при прокрутке вниз</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Показать панель инструментов при прокрутке вверх</string>
     <string name="pref_title_show_tool_bar_on_page_top">Показывать панель инструментов в верхней части страницы</string>
-    <string name="pref_title_use_cutout_area">Use notch areas</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
-    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_title_use_cutout_area">Использовать области выреза</string>
+    <string name="pref_summary_on_use_cutout_area">Разрешить контенту расширяться в области выреза для полноэкранного отображения</string>
+    <string name="pref_summary_off_use_cutout_area">Предотвратить перекрытие контента с областями выреза</string>
+    <string name="pref_title_system_gesture_clearance">Зазор для системных жестов</string>
+    <string name="pref_summary_system_gesture_clearance">Держать контент подальше от нижних жестов</string>
     <string name="pref_title_locked_drawers">Заблокированные панели</string>
     <string name="pref_summary_locked_drawers">Вкладки и панели закладок нельзя перетащить</string>
     <string name="pref_title_use_bottom_sheets">Использовать нижние панели</string>
@@ -291,16 +291,16 @@
     <string name="pref_summary_menu_show_exit">Показать опцию выхода из приложения в меню. В режиме инкогнито он отображается всегда в любом случае.</string>
     <string name="pref_title_menu_new_tab">Пункт меню \"Новая вкладка\"</string>
     <string name="pref_summary_menu_new_tab">Показывать в меню пункт \"Новая вкладка\"</string>
-    <string name="pref_title_crash_report">Crash reports</string>
+    <string name="pref_title_crash_report">Отчеты о сбоях</string>
     <string name="pref_title_analytics">Аналитика</string>
     <string name="pref_title_pull_to_refresh">Потяните для обновления</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
-    <string name="pref_title_accept_terms">I want to use Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
+    <string name="pref_summary_on_crash_reports">Помогите улучшить приложение, отправляя отчеты о сбоях</string>
+    <string name="pref_summary_off_crash_reports">Отчеты о сбоях не будут отправлены</string>
+    <string name="pref_summary_on_analytics">Помогите улучшить приложение, отправляя данные об использовании</string>
+    <string name="pref_summary_off_analytics">Данные об использовании не будут отправлены</string>
+    <string name="pref_title_accept_terms">Я хочу использовать Fulguris</string>
+    <string name="pref_summary_on_accept_terms">Вы приняли наши условия использования</string>
+    <string name="pref_summary_off_accept_terms">Примите наши условия использования, чтобы продолжить</string>
     <string name="pref_summary_color_mode">Применить цвет веб-страницы к панели инструментов и строке состояния</string>
     <string name="pref_title_desktop_width">Ширина рабочего стола</string>
     <string name="pref_summary_desktop_width">Ширина области просмотра в режиме рабочего стола, установите больше для меньшего содержимого</string>
@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">После текущей вкладки</string>
     <string name="new_tab_position_start">Начало списка вкладок</string>
     <string name="new_tab_position_end">Конец списка вкладок</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Действие входящего просмотра</string>
+    <string name="action_incognito_tab">Вкладка инкогнито</string>
+    <string name="action_select_browser">Выбрать браузер</string>
+    <string name="action_block">Заблокировать</string>
+    <string name="pref_title_default_browser">Браузер по умолчанию</string>
     <string name="text_encoding">Кодировка текста</string>
     <string name="reset_settings">Сбросить настройки</string>
     <string name="reset_settings_confirmation">Вы потеряете все настройки. Вы уверены, что хотите продолжить?</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Переименовать папку</string>
     <string name="dialog_remove_folder">Удалить папку</string>
     <string name="dialog_title_close_browser">Закрыть браузер</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">Открыть %1$s</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">%1$s заблокирован</string>
     <string name="dialog_delete_all_downloads">Удалить все загрузки</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Инструменты страницы</string>
@@ -425,7 +425,7 @@
     </plurals>
     <string name="notification_incognito_running_message">Нажмите, чтобы открыть</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Текущая сессия инкогнито</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Кем выдан:</string>
@@ -464,8 +464,8 @@
     <string name="settings_summary_default_domain_settings">Настройки домена по умолчанию</string>
     <string name="settings_title_ssl_error">Ошибка безопасности</string>
     <string name="settings_summary_ssl_error">Что делать при обнаружении ошибки SSL</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_title_incoming_url_action">Действие входящей ссылки</string>
+    <string name="settings_summary_incoming_url_action">Как обрабатывать ссылки из других приложений</string>
     <string name="checkbox_remember_domain_choice">Запомнить свой выбор для этого домена</string>
     <string name="settings_title_third_party_cookies">Сторонние файлы-cookie</string>
     <string name="settings_summary_on_third_party_cookies">Принимать файлы cookie, используемые для отслеживания ваших действий на веб-сайтах</string>
@@ -623,15 +623,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">Название приложения</string>
     <string name="message_render_process_crashed">Процесс рендеринга завершился сбоем. Возможно, вам придется перезагрузить некоторые веб-страницы.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Добро пожаловать в Fulguris</string>
+    <string name="intro_welcome_description">Испытайте быстрый, безопасный и настраиваемый веб-браузер с расширенными функциями конфиденциальности и современным дизайном.</string>
+    <string name="intro_title_terms">Начнём!</string>
+    <string name="intro_title_telemetry">Помогите нам помочь вам!</string>
+    <string name="intro_title_ad_blocker">Будьте в безопасности!</string>
+    <string name="intro_description_ad_blocker">Включите наш мощный блокировщик рекламы для более быстрого, безопасного просмотра с меньшим количеством отвлекающих факторов. Вы всегда можете изменить это позже в настройках.</string>
+    <string name="intro_notification_permission_title">Разрешение на уведомления</string>
+    <string name="intro_notification_permission_description">Разрешите Fulguris отправлять уведомления, особенно о завершении загрузок и во время сеансов инкогнито.</string>
+    <string name="pref_title_enable_ad_blocker">Блокировщик рекламы</string>
+    <string name="pref_summary_on_enable_ad_blocker">Наслаждайтесь более чистым и безопасным интернетом</string>
+    <string name="pref_summary_off_enable_ad_blocker">Наслаждайтесь нефильтрованной, оригинальной версией интернета</string>
 </resources>

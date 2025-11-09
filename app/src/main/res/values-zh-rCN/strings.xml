@@ -233,7 +233,7 @@
     <string name="message_bookmark_added">书签已添加</string>
     <string name="message_bookmark_not_added">书签已存在</string>
     <string name="title_chooser">选择一个文件</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">打开方式</string>
     <string name="settings_general">常规设置</string>
     <string name="settings_display">显示设置</string>
     <string name="settings_backup">备份</string>
@@ -252,7 +252,7 @@
     <string name="settings_title_terms_and_conditions">使用条款&amp; 细则</string>
     <string name="settings_summary_terms_and_conditions">在线查看我们的条款和细则</string>
     <string name="settings_title_introduction">Introduction</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
+    <string name="settings_summary_introduction">启动入门体验</string>
     <string name="settings_summary_discord">加入我们成长中的社区</string>
     <string name="pref_category_panels">面板</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -276,11 +276,11 @@
     <string name="pref_title_hide_tool_bar">下翻时隐藏工具栏</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">上翻时显示工具栏</string>
     <string name="pref_title_show_tool_bar_on_page_top">在页面顶部显示工具栏</string>
-    <string name="pref_title_use_cutout_area">Use notch areas</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
-    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_title_use_cutout_area">使用刘海区域</string>
+    <string name="pref_summary_on_use_cutout_area">允许内容延伸至刘海区域以实现全屏显示</string>
+    <string name="pref_summary_off_use_cutout_area">防止内容与刘海区域重叠</string>
+    <string name="pref_title_system_gesture_clearance">系统手势间距</string>
+    <string name="pref_summary_system_gesture_clearance">使内容远离底部手势</string>
     <string name="pref_title_locked_drawers">锁定的面板</string>
     <string name="pref_summary_locked_drawers">不能拖动标签和书签面板</string>
     <string name="pref_title_use_bottom_sheets">嵌入底部表单</string>
@@ -291,16 +291,16 @@
     <string name="pref_summary_menu_show_exit">在菜单中显示用于退出应用的一项。无论是否打开此选项，无痕模式下都会有“退出”一项。</string>
     <string name="pref_title_menu_new_tab">在菜单中显示“新建标签页”一项</string>
     <string name="pref_summary_menu_new_tab">在菜单中显示新标签选项</string>
-    <string name="pref_title_crash_report">Crash reports</string>
+    <string name="pref_title_crash_report">崩溃报告</string>
     <string name="pref_title_analytics">统计数据</string>
     <string name="pref_title_pull_to_refresh">下拉刷新</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
-    <string name="pref_title_accept_terms">I want to use Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
+    <string name="pref_summary_on_crash_reports">通过发送崩溃报告帮助改进应用</string>
+    <string name="pref_summary_off_crash_reports">不会发送崩溃报告</string>
+    <string name="pref_summary_on_analytics">通过发送使用数据帮助改进应用</string>
+    <string name="pref_summary_off_analytics">不会发送使用数据</string>
+    <string name="pref_title_accept_terms">我想使用Fulguris</string>
+    <string name="pref_summary_on_accept_terms">您已接受我们的条款和条件</string>
+    <string name="pref_summary_off_accept_terms">接受我们的条款和条件以继续</string>
     <string name="pref_summary_color_mode">随网页的色彩变化工具和状态栏的颜色</string>
     <string name="pref_title_desktop_width">桌面宽度</string>
     <string name="pref_summary_desktop_width">桌面模式视口宽度，为较小的内容设置更高的宽度</string>
@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">在当前标签页之后</string>
     <string name="new_tab_position_start">标签页列表的最前面</string>
     <string name="new_tab_position_end">标签页列表的最后面</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">传入视图操作</string>
+    <string name="action_incognito_tab">无痕标签页</string>
+    <string name="action_select_browser">选择浏览器</string>
+    <string name="action_block">屏蔽</string>
+    <string name="pref_title_default_browser">默认浏览器</string>
     <string name="text_encoding">文字编码</string>
     <string name="reset_settings">重置设置</string>
     <string name="reset_settings_confirmation">您将丢失所有设置。您确定要继续吗？</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">重命名文件夹</string>
     <string name="dialog_remove_folder">移除文件夹</string>
     <string name="dialog_title_close_browser">关闭浏览器</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">打开 %1$s</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">已屏蔽 %1$s</string>
     <string name="dialog_delete_all_downloads">删除所有下载内容</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">页面工具</string>
@@ -422,7 +422,7 @@
     </plurals>
     <string name="notification_incognito_running_message">轻触以打开</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">正在进行的无痕会话</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">颁发者</string>
@@ -461,8 +461,8 @@
     <string name="settings_summary_default_domain_settings">默认域名设置</string>
     <string name="settings_title_ssl_error">安全性错误</string>
     <string name="settings_summary_ssl_error">检测到 SSL 错误时应做什么</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_title_incoming_url_action">传入链接操作</string>
+    <string name="settings_summary_incoming_url_action">如何处理来自其他应用的链接</string>
     <string name="checkbox_remember_domain_choice">记住您对此域名的选择</string>
     <string name="settings_title_third_party_cookies">第三方 Cookie</string>
     <string name="settings_summary_on_third_party_cookies">接受用于跟踪您在所有网站上活动的 Cookie</string>
@@ -617,15 +617,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">应用名称</string>
     <string name="message_render_process_crashed">渲染进程崩溃。您可能需要重新加载一些网页。</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">欢迎使用 Fulguris</string>
+    <string name="intro_welcome_description">体验快速、安全且可自定义的网页浏览，具有先进的隐私功能和现代化设计。</string>
+    <string name="intro_title_terms">让我们开始吧！</string>
+    <string name="intro_title_telemetry">帮助我们，帮助您！</string>
+    <string name="intro_title_ad_blocker">保持安全！</string>
+    <string name="intro_description_ad_blocker">启用我们强大的广告拦截器，以更快、更安全、更少干扰的方式浏览。您可以稍后在设置中随时更改此选项。</string>
+    <string name="intro_notification_permission_title">通知权限</string>
+    <string name="intro_notification_permission_description">允许 Fulguris 发送通知，特别是在下载完成和无痕会话期间。</string>
+    <string name="pref_title_enable_ad_blocker">广告拦截器</string>
+    <string name="pref_summary_on_enable_ad_blocker">享受更干净、更安全的网络体验</string>
+    <string name="pref_summary_off_enable_ad_blocker">享受未经过滤的原始网络版本</string>
 </resources>

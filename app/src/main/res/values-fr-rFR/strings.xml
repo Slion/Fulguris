@@ -77,9 +77,9 @@
     <string name="action_yes">Oui</string>
     <string name="action_no">Non</string>
     <string name="action_ask">Demander</string>
-    <string name="layer_type_none">None</string>
-    <string name="layer_type_software">Software - WebGL off</string>
-    <string name="layer_type_hardware">Hardware - WebGL on</string>
+    <string name="layer_type_none">Aucun</string>
+    <string name="layer_type_software">Logiciel - WebGL désactivé</string>
+    <string name="layer_type_hardware">Matériel - WebGL activé</string>
     <string name="action_proceed">Procéder</string>
     <string name="action_abort">Annuler</string>
     <string name="title_text_size">Taille du texte</string>
@@ -117,9 +117,9 @@
     <string name="message_import">Favoris ont été importés</string>
     <string name="message_clear_history">Historique effacé</string>
     <string name="message_cookies_cleared">Cookies effacés</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">Impossible d\'effacer les cookies</string>
     <string name="max_tabs">Maximum d\'onglets atteint. Déverrouillez en achetant un abonnement.</string>
-    <string name="message_cookie_copied">Cookie copied to clipboard</string>
+    <string name="message_cookie_copied">Cookie copié dans le presse-papiers</string>
     <string name="message_text_copied">Texte copié dans le presse-papiers</string>
     <string name="message_link_copied">Adresse copiée dans le presse-papiers</string>
     <string name="message_blocked_local">Le fichier local a été bloqué au chargement</string>
@@ -162,7 +162,7 @@
     <string name="invalid_url">URL invalide</string>
     <string name="blocklist_remove">Supprimer le fichier de filtres</string>
     <string name="blocklist_remove_confirm">Voulez-vous vraiment supprimer le fichier de filtres %s?</string>
-    <string name="local_file">Local</string>
+    <string name="local_file">Fichier local</string>
     <string name="local_file_replace">Remplacer</string>
     <string name="local_file_chosen">fichier sélectionné</string>
     <string name="remote_file">Distant</string>
@@ -503,7 +503,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">Impossible de supprimer la session en cours !</string>
     <string name="session_prompt_confirm_deletion_title">Confirmez la suppression</string>
     <string name="session_prompt_confirm_deletion_message">Êtes-vous sûr de vouloir supprimer la session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\" ?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Êtes-vous sûr de vouloir supprimer la configuration \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" ?</string>
     <string name="session_switched">Basculé vers \"%s\"</string>
     <string name="busy">Occupé, réessayez ultérieurement.</string>
     <string name="invalid_character_removed">Caractère non valide supprimé !</string>

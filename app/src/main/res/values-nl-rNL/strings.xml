@@ -233,7 +233,7 @@
     <string name="message_bookmark_added">Bladwijzer toegevoegd.</string>
     <string name="message_bookmark_not_added">Bladwijzer bestaat al.</string>
     <string name="title_chooser">Kies een bestand</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">Openen met</string>
     <string name="settings_general">Algemene instellingen</string>
     <string name="settings_display">Scherm instellingen</string>
     <string name="settings_backup">Back-up</string>
@@ -252,7 +252,7 @@
     <string name="settings_title_terms_and_conditions">Algemene voorwaarden</string>
     <string name="settings_summary_terms_and_conditions">Bekijk onze algemene voorwaarden online</string>
     <string name="settings_title_introduction">Introduction</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
+    <string name="settings_summary_introduction">Start de onboarding-ervaring</string>
     <string name="settings_summary_discord">Sluit je aan bij onze groeiende gemeenschap</string>
     <string name="pref_category_panels">Panelen</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
@@ -276,11 +276,11 @@
     <string name="pref_title_hide_tool_bar">Verberg werkbalk bij naar beneden scrollen</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Toon werkbalk bij omhoog scrollen</string>
     <string name="pref_title_show_tool_bar_on_page_top">Toon de werkbalk bovenaan de pagina</string>
-    <string name="pref_title_use_cutout_area">Use notch areas</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
-    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_title_use_cutout_area">Gebruik notch-gebieden</string>
+    <string name="pref_summary_on_use_cutout_area">Sta inhoud toe zich uit te breiden in notch-gebieden voor volledig scherm</string>
+    <string name="pref_summary_off_use_cutout_area">Voorkom dat inhoud notch-gebieden overlapt</string>
+    <string name="pref_title_system_gesture_clearance">Ruimte voor systeemgebaren</string>
+    <string name="pref_summary_system_gesture_clearance">Houd inhoud weg van onderste gebaren</string>
     <string name="pref_title_locked_drawers">Vergrendelde panelen</string>
     <string name="pref_summary_locked_drawers">Tabbladen en Bladwijzerpanelen kunnen niet worden versleept</string>
     <string name="pref_title_use_bottom_sheets">Bodemplaten gebruiken</string>
@@ -291,16 +291,16 @@
     <string name="pref_summary_menu_show_exit">Toon app afsluiten optie in menu. Incognito-modus geeft het altijd weer, ongeacht.</string>
     <string name="pref_title_menu_new_tab">Nieuw tabblad menu-item</string>
     <string name="pref_summary_menu_new_tab">Toon de optie Nieuw tabblad in het menu</string>
-    <string name="pref_title_crash_report">Crash reports</string>
+    <string name="pref_title_crash_report">Crashrapporten</string>
     <string name="pref_title_analytics">Statistieken</string>
     <string name="pref_title_pull_to_refresh">Trekken om te verversen</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
-    <string name="pref_title_accept_terms">I want to use Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
+    <string name="pref_summary_on_crash_reports">Help de app te verbeteren door crashrapporten te sturen</string>
+    <string name="pref_summary_off_crash_reports">Crashrapporten worden niet verstuurd</string>
+    <string name="pref_summary_on_analytics">Help de app te verbeteren door gebruiksgegevens te sturen</string>
+    <string name="pref_summary_off_analytics">Gebruiksgegevens worden niet verstuurd</string>
+    <string name="pref_title_accept_terms">Ik wil Fulguris gebruiken</string>
+    <string name="pref_summary_on_accept_terms">Je hebt onze voorwaarden geaccepteerd</string>
+    <string name="pref_summary_off_accept_terms">Accepteer onze voorwaarden om door te gaan</string>
     <string name="pref_summary_color_mode">Webpaginakleur toepassen op gereedschap en statusbalk</string>
     <string name="pref_title_desktop_width">Desktop breedte</string>
     <string name="pref_summary_desktop_width">Beeldschermbreedte in desktopmodus, stel deze hoger in voor kleinere inhoud</string>
@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">Na huidige tab</string>
     <string name="new_tab_position_start">Begin van tabbladlijst</string>
     <string name="new_tab_position_end">Einde tabbladlijst</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Inkomende weergave-actie</string>
+    <string name="action_incognito_tab">Incognito-tabblad</string>
+    <string name="action_select_browser">Browser selecteren</string>
+    <string name="action_block">Blokkeren</string>
+    <string name="pref_title_default_browser">Standaard browser</string>
     <string name="text_encoding">Tekst codering</string>
     <string name="reset_settings">Instellingen resetten</string>
     <string name="reset_settings_confirmation">Je verliest dan al je instellingen. Weet je zeker dat je door wilt gaan?</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Hernoem map</string>
     <string name="dialog_remove_folder">Map verwijderen</string>
     <string name="dialog_title_close_browser">Sluit browser</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">%1$s openen</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">%1$s geblokkeerd</string>
     <string name="dialog_delete_all_downloads">Alle downloads verwijderen</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Pagina gereedschappen</string>
@@ -423,7 +423,7 @@
     </plurals>
     <string name="notification_incognito_running_message">Aanraken om te openen</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Lopende incognito-sessie</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Uitgegeven door:</string>
@@ -462,8 +462,8 @@
     <string name="settings_summary_default_domain_settings">Standaard domeininstellingen</string>
     <string name="settings_title_ssl_error">Beveiligingsfout</string>
     <string name="settings_summary_ssl_error">Wat te doen als er een SSL-fout is gedetecteerd</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_title_incoming_url_action">Inkomende linkactie</string>
+    <string name="settings_summary_incoming_url_action">Hoe links van andere apps te behandelen</string>
     <string name="checkbox_remember_domain_choice">Onthoud je keuze voor dit domein</string>
     <string name="settings_title_third_party_cookies">Cookies van derden</string>
     <string name="settings_summary_on_third_party_cookies">Cookies accepteren die worden gebruikt om uw activiteiten op websites te volgen</string>
@@ -560,7 +560,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_summary_close_drawer">Lade automatisch sluiten na het maken of verwijderen van een tabblad</string>
     <string name="inspect">Javascript injecteren</string>
     <string name="edit_cookies">Website cookies tonen</string>
-    <string name="site_cookies">Site cookies</string>
+    <string name="site_cookies">Site-cookies</string>
     <string name="accent_color">Accent kleur</string>
     <string name="accent_amber">Oranjegeel</string>
     <string name="accent_blue">Blauw</string>
@@ -619,15 +619,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">Naam app</string>
     <string name="message_render_process_crashed">Renderproces is gecrasht. Mogelijk moet u sommige webpagina\'s opnieuw laden.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Welkom bij Fulguris</string>
+    <string name="intro_welcome_description">Ervaar snel, veilig en aanpasbaar browsen met geavanceerde privacyfuncties en modern ontwerp.</string>
+    <string name="intro_title_terms">Laten we beginnen!</string>
+    <string name="intro_title_telemetry">Help ons u te helpen!</string>
+    <string name="intro_title_ad_blocker">Wees veilig!</string>
+    <string name="intro_description_ad_blocker">Schakel onze krachtige advertentieblokkering in om sneller, veiliger en met minder afleidingen te browsen. U kunt dit later altijd wijzigen in de instellingen.</string>
+    <string name="intro_notification_permission_title">Meldingstoestemming</string>
+    <string name="intro_notification_permission_description">Sta Fulguris toe meldingen te verzenden, met name voor voltooide downloads en tijdens incognito-sessies.</string>
+    <string name="pref_title_enable_ad_blocker">Advertentieblokkering</string>
+    <string name="pref_summary_on_enable_ad_blocker">Geniet van een schonere, veiligere webervaring</string>
+    <string name="pref_summary_off_enable_ad_blocker">Geniet van een ongefilterde, originele versie van het web</string>
 </resources>
