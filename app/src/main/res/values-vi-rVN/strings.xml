@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">Sau tab hiện tại</string>
     <string name="new_tab_position_start">Đầu danh sách tab</string>
     <string name="new_tab_position_end">Cuối danh sách tab</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Hành động xem đến</string>
+    <string name="action_incognito_tab">Tab ẩn danh</string>
+    <string name="action_select_browser">Chọn trình duyệt</string>
+    <string name="action_block">Chặn</string>
+    <string name="pref_title_default_browser">Trình duyệt mặc định</string>
     <string name="text_encoding">Mã hóa văn bản</string>
     <string name="reset_settings">Đặt lại thiết đặt</string>
     <string name="reset_settings_confirmation">Bạn sẽ mất tất cả các cài đặt của mình. Bạn có chắc muốn tiếp tục?</string>
@@ -617,15 +617,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">App name</string>
     <string name="message_render_process_crashed">Quá trình kết xuất bị lỗi. Bạn có thể cần phải tải lại một số trang web.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Chào mừng đến với Fulguris</string>
+    <string name="intro_welcome_description">Trải nghiệm duyệt web nhanh, an toàn và có thể tùy chỉnh với các tính năng bảo mật nâng cao và thiết kế hiện đại.</string>
+    <string name="intro_title_terms">Hãy bắt đầu!</string>
+    <string name="intro_title_telemetry">Giúp chúng tôi, giúp bạn!</string>
+    <string name="intro_title_ad_blocker">An toàn!</string>
+    <string name="intro_description_ad_blocker">Bật trình chặn quảng cáo mạnh mẽ của chúng tôi để duyệt nhanh hơn, an toàn hơn và ít bị phân tâm hơn. Bạn luôn có thể thay đổi điều này sau trong cài đặt.</string>
+    <string name="intro_notification_permission_title">Quyền thông báo</string>
+    <string name="intro_notification_permission_description">Cho phép Fulguris gửi thông báo, đặc biệt là cho việc hoàn thành tải xuống và trong các phiên ẩn danh.</string>
+    <string name="pref_title_enable_ad_blocker">Trình chặn quảng cáo</string>
+    <string name="pref_summary_on_enable_ad_blocker">Tận hưởng trải nghiệm web sạch hơn, an toàn hơn</string>
+    <string name="pref_summary_off_enable_ad_blocker">Tận hưởng phiên bản web gốc không lọc</string>
 </resources>

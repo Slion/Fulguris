@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">Setelah tab terkini</string>
     <string name="new_tab_position_start">Pada awal daftar tab</string>
     <string name="new_tab_position_end">Pada akhir daftar tab</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Tindakan tampilan masuk</string>
+    <string name="action_incognito_tab">Tab penyamaran</string>
+    <string name="action_select_browser">Pilih peramban</string>
+    <string name="action_block">Blokir</string>
+    <string name="pref_title_default_browser">Peramban default</string>
     <string name="text_encoding">Format kode teks</string>
     <string name="reset_settings">Atur ulang pengaturan</string>
     <string name="reset_settings_confirmation">Semua setelan akan terhapus. Lanjut?</string>
@@ -617,15 +617,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">App name</string>
     <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Selamat datang di Fulguris</string>
+    <string name="intro_welcome_description">Rasakan penelusuran web yang cepat, aman, dan dapat disesuaikan dengan fitur privasi canggih dan desain modern.</string>
+    <string name="intro_title_terms">Mari Mulai!</string>
+    <string name="intro_title_telemetry">Bantu Kami, Bantu Anda!</string>
+    <string name="intro_title_ad_blocker">Tetap Aman!</string>
+    <string name="intro_description_ad_blocker">Aktifkan pemblokir iklan kami yang kuat untuk menjelajah lebih cepat, lebih aman, dan dengan lebih sedikit gangguan. Anda selalu dapat mengubah ini nanti di pengaturan.</string>
+    <string name="intro_notification_permission_title">Izin notifikasi</string>
+    <string name="intro_notification_permission_description">Izinkan Fulguris mengirim notifikasi, terutama untuk penyelesaian unduhan dan selama sesi penyamaran.</string>
+    <string name="pref_title_enable_ad_blocker">Pemblokir iklan</string>
+    <string name="pref_summary_on_enable_ad_blocker">Nikmati pengalaman web yang lebih bersih dan aman</string>
+    <string name="pref_summary_off_enable_ad_blocker">Nikmati versi web asli tanpa filter</string>
 </resources>

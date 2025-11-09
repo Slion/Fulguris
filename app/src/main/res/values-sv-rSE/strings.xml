@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">Efter nuvarande flik</string>
     <string name="new_tab_position_start">Start av fliklistan</string>
     <string name="new_tab_position_end">Slutet av fliklistan</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Inkommande vyåtgärd</string>
+    <string name="action_incognito_tab">Inkognitoflik</string>
+    <string name="action_select_browser">Välj webbläsare</string>
+    <string name="action_block">Blockera</string>
+    <string name="pref_title_default_browser">Standardwebbläsare</string>
     <string name="text_encoding">Textkodning</string>
     <string name="reset_settings">Återställ inställningar</string>
     <string name="reset_settings_confirmation">Du kommer förlora alla dina inställningar. Är du säker på att du vill fortsätta?</string>
@@ -619,15 +619,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">App name</string>
     <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Välkommen till Fulguris</string>
+    <string name="intro_welcome_description">Upplev snabb, säker och anpassningsbar webbläsning med avancerade integritetsfunktioner och modern design.</string>
+    <string name="intro_title_terms">Låt oss komma igång!</string>
+    <string name="intro_title_telemetry">Hjälp oss att hjälpa dig!</string>
+    <string name="intro_title_ad_blocker">Var säker!</string>
+    <string name="intro_description_ad_blocker">Aktivera vår kraftfulla annonsblockerare för att surfa snabbare, säkrare och med färre distraktioner. Du kan alltid ändra detta senare i inställningarna.</string>
+    <string name="intro_notification_permission_title">Aviseringsbehörighet</string>
+    <string name="intro_notification_permission_description">Tillåt Fulguris att skicka aviseringar, särskilt för nedladdningar och under inkognitosessioner.</string>
+    <string name="pref_title_enable_ad_blocker">Annonsblockerare</string>
+    <string name="pref_summary_on_enable_ad_blocker">Njut av en renare, säkrare webbupplevelse</string>
+    <string name="pref_summary_off_enable_ad_blocker">Njut av en ofiltrerad, original version av webben</string>
 </resources>

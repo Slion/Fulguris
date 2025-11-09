@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">Após a aba atual</string>
     <string name="new_tab_position_start">Início da lista de abas</string>
     <string name="new_tab_position_end">Fim da lista de abas</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Ação de visualização recebida</string>
+    <string name="action_incognito_tab">Aba anônima</string>
+    <string name="action_select_browser">Selecionar navegador</string>
+    <string name="action_block">Bloquear</string>
+    <string name="pref_title_default_browser">Navegador padrão</string>
     <string name="text_encoding">Codificação de texto</string>
     <string name="reset_settings">Redefinir configurações</string>
     <string name="reset_settings_confirmation">Você perderá todas as suas configurações. Tem certeza de que deseja continuar?</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Renomear pasta</string>
     <string name="dialog_remove_folder">Remover pasta</string>
     <string name="dialog_title_close_browser">Fechar navegador</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">Abrir %1$s</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">%1$s bloqueado</string>
     <string name="dialog_delete_all_downloads">Excluir todos os downloads</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Ferramentas da página</string>
@@ -423,7 +423,7 @@
     </plurals>
     <string name="notification_incognito_running_message">Toque para abrir</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Sessão anônima em andamento</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Issued by</string>
@@ -462,8 +462,8 @@
     <string name="settings_summary_default_domain_settings">Configurações padrão de domínio</string>
     <string name="settings_title_ssl_error">Erro de segurança</string>
     <string name="settings_summary_ssl_error">O que fazer quando um erro SSL for detectado</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_title_incoming_url_action">Ação de link recebido</string>
+    <string name="settings_summary_incoming_url_action">Como lidar com links de outros aplicativos</string>
     <string name="checkbox_remember_domain_choice">Memorizar escolha para este domínio</string>
     <string name="settings_title_third_party_cookies">Cookies de terceiros</string>
     <string name="settings_summary_on_third_party_cookies">Aceitar cookies usados para rastrear suas atividades nos sites</string>
@@ -619,15 +619,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">Nome do aplicativo</string>
     <string name="message_render_process_crashed">Processo de renderização falhou. Talvez seja necessário recarregar algumas páginas da web.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Bem-vindo ao Fulguris</string>
+    <string name="intro_welcome_description">Experimente navegação web rápida, segura e personalizável com recursos avançados de privacidade e design moderno.</string>
+    <string name="intro_title_terms">Vamos começar!</string>
+    <string name="intro_title_telemetry">Ajude-nos a ajudá-lo!</string>
+    <string name="intro_title_ad_blocker">Fique seguro!</string>
+    <string name="intro_description_ad_blocker">Ative nosso poderoso bloqueador de anúncios para navegar mais rápido, com mais segurança e menos distrações. Você pode sempre alterar isso mais tarde nas configurações.</string>
+    <string name="intro_notification_permission_title">Permissão de notificação</string>
+    <string name="intro_notification_permission_description">Permitir que o Fulguris envie notificações, especialmente para conclusão de downloads e durante sessões anônimas.</string>
+    <string name="pref_title_enable_ad_blocker">Bloqueador de anúncios</string>
+    <string name="pref_summary_on_enable_ad_blocker">Desfrute de uma experiência web mais limpa e segura</string>
+    <string name="pref_summary_off_enable_ad_blocker">Desfrute de uma versão não filtrada e original da web</string>
 </resources>

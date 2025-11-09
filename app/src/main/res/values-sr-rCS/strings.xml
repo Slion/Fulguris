@@ -335,11 +335,11 @@
     <string name="new_tab_position_after">Nakon trenutnog jezička</string>
     <string name="new_tab_position_start">Početak liste jezičaka</string>
     <string name="new_tab_position_end">Kraj liste jezičaka</string>
-    <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
-    <string name="action_select_browser">Select browser</string>
-    <string name="action_block">Block</string>
-    <string name="pref_title_default_browser">Default browser</string>
+    <string name="incoming_view_action">Akcija dolaznog prikaza</string>
+    <string name="action_incognito_tab">Inkognito kartica</string>
+    <string name="action_select_browser">Odaberi pretraživač</string>
+    <string name="action_block">Blokiraj</string>
+    <string name="pref_title_default_browser">Podrazumevani pretraživač</string>
     <string name="text_encoding">Kodiranje teksta</string>
     <string name="reset_settings">Resetujte podešavanja</string>
     <string name="reset_settings_confirmation">Izgubićete sva podešavanja. Da li ste sigurni da želite da nastavite?</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Preimenuj fasciklu</string>
     <string name="dialog_remove_folder">Ukloni fasciklu</string>
     <string name="dialog_title_close_browser">Zatvorite pretraživač</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">Otvori %1$s</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">Blokirano %1$s</string>
     <string name="dialog_delete_all_downloads">Izbrišite sva preuzimanja</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Alatke za stranice</string>
@@ -424,7 +424,7 @@
     </plurals>
     <string name="notification_incognito_running_message">Dodirnite za otvaranje</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Tekuća inkognito sesija</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Izdato od:</string>
@@ -463,8 +463,8 @@
     <string name="settings_summary_default_domain_settings">Podrazumevana podešavanja domena</string>
     <string name="settings_title_ssl_error">Security error</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_title_incoming_url_action">Akcija dolazećeg linka</string>
+    <string name="settings_summary_incoming_url_action">Kako rukovati linkovima iz drugih aplikacija</string>
     <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
     <string name="settings_title_third_party_cookies">Third-party cookies</string>
     <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
@@ -621,15 +621,15 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_app_name">App name</string>
     <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
     <!-- App Introduction Strings -->
-    <string name="intro_welcome_title">Welcome to Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
-    <string name="intro_title_terms">Let\'s Get Started!</string>
-    <string name="intro_title_telemetry">Help Us, Help You!</string>
-    <string name="intro_title_ad_blocker">Be Safe!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
-    <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
-    <string name="pref_title_enable_ad_blocker">Ad blocker</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="intro_welcome_title">Dobrodošli u Fulguris</string>
+    <string name="intro_welcome_description">Doživite brzo, bezbedno i prilagodljivo pregledanje veba sa naprednim funkcijama privatnosti i modernim dizajnom.</string>
+    <string name="intro_title_terms">Počnimo!</string>
+    <string name="intro_title_telemetry">Pomozite nam da vam pomognemo!</string>
+    <string name="intro_title_ad_blocker">Budite bezbedni!</string>
+    <string name="intro_description_ad_blocker">Omogućite naš moćan blokator oglasa za brže, bezbednije pregledanje sa manje ometanja. Uvek možete promeniti ovo kasnije u podešavanjima.</string>
+    <string name="intro_notification_permission_title">Dozvola za obaveštenja</string>
+    <string name="intro_notification_permission_description">Dozvolite Fulguris-u da šalje obaveštenja, posebno za završetak preuzimanja i tokom inkognito sesija.</string>
+    <string name="pref_title_enable_ad_blocker">Blokator oglasa</string>
+    <string name="pref_summary_on_enable_ad_blocker">Uživajte u čistijem, bezbednijem veb iskustvu</string>
+    <string name="pref_summary_off_enable_ad_blocker">Uživajte u nefiltriranoj, originalnoj verziji veba</string>
 </resources>
