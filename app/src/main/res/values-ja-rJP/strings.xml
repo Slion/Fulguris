@@ -526,7 +526,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <!-- Find in page -->
     <string name="no_match_found">一致するものが見つかりません。</string>
     <string name="match_x_of_n"><xliff:g id="current_match" example="1">%1$d</xliff:g> / <xliff:g id="match_count" example="10">%2$d</xliff:g> と一致</string>
-    <string name="pref_title_show_snackbar">Show snackbar</string>
+    <string name="pref_title_show_snackbar">スナックバーを表示</string>
     <string name="pref_title_show_animation">アニメーションを表示</string>
     <string name="pref_title_vibrate">振動</string>
     <string name="settings_title_animation_duration">アニメーションの時間</string>

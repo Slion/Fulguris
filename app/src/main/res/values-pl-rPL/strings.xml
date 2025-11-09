@@ -3,7 +3,7 @@
     <string name="action_reload">Przeładuj</string>
     <string name="action_menu">Więcej</string>
     <string name="action_new_tab">Nowa</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Duplikuj kartę</string>
     <string name="action_share">Udostępniaj</string>
     <string name="action_history">Historia</string>
     <string name="action_bookmarks">Zakładki</string>

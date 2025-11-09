@@ -1,5 +1,12 @@
 import re
+import sys
 from pathlib import Path
+
+# Check for command-line argument
+show_all_for_lang = None
+if len(sys.argv) > 1:
+    show_all_for_lang = sys.argv[1]
+    print(f"Will show ALL issues for language: {show_all_for_lang}\n")
 
 # Parse main English strings.xml
 main_strings_file = Path('app/src/main/res/values/strings.xml')
@@ -98,10 +105,17 @@ if issues_found:
     for lang_name in sorted(issues_found.keys()):
         issues = issues_found[lang_name]
         print(f"\n{lang_name} ({len(issues)} issues):")
-        for issue in issues[:20]:  # Show first 20
-            print(issue)
-        if len(issues) > 20:
-            print(f"  ... and {len(issues) - 20} more issues")
+
+        # Show all issues if this is the requested language, otherwise show first 20
+        if show_all_for_lang and lang_name == show_all_for_lang:
+            for issue in issues:
+                print(issue)
+            print(f"\n*** Showing ALL {len(issues)} issues for {lang_name} ***")
+        else:
+            for issue in issues[:20]:  # Show first 20
+                print(issue)
+            if len(issues) > 20:
+                print(f"  ... and {len(issues) - 20} more issues")
 else:
     print("\nNo translation quality issues detected!")
     print("All translations appear to be properly localized.")
@@ -113,5 +127,8 @@ print(f"Languages checked: {len(lang_dirs)}")
 print(f"Languages with potential issues: {len(issues_found)}")
 print(f"Languages with clean translations: {len(lang_dirs) - len(issues_found)}")
 print("\nNote: Some 'untranslated' strings may be intentional (proper nouns, etc.)")
+print("\nUsage: python check_translation_quality.py [language_code]")
+print("  Example: python check_translation_quality.py uk-rUA")
+print("  (Shows ALL issues for specified language instead of just first 20)")
 print("="*80)
 

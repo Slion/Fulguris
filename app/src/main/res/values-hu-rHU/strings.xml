@@ -528,7 +528,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <!-- Find in page -->
     <string name="no_match_found">Nincs találat!</string>
     <string name="match_x_of_n">Találat <xliff:g id="current_match" example="1">%1$d</xliff:g> ennyiből <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
-    <string name="pref_title_show_snackbar">Show snackbar</string>
+    <string name="pref_title_show_snackbar">Snackbar megjelenítése</string>
     <string name="pref_title_show_animation">Animáció mutatása</string>
     <string name="pref_title_vibrate">Rezgés</string>
     <string name="settings_title_animation_duration">Animáció időtartam</string>
@@ -556,9 +556,9 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_search_custom_image_url">Keresési oldal egyedi kép</string>
     <string name="pref_summary_search_custom_image_url">Csak egyedi URL-nak</string>
     <string name="long_press_tab">Nyomjon hosszan a \"Lap\" ikonra új lap megnyitásához</string>
-    <string name="pref_title_close_drawer">Close drawer</string>
-    <string name="pref_summary_close_drawer">Automatically close Drawer after creating or deleting a tab</string>
-    <string name="inspect">Inject Javascript</string>
+    <string name="pref_title_close_drawer">Fiók bezárása</string>
+    <string name="pref_summary_close_drawer">Fiók automatikus bezárása lap létrehozása vagy törlése után</string>
+    <string name="inspect">Javascript befecskendezése</string>
     <string name="edit_cookies">Oldal sütijeinek mutatása</string>
     <string name="site_cookies">Oldal sütik</string>
     <string name="accent_color">Akcentus szín</string>
@@ -589,35 +589,34 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="suggest">Keresési javaslatok (szám)</string>
     <string name="action_cycle_tabs_forwards">Lépjen előre a lapok közt</string>
     <string name="action_cycle_tabs_backwards">Lépjen hátra a lapok közt</string>
-    <string name="action_focus_address_bar">Focus address bar</string>
+    <string name="action_focus_address_bar">Címsáv fókuszálása</string>
     <string name="action_tab_history_forward">Előre a lap történetében</string>
-    <string name="action_toggle_toolbar">Toggle toolbar</string>
-    <string name="action_toggle_status_bar">Toggle status bar</string>
-    <string name="action_text_size_increment">Increase text size</string>
-    <string name="action_text_size_decrement">Decrease text size</string>
-    <string name="action_text_size_small_increment">Increase text size a bit</string>
-    <string name="action_text_size_small_decrement">Decrease text size a bit</string>
-    <string name="action_open_bookmark_list">Open bookmark list</string>
+    <string name="action_toggle_toolbar">Eszköztár váltása</string>
+    <string name="action_toggle_status_bar">Állapotsor váltása</string>
+    <string name="action_text_size_increment">Szövegméret növelése</string>
+    <string name="action_text_size_decrement">Szövegméret csökkentése</string>
+    <string name="action_text_size_small_increment">Szövegméret kicsit növelése</string>
+    <string name="action_text_size_small_decrement">Szövegméret kicsit csökkentése</string>
+    
+    <string name="action_open_bookmark_list">Könyvjelző lista megnyitása</string>
     <string name="action_open_tab_list">Lapok listájának megnyitása</string>
-    <string name="action_open_session_list">Open session list</string>
-    <string name="action_switch_to_session">Switch to session 1 to 9</string>
+    <string name="action_open_session_list">Munkamenet lista megnyitása</string>
+    <string name="action_switch_to_session">Váltás 1-9 munkamenetre</string>
     <string name="action_switch_to_tab">Váltás 1 és 9 lap közt</string>
-    <string name="action_switch_to_last_tab">Utolsó lap megnyitása</string>
-    <string name="action_switch_to_last_session">Switch to last session</string>
+    <string name="action_switch_to_last_session">Utolsó munkamenet megnyitása</string>
     <string name="log_level_verbose">Verbose</string>
     <string name="log_level_debug">Debug</string>
     <string name="log_level_info">Info</string>
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
-    <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
+
+    <string name="label_short_url">Rövid URL</string>
     <string name="label_domain">Tartomány</string>
-    <string name="label_title">Title</string>
-    <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_title">Cím</string>
+    <string name="label_session">Munkamenet</string>
+    <string name="label_app_name">Alkalmazás neve</string>
+    <string name="message_render_process_crashed">A renderelési folyamat összeomlott. Előfordulhat, hogy újra kell töltenie néhány weboldalt.</string>
     <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Üdvözöljük a Fulgurisban</string>
     <string name="intro_welcome_description">Tapasztalja meg a gyors, biztonságos és testreszabható webböngészést fejlett adatvédelmi funkciókkal és modern dizájnnal.</string>
