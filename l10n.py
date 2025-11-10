@@ -10,6 +10,43 @@ if sys.platform == 'win32':
     except:
         pass
 
+def escape_xml_value(value):
+    """Escape special XML characters in string values.
+
+    Android XML string resources require:
+    - Apostrophes (') to be escaped as \'
+    - Quotes (") to be escaped as \"
+    - Ampersands (&) to be escaped as &amp;
+    - Less than (<) to be escaped as &lt;
+    - Greater than (>) to be escaped as &gt;
+    - Newlines (\n) should be preserved as literal \n
+    """
+    # Don't escape if already contains XML entities or escape sequences
+    if '&amp;' in value or '&lt;' in value or '&gt;' in value:
+        # Already has XML entities, assume it's properly formatted
+        return value
+
+    # Escape XML special characters
+    value = value.replace('&', '&amp;')  # Must be first
+    value = value.replace('<', '&lt;')
+    value = value.replace('>', '&gt;')
+
+    # For Android XML, apostrophes need to be escaped with backslash
+    # Check if there are any unescaped apostrophes
+    # Look for ' that is not preceded by \
+    result = []
+    i = 0
+    while i < len(value):
+        if value[i] == "'" and (i == 0 or value[i-1] != '\\'):
+            result.append("\\'")
+        elif value[i] == '"' and (i == 0 or value[i-1] != '\\'):
+            result.append('\\"')
+        else:
+            result.append(value[i])
+        i += 1
+
+    return ''.join(result)
+
 def show_help():
     """Display help information about available commands."""
     print("=" * 80)
@@ -115,8 +152,11 @@ def set_string_value(language, string_id, new_value):
         print(f"Error: String ID '{string_id}' not found in {file_path}")
         sys.exit(1)
 
+    # Escape XML special characters in the new value
+    escaped_value = escape_xml_value(new_value)
+
     # Replace the string value
-    content = re.sub(pattern, f'\\1{new_value}\\3', content)
+    content = re.sub(pattern, f'\\1{escaped_value}\\3', content)
 
     # Write back to file with UTF-8 encoding (no BOM)
     try:
@@ -175,8 +215,11 @@ def set_string_values_batch(language, string_pairs):
             error_count += 1
             continue
 
+        # Escape XML special characters in the new value
+        escaped_value = escape_xml_value(new_value)
+
         # Replace the string value
-        content = re.sub(pattern, f'\\1{new_value}\\3', content)
+        content = re.sub(pattern, f'\\1{escaped_value}\\3', content)
         print(f"[OK] {string_id}")
         success_count += 1
 
