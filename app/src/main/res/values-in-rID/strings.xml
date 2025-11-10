@@ -3,11 +3,11 @@
     <string name="action_reload">Muat ulang</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Tab baru</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Duplikat tab</string>
     <string name="action_share">Bagikan</string>
-    <string name="action_history">Histori</string>
+    <string name="action_history">Riwayat</string>
     <string name="action_bookmarks">Bookmark</string>
-    <string name="action_downloads">Download</string>
+    <string name="action_downloads">Unduhan</string>
     <string name="action_add_bookmark">Tambahkan bookmark</string>
     <string name="action_forward">Teruskan</string>
     <string name="action_sessions">Sesi</string>
@@ -17,7 +17,7 @@
     <string name="enable">Aktifkan</string>
     <string name="disable">Nonaktifkan</string>
     <string name="settings">Setelan</string>
-    <string name="options">Options</string>
+    <string name="options">Opsi</string>
     <string name="location">Akses lokasi</string>
     <string name="password">Simpan sandi Anda</string>
     <string name="agent">Agen pengguna</string>
@@ -43,7 +43,7 @@
     <string name="restore_tabs_on_startup">Pulihkan tab saat memulai</string>
     <string name="clear_cookies">Hapus cookie pada browser</string>
     <string name="clear_history">Hapus histori pada browser</string>
-    <string name="action_download">Download</string>
+    <string name="action_download">Unduh</string>
     <string name="action_open">Buka</string>
     <string name="dialog_title_share">Bagikan halaman ini</string>
     <string name="action_delete">Hapus</string>
@@ -77,13 +77,13 @@
     <string name="action_yes">Ya</string>
     <string name="action_no">Tidak</string>
     <string name="action_ask">Ask</string>
-    <string name="layer_type_none">None</string>
-    <string name="layer_type_software">Software - WebGL off</string>
-    <string name="layer_type_hardware">Hardware - WebGL on</string>
-    <string name="action_proceed">Proceed</string>
-    <string name="action_abort">Abort</string>
+    <string name="layer_type_none">Tidak ada</string>
+    <string name="layer_type_software">Perangkat lunak - WebGL mati</string>
+    <string name="layer_type_hardware">Perangkat keras - WebGL aktif</string>
+    <string name="action_proceed">Lanjutkan</string>
+    <string name="action_abort">Batalkan</string>
     <string name="title_text_size">Ukuran teks</string>
-    <string name="title_error">Error</string>
+    <string name="title_error">Kesalahan</string>
     <string name="hint_title">Judul</string>
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Edit bookmark</string>
@@ -97,7 +97,7 @@
     <string name="action_find_selection">Temukan pilihan</string>
     <string name="action_print">Cetak</string>
     <string name="action_translate">Terjemahkan</string>
-    <string name="downloads">Download</string>
+    <string name="downloads">Unduhan</string>
     <string name="downloads_notification_description">Aktif pada saat download selesai</string>
     <string name="download_pending">Mendownload:</string>
     <string name="cannot_download">Hanya dapat mendownload dari URL dengan \"http\" atau \"https\".</string>
@@ -117,9 +117,9 @@
     <string name="message_import">Penanda telah dibawa masuk</string>
     <string name="message_clear_history">Riwayat telah dihapus</string>
     <string name="message_cookies_cleared">Cookies telah dihapus</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">Tidak dapat menghapus cookie</string>
     <string name="max_tabs">Jumlah tab telah mencapai batas. Untuk menambah batas jumlah tab, ayo berlangganan.</string>
-    <string name="message_cookie_copied">Cookie copied to clipboard</string>
+    <string name="message_cookie_copied">Cookie disalin ke clipboard</string>
     <string name="message_text_copied">Teks telah tersalin ke dalam clipboard</string>
     <string name="message_link_copied">Tautan telah tersalin ke dalam clipboard</string>
     <string name="message_blocked_local">Tidak bisa memuat file yang tersimpan</string>
@@ -172,8 +172,8 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Tindakan telah dibatalkan.</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error_aborted">Kesalahan keamanan! Pemuatan halaman dibatalkan.</string>
+    <string name="message_ssl_error">Koneksi aman terkompromi:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Apakah Anda masih ingin melanjutkan?</string>
     <string name="message_certificate_date_invalid">Tanggal pada sertifikat tidak berlaku</string>
     <string name="message_certificate_expired">Sertifikat ini telah kadaluarsa</string>
     <string name="message_certificate_domain_mismatch">Domain dalam sertifikat ini tidak sama dengan domain halaman ini</string>
@@ -233,16 +233,16 @@
     <string name="message_bookmark_added">Penanda telah ditambahkan.</string>
     <string name="message_bookmark_not_added">Penanda sudah ada.</string>
     <string name="title_chooser">Pilih file</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">Buka dengan</string>
     <string name="settings_general">Umum</string>
     <string name="settings_display">Tampilan &amp; nuansa</string>
     <string name="settings_backup">Cadangan</string>
     <string name="settings_title_configuration">Setelan</string>
     <string name="settings_summary_configuration">Setelan tampilan tegak dan mendatar</string>
-    <string name="settings_title_delete_configuration">Delete configuration</string>
+    <string name="settings_title_delete_configuration">Hapus konfigurasi</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
-    <string name="settings_title_add_configuration">Add configuration</string>
+    <string name="settings_title_add_configuration">Tambah konfigurasi</string>
     <string name="settings_privacy">Privasi</string>
     <string name="settings_about">Mengenai Fulguris</string>
     <string name="settings_contribute">Berkontribusi</string>
@@ -251,9 +251,9 @@
     <string name="settings_summary_privacy_policy">Lihat kebijakan privasi kami secara daring</string>
     <string name="settings_title_terms_and_conditions">Syarat &amp; Ketentuan</string>
     <string name="settings_summary_terms_and_conditions">Lihat kebijakan privasi kami secara daring</string>
-    <string name="settings_title_introduction">Introduction</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_title_introduction">Pengenalan</string>
+    <string name="settings_summary_introduction">Luncurkan pengalaman orientasi</string>
+    <string name="settings_summary_discord">Bergabunglah dengan komunitas kami yang berkembang</string>
     <string name="pref_category_panels">Panel</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Mendatar</string>
@@ -264,23 +264,23 @@
     <string name="pref_category_on_tab_close">Saat menutup tab</string>
     <string name="pref_category_on_tab_change">Saat bertukar tab</string>
     <string name="pref_category_on_tab_back_forward">Saat berganti ke tab sebelumnya atau sesudahnya</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
-    <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="settings_category_on_follow_link">Saat mengikuti tautan</string>
+    <string name="pref_category_scrollbars">Scrollbar</string>
     <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
-    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
+    <string name="settings_title_page_history">Riwayat halaman</string>
+    <string name="settings_summary_tab">Animasi, umpan balik dan tampilan</string>
+    <string name="pref_summary_scrollbars">Sesuaikan ukuran dan perilaku scrollbar</string>
     <string name="pref_category_subscriptions">Berlangganan</string>
     <string name="pref_summary_subscriptions">Lihat, ubah, atau batalkan Langganan Anda</string>
     <string name="pref_title_hide_status_bar">Samarkan status bar</string>
     <string name="pref_title_hide_tool_bar">Samarkan tool bar saat turun halaman</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Tampilkan tool bar saat naik halaman</string>
     <string name="pref_title_show_tool_bar_on_page_top">Tampilkan tool bar pada awal halaman</string>
-    <string name="pref_title_use_cutout_area">Use notch areas</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
-    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_title_use_cutout_area">Gunakan area notch</string>
+    <string name="pref_summary_on_use_cutout_area">Izinkan konten meluas ke area notch untuk tampilan layar penuh</string>
+    <string name="pref_summary_off_use_cutout_area">Cegah konten tumpang tindih dengan area notch</string>
+    <string name="pref_title_system_gesture_clearance">Jarak gestur sistem</string>
+    <string name="pref_summary_system_gesture_clearance">Jaga konten agar tidak tertutup gestur bawah</string>
     <string name="pref_title_locked_drawers">Panel yang terkunci</string>
     <string name="pref_summary_locked_drawers">Panel Tab dan Penanda tidak bisa diseret</string>
     <string name="pref_title_use_bottom_sheets">Gunakan bottom sheets</string>
@@ -291,16 +291,16 @@
     <string name="pref_summary_menu_show_exit">Tampilkan pilihan untuk keluar dalam menu. Pilihan untuk keluar akan selalu tampil dalam mode menyamar.</string>
     <string name="pref_title_menu_new_tab">Menu untuk tab baru</string>
     <string name="pref_summary_menu_new_tab">Tampilkan pilihan untuk tab baru dalam menu</string>
-    <string name="pref_title_crash_report">Crash reports</string>
+    <string name="pref_title_crash_report">Laporan crash</string>
     <string name="pref_title_analytics">Analitik</string>
     <string name="pref_title_pull_to_refresh">Tarik untuk memperbarui</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
-    <string name="pref_title_accept_terms">I want to use Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
+    <string name="pref_summary_on_crash_reports">Bantu tingkatkan aplikasi dengan mengirim laporan crash</string>
+    <string name="pref_summary_off_crash_reports">Laporan crash tidak akan dikirim</string>
+    <string name="pref_summary_on_analytics">Bantu tingkatkan aplikasi dengan mengirim data penggunaan</string>
+    <string name="pref_summary_off_analytics">Data penggunaan tidak akan dikirim</string>
+    <string name="pref_title_accept_terms">Saya ingin menggunakan Fulguris</string>
+    <string name="pref_summary_on_accept_terms">Anda telah menerima syarat dan ketentuan kami</string>
+    <string name="pref_summary_off_accept_terms">Terima syarat dan ketentuan kami untuk melanjutkan</string>
     <string name="pref_summary_color_mode">Pakai warna dari halaman web untuk tool dan status bar</string>
     <string name="pref_title_desktop_width">Lebarnya desktop</string>
     <string name="pref_summary_desktop_width">Naikkan jika isi halaman berukuran kecil</string>
@@ -455,18 +455,18 @@
     <string name="settings_title_domains_delete_all">Delete all</string>
     <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
-    <string name="settings_title_delete_domain_settings">Delete domain settings</string>
-    <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
-    <string name="settings_title_parent">Parent</string>
-    <string name="settings_summary_default_domain_settings">Default domain settings</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_title_delete_domain_settings">Hapus pengaturan domain</string>
+    <string name="settings_summary_delete_domain_settings">Akan dibuat ulang saat domain ini ditemui lagi</string>
+    <string name="settings_title_parent">Induk</string>
+    <string name="settings_summary_default_domain_settings">Pengaturan domain default</string>
+    <string name="settings_title_ssl_error">Kesalahan keamanan</string>
+    <string name="settings_summary_ssl_error">Apa yang harus dilakukan saat kesalahan SSL terdeteksi</string>
+    <string name="settings_title_incoming_url_action">Aksi tautan masuk</string>
+    <string name="settings_summary_incoming_url_action">Cara menangani tautan dari aplikasi lain</string>
+    <string name="checkbox_remember_domain_choice">Ingat pilihan Anda untuk domain ini</string>
+    <string name="settings_title_third_party_cookies">Cookie pihak ketiga</string>
+    <string name="settings_summary_on_third_party_cookies">Terima cookie yang digunakan untuk melacak aktivitas Anda di seluruh situs web</string>
+    <string name="settings_summary_off_third_party_cookies">Tolak cookie yang digunakan untuk melacak aktivitas Anda di seluruh situs web</string>
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
     <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
@@ -481,7 +481,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">Halaman saat ini tidak memiliki cookie</item> -->
         <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
     <string name="settings_title_task_label">Task label</string>
@@ -500,8 +500,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Sudah ada sesi yang bernama ini!</string>
     <string name="session_cant_delete_current">Tidak dapat menghapus sesi ini!</string>
     <string name="session_prompt_confirm_deletion_title">Konfirmasi penghapusan</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="session_prompt_confirm_deletion_message">Apakah Anda yakin ingin menghapus sesi "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Apakah Anda yakin ingin menghapus konfigurasi "<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>"?</string>
     <string name="session_switched">Beralih ke \"%s\"</string>
     <string name="busy">Sedang sibuk, coba sebentar lagi.</string>
     <string name="invalid_character_removed">Karakter yang tidak valid telah dihapus!</string>
@@ -512,7 +512,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="tts">Baca halaman ini</string>
     <string name="stop_tts">Hentikan pembacaan halaman ini</string>
     <!-- Application name which can be translated -->
-    <string name="locale_app_name">Fulguris Web Browser</string>
+    <string name="locale_app_name">Peramban Web Fulguris</string>
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
@@ -525,16 +525,16 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="button_dismiss">Abaikan</string>
     <!-- Find in page -->
     <string name="no_match_found">Tidak ada temuan yang cocok!</string>
-    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="match_x_of_n">Cocokkan <xliff:g id="current_match" example="1">%1$d</xliff:g> dari <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Tampilkan snackbar</string>
     <string name="pref_title_show_animation">Tampilkan animasi</string>
     <string name="pref_title_vibrate">Bergetar</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
-    <string name="pref_title_scrollbar_fading">Fading</string>
-    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
-    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
-    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
-    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
+    <string name="settings_title_animation_duration">Durasi animasi</string>
+    <string name="pref_title_scrollbar_fading">Memudar</string>
+    <string name="pref_summary_on_scrollbar_fading">Scrollbar memudar</string>
+    <string name="pref_summary_off_scrollbar_fading">Scrollbar selalu ditampilkan</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Tunda sebelum memudar</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">Waktu setelah scrollbar mulai memudar</string>
     <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
     <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
     <string name="pref_title_scrollbar_size">Size</string>
@@ -612,10 +612,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>
     <string name="label_domain">Domain</string>
-    <string name="label_title">Title</string>
-    <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_title">Judul</string>
+    <string name="label_session">Sesi</string>
+    <string name="label_app_name">Nama aplikasi</string>
+    <string name="message_render_process_crashed">Proses render crash. Anda mungkin perlu memuat ulang beberapa halaman web.</string>
     <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Selamat datang di Fulguris</string>
     <string name="intro_welcome_description">Rasakan penelusuran web yang cepat, aman, dan dapat disesuaikan dengan fitur privasi canggih dan desain modern.</string>
