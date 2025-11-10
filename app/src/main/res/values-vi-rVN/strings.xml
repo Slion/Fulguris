@@ -119,7 +119,7 @@
     <string name="message_cookies_cleared">Đã xóa cookie</string>
     <string name="message_cookies_clear_error">Không thể xóa cookie</string>
     <string name="max_tabs">Max tabs reached. Unlock more from Settings &gt; Sponsorship.</string>
-    <string name="message_cookie_copied">Cookie copied to clipboard</string>
+    <string name="message_cookie_copied">Đã sao chép cookie vào clipboard</string>
     <string name="message_text_copied">Đã sao chép văn bản vào clipboard</string>
     <string name="message_link_copied">Đã sao chép liên kết vào clipboard</string>
     <string name="message_blocked_local">Tệp cục bộ đã bị chặn tải</string>
@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">Xem chính sách bảo mật của chúng tôi trực tuyến</string>
     <string name="settings_title_terms_and_conditions">Điều khoản &amp; Điều kiện</string>
     <string name="settings_summary_terms_and_conditions">Xem các điều khoản và điều kiện của chúng tôi trực tuyến</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Giới thiệu</string>
     <string name="settings_summary_introduction">Khởi động trải nghiệm giới thiệu</string>
     <string name="settings_summary_discord">Tham gia cộng đồng đang phát triển của chúng tôi</string>
     <string name="pref_category_panels">Bảng điều khiển</string>
@@ -302,7 +302,7 @@
     <string name="pref_summary_on_accept_terms">Bạn đã chấp nhận các điều khoản và điều kiện của chúng tôi</string>
     <string name="pref_summary_off_accept_terms">Chấp nhận các điều khoản và điều kiện của chúng tôi để tiếp tục</string>
     <string name="pref_summary_color_mode">Áp dụng màu trang web cho công cụ và thanh trạng thái</string>
-    <string name="pref_title_desktop_width">Desktop width</string>
+    <string name="pref_title_desktop_width">Độ rộng máy tính</string>
     <string name="pref_summary_desktop_width">Chiều rộng khung nhìn của chế độ máy tính để bàn, đặt nó cao hơn cho nội dung nhỏ hơn</string>
     <string name="pref_title_no_sponsorship">Tài trợ trong ứng dụng không có sẵn</string>
     <string name="pref_summary_no_sponsorship">Sử dụng Fulguris từ Google Play để tài trợ cho chúng tôi.</string>
@@ -352,11 +352,11 @@
     <string name="black_theme">Đen</string>
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Tên thư mục</string>
-    <string name="action_folder">Folder</string>
+    <string name="action_folder">Thư mục</string>
     <string name="title_rename_folder">Đổi tên thư mục</string>
-    <string name="clear_web_storage">Clear web storage</string>
-    <string name="clear_web_storage_exit">Clear web storage on exit</string>
-    <string name="message_web_storage_cleared">Web storage cleared</string>
+    <string name="clear_web_storage">Xóa dữ liệu web</string>
+    <string name="clear_web_storage_exit">Xóa dữ liệu web khi thoát</string>
+    <string name="message_web_storage_cleared">Đã xóa dữ liệu web</string>
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Trình chặn quảng cáo và lọc nội dung</string>
     <string name="settings_summary_content_control_toggle">Kích hoạt trình chặn quảng cáo và lọc nội dung</string>
@@ -375,25 +375,25 @@
     <string name="settings_summary_dark_mode_default">Xác định xem các tab mới có sử dụng chế độ tối bắt buộc theo mặc định hay không</string>
     <string name="settings_title_swap_bookmarks_and_tabs">Hoán đổi ngăn kéo</string>
     <string name="settings_summary_swap_bookmarks_and_tabs">Ngăn kéo Tab và Dấu trang sẽ hoán đổi vị trí</string>
-    <string name="do_not_track">Request \'Do Not Track\'</string>
+    <string name="do_not_track">Yêu cầu \'Không theo dõi\'</string>
     <string name="save_data">Yêu cầu \'Tiết kiệm-dữ liệu\'</string>
-    <string name="remove_identifying_headers">Remove identifying headers</string>
-    <string name="pref_title_webrtc">WebRTC Support</string>
+    <string name="remove_identifying_headers">Xóa header nhận dạng</string>
+    <string name="pref_title_webrtc">Hỗ trợ WebRTC</string>
     <string name="pref_summary_webrtc">Cho phép giao tiếp theo thời gian thực qua Web bằng camera và micrô của thiết bị của bạn</string>
     <string name="action_add_to_homescreen">Thêm vào màn hình chính</string>
     <string name="message_added_to_homescreen">Đã thêm lối tắt vào màn hình chính</string>
-    <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
+    <string name="shortcut_message_failed_to_add">Xin lỗi, trình khởi chạy của bạn không hỗ trợ phím tắt.</string>
     <string name="action_delete_all_bookmarks">Xóa mọi dấu trang</string>
     <!-- debug strings -->
-    <string name="debug_title">Debug</string>
+    <string name="debug_title">Gỡ lỗi</string>
     <string name="debug_leak_canary">LeakCanary</string>
-    <string name="app_restart">Please restart the app for the change to take effect</string>
-    <string name="pref_title_crash_logs">Crash logs</string>
-    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="app_restart">Vui lòng khởi động lại ứng dụng để thay đổi có hiệu lực</string>
+    <string name="pref_title_crash_logs">Nhật ký sự cố</string>
+    <string name="pref_summary_crash_logs">Ghi nhật ký sự cố vào hệ thống tệp.\nNhấn để mở thư mục. Vui lòng cung cấp tệp liên quan khi báo cáo lỗi.</string>
+    <string name="pref_title_logs">Nhật ký</string>
+    <string name="pref_summary_on_logs">Đã bật</string>
+    <string name="pref_summary_off_logs">Đã tắt</string>
+    <string name="pref_title_log_level">Mức nhật ký</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Mở ra trong trang mới</string>
     <string name="dialog_open_background_tab">Mở trong tab nền</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Đổi tên thư mục</string>
     <string name="dialog_remove_folder">Loại bỏ thư mục</string>
     <string name="dialog_title_close_browser">Đóng trình duyệt</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">Mở %1$s</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">Đã chặn %1$s</string>
     <string name="dialog_delete_all_downloads">Xóa mọi bản tải xuống</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Công cụ trang</string>
@@ -422,13 +422,13 @@
     </plurals>
     <string name="notification_incognito_running_message">Chạm để mở</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Phiên ẩn danh đang hoạt động</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Issued by</string>
-    <string name="ssl_info_issued_to">Issued to</string>
-    <string name="ssl_info_issued_on">Issued on</string>
-    <string name="ssl_info_expires_on">Expires on</string>
+    <string name="ssl_info_issued_by">Được cấp bởi:</string>
+    <string name="ssl_info_issued_to">Được cấp cho:</string>
+    <string name="ssl_info_issued_on">Được cấp vào:</string>
+    <string name="ssl_info_expires_on">Hết hạn vào:</string>
     <!-- Search in page -->
     <string name="next">Kế tiếp</string>
     <string name="previous">Trước đó</string>
@@ -445,8 +445,8 @@
     <string name="settings_summary_domains">Quản lý thiết đặt tên miền</string>
     <string name="settings_title_resource_domains">Các tên miền tài nguyên</string>
     <string name="settings_title_override">Ghi đè</string>
-    <string name="settings_summary_on_override">Override parent settings</string>
-    <string name="settings_summary_off_override">Use parent settings</string>
+    <string name="settings_summary_on_override">Ghi đè cài đặt cha</string>
+    <string name="settings_summary_off_override">Sử dụng cài đặt cha</string>
     <string name="settings_title_launch_app">Khởi chạy ứng dụng</string>
     <string name="settings_title_category">Danh mục</string>
     <string name="settings_summary_on_category">Tên miền chính</string>
@@ -457,19 +457,19 @@
     <string name="question_delete_all_domain_settings">Xóa tất cả thiết đặt tên miền?</string>
     <string name="settings_title_delete_domain_settings">Xóa thiết đặt tên miền</string>
     <string name="settings_summary_delete_domain_settings">Sẽ được tạo lại vào lần tới khi gặp tên miền này</string>
-    <string name="settings_title_parent">Parent</string>
+    <string name="settings_title_parent">Cha</string>
     <string name="settings_summary_default_domain_settings">Thiết đặt tên miền mặc định</string>
     <string name="settings_title_ssl_error">Lỗi an ninh</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_summary_ssl_error">Những gì cần làm khi phát hiện lỗi SSL</string>
+    <string name="settings_title_incoming_url_action">Hành động liên kết đến</string>
+    <string name="settings_summary_incoming_url_action">Cách xử lý liên kết từ ứng dụng khác</string>
     <string name="checkbox_remember_domain_choice">Hãy nhớ lựa chọn của bạn cho tên miền này</string>
     <string name="settings_title_third_party_cookies">Cookie của bên thứ ba</string>
     <string name="settings_summary_on_third_party_cookies">Chấp nhận cookie được sử dụng để theo dõi hoạt động của bạn trên các trang web</string>
     <string name="settings_summary_off_third_party_cookies">Từ chối cookie được sử dụng để theo dõi hoạt động của bạn trên các trang web</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_summary_on_javascript">Tất cả các tính năng của trang web và trình duyệt sẽ hoạt động</string>
+    <string name="settings_summary_off_javascript">Một số tính năng của trang web và trình duyệt sẽ không hoạt động</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Trang hiện tại không có cookie</string>
     <string name="settings_summary_manage_cookies">Quản lý cookie trang hiện tại</string>
@@ -481,19 +481,19 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">Trang hiện tại không có cookie</item> -->
         <item quantity="other">Trang hiện tại có <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
     <string name="settings_title_task_label">Nhãn nhiệm vụ</string>
     <string name="settings_title_task_icon">Biểu tượng nhiệm vụ</string>
     <string name="settings_summary_on_task_icon">Sử dụng biểu tượng trang</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
+    <string name="settings_summary_off_task_icon">Sử dụng biểu tượng ứng dụng</string>
     <string name="settings_title_toolbar_label">Nhãn thanh công cụ</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Ứng dụng có sẵn của bên thứ ba</string>
     <string name="dialog_message_third_party_app">Bạn có muốn khởi chạy ứng dụng được liên kết với trang web đó không?</string>
-    <string name="per_month">\u0020/ month</string>
-    <string name="per_year">\u0020/ year</string>
+    <string name="per_month">\u0020/ tháng</string>
+    <string name="per_year">\u0020/ năm</string>
     <string name="session_default">@string/agent_default</string>
     <string name="session_recovery">Phục hồi</string>
     <string name="session_name_prompt">Nhập tên phiên:</string>
@@ -503,42 +503,42 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_prompt_confirm_deletion_message">Bạn có chắc chắn muốn xóa phiên \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
     <string name="configuration_prompt_confirm_deletion_message">Bạn có chắc chắn muốn xóa cấu hình \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" không?</string>
     <string name="session_switched">Đã chuyển sang \"%s\"</string>
-    <string name="busy">Busy, try again shortly.</string>
-    <string name="invalid_character_removed">Invalid character removed!</string>
-    <string name="invalid_characters_removed">Invalid characters removed!</string>
-    <string name="reading_mode_image_copyright">Image attributed to</string>
-    <string name="reading_mode_image_caption">Image with caption</string>
+    <string name="busy">Bận, vui lòng thử lại sau.</string>
+    <string name="invalid_character_removed">Đã xóa ký tự không hợp lệ!</string>
+    <string name="invalid_characters_removed">Đã xóa các ký tự không hợp lệ!</string>
+    <string name="reading_mode_image_copyright">Hình ảnh thuộc về</string>
+    <string name="reading_mode_image_caption">Hình ảnh có chú thích</string>
     <!-- text-to-speech -->
     <string name="tts">Đọc trang</string>
-    <string name="stop_tts">Stop reading</string>
+    <string name="stop_tts">Dừng đọc</string>
     <!-- Application name which can be translated -->
-    <string name="locale_app_name">Fulguris Web Browser</string>
+    <string name="locale_app_name">Trình duyệt Web Fulguris</string>
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
      -->
     <string name="button_link">Liên kết</string>
-    <string name="button_image">Image</string>
+    <string name="button_image">Hình ảnh</string>
     <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Tab đã đóng</string>
-    <string name="button_undo">Undo</string>
-    <string name="button_dismiss">Dismiss</string>
+    <string name="button_undo">Hoàn tác</string>
+    <string name="button_dismiss">Bỏ qua</string>
     <!-- Find in page -->
     <string name="no_match_found">Không tìm thấy kết quả phù hợp!</string>
-    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
-    <string name="pref_title_show_snackbar">Show snackbar</string>
+    <string name="match_x_of_n">Kết quả <xliff:g id="current_match" example="1">%1$d</xliff:g> trong <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="pref_title_show_snackbar">Hiển thị thanh thông báo</string>
     <string name="pref_title_show_animation">Hiển thị hoạt ảnh</string>
     <string name="pref_title_vibrate">Rung</string>
     <string name="settings_title_animation_duration">Thời lượng hoạt ảnh</string>
     <string name="pref_title_scrollbar_fading">Mờ dần</string>
-    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
-    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
+    <string name="pref_summary_on_scrollbar_fading">Thanh cuộn đang mờ dần</string>
+    <string name="pref_summary_off_scrollbar_fading">Thanh cuộn luôn hiển thị</string>
     <string name="pref_title_scrollbar_delay_before_fade">Trì hoãn trước khi mờ dần</string>
     <string name="pref_summary_scrollbar_delay_before_fade">Thời gian sau đó thanh cuộn sẽ bắt đầu mờ dần</string>
     <string name="pref_title_scrollbar_fade_duration">Thời lượng mờ dần</string>
     <string name="pref_summary_scrollbar_fade_duration">Thời gian để thanh cuộn mờ dần</string>
     <string name="pref_title_scrollbar_size">Kích cỡ</string>
-    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
+    <string name="pref_summary_scrollbar_size">Xác định chiều rộng và chiều cao của thanh cuộn</string>
     <string name="pref_category_title_session_export">Xuất phiên</string>
     <string name="pref_category_summary_session_export">Chọn phiên bạn muốn xuất</string>
     <string name="error_session_file_corrupted">Lỗi: tệp phiên bị hỏng!</string>
@@ -547,8 +547,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="message_session_exported">Đã xuất phiên: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="force_zoom_summary">Không hoạt động nếu JavaScript không được kích hoạt</string>
     <string name="force_zoom">Buộc thu phóng cho các trang web</string>
-    <string name="algorithm">Algorithm:</string>
-    <string name="oid">Object Identifier (OID):</string>
+    <string name="algorithm">Thuật toán:</string>
+    <string name="oid">Mã định danh đối tượng (OID):</string>
     <string name="export_settings">Xuất thiết đặt sang bản sao lưu</string>
     <string name="import_settings">Nhập thiết đặt từ bản sao lưu</string>
     <string name="pref_title_search_custom_image_url">Hình ảnh tùy chỉnh của trang tìm kiếm</string>
@@ -556,45 +556,45 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="long_press_tab">Nhấn và giữ biểu tượng \"Tab\" sẽ mở tab mới</string>
     <string name="pref_title_close_drawer">Đóng ngăn kéo</string>
     <string name="pref_summary_close_drawer">Tự động đóng ngăn kéo sau khi tạo hoặc xóa tab</string>
-    <string name="inspect">Inject Javascript</string>
-    <string name="edit_cookies">Show site cookies</string>
-    <string name="site_cookies">Site cookies</string>
-    <string name="accent_color">Accent color</string>
-    <string name="accent_amber">Amber</string>
-    <string name="accent_blue">Blue</string>
-    <string name="accent_cyan">Cyan</string>
-    <string name="accent_deep_orange">Deep Orange</string>
-    <string name="accent_deep_purple">Deep Purple</string>
-    <string name="accent_default">Default</string>
-    <string name="accent_green">Green</string>
-    <string name="accent_indigo">Indigo</string>
-    <string name="accent_light_blue">Light Blue</string>
-    <string name="accent_light_green">Light Green</string>
-    <string name="accent_lime">Lime</string>
-    <string name="accent_orange">Orange</string>
-    <string name="accent_pink">Pink</string>
-    <string name="accent_purple">Purple</string>
-    <string name="accent_teal">Teal</string>
-    <string name="accent_yellow">Yellow</string>
-    <string name="accent_brown">Brown</string>
+    <string name="inspect">Chèn Javascript</string>
+    <string name="edit_cookies">Hiển thị cookie trang web</string>
+    <string name="site_cookies">Cookie trang web</string>
+    <string name="accent_color">Màu nhấn</string>
+    <string name="accent_amber">Hổ phách</string>
+    <string name="accent_blue">Xanh lam</string>
+    <string name="accent_cyan">Xanh lơ</string>
+    <string name="accent_deep_orange">Cam đậm</string>
+    <string name="accent_deep_purple">Tím đậm</string>
+    <string name="accent_default">Mặc định</string>
+    <string name="accent_green">Xanh lá</string>
+    <string name="accent_indigo">Chàm</string>
+    <string name="accent_light_blue">Xanh lam nhạt</string>
+    <string name="accent_light_green">Xanh lá nhạt</string>
+    <string name="accent_lime">Vàng chanh</string>
+    <string name="accent_orange">Cam</string>
+    <string name="accent_pink">Hồng</string>
+    <string name="accent_purple">Tím</string>
+    <string name="accent_teal">Xanh mòng két</string>
+    <string name="accent_yellow">Vàng</string>
+    <string name="accent_brown">Nâu</string>
     <string name="search_homepage">Tìm</string>
     <string name="search_incognito">Tìm kiếm riêng tư</string>
-    <string name="incognito">Incognito</string>
-    <string name="unknown">Unknown</string>
+    <string name="incognito">Ẩn danh</string>
+    <string name="unknown">Không xác định</string>
     <string name="settings_export_failure">Rất tiếc, không thể xuất thiết đặt!</string>
     <string name="settings_exported">Đã xuất thiết đặt:</string>
     <string name="settings_reseted">Đã khôi phục tất cả thiết đặt</string>
     <string name="suggest">Gợi ý tìm kiếm (số)</string>
     <string name="action_cycle_tabs_forwards">Chuyển tiếp các tab theo chu kỳ</string>
     <string name="action_cycle_tabs_backwards">Xoay ngược các tab</string>
-    <string name="action_focus_address_bar">Focus address bar</string>
+    <string name="action_focus_address_bar">Tập trung thanh địa chỉ</string>
     <string name="action_tab_history_forward">Chuyển tiếp trong lịch sử tab</string>
     <string name="action_toggle_toolbar">Chuyển đổi thanh công cụ</string>
-    <string name="action_toggle_status_bar">Toggle status bar</string>
-    <string name="action_text_size_increment">Increase text size</string>
-    <string name="action_text_size_decrement">Decrease text size</string>
-    <string name="action_text_size_small_increment">Increase text size a bit</string>
-    <string name="action_text_size_small_decrement">Decrease text size a bit</string>
+    <string name="action_toggle_status_bar">Bật/tắt thanh trạng thái</string>
+    <string name="action_text_size_increment">Tăng kích thước chữ</string>
+    <string name="action_text_size_decrement">Giảm kích thước chữ</string>
+    <string name="action_text_size_small_increment">Tăng kích thước chữ một chút</string>
+    <string name="action_text_size_small_decrement">Giảm kích thước chữ một chút</string>
     <string name="action_open_bookmark_list">Mở danh sách dấu trang</string>
     <string name="action_open_tab_list">Mở danh sách tab</string>
     <string name="action_open_session_list">Mở danh sách phiên</string>
@@ -610,11 +610,11 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_assert">Assert</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
+    <string name="label_short_url">URL ngắn</string>
     <string name="label_domain">Tên miền</string>
     <string name="label_title">Tiêu đề</string>
     <string name="label_session">Phiên</string>
-    <string name="label_app_name">App name</string>
+    <string name="label_app_name">Tên ứng dụng</string>
     <string name="message_render_process_crashed">Quá trình kết xuất bị lỗi. Bạn có thể cần phải tải lại một số trang web.</string>
     <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Chào mừng đến với Fulguris</string>

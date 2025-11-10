@@ -22,7 +22,25 @@ def escape_xml_value(value):
     - Newlines (\n) should be preserved as literal \n
 
     Special handling: If the value contains XML tags like <xliff:g>, we preserve them.
+
+    IMPORTANT: This function detects and fixes common mistakes:
+    - &apos; is WRONG for Android XML (causes build errors)
+    - \' is CORRECT for Android XML
     """
+    # CRITICAL FIX: Detect and warn about incorrect &apos; usage
+    if '&apos;' in value:
+        print("  [WARNING] Detected &apos; entity - this is INCORRECT for Android XML!")
+        print("            Converting &apos; to \\' (proper Android XML escape)")
+        print(f"            Original value: {value}")
+        # Replace &apos; with unescaped apostrophe, which will be properly escaped below
+        value = value.replace('&apos;', "'")
+        print(f"            Fixed value: {value}")
+
+    # Also check for &quot; which should be \"
+    if '&quot;' in value:
+        print("  [WARNING] Detected &quot; entity - converting to \\\" for Android XML")
+        value = value.replace('&quot;', '"')
+
     # Don't escape if already contains XML entities or escape sequences
     if '&amp;' in value or '&lt;' in value or '&gt;' in value:
         # Already has XML entities, assume it's properly formatted
