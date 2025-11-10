@@ -120,6 +120,83 @@ def _char_difference(str1, str2):
 
     return differences
 
+def validate_android_string(value):
+    """Validate Android string resource content.
+
+    Checks for issues that will break Android resource compilation:
+    - Invalid XML structure (malformed tags, unquoted attributes)
+    - Invalid entity references (&pos;, &quot; when should use \\", etc.)
+    - PowerShell backtick escapes passed through
+    - Unescaped quotes/apostrophes in plain text
+    - Invalid placeholders
+
+    Args:
+        value: The string value to validate
+
+    Returns:
+        tuple: (is_valid, error_message)
+               is_valid: bool indicating if string is valid
+               error_message: str describing the error, None if valid
+    """
+    # Check for PowerShell backtick escapes - these are wrong!
+    if '`"' in value or '"`' in value or "`'" in value or "'`" in value:
+        return False, r'PowerShell backtick escapes detected (`" or `\')! These will break compilation. Use here-strings instead.'
+
+    # Check for invalid entity references that break Android compilation
+    # &pos; is a common typo and WILL break
+    if '&pos;' in value:
+        return False, "Invalid entity '&pos;' detected! This will break compilation. Use \\' for apostrophes in Android XML."
+
+    # Check for &quot; entity - should use \" instead for Android
+    if '&quot;' in value:
+        return False, "Entity '&quot;' detected! For Android XML, use \\\" (backslash-escaped quote) instead of XML entities."
+
+    # Check for &apos; entity - this is WRONG for Android XML
+    if '&apos;' in value:
+        return False, "Entity '&apos;' detected! This BREAKS Android compilation. Use \\' (backslash-escaped apostrophe) instead."
+
+    # Check for unescaped quotes in plain text (not in XML tags)
+    # This is tricky - we need to check quotes that are NOT part of XML attributes
+    if '<' in value and '>' in value:
+        # Has XML tags - need to validate XML structure
+
+        # Check for XML attributes without quotes
+        # Pattern: word= followed by non-quote, non-space (common error)
+        unquoted_attr = re.search(r'\s+\w+=([^\s"\'>][^\s>]*)', value)
+        if unquoted_attr:
+            return False, f"Attribute value not quoted: {unquoted_attr.group(0).strip()}. XML attributes must have quoted values."
+
+        # Check for basic XML tag matching
+        tags = re.findall(r'<(/?)(\w+(?::\w+)?)[^>]*>', value)
+        tag_stack = []
+        for closing, tag_name in tags:
+            if not closing:
+                # Opening tag
+                tag_stack.append(tag_name)
+            else:
+                # Closing tag
+                if not tag_stack:
+                    return False, f"Closing tag </{tag_name}> without matching opening tag"
+                opening = tag_stack.pop()
+                if opening != tag_name:
+                    return False, f"Mismatched tags: <{opening}> closed with </{tag_name}>"
+
+        if tag_stack:
+            return False, f"Unclosed tag(s): {', '.join('<' + t + '>' for t in tag_stack)}"
+
+    # Check for other invalid entity references (must be &amp; &lt; &gt; only for plain text)
+    # Allow &#... numeric entities and common valid entities
+    invalid_entities = re.findall(r'&(?!amp;|lt;|gt;|#\d+;|#x[0-9a-fA-F]+;)\w+;', value)
+    if invalid_entities:
+        return False, f"Invalid entity reference(s): {', '.join(set(invalid_entities))}. Only &amp; &lt; &gt; and numeric entities are valid in Android XML."
+
+    # Check for unterminated entity references
+    unterminated = re.search(r'&\w+(?![;])', value)
+    if unterminated:
+        return False, f"Unterminated entity reference: '{unterminated.group(0)}'. Entities must end with semicolon."
+
+    return True, None
+
 def show_help():
     """Display help information about available commands."""
     print("=" * 80)
@@ -141,12 +218,14 @@ def show_help():
     print("    Show this help message")
     print("\n  python l10n.py --summary")
     print("    Show only summary statistics for all languages")
-    print("\n  python l10n.py --set <lang> <string_id> <value> [<string_id> <value> ...]")
+    print("\n  python l10n.py [--raw] --set <lang> <string_id> <value> [<string_id> <value> ...]")
     print("    Set one or more string values for a specific language")
-    print("    Values are XML-escaped (quotes, apostrophes). For complex XML, use --set-raw.")
+    print("    By default, values are XML-escaped (quotes, apostrophes).")
+    print("    Use --raw flag for complex XML content (no escaping).")
     print("    Examples:")
     print("      python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
     print("      python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
+    print("      python l10n.py --raw --set ko-rKR test '<xliff:g id=\"x\">%1$d</xliff:g>개'")
     print("    ")
     print("    IMPORTANT - PowerShell quoting:")
     print("      When using strings with $ (like %1$s), use SINGLE quotes in PowerShell:")
@@ -154,11 +233,6 @@ def show_help():
     print("      Double quotes cause PowerShell to expand variables like $s, corrupting the value.")
     print("      Alternatively, escape the $ with backtick: \"%1`$s 열기\"")
     print("      This issue does NOT occur in bash/sh terminals.")
-    print("\n  python l10n.py --set-raw <lang> <string_id> <value> [<string_id> <value> ...]")
-    print("    Set string values WITHOUT XML escaping (for complex XML content)")
-    print("    Use this for strings containing <xliff:g> or other XML tags")
-    print("    PowerShell: Use single quotes and escape inner quotes with backslash:")
-    print("      python l10n.py --set-raw ko-rKR test '<xliff:g id=\"x\">%1$d</xliff:g>개'")
     print("\n  python l10n.py --get <lang> <string_id>")
     print("    Get a string value from a specific language")
     print("    Example:")
@@ -167,11 +241,13 @@ def show_help():
     print("    Get all plural items for a plurals resource")
     print("    Example:")
     print("      python l10n.py --get-plurals ko-rKR notification_incognito_running_title")
-    print("\n  python l10n.py --set-plurals <lang> <plurals_name> <quantity> <value> [<quantity> <value> ...]")
+    print("\n  python l10n.py [--raw] --set-plurals <lang> <plurals_name> <quantity> <value> [<quantity> <value> ...]")
     print("    Set plural items for a plurals resource")
     print("    Quantities: zero, one, two, few, many, other")
+    print("    Use --raw flag for complex XML content (no escaping).")
     print("    Example:")
     print("      python l10n.py --set-plurals ko-rKR notification_title other '%1$d tabs open'")
+    print("      python l10n.py --raw --set-plurals ko-rKR cookies other '<xliff:g>%d</xliff:g> cookies'")
     print("\n  python l10n.py --add <string_id> <value>")
     print("    Add a string to all language files (uses English value)")
     print("    Example:")
@@ -264,13 +340,14 @@ def get_plurals_value(language, plurals_name):
 
     sys.exit(0)
 
-def set_plurals_value(language, plurals_name, quantity_value_pairs):
-    """Set plural items in a specific language file.
+def set_plurals_value(language, plurals_name, quantity_value_pairs, skip_escape=False):
+    """Set plural items for a plurals resource.
 
     Args:
         language: Language code (e.g., 'ko-rKR')
         plurals_name: The plurals resource name
         quantity_value_pairs: List of tuples [(quantity, value), ...] where quantity is 'one', 'other', etc.
+        skip_escape: If True, skip XML escaping (for --raw flag)
     """
     file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
@@ -302,14 +379,30 @@ def set_plurals_value(language, plurals_name, quantity_value_pairs):
     print(f"Updating plurals: {plurals_name}")
     print(f"Setting {len(quantity_value_pairs)} quantities...\n")
 
+    # Validate all values first before making any changes
+    for quantity, value in quantity_value_pairs:
+        is_valid, error_msg = validate_android_string(value)
+        if not is_valid:
+            print(f"[ERROR] XML Validation Failed for quantity '{quantity}'!")
+            print(f"  {error_msg}")
+            if skip_escape:
+                print(f"\nFor PowerShell with --raw, use here-string to preserve quotes.")
+            sys.exit(1)
+
     # For each quantity-value pair, update or add the item
     def replacer(match):
         plurals_content = match.group(2)
 
         # For each quantity, update or add
         for quantity, value in quantity_value_pairs:
+            # Escape XML special characters in the value (unless skip_escape is True)
+            if skip_escape:
+                escaped_value = value
+            else:
+                escaped_value = escape_xml_value(value)
+
             item_pattern = f'<item quantity="{re.escape(quantity)}">.*?</item>'
-            new_item = f'<item quantity="{quantity}">{value}</item>'
+            new_item = f'<item quantity="{quantity}">{escaped_value}</item>'
 
             if re.search(item_pattern, plurals_content):
                 # Update existing
@@ -393,8 +486,19 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
         language: Language code (e.g., 'ko-rKR')
         string_id: The string resource ID
         new_value: The new value to set
-        skip_escape: If True, skip XML escaping (for --set-raw)
+        skip_escape: If True, skip XML escaping (for --raw)
     """
+    # Always validate XML content before processing
+    is_valid, error_msg = validate_android_string(new_value)
+    if not is_valid:
+        print(f"[ERROR] XML Validation Failed!")
+        print(f"  {error_msg}")
+        if skip_escape:
+            print(f"\nFor PowerShell with --raw, use here-string to preserve quotes:")
+            print(f"  $value = @'\n{new_value}\n'@")
+            print(f"  python l10n.py --raw --set {language} {string_id} $value")
+        sys.exit(1)
+
     file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
     if not file_path.exists():
@@ -456,6 +560,16 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
     print(f"BATCH UPDATE: {language}")
     print("=" * 80)
     print(f"Updating {len(string_pairs)} strings...\n")
+
+    # Validate all values first before making any changes
+    for string_id, new_value in string_pairs:
+        is_valid, error_msg = validate_android_string(new_value)
+        if not is_valid:
+            print(f"[ERROR] XML Validation Failed for '{string_id}'!")
+            print(f"  {error_msg}")
+            if skip_escape:
+                print(f"\nFor PowerShell with --raw, use here-string to preserve quotes.")
+            sys.exit(1)
 
     success_count = 0
     error_count = 0
@@ -657,13 +771,23 @@ def remove_string_from_all(string_id):
 show_all_for_lang = None
 summary_only = False
 near_threshold = 1  # Default: only one char difference
+skip_escape = False  # Default: escape XML (use --raw to skip)
 
 # Show help if no arguments provided
 if len(sys.argv) == 1:
     show_help()
 
 if len(sys.argv) > 1:
-    arg = sys.argv[1]
+    # Check for --raw flag
+    arg_start = 1
+    if sys.argv[1] == '--raw':
+        skip_escape = True
+        arg_start = 2
+        if len(sys.argv) == 2:
+            print("Error: --raw must be followed by a command (--set or --set-plurals)")
+            sys.exit(1)
+
+    arg = sys.argv[arg_start]
 
     # Handle help commands
     if arg in ['--help', '-h', 'help']:
@@ -673,35 +797,36 @@ if len(sys.argv) > 1:
         list_languages()
     # Handle get command
     elif arg == '--get':
-        if len(sys.argv) < 4:
+        if len(sys.argv) < arg_start + 3:
             print("Error: --get requires 2 arguments: <language> <string_id>")
             print("Example: python l10n.py --get ru-rRU locale_app_name")
             sys.exit(1)
-        language = sys.argv[2]
-        string_id = sys.argv[3]
+        language = sys.argv[arg_start + 1]
+        string_id = sys.argv[arg_start + 2]
         get_string_value(language, string_id)
     # Handle get-plurals command
     elif arg == '--get-plurals':
-        if len(sys.argv) < 4:
+        if len(sys.argv) < arg_start + 3:
             print("Error: --get-plurals requires 2 arguments: <language> <plurals_name>")
             print("Example: python l10n.py --get-plurals ko-rKR notification_incognito_running_title")
             sys.exit(1)
-        language = sys.argv[2]
-        plurals_name = sys.argv[3]
+        language = sys.argv[arg_start + 1]
+        plurals_name = sys.argv[arg_start + 2]
         get_plurals_value(language, plurals_name)
     # Handle set command
     elif arg == '--set':
-        if len(sys.argv) < 5:
+        if len(sys.argv) < arg_start + 4:
             print("Error: --set requires at least 3 arguments: <language> <string_id> <value> [<string_id> <value> ...]")
             print("Examples:")
             print("  python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
             print("  python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\"")
+            print("  python l10n.py --raw --set ko-rKR test '<xliff:g>%s</xliff:g>'")
             sys.exit(1)
-        language = sys.argv[2]
+        language = sys.argv[arg_start + 1]
 
         # Parse pairs of string_id and value
         string_pairs = []
-        i = 3
+        i = arg_start + 2
         while i < len(sys.argv):
             if i + 1 >= len(sys.argv):
                 print(f"Error: Missing value for string_id '{sys.argv[i]}'")
@@ -713,49 +838,24 @@ if len(sys.argv) > 1:
 
         # If only one pair, use single-string output format
         if len(string_pairs) == 1:
-            set_string_value(language, string_pairs[0][0], string_pairs[0][1])
+            set_string_value(language, string_pairs[0][0], string_pairs[0][1], skip_escape=skip_escape)
         else:
-            set_string_values_batch(language, string_pairs)
-    # Handle set-raw command (no XML escaping)
-    elif arg == '--set-raw':
-        if len(sys.argv) < 5:
-            print("Error: --set-raw requires at least 3 arguments: <language> <string_id> <value> [<string_id> <value> ...]")
-            print("Examples:")
-            print("  python l10n.py --set-raw ko-rKR match_x_of_n '<xliff:g id=\"current_match\">%1$d</xliff:g>개 중'")
-            sys.exit(1)
-        language = sys.argv[2]
-
-        # Parse pairs of string_id and value
-        string_pairs = []
-        i = 3
-        while i < len(sys.argv):
-            if i + 1 >= len(sys.argv):
-                print(f"Error: Missing value for string_id '{sys.argv[i]}'")
-                sys.exit(1)
-            string_id = sys.argv[i]
-            value = sys.argv[i + 1]
-            string_pairs.append((string_id, value))
-            i += 2
-
-        # If only one pair, use single-string output format
-        if len(string_pairs) == 1:
-            set_string_value(language, string_pairs[0][0], string_pairs[0][1], skip_escape=True)
-        else:
-            set_string_values_batch(language, string_pairs, skip_escape=True)
+            set_string_values_batch(language, string_pairs, skip_escape=skip_escape)
     # Handle set-plurals command
     elif arg == '--set-plurals':
-        if len(sys.argv) < 6:
+        if len(sys.argv) < arg_start + 5:
             print("Error: --set-plurals requires at least 4 arguments: <language> <plurals_name> <quantity> <value> [<quantity> <value> ...]")
             print("Examples:")
             print("  python l10n.py --set-plurals ko-rKR notification_incognito_running_title other '%1$d 시크릿 탭 열림'")
             print("  python l10n.py --set-plurals ko-rKR tabs_count one '1 tab' other '%1$d tabs'")
+            print("  python l10n.py --raw --set-plurals ko-rKR cookies other '<xliff:g>%d</xliff:g> cookies'")
             sys.exit(1)
-        language = sys.argv[2]
-        plurals_name = sys.argv[3]
+        language = sys.argv[arg_start + 1]
+        plurals_name = sys.argv[arg_start + 2]
 
         # Parse pairs of quantity and value
         quantity_value_pairs = []
-        i = 4
+        i = arg_start + 3
         while i < len(sys.argv):
             if i + 1 >= len(sys.argv):
                 print(f"Error: Missing value for quantity '{sys.argv[i]}'")
@@ -765,28 +865,28 @@ if len(sys.argv) > 1:
             quantity_value_pairs.append((quantity, value))
             i += 2
 
-        set_plurals_value(language, plurals_name, quantity_value_pairs)
+        set_plurals_value(language, plurals_name, quantity_value_pairs, skip_escape=skip_escape)
     # Handle add command
     elif arg == '--add':
-        if len(sys.argv) < 4:
+        if len(sys.argv) < arg_start + 3:
             print("Error: --add requires 2 arguments: <string_id> <value>")
             print("Example: python l10n.py --add new_feature_name \"New Feature\"")
             sys.exit(1)
-        string_id = sys.argv[2]
-        value = sys.argv[3]
+        string_id = sys.argv[arg_start + 1]
+        value = sys.argv[arg_start + 2]
         add_string_to_all(string_id, value)
     # Handle remove command
     elif arg == '--remove':
-        if len(sys.argv) < 3:
+        if len(sys.argv) < arg_start + 2:
             print("Error: --remove requires 1 argument: <string_id>")
             print("Example: python l10n.py --remove obsolete_string")
             sys.exit(1)
-        string_id = sys.argv[2]
+        string_id = sys.argv[arg_start + 1]
         remove_string_from_all(string_id)
     # Handle check command
     elif arg == '--check':
         # Parse arguments for check command
-        i = 2
+        i = arg_start + 1
         while i < len(sys.argv):
             if sys.argv[i] == '--near':
                 if i + 1 >= len(sys.argv):
