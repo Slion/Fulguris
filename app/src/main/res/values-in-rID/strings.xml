@@ -6,7 +6,7 @@
     <string name="action_duplicate_tab">Duplikat tab</string>
     <string name="action_share">Bagikan</string>
     <string name="action_history">Riwayat</string>
-    <string name="action_bookmarks">Bookmark</string>
+    <string name="action_bookmarks">Markah</string>
     <string name="action_downloads">Unduhan</string>
     <string name="action_add_bookmark">Tambahkan bookmark</string>
     <string name="action_forward">Teruskan</string>
@@ -86,8 +86,8 @@
     <string name="title_error">Kesalahan</string>
     <string name="hint_title">Judul</string>
     <string name="hint_url">URL</string>
-    <string name="title_edit_bookmark">Edit bookmark</string>
-    <string name="action_edit">Edit</string>
+    <string name="title_edit_bookmark">Sunting bookmark</string>
+    <string name="action_edit">Sunting</string>
     <string name="action_incognito">Tab samaran</string>
     <string name="action_show_homepage">Tampilkan beranda</string>
     <string name="action_back">Kembali</string>
@@ -265,7 +265,7 @@
     <string name="pref_category_on_tab_change">Saat bertukar tab</string>
     <string name="pref_category_on_tab_back_forward">Saat berganti ke tab sebelumnya atau sesudahnya</string>
     <string name="settings_category_on_follow_link">Saat mengikuti tautan</string>
-    <string name="pref_category_scrollbars">Scrollbar</string>
+    <string name="pref_category_scrollbars">Bilah gulir</string>
     <string name="settings_title_tab">Tab</string>
     <string name="settings_title_page_history">Riwayat halaman</string>
     <string name="settings_summary_tab">Animasi, umpan balik dan tampilan</string>
@@ -360,15 +360,15 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Pemblokir iklan dan penyaring isi halaman web</string>
     <string name="settings_summary_content_control_toggle">Nyalakan pemblokir iklan dan penyaring isi halaman web</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
-    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
-    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
-    <string name="settings_summary_off_toolbars_position">Top</string>
+    <string name="settings_title_tab_bar_orientation">Orientasi bilah tab</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertikal</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horisontal</string>
+    <string name="settings_title_tab_bar_placement">Penempatan bilah tab</string>
+    <string name="settings_summary_on_tab_bar_placement">Panel yang dapat ditarik</string>
+    <string name="settings_summary_off_tab_bar_placement">Selalu di layar</string>
+    <string name="settings_title_toolbars_position">Posisi toolbar</string>
+    <string name="settings_summary_on_toolbars_position">Bawah</string>
+    <string name="settings_summary_off_toolbars_position">Atas</string>
     <string name="settings_title_desktop_mode_default">Mode Desktop</string>
     <string name="settings_summary_desktop_mode_default">Mengotomatiskan wujud desktop untuk tab baru</string>
     <string name="settings_title_dark_mode_default">Pemakaian wujud gelap</string>
@@ -378,7 +378,7 @@
     <string name="do_not_track">Permintaan agar tidak dilacak (’Do Not Track’)</string>
     <string name="save_data">Permintaan untuk menyimpan data (’Save-Data’)</string>
     <string name="remove_identifying_headers">Jangan tampilkan judul halaman</string>
-    <string name="pref_title_webrtc">WebRTC Support</string>
+    <string name="pref_title_webrtc">Dukungan WebRTC</string>
     <string name="pref_summary_webrtc">Izinkan penggunaan kamera dan mikrofon untuk percakapan langsung lewat web</string>
     <string name="action_add_to_homescreen">Tambahkan ke beranda</string>
     <string name="message_added_to_homescreen">Pintasan telah ditambahkan ke layar utama</string>
@@ -390,10 +390,10 @@
     <string name="app_restart">Restart aplikasi ini untuk menerapkan perubahan</string>
     <string name="pref_title_crash_logs">Log Kerusakan</string>
     <string name="pref_summary_crash_logs">Buat catatan kerusakan pada sistem file.\nKetuk untuk membuka folder. Harap berikan file yang relevan saat melaporkan bug.</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_logs">Log</string>
+    <string name="pref_summary_on_logs">Diaktifkan</string>
+    <string name="pref_summary_off_logs">Dinonaktifkan</string>
+    <string name="pref_title_log_level">Level log</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Buka di tab baru</string>
     <string name="dialog_open_background_tab">Buka di tab latar belakang</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Ubah nama folder</string>
     <string name="dialog_remove_folder">Hapus folder</string>
     <string name="dialog_title_close_browser">Tutup browser</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
-    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="dialog_title_incoming_url">Buka %1</string>
+    <string name="dialog_message_incoming_url">%1\n\n%2</string>
+    <string name="message_blocked_domain">Diblokir %1</string>
     <string name="dialog_delete_all_downloads">Hapus semua unduhan</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Peralatan Halaman</string>
@@ -422,7 +422,7 @@
     </plurals>
     <string name="notification_incognito_running_message">Sentuh untuk membuka</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Sesi penyamaran sedang berlangsung</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
     <string name="ssl_info_issued_by">Diterbitkan oleh</string>
@@ -440,21 +440,21 @@
     <string name="action_close_all_other_tabs">Tutup semua tab yang lain</string>
     <string name="action_restore_all_tabs">Kembalikan semua tab</string>
     <string name="action_restore_tab">Kembalikan tab</string>
-    <string name="settings_title_layer_type">Layer type</string>
-    <string name="settings_title_domains">Domains</string>
-    <string name="settings_summary_domains">Manage domain settings</string>
-    <string name="settings_title_resource_domains">Resource domains</string>
-    <string name="settings_title_override">Override</string>
-    <string name="settings_summary_on_override">Override parent settings</string>
-    <string name="settings_summary_off_override">Use parent settings</string>
-    <string name="settings_title_launch_app">Launch app</string>
-    <string name="settings_title_category">Category</string>
-    <string name="settings_summary_on_category">Main domain</string>
-    <string name="settings_summary_off_category">Resource domain</string>
+    <string name="settings_title_layer_type">Tipe layer</string>
+    <string name="settings_title_domains">Domain</string>
+    <string name="settings_summary_domains">Kelola pengaturan domain</string>
+    <string name="settings_title_resource_domains">Domain sumber daya</string>
+    <string name="settings_title_override">Timpa</string>
+    <string name="settings_summary_on_override">Timpa pengaturan induk</string>
+    <string name="settings_summary_off_override">Gunakan pengaturan induk</string>
+    <string name="settings_title_launch_app">Luncurkan aplikasi</string>
+    <string name="settings_title_category">Kategori</string>
+    <string name="settings_summary_on_category">Domain utama</string>
+    <string name="settings_summary_off_category">Domain sumber daya</string>
     <string name="action_domain_settings">Domain</string>
-    <string name="settings_title_domains_delete_all">Delete all</string>
-    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
-    <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
+    <string name="settings_title_domains_delete_all">Hapus semua</string>
+    <string name="settings_summary_domains_delete_all">Hapus semua pengaturan domain</string>
+    <string name="question_delete_all_domain_settings">Hapus semua pengaturan domain?</string>
     <string name="settings_title_delete_domain_settings">Hapus pengaturan domain</string>
     <string name="settings_summary_delete_domain_settings">Akan dibuat ulang saat domain ini ditemui lagi</string>
     <string name="settings_title_parent">Induk</string>
@@ -468,27 +468,27 @@
     <string name="settings_summary_on_third_party_cookies">Terima cookie yang digunakan untuk melacak aktivitas Anda di seluruh situs web</string>
     <string name="settings_summary_off_third_party_cookies">Tolak cookie yang digunakan untuk melacak aktivitas Anda di seluruh situs web</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_summary_on_javascript">Semua fitur situs web dan peramban akan berfungsi</string>
+    <string name="settings_summary_off_javascript">Beberapa fitur situs web dan peramban mungkin tidak berfungsi</string>
     <string name="settings_title_cookies">Cookies</string>
-    <string name="settings_summary_cookies">Current page has no cookies</string>
-    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
-    <string name="settings_title_cookies_delete_all">Delete all</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
-    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <string name="settings_summary_cookies">Halaman saat ini tidak memiliki cookie</string>
+    <string name="settings_summary_manage_cookies">Kelola cookie halaman saat ini</string>
+    <string name="settings_title_cookies_delete_all">Hapus semua</string>
+    <string name="settings_summary_cookies_delete_all">Hapus semua cookie untuk halaman saat ini</string>
+    <string name="question_delete_all_page_cookies">Hapus semua cookie untuk halaman saat ini?</string>
     <plurals name="settings_summary_cookies">
         <!--
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
         <!-- <item quantity="zero">Halaman saat ini tidak memiliki cookie</item> -->
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="other">Halaman saat ini memiliki <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
-    <string name="settings_title_task_label">Task label</string>
-    <string name="settings_title_task_icon">Task icon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
-    <string name="settings_title_toolbar_label">Toolbar label</string>
+    <string name="settings_title_task_label">Label tugas</string>
+    <string name="settings_title_task_icon">Ikon tugas</string>
+    <string name="settings_summary_on_task_icon">Gunakan ikon halaman</string>
+    <string name="settings_summary_off_task_icon">Gunakan ikon aplikasi</string>
+    <string name="settings_title_toolbar_label">Label toolbar</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Ada aplikasi pihak ketiga yang bisa digunakan</string>
     <string name="dialog_message_third_party_app">Maukah Anda membuka aplikasi yang tertaut dengan halaman itu?</string>
@@ -535,10 +535,10 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_summary_off_scrollbar_fading">Scrollbar selalu ditampilkan</string>
     <string name="pref_title_scrollbar_delay_before_fade">Tunda sebelum memudar</string>
     <string name="pref_summary_scrollbar_delay_before_fade">Waktu setelah scrollbar mulai memudar</string>
-    <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
-    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
-    <string name="pref_title_scrollbar_size">Size</string>
-    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
+    <string name="pref_title_scrollbar_fade_duration">Durasi fade</string>
+    <string name="pref_summary_scrollbar_fade_duration">Waktu yang diperlukan scrollbar untuk memudar</string>
+    <string name="pref_title_scrollbar_size">Ukuran</string>
+    <string name="pref_summary_scrollbar_size">Tentukan lebar dan tinggi scrollbar Anda</string>
     <string name="pref_category_title_session_export">Ekspor Sesi</string>
     <string name="pref_category_summary_session_export">Pilih sesi yang ingin dibawa keluar</string>
     <string name="error_session_file_corrupted">Error: file sesi rusak!</string>
@@ -610,7 +610,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_assert">Assert</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
+    <string name="label_short_url">URL pendek</string>
     <string name="label_domain">Domain</string>
     <string name="label_title">Judul</string>
     <string name="label_session">Sesi</string>
