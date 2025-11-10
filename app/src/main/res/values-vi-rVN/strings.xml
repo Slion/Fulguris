@@ -476,12 +476,12 @@
     <string name="settings_title_cookies_delete_all">Xóa hết</string>
     <string name="settings_summary_cookies_delete_all">Xóa tất cả cookie cho trang hiện tại</string>
     <string name="question_delete_all_page_cookies">Xóa tất cả cookie cho trang hiện tại?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">Trang hiện tại không có cookie</item> -->
         <item quantity="other">Trang hiện tại có <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
     <string name="settings_title_task_label">Nhãn nhiệm vụ</string>

@@ -477,12 +477,12 @@
     <string name="settings_title_cookies_delete_all">Tümünü sil</string>
     <string name="settings_summary_cookies_delete_all">Mevcut sayfa için tüm çerezleri sil</string>
     <string name="question_delete_all_page_cookies">Mevcut sayfa için tüm çerezler silinsin mi?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">Mevcut sayfada çerez yok</item> -->
         <item quantity="one">Mevcut sayfada bir çerez var</item>
         <item quantity="other">Mevcut sayfada <xliff:g id="cookies_count" example="2">%d</xliff:g> çerez var</item>
     </plurals>

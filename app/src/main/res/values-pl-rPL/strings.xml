@@ -479,12 +479,12 @@
     <string name="settings_title_cookies_delete_all">Usuń wszystko</string>
     <string name="settings_summary_cookies_delete_all">Usuń wszystkie pliki cookie bieżącej strony</string>
     <string name="question_delete_all_page_cookies">Usunąć wszystkie pliki cookie dla bieżącej strony?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">Bieżąca strona nie ma plików cookie</item> -->
         <item quantity="one">Bieżąca strona ma jeden plik cookie</item>
         <item quantity="few">Bieżąca strona ma parę plików cookie</item>
         <item quantity="many">Bieżąca strona ma wiele plików cookie</item>
@@ -507,7 +507,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_cant_delete_current">Nie można usunąć bieżącej sesji!</string>
     <string name="session_prompt_confirm_deletion_title">Potwierdź usunięcie</string>
     <string name="session_prompt_confirm_deletion_message">Czy na pewno chcesz usunąć sesję \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Czy na pewno chcesz usunąć konfigurację "<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Czy na pewno chcesz usunąć konfigurację \"<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Przełączono na \"%s\"</string>
     <string name="busy">Zajęte, spróbuj ponownie wkrótce.</string>
     <string name="invalid_character_removed">Nieprawidłowy znak usunięty!</string>

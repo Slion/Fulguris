@@ -476,6 +476,11 @@
     <string name="settings_title_cookies_delete_all">모두 삭제</string>
     <string name="settings_summary_cookies_delete_all">현재 페이지의 모든 쿠키 삭제</string>
     <string name="question_delete_all_page_cookies">현재 페이지의 모든 쿠키를 삭제하시겠습니까?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
         <item quantity="other">현재 페이지에 <xliff:g id="cookies_count" example="2">%d</xliff:g>개의 쿠키가 있습니다</item>
     </plurals>
@@ -495,8 +500,8 @@
     <string name="session_already_exists">해당 이름의 세션이 이미 존재합니다!</string>
     <string name="session_cant_delete_current">현재 세션을 삭제할 수 없습니다!</string>
     <string name="session_prompt_confirm_deletion_title">삭제 확인</string>
-    <string name="session_prompt_confirm_deletion_message">세션 "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"을(를) 정말로 삭제하시겠습니까?</string>
-    <string name="configuration_prompt_confirm_deletion_message">"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>" 구성을 정말로 삭제하시겠습니까?</string>
+    <string name="session_prompt_confirm_deletion_message">세션 \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"을(를) 정말로 삭제하시겠습니까?</string>
+    <string name="configuration_prompt_confirm_deletion_message">\"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" 구성을 정말로 삭제하시겠습니까?</string>
     <string name="session_switched">\"%s\"(으)로 전환됨</string>
     <string name="busy">사용 중, 잠시 후 다시 시도하세요.</string>
     <string name="invalid_character_removed">잘못된 문자가 제거되었습니다!</string>

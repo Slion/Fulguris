@@ -476,12 +476,12 @@
     <string name="settings_title_cookies_delete_all">すべて削除</string>
     <string name="settings_summary_cookies_delete_all">現在のページの Cookie をすべて削除します</string>
     <string name="question_delete_all_page_cookies">現在のページのすべてのクッキーを削除しますか？</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">現在のページにはクッキーがありません</item> -->
         <item quantity="other">現在のページには <xliff:g id="cookies_count" example="2">%d</xliff:g> クッキー があります</item>
     </plurals>
     <string name="settings_title_task_label">タスクラベル</string>

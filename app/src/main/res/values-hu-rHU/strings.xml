@@ -477,12 +477,12 @@
     <string name="settings_title_cookies_delete_all">Összes törlése</string>
     <string name="settings_summary_cookies_delete_all">Törölje ezen oldal összes sütijét</string>
     <string name="question_delete_all_page_cookies">Törli ezen oldal összes sütijét?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">Az aktuális oldal nem tartalmaz sütiket</item> -->
         <item quantity="one">Ezen oldalnak egy sütije van</item>
         <item quantity="other">Ezen oldalnak <xliff:g id="cookies_count" example="2">%d</xliff:g> sütije van</item>
     </plurals>
@@ -597,12 +597,12 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="action_text_size_decrement">Szövegméret csökkentése</string>
     <string name="action_text_size_small_increment">Szövegméret kicsit növelése</string>
     <string name="action_text_size_small_decrement">Szövegméret kicsit csökkentése</string>
-    
     <string name="action_open_bookmark_list">Könyvjelző lista megnyitása</string>
     <string name="action_open_tab_list">Lapok listájának megnyitása</string>
     <string name="action_open_session_list">Munkamenet lista megnyitása</string>
     <string name="action_switch_to_session">Váltás 1-9 munkamenetre</string>
     <string name="action_switch_to_tab">Váltás 1 és 9 lap közt</string>
+    <string name="action_switch_to_last_tab">Utolsó lap megnyitása</string>
     <string name="action_switch_to_last_session">Utolsó munkamenet megnyitása</string>
     <string name="log_level_verbose">Verbose</string>
     <string name="log_level_debug">Debug</string>
@@ -610,7 +610,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-
+    <!-- TODO: link to existing strings -->
+    <string name="label_url">URL</string>
     <string name="label_short_url">Rövid URL</string>
     <string name="label_domain">Tartomány</string>
     <string name="label_title">Cím</string>

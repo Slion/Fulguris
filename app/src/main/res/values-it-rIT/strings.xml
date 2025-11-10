@@ -20,7 +20,7 @@
     <string name="options">Opzioni</string>
     <string name="location">Posizione</string>
     <string name="password">Salva password</string>
-    <string name="agent">User agent</string>
+    <string name="agent">User Agent</string>
     <string name="home">Pagina iniziale</string>
     <string name="download">Scegli un percorso</string>
     <string name="settings_advanced">Avanzate</string>
@@ -65,7 +65,7 @@
     <string name="unknown_size">Dimensione sconosciuta</string>
     <string name="action_cancel">Annulla</string>
     <string name="title_warning">Attenzione</string>
-    <string name="title_user_agent">User agent</string>
+    <string name="title_user_agent">User Agent</string>
     <string name="title_download_location">Percorso download</string>
     <string name="title_custom_homepage">Pagina iniziale</string>
     <string name="action_webpage">Pagina web</string>
@@ -477,12 +477,12 @@
     <string name="settings_title_cookies_delete_all">Elimina tutto</string>
     <string name="settings_summary_cookies_delete_all">Elimina tutti i cookie per la pagina attuale</string>
     <string name="question_delete_all_page_cookies">Elimina tutti i cookie per la pagina attuale?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">La pagina corrente non ha cookie</item> -->
         <item quantity="one">La pagina attuale ha un cookie</item>
         <item quantity="other">La pagina attuale ha <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>

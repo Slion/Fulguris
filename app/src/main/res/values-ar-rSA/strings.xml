@@ -481,13 +481,13 @@
     <string name="settings_title_cookies_delete_all">حذف الكل</string>
     <string name="settings_summary_cookies_delete_all">حذف جميع ملفات تعريف الارتباط للصفحة الحالية</string>
     <string name="question_delete_all_page_cookies">حذف جميع ملفات تعريف الارتباط للصفحة الحالية؟</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
         <item quantity="zero">الصفحة الحالية ليس بها ملفات تعريف ارتباط</item>
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">الصفحة الحالية ليس بها ملفات تعريف ارتباط</item> -->
         <item quantity="one">الصفحة الحالية بها ملف تعريف ارتباط واحد</item>
         <item quantity="two">الصفحة الحالية بها ملفا تعريف ارتباط</item>
         <item quantity="few">الصفحة الحالية بها %d ملفات تعريف ارتباط</item>
@@ -510,9 +510,9 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">توجد جلسة بهذا الاسم بالفعل!</string>
     <string name="session_cant_delete_current">لا يمكن حذف الجلسة الحالية!</string>
     <string name="session_prompt_confirm_deletion_title">تأكيد الحذف</string>
-    <string name="session_prompt_confirm_deletion_message">هل أنت متأكد أنك تريد حذف جلسة "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"؟</string>
-    <string name="configuration_prompt_confirm_deletion_message">هل أنت متأكد أنك تريد حذف تكوين "<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>"؟</string>
-    <string name="session_switched">تم التبديل إلى "%s"</string>
+    <string name="session_prompt_confirm_deletion_message">هل أنت متأكد أنك تريد حذف جلسة \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"؟</string>
+    <string name="configuration_prompt_confirm_deletion_message">هل أنت متأكد أنك تريد حذف تكوين \"<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>\"؟</string>
+    <string name="session_switched">تم التبديل إلى \"%s\"</string>
     <string name="busy">مشغول، حاول مرة أخرى قريباً.</string>
     <string name="invalid_character_removed">تمت إزالة الحرف غير الصالح!</string>
     <string name="invalid_characters_removed">تمت إزالة الأحرف غير الصالحة!</string>

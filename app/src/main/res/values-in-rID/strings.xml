@@ -476,12 +476,12 @@
     <string name="settings_title_cookies_delete_all">Hapus semua</string>
     <string name="settings_summary_cookies_delete_all">Hapus semua cookie untuk halaman saat ini</string>
     <string name="question_delete_all_page_cookies">Hapus semua cookie untuk halaman saat ini?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">Halaman saat ini tidak memiliki cookie</item> -->
         <item quantity="other">Halaman saat ini memiliki <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
     <string name="settings_title_task_label">Label tugas</string>
@@ -500,8 +500,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">Sudah ada sesi yang bernama ini!</string>
     <string name="session_cant_delete_current">Tidak dapat menghapus sesi ini!</string>
     <string name="session_prompt_confirm_deletion_title">Konfirmasi penghapusan</string>
-    <string name="session_prompt_confirm_deletion_message">Apakah Anda yakin ingin menghapus sesi "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Apakah Anda yakin ingin menghapus konfigurasi "<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>"?</string>
+    <string name="session_prompt_confirm_deletion_message">Apakah Anda yakin ingin menghapus sesi \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Apakah Anda yakin ingin menghapus konfigurasi \"<xliff:g id="config_name" example="Landscape - 270 - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Beralih ke \"%s\"</string>
     <string name="busy">Sedang sibuk, coba sebentar lagi.</string>
     <string name="invalid_character_removed">Karakter yang tidak valid telah dihapus!</string>

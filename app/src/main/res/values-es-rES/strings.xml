@@ -477,12 +477,12 @@
     <string name="settings_title_cookies_delete_all">Borrar todo</string>
     <string name="settings_summary_cookies_delete_all">Borrar todas las cookies de la página actual</string>
     <string name="question_delete_all_page_cookies">¿Quiere borrar todas las cookies de la página actual?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">La página actual no tiene cookies</item> -->
         <item quantity="one">La página actual tiene 1 cookie</item>
         <item quantity="other">La página actual contiene <xliff:g id="cookies_count" example="2">%d</xliff:g></item>
     </plurals>

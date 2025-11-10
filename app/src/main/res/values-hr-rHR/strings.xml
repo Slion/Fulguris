@@ -478,12 +478,12 @@
     <string name="settings_title_cookies_delete_all">Delete all</string>
     <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
     <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
         <item quantity="one">Current page has one cookie</item>
         <item quantity="few">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
         <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>

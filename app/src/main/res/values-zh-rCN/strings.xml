@@ -476,12 +476,12 @@
     <string name="settings_title_cookies_delete_all">全部删除</string>
     <string name="settings_summary_cookies_delete_all">删除当前页面的所有 cookies</string>
     <string name="question_delete_all_page_cookies">删除当前页面的所有 cookie 吗？</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">当前页面没有Cookie</item> -->
         <item quantity="other">当前页面有 %d 个 cookie</item>
     </plurals>
     <string name="settings_title_task_label">任务标签</string>

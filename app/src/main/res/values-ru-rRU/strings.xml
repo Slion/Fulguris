@@ -479,12 +479,12 @@
     <string name="settings_title_cookies_delete_all">Удалить все</string>
     <string name="settings_summary_cookies_delete_all">Удалить все файлы cookie для текущей страницы</string>
     <string name="question_delete_all_page_cookies">Удалить все файлы cookie для текущей страницы?</string>
+    <!--
+    Zero is not working for english:
+    See: https://stackoverflow.com/a/42884713/3969362
+    <item quantity="zero">Current page has no cookies</item>
+    -->
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">На текущей странице нет файлов cookie</item> -->
         <item quantity="one">Текущая страница содержит один файл cookie</item>
         <item quantity="few">На текущей странице мало файлов cookie</item>
         <item quantity="many">Текущая страница содержит много файлов cookie</item>
