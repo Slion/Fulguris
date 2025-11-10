@@ -482,7 +482,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">Mevcut sayfada çerez yok</item> -->
         <item quantity="one">Mevcut sayfada bir çerez var</item>
         <item quantity="other">Mevcut sayfada <xliff:g id="cookies_count" example="2">%d</xliff:g> çerez var</item>
     </plurals>

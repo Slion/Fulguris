@@ -860,10 +860,7 @@ print("="*80)
 # International terms that don't need translation
 international_terms = {
     'WebView', 'Android', 'iOS', 'Linux', 'macOS', 'Windows', 'Desktop', 'Mobile',
-    'JavaScript', 'Cookies', 'Session', 'Sessions', 'Port:', 'Info', 'Verbose',
-    'Assert', 'Debug', 'LeakCanary', 'Normal', 'Options', 'Incognito',
-    'Portrait', 'Landscape', 'Introduction', 'Image',
-    'System', 'Default', 'Local', 'Error', 'Parent'
+    'JavaScript', 'Cookies', 'Port:', 'LeakCanary'
 }
 
 issues_found = {}
@@ -903,9 +900,8 @@ for lang_dir in sorted(lang_dirs):
             if ((is_exact_match or is_near_match) and
                 len(english_value) > 3 and
                 english_value not in international_terms and
-                not string_name.startswith('accent_') and
-                not string_name.startswith('settings_title_portrait') and
-                not string_name.startswith('settings_title_landscape') and
+                not string_name.startswith('agent_') and
+                not string_name.startswith('log_level_') and
                 not '@string/' in translated_value and  # String references
                 string_name not in ['android_open_source_project', 'jsoup', 'infinity', 'search_action']):
                 if is_exact_match:
