@@ -409,7 +409,7 @@
     <string name="dialog_title_close_browser">브라우저 닫기</string>
     <string name="dialog_title_incoming_url">Open %1$s</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="message_blocked_domain">%1$s 차단됨</string>
     <string name="dialog_delete_all_downloads">모든 다운로드 삭제</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">페이지 도구</string>

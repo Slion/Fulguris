@@ -71,6 +71,13 @@ def show_help():
     print("    Examples:")
     print("      python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
     print("      python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
+    print("    ")
+    print("    IMPORTANT - PowerShell quoting:")
+    print("      When using strings with $ (like %1$s), use SINGLE quotes in PowerShell:")
+    print("        python l10n.py --set ko-rKR dialog_title '%1$s 열기'")
+    print("      Double quotes cause PowerShell to expand variables like $s, corrupting the value.")
+    print("      Alternatively, escape the $ with backtick: \"%1`$s 열기\"")
+    print("      This issue does NOT occur in bash/sh terminals.")
     print("\n  python l10n.py --get <lang> <string_id>")
     print("    Get a string value from a specific language")
     print("    Example:")
@@ -124,6 +131,46 @@ def get_string_value(language, string_id):
     print(f"  {value}")
     sys.exit(0)
 
+def _replace_string_in_content(content, string_id, new_value):
+    """Internal function to replace a string value in XML content.
+
+    Args:
+        content: The XML file content as string
+        string_id: The string resource ID
+        new_value: The new value to set
+
+    Returns:
+        tuple: (success, new_content, error_message)
+               success: bool indicating if replacement succeeded
+               new_content: the modified content (or original if failed)
+               error_message: error description if failed, None if succeeded
+    """
+    # Escape special regex characters in the string ID
+    escaped_id = re.escape(string_id)
+
+    # Pattern to match the string entry
+    pattern = f'(<string name="{escaped_id}">)([^<]*)(</string>)'
+
+    # Check if the string exists
+    if not re.search(pattern, content):
+        return False, content, f"String ID '{string_id}' not found"
+
+    # Escape XML special characters in the new value
+    escaped_value = escape_xml_value(new_value)
+
+    # Replace the string value using a function to avoid regex replacement string issues
+    # CRITICAL: We MUST use a function, not an f-string like f'\\1{value}\\3'
+    # Reason: If value contains backslashes (from XML escaping like \' or \n),
+    # they can combine with the following \\3 to create unintended backreferences.
+    # Example: value="test\n" in f'\\1{value}\\3' becomes '\1test\n\3' where
+    # \n is interpreted as backreference (empty) and \3 as 3rd capture group.
+    # With a function, the value is returned as-is with no interpretation.
+    def replacer(match):
+        return match.group(1) + escaped_value + match.group(3)
+
+    new_content = re.sub(pattern, replacer, content)
+    return True, new_content, None
+
 def set_string_value(language, string_id, new_value):
     """Set a string value in a specific language file."""
     file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
@@ -141,27 +188,17 @@ def set_string_value(language, string_id, new_value):
         print(f"Error reading file: {e}")
         sys.exit(1)
 
-    # Escape special regex characters in the string ID
-    escaped_id = re.escape(string_id)
+    # Replace the string using common function
+    success, new_content, error_msg = _replace_string_in_content(content, string_id, new_value)
 
-    # Pattern to match the string entry
-    pattern = f'(<string name="{escaped_id}">)([^<]*)(</string>)'
-
-    # Check if the string exists
-    if not re.search(pattern, content):
-        print(f"Error: String ID '{string_id}' not found in {file_path}")
+    if not success:
+        print(f"Error: {error_msg} in {file_path}")
         sys.exit(1)
-
-    # Escape XML special characters in the new value
-    escaped_value = escape_xml_value(new_value)
-
-    # Replace the string value
-    content = re.sub(pattern, f'\\1{escaped_value}\\3', content)
 
     # Write back to file with UTF-8 encoding (no BOM)
     try:
         with open(file_path, 'w', encoding='utf-8') as f:
-            f.write(content)
+            f.write(new_content)
         print(f"[OK] Successfully updated {language}:{string_id}")
         print(f"  New value: {new_value}")
     except Exception as e:
@@ -203,23 +240,14 @@ def set_string_values_batch(language, string_pairs):
 
     # Process all string replacements
     for string_id, new_value in string_pairs:
-        # Escape special regex characters in the string ID
-        escaped_id = re.escape(string_id)
+        # Use common replacement function
+        success, content, error_msg = _replace_string_in_content(content, string_id, new_value)
 
-        # Pattern to match the string entry
-        pattern = f'(<string name="{escaped_id}">)([^<]*)(</string>)'
-
-        # Check if the string exists
-        if not re.search(pattern, content):
+        if not success:
             not_found.append(string_id)
             error_count += 1
             continue
 
-        # Escape XML special characters in the new value
-        escaped_value = escape_xml_value(new_value)
-
-        # Replace the string value
-        content = re.sub(pattern, f'\\1{escaped_value}\\3', content)
         print(f"[OK] {string_id}")
         success_count += 1
 
