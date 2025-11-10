@@ -525,7 +525,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="button_dismiss">무시</string>
     <!-- Find in page -->
     <string name="no_match_found">일치하는 항목을 찾을 수 없습니다!</string>
-    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="match_x_of_n"><xliff:g id="current_match" example="1">%1$d</xliff:g>개 중 <xliff:g id="match_count" example="10">%2$d</xliff:g>번째 일치</string>
     <string name="pref_title_show_snackbar">스낵바 표시</string>
     <string name="pref_title_show_animation">애니메이션 표시</string>
     <string name="pref_title_vibrate">진동</string>

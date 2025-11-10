@@ -16,20 +16,32 @@ def escape_xml_value(value):
     Android XML string resources require:
     - Apostrophes (') to be escaped as \'
     - Quotes (") to be escaped as \"
-    - Ampersands (&) to be escaped as &amp;
-    - Less than (<) to be escaped as &lt;
-    - Greater than (>) to be escaped as &gt;
+    - Ampersands (&) to be escaped as &amp; (only if not part of entity)
+    - Less than (<) to be escaped as &lt; (only if not part of XML tag)
+    - Greater than (>) to be escaped as &gt; (only if not part of XML tag)
     - Newlines (\n) should be preserved as literal \n
+
+    Special handling: If the value contains XML tags like <xliff:g>, we preserve them.
     """
     # Don't escape if already contains XML entities or escape sequences
     if '&amp;' in value or '&lt;' in value or '&gt;' in value:
         # Already has XML entities, assume it's properly formatted
         return value
 
+    # Check if value contains XML tags (like <xliff:g>)
+    # If it does, we should NOT escape < and > as they're part of the XML structure
+    has_xml_tags = '<xliff:' in value or '</xliff:' in value or '<b>' in value or '</b>' in value
+
     # Escape XML special characters
-    value = value.replace('&', '&amp;')  # Must be first
-    value = value.replace('<', '&lt;')
-    value = value.replace('>', '&gt;')
+    if not has_xml_tags:
+        # Only escape < and > if there are no XML tags in the content
+        value = value.replace('&', '&amp;')  # Must be first
+        value = value.replace('<', '&lt;')
+        value = value.replace('>', '&gt;')
+    else:
+        # If there are XML tags, only escape & that are not part of entities
+        # This is more complex, so for now we skip & escaping for XML tag content
+        pass
 
     # For Android XML, apostrophes need to be escaped with backslash
     # Check if there are any unescaped apostrophes
@@ -68,6 +80,7 @@ def show_help():
     print("    Show only summary statistics for all languages")
     print("\n  python l10n.py --set <lang> <string_id> <value> [<string_id> <value> ...]")
     print("    Set one or more string values for a specific language")
+    print("    Values are XML-escaped (quotes, apostrophes). For complex XML, use --set-raw.")
     print("    Examples:")
     print("      python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
     print("      python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
@@ -78,6 +91,11 @@ def show_help():
     print("      Double quotes cause PowerShell to expand variables like $s, corrupting the value.")
     print("      Alternatively, escape the $ with backtick: \"%1`$s 열기\"")
     print("      This issue does NOT occur in bash/sh terminals.")
+    print("\n  python l10n.py --set-raw <lang> <string_id> <value> [<string_id> <value> ...]")
+    print("    Set string values WITHOUT XML escaping (for complex XML content)")
+    print("    Use this for strings containing <xliff:g> or other XML tags")
+    print("    PowerShell: Use single quotes and escape inner quotes with backslash:")
+    print("      python l10n.py --set-raw ko-rKR test '<xliff:g id=\"x\">%1$d</xliff:g>개'")
     print("\n  python l10n.py --get <lang> <string_id>")
     print("    Get a string value from a specific language")
     print("    Example:")
@@ -131,13 +149,14 @@ def get_string_value(language, string_id):
     print(f"  {value}")
     sys.exit(0)
 
-def _replace_string_in_content(content, string_id, new_value):
+def _replace_string_in_content(content, string_id, new_value, skip_escape=False):
     """Internal function to replace a string value in XML content.
 
     Args:
         content: The XML file content as string
         string_id: The string resource ID
         new_value: The new value to set
+        skip_escape: If True, skip XML escaping (for complex XML content)
 
     Returns:
         tuple: (success, new_content, error_message)
@@ -148,15 +167,19 @@ def _replace_string_in_content(content, string_id, new_value):
     # Escape special regex characters in the string ID
     escaped_id = re.escape(string_id)
 
-    # Pattern to match the string entry
-    pattern = f'(<string name="{escaped_id}">)([^<]*)(</string>)'
+    # Pattern to match the string entry - use .*? to match any content including XML tags
+    # The ? makes it non-greedy so it stops at the first </string>
+    pattern = f'(<string name="{escaped_id}">)(.*?)(</string>)'
 
-    # Check if the string exists
-    if not re.search(pattern, content):
+    # Check if the string exists - need DOTALL flag to match across newlines
+    if not re.search(pattern, content, re.DOTALL):
         return False, content, f"String ID '{string_id}' not found"
 
-    # Escape XML special characters in the new value
-    escaped_value = escape_xml_value(new_value)
+    # Escape XML special characters in the new value (unless skip_escape is True)
+    if skip_escape:
+        escaped_value = new_value
+    else:
+        escaped_value = escape_xml_value(new_value)
 
     # Replace the string value using a function to avoid regex replacement string issues
     # CRITICAL: We MUST use a function, not an f-string like f'\\1{value}\\3'
@@ -168,11 +191,18 @@ def _replace_string_in_content(content, string_id, new_value):
     def replacer(match):
         return match.group(1) + escaped_value + match.group(3)
 
-    new_content = re.sub(pattern, replacer, content)
+    new_content = re.sub(pattern, replacer, content, flags=re.DOTALL)
     return True, new_content, None
 
-def set_string_value(language, string_id, new_value):
-    """Set a string value in a specific language file."""
+def set_string_value(language, string_id, new_value, skip_escape=False):
+    """Set a string value in a specific language file.
+
+    Args:
+        language: Language code (e.g., 'ko-rKR')
+        string_id: The string resource ID
+        new_value: The new value to set
+        skip_escape: If True, skip XML escaping (for --set-raw)
+    """
     file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
     if not file_path.exists():
@@ -189,7 +219,7 @@ def set_string_value(language, string_id, new_value):
         sys.exit(1)
 
     # Replace the string using common function
-    success, new_content, error_msg = _replace_string_in_content(content, string_id, new_value)
+    success, new_content, error_msg = _replace_string_in_content(content, string_id, new_value, skip_escape)
 
     if not success:
         print(f"Error: {error_msg} in {file_path}")
@@ -207,12 +237,13 @@ def set_string_value(language, string_id, new_value):
 
     sys.exit(0)
 
-def set_string_values_batch(language, string_pairs):
+def set_string_values_batch(language, string_pairs, skip_escape=False):
     """Set multiple string values in a specific language file at once.
 
     Args:
         language: Language code (e.g., 'ko-rKR')
         string_pairs: List of tuples [(string_id, value), ...]
+        skip_escape: If True, skip XML escaping (for --set-raw)
     """
     file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
@@ -241,7 +272,7 @@ def set_string_values_batch(language, string_pairs):
     # Process all string replacements
     for string_id, new_value in string_pairs:
         # Use common replacement function
-        success, content, error_msg = _replace_string_in_content(content, string_id, new_value)
+        success, content, error_msg = _replace_string_in_content(content, string_id, new_value, skip_escape)
 
         if not success:
             not_found.append(string_id)
@@ -483,6 +514,32 @@ if len(sys.argv) > 1:
             set_string_value(language, string_pairs[0][0], string_pairs[0][1])
         else:
             set_string_values_batch(language, string_pairs)
+    # Handle set-raw command (no XML escaping)
+    elif arg == '--set-raw':
+        if len(sys.argv) < 5:
+            print("Error: --set-raw requires at least 3 arguments: <language> <string_id> <value> [<string_id> <value> ...]")
+            print("Examples:")
+            print("  python l10n.py --set-raw ko-rKR match_x_of_n '<xliff:g id=\"current_match\">%1$d</xliff:g>개 중'")
+            sys.exit(1)
+        language = sys.argv[2]
+
+        # Parse pairs of string_id and value
+        string_pairs = []
+        i = 3
+        while i < len(sys.argv):
+            if i + 1 >= len(sys.argv):
+                print(f"Error: Missing value for string_id '{sys.argv[i]}'")
+                sys.exit(1)
+            string_id = sys.argv[i]
+            value = sys.argv[i + 1]
+            string_pairs.append((string_id, value))
+            i += 2
+
+        # If only one pair, use single-string output format
+        if len(string_pairs) == 1:
+            set_string_value(language, string_pairs[0][0], string_pairs[0][1], skip_escape=True)
+        else:
+            set_string_values_batch(language, string_pairs, skip_escape=True)
     # Handle add command
     elif arg == '--add':
         if len(sys.argv) < 4:
