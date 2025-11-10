@@ -173,7 +173,7 @@
     <string name="action_message_canceled">작업이 취소되었습니다.</string>
     <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">보안 오류! 페이지 로드가 중단되었습니다.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error">보안 연결이 손상되었습니다:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>계속하시겠습니까?</string>
     <string name="message_certificate_date_invalid">인증서 만료일</string>
     <string name="message_certificate_expired">인증서가 만료되었습니다</string>
     <string name="message_certificate_domain_mismatch">인증서 도메인과 사이트 도메인이 일치하지 않습니다</string>
@@ -407,7 +407,7 @@
     <string name="dialog_rename_folder">폴더 이름 바꾸기</string>
     <string name="dialog_remove_folder">폴더 삭제</string>
     <string name="dialog_title_close_browser">브라우저 닫기</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">%1$s 열기</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$s 차단됨</string>
     <string name="dialog_delete_all_downloads">모든 다운로드 삭제</string>
@@ -500,8 +500,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">해당 이름의 세션이 이미 존재합니다!</string>
     <string name="session_cant_delete_current">현재 세션을 삭제할 수 없습니다!</string>
     <string name="session_prompt_confirm_deletion_title">삭제 확인</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="session_prompt_confirm_deletion_message">세션 "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"을(를) 정말로 삭제하시겠습니까?</string>
+    <string name="configuration_prompt_confirm_deletion_message">"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>" 구성을 정말로 삭제하시겠습니까?</string>
     <string name="session_switched">\"%s\"(으)로 전환됨</string>
     <string name="busy">사용 중, 잠시 후 다시 시도하세요.</string>
     <string name="invalid_character_removed">잘못된 문자가 제거되었습니다!</string>
