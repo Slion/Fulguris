@@ -236,7 +236,7 @@
     <string name="open_with">Abrir com</string>
     <string name="settings_general">Gerais</string>
     <string name="settings_display">Exibição</string>
-    <string name="settings_backup">Backup</string>
+    <string name="settings_backup">Cópia de segurança</string>
     <string name="settings_title_configuration">Configuração</string>
     <string name="settings_summary_configuration">Definições do modo vertical ou horizontal</string>
     <string name="settings_title_delete_configuration">Eliminar configuração</string>
@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">Consulte nossa política de privacidade</string>
     <string name="settings_title_terms_and_conditions">Termos e condições</string>
     <string name="settings_summary_terms_and_conditions">Consulte nossos termos e condições</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Introdução</string>
     <string name="settings_summary_introduction">Iniciar a experiência de integração</string>
     <string name="settings_summary_discord">Junte-se à nossa comunidade</string>
     <string name="pref_category_panels">Painéis</string>
@@ -292,7 +292,7 @@
     <string name="pref_title_menu_new_tab">Mostrar botão Novo separador</string>
     <string name="pref_summary_menu_new_tab">Mostrar item de menu para criar um separador</string>
     <string name="pref_title_crash_report">Relatórios de falhas</string>
-    <string name="pref_title_analytics">Analytics</string>
+    <string name="pref_title_analytics">Análise</string>
     <string name="pref_title_pull_to_refresh">Puxe para recarregar</string>
     <string name="pref_summary_on_crash_reports">Ajude a melhorar a aplicação enviando relatórios de falhas</string>
     <string name="pref_summary_off_crash_reports">Relatórios de falhas não serão enviados</string>
@@ -325,7 +325,7 @@
     <string name="reading_mode">Modo de leitura</string>
     <string name="loading">A carregar&#8230;</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
-    <string name="mit_license">MIT License</string>
+    <string name="mit_license">Licença MIT</string>
     <string name="search_in_new_tab">Pesquisa em novo separador</string>
     <string name="url_in_new_tab">URL em novo separador</string>
     <string name="homepage_in_new_tab">Página inicial em novo separador</string>
@@ -482,7 +482,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">A página atual não tem cookies</item> -->
         <item quantity="one">A página atual possui um cookie</item>
         <item quantity="other">A página atual possui <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>

@@ -482,7 +482,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">La page actuelle n&apos;a pas de cookies</item> -->
         <item quantity="one">La page actuelle contient un cookie</item>
         <item quantity="other">La page actuelle contient <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>

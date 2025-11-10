@@ -251,10 +251,10 @@
     <string name="settings_summary_privacy_policy">Online unsere Datenschutzerklärung ansehen</string>
     <string name="settings_title_terms_and_conditions">Allgemeine Geschäftsbedingungen</string>
     <string name="settings_summary_terms_and_conditions">Unsere allgemeinen Bedingungen online ansehen</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Einführung</string>
     <string name="settings_summary_introduction">Onboarding-Erfahrung starten</string>
     <string name="settings_summary_discord">Trete unserer wachsenden Community bei</string>
-    <string name="pref_category_panels">Panels</string>
+    <string name="pref_category_panels">Bedienfelder</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Querformat</string>
     <string name="pref_category_portrait">Hochformat</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_logs">Verlauf</string>
     <string name="pref_summary_on_logs">Aktiviert</string>
     <string name="pref_summary_off_logs">Deaktiviert</string>
-    <string name="pref_title_log_level">Log Level</string>
+    <string name="pref_title_log_level">Log-Level</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">In neuem Tab öffnen</string>
     <string name="dialog_open_background_tab">In Hintergrund-Tab öffnen</string>
@@ -482,7 +482,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">Die aktuelle Seite hat keine Cookies</item> -->
         <item quantity="one">Aktuelle Seite enthält ein Cookie</item>
         <item quantity="other">Die aktuelle Seite hat <xliff:g id="cookies_count" example="2">%d</xliff:g> Kekse</item>
     </plurals>
@@ -514,7 +514,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="tts">Seite lesen</string>
     <string name="stop_tts">Lesen beenden</string>
     <!-- Application name which can be translated -->
-    <string name="locale_app_name">Fulguris Web Browser</string>
+    <string name="locale_app_name">Fulguris Webbrowser</string>
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.

@@ -119,7 +119,7 @@
     <string name="message_cookies_cleared">Cookies removidos</string>
     <string name="message_cookies_clear_error">Falha ao limpar cookies</string>
     <string name="max_tabs">Atingido número máximo de abas</string>
-    <string name="message_cookie_copied">Cookie copied to clipboard</string>
+    <string name="message_cookie_copied">Cookie copiado para a área de transferência</string>
     <string name="message_text_copied">Texto copiado para a área de transferência</string>
     <string name="message_link_copied">Link copiado para a área de transferência</string>
     <string name="message_blocked_local">Bloqueado o carregamento do arquivo local</string>
@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">Veja nossa política de privacidade online</string>
     <string name="settings_title_terms_and_conditions">Termos &amp; Condições</string>
     <string name="settings_summary_terms_and_conditions">Consulte nossos termos e condições online</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Introdução</string>
     <string name="settings_summary_introduction">Iniciar a experiência de integração</string>
     <string name="settings_summary_discord">Junte-se à nossa comunidade em crescimento</string>
     <string name="pref_category_panels">Painéis</string>
@@ -292,7 +292,7 @@
     <string name="pref_title_menu_new_tab">Item de menu Nova Aba</string>
     <string name="pref_summary_menu_new_tab">Exibir opção de abrir nova aba no menu</string>
     <string name="pref_title_crash_report">Relatórios de falhas</string>
-    <string name="pref_title_analytics">Analytics</string>
+    <string name="pref_title_analytics">Análises</string>
     <string name="pref_title_pull_to_refresh">Puxar para atualizar</string>
     <string name="pref_summary_on_crash_reports">Ajude a melhorar o aplicativo enviando relatórios de falhas</string>
     <string name="pref_summary_off_crash_reports">Relatórios de falhas não serão enviados</string>
@@ -390,7 +390,7 @@
     <string name="app_restart">Reinicie o aplicativo para que a alteração entre em vigor</string>
     <string name="pref_title_crash_logs">Relatório de erros</string>
     <string name="pref_summary_crash_logs">Escreva logs de erro no sistema de arquivos.\nToque para abrir a pasta. Por favor, forneça um arquivo pertinente ao relatar um bug.</string>
-    <string name="pref_title_logs">Logs</string>
+    <string name="pref_title_logs">Registros</string>
     <string name="pref_summary_on_logs">Ativado</string>
     <string name="pref_summary_off_logs">Desativado</string>
     <string name="pref_title_log_level">Nível de log</string>
@@ -426,10 +426,10 @@
     <string name="notification_incognito_running_description">Sessão anônima em andamento</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Issued by</string>
-    <string name="ssl_info_issued_to">Issued to</string>
-    <string name="ssl_info_issued_on">Issued on</string>
-    <string name="ssl_info_expires_on">Expires on</string>
+    <string name="ssl_info_issued_by">Emitido por:</string>
+    <string name="ssl_info_issued_to">Emitido para:</string>
+    <string name="ssl_info_issued_on">Emitido em:</string>
+    <string name="ssl_info_expires_on">Expira em:</string>
     <!-- Search in page -->
     <string name="next">Avançar</string>
     <string name="previous">Voltar</string>
@@ -482,7 +482,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">A página atual não tem cookies</item> -->
         <item quantity="one">A página atual possui um cookie</item>
         <item quantity="other">A página atual possui <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>

@@ -7,7 +7,7 @@
     <string name="action_share">Condividi</string>
     <string name="action_history">Cronologia</string>
     <string name="action_bookmarks">Segnalibri</string>
-    <string name="action_downloads">Downloads</string>
+    <string name="action_downloads">Download</string>
     <string name="action_add_bookmark">Aggiungi segnalibro</string>
     <string name="action_forward">Avanti</string>
     <string name="action_sessions">Sessioni</string>
@@ -20,7 +20,7 @@
     <string name="options">Opzioni</string>
     <string name="location">Posizione</string>
     <string name="password">Salva password</string>
-    <string name="agent">User Agent</string>
+    <string name="agent">User agent</string>
     <string name="home">Pagina iniziale</string>
     <string name="download">Scegli un percorso</string>
     <string name="settings_advanced">Avanzate</string>
@@ -65,7 +65,7 @@
     <string name="unknown_size">Dimensione sconosciuta</string>
     <string name="action_cancel">Annulla</string>
     <string name="title_warning">Attenzione</string>
-    <string name="title_user_agent">User Agent</string>
+    <string name="title_user_agent">User agent</string>
     <string name="title_download_location">Percorso download</string>
     <string name="title_custom_homepage">Pagina iniziale</string>
     <string name="action_webpage">Pagina web</string>
@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">Vedi la nostra politica sulla privacy online</string>
     <string name="settings_title_terms_and_conditions">Termini e Condizioni</string>
     <string name="settings_summary_terms_and_conditions">Vedi i nostri termini e condizioni online</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Introduzione</string>
     <string name="settings_summary_introduction">Avvia l\'esperienza di onboarding</string>
     <string name="settings_summary_discord">Unisciti alla nostra comunità in crescita</string>
     <string name="pref_category_panels">Pannelli</string>
@@ -426,10 +426,10 @@
     <string name="notification_incognito_running_description">Sessione in incognito in corso</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Issued by</string>
-    <string name="ssl_info_issued_to">Issued to</string>
-    <string name="ssl_info_issued_on">Issued on</string>
-    <string name="ssl_info_expires_on">Expires on</string>
+    <string name="ssl_info_issued_by">Rilasciato da:</string>
+    <string name="ssl_info_issued_to">Rilasciato a:</string>
+    <string name="ssl_info_issued_on">Rilasciato il:</string>
+    <string name="ssl_info_expires_on">Scade il:</string>
     <!-- Search in page -->
     <string name="next">Prossimo</string>
     <string name="previous">Precedente</string>
@@ -458,7 +458,7 @@
     <string name="question_delete_all_domain_settings">Eliminare tutte le impostazioni di dominio?</string>
     <string name="settings_title_delete_domain_settings">Elimina impostazioni dominio</string>
     <string name="settings_summary_delete_domain_settings">Sarà ricreato la prossima volta che questo dominio è incontrato</string>
-    <string name="settings_title_parent">Parent</string>
+    <string name="settings_title_parent">Genitore</string>
     <string name="settings_summary_default_domain_settings">Impostazioni dominio predefinite</string>
     <string name="settings_title_ssl_error">Errore di sicurezza</string>
     <string name="settings_summary_ssl_error">Cosa fare quando un errore SSL è rilevato</string>
@@ -482,7 +482,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">La pagina corrente non ha cookie</item> -->
         <item quantity="one">La pagina attuale ha un cookie</item>
         <item quantity="other">La pagina attuale ha <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
@@ -514,7 +514,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="tts">Leggi pagina</string>
     <string name="stop_tts">Interrompi lettura</string>
     <!-- Application name which can be translated -->
-    <string name="locale_app_name">Fulguris Web Browser</string>
+    <string name="locale_app_name">Browser Web Fulguris</string>
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
