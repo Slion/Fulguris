@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">Vea nuestra política de privacidad en línea</string>
     <string name="settings_title_terms_and_conditions">Términos &amp; Condiciones</string>
     <string name="settings_summary_terms_and_conditions">Vea nuestros términos y condiciones en línea</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Introducción</string>
     <string name="settings_summary_introduction">Iniciar la experiencia de incorporación</string>
     <string name="settings_summary_discord">Únase a nuestra creciente comunidad</string>
     <string name="pref_category_panels">Paneles</string>
@@ -482,7 +482,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">La página actual no tiene cookies</item> -->
         <item quantity="one">La página actual tiene 1 cookie</item>
         <item quantity="other">La página actual contiene <xliff:g id="cookies_count" example="2">%d</xliff:g></item>
     </plurals>

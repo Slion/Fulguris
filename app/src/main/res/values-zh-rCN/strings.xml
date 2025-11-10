@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">在线查看我们的隐私政策</string>
     <string name="settings_title_terms_and_conditions">使用条款&amp; 细则</string>
     <string name="settings_summary_terms_and_conditions">在线查看我们的条款和细则</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">介绍</string>
     <string name="settings_summary_introduction">启动入门体验</string>
     <string name="settings_summary_discord">加入我们成长中的社区</string>
     <string name="pref_category_panels">面板</string>
@@ -481,7 +481,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">当前页面没有Cookie</item> -->
         <item quantity="other">当前页面有 %d 个 cookie</item>
     </plurals>
     <string name="settings_title_task_label">任务标签</string>

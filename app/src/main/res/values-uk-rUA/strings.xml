@@ -239,10 +239,10 @@
     <string name="settings_backup">Запасне копіювання</string>
     <string name="settings_title_configuration">Конфігурація</string>
     <string name="settings_summary_configuration">Налаштування портретної й альбомної орієнтації</string>
-    <string name="settings_title_delete_configuration">Delete configuration</string>
+    <string name="settings_title_delete_configuration">Видалити конфігурацію</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
-    <string name="settings_title_add_configuration">Add configuration</string>
+    <string name="settings_title_add_configuration">Додати конфігурацію</string>
     <string name="settings_privacy">Приватність</string>
     <string name="settings_about">Про програму</string>
     <string name="settings_contribute">Співпраця</string>
@@ -251,9 +251,9 @@
     <string name="settings_summary_privacy_policy">Перегляньте нашу політику конфіденційності онлайн</string>
     <string name="settings_title_terms_and_conditions">Умови та положення</string>
     <string name="settings_summary_terms_and_conditions">Ознайомтесь з нашими умовами та положеннями онлайн</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Вступ</string>
     <string name="settings_summary_introduction">Запустити процес адаптації</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_summary_discord">Приєднуйтесь до нашої спільноти</string>
     <string name="pref_category_panels">Панелі</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Альбомна</string>
@@ -484,11 +484,11 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
-        <item quantity="one">Current page has one cookie</item>
+        <!-- <item quantity="zero">На поточній сторінці немає файлів cookie</item> -->
+        <item quantity="one">На поточній сторінці один файл cookie</item>
         <item quantity="few">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
         <item quantity="many">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="other">На поточній сторінці <xliff:g id="cookies_count" example="2">%d</xliff:g> файлів cookie</item>
     </plurals>
     <string name="settings_title_task_label">Мітка завдання</string>
     <string name="settings_title_task_icon">Значок завдання</string>
@@ -619,7 +619,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="label_short_url">Короткий URL</string>
     <string name="label_domain">Домен</string>
     <string name="label_title">Заголовок</string>
-    <string name="label_session">Session</string>
+    <string name="label_session">Сеанс</string>
     <string name="label_app_name">Назва програми</string>
     <string name="message_render_process_crashed">Процес рендерингу завершився збоєм. Можливо, вам потрібно перезавантажити деякі веб-сторінки.</string>
     <!-- App Introduction Strings -->

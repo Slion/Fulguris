@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">Pogledajte našu politiku privatnosti na mreži</string>
     <string name="settings_title_terms_and_conditions">Odredbe i Uslovi</string>
     <string name="settings_summary_terms_and_conditions">Pogledajte naše uslove i odredbe preko interneta</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Uvod</string>
     <string name="settings_summary_introduction">Pokreni iskustvo upoznavanja</string>
     <string name="settings_summary_discord">Pridružite se našoj rastućoj zajednici</string>
     <string name="pref_category_panels">Paneli</string>
@@ -483,7 +483,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">Trenutna stranica nema kolačića</item> -->
         <item quantity="one">Trenutna stranica ima jedan kolačić</item>
         <item quantity="few">Trenutna stranica ima<xliff:g id="cookies_count" example="2"> %d</xliff:g> kolačići</item>
         <item quantity="other">Trenutna stranica ima<xliff:g id="cookies_count" example="2"> %d</xliff:g> kolačići</item>
@@ -564,7 +564,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="edit_cookies">Prikaži kolačiće web stranice</string>
     <string name="site_cookies">Kolačići stranice</string>
     <string name="accent_color">Osnovna boja</string>
-    <string name="accent_amber">Amber</string>
+    <string name="accent_amber">Jantarna</string>
     <string name="accent_blue">Plava</string>
     <string name="accent_cyan">Zelenkasto Plava</string>
     <string name="accent_deep_orange">Tamno Narandžasta</string>

@@ -166,7 +166,7 @@
     <string name="local_file_replace">置換</string>
     <string name="local_file_chosen">選択されたファイル</string>
     <string name="remote_file">リモート</string>
-    <string name="use_modify_filters">Modifier filters</string>
+    <string name="use_modify_filters">修飾子フィルター</string>
     <string name="use_modify_filters_warning">いくつかのケースでは、modifier filterがこのブラウザでウェブサイトを破壊することが見つかりました。 実装が改善されるまで、自己責任で有効にできます。メインフレームドキュメントの無効化はほとんどの問題を回避するだけです。</string>
     <string name="modify_filters_not_for_main_frame">メインフレームのみ無効にする</string>
     <!-- Common actions -->
@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">プライバシーポリシーをオンラインで見る</string>
     <string name="settings_title_terms_and_conditions">利用規約</string>
     <string name="settings_summary_terms_and_conditions">オンラインで利用規約を見る</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">はじめに</string>
     <string name="settings_summary_introduction">オンボーディング体験を開始</string>
     <string name="settings_summary_discord">成長中のコミュニティに参加する</string>
     <string name="pref_category_panels">パネル</string>
@@ -325,7 +325,7 @@
     <string name="reading_mode">リーダーモード</string>
     <string name="loading">読み込み中&#8230;</string>
     <string name="jsoup">jsoup: Java HTML Parser</string>
-    <string name="mit_license">MIT license</string>
+    <string name="mit_license">MITライセンス</string>
     <string name="search_in_new_tab">新しいタブで検索</string>
     <string name="url_in_new_tab">URLを新しいタブで開く</string>
     <string name="homepage_in_new_tab">新しいタブでホームページを開く</string>
@@ -481,7 +481,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">現在のページにはクッキーがありません</item> -->
         <item quantity="other">現在のページには <xliff:g id="cookies_count" example="2">%d</xliff:g> クッキー があります</item>
     </plurals>
     <string name="settings_title_task_label">タスクラベル</string>
@@ -512,7 +512,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="tts">ページを読み上げる</string>
     <string name="stop_tts">読み上げを停止</string>
     <!-- Application name which can be translated -->
-    <string name="locale_app_name">Fulguris Web Browser</string>
+    <string name="locale_app_name">Fulguris ウェブブラウザ</string>
     <!--
     Long press on image link disambiguation:
         When user does a long press on a page element containing both an image and link we ask her which one she wants to use.

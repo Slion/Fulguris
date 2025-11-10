@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">Gizlilik politikamızı çevrimiçi görün</string>
     <string name="settings_title_terms_and_conditions">Şartlar ve Koşullar</string>
     <string name="settings_summary_terms_and_conditions">Şartlar ve koşullarımızı çevrimiçi görün</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Giriş</string>
     <string name="settings_summary_introduction">İlk kullanım deneyimini başlat</string>
     <string name="settings_summary_discord">Büyüyen topluluğumuza katılın</string>
     <string name="pref_category_panels">Paneller</string>
@@ -576,7 +576,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="accent_orange">Turuncu</string>
     <string name="accent_pink">Pembe</string>
     <string name="accent_purple">Mor</string>
-    <string name="accent_teal">Teal</string>
+    <string name="accent_teal">Deniz Mavisi</string>
     <string name="accent_yellow">Sarı</string>
     <string name="accent_brown">Kahverengi</string>
     <string name="search_homepage">Ara</string>

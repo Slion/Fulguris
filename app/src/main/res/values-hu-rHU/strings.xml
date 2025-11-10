@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">Nézze meg adatvédelmi irányelveinket online</string>
     <string name="settings_title_terms_and_conditions">Szerződési &amp; Feltételek</string>
     <string name="settings_summary_terms_and_conditions">Nézze meg szerződési feltételeinket online</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Bevezetés</string>
     <string name="settings_summary_introduction">Kezdd el a bevezető élményt</string>
     <string name="settings_summary_discord">Csatlakozzon növekvő közösségünkhöz</string>
     <string name="pref_category_panels">Panelek</string>
@@ -426,10 +426,10 @@
     <string name="notification_incognito_running_description">Folyamatban lévő inkognitó munkamenet</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Issued by</string>
-    <string name="ssl_info_issued_to">Issued to</string>
-    <string name="ssl_info_issued_on">Issued on</string>
-    <string name="ssl_info_expires_on">Expires on</string>
+    <string name="ssl_info_issued_by">Kibocsátó:</string>
+    <string name="ssl_info_issued_to">Kiadva:</string>
+    <string name="ssl_info_issued_on">Kibocsátás dátuma:</string>
+    <string name="ssl_info_expires_on">Lejárat dátuma:</string>
     <!-- Search in page -->
     <string name="next">Következő</string>
     <string name="previous">Előző</string>
@@ -482,7 +482,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">Az aktuális oldal nem tartalmaz sütiket</item> -->
         <item quantity="one">Ezen oldalnak egy sütije van</item>
         <item quantity="other">Ezen oldalnak <xliff:g id="cookies_count" example="2">%d</xliff:g> sütije van</item>
     </plurals>
@@ -569,7 +569,7 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="accent_deep_purple">Sötétlila</string>
     <string name="accent_default">Alapértelmezett</string>
     <string name="accent_green">Zöld</string>
-    <string name="accent_indigo">Indigo</string>
+    <string name="accent_indigo">Indigó</string>
     <string name="accent_light_blue">Világoskék</string>
     <string name="accent_light_green">Világoszöld</string>
     <string name="accent_lime">Lime</string>

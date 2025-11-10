@@ -20,7 +20,7 @@
     <string name="options">Опции</string>
     <string name="location">Доступ к местоположению</string>
     <string name="password">Сохранять пароли</string>
-    <string name="agent">User Agent</string>
+    <string name="agent">Агент пользователя</string>
     <string name="home">Новая вкладка</string>
     <string name="download">Путь загрузки</string>
     <string name="settings_advanced">Дополнительно</string>
@@ -251,7 +251,7 @@
     <string name="settings_summary_privacy_policy">Посмотрите нашу политику конфиденциальности онлайн</string>
     <string name="settings_title_terms_and_conditions">Условия использования</string>
     <string name="settings_summary_terms_and_conditions">Смотрите наши условия использования онлайн</string>
-    <string name="settings_title_introduction">Introduction</string>
+    <string name="settings_title_introduction">Введение</string>
     <string name="settings_summary_introduction">Запустить процесс адаптации</string>
     <string name="settings_summary_discord">Присоединяйтесь к нашему растущему сообществу</string>
     <string name="pref_category_panels">Панели</string>
@@ -484,7 +484,7 @@
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
+        <!-- <item quantity="zero">На текущей странице нет файлов cookie</item> -->
         <item quantity="one">Текущая страница содержит один файл cookie</item>
         <item quantity="few">На текущей странице мало файлов cookie</item>
         <item quantity="many">Текущая страница содержит много файлов cookie</item>
