@@ -298,9 +298,9 @@
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
     <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
     <string name="pref_summary_off_analytics">Usage data will not be sent</string>
-    <string name="pref_title_accept_terms">I want to use Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
+    <string name="pref_title_accept_terms">Jag vill använda Fulguris</string>
+    <string name="pref_summary_on_accept_terms">Du har accepterat våra villkor</string>
+    <string name="pref_summary_off_accept_terms">Acceptera våra villkor för att fortsätta</string>
     <string name="pref_summary_color_mode">Tillämpa webbsidans färg på verktygs- och statusfältet</string>
     <string name="pref_title_desktop_width">Bredd på skrivbordet</string>
     <string name="pref_summary_desktop_width">Skrivbordsläge vyportbredd, sätt det högre för mindre innehåll</string>
@@ -360,14 +360,14 @@
     <string name="settings_adblock">@string/block_ads</string>
     <string name="settings_summary_content_control">Annonsblockerare och innehållsfiltrering</string>
     <string name="settings_summary_content_control_toggle">Aktivera annonsblockering och innehållsfiltrering</string>
-    <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
-    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
-    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
-    <string name="settings_title_tab_bar_placement">Tab bar placement</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
-    <string name="settings_title_toolbars_position">Toolbars position</string>
-    <string name="settings_summary_on_toolbars_position">Bottom</string>
+    <string name="settings_title_tab_bar_orientation">Flikladens orientering</string>
+    <string name="settings_summary_on_tab_bar_orientation">Vertikal</string>
+    <string name="settings_summary_off_tab_bar_orientation">Horisontell</string>
+    <string name="settings_title_tab_bar_placement">Flikladens placering</string>
+    <string name="settings_summary_on_tab_bar_placement">Infällbar panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Alltid på skärmen</string>
+    <string name="settings_title_toolbars_position">Verktygsfältens position</string>
+    <string name="settings_summary_on_toolbars_position">Nedtill</string>
     <string name="settings_summary_off_toolbars_position">Top</string>
     <string name="settings_title_desktop_mode_default">Stationära datorläge</string>
     <string name="settings_summary_desktop_mode_default">Definiera om nya flikar använder stationära datorläge som standard</string>
@@ -390,10 +390,10 @@
     <string name="app_restart">Vänligen starta om appen för att ändringen ska börja gälla</string>
     <string name="pref_title_crash_logs">Kraschlogg</string>
     <string name="pref_summary_crash_logs">Skriv kraschloggar till filsystemet.\nTryck för att öppna mappen. Ange relevant fil när du rapporterar ett fel.</string>
-    <string name="pref_title_logs">Logs</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_title_logs">Loggar</string>
+    <string name="pref_summary_on_logs">Aktiverad</string>
+    <string name="pref_summary_off_logs">Inaktiverad</string>
+    <string name="pref_title_log_level">Loggnivå</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Öppna i ny flik</string>
     <string name="dialog_open_background_tab">Öppna i bakgrundsflik</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Döp om mapp</string>
     <string name="dialog_remove_folder">Ta bort mapp</string>
     <string name="dialog_title_close_browser">Stäng webbläsaren</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
-    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
-    <string name="message_blocked_domain">Blocked %1$s</string>
+    <string name="dialog_title_incoming_url">Öppna %1</string>
+    <string name="dialog_message_incoming_url">%1\n\n%2</string>
+    <string name="message_blocked_domain">Blockerade %1</string>
     <string name="dialog_delete_all_downloads">Radera alla nedladdningar</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Verktyg för sidan</string>
@@ -423,13 +423,13 @@
     </plurals>
     <string name="notification_incognito_running_message">Tryck för att öppna</string>
     <!-- Shown in system app notification settings -->
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Pågående inkognitosession</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Issued by</string>
-    <string name="ssl_info_issued_to">Issued to</string>
-    <string name="ssl_info_issued_on">Issued on</string>
-    <string name="ssl_info_expires_on">Expires on</string>
+    <string name="ssl_info_issued_by">Utfärdad av:</string>
+    <string name="ssl_info_issued_to">Utfärdad till:</string>
+    <string name="ssl_info_issued_on">Utfärdad den:</string>
+    <string name="ssl_info_expires_on">Upphör den:</string>
     <!-- Search in page -->
     <string name="next">Nästa</string>
     <string name="previous">Föregående</string>
@@ -441,56 +441,56 @@
     <string name="action_close_all_other_tabs">Stäng övriga flikar</string>
     <string name="action_restore_all_tabs">Återställ alla flikar</string>
     <string name="action_restore_tab">Återställ flik</string>
-    <string name="settings_title_layer_type">Layer type</string>
-    <string name="settings_title_domains">Domains</string>
-    <string name="settings_summary_domains">Manage domain settings</string>
-    <string name="settings_title_resource_domains">Resource domains</string>
-    <string name="settings_title_override">Override</string>
-    <string name="settings_summary_on_override">Override parent settings</string>
-    <string name="settings_summary_off_override">Use parent settings</string>
-    <string name="settings_title_launch_app">Launch app</string>
-    <string name="settings_title_category">Category</string>
-    <string name="settings_summary_on_category">Main domain</string>
-    <string name="settings_summary_off_category">Resource domain</string>
-    <string name="action_domain_settings">Domain</string>
-    <string name="settings_title_domains_delete_all">Delete all</string>
-    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
-    <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
-    <string name="settings_title_delete_domain_settings">Delete domain settings</string>
-    <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
-    <string name="settings_title_parent">Parent</string>
-    <string name="settings_summary_default_domain_settings">Default domain settings</string>
-    <string name="settings_title_ssl_error">Security error</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
-    <string name="settings_title_incoming_url_action">Incoming link action</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
-    <string name="settings_title_third_party_cookies">Third-party cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_title_layer_type">Lagertyp</string>
+    <string name="settings_title_domains">Domäner</string>
+    <string name="settings_summary_domains">Hantera domäninställningar</string>
+    <string name="settings_title_resource_domains">Resursdomäner</string>
+    <string name="settings_title_override">Åsidosätt</string>
+    <string name="settings_summary_on_override">Åsidosätt förälderns inställningar</string>
+    <string name="settings_summary_off_override">Använd förälderns inställningar</string>
+    <string name="settings_title_launch_app">Starta app</string>
+    <string name="settings_title_category">Kategori</string>
+    <string name="settings_summary_on_category">Huvuddomän</string>
+    <string name="settings_summary_off_category">Resursdomän</string>
+    <string name="action_domain_settings">Domän</string>
+    <string name="settings_title_domains_delete_all">Ta bort alla</string>
+    <string name="settings_summary_domains_delete_all">Ta bort alla domäninställningar</string>
+    <string name="question_delete_all_domain_settings">Ta bort alla domäninställningar?</string>
+    <string name="settings_title_delete_domain_settings">Ta bort domäninställningar</string>
+    <string name="settings_summary_delete_domain_settings">Kommer att återskapas nästa gång denna domän påträffas</string>
+    <string name="settings_title_parent">Förälder</string>
+    <string name="settings_summary_default_domain_settings">Standarddomäninställningar</string>
+    <string name="settings_title_ssl_error">Säkerhetsfel</string>
+    <string name="settings_summary_ssl_error">Vad som ska göras när ett SSL-fel upptäcks</string>
+    <string name="settings_title_incoming_url_action">Åtgärd för inkommande länk</string>
+    <string name="settings_summary_incoming_url_action">Hur länkar från andra appar ska hanteras</string>
+    <string name="checkbox_remember_domain_choice">Kom ihåg ditt val för denna domän</string>
+    <string name="settings_title_third_party_cookies">Tredjepartscookies</string>
+    <string name="settings_summary_on_third_party_cookies">Acceptera cookies som används för att spåra dina aktiviteter över webbplatser</string>
+    <string name="settings_summary_off_third_party_cookies">Avvisa cookies som används för att spåra dina aktiviteter över webbplatser</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_summary_on_javascript">Alla webbplatsers och webbläsarens funktioner bör fungera</string>
+    <string name="settings_summary_off_javascript">Vissa webbplatsers och webbläsarens funktioner fungerar inte</string>
     <string name="settings_title_cookies">Cookies</string>
-    <string name="settings_summary_cookies">Current page has no cookies</string>
-    <string name="settings_summary_manage_cookies">Manage current page cookies</string>
-    <string name="settings_title_cookies_delete_all">Delete all</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
-    <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
+    <string name="settings_summary_cookies">Aktuell sida har inga cookies</string>
+    <string name="settings_summary_manage_cookies">Hantera cookies för aktuell sida</string>
+    <string name="settings_title_cookies_delete_all">Ta bort alla</string>
+    <string name="settings_summary_cookies_delete_all">Ta bort alla cookies för aktuell sida</string>
+    <string name="question_delete_all_page_cookies">Ta bort alla cookies för aktuell sida?</string>
     <plurals name="settings_summary_cookies">
         <!--
 Zero ain't working for english.
 See: https://stackoverflow.com/a/42884713/3969362
 -->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
-        <item quantity="one">Current page has one cookie</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <!-- <item quantity="zero">Aktuell sida har inga cookies</item> -->
+        <item quantity="one">Aktuell sida har en cookie</item>
+        <item quantity="other">Aktuell sida har <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
-    <string name="settings_title_task_label">Task label</string>
-    <string name="settings_title_task_icon">Task icon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
-    <string name="settings_title_toolbar_label">Toolbar label</string>
+    <string name="settings_title_task_label">Uppgiftsetikett</string>
+    <string name="settings_title_task_icon">Uppgiftsikon</string>
+    <string name="settings_summary_on_task_icon">Använd sidikon</string>
+    <string name="settings_summary_off_task_icon">Använd appikon</string>
+    <string name="settings_title_toolbar_label">Verktygsfältsetikett</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Tredjepartsapp tillgänglig</string>
     <string name="dialog_message_third_party_app">Vill du starta programmet som är kopplat till den webbplatsen?</string>
@@ -502,8 +502,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="session_already_exists">En session med detta namn finns redan!</string>
     <string name="session_cant_delete_current">Kan inte ta bort nuvarande session!</string>
     <string name="session_prompt_confirm_deletion_title">Bekräfta radering</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="session_prompt_confirm_deletion_message">Är du säker på att du vill ta bort sessionen \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Är du säker på att du vill ta bort konfigurationen \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Byt till %s</string>
     <string name="busy">Upptagen, försök igen inom kort.</string>
     <string name="invalid_character_removed">Ogiltigt tecken borttagen!</string>
@@ -531,16 +531,16 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_title_show_snackbar">Visa snackbar</string>
     <string name="pref_title_show_animation">Visa animation</string>
     <string name="pref_title_vibrate">Vibrera</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
-    <string name="pref_title_scrollbar_fading">Fading</string>
-    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
-    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
-    <string name="pref_title_scrollbar_delay_before_fade">Delay before fade</string>
-    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
-    <string name="pref_title_scrollbar_fade_duration">Fade duration</string>
-    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
-    <string name="pref_title_scrollbar_size">Size</string>
-    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
+    <string name="settings_title_animation_duration">Animationsvaraktighet</string>
+    <string name="pref_title_scrollbar_fading">Toning</string>
+    <string name="pref_summary_on_scrollbar_fading">Rullningslisterna tonas bort</string>
+    <string name="pref_summary_off_scrollbar_fading">Rullningslisterna visas alltid</string>
+    <string name="pref_title_scrollbar_delay_before_fade">Fördröjning före toning</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">Tiden efter vilken rullningslisterna börjar tonas bort</string>
+    <string name="pref_title_scrollbar_fade_duration">Toningsvaraktighet</string>
+    <string name="pref_summary_scrollbar_fade_duration">Tiden det tar för rullningslisterna att tonas bort</string>
+    <string name="pref_title_scrollbar_size">Storlek</string>
+    <string name="pref_summary_scrollbar_size">Definiera bredd och höjd på dina rullningslister</string>
     <string name="pref_category_title_session_export">Exportera session</string>
     <string name="pref_category_summary_session_export">Välj den session du vill exportera</string>
     <string name="error_session_file_corrupted">Fel: skadad sessionsfil!</string>
@@ -612,12 +612,12 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="log_level_assert">Assert</string>
     <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
-    <string name="label_short_url">Short URL</string>
-    <string name="label_domain">Domain</string>
-    <string name="label_title">Title</string>
+    <string name="label_short_url">Kort URL</string>
+    <string name="label_domain">Domän</string>
+    <string name="label_title">Titel</string>
     <string name="label_session">Session</string>
-    <string name="label_app_name">App name</string>
-    <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
+    <string name="label_app_name">Appnamn</string>
+    <string name="message_render_process_crashed">Renderingsprocessen kraschade. Du kan behöva ladda om några webbsidor.</string>
     <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Välkommen till Fulguris</string>
     <string name="intro_welcome_description">Upplev snabb, säker och anpassningsbar webbläsning med avancerade integritetsfunktioner och modern design.</string>
