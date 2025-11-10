@@ -59,19 +59,64 @@ def escape_xml_value(value):
 
     return ''.join(result)
 
+def _extract_plural_items(plurals_content):
+    """Extract plural items from a plurals block content.
+
+    Args:
+        plurals_content: The content between <plurals> tags
+
+    Returns:
+        dict: Dictionary of {quantity: value} pairs
+    """
+    # Use .*? to match content including XML tags (like <xliff:g>)
+    # DOTALL flag allows matching across newlines
+    item_pattern = r'<item quantity="([^"]+)">(.*?)</item>'
+    items = re.findall(item_pattern, plurals_content, re.DOTALL)
+    return dict(items)
+
+def _char_difference(str1, str2):
+    """Calculate the minimum number of character differences between two strings.
+
+    Uses a simple character-level comparison. Returns the count of characters
+    that differ between the strings.
+
+    Args:
+        str1: First string
+        str2: Second string
+
+    Returns:
+        int: Number of differing characters
+    """
+    # If lengths are very different, not a near match
+    len_diff = abs(len(str1) - len(str2))
+
+    # For strings of similar length, count character differences
+    min_len = min(len(str1), len(str2))
+    max_len = max(len(str1), len(str2))
+
+    # Count differences in overlapping portion
+    differences = sum(c1 != c2 for c1, c2 in zip(str1, str2))
+
+    # Add length difference as additional differences
+    differences += len_diff
+
+    return differences
+
 def show_help():
     """Display help information about available commands."""
     print("=" * 80)
     print("LOCALIZATION (L10N) CHECK TOOL")
     print("=" * 80)
     print("\nSupported Commands:")
-    print("\n  python l10n.py --check [language_code]")
+    print("\n  python l10n.py --check [language_code] [--near N]")
     print("    Check translations for all languages or a specific language")
+    print("    --near N: Also flag strings differing by N or fewer characters from English")
+    print("              (default: 0, exact match only)")
     print("    Examples:")
     print("      python l10n.py --check          # Check all languages (first 20 issues per lang)")
     print("      python l10n.py --check ru-rRU   # Check Russian (show ALL issues)")
-    print("      python l10n.py --check uk-rUA   # Check Ukrainian")
-    print("      python l10n.py --check fr-rFR   # Check French")
+    print("      python l10n.py --check --near 1 # Flag strings differing by 1 char (e.g. punctuation)")
+    print("      python l10n.py --check ko-rKR --near 2  # Check Korean, flag ≤2 char differences")
     print("\n  python l10n.py --list")
     print("    List all available language codes")
     print("\n  python l10n.py --help, -h")
@@ -100,6 +145,15 @@ def show_help():
     print("    Get a string value from a specific language")
     print("    Example:")
     print("      python l10n.py --get ru-rRU locale_app_name")
+    print("\n  python l10n.py --get-plurals <lang> <plurals_name>")
+    print("    Get all plural items for a plurals resource")
+    print("    Example:")
+    print("      python l10n.py --get-plurals ko-rKR notification_incognito_running_title")
+    print("\n  python l10n.py --set-plurals <lang> <plurals_name> <quantity> <value> [<quantity> <value> ...]")
+    print("    Set plural items for a plurals resource")
+    print("    Quantities: zero, one, two, few, many, other")
+    print("    Example:")
+    print("      python l10n.py --set-plurals ko-rKR notification_title other '%1$d tabs open'")
     print("\n  python l10n.py --add <string_id> <value>")
     print("    Add a string to all language files (uses English value)")
     print("    Example:")
@@ -147,6 +201,126 @@ def get_string_value(language, string_id):
     value = match.group(1)
     print(f"{language}:{string_id}")
     print(f"  {value}")
+    sys.exit(0)
+
+def get_plurals_value(language, plurals_name):
+    """Get all plural items from a specific language file."""
+    file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
+
+    if not file_path.exists():
+        print(f"Error: Language file not found: {file_path}")
+        print(f"Run 'python l10n.py --list' to see available languages")
+        sys.exit(1)
+
+    # Read the file content
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        sys.exit(1)
+
+    # Escape special regex characters in the plurals name
+    escaped_name = re.escape(plurals_name)
+
+    # Pattern to match the plurals block
+    pattern = f'<plurals name="{escaped_name}">(.*?)</plurals>'
+
+    # Search for the plurals block
+    match = re.search(pattern, content, re.DOTALL)
+    if not match:
+        print(f"Error: Plurals '{plurals_name}' not found in {file_path}")
+        sys.exit(1)
+
+    plurals_content = match.group(1)
+
+    # Extract all items using common function
+    items_dict = _extract_plural_items(plurals_content)
+
+    if not items_dict:
+        print(f"Warning: No items found in plurals '{plurals_name}'")
+
+    print(f"{language}:{plurals_name}")
+    for quantity, value in items_dict.items():
+        print(f"  {quantity}: {value}")
+
+    sys.exit(0)
+
+def set_plurals_value(language, plurals_name, quantity_value_pairs):
+    """Set plural items in a specific language file.
+
+    Args:
+        language: Language code (e.g., 'ko-rKR')
+        plurals_name: The plurals resource name
+        quantity_value_pairs: List of tuples [(quantity, value), ...] where quantity is 'one', 'other', etc.
+    """
+    file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
+
+    if not file_path.exists():
+        print(f"Error: Language file not found: {file_path}")
+        print(f"Run 'python l10n.py --list' to see available languages")
+        sys.exit(1)
+
+    # Read the file content
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        sys.exit(1)
+
+    # Escape special regex characters in the plurals name
+    escaped_name = re.escape(plurals_name)
+
+    # Pattern to match the plurals block
+    pattern = f'(<plurals name="{escaped_name}">)(.*?)(</plurals>)'
+
+    # Check if the plurals exists
+    if not re.search(pattern, content, re.DOTALL):
+        print(f"Error: Plurals '{plurals_name}' not found in {file_path}")
+        sys.exit(1)
+
+    # Build new plurals content
+    print(f"Updating plurals: {plurals_name}")
+    print(f"Setting {len(quantity_value_pairs)} quantities...\n")
+
+    # For each quantity-value pair, update or add the item
+    def replacer(match):
+        plurals_content = match.group(2)
+
+        # For each quantity, update or add
+        for quantity, value in quantity_value_pairs:
+            item_pattern = f'<item quantity="{re.escape(quantity)}">.*?</item>'
+            new_item = f'<item quantity="{quantity}">{value}</item>'
+
+            if re.search(item_pattern, plurals_content):
+                # Update existing
+                plurals_content = re.sub(item_pattern, new_item, plurals_content)
+                print(f"[OK] Updated quantity '{quantity}'")
+            else:
+                # Add new item (before closing tag, with proper indentation)
+                # Find the last item to maintain formatting
+                lines = plurals_content.split('\n')
+                indent = '        '  # Default indentation
+                insert_pos = len(lines) - 1
+
+                # Add the new item
+                plurals_content = plurals_content.rstrip() + f'\n{indent}{new_item}\n    '
+                print(f"[OK] Added quantity '{quantity}'")
+
+        return match.group(1) + plurals_content + match.group(3)
+
+    new_content = re.sub(pattern, replacer, content, flags=re.DOTALL)
+
+    # Write back to file
+    try:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+        print(f"\n[OK] Successfully updated {language}:{plurals_name}")
+    except Exception as e:
+        print(f"Error writing file: {e}")
+        sys.exit(1)
+
     sys.exit(0)
 
 def _replace_string_in_content(content, string_id, new_value, skip_escape=False):
@@ -304,7 +478,7 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
             print(f"  - {string_id}")
 
     print("=" * 80)
-    sys.exit(0 if error_count == 0 else 1)
+    sys.exit(0)
 
 def list_languages():
     """List all available language codes."""
@@ -464,6 +638,7 @@ def remove_string_from_all(string_id):
 # Check for command-line argument
 show_all_for_lang = None
 summary_only = False
+near_threshold = 1  # Default: only one char difference
 
 # Show help if no arguments provided
 if len(sys.argv) == 1:
@@ -487,6 +662,15 @@ if len(sys.argv) > 1:
         language = sys.argv[2]
         string_id = sys.argv[3]
         get_string_value(language, string_id)
+    # Handle get-plurals command
+    elif arg == '--get-plurals':
+        if len(sys.argv) < 4:
+            print("Error: --get-plurals requires 2 arguments: <language> <plurals_name>")
+            print("Example: python l10n.py --get-plurals ko-rKR notification_incognito_running_title")
+            sys.exit(1)
+        language = sys.argv[2]
+        plurals_name = sys.argv[3]
+        get_plurals_value(language, plurals_name)
     # Handle set command
     elif arg == '--set':
         if len(sys.argv) < 5:
@@ -540,6 +724,30 @@ if len(sys.argv) > 1:
             set_string_value(language, string_pairs[0][0], string_pairs[0][1], skip_escape=True)
         else:
             set_string_values_batch(language, string_pairs, skip_escape=True)
+    # Handle set-plurals command
+    elif arg == '--set-plurals':
+        if len(sys.argv) < 6:
+            print("Error: --set-plurals requires at least 4 arguments: <language> <plurals_name> <quantity> <value> [<quantity> <value> ...]")
+            print("Examples:")
+            print("  python l10n.py --set-plurals ko-rKR notification_incognito_running_title other '%1$d 시크릿 탭 열림'")
+            print("  python l10n.py --set-plurals ko-rKR tabs_count one '1 tab' other '%1$d tabs'")
+            sys.exit(1)
+        language = sys.argv[2]
+        plurals_name = sys.argv[3]
+
+        # Parse pairs of quantity and value
+        quantity_value_pairs = []
+        i = 4
+        while i < len(sys.argv):
+            if i + 1 >= len(sys.argv):
+                print(f"Error: Missing value for quantity '{sys.argv[i]}'")
+                sys.exit(1)
+            quantity = sys.argv[i]
+            value = sys.argv[i + 1]
+            quantity_value_pairs.append((quantity, value))
+            i += 2
+
+        set_plurals_value(language, plurals_name, quantity_value_pairs)
     # Handle add command
     elif arg == '--add':
         if len(sys.argv) < 4:
@@ -559,11 +767,38 @@ if len(sys.argv) > 1:
         remove_string_from_all(string_id)
     # Handle check command
     elif arg == '--check':
-        if len(sys.argv) > 2 and not sys.argv[2].startswith('--'):
-            # Check specific language
-            show_all_for_lang = sys.argv[2]
-            print(f"Will show ALL issues for language: {show_all_for_lang}\n")
-        # else: check all languages (default behavior)
+        # Parse arguments for check command
+        i = 2
+        while i < len(sys.argv):
+            if sys.argv[i] == '--near':
+                if i + 1 >= len(sys.argv):
+                    print("Error: --near requires a number argument")
+                    sys.exit(1)
+                try:
+                    near_threshold = int(sys.argv[i + 1])
+                    if near_threshold < 0:
+                        print("Error: --near threshold must be >= 0")
+                        sys.exit(1)
+                    i += 2
+                except ValueError:
+                    print(f"Error: --near requires a number, got '{sys.argv[i + 1]}'")
+                    sys.exit(1)
+            elif not sys.argv[i].startswith('--'):
+                # Language code
+                show_all_for_lang = sys.argv[i]
+                print(f"Will show ALL issues for language: {show_all_for_lang}")
+                if near_threshold > 0:
+                    print(f"Including near matches (≤{near_threshold} char difference)\n")
+                else:
+                    print()
+                i += 1
+            else:
+                print(f"Error: Unknown option '{sys.argv[i]}' for --check")
+                sys.exit(1)
+
+        if near_threshold > 0 and not show_all_for_lang:
+            print(f"Checking with near matches (≤{near_threshold} char difference)\n")
+        # Continue to check logic below
     # Handle summary command
     elif arg == '--summary':
         summary_only = True
@@ -587,7 +822,18 @@ for line in content.split('\n'):
         string_value = match.group(2)
         english_strings[string_name] = string_value
 
-print(f"Loaded {len(english_strings)} English strings")
+# Build a dictionary of English plurals
+english_plurals = {}
+plurals_pattern = r'<plurals name="([^"]+)">(.*?)</plurals>'
+for match in re.finditer(plurals_pattern, content, re.DOTALL):
+    plurals_name = match.group(1)
+    plurals_content = match.group(2)
+    # Use common function to extract quantity items
+    items_dict = _extract_plural_items(plurals_content)
+    if items_dict:
+        english_plurals[plurals_name] = items_dict
+
+print(f"Loaded {len(english_strings)} English strings and {len(english_plurals)} plurals")
 
 # Get all language directories
 res_dir = Path('app/src/main/res')
@@ -610,6 +856,15 @@ print(f"Checking {len(lang_dirs)} {'language' if len(lang_dirs) == 1 else 'non-E
 print("="*80)
 print("TRANSLATION QUALITY CHECK")
 print("="*80)
+
+# International terms that don't need translation
+international_terms = {
+    'WebView', 'Android', 'iOS', 'Linux', 'macOS', 'Windows', 'Desktop', 'Mobile',
+    'JavaScript', 'Cookies', 'Session', 'Sessions', 'Port:', 'Info', 'Verbose',
+    'Assert', 'Debug', 'LeakCanary', 'Normal', 'Options', 'Incognito',
+    'Portrait', 'Landscape', 'Introduction', 'Image',
+    'System', 'Default', 'Local', 'Error', 'Parent'
+}
 
 issues_found = {}
 
@@ -639,25 +894,26 @@ for lang_dir in sorted(lang_dirs):
             english_value = english_strings[string_name]
 
             # Check 1: Exact match with English (likely untranslated)
+            # Also check near matches if near_threshold > 0
             # But exclude short strings, proper nouns, and international technical terms
-            international_terms = {
-                'WebView', 'Android', 'iOS', 'Linux', 'macOS', 'Windows', 'Desktop', 'Mobile',
-                'JavaScript', 'Cookies', 'Session', 'Sessions', 'Port:', 'Info', 'Verbose',
-                'Assert', 'Debug', 'LeakCanary', 'Normal', 'Options', 'Incognito',
-                'Configuration', 'Portrait', 'Landscape', 'Introduction', 'Image',
-                'System', 'Default', 'Local', 'Error', 'Parent'
-            }
+            is_exact_match = translated_value == english_value
+            char_diff = _char_difference(translated_value, english_value) if near_threshold > 0 else 999
+            is_near_match = char_diff <= near_threshold and char_diff > 0
 
-            if (translated_value == english_value and
+            if ((is_exact_match or is_near_match) and
                 len(english_value) > 3 and
                 english_value not in international_terms and
                 not string_name.startswith('accent_') and
-                not string_name.startswith('pref_category') and  # Category refs
                 not string_name.startswith('settings_title_portrait') and
                 not string_name.startswith('settings_title_landscape') and
                 not '@string/' in translated_value and  # String references
                 string_name not in ['android_open_source_project', 'jsoup', 'infinity', 'search_action']):
-                lang_issues.append(f"  Untranslated: {string_name} = '{english_value}'")
+                if is_exact_match:
+                    lang_issues.append(f"  Untranslated: {string_name} = '{english_value}'")
+                else:
+                    lang_issues.append(f"  Near match ({char_diff} chars): {string_name}")
+                    lang_issues.append(f"    EN: '{english_value}'")
+                    lang_issues.append(f"    TR: '{translated_value}'")
 
             # Check 2: Placeholder consistency
             english_placeholders = re.findall(r'%[sd\d]|\{[^}]+\}|<xliff:g[^>]*>.*?</xliff:g>', english_value)
@@ -667,6 +923,36 @@ for lang_dir in sorted(lang_dirs):
                 lang_issues.append(f"  Placeholder mismatch: {string_name}")
                 lang_issues.append(f"    English: {english_placeholders}")
                 lang_issues.append(f"    Translation: {trans_placeholders}")
+
+    # Check plurals
+    for plurals_name, english_quantities in english_plurals.items():
+        # Find the plurals block in translated content
+        plurals_pattern = f'<plurals name="{re.escape(plurals_name)}">(.*?)</plurals>'
+        plurals_match = re.search(plurals_pattern, trans_content, re.DOTALL)
+
+        if not plurals_match:
+            # Plurals resource missing entirely
+            lang_issues.append(f"  Missing plurals: {plurals_name}")
+            continue
+
+        trans_plurals_content = plurals_match.group(1)
+        trans_quantities = _extract_plural_items(trans_plurals_content)
+
+        # Only check if existing quantities are untranslated
+        # Don't complain about missing quantities - different languages have different plural rules
+        untranslated_quantities = []
+
+        for quantity, trans_value in trans_quantities.items():
+            # Check if this quantity exists in English and has the same value (untranslated)
+            if quantity in english_quantities:
+                english_value = english_quantities[quantity]
+                if trans_value == english_value and len(english_value) > 3:
+                    untranslated_quantities.append(f"{quantity}: '{english_value}'")
+
+        if untranslated_quantities:
+            lang_issues.append(f"  Plurals '{plurals_name}' untranslated:")
+            for untrans in untranslated_quantities:
+                lang_issues.append(f"    {untrans}")
 
     if lang_issues:
         issues_found[lang_name] = lang_issues

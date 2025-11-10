@@ -237,7 +237,7 @@
     <string name="settings_general">일반 설정</string>
     <string name="settings_display">디스플레이 설정</string>
     <string name="settings_backup">백업</string>
-    <string name="settings_title_configuration">Configuration</string>
+    <string name="settings_title_configuration">구성</string>
     <string name="settings_summary_configuration">세로 및 가로 설정</string>
     <string name="settings_title_delete_configuration">구성 삭제</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
@@ -254,23 +254,23 @@
     <string name="settings_title_introduction">Introduction</string>
     <string name="settings_summary_introduction">온보딩 경험 시작</string>
     <string name="settings_summary_discord">성장하는 커뮤니티에 참여하세요</string>
-    <string name="pref_category_panels">Panels</string>
+    <string name="pref_category_panels">패널</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
-    <string name="pref_category_landscape">Landscape</string>
-    <string name="pref_category_portrait">Portrait</string>
+    <string name="pref_category_landscape">가로 모드</string>
+    <string name="pref_category_portrait">세로 모드</string>
     <string name="pref_category_menu">@string/action_menu</string>
-    <string name="pref_category_filters">Filters</string>
-    <string name="pref_category_summary_filters">Local or remote files defining your content control rules</string>
-    <string name="pref_category_on_tab_close">When closing tab</string>
-    <string name="pref_category_on_tab_change">When changing tab</string>
-    <string name="pref_category_on_tab_back_forward">When going back or forward</string>
+    <string name="pref_category_filters">필터</string>
+    <string name="pref_category_summary_filters">콘텐츠 제어 규칙을 정의하는 로컬 또는 원격 파일</string>
+    <string name="pref_category_on_tab_close">탭을 닫을 때</string>
+    <string name="pref_category_on_tab_change">탭을 변경할 때</string>
+    <string name="pref_category_on_tab_back_forward">뒤로 또는 앞으로 이동할 때</string>
     <string name="settings_category_on_follow_link">링크를 따라갈 때</string>
-    <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="pref_category_scrollbars">스크롤바</string>
     <string name="settings_title_tab">Tab</string>
     <string name="settings_title_page_history">페이지 기록</string>
     <string name="settings_summary_tab">애니메이션, 피드백 및 모양</string>
     <string name="pref_summary_scrollbars">스크롤바 크기 및 동작 조정</string>
-    <string name="pref_category_subscriptions">Subscriptions</string>
+    <string name="pref_category_subscriptions">구독</string>
     <string name="pref_summary_subscriptions">구독 활성화 또는 취소</string>
     <string name="pref_title_hide_status_bar">상태 표시줄 숨기기</string>
     <string name="pref_title_hide_tool_bar">아래로 스크롤 시 도구 모음 숨기기</string>
@@ -418,17 +418,17 @@
     <string name="search_engine_custom">임의의 URL</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d incognito tabs open</item>
+        <item quantity="other">%1$d 시크릿 탭 열림</item>
     </plurals>
     <string name="notification_incognito_running_message">터치해서 열기</string>
     <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">진행 중인 시크릿 세션</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Issued by</string>
-    <string name="ssl_info_issued_to">Issued to</string>
-    <string name="ssl_info_issued_on">Issued on</string>
-    <string name="ssl_info_expires_on">Expires on</string>
+    <string name="ssl_info_issued_by">발급자:</string>
+    <string name="ssl_info_issued_to">발급 대상:</string>
+    <string name="ssl_info_issued_on">발급일:</string>
+    <string name="ssl_info_expires_on">만료일:</string>
     <!-- Search in page -->
     <string name="next">다음</string>
     <string name="previous">이전</string>
@@ -477,12 +477,7 @@
     <string name="settings_summary_cookies_delete_all">현재 페이지의 모든 쿠키 삭제</string>
     <string name="question_delete_all_page_cookies">현재 페이지의 모든 쿠키를 삭제하시겠습니까?</string>
     <plurals name="settings_summary_cookies">
-        <!--
-Zero ain't working for english.
-See: https://stackoverflow.com/a/42884713/3969362
--->
-        <!-- <item quantity="zero">Current page has no cookies</item> -->
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="other">현재 페이지에 <xliff:g id="cookies_count" example="2">%d</xliff:g>개의 쿠키가 있습니다</item>
     </plurals>
     <string name="settings_title_task_label">작업 레이블</string>
     <string name="settings_title_task_icon">작업 아이콘</string>
@@ -539,8 +534,8 @@ See: https://stackoverflow.com/a/42884713/3969362
     <string name="pref_summary_scrollbar_fade_duration">스크롤바가 페이드되는 데 걸리는 시간</string>
     <string name="pref_title_scrollbar_size">크기</string>
     <string name="pref_summary_scrollbar_size">스크롤바의 너비와 높이 정의</string>
-    <string name="pref_category_title_session_export">Export session</string>
-    <string name="pref_category_summary_session_export">Pick the session you want to export</string>
+    <string name="pref_category_title_session_export">세션 내보내기</string>
+    <string name="pref_category_summary_session_export">내보낼 세션을 선택하세요</string>
     <string name="error_session_file_corrupted">오류: 손상된 세션 파일!</string>
     <string name="error_recovery_session">오류: 복구 세션이 생성되었습니다!</string>
     <string name="message_session_imported">가져온 세션: <xliff:g id="session_name" example="News">%s</xliff:g></string>
