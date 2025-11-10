@@ -29,10 +29,11 @@ def show_help():
     print("    Show this help message")
     print("\n  python l10n.py --summary")
     print("    Show only summary statistics for all languages")
-    print("\n  python l10n.py --set <lang> <string_id> <value>")
-    print("    Set a string value for a specific language")
-    print("    Example:")
+    print("\n  python l10n.py --set <lang> <string_id> <value> [<string_id> <value> ...]")
+    print("    Set one or more string values for a specific language")
+    print("    Examples:")
     print("      python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
+    print("      python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
     print("\n  python l10n.py --get <lang> <string_id>")
     print("    Get a string value from a specific language")
     print("    Example:")
@@ -128,6 +129,80 @@ def set_string_value(language, string_id, new_value):
         sys.exit(1)
 
     sys.exit(0)
+
+def set_string_values_batch(language, string_pairs):
+    """Set multiple string values in a specific language file at once.
+
+    Args:
+        language: Language code (e.g., 'ko-rKR')
+        string_pairs: List of tuples [(string_id, value), ...]
+    """
+    file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
+
+    if not file_path.exists():
+        print(f"Error: Language file not found: {file_path}")
+        print(f"Run 'python l10n.py --list' to see available languages")
+        sys.exit(1)
+
+    # Read the file content
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        sys.exit(1)
+
+    print("=" * 80)
+    print(f"BATCH UPDATE: {language}")
+    print("=" * 80)
+    print(f"Updating {len(string_pairs)} strings...\n")
+
+    success_count = 0
+    error_count = 0
+    not_found = []
+
+    # Process all string replacements
+    for string_id, new_value in string_pairs:
+        # Escape special regex characters in the string ID
+        escaped_id = re.escape(string_id)
+
+        # Pattern to match the string entry
+        pattern = f'(<string name="{escaped_id}">)([^<]*)(</string>)'
+
+        # Check if the string exists
+        if not re.search(pattern, content):
+            not_found.append(string_id)
+            error_count += 1
+            continue
+
+        # Replace the string value
+        content = re.sub(pattern, f'\\1{new_value}\\3', content)
+        print(f"[OK] {string_id}")
+        success_count += 1
+
+    # Write back to file with UTF-8 encoding (no BOM)
+    if success_count > 0:
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+        except Exception as e:
+            print(f"\n[ERROR] Failed to write file: {e}")
+            sys.exit(1)
+
+    # Print summary
+    print("\n" + "=" * 80)
+    print("SUMMARY")
+    print("=" * 80)
+    print(f"Successfully updated: {success_count}")
+    print(f"Not found: {error_count}")
+
+    if not_found:
+        print(f"\nStrings not found in {file_path}:")
+        for string_id in not_found:
+            print(f"  - {string_id}")
+
+    print("=" * 80)
+    sys.exit(0 if error_count == 0 else 1)
 
 def list_languages():
     """List all available language codes."""
@@ -313,13 +388,30 @@ if len(sys.argv) > 1:
     # Handle set command
     elif arg == '--set':
         if len(sys.argv) < 5:
-            print("Error: --set requires 3 arguments: <language> <string_id> <value>")
-            print("Example: python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
+            print("Error: --set requires at least 3 arguments: <language> <string_id> <value> [<string_id> <value> ...]")
+            print("Examples:")
+            print("  python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
+            print("  python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\"")
             sys.exit(1)
         language = sys.argv[2]
-        string_id = sys.argv[3]
-        new_value = sys.argv[4]
-        set_string_value(language, string_id, new_value)
+
+        # Parse pairs of string_id and value
+        string_pairs = []
+        i = 3
+        while i < len(sys.argv):
+            if i + 1 >= len(sys.argv):
+                print(f"Error: Missing value for string_id '{sys.argv[i]}'")
+                sys.exit(1)
+            string_id = sys.argv[i]
+            value = sys.argv[i + 1]
+            string_pairs.append((string_id, value))
+            i += 2
+
+        # If only one pair, use single-string output format
+        if len(string_pairs) == 1:
+            set_string_value(language, string_pairs[0][0], string_pairs[0][1])
+        else:
+            set_string_values_batch(language, string_pairs)
     # Handle add command
     elif arg == '--add':
         if len(sys.argv) < 4:
