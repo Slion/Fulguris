@@ -419,15 +419,15 @@
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d incognito tab open</item>
-        <item quantity="other">%1$d incognito tabs open</item>
+        <item quantity="other">%1\ yksityistä välilehteä avoinna</item>
     </plurals>
     <string name="notification_incognito_running_message">Napauta avataksesi</string>
     <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Yksityinen istunto käynnissä</string>
     <string name="infinity">∞</string>
     <!-- SSL -->
-    <string name="ssl_info_issued_by">Issued by</string>
-    <string name="ssl_info_issued_to">Issued to</string>
+    <string name="ssl_info_issued_by">Myöntäjä:</string>
+    <string name="ssl_info_issued_to">Myönnetty:</string>
     <string name="ssl_info_issued_on">Issued on</string>
     <string name="ssl_info_expires_on">Expires on</string>
     <!-- Search in page -->
@@ -484,7 +484,7 @@
     -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Current page has one cookie</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="other">%d evästettä</item>
     </plurals>
     <string name="settings_title_task_label">Tehtävän nimi</string>
     <string name="settings_title_task_icon">Task icon</string>
@@ -528,10 +528,10 @@
     <!-- Find in page -->
     <string name="no_match_found">Ei osumia!</string>
     <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
-    <string name="pref_title_show_snackbar">Show snackbar</string>
-    <string name="pref_title_show_animation">Show animation</string>
+    <string name="pref_title_show_snackbar">Näytä snackbar</string>
+    <string name="pref_title_show_animation">Näytä animaatiot</string>
     <string name="pref_title_vibrate">Värinä</string>
-    <string name="settings_title_animation_duration">Animation duration</string>
+    <string name="settings_title_animation_duration">Animaation kesto</string>
     <string name="pref_title_scrollbar_fading">Vierityspalkkien häivytys</string>
     <string name="pref_summary_on_scrollbar_fading">Vierityspalkit häivytetään</string>
     <string name="pref_summary_off_scrollbar_fading">Vierityspalkit näkyvät aina</string>
