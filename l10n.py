@@ -1078,8 +1078,9 @@ for lang_dir in sorted(lang_dirs):
                     lang_issues.append(f"    TR: '{translated_value}'")
 
             # Check 2: Placeholder consistency
-            english_placeholders = re.findall(r'%[sd\d]|\{[^}]+\}|<xliff:g[^>]*>.*?</xliff:g>', english_value)
-            trans_placeholders = re.findall(r'%[sd\d]|\{[^}]+\}|<xliff:g[^>]*>.*?</xliff:g>', translated_value)
+            # Match patterns: %s, %d, %1$s, %2$d, {placeholders}, <xliff:g>...</xliff:g>
+            english_placeholders = re.findall(r'%\d*\$?[sdif]|\{[^}]+\}|<xliff:g[^>]*>.*?</xliff:g>', english_value)
+            trans_placeholders = re.findall(r'%\d*\$?[sdif]|\{[^}]+\}|<xliff:g[^>]*>.*?</xliff:g>', translated_value)
 
             if len(english_placeholders) != len(trans_placeholders):
                 lang_issues.append(f"  Placeholder mismatch: {string_name}")

@@ -500,8 +500,8 @@
     <string name="session_already_exists">มีเซสชันที่มีชื่อนั้นอยู่แล้ว!</string>
     <string name="session_cant_delete_current">ไม่สามารถลบเซสชันปัจจุบันได้!</string>
     <string name="session_prompt_confirm_deletion_title">ยืนยันการลบ</string>
-    <string name="session_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบเซสชันนี้?</string>
-    <string name="configuration_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบการกำหนดค่านี้?</string>
+    <string name="session_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบเซสชัน "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบการกำหนดค่า "<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>"?</string>
     <string name="session_switched">สลับไปที่ \"%s\"</string>
     <string name="busy">ไม่ว่าง</string>
     <string name="invalid_character_removed">ลบอักขระที่ไม่ถูกต้องแล้ว</string>
@@ -543,8 +543,8 @@
     <string name="pref_category_summary_session_export">เลือกเซสชันที่จะส่งออก</string>
     <string name="error_session_file_corrupted">ข้อผิดพลาด: ไฟล์เซสชันเสียหาย!</string>
     <string name="error_recovery_session">ข้อผิดพลาด: สร้างเซสชันกู้คืนแล้ว!</string>
-    <string name="message_session_imported">นำเข้าเซสชัน:</string>
-    <string name="message_session_exported">ส่งออกเซสชัน:</string>
+    <string name="message_session_imported">นำเข้าเซสชัน: <xliff:g id="session_name" example="News">%s</xliff:g></string>
+    <string name="message_session_exported">ส่งออกเซสชัน: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="force_zoom_summary">จะไม่ทำงานหาก JavaScript ไม่ได้เปิดใช้งาน</string>
     <string name="force_zoom">บังคับซูมสำหรับเว็บไซต์</string>
     <string name="algorithm">อัลกอริทึม:</string>
