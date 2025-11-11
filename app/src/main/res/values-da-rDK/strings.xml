@@ -174,15 +174,15 @@
     <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
     <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
-    <string name="message_certificate_date_invalid">Date of certificate is invalid</string>
-    <string name="message_certificate_expired">Certificate is expired</string>
-    <string name="message_certificate_domain_mismatch">Domain in certificate does not match the site domain</string>
-    <string name="message_certificate_invalid">Certificate is invalid</string>
-    <string name="message_certificate_not_yet_valid">Certificate is not yet valid</string>
-    <string name="message_certificate_untrusted">Certificate is not trusted</string>
+    <string name="message_certificate_date_invalid">Certifikatdato er ugyldig</string>
+    <string name="message_certificate_expired">Certifikat er udløbet</string>
+    <string name="message_certificate_domain_mismatch">Domæne i certifikat matcher ikke webstedets domæne</string>
+    <string name="message_certificate_invalid">Certifikat er ugyldigt</string>
+    <string name="message_certificate_not_yet_valid">Certifikat er endnu ikke gyldigt</string>
+    <string name="message_certificate_untrusted">Certifikat er ikke tillid til</string>
     <!-- permissions request -->
     <string name="title_permission_request">Tilladelsesanmodning</string>
-    <string name="message_permission_request">%1$s\n\nwould like to use:\n\n%2$s</string>
+    <string name="message_permission_request">%1\\n\nVil gerne bruge:\n\n%2\" name_normal Normal</string>
     <string name="title_form_resubmission">Genindend formular</string>
     <string name="message_form_resubmission">Vil du gensende dataene?</string>
     <string name="message_location">\nVil gerne bruge din placering</string>
@@ -246,21 +246,21 @@
     <string name="settings_privacy">Privatliv</string>
     <string name="settings_about">Om</string>
     <string name="settings_contribute">Bidrag</string>
-    <string name="settings_summary_contribute">Help Fulguris grow and succeed</string>
+    <string name="settings_summary_contribute">Hjælp Fulguris med at vokse og få succes</string>
     <string name="settings_title_privacy_policy">Fortrolighedspolitik</string>
-    <string name="settings_summary_privacy_policy">See our privacy policy online</string>
+    <string name="settings_summary_privacy_policy">Se vores privatlivspolitik online</string>
     <string name="settings_title_terms_and_conditions">Vilkår og betingelser</string>
-    <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
+    <string name="settings_summary_terms_and_conditions">Se vores vilkår og betingelser online</string>
     <string name="settings_title_introduction">Introduktion</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_summary_introduction">Start onboarding-oplevelsen</string>
+    <string name="settings_summary_discord">Deltag i vores voksende fællesskab</string>
     <string name="pref_category_panels">Paneler</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Liggende</string>
     <string name="pref_category_portrait">Højformat</string>
     <string name="pref_category_menu">Menu</string>
     <string name="pref_category_filters">Filtre</string>
-    <string name="pref_category_summary_filters">Local or remote files defining your content control rules</string>
+    <string name="pref_category_summary_filters">Lokale eller eksterne filer der definerer dine indholdskontrolregler</string>
     <string name="pref_category_on_tab_close">Ved lukning af fane</string>
     <string name="pref_category_on_tab_change">Ved skift af fane</string>
     <string name="pref_category_on_tab_back_forward">Ved at gå tilbage eller frem</string>
@@ -277,25 +277,25 @@
     <string name="pref_title_show_tool_bar_when_scroll_up">Vis værktøjslinje ved rulning op</string>
     <string name="pref_title_show_tool_bar_on_page_top">Vis værktøjslinje øverst på siden</string>
     <string name="pref_title_use_cutout_area">Brug hakområder</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
+    <string name="pref_summary_on_use_cutout_area">Tillad indhold at udvide sig til notch-områder for fuld-skærm visning</string>
+    <string name="pref_summary_off_use_cutout_area">Forhindre indhold i at overlappe notch-områder</string>
     <string name="pref_title_system_gesture_clearance">Systemgestusfrigivelse</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_summary_system_gesture_clearance">Hold indhold væk fra bundgestusser</string>
     <string name="pref_title_locked_drawers">Låste paneler</string>
-    <string name="pref_summary_locked_drawers">Tabs and Bookmarks panels can\'t be dragged</string>
+    <string name="pref_summary_locked_drawers">Faner og bogmærker kan ikke trækkes</string>
     <string name="pref_title_use_bottom_sheets">Brug bundark</string>
-    <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
+    <string name="pref_summary_use_bottom_sheets">Faner og bogmærker vises i bundark i stedet for sideskuffer</string>
     <string name="pref_title_tab_list_item_show_close_button">Vis luk fane-knap</string>
-    <string name="pref_summary_tab_list_item_show_close_button">Display close tab buttons on tab list items</string>
+    <string name="pref_summary_tab_list_item_show_close_button">Vis luk fane-knapper på faneliste-elementer</string>
     <string name="pref_title_menu_show_exit">Afslut menupunkt</string>
-    <string name="pref_summary_menu_show_exit">Show Exit app option in menu. Incognito mode always displays it regardless.</string>
+    <string name="pref_summary_menu_show_exit">Vis Afslut app-mulighed i menuen. Inkognitotilstand viser det altid uanset.</string>
     <string name="pref_title_menu_new_tab">Ny fane-menupunkt</string>
-    <string name="pref_summary_menu_new_tab">Show New tab option in menu</string>
+    <string name="pref_summary_menu_new_tab">Vis Ny fane-mulighed i menuen</string>
     <string name="pref_title_crash_report">Nedbrudsrapporter</string>
     <string name="pref_title_analytics">Analyser</string>
     <string name="pref_title_pull_to_refresh">Træk for at opdatere</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
+    <string name="pref_summary_on_crash_reports">Hjælp med at forbedre appen ved at sende nedbrudsrapporter</string>
+    <string name="pref_summary_off_crash_reports">Nedbrudsrapporter vil ikke blive sendt</string>
     <string name="pref_summary_on_analytics">Hjælp med at forbedre appen ved at sende brugsdata</string>
     <string name="pref_summary_off_analytics">Brugsdata vil ikke blive sendt</string>
     <string name="pref_title_accept_terms">Jeg vil bruge Fulguris</string>
@@ -376,7 +376,7 @@
     <string name="settings_title_swap_bookmarks_and_tabs">Ombyt skuffer</string>
     <string name="settings_summary_swap_bookmarks_and_tabs">Fane- og bogmærkeskuffer vil bytte plads</string>
     <string name="do_not_track">Anmod om \" Spor ikke\ save_data Anmod</string>
-    <string name="save_data">Request \'Save-Data\'</string>
+    <string name="save_data">Anmod om \'Save-Data\'</string>
     <string name="remove_identifying_headers">Fjern identificerende headere</string>
     <string name="pref_title_webrtc">WebRTC-understøttelse</string>
     <string name="pref_summary_webrtc">Tillader realtidskommunikation over nettet ved brug af dit enheds kamera og mikrofon</string>
@@ -408,7 +408,7 @@
     <string name="dialog_remove_folder">Fjern mappe</string>
     <string name="dialog_title_close_browser">Luk browser</string>
     <string name="dialog_title_incoming_url">Åbn %1$s</string>
-    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="dialog_message_incoming_url">%1\\n\n%2\</string>
     <string name="message_blocked_domain">Blokeret %1$s</string>
     <string name="dialog_delete_all_downloads">Slet alle downloads</string>
     <!-- Tools dialog -->
@@ -466,11 +466,11 @@
     <string name="settings_summary_incoming_url_action">Hvordan man håndterer links fra andre apps</string>
     <string name="checkbox_remember_domain_choice">Husk dit valg for dette domæne</string>
     <string name="settings_title_third_party_cookies">Tredjeparts cookies</string>
-    <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
-    <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>
+    <string name="settings_summary_on_third_party_cookies">Accepter cookies brugt til at spore dine aktiviteter på tværs af websteder</string>
+    <string name="settings_summary_off_third_party_cookies">Afvis cookies brugt til at spore dine aktiviteter på tværs af websteder</string>
     <string name="settings_title_javascript">JavaScript</string>
-    <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
-    <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_summary_on_javascript">Alle websteders og browserens funktioner skal virke</string>
+    <string name="settings_summary_off_javascript">Nogle websteders og browserens funktioner virker ikke</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Nuværende side har ingen cookies</string>
     <string name="settings_summary_manage_cookies">Administrer nuværende sides cookies</string>
@@ -488,12 +488,12 @@
     </plurals>
     <string name="settings_title_task_label">Opgaveetiket</string>
     <string name="settings_title_task_icon">Opgaveikon</string>
-    <string name="settings_summary_on_task_icon">Use page icon</string>
-    <string name="settings_summary_off_task_icon">Use app icon</string>
+    <string name="settings_summary_on_task_icon">Brug sideikon</string>
+    <string name="settings_summary_off_task_icon">Brug app-ikon</string>
     <string name="settings_title_toolbar_label">Værktøjslinjeetiket</string>
     <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Tredjepartsapp tilgængelig</string>
-    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
+    <string name="dialog_message_third_party_app">Vil du starte applikationen tilknyttet dette websted?</string>
     <string name="per_month">\u0020/ måned</string>
     <string name="per_year">\u0020/ år</string>
     <string name="session_default">@string/agent_default</string>
@@ -533,16 +533,16 @@
     <string name="pref_title_vibrate">Vibrér</string>
     <string name="settings_title_animation_duration">Animationsvarighed</string>
     <string name="pref_title_scrollbar_fading">Udtonende</string>
-    <string name="pref_summary_on_scrollbar_fading">Scrollbars are fading away</string>
-    <string name="pref_summary_off_scrollbar_fading">Scrollbars are always displayed</string>
+    <string name="pref_summary_on_scrollbar_fading">Rullebjælker forsvinder</string>
+    <string name="pref_summary_off_scrollbar_fading">Rullebjælker vises altid</string>
     <string name="pref_title_scrollbar_delay_before_fade">Forsinkelse før udtoning</string>
-    <string name="pref_summary_scrollbar_delay_before_fade">The time after which scrollbars will start fading</string>
+    <string name="pref_summary_scrollbar_delay_before_fade">Tiden hvorefter rullebjælker begynder at forsvinde</string>
     <string name="pref_title_scrollbar_fade_duration">Udtoningsvarighed</string>
-    <string name="pref_summary_scrollbar_fade_duration">The time it takes for scrollbars to fade</string>
+    <string name="pref_summary_scrollbar_fade_duration">Tiden det tager for rullebjælker at forsvinde</string>
     <string name="pref_title_scrollbar_size">Størrelse</string>
-    <string name="pref_summary_scrollbar_size">Define width and height of your scrollbars</string>
+    <string name="pref_summary_scrollbar_size">Definer bredde og højde af dine rullebjælker</string>
     <string name="pref_category_title_session_export">Eksportér session</string>
-    <string name="pref_category_summary_session_export">Pick the session you want to export</string>
+    <string name="pref_category_summary_session_export">Vælg den session du vil eksportere</string>
     <string name="error_session_file_corrupted">Fejl: beskadiget sessionsfil!</string>
     <string name="error_recovery_session">Fejl: en gendannelsessession blev oprettet!</string>
     <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
@@ -554,10 +554,10 @@
     <string name="export_settings">Eksportér indstillinger til sikkerhedskopi</string>
     <string name="import_settings">Importér indstillinger fra sikkerhedskopi</string>
     <string name="pref_title_search_custom_image_url">Søgesides brugerdefineret billede</string>
-    <string name="pref_summary_search_custom_image_url">Only for Custom URL</string>
+    <string name="pref_summary_search_custom_image_url">Kun til brugerdefineret URL</string>
     <string name="long_press_tab">Langt tryk på \"Fane\"-ikonet åbner en ny fane</string>
     <string name="pref_title_close_drawer">Luk skuffe</string>
-    <string name="pref_summary_close_drawer">Automatically close Drawer after creating or deleting a tab</string>
+    <string name="pref_summary_close_drawer">Luk skuffe automatisk efter oprettelse eller sletning af en fane</string>
     <string name="inspect">Injicer Javascript</string>
     <string name="edit_cookies">Vis sidecookies</string>
     <string name="site_cookies">Sidecookies</string>
@@ -620,14 +620,14 @@
     <string name="message_render_process_crashed">Gengivelsesproces nedbrudt. Du skal muligvis genindlæse nogle websider.</string>
     <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Velkommen til Fulguris</string>
-    <string name="intro_welcome_description">Experience fast, secure, and customizable web browsing with advanced privacy features and modern design.</string>
+    <string name="intro_welcome_description">Oplev hurtig, sikker og tilpasselig webbrowsing med avancerede privatlivsfunktioner og moderne design.</string>
     <string name="intro_title_terms">Lad os komme i gang!</string>
     <string name="intro_title_telemetry">Hjælp os, hjælp dig!</string>
     <string name="intro_title_ad_blocker">Vær sikker!</string>
-    <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
+    <string name="intro_description_ad_blocker">Aktiver vores kraftfulde annonceblokker for at browse hurtigere, sikrere og med færre distraktioner. Du kan altid ændre dette senere i indstillinger.</string>
     <string name="intro_notification_permission_title">Notifikationstilladelse</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
+    <string name="intro_notification_permission_description">Tillad Fulguris at sende notifikationer, især ved download-afslutning og under inkognito-sessioner.</string>
     <string name="pref_title_enable_ad_blocker">Annonceblokering</string>
-    <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
-    <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="pref_summary_on_enable_ad_blocker">Nyd en renere, sikrere weboplevelse</string>
+    <string name="pref_summary_off_enable_ad_blocker">Nyd en ufiltreret, original version af nettet</string>
 </resources>
