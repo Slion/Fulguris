@@ -71,6 +71,10 @@ python l10n.py --set th-rTH string_id 'ดาวน์โหลด \"%1$s\"'
 # Strings with newlines (\n) - works perfectly in single quotes
 python l10n.py --set th-rTH string_id 'บรรทัด1\n\nบรรทัด2'
 
+# Strings with apostrophes (single quotes) - double them up
+python l10n.py --set th-rTH action_dont_allow 'Don''t allow'
+python l10n.py --set th-rTH save_data 'Request ''Save-Data'''
+
 # Complex XML - same rule, single quotes with \"
 python l10n.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id=\"example\">%1$s</xliff:g>'
 ```
@@ -80,6 +84,7 @@ python l10n.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id=\
 - Dollar signs `$` in placeholders like `%1$s` work perfectly - no escaping needed
 - Backslash `\"` escapes inner double quotes - PowerShell passes `\` to Python, which receives actual quotes
 - Newlines `\n` work correctly - PowerShell passes `\` and `n` as separate characters, Python writes `\n` to XML
+- **Apostrophes (single quotes) must be doubled:** `''` → PowerShell converts to `'` that Python receives
 - Only inner double quotes need escaping with backslash `\"`
 
 **Important:** PowerShell passes the backslashes literally to Python. The Python script receives them and writes them correctly to the Android XML format.
@@ -99,7 +104,11 @@ python l10n.py --set th-rTH dialog_download 'คุณต้องการด�
 # Strings with quotes - single quotes, escape inner quotes with backslash
 python l10n.py --set th-rTH session_switched 'สลับไปที่ \"%s\"'
 
-# Strings with BOTH quotes and placeholders - single quotes with \"
+# Strings with apostrophes - double the single quotes
+python l10n.py --set da-rDK action_dont_allow 'Tillad ikke'  # No apostrophe in Danish
+python l10n.py --set en-rUS action_dont_allow 'Don''t allow'  # English has apostrophe - double it
+
+# Strings with BOTH quotes and placeholders
 python l10n.py --set th-rTH string_id 'ดาวน์โหลด \"%1$s\"'
 
 # Complex XML - single quotes with backslash for quotes
