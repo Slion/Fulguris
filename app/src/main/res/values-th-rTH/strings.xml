@@ -182,7 +182,7 @@
     <string name="message_certificate_untrusted">ใบรับรองไม่น่าเชื่อถือ</string>
     <!-- permissions request -->
     <string name="title_permission_request">คำขอสิทธิ์</string>
-    <string name="message_permission_request">%1$s\n\nwould like to use:\n\n%2$s</string>
+    <string name="message_permission_request">%1$s\n\nต้องการใช้:\n\n%2$s</string>
     <string name="title_form_resubmission">การส่งฟอร์มอีกครั้ง</string>
     <string name="message_form_resubmission">ต้องการส่งข้อมูลอีกครั้งหรือไม่?</string>
     <string name="message_location">ต้องการใช้ตำแหน่งของคุณ</string>
@@ -502,7 +502,7 @@
     <string name="session_prompt_confirm_deletion_title">ยืนยันการลบ</string>
     <string name="session_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบเซสชันนี้?</string>
     <string name="configuration_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบการกำหนดค่านี้?</string>
-    <string name="session_switched">สลับเซสชันแล้ว</string>
+    <string name="session_switched">สลับไปที่ \"%s\"</string>
     <string name="busy">ไม่ว่าง</string>
     <string name="invalid_character_removed">ลบอักขระที่ไม่ถูกต้องแล้ว</string>
     <string name="invalid_characters_removed">ลบอักขระที่ไม่ถูกต้องแล้ว</string>
@@ -525,7 +525,7 @@
     <string name="button_dismiss">ปิด</string>
     <!-- Find in page -->
     <string name="no_match_found">ไม่พบที่ตรงกัน</string>
-    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="match_x_of_n">ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">แสดง snackbar</string>
     <string name="pref_title_show_animation">แสดงแอนิเมชัน</string>
     <string name="pref_title_vibrate">สั่น</string>
