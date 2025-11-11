@@ -19,6 +19,7 @@ When the user asks to "work on Thai translation" or similar requests, you should
 **Important:** 
 - Run all commands in the existing terminal session. Do not open new terminal windows.
 - If you encounter "string does not exist" errors, **STOP and report the issue** to the user. Do not attempt to add strings during translation work.
+- **Do not stop translation work until complete**, even if it takes a long time and many batches. Continue working through all untranslated strings systematically.
 
 ## Complete Documentation
 
