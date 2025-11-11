@@ -218,27 +218,26 @@ def show_help():
     print("    Show this help message")
     print("\n  python l10n.py --summary")
     print("    Show only summary statistics for all languages")
-    print("\n  python l10n.py [--raw] [--add] --set <lang> <string_id> <value> [<string_id> <value> ...]")
+    print("\n  python l10n.py [--raw] --set <lang> <string_id> <value> [<string_id> <value> ...]")
     print("    Set one or more string values for a specific language")
     print("    By default, values are XML-escaped (quotes, apostrophes).")
     print("    Use --raw flag for complex XML content (no escaping).")
-    print("    Use --add flag to allow adding new strings (otherwise error if string doesn't exist).")
+    print("    Will ERROR if string doesn't exist - use --add command to add new strings.")
     print("    Examples:")
     print("      python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
     print("      python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
     print("      python l10n.py --raw --set ko-rKR test '<xliff:g id=\"x\">%1$d</xliff:g>개'")
-    print("      python l10n.py --add --set th-rTH new_string \"New value\"  # Add if doesn't exist")
     print("    ")
-    print("    IMPORTANT - Only translate strings that exist in values/strings.xml!")
-    print("      Without --add flag, the tool will error if string doesn't exist (safer default).")
-    print("      Use --add only when you're certain the string should be added.")
+    print("    IMPORTANT - Only updates existing strings!")
+    print("      --set will error if string doesn't exist (prevents accidental additions).")
+    print("      Use --add command to add new strings to ALL language files (keeps files in sync).")
     print("    ")
     print("    IMPORTANT - PowerShell quoting:")
-    print("      When using strings with $ (like %1$s), use SINGLE quotes in PowerShell:")
+    print("      Use SINGLE quotes for strings with placeholders (%, $, etc.):")
     print("        python l10n.py --set ko-rKR dialog_title '%1$s 열기'")
-    print("      Double quotes cause PowerShell to expand variables like $s, corrupting the value.")
-    print("      Alternatively, escape the $ with backtick: \"%1`$s 열기\"")
-    print("      This issue does NOT occur in bash/sh terminals.")
+    print("      Escape inner double quotes with backslash:")
+    print("        python l10n.py --set ko-rKR string_id 'Text with \"quotes\"'")
+    print("      See L10N.md for complete PowerShell quoting guide.")
     print("\n  python l10n.py --get <lang> <string_id>")
     print("    Get a string value from a specific language")
     print("    Example:")
@@ -255,11 +254,14 @@ def show_help():
     print("      python l10n.py --set-plurals ko-rKR notification_title other '%1$d tabs open'")
     print("      python l10n.py --raw --set-plurals ko-rKR cookies other '<xliff:g>%d</xliff:g> cookies'")
     print("\n  python l10n.py --add <string_id> <value>")
-    print("    Add a string to all language files (uses English value)")
+    print("    Add a NEW string to ALL language files")
+    print("    This adds the string with the given English value to ALL language files.")
+    print("    Use this when adding a new string resource to keep all files in sync.")
     print("    Example:")
     print("      python l10n.py --add new_feature_name \"New Feature\"")
+    print("    After adding, translate the new string in each language using --set.")
     print("\n  python l10n.py --remove <string_id>")
-    print("    Remove a string from all language files")
+    print("    Remove a string from ALL language files")
     print("    Example:")
     print("      python l10n.py --remove obsolete_string")
     print("\nOutput Information:")
@@ -504,7 +506,7 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False,
     new_content = re.sub(pattern, replacer, content, flags=re.DOTALL)
     return True, new_content, None, False  # was_added = False
 
-def set_string_value(language, string_id, new_value, skip_escape=False, allow_add=False):
+def set_string_value(language, string_id, new_value, skip_escape=False):
     """Set a string value in a specific language file.
 
     Args:
@@ -512,7 +514,6 @@ def set_string_value(language, string_id, new_value, skip_escape=False, allow_ad
         string_id: The string resource ID
         new_value: The new value to set
         skip_escape: If True, skip XML escaping (for --raw)
-        allow_add: If True, add string if it doesn't exist (requires --add flag)
     """
     # Always validate XML content before processing
     is_valid, error_msg = validate_android_string(new_value)
@@ -540,22 +541,21 @@ def set_string_value(language, string_id, new_value, skip_escape=False, allow_ad
         print(f"Error reading file: {e}")
         sys.exit(1)
 
-    # Replace the string using common function
-    success, new_content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add)
+    # Replace the string using common function - never allow adding
+    success, new_content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add=False)
 
     if not success:
         print(f"[ERROR] {error_msg}")
-        if not allow_add and "not found" in error_msg:
-            print(f"  String '{string_id}' does not exist in {file_path}")
-            print(f"  Use --add flag to add new strings: python l10n.py --add --set {language} {string_id} \"value\"")
+        print(f"  String '{string_id}' does not exist in {file_path}")
+        print(f"  Use --add command to add new strings to all languages:")
+        print(f"  python l10n.py --add {string_id} \"value\"")
         sys.exit(1)
 
     # Write back to file with UTF-8 encoding (no BOM), preserving line endings
     try:
         with open(file_path, 'w', encoding='utf-8', newline='') as f:
             f.write(new_content)
-        action = "Added" if was_added else "Updated"
-        print(f"[OK] Successfully {action.lower()} {language}:{string_id}")
+        print(f"[OK] Successfully updated {language}:{string_id}")
         print(f"  New value: {new_value}")
     except Exception as e:
         print(f"Error writing file: {e}")
@@ -563,14 +563,13 @@ def set_string_value(language, string_id, new_value, skip_escape=False, allow_ad
 
     sys.exit(0)
 
-def set_string_values_batch(language, string_pairs, skip_escape=False, allow_add=False):
+def set_string_values_batch(language, string_pairs, skip_escape=False):
     """Set multiple string values in a specific language file at once.
 
     Args:
         language: Language code (e.g., 'ko-rKR')
         string_pairs: List of tuples [(string_id, value), ...]
         skip_escape: If True, skip XML escaping (for --set-raw)
-        allow_add: If True, add strings if they don't exist (requires --add flag)
     """
     file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
@@ -603,25 +602,21 @@ def set_string_values_batch(language, string_pairs, skip_escape=False, allow_add
             sys.exit(1)
 
     success_count = 0
-    added_count = 0
     error_count = 0
     not_found = []
 
     # Process all string replacements
     for string_id, new_value in string_pairs:
-        # Use common replacement function
-        success, content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add)
+        # Use common replacement function - never allow adding
+        success, content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add=False)
 
         if not success:
             not_found.append(string_id)
             error_count += 1
             continue
 
-        action_marker = "[ADDED]" if was_added else "[OK]"
-        print(f"{action_marker} {string_id}")
+        print(f"[OK] {string_id}")
         success_count += 1
-        if was_added:
-            added_count += 1
 
     # Write back to file with UTF-8 encoding (no BOM), preserving line endings
     if success_count > 0:
@@ -637,10 +632,12 @@ def set_string_values_batch(language, string_pairs, skip_escape=False, allow_add
     print("SUMMARY")
     print("=" * 80)
     print(f"Successfully updated: {success_count}")
-    if added_count > 0:
-        print(f"  - Updated existing: {success_count - added_count}")
-        print(f"  - Added new: {added_count}")
     print(f"Not found: {error_count}")
+    if not_found:
+        print(f"\nStrings not found: {', '.join(not_found)}")
+        print(f"Use --add command to add new strings to all languages:")
+        print(f"  python l10n.py --add <string_id> \"value\"")
+    print("=" * 80)
 
     if not_found:
         print(f"\nStrings that could not be processed:")
@@ -713,12 +710,15 @@ def add_string_to_all(string_id, value):
                 error_count += 1
                 continue
 
+            # Detect line ending style from existing content (default to Windows CRLF)
+            line_ending = '\r\n' if '\r\n' in content else '\n'
+
             # Insert the new string before </resources>
-            new_string_line = f'    <string name="{string_id}">{value}</string>\n'
+            new_string_line = f'    <string name="{string_id}">{value}</string>{line_ending}'
             content = content.replace('</resources>', f'{new_string_line}</resources>')
 
             # Write back
-            with open(strings_file, 'w', encoding='utf-8') as f:
+            with open(strings_file, 'w', encoding='utf-8', newline='') as f:
                 f.write(content)
 
             print(f"[OK] Added to {lang_name}")
@@ -816,18 +816,14 @@ if len(sys.argv) == 1:
     show_help()
 
 if len(sys.argv) > 1:
-    # Check for --raw and --add flags (can be combined)
+    # Check for --raw flag
     arg_start = 1
     skip_escape = False
-    allow_add = False
 
     # Process flags that can appear before commands
     while arg_start < len(sys.argv) and sys.argv[arg_start].startswith('--'):
         if sys.argv[arg_start] == '--raw':
             skip_escape = True
-            arg_start += 1
-        elif sys.argv[arg_start] == '--add':
-            allow_add = True
             arg_start += 1
         else:
             # Not a pre-command flag, might be a command
@@ -835,7 +831,7 @@ if len(sys.argv) > 1:
 
     if arg_start >= len(sys.argv):
         print("Error: Flags must be followed by a command")
-        print("Example: python l10n.py --add --set th-rTH new_string \"value\"")
+        print("Example: python l10n.py --raw --set th-rTH string_id \"value\"")
         sys.exit(1)
 
     arg = sys.argv[arg_start]
@@ -872,7 +868,7 @@ if len(sys.argv) > 1:
             print("  python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
             print("  python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\"")
             print("  python l10n.py --raw --set ko-rKR test '<xliff:g>%s</xliff:g>'")
-            print("  python l10n.py --add --set th-rTH new_string \"New value\"  # Adds if doesn't exist")
+            print("\nNote: String must exist in the language file. Use --add to add new strings to all languages.")
             sys.exit(1)
         language = sys.argv[arg_start + 1]
 
@@ -890,9 +886,9 @@ if len(sys.argv) > 1:
 
         # If only one pair, use single-string output format
         if len(string_pairs) == 1:
-            set_string_value(language, string_pairs[0][0], string_pairs[0][1], skip_escape=skip_escape, allow_add=allow_add)
+            set_string_value(language, string_pairs[0][0], string_pairs[0][1], skip_escape=skip_escape)
         else:
-            set_string_values_batch(language, string_pairs, skip_escape=skip_escape, allow_add=allow_add)
+            set_string_values_batch(language, string_pairs, skip_escape=skip_escape)
     # Handle set-plurals command
     elif arg == '--set-plurals':
         if len(sys.argv) < arg_start + 5:

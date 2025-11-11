@@ -16,7 +16,9 @@ When the user asks to "work on Thai translation" or similar requests, you should
 6. **Fix any errors** before continuing
 7. **Verify success** and continue with next batch
 
-**Important:** Run all commands in the existing terminal session. Do not open new terminal windows.
+**Important:** 
+- Run all commands in the existing terminal session. Do not open new terminal windows.
+- If you encounter "string does not exist" errors, **STOP and report the issue** to the user. Do not attempt to add strings during translation work.
 
 ## Complete Documentation
 
@@ -41,6 +43,8 @@ The L10N.md file contains everything you need:
 ⚠️ **Check command output for errors** - Look for `[ERROR]` vs `[OK]` messages
 
 ⚠️ **Don't spawn new terminal windows** - Run commands in the existing terminal session
+
+⚠️ **Never add strings during translation** - If a string doesn't exist, STOP and report the issue to the user
 
 ⚠️ **Read L10N.md first** - All technical details are documented there
 
@@ -129,9 +133,15 @@ Successfully updated: 2
 | `Attribute value not quoted` | PowerShell stripped quotes from XML | Use here-string with `--raw` |
 | `Entity '&apos;' detected` | Wrong entity for Android | Use `\'` instead |
 | `Placeholder mismatch` | Missing or wrong placeholders | Match English placeholders exactly |
-| `String does not exist` | Typo in string ID | Check English strings.xml |
+| `String does not exist` | String not in language file | **STOP** - Report to user, don't add! |
 
-**If you see an error:**
+**If you see "String does not exist" error:**
+1. **STOP translation work immediately**
+2. **Report the issue to the user** - the string may be missing from English source or file is out of sync
+3. **DO NOT attempt to add the string** - adding strings should only be done deliberately via `--add` command
+4. **Wait for user guidance** before continuing
+
+**For other errors:**
 1. **Stop immediately** - don't continue with more translations
 2. **Read the error message** carefully
 3. **Fix the issue** (usually quoting or escaping)
