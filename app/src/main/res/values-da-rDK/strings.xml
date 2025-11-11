@@ -58,7 +58,7 @@
     <string name="agent_system">System</string>
     <string name="agent_web_view">WebView</string>
     <string name="agent_windows_desktop">Windows (Desktop)</string>
-    <string name="agent_hide_device">Hide device</string>
+    <string name="agent_hide_device">Skjul enhed</string>
     <string name="title_search_engine">Søgemaskine</string>
     <string name="action_ok">OK</string>
     <string name="dialog_download">Vil du downloade denne fil? (%1$s)</string>
@@ -296,26 +296,26 @@
     <string name="pref_title_pull_to_refresh">Træk for at opdatere</string>
     <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
     <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
+    <string name="pref_summary_on_analytics">Hjælp med at forbedre appen ved at sende brugsdata</string>
+    <string name="pref_summary_off_analytics">Brugsdata vil ikke blive sendt</string>
     <string name="pref_title_accept_terms">Jeg vil bruge Fulguris</string>
-    <string name="pref_summary_on_accept_terms">You have accepted our terms and conditions</string>
-    <string name="pref_summary_off_accept_terms">Accept our terms and conditions to continue</string>
-    <string name="pref_summary_color_mode">Apply web page color to tool and status bar</string>
+    <string name="pref_summary_on_accept_terms">Du har accepteret vores vilkår og betingelser</string>
+    <string name="pref_summary_off_accept_terms">Acceptér vores vilkår og betingelser for at fortsætte</string>
+    <string name="pref_summary_color_mode">Anvend websidefarve på værktøjs- og statuslinje</string>
     <string name="pref_title_desktop_width">Skrivebordsbredde</string>
-    <string name="pref_summary_desktop_width">Desktop mode viewport width, set it higher for smaller content</string>
+    <string name="pref_summary_desktop_width">Skrivebordstilstand viewport-bredde, indstil den højere for mindre indhold</string>
     <string name="pref_title_no_sponsorship">Sponsorering i appen ikke tilgængelig</string>
-    <string name="pref_summary_no_sponsorship">Use Fulguris from Google Play to sponsor us.</string>
+    <string name="pref_summary_no_sponsorship">Brug Fulguris fra Google Play for at sponsorere os.</string>
     <string name="pref_title_free_download">Gratis download</string>
-    <string name="pref_summary_free_download">Fulguris is Open Source Software. You can download our free edition including full feature set and unlimited tabs.</string>
+    <string name="pref_summary_free_download">Fulguris er Open Source Software. Du kan downloade vores gratis udgave inklusive fuldt funktionssæt og ubegrænsede faner.</string>
     <string name="pref_title_sponsorship_github">Sponsorér os på GitHub</string>
-    <string name="pref_summary_sponsorship_github">You can sponsor our work on GitHub to help make this project a success.</string>
+    <string name="pref_summary_sponsorship_github">Du kan sponsorere vores arbejde på GitHub for at hjælpe med at gøre dette projekt til en succes.</string>
     <string name="pref_title_sponsorship_five_stars">Fem stjerner anmeldelse</string>
-    <string name="pref_summary_sponsorship_five_stars">Giving us a five stars review on Google Play is a great way to help this project.</string>
+    <string name="pref_summary_sponsorship_five_stars">At give os en fem stjerner anmeldelse på Google Play er en god måde at hjælpe dette projekt på.</string>
     <string name="pref_title_contribute_translations">Oversættelser</string>
-    <string name="pref_summary_contribute_translations">You can help translate Fulguris to your locale language on Crowdin.</string>
+    <string name="pref_summary_contribute_translations">Du kan hjælpe med at oversætte Fulguris til dit lokalsprog på Crowdin.</string>
     <string name="pref_title_contribute_share">Spred ordet</string>
-    <string name="pref_summary_contribute_share">Dazzle your friends and communities by sharing Fulguris with them.</string>
+    <string name="pref_summary_contribute_share">Imponér dine venner og fællesskaber ved at dele Fulguris med dem.</string>
     <string name="pref_title_language">Sprog</string>
     <string name="language_system_default">Systemstandard</string>
     <string name="close_tab">Luk nuværende fane</string>
@@ -361,11 +361,11 @@
     <string name="settings_summary_content_control">Annonceblokering og indholdsfiltrering</string>
     <string name="settings_summary_content_control_toggle">Aktivér annonceblokering og indholdsfiltrering</string>
     <string name="settings_title_tab_bar_orientation">Fanelinjens orientering</string>
-    <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
-    <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
+    <string name="settings_summary_on_tab_bar_orientation">Lodret</string>
+    <string name="settings_summary_off_tab_bar_orientation">Vandret</string>
     <string name="settings_title_tab_bar_placement">Fanelinjens placering</string>
-    <string name="settings_summary_on_tab_bar_placement">Retractable panel</string>
-    <string name="settings_summary_off_tab_bar_placement">Always on screen</string>
+    <string name="settings_summary_on_tab_bar_placement">Indtrækkeligt panel</string>
+    <string name="settings_summary_off_tab_bar_placement">Altid på skærmen</string>
     <string name="settings_title_toolbars_position">Værktøjslinjeposition</string>
     <string name="settings_summary_on_toolbars_position">Bund</string>
     <string name="settings_summary_off_toolbars_position">Top</string>
@@ -374,12 +374,12 @@
     <string name="settings_title_dark_mode_default">Tving mørk tilstand</string>
     <string name="settings_summary_dark_mode_default">Definer om nye faner bruger tving mørk tilstand som standard</string>
     <string name="settings_title_swap_bookmarks_and_tabs">Ombyt skuffer</string>
-    <string name="settings_summary_swap_bookmarks_and_tabs">Tabs and Bookmarks drawers will swap places</string>
+    <string name="settings_summary_swap_bookmarks_and_tabs">Fane- og bogmærkeskuffer vil bytte plads</string>
     <string name="do_not_track">Anmod om \" Spor ikke\ save_data Anmod</string>
     <string name="save_data">Request \'Save-Data\'</string>
     <string name="remove_identifying_headers">Fjern identificerende headere</string>
     <string name="pref_title_webrtc">WebRTC-understøttelse</string>
-    <string name="pref_summary_webrtc">Allows Real Time Communication over the Web using your device camera and microphone</string>
+    <string name="pref_summary_webrtc">Tillader realtidskommunikation over nettet ved brug af dit enheds kamera og mikrofon</string>
     <string name="action_add_to_homescreen">Tilføj til hjemmeskærm</string>
     <string name="message_added_to_homescreen">Genvej tilføjet til hjemmeskærm</string>
     <string name="shortcut_message_failed_to_add">Beklager, din launcher understøtter ikke genveje.</string>
@@ -389,11 +389,11 @@
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Genstart venligst appen for at ændringen træder i kraft</string>
     <string name="pref_title_crash_logs">Nedbrudslogge</string>
-    <string name="pref_summary_crash_logs">Write crash logs to file system.\nTap to open folder. Please provide relevant file when reporting a bug.</string>
+    <string name="pref_summary_crash_logs">Skriv nedbrudslogge til filsystem.\nTryk for at åbne mappe. Venligst medtag relevant fil, når du rapporterer en fejl.</string>
     <string name="pref_title_logs">Logge</string>
-    <string name="pref_summary_on_logs">Enabled</string>
-    <string name="pref_summary_off_logs">Disabled</string>
-    <string name="pref_title_log_level">Log level</string>
+    <string name="pref_summary_on_logs">Aktiveret</string>
+    <string name="pref_summary_off_logs">Deaktiveret</string>
+    <string name="pref_title_log_level">Log-niveau</string>
     <!-- Dialogs -->
     <string name="dialog_open_new_tab">Åbn i ny fane</string>
     <string name="dialog_open_background_tab">Åbn i baggrundsfane</string>
@@ -407,7 +407,7 @@
     <string name="dialog_rename_folder">Omdøb mappe</string>
     <string name="dialog_remove_folder">Fjern mappe</string>
     <string name="dialog_title_close_browser">Luk browser</string>
-    <string name="dialog_title_incoming_url">Open %1$s</string>
+    <string name="dialog_title_incoming_url">Åbn %1$s</string>
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Blokeret %1$s</string>
     <string name="dialog_delete_all_downloads">Slet alle downloads</string>
@@ -418,8 +418,8 @@
     <string name="search_engine_custom">Brugerdefineret URL</string>
     <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d incognito tab open</item>
-        <item quantity="other">%1$d incognito tabs open</item>
+        <item quantity="one">%1$d inkognitofane åben</item>
+        <item quantity="other">%1$d inkognitofaner åbne</item>
     </plurals>
     <string name="notification_incognito_running_message">Tryk for at åbne</string>
     <!-- Shown in system app notification settings -->
@@ -446,24 +446,24 @@
     <string name="settings_summary_domains">Administrer domæneindstillinger</string>
     <string name="settings_title_resource_domains">Ressourcedomæner</string>
     <string name="settings_title_override">Tilsidesæt</string>
-    <string name="settings_summary_on_override">Override parent settings</string>
-    <string name="settings_summary_off_override">Use parent settings</string>
+    <string name="settings_summary_on_override">Tilsidesæt forældreindstillinger</string>
+    <string name="settings_summary_off_override">Brug forældreindstillinger</string>
     <string name="settings_title_launch_app">Start app</string>
     <string name="settings_title_category">Kategori</string>
-    <string name="settings_summary_on_category">Main domain</string>
-    <string name="settings_summary_off_category">Resource domain</string>
+    <string name="settings_summary_on_category">Hoveddomæne</string>
+    <string name="settings_summary_off_category">Ressourcedomæne</string>
     <string name="action_domain_settings">Domæne</string>
     <string name="settings_title_domains_delete_all">Slet alle</string>
-    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
+    <string name="settings_summary_domains_delete_all">Slet alle domæneindstillinger</string>
     <string name="question_delete_all_domain_settings">Slet alle domæneindstillinger?</string>
     <string name="settings_title_delete_domain_settings">Slet domæneindstillinger</string>
-    <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
+    <string name="settings_summary_delete_domain_settings">Vil blive genskabt næste gang dette domæne stødes på</string>
     <string name="settings_title_parent">Forælder</string>
     <string name="settings_summary_default_domain_settings">Standard domæneindstillinger</string>
     <string name="settings_title_ssl_error">Sikkerhedsfejl</string>
-    <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
+    <string name="settings_summary_ssl_error">Hvad skal gøres, når en SSL-fejl registreres</string>
     <string name="settings_title_incoming_url_action">Indgående linkhandling</string>
-    <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
+    <string name="settings_summary_incoming_url_action">Hvordan man håndterer links fra andre apps</string>
     <string name="checkbox_remember_domain_choice">Husk dit valg for dette domæne</string>
     <string name="settings_title_third_party_cookies">Tredjeparts cookies</string>
     <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
@@ -475,7 +475,7 @@
     <string name="settings_summary_cookies">Nuværende side har ingen cookies</string>
     <string name="settings_summary_manage_cookies">Administrer nuværende sides cookies</string>
     <string name="settings_title_cookies_delete_all">Slet alle</string>
-    <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
+    <string name="settings_summary_cookies_delete_all">Slet alle cookies for nuværende side</string>
     <string name="question_delete_all_page_cookies">Slet alle cookies for nuværende side?</string>
     <!--
     Zero is not working for english:
@@ -483,8 +483,8 @@
     <item quantity="zero">Current page has no cookies</item>
     -->
     <plurals name="settings_summary_cookies">
-        <item quantity="one">Current page has one cookie</item>
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="one">Nuværende side har en cookie</item>
+        <item quantity="other">Nuværende side har <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
     <string name="settings_title_task_label">Opgaveetiket</string>
     <string name="settings_title_task_icon">Opgaveikon</string>
