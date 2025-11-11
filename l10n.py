@@ -435,7 +435,7 @@ def set_plurals_value(language, plurals_name, quantity_value_pairs, skip_escape=
     sys.exit(0)
 
 def _replace_string_in_content(content, string_id, new_value, skip_escape=False):
-    """Internal function to replace a string value in XML content.
+    """Internal function to replace a string value in XML content, or add if missing.
 
     Args:
         content: The XML file content as string
@@ -444,10 +444,11 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False)
         skip_escape: If True, skip XML escaping (for complex XML content)
 
     Returns:
-        tuple: (success, new_content, error_message)
-               success: bool indicating if replacement succeeded
+        tuple: (success, new_content, error_message, was_added)
+               success: bool indicating if replacement/addition succeeded
                new_content: the modified content (or original if failed)
                error_message: error description if failed, None if succeeded
+               was_added: bool indicating if string was added (True) vs updated (False)
     """
     # Escape special regex characters in the string ID
     escaped_id = re.escape(string_id)
@@ -456,16 +457,31 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False)
     # The ? makes it non-greedy so it stops at the first </string>
     pattern = f'(<string name="{escaped_id}">)(.*?)(</string>)'
 
-    # Check if the string exists - need DOTALL flag to match across newlines
-    if not re.search(pattern, content, re.DOTALL):
-        return False, content, f"String ID '{string_id}' not found"
-
     # Escape XML special characters in the new value (unless skip_escape is True)
     if skip_escape:
         escaped_value = new_value
     else:
         escaped_value = escape_xml_value(new_value)
 
+    # Check if the string exists - need DOTALL flag to match across newlines
+    if not re.search(pattern, content, re.DOTALL):
+        # String doesn't exist - ADD IT
+        # Find the closing </resources> tag and add before it
+        closing_tag_pattern = r'(\s*)(</resources>)'
+        closing_match = re.search(closing_tag_pattern, content)
+
+        if not closing_match:
+            return False, content, "Could not find </resources> tag in XML file", False
+
+        # Create new string entry with proper indentation
+        indent = '    '  # Standard 4-space indent
+        new_entry = f'{indent}<string name="{string_id}">{escaped_value}</string>\n'
+
+        # Insert before closing tag
+        new_content = content[:closing_match.start()] + new_entry + closing_match.group(0)
+        return True, new_content, None, True  # was_added = True
+
+    # String exists - UPDATE IT
     # Replace the string value using a function to avoid regex replacement string issues
     # CRITICAL: We MUST use a function, not an f-string like f'\\1{value}\\3'
     # Reason: If value contains backslashes (from XML escaping like \' or \n),
@@ -477,7 +493,7 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False)
         return match.group(1) + escaped_value + match.group(3)
 
     new_content = re.sub(pattern, replacer, content, flags=re.DOTALL)
-    return True, new_content, None
+    return True, new_content, None, False  # was_added = False
 
 def set_string_value(language, string_id, new_value, skip_escape=False):
     """Set a string value in a specific language file.
@@ -515,7 +531,7 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
         sys.exit(1)
 
     # Replace the string using common function
-    success, new_content, error_msg = _replace_string_in_content(content, string_id, new_value, skip_escape)
+    success, new_content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape)
 
     if not success:
         print(f"Error: {error_msg} in {file_path}")
@@ -525,7 +541,8 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
     try:
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(new_content)
-        print(f"[OK] Successfully updated {language}:{string_id}")
+        action = "Added" if was_added else "Updated"
+        print(f"[OK] Successfully {action.lower()} {language}:{string_id}")
         print(f"  New value: {new_value}")
     except Exception as e:
         print(f"Error writing file: {e}")
@@ -572,21 +589,25 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
             sys.exit(1)
 
     success_count = 0
+    added_count = 0
     error_count = 0
     not_found = []
 
     # Process all string replacements
     for string_id, new_value in string_pairs:
         # Use common replacement function
-        success, content, error_msg = _replace_string_in_content(content, string_id, new_value, skip_escape)
+        success, content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape)
 
         if not success:
             not_found.append(string_id)
             error_count += 1
             continue
 
-        print(f"[OK] {string_id}")
+        action_marker = "[ADDED]" if was_added else "[OK]"
+        print(f"{action_marker} {string_id}")
         success_count += 1
+        if was_added:
+            added_count += 1
 
     # Write back to file with UTF-8 encoding (no BOM)
     if success_count > 0:
@@ -602,10 +623,13 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
     print("SUMMARY")
     print("=" * 80)
     print(f"Successfully updated: {success_count}")
+    if added_count > 0:
+        print(f"  - Updated existing: {success_count - added_count}")
+        print(f"  - Added new: {added_count}")
     print(f"Not found: {error_count}")
 
     if not_found:
-        print(f"\nStrings not found in {file_path}:")
+        print(f"\nStrings that could not be processed:")
         for string_id in not_found:
             print(f"  - {string_id}")
 
