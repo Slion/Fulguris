@@ -100,7 +100,7 @@
     <string name="downloads">Downloads</string>
     <string name="downloads_notification_description">Aktiveres ved fuldført download</string>
     <string name="download_pending">Downloader:</string>
-    <string name="cannot_download">Can only download \"http\" or \"https\" URLs.</string>
+    <string name="cannot_download">Kan kun downloade \" http\</string>
     <string name="problem_download">Invalid URL encountered, cannot download</string>
     <string name="problem_location_download">Cannot download to the specified location</string>
     <string name="download_no_sdcard_dlg_title">Intet SD-kort</string>
@@ -110,7 +110,7 @@
     <string name="download_complete">Download fuldført</string>
     <string name="download_failed">Download mislykkedes</string>
     <string name="incognito_cookies">Aktivér cookies i inkognitotilstand</string>
-    <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
+    <string name="incognito_cookies_pie">Inkognitotilstand kører i en separat proces, der nulstilles efter hver session. Inkognito cookie-indstillinger styres nu af de almindelige cookie-indstillinger.</string>
     <string name="pref_title_contact_us">Kontakt os</string>
     <string name="clear_cache">Ryd cache</string>
     <string name="message_cache_cleared">Cache ryddet</string>
@@ -167,13 +167,13 @@
     <string name="local_file_chosen">fil valgt</string>
     <string name="remote_file">Ekstern</string>
     <string name="use_modify_filters">Modificeringsfiltre</string>
-    <string name="use_modify_filters_warning">In some cases, modifier filters have been found to break websites in this browser. Until implementation is improved, you can enable them at your own risk. Disabling for main-frame documents only avoids most issues.</string>
+    <string name="use_modify_filters_warning">I nogle tilfælde er modifikatorfiltre fundet til at ødelægge websteder i denne browser. Indtil implementeringen forbedres, kan du aktivere dem på egen risiko. Deaktivering kun for hoveddokumenter undgår de fleste problemer.</string>
     <string name="modify_filters_not_for_main_frame">Deaktiver kun for hovedramme</string>
     <!-- Common actions -->
     <string name="action_message_canceled">Handling annulleret.</string>
     <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error">Sikker forbindelse kompromitteret:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Vil du stadig fortsætte?</string>
     <string name="message_certificate_date_invalid">Certifikatdato er ugyldig</string>
     <string name="message_certificate_expired">Certifikat er udløbet</string>
     <string name="message_certificate_domain_mismatch">Domæne i certifikat matcher ikke webstedets domæne</string>
@@ -182,7 +182,7 @@
     <string name="message_certificate_untrusted">Certifikat er ikke tillid til</string>
     <!-- permissions request -->
     <string name="title_permission_request">Tilladelsesanmodning</string>
-    <string name="message_permission_request">%1\\n\nVil gerne bruge:\n\n%2\" name_normal Normal</string>
+    <string name="message_permission_request">%1$s\n\nVil gerne bruge:\n\n%2$s</string>
     <string name="title_form_resubmission">Genindend formular</string>
     <string name="message_form_resubmission">Vil du gensende dataene?</string>
     <string name="message_location">\nVil gerne bruge din placering</string>
@@ -408,7 +408,7 @@
     <string name="dialog_remove_folder">Fjern mappe</string>
     <string name="dialog_title_close_browser">Luk browser</string>
     <string name="dialog_title_incoming_url">Åbn %1$s</string>
-    <string name="dialog_message_incoming_url">%1\\n\n%2\</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Blokeret %1$s</string>
     <string name="dialog_delete_all_downloads">Slet alle downloads</string>
     <!-- Tools dialog -->
@@ -502,8 +502,8 @@
     <string name="session_already_exists">En session med det navn findes allerede!</string>
     <string name="session_cant_delete_current">Kan ikke slette nuværende session!</string>
     <string name="session_prompt_confirm_deletion_title">Bekræft sletning</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="session_prompt_confirm_deletion_message">Er du sikker på at du vil slette session "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Er du sikker på at du vil slette "<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>" konfiguration?</string>
     <string name="session_switched">Skiftet til \"%s\"</string>
     <string name="busy">Optaget, prøv igen om lidt.</string>
     <string name="invalid_character_removed">Ugyldigt tegn fjernet!</string>
@@ -527,7 +527,7 @@
     <string name="button_dismiss">Afvis</string>
     <!-- Find in page -->
     <string name="no_match_found">Ingen match fundet!</string>
-    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> af <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Vis snackbar</string>
     <string name="pref_title_show_animation">Vis animation</string>
     <string name="pref_title_vibrate">Vibrér</string>
@@ -545,8 +545,8 @@
     <string name="pref_category_summary_session_export">Vælg den session du vil eksportere</string>
     <string name="error_session_file_corrupted">Fejl: beskadiget sessionsfil!</string>
     <string name="error_recovery_session">Fejl: en gendannelsessession blev oprettet!</string>
-    <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
-    <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
+    <string name="message_session_imported">Importeret session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
+    <string name="message_session_exported">Eksporteret session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="force_zoom_summary">Virker ikke hvis JavaScript ikke er aktiveret</string>
     <string name="force_zoom">Tving zoom for websteder</string>
     <string name="algorithm">Algoritme:</string>
