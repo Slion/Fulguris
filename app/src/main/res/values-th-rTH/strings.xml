@@ -173,7 +173,7 @@
     <string name="action_message_canceled">ยกเลิกการดำเนินการแล้ว</string>
     <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">ข้อผิดพลาดความปลอดภัย! ยกเลิกการโหลดหน้าแล้ว</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error">การเชื่อมต่อที่ปลอดภัยถูกบุกรุก:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>คุณยังต้องการดำเนินการต่อหรือไม่?</string>
     <string name="message_certificate_date_invalid">วันที่ของใบรับรองไม่ถูกต้อง</string>
     <string name="message_certificate_expired">ใบรับรองหมดอายุแล้ว</string>
     <string name="message_certificate_domain_mismatch">โดเมนในใบรับรองไม่ตรงกับโดเมนของเว็บไซต์</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">เปลี่ยนชื่อโฟลเดอร์</string>
     <string name="dialog_remove_folder">ลบโฟลเดอร์</string>
     <string name="dialog_title_close_browser">ปิดเบราว์เซอร์</string>
-    <string name="dialog_title_incoming_url">URL ขาเข้า</string>
-    <string name="dialog_message_incoming_url">คุณต้องการเปิด URL นี้หรือไม่?</string>
-    <string name="message_blocked_domain">บล็อกโดเมนแล้ว</string>
+    <string name="dialog_title_incoming_url">เปิด %1$s</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="message_blocked_domain">บล็อก %1$s แล้ว</string>
     <string name="dialog_delete_all_downloads">ลบการดาวน์โหลดทั้งหมด</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">เครื่องมือ</string>
@@ -482,7 +482,7 @@
     <item quantity="zero">Current page has no cookies</item>
     -->
     <plurals name="settings_summary_cookies">
-        <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
+        <item quantity="other">หน้าปัจจุบันมี <xliff:g id="cookies_count" example="2">%d</xliff:g> คุกกี้</item>
     </plurals>
     <string name="settings_title_task_label">ชื่องาน</string>
     <string name="settings_title_task_icon">ไอคอนงาน</string>
