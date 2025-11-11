@@ -218,14 +218,20 @@ def show_help():
     print("    Show this help message")
     print("\n  python l10n.py --summary")
     print("    Show only summary statistics for all languages")
-    print("\n  python l10n.py [--raw] --set <lang> <string_id> <value> [<string_id> <value> ...]")
+    print("\n  python l10n.py [--raw] [--add] --set <lang> <string_id> <value> [<string_id> <value> ...]")
     print("    Set one or more string values for a specific language")
     print("    By default, values are XML-escaped (quotes, apostrophes).")
     print("    Use --raw flag for complex XML content (no escaping).")
+    print("    Use --add flag to allow adding new strings (otherwise error if string doesn't exist).")
     print("    Examples:")
     print("      python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
     print("      python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
     print("      python l10n.py --raw --set ko-rKR test '<xliff:g id=\"x\">%1$d</xliff:g>개'")
+    print("      python l10n.py --add --set th-rTH new_string \"New value\"  # Add if doesn't exist")
+    print("    ")
+    print("    IMPORTANT - Only translate strings that exist in values/strings.xml!")
+    print("      Without --add flag, the tool will error if string doesn't exist (safer default).")
+    print("      Use --add only when you're certain the string should be added.")
     print("    ")
     print("    IMPORTANT - PowerShell quoting:")
     print("      When using strings with $ (like %1$s), use SINGLE quotes in PowerShell:")
@@ -434,14 +440,15 @@ def set_plurals_value(language, plurals_name, quantity_value_pairs, skip_escape=
 
     sys.exit(0)
 
-def _replace_string_in_content(content, string_id, new_value, skip_escape=False):
-    """Internal function to replace a string value in XML content, or add if missing.
+def _replace_string_in_content(content, string_id, new_value, skip_escape=False, allow_add=False):
+    """Internal function to replace a string value in XML content, or add if allowed.
 
     Args:
         content: The XML file content as string
         string_id: The string resource ID
         new_value: The new value to set
         skip_escape: If True, skip XML escaping (for complex XML content)
+        allow_add: If True, add string if it doesn't exist; if False, return error
 
     Returns:
         tuple: (success, new_content, error_message, was_added)
@@ -465,7 +472,12 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False)
 
     # Check if the string exists - need DOTALL flag to match across newlines
     if not re.search(pattern, content, re.DOTALL):
-        # String doesn't exist - ADD IT
+        # String doesn't exist
+        if not allow_add:
+            # Not allowed to add - return error
+            return False, content, f"String ID '{string_id}' not found. Use --add flag to add new strings.", False
+
+        # ADD IT (only if allow_add is True)
         # Find the closing </resources> tag and add before it
         closing_tag_pattern = r'(\s*)(</resources>)'
         closing_match = re.search(closing_tag_pattern, content)
@@ -473,29 +485,26 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False)
         if not closing_match:
             return False, content, "Could not find </resources> tag in XML file", False
 
-        # Create new string entry with proper indentation
+        # Detect line ending style from existing content (default to Windows CRLF)
+        line_ending = '\r\n' if '\r\n' in content else '\n'
+
+        # Create new string entry with proper indentation and line ending
         indent = '    '  # Standard 4-space indent
-        new_entry = f'{indent}<string name="{string_id}">{escaped_value}</string>\n'
+        new_entry = f'{indent}<string name="{string_id}">{escaped_value}</string>{line_ending}'
 
         # Insert before closing tag
         new_content = content[:closing_match.start()] + new_entry + closing_match.group(0)
         return True, new_content, None, True  # was_added = True
 
     # String exists - UPDATE IT
-    # Replace the string value using a function to avoid regex replacement string issues
-    # CRITICAL: We MUST use a function, not an f-string like f'\\1{value}\\3'
-    # Reason: If value contains backslashes (from XML escaping like \' or \n),
-    # they can combine with the following \\3 to create unintended backreferences.
-    # Example: value="test\n" in f'\\1{value}\\3' becomes '\1test\n\3' where
-    # \n is interpreted as backreference (empty) and \3 as 3rd capture group.
-    # With a function, the value is returned as-is with no interpretation.
+    # ...existing code...
     def replacer(match):
         return match.group(1) + escaped_value + match.group(3)
 
     new_content = re.sub(pattern, replacer, content, flags=re.DOTALL)
     return True, new_content, None, False  # was_added = False
 
-def set_string_value(language, string_id, new_value, skip_escape=False):
+def set_string_value(language, string_id, new_value, skip_escape=False, allow_add=False):
     """Set a string value in a specific language file.
 
     Args:
@@ -503,6 +512,7 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
         string_id: The string resource ID
         new_value: The new value to set
         skip_escape: If True, skip XML escaping (for --raw)
+        allow_add: If True, add string if it doesn't exist (requires --add flag)
     """
     # Always validate XML content before processing
     is_valid, error_msg = validate_android_string(new_value)
@@ -522,24 +532,27 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
         print(f"Run 'python l10n.py --list' to see available languages")
         sys.exit(1)
 
-    # Read the file content
+    # Read the file content, preserving line endings
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(file_path, 'r', encoding='utf-8', newline='') as f:
             content = f.read()
     except Exception as e:
         print(f"Error reading file: {e}")
         sys.exit(1)
 
     # Replace the string using common function
-    success, new_content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape)
+    success, new_content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add)
 
     if not success:
-        print(f"Error: {error_msg} in {file_path}")
+        print(f"[ERROR] {error_msg}")
+        if not allow_add and "not found" in error_msg:
+            print(f"  String '{string_id}' does not exist in {file_path}")
+            print(f"  Use --add flag to add new strings: python l10n.py --add --set {language} {string_id} \"value\"")
         sys.exit(1)
 
-    # Write back to file with UTF-8 encoding (no BOM)
+    # Write back to file with UTF-8 encoding (no BOM), preserving line endings
     try:
-        with open(file_path, 'w', encoding='utf-8') as f:
+        with open(file_path, 'w', encoding='utf-8', newline='') as f:
             f.write(new_content)
         action = "Added" if was_added else "Updated"
         print(f"[OK] Successfully {action.lower()} {language}:{string_id}")
@@ -550,13 +563,14 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
 
     sys.exit(0)
 
-def set_string_values_batch(language, string_pairs, skip_escape=False):
+def set_string_values_batch(language, string_pairs, skip_escape=False, allow_add=False):
     """Set multiple string values in a specific language file at once.
 
     Args:
         language: Language code (e.g., 'ko-rKR')
         string_pairs: List of tuples [(string_id, value), ...]
         skip_escape: If True, skip XML escaping (for --set-raw)
+        allow_add: If True, add strings if they don't exist (requires --add flag)
     """
     file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
@@ -565,9 +579,9 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
         print(f"Run 'python l10n.py --list' to see available languages")
         sys.exit(1)
 
-    # Read the file content
+    # Read the file content, preserving line endings
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(file_path, 'r', encoding='utf-8', newline='') as f:
             content = f.read()
     except Exception as e:
         print(f"Error reading file: {e}")
@@ -596,7 +610,7 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
     # Process all string replacements
     for string_id, new_value in string_pairs:
         # Use common replacement function
-        success, content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape)
+        success, content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add)
 
         if not success:
             not_found.append(string_id)
@@ -609,10 +623,10 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
         if was_added:
             added_count += 1
 
-    # Write back to file with UTF-8 encoding (no BOM)
+    # Write back to file with UTF-8 encoding (no BOM), preserving line endings
     if success_count > 0:
         try:
-            with open(file_path, 'w', encoding='utf-8') as f:
+            with open(file_path, 'w', encoding='utf-8', newline='') as f:
                 f.write(content)
         except Exception as e:
             print(f"\n[ERROR] Failed to write file: {e}")
@@ -802,14 +816,27 @@ if len(sys.argv) == 1:
     show_help()
 
 if len(sys.argv) > 1:
-    # Check for --raw flag
+    # Check for --raw and --add flags (can be combined)
     arg_start = 1
-    if sys.argv[1] == '--raw':
-        skip_escape = True
-        arg_start = 2
-        if len(sys.argv) == 2:
-            print("Error: --raw must be followed by a command (--set or --set-plurals)")
-            sys.exit(1)
+    skip_escape = False
+    allow_add = False
+
+    # Process flags that can appear before commands
+    while arg_start < len(sys.argv) and sys.argv[arg_start].startswith('--'):
+        if sys.argv[arg_start] == '--raw':
+            skip_escape = True
+            arg_start += 1
+        elif sys.argv[arg_start] == '--add':
+            allow_add = True
+            arg_start += 1
+        else:
+            # Not a pre-command flag, might be a command
+            break
+
+    if arg_start >= len(sys.argv):
+        print("Error: Flags must be followed by a command")
+        print("Example: python l10n.py --add --set th-rTH new_string \"value\"")
+        sys.exit(1)
 
     arg = sys.argv[arg_start]
 
@@ -845,6 +872,7 @@ if len(sys.argv) > 1:
             print("  python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
             print("  python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\"")
             print("  python l10n.py --raw --set ko-rKR test '<xliff:g>%s</xliff:g>'")
+            print("  python l10n.py --add --set th-rTH new_string \"New value\"  # Adds if doesn't exist")
             sys.exit(1)
         language = sys.argv[arg_start + 1]
 
@@ -862,9 +890,9 @@ if len(sys.argv) > 1:
 
         # If only one pair, use single-string output format
         if len(string_pairs) == 1:
-            set_string_value(language, string_pairs[0][0], string_pairs[0][1], skip_escape=skip_escape)
+            set_string_value(language, string_pairs[0][0], string_pairs[0][1], skip_escape=skip_escape, allow_add=allow_add)
         else:
-            set_string_values_batch(language, string_pairs, skip_escape=skip_escape)
+            set_string_values_batch(language, string_pairs, skip_escape=skip_escape, allow_add=allow_add)
     # Handle set-plurals command
     elif arg == '--set-plurals':
         if len(sys.argv) < arg_start + 5:
