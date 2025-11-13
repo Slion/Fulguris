@@ -182,7 +182,7 @@
     <string name="message_certificate_untrusted">Το πιστοποιητικό δεν είναι αξιόπιστο</string>
     <!-- permissions request -->
     <string name="title_permission_request">Αίτημα άδειας</string>
-    <string name="message_permission_request">%1\n\nθα ήθελε να χρησιμοποιήσει:\n\n%2</string>
+    <string name="message_permission_request">%1$s\n\nθα ήθελε να χρησιμοποιήσει:\n\n%2$s</string>
     <string name="title_form_resubmission">Επαναυποβολή φόρμας</string>
     <string name="message_form_resubmission">Θα θέλατε να ξαναστείλετε τα στοιχεία;</string>
     <string name="message_location">\nΘα θέλατε να χρησιμοποιήσετε την τοποθεσία σας;</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Μετονομασία φακέλου</string>
     <string name="dialog_remove_folder">Αφαίρεση φακέλου</string>
     <string name="dialog_title_close_browser">Κλείσιμο προγράμματος περιήγησης</string>
-    <string name="dialog_title_incoming_url">Άνοιγμα %1</string>
-    <string name="dialog_message_incoming_url">%1\n\n%2</string>
-    <string name="message_blocked_domain">Αποκλεισμένο %1</string>
+    <string name="dialog_title_incoming_url">Άνοιγμα %1$s</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="message_blocked_domain">Αποκλείστηκε %1$s</string>
     <string name="dialog_delete_all_downloads">Διαγραφή όλων των λήψεων</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Εργαλεία σελίδας</string>

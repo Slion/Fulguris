@@ -155,7 +155,7 @@
     <string name="blocklist_updating">正在更新…</string>
     <string name="blocklist_update_error">更新過濾器清單 %s 時發生錯誤</string>
     <!-- not used any more, generic error for all non-successful codes -->
-    <string name="blocklist_update_error_code">更新過濾器清單 %1 時發生錯誤：狀態代碼 %2</string>
+    <string name="blocklist_update_error_code">更新過濾器清單 %1$s 時發生錯誤：狀態碼 %2$s</string>
     <string name="add_blocklist">新增過濾器檔案</string>
     <string name="add_blocklist_hint">您可以選擇主機清單或任何與 AdBlockPlus 規則相容的清單</string>
     <string name="invalid_title">無效的標題</string>
@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">重新命名資料夾</string>
     <string name="dialog_remove_folder">移除資料夾</string>
     <string name="dialog_title_close_browser">關閉瀏覽器</string>
-    <string name="dialog_title_incoming_url">開啟 %1</string>
-    <string name="dialog_message_incoming_url">%1\n\n%2</string>
-    <string name="message_blocked_domain">已封鎖 %1</string>
+    <string name="dialog_title_incoming_url">開啟 %1$s</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="message_blocked_domain">已封鎖 %1$s</string>
     <string name="dialog_delete_all_downloads">刪除所有下載</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">頁面工具</string>

@@ -155,7 +155,7 @@
     <string name="blocklist_updating">업데이트 중…</string>
     <string name="blocklist_update_error">필터 목록 %s 업데이트 중 오류</string>
     <!-- not used any more, generic error for all non-successful codes -->
-    <string name="blocklist_update_error_code">필터 목록 %1 업데이트 중 오류: 상태 코드 %2</string>
+    <string name="blocklist_update_error_code">필터 목록 %1$s를 업데이트하는 중 오류 발생: 상태 코드 %2$s</string>
     <string name="add_blocklist">필터 파일 추가</string>
     <string name="add_blocklist_hint">호스트 목록 또는 AdBlockPlus 규칙과 호환되는 모든 목록을 선택할 수 있습니다</string>
     <string name="invalid_title">잘못된 제목</string>

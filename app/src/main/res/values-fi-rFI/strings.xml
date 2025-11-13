@@ -61,7 +61,7 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Hakukone</string>
     <string name="action_ok">OK</string>
-    <string name="dialog_download">Haluatko ladata tämän tiedoston?</string>
+    <string name="dialog_download">Haluatko ladata tämän tiedoston? (%1$s)</string>
     <string name="unknown_size">Tuntematon koko</string>
     <string name="action_cancel">Peruuta</string>
     <string name="title_warning">Varoitus</string>
