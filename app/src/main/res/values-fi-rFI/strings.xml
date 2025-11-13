@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Nimeä kansio uudelleen</string>
     <string name="dialog_remove_folder">Poista kansio</string>
     <string name="dialog_title_close_browser">Sulje selain</string>
-    <string name="dialog_title_incoming_url">Saapuva URL</string>
-    <string name="dialog_message_incoming_url">Haluatko avata tämän URL-osoitteen?</string>
-    <string name="message_blocked_domain">Verkkotunnus estetty</string>
+    <string name="dialog_title_incoming_url">Avaa %1$s</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="message_blocked_domain">Estetty %1$s</string>
     <string name="dialog_delete_all_downloads">Poista kaikki lataukset</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Työkalut</string>
@@ -502,9 +502,9 @@
     <string name="session_already_exists">A session with that name already exists!</string>
     <string name="session_cant_delete_current">Can\'t delete current session!</string>
     <string name="session_prompt_confirm_deletion_title">Vahvista poisto</string>
-    <string name="session_prompt_confirm_deletion_message">Haluatko varmasti poistaa tämän istunnon?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Haluatko varmasti poistaa tämän määrityksen?</string>
-    <string name="session_switched">Istunto vaihdettu</string>
+    <string name="session_prompt_confirm_deletion_message">Haluatko varmasti poistaa istunnon \"%s\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Haluatko varmasti poistaa määrityksen \"%s\"?</string>
+    <string name="session_switched">Vaihdettu istuntoon \"%s\"</string>
     <string name="busy">Varattu</string>
     <string name="invalid_character_removed">Virheellinen merkki poistettu</string>
     <string name="invalid_characters_removed">Virheelliset merkit poistettu</string>
@@ -545,8 +545,8 @@
     <string name="pref_category_summary_session_export">Valitse vietävä istunto</string>
     <string name="error_session_file_corrupted">Virhe: vioittunut istuntotiedosto!</string>
     <string name="error_recovery_session">Virhe: palautusistunto luotu!</string>
-    <string name="message_session_imported">Istunto tuotu:</string>
-    <string name="message_session_exported">Istunto viety:</string>
+    <string name="message_session_imported">Tuotu istunto: %s</string>
+    <string name="message_session_exported">Viety istunto: %s</string>
     <string name="force_zoom_summary">Ei toimi jos JavaScript ei ole käytössä</string>
     <string name="force_zoom">Pakota zoomaus verkkosivustoille</string>
     <string name="algorithm">Algoritmi:</string>

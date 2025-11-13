@@ -1077,15 +1077,17 @@ for lang_dir in sorted(lang_dirs):
                     lang_issues.append(f"    EN: '{english_value}'")
                     lang_issues.append(f"    TR: '{translated_value}'")
 
-            # Check 2: Placeholder consistency
+            # Check 2: Placeholder consistency - CRITICAL!
             # Match patterns: %s, %d, %1$s, %2$d, {placeholders}, <xliff:g>...</xliff:g>
+            # Placeholder mismatches can cause app crashes at runtime
             english_placeholders = re.findall(r'%\d*\$?[sdif]|\{[^}]+\}|<xliff:g[^>]*>.*?</xliff:g>', english_value)
             trans_placeholders = re.findall(r'%\d*\$?[sdif]|\{[^}]+\}|<xliff:g[^>]*>.*?</xliff:g>', translated_value)
 
             if len(english_placeholders) != len(trans_placeholders):
-                lang_issues.append(f"  Placeholder mismatch: {string_name}")
+                lang_issues.append(f"  [CRITICAL] Placeholder mismatch: {string_name}")
                 lang_issues.append(f"    English: {english_placeholders}")
                 lang_issues.append(f"    Translation: {trans_placeholders}")
+                lang_issues.append(f"    WARNING: This WILL cause app crashes!")
 
     # Check plurals
     for plurals_name, english_quantities in english_plurals.items():
@@ -1127,7 +1129,13 @@ if issues_found:
 
         for lang_name in sorted(issues_found.keys()):
             issues = issues_found[lang_name]
-            print(f"\n{lang_name} ({len(issues)} issues):")
+            # Count critical (placeholder) issues
+            critical_count = sum(1 for issue in issues if 'CRITICAL' in issue)
+
+            if critical_count > 0:
+                print(f"\n{lang_name} ({len(issues)} issues, {critical_count} CRITICAL):")
+            else:
+                print(f"\n{lang_name} ({len(issues)} issues):")
 
             # If specific language requested, show all issues; otherwise show first 20
             if show_all_for_lang:
@@ -1144,12 +1152,19 @@ else:
         print("\nNo translation quality issues detected!")
         print("All translations appear to be properly localized.")
 
+# Count total critical issues across all languages
+total_critical = 0
+for issues in issues_found.values():
+    total_critical += sum(1 for issue in issues if 'CRITICAL' in issue)
+
 print("\n" + "="*80)
 print("SUMMARY")
 print("="*80)
 print(f"Languages checked: {len(lang_dirs)}")
 print(f"Languages with potential issues: {len(issues_found)}")
 print(f"Languages with clean translations: {len(lang_dirs) - len(issues_found)}")
+if total_critical > 0:
+    print(f"\n*** CRITICAL ISSUES FOUND: {total_critical} placeholder mismatches that WILL cause crashes! ***")
 print("\nNote: Some 'untranslated' strings may be intentional (proper nouns, etc.)")
 print("\nUsage:")
 print("  python l10n.py --check                   # Check all languages")

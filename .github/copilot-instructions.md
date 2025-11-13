@@ -37,17 +37,19 @@ The L10N.md file contains everything you need:
 
 ## Critical Reminders
 
-⚠️ **Always use PowerShell syntax** - This is a Windows project!
+**Always use PowerShell syntax** - This is a Windows project!
 
-⚠️ **Work in batches** - Translate 10-20 strings at a time for efficiency
+**Work in batches** - Translate 10-20 strings at a time for efficiency
 
-⚠️ **Check command output for errors** - Look for `[ERROR]` vs `[OK]` messages
+**Check command output for errors** - Look for `[ERROR]` vs `[OK]` messages
 
-⚠️ **Don't spawn new terminal windows** - Run commands in the existing terminal session
+**CRITICAL: Placeholder mismatches cause app crashes!** - The `--check` command automatically validates placeholder consistency. Look for `[CRITICAL]` issues and fix them immediately.
 
-⚠️ **Never add strings during translation** - If a string doesn't exist, STOP and report the issue to the user
+**Don't spawn new terminal windows** - Run commands in the existing terminal session
 
-⚠️ **Read L10N.md first** - All technical details are documented there
+**Never add strings during translation** - If a string doesn't exist, STOP and report the issue to the user
+
+**Read L10N.md first** - All technical details are documented there
 
 ## PowerShell String Quoting Guide
 

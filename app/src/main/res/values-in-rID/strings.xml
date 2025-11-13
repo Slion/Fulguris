@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Ubah nama folder</string>
     <string name="dialog_remove_folder">Hapus folder</string>
     <string name="dialog_title_close_browser">Tutup browser</string>
-    <string name="dialog_title_incoming_url">Buka %1</string>
-    <string name="dialog_message_incoming_url">%1\n\n%2</string>
-    <string name="message_blocked_domain">Diblokir %1</string>
+    <string name="dialog_title_incoming_url">Buka %1$s</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="message_blocked_domain">Diblokir %1$s</string>
     <string name="dialog_delete_all_downloads">Hapus semua unduhan</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Peralatan Halaman</string>

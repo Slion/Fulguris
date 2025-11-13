@@ -407,9 +407,9 @@
     <string name="dialog_rename_folder">Döp om mapp</string>
     <string name="dialog_remove_folder">Ta bort mapp</string>
     <string name="dialog_title_close_browser">Stäng webbläsaren</string>
-    <string name="dialog_title_incoming_url">Öppna %1</string>
-    <string name="dialog_message_incoming_url">%1\n\n%2</string>
-    <string name="message_blocked_domain">Blockerade %1</string>
+    <string name="dialog_title_incoming_url">Öppna %1$s</string>
+    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="message_blocked_domain">Blockerade %1$s</string>
     <string name="dialog_delete_all_downloads">Radera alla nedladdningar</string>
     <!-- Tools dialog -->
     <string name="dialog_tools_title">Verktyg för sidan</string>
