@@ -1,0 +1,116 @@
+"""
+Generate changelog template for all supported languages and copy to clipboard.
+
+Usage:
+    python changelogs.py 239
+
+Arguments:
+    version_code: The version number to compile changelogs for (e.g., 239)
+"""
+
+import sys
+import os
+
+# Languages from publish_google_play.py
+languages = [
+    'en-US',  # English (US)
+    'cs-CZ',  # Czech
+    'da-DK',  # Danish
+    'de-DE',  # German
+    'el-GR',  # Greek
+    'es-ES',  # Spanish
+    'fi-FI',  # Finnish
+    'fr-FR',  # French
+    'hr',     # Croatian
+    'hu-HU',  # Hungarian
+    'it-IT',  # Italian
+    'ja-JP',  # Japanese
+    'ko-KR',  # Korean
+    'no-NO',  # Norwegian
+    'pl-PL',  # Polish
+    'pt-PT',  # Portuguese (Portugal)
+    'pt-BR',  # Portuguese (Brazil)
+    'ro',     # Romanian
+    'ru-RU',  # Russian
+    'sr',     # Serbian
+    'sv-SE',  # Swedish
+    'th',     # Thai
+    'tr-TR',  # Turkish
+    'zh-CN',  # Chinese (Simplified)
+    'zh-TW',  # Chinese (Traditional)
+]
+
+def generate_template(version_code):
+    """Generate the changelog template from existing files."""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    template = ""
+    found_count = 0
+    missing = []
+
+    for lang in languages:
+        changelog_file = os.path.join(script_dir, 'metadata', 'android', lang, 'changelogs', f'{version_code}.txt')
+
+        if os.path.exists(changelog_file):
+            try:
+                with open(changelog_file, 'r', encoding='utf-8') as f:
+                    content = f.read().strip()
+                template += f"<{lang}>\n{content}\n</{lang}>\n\n"
+                found_count += 1
+            except Exception as e:
+                print(f"⚠️  Error reading {lang}: {e}")
+                template += f"<{lang}>\nError reading file\n</{lang}>\n\n"
+                missing.append(lang)
+        else:
+            template += f"<{lang}>\nEnter or paste your release notes for {lang} here\n</{lang}>\n\n"
+            missing.append(lang)
+
+    return template.strip(), found_count, missing
+
+def copy_to_clipboard(text):
+    """Copy text to clipboard using PowerShell Set-Clipboard for proper UTF-8 encoding."""
+    try:
+        import subprocess
+        # Use PowerShell's Set-Clipboard which handles UTF-8 properly
+        ps_command = ['powershell', '-NoProfile', '-Command', f'Set-Clipboard -Value @\"\n{text}\n\"@']
+        subprocess.run(ps_command, check=True)
+        return True
+    except Exception as e:
+        print(f"❌ Failed to copy to clipboard: {e}")
+        # Fallback: try to save to a file
+        try:
+            with open('changelog_template.txt', 'w', encoding='utf-8') as f:
+                f.write(text)
+            print("💾 Saved to changelog_template.txt instead")
+        except:
+            pass
+        return False
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print("Usage: python changelogs.py <version_code>")
+        print("\nExample:")
+        print("  python changelogs.py 239")
+        sys.exit(1)
+
+    version_code = sys.argv[1]
+
+    print(f"📋 Compiling changelog template for version {version_code}...")
+    template, found_count, missing = generate_template(version_code)
+
+    print(f"✅ Found changelogs for {found_count}/{len(languages)} languages")
+
+    if missing:
+        print(f"⚠️  Missing changelogs for {len(missing)} languages: {', '.join(missing)}")
+
+    if copy_to_clipboard(template):
+        print("✅ Template copied to clipboard!")
+        print("\nYou can now paste it into Google Play Console's bulk changelog editor.")
+    else:
+        print("\n⚠️  Could not copy to clipboard automatically.")
+        print("\nTemplate content:")
+        print("=" * 60)
+        print(template[:500] + "..." if len(template) > 500 else template)
+        print("=" * 60)
+
+    sys.exit(0)
+
