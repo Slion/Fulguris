@@ -1,0 +1,52 @@
+Funktioner inkluderer:
+📑Sessioner
+Alle dine faner tilhører en session. Du kan have flere navngivne sessioner for at hjælpe dig med at holde fokus og være organiseret. Skift mellem sessioner er lynhurtigt. Du kan pakke hundredvis af faner i hver session.
+
+🌍 Adresselinje
+Smart adresse-, titel- og søgelinje kombineret. Du kan placere den øverst eller nederst på skærmen afhængigt af skærmorienteringen.
+
+🚦Vertikalt fanepanel
+Omarranger dine faner ved at bruge langt tryk for at trække og slippe. Stryg til højre for at flytte en fane til papirkurven. Gendan faner fra papirkurven ved hjælp af panelværktøjslinjen.
+
+🚥Horisontal fanelinje
+Meget som din klassiske pc-webbrowser. Mest nyttig når du bruger tablets og desktop-tilstande som Samsung Dex og Huawei EMUI Desktop. Du kan placere den øverst eller nederst på skærmen.
+
+⚙Fanestyring
+Som standard bør du aldrig have brug for at trykke på ny fane-knappen. Nye faner oprettes, når du søger eller indtaster adresser. Hvis du dog foretrækker at have færre faner, kan du justere disse indstillinger efter eget ønske.
+
+🏞Skærmorienteringer
+Specifikke udseende- og følelsesindstillinger for portræt og landskab, der giver optimal brug af din skærmplads. Inkluderer valgfri træk-for-at-opdatere.
+
+🔖Bogmærker
+Importer, eksporter, grupper dem i mapper og organiser dine bogmærker ved hjælp af træk og slip. Sikkerhedskopier og gendan dine bogmærker direkte fra alle Cloud-tjenester.
+
+⌚Historik
+Gennemgå de sider, du har besøgt. Ryd den når som helst.
+
+🌗Tving mørk tilstand
+Til dine sene læsesessioner kan du tvinge enhver webside til at vise i mørk tilstand.
+
+🎨Temaer
+Værktøjslinje- og statuslinje-farvetema integreres elegant med dine foretrukne websteder. Understøtter sorte, mørke og lyse temaer. Fulguris er ikke kun hurtig, sikker og effektiv, den ser også godt ud.
+
+⛔Annonceblokering
+Brug annonceblokering-definitioner fra lokale og online-filer. Understøtter hosts-filer og det meste af Adblock Plus-syntaks, så du kan bruge næsten enhver almindelig filterliste.
+
+🔒Privatliv
+Fulguris beskytter og respekterer dit privatliv. Inkognito-tilstand. Kan kassere sporingscookies. Ryd faner, historik, cookies og cache-funktioner. Administration af tredjepartsapps.
+
+🔎Søgning
+Flere søgemaskiner (Google, Bing, Yahoo, StartPage, DuckDuckGo, osv.). Find tekst på siden. Google-søgeforslag.
+
+♿Tilgængelighed
+Læsetilstand. Forskellige gengivelsestilstande: inverteret, høj kontrast, gråskala.
+
+⌨Tastaturunderstøttelse
+Tastaturgenveje og fokusstyring. Vedvarende liste over seneste faner, der muliggør faneskift ved hjælp af CTRL+TAB. Besøg vores websted for en komplet liste over tastaturgenveje.
+
+⚡Hardwareaccelereret
+Udnytter din hardwares processorkraft maksimalt.
+
+🔧Indstillinger
+Masser af indstillingsmuligheder til at finjustere din browser efter eget ønske. Dette inkluderer konfigurationsindstillinger specifikke for din skærmorientering.
+

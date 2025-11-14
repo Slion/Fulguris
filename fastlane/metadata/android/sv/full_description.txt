@@ -1,0 +1,52 @@
+Funktioner inkluderar:
+📑Sessioner
+Alla dina flikar tillhör en session. Du kan ha flera namngivna sessioner för att hjälpa dig att hålla fokus och vara organiserad. Växling mellan sessioner är blixtsnabb. Du kan packa hundratals flikar i varje session.
+
+🌍 Adressfält
+Smart adress-, titel- och sökfält kombinerat. Du kan placera det högst upp eller längst ner på skärmen beroende på skärmorientering.
+
+🚦Vertikalt flikpanel
+Ordna om dina flikar genom att använda långt tryck för att dra och släppa. Svep höger för att flytta en flik till papperskorgen. Återställ flikar från papperskorgen med hjälp av panelverktygsfältet.
+
+🚥Horisontell flikrad
+Precis som på din klassiska PC-webbläsare. Mest användbar när du använder surfplattor och skrivbordslägen som Samsung Dex och Huawei EMUI Desktop. Du kan placera den högst upp eller längst ner på skärmen.
+
+⚙Flikhantering
+Som standard bör du aldrig behöva trycka på knappen för ny flik. Nya flikar skapas när du söker eller matar in adresser. Om du dock föredrar att ha färre flikar kan du justera dessa inställningar efter eget tycke.
+
+🏞Skärmorientering
+Specifika utseende- och känsla-inställningar för stående och liggande som möjliggör optimal användning av ditt skärmutrymme. Inkluderar valfri dra-för-att-uppdatera.
+
+🔖Bokmärken
+Importera, exportera, gruppera dem i mappar och organisera dina bokmärken med dra och släpp. Säkerhetskopiera och återställ dina bokmärken direkt från vilken molntjänst som helst.
+
+⌚Historik
+Granska sidorna du besökt. Rensa den när du vill.
+
+🌗Tvinga mörkt läge
+För dina sena lässtunder kan du tvinga vilken webbsida som helst att visas i mörkt läge.
+
+🎨Teman
+Verktygsfält och statusfält färgtema integreras elegant med dina favoritwebbplatser. Stöder svarta, mörka och ljusa teman. Fulguris är inte bara snabb, säker och effektiv, den ser också bra ut.
+
+⛔Annonsblockering
+Använd annonsblockeringsdefinitioner från lokala och online-filer. Stöder hosts-filer och det mesta av Adblock Plus-syntax, så du kan använda nästan vilken vanlig filterlista som helst.
+
+🔒Integritet
+Fulguris skyddar och respekterar din integritet. Inkognitoläge. Kan slänga spårningskakor. Rensa flikar, historik, kakor och cache-funktioner. Hantering av tredjepartsappar.
+
+🔎Sökning
+Flera sökmotorer (Google, Bing, Yahoo, StartPage, DuckDuckGo, etc.). Hitta text på sidan. Google-sökförslag.
+
+♿Tillgänglighet
+Läsarläge. Olika renderingslägen: inverterat, hög kontrast, gråskala.
+
+⌨Tangentbordsstöd
+Tangentbordsgenvägar och fokushantering. Beständig lista över senaste flikar som möjliggör flikväxling med CTRL+TAB. Besök vår webbplats för en komplett lista över tangentbordsgenvägar.
+
+⚡Hårdvaruaccelererad
+Utnyttjar din hårdvaras processorkraft maximalt.
+
+🔧Inställningar
+Massor av inställningsalternativ för att finjustera din webbläsare efter eget tycke. Detta inkluderar konfigurationsinställningar specifika för din skärmorientering.
+

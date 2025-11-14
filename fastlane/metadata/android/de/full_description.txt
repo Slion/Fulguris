@@ -1,0 +1,52 @@
+Funktionen umfassen:
+📑Sitzungen
+Alle Ihre Tabs gehören zu einer Sitzung. Sie können mehrere benannte Sitzungen haben, um fokussiert und organisiert zu bleiben. Der Wechsel zwischen Sitzungen ist blitzschnell. Sie können Hunderte von Tabs in jeder Sitzung unterbringen.
+
+🌍 Adressleiste
+Intelligente Adress-, Titel- und Suchleiste kombiniert. Sie können sie je nach Bildschirmorientierung oben oder unten auf Ihrem Bildschirm platzieren.
+
+🚦Vertikales Tab-Panel
+Ordnen Sie Ihre Tabs neu, indem Sie lange drücken, um sie per Drag & Drop zu verschieben. Wischen Sie nach rechts, um einen Tab in den Papierkorb zu verschieben. Stellen Sie Tabs aus dem Papierkorb mithilfe der Panel-Symbolleiste wieder her.
+
+🚥Horizontale Tab-Leiste
+Ähnlich wie bei Ihrem klassischen PC-Webbrowser. Am nützlichsten bei Verwendung von Tablets und Desktop-Modi wie Samsung Dex und Huawei EMUI Desktop. Sie können sie oben oder unten auf Ihrem Bildschirm platzieren.
+
+⚙Tab-Verwaltung
+Standardmäßig sollten Sie nie die Schaltfläche für neue Tabs drücken müssen. Neue Tabs werden erstellt, wenn Sie suchen oder Adressen eingeben. Wenn Sie jedoch weniger Tabs haben möchten, können Sie diese Einstellungen nach Ihren Wünschen anpassen.
+
+🏞Bildschirmorientierungen
+Spezifische Look-and-Feel-Einstellungen für Hoch- und Querformat ermöglichen eine optimale Nutzung Ihrer Bildschirmfläche. Enthält optionales Pull-to-Refresh.
+
+🔖Lesezeichen
+Importieren, exportieren, gruppieren Sie sie in Ordnern und organisieren Sie Ihre Lesezeichen per Drag & Drop. Sichern und stellen Sie Ihre Lesezeichen direkt von Cloud-Diensten wieder her.
+
+⌚Verlauf
+Überprüfen Sie die besuchten Seiten. Löschen Sie ihn jederzeit.
+
+🌗Dunklen Modus erzwingen
+Für Ihre späten Lesesitzungen können Sie jede Webseite zwingen, im dunklen Modus angezeigt zu werden.
+
+🎨Themen
+Symbolleisten- und Statusleisten-Farbthema integriert sich elegant in Ihre Lieblingswebsites. Unterstützt schwarze, dunkle und helle Themen. Fulguris ist nicht nur schnell, sicher und effizient, es sieht auch gut aus.
+
+⛔Werbeblocker
+Verwenden Sie Werbeblocker-Definitionen aus lokalen und Online-Dateien. Unterstützt Hosts-Dateien und die meiste Adblock Plus-Syntax, sodass Sie fast jede gängige Filterliste verwenden können.
+
+🔒Datenschutz
+Fulguris schützt und respektiert Ihre Privatsphäre. Inkognito-Modus. Kann Tracking-Cookies verwerfen. Tabs, Verlauf, Cookies und Caches löschen. Verwaltung von Drittanbieter-Apps.
+
+🔎Suche
+Mehrere Suchmaschinen (Google, Bing, Yahoo, StartPage, DuckDuckGo, etc.). Text auf der Seite finden. Google-Suchvorschläge.
+
+♿Barrierefreiheit
+Lesemodus. Verschiedene Rendering-Modi: invertiert, hoher Kontrast, Graustufen.
+
+⌨Tastaturunterstützung
+Tastaturkürzel und Fokusverwaltung. Dauerhafte Liste zuletzt verwendeter Tabs ermöglicht Tab-Wechsel mit STRG+TAB. Besuchen Sie unsere Website für eine vollständige Liste der Tastaturkürzel.
+
+⚡Hardware-beschleunigt
+Nutzt die Verarbeitungsleistung Ihrer Hardware optimal aus.
+
+🔧Einstellungen
+Viele Einstellungsoptionen, um Ihren Browser nach Ihren Wünschen fein abzustimmen. Dies umfasst konfigurationsspezifische Einstellungen für Ihre Bildschirmorientierung.
+

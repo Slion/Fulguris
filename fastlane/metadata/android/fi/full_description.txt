@@ -1,0 +1,52 @@
+Ominaisuuksiin kuuluvat:
+📑Istunnot
+Kaikki välilehdet kuuluvat istuntoon. Voit luoda useita nimettyjä istuntoja pysyäksesi keskittyneenä ja järjestyneenä. Istuntojen välillä vaihtaminen on salamannopea. Voit pakata satoja välilehtiä jokaiseen istuntoon.
+
+🌍 Osoitepalkki
+Älykäs osoite-, otsikko- ja hakupalkki yhdistettynä. Voit sijoittaa sen näytön ylä- tai alareunaan näytön suunnan mukaan.
+
+🚦Pystysuora välilehtipaneeli
+Järjestä välilehdet uudelleen käyttämällä pitkää painallusta vetämiseen ja pudottamiseen. Pyyhkäise oikealle siirtääksesi välilehden roskakoriin. Palauta välilehdet roskakorista paneelin työkalupalkin avulla.
+
+🚥Vaakasuora välilehtipalkki
+Aivan kuin klassisessa PC-selaimessa. Hyödyllisintä tablettien ja työpöytätilojen, kuten Samsung Dexin ja Huawei EMUI Desktopin, käytössä. Voit sijoittaa sen näytön ylä- tai alareunaan.
+
+⚙Välilehtien hallinta
+Oletuksena sinun ei pitäisi koskaan joutua painamaan uusi välilehti -painiketta. Uusia välilehtiä luodaan, kun teet hakuja tai syötät osoitteita. Jos kuitenkin haluat vähemmän välilehtiä, voit säätää näitä asetuksia mieltymystesi mukaan.
+
+🏞Näytön suunnat
+Erityiset ulkoasu- ja käyttötuntuma-asetukset pysty- ja vaakasuuntaukselle optimaalisen näyttötilan käytön mahdollistamiseksi. Sisältää valinnaisen vedä päivittääksesi -toiminnon.
+
+🔖Kirjanmerkit
+Tuo, vie, ryhmittele ne kansioihin ja järjestä kirjanmerkkisi vetämällä ja pudottamalla. Varmuuskopioi ja palauta kirjanmerkit suoraan mistä tahansa pilvipalvelusta.
+
+⌚Historia
+Tarkista vierailemasi sivut. Tyhjennä se milloin haluat.
+
+🌗Pakota tumma tila
+Myöhäisillä lukuhetkillä voit pakottaa minkä tahansa verkkosivun näyttämään tumman tilan.
+
+🎨Teemat
+Työkalupalkki- ja tilapalkki-väriteema integroituu tyylikkäästi suosikkisivustoihisi. Tukee mustia, tummia ja vaaleita teemoja. Fulguris ei ole vain nopea, turvallinen ja tehokas, se näyttää myös hyvältä.
+
+⛔Mainosten esto
+Käytä mainosten eston määritelmiä paikallisista ja online-tiedostoista. Tukee hosts-tiedostoja ja suurinta osaa Adblock Plus -syntaksista, joten voit käyttää lähes mitä tahansa yleistä suodatinlistaa.
+
+🔒Yksityisyys
+Fulguris suojaa ja kunnioittaa yksityisyyttäsi. Incognito-tila. Voi hylätä seurantaevästeet. Tyhjennä välilehdet, historia, evästeet ja välimuistit. Kolmannen osapuolen sovellusten hallinta.
+
+🔎Haku
+Useita hakukoneita (Google, Bing, Yahoo, StartPage, DuckDuckGo jne.). Etsi tekstiä sivulta. Googlen hakuehdotukset.
+
+♿Esteettömyys
+Lukutila. Erilaisia renderöintitiloja: käänteinen, korkea kontrasti, harmaasävy.
+
+⌨Näppäimistötuki
+Pikanäppäimet ja kohdistuksen hallinta. Pysyvä viimeaikaisista välilehdistä koostuva lista mahdollistaa välilehtien vaihdon CTRL+TAB:lla. Vieraile verkkosivustollamme saadaksesi täydellisen luettelon pikanäppäimistä.
+
+⚡Laitteistokiihdytetty
+Hyödyntää laitteistosi prosessointitehoa maksimaalises ti.
+
+🔧Asetukset
+Paljon asetuksia selaimen hienosäätämiseksi mieltymystesi mukaan. Tämä sisältää näytön suuntaan liittyvät kokoonpanoasetukset.
+

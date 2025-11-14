@@ -1,0 +1,52 @@
+A funkciók a következők:
+📑Munkamenetek
+Minden lap egy munkamenethez tartozik. Több elnevezett munkamenet is lehet, hogy fókuszált és szervezett maradj. A munkamenetek közötti váltás villámgyors. Több száz lapot is elhelyezhetsz minden munkamenetben.
+
+🌍 Címsáv
+Intelligens cím-, címsor- és keresősáv kombinálva. A képernyő felső vagy alsó részére helyezheted a képernyő tájolásától függően.
+
+🚦Függőleges lappanel
+Rendezd át a lapokat hosszú érintéssel húzással és ejtéssel. Pöccints jobbra, hogy egy lapot a kukába mozgass. Állítsd vissza a lapokat a kukából a panel eszköztár használatával.
+
+🚥Vízszintes lapsáv
+Akárcsak a klasszikus PC webböngészőben. Leghasznosabb táblagépek és asztali módok, mint a Samsung Dex és Huawei EMUI Desktop használatakor. A képernyő felső vagy alsó részére helyezheted.
+
+⚙Lapkezelés
+Alapértelmezés szerint soha nem kell megnyomnod az új lap gombot. Új lapok jönnek létre, amikor keresel vagy címeket írsz be. Ha azonban kevesebb lapot szeretnél, ezeket a beállításokat kedved szerint állíthatod.
+
+🏞Képernyő tájolások
+Specifikus megjelenési és viselkedési beállítások álló és fekvő módhoz, amelyek lehetővé teszik a képernyő terület optimális használatát. Opcionális lehúzással frissítést tartalmaz.
+
+🔖Könyvjelzők
+Importálj, exportálj, csoportosítsd őket mappákba és rendezd a könyvjelzőidet húzással és ejtéssel. Mentsd el és állítsd vissza a könyvjelzőidet közvetlenül bármely felhőszolgáltatásról.
+
+⌚Előzmények
+Nézd át a meglátogatott oldalakat. Töröld bármikor.
+
+🌗Sötét mód kényszerítése
+Késő éjszakai olvasási munkameneteidhez bármely weboldalt kényszeríthetsz sötét módban megjeleníteni.
+
+🎨Témák
+Az eszköztár és állapotsáv színtémája elegánsan integrálódik kedvenc weboldalaidba. Támogatja a fekete, sötét és világos témákat. A Fulguris nemcsak gyors, biztonságos és hatékony, hanem jól is néz ki.
+
+⛔Hirdetésblokkoló
+Használj hirdetésblokkolási definíciókat helyi és online fájlokból. Támogatja a hosts fájlokat és az Adblock Plus szintaxis nagy részét, így szinte bármilyen gyakori szűrőlistát használhatsz.
+
+🔒Adatvédelem
+A Fulguris védi és tiszteletben tartja az adatvédelmedet. Inkognitó mód. Eldobhatja a követési cookie-kat. Lapok, előzmények, cookie-k és gyorsítótár törlési funkciók. Harmadik féltől származó alkalmazások kezelése.
+
+🔎Keresés
+Több keresőmotor (Google, Bing, Yahoo, StartPage, DuckDuckGo stb.). Szöveg keresése az oldalon. Google keresési javaslatok.
+
+♿Akadálymentesség
+Olvasó mód. Különböző megjelenítési módok: fordított, nagy kontraszt, szürkeárnyalatos.
+
+⌨Billentyűzet támogatás
+Billentyűparancsok és fókuszkezelés. Állandó legutóbbi lapok lista, amely lehetővé teszi a lapok közötti váltást CTRL+TAB használatával. Látogass el weboldalunkra a billentyűparancsok teljes listájáért.
+
+⚡Hardveres gyorsítás
+Maximálisan kihasználja a hardvered feldolgozási erejét.
+
+🔧Beállítások
+Rengeteg beállítási lehetőség a böngésző finomhangolásához kedved szerint. Ez magában foglalja a képernyő tájolásra specifikus konfigurációs beállításokat.
+

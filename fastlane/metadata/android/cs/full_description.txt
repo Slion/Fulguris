@@ -1,0 +1,52 @@
+Funkce zahrnují:
+📑Relace
+Všechny vaše karty patří do relace. Můžete mít několik pojmenovaných relací, které vám pomohou zůstat soustředěni a organizováni. Přepínání mezi relacemi je bleskově rychlé. Do každé relace můžete vložit stovky karet.
+
+🌍 Adresní řádek
+Inteligentní kombinace adresního, titulkového a vyhledávacího řádku. Můžete jej umístit v horní nebo dolní části obrazovky v závislosti na orientaci obrazovky.
+
+🚦Svislý panel karet
+Přeuspořádejte své karty dlouhým stisknutím pro přetažení. Přejetím doprava přesunete kartu do koše. Obnovte karty z koše pomocí panelu nástrojů.
+
+🚥Vodorovný řádek karet
+Podobně jako ve vašem klasickém webovém prohlížeči na PC. Nejužitečnější při používání tabletů a desktopových režimů, jako jsou Samsung Dex a Huawei EMUI Desktop. Můžete jej umístit v horní nebo dolní části obrazovky.
+
+⚙Správa karet
+Ve výchozím nastavení byste nikdy neměli muset stisknout tlačítko nové karty. Nové karty se vytvoří, když vyhledáváte nebo zadáváte adresy. Pokud však dáváte přednost méně kartám, můžete tato nastavení upravit podle svých preferencí.
+
+🏞Orientace obrazovky
+Specifická nastavení vzhledu a chování pro na výšku a na šířku umožňující optimální využití obrazovkového prostoru. Zahrnuje volitelné stažení pro obnovení.
+
+🔖Záložky
+Importujte, exportujte, seskupujte je do složek a organizujte své záložky pomocí přetažení. Zálohujte a obnovujte své záložky přímo z jakékoli cloudové služby.
+
+⌚Historie
+Zkontrolujte stránky, které jste navštívili. Vymažte ji, kdykoli chcete.
+
+🌗Vynutit tmavý režim
+Pro vaše pozdní noční čtení můžete vynutit zobrazení jakékoli webové stránky v tmavém režimu.
+
+🎨Motivy
+Barevný motiv panelu nástrojů a stavového řádku se elegantně integruje s vašimi oblíbenými webovými stránkami. Podporuje černé, tmavé a světlé motivy. Fulguris není jen rychlý, bezpečný a efektivní, také dobře vypadá.
+
+⛔Blokování reklam
+Používejte definice blokování reklam z místních a online souborů. Podporuje soubory hosts a většinu syntaxe Adblock Plus, takže můžete používat téměř jakýkoli běžný seznam filtrů.
+
+🔒Soukromí
+Fulguris chrání a respektuje vaše soukromí. Režim inkognito. Může zahodit sledovací cookies. Funkce mazání karet, historie, cookies a cache. Správa aplikací třetích stran.
+
+🔎Vyhledávání
+Několik vyhledávačů (Google, Bing, Yahoo, StartPage, DuckDuckGo atd.). Najděte text na stránce. Návrhy vyhledávání Google.
+
+♿Přístupnost
+Režim čtečky. Různé režimy vykreslování: invertovaný, vysoký kontrast, stupně šedi.
+
+⌨Podpora klávesnice
+Klávesové zkratky a správa zaměření. Trvalý seznam nedávných karet umožňující přepínání karet pomocí CTRL+TAB. Navštivte naši webovou stránku pro kompletní seznam klávesových zkratek.
+
+⚡Hardwarová akcelerace
+Maximálně využívá výpočetní výkon vašeho hardwaru.
+
+🔧Nastavení
+Mnoho možností nastavení pro doladění prohlížeče podle vašich preferencí. To zahrnuje nastavení konfigurace specifická pro orientaci obrazovky.
+

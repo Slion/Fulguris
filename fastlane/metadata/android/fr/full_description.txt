@@ -1,0 +1,52 @@
+Les fonctionnalités incluent :
+📑Sessions
+Tous vos onglets appartiennent à une session. Vous pouvez avoir plusieurs sessions nommées pour vous aider à rester concentré et organisé. Le basculement entre les sessions est ultra-rapide. Vous pouvez mettre des centaines d'onglets dans chaque session.
+
+🌍 Barre d'adresse
+Barre intelligente combinant adresse, titre et recherche. Vous pouvez la placer en haut ou en bas de votre écran selon l'orientation de l'écran.
+
+🚦Panneau d'onglets vertical
+Réorganisez vos onglets en utilisant un appui long pour glisser-déposer. Balayez vers la droite pour déplacer un onglet vers la corbeille. Récupérez les onglets de la corbeille à l'aide de la barre d'outils du panneau.
+
+🚥Barre d'onglets horizontale
+Similaire à votre navigateur web PC classique. Plus utile lors de l'utilisation de tablettes et de modes bureau comme Samsung Dex et Huawei EMUI Desktop. Vous pouvez la placer en haut ou en bas de votre écran.
+
+⚙Gestion des onglets
+Par défaut, vous ne devriez jamais avoir besoin d'appuyer sur le bouton nouvel onglet. De nouveaux onglets sont créés lorsque vous effectuez des recherches ou saisissez des adresses. Cependant, si vous préférez avoir moins d'onglets, vous pouvez ajuster ces paramètres à votre convenance.
+
+🏞Orientations d'écran
+Paramètres d'apparence spécifiques pour portrait et paysage permettant une utilisation optimale de votre espace d'écran. Inclut un tirer-pour-actualiser optionnel.
+
+🔖Favoris
+Importez, exportez, regroupez-les dans des dossiers et organisez vos favoris par glisser-déposer. Sauvegardez et restaurez vos favoris directement depuis n'importe quel service Cloud.
+
+⌚Historique
+Consultez les pages que vous avez visitées. Effacez-le quand vous voulez.
+
+🌗Forcer le mode sombre
+Pour vos sessions de lecture tard le soir, vous pouvez forcer n'importe quelle page web à s'afficher en mode sombre.
+
+🎨Thèmes
+Le thème de couleur de la barre d'outils et de la barre d'état s'intègre élégamment avec vos sites web préférés. Prend en charge les thèmes noir, sombre et clair. Fulguris n'est pas seulement rapide, sécurisé et efficace, il est aussi beau.
+
+⛔Bloqueur de publicités
+Utilisez des définitions de blocage de publicités à partir de fichiers locaux et en ligne. Prend en charge les fichiers hosts et la plupart de la syntaxe Adblock Plus, vous pouvez donc utiliser presque n'importe quelle liste de filtres courante.
+
+🔒Confidentialité
+Fulguris protège et respecte votre vie privée. Mode incognito. Peut rejeter les cookies de suivi. Fonctionnalités d'effacement des onglets, historique, cookies et caches. Gestion des applications tierces.
+
+🔎Recherche
+Plusieurs moteurs de recherche (Google, Bing, Yahoo, StartPage, DuckDuckGo, etc.). Rechercher du texte dans la page. Suggestions de recherche Google.
+
+♿Accessibilité
+Mode lecteur. Divers modes de rendu : inversé, contraste élevé, niveaux de gris.
+
+⌨Prise en charge du clavier
+Raccourcis clavier et gestion du focus. Liste persistante des onglets récents permettant le changement d'onglets avec CTRL+TAB. Visitez notre site web pour une liste complète des raccourcis clavier.
+
+⚡Accélération matérielle
+Tire le meilleur parti de la puissance de traitement de votre matériel.
+
+🔧Paramètres
+De nombreuses options de paramètres pour affiner votre navigateur à votre goût. Cela inclut des paramètres de configuration spécifiques à l'orientation de votre écran.
+

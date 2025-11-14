@@ -1,0 +1,52 @@
+Os recursos incluem:
+📑Sessões
+Todas as suas abas pertencem a uma sessão. Você pode ter várias sessões nomeadas para ajudá-lo a se manter focado e organizado. Alternar entre sessões é extremamente rápido. Você pode ter centenas de abas em cada sessão.
+
+🌍 Barra de endereços
+Barra inteligente combinada de endereço, título e pesquisa. Você pode colocá-la no topo ou na parte inferior da tela, dependendo da orientação da tela.
+
+🚦Painel de abas vertical
+Reorganize suas abas usando toque longo para arrastar e soltar. Deslize para a direita para mover uma aba para a lixeira. Recupere abas da lixeira usando a barra de ferramentas do painel.
+
+🚥Barra de abas horizontal
+Semelhante ao seu navegador web clássico de PC. Mais útil ao usar tablets e modos desktop como Samsung Dex e Huawei EMUI Desktop. Você pode colocá-la no topo ou na parte inferior da tela.
+
+⚙Gerenciamento de abas
+Por padrão, você nunca deve precisar pressionar o botão de nova aba. Novas abas são criadas quando você faz pesquisas ou digita endereços. No entanto, se você preferir ter menos abas, pode ajustar essas configurações ao seu gosto.
+
+🏞Orientações de tela
+Configurações específicas de aparência para retrato e paisagem permitindo uso ideal do espaço da tela. Inclui puxar para atualizar opcional.
+
+🔖Favoritos
+Importe, exporte, agrupe-os em pastas e organize seus favoritos usando arrastar e soltar. Faça backup e restaure seus favoritos diretamente de qualquer serviço de nuvem.
+
+⌚Histórico
+Revise as páginas que você visitou. Limpe-o quando quiser.
+
+🌗Forçar modo escuro
+Para suas sessões de leitura noturnas, você pode forçar qualquer página web a exibir em modo escuro.
+
+🎨Temas
+O tema de cor da barra de ferramentas e barra de status se integra elegantemente com seus sites favoritos. Suporta temas preto, escuro e claro. Fulguris não é apenas rápido, seguro e eficiente, também tem boa aparência.
+
+⛔Bloqueador de anúncios
+Use definições de bloqueio de anúncios de arquivos locais e online. Suporta arquivos hosts e a maioria da sintaxe do Adblock Plus, para que você possa usar quase qualquer lista de filtros comum.
+
+🔒Privacidade
+Fulguris protege e respeita sua privacidade. Modo incógnito. Pode descartar cookies de rastreamento. Funcionalidades de limpeza de abas, histórico, cookies e caches. Gerenciamento de aplicativos de terceiros.
+
+🔎Pesquisa
+Vários mecanismos de pesquisa (Google, Bing, Yahoo, StartPage, DuckDuckGo, etc.). Encontrar texto na página. Sugestões de pesquisa do Google.
+
+♿Acessibilidade
+Modo de leitura. Vários modos de renderização: invertido, alto contraste, escala de cinza.
+
+⌨Suporte a teclado
+Atalhos de teclado e gerenciamento de foco. Lista persistente de abas recentes permitindo troca de abas usando CTRL+TAB. Visite nosso site para uma lista completa de atalhos de teclado.
+
+⚡Aceleração por hardware
+Aproveita ao máximo o poder de processamento do seu hardware.
+
+🔧Configurações
+Muitas opções de configurações para ajustar seu navegador ao seu gosto. Isso inclui configurações específicas para a orientação da sua tela.
+

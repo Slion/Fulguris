@@ -1,0 +1,52 @@
+As funcionalidades incluem:
+📑Sessões
+Todos os seus separadores pertencem a uma sessão. Pode ter várias sessões com nome para o ajudar a manter-se focado e organizado. Alternar entre sessões é extremamente rápido. Pode ter centenas de separadores em cada sessão.
+
+🌍 Barra de endereços
+Barra inteligente combinada de endereço, título e pesquisa. Pode colocá-la no topo ou na parte inferior do ecrã, dependendo da orientação do ecrã.
+
+🚦Painel de separadores vertical
+Reorganize os seus separadores usando toque longo para arrastar e soltar. Deslize para a direita para mover um separador para o lixo. Recupere separadores do lixo usando a barra de ferramentas do painel.
+
+🚥Barra de separadores horizontal
+Semelhante ao seu navegador web clássico de PC. Mais útil ao usar tablets e modos desktop como Samsung Dex e Huawei EMUI Desktop. Pode colocá-la no topo ou na parte inferior do ecrã.
+
+⚙Gestão de separadores
+Por predefinição, nunca deve precisar de premir o botão de novo separador. Novos separadores são criados quando faz pesquisas ou digita endereços. No entanto, se preferir ter menos separadores, pode ajustar estas definições ao seu gosto.
+
+🏞Orientações de ecrã
+Definições específicas de aparência para retrato e paisagem permitindo uso ideal do espaço do ecrã. Inclui puxar para atualizar opcional.
+
+🔖Favoritos
+Importe, exporte, agrupe-os em pastas e organize os seus favoritos usando arrastar e soltar. Faça backup e restaure os seus favoritos diretamente de qualquer serviço de nuvem.
+
+⌚Histórico
+Reveja as páginas que visitou. Limpe-o quando quiser.
+
+🌗Forçar modo escuro
+Para as suas sessões de leitura noturnas, pode forçar qualquer página web a exibir em modo escuro.
+
+🎨Temas
+O tema de cor da barra de ferramentas e barra de estado integra-se elegantemente com os seus sites favoritos. Suporta temas preto, escuro e claro. Fulguris não é apenas rápido, seguro e eficiente, também tem boa aparência.
+
+⛔Bloqueador de anúncios
+Use definições de bloqueio de anúncios de ficheiros locais e online. Suporta ficheiros hosts e a maioria da sintaxe do Adblock Plus, para que possa usar quase qualquer lista de filtros comum.
+
+🔒Privacidade
+Fulguris protege e respeita a sua privacidade. Modo de navegação anónima. Pode descartar cookies de rastreamento. Funcionalidades de limpeza de separadores, histórico, cookies e caches. Gestão de aplicações de terceiros.
+
+🔎Pesquisa
+Vários motores de pesquisa (Google, Bing, Yahoo, StartPage, DuckDuckGo, etc.). Encontrar texto na página. Sugestões de pesquisa do Google.
+
+♿Acessibilidade
+Modo de leitura. Vários modos de renderização: invertido, alto contraste, escala de cinza.
+
+⌨Suporte a teclado
+Atalhos de teclado e gestão de foco. Lista persistente de separadores recentes permitindo troca de separadores usando CTRL+TAB. Visite o nosso site para uma lista completa de atalhos de teclado.
+
+⚡Aceleração por hardware
+Aproveita ao máximo o poder de processamento do seu hardware.
+
+🔧Definições
+Muitas opções de definições para ajustar o seu navegador ao seu gosto. Isso inclui definições específicas para a orientação do seu ecrã.
+

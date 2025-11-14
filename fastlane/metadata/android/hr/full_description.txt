@@ -1,0 +1,52 @@
+Značajke uključuju:
+📑Sesije
+Sve vaše kartice pripadaju sesiji. Možete imati više imenovanih sesija koje vam pomažu ostati fokusirani i organizirani. Prebacivanje između sesija je munjevito brzo. Možete staviti stotine kartica u svaku sesiju.
+
+🌍 Adresna traka
+Pametna adresna traka, naslov i traka za pretraživanje kombinirano. Možete je postaviti na vrh ili dno ekrana ovisno o orijentaciji ekrana.
+
+🚦Okomita ploča kartica
+Promijenite redoslijed kartica dugim dodirom za povlačenje i ispuštanje. Povucite udesno da biste premjestili karticu u smeće. Vratite kartice iz smeća pomoću alatne trake ploče.
+
+🚥Vodoravna traka kartica
+Slično kao na vašem klasičnom PC web pregledniku. Najkorisnije pri korištenju tableta i desktop načina rada poput Samsung Dex i Huawei EMUI Desktop. Možete je postaviti na vrh ili dno ekrana.
+
+⚙Upravljanje karticama
+Prema zadanim postavkama nikada ne biste trebali pritisnuti gumb za novu karticu. Nove kartice se stvaraju kada pretražujete ili unosite adrese. Međutim, ako preferirate imati manje kartica, možete prilagoditi ove postavke po svom ukusu.
+
+🏞Orijentacije ekrana
+Specifične postavke izgleda i osjećaja za portret i pejzaž omogućavajući optimalno korištenje prostora ekrana. Uključuje opcionalno povlačenje za osvježavanje.
+
+🔖Oznake
+Uvezite, izvezite, grupirajte ih u mape i organizirajte svoje oznake pomoću povlačenja i ispuštanja. Izradite sigurnosnu kopiju i vratite svoje oznake izravno iz bilo koje usluge oblaka.
+
+⌚Povijest
+Pregledajte stranice koje ste posjetili. Obrišite je kada god želite.
+
+🌗Prisilni tamni način
+Za vaše kasne noćne sesije čitanja možete prisiliti bilo koju web stranicu da se prikaže u tamnom načinu rada.
+
+🎨Teme
+Tema boje alatne trake i trake stanja elegantno se integrira s vašim omiljenim web stranicama. Podržava crne, tamne i svjetle teme. Fulguris nije samo brz, siguran i učinkovit, također dobro izgleda.
+
+⛔Blokator oglasa
+Koristite definicije blokiranja oglasa iz lokalnih i online datoteka. Podržava hosts datoteke i većinu Adblock Plus sintakse, tako da možete koristiti gotovo bilo koju uobičajenu listu filtera.
+
+🔒Privatnost
+Fulguris štiti i poštuje vašu privatnost. Inkognito način rada. Može odbaciti kolačiće za praćenje. Funkcionalnosti čišćenja kartica, povijesti, kolačića i predmemorije. Upravljanje aplikacijama trećih strana.
+
+🔎Pretraživanje
+Više tražilica (Google, Bing, Yahoo, StartPage, DuckDuckGo, itd.). Pronađite tekst na stranici. Google prijedlozi pretraživanja.
+
+♿Pristupačnost
+Način čitača. Različiti načini prikazivanja: invertirano, visoki kontrast, siva skala.
+
+⌨Podrška za tipkovnicu
+Prečaci tipkovnice i upravljanje fokusom. Trajna lista nedavnih kartica koja omogućava prebacivanje kartica pomoću CTRL+TAB. Posjetite našu web stranicu za potpuni popis prečaca tipkovnice.
+
+⚡Hardverski ubrzano
+Maksimalno koristi procesorsku snagu vašeg hardvera.
+
+🔧Postavke
+Mnogo opcija postavki za fino podešavanje vašeg preglednika po vašoj želji. To uključuje konfiguracijske postavke specifične za orijentaciju vašeg ekrana.
+

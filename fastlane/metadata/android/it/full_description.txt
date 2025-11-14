@@ -1,0 +1,52 @@
+Le funzionalità includono:
+📑Sessioni
+Tutte le tue schede appartengono a una sessione. Puoi avere più sessioni con nome per aiutarti a rimanere concentrato e organizzato. Il passaggio tra sessioni è fulmineo. Puoi avere centinaia di schede in ogni sessione.
+
+🌍 Barra degli indirizzi
+Barra intelligente combinata di indirizzo, titolo e ricerca. Puoi posizionarla in alto o in basso sullo schermo a seconda dell'orientamento dello schermo.
+
+🚦Pannello schede verticale
+Riordina le tue schede usando una pressione lunga per trascinare e rilasciare. Scorri verso destra per spostare una scheda nel cestino. Recupera le schede dal cestino usando la barra degli strumenti del pannello.
+
+🚥Barra schede orizzontale
+Proprio come sul classico browser web per PC. Molto utile quando si utilizzano tablet e modalità desktop come Samsung Dex e Huawei EMUI Desktop. Puoi posizionarla in alto o in basso sullo schermo.
+
+⚙Gestione schede
+Per impostazione predefinita, non dovresti mai dover premere il pulsante nuova scheda. Le nuove schede vengono create quando fai ricerche o inserisci indirizzi. Tuttavia, se preferisci avere meno schede, puoi regolare queste impostazioni a tuo piacimento.
+
+🏞Orientamenti schermo
+Impostazioni specifiche di aspetto per verticale e orizzontale che consentono un utilizzo ottimale dello spazio dello schermo. Include pull-to-refresh opzionale.
+
+🔖Segnalibri
+Importa, esporta, raggruppali in cartelle e organizza i tuoi segnalibri usando trascinamento e rilascio. Esegui il backup e ripristina i tuoi segnalibri direttamente da qualsiasi servizio Cloud.
+
+⌚Cronologia
+Rivedi le pagine che hai visitato. Cancellala quando vuoi.
+
+🌗Forza modalità scura
+Per le tue sessioni di lettura notturne puoi forzare qualsiasi pagina web a visualizzarsi in modalità scura.
+
+🎨Temi
+Il tema colore della barra degli strumenti e della barra di stato si integra elegantemente con i tuoi siti web preferiti. Supporta temi nero, scuro e chiaro. Fulguris non è solo veloce, sicuro ed efficiente, ha anche un bell'aspetto.
+
+⛔Blocco annunci
+Usa definizioni di blocco annunci da file locali e online. Supporta file hosts e la maggior parte della sintassi di Adblock Plus, quindi puoi usare quasi qualsiasi lista di filtri comune.
+
+🔒Privacy
+Fulguris protegge e rispetta la tua privacy. Modalità incognito. Può scartare cookie di tracciamento. Funzionalità di cancellazione schede, cronologia, cookie e cache. Gestione app di terze parti.
+
+🔎Ricerca
+Più motori di ricerca (Google, Bing, Yahoo, StartPage, DuckDuckGo, ecc.). Trova testo nella pagina. Suggerimenti di ricerca Google.
+
+♿Accessibilità
+Modalità lettore. Varie modalità di rendering: invertito, alto contrasto, scala di grigi.
+
+⌨Supporto tastiera
+Scorciatoie da tastiera e gestione del focus. Lista persistente delle schede recenti che consente il cambio schede usando CTRL+TAB. Visita il nostro sito web per un elenco completo delle scorciatoie da tastiera.
+
+⚡Accelerazione hardware
+Sfrutta al massimo la potenza di elaborazione del tuo hardware.
+
+🔧Impostazioni
+Molte opzioni di impostazioni per ottimizzare il tuo browser a tuo piacimento. Ciò include impostazioni di configurazione specifiche per l'orientamento dello schermo.
+

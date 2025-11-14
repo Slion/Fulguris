@@ -1,0 +1,52 @@
+Funcționalitățile includ:
+📑Sesiuni
+Toate filele tale aparțin unei sesiuni. Poți avea multiple sesiuni denumite pentru a te ajuta să rămâi concentrat și organizat. Comutarea între sesiuni este extrem de rapidă. Poți pune sute de file în fiecare sesiune.
+
+🌍 Bară de adrese
+Bară inteligentă de adrese, titlu și căutare combinată. O poți plasa în partea de sus sau de jos a ecranului în funcție de orientarea ecranului.
+
+🚦Panou vertical de file
+Reordonează filele folosind apăsare lungă pentru a trage și plasa. Glisează spre dreapta pentru a muta o filă la gunoi. Recuperează file din gunoi folosind bara de unelte a panoului.
+
+🚥Bară orizontală de file
+Similar cu browserul web clasic de PC. Cel mai util când folosești tablete și moduri desktop precum Samsung Dex și Huawei EMUI Desktop. O poți plasa în partea de sus sau de jos a ecranului.
+
+⚙Gestionarea filelor
+În mod implicit, nu ar trebui să fie nevoie să apeși butonul de filă nouă. Filele noi sunt create pe măsură ce faci căutări sau introduci adrese. Totuși, dacă preferi să ai mai puține file, poți ajusta aceste setări după preferințe.
+
+🏞Orientări ecran
+Setări specifice de aspect pentru portret și peisaj, permițând utilizarea optimă a spațiului ecranului. Include opțional trage-pentru-reîmprospătare.
+
+🔖Marcaje
+Importă, exportă, grupează-le în dosare și organizează marcajele folosind trage și plasează. Fă backup și restaurează marcajele direct din orice servicii Cloud.
+
+⌚Istoric
+Revizuiește paginile pe care le-ai vizitat. Șterge-l oricând dorești.
+
+🌗Forțează modul întunecat
+Pentru sesiunile tale de citit târziu noaptea, poți forța orice pagină web să se afișeze în modul întunecat.
+
+🎨Teme
+Tema de culoare a barei de unelte și a barei de stare se integrează elegant cu site-urile tale web favorite. Suportă teme negre, întunecate și deschise. Fulguris nu este doar rapid, sigur și eficient, arată și bine.
+
+⛔Blocare reclame
+Folosește definiții de blocare reclame din fișiere locale și online. Suportă fișiere hosts și majoritatea sintaxei Adblock Plus, astfel încât poți folosi aproape orice listă de filtre comună.
+
+🔒Confidențialitate
+Fulguris protejează și respectă confidențialitatea ta. Mod incognito. Poate elimina cookie-urile de urmărire. Funcționalități de ștergere file, istoric, cookie-uri și cache-uri. Gestionarea aplicațiilor terțe.
+
+🔎Căutare
+Multiple motoare de căutare (Google, Bing, Yahoo, StartPage, DuckDuckGo, etc.). Găsește text în pagină. Sugestii de căutare Google.
+
+♿Accesibilitate
+Mod cititor. Diverse moduri de randare: inversat, contrast ridicat, tonuri de gri.
+
+⌨Suport tastatură
+Scurtături de tastatură și gestionarea focusului. Listă persistentă de file recente, permițând comutarea filelor folosind CTRL+TAB. Vizitează site-ul nostru pentru o listă completă de scurtături de tastatură.
+
+⚡Accelerat hardware
+Profită la maximum de puterea de procesare a hardware-ului tău.
+
+🔧Setări
+Multe opțiuni de setări pentru a ajusta fin browserul după preferințe. Asta include setări de configurare specifice orientării ecranului.
+

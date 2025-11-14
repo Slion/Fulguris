@@ -1,0 +1,52 @@
+Funksjoner inkluderer:
+📑Økter
+Alle fanene dine tilhører en økt. Du kan ha flere navngitte økter for å hjelpe deg med å forbli fokusert og organisert. Bytte mellom økter er lynraskt. Du kan pakke hundrevis av faner i hver økt.
+
+🌍 Adressefelt
+Smart adresse-, tittel- og søkefelt kombinert. Du kan plassere det øverst eller nederst på skjermen avhengig av skjermorienteringen.
+
+🚦Vertikalt fanepanel
+Omorganiser fanene dine ved å bruke langt trykk for å dra og slippe. Sveip til høyre for å flytte en fane til papirkurven. Gjenopprett faner fra papirkurven ved hjelp av panelverktøylinjen.
+
+🚥Horisontal fanelinje
+Omtrent som på din klassiske PC-nettleser. Mest nyttig når du bruker nettbrett og skrivebordsmodus som Samsung Dex og Huawei EMUI Desktop. Du kan plassere den øverst eller nederst på skjermen.
+
+⚙Faneadministrasjon
+Som standard bør du aldri trenge å trykke på ny fane-knappen. Nye faner opprettes når du søker eller skriver inn adresser. Men hvis du liker å ha færre faner, kan du justere disse innstillingene etter eget ønske.
+
+🏞Skjermorienteringer
+Spesifikke utseende- og følelsesinnstillinger for portrett og landskap som gir optimal bruk av skjermplassen din. Inkluderer valgfri dra-for-å-oppdatere.
+
+🔖Bokmerker
+Importer, eksporter, grupper dem i mapper og organiser bokmerkene dine ved hjelp av dra og slipp. Sikkerhetskopier og gjenopprett bokmerkene dine direkte fra alle skytjenester.
+
+⌚Historikk
+Se gjennom sidene du har besøkt. Tøm den når du vil.
+
+🌗Tving mørk modus
+For dine sene kvelds leseøkter kan du tvinge enhver nettside til å vises i mørk modus.
+
+🎨Temaer
+Verktøylinje- og statuslinje-fargetema integreres elegant med dine favoritt nettsteder. Støtter svarte, mørke og lyse temaer. Fulguris er ikke bare rask, sikker og effektiv, den ser også bra ut.
+
+⛔Annonseblokkering
+Bruk annonseblokkeringdefinisjoner fra lokale og online filer. Støtter vertsfiler og det meste av Adblock Plus-syntaks, slik at du kan bruke nesten alle vanlige filterlister.
+
+🔒Personvern
+Fulguris beskytter og respekterer ditt personvern. Inkognitomodus. Kan forkaste sporingsinformasjonskapsler. Tøm faner, historikk, informasjonskapsler og hurtigbuffer-funksjoner. Administrasjon av tredjepartsapper.
+
+🔎Søk
+Flere søkemotorer (Google, Bing, Yahoo, StartPage, DuckDuckGo, etc.). Finn tekst på siden. Google søkeforslag.
+
+♿Tilgjengelighet
+Lesemodus. Ulike renderingsmoduser: invertert, høy kontrast, gråskala.
+
+⌨Tastaturstøtte
+Tastatursnarveier og fokusledelse. Vedvarende nylig faneliste som muliggjør fanebytte med CTRL+TAB. Besøk nettstedet vårt for en komplett liste over tastatursnarveier.
+
+⚡Maskinvareakselerert
+Utnytter maksimalt av maskinvarens prosessorkraft.
+
+🔧Innstillinger
+Mange innstillingsalternativer for å finjustere nettleseren din etter eget ønske. Dette inkluderer konfigurasjonsinnstillinger spesifikke for skjermorienteringen din.
+

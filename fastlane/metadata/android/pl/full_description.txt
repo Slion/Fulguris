@@ -1,0 +1,52 @@
+Funkcje obejmują:
+📑Sesje
+Wszystkie twoje karty należą do sesji. Możesz mieć wiele nazwanych sesji, które pomogą ci zachować skupienie i porządek. Przełączanie między sesjami jest błyskawiczne. Możesz umieścić setki kart w każdej sesji.
+
+🌍 Pasek adresu
+Inteligentny pasek adresu, tytułu i wyszukiwania połączony. Możesz umieścić go u góry lub u dołu ekranu w zależności od orientacji ekranu.
+
+🚦Pionowy panel kart
+Zmień kolejność kart używając długiego naciśnięcia do przeciągania i upuszczania. Przesuń w prawo, aby przenieść kartę do kosza. Przywróć karty z kosza za pomocą paska narzędzi panelu.
+
+🚥Poziomy pasek kart
+Podobnie jak w klasycznej przeglądarce internetowej na PC. Najbardziej przydatne podczas korzystania z tabletów i trybów pulpitu, takich jak Samsung Dex i Huawei EMUI Desktop. Możesz umieścić go u góry lub u dołu ekranu.
+
+⚙Zarządzanie kartami
+Domyślnie nigdy nie powinieneś naciskać przycisku nowej karty. Nowe karty są tworzone podczas wyszukiwania lub wprowadzania adresów. Jeśli jednak wolisz mieć mniej kart, możesz dostosować te ustawienia według własnych preferencji.
+
+🏞Orientacje ekranu
+Specyficzne ustawienia wyglądu i zachowania dla orientacji pionowej i poziomej, umożliwiające optymalne wykorzystanie przestrzeni ekranu. Zawiera opcjonalne przeciągnięcie, aby odświeżyć.
+
+🔖Zakładki
+Importuj, eksportuj, grupuj je w folderach i organizuj zakładki za pomocą przeciągania i upuszczania. Twórz kopie zapasowe i przywracaj zakładki bezpośrednio z dowolnych usług w chmurze.
+
+⌚Historia
+Przeglądaj odwiedzone strony. Wyczyść ją, kiedy chcesz.
+
+🌗Wymuś tryb ciemny
+Podczas nocnych sesji czytania możesz wymusić wyświetlanie dowolnej strony internetowej w trybie ciemnym.
+
+🎨Motywy
+Motyw kolorystyczny paska narzędzi i paska stanu integruje się elegancko z twoimi ulubionymi witrynami. Obsługuje motywy czarne, ciemne i jasne. Fulguris jest nie tylko szybka, bezpieczna i wydajna, ale także ładnie wygląda.
+
+⛔Blokowanie reklam
+Używaj definicji blokowania reklam z plików lokalnych i online. Obsługuje pliki hosts i większość składni Adblock Plus, dzięki czemu możesz używać prawie dowolnej popularnej listy filtrów.
+
+🔒Prywatność
+Fulguris chroni i szanuje twoją prywatność. Tryb incognito. Może odrzucać pliki cookie śledzące. Funkcje czyszczenia kart, historii, plików cookie i pamięci podręcznej. Zarządzanie aplikacjami innych firm.
+
+🔎Wyszukiwanie
+Wiele wyszukiwarek (Google, Bing, Yahoo, StartPage, DuckDuckGo itp.). Znajdź tekst na stronie. Sugestie wyszukiwania Google.
+
+♿Dostępność
+Tryb czytnika. Różne tryby renderowania: odwrócony, wysoki kontrast, skala szarości.
+
+⌨Obsługa klawiatury
+Skróty klawiszowe i zarządzanie fokusem. Trwała lista ostatnich kart umożliwiająca przełączanie kart za pomocą CTRL+TAB. Odwiedź naszą stronę internetową, aby uzyskać pełną listę skrótów klawiszowych.
+
+⚡Przyśpieszenie sprzętowe
+Maksymalnie wykorzystuje moc obliczeniową twojego sprzętu.
+
+🔧Ustawienia
+Wiele opcji ustawień do dopasowania przeglądarki do swoich upodobań. Obejmuje to ustawienia konfiguracji specyficzne dla orientacji ekranu.
+

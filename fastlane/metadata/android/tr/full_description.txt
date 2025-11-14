@@ -1,0 +1,52 @@
+Özellikler şunları içerir:
+📑Oturumlar
+Tüm sekmeleriniz bir oturuma aittir. Odaklanmanıza ve düzenli kalmanıza yardımcı olmak için birden fazla adlandırılmış oturumunuz olabilir. Oturumlar arasında geçiş son derece hızlıdır. Her oturuma yüzlerce sekme sığdırabilirsiniz.
+
+🌍 Adres çubuğu
+Akıllı adres, başlık ve arama çubuğu birleştirildi. Ekran yönüne bağlı olarak ekranınızın üstüne veya altına yerleştirebilirsiniz.
+
+🚦Dikey sekme paneli
+Uzun basarak sürükle ve bırak yaparak sekmelerinizi yeniden düzenleyin. Bir sekmeyi çöp kutusuna taşımak için sağa kaydırın. Panel araç çubuğunu kullanarak çöp kutusundan sekmeleri geri yükleyin.
+
+🚥Yatay sekme çubuğu
+Klasik PC web tarayıcınız gibi. Tabletleri ve Samsung Dex ve Huawei EMUI Desktop gibi masaüstü modlarını kullanırken en kullanışlıdır. Ekranınızın üstüne veya altına yerleştirebilirsiniz.
+
+⚙Sekme yönetimi
+Varsayılan olarak hiçbir zaman yeni sekme düğmesine basmanıza gerek kalmamalıdır. Arama yaptığınızda veya adres girdiğinizde yeni sekmeler oluşturulur. Ancak daha az sekmeye sahip olmayı tercih ediyorsanız, bu ayarları beğeninize göre ayarlayabilirsiniz.
+
+🏞Ekran yönleri
+Dikey ve yatay için ekran alanınızın optimal kullanımını sağlayan özel görünüm ve his ayarları. İsteğe bağlı çekme-yenileme içerir.
+
+🔖Yer işaretleri
+İçe aktarın, dışa aktarın, klasörlerde gruplandırın ve yer işaretlerinizi sürükle-bırak kullanarak düzenleyin. Yer işaretlerinizi herhangi bir Bulut hizmetinden doğrudan yedekleyin ve geri yükleyin.
+
+⌚Geçmiş
+Ziyaret ettiğiniz sayfaları inceleyin. İstediğiniz zaman temizleyin.
+
+🌗Koyu modu zorla
+Gece geç saatlerdeki okuma seanslarınız için herhangi bir web sayfasını koyu modda görüntülemeye zorlayabilirsiniz.
+
+🎨Temalar
+Araç çubuğu ve durum çubuğu renk teması favori web sitelerinizle zarif bir şekilde bütünleşir. Siyah, koyu ve açık temaları destekler. Fulguris sadece hızlı, güvenli ve verimli değil, aynı zamanda iyi görünür.
+
+⛔Reklam engelleyici
+Yerel ve çevrimiçi dosyalardan reklam engelleme tanımlarını kullanın. Hosts dosyalarını ve Adblock Plus sözdiziminin çoğunu destekler, böylece hemen hemen her yaygın filtre listesini kullanabilirsiniz.
+
+🔒Gizlilik
+Fulguris gizliliğinizi korur ve saygı gösterir. Gizli mod. İzleme çerezlerini atabilir. Sekmeleri, geçmişi, çerezleri ve önbellekleri temizleme işlevleri. Üçüncü taraf uygulama yönetimi.
+
+🔎Arama
+Birden fazla arama motoru (Google, Bing, Yahoo, StartPage, DuckDuckGo, vb.). Sayfada metin bulun. Google arama önerileri.
+
+♿Erişilebilirlik
+Okuyucu modu. Çeşitli işleme modları: ters çevrilmiş, yüksek kontrast, gri tonlama.
+
+⌨Klavye desteği
+Klavye kısayolları ve odak yönetimi. CTRL+TAB kullanarak sekme değiştirmeyi sağlayan kalıcı son sekmeler listesi. Klavye kısayollarının tam listesi için web sitemizi ziyaret edin.
+
+⚡Donanım hızlandırmalı
+Donanımınızın işlem gücünden en iyi şekilde yararlanır.
+
+🔧Ayarlar
+Tarayıcınızı beğeninize göre ince ayar yapmak için çok sayıda ayar seçeneği. Bu, ekran yönünüze özel yapılandırma ayarlarını içerir.
+
