@@ -1,4 +1,4 @@
-# Android Studio
+n# Android Studio
 *.jks
 .DS_Store
 /local.properties
@@ -51,3 +51,23 @@ out
 # https://gitlab.com/fdroid/fdroidclient/raw/master/.gitignore
 
 *.iml
+
+t # Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/README.md
+
+# Google Play API keys - NEVER COMMIT THESE!
+*-play-store.json
+*-playstore.json
+playstore-*.json
+google-play-*.json
+# But DO keep google-services.json (Firebase config)
+!google-services.json
+
+# Bundler
+vendor/bundle
+.bundle
+
