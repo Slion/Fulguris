@@ -1,1 +1,2 @@
-Gyors, testreszabható böngésző munkamenetekkel, hirdetésblokkolással és adatvédelemmel
+Gyors, testreszabható munkamenetekkel, hirdetésblokkolással és adatvédelemmel
+

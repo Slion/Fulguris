@@ -1,1 +1,2 @@
-Navigateur rapide et personnalisable avec sessions, blocage pub et confidentialité
+Rapide, personnalisable avec sessions, blocage pub et confidentialité
+

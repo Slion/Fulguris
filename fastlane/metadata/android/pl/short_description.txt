@@ -1,1 +1,2 @@
-Szybka, konfigurowalna przeglądarka z sesjami, blokowaniem reklam i prywatnością
+Szybka, konfigurowalna z sesjami, blokowaniem reklam i prywatnością
+

@@ -1,1 +1,2 @@
-Oturumlar, reklam engelleme ve gizlilik özellikleri olan hızlı, özelleştirilebilir tarayıcı
+Hızlı, özelleştirilebilir oturumlar, reklam engelleme ve gizlilik ile
+

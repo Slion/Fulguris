@@ -1,1 +1,2 @@
-Snabb, anpassningsbar webbläsare med sessioner, annonsblockering och integritet
+Snabb, anpassningsbar med sessioner, annonsblockering och integritet
+

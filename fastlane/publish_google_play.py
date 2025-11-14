@@ -36,6 +36,7 @@ def upload_metadata(service_account_file):
 
     # Languages to upload
     languages = [
+        'en-US',  # English (US)
         'cs',     # Czech
         'da',     # Danish
         'de',     # German
@@ -150,24 +151,31 @@ def upload_metadata(service_account_file):
     except Exception as e:
         commit_success = False
         error_msg = str(e)
+        print(f"\n❌ ERROR: COMMIT FAILED!")
+        print(f"{'='*60}")
         if 'financial features' in error_msg.lower():
-            print(f"\n⚠️  COMMIT BLOCKED: {error_msg}")
-            print("\n📋 ACTION REQUIRED:")
-            print("1. Go to: https://play.google.com/console/")
-            print("2. Select your app")
-            print("3. Go to: Policy → App content")
-            print("4. Answer the 'Financial features' question")
-            print("5. Save and run this script again")
-            print("\nNote: Your metadata was prepared but not published yet.")
+            print(f"⚠️  Reason: {error_msg}")
+            print(f"\n📋 ACTION REQUIRED:")
+            print(f"1. Go to: https://play.google.com/console/")
+            print(f"2. Select your app")
+            print(f"3. Go to: Policy → App content")
+            print(f"4. Answer the 'Financial features' question")
+            print(f"5. Save and run this script again")
+            print(f"\n⚠️  Your metadata was prepared but NOT published.")
         else:
-            print(f"\n❌ COMMIT FAILED: {error_msg}")
+            print(f"⚠️  Reason: {error_msg}")
+            print(f"\n⚠️  Your metadata was prepared but NOT published.")
+        print(f"{'='*60}")
 
-    print(f"\n{'='*60}")
     if commit_success:
+        print(f"\n{'='*60}")
         print(f"🎉 Upload complete!")
+        print(f"{'='*60}")
     else:
-        print(f"⚠️  Upload prepared but not committed")
-    print(f"{'='*60}")
+        print(f"\n{'='*60}")
+        print(f"❌ UPLOAD FAILED - Changes not published")
+        print(f"{'='*60}")
+
     print(f"✅ Successfully uploaded: {uploaded} languages")
     if len(skipped_not_enabled) > 0:
         print(f"⏭️  Skipped (not enabled): {len(skipped_not_enabled)} languages")
