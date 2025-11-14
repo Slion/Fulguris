@@ -49,6 +49,7 @@ def upload_metadata(service_account_file):
         'it-IT',  # Italian
         'ja-JP',  # Japanese
         'ko-KR',  # Korean
+        'lt',     # Lithuanian
         'no-NO',  # Norwegian
         'pl-PL',  # Polish
         'pt-PT',  # Portuguese (Portugal)

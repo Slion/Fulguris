@@ -1,0 +1,46 @@
+Fulguris yra greitai veikianti, privatumą orientuota interneto naršyklė, sukurta specialiai Android įrenginiams. Ji siūlo galimą pritaikyti patirtį su galingomis funkcijomis, išlaikant paprastumą ir našumą.
+
+PAGRINDINĖS FUNKCIJOS:
+
+🔒 PRIVATUMAS IR SAUGUMAS
+• Integruotas reklamos ir sekimo blokavimas
+• HTTPS Everywhere palaikymas
+• Incognito režimas privatiems naršymui
+• Galimybė išvalyti naršymo duomenis vienu paspaudimu
+• Slapukų valdymas ir leidimų kontrolė
+
+⚡ NAŠUMAS
+• Greitas puslapių įkėlimas
+• Minimalus atminties naudojimas
+• Sklandus slinkimas ir naršymas
+• Efektyvus baterijos naudojimas
+
+🎨 PRITAIKYMAS
+• Tamsus režimas ir teminės galimybės
+• Keičiami paieškos varikliai
+• Pritaikoma namai puslapis
+• Lankstūs naršymo nustatymai
+• Veiksmų juostos pritaikymas
+
+📑 SEANSŲ VALDYMAS
+• Išsaugokite ir atkurkite naršymo seansus
+• Kelių seansų palaikymas
+• Lengvas perjungimas tarp seansų
+• Seansų importavimas ir eksportavimas
+
+🌐 NARŠYMO FUNKCIJOS
+• Kortelių valdymas su patogia sąsaja
+• Žymių sinchronizavimas
+• Naršymo istorija su paieška
+• Atsisiuntimų valdymas
+• Visą ekraną užimantis režimas
+
+📱 ANDROID INTEGRACIJA
+• Dalintis puslapiais ir turiniu
+• Namų ekrano spartieji klavišai
+• Žiniatinklio programų palaikymas
+• Modernūs Android dizaino principai
+
+Fulguris yra atvirojo kodo projektas, skirtas suteikti naudotojams greitą, privatų ir pritaikomą naršymo patirtį be nereikalingų funkcijų ar sudėtingumo.
+
+Prisijunkite prie mūsų bendruomenės ir patirkite modernų interneto naršymą su Fulguris!

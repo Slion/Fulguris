@@ -26,6 +26,7 @@ languages = [
     'it-IT',  # Italian
     'ja-JP',  # Japanese
     'ko-KR',  # Korean
+    'lt',     # Lithuanian
     'no-NO',  # Norwegian
     'pl-PL',  # Polish
     'pt-PT',  # Portuguese (Portugal)
