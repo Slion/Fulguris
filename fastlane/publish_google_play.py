@@ -37,28 +37,28 @@ def upload_metadata(service_account_file):
     # Languages to upload
     languages = [
         'en-US',  # English (US)
-        'cs',     # Czech
-        'da',     # Danish
-        'de',     # German
-        'el',     # Greek
-        'es',     # Spanish
-        'fi',     # Finnish
-        'fr',     # French
+        'cs-CZ',  # Czech
+        'da-DK',  # Danish
+        'de-DE',  # German
+        'el-GR',  # Greek
+        'es-ES',  # Spanish
+        'fi-FI',  # Finnish
+        'fr-FR',  # French
         'hr',     # Croatian
-        'hu',     # Hungarian
-        'it',     # Italian
-        'ja',     # Japanese
-        'ko',     # Korean
-        'no',     # Norwegian
-        'pl',     # Polish
-        'pt',     # Portuguese (Portugal)
+        'hu-HU',  # Hungarian
+        'it-IT',  # Italian
+        'ja-JP',  # Japanese
+        'ko-KR',  # Korean
+        'nb-NO',  # Norwegian (Bokmål)
+        'pl-PL',  # Polish
+        'pt-PT',  # Portuguese (Portugal)
         'pt-BR',  # Portuguese (Brazil)
         'ro',     # Romanian
-        'ru',     # Russian
+        'ru-RU',  # Russian
         'sr',     # Serbian
-        'sv',     # Swedish
+        'sv-SE',  # Swedish
         'th',     # Thai
-        'tr',     # Turkish
+        'tr-TR',  # Turkish
         'zh-CN',  # Chinese (Simplified)
         'zh-TW',  # Chinese (Traditional)
     ]
