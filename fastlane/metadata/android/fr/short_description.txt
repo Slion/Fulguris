@@ -1,2 +1,1 @@
-⚡Navigateur Web
-
+Navigateur rapide et personnalisable avec sessions, blocage pub et confidentialité

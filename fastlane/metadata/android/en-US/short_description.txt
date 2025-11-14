@@ -1,1 +1,1 @@
-⚡Web Browser
+Fast, customizable browser with sessions, ad blocking & privacy features

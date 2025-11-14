@@ -1,2 +1,1 @@
-⚡Webbrowser
-
+Hurtig, tilpasselig browser med sessioner, annonceblokering og privatliv

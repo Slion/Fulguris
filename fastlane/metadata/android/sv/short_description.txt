@@ -1,2 +1,1 @@
-⚡Webbrowser
-
+Snabb, anpassningsbar webbläsare med sessioner, annonsblockering och integritet

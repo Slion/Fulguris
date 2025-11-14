@@ -1,2 +1,1 @@
-⚡Böngésző
-
+Gyors, testreszabható böngésző munkamenetekkel, hirdetésblokkolással és adatvédelemmel

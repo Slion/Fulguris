@@ -1,2 +1,1 @@
-⚡Navegador Web
-
+Navegador rápido y personalizable con sesiones, bloqueo de anuncios y privacidad

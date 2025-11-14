@@ -66,9 +66,13 @@ def upload_metadata(service_account_file):
     failed = 0
     skipped_not_enabled = []
 
+    # Get the directory where this script is located (fastlane/)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
     # Upload listing for each language
     for lang in languages:
-        metadata_dir = f'fastlane/metadata/android/{lang}'
+        # Path is relative to script location
+        metadata_dir = os.path.join(script_dir, 'metadata', 'android', lang)
 
         if not os.path.exists(metadata_dir):
             print(f"⚠️  Skipping {lang} - directory not found")
