@@ -3,9 +3,12 @@ Generate changelog template for all supported languages and copy to clipboard.
 
 Usage:
     python changelogs.py 239
+    python changelogs.py 239 240
+    python changelogs.py 238 239 240
 
 Arguments:
-    version_code: The version number to compile changelogs for (e.g., 239)
+    version_codes: One or more version numbers to compile changelogs for (e.g., 239 240)
+                   Multiple changelogs will be concatenated with separator lines
 """
 
 import sys
@@ -47,29 +50,63 @@ languages = [
     'zh-TW',  # Chinese (Traditional)
 ]
 
-def generate_template(version_code):
-    """Generate the changelog template from existing files."""
+def generate_template(version_codes):
+    """Generate the changelog template from existing files for multiple versions."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     template = ""
     found_count = 0
     missing = []
 
-    for lang in languages:
-        changelog_file = os.path.join(script_dir, 'metadata', 'android', lang, 'changelogs', f'{version_code}.txt')
+    # If single version, process normally
+    if len(version_codes) == 1:
+        version_code = version_codes[0]
+        for lang in languages:
+            changelog_file = os.path.join(script_dir, 'metadata', 'android', lang, 'changelogs', f'{version_code}.txt')
 
-        if os.path.exists(changelog_file):
-            try:
-                with open(changelog_file, 'r', encoding='utf-8') as f:
-                    content = f.read().strip()
-                template += f"<{lang}>\n{content}\n</{lang}>\n\n"
-                found_count += 1
-            except Exception as e:
-                print(f"⚠️  Error reading {lang}: {e}")
-                template += f"<{lang}>\nError reading file\n</{lang}>\n\n"
+            if os.path.exists(changelog_file):
+                try:
+                    with open(changelog_file, 'r', encoding='utf-8') as f:
+                        content = f.read().strip()
+                    template += f"<{lang}>\n{content}\n</{lang}>\n\n"
+                    found_count += 1
+                except Exception as e:
+                    print(f"⚠️  Error reading {lang}: {e}")
+                    template += f"<{lang}>\nError reading file\n</{lang}>\n\n"
+                    missing.append(lang)
+            else:
+                template += f"<{lang}>\nEnter or paste your release notes for {lang} here\n</{lang}>\n\n"
                 missing.append(lang)
-        else:
-            template += f"<{lang}>\nEnter or paste your release notes for {lang} here\n</{lang}>\n\n"
-            missing.append(lang)
+    else:
+        # Multiple versions - concatenate changelogs
+        for lang in languages:
+            concatenated_content = []
+            all_found = True
+
+            for version_code in version_codes:
+                changelog_file = os.path.join(script_dir, 'metadata', 'android', lang, 'changelogs', f'{version_code}.txt')
+
+                if os.path.exists(changelog_file):
+                    try:
+                        with open(changelog_file, 'r', encoding='utf-8') as f:
+                            content = f.read().strip()
+                        concatenated_content.append(content)
+                    except Exception as e:
+                        print(f"⚠️  Error reading {lang} v{version_code}: {e}")
+                        all_found = False
+                        break
+                else:
+                    all_found = False
+                    break
+
+            if all_found and concatenated_content:
+                # Join multiple changelogs with separator
+                separator = "\n\n---\n\n"
+                combined = separator.join(concatenated_content)
+                template += f"<{lang}>\n{combined}\n</{lang}>\n\n"
+                found_count += 1
+            else:
+                template += f"<{lang}>\nEnter or paste your release notes for {lang} here\n</{lang}>\n\n"
+                missing.append(lang)
 
     return template.strip(), found_count, missing
 
@@ -93,16 +130,22 @@ def copy_to_clipboard(text):
         return False
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("Usage: python changelogs.py <version_code>")
-        print("\nExample:")
+    if len(sys.argv) < 2:
+        print("Usage: python changelogs.py <version_code> [version_code2] [version_code3] ...")
+        print("\nExamples:")
         print("  python changelogs.py 239")
+        print("  python changelogs.py 239 240")
+        print("  python changelogs.py 238 239 240")
         sys.exit(1)
 
-    version_code = sys.argv[1]
+    version_codes = sys.argv[1:]
 
-    print(f"📋 Compiling changelog template for version {version_code}...")
-    template, found_count, missing = generate_template(version_code)
+    if len(version_codes) == 1:
+        print(f"📋 Compiling changelog template for version {version_codes[0]}...")
+    else:
+        print(f"📋 Compiling and concatenating changelog templates for versions: {', '.join(version_codes)}...")
+
+    template, found_count, missing = generate_template(version_codes)
 
     print(f"✅ Found changelogs for {found_count}/{len(languages)} languages")
 
@@ -111,6 +154,8 @@ if __name__ == '__main__':
 
     if copy_to_clipboard(template):
         print("✅ Template copied to clipboard!")
+        if len(version_codes) > 1:
+            print(f"   Changelogs from versions {', '.join(version_codes)} have been concatenated.")
         print("\nYou can now paste it into Google Play Console's bulk changelog editor.")
     else:
         print("\n⚠️  Could not copy to clipboard automatically.")

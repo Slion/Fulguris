@@ -1,11 +1,8 @@
-🌍 8 yeni dil eklendi!
+🌍 6 yeni dil eklendi!
 🇸🇦 Arapça
-🇧🇦 Boşnakça
 🇮🇩 Endonezce
 🇱🇹 Litvanca
-🇳🇱 Felemenkçe
-🇮🇳 Santali
+🇳🇱 Hollandaca
 🇺🇦 Ukraynaca
 🇻🇳 Vietnamca
 
-Artık toplam 33 dilde kullanılabilir!

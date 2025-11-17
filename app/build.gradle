@@ -124,8 +124,8 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 239
-            versionName "1.11.1"
+            versionCode 241
+            versionName "1.11.3"
         }
 
         styx {
@@ -203,6 +203,12 @@ android {
     }
 
     packagingOptions {
+        // Enable 16KB page size alignment for Android 15+ compatibility
+        // This ensures native libraries are properly aligned for 16KB memory pages
+        // See: https://developer.android.com/guide/practices/page-sizes
+        jniLibs {
+            useLegacyPackaging = false
+        }
         resources {
             excludes += ['.readme']
         }
