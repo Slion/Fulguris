@@ -1,0 +1,46 @@
+Fulguris je brzi web preglednik fokusiran na privatnost, dizajniran posebno za Android uređaje. Nudi prilagodljivo iskustvo sa moćnim funkcijama uz održavanje jednostavnosti i performansi.
+
+KLJUČNE FUNKCIJE:
+
+🔒 PRIVATNOST I SIGURNOST
+• Ugrađeno blokiranje oglasa i praćenja
+• HTTPS Everywhere podrška
+• Incognito režim za privatno pregledanje
+• Brisanje podataka o pregledanju jednim klikom
+• Upravljanje kolačićima i kontrola dozvola
+
+⚡ PERFORMANSE
+• Brzo učitavanje stranica
+• Minimalno korištenje memorije
+• Glatko klizanje i pregledanje
+• Efikasno korištenje baterije
+
+🎨 PRILAGOĐAVANJE
+• Tamni režim i opcije tema
+• Zamjenjivi pretraživači
+• Prilagodljiva početna stranica
+• Fleksibilne postavke pregledanja
+• Prilagođavanje trake radnji
+
+📑 UPRAVLJANJE SESIJAMA
+• Spremanje i obnavljanje sesija pregledanja
+• Podrška za više sesija
+• Lako prebacivanje između sesija
+• Uvoz i izvoz sesija
+
+🌐 FUNKCIJE PREGLEDANJA
+• Upravljanje karticama sa pogodnim interfejsom
+• Sinhronizacija obilježivača
+• Historija pregledanja sa pretragom
+• Upravljanje preuzimanjima
+• Pun ekran režim
+
+📱 ANDROID INTEGRACIJA
+• Dijeljenje stranica i sadržaja
+• Prečice početnog ekrana
+• Podrška za web aplikacije
+• Moderna Android dizajn načela
+
+Fulguris je open source projekat koji ima za cilj pružiti korisnicima brzo, privatno i prilagodljivo iskustvo pregledanja bez nepotrebnih funkcija ili složenosti.
+
+Pridružite se našoj zajednici i iskusite moderno web pregledanje sa Fulguris!

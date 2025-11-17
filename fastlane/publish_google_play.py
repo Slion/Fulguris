@@ -34,9 +34,11 @@ def upload_metadata(service_account_file):
     edit_id = edit['id']
     print(f"✅ Edit ID: {edit_id}")
 
-    # Languages to upload
+    # Languages to upload (Google Play Console language codes)
+    # See: https://support.google.com/googleplay/android-developer/table/4419860?hl=en
     languages = [
         'en-US',  # English (US)
+        'ar',     # Arabic
         'cs-CZ',  # Czech
         'da-DK',  # Danish
         'de-DE',  # German
@@ -46,20 +48,24 @@ def upload_metadata(service_account_file):
         'fr-FR',  # French
         'hr',     # Croatian
         'hu-HU',  # Hungarian
+        'id',     # Indonesian
         'it-IT',  # Italian
         'ja-JP',  # Japanese
         'ko-KR',  # Korean
         'lt',     # Lithuanian
+        'nl-NL',  # Dutch
         'no-NO',  # Norwegian
         'pl-PL',  # Polish
-        'pt-PT',  # Portuguese (Portugal)
         'pt-BR',  # Portuguese (Brazil)
+        'pt-PT',  # Portuguese (Portugal)
         'ro',     # Romanian
         'ru-RU',  # Russian
         'sr',     # Serbian
         'sv-SE',  # Swedish
         'th',     # Thai
         'tr-TR',  # Turkish
+        'uk',     # Ukrainian
+        'vi',     # Vietnamese
         'zh-CN',  # Chinese (Simplified)
         'zh-TW',  # Chinese (Traditional)
     ]

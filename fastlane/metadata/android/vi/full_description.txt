@@ -1,0 +1,46 @@
+Fulguris là trình duyệt web nhanh tập trung vào quyền riêng tư, được thiết kế đặc biệt cho các thiết bị Android. Nó cung cấp trải nghiệm tùy chỉnh với các tính năng mạnh mẽ đồng thời duy trì sự đơn giản và hiệu suất.
+
+TÍNH NĂNG CHÍNH:
+
+🔒 QUYỀN RIÊNG TƯ & BẢO MẬT
+• Chặn quảng cáo và theo dõi tích hợp
+• Hỗ trợ HTTPS Everywhere
+• Chế độ ẩn danh cho duyệt web riêng tư
+• Xóa dữ liệu duyệt web chỉ với một chạm
+• Quản lý cookie và kiểm soát quyền
+
+⚡ HIỆU SUẤT
+• Tải trang nhanh
+• Sử dụng bộ nhớ tối thiểu
+• Cuộn và duyệt mượt mà
+• Sử dụng pin hiệu quả
+
+🎨 TÙY CHỈNH
+• Chế độ tối và tùy chọn chủ đề
+• Công cụ tìm kiếm có thể chuyển đổi
+• Trang chủ tùy chỉnh
+• Cài đặt duyệt web linh hoạt
+• Tùy chỉnh thanh hành động
+
+📑 QUẢN LÝ PHIÊN
+• Lưu và khôi phục phiên duyệt web
+• Hỗ trợ nhiều phiên
+• Chuyển đổi dễ dàng giữa các phiên
+• Nhập và xuất phiên
+
+🌐 TÍNH NĂNG DUYỆT WEB
+• Quản lý tab với giao diện tiện lợi
+• Đồng bộ dấu trang
+• Lịch sử duyệt web với tìm kiếm
+• Quản lý tải xuống
+• Chế độ toàn màn hình
+
+📱 TÍCH HỢP ANDROID
+• Chia sẻ trang và nội dung
+• Phím tắt màn hình chính
+• Hỗ trợ ứng dụng web
+• Nguyên tắc thiết kế Android hiện đại
+
+Fulguris là một dự án mã nguồn mở nhằm cung cấp cho người dùng trải nghiệm duyệt web nhanh, riêng tư và tùy chỉnh mà không có các tính năng không cần thiết hoặc phức tạp.
+
+Tham gia cộng đồng của chúng tôi và trải nghiệm duyệt web hiện đại với Fulguris!

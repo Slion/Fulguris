@@ -1,0 +1,46 @@
+Fulguris adalah browser web cepat yang berfokus pada privasi, dirancang khusus untuk perangkat Android. Menawarkan pengalaman yang dapat disesuaikan dengan fitur yang kuat sambil mempertahankan kesederhanaan dan kinerja.
+
+FITUR UTAMA:
+
+🔒 PRIVASI & KEAMANAN
+• Pemblokiran iklan dan pelacakan terintegrasi
+• Dukungan HTTPS Everywhere
+• Mode penyamaran untuk browsing pribadi
+• Hapus data browsing dengan satu ketukan
+• Manajemen cookie dan kontrol izin
+
+⚡ PERFORMA
+• Pemuatan halaman yang cepat
+• Penggunaan memori minimal
+• Scrolling dan browsing yang mulus
+• Penggunaan baterai yang efisien
+
+🎨 KUSTOMISASI
+• Mode gelap dan opsi tema
+• Mesin pencari yang dapat ditukar
+• Halaman beranda yang dapat disesuaikan
+• Pengaturan browsing yang fleksibel
+• Kustomisasi action bar
+
+📑 MANAJEMEN SESI
+• Simpan dan pulihkan sesi browsing
+• Dukungan multi-sesi
+• Peralihan mudah antar sesi
+• Impor dan ekspor sesi
+
+🌐 FITUR BROWSING
+• Manajemen tab dengan antarmuka yang nyaman
+• Sinkronisasi bookmark
+• Riwayat browsing dengan pencarian
+• Manajemen unduhan
+• Mode layar penuh
+
+📱 INTEGRASI ANDROID
+• Bagikan halaman dan konten
+• Shortcut layar beranda
+• Dukungan aplikasi web
+• Prinsip desain Android modern
+
+Fulguris adalah proyek open source yang bertujuan memberikan pengguna pengalaman browsing yang cepat, privat, dan dapat disesuaikan tanpa fitur yang tidak perlu atau kompleksitas.
+
+Bergabunglah dengan komunitas kami dan rasakan browsing web modern dengan Fulguris!
