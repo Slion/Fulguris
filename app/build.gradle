@@ -55,7 +55,7 @@ def generatedLocaleListDir = layout.buildDirectory.dir('generated/source/locale/
 android {
     compileSdk = libs.versions.compileSdk.get().toInteger()
     // Specify namespace for generated R and BuildConfig classes
-    namespace 'fulguris'
+    namespace = 'fulguris'
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInteger()
@@ -73,26 +73,26 @@ android {
 
     buildTypes {
         debug {
-            debuggable true
+            debuggable = true
             // See: https://github.com/Slion/Fulguris/issues/116
             // If we disable minify then we need multi DEX.
-            multiDexEnabled true
-            minifyEnabled false
-            shrinkResources false
+            multiDexEnabled = true
+            minifyEnabled = false
+            shrinkResources = false
             proguardFiles getDefaultProguardFile(
                     'proguard-android-optimize.txt'),
                     'proguard-project.txt'
-            applicationIdSuffix ".debug"
-            enableUnitTestCoverage true
-            enableAndroidTestCoverage true
+            applicationIdSuffix = ".debug"
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
         }
 
         release {
-            debuggable false
-            multiDexEnabled false
+            debuggable = false
+            multiDexEnabled = false
             // If you disable minify you need to make sure multi DEX library is loaded in release or you will get crashed on Android 5 devices and below
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile(
                     'proguard-android-optimize.txt'),
                     'proguard-project.txt'
@@ -102,8 +102,8 @@ android {
             ndk {
                 //abiFilters "arm64-v8a", "armeabi-v7a", "armeabi", "mips"
             }
-            enableUnitTestCoverage false
-            enableAndroidTestCoverage false
+            enableUnitTestCoverage = false
+            enableAndroidTestCoverage = false
         }
     }
 
@@ -228,10 +228,10 @@ android {
             // Just replace our archive base name, which by default is "app" with our own format according to flavor
             if (variant.flavorName.contains("slions")) {
                 //println("Use Fulguris archive name")
-                outputFileName = outputFileName.replaceFirst("^$archivesBaseName", "Fulguris-v$versionName")
+                outputFileName = outputFileName.replaceFirst("^${base.archivesName.get()}", "Fulguris-v$versionName")
             } else if (variant.flavorName.contains("styx")) {
                 //println("Use Styx archive name")
-                outputFileName = outputFileName.replaceFirst("^$archivesBaseName", "Styx-v$versionName")
+                outputFileName = outputFileName.replaceFirst("^${base.archivesName.get()}", "Styx-v$versionName")
             }
             //customize your app name by using variables
             //outputFileName = "${variantName}.apk"
@@ -249,12 +249,12 @@ android {
 
     buildFeatures {
         // That should give us both view and data binding
-        dataBinding true
+        dataBinding = true
         // We notably use build config to define our sponsorships
-        buildConfig true
+        buildConfig = true
     }
     lint {
-        abortOnError true
+        abortOnError = true
     }
 }
 
@@ -291,6 +291,7 @@ dependencies {
     implementation libs.androidx.vectordrawable.animated
     implementation libs.androidx.appcompat
     implementation libs.androidx.recyclerview.v140
+    implementation libs.androidx.swiperefreshlayout
     // Needs to upgrade target SDK
     implementation libs.androidx.core.ktx.v1160
     implementation libs.androidx.core.splashscreen
@@ -347,9 +348,6 @@ dependencies {
 
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
-    // proxy support
-    implementation 'net.i2p.android:client:0.9.49'
-    implementation 'net.i2p.android:helper:0.9.5'
 
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 

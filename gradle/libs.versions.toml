@@ -24,6 +24,7 @@ palette-ktx = "1.0.0"
 preference-ktx = "1.2.1"
 recyclerview = "1.4.0"
 recyclerview-version = "1.4.0"
+swiperefreshlayout = "1.1.0"
 threetenabp = "1.4.9"
 timber = "5.0.1"
 vectordrawable-animated = "1.2.0"
@@ -48,6 +49,7 @@ androidx-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = 
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preference-ktx" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 androidx-recyclerview-v140 = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview-version" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-vectordrawable-animated = { module = "androidx.vectordrawable:vectordrawable-animated", version.ref = "vectordrawable-animated" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2"}
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment"}
