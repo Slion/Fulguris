@@ -1,10 +1,12 @@
 [versions]
 agp = "8.13.0"
+compileSdk = "35"
+compile_sdk_version = "35"
+minSdk = "21"
+min_sdk_version = "21"
 appcompat = "1.7.1"
 annotation = "1.9.1"
 cardview = "1.0.0"
-compileSdk = "34"
-compile_sdk_version = "34"
 constraintlayout = "2.2.1"
 mezzanine = "2.1.0"
 core-ktx = "1.16.0"
@@ -16,8 +18,6 @@ junit = "4.13.2"
 kotlin = "2.2.20"
 ktlint_gradle = "14.0.1"
 material = "1.13.0"
-minSdk = "21"
-min_sdk_version = "21"
 mockito-core = "5.20.0"
 multidex = "2.0.1"
 palette-ktx = "1.0.0"
@@ -28,7 +28,6 @@ threetenabp = "1.4.9"
 timber = "5.0.1"
 vectordrawable-animated = "1.2.0"
 viewpager2 = "1.1.0"
-target-sdk-version = "34"
 fragment = "1.8.9"
 volley = "1.2.1"
 junitExt = "1.1.5"
@@ -53,9 +52,10 @@ androidx-vectordrawable-animated = { module = "androidx.vectordrawable:vectordra
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2"}
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment"}
 material = { module = "com.google.android.material:material", version.ref = "material" }
-mezzanine-core = { module = "com.anthonycr.mezzanine:core", version.ref = "mezzanine" }
 junit = { module = "junit:junit", version.ref = "junit" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-core" }
+mezzanine-core = { module = "com.anthonycr.mezzanine:core", version.ref = "mezzanine" }
+mezzanine-processor = { module = "com.anthonycr.mezzanine:processor", version.ref = "mezzanine" }
 threetenabp = { module = "com.jakewharton.threetenabp:threetenabp", version.ref = "threetenabp" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 volley = { module = "com.android.volley:volley", version.ref = "volley" }

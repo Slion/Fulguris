@@ -43,7 +43,7 @@ allprojects {
 }
 
 ext {
-    minSdkVersion = 21
-    targetSdkVersion = 35
+    //minSdkVersion = 21
+    //targetSdkVersion = 35
     //buildToolsVersion = '33.0.0'
 }
