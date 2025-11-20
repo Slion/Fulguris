@@ -59,7 +59,6 @@
     <application
         android:name="fulguris.App"
         android:allowBackup="true"
-        android:extractNativeLibs="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"

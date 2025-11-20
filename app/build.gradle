@@ -31,7 +31,7 @@ plugins {
     id 'com.github.ben-manes.versions'
     id 'de.mobilej.unmock'
     id 'com.google.devtools.ksp'
-    id("com.anthonycr.plugins.mezzanine") version "2.1.0"
+    id("com.anthonycr.plugins.mezzanine") version "2.2.0"
 }
 
 // See: https://stackoverflow.com/a/53408667/3969362
@@ -124,8 +124,8 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 241
-            versionName "1.11.3"
+            versionCode 242
+            versionName "1.11.4"
         }
 
         styx {
@@ -274,7 +274,7 @@ dependencies {
     // If you disable minify in release mode you also need to load and install that library in release for those devices.
     // See [BrowserApp.attachBaseContext]
     // See: https://github.com/Slion/Fulguris/issues/116
-    debugImplementation 'androidx.multidex:multidex:2.0.1'
+    debugImplementation libs.androidx.multidex
 
     // test dependencies
     implementation 'junit:junit:4.13.2'
@@ -286,18 +286,18 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.4'
 
     // Jetpack AndroidX libraries
-    implementation "androidx.palette:palette-ktx:1.0.0"
-    implementation "androidx.annotation:annotation:1.9.1"
-    implementation "androidx.vectordrawable:vectordrawable-animated:1.2.0"
-    implementation "androidx.appcompat:appcompat:1.7.1"
-    implementation "androidx.recyclerview:recyclerview:1.4.0"
+    implementation libs.androidx.palette.ktx
+    implementation libs.androidx.annotation
+    implementation libs.androidx.vectordrawable.animated
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.recyclerview.v140
     // Needs to upgrade target SDK
-    implementation "androidx.core:core-ktx:1.16.0"
-    implementation 'androidx.core:core-splashscreen:1.0.1'
-    implementation "androidx.constraintlayout:constraintlayout:2.2.1"
-    implementation "androidx.fragment:fragment-ktx:1.8.9"
-    implementation "androidx.drawerlayout:drawerlayout:1.2.0"
-    implementation 'androidx.preference:preference-ktx:1.2.1'
+    implementation libs.androidx.core.ktx.v1160
+    implementation libs.androidx.core.splashscreen
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.fragment
+    implementation libs.androidx.drawerlayout
+    implementation libs.androidx.preference.ktx
     // Webkit: https://developer.android.com/jetpack/androidx/releases/webkit
     implementation 'androidx.webkit:webkit:1.10.0'
 
@@ -308,7 +308,7 @@ dependencies {
     // In code we use reflection to access some bottom sheet private class, methods and fields
     // Whenever you update that library you will need to review those hacks, see adjustBottomSheet.
     // Also search the code for BottomSheetDialog::class
-    implementation "com.google.android.material:material:1.12.0"
+    implementation "com.google.android.material:material:1.13.0"
     //implementation group: 'com.google.android.material', name: 'material', version: '1.6.0-alpha01'
 
     //
@@ -329,7 +329,7 @@ dependencies {
     implementation 'net.dankito.readability4j:readability4j:1.0.8'
 
     // Built-in files support
-    implementation("com.anthonycr.mezzanine:core:2.1.0")
+    implementation(libs.mezzanine.core)
     ksp("com.anthonycr.mezzanine:processor:2.1.0")
 
     // Just using the local JAR won't work as is since the compiler has other unresolved dependencies
@@ -375,14 +375,14 @@ dependencies {
 
 
     // Volley HTTP request
-    implementation 'com.android.volley:volley:1.2.1'
+    implementation libs.volley
 
     // Since java.time need API 26 we use that backport instead
     // See: https://github.com/JakeWharton/ThreeTenABP
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.7'
+    implementation libs.threetenabp
 
     // Logs
-    implementation 'com.jakewharton.timber:timber:5.0.1'
+    implementation libs.timber
 }
 
 
