@@ -124,15 +124,15 @@ android {
         slions {
             dimension "BRAND"
             applicationId "net.slions.fulguris"
-            versionCode 242
-            versionName "1.11.4"
+            versionCode libs.versions.slions.version.code.get().toInteger()
+            versionName libs.versions.slions.version.name.get()
         }
 
         styx {
             dimension "BRAND"
             applicationId "com.jamal2367.styx"
-            versionCode 1
-            versionName "20.0"
+            versionCode libs.versions.styx.version.code.get().toInteger()
+            versionName libs.versions.styx.version.name.get()
         }
 
         /*

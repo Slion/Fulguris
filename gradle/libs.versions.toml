@@ -1,9 +1,18 @@
 [versions]
-agp = "8.13.0"
+# App versions
+slions-version-code = "244"
+slions-version-name = "1.11.6"
+styx-version-code = "1"
+styx-version-name = "20.0"
+
+# Android SDK
 compileSdk = "35"
 compile_sdk_version = "35"
 minSdk = "21"
 min_sdk_version = "21"
+
+# Plugins and libraries
+agp = "8.13.0"
 appcompat = "1.7.1"
 annotation = "1.9.1"
 cardview = "1.0.0"
@@ -33,6 +42,8 @@ fragment = "1.8.9"
 volley = "1.2.1"
 junitExt = "1.1.5"
 espresso = "3.5.1"
+
+
 
 
 [libraries]
