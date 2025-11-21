@@ -103,15 +103,15 @@
     <string name="cannot_download">Se pot descărca doar URL-uri \"http\" sau \"https\".</string>
     <string name="problem_download">URL invalid întâlnit, nu se poate descărca</string>
     <string name="problem_location_download">Nu se poate descărca la locația specificată</string>
-    <string name="download_no_sdcard_dlg_title">No SD card</string>
-    <string name="download_no_sdcard_dlg_msg">USB storage is required to download the file.</string>
-    <string name="download_sdcard_busy_dlg_title">USB storage unavailable</string>
-    <string name="download_sdcard_busy_dlg_msg">The storage is busy. To allow downloads, touch \'Turn Off USB Storage\' in the notification.</string>
+    <string name="download_no_sdcard_dlg_title">Fără card SD</string>
+    <string name="download_no_sdcard_dlg_msg">Stocare USB este necesară pentru a descărca fișierul.</string>
+    <string name="download_sdcard_busy_dlg_title">Stocare USB indisponibilă</string>
+    <string name="download_sdcard_busy_dlg_msg">Stocarea este ocupată. Pentru a permite descărcări, apăsați \'Dezactivează stocarea USB\' în notificare.</string>
     <string name="download_complete">Descărcare finalizată</string>
-    <string name="download_failed">Download failed</string>
-    <string name="incognito_cookies">Enable cookies in incognito mode</string>
-    <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
-    <string name="pref_title_contact_us">Contact us</string>
+    <string name="download_failed">Descărcare eșuată</string>
+    <string name="incognito_cookies">Activează cookie-uri în modul incognito</string>
+    <string name="incognito_cookies_pie">Modul incognito rulează într-un proces separat care este resetat după fiecare sesiune. Preferințele pentru cookie-uri incognito sunt acum controlate de preferințele obișnuite pentru cookie-uri.</string>
+    <string name="pref_title_contact_us">Contactează-ne</string>
     <string name="clear_cache">Șterge cache-ul</string>
     <string name="message_cache_cleared">Cache șters</string>
     <string name="message_import">Marcajele au fost importate</string>
@@ -173,7 +173,7 @@
     <string name="action_message_canceled">Acțiune anulată.</string>
     <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Eroare de securitate! Încărcarea paginii anulată.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error">Conexiune securizată compromisă:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Doriți totuși să continuați?</string>
     <string name="message_certificate_date_invalid">Data certificatului este invalidă</string>
     <string name="message_certificate_expired">Certificatul a expirat</string>
     <string name="message_certificate_domain_mismatch">Domeniul din certificat nu se potrivește cu domeniul site-ului</string>
@@ -236,7 +236,7 @@
     <string name="open_with">Deschide cu</string>
     <string name="settings_general">General</string>
     <string name="settings_display">Aspect</string>
-    <string name="settings_backup">Backup</string>
+    <string name="settings_backup">Copie de siguranță</string>
     <string name="settings_title_configuration">Configurație</string>
     <string name="settings_summary_configuration">Setări portret și peisaj</string>
     <string name="settings_title_delete_configuration">Șterge configurația</string>
@@ -352,7 +352,7 @@
     <string name="black_theme">Negru</string>
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Nume folder</string>
-    <string name="action_folder">Folder</string>
+    <string name="action_folder">Dosar</string>
     <string name="title_rename_folder">Redenumește folder</string>
     <string name="clear_web_storage">Șterge stocarea web</string>
     <string name="clear_web_storage_exit">Șterge stocarea web la ieșire</string>
@@ -510,8 +510,8 @@
     <string name="session_already_exists">O sesiune cu acel nume există deja!</string>
     <string name="session_cant_delete_current">Nu se poate șterge sesiunea curentă!</string>
     <string name="session_prompt_confirm_deletion_title">Confirmă ștergerea</string>
-    <string name="session_prompt_confirm_deletion_message">Are you sure you want to delete session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Are you sure you want to delete \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" configuration?</string>
+    <string name="session_prompt_confirm_deletion_message">Sigur doriti sa stergeti sesiunea \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Sigur doriti sa stergeti configuratia \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Comutat la \"%s\"</string>
     <string name="busy">Ocupat, încearcă din nou în scurt timp.</string>
     <string name="invalid_character_removed">Caracter invalid eliminat!</string>
@@ -535,7 +535,7 @@
     <string name="button_dismiss">Închide</string>
     <!-- Find in page -->
     <string name="no_match_found">Nicio potrivire găsită!</string>
-    <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
+    <string name="match_x_of_n">Potrivire <xliff:g id="current_match" example="1">%1$d</xliff:g> din <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Arată snackbar</string>
     <string name="pref_title_show_animation">Arată animație</string>
     <string name="pref_title_vibrate">Vibrează</string>
@@ -553,8 +553,8 @@
     <string name="pref_category_summary_session_export">Alege sesiunea pe care vrei să o exporți</string>
     <string name="error_session_file_corrupted">Eroare: fișier sesiune corupt!</string>
     <string name="error_recovery_session">Eroare: o sesiune de recuperare a fost creată!</string>
-    <string name="message_session_imported">Imported session: <xliff:g id="session_name" example="News">%s</xliff:g></string>
-    <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
+    <string name="message_session_imported">Sesiune importata: <xliff:g id="session_name" example="News">%s</xliff:g></string>
+    <string name="message_session_exported">Sesiune exportata: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
     <string name="force_zoom_summary">Nu funcționează dacă JavaScript nu este activat</string>
     <string name="force_zoom">Forțează zoom pentru site-uri web</string>
     <string name="algorithm">Algoritm:</string>

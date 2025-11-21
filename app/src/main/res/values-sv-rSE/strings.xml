@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Ladda om</string>
-    <string name="action_menu">More</string>
+    <string name="action_menu">Mer</string>
     <string name="action_new_tab">Ny flik</string>
-    <string name="action_duplicate_tab">Duplicate tab</string>
+    <string name="action_duplicate_tab">Duplicera flik</string>
     <string name="action_share">Dela</string>
     <string name="action_history">Historik</string>
     <string name="action_bookmarks">Bokmärken</string>
@@ -17,7 +17,7 @@
     <string name="enable">Aktivera</string>
     <string name="disable">Inaktivera</string>
     <string name="settings">Inställningar</string>
-    <string name="options">Options</string>
+    <string name="options">Alternativ</string>
     <string name="location">Platsåtkomst</string>
     <string name="password">Spara dina lösenord</string>
     <string name="agent">Använderagent</string>
@@ -77,11 +77,11 @@
     <string name="action_yes">Ja</string>
     <string name="action_no">Nej</string>
     <string name="action_ask">Ask</string>
-    <string name="layer_type_none">None</string>
-    <string name="layer_type_software">Software - WebGL off</string>
-    <string name="layer_type_hardware">Hardware - WebGL on</string>
-    <string name="action_proceed">Proceed</string>
-    <string name="action_abort">Abort</string>
+    <string name="layer_type_none">Ingen</string>
+    <string name="layer_type_software">Programvara - WebGL av</string>
+    <string name="layer_type_hardware">Hårdvara - WebGL på</string>
+    <string name="action_proceed">Fortsätt</string>
+    <string name="action_abort">Avbryt</string>
     <string name="title_text_size">Textstorlek</string>
     <string name="title_error">Fel</string>
     <string name="hint_title">Rubrik</string>
@@ -92,9 +92,9 @@
     <string name="action_show_homepage">Visa hemsida</string>
     <string name="action_back">Tillbaka</string>
     <string name="action_find">Sök på sidan</string>
-    <string name="action_find_next">Find next</string>
-    <string name="action_find_previous">Find previous</string>
-    <string name="action_find_selection">Find selection</string>
+    <string name="action_find_next">Hitta nästa</string>
+    <string name="action_find_previous">Hitta föregående</string>
+    <string name="action_find_selection">Hitta markering</string>
     <string name="action_print">Skriv ut</string>
     <string name="action_translate">Översätt</string>
     <string name="downloads">Nedladdningar</string>
@@ -117,9 +117,9 @@
     <string name="message_import">Bokmärken importerades</string>
     <string name="message_clear_history">Historik rensad</string>
     <string name="message_cookies_cleared">Cookies rensade</string>
-    <string name="message_cookies_clear_error">Could not clear cookies</string>
+    <string name="message_cookies_clear_error">Kunde inte rensa cookies</string>
     <string name="max_tabs">Max tabs reached. Unlock more from Settings &gt; Sponsorship.</string>
-    <string name="message_cookie_copied">Cookie copied to clipboard</string>
+    <string name="message_cookie_copied">Cookie kopierad till urklipp</string>
     <string name="message_text_copied">Text kopierad till urklipp</string>
     <string name="message_link_copied">Länk kopierad till urklipp</string>
     <string name="message_blocked_local">Lokal fil har blockerats från att ladda</string>
@@ -140,7 +140,7 @@
     <string name="page_blocked_reason">på grund av:</string>
     <string name="page_blocked_list_ad">%s på annonsfilter</string>
     <string name="page_blocked_list_user">%s blockerad av användarregel</string>
-    <string name="page_blocked_list_malware">%s on malware filters</string>
+    <string name="page_blocked_list_malware">%s på filter för skadlig kod</string>
     <string name="request_blocked">Begäran spärrad</string>
     <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Automatiskt uppdateringsläge</string>
@@ -149,7 +149,7 @@
     <string name="blocklist_update_wifi">Endast på icke-mätta anslutningar</string>
     <string name="blocklist_update">Uppdatera filter</string>
     <string name="blocklist_update_frequency">Automatisk uppdatering frekvens</string>
-    <string name="blocklist_update_description">Updates will be done with the chosen frequency, unless the filters file specifies a longer interval</string>
+    <string name="blocklist_update_description">Uppdateringar görs med vald frekvens, om inte filterfilen anger ett längre intervall</string>
     <string name="blocklist_update_now">Uppdatera listor nu</string>
     <string name="blocklist_last_update">Senaste uppdatering: %s</string>
     <string name="blocklist_updating">Uppdaterar…</string>
@@ -172,8 +172,8 @@
     <!-- Common actions -->
     <string name="action_message_canceled">Åtgärd avbröts.</string>
     <!-- SSL warnings -->
-    <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
-    <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
+    <string name="message_ssl_error_aborted">Säkerhetsfel! Sidladdning avbruten.</string>
+    <string name="message_ssl_error">Säker anslutning komprometterad:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Vill du fortfarande fortsätta?</string>
     <string name="message_certificate_date_invalid">Datum för certifikatet är ogiltigt</string>
     <string name="message_certificate_expired">Certifikatet har gått ut</string>
     <string name="message_certificate_domain_mismatch">Domänen i certifikatet matchar inte webbplatsdomänen</string>
@@ -233,27 +233,27 @@
     <string name="message_bookmark_added">Bokmärke tillagt.</string>
     <string name="message_bookmark_not_added">Bokmärket finns redan.</string>
     <string name="title_chooser">Välj en fil</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">Öppna med</string>
     <string name="settings_general">Allmänt</string>
     <string name="settings_display">Utseende &amp; känsla</string>
     <string name="settings_backup">Säkerhetskopiering</string>
     <string name="settings_title_configuration">Inställningar</string>
     <string name="settings_summary_configuration">Inställningar för porträtt och landskap</string>
-    <string name="settings_title_delete_configuration">Delete configuration</string>
+    <string name="settings_title_delete_configuration">Ta bort konfiguration</string>
     <string name="settings_title_portrait">@string/pref_category_portrait</string>
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
-    <string name="settings_title_add_configuration">Add configuration</string>
+    <string name="settings_title_add_configuration">Lägg till konfiguration</string>
     <string name="settings_privacy">Integritet</string>
     <string name="settings_about">Om</string>
     <string name="settings_contribute">Medverka</string>
     <string name="settings_summary_contribute">Hjälp Fulguris växa och lyckas</string>
-    <string name="settings_title_privacy_policy">Privacy Policy</string>
-    <string name="settings_summary_privacy_policy">See our privacy policy online</string>
-    <string name="settings_title_terms_and_conditions">Terms &amp; Conditions</string>
-    <string name="settings_summary_terms_and_conditions">See our terms and conditions online</string>
-    <string name="settings_title_introduction">Introduction</string>
-    <string name="settings_summary_introduction">Launch the onboarding experience</string>
-    <string name="settings_summary_discord">Join our growing community</string>
+    <string name="settings_title_privacy_policy">Integritetspolicy</string>
+    <string name="settings_summary_privacy_policy">Se vår integritetspolicy online</string>
+    <string name="settings_title_terms_and_conditions">Villkor</string>
+    <string name="settings_summary_terms_and_conditions">Se våra villkor online</string>
+    <string name="settings_title_introduction">Introduktion</string>
+    <string name="settings_summary_introduction">Starta introduktionen</string>
+    <string name="settings_summary_discord">Gå med i vår växande community</string>
     <string name="pref_category_panels">Fält</string>
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landskap</string>
@@ -264,23 +264,23 @@
     <string name="pref_category_on_tab_close">Vid stängning av flik</string>
     <string name="pref_category_on_tab_change">Vid ändring av flik</string>
     <string name="pref_category_on_tab_back_forward">När du går bakåt eller framåt</string>
-    <string name="settings_category_on_follow_link">When following a link</string>
-    <string name="pref_category_scrollbars">Scrollbars</string>
+    <string name="settings_category_on_follow_link">När du följer en länk</string>
+    <string name="pref_category_scrollbars">Rullningslister</string>
     <string name="settings_title_tab">Tab</string>
-    <string name="settings_title_page_history">Page history</string>
-    <string name="settings_summary_tab">Animations, feedback and appearance</string>
-    <string name="pref_summary_scrollbars">Adjust scrollbars size and behavior</string>
-    <string name="pref_category_subscriptions">Subscriptions</string>
-    <string name="pref_summary_subscriptions">Activate or cancel your subscriptions</string>
+    <string name="settings_title_page_history">Sidhistorik</string>
+    <string name="settings_summary_tab">Animationer, feedback och utseende</string>
+    <string name="pref_summary_scrollbars">Justera rullningslisternas storlek och beteende</string>
+    <string name="pref_category_subscriptions">Prenumerationer</string>
+    <string name="pref_summary_subscriptions">Aktivera eller avbryt dina prenumerationer</string>
     <string name="pref_title_hide_status_bar">Dölj statusfält</string>
     <string name="pref_title_hide_tool_bar">Dölj verktygsfältet vid rullning nedåt</string>
     <string name="pref_title_show_tool_bar_when_scroll_up">Visa verktygsfältet när du rullar upp</string>
     <string name="pref_title_show_tool_bar_on_page_top">Visa verktygsfältet överst på sidan</string>
-    <string name="pref_title_use_cutout_area">Use notch areas</string>
-    <string name="pref_summary_on_use_cutout_area">Allow content to extend into notch regions for full-screen display</string>
-    <string name="pref_summary_off_use_cutout_area">Prevent content from overlapping notch regions</string>
-    <string name="pref_title_system_gesture_clearance">System gesture clearance</string>
-    <string name="pref_summary_system_gesture_clearance">Keep content away from bottom gestures</string>
+    <string name="pref_title_use_cutout_area">Använd skärmskåror</string>
+    <string name="pref_summary_on_use_cutout_area">Tillåt innehåll att sträcka sig in i skärmskåror för helskärmsvisning</string>
+    <string name="pref_summary_off_use_cutout_area">Förhindra att innehåll överlappar skärmskåror</string>
+    <string name="pref_title_system_gesture_clearance">Utrymme för systemgester</string>
+    <string name="pref_summary_system_gesture_clearance">Håll innehåll borta från nedre gester</string>
     <string name="pref_title_locked_drawers">Låsta paneler</string>
     <string name="pref_summary_locked_drawers">Flikar och bokmärken kan inte dras</string>
     <string name="pref_title_use_bottom_sheets">Använd nedre ark</string>
@@ -291,13 +291,13 @@
     <string name="pref_summary_menu_show_exit">Visa alternativet Avsluta app i menyn. Inkognitoläge visar alltid det oavsett.</string>
     <string name="pref_title_menu_new_tab">Menuobjjekt för ny flik</string>
     <string name="pref_summary_menu_new_tab">Visa nytt flikval i menyn</string>
-    <string name="pref_title_crash_report">Crash reports</string>
+    <string name="pref_title_crash_report">Kraschrapporter</string>
     <string name="pref_title_analytics">Analytiker</string>
     <string name="pref_title_pull_to_refresh">Dra för att uppdatera</string>
-    <string name="pref_summary_on_crash_reports">Help improve the app by sending crash reports</string>
-    <string name="pref_summary_off_crash_reports">Crash reports will not be sent</string>
-    <string name="pref_summary_on_analytics">Help improve the app by sending usage data</string>
-    <string name="pref_summary_off_analytics">Usage data will not be sent</string>
+    <string name="pref_summary_on_crash_reports">Hjälp till att förbättra appen genom att skicka kraschrapporter</string>
+    <string name="pref_summary_off_crash_reports">Kraschrapporter skickas inte</string>
+    <string name="pref_summary_on_analytics">Hjälp till att förbättra appen genom att skicka användningsdata</string>
+    <string name="pref_summary_off_analytics">Användningsdata skickas inte</string>
     <string name="pref_title_accept_terms">Jag vill använda Fulguris</string>
     <string name="pref_summary_on_accept_terms">Du har accepterat våra villkor</string>
     <string name="pref_summary_off_accept_terms">Acceptera våra villkor för att fortsätta</string>
