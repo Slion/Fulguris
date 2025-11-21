@@ -106,7 +106,7 @@
     <string name="download_no_sdcard_dlg_title">Intet SD-kort</string>
     <string name="download_no_sdcard_dlg_msg">USB-lager er påkrævet for at downloade filen.</string>
     <string name="download_sdcard_busy_dlg_title">USB-lager ikke tilgængeligt</string>
-    <string name="download_sdcard_busy_dlg_msg">Lageret er optaget. For at tillade downloads, tryk på " Slå USB-lager fra\</string>
+    <string name="download_sdcard_busy_dlg_msg">Lageret er optaget. For at tillade downloads, tryk på \" Slå USB-lager fra\</string>
     <string name="download_complete">Download fuldført</string>
     <string name="download_failed">Download mislykkedes</string>
     <string name="incognito_cookies">Aktivér cookies i inkognitotilstand</string>
@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Vil blive genskabt næste gang dette domæne stødes på</string>
     <string name="settings_title_parent">Forælder</string>
     <string name="settings_summary_default_domain_settings">Standard domæneindstillinger</string>
+    <string name="settings_summary_loading">Indlæser…</string>
     <string name="settings_title_ssl_error">Sikkerhedsfejl</string>
     <string name="settings_summary_ssl_error">Hvad skal gøres, når en SSL-fejl registreres</string>
     <string name="settings_title_incoming_url_action">Indgående linkhandling</string>
@@ -485,6 +486,11 @@
         <item quantity="one">Nuværende side har en cookie</item>
         <item quantity="other">Nuværende side har <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 tilsidesættelse</item>
+        <item quantity="other">%d tilsidesættelser</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Ingen tilsidesættelser</string>
     <string name="settings_title_task_label">Opgaveetiket</string>
     <string name="settings_title_task_icon">Opgaveikon</string>
     <string name="settings_summary_on_task_icon">Brug sideikon</string>
@@ -501,8 +507,8 @@
     <string name="session_already_exists">En session med det navn findes allerede!</string>
     <string name="session_cant_delete_current">Kan ikke slette nuværende session!</string>
     <string name="session_prompt_confirm_deletion_title">Bekræft sletning</string>
-    <string name="session_prompt_confirm_deletion_message">Er du sikker på at du vil slette session "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Er du sikker på at du vil slette "<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>" konfiguration?</string>
+    <string name="session_prompt_confirm_deletion_message">Er du sikker på at du vil slette session \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Er du sikker på at du vil slette \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\" konfiguration?</string>
     <string name="session_switched">Skiftet til \"%s\"</string>
     <string name="busy">Optaget, prøv igen om lidt.</string>
     <string name="invalid_character_removed">Ugyldigt tegn fjernet!</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Annonceblokering</string>
     <string name="pref_summary_on_enable_ad_blocker">Nyd en renere, sikrere weboplevelse</string>
     <string name="pref_summary_off_enable_ad_blocker">Nyd en ufiltreret, original version af nettet</string>
-    <string name="settings_summary_no_overrides">Ingen tilsidesættelser</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 tilsidesættelse</item>
-        <item quantity="other">%d tilsidesættelser</item>
-    </plurals>
-    <string name="settings_summary_loading">Indlæser…</string>
 </resources>

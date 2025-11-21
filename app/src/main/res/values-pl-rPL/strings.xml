@@ -461,6 +461,7 @@
     <string name="settings_summary_delete_domain_settings">Zostaną ponownie utworzone przy napotkaniu tej domeny</string>
     <string name="settings_title_parent">Nadrzędne</string>
     <string name="settings_summary_default_domain_settings">Domyślne ustawienia domen</string>
+    <string name="settings_summary_loading">Ładowanie…</string>
     <string name="settings_title_ssl_error">Błąd bezpieczeństwa</string>
     <string name="settings_summary_ssl_error">Co zrobić, gdy wykryty został błąd SSL</string>
     <string name="settings_title_incoming_url_action">Akcja przychodzącego linku</string>
@@ -489,6 +490,13 @@
         <item quantity="many">Bieżąca strona ma wiele plików cookie</item>
         <item quantity="other">Bieżąca strona ma <xliff:g id="cookies_count" example="2">%d</xliff:g> plików cookie</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 nadpisanie</item>
+        <item quantity="few">%d nadpisań</item>
+        <item quantity="many">%d nadpisań</item>
+        <item quantity="other">%d nadpisań</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Brak nadpisań</string>
     <string name="settings_title_task_label">Etykieta zadania</string>
     <string name="settings_title_task_icon">Ikona zadania</string>
     <string name="settings_summary_on_task_icon">Użyj ikony strony</string>
@@ -633,10 +641,4 @@
     <string name="pref_title_enable_ad_blocker">Bloker reklam</string>
     <string name="pref_summary_on_enable_ad_blocker">Ciesz się czystszym, bezpieczniejszym doświadczeniem w sieci</string>
     <string name="pref_summary_off_enable_ad_blocker">Ciesz się niefiltrowaną, oryginalną wersją sieci</string>
-    <string name="settings_summary_no_overrides">Brak nadpisań</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 nadpisanie</item>
-        <item quantity="other">%d nadpisań</item>
-    </plurals>
-    <string name="settings_summary_loading">Ładowanie…</string>
 </resources>

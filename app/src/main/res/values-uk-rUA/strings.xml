@@ -461,6 +461,7 @@
     <string name="settings_summary_delete_domain_settings">Буде повторно створено наступного разу при зіткненні цього домену</string>
     <string name="settings_title_parent">Батьківський</string>
     <string name="settings_summary_default_domain_settings">Налаштування домену за замовчуванням</string>
+    <string name="settings_summary_loading">Завантаження…</string>
     <string name="settings_title_ssl_error">Помилка безпеки</string>
     <string name="settings_summary_ssl_error">Що робити при виявленні помилки SSL</string>
     <string name="settings_title_incoming_url_action">Дія вхідного посилання</string>
@@ -489,6 +490,13 @@
         <item quantity="many">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
         <item quantity="other">На поточній сторінці <xliff:g id="cookies_count" example="2">%d</xliff:g> файлів cookie</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 перевизначення</item>
+        <item quantity="few">%d перевизначень</item>
+        <item quantity="many">%d перевизначень</item>
+        <item quantity="other">%d перевизначень</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Без перевизначень</string>
     <string name="settings_title_task_label">Мітка завдання</string>
     <string name="settings_title_task_icon">Значок завдання</string>
     <string name="settings_summary_on_task_icon">Використовувати значок сторінки</string>
@@ -633,10 +641,4 @@
     <string name="pref_title_enable_ad_blocker">Блокувальник реклами</string>
     <string name="pref_summary_on_enable_ad_blocker">Насолоджуйтесь чистішим, безпечнішим інтернетом</string>
     <string name="pref_summary_off_enable_ad_blocker">Насолоджуйтесь нефільтрованою, оригінальною версією інтернету</string>
-    <string name="settings_summary_no_overrides">Без перевизначень</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 перевизначення</item>
-        <item quantity="other">%d перевизначень</item>
-    </plurals>
-    <string name="settings_summary_loading">Завантаження…</string>
 </resources>

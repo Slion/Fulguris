@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Sarà ricreato la prossima volta che questo dominio è incontrato</string>
     <string name="settings_title_parent">Genitore</string>
     <string name="settings_summary_default_domain_settings">Impostazioni dominio predefinite</string>
+    <string name="settings_summary_loading">Caricamento…</string>
     <string name="settings_title_ssl_error">Errore di sicurezza</string>
     <string name="settings_summary_ssl_error">Cosa fare quando un errore SSL è rilevato</string>
     <string name="settings_title_incoming_url_action">Azione link in arrivo</string>
@@ -485,6 +486,11 @@
         <item quantity="one">La pagina attuale ha un cookie</item>
         <item quantity="other">La pagina attuale ha <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 sovrascrittura</item>
+        <item quantity="other">%d sovrascritture</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Nessuna sovrascrittura</string>
     <string name="settings_title_task_label">Etichetta attività</string>
     <string name="settings_title_task_icon">Icona attività</string>
     <string name="settings_summary_on_task_icon">Usa icona della pagina</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Blocco annunci</string>
     <string name="pref_summary_on_enable_ad_blocker">Goditi un\'esperienza web più pulita e sicura</string>
     <string name="pref_summary_off_enable_ad_blocker">Goditi una versione non filtrata e originale del web</string>
-    <string name="settings_summary_no_overrides">Nessuna sovrascrittura</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 sovrascrittura</item>
-        <item quantity="other">%d sovrascritture</item>
-    </plurals>
-    <string name="settings_summary_loading">Caricamento…</string>
 </resources>

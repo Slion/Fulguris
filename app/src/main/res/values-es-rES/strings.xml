@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Será recreado la próxima vez que se encuentre este dominio</string>
     <string name="settings_title_parent">Padre</string>
     <string name="settings_summary_default_domain_settings">Configuración de dominio predeterminada</string>
+    <string name="settings_summary_loading">Cargando…</string>
     <string name="settings_title_ssl_error">Error de seguridad</string>
     <string name="settings_summary_ssl_error">Qué hacer cuando se detecte un error SSL</string>
     <string name="settings_title_incoming_url_action">Acción de enlace entrante</string>
@@ -485,6 +486,11 @@
         <item quantity="one">La página actual tiene 1 cookie</item>
         <item quantity="other">La página actual contiene <xliff:g id="cookies_count" example="2">%d</xliff:g></item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 anulación</item>
+        <item quantity="other">%d anulaciones</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Sin anulaciones</string>
     <string name="settings_title_task_label">Etiqueta de la tarea</string>
     <string name="settings_title_task_icon">Icono de la tarea</string>
     <string name="settings_summary_on_task_icon">Usar icono de la página</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Bloqueador de anuncios</string>
     <string name="pref_summary_on_enable_ad_blocker">Disfruta de una experiencia web más limpia y segura</string>
     <string name="pref_summary_off_enable_ad_blocker">Disfruta de una versión sin filtrar y original de la web</string>
-    <string name="settings_summary_no_overrides">Sin anulaciones</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 anulación</item>
-        <item quantity="other">%d anulaciones</item>
-    </plurals>
-    <string name="settings_summary_loading">Cargando…</string>
 </resources>

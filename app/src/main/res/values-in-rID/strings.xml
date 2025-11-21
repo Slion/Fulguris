@@ -408,7 +408,7 @@
     <string name="dialog_remove_folder">Hapus folder</string>
     <string name="dialog_title_close_browser">Tutup browser</string>
     <string name="dialog_title_incoming_url">Buka %1$s</string>
-    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="dialog_message_incoming_url">%1\n\n%2</string>
     <string name="message_blocked_domain">Diblokir %1$s</string>
     <string name="dialog_delete_all_downloads">Hapus semua unduhan</string>
     <!-- Tools dialog -->
@@ -458,6 +458,7 @@
     <string name="settings_summary_delete_domain_settings">Akan dibuat ulang saat domain ini ditemui lagi</string>
     <string name="settings_title_parent">Induk</string>
     <string name="settings_summary_default_domain_settings">Pengaturan domain default</string>
+    <string name="settings_summary_loading">Memuat…</string>
     <string name="settings_title_ssl_error">Kesalahan keamanan</string>
     <string name="settings_summary_ssl_error">Apa yang harus dilakukan saat kesalahan SSL terdeteksi</string>
     <string name="settings_title_incoming_url_action">Aksi tautan masuk</string>
@@ -483,6 +484,10 @@
     <plurals name="settings_summary_cookies">
         <item quantity="other">Halaman saat ini memiliki <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="other">%d penggantian</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Tidak ada penggantian</string>
     <string name="settings_title_task_label">Label tugas</string>
     <string name="settings_title_task_icon">Ikon tugas</string>
     <string name="settings_summary_on_task_icon">Gunakan ikon halaman</string>
@@ -627,10 +632,4 @@
     <string name="pref_title_enable_ad_blocker">Pemblokir iklan</string>
     <string name="pref_summary_on_enable_ad_blocker">Nikmati pengalaman web yang lebih bersih dan aman</string>
     <string name="pref_summary_off_enable_ad_blocker">Nikmati versi web asli tanpa filter</string>
-    <string name="settings_summary_no_overrides">Tidak ada penggantian</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 penggantian</item>
-        <item quantity="other">%d penggantian</item>
-    </plurals>
-    <string name="settings_summary_loading">Memuat…</string>
 </resources>

@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Serão recriadas na próxima vez em que este domínio for carregado</string>
     <string name="settings_title_parent">Domínio pai</string>
     <string name="settings_summary_default_domain_settings">Configurações padrão de domínio</string>
+    <string name="settings_summary_loading">Carregando…</string>
     <string name="settings_title_ssl_error">Erro de segurança</string>
     <string name="settings_summary_ssl_error">O que fazer quando um erro SSL for detectado</string>
     <string name="settings_title_incoming_url_action">Ação de link recebido</string>
@@ -485,6 +486,11 @@
         <item quantity="one">A página atual possui um cookie</item>
         <item quantity="other">A página atual possui <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 substituição</item>
+        <item quantity="other">%d substituições</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Sem substituições</string>
     <string name="settings_title_task_label">Nome da tarefa</string>
     <string name="settings_title_task_icon">Ícone da tarefa</string>
     <string name="settings_summary_on_task_icon">Usar ícone da página</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Bloqueador de anúncios</string>
     <string name="pref_summary_on_enable_ad_blocker">Desfrute de uma experiência web mais limpa e segura</string>
     <string name="pref_summary_off_enable_ad_blocker">Desfrute de uma versão não filtrada e original da web</string>
-    <string name="settings_summary_no_overrides">Sem substituições</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 substituição</item>
-        <item quantity="other">%d substituições</item>
-    </plurals>
-    <string name="settings_summary_loading">Carregando…</string>
 </resources>

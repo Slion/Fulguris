@@ -408,7 +408,7 @@
     <string name="dialog_remove_folder">Αφαίρεση φακέλου</string>
     <string name="dialog_title_close_browser">Κλείσιμο προγράμματος περιήγησης</string>
     <string name="dialog_title_incoming_url">Άνοιγμα %1$s</string>
-    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="dialog_message_incoming_url">%1\n\n%2</string>
     <string name="message_blocked_domain">Αποκλείστηκε %1$s</string>
     <string name="dialog_delete_all_downloads">Διαγραφή όλων των λήψεων</string>
     <!-- Tools dialog -->
@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Θα δημιουργηθεί ξανά την επόμενη φορά που θα συναντηθεί αυτός ο τομέας</string>
     <string name="settings_title_parent">Γονικό</string>
     <string name="settings_summary_default_domain_settings">Προεπιλεγμένες ρυθμίσεις τομέα</string>
+    <string name="settings_summary_loading">Φόρτωση…</string>
     <string name="settings_title_ssl_error">Σφάλμα ασφαλείας</string>
     <string name="settings_summary_ssl_error">Τι να γίνει όταν ανιχνευτεί σφάλμα SSL</string>
     <string name="settings_title_incoming_url_action">Ενέργεια εισερχόμενου συνδέσμου</string>
@@ -485,6 +486,11 @@
         <item quantity="one">Η τρέχουσα σελίδα έχει ένα cookie</item>
         <item quantity="other">Η τρέχουσα σελίδα έχει <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 παράκαμψη</item>
+        <item quantity="other">%d παρακάμψεις</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Χωρίς παρακάμψεις</string>
     <string name="settings_title_task_label">Ετικέτα εργασίας</string>
     <string name="settings_title_task_icon">Εικονίδιο εργασίας</string>
     <string name="settings_summary_on_task_icon">Χρήση εικονιδίου σελίδας</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Αποκλειστής διαφημίσεων</string>
     <string name="pref_summary_on_enable_ad_blocker">Απολαύστε μια πιο καθαρή, ασφαλέστερη εμπειρία ιστού</string>
     <string name="pref_summary_off_enable_ad_blocker">Απολαύστε την αφιλτράριστη, αυθεντική έκδοση του ιστού</string>
-    <string name="settings_summary_no_overrides">Χωρίς παρακάμψεις</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 παράκαμψη</item>
-        <item quantity="other">%d παρακάμψεις</item>
-    </plurals>
-    <string name="settings_summary_loading">Φόρτωση…</string>
 </resources>

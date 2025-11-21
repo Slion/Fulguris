@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Wird neu erstellt, wenn diese Domäne das nächste Mal aufgesucht wird</string>
     <string name="settings_title_parent">Übergeordnet</string>
     <string name="settings_summary_default_domain_settings">Standard-Domäneneinstellungen</string>
+    <string name="settings_summary_loading">Laden…</string>
     <string name="settings_title_ssl_error">Sicherheitsfehler</string>
     <string name="settings_summary_ssl_error">Was tun wenn ein SSL-Error aufgetreten ist</string>
     <string name="settings_title_incoming_url_action">Eingehende Link-Aktion</string>
@@ -485,6 +486,11 @@
         <item quantity="one">Aktuelle Seite enthält ein Cookie</item>
         <item quantity="other">Die aktuelle Seite hat <xliff:g id="cookies_count" example="2">%d</xliff:g> Kekse</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 Überschreibung</item>
+        <item quantity="other">%d Überschreibungen</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Keine Überschreibungen</string>
     <string name="settings_title_task_label">Aufgabenbezeichnung</string>
     <string name="settings_title_task_icon">Aufgabensymbol</string>
     <string name="settings_summary_on_task_icon">Benutze Seitensymbol</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Werbeblocker</string>
     <string name="pref_summary_on_enable_ad_blocker">Genießen Sie ein saubereres, sichereres Web-Erlebnis</string>
     <string name="pref_summary_off_enable_ad_blocker">Genießen Sie eine ungefilterte, originale Version des Webs</string>
-    <string name="settings_summary_no_overrides">Keine Überschreibungen</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 Überschreibung</item>
-        <item quantity="other">%d Überschreibungen</item>
-    </plurals>
-    <string name="settings_summary_loading">Laden…</string>
 </resources>

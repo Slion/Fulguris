@@ -458,6 +458,7 @@
     <string name="settings_summary_delete_domain_settings">ลบการตั้งค่าสำหรับโดเมนนี้</string>
     <string name="settings_title_parent">โดเมนหลัก</string>
     <string name="settings_summary_default_domain_settings">การตั้งค่าโดเมนเริ่มต้น</string>
+    <string name="settings_summary_loading">กำลังโหลด…</string>
     <string name="settings_title_ssl_error">ข้อผิดพลาด SSL</string>
     <string name="settings_summary_ssl_error">วิธีจัดการข้อผิดพลาด SSL</string>
     <string name="settings_title_incoming_url_action">การดำเนินการ URL ขาเข้า</string>
@@ -483,6 +484,10 @@
     <plurals name="settings_summary_cookies">
         <item quantity="other">หน้าปัจจุบันมี <xliff:g id="cookies_count" example="2">%d</xliff:g> คุกกี้</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="other">%d การแทนที่</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">ไม่มีการแทนที่</string>
     <string name="settings_title_task_label">ชื่องาน</string>
     <string name="settings_title_task_icon">ไอคอนงาน</string>
     <string name="settings_summary_on_task_icon">ใช้ไอคอนหน้า</string>
@@ -499,8 +504,8 @@
     <string name="session_already_exists">มีเซสชันที่มีชื่อนั้นอยู่แล้ว!</string>
     <string name="session_cant_delete_current">ไม่สามารถลบเซสชันปัจจุบันได้!</string>
     <string name="session_prompt_confirm_deletion_title">ยืนยันการลบ</string>
-    <string name="session_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบเซสชัน "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบการกำหนดค่า "<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>"?</string>
+    <string name="session_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบเซสชัน \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">คุณแน่ใจหรือไม่ว่าต้องการลบการกำหนดค่า \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">สลับไปที่ \"%s\"</string>
     <string name="busy">ไม่ว่าง</string>
     <string name="invalid_character_removed">ลบอักขระที่ไม่ถูกต้องแล้ว</string>
@@ -627,10 +632,4 @@
     <string name="pref_title_enable_ad_blocker">ตัวบล็อกโฆษณา</string>
     <string name="pref_summary_on_enable_ad_blocker">เพลิดเพลินกับประสบการณ์เว็บที่สะอาดและปลอดภัยยิ่งขึ้น</string>
     <string name="pref_summary_off_enable_ad_blocker">เพลิดเพลินกับเว็บเวอร์ชันต้นฉบับที่ไม่ถูกกรอง</string>
-    <string name="settings_summary_no_overrides">ไม่มีการแทนที่</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 การแทนที่</item>
-        <item quantity="other">%d การแทนที่</item>
-    </plurals>
-    <string name="settings_summary_loading">กำลังโหลด…</string>
 </resources>

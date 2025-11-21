@@ -408,7 +408,7 @@
     <string name="dialog_remove_folder">移除資料夾</string>
     <string name="dialog_title_close_browser">關閉瀏覽器</string>
     <string name="dialog_title_incoming_url">開啟 %1$s</string>
-    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="dialog_message_incoming_url">%1\n\n%2</string>
     <string name="message_blocked_domain">已封鎖 %1$s</string>
     <string name="dialog_delete_all_downloads">刪除所有下載</string>
     <!-- Tools dialog -->
@@ -458,6 +458,7 @@
     <string name="settings_summary_delete_domain_settings">下次遇到此網域時將重新建立</string>
     <string name="settings_title_parent">父項</string>
     <string name="settings_summary_default_domain_settings">預設網域設定</string>
+    <string name="settings_summary_loading">載入中…</string>
     <string name="settings_title_ssl_error">安全性錯誤</string>
     <string name="settings_summary_ssl_error">偵測到 SSL 錯誤時該怎麼做</string>
     <string name="settings_title_incoming_url_action">傳入連結操作</string>
@@ -483,6 +484,10 @@
     <plurals name="settings_summary_cookies">
         <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="other">%d個覆寫</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">無覆寫</string>
     <string name="settings_title_task_label">工作標籤</string>
     <string name="settings_title_task_icon">工作圖示</string>
     <string name="settings_summary_on_task_icon">使用頁面圖示</string>
@@ -627,10 +632,4 @@
     <string name="pref_title_enable_ad_blocker">廣告封鎖器</string>
     <string name="pref_summary_on_enable_ad_blocker">享受更乾淨、更安全的網路體驗</string>
     <string name="pref_summary_off_enable_ad_blocker">享受未過濾的原始網路版本</string>
-    <string name="settings_summary_no_overrides">無覆寫</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1個覆寫</item>
-        <item quantity="other">%d個覆寫</item>
-    </plurals>
-    <string name="settings_summary_loading">載入中…</string>
 </resources>

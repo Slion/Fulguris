@@ -458,6 +458,7 @@
     <string name="settings_summary_delete_domain_settings">이 도메인이 다음에 발견되면 다시 생성됩니다</string>
     <string name="settings_title_parent">상위</string>
     <string name="settings_summary_default_domain_settings">기본 도메인 설정</string>
+    <string name="settings_summary_loading">로딩 중…</string>
     <string name="settings_title_ssl_error">보안 오류</string>
     <string name="settings_summary_ssl_error">SSL 오류가 감지될 때 수행할 작업</string>
     <string name="settings_title_incoming_url_action">수신 링크 작업</string>
@@ -483,6 +484,10 @@
     <plurals name="settings_summary_cookies">
         <item quantity="other">현재 페이지에 <xliff:g id="cookies_count" example="2">%d</xliff:g>개의 쿠키가 있습니다</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="other">%d개 재정의</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">재정의 없음</string>
     <string name="settings_title_task_label">작업 레이블</string>
     <string name="settings_title_task_icon">작업 아이콘</string>
     <string name="settings_summary_on_task_icon">페이지 아이콘 사용</string>
@@ -627,10 +632,4 @@
     <string name="pref_title_enable_ad_blocker">광고 차단기</string>
     <string name="pref_summary_on_enable_ad_blocker">더 깔끔하고 안전한 웹 경험을 즐기세요</string>
     <string name="pref_summary_off_enable_ad_blocker">필터링되지 않은 원래 버전의 웹을 즐기세요</string>
-    <string name="settings_summary_no_overrides">재정의 없음</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1개 재정의</item>
-        <item quantity="other">%d개 재정의</item>
-    </plurals>
-    <string name="settings_summary_loading">로딩 중…</string>
 </resources>

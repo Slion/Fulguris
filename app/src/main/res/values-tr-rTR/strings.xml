@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Bu alan adıyla bir sonraki karşılaşmada yeniden oluşturulacak</string>
     <string name="settings_title_parent">Üst</string>
     <string name="settings_summary_default_domain_settings">Varsayılan alan adı ayarları</string>
+    <string name="settings_summary_loading">Yükleniyor…</string>
     <string name="settings_title_ssl_error">Güvenlik hatası</string>
     <string name="settings_summary_ssl_error">Bir SSL hatası algılandığında ne yapılmalı</string>
     <string name="settings_title_incoming_url_action">Gelen bağlantı eylemi</string>
@@ -485,6 +486,11 @@
         <item quantity="one">Mevcut sayfada bir çerez var</item>
         <item quantity="other">Mevcut sayfada <xliff:g id="cookies_count" example="2">%d</xliff:g> çerez var</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 geçersiz kılma</item>
+        <item quantity="other">%d geçersiz kılma</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Geçersiz kılma yok</string>
     <string name="settings_title_task_label">Görev etiketi</string>
     <string name="settings_title_task_icon">Görev simgesi</string>
     <string name="settings_summary_on_task_icon">Sayfa simgesini kullan</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Reklam engelleyici</string>
     <string name="pref_summary_on_enable_ad_blocker">Daha temiz, daha güvenli bir web deneyiminin keyfini çıkarın</string>
     <string name="pref_summary_off_enable_ad_blocker">Web\'in filtrelenmemiş, orijinal sürümünün keyfini çıkarın</string>
-    <string name="settings_summary_no_overrides">Geçersiz kılma yok</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 geçersiz kılma</item>
-        <item quantity="other">%d geçersiz kılma</item>
-    </plurals>
-    <string name="settings_summary_loading">Yükleniyor…</string>
 </resources>

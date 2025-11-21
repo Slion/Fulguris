@@ -408,7 +408,7 @@
     <string name="dialog_remove_folder">Poista kansio</string>
     <string name="dialog_title_close_browser">Sulje selain</string>
     <string name="dialog_title_incoming_url">Avaa %1$s</string>
-    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="dialog_message_incoming_url">Haluatko avata tämän URL-osoitteen?</string>
     <string name="message_blocked_domain">Estetty %1$s</string>
     <string name="dialog_delete_all_downloads">Poista kaikki lataukset</string>
     <!-- Tools dialog -->
@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Poista tämän verkkotunnuksen asetukset</string>
     <string name="settings_title_parent">Pääverkkotunnus</string>
     <string name="settings_summary_default_domain_settings">Oletusverkkotunnuksen asetukset</string>
+    <string name="settings_summary_loading">Loading…</string>
     <string name="settings_title_ssl_error">SSL-virhe</string>
     <string name="settings_summary_ssl_error">Miten käsitellä SSL-virheet</string>
     <string name="settings_title_incoming_url_action">Saapuvan URL-osoitteen toiminto</string>
@@ -485,6 +486,11 @@
         <item quantity="one">Current page has one cookie</item>
         <item quantity="other">%d evästettä</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 override</item>
+        <item quantity="other">%d overrides</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">No overrides</string>
     <string name="settings_title_task_label">Tehtävän nimi</string>
     <string name="settings_title_task_icon">Task icon</string>
     <string name="settings_summary_on_task_icon">Use page icon</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Mainosten esto</string>
     <string name="pref_summary_on_enable_ad_blocker">Nauti puhtaammasta, turvallisemmasta verkkokokemuksesta</string>
     <string name="pref_summary_off_enable_ad_blocker">Nauti suodattamattomasta, alkuperäisestä verkosta</string>
-    <string name="settings_summary_no_overrides">No overrides</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 override</item>
-        <item quantity="other">%d overrides</item>
-    </plurals>
-    <string name="settings_summary_loading">Loading…</string>
 </resources>

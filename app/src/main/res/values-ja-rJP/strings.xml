@@ -458,6 +458,7 @@
     <string name="settings_summary_delete_domain_settings">次回このドメインが見つかったときに再作成されます。</string>
     <string name="settings_title_parent">親</string>
     <string name="settings_summary_default_domain_settings">既定のドメイン設定</string>
+    <string name="settings_summary_loading">読み込み中…</string>
     <string name="settings_title_ssl_error">セキュリティエラー</string>
     <string name="settings_summary_ssl_error">SSLエラーが検出されたときの対処方法</string>
     <string name="settings_title_incoming_url_action">受信リンクアクション</string>
@@ -483,6 +484,10 @@
     <plurals name="settings_summary_cookies">
         <item quantity="other">現在のページには <xliff:g id="cookies_count" example="2">%d</xliff:g> クッキー があります</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="other">%dつのオーバーライド</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">オーバーライドなし</string>
     <string name="settings_title_task_label">タスクラベル</string>
     <string name="settings_title_task_icon">タスクアイコン</string>
     <string name="settings_summary_on_task_icon">ページアイコンを使用</string>
@@ -627,10 +632,4 @@
     <string name="pref_title_enable_ad_blocker">広告ブロッカー</string>
     <string name="pref_summary_on_enable_ad_blocker">よりクリーンで安全なウェブ体験をお楽しみください</string>
     <string name="pref_summary_off_enable_ad_blocker">フィルタリングされていない本来のウェブをお楽しみください</string>
-    <string name="settings_summary_no_overrides">オーバーライドなし</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1つのオーバーライド</item>
-        <item quantity="other">%dつのオーバーライド</item>
-    </plurals>
-    <string name="settings_summary_loading">読み込み中…</string>
 </resources>

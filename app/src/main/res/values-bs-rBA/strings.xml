@@ -460,6 +460,7 @@
     <string name="settings_summary_delete_domain_settings">Bit će ponovo kreiran sljedeći put kada se naiđe na ovu domenu</string>
     <string name="settings_title_parent">Roditelj</string>
     <string name="settings_summary_default_domain_settings">Zadane postavke domene</string>
+    <string name="settings_summary_loading">Loading…</string>
     <string name="settings_title_ssl_error">Sigurnosna greška</string>
     <string name="settings_summary_ssl_error">Šta učiniti kada se otkrije SSL greška</string>
     <string name="settings_title_incoming_url_action">Akcija dolazećeg linka</string>
@@ -487,6 +488,12 @@
         <item quantity="few">Trenutna stranica ima<xliff:g id="cookies_count" example="2"> %d</xliff:g> kolačići</item>
         <item quantity="other">Trenutna stranica ima<xliff:g id="cookies_count" example="2"> %d</xliff:g> kolačići</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 override</item>
+        <item quantity="few">%d overrides</item>
+        <item quantity="other">%d overrides</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">No overrides</string>
     <string name="settings_title_task_label">Oznaka zadatka</string>
     <string name="settings_title_task_icon">Ikona zadatka</string>
     <string name="settings_summary_on_task_icon">Koristi ikonu stranice</string>
@@ -631,10 +638,4 @@
     <string name="pref_title_enable_ad_blocker">Blokator oglasa</string>
     <string name="pref_summary_on_enable_ad_blocker">Uživajte u čistijem i sigurnijem web iskustvu</string>
     <string name="pref_summary_off_enable_ad_blocker">Uživajte u nefilitriranoj, originalnoj verziji weba</string>
-    <string name="settings_summary_no_overrides">No overrides</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 override</item>
-        <item quantity="other">%d overrides</item>
-    </plurals>
-    <string name="settings_summary_loading">Loading…</string>
 </resources>

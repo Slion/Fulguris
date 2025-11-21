@@ -458,6 +458,7 @@
     <string name="settings_summary_delete_domain_settings">下次遇到此域名时将被重新创建</string>
     <string name="settings_title_parent">主设置</string>
     <string name="settings_summary_default_domain_settings">默认域名设置</string>
+    <string name="settings_summary_loading">加载中…</string>
     <string name="settings_title_ssl_error">安全性错误</string>
     <string name="settings_summary_ssl_error">检测到 SSL 错误时应做什么</string>
     <string name="settings_title_incoming_url_action">传入链接操作</string>
@@ -483,6 +484,10 @@
     <plurals name="settings_summary_cookies">
         <item quantity="other">当前页面有 %d 个 cookie</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="other">%d个覆盖</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">无覆盖</string>
     <string name="settings_title_task_label">任务标签</string>
     <string name="settings_title_task_icon">任务图标</string>
     <string name="settings_summary_on_task_icon">使用页面图标</string>
@@ -627,10 +632,4 @@
     <string name="pref_title_enable_ad_blocker">广告拦截器</string>
     <string name="pref_summary_on_enable_ad_blocker">享受更干净、更安全的网络体验</string>
     <string name="pref_summary_off_enable_ad_blocker">享受未经过滤的原始网络版本</string>
-    <string name="settings_summary_no_overrides">无覆盖</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1个覆盖</item>
-        <item quantity="other">%d个覆盖</item>
-    </plurals>
-    <string name="settings_summary_loading">加载中…</string>
 </resources>

@@ -458,6 +458,7 @@
     <string name="settings_summary_delete_domain_settings">Sẽ được tạo lại vào lần tới khi gặp tên miền này</string>
     <string name="settings_title_parent">Cha</string>
     <string name="settings_summary_default_domain_settings">Thiết đặt tên miền mặc định</string>
+    <string name="settings_summary_loading">Đang tải…</string>
     <string name="settings_title_ssl_error">Lỗi an ninh</string>
     <string name="settings_summary_ssl_error">Những gì cần làm khi phát hiện lỗi SSL</string>
     <string name="settings_title_incoming_url_action">Hành động liên kết đến</string>
@@ -483,6 +484,10 @@
     <plurals name="settings_summary_cookies">
         <item quantity="other">Trang hiện tại có <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="other">%d ghi đè</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Không có ghi đè</string>
     <string name="settings_title_task_label">Nhãn nhiệm vụ</string>
     <string name="settings_title_task_icon">Biểu tượng nhiệm vụ</string>
     <string name="settings_summary_on_task_icon">Sử dụng biểu tượng trang</string>
@@ -627,10 +632,4 @@
     <string name="pref_title_enable_ad_blocker">Trình chặn quảng cáo</string>
     <string name="pref_summary_on_enable_ad_blocker">Tận hưởng trải nghiệm web sạch hơn, an toàn hơn</string>
     <string name="pref_summary_off_enable_ad_blocker">Tận hưởng phiên bản web gốc không lọc</string>
-    <string name="settings_summary_no_overrides">Không có ghi đè</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 ghi đè</item>
-        <item quantity="other">%d ghi đè</item>
-    </plurals>
-    <string name="settings_summary_loading">Đang tải…</string>
 </resources>

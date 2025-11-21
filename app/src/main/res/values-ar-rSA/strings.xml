@@ -463,6 +463,7 @@
     <string name="settings_summary_delete_domain_settings">سيتم إعادة إنشائها في المرة القادمة التي يتم فيها مواجهة هذا النطاق</string>
     <string name="settings_title_parent">الأصل</string>
     <string name="settings_summary_default_domain_settings">إعدادات النطاق الافتراضية</string>
+    <string name="settings_summary_loading">جاري التحميل…</string>
     <string name="settings_title_ssl_error">خطأ أمني</string>
     <string name="settings_summary_ssl_error">ما يجب فعله عند اكتشاف خطأ SSL</string>
     <string name="settings_title_incoming_url_action">إجراء الرابط الوارد</string>
@@ -493,6 +494,15 @@
         <item quantity="many">الصفحة الحالية بها %d ملف تعريف ارتباط</item>
         <item quantity="other">الصفحة الحالية بها %d ملف تعريف ارتباط</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="zero">تجاوز واحد</item>
+        <item quantity="one">%d تجاوزات</item>
+        <item quantity="two">%d تجاوزات</item>
+        <item quantity="few">%d تجاوزات</item>
+        <item quantity="many">%d تجاوزات</item>
+        <item quantity="other">%d تجاوزات</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">لا توجد تجاوزات</string>
     <string name="settings_title_task_label">تسمية المهمة</string>
     <string name="settings_title_task_icon">أيقونة المهمة</string>
     <string name="settings_summary_on_task_icon">استخدام أيقونة الصفحة</string>
@@ -637,10 +647,4 @@
     <string name="pref_title_enable_ad_blocker">حاجب الإعلانات</string>
     <string name="pref_summary_on_enable_ad_blocker">استمتع بتجربة ويب أنظف وأكثر أماناً</string>
     <string name="pref_summary_off_enable_ad_blocker">استمتع بنسخة الويب الأصلية غير المفلترة</string>
-    <string name="settings_summary_no_overrides">لا توجد تجاوزات</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">تجاوز واحد</item>
-        <item quantity="other">%d تجاوزات</item>
-    </plurals>
-    <string name="settings_summary_loading">جاري التحميل…</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Újratölt</string>
-    <string name="action_menu">Menu</string>
+    <string name="action_menu">Több</string>
     <string name="action_new_tab">Új Lap</string>
     <string name="action_duplicate_tab">Lap duplikálása</string>
     <string name="action_share">Megosztás</string>
@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Újra létre lesz hozva amint a tartománnyal találkozik</string>
     <string name="settings_title_parent">Szülő</string>
     <string name="settings_summary_default_domain_settings">Alapértelmezett tartománybeállítások</string>
+    <string name="settings_summary_loading">Betöltés…</string>
     <string name="settings_title_ssl_error">Biztonsági hiba</string>
     <string name="settings_summary_ssl_error">Mit tegyen, ha SSL hibát tapasztal</string>
     <string name="settings_title_incoming_url_action">Bejövő link művelet</string>
@@ -485,6 +486,11 @@
         <item quantity="one">Ezen oldalnak egy sütije van</item>
         <item quantity="other">Ezen oldalnak <xliff:g id="cookies_count" example="2">%d</xliff:g> sütije van</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 felülírás</item>
+        <item quantity="other">%d felülírás</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Nincs felülírás</string>
     <string name="settings_title_task_label">Feladatcímke</string>
     <string name="settings_title_task_icon">Feladat ikon</string>
     <string name="settings_summary_on_task_icon">Használja az oldal ikonját</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Hirdetésblokkoló</string>
     <string name="pref_summary_on_enable_ad_blocker">Élvezd a tisztább, biztonságosabb webes élményt</string>
     <string name="pref_summary_off_enable_ad_blocker">Élvezd a szűretlen, eredeti web verzióját</string>
-    <string name="settings_summary_no_overrides">Nincs felülírás</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 felülírás</item>
-        <item quantity="other">%d felülírás</item>
-    </plurals>
-    <string name="settings_summary_loading">Betöltés…</string>
 </resources>

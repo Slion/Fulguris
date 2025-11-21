@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱱᱚᱶᱟ ᱰᱳᱢᱮᱱ ᱧᱟᱢ ᱡᱚᱠᱷᱟ ᱫᱚᱦᱲᱟ ᱵᱮᱱᱟᱣᱜᱼᱟ</string>
     <string name="settings_title_parent">ᱟᱭᱳ</string>
     <string name="settings_summary_default_domain_settings">ᱢᱩᱞ ᱰᱳᱢᱮᱱ ᱥᱟᱡᱟᱣ ᱠᱚ</string>
+    <string name="settings_summary_loading">ᱞᱳᱰ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ…</string>
     <string name="settings_title_ssl_error">ᱨᱩᱠᱷᱤᱭᱟᱹ ᱵᱷᱩᱞ</string>
     <string name="settings_summary_ssl_error">SSL ᱵᱷᱩᱞ ᱧᱟᱢ ᱡᱚᱠᱷᱟ ᱪᱮᱫ ᱞᱟᱹᱜᱤᱫ</string>
     <string name="settings_title_incoming_url_action">ᱦᱤᱡᱩᱜ ᱞᱤᱝᱠ ᱠᱟᱹᱢᱤ</string>
@@ -485,6 +486,11 @@
         <item quantity="one">ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱦᱴᱟ ᱨᱮ ᱢᱤᱫ ᱠᱩᱠᱤ ᱢᱮᱱᱟᱜᱼᱟ</item>
         <item quantity="other">ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱦᱴᱟ ᱨᱮ %d ᱠᱩᱠᱤᱡᱽ ᱢᱮᱱᱟᱜᱼᱟ</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</item>
+        <item quantity="other">%d ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">ᱵᱟᱝ ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</string>
     <string name="settings_title_task_label">ᱠᱟᱹᱢᱤ ᱞᱮᱵᱮᱞ</string>
     <string name="settings_title_task_icon">ᱠᱟᱹᱢᱤ ᱪᱤᱱᱦᱟᱹ</string>
     <string name="settings_summary_on_task_icon">ᱥᱟᱦᱴᱟ ᱪᱤᱱᱦᱟᱹ ᱵᱮᱵᱷᱟᱨ</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">ᱮᱰ ᱵᱞᱚᱠᱚᱨ</string>
     <string name="pref_summary_on_enable_ad_blocker">ᱥᱟᱯᱷᱟ, ᱨᱩᱠᱷᱤᱭᱟᱹ ᱣᱮᱵᱽ ᱮᱱᱮᱢ ᱮᱱᱮᱢ ᱢᱮ</string>
     <string name="pref_summary_off_enable_ad_blocker">ᱵᱟᱝ ᱯᱷᱤᱞᱴᱚᱨ, ᱢᱩᱞ ᱵᱷᱚᱨᱥᱚᱱ ᱣᱮᱵᱽ ᱮᱱᱮᱢ ᱢᱮ</string>
-    <string name="settings_summary_no_overrides">ᱵᱟᱝ ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</item>
-        <item quantity="other">%d ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</item>
-    </plurals>
-    <string name="settings_summary_loading">ᱞᱳᱰ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ…</string>
 </resources>

@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Vil bli gjenskapt neste gang dette domenet oppdages</string>
     <string name="settings_title_parent">Overordnet</string>
     <string name="settings_summary_default_domain_settings">Standard domeneinnstillinger</string>
+    <string name="settings_summary_loading">Laster…</string>
     <string name="settings_title_ssl_error">Sikkerhetsfeil</string>
     <string name="settings_summary_ssl_error">Hva skal gjøres når en SSL-feil oppdages</string>
     <string name="settings_title_incoming_url_action">Innkommende lenkehandling</string>
@@ -485,6 +486,11 @@
         <item quantity="one">Gjeldende side har én informasjonskapsel</item>
         <item quantity="other">Gjeldende side har %d informasjonskapsler</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 overstyring</item>
+        <item quantity="other">%d overstyringer</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Ingen overstyringer</string>
     <string name="settings_title_task_label">Oppgaveetikett</string>
     <string name="settings_title_task_icon">Oppgaveikon</string>
     <string name="settings_summary_on_task_icon">Bruk sideikon</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Annonseblokkerer</string>
     <string name="pref_summary_on_enable_ad_blocker">Nyt en renere, tryggere nettopplevelse</string>
     <string name="pref_summary_off_enable_ad_blocker">Nyt en ufiltrert, original versjon av nettet</string>
-    <string name="settings_summary_no_overrides">Ingen overstyringer</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 overstyring</item>
-        <item quantity="other">%d overstyringer</item>
-    </plurals>
-    <string name="settings_summary_loading">Laster…</string>
 </resources>

@@ -461,6 +461,7 @@
     <string name="settings_summary_delete_domain_settings">Будет воссоздано в следующий раз, при обнаружении этого домена</string>
     <string name="settings_title_parent">Родительский</string>
     <string name="settings_summary_default_domain_settings">Настройки домена по умолчанию</string>
+    <string name="settings_summary_loading">Загрузка…</string>
     <string name="settings_title_ssl_error">Ошибка безопасности</string>
     <string name="settings_summary_ssl_error">Что делать при обнаружении ошибки SSL</string>
     <string name="settings_title_incoming_url_action">Действие входящей ссылки</string>
@@ -489,6 +490,13 @@
         <item quantity="many">Текущая страница содержит много файлов cookie</item>
         <item quantity="other">Текущая страница содержит файлы cookie <xliff:g id="cookies_count" example="2">%d</xliff:g></item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 переопределение</item>
+        <item quantity="few">%d переопределений</item>
+        <item quantity="many">%d переопределений</item>
+        <item quantity="other">%d переопределений</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Без переопределений</string>
     <string name="settings_title_task_label">Ярлык задачи</string>
     <string name="settings_title_task_icon">Значок задачи</string>
     <string name="settings_summary_on_task_icon">Использовать значок страницы</string>
@@ -633,10 +641,4 @@
     <string name="pref_title_enable_ad_blocker">Блокировщик рекламы</string>
     <string name="pref_summary_on_enable_ad_blocker">Наслаждайтесь более чистым и безопасным интернетом</string>
     <string name="pref_summary_off_enable_ad_blocker">Наслаждайтесь нефильтрованной, оригинальной версией интернета</string>
-    <string name="settings_summary_no_overrides">Без переопределений</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 переопределение</item>
-        <item quantity="other">%d переопределений</item>
-    </plurals>
-    <string name="settings_summary_loading">Загрузка…</string>
 </resources>

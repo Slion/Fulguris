@@ -408,7 +408,7 @@
     <string name="dialog_remove_folder">Ta bort mapp</string>
     <string name="dialog_title_close_browser">Stäng webbläsaren</string>
     <string name="dialog_title_incoming_url">Öppna %1$s</string>
-    <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
+    <string name="dialog_message_incoming_url">%1\n\n%2</string>
     <string name="message_blocked_domain">Blockerade %1$s</string>
     <string name="dialog_delete_all_downloads">Radera alla nedladdningar</string>
     <!-- Tools dialog -->
@@ -459,6 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Kommer att återskapas nästa gång denna domän påträffas</string>
     <string name="settings_title_parent">Förälder</string>
     <string name="settings_summary_default_domain_settings">Standarddomäninställningar</string>
+    <string name="settings_summary_loading">Läser in…</string>
     <string name="settings_title_ssl_error">Säkerhetsfel</string>
     <string name="settings_summary_ssl_error">Vad som ska göras när ett SSL-fel upptäcks</string>
     <string name="settings_title_incoming_url_action">Åtgärd för inkommande länk</string>
@@ -485,6 +486,11 @@
         <item quantity="one">Aktuell sida har en cookie</item>
         <item quantity="other">Aktuell sida har <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 åsidosättning</item>
+        <item quantity="other">%d åsidosättningar</item>
+    </plurals>
+    <string name="settings_summary_no_overrides">Inga åsidosättningar</string>
     <string name="settings_title_task_label">Uppgiftsetikett</string>
     <string name="settings_title_task_icon">Uppgiftsikon</string>
     <string name="settings_summary_on_task_icon">Använd sidikon</string>
@@ -629,10 +635,4 @@
     <string name="pref_title_enable_ad_blocker">Annonsblockerare</string>
     <string name="pref_summary_on_enable_ad_blocker">Njut av en renare, säkrare webbupplevelse</string>
     <string name="pref_summary_off_enable_ad_blocker">Njut av en ofiltrerad, original version av webben</string>
-    <string name="settings_summary_no_overrides">Inga åsidosättningar</string>
-    <plurals name="settings_summary_overrides">
-        <item quantity="one">1 åsidosättning</item>
-        <item quantity="other">%d åsidosättningar</item>
-    </plurals>
-    <string name="settings_summary_loading">Läser in…</string>
 </resources>
