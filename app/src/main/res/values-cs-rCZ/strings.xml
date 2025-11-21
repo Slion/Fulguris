@@ -513,8 +513,8 @@
     <string name="session_already_exists">Relace s tímto názvem již existuje!</string>
     <string name="session_cant_delete_current">Nelze smazat aktuální relaci!</string>
     <string name="session_prompt_confirm_deletion_title">Potvrdit smazání</string>
-    <string name="session_prompt_confirm_deletion_message">Opravdu chcete smazat relaci "<xliff:g id="session_name" example="Shopping">%s</xliff:g>"?</string>
-    <string name="configuration_prompt_confirm_deletion_message">Opravdu chcete smazat konfiguraci "<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>"?</string>
+    <string name="session_prompt_confirm_deletion_message">Opravdu chcete smazat relaci \"<xliff:g id="session_name" example="Shopping">%s</xliff:g>\"?</string>
+    <string name="configuration_prompt_confirm_deletion_message">Opravdu chcete smazat konfiguraci \"<xliff:g id="config_name" example="Landscape - 270° - sw718dp">%s</xliff:g>\"?</string>
     <string name="session_switched">Přepnuto na \"%s\"</string>
     <string name="busy">Zaneprázdněn, zkuste to brzy znovu.</string>
     <string name="invalid_character_removed">Neplatný znak odstraněn!</string>
