@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Lagtype</string>
     <string name="settings_title_domains">Domener</string>
     <string name="settings_summary_domains">Håndter domeneinnstillinger</string>
-    <string name="settings_title_resource_domains">Ressursdomener</string>
     <string name="settings_title_override">Overstyr</string>
     <string name="settings_summary_on_override">Overstyr overordnede innstillinger</string>
     <string name="settings_summary_off_override">Bruk overordnede innstillinger</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Annonseblokkerer</string>
     <string name="pref_summary_on_enable_ad_blocker">Nyt en renere, tryggere nettopplevelse</string>
     <string name="pref_summary_off_enable_ad_blocker">Nyt en ufiltrert, original versjon av nettet</string>
+    <string name="settings_summary_no_overrides">Ingen overstyringer</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 overstyring</item>
+        <item quantity="other">%d overstyringer</item>
+    </plurals>
 </resources>

@@ -443,7 +443,6 @@
     <string name="settings_title_layer_type">图层类型</string>
     <string name="settings_title_domains">域名</string>
     <string name="settings_summary_domains">管理域设置</string>
-    <string name="settings_title_resource_domains">资源域</string>
     <string name="settings_title_override">覆盖</string>
     <string name="settings_summary_on_override">覆盖主设置</string>
     <string name="settings_summary_off_override">使用主设置</string>
@@ -628,4 +627,9 @@
     <string name="pref_title_enable_ad_blocker">广告拦截器</string>
     <string name="pref_summary_on_enable_ad_blocker">享受更干净、更安全的网络体验</string>
     <string name="pref_summary_off_enable_ad_blocker">享受未经过滤的原始网络版本</string>
+    <string name="settings_summary_no_overrides">无覆盖</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1个覆盖</item>
+        <item quantity="other">%d个覆盖</item>
+    </plurals>
 </resources>

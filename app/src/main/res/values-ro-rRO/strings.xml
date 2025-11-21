@@ -445,7 +445,6 @@
     <string name="settings_title_layer_type">Tip strat</string>
     <string name="settings_title_domains">Domenii</string>
     <string name="settings_summary_domains">Gestionează setările domeniilor</string>
-    <string name="settings_title_resource_domains">Domenii resurse</string>
     <string name="settings_title_override">Suprascriere</string>
     <string name="settings_summary_on_override">Suprascrie setările părinte</string>
     <string name="settings_summary_off_override">Folosește setările părinte</string>
@@ -632,4 +631,9 @@
     <string name="pref_title_enable_ad_blocker">Blocare reclame</string>
     <string name="pref_summary_on_enable_ad_blocker">Bucură-te de o experiență web mai curată și mai sigură</string>
     <string name="pref_summary_off_enable_ad_blocker">Bucură-te de o versiune nefil trată, originală a web-ului</string>
+    <string name="settings_summary_no_overrides">Fără suprascriări</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 suprascritere</item>
+        <item quantity="other">%d suprascriteri</item>
+    </plurals>
 </resources>

@@ -401,7 +401,6 @@
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
 
 
-
     <!-- debug strings -->
     <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
@@ -474,7 +473,6 @@
     <string name="settings_title_layer_type">Layer type</string>
     <string name="settings_title_domains">Domains</string>
     <string name="settings_summary_domains">Manage domain settings</string>
-    <string name="settings_title_resource_domains">Resource domains</string>
     <string name="settings_title_override">Override</string>
     <string name="settings_summary_on_override">Override parent settings</string>
     <string name="settings_summary_off_override">Use parent settings</string>
@@ -490,6 +488,7 @@
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_summary_default_domain_settings">Default domain settings</string>
+    <string name="settings_summary_loading">Loading…</string>
     <string name="settings_title_ssl_error">Security error</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
     <string name="settings_title_incoming_url_action">Incoming link action</string>
@@ -516,6 +515,13 @@
         <item quantity="one">Current page has one cookie</item>
         <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
+
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 override</item>
+        <item quantity="other"><xliff:g id="domain_count" example="5">%d</xliff:g> overrides</item>
+    </plurals>
+
+    <string name="settings_summary_no_overrides">No overrides</string>
 
     <string name="settings_title_task_label">Task label</string>
     <string name="settings_title_task_icon">Task icon</string>
@@ -594,8 +600,6 @@
     <string name="message_session_exported">Exported session: <xliff:g id="session_name" example="Cooking">%s</xliff:g></string>
 
 
-
-
     <string name="force_zoom_summary">Does not work if JavaScript is not enabled</string>
     <string name="force_zoom">Force zoom for websites</string>
 
@@ -604,7 +608,6 @@
 
     <string name="export_settings">Export settings to backup</string>
     <string name="import_settings">Import settings from backup</string>
-
 
 
     <string name="pref_title_search_custom_image_url">Search page custom image</string>

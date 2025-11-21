@@ -443,7 +443,6 @@
     <string name="settings_title_layer_type">레이어 유형</string>
     <string name="settings_title_domains">도메인</string>
     <string name="settings_summary_domains">도메인 설정 관리</string>
-    <string name="settings_title_resource_domains">리소스 도메인</string>
     <string name="settings_title_override">재정의</string>
     <string name="settings_summary_on_override">상위 설정 재정의</string>
     <string name="settings_summary_off_override">상위 설정 사용</string>
@@ -628,4 +627,9 @@
     <string name="pref_title_enable_ad_blocker">광고 차단기</string>
     <string name="pref_summary_on_enable_ad_blocker">더 깔끔하고 안전한 웹 경험을 즐기세요</string>
     <string name="pref_summary_off_enable_ad_blocker">필터링되지 않은 원래 버전의 웹을 즐기세요</string>
+    <string name="settings_summary_no_overrides">재정의 없음</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1개 재정의</item>
+        <item quantity="other">%d개 재정의</item>
+    </plurals>
 </resources>

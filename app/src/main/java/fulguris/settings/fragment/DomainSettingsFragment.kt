@@ -64,6 +64,7 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         prefs = DomainPreferences(requireContext(),domain)
+        // SharedPreferences will automatically create the file when settings are modified
         // That's the earliest place we can change our preference file as earlier in onCreate the manager has not been created yet
         preferenceManager.sharedPreferencesName = DomainPreferences.name(domain)
         preferenceManager.sharedPreferencesMode = Context.MODE_PRIVATE
@@ -98,8 +99,23 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
         // Delete this domain settings
         find<Preference>(R.string.pref_key_delete)?.setOnPreferenceClickListener {
             DomainPreferences.delete(domain)
-            parentFragmentManager.popBackStack()
+            // Pop back stack and update breadcrumbs properly
+            val responsiveParent = parentFragment as? ResponsiveSettingsFragment
+            if (responsiveParent != null) {
+                // Use breadcrumb-aware navigation for responsive settings
+                responsiveParent.popBackStackWithBreadcrumbs()
+            } else {
+                // Fallback for bottom sheet or other non-responsive contexts
+                parentFragmentManager.popBackStack()
+            }
             true
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Clean up domain settings file if no overrides are actually enabled
+        // This keeps the domain settings list clean - only showing domains with actual customizations
+        prefs.deleteIfNoOverrides()
     }
 }

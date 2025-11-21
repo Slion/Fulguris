@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Tipo del layer</string>
     <string name="settings_title_domains">Domini</string>
     <string name="settings_summary_domains">Gestisci impostazioni dominio</string>
-    <string name="settings_title_resource_domains">Domini delle risorse</string>
     <string name="settings_title_override">Sovrascrivi</string>
     <string name="settings_summary_on_override">Sovrascrivi le impostazioni genitore</string>
     <string name="settings_summary_off_override">Usa impostazioni genitore</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Blocco annunci</string>
     <string name="pref_summary_on_enable_ad_blocker">Goditi un\'esperienza web più pulita e sicura</string>
     <string name="pref_summary_off_enable_ad_blocker">Goditi una versione non filtrata e originale del web</string>
+    <string name="settings_summary_no_overrides">Nessuna sovrascrittura</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 sovrascrittura</item>
+        <item quantity="other">%d sovrascritture</item>
+    </plurals>
 </resources>

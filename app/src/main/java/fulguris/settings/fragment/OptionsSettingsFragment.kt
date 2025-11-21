@@ -94,10 +94,14 @@ class OptionsSettingsFragment : AbstractSettingsFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Timber.d("Domain: ${app.domain}")
-        // Don't show domain settings if it does not exists yet
-        // Most important so that we don't create them when in incognito mode
+        // Show domain settings option when:
+        // - Domain is not empty/default AND
+        // - Either we're NOT in incognito mode OR the domain settings already exist
+        // This allows viewing existing settings in incognito but prevents creating new ones
+        val isIncognito = requireActivity() is fulguris.activity.IncognitoActivity
+
         find<Preference>(R.string.pref_key_domain)?.apply{
-            isVisible = DomainPreferences.exists(domain)
+            isVisible = domain.isNotEmpty() && (!isIncognito || DomainPreferences.exists(domain))
             setOnPreferenceClickListener {
                 app.domain = domain
                 false

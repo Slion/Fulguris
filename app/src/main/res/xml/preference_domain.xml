@@ -248,18 +248,6 @@
 
     </fulguris.settings.preferences.PreferenceCategoryEx>
 
-    <slions.pref.SwitchPreference
-        a:key="@string/pref_key_entry_point"
-        a:title="@string/settings_title_category"
-        a:summaryOn="@string/settings_summary_on_category"
-        a:summaryOff="@string/settings_summary_off_category"
-        a:defaultValue="false"
-        a:iconSpaceReserved="false"
-        a:icon="@drawable/ic_category_outline"
-        a:singleLineTitle="false"
-        a:allowDividerAbove="true"
-        />
-
 
     <slions.pref.BasicPreference
         a:key="@string/pref_key_delete"

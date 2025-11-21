@@ -446,7 +446,6 @@
     <string name="settings_title_layer_type">Тип шару</string>
     <string name="settings_title_domains">Домени</string>
     <string name="settings_summary_domains">Керувати налаштуваннями домену</string>
-    <string name="settings_title_resource_domains">Домени ресурсів</string>
     <string name="settings_title_override">Переписати</string>
     <string name="settings_summary_on_override">Переписати батьківські налаштування</string>
     <string name="settings_summary_off_override">Використовувати батьківські налаштування</string>
@@ -634,4 +633,9 @@
     <string name="pref_title_enable_ad_blocker">Блокувальник реклами</string>
     <string name="pref_summary_on_enable_ad_blocker">Насолоджуйтесь чистішим, безпечнішим інтернетом</string>
     <string name="pref_summary_off_enable_ad_blocker">Насолоджуйтесь нефільтрованою, оригінальною версією інтернету</string>
+    <string name="settings_summary_no_overrides">Без перевизначень</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 перевизначення</item>
+        <item quantity="other">%d перевизначень</item>
+    </plurals>
 </resources>

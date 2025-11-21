@@ -33,17 +33,8 @@
         a:icon="@drawable/ic_domain"
         a:title="@string/settings_title_domains"
         a:singleLineTitle="false"
-        a:initialExpandedChildrenCount="0"
+        a:initialExpandedChildrenCount="30"
         a:order="10"/>
-
-    <PreferenceCategory
-        a:key="@string/pref_key_resource_domains"
-        a:icon="@drawable/ic_domain"
-        a:title="@string/settings_title_resource_domains"
-        a:singleLineTitle="false"
-        a:initialExpandedChildrenCount="0"
-        a:order="20"
-        />
 
     <Preference
         a:defaultValue="false"
@@ -53,6 +44,7 @@
         a:iconSpaceReserved="false"
         a:icon="@drawable/ic_delete_forever"
         a:singleLineTitle="false"
+        a:allowDividerAbove="true"
         a:order="30"
         />
 

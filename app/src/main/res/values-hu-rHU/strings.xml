@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Rétegtípus</string>
     <string name="settings_title_domains">Tartományok</string>
     <string name="settings_summary_domains">Tartománybeállítások kezelése</string>
-    <string name="settings_title_resource_domains">Forrástartományok</string>
     <string name="settings_title_override">Felülír</string>
     <string name="settings_summary_on_override">Főbeállítások felülírása</string>
     <string name="settings_summary_off_override">Főbeállítások használata</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Hirdetésblokkoló</string>
     <string name="pref_summary_on_enable_ad_blocker">Élvezd a tisztább, biztonságosabb webes élményt</string>
     <string name="pref_summary_off_enable_ad_blocker">Élvezd a szűretlen, eredeti web verzióját</string>
+    <string name="settings_summary_no_overrides">Nincs felülírás</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 felülírás</item>
+        <item quantity="other">%d felülírás</item>
+    </plurals>
 </resources>

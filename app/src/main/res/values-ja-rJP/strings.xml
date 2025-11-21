@@ -443,7 +443,6 @@
     <string name="settings_title_layer_type">レイヤーの種類</string>
     <string name="settings_title_domains">ドメイン</string>
     <string name="settings_summary_domains">ドメイン設定の管理</string>
-    <string name="settings_title_resource_domains">リソースドメイン</string>
     <string name="settings_title_override">上書き</string>
     <string name="settings_summary_on_override">親の設定を上書き</string>
     <string name="settings_summary_off_override">親の設定を使用</string>
@@ -628,4 +627,9 @@
     <string name="pref_title_enable_ad_blocker">広告ブロッカー</string>
     <string name="pref_summary_on_enable_ad_blocker">よりクリーンで安全なウェブ体験をお楽しみください</string>
     <string name="pref_summary_off_enable_ad_blocker">フィルタリングされていない本来のウェブをお楽しみください</string>
+    <string name="settings_summary_no_overrides">オーバーライドなし</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1つのオーバーライド</item>
+        <item quantity="other">%dつのオーバーライド</item>
+    </plurals>
 </resources>

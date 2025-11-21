@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Kerrostyyppi</string>
     <string name="settings_title_domains">Verkkotunnukset</string>
     <string name="settings_summary_domains">Hallinnoi verkkotunnuskohtaisia asetuksia</string>
-    <string name="settings_title_resource_domains">Resurssiverkkotunnukset</string>
     <string name="settings_title_override">Ohita</string>
     <string name="settings_summary_on_override">Override parent settings</string>
     <string name="settings_summary_off_override">Use parent settings</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Mainosten esto</string>
     <string name="pref_summary_on_enable_ad_blocker">Nauti puhtaammasta, turvallisemmasta verkkokokemuksesta</string>
     <string name="pref_summary_off_enable_ad_blocker">Nauti suodattamattomasta, alkuperäisestä verkosta</string>
+    <string name="settings_summary_no_overrides">No overrides</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 override</item>
+        <item quantity="other">%d overrides</item>
+    </plurals>
 </resources>

@@ -445,7 +445,6 @@
     <string name="settings_title_layer_type">Layer type</string>
     <string name="settings_title_domains">Domeni</string>
     <string name="settings_summary_domains">Upravljajte podešavanjima domena</string>
-    <string name="settings_title_resource_domains">Domeni resursa</string>
     <string name="settings_title_override">Nadjačati</string>
     <string name="settings_summary_on_override">Nadjačajte roditeljska podešavanja</string>
     <string name="settings_summary_off_override">Koristi roditeljska podešavanja</string>
@@ -632,4 +631,9 @@
     <string name="pref_title_enable_ad_blocker">Blokator oglasa</string>
     <string name="pref_summary_on_enable_ad_blocker">Uživajte u čistijem, bezbednijem veb iskustvu</string>
     <string name="pref_summary_off_enable_ad_blocker">Uživajte u nefiltriranoj, originalnoj verziji veba</string>
+    <string name="settings_summary_no_overrides">Bez zamena</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 zamena</item>
+        <item quantity="other">%d zamena</item>
+    </plurals>
 </resources>

@@ -443,7 +443,6 @@
     <string name="settings_title_layer_type">Loại lớp</string>
     <string name="settings_title_domains">Tên miền</string>
     <string name="settings_summary_domains">Quản lý thiết đặt tên miền</string>
-    <string name="settings_title_resource_domains">Các tên miền tài nguyên</string>
     <string name="settings_title_override">Ghi đè</string>
     <string name="settings_summary_on_override">Ghi đè cài đặt cha</string>
     <string name="settings_summary_off_override">Sử dụng cài đặt cha</string>
@@ -628,4 +627,9 @@
     <string name="pref_title_enable_ad_blocker">Trình chặn quảng cáo</string>
     <string name="pref_summary_on_enable_ad_blocker">Tận hưởng trải nghiệm web sạch hơn, an toàn hơn</string>
     <string name="pref_summary_off_enable_ad_blocker">Tận hưởng phiên bản web gốc không lọc</string>
+    <string name="settings_summary_no_overrides">Không có ghi đè</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 ghi đè</item>
+        <item quantity="other">%d ghi đè</item>
+    </plurals>
 </resources>

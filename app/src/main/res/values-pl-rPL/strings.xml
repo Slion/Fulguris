@@ -446,7 +446,6 @@
     <string name="settings_title_layer_type">Typ warstwy</string>
     <string name="settings_title_domains">Domeny</string>
     <string name="settings_summary_domains">Zarządzaj ustawieniami domen</string>
-    <string name="settings_title_resource_domains">Domeny zasobowe</string>
     <string name="settings_title_override">Nadpisz</string>
     <string name="settings_summary_on_override">Nadpisz ustawienia nadrzędne</string>
     <string name="settings_summary_off_override">Użyj ustawień nadrzędnych</string>
@@ -634,4 +633,9 @@
     <string name="pref_title_enable_ad_blocker">Bloker reklam</string>
     <string name="pref_summary_on_enable_ad_blocker">Ciesz się czystszym, bezpieczniejszym doświadczeniem w sieci</string>
     <string name="pref_summary_off_enable_ad_blocker">Ciesz się niefiltrowaną, oryginalną wersją sieci</string>
+    <string name="settings_summary_no_overrides">Brak nadpisań</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 nadpisanie</item>
+        <item quantity="other">%d nadpisań</item>
+    </plurals>
 </resources>

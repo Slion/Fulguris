@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Layertyp</string>
     <string name="settings_title_domains">Domains</string>
     <string name="settings_summary_domains">Domains-Einstellungen</string>
-    <string name="settings_title_resource_domains">Ressourcen-Domains</string>
     <string name="settings_title_override">Überschreiben</string>
     <string name="settings_summary_on_override">Übergeordnete Einstellungen überschreiben</string>
     <string name="settings_summary_off_override">Übergeordnete Einstellungen verwenden</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Werbeblocker</string>
     <string name="pref_summary_on_enable_ad_blocker">Genießen Sie ein saubereres, sichereres Web-Erlebnis</string>
     <string name="pref_summary_off_enable_ad_blocker">Genießen Sie eine ungefilterte, originale Version des Webs</string>
+    <string name="settings_summary_no_overrides">Keine Überschreibungen</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 Überschreibung</item>
+        <item quantity="other">%d Überschreibungen</item>
+    </plurals>
 </resources>

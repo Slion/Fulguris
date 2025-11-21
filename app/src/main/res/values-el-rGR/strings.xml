@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Τύπος επιπέδου</string>
     <string name="settings_title_domains">Τομείς</string>
     <string name="settings_summary_domains">Διαχείριση ρυθμίσεων τομέα</string>
-    <string name="settings_title_resource_domains">Τομείς πόρων</string>
     <string name="settings_title_override">Παράκαμψη</string>
     <string name="settings_summary_on_override">Παράκαμψη γονικών ρυθμίσεων</string>
     <string name="settings_summary_off_override">Χρήση γονικών ρυθμίσεων</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Αποκλειστής διαφημίσεων</string>
     <string name="pref_summary_on_enable_ad_blocker">Απολαύστε μια πιο καθαρή, ασφαλέστερη εμπειρία ιστού</string>
     <string name="pref_summary_off_enable_ad_blocker">Απολαύστε την αφιλτράριστη, αυθεντική έκδοση του ιστού</string>
+    <string name="settings_summary_no_overrides">Χωρίς παρακάμψεις</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 παράκαμψη</item>
+        <item quantity="other">%d παρακάμψεις</item>
+    </plurals>
 </resources>

@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Lagertyp</string>
     <string name="settings_title_domains">Domäner</string>
     <string name="settings_summary_domains">Hantera domäninställningar</string>
-    <string name="settings_title_resource_domains">Resursdomäner</string>
     <string name="settings_title_override">Åsidosätt</string>
     <string name="settings_summary_on_override">Åsidosätt förälderns inställningar</string>
     <string name="settings_summary_off_override">Använd förälderns inställningar</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Annonsblockerare</string>
     <string name="pref_summary_on_enable_ad_blocker">Njut av en renare, säkrare webbupplevelse</string>
     <string name="pref_summary_off_enable_ad_blocker">Njut av en ofiltrerad, original version av webben</string>
+    <string name="settings_summary_no_overrides">Inga åsidosättningar</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 åsidosättning</item>
+        <item quantity="other">%d åsidosättningar</item>
+    </plurals>
 </resources>

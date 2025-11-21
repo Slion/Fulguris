@@ -374,16 +374,6 @@ class WebPageClient(
 
         Timber.e("onReceivedError: ${domainPreferences.domain}")
 
-        // Avoid polluting our domain settings from missed typed URLs
-        if (domainPreferences.wasCreated) {
-            Timber.d("onReceivedError: domain settings clean-up")
-            DomainPreferences.delete(domainPreferences.domain)
-            //
-            if (domainPreferences.parentWasCreated) {
-                Timber.d("onReceivedError: domain settings parent clean-up")
-                DomainPreferences.delete(domainPreferences.topPrivateDomain!!)
-            }
-        }
 
         //Encode image to base64 string
         val output = ByteArrayOutputStream()
@@ -514,6 +504,7 @@ class WebPageClient(
     private fun applySslErrorToDomainSettings(aSslError: NoYesAsk) {
         // Defensive we should not change default domain settings
         if (!domainPreferences.isDefault) {
+            // SharedPreferences will automatically create the file when we write to it
             domainPreferences.sslErrorOverride = true
             domainPreferences.sslErrorLocal = aSslError
         } else {
@@ -545,7 +536,7 @@ class WebPageClient(
     var domainPreferences = DomainPreferences(app)
 
     /**
-     * Load and create our domain preferences if needed
+     * Load domain preferences
      */
     private fun loadDomainPreferences(aHost :String, aEntryPoint: Boolean = false) {
 
@@ -553,34 +544,14 @@ class WebPageClient(
         // We hit that a lot actually as we load resources
         if (domainPreferences.domain==aHost) {
             Timber.d("loadDomainPreferences: already loaded")
-            setEntryPoint(aEntryPoint)
             return
         }
 
         Timber.d("loadDomainPreferences for $aHost")
-        // Check if we need to load defaults
-        if (webPageTab.isIncognito && !DomainPreferences.exists(aHost)) {
-            // Don't create new preferences when in incognito mode
-            // Load default domain settings instead
-            domainPreferences = DomainPreferences(app)
-        } else {
-            // Will load defaults if domain does not exists yet
-            domainPreferences = DomainPreferences(app,aHost)
-        }
 
-        setEntryPoint(aEntryPoint)
-    }
-
-    /**
-     *
-     */
-    private fun setEntryPoint(aEntryPoint: Boolean) {
-        if (aEntryPoint &&
-            // Never set default domain as entry point, somehow this was happening
-            // Since we copy the default to create new domain settings that would force all new domains as entry point
-            !domainPreferences.isDefault) {
-            domainPreferences.entryPoint = true
-        }
+        // Load domain preferences
+        // SharedPreferences cache is cleared when files are deleted, so we can safely load
+        domainPreferences = DomainPreferences(app, aHost)
     }
 
     // Used to debounce app launch

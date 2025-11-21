@@ -70,8 +70,10 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
     internal lateinit var mainScheduler: Scheduler
 
     private var catDomains: PreferenceCategory? = null
-    private var catResources: PreferenceCategory? = null
     private var deleteAll: Preference? = null
+
+    // Track how many domains with overrides we have
+    private var domainCount = 0
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
@@ -92,10 +94,11 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         // TODO: Have a custom preference with test input to filter out our list
 
         // Disable ordering as added to sort alphabetically by title
-        catDomains = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_domains))?.apply { isOrderingAsAdded = false }
-        catResources = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_resource_domains))?.apply { isOrderingAsAdded = false }
-        // Hide resources category while we are filling our preferences otherwise it looks ugly
-        catResources?.isVisible = false
+        catDomains = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_domains))?.apply {
+            isOrderingAsAdded = false
+            // Initial summary will be updated after scanning
+            summary = getString(R.string.settings_summary_loading)
+        }
 
         deleteAll = clickablePreference(
             preference = getString(R.string.pref_key_delete_all_domains_settings),
@@ -109,13 +112,68 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     .setPositiveButton(R.string.action_delete) { _, _ ->
                         DomainPreferences.deleteAll(requireContext())
                         catDomains?.removeAll()
-                        catResources?.removeAll()
+                        domainCount = 0
+                        updateDomainCountSummary()
                     }
                     .resizeAndShow()
 
                 true
             }
         ).apply { isVisible = false }
+    }
+
+    /**
+     * Update the domains category summary with current domain count.
+     * Note: English doesn't support quantity="zero" in plurals, so we handle it explicitly.
+     */
+    private fun updateDomainCountSummary() {
+        catDomains?.summary = if (domainCount == 0) {
+            getString(R.string.settings_summary_no_overrides)
+        } else {
+            resources.getQuantityString(
+                R.plurals.settings_summary_overrides,
+                domainCount,
+                domainCount
+            )
+        }
+    }
+
+    /**
+     * Generate a summary string showing which overrides are active for a domain
+     * Order matches the preference XML file order
+     */
+    private fun getOverridesSummary(domainPref: DomainPreferences): String {
+        val overrides = mutableListOf<String>()
+
+        // Order matches preference_domain_default.xml
+        if (domainPref.darkModeOverride) {
+            overrides.add(getString(R.string.settings_title_dark_mode_default))
+        }
+        if (domainPref.desktopModeOverride) {
+            overrides.add(getString(R.string.settings_title_desktop_mode_default))
+        }
+        if (domainPref.javaScriptEnabledOverride) {
+            overrides.add(getString(R.string.settings_title_javascript))
+        }
+        if (domainPref.thirdPartyCookiesOverride) {
+            overrides.add(getString(R.string.settings_title_third_party_cookies))
+        }
+        if (domainPref.launchAppOverride) {
+            overrides.add(getString(R.string.settings_title_launch_app))
+        }
+        if (domainPref.sslErrorOverride) {
+            overrides.add(getString(R.string.settings_title_ssl_error))
+        }
+        if (domainPref.incomingUrlActionOverride) {
+            overrides.add(getString(R.string.settings_title_incoming_url_action))
+        }
+
+        return if (overrides.isEmpty()) {
+            // Fallback (shouldn't happen since we delete domains with no overrides)
+            getString(R.string.settings_summary_default_domain_settings)
+        } else {
+            overrides.joinToString(", ")
+        }
     }
 
     /**
@@ -145,43 +203,75 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                 return
             }
 
-            // TODO: Have a function instead of duplicating code for sub-domain and its parent
-            // Check if our domain was deleted when coming back from a specific domain preference page
-            if (!DomainPreferences.exists(domain)) {
-                // Domain settings was deleted remove the preference then
-                findPreference<Preference>(domain)?.let {
-                    it.parent?.removePreference(it)
-                }
-            } else {
-                // Our setting still exist
-                // Check if it was moved to another category and take action
-                val dp = DomainPreferences(requireContext(),domain)
-                findPreference<Preference>(domain)?.let {
-                    val newParent = if (dp.entryPoint) catDomains else catResources
-                    if (newParent!=it.parent) {
-                        it.parent?.removePreference(it)
-                        newParent?.addPreference(it)
-                    }
+            // Update the summary for the domain we just came back from
+            // This shows any changes made to overrides
+            if (DomainPreferences.exists(domain)) {
+                findPreference<Preference>(domain)?.let { pref ->
+                    val domainPref = DomainPreferences(requireContext(), domain)
+                    pref.summary = getOverridesSummary(domainPref)
                 }
             }
 
-            // Remove the top private domain if it was deleted
+            // Check if our domain was deleted when coming back from a specific domain preference page
+            if (!DomainPreferences.exists(domain)) {
+                // Domain settings was deleted, remove the preference then
+                findPreference<Preference>(domain)?.let {
+                    it.parent?.removePreference(it)
+                    domainCount--
+                    updateDomainCountSummary()
+                }
+            }
+
+            // Handle parent domain changes (created or deleted)
             val tpd = "http://$domain".toHttpUrl().topPrivateDomain()
             if (tpd?.isNotEmpty() == true) {
                 if (!DomainPreferences.exists(tpd)) {
-                    // Domain settings was deleted remove the preference then
+                    // Parent domain was deleted, remove its preference
                     findPreference<Preference>(tpd)?.let {
                         it.parent?.removePreference(it)
+                        domainCount--
+                        updateDomainCountSummary()
                     }
                 } else {
-                    // Our settings still exist
-                    // Check if it was moved to another category and take action
-                    val dp = DomainPreferences(requireContext(),tpd)
-                    findPreference<Preference>(tpd)?.let {
-                        val newParent = if (dp.entryPoint) catDomains else catResources
-                        if (newParent!=it.parent) {
-                            it.parent?.removePreference(it)
-                            newParent?.addPreference(it)
+                    // Parent domain exists - check if preference already exists
+                    val existingPref = findPreference<Preference>(tpd)
+                    if (existingPref != null) {
+                        // Update existing parent domain summary
+                        val domainPref = DomainPreferences(requireContext(), tpd)
+                        existingPref.summary = getOverridesSummary(domainPref)
+                    } else {
+                        // Parent domain was just created - add it to the list
+                        val domainPref = DomainPreferences(requireContext(), tpd)
+                        if (domainPref.hasAnyOverrides()) {
+                            Timber.d("Adding newly created parent domain: $tpd")
+
+                            // Create new preference for parent domain
+                            val pref = BasicPreference(requireContext())
+                            pref.isSingleLineTitle = false
+                            pref.key = tpd
+                            pref.title = tpd
+                            pref.summary = getOverridesSummary(domainPref)
+                            pref.breadcrumb = tpd
+                            pref.fragment = "fulguris.settings.fragment.DomainSettingsFragment"
+                            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                                this.domain = tpd
+                                app.domain = tpd
+                                false
+                            }
+
+                            // Add favicon
+                            faviconModel.faviconForUrl("http://$tpd", "", (activity as? ThemedActivity)?.isDarkTheme() == true)
+                                .subscribeOn(networkScheduler)
+                                .observeOn(mainScheduler)
+                                .subscribeBy(
+                                    onSuccess = { bitmap ->
+                                        pref.icon = bitmap.scale(Utils.dpToPx(24f), Utils.dpToPx(24f)).toDrawable(resources)
+                                    }
+                                )
+
+                            catDomains?.addPreference(pref)
+                            domainCount++
+                            updateDomainCountSummary()
                         }
                     }
                 }
@@ -216,7 +306,10 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
             //list?.sortWith ( compareBy(String.CASE_INSENSITIVE_ORDER){it})
             // Sort our domains using reversed string so that subdomains are grouped together
             var delay = 300L
-            var delayIncrement = 1L
+            val delayIncrement = 1L
+            // Reset domain count before scanning
+            domainCount = 0
+
             // Fill our list asynchronously
             list?.forEach {
                 view.postDelayed({
@@ -231,16 +324,33 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                         return@postDelayed
                     }
 
+                    // Check if this domain has any overrides, delete if none
+                    // Depollute existing installations as it should not be needed for new ones
+                    val domainPref = DomainPreferences(requireContext(), domain)
+                    if (domainPref.deleteIfNoOverrides()) {
+                        // Domain settings was deleted, don't add it to the list
+                        Timber.d("Deleted domain settings with no overrides: $domain")
+                        return@postDelayed
+                    }
+
+                    // Count this domain
+                    domainCount++
+
+                    // Update summary as we add domains to show progress
+                    updateDomainCountSummary()
+
                     // Create domain preference
                     val pref = BasicPreference(requireContext())
-                    // Make sure domains and not reversed domains are shown as titles
-                    pref.swapTitleSummary = true
+                    // Make sure domains are shown as titles
                     pref.isSingleLineTitle = false
                     pref.key = domain
-                    // We are using preference built-in alphabetical sorting by title
-                    // We want sorting to group sub-domains together so we use reverse domain
+                    // Use reversed domain as title for sorting
+                    // Sorting by reversed domain makes sure subdomains and parent are grouped together
                     pref.title = domainReverse
-                    pref.summary = domain
+                    // But actually show the domain name
+                    pref.displayedTitle = domain
+                    // Show active overrides in summary
+                    pref.summary = getOverridesSummary(domainPref)
                     pref.breadcrumb = domain
                     pref.fragment = "fulguris.settings.fragment.DomainSettingsFragment"
                     pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -258,13 +368,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                             }
                         )
 
-                    val domainPref = DomainPreferences(requireContext(),domain)
-
-                    if (domainPref.entryPoint) {
-                        catDomains?.addPreference(pref)
-                    } else {
-                        catResources?.addPreference(pref)
-                    }
+                    catDomains?.addPreference(pref)
 
                 },delay)
                 // We could lower or just remove the delay as it seems to be smooth without it too
@@ -272,11 +376,13 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                 delay+=delayIncrement
             }
 
-            // Show resources category only once our list is parsed otherwise it looks ugly
+            // Show delete button once our list is parsed and update summary
             view.postDelayed({
-                catResources?.isVisible = true
                 deleteAll?.isVisible = true
-                             },delay)
+                // Update category summary with domain count
+                // Note: English doesn't support quantity="zero" in plurals
+                updateDomainCountSummary()
+            }, delay)
         }
     }
 

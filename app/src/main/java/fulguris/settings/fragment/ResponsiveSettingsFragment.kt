@@ -51,14 +51,7 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
         // No actual fragment specified, just a back action
         // Notably used when deleting custom configuration
         if (pref.fragment == "back") {
-            if (childFragmentManager.backStackEntryCount >=1) {
-                // Go back to previous fragment if any
-                childFragmentManager.popBackStack()
-                // Adjust and update our breadcrumb
-                popBreadcrumbs()
-                (activity as? SettingsActivity)?.updateTitleOnLayout()
-            }
-
+            popBackStackWithBreadcrumbs()
             return true
         }
 
@@ -168,6 +161,20 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
         if (iTitleStack.count()>1) {
             //iTitleStack.removeLast()
             iTitleStack.removeAt(iTitleStack.size - 1)
+        }
+    }
+
+    /**
+     * Pop back stack and adjust breadcrumbs
+     * Call this when programmatically going back (e.g., after deleting a domain)
+     */
+    fun popBackStackWithBreadcrumbs() {
+        if (childFragmentManager.backStackEntryCount >= 1) {
+            // Go back to previous fragment if any
+            childFragmentManager.popBackStack()
+            // Adjust and update our breadcrumb
+            popBreadcrumbs()
+            (activity as? SettingsActivity)?.updateTitleOnLayout()
         }
     }
 

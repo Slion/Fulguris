@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Lagtype</string>
     <string name="settings_title_domains">Domæner</string>
     <string name="settings_summary_domains">Administrer domæneindstillinger</string>
-    <string name="settings_title_resource_domains">Ressourcedomæner</string>
     <string name="settings_title_override">Tilsidesæt</string>
     <string name="settings_summary_on_override">Tilsidesæt forældreindstillinger</string>
     <string name="settings_summary_off_override">Brug forældreindstillinger</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Annonceblokering</string>
     <string name="pref_summary_on_enable_ad_blocker">Nyd en renere, sikrere weboplevelse</string>
     <string name="pref_summary_off_enable_ad_blocker">Nyd en ufiltreret, original version af nettet</string>
+    <string name="settings_summary_no_overrides">Ingen tilsidesættelser</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 tilsidesættelse</item>
+        <item quantity="other">%d tilsidesættelser</item>
+    </plurals>
 </resources>

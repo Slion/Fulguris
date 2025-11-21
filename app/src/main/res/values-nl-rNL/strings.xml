@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Type laag</string>
     <string name="settings_title_domains">Domeinen</string>
     <string name="settings_summary_domains">Domeininstellingen beheren</string>
-    <string name="settings_title_resource_domains">Hulpbron domeinen</string>
     <string name="settings_title_override">Overschrijven</string>
     <string name="settings_summary_on_override">Bovenliggende instellingen overschrijven</string>
     <string name="settings_summary_off_override">Ouderinstellingen gebruiken</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Advertentieblokkering</string>
     <string name="pref_summary_on_enable_ad_blocker">Geniet van een schonere, veiligere webervaring</string>
     <string name="pref_summary_off_enable_ad_blocker">Geniet van een ongefilterde, originele versie van het web</string>
+    <string name="settings_summary_no_overrides">Geen overschrijvingen</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 overschrijving</item>
+        <item quantity="other">%d overschrijvingen</item>
+    </plurals>
 </resources>

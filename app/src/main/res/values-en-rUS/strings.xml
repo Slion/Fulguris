@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Layer type</string>
     <string name="settings_title_domains">Domains</string>
     <string name="settings_summary_domains">Manage domain settings</string>
-    <string name="settings_title_resource_domains">Resource domains</string>
     <string name="settings_title_override">Override</string>
     <string name="settings_summary_on_override">Override parent settings</string>
     <string name="settings_summary_off_override">Use parent settings</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Ad blocker</string>
     <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
     <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="settings_summary_no_overrides">No overrides</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 override</item>
+        <item quantity="other">%d overrides</item>
+    </plurals>
 </resources>

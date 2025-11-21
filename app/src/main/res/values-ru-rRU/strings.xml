@@ -446,7 +446,6 @@
     <string name="settings_title_layer_type">Тип слоя</string>
     <string name="settings_title_domains">Домены</string>
     <string name="settings_summary_domains">Настройки домена</string>
-    <string name="settings_title_resource_domains">Ресурсные домены</string>
     <string name="settings_title_override">Переопределить</string>
     <string name="settings_summary_on_override">Переопределить родительские настройки</string>
     <string name="settings_summary_off_override">Использовать родительские настройки</string>
@@ -634,4 +633,9 @@
     <string name="pref_title_enable_ad_blocker">Блокировщик рекламы</string>
     <string name="pref_summary_on_enable_ad_blocker">Наслаждайтесь более чистым и безопасным интернетом</string>
     <string name="pref_summary_off_enable_ad_blocker">Наслаждайтесь нефильтрованной, оригинальной версией интернета</string>
+    <string name="settings_summary_no_overrides">Без переопределений</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 переопределение</item>
+        <item quantity="other">%d переопределений</item>
+    </plurals>
 </resources>

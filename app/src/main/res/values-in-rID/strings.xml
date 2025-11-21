@@ -443,7 +443,6 @@
     <string name="settings_title_layer_type">Tipe layer</string>
     <string name="settings_title_domains">Domain</string>
     <string name="settings_summary_domains">Kelola pengaturan domain</string>
-    <string name="settings_title_resource_domains">Domain sumber daya</string>
     <string name="settings_title_override">Timpa</string>
     <string name="settings_summary_on_override">Timpa pengaturan induk</string>
     <string name="settings_summary_off_override">Gunakan pengaturan induk</string>
@@ -628,4 +627,9 @@
     <string name="pref_title_enable_ad_blocker">Pemblokir iklan</string>
     <string name="pref_summary_on_enable_ad_blocker">Nikmati pengalaman web yang lebih bersih dan aman</string>
     <string name="pref_summary_off_enable_ad_blocker">Nikmati versi web asli tanpa filter</string>
+    <string name="settings_summary_no_overrides">Tidak ada penggantian</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 penggantian</item>
+        <item quantity="other">%d penggantian</item>
+    </plurals>
 </resources>

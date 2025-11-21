@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Tipo de camada</string>
     <string name="settings_title_domains">Domínios</string>
     <string name="settings_summary_domains">Gerir definições de domínios</string>
-    <string name="settings_title_resource_domains">Domínios de recurso</string>
     <string name="settings_title_override">Substituir</string>
     <string name="settings_summary_on_override">Substituir definições principais</string>
     <string name="settings_summary_off_override">Utilizar definições principais</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Bloqueador de anúncios</string>
     <string name="pref_summary_on_enable_ad_blocker">Desfrute de uma experiência web mais limpa e segura</string>
     <string name="pref_summary_off_enable_ad_blocker">Desfrute de uma versão não filtrada e original da web</string>
+    <string name="settings_summary_no_overrides">Sem substituições</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 substituição</item>
+        <item quantity="other">%d substituições</item>
+    </plurals>
 </resources>

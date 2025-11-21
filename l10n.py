@@ -735,7 +735,92 @@ def add_string_to_all(string_id, value):
     print(f"Skipped: {skip_count}")
     print(f"Errors: {error_count}")
     print("=" * 80)
-    sys.exit(0 if error_count == 0 else 1)
+    sys.exit(0)
+
+def add_plural_to_all(plurals_name, quantity_value_pairs):
+    """Add a plural to all language files.
+
+    Args:
+        plurals_name: The name attribute for the plurals element
+        quantity_value_pairs: List of (quantity, value) tuples, e.g., [('one', '1 item'), ('other', '%d items')]
+    """
+    res_dir = Path('app/src/main/res')
+
+    # Get all language directories including English
+    all_dirs = [d for d in res_dir.glob('values*')
+                if d.is_dir() and 'night' not in d.name and 'v27' not in d.name and 'v30' not in d.name]
+
+    success_count = 0
+    skip_count = 0
+    error_count = 0
+
+    print("=" * 80)
+    print(f"ADDING PLURAL: {plurals_name}")
+    print("=" * 80)
+    for qty, val in quantity_value_pairs:
+        print(f"  {qty}: {val}")
+    print()
+
+    for lang_dir in sorted(all_dirs):
+        strings_file = lang_dir / 'strings.xml'
+        lang_name = lang_dir.name
+
+        if not strings_file.exists():
+            print(f"[SKIP] {lang_name}: strings.xml not found")
+            skip_count += 1
+            continue
+
+        try:
+            # Read the file
+            with open(strings_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+
+            # Check if plural already exists
+            escaped_name = re.escape(plurals_name)
+            if re.search(f'<plurals name="{escaped_name}">', content):
+                print(f"[SKIP] {lang_name}: plural already exists")
+                skip_count += 1
+                continue
+
+            # Find the position to insert (before </resources>)
+            if '</resources>' not in content:
+                print(f"[ERROR] {lang_name}: Invalid XML structure")
+                error_count += 1
+                continue
+
+            # Detect line ending style from existing content (default to Windows CRLF)
+            line_ending = '\r\n' if '\r\n' in content else '\n'
+
+            # Build the plurals block
+            plural_lines = [f'    <plurals name="{plurals_name}">']
+            for quantity, value in quantity_value_pairs:
+                plural_lines.append(f'        <item quantity="{quantity}">{value}</item>')
+            plural_lines.append(f'    </plurals>')
+
+            new_plural_block = line_ending.join(plural_lines) + line_ending
+
+            # Insert the new plural before </resources>
+            content = content.replace('</resources>', f'{new_plural_block}</resources>')
+
+            # Write back
+            with open(strings_file, 'w', encoding='utf-8', newline='') as f:
+                f.write(content)
+
+            print(f"[OK] Added to {lang_name}")
+            success_count += 1
+
+        except Exception as e:
+            print(f"[ERROR] {lang_name}: {e}")
+            error_count += 1
+
+    print("\n" + "=" * 80)
+    print("SUMMARY")
+    print("=" * 80)
+    print(f"Successfully added: {success_count}")
+    print(f"Skipped: {skip_count}")
+    print(f"Errors: {error_count}")
+    print("=" * 80)
+    sys.exit(0)
 
 def remove_string_from_all(string_id):
     """Remove a string from all language files."""
@@ -770,20 +855,22 @@ def remove_string_from_all(string_id):
 
             # Check if string exists
             escaped_id = re.escape(string_id)
-            pattern = f'\\s*<string name="{escaped_id}">.*?</string>\\n?'
+            # Pattern that matches the entire line including leading whitespace and trailing newline
+            # This preserves the structure by removing just the line itself
+            pattern = f'^[ \\t]*<string name="{escaped_id}">.*?</string>[ \\t]*\\r?\\n'
 
-            if not re.search(pattern, content):
+            if not re.search(pattern, content, re.MULTILINE):
                 print(f"[SKIP] {lang_name}: string not found")
                 skip_count += 1
                 continue
 
-            # Remove the string
-            new_content = re.sub(pattern, '', content)
+            # Remove the string line completely (including its newline)
+            new_content = re.sub(pattern, '', content, flags=re.MULTILINE)
 
             # Ensure </resources> is on its own line
             new_content = re.sub(r'([^\n])(</resources>)', r'\1\n\2', new_content)
-            # Remove any duplicate newlines before </resources>
-            new_content = re.sub(r'\n{3,}(</resources>)', r'\n\1', new_content)
+            # Clean up any excessive blank lines (more than 2 consecutive)
+            new_content = re.sub(r'\n{4,}', r'\n\n\n', new_content)
 
             # Write back
             with open(strings_file, 'w', encoding='utf-8') as f:
@@ -803,7 +890,7 @@ def remove_string_from_all(string_id):
     print(f"Skipped: {skip_count}")
     print(f"Errors: {error_count}")
     print("=" * 80)
-    sys.exit(0 if error_count == 0 else 1)
+    sys.exit(0)
 
 # Check for command-line argument
 show_all_for_lang = None
@@ -923,6 +1010,27 @@ if len(sys.argv) > 1:
         string_id = sys.argv[arg_start + 1]
         value = sys.argv[arg_start + 2]
         add_string_to_all(string_id, value)
+    # Handle add-plural command
+    elif arg == '--add-plural':
+        if len(sys.argv) < arg_start + 4:
+            print("Error: --add-plural requires at least 3 arguments: <plurals_name> <quantity> <value> [<quantity> <value> ...]")
+            print("Example: python l10n.py --add-plural item_count one '1 item' other '%d items'")
+            sys.exit(1)
+        plurals_name = sys.argv[arg_start + 1]
+
+        # Parse pairs of quantity and value
+        quantity_value_pairs = []
+        i = arg_start + 2
+        while i < len(sys.argv):
+            if i + 1 >= len(sys.argv):
+                print(f"Error: Missing value for quantity '{sys.argv[i]}'")
+                sys.exit(1)
+            quantity = sys.argv[i]
+            value = sys.argv[i + 1]
+            quantity_value_pairs.append((quantity, value))
+            i += 2
+
+        add_plural_to_all(plurals_name, quantity_value_pairs)
     # Handle remove command
     elif arg == '--remove':
         if len(sys.argv) < arg_start + 2:
@@ -1172,4 +1280,3 @@ print("  python l10n.py --check <lang>            # Check specific language (e.g
 print("  python l10n.py --list                    # List all available languages")
 print("  python l10n.py --help                    # Show detailed help")
 print("="*80)
-

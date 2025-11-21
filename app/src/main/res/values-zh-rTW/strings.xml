@@ -443,7 +443,6 @@
     <string name="settings_title_layer_type">圖層類型</string>
     <string name="settings_title_domains">網域</string>
     <string name="settings_summary_domains">管理網域設定</string>
-    <string name="settings_title_resource_domains">資源網域</string>
     <string name="settings_title_override">覆寫</string>
     <string name="settings_summary_on_override">覆寫父項設定</string>
     <string name="settings_summary_off_override">使用父項設定</string>
@@ -628,4 +627,9 @@
     <string name="pref_title_enable_ad_blocker">廣告封鎖器</string>
     <string name="pref_summary_on_enable_ad_blocker">享受更乾淨、更安全的網路體驗</string>
     <string name="pref_summary_off_enable_ad_blocker">享受未過濾的原始網路版本</string>
+    <string name="settings_summary_no_overrides">無覆寫</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1個覆寫</item>
+        <item quantity="other">%d個覆寫</item>
+    </plurals>
 </resources>

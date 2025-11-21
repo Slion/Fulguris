@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Tipo de capa</string>
     <string name="settings_title_domains">Dominios</string>
     <string name="settings_summary_domains">Gestionar ajustes de dominio</string>
-    <string name="settings_title_resource_domains">Dominios de recursos</string>
     <string name="settings_title_override">Sobrescribir</string>
     <string name="settings_summary_on_override">Sobreescribir configuración heredada</string>
     <string name="settings_summary_off_override">Usar configuración heredada</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Bloqueador de anuncios</string>
     <string name="pref_summary_on_enable_ad_blocker">Disfruta de una experiencia web más limpia y segura</string>
     <string name="pref_summary_off_enable_ad_blocker">Disfruta de una versión sin filtrar y original de la web</string>
+    <string name="settings_summary_no_overrides">Sin anulaciones</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 anulación</item>
+        <item quantity="other">%d anulaciones</item>
+    </plurals>
 </resources>

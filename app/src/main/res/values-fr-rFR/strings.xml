@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">Type de couche</string>
     <string name="settings_title_domains">Domaines</string>
     <string name="settings_summary_domains">Gérer les paramètres de domaine</string>
-    <string name="settings_title_resource_domains">Domaines ressource</string>
     <string name="settings_title_override">Forcer</string>
     <string name="settings_summary_on_override">Remplacer les paramètres parents</string>
     <string name="settings_summary_off_override">Utiliser les paramètres parents</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">Bloqueur de publicités</string>
     <string name="pref_summary_on_enable_ad_blocker">Profitez d\'une expérience Web plus propre et plus sûre</string>
     <string name="pref_summary_off_enable_ad_blocker">Profitez d\'une version non filtrée et originale du Web</string>
+    <string name="settings_summary_no_overrides">Aucun remplacement</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 remplacement</item>
+        <item quantity="other">%d remplacements</item>
+    </plurals>
 </resources>

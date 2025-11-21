@@ -444,7 +444,6 @@
     <string name="settings_title_layer_type">ᱛᱷᱚᱠ ᱞᱮᱭᱟᱨ</string>
     <string name="settings_title_domains">ᱰᱳᱢᱮᱱ ᱠᱚ</string>
     <string name="settings_summary_domains">ᱰᱳᱢᱮᱱ ᱥᱟᱡᱟᱣ ᱠᱚ ᱥᱟᱢᱵᱽᱲᱟᱣ</string>
-    <string name="settings_title_resource_domains">ᱨᱤᱥᱳᱨᱥ ᱰᱳᱢᱮᱱ ᱠᱚ</string>
     <string name="settings_title_override">ᱚᱵᱷᱟᱨᱨᱟᱭᱤᱰ</string>
     <string name="settings_summary_on_override">ᱟᱭᱳ ᱥᱟᱡᱟᱣ ᱠᱚ ᱚᱵᱷᱟᱨᱨᱟᱭᱤᱰ</string>
     <string name="settings_summary_off_override">ᱟᱭᱳ ᱥᱟᱡᱟᱣ ᱠᱚ ᱵᱮᱵᱷᱟᱨ</string>
@@ -630,4 +629,9 @@
     <string name="pref_title_enable_ad_blocker">ᱮᱰ ᱵᱞᱚᱠᱚᱨ</string>
     <string name="pref_summary_on_enable_ad_blocker">ᱥᱟᱯᱷᱟ, ᱨᱩᱠᱷᱤᱭᱟᱹ ᱣᱮᱵᱽ ᱮᱱᱮᱢ ᱮᱱᱮᱢ ᱢᱮ</string>
     <string name="pref_summary_off_enable_ad_blocker">ᱵᱟᱝ ᱯᱷᱤᱞᱴᱚᱨ, ᱢᱩᱞ ᱵᱷᱚᱨᱥᱚᱱ ᱣᱮᱵᱽ ᱮᱱᱮᱢ ᱢᱮ</string>
+    <string name="settings_summary_no_overrides">ᱵᱟᱝ ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</string>
+    <plurals name="settings_summary_overrides">
+        <item quantity="one">1 ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</item>
+        <item quantity="other">%d ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</item>
+    </plurals>
 </resources>

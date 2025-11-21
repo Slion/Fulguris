@@ -39,6 +39,7 @@ import fulguris.settings.preferences.delegates.enumPreference
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber
 import java.io.File
+import androidx.core.content.edit
 
 /**
  * Domain preferences
@@ -51,8 +52,6 @@ class DomainPreferences constructor(
     val domain: String = "",
 ) {
 
-    var wasCreated = false
-    var parentWasCreated = false
 
     init {
         Timber.d("init: $domain")
@@ -82,78 +81,72 @@ class DomainPreferences constructor(
 
     // Remember order matters, do this first
     init {
-
         // Make sure default domain settings exists
         if (!exists("")) {
             Timber.d("Create default domain settings")
-            context.getSharedPreferences(name(""), MODE_PRIVATE).edit().putBoolean(context.getString(R.string.pref_key_entry_point), false).commit()
+            // Create an empty preferences file for the default domain
+            context.getSharedPreferences(name(""), MODE_PRIVATE).edit().apply()
         }
 
-        // Make sure parents settings exists
-        if (isSubDomain) {
-            if (!exists(topPrivateDomain!!)) {
-                Timber.d("Create top private domain settings")
-                createFromParent(topPrivateDomain,"")
-                parentWasCreated = true
-            }
-
-            // If our file does not exist yet, create it from default settings
-            if (!exists(domain)) {
-                createFromParent(domain,topPrivateDomain)
-                wasCreated = true
-            }
-        } else if (!isDefault) {
-            // We are either a top level domain or a private address
-            if (!exists(domain)) {
-                createFromParent(domain,"")
-                wasCreated = true
-            }
-        }
+        // Don't automatically create domain settings anymore
+        // They will be created on-demand when a user actually changes a setting
     }
 
     // Preferences for this domain
     val preferences: SharedPreferences = context.getSharedPreferences(name(domain), MODE_PRIVATE)
+
     // Preferences of the parent, either the top private domain or the default settings
     // TODO: I don't think that will be working for sub-sub-domain. It seems we just jump to the top level domain anyway
     // See: https://github.com/Slion/Fulguris/issues/554
-    val parent: DomainPreferences? = if (isDefault) null else DomainPreferences(context,if (isSubDomain) topPrivateDomain!! else "")
-
-    /**
-     * Used to distinguish main domain from resource domain
-     */
-    var entryPoint by preferences.booleanPreference(R.string.pref_key_entry_point, false)
+    val parent: DomainPreferences? = if (isDefault) null else DomainPreferences(context, if (isSubDomain) topPrivateDomain!! else "")
 
     /**
      * True if the browser should allow execution of javascript, false otherwise.
      */
     var javaScriptEnabledOverride by preferences.booleanPreference(R.string.pref_key_javascript_override, false)
     var javaScriptEnabledLocal by preferences.booleanPreference(R.string.pref_key_javascript, true)
-    val javaScriptEnabledParent: Boolean get() { return parent?.javaScriptEnabled ?: javaScriptEnabledLocal}
-    val javaScriptEnabled: Boolean get() { return if (isDefault || !javaScriptEnabledOverride) { javaScriptEnabledParent } else { javaScriptEnabledLocal } }
+    val javaScriptEnabled: Boolean get() {
+        val override = javaScriptEnabledOverride
+        val local = javaScriptEnabledLocal
+        val parentValue = parent?.javaScriptEnabled ?: local
+        return if (isDefault || !override) { parentValue } else { local }
+    }
 
     /**
      * Accept or reject third-party cookies
      */
     var thirdPartyCookiesOverride by preferences.booleanPreference(R.string.pref_key_third_party_cookies_override, false)
     var thirdPartyCookiesLocal by preferences.booleanPreference(R.string.pref_key_third_party_cookies, true)
-    val thirdPartyCookiesParent: Boolean get() { return parent?.thirdPartyCookies ?: thirdPartyCookiesLocal}
-    val thirdPartyCookies: Boolean get() { return if (isDefault || !thirdPartyCookiesOverride) { thirdPartyCookiesParent } else { thirdPartyCookiesLocal } }
+    val thirdPartyCookies: Boolean get() {
+        val override = thirdPartyCookiesOverride
+        val local = thirdPartyCookiesLocal
+        val parentValue = parent?.thirdPartyCookies ?: local
+        return if (isDefault || !override) { parentValue } else { local }
+    }
 
     /**
      * True if desktop mode should be enabled by default for new tabs, false otherwise.
      */
     var desktopModeOverride by preferences.booleanPreference(R.string.pref_key_desktop_mode_override, false)
     var desktopModeLocal by preferences.booleanPreference(R.string.pref_key_desktop_mode, false)
-    val desktopModeParent: Boolean get() { return parent?.desktopMode ?: desktopModeLocal}
-    val desktopMode: Boolean get() { return if (isDefault || !desktopModeOverride) { desktopModeParent } else { desktopModeLocal } }
+    val desktopMode: Boolean get() {
+        val override = desktopModeOverride
+        val local = desktopModeLocal
+        val parentValue = parent?.desktopMode ?: local
+        return if (isDefault || !override) { parentValue } else { local }
+    }
 
     /**
      * True if dark mode should be enabled by default for this domain, false otherwise.
      */
     var darkModeOverride by preferences.booleanPreference(R.string.pref_key_dark_mode_override, false)
     var darkModeLocal by preferences.booleanPreference(R.string.pref_key_dark_mode, false)
-    val darkModeParent: Boolean get() { return parent?.darkMode ?: darkModeLocal}
-    val darkMode: Boolean get() { return if (isDefault || !darkModeOverride) { darkModeParent } else { darkModeLocal } }
+    val darkMode: Boolean get() {
+        val override = darkModeOverride
+        val local = darkModeLocal
+        val parentValue = parent?.darkMode ?: local
+        return if (isDefault || !override) { parentValue } else { local }
+    }
 
     /**
      * Define what to do when a third-party app is available:
@@ -165,8 +158,12 @@ class DomainPreferences constructor(
      */
     var launchAppOverride by preferences.booleanPreference(R.string.pref_key_launch_app_override, false)
     var launchAppLocal by preferences.enumPreference(R.string.pref_key_launch_app, NoYesAsk.YES)
-    val launchAppParent: NoYesAsk get() { return parent?.launchApp ?: launchAppLocal}
-    val launchApp: NoYesAsk get() { return if (isDefault || !launchAppOverride) { launchAppParent } else { launchAppLocal } }
+    val launchApp: NoYesAsk get() {
+        val override = launchAppOverride
+        val local = launchAppLocal
+        val parentValue = parent?.launchApp ?: local
+        return if (isDefault || !override) { parentValue } else { local }
+    }
 
     /**
      * Define what to do when an SSL error is detected
@@ -176,8 +173,12 @@ class DomainPreferences constructor(
      */
     var sslErrorOverride by preferences.booleanPreference(R.string.pref_key_ssl_error_override, false)
     var sslErrorLocal by preferences.enumPreference(R.string.pref_key_ssl_error, NoYesAsk.ASK)
-    val sslErrorParent: NoYesAsk get() { return parent?.sslError ?: sslErrorLocal}
-    val sslError: NoYesAsk get() { return if (isDefault || !sslErrorOverride) { sslErrorParent } else { sslErrorLocal } }
+    val sslError: NoYesAsk get() {
+        val override = sslErrorOverride
+        val local = sslErrorLocal
+        val parentValue = parent?.sslError ?: local
+        return if (isDefault || !override) { parentValue } else { local }
+    }
 
     /**
      * Define what to do with incoming URLs
@@ -187,8 +188,13 @@ class DomainPreferences constructor(
      */
     var incomingUrlActionOverride by preferences.booleanPreference(R.string.pref_key_incoming_url_action_override, false)
     var incomingUrlActionLocal by preferences.enumPreference(R.string.pref_key_incoming_url_action, IncomingUrlAction.NEW_TAB)
-    val incomingUrlActionParent: IncomingUrlAction get() { return parent?.incomingUrlAction ?: incomingUrlActionLocal}
-    val incomingUrlAction: IncomingUrlAction get() { return if (isDefault || !incomingUrlActionOverride) { incomingUrlActionParent } else { incomingUrlActionLocal } }
+    val incomingUrlAction: IncomingUrlAction get() {
+        val override = incomingUrlActionOverride
+        val local = incomingUrlActionLocal
+        val parentValue = parent?.incomingUrlAction ?: local
+        return if (isDefault || !override) { parentValue } else { local }
+    }
+
 
     /**
      * Is this the default domain settings?
@@ -207,19 +213,31 @@ class DomainPreferences constructor(
 
 
     /**
-     * Load the default domain settings
+     * Check if any overrides are actually enabled.
+     * Returns true if at least one override is turned on.
      */
-    private fun createFromParent(domain: String, parent: String) {
-        Timber.d("createFromParent: $domain")
-        val defaultFileName = fileName("")
-        val thisFileName = fileName(domain)
-        try {
-            File(defaultFileName).copyTo(File(thisFileName), true)
-            // Make sure cached values are reloaded from disk
-            app.getSharedPreferences(name(domain),MODE_MULTI_PROCESS)
-        } catch (ex: Exception) {
-            Timber.d("File copy failed: $ex")
+    fun hasAnyOverrides(): Boolean {
+        return javaScriptEnabledOverride ||
+               thirdPartyCookiesOverride ||
+               desktopModeOverride ||
+               darkModeOverride ||
+               launchAppOverride ||
+               sslErrorOverride ||
+               incomingUrlActionOverride
+    }
+
+    /**
+     * Delete this domain's settings file if no overrides are enabled.
+     * Should be called when exiting domain settings to keep the list clean.
+     * @return true if the settings file was deleted, false otherwise
+     */
+    fun deleteIfNoOverrides(): Boolean {
+        if (!isDefault && exists(domain) && !hasAnyOverrides()) {
+            Timber.d("Deleting domain settings with no overrides: $domain")
+            delete(domain)
+            return true
         }
+        return false
     }
 
     companion object {
@@ -256,6 +274,7 @@ class DomainPreferences constructor(
 
         /**
          * Delete all our domain settings
+         * Also clears SharedPreferences cache for each domain by calling delete() for each
          * TODO: Make it async
          */
         fun deleteAll(ctx : Context) {
@@ -263,18 +282,36 @@ class DomainPreferences constructor(
             val directory = File(ctx.applicationInfo.dataDir, "shared_prefs")
             if (directory.exists() && directory.isDirectory) {
                 // Delete each file in this directory matching our domain prefix
-                directory.listFiles { _, name -> name.startsWith(prefix) }?.forEach {
-                    Timber.d("Delete ${it.absolutePath}: ${it.delete()}")
+                directory.listFiles { _, name -> name.startsWith(prefix) }?.forEach { file ->
+                    // Extract domain name from filename (remove prefix and .xml suffix)
+                    val domainName = file.nameWithoutExtension.substring(prefix.length)
+                    val reversedDomain = domainName.reverseDomainName
+
+                    // Call delete() to handle both file deletion and cache clearing
+                    delete(reversedDomain)
                 }
             }
         }
 
         /**
          * Delete the settings file belonging to the specified domain.
+         * Also clears the SharedPreferences cache to prevent stale values.
          */
         fun delete(domain: String) {
+            // First, clear SharedPreferences from Android's cache
+            // This ensures cached values are removed before we delete the file
+            try {
+                val prefs = app.getSharedPreferences(name(domain), Context.MODE_PRIVATE)
+                prefs.edit(commit = true) { clear() }
+                Timber.d("Cleared SharedPreferences cache for domain: $domain")
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to clear SharedPreferences cache for domain: $domain")
+            }
+
+            // Then, delete the physical file
             val file = File(fileName(domain))
-            Timber.d("Delete ${file.absolutePath}: ${file.delete()}")
+            val deleted = file.delete()
+            Timber.d("Delete ${file.absolutePath}: $deleted")
         }
     }
 }

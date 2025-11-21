@@ -379,7 +379,7 @@ class WebPageTab(
             createWebView()
             initializeContent(tabInitializer)
             desktopMode = defaultDomainSettings.desktopMode
-            darkMode = defaultDomainSettings.darkModeParent
+            darkMode = defaultDomainSettings.darkMode
         } else {
             // Our WebView will only be created whenever our tab goes to the foreground
             latentTabInitializer = tabInitializer
