@@ -642,4 +642,5 @@
         <item quantity="one">تجاوز واحد</item>
         <item quantity="other">%d تجاوزات</item>
     </plurals>
+    <string name="settings_summary_loading">جاري التحميل…</string>
 </resources>

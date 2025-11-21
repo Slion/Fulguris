@@ -636,4 +636,5 @@
         <item quantity="one">1 override</item>
         <item quantity="other">%d overrides</item>
     </plurals>
+    <string name="settings_summary_loading">Loading…</string>
 </resources>

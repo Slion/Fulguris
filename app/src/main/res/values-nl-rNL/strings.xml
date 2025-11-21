@@ -634,4 +634,5 @@
         <item quantity="one">1 overschrijving</item>
         <item quantity="other">%d overschrijvingen</item>
     </plurals>
+    <string name="settings_summary_loading">Laden…</string>
 </resources>

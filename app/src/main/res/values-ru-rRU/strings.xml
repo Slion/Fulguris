@@ -638,4 +638,5 @@
         <item quantity="one">1 переопределение</item>
         <item quantity="other">%d переопределений</item>
     </plurals>
+    <string name="settings_summary_loading">Загрузка…</string>
 </resources>

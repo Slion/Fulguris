@@ -634,4 +634,5 @@
         <item quantity="one">1 geçersiz kılma</item>
         <item quantity="other">%d geçersiz kılma</item>
     </plurals>
+    <string name="settings_summary_loading">Yükleniyor…</string>
 </resources>

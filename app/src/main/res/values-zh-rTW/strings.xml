@@ -632,4 +632,5 @@
         <item quantity="one">1個覆寫</item>
         <item quantity="other">%d個覆寫</item>
     </plurals>
+    <string name="settings_summary_loading">載入中…</string>
 </resources>

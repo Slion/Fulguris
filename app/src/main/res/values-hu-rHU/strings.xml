@@ -634,4 +634,5 @@
         <item quantity="one">1 felülírás</item>
         <item quantity="other">%d felülírás</item>
     </plurals>
+    <string name="settings_summary_loading">Betöltés…</string>
 </resources>

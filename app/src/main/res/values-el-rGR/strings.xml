@@ -634,4 +634,5 @@
         <item quantity="one">1 παράκαμψη</item>
         <item quantity="other">%d παρακάμψεις</item>
     </plurals>
+    <string name="settings_summary_loading">Φόρτωση…</string>
 </resources>

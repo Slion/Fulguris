@@ -636,4 +636,5 @@
         <item quantity="one">1 замена</item>
         <item quantity="other">%d замена</item>
     </plurals>
+    <string name="settings_summary_loading">Учитавање…</string>
 </resources>

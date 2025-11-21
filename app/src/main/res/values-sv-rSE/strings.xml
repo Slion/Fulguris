@@ -634,4 +634,5 @@
         <item quantity="one">1 åsidosättning</item>
         <item quantity="other">%d åsidosättningar</item>
     </plurals>
+    <string name="settings_summary_loading">Läser in…</string>
 </resources>

@@ -632,4 +632,5 @@
         <item quantity="one">1 penggantian</item>
         <item quantity="other">%d penggantian</item>
     </plurals>
+    <string name="settings_summary_loading">Memuat…</string>
 </resources>

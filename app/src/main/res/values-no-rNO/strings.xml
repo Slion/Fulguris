@@ -634,4 +634,5 @@
         <item quantity="one">1 overstyring</item>
         <item quantity="other">%d overstyringer</item>
     </plurals>
+    <string name="settings_summary_loading">Laster…</string>
 </resources>

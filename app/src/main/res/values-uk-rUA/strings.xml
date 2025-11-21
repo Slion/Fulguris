@@ -638,4 +638,5 @@
         <item quantity="one">1 перевизначення</item>
         <item quantity="other">%d перевизначень</item>
     </plurals>
+    <string name="settings_summary_loading">Завантаження…</string>
 </resources>

@@ -638,4 +638,5 @@
         <item quantity="one">1 nadpisanie</item>
         <item quantity="other">%d nadpisań</item>
     </plurals>
+    <string name="settings_summary_loading">Ładowanie…</string>
 </resources>

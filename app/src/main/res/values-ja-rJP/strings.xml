@@ -632,4 +632,5 @@
         <item quantity="one">1つのオーバーライド</item>
         <item quantity="other">%dつのオーバーライド</item>
     </plurals>
+    <string name="settings_summary_loading">読み込み中…</string>
 </resources>

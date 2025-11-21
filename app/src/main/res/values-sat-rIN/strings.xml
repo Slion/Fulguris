@@ -634,4 +634,5 @@
         <item quantity="one">1 ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</item>
         <item quantity="other">%d ᱚᱵᱷᱚᱨᱨᱟᱭᱤᱰ</item>
     </plurals>
+    <string name="settings_summary_loading">ᱞᱳᱰ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ…</string>
 </resources>

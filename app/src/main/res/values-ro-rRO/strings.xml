@@ -636,4 +636,5 @@
         <item quantity="one">1 suprascritere</item>
         <item quantity="other">%d suprascriteri</item>
     </plurals>
+    <string name="settings_summary_loading">Se încarcă…</string>
 </resources>

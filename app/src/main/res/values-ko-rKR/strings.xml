@@ -632,4 +632,5 @@
         <item quantity="one">1개 재정의</item>
         <item quantity="other">%d개 재정의</item>
     </plurals>
+    <string name="settings_summary_loading">로딩 중…</string>
 </resources>

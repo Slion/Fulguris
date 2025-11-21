@@ -634,4 +634,5 @@
         <item quantity="one">1 tilsidesættelse</item>
         <item quantity="other">%d tilsidesættelser</item>
     </plurals>
+    <string name="settings_summary_loading">Indlæser…</string>
 </resources>
