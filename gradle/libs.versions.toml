@@ -1,7 +1,7 @@
 [versions]
 # App versions
-slions-version-code = "244"
-slions-version-name = "1.11.6"
+slions-version-code = "245"
+slions-version-name = "1.11.7"
 styx-version-code = "1"
 styx-version-name = "20.0"
 
