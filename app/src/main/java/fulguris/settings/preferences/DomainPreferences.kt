@@ -240,6 +240,50 @@ class DomainPreferences constructor(
         return false
     }
 
+    /**
+     * Generate a summary string showing which overrides are active for this domain
+     * Order matches the preference XML file order
+     * Returns the domain name if it doesn't exist or has no overrides
+     */
+    fun getOverridesSummary(context: Context): String {
+        // If domain settings don't exist, just return the domain name
+        if (!exists(domain)) {
+            return domain.ifEmpty { context.getString(R.string.settings_summary_no_overrides) }
+        }
+
+        val overrides = mutableListOf<String>()
+
+        // Order matches preference_domain_default.xml
+        if (darkModeOverride) {
+            overrides.add(context.getString(R.string.settings_title_dark_mode_default))
+        }
+        if (desktopModeOverride) {
+            overrides.add(context.getString(R.string.settings_title_desktop_mode_default))
+        }
+        if (javaScriptEnabledOverride) {
+            overrides.add(context.getString(R.string.settings_title_javascript))
+        }
+        if (thirdPartyCookiesOverride) {
+            overrides.add(context.getString(R.string.settings_title_third_party_cookies))
+        }
+        if (launchAppOverride) {
+            overrides.add(context.getString(R.string.settings_title_launch_app))
+        }
+        if (sslErrorOverride) {
+            overrides.add(context.getString(R.string.settings_title_ssl_error))
+        }
+        if (incomingUrlActionOverride) {
+            overrides.add(context.getString(R.string.settings_title_incoming_url_action))
+        }
+
+        return if (overrides.isEmpty()) {
+            // Return domain name if no overrides exist
+            domain.ifEmpty { context.getString(R.string.settings_summary_no_overrides) }
+        } else {
+            overrides.joinToString(", ")
+        }
+    }
+
     companion object {
 
         /**

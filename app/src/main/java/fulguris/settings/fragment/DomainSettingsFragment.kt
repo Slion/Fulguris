@@ -77,24 +77,7 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
             intent?.data = Uri.parse(uri)
         }
 
-        // Setup parent link
-        find<BasicPreference>(R.string.pref_key_parent)?.apply {
-            if (prefs.isSubDomain) {
-                breadcrumb = prefs.parent?.domain ?: ""
-                summary = breadcrumb
-            } else {
-                breadcrumb = getString(R.string.settings_summary_default_domain_settings)
-                summary = breadcrumb
-            }
-
-            setOnPreferenceClickListener {
-                // Set domain setting page to load
-                app.domain = prefs.parent?.domain ?: ""
-                // Still perform default action
-                false
-            }
-        }
-
+        // Parent link setup is done in onResume() to ensure it's always up-to-date
 
         // Delete this domain settings
         find<Preference>(R.string.pref_key_delete)?.setOnPreferenceClickListener {
@@ -109,6 +92,28 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
                 parentFragmentManager.popBackStack()
             }
             true
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Update parent preference - breadcrumb, summary, and click listener
+        // Done here to ensure everything is always up-to-date when returning to this fragment
+        find<BasicPreference>(R.string.pref_key_parent)?.apply {
+            if (prefs.isSubDomain) {
+                breadcrumb = prefs.parent?.domain ?: ""
+                summary = prefs.parent?.getOverridesSummary(requireContext())
+            } else {
+                breadcrumb = getString(R.string.settings_summary_default_domain_settings)
+                summary = breadcrumb
+            }
+
+            setOnPreferenceClickListener {
+                // Set domain setting page to load
+                app.domain = prefs.parent?.domain ?: ""
+                // Still perform default action
+                false
+            }
         }
     }
 

@@ -138,43 +138,6 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-    /**
-     * Generate a summary string showing which overrides are active for a domain
-     * Order matches the preference XML file order
-     */
-    private fun getOverridesSummary(domainPref: DomainPreferences): String {
-        val overrides = mutableListOf<String>()
-
-        // Order matches preference_domain_default.xml
-        if (domainPref.darkModeOverride) {
-            overrides.add(getString(R.string.settings_title_dark_mode_default))
-        }
-        if (domainPref.desktopModeOverride) {
-            overrides.add(getString(R.string.settings_title_desktop_mode_default))
-        }
-        if (domainPref.javaScriptEnabledOverride) {
-            overrides.add(getString(R.string.settings_title_javascript))
-        }
-        if (domainPref.thirdPartyCookiesOverride) {
-            overrides.add(getString(R.string.settings_title_third_party_cookies))
-        }
-        if (domainPref.launchAppOverride) {
-            overrides.add(getString(R.string.settings_title_launch_app))
-        }
-        if (domainPref.sslErrorOverride) {
-            overrides.add(getString(R.string.settings_title_ssl_error))
-        }
-        if (domainPref.incomingUrlActionOverride) {
-            overrides.add(getString(R.string.settings_title_incoming_url_action))
-        }
-
-        return if (overrides.isEmpty()) {
-            // Fallback (shouldn't happen since we delete domains with no overrides)
-            getString(R.string.settings_summary_default_domain_settings)
-        } else {
-            overrides.joinToString(", ")
-        }
-    }
 
     /**
      *
@@ -208,7 +171,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
             if (DomainPreferences.exists(domain)) {
                 findPreference<Preference>(domain)?.let { pref ->
                     val domainPref = DomainPreferences(requireContext(), domain)
-                    pref.summary = getOverridesSummary(domainPref)
+                    pref.summary = domainPref.getOverridesSummary(requireContext())
                 }
             }
 
@@ -238,7 +201,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     if (existingPref != null) {
                         // Update existing parent domain summary
                         val domainPref = DomainPreferences(requireContext(), tpd)
-                        existingPref.summary = getOverridesSummary(domainPref)
+                        existingPref.summary = domainPref.getOverridesSummary(requireContext())
                     } else {
                         // Parent domain was just created - add it to the list
                         val domainPref = DomainPreferences(requireContext(), tpd)
@@ -250,7 +213,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                             pref.isSingleLineTitle = false
                             pref.key = tpd
                             pref.title = tpd
-                            pref.summary = getOverridesSummary(domainPref)
+                            pref.summary = domainPref.getOverridesSummary(requireContext())
                             pref.breadcrumb = tpd
                             pref.fragment = "fulguris.settings.fragment.DomainSettingsFragment"
                             pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -350,7 +313,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     // But actually show the domain name
                     pref.displayedTitle = domain
                     // Show active overrides in summary
-                    pref.summary = getOverridesSummary(domainPref)
+                    pref.summary = domainPref.getOverridesSummary(requireContext())
                     pref.breadcrumb = domain
                     pref.fragment = "fulguris.settings.fragment.DomainSettingsFragment"
                     pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
