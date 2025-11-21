@@ -301,5 +301,29 @@
             </intent>
         </Preference>
 
+        <Preference
+            android:summary="@string/license_apache"
+            android:title="AppIntro"
+            app:icon="@drawable/ic_library"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="false">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/AppIntro/AppIntro/blob/main/LICENSE">
+                <extra
+                    android:name="PACKAGE"
+                    android:value="@string/application_id" />
+
+                <extra
+                    android:name="ACTIVITY"
+                    android:value="fulguris.activity.SettingsActivity" />
+
+                <extra
+                    android:name="FRAGMENT"
+                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+            </intent>
+        </Preference>
+
     </PreferenceCategory>
 </PreferenceScreen>
