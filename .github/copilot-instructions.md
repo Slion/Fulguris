@@ -55,7 +55,7 @@ The L10N.md file contains everything you need:
 
 ### Simple Rule: Always Use Single Quotes
 
-**Use single quotes for outer string container** and escape inner double quotes with backslash `\"`:
+**ALWAYS use single quotes - no escaping needed for double quotes in XML!**
 
 ```powershell
 # Simple strings
@@ -64,11 +64,11 @@ python l10n.py --set th-rTH string_id 'คำแปล'
 # Strings with placeholders (%1$s, %d, etc.) - NO escaping needed!
 python l10n.py --set th-rTH string_id 'ดาวน์โหลด %1$s'
 
-# Strings with double quotes inside - escape with backslash
-python l10n.py --set th-rTH string_id 'สลับไปที่ \"%s\"'
+# Strings with double quotes inside - NO escaping needed!
+python l10n.py --set th-rTH string_id 'สลับไปที่ "%s"'
 
 # Strings with BOTH quotes and placeholders
-python l10n.py --set th-rTH string_id 'ดาวน์โหลด \"%1$s\"'
+python l10n.py --set th-rTH string_id 'ดาวน์โหลด "%1$s"'
 
 # Strings with newlines (\n) - works perfectly in single quotes
 python l10n.py --set th-rTH string_id 'บรรทัด1\n\nบรรทัด2'
@@ -77,19 +77,17 @@ python l10n.py --set th-rTH string_id 'บรรทัด1\n\nบรรทัด
 python l10n.py --set th-rTH action_dont_allow 'Don''t allow'
 python l10n.py --set th-rTH save_data 'Request ''Save-Data'''
 
-# Complex XML - same rule, single quotes with \"
-python l10n.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id=\"example\">%1$s</xliff:g>'
+# Complex XML - single quotes, no escaping needed for double quotes!
+python l10n.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id="example">%1$s</xliff:g>'
 ```
 
 **Why single quotes work perfectly:**
 - PowerShell single quotes treat everything literally (no variable expansion)
 - Dollar signs `$` in placeholders like `%1$s` work perfectly - no escaping needed
-- Backslash `\"` escapes inner double quotes - PowerShell passes `\` to Python, which receives actual quotes
-- Newlines `\n` work correctly - PowerShell passes `\` and `n` as separate characters, Python writes `\n` to XML
-- **Apostrophes (single quotes) must be doubled:** `''` → PowerShell converts to `'` that Python receives
-- Only inner double quotes need escaping with backslash `\"`
-
-**Important:** PowerShell passes the backslashes literally to Python. The Python script receives them and writes them correctly to the Android XML format.
+- Double quotes in XML attributes need NO escaping
+- Newlines `\n` work correctly - PowerShell passes `\` and `n` as separate characters
+- **Apostrophes (single quotes) must be doubled:** `''` → PowerShell converts to `'`
+- Safe from accidental PowerShell variable interpolation
 
 ## Quick Start Examples
 
@@ -103,21 +101,21 @@ python l10n.py --set th-rTH string_id1 'คำแปล1' string_id2 'คำแ�
 # Strings with placeholders - single quotes, no escaping needed for $
 python l10n.py --set th-rTH dialog_download 'คุณต้องการดาวน์โหลดไฟล์นี้หรือไม่? (%1$s)'
 
-# Strings with quotes - single quotes, escape inner quotes with backslash
-python l10n.py --set th-rTH session_switched 'สลับไปที่ \"%s\"'
+# Strings with quotes - single quotes, no escaping needed!
+python l10n.py --set th-rTH session_switched 'สลับไปที่ "%s"'
 
 # Strings with apostrophes - double the single quotes
 python l10n.py --set da-rDK action_dont_allow 'Tillad ikke'  # No apostrophe in Danish
 python l10n.py --set en-rUS action_dont_allow 'Don''t allow'  # English has apostrophe - double it
 
 # Strings with BOTH quotes and placeholders
-python l10n.py --set th-rTH string_id 'ดาวน์โหลด \"%1$s\"'
+python l10n.py --set th-rTH string_id 'ดาวน์โหลด "%1$s"'
 
-# Complex XML - single quotes with backslash for quotes
-python l10n.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id=\"example\">%s</xliff:g>'
+# Complex XML - single quotes, no escaping needed for quotes!
+python l10n.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id="example">%s</xliff:g>'
 
 # Complex XML with placeholders - still single quotes!
-python l10n.py --raw --set th-rTH match_x_of_n 'ตรงกัน <xliff:g id=\"current_match\" example=\"1\">%1$d</xliff:g> จาก <xliff:g id=\"match_count\" example=\"10\">%2$d</xliff:g>'
+python l10n.py --raw --set th-rTH match_x_of_n 'ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g>'
 ```
 
 ## Error Checking - IMPORTANT!
@@ -142,7 +140,7 @@ Successfully updated: 2
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| `Attribute value not quoted` | PowerShell stripped quotes from XML | Use here-string with `--raw` |
+| `Attribute value not quoted` | Missing quotes in XML | Use single quotes - no escaping needed |
 | `Entity '&apos;' detected` | Wrong entity for Android | Use `\'` instead |
 | `Placeholder mismatch` | Missing or wrong placeholders | Match English placeholders exactly |
 | `String does not exist` | String not in language file | **STOP** - Report to user, don't add! |
@@ -174,6 +172,6 @@ Settings → การตั้งค่า | Enable → เปิดใช้�
 
 **For complete instructions, commands, examples, and troubleshooting: See [L10N.md](../L10N.md)**
 
-**Last Updated:** November 11, 2025  
+**Last Updated:** November 21, 2025  
 **Maintained by:** Fulguris Development Team
 
