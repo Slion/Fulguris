@@ -459,7 +459,7 @@
     <string name="settings_summary_delete_domain_settings">Poista tämän verkkotunnuksen asetukset</string>
     <string name="settings_title_parent">Pääverkkotunnus</string>
     <string name="settings_summary_default_domain_settings">Oletusverkkotunnuksen asetukset</string>
-    <string name="settings_summary_loading">Loading…</string>
+    <string name="settings_summary_loading">Ladataan…</string>
     <string name="settings_title_ssl_error">SSL-virhe</string>
     <string name="settings_summary_ssl_error">Miten käsitellä SSL-virheet</string>
     <string name="settings_title_incoming_url_action">Saapuvan URL-osoitteen toiminto</string>
@@ -487,10 +487,10 @@
         <item quantity="other">%d evästettä</item>
     </plurals>
     <plurals name="settings_summary_overrides">
-        <item quantity="one">1 override</item>
-        <item quantity="other">%d overrides</item>
+        <item quantity="one">1 ohitus</item>
+        <item quantity="other">%d ohitusta</item>
     </plurals>
-    <string name="settings_summary_no_overrides">No overrides</string>
+    <string name="settings_summary_no_overrides">Ei ohituksia</string>
     <string name="settings_title_task_label">Tehtävän nimi</string>
     <string name="settings_title_task_icon">Task icon</string>
     <string name="settings_summary_on_task_icon">Use page icon</string>

@@ -461,7 +461,7 @@
     <string name="settings_summary_delete_domain_settings">Will be recreated next time this domain is encountered</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_summary_default_domain_settings">Default domain settings</string>
-    <string name="settings_summary_loading">Loading…</string>
+    <string name="settings_summary_loading">Įkeliama…</string>
     <string name="settings_title_ssl_error">Security error</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
     <string name="settings_title_incoming_url_action">Incoming link action</string>
@@ -491,12 +491,12 @@
         <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
     <plurals name="settings_summary_overrides">
-        <item quantity="one">1 override</item>
+        <item quantity="one">1 perrašymas</item>
         <item quantity="few">%d overrides</item>
         <item quantity="many">%d overrides</item>
-        <item quantity="other">%d overrides</item>
+        <item quantity="other">%d perrašymų</item>
     </plurals>
-    <string name="settings_summary_no_overrides">No overrides</string>
+    <string name="settings_summary_no_overrides">Nėra perrašymų</string>
     <string name="settings_title_task_label">Task label</string>
     <string name="settings_title_task_icon">Task icon</string>
     <string name="settings_summary_on_task_icon">Use page icon</string>
