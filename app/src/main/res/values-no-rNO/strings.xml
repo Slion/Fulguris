@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Slett alle domeneinnstillinger</string>
     <string name="question_delete_all_domain_settings">Slett alle domeneinnstillinger?</string>
     <string name="settings_title_delete_domain_settings">Slett domeneinnstillinger</string>
-    <string name="settings_summary_delete_domain_settings">Vil bli gjenskapt neste gang dette domenet oppdages</string>
     <string name="settings_title_parent">Overordnet</string>
     <string name="settings_summary_default_domain_settings">Standard domeneinnstillinger</string>
     <string name="settings_summary_loading">Laster…</string>

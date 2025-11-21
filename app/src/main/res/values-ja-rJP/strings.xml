@@ -455,7 +455,6 @@
     <string name="settings_summary_domains_delete_all">すべてのドメイン設定を削除</string>
     <string name="question_delete_all_domain_settings">すべてのドメイン設定を削除しますか？</string>
     <string name="settings_title_delete_domain_settings">ドメイン設定を削除</string>
-    <string name="settings_summary_delete_domain_settings">次回このドメインが見つかったときに再作成されます。</string>
     <string name="settings_title_parent">親</string>
     <string name="settings_summary_default_domain_settings">既定のドメイン設定</string>
     <string name="settings_summary_loading">読み込み中…</string>

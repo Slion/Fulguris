@@ -455,7 +455,6 @@
     <string name="settings_summary_domains_delete_all">ลบการตั้งค่าเฉพาะโดเมนทั้งหมด</string>
     <string name="question_delete_all_domain_settings">ลบการตั้งค่าโดเมนทั้งหมดหรือไม่?</string>
     <string name="settings_title_delete_domain_settings">ลบการตั้งค่าโดเมน</string>
-    <string name="settings_summary_delete_domain_settings">ลบการตั้งค่าสำหรับโดเมนนี้</string>
     <string name="settings_title_parent">โดเมนหลัก</string>
     <string name="settings_summary_default_domain_settings">การตั้งค่าโดเมนเริ่มต้น</string>
     <string name="settings_summary_loading">กำลังโหลด…</string>

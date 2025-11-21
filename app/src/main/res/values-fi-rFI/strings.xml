@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Poista kaikki verkkotunnuskohtaiset asetukset</string>
     <string name="question_delete_all_domain_settings">Haluatko poistaa kaikki verkkotunnuskohtaiset asetukset?</string>
     <string name="settings_title_delete_domain_settings">Poista verkkotunnuksen asetukset</string>
-    <string name="settings_summary_delete_domain_settings">Poista tämän verkkotunnuksen asetukset</string>
     <string name="settings_title_parent">Pääverkkotunnus</string>
     <string name="settings_summary_default_domain_settings">Oletusverkkotunnuksen asetukset</string>
     <string name="settings_summary_loading">Ladataan…</string>

@@ -457,7 +457,6 @@
     <string name="settings_summary_domains_delete_all">Izbrišite sve postavke domene</string>
     <string name="question_delete_all_domain_settings">Želite li izbrisati sve postavke domene?</string>
     <string name="settings_title_delete_domain_settings">Izbrišite postavke domene</string>
-    <string name="settings_summary_delete_domain_settings">Bit će ponovo kreiran sljedeći put kada se naiđe na ovu domenu</string>
     <string name="settings_title_parent">Roditelj</string>
     <string name="settings_summary_default_domain_settings">Zadane postavke domene</string>
     <string name="settings_summary_loading">Učitavanje…</string>

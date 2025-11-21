@@ -460,7 +460,6 @@
     <string name="settings_summary_domains_delete_all">حذف جميع إعدادات النطاقات</string>
     <string name="question_delete_all_domain_settings">حذف جميع إعدادات النطاقات؟</string>
     <string name="settings_title_delete_domain_settings">حذف إعدادات النطاق</string>
-    <string name="settings_summary_delete_domain_settings">سيتم إعادة إنشائها في المرة القادمة التي يتم فيها مواجهة هذا النطاق</string>
     <string name="settings_title_parent">الأصل</string>
     <string name="settings_summary_default_domain_settings">إعدادات النطاق الافتراضية</string>
     <string name="settings_summary_loading">جاري التحميل…</string>

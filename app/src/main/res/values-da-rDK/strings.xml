@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Slet alle domæneindstillinger</string>
     <string name="question_delete_all_domain_settings">Slet alle domæneindstillinger?</string>
     <string name="settings_title_delete_domain_settings">Slet domæneindstillinger</string>
-    <string name="settings_summary_delete_domain_settings">Vil blive genskabt næste gang dette domæne stødes på</string>
     <string name="settings_title_parent">Forælder</string>
     <string name="settings_summary_default_domain_settings">Standard domæneindstillinger</string>
     <string name="settings_summary_loading">Indlæser…</string>

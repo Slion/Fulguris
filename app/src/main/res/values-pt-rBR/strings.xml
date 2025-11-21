@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Excluir todas as configurações do domínio</string>
     <string name="question_delete_all_domain_settings">Excluir todas as configurações do domínio?</string>
     <string name="settings_title_delete_domain_settings">Excluir configurações do domínio</string>
-    <string name="settings_summary_delete_domain_settings">Serão recriadas na próxima vez em que este domínio for carregado</string>
     <string name="settings_title_parent">Domínio pai</string>
     <string name="settings_summary_default_domain_settings">Configurações padrão de domínio</string>
     <string name="settings_summary_loading">Carregando…</string>

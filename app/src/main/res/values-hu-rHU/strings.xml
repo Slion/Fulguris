@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Összes tartománybeállítás törlése</string>
     <string name="question_delete_all_domain_settings">Törli az összes tartománybeállítást?</string>
     <string name="settings_title_delete_domain_settings">Tartománybeállítások törlése</string>
-    <string name="settings_summary_delete_domain_settings">Újra létre lesz hozva amint a tartománnyal találkozik</string>
     <string name="settings_title_parent">Szülő</string>
     <string name="settings_summary_default_domain_settings">Alapértelmezett tartománybeállítások</string>
     <string name="settings_summary_loading">Betöltés…</string>

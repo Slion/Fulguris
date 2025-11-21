@@ -458,7 +458,6 @@
     <string name="settings_summary_domains_delete_all">Smazat všechna nastavení domén</string>
     <string name="question_delete_all_domain_settings">Smazat všechna nastavení domén?</string>
     <string name="settings_title_delete_domain_settings">Smazat nastavení domény</string>
-    <string name="settings_summary_delete_domain_settings">Bude znovu vytvořeno při příštím setkání s touto doménou</string>
     <string name="settings_title_parent">Nadřazená</string>
     <string name="settings_summary_default_domain_settings">Výchozí nastavení domény</string>
     <string name="settings_summary_loading">Načítání…</string>

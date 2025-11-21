@@ -455,7 +455,6 @@
     <string name="settings_summary_domains_delete_all">删除所有域设置</string>
     <string name="question_delete_all_domain_settings">删除所有域设置？</string>
     <string name="settings_title_delete_domain_settings">删除域设置</string>
-    <string name="settings_summary_delete_domain_settings">下次遇到此域名时将被重新创建</string>
     <string name="settings_title_parent">主设置</string>
     <string name="settings_summary_default_domain_settings">默认域名设置</string>
     <string name="settings_summary_loading">加载中…</string>

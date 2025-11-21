@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Alle Domains-Einstellungen löschen</string>
     <string name="question_delete_all_domain_settings">Möchten sie alle Domains-Einstellungen löschen?</string>
     <string name="settings_title_delete_domain_settings">Domain-Einstellungen löschen</string>
-    <string name="settings_summary_delete_domain_settings">Wird neu erstellt, wenn diese Domäne das nächste Mal aufgesucht wird</string>
     <string name="settings_title_parent">Übergeordnet</string>
     <string name="settings_summary_default_domain_settings">Standard-Domäneneinstellungen</string>
     <string name="settings_summary_loading">Laden…</string>

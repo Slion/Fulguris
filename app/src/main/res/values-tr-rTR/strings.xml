@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Tüm alan adı ayarlarını sil</string>
     <string name="question_delete_all_domain_settings">Tüm alan adı ayarları silinsin mi?</string>
     <string name="settings_title_delete_domain_settings">Alan adı ayarlarını sil</string>
-    <string name="settings_summary_delete_domain_settings">Bu alan adıyla bir sonraki karşılaşmada yeniden oluşturulacak</string>
     <string name="settings_title_parent">Üst</string>
     <string name="settings_summary_default_domain_settings">Varsayılan alan adı ayarları</string>
     <string name="settings_summary_loading">Yükleniyor…</string>

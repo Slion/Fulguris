@@ -458,7 +458,6 @@
     <string name="settings_summary_domains_delete_all">Видалити всі налаштування домену</string>
     <string name="question_delete_all_domain_settings">Видалити всі налаштування домену?</string>
     <string name="settings_title_delete_domain_settings">Видалити налаштування домену</string>
-    <string name="settings_summary_delete_domain_settings">Буде повторно створено наступного разу при зіткненні цього домену</string>
     <string name="settings_title_parent">Батьківський</string>
     <string name="settings_summary_default_domain_settings">Налаштування домену за замовчуванням</string>
     <string name="settings_summary_loading">Завантаження…</string>

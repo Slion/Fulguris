@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Ta bort alla domäninställningar</string>
     <string name="question_delete_all_domain_settings">Ta bort alla domäninställningar?</string>
     <string name="settings_title_delete_domain_settings">Ta bort domäninställningar</string>
-    <string name="settings_summary_delete_domain_settings">Kommer att återskapas nästa gång denna domän påträffas</string>
     <string name="settings_title_parent">Förälder</string>
     <string name="settings_summary_default_domain_settings">Standarddomäninställningar</string>
     <string name="settings_summary_loading">Läser in…</string>

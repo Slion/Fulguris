@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Διαγραφή όλων των ρυθμίσεων τομέα</string>
     <string name="question_delete_all_domain_settings">Διαγραφή όλων των ρυθμίσεων τομέα;</string>
     <string name="settings_title_delete_domain_settings">Διαγραφή ρυθμίσεων τομέα</string>
-    <string name="settings_summary_delete_domain_settings">Θα δημιουργηθεί ξανά την επόμενη φορά που θα συναντηθεί αυτός ο τομέας</string>
     <string name="settings_title_parent">Γονικό</string>
     <string name="settings_summary_default_domain_settings">Προεπιλεγμένες ρυθμίσεις τομέα</string>
     <string name="settings_summary_loading">Φόρτωση…</string>

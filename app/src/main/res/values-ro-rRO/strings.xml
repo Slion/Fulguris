@@ -457,7 +457,6 @@
     <string name="settings_summary_domains_delete_all">Șterge toate setările domeniilor</string>
     <string name="question_delete_all_domain_settings">Ștergi toate setările domeniilor?</string>
     <string name="settings_title_delete_domain_settings">Șterge setările domeniului</string>
-    <string name="settings_summary_delete_domain_settings">Vor fi recreate data viitoare când acest domeniu este întâlnit</string>
     <string name="settings_title_parent">Părinte</string>
     <string name="settings_summary_default_domain_settings">Setări domeniu implicite</string>
     <string name="settings_summary_loading">Se încarcă…</string>

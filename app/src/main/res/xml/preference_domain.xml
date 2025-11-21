@@ -252,8 +252,8 @@
     <slions.pref.BasicPreference
         a:key="@string/pref_key_delete"
         a:title="@string/settings_title_delete_domain_settings"
-        a:summary="@string/settings_summary_delete_domain_settings"
-        a:icon="@drawable/ic_delete"
+        a:icon="@drawable/ic_delete_forever_outline"
+        a:allowDividerAbove="true"
         tools:ignore="PrivateResource" />
 
 

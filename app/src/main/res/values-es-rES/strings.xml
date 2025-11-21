@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Borrar todos los ajustes del dominio</string>
     <string name="question_delete_all_domain_settings">¿Quiere borrar todos los ajustes del dominio?</string>
     <string name="settings_title_delete_domain_settings">Borrar todos los ajustes del dominio</string>
-    <string name="settings_summary_delete_domain_settings">Será recreado la próxima vez que se encuentre este dominio</string>
     <string name="settings_title_parent">Padre</string>
     <string name="settings_summary_default_domain_settings">Configuración de dominio predeterminada</string>
     <string name="settings_summary_loading">Cargando…</string>

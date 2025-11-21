@@ -33,7 +33,7 @@
         a:icon="@drawable/ic_domain"
         a:title="@string/settings_title_domains"
         a:singleLineTitle="false"
-        a:initialExpandedChildrenCount="30"
+        a:initialExpandedChildrenCount="6"
         a:order="10"/>
 
     <Preference

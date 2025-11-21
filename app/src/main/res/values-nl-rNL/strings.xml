@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Alle domeininstellingen verwijderen</string>
     <string name="question_delete_all_domain_settings">Alle domeininstellingen verwijderen?</string>
     <string name="settings_title_delete_domain_settings">Domeininstellingen verwijderen</string>
-    <string name="settings_summary_delete_domain_settings">Wordt opnieuw aangemaakt de volgende keer dat dit domein wordt gebruikt</string>
     <string name="settings_title_parent">Bovenliggende</string>
     <string name="settings_summary_default_domain_settings">Standaard domeininstellingen</string>
     <string name="settings_summary_loading">Laden…</string>

@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Elimina tutte le impostazioni di dominio</string>
     <string name="question_delete_all_domain_settings">Eliminare tutte le impostazioni di dominio?</string>
     <string name="settings_title_delete_domain_settings">Elimina impostazioni dominio</string>
-    <string name="settings_summary_delete_domain_settings">Sarà ricreato la prossima volta che questo dominio è incontrato</string>
     <string name="settings_title_parent">Genitore</string>
     <string name="settings_summary_default_domain_settings">Impostazioni dominio predefinite</string>
     <string name="settings_summary_loading">Caricamento…</string>

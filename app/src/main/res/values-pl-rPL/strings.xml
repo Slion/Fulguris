@@ -458,7 +458,6 @@
     <string name="settings_summary_domains_delete_all">Usuń wszystkie ustawienia domen</string>
     <string name="question_delete_all_domain_settings">Usunąć wszystkie ustawienia domen?</string>
     <string name="settings_title_delete_domain_settings">Usuń ustawienia domeny</string>
-    <string name="settings_summary_delete_domain_settings">Zostaną ponownie utworzone przy napotkaniu tej domeny</string>
     <string name="settings_title_parent">Nadrzędne</string>
     <string name="settings_summary_default_domain_settings">Domyślne ustawienia domen</string>
     <string name="settings_summary_loading">Ładowanie…</string>

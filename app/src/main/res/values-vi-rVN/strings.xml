@@ -455,7 +455,6 @@
     <string name="settings_summary_domains_delete_all">Xóa tất cả thiết đặt tên miền</string>
     <string name="question_delete_all_domain_settings">Xóa tất cả thiết đặt tên miền?</string>
     <string name="settings_title_delete_domain_settings">Xóa thiết đặt tên miền</string>
-    <string name="settings_summary_delete_domain_settings">Sẽ được tạo lại vào lần tới khi gặp tên miền này</string>
     <string name="settings_title_parent">Cha</string>
     <string name="settings_summary_default_domain_settings">Thiết đặt tên miền mặc định</string>
     <string name="settings_summary_loading">Đang tải…</string>

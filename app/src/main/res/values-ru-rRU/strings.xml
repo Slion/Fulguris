@@ -458,7 +458,6 @@
     <string name="settings_summary_domains_delete_all">Удалить все настройки домена</string>
     <string name="question_delete_all_domain_settings">Удалить все настройки домена?</string>
     <string name="settings_title_delete_domain_settings">Удалить настройки домена</string>
-    <string name="settings_summary_delete_domain_settings">Будет воссоздано в следующий раз, при обнаружении этого домена</string>
     <string name="settings_title_parent">Родительский</string>
     <string name="settings_summary_default_domain_settings">Настройки домена по умолчанию</string>
     <string name="settings_summary_loading">Загрузка…</string>

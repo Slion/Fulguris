@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Supprimer tous les paramètres du domaine</string>
     <string name="question_delete_all_domain_settings">Supprimer tous les paramètres du domaine ?</string>
     <string name="settings_title_delete_domain_settings">Supprimer les paramètres du domaine</string>
-    <string name="settings_summary_delete_domain_settings">Les paramètres seront recréés la prochaine fois que ce domaine sera rencontré</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_summary_default_domain_settings">Paramètres de domaine par défaut</string>
     <string name="settings_summary_loading">Chargement…</string>

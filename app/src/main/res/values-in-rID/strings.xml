@@ -455,7 +455,6 @@
     <string name="settings_summary_domains_delete_all">Hapus semua pengaturan domain</string>
     <string name="question_delete_all_domain_settings">Hapus semua pengaturan domain?</string>
     <string name="settings_title_delete_domain_settings">Hapus pengaturan domain</string>
-    <string name="settings_summary_delete_domain_settings">Akan dibuat ulang saat domain ini ditemui lagi</string>
     <string name="settings_title_parent">Induk</string>
     <string name="settings_summary_default_domain_settings">Pengaturan domain default</string>
     <string name="settings_summary_loading">Memuat…</string>

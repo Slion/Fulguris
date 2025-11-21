@@ -456,7 +456,6 @@
     <string name="settings_summary_domains_delete_all">Apagar todas as definições</string>
     <string name="question_delete_all_domain_settings">Apagar todas as definições?</string>
     <string name="settings_title_delete_domain_settings">Apagar definições de domínio</string>
-    <string name="settings_summary_delete_domain_settings">As definições serão recriadas assim que este domínio for encontrado</string>
     <string name="settings_title_parent">Principal</string>
     <string name="settings_summary_default_domain_settings">Definições padrão de domínios</string>
     <string name="settings_summary_loading">A carregar…</string>
