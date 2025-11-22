@@ -705,6 +705,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
+     * Show all page requests and their blocked status in a bottom sheet
+     */
+    private fun showPageRequests() {
+        iBottomSheet.setLayout(R.layout.fragment_page_requests).show()
+    }
+
+    /**
      *
      */
     private fun showMenuMain() {
@@ -741,6 +748,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onMenuItemClicked(iBinding.menuItemPageHistory) {
                 dismiss()
                 iBottomSheet.setLayout(R.layout.fragment_settings_page_history).show()
+            }
+            onMenuItemClicked(iBinding.menuItemPageRequests) {
+                dismiss()
+                showPageRequests()
             }
             onMenuItemClicked(iBinding.menuItemShare) { dismiss(); executeAction(R.id.action_share) }
             onMenuItemClicked(iBinding.menuItemAddBookmark) { dismiss(); executeAction(R.id.action_add_bookmark) }

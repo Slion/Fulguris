@@ -134,7 +134,12 @@ class WebPageTab(
     var webView: WebViewEx? = null
         private set
 
-    private lateinit var webPageClient: WebPageClient
+    /**
+     * The WebPageClient instance for this tab.
+     * Provides access to page loading events and request tracking.
+     */
+    lateinit var webPageClient: WebPageClient
+        private set
 
     /**
      * The URL we tried to load

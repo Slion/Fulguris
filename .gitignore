@@ -71,3 +71,5 @@ google-play-*.json
 vendor/bundle
 .bundle
 
+# Crowdin - prevent accidental auto-upload configuration
+crowdin.properties

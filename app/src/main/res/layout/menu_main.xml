@@ -28,7 +28,7 @@
         <LinearLayout
             android:id="@+id/header"
             android:layout_width="250dp"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="56dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -104,6 +104,7 @@ TODO: Find a way not to scroll that guy without breaking our layout
 
             <View
                 android:layout_width="match_parent"
+                android:layout_marginHorizontal="8dp"
                 android:layout_height="2dp"
                 android:background="?android:attr/listDivider"
                 />

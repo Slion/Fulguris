@@ -90,6 +90,27 @@ class WebPageClient(
     // Count the number of resources loaded since the page was last started
     private var iResourceCount: Int = 0;
 
+    // Track all requests for the current page and whether they were blocked
+    data class PageRequest(
+        val url: String,
+        val wasBlocked: Boolean,
+        val timestamp: Long = System.currentTimeMillis()
+    )
+
+    private val pageRequests = mutableListOf<PageRequest>()
+
+    /**
+     * Get all requests for the current page
+     */
+    fun getPageRequests(): List<PageRequest> = pageRequests.toList()
+
+    /**
+     * Clear tracked requests
+     */
+    fun clearPageRequests() {
+        pageRequests.clear()
+    }
+
 //    private var elementHide = userPreferences.elementHide
 
     var sslState: SslState = SslState.None
@@ -151,9 +172,14 @@ class WebPageClient(
         // returns some dummy response if blocked, null if not blocked
 
         val response = adBlock.shouldBlock(request, currentUrl)
+        val wasBlocked = response != null
+
+        // Track this request
+        synchronized(pageRequests) {
+            pageRequests.add(PageRequest(request.url.toString(), wasBlocked))
+        }
 
         //SL: Use this when debugging
-        // TODO: We should really collect all intercepts to be able to display them to the user
 //        if (response!=null)
 //        {
 //            Timber.d( "Request hijacked: " + request.url
@@ -257,6 +283,8 @@ class WebPageClient(
         Timber.d("$ihs : onPageStarted - $url")
         // Reset our resource count
         iResourceCount = 0
+        // Clear page requests for the new page
+        clearPageRequests()
         currentUrl = url
         val uri  = Uri.parse(url)
         loadDomainPreferences(uri.host ?: "", true)

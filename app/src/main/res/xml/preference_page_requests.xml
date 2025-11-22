@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:a="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <Preference
+        a:key="@string/pref_key_back"
+        a:title="@string/page_requests_title"
+        tools:summary="104 requests – 32 blocked / 70 allowed"
+        a:icon="@drawable/ic_arrow_back_ios"
+        a:fragment="back"
+        a:layout="@layout/preference_category_material"
+        tools:ignore="PrivateResource" />
+
+    <!-- Categories will be dynamically added here for each domain -->
+
+</androidx.preference.PreferenceScreen>
+

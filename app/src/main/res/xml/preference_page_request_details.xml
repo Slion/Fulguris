@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:a="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <Preference
+        a:key="@string/pref_key_back"
+        a:title="@string/page_request_details_title"
+        tools:summary="https://example.com/path"
+        a:icon="@drawable/ic_arrow_back_ios"
+        a:fragment="back"
+        a:layout="@layout/preference_category_material"
+        tools:ignore="PrivateResource" />
+
+    <!-- Request details will be dynamically populated -->
+
+</androidx.preference.PreferenceScreen>
+

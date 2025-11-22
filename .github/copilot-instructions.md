@@ -49,6 +49,8 @@ The L10N.md file contains everything you need:
 
 **Never add strings during translation** - If a string doesn't exist, STOP and report the issue to the user
 
+**NEVER upload to Crowdin** - The `l10n.py` script only manages local files. Crowdin uploads must be done manually via `crowdin upload sources` command and only when explicitly requested by the user.
+
 **Read L10N.md first** - All technical details are documented there
 
 ## PowerShell String Quoting Guide

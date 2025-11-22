@@ -46,6 +46,7 @@
     <string name="clear_history">Clear browser history</string>
     <string name="action_download">Download</string>
     <string name="action_open">Open</string>
+    <string name="action_copy">Copy</string>
     <string name="dialog_title_share">Share this page</string>
     <string name="action_delete">Delete</string>
     <string name="action_blank">Blank page</string>
@@ -700,4 +701,20 @@
     <string name="pref_title_enable_ad_blocker">Ad blocker</string>
     <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
     <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="page_requests_title">Requests</string>
+    <string name="page_request_details_title">Request</string>
+    <string name="request_status">Status</string>
+    <string name="request_url">URL</string>
+    <string name="request_url_length">%1$d characters</string>
+    <string name="request_domain">Domain</string>
+    <string name="request_path">Path</string>
+    <string name="request_parameters">Parameters</string>
+    <string name="request_timestamp">Timestamp</string>
+    <string name="action_page_requests">Requests</string>
+    <string name="page_requests_blocked">Blocked</string>
+    <string name="page_requests_allowed">Allowed</string>
+    <string name="page_requests_summary">%1$d total – %2$d blocked / %3$d allowed</string>
+    <string name="page_requests_none">No requests recorded for this page</string>
 </resources>
+
+
