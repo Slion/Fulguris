@@ -108,6 +108,16 @@ class OptionsSettingsFragment : AbstractSettingsFragment() {
             }
         }
 
+        // Hook up full menu preference
+        find<Preference>(R.string.pref_key_full_menu)?.setOnPreferenceClickListener {
+            // Close the options bottom sheet and show the full menu
+            (requireActivity() as? fulguris.activity.WebBrowserActivity)?.apply {
+                dismissBottomSheet()
+                showMenuFull()
+            }
+            true
+        }
+
         // Need when coming back from sub menu after rotation for instance
         setupConfiguration()
     }

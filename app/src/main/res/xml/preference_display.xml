@@ -69,6 +69,14 @@
         a:singleLineTitle="false">
 
         <Preference
+            a:fragment="fulguris.settings.fragment.MenusSettingsFragment"
+            a:title="@string/settings_title_menus"
+            a:summary="@string/settings_summary_menus"
+            a:icon="@drawable/ic_menu"
+            a:singleLineTitle="false"
+            />
+
+        <Preference
             a:fragment="fulguris.settings.fragment.TabSettingsFragment"
             a:title="@string/settings_title_tab"
             a:summary="@string/settings_summary_tab"
@@ -126,30 +134,6 @@
         a:iconSpaceReserved="true"
         a:singleLineTitle="false"
         />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/pref_category_menu">
-
-        <slions.pref.SwitchPreference
-            android:defaultValue="@bool/pref_default_menu_show_exit"
-            android:key="@string/pref_key_menu_show_exit"
-            android:title="@string/pref_title_menu_show_exit"
-            android:summary="@string/pref_summary_menu_show_exit"
-            a:icon="@drawable/ic_action_delete"
-            a:iconSpaceReserved="false"
-            a:singleLineTitle="false"
-            />
-
-        <slions.pref.SwitchPreference
-            android:defaultValue="@bool/pref_default_menu_show_new_tab"
-            android:key="@string/pref_key_menu_show_new_tab"
-            android:title="@string/pref_title_menu_new_tab"
-            android:summary="@string/pref_summary_menu_new_tab"
-            a:icon="@drawable/ic_add"
-            a:iconSpaceReserved="false"
-            a:singleLineTitle="false"
-            />
 
     </PreferenceCategory>
 

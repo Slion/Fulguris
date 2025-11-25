@@ -370,16 +370,6 @@ class UserPreferences @Inject constructor(
     var versionCode by preferences.intPreference(R.string.pref_key_version_code, 0)
 
     /**
-     * Define if user wants to show exit option in menu
-     */
-    var menuShowExit by preferences.booleanPreference(R.string.pref_key_menu_show_exit, R.bool.pref_default_menu_show_exit)
-
-    /**
-     * Define if user wants to show exit option in menu
-     */
-    var menuShowNewTab by preferences.booleanPreference(R.string.pref_key_menu_show_new_tab, R.bool.pref_default_menu_show_new_tab)
-
-    /**
      * Define the locale language the user want us to use.
      * Empty string means use system default locale.
      */

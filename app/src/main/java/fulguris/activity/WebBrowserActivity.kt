@@ -1,5 +1,5 @@
-﻿/*
- * Copyright © 2020 Stéphane Lenclud. All Rights Reserved.
+/*
+ * Copyright � 2020 St�phane Lenclud. All Rights Reserved.
  * Copyright 2015 Anthony Restaino
  */
 
@@ -11,7 +11,6 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.SearchManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -32,12 +31,9 @@ import android.text.TextWatcher
 import android.view.*
 import android.view.View.*
 import android.view.ViewGroup.LayoutParams
-import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.CookieManager
-import android.webkit.URLUtil
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient.CustomViewCallback
 import android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE
@@ -58,9 +54,7 @@ import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.children
 import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
 import androidx.customview.widget.ViewDragHelper
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -88,7 +82,6 @@ import fulguris.browser.cleanup.ExitCleanup
 import fulguris.browser.sessions.SessionsPopupWindow
 import fulguris.browser.tabs.TabsDesktopView
 import fulguris.browser.tabs.TabsDrawerView
-import fulguris.constant.INTENT_ORIGIN
 import fulguris.database.Bookmark
 import fulguris.database.HistoryEntry
 import fulguris.database.SearchSuggestion
@@ -102,7 +95,6 @@ import fulguris.dialog.BrowserDialog
 import fulguris.dialog.DialogItem
 import fulguris.dialog.LightningDialogBuilder
 import fulguris.enums.HeaderInfo
-import fulguris.enums.IncomingUrlAction
 import fulguris.extensions.*
 import fulguris.html.bookmark.BookmarkPageFactory
 import fulguris.html.history.HistoryPageFactory
@@ -117,7 +109,6 @@ import fulguris.settings.fragment.BottomSheetDialogFragment
 import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MAX_BROWSER_TEXT_SIZE
 import fulguris.settings.fragment.DisplaySettingsFragment.Companion.MIN_BROWSER_TEXT_SIZE
 import fulguris.settings.fragment.SponsorshipSettingsFragment
-import fulguris.settings.preferences.DomainPreferences
 import fulguris.ssl.SslState
 import fulguris.ssl.createSslDrawableForState
 import fulguris.ssl.showSslDialog
@@ -247,8 +238,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private var bookmarksView: BookmarksDrawerView? = null
 
     // Menus
-    private lateinit var iMenuMain: MenuMain
-    private lateinit var iMenuWebPage: MenuWebPage
+    private lateinit var iMenuCustom: MenuPopupWindow
     lateinit var iMenuSessions: SessionsPopupWindow
     //TODO: put that in settings
     private lateinit var tabsDialog: BottomSheetDialog
@@ -391,8 +381,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         iBinding.findInPageInclude.buttonQuit.setOnClickListener(this)
 
         queue = Volley.newRequestQueue(this)
-        createMenuMain()
-        createMenuWebPage()
+        createMenuCustom()
         createMenuSessions()
         tabsDialog = BottomSheetDialog(this)
         bookmarksDialog = BottomSheetDialog(this)
@@ -426,7 +415,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             }
         } else if (BuildConfig.FLAVOR_BRAND != "slions") {
             // As per CPAL license show attribution if not slions brand
-            makeSnackbar("",5000, Gravity.TOP).setAction("Powered by ⚡Fulguris") {
+            makeSnackbar("",5000, Gravity.TOP).setAction("Powered by ?Fulguris") {
                 Intent(Intent.ACTION_VIEW).apply{
                     data = Uri.parse(getString(R.string.url_fulguris_home_page))
                     putExtra("SOURCE", "SELF")
@@ -659,15 +648,17 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     *
+     * Create our unified custom menu that handles both MainMenu and TabMenu modes
      */
-    private fun createMenuMain() {
-        iMenuMain = MenuMain(layoutInflater)
-        // TODO: could use data binding instead
-        iMenuMain.apply {
-            // Menu
-            onMenuItemClicked(iBinding.menuItemWebPage) { dismiss(); showMenuWebPage() }
-            // Bind our actions
+    private fun createMenuCustom() {
+        iMenuCustom = MenuPopupWindow(layoutInflater, mode = MenuType.MainMenu)
+
+        iMenuCustom.apply {
+            // Menu switchers
+            onMenuItemClicked(iBinding.menuItemMainMenu) { dismiss(); showMenuMain() }
+            onMenuItemClicked(iBinding.menuItemTabMenu) { dismiss(); showMenuWebPage() }
+
+            // Main menu items
             onMenuItemClicked(iBinding.menuItemSessions) { dismiss(); executeAction(R.id.action_sessions) }
             onMenuItemClicked(iBinding.menuItemNewTab) { dismiss(); executeAction(R.id.action_new_tab) }
             onMenuItemClicked(iBinding.menuItemIncognito) { dismiss(); executeAction(R.id.action_incognito) }
@@ -675,7 +666,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onMenuItemClicked(iBinding.menuItemDownloads) { dismiss(); executeAction(R.id.action_downloads) }
             onMenuItemClicked(iBinding.menuItemBookmarks) { dismiss(); executeAction(R.id.action_bookmarks) }
             onMenuItemClicked(iBinding.menuItemExit) { dismiss(); executeAction(R.id.action_exit) }
-            //
             onMenuItemClicked(iBinding.menuItemSettings) { dismiss(); executeAction(R.id.action_settings) }
             onMenuItemClicked(iBinding.menuItemOptions) {
                 dismiss()
@@ -683,7 +673,27 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 iBottomSheet.setLayout(R.layout.fragment_settings_options).show()
             }
 
-            // Popup menu action shortcut icons
+            // Tab/Web page menu items
+            onMenuItemClicked(iBinding.menuItemPageHistory) {
+                dismiss()
+                iBottomSheet.setLayout(R.layout.fragment_settings_page_history).show()
+            }
+            onMenuItemClicked(iBinding.menuItemPageRequests) {
+                dismiss()
+                showPageRequests()
+            }
+            onMenuItemClicked(iBinding.menuItemShare) { dismiss(); executeAction(R.id.action_share) }
+            onMenuItemClicked(iBinding.menuItemAddBookmark) { dismiss(); executeAction(R.id.action_add_bookmark) }
+            onMenuItemClicked(iBinding.menuItemFind) { dismiss(); executeAction(R.id.action_find) }
+            onMenuItemClicked(iBinding.menuItemPrint) { dismiss(); executeAction(R.id.action_print) }
+            onMenuItemClicked(iBinding.menuItemAddToHome) { dismiss(); executeAction(R.id.action_add_to_homescreen) }
+            onMenuItemClicked(iBinding.menuItemReaderMode) { dismiss(); executeAction(R.id.action_reading_mode) }
+            onMenuItemClicked(iBinding.menuItemDesktopMode) { dismiss(); executeAction(R.id.action_toggle_desktop_mode) }
+            onMenuItemClicked(iBinding.menuItemDarkMode) { dismiss(); executeAction(R.id.action_toggle_dark_mode) }
+            onMenuItemClicked(iBinding.menuItemAdBlock) { dismiss(); executeAction(R.id.action_block) }
+            onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
+
+            // Popup menu action shortcut icons (work for both modes)
             onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
             onMenuItemClicked(iBinding.menuShortcutHome) { dismiss(); executeAction(R.id.action_show_homepage) }
             onMenuItemClicked(iBinding.menuShortcutBookmarks) { dismiss(); executeAction(R.id.action_bookmarks) }
@@ -712,12 +722,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     *
+     * Show main menu
      */
     private fun showMenuMain() {
-        // Hide web page menu
-        iMenuWebPage.dismiss()
-        // Web page is loosing focus as we open our menu
+        // Dismiss menu if already shown
+        iMenuCustom.dismiss()
+        // Web page is losing focus as we open our menu
         // Should notably hide the virtual keyboard
         currentTabView?.clearFocus()
         searchView.clearFocus()
@@ -726,63 +736,61 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     /**
-     *
+     * Actually show the main menu
      */
     private fun doShowMenuMain() {
         // Make sure back and forward buttons are in correct state
         setForwardButtonEnabled(tabsManager.currentTab?.canGoForward()?:false)
         setBackButtonEnabled(tabsManager.currentTab?.canGoBack()?:false)
+        // Switch to main menu mode
+        iMenuCustom.switchMode(MenuType.MainMenu)
         // Open our menu
-        iMenuMain.show(iBindingToolbarContent.buttonMore)
+        iMenuCustom.show(iBindingToolbarContent.buttonMore)
     }
 
     /**
-     *
+     * Show full menu (all non-optional items from all menus)
+     * This is a public method that can be called from Options menu
      */
-    private fun createMenuWebPage() {
-        iMenuWebPage = MenuWebPage(layoutInflater)
-        // TODO: could use data binding instead
-        iMenuWebPage.apply {
-            onMenuItemClicked(iBinding.menuItemMainMenu) { dismiss(); doShowMenuMain() }
-            // Web page actions
-            onMenuItemClicked(iBinding.menuItemPageHistory) {
-                dismiss()
-                iBottomSheet.setLayout(R.layout.fragment_settings_page_history).show()
-            }
-            onMenuItemClicked(iBinding.menuItemPageRequests) {
-                dismiss()
-                showPageRequests()
-            }
-            onMenuItemClicked(iBinding.menuItemShare) { dismiss(); executeAction(R.id.action_share) }
-            onMenuItemClicked(iBinding.menuItemAddBookmark) { dismiss(); executeAction(R.id.action_add_bookmark) }
-            onMenuItemClicked(iBinding.menuItemFind) { dismiss(); executeAction(R.id.action_find) }
-            onMenuItemClicked(iBinding.menuItemPrint) { dismiss(); executeAction(R.id.action_print) }
-            onMenuItemClicked(iBinding.menuItemAddToHome) { dismiss(); executeAction(R.id.action_add_to_homescreen) }
-            onMenuItemClicked(iBinding.menuItemReaderMode) { dismiss(); executeAction(R.id.action_reading_mode) }
-            onMenuItemClicked(iBinding.menuItemDesktopMode) { dismiss(); executeAction(R.id.action_toggle_desktop_mode) }
-            onMenuItemClicked(iBinding.menuItemDarkMode) { dismiss(); executeAction(R.id.action_toggle_dark_mode) }
-            onMenuItemClicked(iBinding.menuItemAdBlock) { dismiss(); executeAction(R.id.action_block) }
-            onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
-            // Popup menu action shortcut icons
-            onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
-            onMenuItemClicked(iBinding.menuShortcutHome) { dismiss(); executeAction(R.id.action_show_homepage) }
-            // Back and forward do not dismiss the menu to make it easier for users to navigate tab history
-            onMenuItemClicked(iBinding.menuShortcutForward) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_forward) }
-            onMenuItemClicked(iBinding.menuShortcutBack) { iBinding.layoutMenuItemsContainer.isVisible=false; executeAction(R.id.action_back) }
-            //onMenuItemClicked(iBinding.menuShortcutBookmarks) { executeAction(R.id.action_bookmarks) }
-
-            // Make it full screen gesture friendly
-            setOnDismissListener { justClosedMenuCountdown() }
-        }
+    fun showMenuFull() {
+        // Dismiss menu if already shown
+        iMenuCustom.dismiss()
+        // Web page is losing focus as we open our menu
+        // Should notably hide the virtual keyboard
+        currentTabView?.clearFocus()
+        searchView.clearFocus()
+        // Show popup menu once our virtual keyboard is hidden
+        doOnceVirtualKeyboardIsGone { doShowMenuFull() }
     }
 
     /**
-     *
+     * Dismiss bottom sheet dialog if it's currently showing
+     * This is a public method that can be called from fragment within the bottom sheet
+     */
+    fun dismissBottomSheet() {
+        iBottomSheet.dismiss()
+    }
+
+    /**
+     * Actually show the full menu
+     */
+    private fun doShowMenuFull() {
+        // Make sure back and forward buttons are in correct state
+        setForwardButtonEnabled(tabsManager.currentTab?.canGoForward()?:false)
+        setBackButtonEnabled(tabsManager.currentTab?.canGoBack()?:false)
+        // Switch to all menu mode
+        iMenuCustom.switchMode(MenuType.FullMenu)
+        // Open our menu
+        iMenuCustom.show(iBindingToolbarContent.buttonMore)
+    }
+
+    /**
+     * Show tab/web page menu
      */
     private fun showMenuWebPage() {
-        // Hide main menu
-        iMenuMain.dismiss()
-        // Web page is loosing focus as we open our menu
+        // Dismiss menu if already shown
+        iMenuCustom.dismiss()
+        // Web page is losing focus as we open our menu
         // Should notably hide the virtual keyboard
         currentTabView?.clearFocus()
         searchView.clearFocus()
@@ -792,10 +800,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
 
     /**
-     *
+     * Actually show the tab/web page menu
      */
     private fun doShowMenuWebPage() {
-        iMenuWebPage.show(iBindingToolbarContent.buttonMore)
+        // Switch to tab menu mode
+        iMenuCustom.switchMode(MenuType.TabMenu)
+        // Open our menu
+        iMenuCustom.show(iBindingToolbarContent.buttonMore)
     }
 
 
@@ -826,12 +837,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     private val primaryColor: Int
         get() {
-            // If current tab is using forced dark mode and we do not use a dark theme…
+            // If current tab is using forced dark mode and we do not use a dark theme�
             return if (tabsManager.currentTab?.darkMode == true && !isDarkTheme()) {
-                // …then override primary color…
+                // �then override primary color�
                 Color.BLACK
             } else {
-                // …otherwise just use current theme surface color.
+                // �otherwise just use current theme surface color.
                 ThemeUtils.getSurfaceColor(this)
             }
         }
@@ -1133,7 +1144,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun setupButtonMore() {
 
         iBindingToolbarContent.buttonMore.setOnClickListener {
-            // Without that handler we don't get audio feedback on F(x)tec Pro¹
+            // Without that handler we don't get audio feedback on F(x)tec Pro�
         }
 
         val menuSwipeDetector = GestureDetectorCompat(this, object : GestureDetector.SimpleOnGestureListener() {
@@ -1615,7 +1626,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
 
-    private var wasToolbarsBottom = false;
 
     /**
      * Setup our tool bar as collapsible or always-on according to orientation and user preferences.
@@ -1680,29 +1690,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 // Move sessions menu toolbar to the bottom
                 iMenuSessions.iBinding.toolbar.apply{removeFromParent()?.addView(this)}
 
-                // Set popup menus animations
-                iMenuMain.animationStyle = R.style.AnimationMenuBottom
-                // Move popup menu toolbar to the bottom
-                iMenuMain.iBinding.header.apply{removeFromParent()?.addView(this)}
-                // Move items above our toolbar separator
-                iMenuMain.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this, 0)}
-                // Reverse menu items if needed
-                if (!wasToolbarsBottom) {
-                    val children = iMenuMain.iBinding.layoutMenuItems.children.toList()
-                    children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
-                }
-
-                // Set popup menus animations
-                iMenuWebPage.animationStyle = R.style.AnimationMenuBottom
-                // Move popup menu toolbar to the bottom
-                iMenuWebPage.iBinding.header.apply{removeFromParent()?.addView(this)}
-                // Move items above our toolbar separator
-                iMenuWebPage.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this, 0)}
-                // Reverse menu items if needed
-                if (!wasToolbarsBottom) {
-                    val children = iMenuWebPage.iBinding.layoutMenuItems.children.toList()
-                    children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
-                }
+                // Setup custom menu for bottom toolbars
+                iMenuCustom.setupToolbarLayout()
 
                 // Set search dropdown anchor to avoid gap
                 searchView.dropDownAnchor = R.id.address_bar_include
@@ -1762,29 +1751,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 // Move sessions menu toolbar to the top
                 iMenuSessions.iBinding.toolbar.apply{removeFromParent()?.addView(this, 0)}
 
-                // Set popup menus animations
-                iMenuMain.animationStyle = R.style.AnimationMenu
-                // Move popup menu toolbar to the top
-                iMenuMain.iBinding.header.apply{removeFromParent()?.addView(this, 0)}
-                // Move items below our toolbar separator
-                iMenuMain.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this)}
-                // Reverse menu items if needed
-                if (wasToolbarsBottom) {
-                    val children = iMenuMain.iBinding.layoutMenuItems.children.toList()
-                    children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
-                }
-
-                // Set popup menus animations
-                iMenuWebPage.animationStyle = R.style.AnimationMenu
-                // Move popup menu toolbar to the top
-                iMenuWebPage.iBinding.header.apply{removeFromParent()?.addView(this, 0)}
-                // Move items below our toolbar separator
-                iMenuWebPage.iBinding.scrollViewItems.apply{removeFromParent()?.addView(this)}
-                // Reverse menu items if needed
-                if (wasToolbarsBottom) {
-                    val children = iMenuWebPage.iBinding.layoutMenuItems.children.toList()
-                    children.reversed().forEach { item -> item.removeFromParent()?.addView(item) }
-                }
+                // Setup custom menu for top toolbars
+                iMenuCustom.setupToolbarLayout()
 
                 // Set search dropdown anchor to avoid gap
                 searchView.dropDownAnchor = R.id.toolbar_include
@@ -1799,8 +1767,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 iBinding.fabInclude.fabBack.apply{removeFromParent()?.addView(this)}
             }
         }
-
-        wasToolbarsBottom = configPrefs.toolbarsBottom
     }
 
     /**
@@ -1986,7 +1952,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             val isCtrlOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON)
             val isShiftOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_SHIFT_ON)
             val isCtrlShiftOnly  = KeyEvent.metaStateHasModifiers(event.metaState, KeyEvent.META_CTRL_ON or KeyEvent.META_SHIFT_ON)
-            // TODO: Should we enforce that? I guess it should not break F(x)tec Pro¹ when using proper keyboard driver.
+            // TODO: Should we enforce that? I guess it should not break F(x)tec Pro� when using proper keyboard driver.
             val noMods  = KeyEvent.metaStateHasModifiers(event.metaState, 0)
 
             when (event.keyCode) {
@@ -2371,8 +2337,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 // Get our local
                 val locale = fulguris.locale.LocaleUtils.requestedLocale(userPreferences.locale)
                 // For most languages Google just wants the two letters code
-                // Using the full language tag such as fr-FR will actually prevent Google translate…
-                // …to display the target language name even though the translation is actually working
+                // Using the full language tag such as fr-FR will actually prevent Google translate�
+                // �to display the target language name even though the translation is actually working
                 var languageCode = locale.language
                 val languageTag = locale.toLanguageTag()
                 // For chinese however, Google translate expects the full language tag
@@ -2450,7 +2416,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
             R.id.action_block -> {
 
-                abpUserRules.allowPage(Uri.parse(tabsManager.currentTab?.url), !iMenuWebPage.iBinding.menuItemAdBlock.isChecked)
+                abpUserRules.allowPage(Uri.parse(tabsManager.currentTab?.url), !iMenuCustom.iBinding.menuItemAdBlock.isChecked)
                 tabsManager.currentTab?.reload()
                 return true
             }
@@ -2464,12 +2430,6 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             else -> return false
         }
     }
-
-    // Legacy from menu framework. Since we are using custom popup window as menu we don't need this anymore.
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (executeAction(item.itemId)) true else super.onOptionsItemSelected(item)
-    }
-
 
     // By using a manager, adds a bookmark and notifies third parties about that
     private fun addBookmark(title: String, url: String) {
@@ -2566,7 +2526,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         if (verticalTabBar!=configPrefs.verticalTabBar
                 || tabBarInDrawer!=configPrefs.tabBarInDrawer
                 // Our bottom sheets dialog needs to be recreated with proper window decor state, with or without status bar that is.
-                // Looks like that was also needed for the bottom sheets top padding to be in sync? Go figure…
+                // Looks like that was also needed for the bottom sheets top padding to be in sync? Go figure�
                 || userPreferences.useBottomSheets) {
             // We either coming or going to desktop like horizontal tab bar, tabs panel should be closed then
             mainHandler.post {closePanelTabs()}
@@ -2848,9 +2808,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         aView.removeFromParent() // Just to be safe
 
-        // Skip tab animation if user does not want it…
+        // Skip tab animation if user does not want it�
         val skipAnimation = !userPreferences.onTabChangeShowAnimation
-                // …or if we already have a tab animation running
+                // �or if we already have a tab animation running
                 || iTabAnimator!=null
 
         // If we have not swapped our views yet
@@ -3293,8 +3253,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         updateConfiguration()
 
-        iMenuMain.dismiss() // As it wont update somehow
-        iMenuWebPage.dismiss()
+        iMenuCustom.dismiss() // As it won't update somehow
         // Make sure our drawers adjust accordingly
         iBinding.drawerLayout.requestLayout()
 
@@ -3334,8 +3293,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         tabsManager.pauseAll()
 
         // Dismiss any popup menu
-        iMenuMain.dismiss()
-        iMenuWebPage.dismiss()
+        iMenuCustom.dismiss()
         iMenuSessions.dismiss()
 
         if (isIncognito() && isFinishing) {
@@ -3354,9 +3312,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun currentTabGoBack() {
         tabsManager.currentTab?.let {
             it.goBack()
-            // If no animation running yet…
+            // If no animation running yet�
             if (iTabAnimator==null &&
-                    //…and user wants animation
+                    //�and user wants animation
                     userPreferences.onTabBackShowAnimation) {
                 animateTabFlipRight(iTabViewContainerFront)
             }
@@ -3370,9 +3328,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     private fun currentTabGoForward() {
         tabsManager.currentTab?.let {
             it.goForward()
-            // If no animation running yet…
+            // If no animation running yet�
             if (iTabAnimator==null
-                    //…and user wants animation
+                    //�and user wants animation
                     && userPreferences.onTabBackShowAnimation) {
                 animateTabFlipLeft(iTabViewContainerFront)
             }
@@ -4163,14 +4121,12 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     }
 
     override fun setForwardButtonEnabled(enabled: Boolean) {
-        iMenuMain.iBinding.menuShortcutForward.isEnabled = enabled
-        iMenuWebPage.iBinding.menuShortcutForward.isEnabled = enabled
+        iMenuCustom.iBinding.menuShortcutForward.isEnabled = enabled
         tabsView?.setGoForwardEnabled(enabled)
     }
 
     override fun setBackButtonEnabled(enabled: Boolean) {
-        iMenuMain.iBinding.menuShortcutBack.isEnabled = enabled
-        iMenuWebPage.iBinding.menuShortcutBack.isEnabled = enabled
+        iMenuCustom.iBinding.menuShortcutBack.isEnabled = enabled
         tabsView?.setGoBackEnabled(enabled)
     }
 
@@ -4946,7 +4902,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      * Publish keyboard shortcuts so that user can see them when doing Meta+/?
      */
     @RequiresApi(Build.VERSION_CODES.N)
-    override fun onProvideKeyboardShortcuts(data: MutableList<KeyboardShortcutGroup?>, menu: Menu?, deviceId: Int) {
+    override fun onProvideKeyboardShortcuts(data: MutableList<KeyboardShortcutGroup?>, menu: android.view.Menu?, deviceId: Int) {
 
         // Publish our shortcuts, could publish a different list based on current state too
         if (iShortcuts.iList.isNotEmpty()) {

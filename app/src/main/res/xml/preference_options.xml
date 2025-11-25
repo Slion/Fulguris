@@ -49,6 +49,14 @@
             />
 
         <Preference
+            a:key="@string/pref_key_full_menu"
+            a:title="@string/action_menu"
+            a:summary="@string/settings_summary_full_menu"
+            a:icon="@drawable/ic_menu"
+            a:singleLineTitle="false"
+            />
+
+        <Preference
             a:fragment="fulguris.settings.fragment.ScrollbarsSettingsFragment"
             a:title="@string/pref_category_scrollbars"
             a:summary="@string/pref_summary_scrollbars"

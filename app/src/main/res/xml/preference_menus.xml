@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- All preferences will be added dynamically in MainMenuSettingsFragment -->
+</PreferenceScreen>
+
