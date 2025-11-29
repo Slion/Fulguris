@@ -432,13 +432,117 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     }
                 }
 
-                val fromOrder = fromPref.order
-                val toOrder = toPref.order
+                // Handle the reordering
+                if (fromMenuType == toMenuType) {
+                    // Simple reorder within same section - just swap orders
+                    val fromOrder = fromPref.order
+                    val toOrder = toPref.order
+                    fromPref.order = toOrder
+                    toPref.order = fromOrder
+                } else {
+                    // Moving between sections - need to shift orders to maintain section integrity
+                    val fromOrder = fromPref.order
+                    val toOrder = toPref.order
 
-                // Simple order swap - works for both same-menu and cross-menu moves
-                // The menu section is determined by the order relative to headers
-                fromPref.order = toOrder
-                toPref.order = fromOrder
+                    // Find all headers to update their positions
+                    var headerTab: androidx.preference.Preference? = null
+                    var headerHidden: androidx.preference.Preference? = null
+
+                    for (i in 0 until prefScreen.preferenceCount) {
+                        val p = prefScreen.getPreference(i)
+                        when (p.key) {
+                            KEY_HEADER_TAB -> headerTab = p
+                            KEY_HEADER_HIDDEN -> headerHidden = p
+                        }
+                    }
+
+                    if (fromOrder < toOrder) {
+                        // Moving down - shift all NON-HEADER items between from and to up by 1
+                        for (i in 0 until prefScreen.preferenceCount) {
+                            val p = prefScreen.getPreference(i)
+                            if (p.order > fromOrder && p.order <= toOrder && !isHeaderPreference(p.key)) {
+                                p.order--
+                            }
+                        }
+                        fromPref.order = toOrder
+
+                        // Update headers to be right before their first item
+                        // This ensures sections stay properly bounded
+                        headerTab?.let { header ->
+                            var minTabOrder = Int.MAX_VALUE
+                            for (i in 0 until prefScreen.preferenceCount) {
+                                val p = prefScreen.getPreference(i)
+                                if (!isHeaderPreference(p.key) && !isFixedPreference(p.key)) {
+                                    val menuType = getMenuTypeForPreference(p)
+                                    if (menuType == MenuType.TabMenu && p.order < minTabOrder) {
+                                        minTabOrder = p.order
+                                    }
+                                }
+                            }
+                            if (minTabOrder != Int.MAX_VALUE) {
+                                header.order = minTabOrder - 1
+                            }
+                        }
+
+                        headerHidden?.let { header ->
+                            var minHiddenOrder = Int.MAX_VALUE
+                            for (i in 0 until prefScreen.preferenceCount) {
+                                val p = prefScreen.getPreference(i)
+                                if (!isHeaderPreference(p.key) && !isFixedPreference(p.key)) {
+                                    val menuType = getMenuTypeForPreference(p)
+                                    if (menuType == MenuType.HiddenMenu && p.order < minHiddenOrder) {
+                                        minHiddenOrder = p.order
+                                    }
+                                }
+                            }
+                            if (minHiddenOrder != Int.MAX_VALUE) {
+                                header.order = minHiddenOrder - 1
+                            }
+                        }
+                    } else {
+                        // Moving up - shift all NON-HEADER items between to and from down by 1
+                        for (i in 0 until prefScreen.preferenceCount) {
+                            val p = prefScreen.getPreference(i)
+                            if (p.order >= toOrder && p.order < fromOrder && !isHeaderPreference(p.key)) {
+                                p.order++
+                            }
+                        }
+                        fromPref.order = toOrder
+
+                        // Update headers to be right before their first item
+                        headerTab?.let { header ->
+                            var minTabOrder = Int.MAX_VALUE
+                            for (i in 0 until prefScreen.preferenceCount) {
+                                val p = prefScreen.getPreference(i)
+                                if (!isHeaderPreference(p.key) && !isFixedPreference(p.key)) {
+                                    val menuType = getMenuTypeForPreference(p)
+                                    if (menuType == MenuType.TabMenu && p.order < minTabOrder) {
+                                        minTabOrder = p.order
+                                    }
+                                }
+                            }
+                            if (minTabOrder != Int.MAX_VALUE) {
+                                header.order = minTabOrder - 1
+                            }
+                        }
+
+                        headerHidden?.let { header ->
+                            var minHiddenOrder = Int.MAX_VALUE
+                            for (i in 0 until prefScreen.preferenceCount) {
+                                val p = prefScreen.getPreference(i)
+                                if (!isHeaderPreference(p.key) && !isFixedPreference(p.key)) {
+                                    val menuType = getMenuTypeForPreference(p)
+                                    if (menuType == MenuType.HiddenMenu && p.order < minHiddenOrder) {
+                                        minHiddenOrder = p.order
+                                    }
+                                }
+                            }
+                            if (minHiddenOrder != Int.MAX_VALUE) {
+                                header.order = minHiddenOrder - 1
+                            }
+                        }
+                    }
+                }
 
                 return true
             }
