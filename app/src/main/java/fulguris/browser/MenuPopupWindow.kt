@@ -185,12 +185,12 @@ class MenuPopupWindow : PopupWindow {
         // In incognito mode, ensure EXIT is always in main menu
         if (isIncognito && currentMode == MenuType.MainMenu) {
             // Check if EXIT is present in main menu
-            val hasExitInMainMenu = itemsForCurrentMode.contains(MenuItemId.EXIT)
+            val hasExitInMainMenu = itemsForCurrentMode.contains(MenuItemId.Exit)
 
             // If EXIT is not in main menu, add it to the end
             // (whether it was in tab menu, hidden, or not present at all)
             if (!hasExitInMainMenu) {
-                itemsForCurrentMode.add(MenuItemId.EXIT)
+                itemsForCurrentMode.add(MenuItemId.Exit)
             }
         }
 
@@ -282,33 +282,33 @@ class MenuPopupWindow : PopupWindow {
     private fun showMenuItem(itemId: MenuItemId) {
         when (itemId) {
             // Menu switchers
-            MenuItemId.MAIN_MENU -> iBinding.menuItemMainMenu.isVisible = true
-            MenuItemId.TAB_MENU -> iBinding.menuItemTabMenu.isVisible = true
+            MenuItemId.MainMenu -> iBinding.menuItemMainMenu.isVisible = true
+            MenuItemId.TabMenu -> iBinding.menuItemTabMenu.isVisible = true
 
             // Main menu items
-            MenuItemId.SESSIONS -> iBinding.menuItemSessions.isVisible = true
-            MenuItemId.BOOKMARKS -> iBinding.menuItemBookmarks.isVisible = true
-            MenuItemId.HISTORY -> iBinding.menuItemHistory.isVisible = true
-            MenuItemId.DOWNLOADS -> iBinding.menuItemDownloads.isVisible = true
-            MenuItemId.NEW_TAB -> iBinding.menuItemNewTab.isVisible = true
-            MenuItemId.INCOGNITO -> iBinding.menuItemIncognito.isVisible = true
-            MenuItemId.OPTIONS -> iBinding.menuItemOptions.isVisible = true
-            MenuItemId.SETTINGS -> iBinding.menuItemSettings.isVisible = true
-            MenuItemId.EXIT -> iBinding.menuItemExit.isVisible = true
+            MenuItemId.Sessions -> iBinding.menuItemSessions.isVisible = true
+            MenuItemId.Bookmarks -> iBinding.menuItemBookmarks.isVisible = true
+            MenuItemId.History -> iBinding.menuItemHistory.isVisible = true
+            MenuItemId.Downloads -> iBinding.menuItemDownloads.isVisible = true
+            MenuItemId.NewTab -> iBinding.menuItemNewTab.isVisible = true
+            MenuItemId.Incognito -> iBinding.menuItemIncognito.isVisible = true
+            MenuItemId.Options -> iBinding.menuItemOptions.isVisible = true
+            MenuItemId.Settings -> iBinding.menuItemSettings.isVisible = true
+            MenuItemId.Exit -> iBinding.menuItemExit.isVisible = true
 
             // Tab menu items
-            MenuItemId.TAB_HISTORY -> iBinding.menuItemPageHistory.isVisible = true
-            MenuItemId.FIND -> iBinding.menuItemFind.isVisible = true
-            MenuItemId.PRINT -> iBinding.menuItemPrint.isVisible = true
-            MenuItemId.READER_MODE -> iBinding.menuItemReaderMode.isVisible = true
-            MenuItemId.DESKTOP_MODE -> iBinding.menuItemDesktopMode.isVisible = true
-            MenuItemId.DARK_MODE -> iBinding.menuItemDarkMode.isVisible = true
-            MenuItemId.ADD_TO_HOME -> iBinding.menuItemAddToHome.isVisible = true
-            MenuItemId.ADD_BOOKMARK -> iBinding.menuItemAddBookmark.isVisible = true
-            MenuItemId.SHARE -> iBinding.menuItemShare.isVisible = true
-            MenuItemId.AD_BLOCK -> iBinding.menuItemAdBlock.isVisible = true
-            MenuItemId.TRANSLATE -> iBinding.menuItemTranslate.isVisible = true
-            MenuItemId.REQUESTS -> iBinding.menuItemPageRequests.isVisible = true
+            MenuItemId.TabHistory -> iBinding.menuItemPageHistory.isVisible = true
+            MenuItemId.Find -> iBinding.menuItemFind.isVisible = true
+            MenuItemId.Print -> iBinding.menuItemPrint.isVisible = true
+            MenuItemId.ReaderMode -> iBinding.menuItemReaderMode.isVisible = true
+            MenuItemId.DesktopMode -> iBinding.menuItemDesktopMode.isVisible = true
+            MenuItemId.DarkMode -> iBinding.menuItemDarkMode.isVisible = true
+            MenuItemId.AddToHome -> iBinding.menuItemAddToHome.isVisible = true
+            MenuItemId.AddBookmark -> iBinding.menuItemAddBookmark.isVisible = true
+            MenuItemId.Share -> iBinding.menuItemShare.isVisible = true
+            MenuItemId.AdBlock -> iBinding.menuItemAdBlock.isVisible = true
+            MenuItemId.Translate -> iBinding.menuItemTranslate.isVisible = true
+            MenuItemId.Requests -> iBinding.menuItemPageRequests.isVisible = true
         }
     }
 
