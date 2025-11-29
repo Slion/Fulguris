@@ -697,40 +697,16 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     }
                 }
 
-                //clearView(listView,viewHolder)
-
-                //listView.adapter?.notifyItemChanged(newPosition)
-
                 // Now set the new order
-                // SL: That's taking notifying the list view of what was changed
+                // That's taking notifying the list view adapter of what was changed
                 // However I'm guessing because of the swipe the new item position is left blank
                 pref.order = newOrder
-                //listView.adapter?.notifyItemChanged(newPosition)
-
-                // Save configuration after swipe
-                saveCurrentConfiguration()
-
-                // Notify adapter of the item move
-                Timber.d("Moving item from $position to $newPosition")
-                //
-                //listView.adapter?.notifyItemMoved(position, newPosition)
-                //listView.adapter?.notifyItemMoved(newPosition, position)
-                //listView.adapter?.notifyItemChanged(position)
-                //listView.adapter?.notifyItemChanged(newPosition)
-                //listView.adapter?.notifyDataSetChanged()
-
+                //Timber.d("Moving item from $position to $newPosition")
                 // That's the only workaround that worked, it nicely triggers the missing item to animate in
                 listView.postDelayed({listView.adapter?.notifyItemChanged(newPosition)}, 200)
 
-                //listView.postOnAnimation { listView.adapter?.notifyItemChanged(newPosition) }
-
-//                listView.itemAnimator?.isRunning {
-//                    // Called when all animations finish
-//                    Timber.d("All animations completed")
-//                    listView.adapter?.notifyItemChanged(newPosition)
-//                }
-
-
+                // Save configuration after swipe
+                saveCurrentConfiguration()
             }
 
             override fun isLongPressDragEnabled(): Boolean {
