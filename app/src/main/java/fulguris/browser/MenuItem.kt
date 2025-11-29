@@ -37,6 +37,7 @@ import androidx.annotation.StringRes
  * @param availableInTabMenu Whether this item can appear in the tab menu
  * @param mandatory Whether this item must always be present and cannot be removed
  * @param defaultMenu Which menu this item appears in by default (MainMenu, TabMenu, or Hidden)
+ * @param preferredMenu Which menu to use when swiping hidden items back (defaults to defaultMenu for non-hidden items)
  * @param optional Optional items are not shown in the full menu (MenuType.FullMenu)
  */
 data class MenuItem(
@@ -48,6 +49,7 @@ data class MenuItem(
     val availableInTabMenu: Boolean,
     val mandatory: Boolean = false,
     val defaultMenu: MenuType = MenuType.HiddenMenu,
+    val preferredMenu: MenuType = defaultMenu,
     val optional: Boolean = false
 )
 

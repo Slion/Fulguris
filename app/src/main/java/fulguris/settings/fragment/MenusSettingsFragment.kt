@@ -580,13 +580,16 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     return
                 }
 
-                // Find the Hidden header position
+                // Find all header orders
+                var mainHeaderOrder = -1
+                var tabHeaderOrder = -1
                 var hiddenHeaderOrder = -1
                 for (i in 0 until prefScreen.preferenceCount) {
                     val p = prefScreen.getPreference(i)
-                    if (p.key == KEY_HEADER_HIDDEN) {
-                        hiddenHeaderOrder = p.order
-                        break
+                    when (p.key) {
+                        KEY_HEADER_MAIN -> mainHeaderOrder = p.order
+                        KEY_HEADER_TAB -> tabHeaderOrder = p.order
+                        KEY_HEADER_HIDDEN -> hiddenHeaderOrder = p.order
                     }
                 }
 
@@ -596,26 +599,110 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     return
                 }
 
-                // Check if already after Hidden header (in Hidden section)
-                if (pref.order > hiddenHeaderOrder) {
-                    // Already in Hidden section, don't do anything
-                    listView.adapter?.notifyItemChanged(position)
-                    return
-                }
+                // Determine current menu type
+                val currentMenuType = getMenuTypeForPreference(pref)
 
-                // Move to end of list (after all other items)
-                var maxOrder = hiddenHeaderOrder
-                for (i in 0 until prefScreen.preferenceCount) {
-                    val p = prefScreen.getPreference(i)
-                    if (p.order > maxOrder && !isHeaderPreference(p.key)) {
-                        maxOrder = p.order
+                if (currentMenuType == MenuType.HiddenMenu) {
+                    // Item is in Hidden section - move to its preferred menu
+                    if (menuItem == null) {
+                        listView.adapter?.notifyItemChanged(position)
+                        return
                     }
-                }
 
-                pref.order = maxOrder + 1
+                    val targetMenuType = menuItem.preferredMenu
+
+                    // Ensure target menu type is valid (not FullMenu or HiddenMenu)
+                    val finalTargetMenu = when {
+                        targetMenuType == MenuType.FullMenu || targetMenuType == MenuType.HiddenMenu -> {
+                            // Fall back to MainMenu if preferred is not a valid target
+                            if (menuItem.availableInMainMenu) MenuType.MainMenu
+                            else if (menuItem.availableInTabMenu) MenuType.TabMenu
+                            else MenuType.HiddenMenu // Keep hidden if not available anywhere
+                        }
+                        targetMenuType == MenuType.MainMenu && !menuItem.availableInMainMenu -> {
+                            // Can't go to MainMenu, try TabMenu
+                            if (menuItem.availableInTabMenu) MenuType.TabMenu
+                            else MenuType.HiddenMenu
+                        }
+                        targetMenuType == MenuType.TabMenu && !menuItem.availableInTabMenu -> {
+                            // Can't go to TabMenu, try MainMenu
+                            if (menuItem.availableInMainMenu) MenuType.MainMenu
+                            else MenuType.HiddenMenu
+                        }
+                        else -> targetMenuType
+                    }
+
+                    if (finalTargetMenu == MenuType.HiddenMenu) {
+                        // Can't move anywhere, restore it
+                        listView.adapter?.notifyItemChanged(position)
+                        return
+                    }
+
+                    // Find the target section to place the item
+                    val targetHeaderOrder = if (finalTargetMenu == MenuType.MainMenu) mainHeaderOrder else tabHeaderOrder
+                    val nextHeaderOrder = if (finalTargetMenu == MenuType.MainMenu) tabHeaderOrder else hiddenHeaderOrder
+
+                    // Find the maximum order in the target section
+                    var maxOrderInTargetSection = targetHeaderOrder
+                    for (i in 0 until prefScreen.preferenceCount) {
+                        val p = prefScreen.getPreference(i)
+                        // Find items between the target header and next header (excluding our moving item)
+                        if (p != pref && p.order > targetHeaderOrder && p.order < nextHeaderOrder &&
+                            !isHeaderPreference(p.key) && !isFixedPreference(p.key)) {
+                            if (p.order > maxOrderInTargetSection) {
+                                maxOrderInTargetSection = p.order
+                            }
+                        }
+                    }
+
+                    // Place item right after the last item in target section (or right after header if empty)
+                    val newOrder = maxOrderInTargetSection + 1
+
+                    // If the new order would overlap with the next header, we need to shift the next header
+                    if (newOrder >= nextHeaderOrder) {
+                        // Shift the next header and all items after it
+                        val shiftAmount = newOrder - nextHeaderOrder + 1
+                        for (i in 0 until prefScreen.preferenceCount) {
+                            val p = prefScreen.getPreference(i)
+                            if (p != pref && p.order >= nextHeaderOrder) {
+                                p.order += shiftAmount
+                            }
+                        }
+                    }
+
+                    pref.order = newOrder
+                } else {
+                    // Item is in MainMenu or TabMenu - move to Hidden section
+                    // Move to end of Hidden section
+                    var maxOrder = hiddenHeaderOrder
+                    for (i in 0 until prefScreen.preferenceCount) {
+                        val p = prefScreen.getPreference(i)
+                        if (p.order > maxOrder && !isHeaderPreference(p.key)) {
+                            maxOrder = p.order
+                        }
+                    }
+
+                    pref.order = maxOrder + 1
+                }
 
                 // Save configuration after swipe
                 saveCurrentConfiguration()
+
+                // Force PreferenceScreen to re-sort by removing and re-adding all preferences
+                // This is necessary because just changing order values doesn't trigger visual update
+                val allPrefs = mutableListOf<androidx.preference.Preference>()
+                for (i in 0 until prefScreen.preferenceCount) {
+                    allPrefs.add(prefScreen.getPreference(i))
+                }
+
+                // Sort by order
+                allPrefs.sortBy { it.order }
+
+                // Remove all
+                prefScreen.removeAll()
+
+                // Re-add in sorted order
+                allPrefs.forEach { prefScreen.addPreference(it) }
             }
 
             override fun isLongPressDragEnabled(): Boolean {
@@ -653,21 +740,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     return 0 // No swipe for mandatory items
                 }
 
-                // Find the Hidden header order
-                var hiddenHeaderOrder = -1
-                for (i in 0 until prefScreen.preferenceCount) {
-                    val p = prefScreen.getPreference(i)
-                    if (p.key == KEY_HEADER_HIDDEN) {
-                        hiddenHeaderOrder = p.order
-                        break
-                    }
-                }
-
-                // Don't allow swiping items that are already after Hidden header (in Hidden section)
-                if (hiddenHeaderOrder != -1 && pref.order > hiddenHeaderOrder) {
-                    return 0
-                }
-
+                // Allow swiping for all other items (both to hide and to unhide)
                 return super.getSwipeDirs(recyclerView, viewHolder)
             }
         })

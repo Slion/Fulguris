@@ -98,7 +98,8 @@ object MenuItems {
             viewId = R.id.menuItemNewTab,
             availableInMainMenu = true,
             availableInTabMenu = true,
-            defaultMenu = MenuType.HiddenMenu
+            defaultMenu = MenuType.HiddenMenu,
+            preferredMenu = MenuType.MainMenu
         ),
         MenuItemId.Incognito to MenuItem(
             id = MenuItemId.Incognito,
@@ -135,7 +136,8 @@ object MenuItems {
             viewId = R.id.menuItemExit,
             availableInMainMenu = true,
             availableInTabMenu = true,
-            defaultMenu = MenuType.HiddenMenu
+            defaultMenu = MenuType.HiddenMenu,
+            preferredMenu = MenuType.MainMenu
         ),
 
         // Tab menu items (can also appear in both menus)
@@ -236,7 +238,8 @@ object MenuItems {
             viewId = R.id.menuItemPageRequests,
             availableInMainMenu = true,
             availableInTabMenu = true,
-            defaultMenu = MenuType.HiddenMenu
+            defaultMenu = MenuType.HiddenMenu,
+            preferredMenu = MenuType.TabMenu
         ),
         MenuItemId.AddToHome to MenuItem(
             id = MenuItemId.AddToHome,
