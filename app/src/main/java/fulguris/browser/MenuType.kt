@@ -2,7 +2,7 @@ package fulguris.browser
 
 /**
  * Defines which menu a menu item should appear in by default
- * Note: Enum names are persisted in SharedPreferences, so renaming requires migration
+ * Note: Enum names are persisted in SharedPreferences, renaming will reset menus to default configuration.
  */
 enum class MenuType {
     MainMenu,

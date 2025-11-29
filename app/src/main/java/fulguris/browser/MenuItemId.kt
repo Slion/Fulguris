@@ -23,7 +23,8 @@
 package fulguris.browser
 
 /**
- * Unique identifier for each menu item action
+ * Unique identifier for each menu item action.
+ * Note: Enum names are persisted in SharedPreferences, renaming will reset menus to default configuration.
  */
 enum class MenuItemId {
     // Main menu items
