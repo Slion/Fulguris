@@ -34,6 +34,7 @@ import fulguris.browser.MenuItemId
 import fulguris.browser.MenuConfiguration
 import fulguris.browser.MenuType
 import fulguris.browser.MenuItemConfig
+import timber.log.Timber
 
 /**
  * Main menu settings screen - configures both Main Menu and Tab Menu.
@@ -602,6 +603,9 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                 // Determine current menu type
                 val currentMenuType = getMenuTypeForPreference(pref)
 
+                // Variable to store the new order for position calculation
+                var newOrder: Int = -1
+
                 if (currentMenuType == MenuType.HiddenMenu) {
                     // Item is in Hidden section - move to its preferred menu
                     if (menuItem == null) {
@@ -656,7 +660,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     }
 
                     // Place item right after the last item in target section (or right after header if empty)
-                    val newOrder = maxOrderInTargetSection + 1
+                    newOrder = maxOrderInTargetSection + 1
 
                     // If the new order would overlap with the next header, we need to shift the next header
                     if (newOrder >= nextHeaderOrder) {
@@ -669,8 +673,6 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                             }
                         }
                     }
-
-                    pref.order = newOrder
                 } else {
                     // Item is in MainMenu or TabMenu - move to Hidden section
                     // Move to end of Hidden section
@@ -682,27 +684,53 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                         }
                     }
 
-                    pref.order = maxOrder + 1
+                    newOrder = maxOrder + 1
                 }
+
+                // Calculate the new position BEFORE changing pref.order
+                // Count how many preferences will have a lower order than the item's new position
+                var newPosition = 0
+                for (i in 0 until prefScreen.preferenceCount) {
+                    val p = prefScreen.getPreference(i)
+                    if (p != pref && p.order < newOrder) {
+                        newPosition++
+                    }
+                }
+
+                //clearView(listView,viewHolder)
+
+                //listView.adapter?.notifyItemChanged(newPosition)
+
+                // Now set the new order
+                // SL: That's taking notifying the list view of what was changed
+                // However I'm guessing because of the swipe the new item position is left blank
+                pref.order = newOrder
+                //listView.adapter?.notifyItemChanged(newPosition)
 
                 // Save configuration after swipe
                 saveCurrentConfiguration()
 
-                // Force PreferenceScreen to re-sort by removing and re-adding all preferences
-                // This is necessary because just changing order values doesn't trigger visual update
-                val allPrefs = mutableListOf<androidx.preference.Preference>()
-                for (i in 0 until prefScreen.preferenceCount) {
-                    allPrefs.add(prefScreen.getPreference(i))
-                }
+                // Notify adapter of the item move
+                Timber.d("Moving item from $position to $newPosition")
+                //
+                //listView.adapter?.notifyItemMoved(position, newPosition)
+                //listView.adapter?.notifyItemMoved(newPosition, position)
+                //listView.adapter?.notifyItemChanged(position)
+                //listView.adapter?.notifyItemChanged(newPosition)
+                //listView.adapter?.notifyDataSetChanged()
 
-                // Sort by order
-                allPrefs.sortBy { it.order }
+                // That's the only workaround that worked, it nicely triggers the missing item to animate in
+                listView.postDelayed({listView.adapter?.notifyItemChanged(newPosition)}, 200)
 
-                // Remove all
-                prefScreen.removeAll()
+                //listView.postOnAnimation { listView.adapter?.notifyItemChanged(newPosition) }
 
-                // Re-add in sorted order
-                allPrefs.forEach { prefScreen.addPreference(it) }
+//                listView.itemAnimator?.isRunning {
+//                    // Called when all animations finish
+//                    Timber.d("All animations completed")
+//                    listView.adapter?.notifyItemChanged(newPosition)
+//                }
+
+
             }
 
             override fun isLongPressDragEnabled(): Boolean {
@@ -748,4 +776,3 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 }
-
