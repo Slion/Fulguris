@@ -164,6 +164,7 @@ colorControlNormal:
         - Disabled switch toggle knob background
         -->
         <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_light_outline</item>
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <!--
         Usage:
@@ -175,6 +176,29 @@ colorControlNormal:
         - Snackbar action text
         -->
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+
+        <!-- Fixed Colors (for accessibility) -->
+        <item name="colorPrimaryFixed">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryFixed">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorPrimaryFixedDim">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimaryFixedVariant">@color/md_theme_light_onPrimary</item>
+        <item name="colorSecondaryFixed">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryFixed">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorSecondaryFixedDim">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondaryFixedVariant">@color/md_theme_light_onSecondary</item>
+        <item name="colorTertiaryFixed">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryFixed">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorTertiaryFixedDim">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiaryFixedVariant">@color/md_theme_light_onTertiary</item>
+
+        <!-- Surface Container Colors -->
+        <item name="colorSurfaceDim">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorSurfaceBright">@color/md_theme_light_surface</item>
+        <item name="colorSurfaceContainerLowest">@color/md_theme_light_surface</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_light_surface</item>
+        <item name="colorSurfaceContainer">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_light_surfaceVariant</item>
         <!--
         Usage:
         - Tabs text
@@ -345,6 +369,7 @@ colorControlNormal:
         - Disabled switch toggle knob background
         -->
         <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_dark_outline</item>
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
         <!--
         Usage:
@@ -356,6 +381,29 @@ colorControlNormal:
         - Snackbar action text
         -->
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+
+        <!-- Fixed Colors (for accessibility) -->
+        <item name="colorPrimaryFixed">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryFixed">@color/md_theme_dark_onPrimaryContainer</item>
+        <item name="colorPrimaryFixedDim">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimaryFixedVariant">@color/md_theme_dark_onPrimary</item>
+        <item name="colorSecondaryFixed">@color/md_theme_dark_secondaryContainer</item>
+        <item name="colorOnSecondaryFixed">@color/md_theme_dark_onSecondaryContainer</item>
+        <item name="colorSecondaryFixedDim">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondaryFixedVariant">@color/md_theme_dark_onSecondary</item>
+        <item name="colorTertiaryFixed">@color/md_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryFixed">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorTertiaryFixedDim">@color/md_theme_dark_tertiary</item>
+        <item name="colorOnTertiaryFixedVariant">@color/md_theme_dark_onTertiary</item>
+
+        <!-- Surface Container Colors -->
+        <item name="colorSurfaceDim">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorSurfaceBright">@color/md_theme_dark_surface</item>
+        <item name="colorSurfaceContainerLowest">@color/md_theme_dark_surface</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_dark_surface</item>
+        <item name="colorSurfaceContainer">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_dark_surfaceVariant</item>
         <!--
         Usage:
         - Tabs text
@@ -523,6 +571,7 @@ colorControlNormal:
         - Disabled switch toggle knob background
         -->
         <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_dark_outline</item>
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
         <!--
         Usage:
@@ -534,6 +583,29 @@ colorControlNormal:
         - Snackbar action text
         -->
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
+
+        <!-- Fixed Colors (for accessibility) -->
+        <item name="colorPrimaryFixed">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryFixed">@color/md_theme_dark_onPrimaryContainer</item>
+        <item name="colorPrimaryFixedDim">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimaryFixedVariant">@color/md_theme_dark_onPrimary</item>
+        <item name="colorSecondaryFixed">@color/md_theme_dark_secondaryContainer</item>
+        <item name="colorOnSecondaryFixed">@color/md_theme_dark_onSecondaryContainer</item>
+        <item name="colorSecondaryFixedDim">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondaryFixedVariant">@color/md_theme_dark_onSecondary</item>
+        <item name="colorTertiaryFixed">@color/md_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryFixed">@color/md_theme_dark_onTertiaryContainer</item>
+        <item name="colorTertiaryFixedDim">@color/md_theme_dark_tertiary</item>
+        <item name="colorOnTertiaryFixedVariant">@color/md_theme_dark_onTertiary</item>
+
+        <!-- Surface Container Colors -->
+        <item name="colorSurfaceDim">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorSurfaceBright">@color/md_theme_dark_surface</item>
+        <item name="colorSurfaceContainerLowest">@color/black</item>
+        <item name="colorSurfaceContainerLow">@color/black</item>
+        <item name="colorSurfaceContainer">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_dark_surfaceVariant</item>
         <!--
         Usage:
         - Tabs text
