@@ -174,7 +174,7 @@ colorControlNormal:
         Usage:
         - Snackbar action text
         -->
-        <item name="colorPrimaryInverse">@color/md_theme_light_primaryInverse</item>
+        <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
         <!--
         Usage:
         - Tabs text
@@ -355,7 +355,7 @@ colorControlNormal:
         Usage:
         - Snackbar action text
         -->
-        <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
+        <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
         <!--
         Usage:
         - Tabs text
@@ -533,7 +533,7 @@ colorControlNormal:
         Usage:
         - Snackbar action text
         -->
-        <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
+        <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
         <!--
         Usage:
         - Tabs text
