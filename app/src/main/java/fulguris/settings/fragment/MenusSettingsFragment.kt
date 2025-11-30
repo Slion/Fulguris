@@ -34,7 +34,6 @@ import fulguris.browser.MenuItemId
 import fulguris.browser.MenuConfiguration
 import fulguris.browser.MenuType
 import fulguris.browser.MenuItemConfig
-import timber.log.Timber
 
 /**
  * Main menu settings screen - configures both Main Menu and Tab Menu.
@@ -84,25 +83,26 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         // Add reset preference
         val resetPref = slions.pref.BasicPreference(requireContext()).apply {
             key = "reset_menus"
-            title = getString(R.string.generic_reset)
-            summary = getString(R.string.settings_summary_reset_menus)
-            icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_reset_settings)
+            title = getString(R.string.settings_title_reset_menus)
+            icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_reset_menu)
             isIconSpaceReserved = true
             isSingleLineTitle = false
             order = currentOrder++
             setOnPreferenceClickListener {
-                // Show confirmation dialog
-                com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(R.string.generic_reset)
-                    .setMessage(R.string.settings_confirm_reset_menus)
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .setPositiveButton(R.string.action_ok) { _, _ ->
+                // Show confirmation dialog with reduced gap
+                fulguris.dialog.BrowserDialog.show(
+                    context = requireContext(),
+                    title = R.string.dialog_title_reset_menus,
+                    message = R.string.dialog_message_reset_menus,
+                    positive = R.string.action_restore,
+                    onPositive = {
                         // Reset to default configuration
                         menuConfig.clearConfiguration()
                         // Reload the menu items
                         populateMenuItems()
-                    }
-                    .show()
+                    },
+                    negative = android.R.string.cancel
+                )
                 true
             }
         }

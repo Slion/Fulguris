@@ -296,4 +296,49 @@ object BrowserDialog {
             }
     }
 
+    /**
+     * Show a MaterialAlertDialog with reduced gap between message and buttons.
+     * This fixes the excessive spacing issue in Material3 dialogs by setting the content panel's
+     * minimum height to 0 before showing the dialog.
+     *
+     * @param context The context to create the dialog in
+     * @param title The dialog title resource ID
+     * @param message The dialog message resource ID
+     * @param positive The positive button text resource ID
+     * @param onPositive The positive button click handler
+     * @param negative The negative button text resource ID, or null if not needed
+     * @param onNegative The negative button click handler, or null if not needed
+     * @param onCancel Optional callback when dialog is cancelled
+     * @return The created and shown dialog
+     */
+    @JvmStatic
+    fun show(
+        context: Context,
+        @StringRes title: Int,
+        @StringRes message: Int,
+        @StringRes positive: Int,
+        onPositive: () -> Unit,
+        @StringRes negative: Int? = null,
+        onNegative: (() -> Unit)? = null,
+        onCancel: (() -> Unit)? = null
+    ): Dialog {
+        val dialog = MaterialAlertDialogBuilder(context).apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton(positive) { _, _ -> onPositive() }
+            if (negative != null) {
+                setNegativeButton(negative) { _, _ -> onNegative?.invoke() }
+            }
+            onCancel?.let { setOnCancelListener { it() } }
+        }.create()
+        // Create our views
+        dialog.create()
+        // Patch our gap issue, see: https://github.com/material-components/material-components-android/issues/4981
+        val contentPanel = dialog.findViewById<android.widget.FrameLayout>(androidx.appcompat.R.id.contentPanel)
+        contentPanel?.minimumHeight = 0
+        // Show our dialog
+        dialog.show()
+        return dialog
+    }
+
 }

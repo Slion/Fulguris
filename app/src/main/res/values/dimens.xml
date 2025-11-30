@@ -31,6 +31,9 @@
     <dimen name="material_grid_touch_xlarge">72dp</dimen>
     <dimen name="material_grid_touch_xxlarge">88dp</dimen>
 
+    <!-- Override Material3 dialog spacing to reduce gap between content and buttons from 14dp -->
+    <!--<dimen name="m3_alert_dialog_action_top_padding" tools:override="true">14dp</dimen>-->
+
     <dimen name="dialog_max_size">350dp</dimen>
     <dimen name="dialog_padding">24dp</dimen>
     <dimen name="toolbar_height_portrait">56dp</dimen>
