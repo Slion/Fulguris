@@ -25,7 +25,7 @@
     <solid android:color="?attr/colorSurface"/>
     <stroke
         android:width="1dp"
-        android:color="?attr/colorOutlineVariant"/>
+        android:color="?attr/colorSurfaceDim"/>
     <corners
         android:radius="16dp"/>
     <padding
