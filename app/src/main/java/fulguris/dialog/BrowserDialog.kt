@@ -22,6 +22,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
+import fulguris.extensions.doOnLayout
 import fulguris.extensions.inflater
 import fulguris.extensions.onConfigurationChange
 import fulguris.extensions.resizeAndShow
@@ -196,7 +198,21 @@ object BrowserDialog {
         dialog.setView(layout)
         setDialogSize(aContext, dialog)
         dialog.setIcon(aIcon)
+        // Create all the dialog views
+        dialog.create()
+        // Show it first as invisible then dismiss and actually show it
+        // This works around our broken animations on HONOR Magic V2
+        // See: https://github.com/Slion/Fulguris/issues/662
+        dialog.window?.decorView?.visibility = View.INVISIBLE
+        dialog.window?.decorView?.doOnLayout {
+            dialog.dismiss()
+            dialog.window?.decorView?.visibility = View.VISIBLE
+            dialog.show()
+        }
         dialog.show()
+
+
+
         //builder.resizeAndShow()
 
         // We want our dialog to close after a configuration change since the resizing is not working properly.
