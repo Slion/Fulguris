@@ -25,7 +25,7 @@ package fulguris.settings.fragment
 import fulguris.R
 import fulguris.activity.WebBrowserActivity
 import fulguris.di.UserPrefs
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import android.annotation.SuppressLint
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
@@ -35,14 +35,10 @@ import android.view.View
 import android.webkit.CookieManager
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
-import androidx.webkit.CookieManagerCompat
-import androidx.webkit.WebViewFeature
-import androidx.webkit.WebViewFeature.GET_COOKIE_INFO
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
 import fulguris.extensions.copyToClipboard
-import fulguris.extensions.snackbar
 import fulguris.extensions.toast
 import slions.pref.BasicPreference
 import fulguris.utils.WebUtils
@@ -97,7 +93,7 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
                     .setPositiveButton(R.string.action_delete) { _, _ ->
                         deleteAllPageCookies()
                     }
-                    .resizeAndShow()
+                    .launch()
 
                 true
             }

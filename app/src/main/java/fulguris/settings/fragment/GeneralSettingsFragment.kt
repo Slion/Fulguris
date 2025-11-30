@@ -5,31 +5,25 @@ import fulguris.R
 import fulguris.browser.SuggestionNumChoice
 import fulguris.constant.TEXT_ENCODINGS
 import fulguris.constant.Uris
-import fulguris.di.*
 import fulguris.dialog.BrowserDialog
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.extensions.withSingleChoiceItems
 import fulguris.isSupported
 import fulguris.search.SearchEngineProvider
 import fulguris.search.Suggestions
 import fulguris.search.engine.BaseSearchEngine
 import fulguris.search.engine.CustomSearch
-import fulguris.settings.preferences.*
 import fulguris.utils.ThemeUtils
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.webkit.URLUtil
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.ListPreference
@@ -248,7 +242,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     summaryUpdater.updateSummary(TEXT_ENCODINGS[which])
                 }
                 setPositiveButton(resources.getString(R.string.action_ok), null)
-            }.resizeAndShow()
+            }.launch()
         }
 
         return true

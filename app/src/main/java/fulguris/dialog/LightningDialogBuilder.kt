@@ -10,7 +10,6 @@ import fulguris.database.downloads.DownloadsRepository
 import fulguris.database.history.HistoryRepository
 import fulguris.di.DatabaseScheduler
 import fulguris.di.MainScheduler
-import fulguris.extensions.*
 import fulguris.html.bookmark.BookmarkPageFactory
 import fulguris.settings.preferences.UserPreferences
 import fulguris.utils.isBookmarkUrl
@@ -30,7 +29,7 @@ import dagger.Reusable
 import fulguris.extensions.copyToClipboard
 import fulguris.extensions.onConfigurationChange
 import fulguris.extensions.onFocusGained
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.extensions.snackbar
 import fulguris.extensions.toast
 import fulguris.permissions.PermissionsManager
@@ -217,7 +216,7 @@ class LightningDialogBuilder @Inject constructor(
                         )
                     }
                     editBookmarkDialog.setNegativeButton(R.string.action_cancel) { _, _ -> }
-                    editBookmarkDialog.resizeAndShow()
+                    editBookmarkDialog.launch()
                 }
     }
 
@@ -279,7 +278,7 @@ class LightningDialogBuilder @Inject constructor(
                                     .subscribe(webBrowser::handleBookmarksChange)
                         }
                     }
-                    val dialog = editBookmarkDialog.resizeAndShow()
+                    val dialog = editBookmarkDialog.launch()
                     // Discard it on screen rotation as it's broken anyway
                     layout.onConfigurationChange { dialog.dismiss() }
                 }

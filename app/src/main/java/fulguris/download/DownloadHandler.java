@@ -48,6 +48,7 @@ import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 import static fulguris.utils.UrlUtils.guessFileName;
+import fulguris.extensions.AlertDialogExtensionsKt;
 
 /**
  * Handle download requests
@@ -199,10 +200,9 @@ public class DownloadHandler {
                 title = R.string.download_no_sdcard_dlg_title;
             }
 
-            Dialog dialog = new MaterialAlertDialogBuilder(context).setTitle(title)
+            Dialog dialog = AlertDialogExtensionsKt.launch(new MaterialAlertDialogBuilder(context).setTitle(title)
                 .setIcon(android.R.drawable.ic_dialog_alert).setMessage(msg)
-                .setPositiveButton(R.string.action_ok, null).show();
-            BrowserDialog.setDialogSize(context, dialog);
+                .setPositiveButton(R.string.action_ok, null));
             return;
         }
 

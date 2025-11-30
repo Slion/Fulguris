@@ -35,7 +35,7 @@ import com.google.android.material.tabs.TabLayout
 import fulguris.extensions.doOnLayout
 import fulguris.extensions.inflater
 import fulguris.extensions.onConfigurationChange
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 
 object BrowserDialog {
 
@@ -70,7 +70,7 @@ object BrowserDialog {
 
         builder.setView(layout)
 
-        val dialog = builder.resizeAndShow()
+        val dialog = builder.launch()
 
         adapter.onItemClickListener = { item ->
             item.onClick()
@@ -95,7 +95,7 @@ object BrowserDialog {
                 items[which].onClick()
             }
             setPositiveButton(aContext.getString(R.string.action_ok), null)
-        }.resizeAndShow()
+        }.launch()
     }
 
     @JvmStatic
@@ -123,7 +123,7 @@ object BrowserDialog {
 
         builder.setView(layout)
 
-        val dialog = builder.resizeAndShow()
+        val dialog = builder.launch()
 
         adapter.onItemClickListener = { item ->
             item.onClick()
@@ -196,7 +196,6 @@ object BrowserDialog {
         }
         // Our layout is setup, just hook it to our dialog
         dialog.setView(layout)
-        setDialogSize(aContext, dialog)
         dialog.setIcon(aIcon)
         // Create all the dialog views
         dialog.create()
@@ -244,7 +243,7 @@ object BrowserDialog {
             setOnCancelListener { onCancel() }
             setPositiveButton(positiveButton.title) { _, _ -> positiveButton.onClick() }
             setNegativeButton(negativeButton.title) { _, _ -> negativeButton.onClick() }
-        }.resizeAndShow()
+        }.launch()
     }
 
     @JvmStatic
@@ -278,28 +277,10 @@ object BrowserDialog {
             .setView(layout)
             .setPositiveButton(action
             ) { _, _ -> textInputListener(editText.text.toString()) }
-            .resizeAndShow()
+            .launch()
 
         // Discard it on screen rotation as it's broken anyway
         layout.onConfigurationChange { dialog.dismiss() }
-    }
-
-    @JvmStatic
-    fun setDialogSize(context: Context, dialog: Dialog) {
-
-        // SL: That was really dumb so we comment it out
-
-        /*
-        val padding = context.dimen(R.dimen.dialog_padding)
-        val screenSize = DeviceUtils.getScreenWidth(context)
-        if (maxWidth > screenSize - 2 * padding) {
-            maxWidth = screenSize - 2 * padding
-        }*/
-
-        //dialog.window?.setLayout(maxWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        //var maxHeight = context.dimen(R.dimen.dialog_max_height)
-        //dialog.window?.setLayout(dialog.window?.attributes!!.width, maxHeight)
     }
 
     /**
@@ -308,7 +289,7 @@ object BrowserDialog {
     fun showCustomDialog(aContext: Context, block: MaterialAlertDialogBuilder.(Context) -> Unit) : Dialog {
             MaterialAlertDialogBuilder(aContext).apply {
                 block(aContext)
-                return resizeAndShow()
+                return launch()
             }
     }
 
@@ -332,8 +313,8 @@ object BrowserDialog {
         context: Context,
         @StringRes title: Int,
         @StringRes message: Int,
-        @StringRes positive: Int,
-        onPositive: () -> Unit,
+        @StringRes positive: Int = R.string.action_ok,
+        onPositive: (() -> Unit)? = null,
         @StringRes negative: Int? = null,
         onNegative: (() -> Unit)? = null,
         onCancel: (() -> Unit)? = null
@@ -341,19 +322,12 @@ object BrowserDialog {
         val dialog = MaterialAlertDialogBuilder(context).apply {
             setTitle(title)
             setMessage(message)
-            setPositiveButton(positive) { _, _ -> onPositive() }
+            setPositiveButton(positive) { _, _ -> onPositive?.invoke() }
             if (negative != null) {
                 setNegativeButton(negative) { _, _ -> onNegative?.invoke() }
             }
             onCancel?.let { setOnCancelListener { it() } }
-        }.create()
-        // Create our views
-        dialog.create()
-        // Patch our gap issue, see: https://github.com/material-components/material-components-android/issues/4981
-        val contentPanel = dialog.findViewById<android.widget.FrameLayout>(androidx.appcompat.R.id.contentPanel)
-        contentPanel?.minimumHeight = 0
-        // Show our dialog
-        dialog.show()
+        }.launch()
         return dialog
     }
 

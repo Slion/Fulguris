@@ -7,7 +7,7 @@ import android.annotation.SuppressLint
 import fulguris.AccentTheme
 import fulguris.AppTheme
 import fulguris.R
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.extensions.withSingleChoiceItems
 import fulguris.settings.preferences.UserPreferences
 import fulguris.view.RenderingMode
@@ -193,7 +193,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
             }
             setPositiveButton(resources.getString(R.string.action_ok), null)
-        }?.resizeAndShow()
+        }?.launch()
 
         return true
     }
@@ -231,7 +231,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                 userPreferences.browserTextSize = seekBar.progress
                 summaryUpdater.updateSummary((seekBar.progress + MIN_BROWSER_TEXT_SIZE).toString() + "%")
             }
-        }.resizeAndShow()
+        }.launch()
 
         return true
     }
@@ -256,7 +256,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                     (activity as Activity).onBackPressed()
                 }
             }
-        }.resizeAndShow()
+        }.launch()
 
         return true
     }
@@ -287,7 +287,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                     (activity as AppCompatActivity).onBackPressed()
                 }
             }
-        }.resizeAndShow()
+        }.launch()
 
         return true
     }

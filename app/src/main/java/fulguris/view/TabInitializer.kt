@@ -5,7 +5,7 @@ import fulguris.browser.TabModel
 import fulguris.constant.Uris
 import fulguris.di.DiskScheduler
 import fulguris.di.MainScheduler
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.html.HtmlPageFactory
 import fulguris.html.bookmark.BookmarkPageFactory
 import fulguris.html.download.DownloadPageFactory
@@ -281,7 +281,7 @@ class PermissionInitializer(
             setPositiveButton(R.string.action_open) { _, _ ->
                 UrlInitializer(url).initialize(webView, headers)
             }
-        }.resizeAndShow()
+        }.launch()
     }
 
     override fun url(): String {

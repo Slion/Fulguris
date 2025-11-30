@@ -3142,7 +3142,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 .setMessage(R.string.message_blocked_local)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(R.string.action_open) { _, _ -> onPositiveClick.invoke() }
-                .resizeAndShow()
+                .launch()
     }
 
     override fun showSnackbar(@StringRes resource: Int) = snackbar(resource, if (configPrefs.toolbarsBottom) Gravity.TOP else Gravity.BOTTOM)
@@ -4656,7 +4656,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                     // Not sure that does anything
                     i.putExtra("SOURCE", "SELF")
                     startActivity(i)}
-                .resizeAndShow()
+                .launch()
     }
 
 
@@ -4676,7 +4676,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                     // Not sure that does anything
                     i.putExtra("SOURCE", "SELF")
                     startActivity(i)}
-                .resizeAndShow()
+                .launch()
     }
 
 

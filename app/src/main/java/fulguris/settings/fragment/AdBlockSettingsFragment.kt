@@ -4,7 +4,7 @@ import fulguris.R
 import fulguris.adblock.AbpBlockerManager
 import fulguris.adblock.AbpListUpdater
 import fulguris.adblock.AbpUpdateMode
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.extensions.toast
 import fulguris.extensions.withSingleChoiceItems
 import fulguris.settings.preferences.UserPreferences
@@ -108,7 +108,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                                 summaryUpdater.updateSummary(it.toDisplayString())
                             }
                             setPositiveButton(resources.getString(R.string.action_ok), null)
-                        }?.resizeAndShow()
+                        }?.launch()
                     true
                 }
             )
@@ -136,7 +136,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                         setNeutralButton(R.string.blocklist_update_now) {_,_ ->
                             updateFilterList(null, true)
                         }
-                    }?.resizeAndShow()
+                    }?.launch()
                     true
                 }
             )
@@ -161,7 +161,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             summaryUpdater.updateSummary(it.toModifySetting())
                         }
                         setPositiveButton(R.string.action_ok, null)
-                    }?.resizeAndShow()
+                    }?.launch()
                     true
                 }
             )

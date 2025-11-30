@@ -1,6 +1,5 @@
 package fulguris.extensions
 
-import fulguris.dialog.BrowserDialog
 import android.app.Dialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -24,7 +23,18 @@ fun <T> MaterialAlertDialogBuilder.withSingleChoiceItems(
 }
 
 /**
- * Ensures that the dialog is appropriately sized and displays it.
+ * Apply styles patch before launching our dialog
  */
-@Suppress("NOTHING_TO_INLINE")
-inline fun MaterialAlertDialogBuilder.resizeAndShow(): Dialog = show().also { BrowserDialog.setDialogSize(context, it) }
+fun MaterialAlertDialogBuilder.launch(): Dialog {
+    // Create our dialog
+    val dialog = create()
+    // Create our views
+    dialog.create()
+    // Patch our gap issue, see: https://github.com/material-components/material-components-android/issues/4981
+    val contentPanel = dialog.findViewById<android.widget.FrameLayout>(androidx.appcompat.R.id.contentPanel)
+    contentPanel?.minimumHeight = 0
+    // Show our dialog
+    dialog.show()
+    //
+    return dialog
+}

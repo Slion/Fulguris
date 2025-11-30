@@ -8,7 +8,6 @@ import fulguris.activity.WebBrowserActivity
 import fulguris.database.downloads.DownloadsRepository
 import fulguris.di.HiltEntryPoint
 import fulguris.di.configPrefs
-import fulguris.dialog.BrowserDialog.setDialogSize
 import fulguris.extensions.KDuration
 import fulguris.extensions.makeSnackbar
 import fulguris.extensions.snackbar
@@ -33,6 +32,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
 import fulguris.app
+import fulguris.extensions.launch
 import fulguris.permissions.PermissionsManager
 import fulguris.permissions.PermissionsResultAction
 import timber.log.Timber
@@ -222,8 +222,7 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
             .setNegativeButton(
                 mActivity.resources.getString(R.string.action_cancel),
                 dialogClickListener
-            ).show()
-        setDialogSize(mActivity, dialog)
+            ).launch()
         Timber.d("Downloading: $fileName")
     }
 

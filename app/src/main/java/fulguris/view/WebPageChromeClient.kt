@@ -5,7 +5,7 @@ import fulguris.browser.WebBrowser
 import fulguris.di.HiltEntryPoint
 import fulguris.dialog.BrowserDialog
 import fulguris.dialog.DialogItem
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.favicon.FaviconModel
 import fulguris.settings.preferences.UserPreferences
 import fulguris.view.webrtc.WebRtcPermissionsModel
@@ -271,7 +271,7 @@ class WebPageChromeClient(
                     setNegativeButton(activity.getString(R.string.action_dont_allow)) { _, _ ->
                         callback.invoke(origin, false, remember)
                     }
-                }.resizeAndShow()
+                }.launch()
             }
 
             override fun onDenied(permission: String) =//TODO show message and/or turn off setting

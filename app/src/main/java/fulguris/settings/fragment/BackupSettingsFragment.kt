@@ -29,13 +29,10 @@ import fulguris.browser.TabsManager
 import acr.browser.lightning.browser.sessions.Session
 import fulguris.database.bookmark.BookmarkExporter
 import fulguris.database.bookmark.BookmarkRepository
-import fulguris.di.*
 import fulguris.dialog.BrowserDialog
 import fulguris.dialog.DialogItem
-import fulguris.extensions.*
 import fulguris.activity.SettingsActivity
 import fulguris.settings.preferences.UserPreferences
-import fulguris.utils.Utils
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
@@ -61,7 +58,7 @@ import fulguris.di.PrefsPortrait
 import fulguris.di.UserPrefs
 import fulguris.extensions.drawable
 import fulguris.extensions.fileName
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.extensions.snackbar
 import fulguris.extensions.toast
 import io.reactivex.Scheduler
@@ -374,7 +371,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                                         Timber.e(throwable,"onError: exporting bookmarks")
                                         val activity = activity
                                         if (activity != null && !activity.isFinishing && isAdded) {
-                                            fulguris.utils.Utils.createInformativeDialog(activity, R.string.title_error, R.string.bookmark_export_failure)
+                                            BrowserDialog.show(activity, R.string.title_error, R.string.bookmark_export_failure)
                                         } else {
                                             application.toast(R.string.bookmark_export_failure)
                                         }
@@ -445,7 +442,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                             // Our import failed and we are back on the main thread
                             Timber.d("Error importing bookmarks: ", ex)
                             // TODO: Could just put a snackbar, though that was useful to test our coroutines as it would crash if not on the main thread
-                            fulguris.utils.Utils.createInformativeDialog(requireActivity(), R.string.title_error, R.string.import_bookmark_error)
+                            BrowserDialog.show(requireActivity(), R.string.title_error, R.string.import_bookmark_error)
                         }
                     }
                 }
@@ -474,7 +471,7 @@ class BackupSettingsFragment : AbstractSettingsFragment() {
                     activity?.finish()
                     //activity?.supportFragmentManager?.popBackStackImmediate()
                 }
-                .resizeAndShow()
+                .launch()
 
         return true
     }

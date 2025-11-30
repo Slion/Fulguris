@@ -26,14 +26,13 @@ import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.Message
 import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
 import fulguris.app
 import fulguris.device.ScreenSize
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.settings.preferences.ConfigurationCustomPreferences
 import fulguris.settings.preferences.ConfigurationPreferences
 import timber.log.Timber
@@ -95,7 +94,7 @@ class ConfigurationCustomSettingsFragment : ConfigurationSettingsFragment() {
                     // Exit our nested event loop
                     handler.sendMessage(handler.obtainMessage());
                 }
-                .resizeAndShow()
+                .launch()
 
             // Start nested event loop as we don't want to return before user resolves above dialog
             try {

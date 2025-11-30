@@ -28,7 +28,7 @@ import fulguris.di.MainScheduler
 import fulguris.di.NetworkScheduler
 import fulguris.di.UserPrefs
 import fulguris.extensions.isDarkTheme
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.extensions.reverseDomainName
 import fulguris.favicon.FaviconModel
 import fulguris.settings.preferences.DomainPreferences
@@ -115,7 +115,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                         domainCount = 0
                         updateDomainCountSummary()
                     }
-                    .resizeAndShow()
+                    .launch()
 
                 true
             }

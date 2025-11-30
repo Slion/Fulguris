@@ -13,7 +13,7 @@ import fulguris.extensions.getDrawable
 import fulguris.extensions.getText
 import fulguris.extensions.ihs
 import fulguris.extensions.makeSnackbar
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.extensions.setIcon
 import fulguris.html.homepage.HomePageFactory
 import fulguris.js.InvertPage
@@ -386,7 +386,7 @@ class WebPageClient(
             setNegativeButton(R.string.action_cancel) { _, _ ->
                 handler.cancel()
             }
-        }.resizeAndShow()
+        }.launch()
     }
 
     /**
@@ -523,7 +523,7 @@ class WebPageClient(
                 }
                 handler.cancel()
             }
-        }.resizeAndShow()
+        }.launch()
     }
 
     /**
@@ -552,7 +552,7 @@ class WebPageClient(
             setNegativeButton(activity.getString(R.string.action_no)) { _, _ ->
                 dontResend.sendToTarget()
             }
-        }.resizeAndShow()
+        }.launch()
     }
 
     // We use this to prevent opening such dialogs multiple times

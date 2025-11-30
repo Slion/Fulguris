@@ -27,7 +27,6 @@ import fulguris.AppTheme
 import fulguris.R
 import fulguris.di.MainScheduler
 import fulguris.di.NetworkScheduler
-import fulguris.dialog.BrowserDialog.setDialogSize
 import fulguris.extensions.isDarkTheme
 import fulguris.utils.Utils
 import android.annotation.SuppressLint
@@ -57,6 +56,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.extensions.applyWindowInsets
+import fulguris.extensions.launch
 import io.reactivex.Scheduler
 import net.dankito.readability4j.Readability4J
 import org.jsoup.Jsoup
@@ -348,8 +348,7 @@ class ReadingActivity : ThemedActivity(), TextToSpeech.OnInitListener {
                             mBody!!.textSize = getTextSize(mTextSize)
                             userPreferences!!.readingTextSize = bar.progress
                         }
-                val dialog: Dialog = builder.show()
-                setDialogSize(this, dialog)
+                val dialog: Dialog = builder.launch()
             }
             R.id.tts -> {
                 // Toggle TTS

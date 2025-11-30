@@ -26,7 +26,7 @@ import fulguris.R
 import fulguris.activity.WebBrowserActivity
 import fulguris.browser.WebBrowser
 import fulguris.dialog.BrowserDialog
-import fulguris.extensions.resizeAndShow
+import fulguris.extensions.launch
 import fulguris.extensions.toast
 import fulguris.utils.FileNameInputFilter
 import fulguris.utils.ItemDragDropSwipeViewHolder
@@ -87,7 +87,7 @@ class SessionViewHolder(
                                 iMenuSessions.updateSessions()
                             }
                         }
-                        .resizeAndShow()
+                        .launch()
             }
         }
 

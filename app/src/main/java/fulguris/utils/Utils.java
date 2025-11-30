@@ -74,26 +74,6 @@ public final class Utils {
     }
 
     /**
-     * Creates a dialog with only a title, message, and okay button.
-     *
-     * @param activity the activity needed to create a dialog.
-     * @param title    the title of the dialog.
-     * @param message  the message of the dialog.
-     */
-    public static void createInformativeDialog(@NonNull Activity activity, @StringRes int title, @StringRes int message) {
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
-        builder.setTitle(title);
-        builder.setMessage(message)
-            .setCancelable(true)
-            .setPositiveButton(activity.getResources().getString(R.string.action_ok),
-                (dialog, id) -> {
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-        BrowserDialog.setDialogSize(activity, alert);
-    }
-
-    /**
      * Converts Density Pixels (DP) to Pixels (PX).
      *
      * @param dp the number of density pixels to convert.
