@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!-- WebView scrollbar layout -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
-    <gradient android:startColor="#88888888" android:centerColor="#88888888" android:endColor="#88888888" android:angle="45"/>
-    <corners android:radius="20dp" />
-</shape>
