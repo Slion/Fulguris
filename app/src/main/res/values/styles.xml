@@ -796,7 +796,10 @@ colorControlNormal:
         <item name="checkedIconMargin">4dp</item>
         <item name="checkedIconSize">6dp</item>
 <!--        <item name="elevation">24dp</item>-->
-        <item name="checkedIcon">@drawable/ic_circle</item>
+<!--        <item name="checkedIcon">@drawable/ic_circle</item>-->
+
+        <item name="checkedIcon">@null</item>
+
     </style>
 
     <!--
