@@ -38,7 +38,8 @@ import kotlin.Pair;
 import timber.log.Timber;
 
 /**
- * Taken from GeckoLocaleList
+ * Taken from GeckoLocaleList.
+ * Preference allowing selection of app language.
  */
 public class LocaleListPreference extends ListPreference {
 

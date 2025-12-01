@@ -236,6 +236,9 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
         return true
     }
 
+    /**
+     * Shows the dialog which allows the user to choose the browser's theme.
+     */
     private fun showThemePicker(summaryUpdater: SummaryUpdater) : Boolean {
         val currentTheme = userPreferences.useTheme
         MaterialAlertDialogBuilder(activity as Activity).apply {

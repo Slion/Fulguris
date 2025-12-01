@@ -339,6 +339,11 @@ abstract class AbstractSettingsFragment : PreferenceFragmentBase() {
         prefGroup.addPreference(pref)
     }
 
+    /**
+     * Hook-in our own list preference dialog.
+     * Thus ours dialog are constructed using MaterialAlertDialogBuilder rather than the legacy dialog builder.
+     * TODO: Support more than just ListPreference, notably text editor dialog for instance.
+     */
     override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is ListPreference) {
             showListPreferenceDialog(preference)

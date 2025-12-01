@@ -234,8 +234,8 @@ colorControlNormal:
 <!--        <item name="appColorControlDisabled">@color/md_grey_400</item>-->
 <!--        <item name="colorControlNormal">?attr/colorOnSurface</item>-->
         <!-- Fix dialog issues -->
-<!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
-<!--        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
         <!-- Override AppBarLayout background color -->
 <!--        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout.Light</item>-->
         <!-- Override MaterialCardView styles -->
@@ -440,8 +440,8 @@ colorControlNormal:
 <!--        <item name="appColorControlDisabled">@color/md_grey_600</item>-->
 <!--        <item name="colorControlNormal">?attr/colorOnBackground</item>-->
         <!-- Fix dialog issues -->
-<!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
-<!--        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <!-- Override BottomSheetDialog styles -->
@@ -640,8 +640,8 @@ colorControlNormal:
 <!--        <item name="appColorControlDisabled">@color/md_grey_600</item>-->
 <!--        <item name="colorControlNormal">?attr/colorOnBackground</item>-->
         <!-- Fix dialog issues -->
-<!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
-<!--        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>-->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
         <!-- Override MaterialCardView styles -->
         <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
         <!-- Override BottomSheetDialog styles -->
@@ -763,14 +763,22 @@ colorControlNormal:
     </style>
 
     <!--
-    Override dialog theme otherwise buttons' text is not visible in dark mode notably
-    See: https://material.io/components/dialogs/android#theming-dialogs
+        Modify the style of dialogs constructed through classic AlertDialog.Builder.
+        Could be the case for some Preference we did not override.
+        Though ideally we should not be using legacy dialogs.
+    -->
+    <style name="ThemeOverlay.App.Dialog.Alert" parent="ThemeOverlay.Material3.Dialog.Alert">
+    </style>
+
+    <!--
+        Applied as materialAlertDialogTheme
+        Modify the style of dialogs constructed through MaterialAlertDialogBuilder.
     -->
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <!-- Override button text color
-            Should be the same as you colorSecondary really
-        -->
-        <item name="colorPrimary">?attr/colorSecondary</item>
+        <!-- Have colorful current radio button as per M3 design specs -->
+        <item name="colorSecondary">?attr/colorPrimary</item>
+        <!-- Make background color a bit darker -->
+        <item name="android:background">?attr/colorOnSurfaceInverse</item>
     </style>
 
     <!--
