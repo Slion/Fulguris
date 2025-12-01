@@ -674,7 +674,7 @@ colorControlNormal:
     </style>
 
     <style name="Theme.App.Light" parent="Theme.App.Light.Base">
-    </style>>
+    </style>
 
     <style name="Theme.App.Dark" parent="Theme.App.Dark.Base">
     </style>
