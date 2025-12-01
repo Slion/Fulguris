@@ -13,6 +13,7 @@ android:focusableInTouchMode="true"
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/tab_item_background"
+        app:cardBackgroundColor="?attr/colorSurface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/material_grid_touch_large"
         android:layout_marginHorizontal="@dimen/material_grid_unit"

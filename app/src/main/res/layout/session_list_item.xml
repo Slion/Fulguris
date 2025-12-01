@@ -38,6 +38,7 @@
     -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/layout_background"
+        app:cardBackgroundColor="?attr/colorSurface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
