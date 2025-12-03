@@ -69,7 +69,7 @@
 <!--        a:singleLineTitle="false" />-->
 
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         a:title="@string/settings_title_dark_mode_default">
 
     <x.SwitchPreference
@@ -91,9 +91,9 @@
         a:icon="@drawable/ic_dark_mode"
         a:singleLineTitle="false" />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         a:title="@string/settings_title_desktop_mode_default">
 
         <x.SwitchPreference
@@ -115,9 +115,9 @@
             a:icon="@drawable/ic_desktop"
             a:singleLineTitle="false" />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         a:title="@string/settings_title_javascript">
 
         <x.SwitchPreference
@@ -140,9 +140,9 @@
             a:iconSpaceReserved="false"
             a:singleLineTitle="false" />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         a:title="@string/settings_title_third_party_cookies">
 
         <x.SwitchPreference
@@ -165,7 +165,7 @@
             a:iconSpaceReserved="false"
             a:singleLineTitle="false" />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
     <x.PreferenceCategory
         a:title="@string/settings_title_launch_app"

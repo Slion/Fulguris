@@ -47,7 +47,7 @@
         />
 
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         a:key="@string/pref_key_cat_cookies"
         a:icon="@drawable/ic_cookie"
         a:title="@string/settings_title_cookies"

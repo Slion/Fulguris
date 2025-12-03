@@ -2,11 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:a="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         a:key="@string/pref_key_page_history"
         a:title="@string/settings_title_page_history">
 
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 </PreferenceScreen>

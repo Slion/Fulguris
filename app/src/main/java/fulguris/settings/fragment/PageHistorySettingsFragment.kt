@@ -70,7 +70,7 @@ class PageHistorySettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState,rootKey)
 
-        category = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_page_history))?.apply { isOrderingAsAdded = true }!!
+        category = findPreference<x.PreferenceCategory>(resources.getString(R.string.pref_key_page_history))?.apply { isOrderingAsAdded = true }!!
         history = tabsManager.currentTab?.webView?.copyBackForwardList()!!
         currentIndex = history.currentIndex
         populateHistory()

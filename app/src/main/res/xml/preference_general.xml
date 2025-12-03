@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="non-default-test">
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/settings_general"
         app:singleLineTitle="false" >
 
@@ -47,10 +47,10 @@
             app:icon="@drawable/ic_list_number"
             app:singleLineTitle="false" />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/agent_system"
         app:singleLineTitle="false">
 
@@ -72,10 +72,10 @@
             app:singleLineTitle="false"
             app:enumClassName="fulguris.enums.IncomingViewAction" />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/tabs">
+    <x.PreferenceCategory android:title="@string/tabs">
 
         <!-- This option is broken since we introduced sessions.
              Just hide it until we sort this out.
@@ -157,9 +157,9 @@
             app:isPreferenceVisible="@bool/const_false"
             app:singleLineTitle="false" />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/settings_advanced"
         app:singleLineTitle="false">
 
@@ -235,5 +235,5 @@
             app:singleLineTitle="false" />
 
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 </PreferenceScreen>

@@ -12,7 +12,7 @@
         a:singleLineTitle="false"
         />
 
-    <PreferenceCategory android:title="@string/pref_category_on_tab_change">
+    <x.PreferenceCategory android:title="@string/pref_category_on_tab_change">
         <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_change_show_animation"
@@ -39,9 +39,9 @@
             a:format="%.0fms"
             a:singleLineTitle="false"
             />
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_category_on_tab_close">
+    <x.PreferenceCategory android:title="@string/pref_category_on_tab_close">
         <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_close_show_snackbar"
@@ -58,9 +58,9 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false"
             />
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_category_on_tab_back_forward">
+    <x.PreferenceCategory android:title="@string/pref_category_on_tab_back_forward">
         <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_back_show_animation"
@@ -88,9 +88,9 @@
             a:singleLineTitle="false"
             />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_category_on_follow_link">
+    <x.PreferenceCategory android:title="@string/settings_category_on_follow_link">
         <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_page_started_show_animation"
@@ -100,7 +100,7 @@
             a:singleLineTitle="false"
             />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 
 

@@ -54,7 +54,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
 
-        catConfigurations = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_configurations))?.apply { isOrderingAsAdded = true }
+        catConfigurations = findPreference<x.PreferenceCategory>(resources.getString(R.string.pref_key_configurations))?.apply { isOrderingAsAdded = true }
 
         //injector.inject(this)
 

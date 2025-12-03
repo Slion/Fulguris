@@ -94,7 +94,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         // TODO: Have a custom preference with test input to filter out our list
 
         // Disable ordering as added to sort alphabetically by title
-        catDomains = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_domains))?.apply {
+        catDomains = findPreference<x.PreferenceCategory>(resources.getString(R.string.pref_key_domains))?.apply {
             isOrderingAsAdded = false
             // Initial summary will be updated after scanning
             summary = getString(R.string.settings_summary_loading)

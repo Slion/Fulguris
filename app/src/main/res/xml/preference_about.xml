@@ -3,7 +3,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/settings_about"
         app:singleLineTitle="false" >
 
@@ -172,9 +172,9 @@
 
         </Preference>
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/licenses">
+    <x.PreferenceCategory android:title="@string/licenses">
 
         <Preference
             android:summary="@string/license_cpal"
@@ -325,5 +325,5 @@
             </intent>
         </Preference>
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 </PreferenceScreen>

@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/bookmark_settings">
+    <x.PreferenceCategory android:title="@string/bookmark_settings">
 
         <Preference
             android:key="import_bookmark"
@@ -25,14 +25,14 @@
             app:icon="@drawable/ic_delete_forever"
             app:singleLineTitle="false" />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
     <!--
     Currently not fully working. Therefore hidden for now.
     Configuration settings are not backed up.
     Moreover icons do not make much sense.
     -->
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/settings"
         app:isPreferenceVisible="@bool/const_false"
         app:singleLineTitle="false">
@@ -55,9 +55,9 @@
             app:icon="@drawable/ic_delete_forever"
             app:singleLineTitle="false" />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/action_sessions">
 
         <Preference
@@ -69,12 +69,12 @@
             android:key="@string/pref_key_sessions_reset"
             android:title="@string/generic_reset"/>
         -->
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:key="@string/pref_key_session_export_category"
         android:title="@string/pref_category_title_session_export"
         android:summary="@string/pref_category_summary_session_export">
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 </PreferenceScreen>

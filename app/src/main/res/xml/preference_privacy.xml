@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/settings_privacy"
         app:singleLineTitle="false"
         >
@@ -71,9 +71,9 @@
         app:singleLineTitle="false"
         />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/settings_general">
 
     <x.SwitchPreference
@@ -108,9 +108,9 @@
         app:singleLineTitle="false"
         />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/settings_advanced"
         app:singleLineTitle="false"
         >
@@ -143,6 +143,6 @@
         app:singleLineTitle="false"
         />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 </PreferenceScreen>

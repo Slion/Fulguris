@@ -78,7 +78,7 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
         // TODO: Have a custom preference with test input to filter out our list
 
         // Disable ordering as added to sort alphabetically by title
-        catCookies = findPreference<PreferenceCategory>(resources.getString(R.string.pref_key_cat_cookies))?.apply { isOrderingAsAdded = true }
+        catCookies = findPreference<x.PreferenceCategory>(resources.getString(R.string.pref_key_cat_cookies))?.apply { isOrderingAsAdded = true }
 
 
         deleteAll = clickablePreference(

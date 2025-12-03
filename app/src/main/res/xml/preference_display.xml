@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/settings_display"
         a:singleLineTitle="false">
 
@@ -30,9 +30,9 @@
         a:singleLineTitle="false"
         />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         a:key="@string/pref_key_configurations"
         android:title="@string/settings_title_configuration"
         android:summary="@string/settings_summary_configuration"
@@ -62,9 +62,9 @@
             tools:isPreferenceVisible="true"
             />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         android:title="@string/settings_general"
         a:singleLineTitle="false">
 
@@ -135,10 +135,10 @@
         a:singleLineTitle="false"
         />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/pref_category_panels">
+    <x.PreferenceCategory android:title="@string/pref_category_panels">
 
         <x.SwitchPreference
             android:defaultValue="@bool/pref_default_use_bottom_sheets"
@@ -172,10 +172,10 @@
             a:singleLineTitle="false"
             />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/pref_category_webpage">
+    <x.PreferenceCategory android:title="@string/pref_category_webpage">
 
         <x.EnumListPreference
             a:key="@string/pref_key_layer_type"
@@ -224,7 +224,7 @@
             a:allowDividerAbove="false"
             />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 
 

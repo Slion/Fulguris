@@ -2,7 +2,7 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <PreferenceCategory
+        <x.PreferenceCategory
             android:title="@string/settings_adblock"
             app:singleLineTitle="false">
 
@@ -34,7 +34,7 @@
             android:dependency="@string/pref_key_content_control"
             app:singleLineTitle="false" />
 
-        </PreferenceCategory>
+        </x.PreferenceCategory>
 
         <x.PreferenceCategory
             android:key="@string/pref_key_content_control_filters"

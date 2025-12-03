@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:a="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/options">
+    <x.PreferenceCategory android:title="@string/options">
 
         <Preference
             a:fragment="fulguris.settings.fragment.DomainSettingsFragment"
@@ -64,6 +64,6 @@
             a:singleLineTitle="false"
             />
 
-    </PreferenceCategory>
+    </x.PreferenceCategory>
 
 </PreferenceScreen>

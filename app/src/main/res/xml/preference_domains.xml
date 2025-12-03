@@ -28,7 +28,7 @@
 ⚠️: Needed to use orders as the Default domain settings is added on top dynamically
 -->
 
-    <PreferenceCategory
+    <x.PreferenceCategory
         a:key="@string/pref_key_domains"
         a:icon="@drawable/ic_domain"
         a:title="@string/settings_title_domains"
