@@ -73,6 +73,8 @@ colorControlNormal:
         <!--        Use this for larger preferences titles and summaries-->
         <!--        <item name="android:textAppearanceListItem">@style/TextAppearance.Material3.TitleLarge</item>-->
         <!--        <item name="android:textAppearanceListItemSecondary">@style/TextAppearance.Material3.BodyLarge</item>-->
+        <!--        Needed for preference dialogs such as in TermsActivity -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Slions</item>
         <!-- Theme colors
         See: https://material.io/develop/android/theming/color
         -->
