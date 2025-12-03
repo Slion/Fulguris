@@ -167,7 +167,7 @@
 
     </PreferenceCategory>
 
-    <fulguris.settings.preferences.PreferenceCategoryEx
+    <x.PreferenceCategory
         a:title="@string/settings_title_launch_app"
         a:summary="@string/dialog_message_third_party_app">
 
@@ -192,9 +192,9 @@
             a:dependency="@string/pref_key_launch_app_override"
             />
 
-    </fulguris.settings.preferences.PreferenceCategoryEx>
+    </x.PreferenceCategory>
 
-    <fulguris.settings.preferences.PreferenceCategoryEx
+    <x.PreferenceCategory
         a:title="@string/settings_title_ssl_error"
         a:summary="@string/settings_summary_ssl_error">
 
@@ -219,9 +219,9 @@
             a:dependency="@string/pref_key_ssl_error_override"
             />
 
-    </fulguris.settings.preferences.PreferenceCategoryEx>
+    </x.PreferenceCategory>
 
-    <fulguris.settings.preferences.PreferenceCategoryEx
+    <x.PreferenceCategory
         a:title="@string/settings_title_incoming_url_action"
         a:summary="@string/settings_summary_incoming_url_action">
 
@@ -246,7 +246,7 @@
             a:dependency="@string/pref_key_incoming_url_action_override"
             />
 
-    </fulguris.settings.preferences.PreferenceCategoryEx>
+    </x.PreferenceCategory>
 
 
     <x.BasicPreference

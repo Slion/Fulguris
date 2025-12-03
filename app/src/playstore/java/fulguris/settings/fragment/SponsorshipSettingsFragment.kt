@@ -25,7 +25,6 @@ package fulguris.settings.fragment
 import fulguris.BuildConfig
 import fulguris.R
 import fulguris.Sponsorship
-import fulguris.settings.preferences.PreferenceCategoryEx
 import fulguris.settings.preferences.UserPreferences
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -246,7 +245,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                                   pref.order = 0 // We want it at the top
 
                                   // Fetch subscription category
-                                  var prefCat: PreferenceCategoryEx? = preferenceScreen.findPreference(getString(R.string.pref_key_subscriptions_category))
+                                  var prefCat: x.PreferenceCategory? = preferenceScreen.findPreference(getString(R.string.pref_key_subscriptions_category))
                                   if (prefCat == null) {
                                       // Create it if not yet present
                                       prefCat = addCategorySubscriptions()
@@ -272,8 +271,8 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
     /**
      *
      */
-    private fun addCategorySubscriptions() : PreferenceCategoryEx {
-        val prefCat = PreferenceCategoryEx(requireContext())
+    private fun addCategorySubscriptions() : x.PreferenceCategory {
+        val prefCat = x.PreferenceCategory(requireContext())
         prefCat.key = getString(R.string.pref_key_subscriptions_category)
         prefCat.title = getString(R.string.pref_category_subscriptions)
         prefCat.summary = getString(R.string.pref_summary_subscriptions)

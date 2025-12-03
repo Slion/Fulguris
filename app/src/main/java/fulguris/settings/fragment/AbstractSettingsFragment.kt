@@ -24,7 +24,6 @@ package fulguris.settings.fragment
 
 import fulguris.R
 import fulguris.activity.SettingsActivity
-import fulguris.settings.preferences.PreferenceCategoryEx
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -257,7 +256,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentBase() {
      *
      */
     fun addCategoryContribute() {
-        val prefCat = PreferenceCategoryEx(requireContext())
+        val prefCat = x.PreferenceCategory(requireContext())
         prefCat.key = getString(R.string.pref_key_contribute_category)
         prefCat.title = getString(R.string.settings_contribute)
         //prefCat.summary = getString(R.string.pref_summary_subscriptions)
