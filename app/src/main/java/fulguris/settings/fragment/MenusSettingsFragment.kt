@@ -115,6 +115,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
             isIconSpaceReserved = false
             isSingleLineTitle = false
             isSelectable = false // Make it non-clickable without graying it out
+            isAllCapsTitle = true
             setTitleTextColorFromTheme(android.R.attr.colorPrimary)
             order = currentOrder++
         }
@@ -126,6 +127,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
             isIconSpaceReserved = false
             isSingleLineTitle = false
             isSelectable = false // Make it non-clickable without graying it out
+            isAllCapsTitle = true
             setTitleTextColorFromTheme(android.R.attr.colorPrimary)
             order = currentOrder++
         }
@@ -137,6 +139,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
             isIconSpaceReserved = false
             isSingleLineTitle = false
             isSelectable = false // Make it non-clickable without graying it out
+            isAllCapsTitle = true
             setTitleTextColorFromTheme(android.R.attr.colorPrimary)
             order = currentOrder++
         }
