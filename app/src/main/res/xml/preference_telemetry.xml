@@ -6,7 +6,7 @@ Contains crash reports and analytics toggles moved from the accept terms slide.
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:key="@string/pref_key_crash_report"
         android:title="@string/pref_title_crash_report"
         android:summaryOn="@string/pref_summary_on_crash_reports"
@@ -16,7 +16,7 @@ Contains crash reports and analytics toggles moved from the accept terms slide.
         app:iconSpaceReserved="true"
         app:singleLineTitle="false" />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:key="@string/pref_key_analytics"
         android:title="@string/pref_title_analytics"
         android:summaryOn="@string/pref_summary_on_analytics"

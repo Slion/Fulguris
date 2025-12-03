@@ -40,7 +40,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
 import fulguris.extensions.copyToClipboard
 import fulguris.extensions.toast
-import slions.pref.BasicPreference
+import x.BasicPreference
 import fulguris.utils.WebUtils
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber

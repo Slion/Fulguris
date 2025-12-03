@@ -12,7 +12,7 @@
         app:layout="@layout/preference_category_material"
         tools:ignore="PrivateResource" />
 
-    <slions.pref.SliderPreference
+    <x.SliderPreference
         app:key="@string/pref_key_scrollbar_size"
         app:title="@string/pref_title_scrollbar_size"
         app:summary="@string/pref_summary_scrollbar_size"
@@ -29,7 +29,7 @@
         app:singleLineTitle="false"
         />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:defaultValue="@bool/pref_default_scrollbar_fading"
         android:key="@string/pref_key_scrollbar_fading"
         android:title="@string/pref_title_scrollbar_fading"
@@ -39,7 +39,7 @@
         app:singleLineTitle="false"
         />
 
-    <slions.pref.SliderPreference
+    <x.SliderPreference
         app:key="@string/pref_key_scrollbar_delay_before_fade"
         app:dependency="@string/pref_key_scrollbar_fading"
         app:title="@string/pref_title_scrollbar_delay_before_fade"
@@ -58,7 +58,7 @@
         app:singleLineTitle="false"
         />
 
-    <slions.pref.SliderPreference
+    <x.SliderPreference
         app:key="@string/pref_key_scrollbar_fade_duration"
         app:dependency="@string/pref_key_scrollbar_fading"
         app:title="@string/pref_title_scrollbar_fade_duration"

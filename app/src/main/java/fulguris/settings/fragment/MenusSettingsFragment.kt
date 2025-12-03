@@ -69,7 +69,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         var currentOrder = 0
 
         // Add help preference at the very top
-        val helpPref = slions.pref.BasicPreference(requireContext()).apply {
+        val helpPref = x.BasicPreference(requireContext()).apply {
             key = "help_menus"
             summary = getString(R.string.settings_help_menus)
             isSingleLineSummary = false
@@ -81,7 +81,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         prefScreen.addPreference(helpPref)
 
         // Add reset preference
-        val resetPref = slions.pref.BasicPreference(requireContext()).apply {
+        val resetPref = x.BasicPreference(requireContext()).apply {
             key = "reset_menus"
             title = getString(R.string.settings_title_reset_menus)
             icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_reset_menu)
@@ -109,7 +109,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         prefScreen.addPreference(resetPref)
 
         // Create fixed header preferences with sequential order
-        val headerMain = slions.pref.BasicPreference(requireContext()).apply {
+        val headerMain = x.BasicPreference(requireContext()).apply {
             key = KEY_HEADER_MAIN
             title = getString(R.string.settings_title_main_menu)
             isIconSpaceReserved = false
@@ -120,7 +120,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         }
         prefScreen.addPreference(headerMain)
 
-        val headerTab = slions.pref.BasicPreference(requireContext()).apply {
+        val headerTab = x.BasicPreference(requireContext()).apply {
             key = KEY_HEADER_TAB
             title = getString(R.string.action_tab_menu)
             isIconSpaceReserved = false
@@ -131,7 +131,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         }
         prefScreen.addPreference(headerTab)
 
-        val headerHidden = slions.pref.BasicPreference(requireContext()).apply {
+        val headerHidden = x.BasicPreference(requireContext()).apply {
             key = KEY_HEADER_HIDDEN
             title = getString(R.string.settings_title_hidden)
             isIconSpaceReserved = false
@@ -153,7 +153,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
             savedConfig.sortedBy { it.order }.forEach { config ->
                 val menuItem = allItems.find { it.id == config.id } ?: return@forEach
 
-                val pref = slions.pref.BasicPreference(requireContext()).apply {
+                val pref = x.BasicPreference(requireContext()).apply {
                     title = getString(menuItem.labelId)
                     icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_drag_handle_vertical)
                     titleDrawableStart = menuItem.iconId
@@ -209,7 +209,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
 
             // Add Main Menu items right after Main Menu header
             mainMenuItems.forEach { menuItem ->
-                val pref = slions.pref.BasicPreference(requireContext()).apply {
+                val pref = x.BasicPreference(requireContext()).apply {
                     title = getString(menuItem.labelId)
                     icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_drag_handle_vertical)
                     titleDrawableStart = menuItem.iconId
@@ -226,7 +226,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
 
             // Add Tab Menu items right after Tab Menu header
             tabMenuItems.forEach { menuItem ->
-                val pref = slions.pref.BasicPreference(requireContext()).apply {
+                val pref = x.BasicPreference(requireContext()).apply {
                     title = getString(menuItem.labelId)
                     icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_drag_handle_vertical)
                     titleDrawableStart = menuItem.iconId
@@ -243,7 +243,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
 
             // Add Hidden items after Hidden header
             hiddenItems.forEach { menuItem ->
-                val pref = slions.pref.BasicPreference(requireContext()).apply {
+                val pref = x.BasicPreference(requireContext()).apply {
                     title = getString(menuItem.labelId)
                     icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_drag_handle_vertical)
                     titleDrawableStart = menuItem.iconId

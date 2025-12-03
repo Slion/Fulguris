@@ -25,7 +25,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:key="@string/pref_key_logs"
         a:title="@string/pref_title_logs"
         a:icon="@drawable/ic_output"
@@ -35,7 +35,7 @@
         a:singleLineTitle="false"
         />
 
-    <slions.pref.EnumListPreference
+    <x.EnumListPreference
         a:key="@string/pref_key_log_level"
         a:dependency="@string/pref_key_logs"
         a:title="@string/pref_title_log_level"
@@ -47,7 +47,7 @@
         a:enumClassName="fulguris.enums.LogLevel"
         />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:key="@string/pref_key_crash_logs"
         a:title="@string/pref_title_crash_logs"
         android:id="@+id/pref_id_crash_logs"
@@ -57,7 +57,7 @@
         a:singleLineTitle="false"
         />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:icon="@drawable/ic_bug"
         a:defaultValue="false"
         a:key="leak_canary_enabled"

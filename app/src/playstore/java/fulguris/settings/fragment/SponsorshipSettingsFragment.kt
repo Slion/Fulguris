@@ -218,7 +218,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
                               // TODO: do we need to check the result?
                               skuDetailsList?.forEach { skuDetails ->
                                   Timber.d( skuDetails.toString())
-                                  val pref = slions.pref.SwitchPreference(requireContext())
+                                  val pref = x.SwitchPreference(requireContext())
                                   pref.isSingleLineTitle = false
                                   pref.title = skuDetails.title
                                   pref.summary = skuDetails.price + formatPeriod(skuDetails.subscriptionPeriod) + "\n" + skuDetails.description

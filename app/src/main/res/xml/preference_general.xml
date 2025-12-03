@@ -61,7 +61,7 @@
             app:singleLineTitle="false" />
 
 
-        <slions.pref.EnumListPreference
+        <x.EnumListPreference
             app:key="@string/pref_key_incoming_view_action"
             app:title="@string/incoming_view_action"
             app:iconSpaceReserved="false"
@@ -81,7 +81,7 @@
              Just hide it until we sort this out.
              See: https://github.com/Slion/Fulguris/issues/147
         -->
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="true"
             app:isPreferenceVisible="false"
             android:key="@string/pref_key_restore_tabs_on_startup"
@@ -89,7 +89,7 @@
             app:icon="@drawable/ic_save"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             app:key="@string/pref_key_search_in_new_tab"
             app:title="@string/search_in_new_tab"
             app:defaultValue="@bool/pref_default_search_in_new_tab"
@@ -97,7 +97,7 @@
             app:icon="@drawable/ic_search"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             app:key="@string/pref_key_url_in_new_tab"
             app:title="@string/url_in_new_tab"
             app:defaultValue="@bool/pref_default_url_in_new_tab"
@@ -105,7 +105,7 @@
             app:icon="@drawable/ic_web"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             app:key="@string/pref_key_homepage_in_new_tab"
             app:title="@string/homepage_in_new_tab"
             app:defaultValue="@bool/pref_default_homepage_in_new_tab"
@@ -113,7 +113,7 @@
             app:icon="@drawable/ic_action_home"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             app:key="@string/pref_key_bookmark_in_new_tab"
             app:title="@string/bookmark_in_new_tab"
             app:defaultValue="@bool/pref_default_bookmark_in_new_tab"
@@ -136,7 +136,7 @@
         <!--
         Disabled as currently not working.
         -->
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             app:key="@string/pref_key_long_click_tab"
             app:title="@string/long_press_tab"
             android:summary="@string/recommended"
@@ -148,7 +148,7 @@
         <!--
         Disabled as currently not working.
         -->
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="@bool/pref_default_close_drawer"
             android:key="@string/pref_key_close_drawer"
             android:title="@string/pref_title_close_drawer"
@@ -170,7 +170,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_load_images"
             android:title="@string/load_images"
@@ -178,7 +178,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_support_multiple_window"
             android:summary="@string/recommended"
@@ -187,7 +187,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_cookies"
             android:summary="@string/recommended"
@@ -196,7 +196,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_key_cookies_incognito"
             android:title="@string/incognito_cookies"
@@ -204,7 +204,7 @@
             app:iconSpaceReserved="false"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="false"
             android:key="force_zoom"
             android:summary="@string/force_zoom_summary"
@@ -212,7 +212,7 @@
             app:icon="@drawable/ic_force_zoom"
             app:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_key_request_save_data"
             android:title="@string/save_data"

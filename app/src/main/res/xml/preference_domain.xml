@@ -52,7 +52,7 @@
 
     </Preference>
 
-    <slions.pref.BasicPreference
+    <x.BasicPreference
         a:fragment="fulguris.settings.fragment.DomainSettingsFragment"
         a:key="@string/pref_key_parent"
         a:title="@string/settings_title_parent"
@@ -60,7 +60,7 @@
         a:singleLineTitle="false"
         />
 
-<!--    <slions.pref.SwitchPreference-->
+<!--    <x.SwitchPreference-->
 <!--        a:key="@string/pref_key_known_domain"-->
 <!--        a:title="Known domain"-->
 <!--        a:defaultValue="false"-->
@@ -72,7 +72,7 @@
     <PreferenceCategory
         a:title="@string/settings_title_dark_mode_default">
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:defaultValue="false"
         a:key="@string/pref_key_dark_mode_override"
         a:title="@string/settings_title_override"
@@ -81,7 +81,7 @@
         a:iconSpaceReserved="true"
         a:singleLineTitle="false" />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:defaultValue="false"
         a:key="@string/pref_key_dark_mode"
         a:title="@string/settings_title_dark_mode_default"
@@ -96,7 +96,7 @@
     <PreferenceCategory
         a:title="@string/settings_title_desktop_mode_default">
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             a:defaultValue="false"
             a:key="@string/pref_key_desktop_mode_override"
             a:title="@string/settings_title_override"
@@ -105,7 +105,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             a:defaultValue="false"
             a:key="@string/pref_key_desktop_mode"
             a:title="@string/settings_title_desktop_mode_default"
@@ -120,7 +120,7 @@
     <PreferenceCategory
         a:title="@string/settings_title_javascript">
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             a:defaultValue="false"
             a:key="@string/pref_key_javascript_override"
             a:title="@string/settings_title_override"
@@ -129,7 +129,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             a:defaultValue="true"
             a:key="@string/pref_key_javascript"
             a:title="@string/settings_title_javascript"
@@ -145,7 +145,7 @@
     <PreferenceCategory
         a:title="@string/settings_title_third_party_cookies">
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             a:defaultValue="false"
             a:key="@string/pref_key_third_party_cookies_override"
             a:title="@string/settings_title_override"
@@ -154,7 +154,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false" />
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             a:defaultValue="true"
             a:key="@string/pref_key_third_party_cookies"
             a:title="@string/settings_title_third_party_cookies"
@@ -171,7 +171,7 @@
         a:title="@string/settings_title_launch_app"
         a:summary="@string/dialog_message_third_party_app">
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             a:defaultValue="false"
             a:key="@string/pref_key_launch_app_override"
             a:title="@string/settings_title_override"
@@ -180,7 +180,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false" />
 
-        <slions.pref.EnumListPreference
+        <x.EnumListPreference
             a:key="@string/pref_key_launch_app"
             a:title="@string/settings_title_launch_app"
             a:useSimpleSummaryProvider="true"
@@ -198,7 +198,7 @@
         a:title="@string/settings_title_ssl_error"
         a:summary="@string/settings_summary_ssl_error">
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             a:defaultValue="false"
             a:key="@string/pref_key_ssl_error_override"
             a:title="@string/settings_title_override"
@@ -207,7 +207,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false" />
 
-        <slions.pref.EnumListPreference
+        <x.EnumListPreference
             a:key="@string/pref_key_ssl_error"
             a:title="@string/settings_title_ssl_error"
             a:useSimpleSummaryProvider="true"
@@ -225,7 +225,7 @@
         a:title="@string/settings_title_incoming_url_action"
         a:summary="@string/settings_summary_incoming_url_action">
 
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             a:defaultValue="false"
             a:key="@string/pref_key_incoming_url_action_override"
             a:title="@string/settings_title_override"
@@ -234,7 +234,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false" />
 
-        <slions.pref.EnumListPreference
+        <x.EnumListPreference
             a:key="@string/pref_key_incoming_url_action"
             a:title="@string/settings_title_incoming_url_action"
             a:useSimpleSummaryProvider="true"
@@ -249,7 +249,7 @@
     </fulguris.settings.preferences.PreferenceCategoryEx>
 
 
-    <slions.pref.BasicPreference
+    <x.BasicPreference
         a:key="@string/pref_key_delete"
         a:title="@string/settings_title_delete_domain_settings"
         a:icon="@drawable/ic_delete_forever_outline"

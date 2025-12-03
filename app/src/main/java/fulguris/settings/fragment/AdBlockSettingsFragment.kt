@@ -459,7 +459,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     }
 
     // class necessary to allow separate onClickListener for the switch
-    private inner class FilterListSwitchPreference(context : Context?, val entity: AbpEntity) : slions.pref.SwitchPreference(requireContext()) {
+    private inner class FilterListSwitchPreference(context : Context?, val entity: AbpEntity) : x.SwitchPreference(requireContext()) {
 
         init {
             isSingleLineTitle = false

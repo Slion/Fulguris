@@ -3,7 +3,7 @@ package fulguris.settings.fragment
 import fulguris.BuildConfig
 import fulguris.R
 import android.os.Bundle
-import slions.pref.PreferenceFragmentBase
+import x.PreferenceFragmentBase
 
 /**
  * TODO: Derive from [AbstractSettingsFragment]

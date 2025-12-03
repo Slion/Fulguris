@@ -29,7 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
 import fulguris.extensions.configId
-import slions.pref.BasicPreference
+import x.BasicPreference
 import fulguris.settings.Config
 import java.io.File
 import javax.inject.Inject

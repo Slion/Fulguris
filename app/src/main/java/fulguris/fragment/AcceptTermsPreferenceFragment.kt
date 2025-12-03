@@ -33,7 +33,7 @@ class AcceptTermsPreferenceFragment: PreferenceFragmentCompat() {
 
     private fun setupAcceptTermsListener() {
         // Listen for changes to the accept terms switch
-        findPreference<slions.pref.SwitchPreference>(getString(R.string.pref_key_accept_terms))?.setOnPreferenceChangeListener { _, newValue ->
+        findPreference<x.SwitchPreference>(getString(R.string.pref_key_accept_terms))?.setOnPreferenceChangeListener { _, newValue ->
             // Cancel any pending navigation
             view?.removeCallbacks(pendingNavigation)
 

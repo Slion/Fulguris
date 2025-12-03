@@ -31,7 +31,7 @@ class AdBlockerPreferenceFragment: PreferenceFragmentCompat() {
 
     private fun setupAdBlockerListener() {
         // Listen for changes to the ad blocker switch
-        findPreference<slions.pref.SwitchPreference>(getString(R.string.pref_key_content_control))?.setOnPreferenceChangeListener { _, newValue ->
+        findPreference<x.SwitchPreference>(getString(R.string.pref_key_content_control))?.setOnPreferenceChangeListener { _, newValue ->
             // Cancel any pending navigation
             view?.removeCallbacks(pendingNavigation)
 

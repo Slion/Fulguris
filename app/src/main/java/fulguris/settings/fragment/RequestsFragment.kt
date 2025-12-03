@@ -30,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
 import fulguris.activity.WebBrowserActivity
 import fulguris.view.WebPageClient
-import slions.pref.BasicPreference
+import x.BasicPreference
 
 /**
  * Fragment to display all page requests and their blocked status

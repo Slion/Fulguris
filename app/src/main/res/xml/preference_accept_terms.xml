@@ -37,7 +37,7 @@ Should only be shown on first application start-up.
     </Preference>
 
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:key="@string/pref_key_accept_terms"
         android:title="@string/pref_title_accept_terms"
         android:summaryOn="@string/pref_summary_on_accept_terms"

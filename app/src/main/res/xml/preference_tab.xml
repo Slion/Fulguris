@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:a="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:defaultValue="@bool/pref_default_tab_list_item_show_close_button"
         android:key="@string/pref_key_tab_list_item_show_close_button"
         android:title="@string/pref_title_tab_list_item_show_close_button"
@@ -13,7 +13,7 @@
         />
 
     <PreferenceCategory android:title="@string/pref_category_on_tab_change">
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_change_show_animation"
             android:title="@string/pref_title_show_animation"
@@ -22,7 +22,7 @@
             a:singleLineTitle="false"
             />
 
-        <slions.pref.SliderPreference
+        <x.SliderPreference
             a:key="@string/pref_key_on_tab_change_animation_duration"
             a:dependency="@string/pref_key_on_tab_change_show_animation"
             a:title="@string/settings_title_animation_duration"
@@ -42,7 +42,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_on_tab_close">
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_close_show_snackbar"
             android:title="@string/pref_title_show_snackbar"
@@ -50,7 +50,7 @@
             a:iconSpaceReserved="true"
             a:singleLineTitle="false"
             />
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_key_on_tab_close_vibrate"
             android:title="@string/pref_title_vibrate"
@@ -61,7 +61,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_on_tab_back_forward">
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_tab_back_show_animation"
             android:title="@string/pref_title_show_animation"
@@ -70,7 +70,7 @@
             a:singleLineTitle="false"
             />
 
-        <slions.pref.SliderPreference
+        <x.SliderPreference
             a:key="@string/pref_key_on_tab_flip_animation_duration"
             a:dependency="@string/pref_key_on_tab_back_show_animation"
             a:title="@string/settings_title_animation_duration"
@@ -91,7 +91,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_category_on_follow_link">
-        <slions.pref.SwitchPreference
+        <x.SwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_on_page_started_show_animation"
             android:title="@string/pref_title_show_animation"

@@ -32,7 +32,7 @@
         a:layout="@layout/preference_category_material"
         tools:ignore="PrivateResource" />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:key="@string/pref_key_tab_bar_vertical"
         android:title="@string/settings_title_tab_bar_orientation"
         android:summaryOn="@string/settings_summary_on_tab_bar_orientation"
@@ -43,7 +43,7 @@
         tools:defaultValue="false"
         />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:key="@string/pref_key_tab_bar_in_drawer"
         android:title="@string/settings_title_tab_bar_placement"
         android:summaryOn="@string/settings_summary_on_tab_bar_placement"
@@ -55,7 +55,7 @@
         tools:defaultValue="true"
         />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:key="@string/pref_key_toolbars_bottom"
         android:title="@string/settings_title_toolbars_position"
         android:summaryOn="@string/settings_summary_on_toolbars_position"
@@ -66,42 +66,42 @@
         tools:defaultValue="true" />
 
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:key="@string/pref_key_pull_to_refresh"
         android:title="@string/pref_title_pull_to_refresh"
         a:icon="@drawable/ic_action_refresh"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:key="@string/pref_key_hide_status_bar"
         a:title="@string/pref_title_hide_status_bar"
         a:icon="@drawable/ic_fullscreen"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:key="@string/pref_key_hide_tool_bar"
         a:title="@string/pref_title_hide_tool_bar"
         a:icon="@drawable/ic_baseline_aspect_ratio_24"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:key="@string/pref_key_show_tool_bar_on_scroll_up"
         a:title="@string/pref_title_show_tool_bar_when_scroll_up"
         a:icon="@drawable/ic_eye"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:key="@string/pref_key_show_tool_bar_on_page_top"
         a:title="@string/pref_title_show_tool_bar_on_page_top"
         a:icon="@drawable/ic_bottom_app_bar_outline"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         a:key="@string/pref_key_use_cutout_area"
         a:title="@string/pref_title_use_cutout_area"
         a:summaryOn="@string/pref_summary_on_use_cutout_area"
@@ -111,7 +111,7 @@
         a:defaultValue="true"
         />
 
-    <slions.pref.SliderPreference
+    <x.SliderPreference
         a:key="@string/pref_key_system_gesture_clearance"
         a:title="@string/pref_title_system_gesture_clearance"
         a:summary="@string/pref_summary_system_gesture_clearance"
@@ -129,7 +129,7 @@
         a:singleLineTitle="false"
         />
 
-    <slions.pref.SliderPreference
+    <x.SliderPreference
         a:key="@string/pref_key_desktop_width"
         a:title="@string/pref_title_desktop_width"
         a:summary="@string/pref_summary_desktop_width"

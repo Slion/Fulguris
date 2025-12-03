@@ -39,7 +39,7 @@ import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreference
 import androidx.recyclerview.widget.RecyclerView
 import fulguris.utils.shareUrl
-import slions.pref.PreferenceFragmentBase
+import x.PreferenceFragmentBase
 import timber.log.Timber
 
 /**
@@ -217,7 +217,7 @@ abstract class AbstractSettingsFragment : PreferenceFragmentBase() {
         isVisible: Boolean = true,
         summary: String? = null,
         onCheckChange: (Boolean) -> Unit
-    ): slions.pref.SwitchPreference = (findPreference<slions.pref.SwitchPreference>(preference) as slions.pref.SwitchPreference).apply {
+    ): x.SwitchPreference = (findPreference<x.SwitchPreference>(preference) as x.SwitchPreference).apply {
         this.isChecked = isChecked
         this.isEnabled = isEnabled
         this.isVisible = isVisible

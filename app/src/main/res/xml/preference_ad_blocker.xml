@@ -14,7 +14,7 @@ Should only be shown on first application start-up.
         app:iconSpaceReserved="false"
         app:singleLineTitle="false" />
 
-    <slions.pref.SwitchPreference
+    <x.SwitchPreference
         android:key="@string/pref_key_content_control"
         android:title="@string/pref_title_enable_ad_blocker"
         android:summaryOn="@string/pref_summary_on_enable_ad_blocker"

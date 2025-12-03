@@ -28,7 +28,7 @@ import android.text.format.DateFormat
 import androidx.preference.PreferenceCategory
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
-import slions.pref.BasicPreference
+import x.BasicPreference
 import java.util.Date
 
 /**
