@@ -32,7 +32,6 @@ import fulguris.extensions.launch
 import fulguris.extensions.reverseDomainName
 import fulguris.favicon.FaviconModel
 import fulguris.settings.preferences.DomainPreferences
-import x.BasicPreference
 import fulguris.utils.Utils
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
@@ -209,7 +208,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                             Timber.d("Adding newly created parent domain: $tpd")
 
                             // Create new preference for parent domain
-                            val pref = BasicPreference(requireContext())
+                            val pref = x.Preference(requireContext())
                             pref.isSingleLineTitle = false
                             pref.key = tpd
                             pref.title = tpd
@@ -245,7 +244,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         populated = true
 
         // Add default domain settings
-        val prefDefault = BasicPreference(requireContext())
+        val prefDefault = x.Preference(requireContext())
         prefDefault.isSingleLineTitle = false
         prefDefault.title = getString(R.string.default_theme)
         prefDefault.summary = getString(R.string.settings_summary_default_domain_settings)
@@ -303,7 +302,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                     updateDomainCountSummary()
 
                     // Create domain preference
-                    val pref = BasicPreference(requireContext())
+                    val pref = x.Preference(requireContext())
                     // Make sure domains are shown as titles
                     pref.isSingleLineTitle = false
                     pref.key = domain

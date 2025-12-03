@@ -30,7 +30,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
 import fulguris.activity.WebBrowserActivity
 import fulguris.view.WebPageClient
-import x.BasicPreference
 
 /**
  * Fragment to display all page requests and their blocked status
@@ -100,7 +99,7 @@ class RequestsFragment : AbstractSettingsFragment() {
 
             // Add each request as a preference
             domainRequests.forEach { request ->
-                val pref = BasicPreference(requireContext()).apply {
+                val pref = x.Preference(requireContext()).apply {
                     // Use request URL as the key to make it unique
                     key = request.url + request.timestamp
                     title = extractPath(request.url).substringBefore('?')

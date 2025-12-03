@@ -28,7 +28,6 @@ import android.text.format.DateFormat
 import androidx.preference.PreferenceCategory
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
-import x.BasicPreference
 import java.util.Date
 
 /**
@@ -69,7 +68,7 @@ class RequestFragment : AbstractSettingsFragment() {
         }
 
         // Open URL preference
-        val openPref = BasicPreference(requireContext()).apply {
+        val openPref = x.Preference(requireContext()).apply {
             title = getString(R.string.action_open)
             summary = url
             isSingleLineSummary = true
@@ -90,7 +89,7 @@ class RequestFragment : AbstractSettingsFragment() {
         preferenceScreen.addPreference(statusCategory)
 
         // Status preference
-        val statusPref = BasicPreference(requireContext()).apply {
+        val statusPref = x.Preference(requireContext()).apply {
             title = if (wasBlocked) {
                 getString(R.string.page_requests_blocked)
             } else {
@@ -114,7 +113,7 @@ class RequestFragment : AbstractSettingsFragment() {
             preferenceScreen.addPreference(detailsCategory)
 
             // Copy URL preference (first in category)
-            val copyPref = BasicPreference(requireContext()).apply {
+            val copyPref = x.Preference(requireContext()).apply {
                 title = getString(R.string.action_copy)
                 summary = getString(R.string.request_url_length, url.length)
                 isIconSpaceReserved = true
@@ -131,7 +130,7 @@ class RequestFragment : AbstractSettingsFragment() {
             detailsCategory.addPreference(copyPref)
 
             // Full URL preference
-            val urlPref = BasicPreference(requireContext()).apply {
+            val urlPref = x.Preference(requireContext()).apply {
                 title = getString(R.string.request_url)
                 summary = url
                 isIconSpaceReserved = false
@@ -141,7 +140,7 @@ class RequestFragment : AbstractSettingsFragment() {
 
             // Domain preference
             uri.host?.let { host ->
-                val domainPref = BasicPreference(requireContext()).apply {
+                val domainPref = x.Preference(requireContext()).apply {
                     title = getString(R.string.request_domain)
                     summary = host
                     isIconSpaceReserved = false
@@ -152,7 +151,7 @@ class RequestFragment : AbstractSettingsFragment() {
 
             // Path preference
             uri.path?.let { path ->
-                val pathPref = BasicPreference(requireContext()).apply {
+                val pathPref = x.Preference(requireContext()).apply {
                     title = getString(R.string.request_path)
                     summary = path
                     isIconSpaceReserved = false
@@ -173,7 +172,7 @@ class RequestFragment : AbstractSettingsFragment() {
                 // Add each parameter as a preference
                 queryParams.forEach { paramName ->
                     val paramValue = uri.getQueryParameter(paramName) ?: ""
-                    val paramPref = BasicPreference(requireContext()).apply {
+                    val paramPref = x.Preference(requireContext()).apply {
                         title = paramName
                         summary = paramValue
                         isSingleLineSummary = true
@@ -185,7 +184,7 @@ class RequestFragment : AbstractSettingsFragment() {
             }
         } catch (e: Exception) {
             // If URL parsing fails, just show the raw URL
-            val urlPref = BasicPreference(requireContext()).apply {
+            val urlPref = x.Preference(requireContext()).apply {
                 title = getString(R.string.request_url)
                 summary = url
                 isIconSpaceReserved = false
@@ -202,7 +201,7 @@ class RequestFragment : AbstractSettingsFragment() {
         preferenceScreen.addPreference(timestampCategory)
 
         // Timestamp preference
-        val timestampPref = BasicPreference(requireContext()).apply {
+        val timestampPref = x.Preference(requireContext()).apply {
             title = getString(R.string.request_timestamp)
             summary = if (timestamp > 0) {
                 DateFormat.format("yyyy-MM-dd HH:mm:ss", Date(timestamp)).toString()

@@ -39,7 +39,6 @@ import androidx.core.graphics.scale
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import dagger.hilt.android.AndroidEntryPoint
-import x.BasicPreference
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
@@ -89,7 +88,7 @@ class PageHistorySettingsFragment : AbstractSettingsFragment() {
 
             history.getItemAtIndex(i).let {item ->
                 // Create history item preference
-                val pref = BasicPreference(requireContext())
+                val pref = x.Preference(requireContext())
                 //pref.swapTitleSummary = true
                 pref.isSingleLineTitle = false
                 pref.key = "item$i"

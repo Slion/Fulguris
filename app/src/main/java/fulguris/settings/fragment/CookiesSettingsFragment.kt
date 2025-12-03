@@ -40,7 +40,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
 import fulguris.extensions.copyToClipboard
 import fulguris.extensions.toast
-import x.BasicPreference
 import fulguris.utils.WebUtils
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import timber.log.Timber
@@ -215,7 +214,7 @@ class CookiesSettingsFragment : AbstractSettingsFragment() {
                 cookies.forEach { cookie ->
                     Timber.v(cookie.trim())
                     // Create cookie preference
-                    val pref = BasicPreference(requireContext())
+                    val pref = x.Preference(requireContext())
                     // Make sure domains and not reversed domains are shown as titles
                     pref.isSingleLineTitle = false
                     //pref

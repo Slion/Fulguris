@@ -52,7 +52,7 @@
 
     </Preference>
 
-    <x.BasicPreference
+    <x.Preference
         a:fragment="fulguris.settings.fragment.DomainSettingsFragment"
         a:key="@string/pref_key_parent"
         a:title="@string/settings_title_parent"
@@ -249,7 +249,7 @@
     </x.PreferenceCategory>
 
 
-    <x.BasicPreference
+    <x.Preference
         a:key="@string/pref_key_delete"
         a:title="@string/settings_title_delete_domain_settings"
         a:icon="@drawable/ic_delete_forever_outline"

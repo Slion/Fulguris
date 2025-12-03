@@ -29,7 +29,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.app
 import fulguris.extensions.configId
-import x.BasicPreference
 import fulguris.settings.Config
 import java.io.File
 import javax.inject.Inject
@@ -148,7 +147,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
                 }
 
                 // Create configuration preference
-                val pref = BasicPreference(requireContext())
+                val pref = x.Preference(requireContext())
                 pref.isSingleLineTitle = false
                 pref.key = config.id
                 // Get user friendly name

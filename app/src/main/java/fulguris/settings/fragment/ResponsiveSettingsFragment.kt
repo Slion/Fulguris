@@ -8,9 +8,7 @@ import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceHeaderFragmentCompat
-import x.BasicPreference
 import timber.log.Timber
-
 
 /**
  * Give us single pane on narrow screens and two pane settings on wider screens.
@@ -57,7 +55,7 @@ class ResponsiveSettingsFragment : PreferenceHeaderFragmentCompat() {
 
         // TODO: Do we still need to use either AbstractSettingsFragment or addOnBackStackChangedListener
         // Stack our breadcrumb if any, otherwise just stack our title
-        (if (pref is BasicPreference && pref.breadcrumb.isNotEmpty()) pref.breadcrumb else pref.title)?.let {
+        (if (pref is x.Preference && pref.breadcrumb.isNotEmpty()) pref.breadcrumb else pref.title)?.let {
             iTitleStack.add(it.toString())
         }
 

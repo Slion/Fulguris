@@ -31,8 +31,6 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
-import x.BasicPreference
-
 
 @AndroidEntryPoint
 class DomainSettingsFragment : AbstractSettingsFragment() {
@@ -99,7 +97,7 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
         super.onResume()
         // Update parent preference - breadcrumb, summary, and click listener
         // Done here to ensure everything is always up-to-date when returning to this fragment
-        find<BasicPreference>(R.string.pref_key_parent)?.apply {
+        find<x.Preference>(R.string.pref_key_parent)?.apply {
             if (prefs.isSubDomain) {
                 breadcrumb = prefs.parent?.domain ?: ""
                 summary = prefs.parent?.getOverridesSummary(requireContext())
