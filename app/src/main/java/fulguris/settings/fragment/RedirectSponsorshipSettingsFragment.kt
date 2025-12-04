@@ -49,9 +49,9 @@ abstract class RedirectSponsorshipSettingsFragment : AbstractSettingsFragment() 
 
         addCategoryContribute()
         addPreferenceLinkToGooglePlayStoreFiveStarsReview()
+        addPreferenceLinkToGitHubSponsor()
         addPreferenceShareLink()
         addPreferenceLinkToCrowdin()
-        addPreferenceLinkToGitHubSponsor()
         addPreferenceLinkToGooglePlayStore()
     }
 

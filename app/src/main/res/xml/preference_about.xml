@@ -3,176 +3,170 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <x.PreferenceCategory
-        android:title="@string/settings_about"
+    <Preference
+        android:key="pref_version"
+        android:title="@string/version"
+        app:iconSpaceReserved="false"
+        app:icon="@drawable/ic_lightning"
+        app:singleLineTitle="false">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="@string/url_app_home_page">
+            <extra
+                android:name="PACKAGE"
+                android:value="@string/application_id" />
+
+            <extra
+                android:name="ACTIVITY"
+                android:value="fulguris.activity.SettingsActivity" />
+
+            <extra
+                android:name="FRAGMENT"
+                android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+
+        </intent>
+
+    </Preference>
+
+    <Preference
+        android:title="@string/settings_title_discord"
+        android:summary="@string/settings_summary_discord"
+        app:icon="@drawable/ic_discord"
+        app:iconSpaceReserved="false"
         app:singleLineTitle="false" >
 
-        <Preference
-            android:key="@string/pref_key_contact_us"
-            android:title="@string/pref_title_contact_us"
-            android:summary="@string/pref_summary_contact_us"
-            app:icon="@drawable/ic_email"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="@string/url_discord">
+            <extra
+                android:name="PACKAGE"
+                android:value="@string/application_id" />
 
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/url_contact_us">
-                <extra
-                    android:name="PACKAGE"
-                    android:value="@string/application_id" />
+            <extra
+                android:name="ACTIVITY"
+                android:value="fulguris.activity.SettingsActivity" />
 
-                <extra
-                    android:name="ACTIVITY"
-                    android:value="fulguris.activity.SettingsActivity" />
+            <extra
+                android:name="FRAGMENT"
+                android:value="fulguris.settings.fragment.AboutSettingsFragment" />
 
-                <extra
-                    android:name="FRAGMENT"
-                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+        </intent>
 
-            </intent>
+    </Preference>
 
-        </Preference>
+    <Preference
+        android:key="@string/pref_key_contact_us"
+        android:title="@string/pref_title_contact_us"
+        android:summary="@string/pref_summary_contact_us"
+        app:icon="@drawable/ic_email"
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="false" >
 
-        <Preference
-            android:title="@string/settings_title_discord"
-            android:summary="@string/settings_summary_discord"
-            app:icon="@drawable/ic_discord"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="false" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="@string/url_contact_us">
+            <extra
+                android:name="PACKAGE"
+                android:value="@string/application_id" />
 
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/url_discord">
-                <extra
-                    android:name="PACKAGE"
-                    android:value="@string/application_id" />
+            <extra
+                android:name="ACTIVITY"
+                android:value="fulguris.activity.SettingsActivity" />
 
-                <extra
-                    android:name="ACTIVITY"
-                    android:value="fulguris.activity.SettingsActivity" />
+            <extra
+                android:name="FRAGMENT"
+                android:value="fulguris.settings.fragment.AboutSettingsFragment" />
 
-                <extra
-                    android:name="FRAGMENT"
-                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+        </intent>
 
-            </intent>
+    </Preference>
 
-        </Preference>
+    <Preference
+        android:key="@string/pref_key_webview"
+        android:title="@string/agent_web_view"
+        app:icon="@drawable/ic_webview"
+        app:singleLineTitle="false">
 
-        <Preference
-            android:key="pref_version"
-            android:title="@string/version"
-            app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_lightning"
-            app:singleLineTitle="false">
+        <!--
+        Launch WebView DevTools, see https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/developer-ui.md#launching-webview-devtools
+        See also: https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/webview-shell.md
+        -->
+        <intent
+            android:action="com.android.webview.SHOW_DEV_UI">
+            <extra
+                android:name="SOURCE"
+                android:value="SELF" />
+        </intent>
+    </Preference>
 
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/url_app_home_page">
-                <extra
-                    android:name="PACKAGE"
-                    android:value="@string/application_id" />
+    <Preference
+        android:title="@string/settings_title_terms_and_conditions"
+        android:summary="@string/settings_summary_terms_and_conditions"
+        app:iconSpaceReserved="false"
+        app:icon="@drawable/ic_assignment_outline"
+        app:singleLineTitle="false">
 
-                <extra
-                    android:name="ACTIVITY"
-                    android:value="fulguris.activity.SettingsActivity" />
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="@string/url_terms_and_conditions">
+            <extra
+                android:name="PACKAGE"
+                android:value="@string/application_id" />
 
-                <extra
-                    android:name="FRAGMENT"
-                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+            <extra
+                android:name="ACTIVITY"
+                android:value="fulguris.activity.SettingsActivity" />
 
-            </intent>
+            <extra
+                android:name="FRAGMENT"
+                android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+        </intent>
 
-        </Preference>
+    </Preference>
 
-        <Preference
-            android:key="@string/pref_key_webview"
-            android:title="@string/agent_web_view"
-            app:icon="@drawable/ic_webview"
-            app:singleLineTitle="false">
+    <Preference
+        android:title="@string/settings_title_privacy_policy"
+        android:summary="@string/settings_summary_privacy_policy"
+        app:iconSpaceReserved="false"
+        app:icon="@drawable/ic_privacy_tip_outline"
+        app:singleLineTitle="false">
 
-            <!--
-            Launch WebView DevTools, see https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/developer-ui.md#launching-webview-devtools
-            See also: https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/webview-shell.md
-            -->
-            <intent
-                android:action="com.android.webview.SHOW_DEV_UI">
-                <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
-            </intent>
-        </Preference>
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="@string/url_privacy_policy">
+            <extra
+                android:name="PACKAGE"
+                android:value="@string/application_id" />
 
-        <Preference
-            android:title="@string/settings_title_terms_and_conditions"
-            android:summary="@string/settings_summary_terms_and_conditions"
-            app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_assignment_outline"
-            app:singleLineTitle="false">
+            <extra
+                android:name="ACTIVITY"
+                android:value="fulguris.activity.SettingsActivity" />
 
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/url_terms_and_conditions">
-                <extra
-                    android:name="PACKAGE"
-                    android:value="@string/application_id" />
+            <extra
+                android:name="FRAGMENT"
+                android:value="fulguris.settings.fragment.AboutSettingsFragment" />
+        </intent>
 
-                <extra
-                    android:name="ACTIVITY"
-                    android:value="fulguris.activity.SettingsActivity" />
+    </Preference>
 
-                <extra
-                    android:name="FRAGMENT"
-                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
-            </intent>
+    <Preference
+        android:title="@string/settings_title_introduction"
+        android:summary="@string/settings_summary_introduction"
+        app:iconSpaceReserved="false"
+        app:icon="@drawable/ic_slideshow_outline"
+        app:singleLineTitle="false">
 
-        </Preference>
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="fulguris.activity.IntroActivity"
+            android:targetPackage="@string/application_id">
+            <extra
+                android:name="SOURCE"
+                android:value="SELF" />
+        </intent>
 
-        <Preference
-            android:title="@string/settings_title_privacy_policy"
-            android:summary="@string/settings_summary_privacy_policy"
-            app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_privacy_tip_outline"
-            app:singleLineTitle="false">
-
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/url_privacy_policy">
-                <extra
-                    android:name="PACKAGE"
-                    android:value="@string/application_id" />
-
-                <extra
-                    android:name="ACTIVITY"
-                    android:value="fulguris.activity.SettingsActivity" />
-
-                <extra
-                    android:name="FRAGMENT"
-                    android:value="fulguris.settings.fragment.AboutSettingsFragment" />
-            </intent>
-
-        </Preference>
-
-        <Preference
-            android:title="@string/settings_title_introduction"
-            android:summary="@string/settings_summary_introduction"
-            app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_slideshow_outline"
-            app:singleLineTitle="false">
-
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:targetClass="fulguris.activity.IntroActivity"
-                android:targetPackage="@string/application_id">
-                <extra
-                    android:name="SOURCE"
-                    android:value="SELF" />
-            </intent>
-
-        </Preference>
-
-    </x.PreferenceCategory>
+    </Preference>
 
     <x.PreferenceCategory android:title="@string/licenses">
 

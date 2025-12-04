@@ -3,9 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <x.PreferenceCategory
-        android:title="@string/settings_display"
-        a:singleLineTitle="false">
 
     <Preference
         android:key="@string/pref_key_theme"
@@ -29,8 +26,6 @@
         a:icon="@drawable/ic_text_size"
         a:singleLineTitle="false"
         />
-
-    </x.PreferenceCategory>
 
     <x.PreferenceCategory
         a:key="@string/pref_key_configurations"

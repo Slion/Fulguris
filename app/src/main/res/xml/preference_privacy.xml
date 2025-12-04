@@ -2,11 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <x.PreferenceCategory
-        android:title="@string/settings_privacy"
-        app:singleLineTitle="false"
-        >
-
     <x.SwitchPreference
         android:defaultValue="@bool/pref_default_webrtc"
         android:key="@string/pref_key_webrtc"
@@ -71,42 +66,41 @@
         app:singleLineTitle="false"
         />
 
-    </x.PreferenceCategory>
 
     <x.PreferenceCategory
         android:title="@string/settings_general">
 
-    <x.SwitchPreference
-        android:defaultValue="false"
-        android:key="clear_cache_exit"
-        android:title="@string/cache"
-        app:icon="@drawable/ic_cache"
-        app:singleLineTitle="false"
-        />
+        <x.SwitchPreference
+            android:defaultValue="false"
+            android:key="clear_cache_exit"
+            android:title="@string/cache"
+            app:icon="@drawable/ic_cache"
+            app:singleLineTitle="false"
+            />
 
-    <x.SwitchPreference
-        android:defaultValue="false"
-        android:key="clear_history_exit"
-        android:title="@string/clear_history_exit"
-        app:icon="@drawable/ic_history"
-        app:singleLineTitle="false"
-        />
+        <x.SwitchPreference
+            android:defaultValue="false"
+            android:key="clear_history_exit"
+            android:title="@string/clear_history_exit"
+            app:icon="@drawable/ic_history"
+            app:singleLineTitle="false"
+            />
 
-    <x.SwitchPreference
-        android:defaultValue="false"
-        android:key="clear_cookies_exit"
-        android:title="@string/clear_cookies_exit"
-        app:icon="@drawable/ic_cookie_remove"
-        app:singleLineTitle="false"
-        />
+        <x.SwitchPreference
+            android:defaultValue="false"
+            android:key="clear_cookies_exit"
+            android:title="@string/clear_cookies_exit"
+            app:icon="@drawable/ic_cookie_remove"
+            app:singleLineTitle="false"
+            />
 
-    <x.SwitchPreference
-        android:defaultValue="false"
-        android:key="clear_webstorage_exit"
-        android:title="@string/clear_web_storage_exit"
-        app:icon="@drawable/ic_earth_remove"
-        app:singleLineTitle="false"
-        />
+        <x.SwitchPreference
+            android:defaultValue="false"
+            android:key="clear_webstorage_exit"
+            android:title="@string/clear_web_storage_exit"
+            app:icon="@drawable/ic_earth_remove"
+            app:singleLineTitle="false"
+            />
 
     </x.PreferenceCategory>
 
@@ -115,33 +109,33 @@
         app:singleLineTitle="false"
         >
 
-    <Preference
-        android:key="clear_cache"
-        android:title="@string/clear_cache"
-        app:icon="@drawable/ic_cache"
-        app:singleLineTitle="false"
-        />
+        <Preference
+            android:key="clear_cache"
+            android:title="@string/clear_cache"
+            app:icon="@drawable/ic_cache"
+            app:singleLineTitle="false"
+            />
 
-    <Preference
-        android:key="clear_history"
-        android:title="@string/clear_history"
-        app:icon="@drawable/ic_history"
-        app:singleLineTitle="false"
-        />
+        <Preference
+            android:key="clear_history"
+            android:title="@string/clear_history"
+            app:icon="@drawable/ic_history"
+            app:singleLineTitle="false"
+            />
 
-    <Preference
-        android:key="clear_cookies"
-        android:title="@string/clear_cookies"
-        app:icon="@drawable/ic_cookie_remove"
-        app:singleLineTitle="false"
-        />
+        <Preference
+            android:key="clear_cookies"
+            android:title="@string/clear_cookies"
+            app:icon="@drawable/ic_cookie_remove"
+            app:singleLineTitle="false"
+            />
 
-    <Preference
-        android:key="clear_webstorage"
-        android:title="@string/clear_web_storage"
-        app:icon="@drawable/ic_earth_remove"
-        app:singleLineTitle="false"
-        />
+        <Preference
+            android:key="clear_webstorage"
+            android:title="@string/clear_web_storage"
+            app:icon="@drawable/ic_earth_remove"
+            app:singleLineTitle="false"
+            />
 
     </x.PreferenceCategory>
 

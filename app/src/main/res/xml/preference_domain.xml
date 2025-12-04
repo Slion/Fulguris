@@ -24,13 +24,14 @@
     xmlns:a="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <Preference
+    <x.Preference
         a:key="@string/pref_key_back"
         a:title="@string/action_domain_settings"
         a:summary="@string/settings_summary_domains"
         a:icon="@drawable/ic_arrow_back_ios"
         a:fragment="back"
         a:layout="@layout/preference_category_material"
+        a:allCapsTitle="true"
         tools:ignore="PrivateResource" />
 
     <Preference

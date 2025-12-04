@@ -50,7 +50,7 @@
                 android:contentDescription="@string/action_cycle_tabs_forwards"
                 app:tooltipText="@{@string/action_cycle_tabs_forwards}"
                 android:layout_margin="@dimen/material_grid_unit"
-                app:backgroundTint="?attr/colorPrimaryContainer"
+                app:backgroundTint="?attr/colorOnPrimary"
                 />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -61,7 +61,7 @@
                 android:contentDescription="@string/action_cycle_tabs_backwards"
                 app:tooltipText="@{@string/action_cycle_tabs_backwards}"
                 android:layout_margin="@dimen/material_grid_unit"
-                app:backgroundTint="?attr/colorPrimary"
+                app:backgroundTint="?attr/colorPrimaryContainer"
                 />
 
         </LinearLayout>
@@ -75,7 +75,7 @@
             android:contentDescription="@string/close_tab"
             app:tooltipText="@{@string/close_tab}"
             android:layout_margin="@dimen/material_grid_unit"
-            app:backgroundTint="?attr/colorError"
+            app:backgroundTint="?attr/colorOnTertiary"
             />
 
     </LinearLayout>

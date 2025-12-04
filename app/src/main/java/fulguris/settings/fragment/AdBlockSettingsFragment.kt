@@ -35,6 +35,7 @@ import java.util.*
 import javax.inject.Inject
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.materialswitch.MaterialSwitch
+import fulguris.extensions.px
 
 /**
  * Settings for the ad block mechanic.
@@ -147,9 +148,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                 onClick = { summaryUpdater ->
                     activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
                         setCustomTitle(TextView(ContextThemeWrapper(context, R.style.MaterialAlertDialog_Material3)).apply {
-                            setPadding(40, 30, 40, 10)
+                            setPadding(22.px, 18.px, 22.px, 0.px)
                             setText(R.string.use_modify_filters_warning)
-                            textSize = 18f
+                            textSize = 15f
                         })
                         val values = listOf(
                             Pair(0, resources.getString(R.string.disable)),

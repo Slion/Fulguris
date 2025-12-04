@@ -2,39 +2,35 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <x.PreferenceCategory
-            android:title="@string/settings_adblock"
-            app:singleLineTitle="false">
 
-        <x.SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/pref_key_content_control"
-            android:title="@string/enable"
-            android:summary="@string/settings_summary_content_control_toggle"
-            app:icon="@drawable/ic_block"
-            app:singleLineTitle="false" />
+    <x.SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_key_content_control"
+        android:title="@string/enable"
+        android:summary="@string/settings_summary_content_control_toggle"
+        app:icon="@drawable/ic_block"
+        app:singleLineTitle="false" />
 
-        <Preference
-            android:key="@string/pref_key_blocklist_auto_update"
-            android:title="@string/blocklist_update_mode"
-            android:dependency="@string/pref_key_content_control"
-            app:icon="@drawable/ic_action_refresh"
-            app:singleLineTitle="false" />
+    <Preference
+        android:key="@string/pref_key_blocklist_auto_update"
+        android:title="@string/blocklist_update_mode"
+        android:dependency="@string/pref_key_content_control"
+        app:icon="@drawable/ic_action_refresh"
+        app:singleLineTitle="false" />
 
-        <Preference
-            android:key="@string/pref_key_blocklist_auto_update_frequency"
-            android:title="@string/blocklist_update_frequency"
-            android:dependency="@string/pref_key_content_control"
-            app:icon="@drawable/ic_update"
-            app:singleLineTitle="false" />
+    <Preference
+        android:key="@string/pref_key_blocklist_auto_update_frequency"
+        android:title="@string/blocklist_update_frequency"
+        android:dependency="@string/pref_key_content_control"
+        app:icon="@drawable/ic_update"
+        app:singleLineTitle="false" />
 
-        <Preference
-            android:key="@string/pref_key_modify_filters"
-            android:title="@string/use_modify_filters"
-            android:dependency="@string/pref_key_content_control"
-            app:singleLineTitle="false" />
+    <Preference
+        android:key="@string/pref_key_modify_filters"
+        android:title="@string/use_modify_filters"
+        android:dependency="@string/pref_key_content_control"
+        app:singleLineTitle="false" />
 
-        </x.PreferenceCategory>
 
         <x.PreferenceCategory
             android:key="@string/pref_key_content_control_filters"

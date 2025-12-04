@@ -28,13 +28,14 @@
 ⚠️: Needed to use orders as the Default domain settings is added on top dynamically
 -->
 
-    <Preference
+    <x.Preference
         a:key="@string/pref_key_back"
         a:title="@string/settings_title_cookies"
         a:summary="@string/settings_summary_manage_cookies"
         a:icon="@drawable/ic_arrow_back_ios"
         a:fragment="back"
         a:layout="@layout/preference_category_material"
+        a:allCapsTitle="true"
         tools:ignore="PrivateResource" />
 
     <Preference

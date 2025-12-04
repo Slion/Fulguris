@@ -106,18 +106,6 @@ abstract class AbstractSettingsFragment : PreferenceFragmentBase() {
     }
     */
 
-    /**
-     * Called by the framework once our view has been created from its XML definition.
-     */
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Enable fading edge when scrolling settings, looks much better
-        view.findViewById<RecyclerView>(R.id.recycler_view)?.apply{
-            isVerticalFadingEdgeEnabled = true
-        }
-    }
-
     override fun onNavigateToScreen(preferenceScreen: PreferenceScreen) {
         super.onNavigateToScreen(preferenceScreen)
         Timber.d("onNavigateToScreen")
