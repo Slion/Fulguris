@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Tab wiederherstellen</string>
     <string name="settings_title_layer_type">Layertyp</string>
     <string name="settings_title_domains">Domains</string>
-    <string name="settings_summary_domains">Domains-Einstellungen</string>
+    <string name="settings_summary_domains">Website-Einstellungen verwalten</string>
     <string name="settings_title_override">Überschreiben</string>
     <string name="settings_summary_on_override">Übergeordnete Einstellungen überschreiben</string>
     <string name="settings_summary_off_override">Übergeordnete Einstellungen verwenden</string>

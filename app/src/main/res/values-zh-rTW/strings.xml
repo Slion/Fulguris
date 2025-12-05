@@ -428,7 +428,7 @@
     <string name="action_restore_tab">還原分頁</string>
     <string name="settings_title_layer_type">圖層類型</string>
     <string name="settings_title_domains">網域</string>
-    <string name="settings_summary_domains">管理網域設定</string>
+    <string name="settings_summary_domains">管理網站設定</string>
     <string name="settings_title_override">覆寫</string>
     <string name="settings_summary_on_override">覆寫父項設定</string>
     <string name="settings_summary_off_override">使用父項設定</string>

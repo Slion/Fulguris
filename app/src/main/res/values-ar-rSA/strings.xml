@@ -433,7 +433,7 @@
     <string name="action_restore_tab">استعادة التبويب</string>
     <string name="settings_title_layer_type">نوع الطبقة</string>
     <string name="settings_title_domains">النطاقات</string>
-    <string name="settings_summary_domains">إدارة إعدادات النطاقات</string>
+    <string name="settings_summary_domains">إدارة إعدادات الموقع</string>
     <string name="settings_title_override">تجاوز</string>
     <string name="settings_summary_on_override">تجاوز إعدادات الأصل</string>
     <string name="settings_summary_off_override">استخدام إعدادات الأصل</string>

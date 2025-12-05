@@ -431,7 +431,7 @@
     <string name="action_restore_tab">Восстановить вкладку</string>
     <string name="settings_title_layer_type">Тип слоя</string>
     <string name="settings_title_domains">Домены</string>
-    <string name="settings_summary_domains">Настройки домена</string>
+    <string name="settings_summary_domains">Управление настройками сайта</string>
     <string name="settings_title_override">Переопределить</string>
     <string name="settings_summary_on_override">Переопределить родительские настройки</string>
     <string name="settings_summary_off_override">Использовать родительские настройки</string>

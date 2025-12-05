@@ -430,7 +430,7 @@
     <string name="action_restore_tab">Restaurează fila</string>
     <string name="settings_title_layer_type">Tip strat</string>
     <string name="settings_title_domains">Domenii</string>
-    <string name="settings_summary_domains">Gestionează setările domeniilor</string>
+    <string name="settings_summary_domains">Gestionați setările site-ului</string>
     <string name="settings_title_override">Suprascriere</string>
     <string name="settings_summary_on_override">Suprascrie setările părinte</string>
     <string name="settings_summary_off_override">Folosește setările părinte</string>

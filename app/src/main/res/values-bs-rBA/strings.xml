@@ -430,7 +430,7 @@
     <string name="action_restore_tab">Povratna karta</string>
     <string name="settings_title_layer_type">Vrsta sloja</string>
     <string name="settings_title_domains">Domene</string>
-    <string name="settings_summary_domains">Upravljajte postavkama svoje domene</string>
+    <string name="settings_summary_domains">Upravljanje postavkama stranice</string>
     <string name="settings_title_override">Nadjačavanje</string>
     <string name="settings_summary_on_override">Nadjačajte roditeljske postavke</string>
     <string name="settings_summary_off_override">Koristite roditeljske postavke</string>

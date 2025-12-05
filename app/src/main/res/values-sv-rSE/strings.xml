@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Återställ flik</string>
     <string name="settings_title_layer_type">Lagertyp</string>
     <string name="settings_title_domains">Domäner</string>
-    <string name="settings_summary_domains">Hantera domäninställningar</string>
+    <string name="settings_summary_domains">Hantera webbplatsinställningar</string>
     <string name="settings_title_override">Åsidosätt</string>
     <string name="settings_summary_on_override">Åsidosätt förälderns inställningar</string>
     <string name="settings_summary_off_override">Använd förälderns inställningar</string>

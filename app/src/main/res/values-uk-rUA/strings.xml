@@ -431,7 +431,7 @@
     <string name="action_restore_tab">Відновити вкладку</string>
     <string name="settings_title_layer_type">Тип шару</string>
     <string name="settings_title_domains">Домени</string>
-    <string name="settings_summary_domains">Керувати налаштуваннями домену</string>
+    <string name="settings_summary_domains">Керування налаштуваннями сайту</string>
     <string name="settings_title_override">Переписати</string>
     <string name="settings_summary_on_override">Переписати батьківські налаштування</string>
     <string name="settings_summary_off_override">Використовувати батьківські налаштування</string>

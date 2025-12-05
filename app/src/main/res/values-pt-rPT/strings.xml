@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Restaurar separador</string>
     <string name="settings_title_layer_type">Tipo de camada</string>
     <string name="settings_title_domains">Domínios</string>
-    <string name="settings_summary_domains">Gerir definições de domínios</string>
+    <string name="settings_summary_domains">Gerir definições do site</string>
     <string name="settings_title_override">Substituir</string>
     <string name="settings_summary_on_override">Substituir definições principais</string>
     <string name="settings_summary_off_override">Utilizar definições principais</string>

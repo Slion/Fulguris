@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Tabblad Herstellen</string>
     <string name="settings_title_layer_type">Type laag</string>
     <string name="settings_title_domains">Domeinen</string>
-    <string name="settings_summary_domains">Domeininstellingen beheren</string>
+    <string name="settings_summary_domains">Site-instellingen beheren</string>
     <string name="settings_title_override">Overschrijven</string>
     <string name="settings_summary_on_override">Bovenliggende instellingen overschrijven</string>
     <string name="settings_summary_off_override">Ouderinstellingen gebruiken</string>

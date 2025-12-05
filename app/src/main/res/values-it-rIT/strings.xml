@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Ripristina scheda</string>
     <string name="settings_title_layer_type">Tipo del layer</string>
     <string name="settings_title_domains">Domini</string>
-    <string name="settings_summary_domains">Gestisci impostazioni dominio</string>
+    <string name="settings_summary_domains">Gestisci impostazioni sito</string>
     <string name="settings_title_override">Sovrascrivi</string>
     <string name="settings_summary_on_override">Sovrascrivi le impostazioni genitore</string>
     <string name="settings_summary_off_override">Usa impostazioni genitore</string>

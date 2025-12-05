@@ -431,7 +431,7 @@
     <string name="action_restore_tab">Przywróć kartę</string>
     <string name="settings_title_layer_type">Typ warstwy</string>
     <string name="settings_title_domains">Domeny</string>
-    <string name="settings_summary_domains">Zarządzaj ustawieniami domen</string>
+    <string name="settings_summary_domains">Zarządzaj ustawieniami witryny</string>
     <string name="settings_title_override">Nadpisz</string>
     <string name="settings_summary_on_override">Nadpisz ustawienia nadrzędne</string>
     <string name="settings_summary_off_override">Użyj ustawień nadrzędnych</string>

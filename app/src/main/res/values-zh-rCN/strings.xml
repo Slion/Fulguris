@@ -428,7 +428,7 @@
     <string name="action_restore_tab">复原刚删除的标签页</string>
     <string name="settings_title_layer_type">图层类型</string>
     <string name="settings_title_domains">域名</string>
-    <string name="settings_summary_domains">管理域设置</string>
+    <string name="settings_summary_domains">管理网站设置</string>
     <string name="settings_title_override">覆盖</string>
     <string name="settings_summary_on_override">覆盖主设置</string>
     <string name="settings_summary_off_override">使用主设置</string>

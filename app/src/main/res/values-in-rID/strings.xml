@@ -428,7 +428,7 @@
     <string name="action_restore_tab">Kembalikan tab</string>
     <string name="settings_title_layer_type">Tipe layer</string>
     <string name="settings_title_domains">Domain</string>
-    <string name="settings_summary_domains">Kelola pengaturan domain</string>
+    <string name="settings_summary_domains">Kelola pengaturan situs</string>
     <string name="settings_title_override">Timpa</string>
     <string name="settings_summary_on_override">Timpa pengaturan induk</string>
     <string name="settings_summary_off_override">Gunakan pengaturan induk</string>

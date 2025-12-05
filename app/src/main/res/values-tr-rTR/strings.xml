@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Sekmeyi geri yükle</string>
     <string name="settings_title_layer_type">Katman türü</string>
     <string name="settings_title_domains">Alan adları</string>
-    <string name="settings_summary_domains">Alan adı ayarlarını yönet</string>
+    <string name="settings_summary_domains">Site ayarlarını yönet</string>
     <string name="settings_title_override">Geçersiz kıl</string>
     <string name="settings_summary_on_override">Üst ayarları geçersiz kıl</string>
     <string name="settings_summary_off_override">Üst ayarları kullan</string>

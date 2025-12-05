@@ -431,7 +431,7 @@
     <string name="action_restore_tab">Obnovit kartu</string>
     <string name="settings_title_layer_type">Typ vrstvy</string>
     <string name="settings_title_domains">Domény</string>
-    <string name="settings_summary_domains">Spravovat nastavení domén</string>
+    <string name="settings_summary_domains">Spravovat nastavení webu</string>
     <string name="settings_title_override">Přepsat</string>
     <string name="settings_summary_on_override">Přepsat nadřazené nastavení</string>
     <string name="settings_summary_off_override">Použít nadřazené nastavení</string>

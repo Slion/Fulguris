@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Palauta välilehti</string>
     <string name="settings_title_layer_type">Kerrostyyppi</string>
     <string name="settings_title_domains">Verkkotunnukset</string>
-    <string name="settings_summary_domains">Hallinnoi verkkotunnuskohtaisia asetuksia</string>
+    <string name="settings_summary_domains">Hallitse sivuston asetuksia</string>
     <string name="settings_title_override">Ohita</string>
     <string name="settings_summary_on_override">Ohita vanhempien asetukset</string>
     <string name="settings_summary_off_override">Käytä vanhempien asetuksia</string>

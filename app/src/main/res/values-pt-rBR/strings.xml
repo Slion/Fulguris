@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Restaurar aba</string>
     <string name="settings_title_layer_type">Tipo de camada</string>
     <string name="settings_title_domains">Domínios</string>
-    <string name="settings_summary_domains">Gerenciar configurações de domínio</string>
+    <string name="settings_summary_domains">Gerenciar configurações do site</string>
     <string name="settings_title_override">Sobrescrever</string>
     <string name="settings_summary_on_override">Sobrescrever configurações principais</string>
     <string name="settings_summary_off_override">Usar configurações principais</string>

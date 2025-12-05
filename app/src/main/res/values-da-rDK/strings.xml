@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Gendan fane</string>
     <string name="settings_title_layer_type">Lagtype</string>
     <string name="settings_title_domains">Domæner</string>
-    <string name="settings_summary_domains">Administrer domæneindstillinger</string>
+    <string name="settings_summary_domains">Administrer webstedsindstillinger</string>
     <string name="settings_title_override">Tilsidesæt</string>
     <string name="settings_summary_on_override">Tilsidesæt forældreindstillinger</string>
     <string name="settings_summary_off_override">Brug forældreindstillinger</string>

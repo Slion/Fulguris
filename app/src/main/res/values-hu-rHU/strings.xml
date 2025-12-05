@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Lap visszaállítása</string>
     <string name="settings_title_layer_type">Rétegtípus</string>
     <string name="settings_title_domains">Tartományok</string>
-    <string name="settings_summary_domains">Tartománybeállítások kezelése</string>
+    <string name="settings_summary_domains">Webhelybeállítások kezelése</string>
     <string name="settings_title_override">Felülír</string>
     <string name="settings_summary_on_override">Főbeállítások felülírása</string>
     <string name="settings_summary_off_override">Főbeállítások használata</string>

@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Gjenopprett fane</string>
     <string name="settings_title_layer_type">Lagtype</string>
     <string name="settings_title_domains">Domener</string>
-    <string name="settings_summary_domains">Håndter domeneinnstillinger</string>
+    <string name="settings_summary_domains">Administrer nettstedsinnstillinger</string>
     <string name="settings_title_override">Overstyr</string>
     <string name="settings_summary_on_override">Overstyr overordnede innstillinger</string>
     <string name="settings_summary_off_override">Bruk overordnede innstillinger</string>

@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Rétablir l\'onglet</string>
     <string name="settings_title_layer_type">Type de couche</string>
     <string name="settings_title_domains">Domaines</string>
-    <string name="settings_summary_domains">Gérer les paramètres de domaine</string>
+    <string name="settings_summary_domains">Gérer les paramètres du site</string>
     <string name="settings_title_override">Forcer</string>
     <string name="settings_summary_on_override">Remplacer les paramètres parents</string>
     <string name="settings_summary_off_override">Utiliser les paramètres parents</string>

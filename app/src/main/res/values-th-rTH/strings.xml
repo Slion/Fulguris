@@ -428,7 +428,7 @@
     <string name="action_restore_tab">คืนค่าแท็บ</string>
     <string name="settings_title_layer_type">ประเภทเลเยอร์</string>
     <string name="settings_title_domains">โดเมน</string>
-    <string name="settings_summary_domains">จัดการการตั้งค่าเฉพาะโดเมน</string>
+    <string name="settings_summary_domains">จัดการการตั้งค่าเว็บไซต์</string>
     <string name="settings_title_override">แทนที่</string>
     <string name="settings_summary_on_override">แทนที่การตั้งค่าหลัก</string>
     <string name="settings_summary_off_override">ใช้การตั้งค่าหลัก</string>

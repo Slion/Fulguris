@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Επαναφορά καρτέλας</string>
     <string name="settings_title_layer_type">Τύπος επιπέδου</string>
     <string name="settings_title_domains">Τομείς</string>
-    <string name="settings_summary_domains">Διαχείριση ρυθμίσεων τομέα</string>
+    <string name="settings_summary_domains">Διαχείριση ρυθμίσεων ιστοτόπου</string>
     <string name="settings_title_override">Παράκαμψη</string>
     <string name="settings_summary_on_override">Παράκαμψη γονικών ρυθμίσεων</string>
     <string name="settings_summary_off_override">Χρήση γονικών ρυθμίσεων</string>

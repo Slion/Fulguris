@@ -428,7 +428,7 @@
     <string name="action_restore_tab">タブを復元</string>
     <string name="settings_title_layer_type">レイヤーの種類</string>
     <string name="settings_title_domains">ドメイン</string>
-    <string name="settings_summary_domains">ドメイン設定の管理</string>
+    <string name="settings_summary_domains">サイト設定を管理</string>
     <string name="settings_title_override">上書き</string>
     <string name="settings_summary_on_override">親の設定を上書き</string>
     <string name="settings_summary_off_override">親の設定を使用</string>

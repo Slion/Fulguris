@@ -429,7 +429,7 @@
     <string name="action_restore_tab">Restaurar pestaña</string>
     <string name="settings_title_layer_type">Tipo de capa</string>
     <string name="settings_title_domains">Dominios</string>
-    <string name="settings_summary_domains">Gestionar ajustes de dominio</string>
+    <string name="settings_summary_domains">Administrar configuración del sitio</string>
     <string name="settings_title_override">Sobrescribir</string>
     <string name="settings_summary_on_override">Sobreescribir configuración heredada</string>
     <string name="settings_summary_off_override">Usar configuración heredada</string>
