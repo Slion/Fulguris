@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application>
+        <!-- Override MainActivity to disable alwaysRetainTaskState for debug builds -->
+        <!-- This prevents automatic app restart after crash, making debugging easier -->
+        <activity
+            android:name="fulguris.activity.MainActivity"
+            android:alwaysRetainTaskState="false"
+            tools:replace="android:alwaysRetainTaskState" />
+    </application>
+
+</manifest>
+
