@@ -227,6 +227,8 @@
     <string name="search_engine_yahoo">Yahoo</string>
     <string name="search_engine_yandex">Yandex</string>
 
+    <!-- Universal technical terms -->
+    <string name="request_url">URL</string>
 
 
 </resources>

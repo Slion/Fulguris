@@ -705,7 +705,6 @@
     <string name="page_requests_title">Requests</string>
     <string name="page_request_details_title">Request</string>
     <string name="request_status">Status</string>
-    <string name="request_url">URL</string>
     <string name="request_url_length">%1$d characters</string>
     <string name="request_domain">Domain</string>
     <string name="request_path">Path</string>

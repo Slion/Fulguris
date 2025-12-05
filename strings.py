@@ -308,6 +308,16 @@ def show_help():
     print("    Find strings defined in English but not used in source code")
     print("    Searches .kt, .java, and .xml files for R.string.* and @string/* references")
     print("    Outputs a command to remove all unused strings")
+    print("\n  python strings.py --changed")
+    print("    Detect source strings that have changed and need translation updates")
+    print("    Compares English source (values/strings.xml) with en-rUS translations.")
+    print("    If source differs from en-rUS, the source string has been modified")
+    print("    and ALL translations need to be reviewed/updated.")
+    print("    ")
+    print("    Workflow:")
+    print("      1. Run --changed to find modified source strings")
+    print("      2. Update en-rUS to match source (or update source to match en-rUS)")
+    print("      3. Update all other language translations")
     print("\nOutput Information:")
     print("  - Untranslated strings that match English")
     print("  - Placeholder mismatches (e.g., missing %s, %1$s)")
@@ -1022,6 +1032,135 @@ def remove_string_from_all(string_id):
     print("=" * 80)
     sys.exit(0)
 
+def find_changed_strings():
+    """Find source strings that have changed and need translation updates.
+
+    Compares English source (values/strings.xml) with en-rUS (values-en-rUS/strings.xml).
+    If a string exists in both but differs, the source has been modified and ALL
+    translations need to be reviewed/updated.
+
+    Workflow:
+    1. When source string content is changed, en-rUS will no longer match
+    2. This function detects those differences
+    3. Developer reviews and updates en-rUS to match source
+    4. Then updates all other language translations
+    """
+    source_file = Path('app/src/main/res/values/strings.xml')
+    en_us_file = Path('app/src/main/res/values-en-rUS/strings.xml')
+
+    if not source_file.exists():
+        print("Error: English source file not found!")
+        sys.exit(1)
+
+    if not en_us_file.exists():
+        print("Error: en-rUS file not found!")
+        sys.exit(1)
+
+    # Parse source strings
+    with open(source_file, 'r', encoding='utf-8') as f:
+        source_content = f.read()
+
+    source_strings = {}
+    for match in re.finditer(r'<string name="([^"]+)">(.+?)</string>', source_content):
+        source_strings[match.group(1)] = match.group(2)
+
+    # Parse en-rUS strings
+    with open(en_us_file, 'r', encoding='utf-8') as f:
+        en_us_content = f.read()
+
+    en_us_strings = {}
+    for match in re.finditer(r'<string name="([^"]+)">(.+?)</string>', en_us_content):
+        en_us_strings[match.group(1)] = match.group(2)
+
+    print("=" * 80)
+    print("CHANGED SOURCE STRINGS DETECTION")
+    print("=" * 80)
+    print(f"\nComparing source ({len(source_strings)} strings) with en-rUS ({len(en_us_strings)} strings)")
+    print()
+
+    changed_strings = []
+    missing_in_en_us = []
+    extra_in_en_us = []
+
+    # Find strings that differ
+    for string_id, source_value in source_strings.items():
+        if string_id in en_us_strings:
+            en_us_value = en_us_strings[string_id]
+            if source_value != en_us_value:
+                changed_strings.append({
+                    'id': string_id,
+                    'source': source_value,
+                    'en_us': en_us_value
+                })
+        else:
+            missing_in_en_us.append({
+                'id': string_id,
+                'source': source_value
+            })
+
+    # Find strings only in en-rUS (might be obsolete)
+    for string_id in en_us_strings:
+        if string_id not in source_strings:
+            extra_in_en_us.append({
+                'id': string_id,
+                'en_us': en_us_strings[string_id]
+            })
+
+    # Report findings
+    if changed_strings:
+        print(f"🔄 CHANGED STRINGS ({len(changed_strings)}):")
+        print("   These source strings have changed. All translations need updating!\n")
+        for item in changed_strings:
+            print(f"   {item['id']}:")
+            print(f"      Source: '{item['source']}'")
+            print(f"      en-rUS: '{item['en_us']}'")
+            print()
+
+    if missing_in_en_us:
+        print(f"\n📥 NEW STRINGS (in source but not in en-rUS): {len(missing_in_en_us)}")
+        print("   These are new strings that need en-rUS translation:\n")
+        for item in missing_in_en_us[:10]:  # Show first 10
+            print(f"   {item['id']}: '{item['source']}'")
+        if len(missing_in_en_us) > 10:
+            print(f"   ... and {len(missing_in_en_us) - 10} more")
+
+    if extra_in_en_us:
+        print(f"\n📤 OBSOLETE STRINGS (in en-rUS but not in source): {len(extra_in_en_us)}")
+        print("   These might need to be removed from en-rUS:\n")
+        for item in extra_in_en_us[:10]:  # Show first 10
+            print(f"   {item['id']}: '{item['en_us']}'")
+        if len(extra_in_en_us) > 10:
+            print(f"   ... and {len(extra_in_en_us) - 10} more")
+
+    # Summary
+    print("\n" + "=" * 80)
+    print("SUMMARY")
+    print("=" * 80)
+    print(f"Source strings: {len(source_strings)}")
+    print(f"en-rUS strings: {len(en_us_strings)}")
+    print(f"Changed (need all translations updated): {len(changed_strings)}")
+    print(f"New (source only): {len(missing_in_en_us)}")
+    print(f"Obsolete (en-rUS only): {len(extra_in_en_us)}")
+
+    if changed_strings:
+        print("\n" + "-" * 80)
+        print("RECOMMENDED ACTIONS:")
+        print("-" * 80)
+        print("1. Review each changed string above")
+        print("2. Decide if source or en-rUS has the correct text")
+        print("3. Update en-rUS to match source (or vice versa):")
+        for item in changed_strings[:5]:
+            print(f"   python strings.py --set en-rUS {item['id']} '<new_value>'")
+        if len(changed_strings) > 5:
+            print(f"   ... and {len(changed_strings) - 5} more")
+        print("4. Then update all other language translations")
+
+    if not changed_strings and not missing_in_en_us and not extra_in_en_us:
+        print("\n✅ Source and en-rUS are in sync! No changes detected.")
+
+    print("=" * 80)
+    sys.exit(0)
+
 def find_unused_strings():
     """Find strings defined in English but not used anywhere in the source code.
 
@@ -1334,6 +1473,9 @@ if len(sys.argv) > 1:
     # Handle unused strings command
     elif arg == '--unused':
         find_unused_strings()
+    # Handle changed strings command
+    elif arg == '--changed':
+        find_changed_strings()
     # Unknown command
     else:
         print(f"Error: Unknown command '{arg}'")
