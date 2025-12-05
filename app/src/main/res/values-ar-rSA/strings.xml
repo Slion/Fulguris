@@ -45,6 +45,7 @@
     <string name="clear_history">Clear Browser History</string>
     <string name="action_download">تحميل</string>
     <string name="action_open">فتح</string>
+    <string name="action_copy">نسخ</string>
     <string name="dialog_title_share">مشاركة هذه الصفحة</string>
     <string name="action_delete">حذف</string>
     <string name="action_blank">صفحة فارغة</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">أنت الآن تستخدم إصدار%s. هل تريد التحقق من ملاحظات الإصدار على الإنترنت؟</string>
     <string name="title_welcome">مرحبا بكم في Fulguris</string>
     <string name="message_welcome">هل تريد زيارة صفحتنا الرئيسة لمعرفة المزيد حول هذا المتصفح القوي للويب؟</string>
-    <!-- Ad block -->
     <string name="block_ads">عناصر تحكم المحتوى</string>
     <string name="block_remote_frequency_daily">يوميّاً</string>
     <string name="block_remote_frequency_weekly">أسبوعيّاً</string>
     <string name="block_remote_frequency_monthly">شهريّاً</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">لقد تم حظر الصفحة التالية:</string>
     <string name="page_blocked_reason">بسبب:</string>
     <string name="page_blocked_list_ad">%s على فلاتر الإعلانات</string>
     <string name="page_blocked_list_user">تم حظر %s بواسطة قاعدة المستخدم</string>
     <string name="page_blocked_list_malware">%s على مرشحات البرامج الضارة</string>
     <string name="request_blocked">تم حظر الطلب</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">وضع التحديث التلقائي</string>
     <string name="blocklist_update_on">التّحديث التّلقائي قيد التّشغيل</string>
     <string name="blocklist_update_off">التّحديث التّلقائي موقّف</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">آخر تحديث: %s</string>
     <string name="blocklist_updating">جارٍ تحديث…</string>
     <string name="blocklist_update_error">حدث خطأ خلال تحديث قائمة المرشحات %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">حدث خطء خلال تحديث قائمة المرشّحات %1$s: رمز الحالة %2$s</string>
     <string name="add_blocklist">إضافة ملف فلاتر</string>
     <string name="add_blocklist_hint">يمكنك اختيار قوائم المضيفين أو أي قائمة متوافقة مع قواعد AdBlockPlus</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">مرشحات التعديل</string>
     <string name="use_modify_filters_warning">في بعض الحالات، تم العثور على فلاتر معدلة لكسر المواقع في هذا المتصفح. إلى أن يتم تحسين التنفيذ، يمكنك تمكينهم على مسؤوليتك الخاصة. تعطيل المستندات الرئيسية لا يؤدي إلا إلى تجنب معظم المشاكل.</string>
     <string name="modify_filters_not_for_main_frame">تعطيل للإطار الرئيسي فقط</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">تم إلغاء الإجراء.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">خطأ أمني! تم إيقاف تحميل الصفحة.</string>
     <string name="message_ssl_error">الاتصال الآمن معرض للخطر:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>هل ما زلت تريد المتابعة؟</string>
     <string name="message_certificate_date_invalid">تاريخ الشهادة غير صالح</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">الشهادة غير صالحة</string>
     <string name="message_certificate_not_yet_valid">الشهادة غير صالحة بعد</string>
     <string name="message_certificate_untrusted">الشهادة غير موثوقة</string>
-    <!-- permissions request -->
     <string name="title_permission_request">طَلَب الصَّلاحِيَّة</string>
     <string name="message_permission_request">%1$s\n\nيرغب في استخدام:\n\n%2$s</string>
     <string name="title_form_resubmission">إعادة تقديم الاستمارة</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">تصدير</string>
     <string name="generic_import">استيراد</string>
     <string name="generic_reset">إعادة تعيين</string>
+    <string name="settings_help_menus">اسحب ومرر العناصر لتنظيم القوائم\nشريط الأدوات السفلي يعكس ترتيب العناصر</string>
+    <string name="settings_title_reset_menus">استعادة القوائم الافتراضية</string>
+    <string name="dialog_title_reset_menus">استعادة القوائم الافتراضية؟</string>
+    <string name="action_restore">استعادة</string>
+    <string name="dialog_message_reset_menus">ستفقد الإعداد الحالي</string>
     <string name="export_bookmarks">تصدير الإشارات المرجعية للنسخ الاحتياطي</string>
     <string name="import_backup">استيراد الإشارات المرجعية من النسخ الاحتياطي</string>
     <string name="bookmark_export_path">تم تصدير الإشارات المرجعية إلى</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">أفقي</string>
     <string name="pref_category_portrait">رأسي</string>
+    <string name="settings_title_hidden">العناصر المخفية</string>
+    <string name="settings_title_menus">القوائم</string>
+    <string name="settings_summary_menus">تنظيم عناصر القائمة</string>
+    <string name="action_tab_menu">قائمة التبويب</string>
+    <string name="settings_title_main_menu">القائمة الرئيسية</string>
     <string name="pref_category_filters">المرشحات</string>
     <string name="pref_category_summary_filters">ملفات محلية أو بعيدة تحدد قواعد التحكم في المحتوى</string>
     <string name="pref_category_on_tab_close">عند إغلاق التبويب</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">تمت إضافة الاختصار إلى الشاشة الرئيسية</string>
     <string name="shortcut_message_failed_to_add">عذراً، المشغل الخاص بك لا يدعم الاختصارات.</string>
     <string name="action_delete_all_bookmarks">حذف جميع الإشارات المرجعية</string>
-    <!-- debug strings -->
     <string name="debug_title">التصحيح</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">يرجى إعادة تشغيل التطبيق لتفعيل التغيير</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">مفعل</string>
     <string name="pref_summary_off_logs">معطل</string>
     <string name="pref_title_log_level">مستوى السجل</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">فتح في تبويب جديد</string>
     <string name="dialog_open_background_tab">فتح في تبويب الخلفية</string>
     <string name="dialog_open_incognito_tab">فتح في تبويب التصفح الخفي</string>
@@ -405,12 +407,9 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">تم حظر %1$s</string>
     <string name="dialog_delete_all_downloads">حذف جميع التنزيلات</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">أدوات الصفحة</string>
     <string name="dialog_toggle_desktop">تبديل وكيل مستخدم سطح المكتب</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">عنوان URL مخصص</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="zero">لا توجد تبويبات تصفح خفي مفتوحة</item>
         <item quantity="one">تبويب تصفح خفي واحد مفتوح</item>
@@ -420,21 +419,16 @@
         <item quantity="other">%1$d تبويب تصفح خفي مفتوح</item>
     </plurals>
     <string name="notification_incognito_running_message">انقر للفتح</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">جلسة تصفح خفي جارية</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">صدرت من:</string>
     <string name="ssl_info_issued_to">صدرت لـ:</string>
     <string name="ssl_info_issued_on">صدرت في:</string>
     <string name="ssl_info_expires_on">تنتهي في:</string>
-    <!-- Search in page -->
     <string name="next">التالي</string>
     <string name="previous">السابق</string>
     <string name="close">إغلاق</string>
     <string name="exit">خروج</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">إدراج الاقتراح</string>
     <string name="action_close_all_other_tabs">إغلاق جميع التبويبات الأخرى</string>
     <string name="action_restore_all_tabs">استعادة جميع التبويبات</string>
@@ -471,11 +465,6 @@
     <string name="settings_title_cookies_delete_all">حذف الكل</string>
     <string name="settings_summary_cookies_delete_all">حذف جميع ملفات تعريف الارتباط للصفحة الحالية</string>
     <string name="question_delete_all_page_cookies">حذف جميع ملفات تعريف الارتباط للصفحة الحالية؟</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="zero">الصفحة الحالية ليس بها ملفات تعريف ارتباط</item>
         <item quantity="one">الصفحة الحالية بها ملف تعريف ارتباط واحد</item>
@@ -498,7 +487,6 @@
     <string name="settings_summary_on_task_icon">استخدام أيقونة الصفحة</string>
     <string name="settings_summary_off_task_icon">استخدام أيقونة التطبيق</string>
     <string name="settings_title_toolbar_label">تسمية شريط الأدوات</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">تطبيق طرف ثالث متاح</string>
     <string name="dialog_message_third_party_app">هل تريد تشغيل التطبيق المرتبط بهذا الموقع؟</string>
     <string name="per_month">\u0020/ شهر</string>
@@ -517,22 +505,14 @@
     <string name="invalid_characters_removed">تمت إزالة الأحرف غير الصالحة!</string>
     <string name="reading_mode_image_copyright">الصورة منسوبة إلى</string>
     <string name="reading_mode_image_caption">صورة بتعليق</string>
-    <!-- text-to-speech -->
     <string name="tts">قراءة الصفحة</string>
     <string name="stop_tts">إيقاف القراءة</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">متصفح Fulguris</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">رابط</string>
     <string name="button_image">صورة</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">تم إغلاق التبويب</string>
     <string name="button_undo">تراجع</string>
     <string name="button_dismiss">تجاهل</string>
-    <!-- Find in page -->
     <string name="no_match_found">لم يتم العثور على تطابق!</string>
     <string name="match_x_of_n">تطابق <xliff:g id="current_match" example="1">%1$d</xliff:g> من <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">إظهار شريط الإشعارات</string>
@@ -617,7 +597,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">عنوان URL قصير</string>
     <string name="label_domain">النطاق</string>
@@ -625,7 +604,6 @@
     <string name="label_session">الجلسة</string>
     <string name="label_app_name">اسم التطبيق</string>
     <string name="message_render_process_crashed">تعطلت عملية العرض. قد تحتاج إلى إعادة تحميل بعض صفحات الويب.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">مرحباً بك في Fulguris</string>
     <string name="intro_welcome_description">استمتع بتصفح ويب سريع وآمن وقابل للتخصيص مع ميزات خصوصية متقدمة وتصميم عصري.</string>
     <string name="intro_title_terms">لنبدأ!</string>
@@ -637,17 +615,6 @@
     <string name="pref_title_enable_ad_blocker">حاجب الإعلانات</string>
     <string name="pref_summary_on_enable_ad_blocker">استمتع بتجربة ويب أنظف وأكثر أماناً</string>
     <string name="pref_summary_off_enable_ad_blocker">استمتع بنسخة الويب الأصلية غير المفلترة</string>
-    <string name="action_copy">نسخ</string>
-    <string name="settings_help_menus">اسحب ومرر العناصر لتنظيم القوائم\nشريط الأدوات السفلي يعكس ترتيب العناصر</string>
-    <string name="settings_title_reset_menus">استعادة القوائم الافتراضية</string>
-    <string name="dialog_title_reset_menus">استعادة القوائم الافتراضية؟</string>
-    <string name="action_restore">استعادة</string>
-    <string name="dialog_message_reset_menus">ستفقد الإعداد الحالي</string>
-    <string name="settings_title_hidden">العناصر المخفية</string>
-    <string name="settings_title_menus">القوائم</string>
-    <string name="settings_summary_menus">تنظيم عناصر القائمة</string>
-    <string name="action_tab_menu">قائمة التبويب</string>
-    <string name="settings_title_main_menu">القائمة الرئيسية</string>
     <string name="page_requests_title">الطلبات</string>
     <string name="page_request_details_title">طلب</string>
     <string name="request_status">الحالة</string>

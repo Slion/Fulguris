@@ -45,6 +45,7 @@
     <string name="clear_history">Tyhjennä selaushistoria</string>
     <string name="action_download">Lataa</string>
     <string name="action_open">Avaa</string>
+    <string name="action_copy">Kopioi</string>
     <string name="dialog_title_share">Jaa tämä sivu</string>
     <string name="action_delete">Poista</string>
     <string name="action_blank">Tyhjä sivu</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Käytät nyt versiota %s. Haluatko tarkistaa julkaisumuistiinpanot verkossa?</string>
     <string name="title_welcome">Tervetuloa Fulguriin</string>
     <string name="message_welcome">Vieraile sivustollamme saadaksesi lisätietoja tästä tehokkaasta verkkoselaimesta?</string>
-    <!-- Ad block -->
     <string name="block_ads">Estä mainokset</string>
     <string name="block_remote_frequency_daily">Päivittäin</string>
     <string name="block_remote_frequency_weekly">Viikoittain</string>
     <string name="block_remote_frequency_monthly">Kuukausittain</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Seuraava sivu estettiin:</string>
     <string name="page_blocked_reason">syynä:</string>
     <string name="page_blocked_list_ad">%s mainossuodattimilla</string>
     <string name="page_blocked_list_user">%s käyttäjän säännön perusteella estetty</string>
     <string name="page_blocked_list_malware">%s haittaohjelmisto suodattimilla</string>
     <string name="request_blocked">Pyyntö estetty</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Automaattinen päivitystila</string>
     <string name="blocklist_update_on">Automaattinen päivitys päällä</string>
     <string name="blocklist_update_off">Automaattinen päivitys pois päältä</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Viimeisin päivitys: %s</string>
     <string name="blocklist_updating">Päivitetään</string>
     <string name="blocklist_update_error">Virhe päivitettäessä suodatinlistaa %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Virhe päivitettäessä suodatinlistaa %1$s: tilakoodi %2$s</string>
     <string name="add_blocklist">Lisää suodatintiedosto</string>
     <string name="add_blocklist_hint">Voit valita hosts-listoja tai mitä tahansa AdBlockPlus-sääntöjen kanssa yhteensopivia listoja</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Muokkaussuodattimet</string>
     <string name="use_modify_filters_warning">Joissakin tapauksissa muokkaussuodattimien on havaittu rikkovan verkkosivustoja tässä selaimessa. Kunnes toteutus on parantunut, voit ottaa ne käyttöön omalla vastuullasi. Pois päältä kytkeminen vain pääkehyksille välttää useimmat ongelmat.</string>
     <string name="modify_filters_not_for_main_frame">Poista käytöstä vain pääkehykseltä</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Toiminto peruutettu.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Turvallisuusvirhe! Sivun lataus keskeytetty.</string>
     <string name="message_ssl_error">Suojattu yhteys vaarantunut:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Haluatko silti jatkaa?</string>
     <string name="message_certificate_date_invalid">Varmenteen päivämäärä on virheellinen</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Varmenne on virheellinen</string>
     <string name="message_certificate_not_yet_valid">Varmenne ei ole vielä voimassa</string>
     <string name="message_certificate_untrusted">Varmenteeseen ei luoteta</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Lupapyyntö</string>
     <string name="message_permission_request">%1$s\n\nhaluaa käyttää:\n\n%2$s</string>
     <string name="title_form_resubmission">Lomakkeen uudelleenlähetys</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Vie</string>
     <string name="generic_import">Tuo</string>
     <string name="generic_reset">Nollaa</string>
+    <string name="settings_help_menus">Vedä ja pyyhkäise kohteita järjestääksesi valikkosi\nAlatyökalupalkki kääntää kohteiden järjestyksen</string>
+    <string name="settings_title_reset_menus">Palauta oletusvalikot</string>
+    <string name="dialog_title_reset_menus">Palauta oletusvalikot?</string>
+    <string name="action_restore">Palauta</string>
+    <string name="dialog_message_reset_menus">Menetät nykyiset asetuksesi</string>
     <string name="export_bookmarks">Vie kirjanmerkit</string>
     <string name="import_backup">Tuo varmuuskopio</string>
     <string name="bookmark_export_path">Kirjanmerkit viety kohteeseen:</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Vaaka</string>
     <string name="pref_category_portrait">Pysty</string>
+    <string name="settings_title_hidden">Piilotetut kohteet</string>
+    <string name="settings_title_menus">Valikot</string>
+    <string name="settings_summary_menus">Järjestä valikon kohteet</string>
+    <string name="action_tab_menu">Välilehden valikko</string>
+    <string name="settings_title_main_menu">Päävalikko</string>
     <string name="pref_category_filters">Suodattimet</string>
     <string name="pref_category_summary_filters">Mainokset ja haittaohjelmat</string>
     <string name="pref_category_on_tab_close">Välilehden sulkemisessa</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Pikakuvake lisätty kotinäytölle</string>
     <string name="shortcut_message_failed_to_add">Käynnistinohjelmasi ei tue pikakuvakkeita.</string>
     <string name="action_delete_all_bookmarks">Poista kaikki kirjanmerkit</string>
-    <!-- debug strings -->
     <string name="debug_title">Virheenkorjaus</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Käynnistä sovellus uudelleen, jotta muutos tulee voimaan</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Käytössä</string>
     <string name="pref_summary_off_logs">Pois käytöstä</string>
     <string name="pref_title_log_level">Lokitaso</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Avaa uudessa välilehdessä</string>
     <string name="dialog_open_background_tab">Avaa taustalla olevassa välilehdessä</string>
     <string name="dialog_open_incognito_tab">Avaa incognito-välilehdessä</string>
@@ -405,32 +407,24 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Estetty %1$s</string>
     <string name="dialog_delete_all_downloads">Poista kaikki lataukset</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Työkalut</string>
     <string name="dialog_toggle_desktop">Vaihda työpöytätila</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Mukautettu hakukone</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d incognito-välilehti auki</item>
         <item quantity="other">%1$d incognito-välilehteä auki</item>
     </plurals>
     <string name="notification_incognito_running_message">Napauta avataksesi</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Yksityinen istunto käynnissä</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Myöntäjä:</string>
     <string name="ssl_info_issued_to">Myönnetty:</string>
     <string name="ssl_info_issued_on">Issued on</string>
     <string name="ssl_info_expires_on">Expires on</string>
-    <!-- Search in page -->
     <string name="next">Seuraava</string>
     <string name="previous">Edellinen</string>
     <string name="close">Sulje</string>
     <string name="exit">Poistu</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Lisää ehdotus</string>
     <string name="action_close_all_other_tabs">Sulje kaikki muut välilehdet</string>
     <string name="action_restore_all_tabs">Palauta kaikki välilehdet</string>
@@ -467,11 +461,6 @@
     <string name="settings_title_cookies_delete_all">Poista kaikki evästeet</string>
     <string name="settings_summary_cookies_delete_all">Poista kaikki tämän verkkotunnuksen evästeet</string>
     <string name="question_delete_all_page_cookies">Haluatko poistaa kaikki tämän sivun evästeet?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Nykyisellä sivulla on yksi eväste</item>
         <item quantity="other">Nykyisellä sivulla on %d evästettä</item>
@@ -486,7 +475,6 @@
     <string name="settings_summary_on_task_icon">Käytä sivukuvaketta</string>
     <string name="settings_summary_off_task_icon">Käytä sovelluskuvaketta</string>
     <string name="settings_title_toolbar_label">Työkalupalkin otsikko</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Kolmannen osapuolen sovellus saatavilla</string>
     <string name="dialog_message_third_party_app">Haluatko käynnistää kyseiseen verkkosivustoon liitetyn sovelluksen?</string>
     <string name="per_month">\u0020/ kuukausi</string>
@@ -505,22 +493,14 @@
     <string name="invalid_characters_removed">Virheelliset merkit poistettu</string>
     <string name="reading_mode_image_copyright">Tekijänoikeus</string>
     <string name="reading_mode_image_caption">Kuvateksti</string>
-    <!-- text-to-speech -->
     <string name="tts">Teksti puheeksi</string>
     <string name="stop_tts">Pysäytä puhe</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris-verkkoselain</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Linkki</string>
     <string name="button_image">Kuva</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Välilehti suljettu</string>
     <string name="button_undo">Kumoa</string>
     <string name="button_dismiss">Hylkää</string>
-    <!-- Find in page -->
     <string name="no_match_found">Ei osumia!</string>
     <string name="match_x_of_n">Osuma <xliff:g id="current_match" example="1">%1$d</xliff:g> / <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Näytä snackbar</string>
@@ -605,7 +585,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Lyhyt URL</string>
     <string name="label_domain">Verkkotunnus</string>
@@ -613,7 +592,6 @@
     <string name="label_session">Istunto</string>
     <string name="label_app_name">Sovelluksen nimi</string>
     <string name="message_render_process_crashed">Renderöintiprosessi kaatui. Saatat joutua päivittämään jotkin verkkosivut.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Tervetuloa Fulguriin</string>
     <string name="intro_welcome_description">Koe nopea, turvallinen ja muokattavissa oleva verkkoselaus edistyneillä yksityisyysominaisuuksilla ja modernilla suunnittelulla.</string>
     <string name="intro_title_terms">Aloitetaan!</string>
@@ -625,17 +603,6 @@
     <string name="pref_title_enable_ad_blocker">Mainosten esto</string>
     <string name="pref_summary_on_enable_ad_blocker">Nauti puhtaammasta, turvallisemmasta verkkokokemuksesta</string>
     <string name="pref_summary_off_enable_ad_blocker">Nauti suodattamattomasta, alkuperäisestä verkosta</string>
-    <string name="action_copy">Kopioi</string>
-    <string name="settings_help_menus">Vedä ja pyyhkäise kohteita järjestääksesi valikkosi\nAlatyökalupalkki kääntää kohteiden järjestyksen</string>
-    <string name="settings_title_reset_menus">Palauta oletusvalikot</string>
-    <string name="dialog_title_reset_menus">Palauta oletusvalikot?</string>
-    <string name="action_restore">Palauta</string>
-    <string name="dialog_message_reset_menus">Menetät nykyiset asetuksesi</string>
-    <string name="settings_title_hidden">Piilotetut kohteet</string>
-    <string name="settings_title_menus">Valikot</string>
-    <string name="settings_summary_menus">Järjestä valikon kohteet</string>
-    <string name="action_tab_menu">Välilehden valikko</string>
-    <string name="settings_title_main_menu">Päävalikko</string>
     <string name="page_requests_title">Pyynnöt</string>
     <string name="page_request_details_title">Pyyntö</string>
     <string name="request_status">Tila</string>

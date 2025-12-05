@@ -45,6 +45,7 @@
     <string name="clear_history">Dọn dẹp lịch sử trình duyệt</string>
     <string name="action_download">Tải xuống</string>
     <string name="action_open">Mở</string>
+    <string name="action_copy">Sao chép</string>
     <string name="dialog_title_share">Chia sẻ trang này</string>
     <string name="action_delete">Xóa</string>
     <string name="action_blank">Trang trắng</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Bạn hiện đang chạy v%s. Bạn có muốn kiểm tra ghi chú phát hành trực tuyến?</string>
     <string name="title_welcome">Chào mừng đến với Fulguris</string>
     <string name="message_welcome">Truy cập trang chủ của chúng tôi để tìm hiểu thêm về trình duyệt web mạnh mẽ này?</string>
-    <!-- Ad block -->
     <string name="block_ads">Kiểm soát nội dung</string>
     <string name="block_remote_frequency_daily">Hàng ngày</string>
     <string name="block_remote_frequency_weekly">Hàng tuần</string>
     <string name="block_remote_frequency_monthly">Hàng tháng</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Trang sau đã bị chặn:</string>
     <string name="page_blocked_reason">bởi vì:</string>
     <string name="page_blocked_list_ad">%s trên bộ lọc quảng cáo</string>
     <string name="page_blocked_list_user">%s bị chặn bởi quy tắc người dùng</string>
     <string name="page_blocked_list_malware">%s trên bộ lọc phần mềm độc hại</string>
     <string name="request_blocked">Yêu cầu bị chặn</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Chế độ tự động cập nhật</string>
     <string name="blocklist_update_on">Tự động cập nhật đã bật</string>
     <string name="blocklist_update_off">Tự động cập nhật đã tắt</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Cập nhật lần cuối: %s</string>
     <string name="blocklist_updating">Đang cập nhật…</string>
     <string name="blocklist_update_error">Lỗi khi cập nhật danh sách bộ lọc %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Lỗi khi cập nhật danh sách bộ lọc %1$s: mã trạng thái %2$s</string>
     <string name="add_blocklist">Thêm tập tin bộ lọc</string>
     <string name="add_blocklist_hint">Bạn có thể chọn danh sách máy chủ hoặc bất kỳ danh sách nào tương thích với quy tắc AdBlockPlus</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Bộ lọc sửa đổi</string>
     <string name="use_modify_filters_warning">Trong một số trường hợp, người ta phát hiện thấy các bộ lọc sửa đổi có thể phá vỡ các trang web trong trình duyệt này. Cho đến khi việc triển khai được cải thiện, bạn có thể tự chịu rủi ro khi kích hoạt chúng. Việc tắt tài liệu khung chính chỉ tránh được hầu hết các vấn đề.</string>
     <string name="modify_filters_not_for_main_frame">Chỉ tắt cho khung chính</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Đã hủy hành động.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Lỗi an ninh! Tải trang bị hủy bỏ.</string>
     <string name="message_ssl_error">Kết nối an toàn bị xâm phạm:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Bạn vẫn muốn tiếp tục chứ?</string>
     <string name="message_certificate_date_invalid">Ngày chứng nhận không hợp lệ</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Chứng chỉ không hợp lệ</string>
     <string name="message_certificate_not_yet_valid">Chứng chỉ vẫn chưa hợp lệ</string>
     <string name="message_certificate_untrusted">Chứng chỉ không đáng tin cậy</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Yêu cầu cấp quyền</string>
     <string name="message_permission_request">%1$s\n\nmuốn sử dụng:\n\n%2$s</string>
     <string name="title_form_resubmission">Gửi lại biểu mẫu</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Xuất khẩu</string>
     <string name="generic_import">Nhập khẩu</string>
     <string name="generic_reset">Đặt lại</string>
+    <string name="settings_help_menus">Cấu hình hành động menu trong tab</string>
+    <string name="settings_title_reset_menus">Đặt lại menu</string>
+    <string name="dialog_title_reset_menus">Đặt lại menu</string>
+    <string name="action_restore">Khôi phục</string>
+    <string name="dialog_message_reset_menus">Đặt lại menu sẽ xóa tất cả thay đổi trang menu</string>
     <string name="export_bookmarks">Xuất dấu trang để sao lưu</string>
     <string name="import_backup">Nhập dấu trang từ bản sao lưu</string>
     <string name="bookmark_export_path">Dấu trang đã xuất sang</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Ngang</string>
     <string name="pref_category_portrait">Dọc</string>
+    <string name="settings_title_hidden">Ẩn</string>
+    <string name="settings_title_menus">Menu</string>
+    <string name="settings_summary_menus">Tùy chỉnh menu của bạn</string>
+    <string name="action_tab_menu">Menu tab</string>
+    <string name="settings_title_main_menu">Menu chính</string>
     <string name="pref_category_filters">Bộ lọc</string>
     <string name="pref_category_summary_filters">Các tệp cục bộ hoặc từ xa xác định quy tắc kiểm soát nội dung của bạn</string>
     <string name="pref_category_on_tab_close">Khi đóng tab</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Đã thêm lối tắt vào màn hình chính</string>
     <string name="shortcut_message_failed_to_add">Xin lỗi, trình khởi chạy của bạn không hỗ trợ phím tắt.</string>
     <string name="action_delete_all_bookmarks">Xóa mọi dấu trang</string>
-    <!-- debug strings -->
     <string name="debug_title">Gỡ lỗi</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Vui lòng khởi động lại ứng dụng để thay đổi có hiệu lực</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Đã bật</string>
     <string name="pref_summary_off_logs">Đã tắt</string>
     <string name="pref_title_log_level">Mức nhật ký</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Mở ra trong trang mới</string>
     <string name="dialog_open_background_tab">Mở trong tab nền</string>
     <string name="dialog_open_incognito_tab">Mở trong tab ẩn danh</string>
@@ -405,31 +407,23 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Đã chặn %1$s</string>
     <string name="dialog_delete_all_downloads">Xóa mọi bản tải xuống</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Công cụ trang</string>
     <string name="dialog_toggle_desktop">Chuyển đổi tác nhân người dùng để bàn</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">URL tùy chỉnh</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">%1$d tab ẩn danh đang mở</item>
     </plurals>
     <string name="notification_incognito_running_message">Chạm để mở</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Phiên ẩn danh đang hoạt động</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Được cấp bởi:</string>
     <string name="ssl_info_issued_to">Được cấp cho:</string>
     <string name="ssl_info_issued_on">Được cấp vào:</string>
     <string name="ssl_info_expires_on">Hết hạn vào:</string>
-    <!-- Search in page -->
     <string name="next">Kế tiếp</string>
     <string name="previous">Trước đó</string>
     <string name="close">Đóng</string>
     <string name="exit">Thoát ra</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Chèn gợi ý</string>
     <string name="action_close_all_other_tabs">Đóng tất cả các tab khác</string>
     <string name="action_restore_all_tabs">Khôi phục tất cả các tab</string>
@@ -466,11 +460,6 @@
     <string name="settings_title_cookies_delete_all">Xóa hết</string>
     <string name="settings_summary_cookies_delete_all">Xóa tất cả cookie cho trang hiện tại</string>
     <string name="question_delete_all_page_cookies">Xóa tất cả cookie cho trang hiện tại?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="other">Trang hiện tại có <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
@@ -483,7 +472,6 @@
     <string name="settings_summary_on_task_icon">Sử dụng biểu tượng trang</string>
     <string name="settings_summary_off_task_icon">Sử dụng biểu tượng ứng dụng</string>
     <string name="settings_title_toolbar_label">Nhãn thanh công cụ</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Ứng dụng có sẵn của bên thứ ba</string>
     <string name="dialog_message_third_party_app">Bạn có muốn khởi chạy ứng dụng được liên kết với trang web đó không?</string>
     <string name="per_month">\u0020/ tháng</string>
@@ -502,22 +490,14 @@
     <string name="invalid_characters_removed">Đã xóa các ký tự không hợp lệ!</string>
     <string name="reading_mode_image_copyright">Hình ảnh thuộc về</string>
     <string name="reading_mode_image_caption">Hình ảnh có chú thích</string>
-    <!-- text-to-speech -->
     <string name="tts">Đọc trang</string>
     <string name="stop_tts">Dừng đọc</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Trình duyệt Web Fulguris</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Liên kết</string>
     <string name="button_image">Hình ảnh</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Tab đã đóng</string>
     <string name="button_undo">Hoàn tác</string>
     <string name="button_dismiss">Bỏ qua</string>
-    <!-- Find in page -->
     <string name="no_match_found">Không tìm thấy kết quả phù hợp!</string>
     <string name="match_x_of_n">Kết quả <xliff:g id="current_match" example="1">%1$d</xliff:g> trong <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Hiển thị thanh thông báo</string>
@@ -602,7 +582,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">URL ngắn</string>
     <string name="label_domain">Tên miền</string>
@@ -610,7 +589,6 @@
     <string name="label_session">Phiên</string>
     <string name="label_app_name">Tên ứng dụng</string>
     <string name="message_render_process_crashed">Quá trình kết xuất bị lỗi. Bạn có thể cần phải tải lại một số trang web.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Chào mừng đến với Fulguris</string>
     <string name="intro_welcome_description">Trải nghiệm duyệt web nhanh, an toàn và có thể tùy chỉnh với các tính năng bảo mật nâng cao và thiết kế hiện đại.</string>
     <string name="intro_title_terms">Hãy bắt đầu!</string>
@@ -622,17 +600,6 @@
     <string name="pref_title_enable_ad_blocker">Trình chặn quảng cáo</string>
     <string name="pref_summary_on_enable_ad_blocker">Tận hưởng trải nghiệm web sạch hơn, an toàn hơn</string>
     <string name="pref_summary_off_enable_ad_blocker">Tận hưởng phiên bản web gốc không lọc</string>
-    <string name="action_copy">Sao chép</string>
-    <string name="settings_help_menus">Cấu hình hành động menu trong tab</string>
-    <string name="settings_title_reset_menus">Đặt lại menu</string>
-    <string name="dialog_title_reset_menus">Đặt lại menu</string>
-    <string name="action_restore">Khôi phục</string>
-    <string name="dialog_message_reset_menus">Đặt lại menu sẽ xóa tất cả thay đổi trang menu</string>
-    <string name="settings_title_hidden">Ẩn</string>
-    <string name="settings_title_menus">Menu</string>
-    <string name="settings_summary_menus">Tùy chỉnh menu của bạn</string>
-    <string name="action_tab_menu">Menu tab</string>
-    <string name="settings_title_main_menu">Menu chính</string>
     <string name="page_requests_title">Yêu cầu trang</string>
     <string name="page_request_details_title">Chi tiết yêu cầu</string>
     <string name="request_status">Trạng thái</string>

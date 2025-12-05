@@ -45,6 +45,7 @@
     <string name="clear_history">Clear Browser History</string>
     <string name="action_download">Letöltés</string>
     <string name="action_open">Megnyitás</string>
+    <string name="action_copy">Másolás</string>
     <string name="dialog_title_share">Oldal megosztása</string>
     <string name="action_delete">Törlés</string>
     <string name="action_blank">Üres oldal</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Most a %s verzió fut. szeretnéd megtekinteni a változásokat?</string>
     <string name="title_welcome">Üdvözli a Fulguris</string>
     <string name="message_welcome">Szeretnél többet megtudni erről az erőteljes böngészőről a honlapunkon?</string>
-    <!-- Ad block -->
     <string name="block_ads">Tartalomirányítás</string>
     <string name="block_remote_frequency_daily">Napi</string>
     <string name="block_remote_frequency_weekly">Heti</string>
     <string name="block_remote_frequency_monthly">Havi</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Ez az oldal tiltva lett:</string>
     <string name="page_blocked_reason">emiatt:</string>
     <string name="page_blocked_list_ad">%s a reklámszűrőn</string>
     <string name="page_blocked_list_user">%s tiltva felhasználói szabály által</string>
     <string name="page_blocked_list_malware">%s rosszindulatú a szűrő szerint</string>
     <string name="request_blocked">Kérés tiltva</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Automatikus frissítés mód</string>
     <string name="blocklist_update_on">Auto-frissítés bekapcsolva</string>
     <string name="blocklist_update_off">Auto-frissítés kikapcsolva</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Utolsó frissítés: %s</string>
     <string name="blocklist_updating">Frissítés…</string>
     <string name="blocklist_update_error">Hiba a %s szűrő frissítésekor</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Hiba a %1$s szűrő frissítésekor: hibakód %2$s</string>
     <string name="add_blocklist">Szűrő fájl hozzáadása</string>
     <string name="add_blocklist_hint">Kiválaszthat bármilyen megosztói listát, ami kompatibilis az AdBlockPlus szabályaival</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Módosító szűrők</string>
     <string name="use_modify_filters_warning">Néha a módosító szűrők eltörnek weboldalakat ebben a böngészőben. Amíg az implementáció nem fejlődik, csak saját felelősségre kapcsold be őket. Ugyanakkor a legtöbb hibát már a Kikapcsolás a fő-keret dokumentumokra opcióval is elkerülheted.</string>
     <string name="modify_filters_not_for_main_frame">Kikapcsolás csak a fő-keret számára</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Művelet megszakítva.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Biztonsági hiba! Oldal betöltése megszakítva.</string>
     <string name="message_ssl_error">Biztonságos kapcsolat megszakadt:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Így is folytatni akarja?</string>
     <string name="message_certificate_date_invalid">az tanúsítvány dátuma érvénytelen</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">a tanúsítvány érvénytelen</string>
     <string name="message_certificate_not_yet_valid">a tanúsítvány, még nem érvényes</string>
     <string name="message_certificate_untrusted">a tanúsítvány nem megbízható</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Engedély kérelem</string>
     <string name="message_permission_request">%1$s\n\nSzeretné ezt használni:\n\n%2$s</string>
     <string name="title_form_resubmission">Űrlap újraküldése</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Exportálás</string>
     <string name="generic_import">Importálás</string>
     <string name="generic_reset">Visszaállítás</string>
+    <string name="settings_help_menus">Húzza és csúsztassa az elemeket a menük rendszerezéséhez\nAz alsó eszköztár megfordítja az elemek sorrendjét</string>
+    <string name="settings_title_reset_menus">Alapértelmezett menük visszaállítása</string>
+    <string name="dialog_title_reset_menus">Alapértelmezett menük visszaállítása?</string>
+    <string name="action_restore">Visszaállítás</string>
+    <string name="dialog_message_reset_menus">Elveszíti a jelenlegi beállításait</string>
     <string name="export_bookmarks">Könyvjelzők exportálása biztonsági mentésbe</string>
     <string name="import_backup">Könyvjelzők importálása biztonsági mentésből</string>
     <string name="bookmark_export_path">Könyvjelző exportálva</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Fekvő tájolás</string>
     <string name="pref_category_portrait">Álló tájolás</string>
+    <string name="settings_title_hidden">Rejtett elemek</string>
+    <string name="settings_title_menus">Menük</string>
+    <string name="settings_summary_menus">Menüelemek rendszerezése</string>
+    <string name="action_tab_menu">Lap menü</string>
+    <string name="settings_title_main_menu">Főmenü</string>
     <string name="pref_category_filters">Szűrők</string>
     <string name="pref_category_summary_filters">Helyi vagy távoli fájlok amelyek megszabják a tartalomirányítási szabályait</string>
     <string name="pref_category_on_tab_close">Amikor a lap bezárul</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Parancsikon hozzáadva a kezdőképernyőhöz</string>
     <string name="shortcut_message_failed_to_add">Sajnos az alkalmazásindítód nem támogatja a gyorsindító parancsikonokat.</string>
     <string name="action_delete_all_bookmarks">Összes könyvjelző törlése</string>
-    <!-- debug strings -->
     <string name="debug_title">Hibakeresés</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Indítsa újra az alkalmazást hogy alkalmazza a változásokat</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Engedélyezve</string>
     <string name="pref_summary_off_logs">Letiltva</string>
     <string name="pref_title_log_level">Naplófájl szint</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Megnyitás új lapon</string>
     <string name="dialog_open_background_tab">Megnyitás a háttérben</string>
     <string name="dialog_open_incognito_tab">Megnyitás inkognitólapon</string>
@@ -405,32 +407,24 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$s letiltva</string>
     <string name="dialog_delete_all_downloads">Összes letöltés törlése</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Oldal eszközök</string>
     <string name="dialog_toggle_desktop">Váltson asztali felhasználó-ügynökre</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Egyéni URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d inkognitó lap nyitva</item>
         <item quantity="other">%1$d inkognitó lapok nyitva</item>
     </plurals>
     <string name="notification_incognito_running_message">Koppintson a megnyitáshoz</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Folyamatban lévő inkognitó munkamenet</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Kibocsátó:</string>
     <string name="ssl_info_issued_to">Kiadva:</string>
     <string name="ssl_info_issued_on">Kibocsátás dátuma:</string>
     <string name="ssl_info_expires_on">Lejárat dátuma:</string>
-    <!-- Search in page -->
     <string name="next">Következő</string>
     <string name="previous">Előző</string>
     <string name="close">Bezárás</string>
     <string name="exit">Kilépés</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Javaslat beillesztése</string>
     <string name="action_close_all_other_tabs">Minden más lap bezárása</string>
     <string name="action_restore_all_tabs">Minden lap visszaállítása</string>
@@ -467,11 +461,6 @@
     <string name="settings_title_cookies_delete_all">Összes törlése</string>
     <string name="settings_summary_cookies_delete_all">Törölje ezen oldal összes sütijét</string>
     <string name="question_delete_all_page_cookies">Törli ezen oldal összes sütijét?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Ezen oldalnak egy sütije van</item>
         <item quantity="other">Ezen oldalnak <xliff:g id="cookies_count" example="2">%d</xliff:g> sütije van</item>
@@ -486,7 +475,6 @@
     <string name="settings_summary_on_task_icon">Használja az oldal ikonját</string>
     <string name="settings_summary_off_task_icon">Használja az app ikonját</string>
     <string name="settings_title_toolbar_label">Eszköztár címke</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Harmadik-fél app elérhető</string>
     <string name="dialog_message_third_party_app">Meg akarja nyitni a weboldalhoz kapcsolódó alkalmazást?</string>
     <string name="per_month">\u0020/ hónap</string>
@@ -505,22 +493,14 @@
     <string name="invalid_characters_removed">Helytelen karakterek törölve!</string>
     <string name="reading_mode_image_copyright">Kép forrása</string>
     <string name="reading_mode_image_caption">Kép helyettesítő szöveggel</string>
-    <!-- text-to-speech -->
     <string name="tts">Oldal olvasása</string>
     <string name="stop_tts">Olvasás megállítása</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris Böngésző</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Link</string>
     <string name="button_image">Kép</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Lap bezárva</string>
     <string name="button_undo">Visszavonás</string>
     <string name="button_dismiss">Elutasít</string>
-    <!-- Find in page -->
     <string name="no_match_found">Nincs találat!</string>
     <string name="match_x_of_n">Találat <xliff:g id="current_match" example="1">%1$d</xliff:g> ennyiből <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Snackbar megjelenítése</string>
@@ -605,7 +585,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Rövid URL</string>
     <string name="label_domain">Tartomány</string>
@@ -613,7 +592,6 @@
     <string name="label_session">Munkamenet</string>
     <string name="label_app_name">Alkalmazás neve</string>
     <string name="message_render_process_crashed">A renderelési folyamat összeomlott. Előfordulhat, hogy újra kell töltenie néhány weboldalt.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Üdvözöljük a Fulgurisban</string>
     <string name="intro_welcome_description">Tapasztalja meg a gyors, biztonságos és testreszabható webböngészést fejlett adatvédelmi funkciókkal és modern dizájnnal.</string>
     <string name="intro_title_terms">Kezdjük el!</string>
@@ -625,17 +603,6 @@
     <string name="pref_title_enable_ad_blocker">Hirdetésblokkoló</string>
     <string name="pref_summary_on_enable_ad_blocker">Élvezd a tisztább, biztonságosabb webes élményt</string>
     <string name="pref_summary_off_enable_ad_blocker">Élvezd a szűretlen, eredeti web verzióját</string>
-    <string name="action_copy">Másolás</string>
-    <string name="settings_help_menus">Húzza és csúsztassa az elemeket a menük rendszerezéséhez\nAz alsó eszköztár megfordítja az elemek sorrendjét</string>
-    <string name="settings_title_reset_menus">Alapértelmezett menük visszaállítása</string>
-    <string name="dialog_title_reset_menus">Alapértelmezett menük visszaállítása?</string>
-    <string name="action_restore">Visszaállítás</string>
-    <string name="dialog_message_reset_menus">Elveszíti a jelenlegi beállításait</string>
-    <string name="settings_title_hidden">Rejtett elemek</string>
-    <string name="settings_title_menus">Menük</string>
-    <string name="settings_summary_menus">Menüelemek rendszerezése</string>
-    <string name="action_tab_menu">Lap menü</string>
-    <string name="settings_title_main_menu">Főmenü</string>
     <string name="page_requests_title">Kérések</string>
     <string name="page_request_details_title">Kérés</string>
     <string name="request_status">Állapot</string>

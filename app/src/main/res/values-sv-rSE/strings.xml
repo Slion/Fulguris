@@ -45,6 +45,7 @@
     <string name="clear_history">Rensa webbläsarens historik</string>
     <string name="action_download">Ladda ned</string>
     <string name="action_open">Öppna</string>
+    <string name="action_copy">Kopiera</string>
     <string name="dialog_title_share">Dela den här sidan</string>
     <string name="action_delete">Radera</string>
     <string name="action_blank">Tom sida</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Du kör nu v%s. Vill du kontrollera versionsfakta online?</string>
     <string name="title_welcome">Välkommen till Fulguris</string>
     <string name="message_welcome">Besök vår hemsida för att få veta mer om denna kraftfulla webbläsare?</string>
-    <!-- Ad block -->
     <string name="block_ads">Innehållskontroll</string>
     <string name="block_remote_frequency_daily">Dagligen</string>
     <string name="block_remote_frequency_weekly">Veckovis</string>
     <string name="block_remote_frequency_monthly">Månadsvis</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Följande sida blockerades:</string>
     <string name="page_blocked_reason">på grund av:</string>
     <string name="page_blocked_list_ad">%s på annonsfilter</string>
     <string name="page_blocked_list_user">%s blockerad av användarregel</string>
     <string name="page_blocked_list_malware">%s på filter för skadlig kod</string>
     <string name="request_blocked">Begäran spärrad</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Automatiskt uppdateringsläge</string>
     <string name="blocklist_update_on">Automatisk uppdatering på</string>
     <string name="blocklist_update_off">Automatisk uppdatering av</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Senaste uppdatering: %s</string>
     <string name="blocklist_updating">Uppdaterar…</string>
     <string name="blocklist_update_error">Fel vid uppdatering av filterlista %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Fel vid uppdatering av filterlista %1$s: statuskod %2$s</string>
     <string name="add_blocklist">Lägg till filtreringsfil</string>
     <string name="add_blocklist_hint">Du kan välja värdlistor eller någon lista som är kompatibel med AdBlockPlus regler</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Modifieringsfilte</string>
     <string name="use_modify_filters_warning">I vissa fall har modifieringsfilter visat sig bryta webbplatser i den här webbläsaren. Tills implementeringen förbättras, kan du aktivera dem på egen risk. Inaktivering för huvuddokument undviker bara de flesta problem.</string>
     <string name="modify_filters_not_for_main_frame">Inaktivera endast för stordator</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Åtgärd avbröts.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Säkerhetsfel! Sidladdning avbruten.</string>
     <string name="message_ssl_error">Säker anslutning komprometterad:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Vill du fortfarande fortsätta?</string>
     <string name="message_certificate_date_invalid">Datum för certifikatet är ogiltigt</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Certifikatet är ogiltigt</string>
     <string name="message_certificate_not_yet_valid">Certifikat är ännu inte giltigt</string>
     <string name="message_certificate_untrusted">Certifikatet är inte betrott</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Begäran om tillstånd</string>
     <string name="message_permission_request">%1$s\n\nvill använda:\n\n%2$s</string>
     <string name="title_form_resubmission">Återinlämning av formulär</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Exportera</string>
     <string name="generic_import">Importera</string>
     <string name="generic_reset">Återställ</string>
+    <string name="settings_help_menus">Konfigurera menyåtgärder på flik</string>
+    <string name="settings_title_reset_menus">Återställ menyer</string>
+    <string name="dialog_title_reset_menus">Återställ menyer</string>
+    <string name="action_restore">Återställ</string>
+    <string name="dialog_message_reset_menus">Återställning av menyer rensar alla ändringar på menysidorna</string>
     <string name="export_bookmarks">Exportera bokmärken till säkerhetskopiering</string>
     <string name="import_backup">Importera bokmärken från säkerhetskopiering</string>
     <string name="bookmark_export_path">Bokmärken exporterade till</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landskap</string>
     <string name="pref_category_portrait">Porträtt</string>
+    <string name="settings_title_hidden">Dold</string>
+    <string name="settings_title_menus">Menyer</string>
+    <string name="settings_summary_menus">Anpassa dina menyer</string>
+    <string name="action_tab_menu">Flikmeny</string>
+    <string name="settings_title_main_menu">Huvudmeny</string>
     <string name="pref_category_filters">Filter</string>
     <string name="pref_category_summary_filters">Lokala eller fjärranslutna filer som definierar dina regler för innehållskontroll</string>
     <string name="pref_category_on_tab_close">Vid stängning av flik</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Genväg tillagd till hemskärm</string>
     <string name="shortcut_message_failed_to_add">Tyvärr, din launcher stöder inte genvägar.</string>
     <string name="action_delete_all_bookmarks">Radera alla bokmärken</string>
-    <!-- debug strings -->
     <string name="debug_title">Felsöka</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Vänligen starta om appen för att ändringen ska börja gälla</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Aktiverad</string>
     <string name="pref_summary_off_logs">Inaktiverad</string>
     <string name="pref_title_log_level">Loggnivå</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Öppna i ny flik</string>
     <string name="dialog_open_background_tab">Öppna i bakgrundsflik</string>
     <string name="dialog_open_incognito_tab">Öppna i ny inkognitoflik</string>
@@ -405,32 +407,24 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Blockerade %1$s</string>
     <string name="dialog_delete_all_downloads">Radera alla nedladdningar</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Verktyg för sidan</string>
     <string name="dialog_toggle_desktop">Växla skrivbords användaragent</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Anpassad URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d incognito flik öppen</item>
         <item quantity="other">%1$d incognito flikar öppna</item>
     </plurals>
     <string name="notification_incognito_running_message">Tryck för att öppna</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Pågående inkognitosession</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Utfärdad av:</string>
     <string name="ssl_info_issued_to">Utfärdad till:</string>
     <string name="ssl_info_issued_on">Utfärdad den:</string>
     <string name="ssl_info_expires_on">Upphör den:</string>
-    <!-- Search in page -->
     <string name="next">Nästa</string>
     <string name="previous">Föregående</string>
     <string name="close">Stäng</string>
     <string name="exit">Avsluta</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Infoga förslag</string>
     <string name="action_close_all_other_tabs">Stäng övriga flikar</string>
     <string name="action_restore_all_tabs">Återställ alla flikar</string>
@@ -467,11 +461,6 @@
     <string name="settings_title_cookies_delete_all">Ta bort alla</string>
     <string name="settings_summary_cookies_delete_all">Ta bort alla cookies för aktuell sida</string>
     <string name="question_delete_all_page_cookies">Ta bort alla cookies för aktuell sida?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Aktuell sida har en cookie</item>
         <item quantity="other">Aktuell sida har <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
@@ -486,7 +475,6 @@
     <string name="settings_summary_on_task_icon">Använd sidikon</string>
     <string name="settings_summary_off_task_icon">Använd appikon</string>
     <string name="settings_title_toolbar_label">Verktygsfältsetikett</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Tredjepartsapp tillgänglig</string>
     <string name="dialog_message_third_party_app">Vill du starta programmet som är kopplat till den webbplatsen?</string>
     <string name="per_month">\u0020/ månad</string>
@@ -505,22 +493,14 @@
     <string name="invalid_characters_removed">Ogiltiga tecken borttagna!</string>
     <string name="reading_mode_image_copyright">Bild tillskriven till</string>
     <string name="reading_mode_image_caption">Bild med bildtext</string>
-    <!-- text-to-speech -->
     <string name="tts">Läsa sidan</string>
     <string name="stop_tts">Sluta läsa</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris Webbläsare</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Länk</string>
     <string name="button_image">Bild</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Flik stängd</string>
     <string name="button_undo">Ångra</string>
     <string name="button_dismiss">Avfärda</string>
-    <!-- Find in page -->
     <string name="no_match_found">Inga matchningar hittades!</string>
     <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> av <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Visa snackbar</string>
@@ -605,7 +585,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Kort URL</string>
     <string name="label_domain">Domän</string>
@@ -613,7 +592,6 @@
     <string name="label_session">Session</string>
     <string name="label_app_name">Appnamn</string>
     <string name="message_render_process_crashed">Renderingsprocessen kraschade. Du kan behöva ladda om några webbsidor.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Välkommen till Fulguris</string>
     <string name="intro_welcome_description">Upplev snabb, säker och anpassningsbar webbläsning med avancerade integritetsfunktioner och modern design.</string>
     <string name="intro_title_terms">Låt oss komma igång!</string>
@@ -625,17 +603,6 @@
     <string name="pref_title_enable_ad_blocker">Annonsblockerare</string>
     <string name="pref_summary_on_enable_ad_blocker">Njut av en renare, säkrare webbupplevelse</string>
     <string name="pref_summary_off_enable_ad_blocker">Njut av en ofiltrerad, original version av webben</string>
-    <string name="action_copy">Kopiera</string>
-    <string name="settings_help_menus">Konfigurera menyåtgärder på flik</string>
-    <string name="settings_title_reset_menus">Återställ menyer</string>
-    <string name="dialog_title_reset_menus">Återställ menyer</string>
-    <string name="action_restore">Återställ</string>
-    <string name="dialog_message_reset_menus">Återställning av menyer rensar alla ändringar på menysidorna</string>
-    <string name="settings_title_hidden">Dold</string>
-    <string name="settings_title_menus">Menyer</string>
-    <string name="settings_summary_menus">Anpassa dina menyer</string>
-    <string name="action_tab_menu">Flikmeny</string>
-    <string name="settings_title_main_menu">Huvudmeny</string>
     <string name="page_requests_title">Sidförfrågningar</string>
     <string name="page_request_details_title">Förfrågningsdetaljer</string>
     <string name="request_status">Status</string>

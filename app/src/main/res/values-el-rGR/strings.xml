@@ -45,6 +45,7 @@
     <string name="clear_history">Clear Browser History</string>
     <string name="action_download">Κατέβασμα</string>
     <string name="action_open">Άνοιγμα</string>
+    <string name="action_copy">Αντιγραφή</string>
     <string name="dialog_title_share">Διαμοιρασμός της σελίδας</string>
     <string name="action_delete">Διαγραφή</string>
     <string name="action_blank">Κενή σελίδα</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Εκτελείτε τώρα την έκδοση v%s. Θέλετε να ελέγξετε τις σημειώσεις έκδοσης στο διαδίκτυο;</string>
     <string name="title_welcome">Καλώς ήρθατε στο Fulguris</string>
     <string name="message_welcome">Επισκεφτείτε την αρχική μας σελίδα για να μάθετε περισσότερα για αυτό το ισχυρό πρόγραμμα περιήγησης ιστού;</string>
-    <!-- Ad block -->
     <string name="block_ads">Έλεγχος περιεχομένου</string>
     <string name="block_remote_frequency_daily">Καθημερινά</string>
     <string name="block_remote_frequency_weekly">Εβδομαδιαία</string>
     <string name="block_remote_frequency_monthly">Μηνιαία</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Η ακόλουθη σελίδα αποκλείστηκε:</string>
     <string name="page_blocked_reason">λόγω:</string>
     <string name="page_blocked_list_ad">%s σε φίλτρα διαφημίσεων</string>
     <string name="page_blocked_list_user">%s αποκλεισμένο από κανόνα χρήστη</string>
     <string name="page_blocked_list_malware">%s σε φίλτρα κακόβουλου λογισμικού</string>
     <string name="request_blocked">Το αίτημα αποκλείστηκε</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Λειτουργία αυτόματης ενημέρωσης</string>
     <string name="blocklist_update_on">Αυτόματη ενημέρωση ενεργή</string>
     <string name="blocklist_update_off">Αυτόματη ενημέρωση ανενεργή</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Τελευταία ενημέρωση: %s</string>
     <string name="blocklist_updating">Ενημέρωση</string>
     <string name="blocklist_update_error">Σφάλμα κατά την ενημέρωση της λίστας φίλτρων %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Σφάλμα κατά την ενημέρωση της λίστας φίλτρων %1$s: κωδικός κατάστασης %2$s</string>
     <string name="add_blocklist">Προσθήκη αρχείου φίλτρων</string>
     <string name="add_blocklist_hint">Μπορείτε να επιλέξετε λίστες hosts ή οποιαδήποτε λίστα συμβατή με κανόνες AdBlockPlus</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Φίλτρα τροποποίησης</string>
     <string name="use_modify_filters_warning">Σε ορισμένες περιπτώσεις, τα φίλτρα τροποποίησης έχουν βρεθεί να προκαλούν προβλήματα σε ιστότοπους σε αυτό το πρόγραμμα περιήγησης. Μέχρι να βελτιωθεί η υλοποίηση, μπορείτε να τα ενεργοποιήσετε με δική σας ευθύνη.</string>
     <string name="modify_filters_not_for_main_frame">Απενεργοποίηση μόνο για κύριο πλαίσιο</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Η ενέργεια ακυρώθηκε.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Σφάλμα ασφαλείας! Η φόρτωση της σελίδας ματαιώθηκε.</string>
     <string name="message_ssl_error">Η ασφαλής σύνδεση διακινδυνεύει:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Θέλετε ακόμα να συνεχίσετε;</string>
     <string name="message_certificate_date_invalid">Η ημερομηνία του πιστοποιητικού δεν είναι έγκυρη</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Το πιστοποιητικό δεν είναι έγκυρο</string>
     <string name="message_certificate_not_yet_valid">Το πιστοποιητικό δεν είναι ακόμα έγκυρο</string>
     <string name="message_certificate_untrusted">Το πιστοποιητικό δεν είναι αξιόπιστο</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Αίτημα άδειας</string>
     <string name="message_permission_request">%1$s\n\nθα ήθελε να χρησιμοποιήσει:\n\n%2$s</string>
     <string name="title_form_resubmission">Επαναυποβολή φόρμας</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Εξαγωγή</string>
     <string name="generic_import">Εισαγωγή</string>
     <string name="generic_reset">Επαναφορά</string>
+    <string name="settings_help_menus">Σύρετε και σαρώστε στοιχεία για να οργανώσετε τα μενού σας\nΗ κάτω γραμμή εργαλείων αντιστρέφει τη σειρά</string>
+    <string name="settings_title_reset_menus">Επαναφορά προεπιλεγμένων μενού</string>
+    <string name="dialog_title_reset_menus">Επαναφορά προεπιλεγμένων μενού;</string>
+    <string name="action_restore">Επαναφορά</string>
+    <string name="dialog_message_reset_menus">Θα χάσετε την τρέχουσα ρύθμιση</string>
     <string name="export_bookmarks">Εξαγωγή σελιδοδεικτών σε αρχείο</string>
     <string name="import_backup">Εισαγωγή σελιδοδεικτών απο αρχείο</string>
     <string name="bookmark_export_path">Σελιδοδείκτες εξάχθηκαν στο</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Οριζόντια</string>
     <string name="pref_category_portrait">Κατακόρυφη</string>
+    <string name="settings_title_hidden">Κρυφά στοιχεία</string>
+    <string name="settings_title_menus">Μενού</string>
+    <string name="settings_summary_menus">Οργανώστε τα στοιχεία μενού</string>
+    <string name="action_tab_menu">Μενού καρτέλας</string>
+    <string name="settings_title_main_menu">Κύριο μενού</string>
     <string name="pref_category_filters">Φίλτρα</string>
     <string name="pref_category_summary_filters">Τοπικά ή απομακρυσμένα αρχεία που ορίζουν τους κανόνες ελέγχου περιεχομένου σας</string>
     <string name="pref_category_on_tab_close">Κατά το κλείσιμο καρτέλας</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Η συντόμευση προστέθηκε στην αρχική οθόνη</string>
     <string name="shortcut_message_failed_to_add">Λυπούμαστε, το πρόγραμμα εκκίνησής σας δεν υποστηρίζει συντομεύσεις.</string>
     <string name="action_delete_all_bookmarks">Διαγραφή όλων των σελιδοδεικτών</string>
-    <!-- debug strings -->
     <string name="debug_title">Αποσφαλμάτωση</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Επανεκκινήστε την εφαρμογή για να τεθεί σε ισχύ η αλλαγή</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Ενεργοποιημένο</string>
     <string name="pref_summary_off_logs">Απενεργοποιημένο</string>
     <string name="pref_title_log_level">Επίπεδο καταγραφής</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Άνοιγμα σε νέα καρτέλα</string>
     <string name="dialog_open_background_tab">Άνοιγμα σε καρτέλα παρασκηνίου</string>
     <string name="dialog_open_incognito_tab">Άνοιγμα σε καρτέλα ανώνυμης περιήγησης</string>
@@ -405,32 +407,24 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Αποκλείστηκε %1$s</string>
     <string name="dialog_delete_all_downloads">Διαγραφή όλων των λήψεων</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Εργαλεία σελίδας</string>
     <string name="dialog_toggle_desktop">Εναλλαγή παράγοντα χρήστη επιφάνειας εργασίας</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Ειδικό URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1 καρτέλα ανώνυμης περιήγησης ανοιχτή</item>
         <item quantity="other">%1 καρτέλες ανώνυμης περιήγησης ανοιχτές</item>
     </plurals>
     <string name="notification_incognito_running_message">Αγγίξτε για άνοιγμα</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Συνεχιζόμενη συνεδρία ανώνυμης περιήγησης</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Εκδόθηκε από:</string>
     <string name="ssl_info_issued_to">Εκδόθηκε σε:</string>
     <string name="ssl_info_issued_on">Εκδόθηκε στις:</string>
     <string name="ssl_info_expires_on">Λήγει στις:</string>
-    <!-- Search in page -->
     <string name="next">Επόμενο</string>
     <string name="previous">Προηγούμενο</string>
     <string name="close">Κλείσιμο</string>
     <string name="exit">Έξοδος</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Εισαγωγή πρότασης</string>
     <string name="action_close_all_other_tabs">Κλείσιμο όλων των άλλων καρτελών</string>
     <string name="action_restore_all_tabs">Επαναφορά όλων των καρτελών</string>
@@ -467,11 +461,6 @@
     <string name="settings_title_cookies_delete_all">Διαγραφή όλων</string>
     <string name="settings_summary_cookies_delete_all">Διαγραφή όλων των cookies για την τρέχουσα σελίδα</string>
     <string name="question_delete_all_page_cookies">Διαγραφή όλων των cookies για την τρέχουσα σελίδα;</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Η τρέχουσα σελίδα έχει ένα cookie</item>
         <item quantity="other">Η τρέχουσα σελίδα έχει <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
@@ -486,7 +475,6 @@
     <string name="settings_summary_on_task_icon">Χρήση εικονιδίου σελίδας</string>
     <string name="settings_summary_off_task_icon">Χρήση εικονιδίου εφαρμογής</string>
     <string name="settings_title_toolbar_label">Ετικέτα γραμμής εργαλείων</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Διαθέσιμη εφαρμογή τρίτου</string>
     <string name="dialog_message_third_party_app">Θέλετε να εκκινήσετε την εφαρμογή που σχετίζεται με αυτόν τον ιστότοπο;</string>
     <string name="per_month"> / μήνα</string>
@@ -505,22 +493,14 @@
     <string name="invalid_characters_removed">Αφαιρέθηκαν μη έγκυροι χαρακτήρες!</string>
     <string name="reading_mode_image_copyright">Εικόνα αποδίδεται σε</string>
     <string name="reading_mode_image_caption">Εικόνα με λεζάντα</string>
-    <!-- text-to-speech -->
     <string name="tts">Ανάγνωση σελίδας</string>
     <string name="stop_tts">Διακοπή ανάγνωσης</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Πρόγραμμα περιήγησης ιστού Fulguris</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Σύνδεσμος</string>
     <string name="button_image">Εικόνα</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Η καρτέλα έκλεισε</string>
     <string name="button_undo">Αναίρεση</string>
     <string name="button_dismiss">Απόρριψη</string>
-    <!-- Find in page -->
     <string name="no_match_found">Δεν βρέθηκε αντιστοίχιση!</string>
     <string name="match_x_of_n">Αντιστοίχιση <xliff:g id="current_match" example="1">%1$d</xliff:g> από <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Εμφάνιση snackbar</string>
@@ -605,7 +585,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Σύντομο URL</string>
     <string name="label_domain">Τομέας</string>
@@ -613,7 +592,6 @@
     <string name="label_session">Συνεδρία</string>
     <string name="label_app_name">Όνομα εφαρμογής</string>
     <string name="message_render_process_crashed">Η διεργασία απόδοσης κατέρρευσε. Μπορεί να χρειαστεί να επαναφορτώσετε ορισμένες ιστοσελίδες.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Καλώς ήρθατε στο Fulguris</string>
     <string name="intro_welcome_description">Εμπειριαστείτε γρήγορη, ασφαλή και προσαρμόσιμη περιήγηση ιστού με προηγμένες λειτουργίες απορρήτου και σύγχρονο σχεδιασμό.</string>
     <string name="intro_title_terms">Ας ξεκινήσουμε!</string>
@@ -625,17 +603,6 @@
     <string name="pref_title_enable_ad_blocker">Αποκλειστής διαφημίσεων</string>
     <string name="pref_summary_on_enable_ad_blocker">Απολαύστε μια πιο καθαρή, ασφαλέστερη εμπειρία ιστού</string>
     <string name="pref_summary_off_enable_ad_blocker">Απολαύστε την αφιλτράριστη, αυθεντική έκδοση του ιστού</string>
-    <string name="action_copy">Αντιγραφή</string>
-    <string name="settings_help_menus">Σύρετε και σαρώστε στοιχεία για να οργανώσετε τα μενού σας\nΗ κάτω γραμμή εργαλείων αντιστρέφει τη σειρά</string>
-    <string name="settings_title_reset_menus">Επαναφορά προεπιλεγμένων μενού</string>
-    <string name="dialog_title_reset_menus">Επαναφορά προεπιλεγμένων μενού;</string>
-    <string name="action_restore">Επαναφορά</string>
-    <string name="dialog_message_reset_menus">Θα χάσετε την τρέχουσα ρύθμιση</string>
-    <string name="settings_title_hidden">Κρυφά στοιχεία</string>
-    <string name="settings_title_menus">Μενού</string>
-    <string name="settings_summary_menus">Οργανώστε τα στοιχεία μενού</string>
-    <string name="action_tab_menu">Μενού καρτέλας</string>
-    <string name="settings_title_main_menu">Κύριο μενού</string>
     <string name="page_requests_title">Αιτήματα</string>
     <string name="page_request_details_title">Αίτημα</string>
     <string name="request_status">Κατάσταση</string>

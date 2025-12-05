@@ -45,6 +45,7 @@
     <string name="clear_history">Wis browser historiek</string>
     <string name="action_download">Downloaden</string>
     <string name="action_open">Openen</string>
+    <string name="action_copy">Kopiëren</string>
     <string name="dialog_title_share">Deel deze pagina</string>
     <string name="action_delete">Verwijderen</string>
     <string name="action_blank">Witte pagina</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Je draait nu v%s. Wilt u de release-opmerkingen online bekijken?</string>
     <string name="title_welcome">Welkom bij Fulguris</string>
     <string name="message_welcome">Bezoek onze homepage voor meer informatie over deze krachtige webbrowser?</string>
-    <!-- Ad block -->
     <string name="block_ads">Controle over inhoud</string>
     <string name="block_remote_frequency_daily">Dagelijks</string>
     <string name="block_remote_frequency_weekly">Wekelijks</string>
     <string name="block_remote_frequency_monthly">Maandelijks</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">De volgende pagina werd geblokkeerd:</string>
     <string name="page_blocked_reason">vanwege:</string>
     <string name="page_blocked_list_ad">%s op advertentiefilters</string>
     <string name="page_blocked_list_user">%s geblokkeerd door gebruikersregel</string>
     <string name="page_blocked_list_malware">%s op malwarefilters</string>
     <string name="request_blocked">Verzoek geblokkeerd</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Modus Automatisch bijwerken</string>
     <string name="blocklist_update_on">Automatisch bijwerken op</string>
     <string name="blocklist_update_off">Automatisch bijwerken uit</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Laatste bijwerking: %s</string>
     <string name="blocklist_updating">Aan het updaten…</string>
     <string name="blocklist_update_error">Fout bij het bijwerken van de filterlijst %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Fout bij het bijwerken van de filterlijst %1$s: statuscode %2$s</string>
     <string name="add_blocklist">Filters toevoegen</string>
     <string name="add_blocklist_hint">Je kunt hostlijsten kiezen of elke lijst die compatibel is met de regels van AdBlockPlus</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Verander filters</string>
     <string name="use_modify_filters_warning">In sommige gevallen is gebleken dat modificatiefilters websites kapot maken in deze browser. Totdat de implementatie is verbeterd, kun je ze op eigen risico inschakelen. Uitschakelen voor main-frame documenten voorkomt alleen de meeste problemen.</string>
     <string name="modify_filters_not_for_main_frame">Alleen uitschakelen voor hoofdframe</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Actie geannuleerd.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Beveiligingsfout! Laden van pagina afgebroken.</string>
     <string name="message_ssl_error">Beveiligde verbinding gecompromitteerd<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Wilt u nog steeds doorgaan?</string>
     <string name="message_certificate_date_invalid">Datum van certificaat is ongeldig</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Certificaat is ongeldig</string>
     <string name="message_certificate_not_yet_valid">Certificaat is nog niet geldig</string>
     <string name="message_certificate_untrusted">Certificaat wordt niet vertrouwd</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Verzoek om toestemming</string>
     <string name="message_permission_request">%1$s\n\nwil graag gebruiken:\n\n%2$s</string>
     <string name="title_form_resubmission">Formulier herverzending</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Exportieren</string>
     <string name="generic_import">Importeren</string>
     <string name="generic_reset">Herstel</string>
+    <string name="settings_help_menus">Sleep en veeg items om je menu\'s te ordenen\nOnderste werkbalk keert de itemvolgorde om</string>
+    <string name="settings_title_reset_menus">Standaardmenu\'s herstellen</string>
+    <string name="dialog_title_reset_menus">Standaardmenu\'s herstellen?</string>
+    <string name="action_restore">Herstellen</string>
+    <string name="dialog_message_reset_menus">Je verliest je huidige instellingen</string>
     <string name="export_bookmarks">Exporteer bladwijzers naar backup</string>
     <string name="import_backup">Importeer bladwijzers van backup</string>
     <string name="bookmark_export_path">Bladwijzers geëxporteerd naar</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Liggend</string>
     <string name="pref_category_portrait">Staand</string>
+    <string name="settings_title_hidden">Verborgen items</string>
+    <string name="settings_title_menus">Menu\'s</string>
+    <string name="settings_summary_menus">Menu-items organiseren</string>
+    <string name="action_tab_menu">Tabmenu</string>
+    <string name="settings_title_main_menu">Hoofdmenu</string>
     <string name="pref_category_filters">Filters</string>
     <string name="pref_category_summary_filters">Lokale of externe bestanden die je regels voor inhoudscontrole definiëren</string>
     <string name="pref_category_on_tab_close">Bij het sluiten van een tabblad</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Snelkoppeling aan startscherm toegevoegd</string>
     <string name="shortcut_message_failed_to_add">Sorry, je launcher ondersteunt geen snelkoppelingen.</string>
     <string name="action_delete_all_bookmarks">Verwijder alle bladwijzers</string>
-    <!-- debug strings -->
     <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Start de app opnieuw op om de wijziging door te voeren</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Ingeschakeld</string>
     <string name="pref_summary_off_logs">Uitgeschakeld</string>
     <string name="pref_title_log_level">Logniveau</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Open in een nieuw tabblad</string>
     <string name="dialog_open_background_tab">Open in een achtergrond tabblad</string>
     <string name="dialog_open_incognito_tab">Open in een incognito tabblad</string>
@@ -405,32 +407,24 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$s geblokkeerd</string>
     <string name="dialog_delete_all_downloads">Alle downloads verwijderen</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Pagina gereedschappen</string>
     <string name="dialog_toggle_desktop">Schakel bureaublad-gebruikersagent in</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Aangepaste URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d incognito tabblad geopend</item>
         <item quantity="other">%1$d incognito tabbladen geopend</item>
     </plurals>
     <string name="notification_incognito_running_message">Aanraken om te openen</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Lopende incognito-sessie</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Uitgegeven door:</string>
     <string name="ssl_info_issued_to">Uitgegeven aan:</string>
     <string name="ssl_info_issued_on">Uitgegeven op:</string>
     <string name="ssl_info_expires_on">Verloopt op:</string>
-    <!-- Search in page -->
     <string name="next">Volgende</string>
     <string name="previous">Vorige</string>
     <string name="close">Sluiten</string>
     <string name="exit">Beenden</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Suggestie invoegen</string>
     <string name="action_close_all_other_tabs">Sluit alle andere tabbladen</string>
     <string name="action_restore_all_tabs">Alle tabbladen herstellen</string>
@@ -467,11 +461,6 @@
     <string name="settings_title_cookies_delete_all">Verwijder alles</string>
     <string name="settings_summary_cookies_delete_all">Alle cookies voor de huidige pagina verwijderen</string>
     <string name="question_delete_all_page_cookies">Alle cookies voor de huidige pagina verwijderen?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Huidige pagina heeft één cookie</item>
         <item quantity="other">Huidige pagina heeft <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
@@ -486,7 +475,6 @@
     <string name="settings_summary_on_task_icon">Pagina-icoon gebruiken</string>
     <string name="settings_summary_off_task_icon">App-pictogram gebruiken</string>
     <string name="settings_title_toolbar_label">Label werkbalk</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">App van derden beschikbaar</string>
     <string name="dialog_message_third_party_app">Wilt u de applicatie starten die bij die website hoort?</string>
     <string name="per_month">\u0020/ maand</string>
@@ -505,22 +493,14 @@
     <string name="invalid_characters_removed">Ongeldige tekens verwijderd!</string>
     <string name="reading_mode_image_copyright">Afbeelding toegeschreven aan</string>
     <string name="reading_mode_image_caption">Afbeelding met bijschrift</string>
-    <!-- text-to-speech -->
     <string name="tts">Lees pagina</string>
     <string name="stop_tts">Stop met lezen</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris webbrowser</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Koppeling</string>
     <string name="button_image">Afbeelding</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Tab gesloten</string>
     <string name="button_undo">Ongedaan maken</string>
     <string name="button_dismiss">Afwijzen</string>
-    <!-- Find in page -->
     <string name="no_match_found">Geen match gevonden!</string>
     <string name="match_x_of_n">Wedstrijd <xliff:g id="current_match" example="1">%1$d</xliff:g> van <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Toon snoepbar</string>
@@ -605,7 +585,6 @@
     <string name="log_level_warn">Waarschuwen</string>
     <string name="log_level_error">Fout</string>
     <string name="log_level_assert">Bevestigen</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Verkorte URL</string>
     <string name="label_domain">Domein</string>
@@ -613,7 +592,6 @@
     <string name="label_session">Sessie</string>
     <string name="label_app_name">Naam app</string>
     <string name="message_render_process_crashed">Renderproces is gecrasht. Mogelijk moet u sommige webpagina\'s opnieuw laden.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Welkom bij Fulguris</string>
     <string name="intro_welcome_description">Ervaar snel, veilig en aanpasbaar browsen met geavanceerde privacyfuncties en modern ontwerp.</string>
     <string name="intro_title_terms">Laten we beginnen!</string>
@@ -625,17 +603,6 @@
     <string name="pref_title_enable_ad_blocker">Advertentieblokkering</string>
     <string name="pref_summary_on_enable_ad_blocker">Geniet van een schonere, veiligere webervaring</string>
     <string name="pref_summary_off_enable_ad_blocker">Geniet van een ongefilterde, originele versie van het web</string>
-    <string name="action_copy">Kopiëren</string>
-    <string name="settings_help_menus">Sleep en veeg items om je menu\'s te ordenen\nOnderste werkbalk keert de itemvolgorde om</string>
-    <string name="settings_title_reset_menus">Standaardmenu\'s herstellen</string>
-    <string name="dialog_title_reset_menus">Standaardmenu\'s herstellen?</string>
-    <string name="action_restore">Herstellen</string>
-    <string name="dialog_message_reset_menus">Je verliest je huidige instellingen</string>
-    <string name="settings_title_hidden">Verborgen items</string>
-    <string name="settings_title_menus">Menu\'s</string>
-    <string name="settings_summary_menus">Menu-items organiseren</string>
-    <string name="action_tab_menu">Tabmenu</string>
-    <string name="settings_title_main_menu">Hoofdmenu</string>
     <string name="page_requests_title">Verzoeken</string>
     <string name="page_request_details_title">Verzoek</string>
     <string name="request_status">Status</string>

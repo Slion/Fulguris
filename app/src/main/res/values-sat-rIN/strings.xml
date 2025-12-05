@@ -45,6 +45,7 @@
     <string name="clear_history">ᱵᱽᱨᱟᱣᱡᱚᱨ ᱱᱟᱜᱟᱢ ᱯᱷᱟᱨᱪᱟᱭ ᱢᱮ</string>
     <string name="action_download">ᱰᱟᱣᱩᱱᱞᱚᱰ</string>
     <string name="action_open">ᱡᱷᱤᱡ</string>
+    <string name="action_copy">ᱱᱚᱠᱚᱞ</string>
     <string name="dialog_title_share">ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱦᱟᱹᱴᱤᱧ</string>
     <string name="action_delete">ᱢᱮᱴᱟᱣ</string>
     <string name="action_blank">ᱠᱷᱟᱹᱞᱤ ᱥᱟᱦᱴᱟ</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">ᱟᱢ ᱱᱤᱛᱚᱜ v%s ᱪᱟᱹᱞᱩ ᱮᱫᱟᱢ ᱾ ᱪᱮᱫ ᱚᱱᱞᱟᱭᱤᱱ ᱨᱤᱞᱤᱡᱽ ᱱᱳᱴᱥ ᱠᱚ ᱧᱮᱞ ᱥᱟᱱᱟᱢᱟ?</string>
     <string name="title_welcome">Fulguris ᱨᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ</string>
     <string name="message_welcome">ᱱᱚᱶᱟ ᱫᱟᱲᱮ ᱵᱽᱨᱟᱣᱡᱚᱨ ᱵᱟᱵᱚᱛ ᱵᱟᱹᱲᱛᱤ ᱵᱟᱰᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱮᱭᱟᱜ ᱚᱲᱟᱜ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱢᱮ?</string>
-    <!-- Ad block -->
     <string name="block_ads">ᱡᱤᱱᱤᱥ ᱠᱚᱸᱴᱨᱚᱞ</string>
     <string name="block_remote_frequency_daily">ᱢᱟᱦᱟᱸ ᱢᱟᱦᱟᱸ</string>
     <string name="block_remote_frequency_weekly">ᱦᱟᱯᱛᱟ ᱦᱟᱯᱛᱟ</string>
     <string name="block_remote_frequency_monthly">ᱪᱟᱸᱫᱚ ᱪᱟᱸᱫᱚ</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱵᱞᱚᱠ ᱮᱱᱟ:</string>
     <string name="page_blocked_reason">ᱪᱮᱫᱟᱜ ᱥᱮ:</string>
     <string name="page_blocked_list_ad">%s ᱮᱰ ᱯᱷᱤᱞᱴᱚᱨ ᱨᱮ</string>
     <string name="page_blocked_list_user">%s ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱱᱤᱭᱟᱹᱢ ᱛᱮ ᱵᱞᱚᱠ</string>
     <string name="page_blocked_list_malware">%s ᱢᱮᱞᱣᱮᱨ ᱯᱷᱤᱞᱴᱚᱨ ᱨᱮ</string>
     <string name="request_blocked">ᱱᱮᱦᱚᱨ ᱵᱞᱚᱠ ᱮᱱᱟ</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">ᱟᱡ ᱟᱡ ᱛᱮ ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱢᱚᱰ</string>
     <string name="blocklist_update_on">ᱟᱡ ᱟᱡ ᱛᱮ ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱪᱟᱹᱞᱩ</string>
     <string name="blocklist_update_off">ᱟᱡ ᱟᱡ ᱛᱮ ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱵᱚᱸᱫᱚ</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">ᱢᱩᱪᱟᱹᱫ ᱦᱟᱹᱞᱤᱭᱟᱹᱠ: %s</string>
     <string name="blocklist_updating">ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ…</string>
     <string name="blocklist_update_error">ᱯᱷᱤᱞᱴᱚᱨ ᱞᱤᱥᱴᱤ %s ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱨᱮ ᱵᱷᱩᱞ</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">ᱯᱷᱤᱞᱴᱚᱨ ᱞᱤᱥᱴᱤ %1$s ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱨᱮ ᱵᱷᱩᱞ: ᱥᱴᱮᱴᱚᱥ ᱠᱳᱰ %2$s</string>
     <string name="add_blocklist">ᱯᱷᱤᱞᱴᱚᱨ ᱨᱮᱫᱽ ᱥᱮᱞᱮᱫ</string>
     <string name="add_blocklist_hint">ᱟᱢ ᱦᱚᱥᱴ ᱞᱤᱥᱴᱤ ᱟᱨ AdBlockPlus ᱱᱤᱭᱟᱹᱢ ᱥᱟᱶ ᱢᱮᱥᱟ ᱞᱤᱥᱴᱤ ᱵᱟᱪᱷᱟᱣ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱢ</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">ᱢᱳᱰᱤᱯᱷᱟᱭᱟᱨ ᱯᱷᱤᱞᱴᱚᱨ ᱠᱚ</string>
     <string name="use_modify_filters_warning">ᱛᱤᱱᱟᱹᱜ ᱜᱟᱱ ᱡᱚᱠᱷᱟ ᱨᱮ, ᱢᱳᱰᱤᱯᱷᱟᱭᱟᱨ ᱯᱷᱤᱞᱴᱚᱨ ᱠᱚ ᱱᱚᱶᱟ ᱵᱽᱨᱟᱣᱡᱚᱨ ᱨᱮ ᱣᱮᱵᱽᱥᱟᱭᱤᱴ ᱠᱚ ᱵᱷᱟᱸᱜᱟᱣ ᱠᱚᱣᱟ ᱾ ᱡᱟᱦᱟᱸ ᱫᱷᱟᱹᱵᱤᱡ ᱱᱟᱯᱟᱭ ᱵᱟᱝ ᱦᱩᱭᱩᱜᱼᱟ, ᱟᱢᱟᱜ ᱡᱚᱠᱷᱚᱢ ᱨᱮ ᱮᱢ ᱪᱷᱚ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱢ ᱾</string>
     <string name="modify_filters_not_for_main_frame">ᱢᱩᱬ ᱯᱷᱨᱮᱢ ᱞᱟᱹᱜᱤᱫ ᱜᱮ ᱵᱚᱸᱫᱚ</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">ᱠᱟᱹᱢᱤ ᱵᱟᱹᱰᱨᱟᱹ ᱮᱱᱟ ᱾</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">ᱨᱩᱠᱷᱤᱭᱟᱹ ᱵᱷᱩᱞ! ᱥᱟᱦᱴᱟ ᱞᱚᱰᱤᱝ ᱵᱟᱹᱰᱨᱟᱹ ᱮᱱᱟ ᱾</string>
     <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
     <string name="message_certificate_date_invalid">ᱥᱚᱨᱴᱤᱯᱷᱤᱠᱮᱴ ᱢᱟᱹᱦᱤᱛ ᱵᱷᱩᱞ ᱜᱮᱭᱟ</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">ᱥᱚᱨᱴᱤᱯᱷᱤᱠᱮᱴ ᱵᱷᱩᱞ ᱜᱮᱭᱟ</string>
     <string name="message_certificate_not_yet_valid">ᱥᱚᱨᱴᱤᱯᱷᱤᱠᱮᱴ ᱱᱤᱛᱚᱜ ᱦᱚᱸ ᱵᱟᱝ ᱴᱷᱤᱠ ᱟᱠᱟᱱᱟ</string>
     <string name="message_certificate_untrusted">ᱥᱚᱨᱴᱤᱯᱷᱤᱠᱮᱴ ᱯᱟᱹᱛᱤᱭᱟᱹᱣ ᱵᱟᱝ ᱜᱮᱭᱟ</string>
-    <!-- permissions request -->
     <string name="title_permission_request">ᱪᱷᱟᱹᱰᱤ ᱱᱮᱦᱚᱨ</string>
     <string name="message_permission_request">%1$s\n\nᱵᱮᱵᱷᱟᱨ ᱥᱟᱱᱟᱢᱟᱭ:\n\n%2$s</string>
     <string name="title_form_resubmission">ᱯᱷᱚᱨᱚᱢ ᱫᱚᱦᱲᱟ ᱡᱚᱢᱟ</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">ᱮᱠᱥᱯᱳᱨᱴ</string>
     <string name="generic_import">ᱤᱢᱯᱳᱨᱴ</string>
     <string name="generic_reset">ᱫᱚᱦᱲᱟ ᱫᱚᱦᱚ</string>
+    <string name="settings_help_menus">ᱛᱚᱵᱷᱚᱵ ᱢᱮᱱᱩ ᱨᱮ ᱠᱟᱹᱢᱤ ᱯᱟᱱᱛᱮᱭᱟᱜ-ᱟ</string>
+    <string name="settings_title_reset_menus">ᱢᱮᱱᱩ ᱮᱞᱟᱠᱷᱟ</string>
+    <string name="dialog_title_reset_menus">ᱢᱮᱱᱩ ᱮᱞᱟᱠᱷᱟ</string>
+    <string name="action_restore">ᱵᱟᱹᱦᱟᱞᱤ</string>
+    <string name="dialog_message_reset_menus">ᱢᱮᱱᱩ ᱮᱞᱟᱠᱷᱟ ᱥᱚᱵᱷᱮ ᱢᱮᱱᱩ ᱯᱟᱦᱴᱟ ᱥᱟᱯᱲᱟᱣ ᱞᱮᱜᱟ-ᱟ</string>
     <string name="export_bookmarks">ᱪᱤᱱᱦᱟᱹ ᱠᱚ ᱵᱮᱠᱚᱯ ᱛᱮ ᱮᱠᱥᱯᱳᱨᱴ</string>
     <string name="import_backup">ᱵᱮᱠᱚᱯ ᱠᱷᱚᱱ ᱪᱤᱱᱦᱟᱹ ᱠᱚ ᱤᱢᱯᱳᱨᱴ</string>
     <string name="bookmark_export_path">ᱪᱤᱱᱦᱟᱹ ᱠᱚ ᱮᱠᱥᱯᱳᱨᱴ ᱮᱱᱟ</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">ᱞᱮᱱᱰᱥᱠᱮᱯ</string>
     <string name="pref_category_portrait">ᱯᱳᱨᱴᱨᱮᱴ</string>
+    <string name="settings_title_hidden">ᱞᱩᱠᱟᱣ</string>
+    <string name="settings_title_menus">ᱢᱮᱱᱩ</string>
+    <string name="settings_summary_menus">ᱟᱢᱟᱜ ᱢᱮᱱᱩ ᱠᱩᱥᱤ</string>
+    <string name="action_tab_menu">ᱴᱮᱵᱽ ᱢᱮᱱᱩ</string>
+    <string name="settings_title_main_menu">ᱢᱩᱞ ᱢᱮᱱᱩ</string>
     <string name="pref_category_filters">ᱯᱷᱤᱞᱴᱚᱨ ᱠᱚ</string>
     <string name="pref_category_summary_filters">ᱟᱢᱟᱜ ᱡᱤᱱᱤᱥ ᱠᱚᱸᱴᱨᱚᱞ ᱱᱤᱭᱟᱹᱢ ᱠᱚ ᱵᱟᱛᱟᱣ ᱞᱳᱠᱟᱞ ᱟᱨ ᱨᱤᱢᱳᱴ ᱨᱮᱫᱽ ᱠᱚ</string>
     <string name="pref_category_on_tab_close">ᱴᱮᱵᱽ ᱵᱚᱸᱫᱚ ᱡᱚᱠᱷᱟ</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">ᱚᱲᱟᱜ ᱥᱠᱨᱤᱱ ᱨᱮ ᱥᱚᱨᱴᱠᱚᱴ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</string>
     <string name="shortcut_message_failed_to_add">ᱢᱟᱯᱷ ᱢᱮ, ᱟᱢᱟᱜ ᱞᱚᱱᱪᱚᱨ ᱥᱚᱨᱴᱠᱚᱴ ᱵᱟᱝ ᱜᱚᱲᱚᱭᱟ ᱾</string>
     <string name="action_delete_all_bookmarks">ᱡᱷᱚᱛᱚ ᱪᱤᱱᱦᱟᱹ ᱠᱚ ᱢᱮᱴᱟᱣ</string>
-    <!-- debug strings -->
     <string name="debug_title">ᱰᱤᱵᱟᱜᱽ</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">ᱵᱚᱫᱚᱞ ᱠᱟᱹᱢᱤ ᱞᱟᱹᱜᱤᱫ ᱫᱟᱭᱟ ᱠᱟᱛᱮ ᱮᱯ ᱫᱚᱦᱲᱟ ᱮᱛᱦᱚᱵ ᱢᱮ</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">ᱮᱢ ᱪᱷᱚ ᱠᱟᱱᱟ</string>
     <string name="pref_summary_off_logs">ᱵᱚᱸᱫᱚ ᱠᱟᱱᱟ</string>
     <string name="pref_title_log_level">ᱞᱚᱜᱽ ᱛᱷᱚᱠ</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">ᱱᱟᱶᱟ ᱴᱮᱵᱽ ᱨᱮ ᱡᱷᱤᱡ</string>
     <string name="dialog_open_background_tab">ᱛᱟᱭᱚᱢ ᱴᱮᱵᱽ ᱨᱮ ᱡᱷᱤᱡ</string>
     <string name="dialog_open_incognito_tab">ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱴᱮᱵᱽ ᱨᱮ ᱡᱷᱤᱡ</string>
@@ -405,32 +407,24 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$s ᱵᱞᱚᱠ ᱠᱟᱱᱟ</string>
     <string name="dialog_delete_all_downloads">ᱡᱷᱚᱛᱚ ᱰᱟᱣᱩᱱᱞᱚᱰ ᱠᱚ ᱢᱮᱴᱟᱣ</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">ᱥᱟᱦᱴᱟ ᱦᱟᱹᱛᱤᱭᱟᱹᱨ ᱠᱚ</string>
     <string name="dialog_toggle_desktop">ᱰᱮᱥᱠᱴᱚᱯ ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱮᱡᱮᱱᱴ ᱵᱚᱫᱚᱞ</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">ᱠᱩᱥᱤᱭᱟᱹᱛ URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱴᱮᱵᱽ ᱡᱷᱤᱡ ᱠᱟᱱᱟ</item>
         <item quantity="other">%1$d ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱴᱮᱵᱽ ᱠᱚ ᱡᱷᱤᱡ ᱠᱟᱱᱟ</item>
     </plurals>
     <string name="notification_incognito_running_message">ᱡᱷᱤᱡ ᱞᱟᱹᱜᱤᱫ ᱴᱤᱯᱟᱹᱣ ᱢᱮ</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">ᱪᱟᱹᱞᱩ ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱥᱮᱥᱚᱱ</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Issued by:</string>
     <string name="ssl_info_issued_to">Issued to:</string>
     <string name="ssl_info_issued_on">Issued on:</string>
     <string name="ssl_info_expires_on">Expires on:</string>
-    <!-- Search in page -->
     <string name="next">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ</string>
     <string name="previous">ᱢᱟᱲᱟᱝ</string>
     <string name="close">ᱵᱚᱸᱫᱚ</string>
     <string name="exit">ᱵᱟᱦᱨᱮ ᱚᱰᱚᱠ</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">ᱵᱟᱛᱟᱣ ᱵᱚᱦᱚᱜ</string>
     <string name="action_close_all_other_tabs">ᱮᱴᱟᱜ ᱡᱷᱚᱛᱚ ᱴᱮᱵᱽ ᱵᱚᱸᱫᱚ</string>
     <string name="action_restore_all_tabs">ᱡᱷᱚᱛᱚ ᱴᱮᱵᱽ ᱫᱚᱦᱲᱟ ᱫᱚᱦᱚ</string>
@@ -467,11 +461,6 @@
     <string name="settings_title_cookies_delete_all">ᱡᱷᱚᱛᱚ ᱢᱮᱴᱟᱣ</string>
     <string name="settings_summary_cookies_delete_all">ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱦᱴᱟ ᱞᱟᱹᱜᱤᱫ ᱡᱷᱚᱛᱚ ᱠᱩᱠᱤᱡᱽ ᱢᱮᱴᱟᱣ</string>
     <string name="question_delete_all_page_cookies">ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱦᱴᱟ ᱞᱟᱹᱜᱤᱫ ᱡᱷᱚᱛᱚ ᱠᱩᱠᱤᱡᱽ ᱢᱮᱴᱟᱣ ᱥᱟᱱᱟᱢᱟ?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱦᱴᱟ ᱨᱮ ᱢᱤᱫ ᱠᱩᱠᱤ ᱢᱮᱱᱟᱜᱼᱟ</item>
         <item quantity="other">ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱦᱴᱟ ᱨᱮ %d ᱠᱩᱠᱤᱡᱽ ᱢᱮᱱᱟᱜᱼᱟ</item>
@@ -486,7 +475,6 @@
     <string name="settings_summary_on_task_icon">ᱥᱟᱦᱴᱟ ᱪᱤᱱᱦᱟᱹ ᱵᱮᱵᱷᱟᱨ</string>
     <string name="settings_summary_off_task_icon">ᱮᱯ ᱪᱤᱱᱦᱟᱹ ᱵᱮᱵᱷᱟᱨ</string>
     <string name="settings_title_toolbar_label">ᱴᱩᱞᱵᱟᱨ ᱞᱮᱵᱮᱞ</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">ᱛᱤᱥᱟᱹᱨ ᱯᱟᱴᱤ ᱮᱯ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="dialog_message_third_party_app">ᱪᱮᱫ ᱟᱢ ᱚᱱᱟ ᱣᱮᱵᱽᱥᱟᱭᱤᱴ ᱥᱟᱶ ᱡᱩᱲᱟᱹᱣ ᱮᱯ ᱮᱛᱦᱚᱵ ᱥᱟᱱᱟᱢᱟ?</string>
     <string name="per_month"> / ᱪᱟᱸᱫᱚ</string>
@@ -505,22 +493,14 @@
     <string name="invalid_characters_removed">ᱵᱷᱩᱞ ᱪᱤᱱᱦᱟᱹᱯ ᱠᱚ ᱚᱪᱚᱜ ᱮᱱᱟ!</string>
     <string name="reading_mode_image_copyright">ᱪᱤᱛᱟᱹᱨ ᱮᱴᱨᱤᱵᱭᱩᱴ</string>
     <string name="reading_mode_image_caption">ᱠᱮᱯᱥᱚᱱ ᱥᱟᱶ ᱪᱤᱛᱟᱹᱨ</string>
-    <!-- text-to-speech -->
     <string name="tts">ᱥᱟᱦᱴᱟ ᱯᱟᱲᱦᱟᱣ</string>
     <string name="stop_tts">ᱯᱟᱲᱦᱟᱣ ᱵᱚᱸᱫᱚ</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris ᱣᱮᱵᱽ ᱵᱽᱨᱟᱣᱡᱚᱨ</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">ᱞᱤᱝᱠ</string>
     <string name="button_image">ᱪᱤᱛᱟᱹᱨ</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">ᱴᱮᱵᱽ ᱵᱚᱸᱫᱚ ᱮᱱᱟ</string>
     <string name="button_undo">ᱵᱟᱹᱰᱨᱟᱹ</string>
     <string name="button_dismiss">ᱵᱚᱸᱫᱚ</string>
-    <!-- Find in page -->
     <string name="no_match_found">ᱡᱚᱲ ᱵᱟᱝ ᱧᱟᱢ ᱮᱱᱟ!</string>
     <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">ᱥᱱᱮᱠᱵᱟᱨ ᱩᱫᱩᱜ</string>
@@ -605,7 +585,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">ᱦᱩᱰᱤᱧ URL</string>
     <string name="label_domain">ᱰᱳᱢᱮᱱ</string>
@@ -613,7 +592,6 @@
     <string name="label_session">ᱥᱮᱥᱚᱱ</string>
     <string name="label_app_name">ᱮᱯ ᱧᱩᱛᱩᱢ</string>
     <string name="message_render_process_crashed">ᱨᱮᱱᱰᱚᱨ ᱯᱨᱚᱥᱮᱥ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱟᱢ ᱛᱤᱱᱟᱹᱜ ᱜᱟᱱ ᱣᱮᱵᱽ ᱥᱟᱦᱴᱟ ᱫᱚᱦᱲᱟ ᱞᱚᱰ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ ᱾</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Fulguris ᱨᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ</string>
     <string name="intro_welcome_description">ᱞᱟᱦᱟᱱᱛᱤ ᱱᱤᱡᱚᱨᱟᱜ ᱯᱷᱤᱪᱚᱨ ᱟᱨ ᱱᱟᱶᱟ ᱰᱤᱡᱟᱭᱤᱱ ᱥᱟᱶ ᱡᱟᱹᱯᱩᱫ, ᱨᱩᱠᱷᱤᱭᱟᱹ, ᱟᱨ ᱠᱩᱥᱤᱭᱟᱹᱛ ᱣᱮᱵᱽ ᱵᱽᱨᱟᱣᱡᱤᱝ ᱮᱱᱮᱢ ᱢᱮ ᱾</string>
     <string name="intro_title_terms">ᱮᱛᱦᱚᱵ ᱞᱮ!</string>
@@ -625,17 +603,6 @@
     <string name="pref_title_enable_ad_blocker">ᱮᱰ ᱵᱞᱚᱠᱚᱨ</string>
     <string name="pref_summary_on_enable_ad_blocker">ᱥᱟᱯᱷᱟ, ᱨᱩᱠᱷᱤᱭᱟᱹ ᱣᱮᱵᱽ ᱮᱱᱮᱢ ᱮᱱᱮᱢ ᱢᱮ</string>
     <string name="pref_summary_off_enable_ad_blocker">ᱵᱟᱝ ᱯᱷᱤᱞᱴᱚᱨ, ᱢᱩᱞ ᱵᱷᱚᱨᱥᱚᱱ ᱣᱮᱵᱽ ᱮᱱᱮᱢ ᱢᱮ</string>
-    <string name="action_copy">ᱱᱚᱠᱚᱞ</string>
-    <string name="settings_help_menus">ᱛᱚᱵᱷᱚᱵ ᱢᱮᱱᱩ ᱨᱮ ᱠᱟᱹᱢᱤ ᱯᱟᱱᱛᱮᱭᱟᱜ-ᱟ</string>
-    <string name="settings_title_reset_menus">ᱢᱮᱱᱩ ᱮᱞᱟᱠᱷᱟ</string>
-    <string name="dialog_title_reset_menus">ᱢᱮᱱᱩ ᱮᱞᱟᱠᱷᱟ</string>
-    <string name="action_restore">ᱵᱟᱹᱦᱟᱞᱤ</string>
-    <string name="dialog_message_reset_menus">ᱢᱮᱱᱩ ᱮᱞᱟᱠᱷᱟ ᱥᱚᱵᱷᱮ ᱢᱮᱱᱩ ᱯᱟᱦᱴᱟ ᱥᱟᱯᱲᱟᱣ ᱞᱮᱜᱟ-ᱟ</string>
-    <string name="settings_title_hidden">ᱞᱩᱠᱟᱣ</string>
-    <string name="settings_title_menus">ᱢᱮᱱᱩ</string>
-    <string name="settings_summary_menus">ᱟᱢᱟᱜ ᱢᱮᱱᱩ ᱠᱩᱥᱤ</string>
-    <string name="action_tab_menu">ᱴᱮᱵᱽ ᱢᱮᱱᱩ</string>
-    <string name="settings_title_main_menu">ᱢᱩᱞ ᱢᱮᱱᱩ</string>
     <string name="page_requests_title">ᱥᱟᱦᱴᱟ ᱛᱮ ᱨᱮᱠᱩᱭᱮᱥᱴ</string>
     <string name="page_request_details_title">ᱨᱮᱠᱩᱭᱮᱥᱴ ᱵᱤᱵᱨᱚᱱ</string>
     <string name="request_status">ᱥᱴᱮᱴᱟᱥ</string>

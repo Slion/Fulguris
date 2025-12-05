@@ -45,6 +45,7 @@
     <string name="clear_history">清除瀏覽歷程記錄</string>
     <string name="action_download">下載</string>
     <string name="action_open">開啟</string>
+    <string name="action_copy">複製</string>
     <string name="dialog_title_share">分享此頁面</string>
     <string name="action_delete">刪除</string>
     <string name="action_blank">空白頁面</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">您現在正在執行 v%s。是否要在線上檢查發行說明？</string>
     <string name="title_welcome">歡迎使用 Fulguris</string>
     <string name="message_welcome">造訪我們的首頁以深入了解這個強大的網路瀏覽器？</string>
-    <!-- Ad block -->
     <string name="block_ads">內容控制</string>
     <string name="block_remote_frequency_daily">每日</string>
     <string name="block_remote_frequency_weekly">每週</string>
     <string name="block_remote_frequency_monthly">每月</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">以下頁面已被封鎖：</string>
     <string name="page_blocked_reason">原因：</string>
     <string name="page_blocked_list_ad">在廣告過濾器中的 %s</string>
     <string name="page_blocked_list_user">被使用者規則封鎖的 %s</string>
     <string name="page_blocked_list_malware">在惡意軟體過濾器中的 %s</string>
     <string name="request_blocked">請求已封鎖</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">自動更新模式</string>
     <string name="blocklist_update_on">自動更新開啟</string>
     <string name="blocklist_update_off">自動更新關閉</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">上次更新：%s</string>
     <string name="blocklist_updating">正在更新…</string>
     <string name="blocklist_update_error">更新過濾器清單 %s 時發生錯誤</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">更新過濾器清單 %1$s 時發生錯誤：狀態碼 %2$s</string>
     <string name="add_blocklist">新增過濾器檔案</string>
     <string name="add_blocklist_hint">您可以選擇主機清單或任何與 AdBlockPlus 規則相容的清單</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">修改器過濾器</string>
     <string name="use_modify_filters_warning">在某些情況下，發現修改器過濾器會破壞此瀏覽器中的網站。在改進實作之前，您可以自行承擔風險來啟用它們。僅對主框架文件停用可避免大多數問題。</string>
     <string name="modify_filters_not_for_main_frame">僅對主框架停用</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">操作已取消。</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">安全性錯誤！頁面載入已中止。</string>
     <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
     <string name="message_certificate_date_invalid">憑證日期無效</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">憑證無效</string>
     <string name="message_certificate_not_yet_valid">憑證尚未生效</string>
     <string name="message_certificate_untrusted">憑證不受信任</string>
-    <!-- permissions request -->
     <string name="title_permission_request">請求權限</string>
     <string name="message_permission_request">%1$s\n\n想使用：\n\n%2$s</string>
     <string name="title_form_resubmission">重新送出表單</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">匯出</string>
     <string name="generic_import">匯入</string>
     <string name="generic_reset">重設</string>
+    <string name="settings_help_menus">設定分頁選單動作</string>
+    <string name="settings_title_reset_menus">重設選單</string>
+    <string name="dialog_title_reset_menus">重設選單</string>
+    <string name="action_restore">還原</string>
+    <string name="dialog_message_reset_menus">重設選單將清除所有選單頁面變更</string>
     <string name="export_bookmarks">匯出書籤至備份檔</string>
     <string name="import_backup">自備份檔匯入書籤</string>
     <string name="bookmark_export_path">書籤已匯出至</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">橫向</string>
     <string name="pref_category_portrait">縱向</string>
+    <string name="settings_title_hidden">隱藏</string>
+    <string name="settings_title_menus">選單</string>
+    <string name="settings_summary_menus">自訂您的選單</string>
+    <string name="action_tab_menu">分頁選單</string>
+    <string name="settings_title_main_menu">主選單</string>
     <string name="pref_category_filters">過濾器</string>
     <string name="pref_category_summary_filters">定義內容控制規則的本機或遠端檔案</string>
     <string name="pref_category_on_tab_close">關閉分頁時</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">捷徑已新增至主畫面</string>
     <string name="shortcut_message_failed_to_add">很抱歉，您的啟動器不支援捷徑功能。</string>
     <string name="action_delete_all_bookmarks">刪除所有書籤</string>
-    <!-- debug strings -->
     <string name="debug_title">偵錯設定</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">請重新啟動此應用程式以使變更生效</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">已啟用</string>
     <string name="pref_summary_off_logs">已停用</string>
     <string name="pref_title_log_level">日誌層級</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">在新分頁開啟</string>
     <string name="dialog_open_background_tab">在背景分頁開啟</string>
     <string name="dialog_open_incognito_tab">在無痕式分頁開啟</string>
@@ -405,31 +407,23 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">已封鎖 %1$s</string>
     <string name="dialog_delete_all_downloads">刪除所有下載</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">頁面工具</string>
     <string name="dialog_toggle_desktop">切換成桌面版使用者代理</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">自訂網址</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">已開啟 %1$d 個無痕式分頁</item>
     </plurals>
     <string name="notification_incognito_running_message">點觸以開啟</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">進行中的無痕工作階段</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Issued by</string>
     <string name="ssl_info_issued_to">Issued to</string>
     <string name="ssl_info_issued_on">Issued on</string>
     <string name="ssl_info_expires_on">Expires on</string>
-    <!-- Search in page -->
     <string name="next">下一個</string>
     <string name="previous">上一個</string>
     <string name="close">關閉</string>
     <string name="exit">結束</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">插入建議</string>
     <string name="action_close_all_other_tabs">關閉所有其他分頁</string>
     <string name="action_restore_all_tabs">還原所有分頁</string>
@@ -466,11 +460,6 @@
     <string name="settings_title_cookies_delete_all">全部刪除</string>
     <string name="settings_summary_cookies_delete_all">刪除目前頁面的所有 Cookie</string>
     <string name="question_delete_all_page_cookies">刪除目前頁面的所有 Cookie？</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="other">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
     </plurals>
@@ -483,7 +472,6 @@
     <string name="settings_summary_on_task_icon">使用頁面圖示</string>
     <string name="settings_summary_off_task_icon">使用應用程式圖示</string>
     <string name="settings_title_toolbar_label">工具列標籤</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">第三方應用程式可用</string>
     <string name="dialog_message_third_party_app">您要啟動與該網站關聯的應用程式嗎？</string>
     <string name="per_month"> / 月</string>
@@ -502,22 +490,14 @@
     <string name="invalid_characters_removed">已移除無效字元！</string>
     <string name="reading_mode_image_copyright">圖片歸屬於</string>
     <string name="reading_mode_image_caption">含標題的圖片</string>
-    <!-- text-to-speech -->
     <string name="tts">朗讀頁面</string>
     <string name="stop_tts">停止朗讀</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris 網路瀏覽器</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">連結</string>
     <string name="button_image">圖片</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">分頁已關閉</string>
     <string name="button_undo">復原</string>
     <string name="button_dismiss">關閉</string>
-    <!-- Find in page -->
     <string name="no_match_found">找不到符合項目！</string>
     <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">顯示提示列</string>
@@ -602,7 +582,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">簡短 URL</string>
     <string name="label_domain">網域</string>
@@ -610,7 +589,6 @@
     <string name="label_session">工作階段</string>
     <string name="label_app_name">應用程式名稱</string>
     <string name="message_render_process_crashed">渲染處理程序崩潰。您可能需要重新載入某些網頁。</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">歡迎使用 Fulguris</string>
     <string name="intro_welcome_description">體驗快速、安全且可自訂的網路瀏覽，具有進階隱私功能和現代設計。</string>
     <string name="intro_title_terms">開始吧！</string>
@@ -622,17 +600,6 @@
     <string name="pref_title_enable_ad_blocker">廣告封鎖器</string>
     <string name="pref_summary_on_enable_ad_blocker">享受更乾淨、更安全的網路體驗</string>
     <string name="pref_summary_off_enable_ad_blocker">享受未過濾的原始網路版本</string>
-    <string name="action_copy">複製</string>
-    <string name="settings_help_menus">設定分頁選單動作</string>
-    <string name="settings_title_reset_menus">重設選單</string>
-    <string name="dialog_title_reset_menus">重設選單</string>
-    <string name="action_restore">還原</string>
-    <string name="dialog_message_reset_menus">重設選單將清除所有選單頁面變更</string>
-    <string name="settings_title_hidden">隱藏</string>
-    <string name="settings_title_menus">選單</string>
-    <string name="settings_summary_menus">自訂您的選單</string>
-    <string name="action_tab_menu">分頁選單</string>
-    <string name="settings_title_main_menu">主選單</string>
     <string name="page_requests_title">頁面請求</string>
     <string name="page_request_details_title">請求詳情</string>
     <string name="request_status">狀態</string>

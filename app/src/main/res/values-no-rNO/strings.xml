@@ -45,6 +45,7 @@
     <string name="clear_history">Tøm nettleserhistorikk</string>
     <string name="action_download">Last ned</string>
     <string name="action_open">Åpne</string>
+    <string name="action_copy">Kopier</string>
     <string name="dialog_title_share">Del denne siden</string>
     <string name="action_delete">Slett</string>
     <string name="action_blank">Tom side</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Du kjører nå v%s. Vil du sjekke utgivelsesnotatene på nett?</string>
     <string name="title_welcome">Velkommen til Fulguris</string>
     <string name="message_welcome">Besøk hjemmesiden vår for å finne ut mer om denne kraftige nettleseren?</string>
-    <!-- Ad block -->
     <string name="block_ads">Innholdskontroll</string>
     <string name="block_remote_frequency_daily">Daglig</string>
     <string name="block_remote_frequency_weekly">Ukentlig</string>
     <string name="block_remote_frequency_monthly">Månedlig</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Følgende side ble blokkert:</string>
     <string name="page_blocked_reason">på grunn av:</string>
     <string name="page_blocked_list_ad">%s på annonsefiltre</string>
     <string name="page_blocked_list_user">%s blokkert av brukerregel</string>
     <string name="page_blocked_list_malware">%s på skadelig programvare-filtre</string>
     <string name="request_blocked">Forespørsel blokkert</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Automatisk oppdateringsmodus</string>
     <string name="blocklist_update_on">Automatisk oppdatering på</string>
     <string name="blocklist_update_off">Automatisk oppdatering av</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Siste oppdatering: %s</string>
     <string name="blocklist_updating">Oppdaterer</string>
     <string name="blocklist_update_error">Feil under oppdatering av filterliste %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Feil under oppdatering av filterliste %1$s: statuskode %2$s</string>
     <string name="add_blocklist">Legg til filterfil</string>
     <string name="add_blocklist_hint">Du kan velge vertslister eller enhver liste kompatibel med AdBlockPlus-regler</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Modifikatorfiltre</string>
     <string name="use_modify_filters_warning">I noen tilfeller har modifikatorfiltre blitt funnet å ødelegge nettsteder i denne nettleseren. Inntil implementeringen er forbedret, kan du aktivere dem på eget ansvar. Deaktivering kun for hoveddokumenter unngår de fleste problemer.</string>
     <string name="modify_filters_not_for_main_frame">Deaktiver bare for hovedramme</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Handling avbrutt.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Sikkerhetsfeil! Sidelasting avbrutt.</string>
     <string name="message_ssl_error">Sikker tilkobling kompromittert:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Vil du fortsatt fortsette?</string>
     <string name="message_certificate_date_invalid">Dato for sertifikat er ugyldig</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Sertifikatet er ugyldig</string>
     <string name="message_certificate_not_yet_valid">Sertifikatet er ikke gyldig ennå</string>
     <string name="message_certificate_untrusted">Sertifikatet er ikke pålitelig</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Tillatelsesforespørsel</string>
     <string name="message_permission_request">%1$s\n\nønsker å bruke:\n\n%2$s</string>
     <string name="title_form_resubmission">Skjemainnsending på nytt</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Eksporter</string>
     <string name="generic_import">Importer</string>
     <string name="generic_reset">Tilbakestill</string>
+    <string name="settings_help_menus">Dra og sveip elementer for å organisere menyene dine\nNedre verktøylinje reverserer elementrekkefølgen</string>
+    <string name="settings_title_reset_menus">Gjenopprett standardmenyer</string>
+    <string name="dialog_title_reset_menus">Gjenopprette standardmenyer?</string>
+    <string name="action_restore">Gjenopprett</string>
+    <string name="dialog_message_reset_menus">Du vil miste dine nåværende innstillinger</string>
     <string name="export_bookmarks">Eksporter bokmerker til sikkerhetskopi</string>
     <string name="import_backup">Importer bokmerker fra sikkerhetskopi</string>
     <string name="bookmark_export_path">Bokmerker eksportert til</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landskap</string>
     <string name="pref_category_portrait">Portrett</string>
+    <string name="settings_title_hidden">Skjulte elementer</string>
+    <string name="settings_title_menus">Menyer</string>
+    <string name="settings_summary_menus">Organiser menyelementene dine</string>
+    <string name="action_tab_menu">Fanemeny</string>
+    <string name="settings_title_main_menu">Hovedmeny</string>
     <string name="pref_category_filters">Filtre</string>
     <string name="pref_category_summary_filters">Styr hvilke eksterne ressurser som lastes inn</string>
     <string name="pref_category_on_tab_close">Ved lukking av fane</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Snarvei lagt til på startskjermen</string>
     <string name="shortcut_message_failed_to_add">Beklager, oppstarteren din støtter ikke snarveier.</string>
     <string name="action_delete_all_bookmarks">Slett alle bokmerker</string>
-    <!-- debug strings -->
     <string name="debug_title">Feilsøk</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Vennligst start appen på nytt for at endringen skal tre i kraft</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Aktivert</string>
     <string name="pref_summary_off_logs">Deaktivert</string>
     <string name="pref_title_log_level">Loggnivå</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Åpne i ny fane</string>
     <string name="dialog_open_background_tab">Åpne i bakgrunnsfane</string>
     <string name="dialog_open_incognito_tab">Åpne i inkognitofane</string>
@@ -405,32 +407,24 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Blokkert %1$s</string>
     <string name="dialog_delete_all_downloads">Slett alle nedlastinger</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Sideverktøy</string>
     <string name="dialog_toggle_desktop">Bytt skrivebordsbrukeragent</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Tilpasset URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d inkognitofane åpen</item>
         <item quantity="other">%1$d inkognitofaner åpne</item>
     </plurals>
     <string name="notification_incognito_running_message">Trykk for å åpne</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Pågående inkognito økt</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Utstedt av:</string>
     <string name="ssl_info_issued_to">Utstedt til:</string>
     <string name="ssl_info_issued_on">Utstedt på:</string>
     <string name="ssl_info_expires_on">Utløper på:</string>
-    <!-- Search in page -->
     <string name="next">Neste</string>
     <string name="previous">Forrige</string>
     <string name="close">Lukk</string>
     <string name="exit">Avslutt</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Sett inn forslag</string>
     <string name="action_close_all_other_tabs">Lukk alle andre faner</string>
     <string name="action_restore_all_tabs">Gjenopprett alle faner</string>
@@ -467,11 +461,6 @@
     <string name="settings_title_cookies_delete_all">Slett alle</string>
     <string name="settings_summary_cookies_delete_all">Slett alle informasjonskapsler for gjeldende side</string>
     <string name="question_delete_all_page_cookies">Slett alle informasjonskapsler for gjeldende side?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Gjeldende side har én informasjonskapsel</item>
         <item quantity="other">Gjeldende side har %d informasjonskapsler</item>
@@ -486,7 +475,6 @@
     <string name="settings_summary_on_task_icon">Bruk sideikon</string>
     <string name="settings_summary_off_task_icon">Bruk app-ikon</string>
     <string name="settings_title_toolbar_label">Verktøylinjeetikett</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Tredjepartsapp tilgjengelig</string>
     <string name="dialog_message_third_party_app">Vil du starte applikasjonen tilknyttet det nettstedet?</string>
     <string name="per_month"> / måned</string>
@@ -505,22 +493,14 @@
     <string name="invalid_characters_removed">Ugyldige tegn fjernet!</string>
     <string name="reading_mode_image_copyright">Bilde tilskrevet</string>
     <string name="reading_mode_image_caption">Bilde med bildetekst</string>
-    <!-- text-to-speech -->
     <string name="tts">Les side</string>
     <string name="stop_tts">Stopp lesing</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris nettleser</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Lenke</string>
     <string name="button_image">Bilde</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Fane lukket</string>
     <string name="button_undo">Angre</string>
     <string name="button_dismiss">Avvis</string>
-    <!-- Find in page -->
     <string name="no_match_found">Ingen treff funnet!</string>
     <string name="match_x_of_n">Treff <xliff:g id="current_match" example="1">%1$d</xliff:g> av <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Vis snackbar</string>
@@ -605,7 +585,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Kort URL</string>
     <string name="label_domain">Domene</string>
@@ -613,7 +592,6 @@
     <string name="label_session">Økt</string>
     <string name="label_app_name">Appnavn</string>
     <string name="message_render_process_crashed">Renderingsprosessen krasjet. Du må kanskje laste inn noen nettsider på nytt.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Velkommen til Fulguris</string>
     <string name="intro_welcome_description">Opplev rask, sikker og tilpassbar nettlesing med avanserte personvernfunksjoner og moderne design.</string>
     <string name="intro_title_terms">La oss komme i gang!</string>
@@ -625,17 +603,6 @@
     <string name="pref_title_enable_ad_blocker">Annonseblokkerer</string>
     <string name="pref_summary_on_enable_ad_blocker">Nyt en renere, tryggere nettopplevelse</string>
     <string name="pref_summary_off_enable_ad_blocker">Nyt en ufiltrert, original versjon av nettet</string>
-    <string name="action_copy">Kopier</string>
-    <string name="settings_help_menus">Dra og sveip elementer for å organisere menyene dine\nNedre verktøylinje reverserer elementrekkefølgen</string>
-    <string name="settings_title_reset_menus">Gjenopprett standardmenyer</string>
-    <string name="dialog_title_reset_menus">Gjenopprette standardmenyer?</string>
-    <string name="action_restore">Gjenopprett</string>
-    <string name="dialog_message_reset_menus">Du vil miste dine nåværende innstillinger</string>
-    <string name="settings_title_hidden">Skjulte elementer</string>
-    <string name="settings_title_menus">Menyer</string>
-    <string name="settings_summary_menus">Organiser menyelementene dine</string>
-    <string name="action_tab_menu">Fanemeny</string>
-    <string name="settings_title_main_menu">Hovedmeny</string>
     <string name="page_requests_title">Forespørsler</string>
     <string name="page_request_details_title">Forespørsel</string>
     <string name="request_status">Status</string>

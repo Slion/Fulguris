@@ -45,6 +45,7 @@
     <string name="clear_history">브라우저 기록 지우기</string>
     <string name="action_download">다운로드</string>
     <string name="action_open">열기</string>
+    <string name="action_copy">복사</string>
     <string name="dialog_title_share">이 페이지 공유</string>
     <string name="action_delete">삭제</string>
     <string name="action_blank">빈 페이지</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">현재 v%s를 실행 중입니다. 온라인에서 릴리스 노트를 확인하시겠습니까?</string>
     <string name="title_welcome">Fulguris에 오신 것을 환영합니다</string>
     <string name="message_welcome">이 강력한 웹 브라우저에 대해 자세히 알아보려면 홈페이지를 방문하시겠습니까?</string>
-    <!-- Ad block -->
     <string name="block_ads">콘텐츠 제어</string>
     <string name="block_remote_frequency_daily">매일</string>
     <string name="block_remote_frequency_weekly">매주</string>
     <string name="block_remote_frequency_monthly">매월</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">다음 페이지가 차단되었습니다:</string>
     <string name="page_blocked_reason">이유:</string>
     <string name="page_blocked_list_ad">광고 필터에서 %s</string>
     <string name="page_blocked_list_user">사용자 규칙에 의해 차단된 %s</string>
     <string name="page_blocked_list_malware">악성 코드 필터에서 %s</string>
     <string name="request_blocked">요청이 차단됨</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">자동 업데이트 모드</string>
     <string name="blocklist_update_on">자동 업데이트 켬</string>
     <string name="blocklist_update_off">자동 업데이트 끔</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">마지막 업데이트: %s</string>
     <string name="blocklist_updating">업데이트 중…</string>
     <string name="blocklist_update_error">필터 목록 %s 업데이트 중 오류</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">필터 목록 %1$s를 업데이트하는 중 오류 발생: 상태 코드 %2$s</string>
     <string name="add_blocklist">필터 파일 추가</string>
     <string name="add_blocklist_hint">호스트 목록 또는 AdBlockPlus 규칙과 호환되는 모든 목록을 선택할 수 있습니다</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">수정자 필터</string>
     <string name="use_modify_filters_warning">경우에 따라 수정자 필터가 이 브라우저에서 웹사이트를 손상시키는 것으로 확인되었습니다. 구현이 개선될 때까지 위험을 감수하고 활성화할 수 있습니다. 기본 프레임 문서에 대해서만 비활성화하면 대부분의 문제를 피할 수 있습니다.</string>
     <string name="modify_filters_not_for_main_frame">기본 프레임에만 비활성화</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">작업이 취소되었습니다.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">보안 오류! 페이지 로드가 중단되었습니다.</string>
     <string name="message_ssl_error">보안 연결이 손상되었습니다:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>계속하시겠습니까?</string>
     <string name="message_certificate_date_invalid">인증서 만료일</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">인증서가 유효하지 않습니다</string>
     <string name="message_certificate_not_yet_valid">인증서가 아직 유효하지 않습니다</string>
     <string name="message_certificate_untrusted">인증서를 신뢰할 수 없습니다</string>
-    <!-- permissions request -->
     <string name="title_permission_request">권한 요청</string>
     <string name="message_permission_request">%1$s  다음 권한을 사용하려 합니다:  %2$s</string>
     <string name="title_form_resubmission">양식 다시 제출</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">내보내기</string>
     <string name="generic_import">가져오기</string>
     <string name="generic_reset">재설정</string>
+    <string name="settings_help_menus">드래그 및 스와이프로 메뉴 정리\n하단 도구 모음은 항목 순서를 뒤집습니다</string>
+    <string name="settings_title_reset_menus">기본 메뉴 복원</string>
+    <string name="dialog_title_reset_menus">기본 메뉴를 복원하시겠습니까?</string>
+    <string name="action_restore">복원</string>
+    <string name="dialog_message_reset_menus">현재 설정이 손실됩니다</string>
     <string name="export_bookmarks">즐겨찾기를 백업으로 내보내기</string>
     <string name="import_backup">즐겨찾기를 백업으로부터 가져오기</string>
     <string name="bookmark_export_path">즐겨찾기를 다음으로 내보내기</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">가로 모드</string>
     <string name="pref_category_portrait">세로 모드</string>
+    <string name="settings_title_hidden">숨겨진 항목</string>
+    <string name="settings_title_menus">메뉴</string>
+    <string name="settings_summary_menus">메뉴 항목 정리</string>
+    <string name="action_tab_menu">탭 메뉴</string>
+    <string name="settings_title_main_menu">메인 메뉴</string>
     <string name="pref_category_filters">필터</string>
     <string name="pref_category_summary_filters">콘텐츠 제어 규칙을 정의하는 로컬 또는 원격 파일</string>
     <string name="pref_category_on_tab_close">탭을 닫을 때</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">홈 화면에 바로가기를 추가했습니다</string>
     <string name="shortcut_message_failed_to_add">죄송합니다, 홈 화면이 바로가기를 지원하지 않습니다.</string>
     <string name="action_delete_all_bookmarks">모든 즐겨찾기 삭제</string>
-    <!-- debug strings -->
     <string name="debug_title">디버그 설정</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">변경 사항을 적용하려면 앱을 다시 시작하세요</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">사용</string>
     <string name="pref_summary_off_logs">사용 안 함</string>
     <string name="pref_title_log_level">로그 레벨</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">새 탭에서 열기</string>
     <string name="dialog_open_background_tab">배경 탭에서 열기</string>
     <string name="dialog_open_incognito_tab">사생활 보호 탭에서 열기</string>
@@ -405,31 +407,23 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$s 차단됨</string>
     <string name="dialog_delete_all_downloads">모든 다운로드 삭제</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">페이지 도구</string>
     <string name="dialog_toggle_desktop">데스크톱 사용자 에이전트 전환</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">임의의 URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">%1$d 시크릿 탭 열림</item>
     </plurals>
     <string name="notification_incognito_running_message">터치해서 열기</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">진행 중인 시크릿 세션</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">발급자:</string>
     <string name="ssl_info_issued_to">발급 대상:</string>
     <string name="ssl_info_issued_on">발급일:</string>
     <string name="ssl_info_expires_on">만료일:</string>
-    <!-- Search in page -->
     <string name="next">다음</string>
     <string name="previous">이전</string>
     <string name="close">닫기</string>
     <string name="exit">종료</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">제안 삽입</string>
     <string name="action_close_all_other_tabs">다른 모든 탭 닫기</string>
     <string name="action_restore_all_tabs">모든 탭 복원</string>
@@ -466,11 +460,6 @@
     <string name="settings_title_cookies_delete_all">모두 삭제</string>
     <string name="settings_summary_cookies_delete_all">현재 페이지의 모든 쿠키 삭제</string>
     <string name="question_delete_all_page_cookies">현재 페이지의 모든 쿠키를 삭제하시겠습니까?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="other">현재 페이지에 <xliff:g id="cookies_count" example="2">%d</xliff:g>개의 쿠키가 있습니다</item>
     </plurals>
@@ -483,7 +472,6 @@
     <string name="settings_summary_on_task_icon">페이지 아이콘 사용</string>
     <string name="settings_summary_off_task_icon">앱 아이콘 사용</string>
     <string name="settings_title_toolbar_label">도구 모음 레이블</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">타사 앱 사용 가능</string>
     <string name="dialog_message_third_party_app">해당 웹사이트와 관련된 애플리케이션을 실행하시겠습니까?</string>
     <string name="per_month"> / 월</string>
@@ -502,22 +490,14 @@
     <string name="invalid_characters_removed">잘못된 문자가 제거되었습니다!</string>
     <string name="reading_mode_image_copyright">이미지 제공:</string>
     <string name="reading_mode_image_caption">캡션이 있는 이미지</string>
-    <!-- text-to-speech -->
     <string name="tts">페이지 읽기</string>
     <string name="stop_tts">읽기 중지</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris 웹 브라우저</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">링크</string>
     <string name="button_image">이미지</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">탭 닫힘</string>
     <string name="button_undo">취소</string>
     <string name="button_dismiss">무시</string>
-    <!-- Find in page -->
     <string name="no_match_found">일치하는 항목을 찾을 수 없습니다!</string>
     <string name="match_x_of_n"><xliff:g id="current_match" example="1">%1$d</xliff:g>개 중 <xliff:g id="match_count" example="10">%2$d</xliff:g>번째 일치</string>
     <string name="pref_title_show_snackbar">스낵바 표시</string>
@@ -602,7 +582,6 @@
     <string name="log_level_warn">경고</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">짧은 URL</string>
     <string name="label_domain">도메인</string>
@@ -610,7 +589,6 @@
     <string name="label_session">세션</string>
     <string name="label_app_name">앱 이름</string>
     <string name="message_render_process_crashed">렌더링 프로세스가 충돌했습니다. 일부 웹 페이지를 다시 로드해야 할 수 있습니다.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Fulguris에 오신 것을 환영합니다</string>
     <string name="intro_welcome_description">고급 개인정보 보호 기능과 현대적인 디자인으로 빠르고 안전하며 사용자 정의 가능한 웹 브라우징을 경험하세요.</string>
     <string name="intro_title_terms">시작하기!</string>
@@ -622,17 +600,6 @@
     <string name="pref_title_enable_ad_blocker">광고 차단기</string>
     <string name="pref_summary_on_enable_ad_blocker">더 깔끔하고 안전한 웹 경험을 즐기세요</string>
     <string name="pref_summary_off_enable_ad_blocker">필터링되지 않은 원래 버전의 웹을 즐기세요</string>
-    <string name="action_copy">복사</string>
-    <string name="settings_help_menus">드래그 및 스와이프로 메뉴 정리\n하단 도구 모음은 항목 순서를 뒤집습니다</string>
-    <string name="settings_title_reset_menus">기본 메뉴 복원</string>
-    <string name="dialog_title_reset_menus">기본 메뉴를 복원하시겠습니까?</string>
-    <string name="action_restore">복원</string>
-    <string name="dialog_message_reset_menus">현재 설정이 손실됩니다</string>
-    <string name="settings_title_hidden">숨겨진 항목</string>
-    <string name="settings_title_menus">메뉴</string>
-    <string name="settings_summary_menus">메뉴 항목 정리</string>
-    <string name="action_tab_menu">탭 메뉴</string>
-    <string name="settings_title_main_menu">메인 메뉴</string>
     <string name="page_requests_title">요청</string>
     <string name="page_request_details_title">요청</string>
     <string name="request_status">상태</string>

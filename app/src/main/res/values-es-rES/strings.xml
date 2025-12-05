@@ -45,6 +45,7 @@
     <string name="clear_history">Limpiar historial</string>
     <string name="action_download">Descargar</string>
     <string name="action_open">Abrir</string>
+    <string name="action_copy">Copiar</string>
     <string name="dialog_title_share">Compartir esta página</string>
     <string name="action_delete">Eliminar</string>
     <string name="action_blank">Página en blanco</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Está usando la v%s. ¿Quiere comprobar las notas de la versión en línea?</string>
     <string name="title_welcome">Bienvenido a Fulguris</string>
     <string name="message_welcome">¿Visita nuestra página de inicio para saber más sobre este potente navegador web?</string>
-    <!-- Ad block -->
     <string name="block_ads">Control de contenido</string>
     <string name="block_remote_frequency_daily">Diariamente</string>
     <string name="block_remote_frequency_weekly">Semanalmente</string>
     <string name="block_remote_frequency_monthly">Mensualmente</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">La siguiente página fue bloqueada:</string>
     <string name="page_blocked_reason">debido a:</string>
     <string name="page_blocked_list_ad">%s en filtros de anuncios</string>
     <string name="page_blocked_list_user">%s bloqueada por regla de usuario</string>
     <string name="page_blocked_list_malware">%s en filtros de malware</string>
     <string name="request_blocked">Solicitud bloqueada</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Modo de actualización automática</string>
     <string name="blocklist_update_on">Activado</string>
     <string name="blocklist_update_off">Desactivado</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Última actualización: %s</string>
     <string name="blocklist_updating">Actualizando…</string>
     <string name="blocklist_update_error">Error al actualizar la lista de filtros %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Error al actualizar la lista de filtros %1$s: Código de estado %2$s</string>
     <string name="add_blocklist">Añadir archivo de filtros</string>
     <string name="add_blocklist_hint">Puede elegir listas de hosts o cualquier lista compatible con las reglas de AdBlockPlus</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Filtros modificadores</string>
     <string name="use_modify_filters_warning">En algunos casos, los filtros modificadores han hecho que algunos sitios web se rompan en este navegador. Hasta que se mejore su implementación, puedes activarlo bajo tu responsabilidad. Desactivarlo para los documentos del marco principal solo evita la mayoría de los problemas.</string>
     <string name="modify_filters_not_for_main_frame">Desactivarlo solo para el marco principal</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Acción cancelada.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">¡Error de seguridad! Carga de página cancelada.</string>
     <string name="message_ssl_error">Conexión segura comprometida:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>¿Aún quieres continuar?</string>
     <string name="message_certificate_date_invalid">La fecha del certificado es inválida</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">El certificado es inválido</string>
     <string name="message_certificate_not_yet_valid">El certificado no es válido todavía</string>
     <string name="message_certificate_untrusted">El certificado no es fiable</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Solicitud de permiso</string>
     <string name="message_permission_request">%1$s\n\nquiere hacer uso de:\n\n%2$s</string>
     <string name="title_form_resubmission">Reenvío de formulario</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Exportar</string>
     <string name="generic_import">Importar</string>
     <string name="generic_reset">Restablecer</string>
+    <string name="settings_help_menus">Arrastra y desliza elementos para organizar tus menús\nLa barra inferior invierte el orden de los elementos</string>
+    <string name="settings_title_reset_menus">Restaurar menús predeterminados</string>
+    <string name="dialog_title_reset_menus">¿Restaurar menús predeterminados?</string>
+    <string name="action_restore">Restaurar</string>
+    <string name="dialog_message_reset_menus">Perderás tu configuración actual</string>
     <string name="export_bookmarks">Exportar marcadores a una copia de seguridad</string>
     <string name="import_backup">Importar marcadores desde una copia de seguridad</string>
     <string name="bookmark_export_path">Marcadores exportados a</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">Página web</string>
     <string name="pref_category_landscape">Horizontal</string>
     <string name="pref_category_portrait">Vertical</string>
+    <string name="settings_title_hidden">Elementos ocultos</string>
+    <string name="settings_title_menus">Menús</string>
+    <string name="settings_summary_menus">Organiza los elementos del menú</string>
+    <string name="action_tab_menu">Menú de pestaña</string>
+    <string name="settings_title_main_menu">Menú principal</string>
     <string name="pref_category_filters">Filtros</string>
     <string name="pref_category_summary_filters">Archivos locales o remotos que definen sus reglas de control de contenido</string>
     <string name="pref_category_on_tab_close">Al cerrar la pestaña</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Acceso directo añadido a la pantalla de inicio</string>
     <string name="shortcut_message_failed_to_add">Lo sentimos, su lanzador no soporta atajos.</string>
     <string name="action_delete_all_bookmarks">Eliminar todos los marcadores</string>
-    <!-- debug strings -->
     <string name="debug_title">Ajustes de depuración</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Por favor reinicie la aplicación para que el cambio tenga efecto</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Activado</string>
     <string name="pref_summary_off_logs">Desactivado</string>
     <string name="pref_title_log_level">Nivel de registro</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Abrir en una nueva pestaña</string>
     <string name="dialog_open_background_tab">Abrir en una pestaña de fondo</string>
     <string name="dialog_open_incognito_tab">Abrir en una pestaña de incógnito</string>
@@ -405,32 +407,24 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$s bloqueado</string>
     <string name="dialog_delete_all_downloads">Eliminar todas las descargas</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Herramientas de página</string>
     <string name="dialog_toggle_desktop">Alternar agente de usuario de escritorio</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Dirección personalizada</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d pestañas de incógnito abiertas</item>
         <item quantity="other">%1$d pestañas de incógnito abiertas</item>
     </plurals>
     <string name="notification_incognito_running_message">Tocar para abrir</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Sesión de incógnito en curso</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Emitido por</string>
     <string name="ssl_info_issued_to">Emitido a</string>
     <string name="ssl_info_issued_on">Emitido el</string>
     <string name="ssl_info_expires_on">Expira el</string>
-    <!-- Search in page -->
     <string name="next">Siguiente</string>
     <string name="previous">Anterior</string>
     <string name="close">Cerrar</string>
     <string name="exit">Salir</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Insertar sugerencia</string>
     <string name="action_close_all_other_tabs">Cerrar el resto de pestañas</string>
     <string name="action_restore_all_tabs">Restaurar todas las pestañas</string>
@@ -467,11 +461,6 @@
     <string name="settings_title_cookies_delete_all">Borrar todo</string>
     <string name="settings_summary_cookies_delete_all">Borrar todas las cookies de la página actual</string>
     <string name="question_delete_all_page_cookies">¿Quiere borrar todas las cookies de la página actual?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">La página actual tiene 1 cookie</item>
         <item quantity="other">La página actual contiene <xliff:g id="cookies_count" example="2">%d</xliff:g></item>
@@ -486,7 +475,6 @@
     <string name="settings_summary_on_task_icon">Usar icono de la página</string>
     <string name="settings_summary_off_task_icon">Usar ícono de la aplicación</string>
     <string name="settings_title_toolbar_label">Etiqueta de la barra de herramientas</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Aplicación de terceros disponible</string>
     <string name="dialog_message_third_party_app">¿Quiere iniciar la aplicación asociada a ese sitio web?</string>
     <string name="per_month">\u0020/ mes</string>
@@ -505,22 +493,14 @@
     <string name="invalid_characters_removed">¡Caracteres inválidos eliminados!</string>
     <string name="reading_mode_image_copyright">Imagen atribuida a</string>
     <string name="reading_mode_image_caption">Imagen con leyenda</string>
-    <!-- text-to-speech -->
     <string name="tts">Leer página</string>
     <string name="stop_tts">Detener lectura</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Navegador Web Fulguris</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Enlace</string>
     <string name="button_image">Imagen</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Pestaña cerrada</string>
     <string name="button_undo">Deshacer</string>
     <string name="button_dismiss">Rechazar</string>
-    <!-- Find in page -->
     <string name="no_match_found">¡No se encontró ninguna coincidencia!</string>
     <string name="match_x_of_n">Coincidencia <xliff:g id="current_match" example="1">%1$d</xliff:g> de <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Mostrar snackbar</string>
@@ -605,7 +585,6 @@
     <string name="log_level_warn">Advertencia</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Afirmar</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">URL corta</string>
     <string name="label_domain">Dominio</string>
@@ -613,7 +592,6 @@
     <string name="label_session">Sesión</string>
     <string name="label_app_name">Nombre de la aplicación</string>
     <string name="message_render_process_crashed">El proceso de renderizado falló. Es posible que necesites recargar algunas páginas web.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Bienvenido a Fulguris</string>
     <string name="intro_welcome_description">Experimenta navegación web rápida, segura y personalizable con funciones avanzadas de privacidad y diseño moderno.</string>
     <string name="intro_title_terms">¡Empecemos!</string>
@@ -625,17 +603,6 @@
     <string name="pref_title_enable_ad_blocker">Bloqueador de anuncios</string>
     <string name="pref_summary_on_enable_ad_blocker">Disfruta de una experiencia web más limpia y segura</string>
     <string name="pref_summary_off_enable_ad_blocker">Disfruta de una versión sin filtrar y original de la web</string>
-    <string name="action_copy">Copiar</string>
-    <string name="settings_help_menus">Arrastra y desliza elementos para organizar tus menús\nLa barra inferior invierte el orden de los elementos</string>
-    <string name="settings_title_reset_menus">Restaurar menús predeterminados</string>
-    <string name="dialog_title_reset_menus">¿Restaurar menús predeterminados?</string>
-    <string name="action_restore">Restaurar</string>
-    <string name="dialog_message_reset_menus">Perderás tu configuración actual</string>
-    <string name="settings_title_hidden">Elementos ocultos</string>
-    <string name="settings_title_menus">Menús</string>
-    <string name="settings_summary_menus">Organiza los elementos del menú</string>
-    <string name="action_tab_menu">Menú de pestaña</string>
-    <string name="settings_title_main_menu">Menú principal</string>
     <string name="page_requests_title">Solicitudes</string>
     <string name="page_request_details_title">Solicitud</string>
     <string name="request_status">Estado</string>

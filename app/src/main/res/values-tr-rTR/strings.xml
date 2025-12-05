@@ -45,6 +45,7 @@
     <string name="clear_history">Tarayıcı geçmişini temizle</string>
     <string name="action_download">İndir</string>
     <string name="action_open">Aç</string>
+    <string name="action_copy">Kopyala</string>
     <string name="dialog_title_share">Bu sayfayı paylaş</string>
     <string name="action_delete">Sil</string>
     <string name="action_blank">Boş sayfa</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Şu anda v%s sürümünü kullanıyorsunuz. Sürüm notlarını çevrimiçi kontrol etmek ister misiniz?</string>
     <string name="title_welcome">Fulguris\'e hoş geldiniz</string>
     <string name="message_welcome">Bu güçlü web tarayıcısı hakkında daha fazla bilgi edinmek için ana sayfamızı ziyaret etmek ister misiniz?</string>
-    <!-- Ad block -->
     <string name="block_ads">İçerik kontrolü</string>
     <string name="block_remote_frequency_daily">Günlük</string>
     <string name="block_remote_frequency_weekly">Haftalık</string>
     <string name="block_remote_frequency_monthly">Aylık</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Aşağıdaki sayfa engellendi:</string>
     <string name="page_blocked_reason">nedeni:</string>
     <string name="page_blocked_list_ad">reklam filtrelerinde %s</string>
     <string name="page_blocked_list_user">kullanıcı kuralı tarafından engellenen %s</string>
     <string name="page_blocked_list_malware">kötü amaçlı yazılım filtrelerinde %s</string>
     <string name="request_blocked">İstek engellendi</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Otomatik güncelleme modu</string>
     <string name="blocklist_update_on">Otomatik güncelleme açık</string>
     <string name="blocklist_update_off">Otomatik güncelleme kapalı</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Son güncelleme: %s</string>
     <string name="blocklist_updating">Güncelleniyor…</string>
     <string name="blocklist_update_error">%s filtre listesi güncellenirken hata oluştu</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">%1$s filtre listesi güncellenirken hata oluştu: durum kodu %2$s</string>
     <string name="add_blocklist">Filtre dosyası ekle</string>
     <string name="add_blocklist_hint">Hosts listeleri veya AdBlockPlus kurallarıyla uyumlu herhangi bir liste seçebilirsiniz</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Değiştirici filtreler</string>
     <string name="use_modify_filters_warning">Bazı durumlarda, değiştirici filtrelerin bu tarayıcıdaki web sitelerini bozduğu tespit edilmiştir. Uygulama iyileştirilene kadar, riski size ait olmak üzere etkinleştirebilirsiniz. Yalnızca ana çerçeve belgeleri için devre dışı bırakmak çoğu sorunu önler.</string>
     <string name="modify_filters_not_for_main_frame">Yalnızca ana çerçeve için devre dışı bırak</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">İşlem iptal edildi.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Güvenlik hatası! Sayfa yüklemesi iptal edildi.</string>
     <string name="message_ssl_error">Güvenli bağlantı riske atıldı:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Yine de devam etmek istiyor musunuz?</string>
     <string name="message_certificate_date_invalid">Sertifika tarihi geçersiz</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Sertifika geçersiz</string>
     <string name="message_certificate_not_yet_valid">Sertifika henüz geçerli değil</string>
     <string name="message_certificate_untrusted">Sertifika güvenilir değil</string>
-    <!-- permissions request -->
     <string name="title_permission_request">İzin talebi</string>
     <string name="message_permission_request">%1$s\n\nşunu kullanmak istiyor:\n\n%2$s</string>
     <string name="title_form_resubmission">Formu yeniden gönderme</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Dışa aktar</string>
     <string name="generic_import">İçe aktar</string>
     <string name="generic_reset">Sıfırla</string>
+    <string name="settings_help_menus">Sekmedeki menü eylemlerini yapılandır</string>
+    <string name="settings_title_reset_menus">Menüleri sıfırla</string>
+    <string name="dialog_title_reset_menus">Menüleri sıfırla</string>
+    <string name="action_restore">Geri yükle</string>
+    <string name="dialog_message_reset_menus">Menüleri sıfırlamak tüm menü sayfası değişikliklerini temizler</string>
     <string name="export_bookmarks">Yer imlerini yedeklemek için dışa aktar</string>
     <string name="import_backup">Yedekten yer imlerini içe aktar</string>
     <string name="bookmark_export_path">Yer imleri şuraya aktarıldı</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Yatay</string>
     <string name="pref_category_portrait">Dikey</string>
+    <string name="settings_title_hidden">Gizli</string>
+    <string name="settings_title_menus">Menüler</string>
+    <string name="settings_summary_menus">Menülerinizi özelleştirin</string>
+    <string name="action_tab_menu">Sekme menüsü</string>
+    <string name="settings_title_main_menu">Ana menü</string>
     <string name="pref_category_filters">Filtreler</string>
     <string name="pref_category_summary_filters">İçerik kontrolü kurallarınızı tanımlayan yerel veya uzak dosyalar</string>
     <string name="pref_category_on_tab_close">Sekme kapatıldığında</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Kısayol ana ekrana eklendi</string>
     <string name="shortcut_message_failed_to_add">Üzgünüz, başlatıcınız kısayolları desteklemiyor.</string>
     <string name="action_delete_all_bookmarks">Tüm yer imlerini sil</string>
-    <!-- debug strings -->
     <string name="debug_title">Hata Ayıklama</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Değişikliğin etkili olması için lütfen uygulamayı yeniden başlatın</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Etkin</string>
     <string name="pref_summary_off_logs">Devre dışı</string>
     <string name="pref_title_log_level">Günlük seviyesi</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Yeni sekmede aç</string>
     <string name="dialog_open_background_tab">Arka plan sekmesinde aç</string>
     <string name="dialog_open_incognito_tab">Gizli sekmede aç</string>
@@ -405,32 +407,24 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$s engellendi</string>
     <string name="dialog_delete_all_downloads">Tüm indirilenleri sil</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Sayfa araçları</string>
     <string name="dialog_toggle_desktop">Masaüstü kullanıcı aracısını değiştir</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Özel URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d gizli sekme açık</item>
         <item quantity="other">%1$d gizli sekme açık</item>
     </plurals>
     <string name="notification_incognito_running_message">Açmak için dokunun</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Devam eden gizli oturum</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Veren kuruluş</string>
     <string name="ssl_info_issued_to">Verilen kuruluş</string>
     <string name="ssl_info_issued_on">Verilme tarihi</string>
     <string name="ssl_info_expires_on">Son kullanma tarihi</string>
-    <!-- Search in page -->
     <string name="next">Sonraki</string>
     <string name="previous">Önceki</string>
     <string name="close">Kapat</string>
     <string name="exit">Çıkış</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Öneriyi ekle</string>
     <string name="action_close_all_other_tabs">Diğer tüm sekmeleri kapat</string>
     <string name="action_restore_all_tabs">Tüm sekmeleri geri yükle</string>
@@ -467,11 +461,6 @@
     <string name="settings_title_cookies_delete_all">Tümünü sil</string>
     <string name="settings_summary_cookies_delete_all">Mevcut sayfa için tüm çerezleri sil</string>
     <string name="question_delete_all_page_cookies">Mevcut sayfa için tüm çerezler silinsin mi?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Mevcut sayfada bir çerez var</item>
         <item quantity="other">Mevcut sayfada <xliff:g id="cookies_count" example="2">%d</xliff:g> çerez var</item>
@@ -486,7 +475,6 @@
     <string name="settings_summary_on_task_icon">Sayfa simgesini kullan</string>
     <string name="settings_summary_off_task_icon">Uygulama simgesini kullan</string>
     <string name="settings_title_toolbar_label">Araç çubuğu etiketi</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Üçüncü taraf uygulaması mevcut</string>
     <string name="dialog_message_third_party_app">Bu web sitesiyle ilişkili uygulamayı başlatmak istiyor musunuz?</string>
     <string name="per_month">\u0020/ ay</string>
@@ -505,22 +493,14 @@
     <string name="invalid_characters_removed">Geçersiz karakterler kaldırıldı!</string>
     <string name="reading_mode_image_copyright">Resim kaynağı:</string>
     <string name="reading_mode_image_caption">Altyazılı resim</string>
-    <!-- text-to-speech -->
     <string name="tts">Sayfayı oku</string>
     <string name="stop_tts">Okumayı durdur</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris Web Tarayıcısı</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Bağlantı</string>
     <string name="button_image">Resim</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Sekme kapatıldı</string>
     <string name="button_undo">Geri al</string>
     <string name="button_dismiss">Kapat</string>
-    <!-- Find in page -->
     <string name="no_match_found">Eşleşme bulunamadı!</string>
     <string name="match_x_of_n">Eşleşme: <xliff:g id="current_match" example="1">%1$d</xliff:g> / <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Bilgi çubuğunu göster</string>
@@ -605,7 +585,6 @@
     <string name="log_level_warn">Uyarı</string>
     <string name="log_level_error">Hata</string>
     <string name="log_level_assert">Doğrulama</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Kısa URL</string>
     <string name="label_domain">Alan Adı</string>
@@ -613,7 +592,6 @@
     <string name="label_session">Oturum</string>
     <string name="label_app_name">Uygulama adı</string>
     <string name="message_render_process_crashed">İşleme süreci çöktü. Bazı web sayfalarını yeniden yüklemeniz gerekebilir.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Fulguris\'e Hoş Geldiniz</string>
     <string name="intro_welcome_description">Gelişmiş gizlilik özellikleri ve modern tasarımla hızlı, güvenli ve özelleştirilebilir web tarama deneyimi yaşayın.</string>
     <string name="intro_title_terms">Başlayalım!</string>
@@ -625,17 +603,6 @@
     <string name="pref_title_enable_ad_blocker">Reklam engelleyici</string>
     <string name="pref_summary_on_enable_ad_blocker">Daha temiz, daha güvenli bir web deneyiminin keyfini çıkarın</string>
     <string name="pref_summary_off_enable_ad_blocker">Web\'in filtrelenmemiş, orijinal sürümünün keyfini çıkarın</string>
-    <string name="action_copy">Kopyala</string>
-    <string name="settings_help_menus">Sekmedeki menü eylemlerini yapılandır</string>
-    <string name="settings_title_reset_menus">Menüleri sıfırla</string>
-    <string name="dialog_title_reset_menus">Menüleri sıfırla</string>
-    <string name="action_restore">Geri yükle</string>
-    <string name="dialog_message_reset_menus">Menüleri sıfırlamak tüm menü sayfası değişikliklerini temizler</string>
-    <string name="settings_title_hidden">Gizli</string>
-    <string name="settings_title_menus">Menüler</string>
-    <string name="settings_summary_menus">Menülerinizi özelleştirin</string>
-    <string name="action_tab_menu">Sekme menüsü</string>
-    <string name="settings_title_main_menu">Ana menü</string>
     <string name="page_requests_title">Sayfa istekleri</string>
     <string name="page_request_details_title">İstek ayrıntıları</string>
     <string name="request_status">Durum</string>

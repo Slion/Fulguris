@@ -318,6 +318,15 @@ def show_help():
     print("      1. Run --changed to find modified source strings")
     print("      2. Update en-rUS to match source (or update source to match en-rUS)")
     print("      3. Update all other language translations")
+    print("\n  python strings.py --sort [language_code]")
+    print("    Sort all strings alphabetically by string ID")
+    print("    If language_code is provided, sorts only that language")
+    print("    If no language_code, sorts ALL language files including source")
+    print("    Preserves comments and XML structure in source file")
+    print("    Examples:")
+    print("      python strings.py --sort          # Sort all languages")
+    print("      python strings.py --sort de-rDE   # Sort only German")
+    print("      python strings.py --sort source   # Sort only English source")
     print("\nOutput Information:")
     print("  - Untranslated strings that match English")
     print("  - Placeholder mismatches (e.g., missing %s, %1$s)")
@@ -1161,6 +1170,206 @@ def find_changed_strings():
     print("=" * 80)
     sys.exit(0)
 
+def sort_strings_file(file_path, source_element_order):
+    """Reorder strings in a translation file to match the order in the source file.
+
+    This makes diffs easier to review and keeps related strings grouped together.
+
+    Args:
+        file_path: Path to the strings.xml file
+        source_element_order: List of (type, id) tuples in source file order
+                              where type is 'string', 'plurals', or 'string-array'
+
+    Returns:
+        tuple: (success: bool, message: str)
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except Exception as e:
+        return False, f"Error reading file: {e}"
+
+    # Detect line ending style
+    line_ending = '\r\n' if '\r\n' in content else '\n'
+
+    # Extract the XML declaration and resources opening tag
+    xml_decl_match = re.match(r'(<\?xml[^?]*\?>\s*)', content)
+    xml_declaration = xml_decl_match.group(1) if xml_decl_match else '<?xml version="1.0" encoding="utf-8"?>\n'
+
+    # Extract resources tag with attributes
+    resources_match = re.search(r'(<resources[^>]*>)', content)
+    if not resources_match:
+        return False, "Invalid XML: No <resources> tag found"
+    resources_tag = resources_match.group(1)
+
+    # Extract all strings - use pattern that handles xliff tags inside strings
+    strings = {}
+    for match in re.finditer(r'(\s*<string name="([^"]+)">(.*?)</string>)', content, re.DOTALL):
+        full_match = match.group(1)
+        string_id = match.group(2)
+        strings[string_id] = full_match.strip()
+
+    # Extract all plurals
+    plurals = {}
+    for match in re.finditer(r'(\s*<plurals name="([^"]+)".*?</plurals>)', content, re.DOTALL):
+        full_match = match.group(1)
+        plurals_id = match.group(2)
+        plurals[plurals_id] = full_match.strip()
+
+    # Extract string-arrays
+    arrays = {}
+    for match in re.finditer(r'(\s*<string-array name="([^"]+)".*?</string-array>)', content, re.DOTALL):
+        full_match = match.group(1)
+        array_id = match.group(2)
+        arrays[array_id] = full_match.strip()
+
+    # Rebuild file with elements in source order
+    output_lines = [xml_declaration.rstrip(), resources_tag]
+
+    for elem_type, elem_id in source_element_order:
+        if elem_type == 'string' and elem_id in strings:
+            output_lines.append(f"    {strings[elem_id]}")
+        elif elem_type == 'plurals' and elem_id in plurals:
+            plurals_content = plurals[elem_id]
+            # Normalize indentation
+            plurals_lines = plurals_content.split('\n')
+            indented_lines = []
+            for pline in plurals_lines:
+                stripped = pline.strip()
+                if stripped.startswith('<plurals'):
+                    indented_lines.append(f"    {stripped}")
+                elif stripped.startswith('</plurals'):
+                    indented_lines.append(f"    {stripped}")
+                elif stripped.startswith('<item'):
+                    indented_lines.append(f"        {stripped}")
+                else:
+                    indented_lines.append(f"    {stripped}")
+            output_lines.append(line_ending.join(indented_lines))
+        elif elem_type == 'string-array' and elem_id in arrays:
+            array_content = arrays[elem_id]
+            array_lines = array_content.split('\n')
+            indented_lines = []
+            for aline in array_lines:
+                stripped = aline.strip()
+                if stripped.startswith('<string-array'):
+                    indented_lines.append(f"    {stripped}")
+                elif stripped.startswith('</string-array'):
+                    indented_lines.append(f"    {stripped}")
+                elif stripped.startswith('<item'):
+                    indented_lines.append(f"        {stripped}")
+                else:
+                    indented_lines.append(f"    {stripped}")
+            output_lines.append(line_ending.join(indented_lines))
+
+    output_lines.append('</resources>')
+    output_lines.append('')
+
+    new_content = line_ending.join(output_lines)
+
+    # Write back
+    try:
+        with open(file_path, 'w', encoding='utf-8', newline='') as f:
+            f.write(new_content)
+        return True, "Sorted successfully"
+    except Exception as e:
+        return False, f"Error writing file: {e}"
+
+
+def get_source_order():
+    """Get the order of all elements from the source file.
+
+    Returns:
+        list: List of (type, id) tuples in source file order
+              where type is 'string', 'plurals', or 'string-array'
+    """
+    source_file = Path('app/src/main/res/values/strings.xml')
+    with open(source_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Find all elements with their positions
+    elements = []
+
+    # Find strings
+    for match in re.finditer(r'<string name="([^"]+)"', content):
+        elements.append((match.start(), 'string', match.group(1)))
+
+    # Find plurals
+    for match in re.finditer(r'<plurals name="([^"]+)"', content):
+        elements.append((match.start(), 'plurals', match.group(1)))
+
+    # Find string-arrays
+    for match in re.finditer(r'<string-array name="([^"]+)"', content):
+        elements.append((match.start(), 'string-array', match.group(1)))
+
+    # Sort by position in file
+    elements.sort(key=lambda x: x[0])
+
+    # Return just (type, id) tuples in order
+    return [(elem_type, elem_id) for _, elem_type, elem_id in elements]
+
+
+def sort_all_strings(language=None):
+    """Sort strings in language files to match the order in the source file.
+
+    Args:
+        language: Optional language code. If None, sorts all translation languages.
+    """
+    res_dir = Path('app/src/main/res')
+
+    # Get the order from source file
+    source_element_order = get_source_order()
+
+    files_to_sort = []
+
+    if language:
+        # Sort specific language
+        lang_file = res_dir / f'values-{language}' / 'strings.xml'
+        if not lang_file.exists():
+            print(f"Error: Language file not found: {lang_file}")
+            sys.exit(1)
+        files_to_sort.append((lang_file, language))
+    else:
+        # Sort all translation files (source defines the order, so we don't sort it)
+        # Get all language directories
+        lang_dirs = [d for d in res_dir.glob('values-*')
+                     if d.is_dir()
+                     and 'night' not in d.name
+                     and 'v27' not in d.name
+                     and 'v30' not in d.name]
+
+        for lang_dir in sorted(lang_dirs):
+            strings_file = lang_dir / 'strings.xml'
+            if strings_file.exists():
+                lang_name = lang_dir.name.replace('values-', '')
+                files_to_sort.append((strings_file, lang_name))
+
+    print("=" * 80)
+    print("REORDERING STRINGS TO MATCH SOURCE")
+    print("=" * 80)
+    print(f"\nFiles to sort: {len(files_to_sort)}")
+    print()
+
+    success_count = 0
+    error_count = 0
+
+    for file_path, name in files_to_sort:
+        success, message = sort_strings_file(file_path, source_element_order)
+        if success:
+            print(f"[OK] {name}")
+            success_count += 1
+        else:
+            print(f"[ERROR] {name}: {message}")
+            error_count += 1
+
+    print("\n" + "=" * 80)
+    print("SUMMARY")
+    print("=" * 80)
+    print(f"Successfully sorted: {success_count}")
+    print(f"Errors: {error_count}")
+    print("=" * 80)
+    sys.exit(0)
+
+
 def find_unused_strings():
     """Find strings defined in English but not used anywhere in the source code.
 
@@ -1476,6 +1685,12 @@ if len(sys.argv) > 1:
     # Handle changed strings command
     elif arg == '--changed':
         find_changed_strings()
+    # Handle sort command
+    elif arg == '--sort':
+        language = None
+        if len(sys.argv) > arg_start + 1:
+            language = sys.argv[arg_start + 1]
+        sort_all_strings(language)
     # Unknown command
     else:
         print(f"Error: Unknown command '{arg}'")

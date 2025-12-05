@@ -45,6 +45,7 @@
     <string name="clear_history">履歴を消去する</string>
     <string name="action_download">ダウンロード</string>
     <string name="action_open">開く</string>
+    <string name="action_copy">コピー</string>
     <string name="dialog_title_share">このページを共有します</string>
     <string name="action_delete">削除</string>
     <string name="action_blank">空白ページ</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">v%sを実行しています。オンラインでリリースノートを確認しますか？</string>
     <string name="title_welcome">Fulgurisへようこそ</string>
     <string name="message_welcome">このパワフルなWebブラウザの詳細については、ホームページをご覧ください。</string>
-    <!-- Ad block -->
     <string name="block_ads">コンテンツ制御</string>
     <string name="block_remote_frequency_daily">毎日</string>
     <string name="block_remote_frequency_weekly">毎週</string>
     <string name="block_remote_frequency_monthly">毎月</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">次のページがブロックされました:</string>
     <string name="page_blocked_reason">理由は以下の通りです</string>
     <string name="page_blocked_list_ad">フィルターリスト上の %s</string>
     <string name="page_blocked_list_user">%s はユーザールールによってブロックされました</string>
     <string name="page_blocked_list_malware">マルウェアフィルターリスト上の %s</string>
     <string name="request_blocked">ブロックしたリクエスト数</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">自動アップデート モード</string>
     <string name="blocklist_update_on">自動アップデート</string>
     <string name="blocklist_update_off">自動アップデートオフ</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">最終更新: %s</string>
     <string name="blocklist_updating">アップデート中...</string>
     <string name="blocklist_update_error">フィルタ %s の更新中にエラーが発生しました</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">フィルタリスト %1$sの更新中にエラー: ステータスコード %2$s</string>
     <string name="add_blocklist">フィルタファイルを追加</string>
     <string name="add_blocklist_hint">AdBlockPlus ルールと互換性のあるホストリストまたは任意のリストを選択できます</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">修飾子フィルター</string>
     <string name="use_modify_filters_warning">いくつかのケースでは、modifier filterがこのブラウザでウェブサイトを破壊することが見つかりました。 実装が改善されるまで、自己責任で有効にできます。メインフレームドキュメントの無効化はほとんどの問題を回避するだけです。</string>
     <string name="modify_filters_not_for_main_frame">メインフレームのみ無効にする</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">操作が取り消されました</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">セキュリティエラー！ページの読み込みが中止されました。</string>
     <string name="message_ssl_error">安全な接続:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>続行しますか？</string>
     <string name="message_certificate_date_invalid">証明書の日付が無効です</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">証明書は無効です</string>
     <string name="message_certificate_not_yet_valid">証明書はまだ有効ではありません</string>
     <string name="message_certificate_untrusted">証明書が信頼できません</string>
-    <!-- permissions request -->
     <string name="title_permission_request">権限リクエスト</string>
     <string name="message_permission_request">%1$s\n\nを使用します:\n\n%2$s</string>
     <string name="title_form_resubmission">フォームの再送信</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">エクスポート</string>
     <string name="generic_import">インポート</string>
     <string name="generic_reset">リセット</string>
+    <string name="settings_help_menus">ドラッグとスワイプでメニューを整理\n下部ツールバーは項目の順序を逆にします</string>
+    <string name="settings_title_reset_menus">デフォルトメニューを復元</string>
+    <string name="dialog_title_reset_menus">デフォルトメニューを復元しますか？</string>
+    <string name="action_restore">復元</string>
+    <string name="dialog_message_reset_menus">現在の設定が失われます</string>
     <string name="export_bookmarks">ブックマークをエクスポートする</string>
     <string name="import_backup">ブックマークをインポートする</string>
     <string name="bookmark_export_path">ブックマークをエクスポートしました</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">横</string>
     <string name="pref_category_portrait">縦</string>
+    <string name="settings_title_hidden">非表示の項目</string>
+    <string name="settings_title_menus">メニュー</string>
+    <string name="settings_summary_menus">メニュー項目を整理</string>
+    <string name="action_tab_menu">タブメニュー</string>
+    <string name="settings_title_main_menu">メインメニュー</string>
     <string name="pref_category_filters">フィルター</string>
     <string name="pref_category_summary_filters">ローカルまたはリモートのコンテンツの制御ルールを定義するファイルです</string>
     <string name="pref_category_on_tab_close">タブを閉じたとき</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">ホーム画面にショートカットを追加しました</string>
     <string name="shortcut_message_failed_to_add">申し訳ありませんが、ランチャーはショートカットをサポートしていません。</string>
     <string name="action_delete_all_bookmarks">すべてのブックマークを削除する</string>
-    <!-- debug strings -->
     <string name="debug_title">デバッグ</string>
     <string name="debug_leak_canary">leakcanary</string>
     <string name="app_restart">変更を反映するにはアプリを再起動してください</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">有効</string>
     <string name="pref_summary_off_logs">無効</string>
     <string name="pref_title_log_level">ログレベル</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">新しいタブで開く</string>
     <string name="dialog_open_background_tab">バックグラウンドのタブで開く</string>
     <string name="dialog_open_incognito_tab">シークレットタブで開く</string>
@@ -405,31 +407,23 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$sをブロックしました</string>
     <string name="dialog_delete_all_downloads">ダウンロードの全削除</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">ページツール</string>
     <string name="dialog_toggle_desktop">デスクトップユーザーエージェントを切り替える</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">カスタム URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">%1$d個のシークレットタブを開く</item>
     </plurals>
     <string name="notification_incognito_running_message">タップすると開きます</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">進行中のシークレットセッション</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">発行元:</string>
     <string name="ssl_info_issued_to">発行先</string>
     <string name="ssl_info_issued_on">発行:</string>
     <string name="ssl_info_expires_on">有効期限</string>
-    <!-- Search in page -->
     <string name="next">次へ</string>
     <string name="previous">前へ</string>
     <string name="close">閉じる</string>
     <string name="exit">終了</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">候補を挿入する</string>
     <string name="action_close_all_other_tabs">他の全てのタブを閉じる</string>
     <string name="action_restore_all_tabs">全てのタブを復元</string>
@@ -466,11 +460,6 @@
     <string name="settings_title_cookies_delete_all">すべて削除</string>
     <string name="settings_summary_cookies_delete_all">現在のページの Cookie をすべて削除します</string>
     <string name="question_delete_all_page_cookies">現在のページのすべてのクッキーを削除しますか？</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="other">現在のページには <xliff:g id="cookies_count" example="2">%d</xliff:g> クッキー があります</item>
     </plurals>
@@ -483,7 +472,6 @@
     <string name="settings_summary_on_task_icon">ページアイコンを使用</string>
     <string name="settings_summary_off_task_icon">アプリのアイコンを使用</string>
     <string name="settings_title_toolbar_label">ツールバーのラベル</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">サードパーティーのアプリが利用可能です</string>
     <string name="dialog_message_third_party_app">そのウェブサイトに関連付けられたアプリを起動しますか?</string>
     <string name="per_month">\u0020/ 月</string>
@@ -502,22 +490,14 @@
     <string name="invalid_characters_removed">無効な文字が削除されました!</string>
     <string name="reading_mode_image_copyright">画像の帰属</string>
     <string name="reading_mode_image_caption">キャプション付き画像</string>
-    <!-- text-to-speech -->
     <string name="tts">ページを読み上げる</string>
     <string name="stop_tts">読み上げを停止</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris ウェブブラウザ</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">リンク</string>
     <string name="button_image">画像</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">タブを閉じました</string>
     <string name="button_undo">元に戻す</string>
     <string name="button_dismiss">中止</string>
-    <!-- Find in page -->
     <string name="no_match_found">一致するものが見つかりません。</string>
     <string name="match_x_of_n"><xliff:g id="current_match" example="1">%1$d</xliff:g> / <xliff:g id="match_count" example="10">%2$d</xliff:g> と一致</string>
     <string name="pref_title_show_snackbar">スナックバーを表示</string>
@@ -602,7 +582,6 @@
     <string name="log_level_warn">警告</string>
     <string name="log_level_error">エラー</string>
     <string name="log_level_assert">アサート</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">短縮URL</string>
     <string name="label_domain">ドメイン</string>
@@ -610,7 +589,6 @@
     <string name="label_session">セッション</string>
     <string name="label_app_name">アプリ名</string>
     <string name="message_render_process_crashed">レンダリング処理がクラッシュしました。ウェブページを再読み込みする必要があるかもしれません。</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Fulgurisへようこそ</string>
     <string name="intro_welcome_description">高度なプライバシー機能とモダンなデザインで、高速で安全なカスタマイズ可能なウェブブラウジングを体験してください。</string>
     <string name="intro_title_terms">始めましょう！</string>
@@ -622,17 +600,6 @@
     <string name="pref_title_enable_ad_blocker">広告ブロッカー</string>
     <string name="pref_summary_on_enable_ad_blocker">よりクリーンで安全なウェブ体験をお楽しみください</string>
     <string name="pref_summary_off_enable_ad_blocker">フィルタリングされていない本来のウェブをお楽しみください</string>
-    <string name="action_copy">コピー</string>
-    <string name="settings_help_menus">ドラッグとスワイプでメニューを整理\n下部ツールバーは項目の順序を逆にします</string>
-    <string name="settings_title_reset_menus">デフォルトメニューを復元</string>
-    <string name="dialog_title_reset_menus">デフォルトメニューを復元しますか？</string>
-    <string name="action_restore">復元</string>
-    <string name="dialog_message_reset_menus">現在の設定が失われます</string>
-    <string name="settings_title_hidden">非表示の項目</string>
-    <string name="settings_title_menus">メニュー</string>
-    <string name="settings_summary_menus">メニュー項目を整理</string>
-    <string name="action_tab_menu">タブメニュー</string>
-    <string name="settings_title_main_menu">メインメニュー</string>
     <string name="page_requests_title">リクエスト</string>
     <string name="page_request_details_title">リクエスト</string>
     <string name="request_status">ステータス</string>

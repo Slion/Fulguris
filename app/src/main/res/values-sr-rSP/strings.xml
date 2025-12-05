@@ -45,6 +45,7 @@
     <string name="clear_history">Очисти историјат</string>
     <string name="action_download">Преузми</string>
     <string name="action_open">Отвори</string>
+    <string name="action_copy">Kopiraj</string>
     <string name="dialog_title_share">Подели ову страницу</string>
     <string name="action_delete">Обриши</string>
     <string name="action_blank">Празна страница</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Сада користите v%s. Да ли желите да проверите белешке о издању на мрежи?</string>
     <string name="title_welcome">Добродошли у Фулгурис</string>
     <string name="message_welcome">Посетите нашу почетну страницу да бисте сазнали више о овом моћном веб претраживачу?</string>
-    <!-- Ad block -->
     <string name="block_ads">Контрола садржаја</string>
     <string name="block_remote_frequency_daily">Дневно</string>
     <string name="block_remote_frequency_weekly">Недељно</string>
     <string name="block_remote_frequency_monthly">Месечно</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Следећа страница је блокирана:</string>
     <string name="page_blocked_reason">због:</string>
     <string name="page_blocked_list_ad">%s на филтерима огласа</string>
     <string name="page_blocked_list_user">%s блокираним корисничким правилом</string>
     <string name="page_blocked_list_malware">%s на филтерима за малвер</string>
     <string name="request_blocked">Захтев је блокиран</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Режим аутоматског ажурирања</string>
     <string name="blocklist_update_on">Аутоматско ажурирање укључено</string>
     <string name="blocklist_update_off">Аутоматско ажурирање искључено</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Последње ажурирање: %s</string>
     <string name="blocklist_updating">Ажурирање…</string>
     <string name="blocklist_update_error">Грешка при ажурирању листе филтера %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Грешка при ажурирању листе филтера %1$s: статусни код %2$s</string>
     <string name="add_blocklist">Додајте датотеку филтера</string>
     <string name="add_blocklist_hint">Можете одабрати листе домаћина или било коју листу компатибилну са АдБлоцкПлус правилима</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Модификаторски филтери</string>
     <string name="use_modify_filters_warning">У неким случајевима је откривено да филтери модификатора разбијају веб локације у овом прегледачу. Док се имплементација не побољша, можете их омогућити на сопствени ризик. Онемогућавање за документе главног оквира само избегава већину проблема.</string>
     <string name="modify_filters_not_for_main_frame">Онемогући само за главни оквир</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Акција је отказана.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Security error! Page loading aborted.</string>
     <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Датум сертификата је неважећи</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Сертификат је неважећи</string>
     <string name="message_certificate_not_yet_valid">Сертификат још није важећи</string>
     <string name="message_certificate_untrusted">Сертификат се не верује</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Захтев за дозволу</string>
     <string name="message_permission_request">%1$s\n\nжели да користи:\n\n%2$s</string>
     <string name="title_form_resubmission">Поновно слање формулара</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Извоз</string>
     <string name="generic_import">Увези</string>
     <string name="generic_reset">Resetovanje</string>
+    <string name="settings_help_menus">Konfigurisanje radnji menija na kartici</string>
+    <string name="settings_title_reset_menus">Resetuj menije</string>
+    <string name="dialog_title_reset_menus">Resetuj menije</string>
+    <string name="action_restore">Vrati</string>
+    <string name="dialog_message_reset_menus">Resetovanje menija će očistiti sve promene stranica menija</string>
     <string name="export_bookmarks">Извези обележиваче у резерву</string>
     <string name="import_backup">Увези обележиваче из резерве</string>
     <string name="bookmark_export_path">Обележивачи извезени у</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Пејзаж</string>
     <string name="pref_category_portrait">Портрет</string>
+    <string name="settings_title_hidden">Skriveno</string>
+    <string name="settings_title_menus">Meniji</string>
+    <string name="settings_summary_menus">Prilagodi menije</string>
+    <string name="action_tab_menu">Meni kartice</string>
+    <string name="settings_title_main_menu">Glavni meni</string>
     <string name="pref_category_filters">Филтери</string>
     <string name="pref_category_summary_filters">Локалне или удаљене датотеке које дефинишу ваша правила контроле садржаја</string>
     <string name="pref_category_on_tab_close">Приликом затварања картице</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Пречица додата на почетни екран</string>
     <string name="shortcut_message_failed_to_add">Жао нам је, ваш покретач не подржава пречице.</string>
     <string name="action_delete_all_bookmarks">Обриши све обележиваче</string>
-    <!-- debug strings -->
     <string name="debug_title">Отклањање грешака</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Поново покрените апликацију да би промена ступила на снагу</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Enabled</string>
     <string name="pref_summary_off_logs">Disabled</string>
     <string name="pref_title_log_level">Log level</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Отвори у новом језичцку</string>
     <string name="dialog_open_background_tab">Отвори у језичцку у позадини</string>
     <string name="dialog_open_incognito_tab">Отвори у приватном језичцку</string>
@@ -405,33 +407,25 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Блокирано %1$s</string>
     <string name="dialog_delete_all_downloads">Избришите сва преузимања</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Алатке за странице</string>
     <string name="dialog_toggle_desktop">Укључите кориснички агент за радну површину</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Посебна адреса</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d приватни језичак је отворен</item>
         <item quantity="few">%1$d приватна језичка су отворена</item>
         <item quantity="other">%1$d приватних језичака је отворено</item>
     </plurals>
     <string name="notification_incognito_running_message">Додирните за отварање</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Текућа инкогнито сесија</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Издато од:</string>
     <string name="ssl_info_issued_to">Издато према:</string>
     <string name="ssl_info_issued_on">Издато:</string>
     <string name="ssl_info_expires_on">Истиче:</string>
-    <!-- Search in page -->
     <string name="next">Следеће</string>
     <string name="previous">Претходно</string>
     <string name="close">Затвори</string>
     <string name="exit">Изађи</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Убаците предлог</string>
     <string name="action_close_all_other_tabs">Затворите све остале језичцке</string>
     <string name="action_restore_all_tabs">Вратите све језичцке</string>
@@ -468,11 +462,6 @@
     <string name="settings_title_cookies_delete_all">Delete all</string>
     <string name="settings_summary_cookies_delete_all">Delete all cookies for current page</string>
     <string name="question_delete_all_page_cookies">Delete all cookies for current page?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Current page has one cookie</item>
         <item quantity="few">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
@@ -489,7 +478,6 @@
     <string name="settings_summary_on_task_icon">Use page icon</string>
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Доступна апликација треће стране</string>
     <string name="dialog_message_third_party_app">Да ли желите да покренете апликацију повезану са том веб локацијом?</string>
     <string name="per_month">\у0020/ месецу</string>
@@ -508,22 +496,14 @@
     <string name="invalid_characters_removed">Уклоњени су неважећи знакови!</string>
     <string name="reading_mode_image_copyright">Слика приписана према</string>
     <string name="reading_mode_image_caption">Слика са натписом</string>
-    <!-- text-to-speech -->
     <string name="tts">Прочитајте страницу</string>
     <string name="stop_tts">Престани да читаш</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Фулгурис веб претраживач</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Линк</string>
     <string name="button_image">Слика</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Картица затворена</string>
     <string name="button_undo">Назад</string>
     <string name="button_dismiss">Одбаци</string>
-    <!-- Find in page -->
     <string name="no_match_found">Није пронађено подударање!</string>
     <string name="match_x_of_n">Слаже се <xliff:g id="current_match" example="1">%1$d</xliff:g> од <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Прикажи сластичарну</string>
@@ -608,7 +588,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Short URL</string>
     <string name="label_domain">Domain</string>
@@ -616,7 +595,6 @@
     <string name="label_session">Session</string>
     <string name="label_app_name">App name</string>
     <string name="message_render_process_crashed">Render process crashed. You may need to reload some web pages.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Добродошли у Fulguris</string>
     <string name="intro_welcome_description">Доживите брзо, безбедно и прилагодљиво прегледање веба са напредним функцијама приватности и модерним дизајном.</string>
     <string name="intro_title_terms">Почнимо!</string>
@@ -628,17 +606,6 @@
     <string name="pref_title_enable_ad_blocker">Блокатор огласа</string>
     <string name="pref_summary_on_enable_ad_blocker">Уживајте у чистијем, безбеднијем веб искуству</string>
     <string name="pref_summary_off_enable_ad_blocker">Уживајте у нефилтрираној, оригиналној верзији веба</string>
-    <string name="action_copy">Kopiraj</string>
-    <string name="settings_help_menus">Konfigurisanje radnji menija na kartici</string>
-    <string name="settings_title_reset_menus">Resetuj menije</string>
-    <string name="dialog_title_reset_menus">Resetuj menije</string>
-    <string name="action_restore">Vrati</string>
-    <string name="dialog_message_reset_menus">Resetovanje menija će očistiti sve promene stranica menija</string>
-    <string name="settings_title_hidden">Skriveno</string>
-    <string name="settings_title_menus">Meniji</string>
-    <string name="settings_summary_menus">Prilagodi menije</string>
-    <string name="action_tab_menu">Meni kartice</string>
-    <string name="settings_title_main_menu">Glavni meni</string>
     <string name="page_requests_title">Zahtevi stranice</string>
     <string name="page_request_details_title">Detalji zahteva</string>
     <string name="request_status">Status</string>

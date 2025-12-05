@@ -45,6 +45,7 @@
     <string name="clear_history">Vymazat historii procházení</string>
     <string name="action_download">Stáhnout</string>
     <string name="action_open">Otevřít</string>
+    <string name="action_copy">Kopírovat</string>
     <string name="dialog_title_share">Sdílet tuto stránku</string>
     <string name="action_delete">Odstranit</string>
     <string name="action_blank">Prázdná stránka</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Nyní používáte verzi v%s. Chcete zkontrolovat online změny této aktualizace?</string>
     <string name="title_welcome">Vítejte v Fulguris</string>
     <string name="message_welcome">Navštivte naši domovskou stránku a zjistěte více o tomto webovém prohlížeči.</string>
-    <!-- Ad block -->
     <string name="block_ads">Správa obsahu</string>
     <string name="block_remote_frequency_daily">Denně</string>
     <string name="block_remote_frequency_weekly">Týdně</string>
     <string name="block_remote_frequency_monthly">Měsíčně</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Následující stránka byla zablokována:</string>
     <string name="page_blocked_reason">kvůli:</string>
     <string name="page_blocked_list_ad">%s na filtrech reklam</string>
     <string name="page_blocked_list_user">%s blokováno pravidly uživatele</string>
     <string name="page_blocked_list_malware">%s na filtrech malwaru</string>
     <string name="request_blocked">Požadavek zablokován</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Režim automatické aktualizace</string>
     <string name="blocklist_update_on">Automatické aktualizace zapnuty</string>
     <string name="blocklist_update_off">Automatické aktualizace vypnuty</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Last update: %s</string>
     <string name="blocklist_updating">Updating…</string>
     <string name="blocklist_update_error">Error while updating filters list %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Error while updating filters list %1$s: status code %2$s</string>
     <string name="add_blocklist">Add filters file</string>
     <string name="add_blocklist_hint">You can choose hosts lists or any list compatible with AdBlockPlus rules</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Modifikační filtry</string>
     <string name="use_modify_filters_warning">V některých případech bylo zjištěno, že modifikační filtry rozbíjejí webové stránky v tomto prohlížeči. Dokud nebude implementace vylepšena, můžete je povolit na vlastní riziko. Zakázání pouze pro hlavní rámec dokumentů vyřeší většinu problémů.</string>
     <string name="modify_filters_not_for_main_frame">Zakázat pouze pro hlavní rámec</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Akce zrušena.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Bezpečnostní chyba! Načítání stránky přerušeno.</string>
     <string name="message_ssl_error">Secure connection compromised:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Do you still want to proceed?</string>
     <string name="message_certificate_date_invalid">Datum certifikátu je neplatné</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Certifikát je neplatný</string>
     <string name="message_certificate_not_yet_valid">Certifikát ještě není platný</string>
     <string name="message_certificate_untrusted">Certifikát není důvěryhodný</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Žádost o oprávnění</string>
     <string name="message_permission_request">%1$s\n\nby chtěl používat:\n\n%2$s</string>
     <string name="title_form_resubmission">Opětovné odeslání formuláře</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Export</string>
     <string name="generic_import">Import</string>
     <string name="generic_reset">Reset</string>
+    <string name="settings_help_menus">Přetažením a přejetím uspořádejte položky nabídky\nSpodní panel nástrojů obrací pořadí položek</string>
+    <string name="settings_title_reset_menus">Obnovit výchozí nabídky</string>
+    <string name="dialog_title_reset_menus">Obnovit výchozí nabídky?</string>
+    <string name="action_restore">Obnovit</string>
+    <string name="dialog_message_reset_menus">Ztratíte své aktuální nastavení</string>
     <string name="export_bookmarks">Exportovat záložky do zálohy</string>
     <string name="import_backup">Importovat záložky ze zálohy</string>
     <string name="bookmark_export_path">Záložky exportovány do</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Na šířku</string>
     <string name="pref_category_portrait">Na výšku</string>
+    <string name="settings_title_hidden">Skryté položky</string>
+    <string name="settings_title_menus">Nabídky</string>
+    <string name="settings_summary_menus">Uspořádat položky nabídky</string>
+    <string name="action_tab_menu">Nabídka karty</string>
+    <string name="settings_title_main_menu">Hlavní nabídka</string>
     <string name="pref_category_filters">Filtry</string>
     <string name="pref_category_summary_filters">Místní nebo vzdálené soubory definující pravidla řízení obsahu</string>
     <string name="pref_category_on_tab_close">Při zavření karty</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Omlouváme se, váš spouštěč nepodporuje zkratky.</string>
     <string name="action_delete_all_bookmarks">Smazat všechny záložky</string>
-    <!-- debug strings -->
     <string name="debug_title">Ladění</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Restartujte aplikaci, aby se změna projevila</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Povoleno</string>
     <string name="pref_summary_off_logs">Zakázáno</string>
     <string name="pref_title_log_level">Úroveň protokolování</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Otevřít v nové kartě</string>
     <string name="dialog_open_background_tab">Otevřít v kartě na pozadí</string>
     <string name="dialog_open_incognito_tab">Otevřít v anonymní kartě</string>
@@ -405,12 +407,9 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Zablokováno %1$s</string>
     <string name="dialog_delete_all_downloads">Smazat všechna stahování</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Nástroje stránky</string>
     <string name="dialog_toggle_desktop">Přepnout uživatelský agent pro počítače</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Vlastní URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d anonymní karta otevřena</item>
         <item quantity="few">%1$d anonymní karty otevřeny</item>
@@ -418,21 +417,16 @@
         <item quantity="other">%1$d anonymních karet otevřeno</item>
     </plurals>
     <string name="notification_incognito_running_message">Klepnutím otevřete</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Probíhající anonymní relace</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Vydal</string>
     <string name="ssl_info_issued_to">Vydáno pro</string>
     <string name="ssl_info_issued_on">Vydáno dne</string>
     <string name="ssl_info_expires_on">Vyprší dne</string>
-    <!-- Search in page -->
     <string name="next">Další</string>
     <string name="previous">Předchozí</string>
     <string name="close">Zavřít</string>
     <string name="exit">Ukončit</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Vložit návrh</string>
     <string name="action_close_all_other_tabs">Zavřít všechny ostatní karty</string>
     <string name="action_restore_all_tabs">Obnovit všechny karty</string>
@@ -469,11 +463,6 @@
     <string name="settings_title_cookies_delete_all">Smazat vše</string>
     <string name="settings_summary_cookies_delete_all">Smazat všechny cookies pro aktuální stránku</string>
     <string name="question_delete_all_page_cookies">Smazat všechny cookies pro aktuální stránku?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Current page has one cookie</item>
         <item quantity="few">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
@@ -492,7 +481,6 @@
     <string name="settings_summary_on_task_icon">Použít ikonu stránky</string>
     <string name="settings_summary_off_task_icon">Použít ikonu aplikace</string>
     <string name="settings_title_toolbar_label">Popisek panelu nástrojů</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Aplikace třetí strany k dispozici</string>
     <string name="dialog_message_third_party_app">Chcete spustit aplikaci spojenou s touto webovou stránkou?</string>
     <string name="per_month">\u0020/ month</string>
@@ -511,22 +499,14 @@
     <string name="invalid_characters_removed">Neplatné znaky odstraněny!</string>
     <string name="reading_mode_image_copyright">Obrázek připisován</string>
     <string name="reading_mode_image_caption">Obrázek s popisem</string>
-    <!-- text-to-speech -->
     <string name="tts">Číst stránku</string>
     <string name="stop_tts">Zastavit čtení</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris Web Browser</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Odkaz</string>
     <string name="button_image">Obrázek</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Karta zavřena</string>
     <string name="button_undo">Vrátit zpět</string>
     <string name="button_dismiss">Zamítnout</string>
-    <!-- Find in page -->
     <string name="no_match_found">Žádná shoda nenalezena!</string>
     <string name="match_x_of_n">Match <xliff:g id="current_match" example="1">%1$d</xliff:g> of <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Zobrazit snackbar</string>
@@ -611,7 +591,6 @@
     <string name="log_level_warn">Varování</string>
     <string name="log_level_error">Chyba</string>
     <string name="log_level_assert">Ujištění</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Krátká URL</string>
     <string name="label_domain">Doména</string>
@@ -619,7 +598,6 @@
     <string name="label_session">Relace</string>
     <string name="label_app_name">Název aplikace</string>
     <string name="message_render_process_crashed">Proces vykreslování selhal. Možná budete muset znovu načíst některé webové stránky.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Vítejte ve Fulguris</string>
     <string name="intro_welcome_description">Zažijte rychlé, bezpečné a přizpůsobitelné prohlížení webu s pokročilými funkcemi ochrany soukromí a moderním designem.</string>
     <string name="intro_title_terms">Pojďme začít!</string>
@@ -631,17 +609,6 @@
     <string name="pref_title_enable_ad_blocker">Blokovač reklam</string>
     <string name="pref_summary_on_enable_ad_blocker">Užijte si čistší a bezpečnější webovou zkušenost</string>
     <string name="pref_summary_off_enable_ad_blocker">Užijte si nefiltrovanou, původní verzi webu</string>
-    <string name="action_copy">Kopírovat</string>
-    <string name="settings_help_menus">Přetažením a přejetím uspořádejte položky nabídky\nSpodní panel nástrojů obrací pořadí položek</string>
-    <string name="settings_title_reset_menus">Obnovit výchozí nabídky</string>
-    <string name="dialog_title_reset_menus">Obnovit výchozí nabídky?</string>
-    <string name="action_restore">Obnovit</string>
-    <string name="dialog_message_reset_menus">Ztratíte své aktuální nastavení</string>
-    <string name="settings_title_hidden">Skryté položky</string>
-    <string name="settings_title_menus">Nabídky</string>
-    <string name="settings_summary_menus">Uspořádat položky nabídky</string>
-    <string name="action_tab_menu">Nabídka karty</string>
-    <string name="settings_title_main_menu">Hlavní nabídka</string>
     <string name="page_requests_title">Požadavky</string>
     <string name="page_request_details_title">Požadavek</string>
     <string name="request_status">Stav</string>

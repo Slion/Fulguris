@@ -45,6 +45,7 @@
     <string name="clear_history">ล้างประวัติเบราว์เซอร์</string>
     <string name="action_download">ดาวน์โหลด</string>
     <string name="action_open">เปิด</string>
+    <string name="action_copy">คัดลอก</string>
     <string name="dialog_title_share">แชร์หน้านี้</string>
     <string name="action_delete">ลบ</string>
     <string name="action_blank">หน้าว่าง</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">คุณกำลังใช้ v%s ต้องการตรวจสอบบันทึกการอัปเดตออนไลน์หรือไม่?</string>
     <string name="title_welcome">ยินดีต้อนรับสู่ Fulguris</string>
     <string name="message_welcome">เยี่ยมชมหน้าแรกของเราเพื่อหาข้อมูลเพิ่มเติมเกี่ยวกับเว็บเบราว์เซอร์ที่ทรงพลังนี้?</string>
-    <!-- Ad block -->
     <string name="block_ads">บล็อกโฆษณา</string>
     <string name="block_remote_frequency_daily">รายวัน</string>
     <string name="block_remote_frequency_weekly">รายสัปดาห์</string>
     <string name="block_remote_frequency_monthly">รายเดือน</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">หน้าต่อไปนี้ถูกบล็อก:</string>
     <string name="page_blocked_reason">เนื่องจาก:</string>
     <string name="page_blocked_list_ad">%s ในตัวกรองโฆษณา</string>
     <string name="page_blocked_list_user">%s ถูกบล็อกโดยกฎของผู้ใช้</string>
     <string name="page_blocked_list_malware">%s ในตัวกรองมัลแวร์</string>
     <string name="request_blocked">คำขอถูกบล็อก</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">โหมดอัปเดตอัตโนมัติ</string>
     <string name="blocklist_update_on">เปิดอัปเดตอัตโนมัติ</string>
     <string name="blocklist_update_off">ปิดอัปเดตอัตโนมัติ</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">อัปเดตล่าสุด: %s</string>
     <string name="blocklist_updating">กำลังอัปเดต</string>
     <string name="blocklist_update_error">เกิดข้อผิดพลาดขณะอัปเดตรายการตัวกรอง %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">เกิดข้อผิดพลาดขณะอัปเดตรายการตัวกรอง %1$s: รหัสสถานะ %2$s</string>
     <string name="add_blocklist">เพิ่มไฟล์ฟิลเตอร์</string>
     <string name="add_blocklist_hint">คุณสามารถเลือกรายการโฮสต์หรือรายการใดๆ ที่เข้ากันได้กับกฎของ AdBlockPlus</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">ฟิลเตอร์ตัวปรับเปลี่ยน</string>
     <string name="use_modify_filters_warning">ในบางกรณี ฟิลเตอร์ตัวปรับเปลี่ยนอาจทำให้เว็บไซต์ใช้งานไม่ได้ในเบราว์เซอร์นี้ จนกว่าการใช้งานจะดีขึ้น คุณสามารถเปิดใช้งานโดยรับความเสี่ยงเอง การปิดใช้งานสำหรับเอกสารเฟรมหลักเท่านั้นจะหลีกเลี่ยงปัญหาส่วนใหญ่</string>
     <string name="modify_filters_not_for_main_frame">ปิดใช้งานสำหรับเฟรมหลักเท่านั้น</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">ยกเลิกการดำเนินการแล้ว</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">ข้อผิดพลาดความปลอดภัย! ยกเลิกการโหลดหน้าแล้ว</string>
     <string name="message_ssl_error">การเชื่อมต่อที่ปลอดภัยถูกบุกรุก:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>คุณยังต้องการดำเนินการต่อหรือไม่?</string>
     <string name="message_certificate_date_invalid">วันที่ของใบรับรองไม่ถูกต้อง</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">ใบรับรองไม่ถูกต้อง</string>
     <string name="message_certificate_not_yet_valid">ใบรับรองยังไม่มีผล</string>
     <string name="message_certificate_untrusted">ใบรับรองไม่น่าเชื่อถือ</string>
-    <!-- permissions request -->
     <string name="title_permission_request">คำขอสิทธิ์</string>
     <string name="message_permission_request">%1$s\n\nต้องการใช้:\n\n%2$s</string>
     <string name="title_form_resubmission">การส่งฟอร์มอีกครั้ง</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">ส่งออก</string>
     <string name="generic_import">นำเข้า</string>
     <string name="generic_reset">รีเซ็ต</string>
+    <string name="settings_help_menus">กำหนดค่าการดำเนินการของเมนูในแท็บ</string>
+    <string name="settings_title_reset_menus">รีเซ็ตเมนู</string>
+    <string name="dialog_title_reset_menus">รีเซ็ตเมนู</string>
+    <string name="action_restore">กู้คืน</string>
+    <string name="dialog_message_reset_menus">การรีเซ็ตเมนูจะล้างการเปลี่ยนแปลงทั้งหมดในหน้าเมนู</string>
     <string name="export_bookmarks">ส่งออกบุ๊กมาร์ก</string>
     <string name="import_backup">นำเข้าสำรองข้อมูล</string>
     <string name="bookmark_export_path">ส่งออกบุ๊กมาร์กไปยัง:</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">แนวนอน</string>
     <string name="pref_category_portrait">แนวตั้ง</string>
+    <string name="settings_title_hidden">ซ่อน</string>
+    <string name="settings_title_menus">เมนู</string>
+    <string name="settings_summary_menus">ปรับแต่งเมนูของคุณ</string>
+    <string name="action_tab_menu">เมนูแท็บ</string>
+    <string name="settings_title_main_menu">เมนูหลัก</string>
     <string name="pref_category_filters">ฟิลเตอร์</string>
     <string name="pref_category_summary_filters">โฆษณาและมัลแวร์</string>
     <string name="pref_category_on_tab_close">เมื่อปิดแท็บ</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">เพิ่มทางลัดไปยังหน้าจอหลักแล้ว</string>
     <string name="shortcut_message_failed_to_add">ขออภัย ตัวเปิดของคุณไม่รองรับทางลัด</string>
     <string name="action_delete_all_bookmarks">ลบบุ๊กมาร์กทั้งหมด</string>
-    <!-- debug strings -->
     <string name="debug_title">ดีบัก</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">กรุณารีสตาร์ตแอปเพื่อให้การเปลี่ยนแปลงมีผล</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">เปิดใช้งาน</string>
     <string name="pref_summary_off_logs">ปิดใช้งาน</string>
     <string name="pref_title_log_level">ระดับบันทึก</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">เปิดในแท็บใหม่</string>
     <string name="dialog_open_background_tab">เปิดในแท็บพื้นหลัง</string>
     <string name="dialog_open_incognito_tab">เปิดในแท็บไม่ระบุตัวตน</string>
@@ -405,31 +407,23 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">บล็อก %1$s แล้ว</string>
     <string name="dialog_delete_all_downloads">ลบการดาวน์โหลดทั้งหมด</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">เครื่องมือ</string>
     <string name="dialog_toggle_desktop">สลับโหมดเดสก์ท็อป</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">เครื่องมือค้นหาที่กำหนดเอง</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">%1$d แท็บไม่ระบุตัวตนเปิดอยู่</item>
     </plurals>
     <string name="notification_incognito_running_message">แตะเพื่อเปิด</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">เซสชันไม่ระบุตัวตนกำลังทำงาน</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">ออกโดย:</string>
     <string name="ssl_info_issued_to">ออกให้:</string>
     <string name="ssl_info_issued_on">ออกเมื่อ:</string>
     <string name="ssl_info_expires_on">หมดอายุเมื่อ:</string>
-    <!-- Search in page -->
     <string name="next">ถัดไป</string>
     <string name="previous">ก่อนหน้า</string>
     <string name="close">ปิด</string>
     <string name="exit">ออก</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">แทรกคำแนะนำ</string>
     <string name="action_close_all_other_tabs">ปิดแท็บอื่นทั้งหมด</string>
     <string name="action_restore_all_tabs">คืนค่าแท็บทั้งหมด</string>
@@ -466,11 +460,6 @@
     <string name="settings_title_cookies_delete_all">ลบคุกกี้ทั้งหมด</string>
     <string name="settings_summary_cookies_delete_all">ลบคุกกี้ทั้งหมดของโดเมนนี้</string>
     <string name="question_delete_all_page_cookies">ลบคุกกี้ทั้งหมดสำหรับหน้านี้หรือไม่?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="other">หน้าปัจจุบันมี <xliff:g id="cookies_count" example="2">%d</xliff:g> คุกกี้</item>
     </plurals>
@@ -483,7 +472,6 @@
     <string name="settings_summary_on_task_icon">ใช้ไอคอนหน้า</string>
     <string name="settings_summary_off_task_icon">ใช้ไอคอนแอป</string>
     <string name="settings_title_toolbar_label">ป้ายแถบเครื่องมือ</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">มีแอปของบุคคลที่สาม</string>
     <string name="dialog_message_third_party_app">คุณต้องการเปิดแอปพลิเคชันที่เชื่อมโยงกับเว็บไซต์นั้นหรือไม่?</string>
     <string name="per_month">\u0020/ เดือน</string>
@@ -502,22 +490,14 @@
     <string name="invalid_characters_removed">ลบอักขระที่ไม่ถูกต้องแล้ว</string>
     <string name="reading_mode_image_copyright">ลิขสิทธิ์</string>
     <string name="reading_mode_image_caption">คำบรรยายภาพ</string>
-    <!-- text-to-speech -->
     <string name="tts">ข้อความเป็นเสียง</string>
     <string name="stop_tts">หยุดการอ่าน</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">เบราว์เซอร์เว็บ Fulguris</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">ลิงก์</string>
     <string name="button_image">รูปภาพ</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">ปิดแท็บแล้ว</string>
     <string name="button_undo">เลิกทำ</string>
     <string name="button_dismiss">ปิด</string>
-    <!-- Find in page -->
     <string name="no_match_found">ไม่พบที่ตรงกัน</string>
     <string name="match_x_of_n">ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">แสดง snackbar</string>
@@ -602,7 +582,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">URL สั้น</string>
     <string name="label_domain">โดเมน</string>
@@ -610,7 +589,6 @@
     <string name="label_session">เซสชัน</string>
     <string name="label_app_name">ชื่อแอป</string>
     <string name="message_render_process_crashed">กระบวนการเรนเดอร์ขัดข้อง คุณอาจจำเป็นต้องโหลดหน้าเว็บบางหน้าใหม่</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">ยินดีต้อนรับสู่ Fulguris</string>
     <string name="intro_welcome_description">สัมผัสประสบการณ์การท่องเว็บที่รวดเร็ว ปลอดภัย และปรับแต่งได้ด้วยฟีเจอร์ความเป็นส่วนตัวขั้นสูงและการออกแบบที่ทันสมัย</string>
     <string name="intro_title_terms">มาเริ่มกันเลย!</string>
@@ -622,17 +600,6 @@
     <string name="pref_title_enable_ad_blocker">ตัวบล็อกโฆษณา</string>
     <string name="pref_summary_on_enable_ad_blocker">เพลิดเพลินกับประสบการณ์เว็บที่สะอาดและปลอดภัยยิ่งขึ้น</string>
     <string name="pref_summary_off_enable_ad_blocker">เพลิดเพลินกับเว็บเวอร์ชันต้นฉบับที่ไม่ถูกกรอง</string>
-    <string name="action_copy">คัดลอก</string>
-    <string name="settings_help_menus">กำหนดค่าการดำเนินการของเมนูในแท็บ</string>
-    <string name="settings_title_reset_menus">รีเซ็ตเมนู</string>
-    <string name="dialog_title_reset_menus">รีเซ็ตเมนู</string>
-    <string name="action_restore">กู้คืน</string>
-    <string name="dialog_message_reset_menus">การรีเซ็ตเมนูจะล้างการเปลี่ยนแปลงทั้งหมดในหน้าเมนู</string>
-    <string name="settings_title_hidden">ซ่อน</string>
-    <string name="settings_title_menus">เมนู</string>
-    <string name="settings_summary_menus">ปรับแต่งเมนูของคุณ</string>
-    <string name="action_tab_menu">เมนูแท็บ</string>
-    <string name="settings_title_main_menu">เมนูหลัก</string>
     <string name="page_requests_title">คำขอหน้า</string>
     <string name="page_request_details_title">รายละเอียดคำขอ</string>
     <string name="request_status">สถานะ</string>

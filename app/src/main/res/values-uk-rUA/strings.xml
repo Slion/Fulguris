@@ -45,6 +45,7 @@
     <string name="clear_history">Очистити історію браузера</string>
     <string name="action_download">Завантажити</string>
     <string name="action_open">Відкрити</string>
+    <string name="action_copy">Копіювати</string>
     <string name="dialog_title_share">Поділитися цією сторінкою</string>
     <string name="action_delete">Видалити</string>
     <string name="action_blank">Порожня сторінка</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Тепер ви використовуєте v%s. Хочете переглянути примітки до випуску?</string>
     <string name="title_welcome">Ласкаво просимо в Fulguris</string>
     <string name="message_welcome">Відвідати нашу домашню сторінку, щоб дізнатися більше про цей потужний веббраузер?</string>
-    <!-- Ad block -->
     <string name="block_ads">Керування вмістом</string>
     <string name="block_remote_frequency_daily">Щодня</string>
     <string name="block_remote_frequency_weekly">Щотижня</string>
     <string name="block_remote_frequency_monthly">Щомісяця</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Цю сторінку було заблоковано:</string>
     <string name="page_blocked_reason">через:</string>
     <string name="page_blocked_list_ad">%s на рекламних фільтрах</string>
     <string name="page_blocked_list_user">%s заблоковано правилами користувача</string>
     <string name="page_blocked_list_malware">%s на важливому списку фільтрів</string>
     <string name="request_blocked">Запит заблоковано</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Режим самооновлення</string>
     <string name="blocklist_update_on">Автооновлення увімкнено</string>
     <string name="blocklist_update_off">Автооновлення вимкнено</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Останнє оновлення: %s</string>
     <string name="blocklist_updating">Оновлення…</string>
     <string name="blocklist_update_error">Помилка під час оновлення списку фільтрів %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Помилка при оновленні списку фільтрів %1$s: код статусу %2$s</string>
     <string name="add_blocklist">Додати файл фільтрів</string>
     <string name="add_blocklist_hint">Ви можете обрати списки хостів або будь-який список сумісний з правилами AdBlockPlus</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Фільтри-модифікатори</string>
     <string name="use_modify_filters_warning">У деяких випадках фільтри-модифікатори можуть порушити роботи вебсайтів у цьому браузері. Ви можете їх увімкнути на власний риск доки не буде покращена їх впровадження. Відключення для мейнфрейм-документів дозволить уникнути більшості проблем.</string>
     <string name="modify_filters_not_for_main_frame">Вимкнути лише для основного фрейму</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Дію скасовано.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Помилка безпеки! Завантаження сторінки перервано.</string>
     <string name="message_ssl_error">Захищене з\'єднання скомпрометовано:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Ви все ще хочете продовжити?</string>
     <string name="message_certificate_date_invalid">Дата сертифіката недійсна</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Сертифікат недійсний</string>
     <string name="message_certificate_not_yet_valid">Сертифікат ще не дійсний</string>
     <string name="message_certificate_untrusted">Сертифікат не є довіреним</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Запит на дозвіл</string>
     <string name="message_permission_request">%1$s\n\nбажає використовувати:\n\n%2$s</string>
     <string name="title_form_resubmission">Повторне подання форми</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Експортувати</string>
     <string name="generic_import">Імпортувати</string>
     <string name="generic_reset">Скинути</string>
+    <string name="settings_help_menus">Налаштування дій меню на вкладці</string>
+    <string name="settings_title_reset_menus">Скинути меню</string>
+    <string name="dialog_title_reset_menus">Скинути меню</string>
+    <string name="action_restore">Відновити</string>
+    <string name="dialog_message_reset_menus">Скидання меню очистить всі зміни сторінок меню</string>
     <string name="export_bookmarks">Експортувати закладки в запасну копію</string>
     <string name="import_backup">Імпортувати закладки із запасної копії</string>
     <string name="bookmark_export_path">Закладки експортовано до</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Альбомна</string>
     <string name="pref_category_portrait">Портретна</string>
+    <string name="settings_title_hidden">Приховано</string>
+    <string name="settings_title_menus">Меню</string>
+    <string name="settings_summary_menus">Налаштуйте ваші меню</string>
+    <string name="action_tab_menu">Меню вкладки</string>
+    <string name="settings_title_main_menu">Головне меню</string>
     <string name="pref_category_filters">Фільтри</string>
     <string name="pref_category_summary_filters">Локальні або віддалені файли, що визначають правила керування вмістом</string>
     <string name="pref_category_on_tab_close">При закритті вкладки</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Ярлик додано на головний екран</string>
     <string name="shortcut_message_failed_to_add">На жаль, ваш лаунчер не підтримує ярлики.</string>
     <string name="action_delete_all_bookmarks">Видалити всі закладки</string>
-    <!-- debug strings -->
     <string name="debug_title">Налагодження</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Перезапустіть додаток, щоб зміни набрали чинності</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Увімкнено</string>
     <string name="pref_summary_off_logs">Вимкнено</string>
     <string name="pref_title_log_level">Рівень журналування</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Відкрити в новій вкладці</string>
     <string name="dialog_open_background_tab">Відкрити у фоновій вкладці</string>
     <string name="dialog_open_incognito_tab">Відкрити в вкладці інкогніто</string>
@@ -405,12 +407,9 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$s заблоковано</string>
     <string name="dialog_delete_all_downloads">Видалити всі завантаження</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Засоби сторінки</string>
     <string name="dialog_toggle_desktop">Увімкнути/вимкнути настільний user-agent</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Власна URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d інкогніто вкладка відкрита</item>
         <item quantity="few">%1$d інкогніто вкладки відкрито</item>
@@ -418,21 +417,16 @@
         <item quantity="other">%1$d інкогніто вкладок відкрито</item>
     </plurals>
     <string name="notification_incognito_running_message">Торкніться, щоб відкрити</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Поточний сеанс інкогніто</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Ким подано:</string>
     <string name="ssl_info_issued_to">Кому подано:</string>
     <string name="ssl_info_issued_on">Коли подано:</string>
     <string name="ssl_info_expires_on">Діє до:</string>
-    <!-- Search in page -->
     <string name="next">Далі</string>
     <string name="previous">Назад</string>
     <string name="close">Закрити</string>
     <string name="exit">Вийти</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Додати пропозицію</string>
     <string name="action_close_all_other_tabs">Закрити всі інші вкладки</string>
     <string name="action_restore_all_tabs">Відновити всі вкладки</string>
@@ -469,11 +463,6 @@
     <string name="settings_title_cookies_delete_all">Видалити все</string>
     <string name="settings_summary_cookies_delete_all">Видалити всі cookies для поточної сторінки</string>
     <string name="question_delete_all_page_cookies">Видалити всі cookies для поточної сторінки?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">На поточній сторінці один файл cookie</item>
         <item quantity="few">Current page has <xliff:g id="cookies_count" example="2">%d</xliff:g> cookies</item>
@@ -492,7 +481,6 @@
     <string name="settings_summary_on_task_icon">Використовувати значок сторінки</string>
     <string name="settings_summary_off_task_icon">Використовувати значок програми</string>
     <string name="settings_title_toolbar_label">Мітка панелі інструментів</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Доступний сторонній додаток</string>
     <string name="dialog_message_third_party_app">Ви хочете запустити додаток, пов\'язаний з цим вебсайтом?</string>
     <string name="per_month">\u0020/ місяць</string>
@@ -511,22 +499,14 @@
     <string name="invalid_characters_removed">Неприпустимі символи видалено!</string>
     <string name="reading_mode_image_copyright">Зображення належить</string>
     <string name="reading_mode_image_caption">Зображення з написом</string>
-    <!-- text-to-speech -->
     <string name="tts">Прочитати сторінку</string>
     <string name="stop_tts">Зупинити читання</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Веб-браузер Fulguris</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Посилання</string>
     <string name="button_image">Зображення</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Вкладку закрито</string>
     <string name="button_undo">Скасувати</string>
     <string name="button_dismiss">Відхилити</string>
-    <!-- Find in page -->
     <string name="no_match_found">Збігів не знайдено!</string>
     <string name="match_x_of_n">Збіг <xliff:g id="current_match" example="1">%1$d</xliff:g> з <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Показувати snackbar</string>
@@ -611,7 +591,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">Короткий URL</string>
     <string name="label_domain">Домен</string>
@@ -619,7 +598,6 @@
     <string name="label_session">Сеанс</string>
     <string name="label_app_name">Назва програми</string>
     <string name="message_render_process_crashed">Процес рендерингу завершився збоєм. Можливо, вам потрібно перезавантажити деякі веб-сторінки.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Ласкаво просимо до Fulguris</string>
     <string name="intro_welcome_description">Відчуйте швидкий, безпечний і налаштовуваний веб-браузер з розширеними функціями конфіденційності та сучасним дизайном.</string>
     <string name="intro_title_terms">Почнемо!</string>
@@ -631,17 +609,6 @@
     <string name="pref_title_enable_ad_blocker">Блокувальник реклами</string>
     <string name="pref_summary_on_enable_ad_blocker">Насолоджуйтесь чистішим, безпечнішим інтернетом</string>
     <string name="pref_summary_off_enable_ad_blocker">Насолоджуйтесь нефільтрованою, оригінальною версією інтернету</string>
-    <string name="action_copy">Копіювати</string>
-    <string name="settings_help_menus">Налаштування дій меню на вкладці</string>
-    <string name="settings_title_reset_menus">Скинути меню</string>
-    <string name="dialog_title_reset_menus">Скинути меню</string>
-    <string name="action_restore">Відновити</string>
-    <string name="dialog_message_reset_menus">Скидання меню очистить всі зміни сторінок меню</string>
-    <string name="settings_title_hidden">Приховано</string>
-    <string name="settings_title_menus">Меню</string>
-    <string name="settings_summary_menus">Налаштуйте ваші меню</string>
-    <string name="action_tab_menu">Меню вкладки</string>
-    <string name="settings_title_main_menu">Головне меню</string>
     <string name="page_requests_title">Запити сторінки</string>
     <string name="page_request_details_title">Деталі запиту</string>
     <string name="request_status">Статус</string>

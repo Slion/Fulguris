@@ -45,6 +45,7 @@
     <string name="clear_history">清除历史记录</string>
     <string name="action_download">下载</string>
     <string name="action_open">打开</string>
+    <string name="action_copy">复制</string>
     <string name="dialog_title_share">分享此页面</string>
     <string name="action_delete">删除</string>
     <string name="action_blank">空白页</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">你正在运行 v%s。你想要在线检查发行通知吗？</string>
     <string name="title_welcome">欢迎使用 Fulguris</string>
     <string name="message_welcome">要不要访问一下我们的主页，了解这个强大的浏览器的更多信息？</string>
-    <!-- Ad block -->
     <string name="block_ads">内容控制</string>
     <string name="block_remote_frequency_daily">每天</string>
     <string name="block_remote_frequency_weekly">每周</string>
     <string name="block_remote_frequency_monthly">每月</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">以下页面被阻止：</string>
     <string name="page_blocked_reason">因为：</string>
     <string name="page_blocked_list_ad">%s 位于广告过滤列表</string>
     <string name="page_blocked_list_user">%s 被用户规则阻止</string>
     <string name="page_blocked_list_malware">%s 位于恶意软件过滤列表</string>
     <string name="request_blocked">请求已阻止</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">自动更新模式</string>
     <string name="blocklist_update_on">启用自动更新</string>
     <string name="blocklist_update_off">禁用自动更新</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">上次更新: %s</string>
     <string name="blocklist_updating">更新中...</string>
     <string name="blocklist_update_error">更新过滤规则列表 %s 时出错</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">更新过滤规则列表 %1$s时出错：状态代码 %2$s</string>
     <string name="add_blocklist">添加过滤器文件</string>
     <string name="add_blocklist_hint">您可以选择 hosts 文件或任何兼容 AdBlockPlus 格式的过滤规则</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">修饰过滤器</string>
     <string name="use_modify_filters_warning">在某些情况下，运用修饰过滤器会破坏网站的正常运作。 在实现获得改进之前，您可以自行开启它们，但后果自负。仅对主框架文档禁用修饰过滤器能避免多数问题。</string>
     <string name="modify_filters_not_for_main_frame">仅对主框架禁用</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">操作已取消</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">安全错误！页面加载中止。</string>
     <string name="message_ssl_error">安全连接已失密:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g> 您仍然想要继续吗？</string>
     <string name="message_certificate_date_invalid">证书的日期无效</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">证书无效</string>
     <string name="message_certificate_not_yet_valid">证书尚未生效</string>
     <string name="message_certificate_untrusted">证书不受信任</string>
-    <!-- permissions request -->
     <string name="title_permission_request">权限请求</string>
     <string name="message_permission_request">%1$s\n\n想要使用：\n\n%2$s</string>
     <string name="title_form_resubmission">重新提交表单</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">导出</string>
     <string name="generic_import">导入</string>
     <string name="generic_reset">重置</string>
+    <string name="settings_help_menus">配置标签页菜单操作</string>
+    <string name="settings_title_reset_menus">重置菜单</string>
+    <string name="dialog_title_reset_menus">重置菜单</string>
+    <string name="action_restore">恢复</string>
+    <string name="dialog_message_reset_menus">重置菜单将清除所有菜单页面更改</string>
     <string name="export_bookmarks">导出书签备份</string>
     <string name="import_backup">从备份中导入书签</string>
     <string name="bookmark_export_path">书签已经导出到</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">横屏</string>
     <string name="pref_category_portrait">竖屏</string>
+    <string name="settings_title_hidden">隐藏</string>
+    <string name="settings_title_menus">菜单</string>
+    <string name="settings_summary_menus">自定义您的菜单</string>
+    <string name="action_tab_menu">标签菜单</string>
+    <string name="settings_title_main_menu">主菜单</string>
     <string name="pref_category_filters">过滤器</string>
     <string name="pref_category_summary_filters">定义内容控制规则的本地或远程文件</string>
     <string name="pref_category_on_tab_close">标签页关闭时</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">快捷方式已添加到桌面</string>
     <string name="shortcut_message_failed_to_add">抱歉，你的桌面应用不支持快捷方式</string>
     <string name="action_delete_all_bookmarks">删除所有书签</string>
-    <!-- debug strings -->
     <string name="debug_title">调试设置</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">重新启动应用以使更改生效</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">已启用</string>
     <string name="pref_summary_off_logs">已禁用</string>
     <string name="pref_title_log_level">日志级别</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">在新标签页中打开</string>
     <string name="dialog_open_background_tab">在后台标签页中打开</string>
     <string name="dialog_open_incognito_tab">在无痕标签页中打开</string>
@@ -405,31 +407,23 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">已屏蔽 %1$s</string>
     <string name="dialog_delete_all_downloads">删除所有下载内容</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">页面工具</string>
     <string name="dialog_toggle_desktop">切换桌面用户代理</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">自定义 URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">打开了 %1$d 个无痕标签页</item>
     </plurals>
     <string name="notification_incognito_running_message">轻触以打开</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">正在进行的无痕会话</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">颁发者</string>
     <string name="ssl_info_issued_to">颁发给</string>
     <string name="ssl_info_issued_on">颁发时间</string>
     <string name="ssl_info_expires_on">过期时间</string>
-    <!-- Search in page -->
     <string name="next">下一页</string>
     <string name="previous">前一页</string>
     <string name="close">关闭</string>
     <string name="exit">退出</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">插入搜索建议</string>
     <string name="action_close_all_other_tabs">关闭其他的全部标签页</string>
     <string name="action_restore_all_tabs">复原全部标签页</string>
@@ -466,11 +460,6 @@
     <string name="settings_title_cookies_delete_all">全部删除</string>
     <string name="settings_summary_cookies_delete_all">删除当前页面的所有 cookies</string>
     <string name="question_delete_all_page_cookies">删除当前页面的所有 cookie 吗？</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="other">当前页面有 %d 个 cookie</item>
     </plurals>
@@ -483,7 +472,6 @@
     <string name="settings_summary_on_task_icon">使用页面图标</string>
     <string name="settings_summary_off_task_icon">使用应用图标</string>
     <string name="settings_title_toolbar_label">工具栏标签</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">第三方应用程序可用</string>
     <string name="dialog_message_third_party_app">是否要启动该网站关联的应用程序?</string>
     <string name="per_month">\u0020/ 月</string>
@@ -502,22 +490,14 @@
     <string name="invalid_characters_removed">多个无效字符已删除！</string>
     <string name="reading_mode_image_copyright">图片版权属于</string>
     <string name="reading_mode_image_caption">带说明的图片</string>
-    <!-- text-to-speech -->
     <string name="tts">语音播报页面</string>
     <string name="stop_tts">停止播报</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Fulguris 网络浏览器</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">链接</string>
     <string name="button_image">图片</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">标签页关闭</string>
     <string name="button_undo">撤销</string>
     <string name="button_dismiss">忽略</string>
-    <!-- Find in page -->
     <string name="no_match_found">查不到！</string>
     <string name="match_x_of_n">第 <xliff:g id="current_match" example="1">%1$d</xliff:g> 处，共 <xliff:g id="match_count" example="10">%2$d</xliff:g> 处</string>
     <string name="pref_title_show_snackbar">显示撤销条</string>
@@ -602,7 +582,6 @@
     <string name="log_level_warn">警告</string>
     <string name="log_level_error">错误</string>
     <string name="log_level_assert">断言 (Assert)</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">短网址</string>
     <string name="label_domain">域名</string>
@@ -610,7 +589,6 @@
     <string name="label_session">会话</string>
     <string name="label_app_name">应用名称</string>
     <string name="message_render_process_crashed">渲染进程崩溃。您可能需要重新加载一些网页。</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">欢迎使用 Fulguris</string>
     <string name="intro_welcome_description">体验快速、安全且可自定义的网页浏览，具有先进的隐私功能和现代化设计。</string>
     <string name="intro_title_terms">让我们开始吧！</string>
@@ -622,17 +600,6 @@
     <string name="pref_title_enable_ad_blocker">广告拦截器</string>
     <string name="pref_summary_on_enable_ad_blocker">享受更干净、更安全的网络体验</string>
     <string name="pref_summary_off_enable_ad_blocker">享受未经过滤的原始网络版本</string>
-    <string name="action_copy">复制</string>
-    <string name="settings_help_menus">配置标签页菜单操作</string>
-    <string name="settings_title_reset_menus">重置菜单</string>
-    <string name="dialog_title_reset_menus">重置菜单</string>
-    <string name="action_restore">恢复</string>
-    <string name="dialog_message_reset_menus">重置菜单将清除所有菜单页面更改</string>
-    <string name="settings_title_hidden">隐藏</string>
-    <string name="settings_title_menus">菜单</string>
-    <string name="settings_summary_menus">自定义您的菜单</string>
-    <string name="action_tab_menu">标签菜单</string>
-    <string name="settings_title_main_menu">主菜单</string>
     <string name="page_requests_title">页面请求</string>
     <string name="page_request_details_title">请求详情</string>
     <string name="request_status">状态</string>

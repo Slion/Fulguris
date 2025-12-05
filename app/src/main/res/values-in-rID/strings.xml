@@ -45,6 +45,7 @@
     <string name="clear_history">Hapus histori pada browser</string>
     <string name="action_download">Unduh</string>
     <string name="action_open">Buka</string>
+    <string name="action_copy">Salin</string>
     <string name="dialog_title_share">Bagikan halaman ini</string>
     <string name="action_delete">Hapus</string>
     <string name="action_blank">Halaman kosong</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Anda sedang menggunakan v%s. Maukah Anda membaca catatan pengeluarannya?</string>
     <string name="title_welcome">Selamat datang di Fulguris</string>
     <string name="message_welcome">Mau mengunjungi beranda kami untuk tahu lebih banyak tentang browser ini?</string>
-    <!-- Ad block -->
     <string name="block_ads">Pengaturan untuk isi halaman</string>
     <string name="block_remote_frequency_daily">Harian</string>
     <string name="block_remote_frequency_weekly">Mingguan</string>
     <string name="block_remote_frequency_monthly">Bulanan</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Halaman berikut ini diblokir:</string>
     <string name="page_blocked_reason">karena:</string>
     <string name="page_blocked_list_ad">%s pada penyaring iklan</string>
     <string name="page_blocked_list_user">%s diblokir oleh aturan dari pengguna</string>
     <string name="page_blocked_list_malware">%s pada penyaring malware</string>
     <string name="request_blocked">Permintaan ditolak</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Mode pembaruan otomatis</string>
     <string name="blocklist_update_on">Pembaruan otomatis hidup</string>
     <string name="blocklist_update_off">Pembaruan otomatis mati</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Pembaruan yang terakhir: %s</string>
     <string name="blocklist_updating">Memperbarui…</string>
     <string name="blocklist_update_error">Terjadi kesalahan saat memperbarui daftar filter %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Terjadi kesalahan saat memperbarui daftar filter %1$s: kode status %2$s</string>
     <string name="add_blocklist">Tambahkan file penyaring</string>
     <string name="add_blocklist_hint">Anda bisa memilih daftar host atau daftar mana saja yang menuruti aturan AdBlockPlus</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Filter modifikasi</string>
     <string name="use_modify_filters_warning">Dibeberapa kasus, modifikasi filter telah ditemukan untuk merusak website di browser ini. Sampai implementasi disetujui, Anda bisa mengaktifkannya dengan resiko. Mematikannya untuk dokumen frame-utama hanya menghindari sebagian besar isu.</string>
     <string name="modify_filters_not_for_main_frame">Matikan untuk frame utama saja</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Tindakan telah dibatalkan.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Kesalahan keamanan! Pemuatan halaman dibatalkan.</string>
     <string name="message_ssl_error">Koneksi aman terkompromi:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Apakah Anda masih ingin melanjutkan?</string>
     <string name="message_certificate_date_invalid">Tanggal pada sertifikat tidak berlaku</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Sertifikat ini tidak berlaku</string>
     <string name="message_certificate_not_yet_valid">Sertifikat ini belum berlaku</string>
     <string name="message_certificate_untrusted">Sertifikat ini tidak bisa dipercayai</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Permohonan izin</string>
     <string name="message_permission_request">%1$s\n\ningin menggunakan:\n\n%2$s</string>
     <string name="title_form_resubmission">Pengulangan pengiriman formulir</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Ekspor</string>
     <string name="generic_import">Impor</string>
     <string name="generic_reset">Atur ulang</string>
+    <string name="settings_help_menus">Seret dan geser item untuk mengatur menu Anda\nBilah alat bawah membalik urutan item</string>
+    <string name="settings_title_reset_menus">Pulihkan menu default</string>
+    <string name="dialog_title_reset_menus">Pulihkan menu default?</string>
+    <string name="action_restore">Pulihkan</string>
+    <string name="dialog_message_reset_menus">Anda akan kehilangan pengaturan saat ini</string>
     <string name="export_bookmarks">Bawa keluar penanda</string>
     <string name="import_backup">Bawa masuk pananda</string>
     <string name="bookmark_export_path">Penanda telah dibawa keluar ke</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Mendatar</string>
     <string name="pref_category_portrait">Tegak</string>
+    <string name="settings_title_hidden">Item tersembunyi</string>
+    <string name="settings_title_menus">Menu</string>
+    <string name="settings_summary_menus">Atur item menu Anda</string>
+    <string name="action_tab_menu">Menu tab</string>
+    <string name="settings_title_main_menu">Menu utama</string>
     <string name="pref_category_filters">Saringan</string>
     <string name="pref_category_summary_filters">File pengatur isi halaman web</string>
     <string name="pref_category_on_tab_close">Saat menutup tab</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Pintasan telah ditambahkan ke layar utama</string>
     <string name="shortcut_message_failed_to_add">Maaf, launcher Anda tidak bisa membuat pintasan ke layar utama.</string>
     <string name="action_delete_all_bookmarks">Hapus semua penanda</string>
-    <!-- debug strings -->
     <string name="debug_title">Debug</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Restart aplikasi ini untuk menerapkan perubahan</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Diaktifkan</string>
     <string name="pref_summary_off_logs">Dinonaktifkan</string>
     <string name="pref_title_log_level">Level log</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Buka di tab baru</string>
     <string name="dialog_open_background_tab">Buka di tab latar belakang</string>
     <string name="dialog_open_incognito_tab">Buka dengan tab penyamaran</string>
@@ -405,31 +407,23 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">Diblokir %1$s</string>
     <string name="dialog_delete_all_downloads">Hapus semua unduhan</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Peralatan Halaman</string>
     <string name="dialog_toggle_desktop">Aktifkan agen pengguna desktop</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">URL kustom</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="other">%1$d tab penyamaran sedang terbuka</item>
     </plurals>
     <string name="notification_incognito_running_message">Sentuh untuk membuka</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Sesi penyamaran sedang berlangsung</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Diterbitkan oleh</string>
     <string name="ssl_info_issued_to">Diterbitkan untuk</string>
     <string name="ssl_info_issued_on">Diterbitkan pada</string>
     <string name="ssl_info_expires_on">Berakhir pada</string>
-    <!-- Search in page -->
     <string name="next">Selanjutnya</string>
     <string name="previous">Sebelumnya</string>
     <string name="close">Tutup</string>
     <string name="exit">Keluar</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Sisipkan anjuran</string>
     <string name="action_close_all_other_tabs">Tutup semua tab yang lain</string>
     <string name="action_restore_all_tabs">Kembalikan semua tab</string>
@@ -466,11 +460,6 @@
     <string name="settings_title_cookies_delete_all">Hapus semua</string>
     <string name="settings_summary_cookies_delete_all">Hapus semua cookie untuk halaman saat ini</string>
     <string name="question_delete_all_page_cookies">Hapus semua cookie untuk halaman saat ini?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="other">Halaman saat ini memiliki <xliff:g id="cookies_count" example="2">%d</xliff:g> cookie</item>
     </plurals>
@@ -483,7 +472,6 @@
     <string name="settings_summary_on_task_icon">Gunakan ikon halaman</string>
     <string name="settings_summary_off_task_icon">Gunakan ikon aplikasi</string>
     <string name="settings_title_toolbar_label">Label toolbar</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Ada aplikasi pihak ketiga yang bisa digunakan</string>
     <string name="dialog_message_third_party_app">Maukah Anda membuka aplikasi yang tertaut dengan halaman itu?</string>
     <string name="per_month">\u0020/ bulan</string>
@@ -502,22 +490,14 @@
     <string name="invalid_characters_removed">Karakter yang tidak valid telah dihapus!</string>
     <string name="reading_mode_image_copyright">Gambar ini berasal dari</string>
     <string name="reading_mode_image_caption">Gambar dengan keterangan</string>
-    <!-- text-to-speech -->
     <string name="tts">Baca halaman ini</string>
     <string name="stop_tts">Hentikan pembacaan halaman ini</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Peramban Web Fulguris</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Tautan</string>
     <string name="button_image">Gambar</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Tab telah ditutup</string>
     <string name="button_undo">Batalkan</string>
     <string name="button_dismiss">Abaikan</string>
-    <!-- Find in page -->
     <string name="no_match_found">Tidak ada temuan yang cocok!</string>
     <string name="match_x_of_n">Cocokkan <xliff:g id="current_match" example="1">%1$d</xliff:g> dari <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Tampilkan snackbar</string>
@@ -602,7 +582,6 @@
     <string name="log_level_warn">Warn</string>
     <string name="log_level_error">Error</string>
     <string name="log_level_assert">Assert</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL</string>
     <string name="label_short_url">URL pendek</string>
     <string name="label_domain">Domain</string>
@@ -610,7 +589,6 @@
     <string name="label_session">Sesi</string>
     <string name="label_app_name">Nama aplikasi</string>
     <string name="message_render_process_crashed">Proses render crash. Anda mungkin perlu memuat ulang beberapa halaman web.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Selamat datang di Fulguris</string>
     <string name="intro_welcome_description">Rasakan penelusuran web yang cepat, aman, dan dapat disesuaikan dengan fitur privasi canggih dan desain modern.</string>
     <string name="intro_title_terms">Mari Mulai!</string>
@@ -622,17 +600,6 @@
     <string name="pref_title_enable_ad_blocker">Pemblokir iklan</string>
     <string name="pref_summary_on_enable_ad_blocker">Nikmati pengalaman web yang lebih bersih dan aman</string>
     <string name="pref_summary_off_enable_ad_blocker">Nikmati versi web asli tanpa filter</string>
-    <string name="action_copy">Salin</string>
-    <string name="settings_help_menus">Seret dan geser item untuk mengatur menu Anda\nBilah alat bawah membalik urutan item</string>
-    <string name="settings_title_reset_menus">Pulihkan menu default</string>
-    <string name="dialog_title_reset_menus">Pulihkan menu default?</string>
-    <string name="action_restore">Pulihkan</string>
-    <string name="dialog_message_reset_menus">Anda akan kehilangan pengaturan saat ini</string>
-    <string name="settings_title_hidden">Item tersembunyi</string>
-    <string name="settings_title_menus">Menu</string>
-    <string name="settings_summary_menus">Atur item menu Anda</string>
-    <string name="action_tab_menu">Menu tab</string>
-    <string name="settings_title_main_menu">Menu utama</string>
     <string name="page_requests_title">Permintaan</string>
     <string name="page_request_details_title">Permintaan</string>
     <string name="request_status">Status</string>

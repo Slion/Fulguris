@@ -45,6 +45,7 @@
     <string name="clear_history">Очистить историю</string>
     <string name="action_download">Загрузить</string>
     <string name="action_open">Открыть</string>
+    <string name="action_copy">Копировать</string>
     <string name="dialog_title_share">Поделиться страницей</string>
     <string name="action_delete">Удалить</string>
     <string name="action_blank">Пустая страница</string>
@@ -130,19 +131,16 @@
     <string name="message_updated">Теперь вы используете версию%s. Вы хотите ознакомиться с примечаниями к выпуску онлайн?</string>
     <string name="title_welcome">Добро пожаловать в Fulguris</string>
     <string name="message_welcome">Посетить нашу домашнюю страницу, чтобы узнать больше об этом мощном веб-браузере?</string>
-    <!-- Ad block -->
     <string name="block_ads">Управление содержимым</string>
     <string name="block_remote_frequency_daily">Ежедневно</string>
     <string name="block_remote_frequency_weekly">Еженедельно</string>
     <string name="block_remote_frequency_monthly">Ежемесячно</string>
-    <!-- new ad blocker -->
     <string name="page_blocked">Следующая страница была заблокирована:</string>
     <string name="page_blocked_reason">по причине:</string>
     <string name="page_blocked_list_ad">%s в рекламных фильтрах</string>
     <string name="page_blocked_list_user">%s заблокирован правилом пользователя</string>
     <string name="page_blocked_list_malware">%s в фильтрах вредоносного ПО</string>
     <string name="request_blocked">Запрос заблокирован</string>
-    <!-- settings for new ad blocker -->
     <string name="blocklist_update_mode">Режим автообновления</string>
     <string name="blocklist_update_on">Автообновление вкл.</string>
     <string name="blocklist_update_off">Автообновление выкл.</string>
@@ -154,7 +152,6 @@
     <string name="blocklist_last_update">Последнее обновление: %s</string>
     <string name="blocklist_updating">Обновление...</string>
     <string name="blocklist_update_error">Ошибка при обновлении списка фильтров %s</string>
-    <!-- not used any more, generic error for all non-successful codes -->
     <string name="blocklist_update_error_code">Ошибка при обновлении списка фильтров %1$s: код состояния %2$s</string>
     <string name="add_blocklist">Добавить файл фильтров</string>
     <string name="add_blocklist_hint">Вы можете выбрать списки хостов или любой список, совместимый с правилами AdBlockPlus</string>
@@ -169,9 +166,7 @@
     <string name="use_modify_filters">Фильтры-модификаторы</string>
     <string name="use_modify_filters_warning">В некоторых случаях было обнаружено, что фильтры-модификаторы нарушают работу веб-сайтов в этом браузере. Пока реализация не будет улучшена, вы можете включить их на свой страх и риск. Отключение только для документов основного фрейма позволяет избежать большинства проблем.</string>
     <string name="modify_filters_not_for_main_frame">Отключить только для основного фрейма</string>
-    <!-- Common actions -->
     <string name="action_message_canceled">Действие отменено.</string>
-    <!-- SSL warnings -->
     <string name="message_ssl_error_aborted">Ошибка безопасности! Загрузка страницы прервана.</string>
     <string name="message_ssl_error">Безопасное соединение нарушено:\n<xliff:g id="domain_name" example="my.example.com"><b>%1$s</b></xliff:g>\n\n<xliff:g id="error_list" example="Certificate is invalid">%2$s</xliff:g>Вы все еще хотите продолжить?</string>
     <string name="message_certificate_date_invalid">Дата сертификата недействительна</string>
@@ -180,7 +175,6 @@
     <string name="message_certificate_invalid">Сертификат недействителен</string>
     <string name="message_certificate_not_yet_valid">Сертификат ещё не действителен</string>
     <string name="message_certificate_untrusted">Сертификат не является доверенным.</string>
-    <!-- permissions request -->
     <string name="title_permission_request">Запрос разрешения</string>
     <string name="message_permission_request">%1$s\n\nхотел бы использовать:\n\n%2$s</string>
     <string name="title_form_resubmission">Повторная отправка формы</string>
@@ -223,6 +217,11 @@
     <string name="generic_export">Экспортировать</string>
     <string name="generic_import">Импортировать</string>
     <string name="generic_reset">Сбросить</string>
+    <string name="settings_help_menus">Перетащите и проведите пальцем по элементам для организации меню\nНижняя панель инструментов меняет порядок элементов</string>
+    <string name="settings_title_reset_menus">Восстановить меню по умолчанию</string>
+    <string name="dialog_title_reset_menus">Восстановить меню по умолчанию?</string>
+    <string name="action_restore">Восстановить</string>
+    <string name="dialog_message_reset_menus">Вы потеряете текущие настройки</string>
     <string name="export_bookmarks">Экспорт закладок в резервную копию</string>
     <string name="import_backup">Импорт закладок из резервной копии</string>
     <string name="bookmark_export_path">Закладки экспортированы в</string>
@@ -257,6 +256,11 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Альбомная</string>
     <string name="pref_category_portrait">Портретная</string>
+    <string name="settings_title_hidden">Скрытые элементы</string>
+    <string name="settings_title_menus">Меню</string>
+    <string name="settings_summary_menus">Организуйте элементы меню</string>
+    <string name="action_tab_menu">Меню вкладки</string>
+    <string name="settings_title_main_menu">Главное меню</string>
     <string name="pref_category_filters">Фильтры</string>
     <string name="pref_category_summary_filters">Локальные или удалённые файлы, определяющие ваши правила управления содержимым</string>
     <string name="pref_category_on_tab_close">При закрытии вкладки</string>
@@ -378,7 +382,6 @@
     <string name="message_added_to_homescreen">Ярлык добавлен на домашний экран</string>
     <string name="shortcut_message_failed_to_add">Извините, ваш лаунчер не поддерживает ярлыки.</string>
     <string name="action_delete_all_bookmarks">Удалить все закладки</string>
-    <!-- debug strings -->
     <string name="debug_title">Настройки отладки</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Чтобы изменения вступили в силу, необходимо перезапустить приложение.</string>
@@ -388,7 +391,6 @@
     <string name="pref_summary_on_logs">Включено</string>
     <string name="pref_summary_off_logs">Отключено</string>
     <string name="pref_title_log_level">Уровень журнала</string>
-    <!-- Dialogs -->
     <string name="dialog_open_new_tab">Открыть в новой вкладке</string>
     <string name="dialog_open_background_tab">Открыть вкладку в фоне</string>
     <string name="dialog_open_incognito_tab">Открыть в инкогнито-вкладке</string>
@@ -405,12 +407,9 @@
     <string name="dialog_message_incoming_url">%1$s\n\n%2$s</string>
     <string name="message_blocked_domain">%1$s заблокирован</string>
     <string name="dialog_delete_all_downloads">Удалить все загрузки</string>
-    <!-- Tools dialog -->
     <string name="dialog_tools_title">Инструменты страницы</string>
     <string name="dialog_toggle_desktop">Переключить агент пользователя рабочего стола</string>
-    <!-- Search Engines -->
     <string name="search_engine_custom">Пользовательский URL</string>
-    <!-- Notifications -->
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d инкогнито вкладка открыта</item>
         <item quantity="few">%1$d инкогнито вкладки открыто</item>
@@ -418,21 +417,16 @@
         <item quantity="other">%1$d инкогнито вкладок открыто</item>
     </plurals>
     <string name="notification_incognito_running_message">Нажмите, чтобы открыть</string>
-    <!-- Shown in system app notification settings -->
     <string name="notification_incognito_running_description">Текущая сессия инкогнито</string>
     <string name="infinity">∞</string>
-    <!-- SSL -->
     <string name="ssl_info_issued_by">Кем выдан:</string>
     <string name="ssl_info_issued_to">Кому выдан:</string>
     <string name="ssl_info_issued_on">Когда выдан:</string>
     <string name="ssl_info_expires_on">Истекает:</string>
-    <!-- Search in page -->
     <string name="next">Далее</string>
     <string name="previous">Предыдущее</string>
     <string name="close">Закрыть</string>
     <string name="exit">Выход</string>
-    <!-- Frozen tabs -->
-    <!-- Search -->
     <string name="search_insert_suggestion">Вставить предложение</string>
     <string name="action_close_all_other_tabs">Закрыть остальные вкладки</string>
     <string name="action_restore_all_tabs">Восстановить все вкладки</string>
@@ -469,11 +463,6 @@
     <string name="settings_title_cookies_delete_all">Удалить все</string>
     <string name="settings_summary_cookies_delete_all">Удалить все файлы cookie для текущей страницы</string>
     <string name="question_delete_all_page_cookies">Удалить все файлы cookie для текущей страницы?</string>
-    <!--
-    Zero is not working for english:
-    See: https://stackoverflow.com/a/42884713/3969362
-    <item quantity="zero">Current page has no cookies</item>
-    -->
     <plurals name="settings_summary_cookies">
         <item quantity="one">Текущая страница содержит один файл cookie</item>
         <item quantity="few">На текущей странице мало файлов cookie</item>
@@ -492,7 +481,6 @@
     <string name="settings_summary_on_task_icon">Использовать значок страницы</string>
     <string name="settings_summary_off_task_icon">Использовать значок приложения</string>
     <string name="settings_title_toolbar_label">Ярлык панели инструментов</string>
-    <!--  TODO: Remove that -->
     <string name="dialog_title_third_party_app">Доступно стороннее приложение</string>
     <string name="dialog_message_third_party_app">Запустить приложение, связанное с этим веб-сайтом?</string>
     <string name="per_month">\u0020/ месяц</string>
@@ -511,22 +499,14 @@
     <string name="invalid_characters_removed">Недействительные символы удалены!</string>
     <string name="reading_mode_image_copyright">Изображение приписывается</string>
     <string name="reading_mode_image_caption">Изображение с подписью</string>
-    <!-- text-to-speech -->
     <string name="tts">Прочитать страницу</string>
     <string name="stop_tts">Остановить чтение</string>
-    <!-- Application name which can be translated -->
     <string name="locale_app_name">Веб-браузер Fulguris</string>
-    <!--
-    Long press on image link disambiguation:
-        When user does a long press on a page element containing both an image and link we ask her which one she wants to use.
-     -->
     <string name="button_link">Ссылка</string>
     <string name="button_image">Изображение</string>
-    <!-- Displayed in snackbar to notify user a tab was closed -->
     <string name="notify_tab_closed">Вкладка закрыта</string>
     <string name="button_undo">Отменить</string>
     <string name="button_dismiss">Отклонить</string>
-    <!-- Find in page -->
     <string name="no_match_found">Совпадений не найдено!</string>
     <string name="match_x_of_n">Совпадение <xliff:g id="current_match" example="1">%1$d</xliff:g> из <xliff:g id="match_count" example="10">%2$d</xliff:g></string>
     <string name="pref_title_show_snackbar">Показывать snackbar</string>
@@ -611,7 +591,6 @@
     <string name="log_level_warn">Предупреждение</string>
     <string name="log_level_error">Ошибка</string>
     <string name="log_level_assert">Утверждение</string>
-    <!-- TODO: link to existing strings -->
     <string name="label_url">URL-адрес</string>
     <string name="label_short_url">Короткий URL-адрес</string>
     <string name="label_domain">Домен</string>
@@ -619,7 +598,6 @@
     <string name="label_session">Сессия</string>
     <string name="label_app_name">Название приложения</string>
     <string name="message_render_process_crashed">Процесс рендеринга завершился сбоем. Возможно, вам придется перезагрузить некоторые веб-страницы.</string>
-    <!-- App Introduction Strings -->
     <string name="intro_welcome_title">Добро пожаловать в Fulguris</string>
     <string name="intro_welcome_description">Испытайте быстрый, безопасный и настраиваемый веб-браузер с расширенными функциями конфиденциальности и современным дизайном.</string>
     <string name="intro_title_terms">Начнём!</string>
@@ -631,17 +609,6 @@
     <string name="pref_title_enable_ad_blocker">Блокировщик рекламы</string>
     <string name="pref_summary_on_enable_ad_blocker">Наслаждайтесь более чистым и безопасным интернетом</string>
     <string name="pref_summary_off_enable_ad_blocker">Наслаждайтесь нефильтрованной, оригинальной версией интернета</string>
-    <string name="action_copy">Копировать</string>
-    <string name="settings_help_menus">Перетащите и проведите пальцем по элементам для организации меню\nНижняя панель инструментов меняет порядок элементов</string>
-    <string name="settings_title_reset_menus">Восстановить меню по умолчанию</string>
-    <string name="dialog_title_reset_menus">Восстановить меню по умолчанию?</string>
-    <string name="action_restore">Восстановить</string>
-    <string name="dialog_message_reset_menus">Вы потеряете текущие настройки</string>
-    <string name="settings_title_hidden">Скрытые элементы</string>
-    <string name="settings_title_menus">Меню</string>
-    <string name="settings_summary_menus">Организуйте элементы меню</string>
-    <string name="action_tab_menu">Меню вкладки</string>
-    <string name="settings_title_main_menu">Главное меню</string>
     <string name="page_requests_title">Запросы</string>
     <string name="page_request_details_title">Запрос</string>
     <string name="request_status">Статус</string>
