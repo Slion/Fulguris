@@ -16,9 +16,9 @@ When the user asks to "work on Thai translation" or similar requests, you should
 6. **Fix any errors** before continuing
 7. **Verify success** and continue with next batch
 
-**Important:** 
+**Important:**
 - Run all commands in the existing terminal session. Do not open new terminal windows.
-- If you encounter "string does not exist" errors, **STOP and report the issue** to the user. Do not attempt to add strings during translation work.
+- If you encounter "string does not exist in English source file" errors, **STOP and report the issue** to the user. The string must be added to English first.
 - **Do not stop translation work until complete**, even if it takes a long time and many batches. Continue working through all untranslated strings systematically.
 
 ## Complete Documentation
@@ -47,7 +47,7 @@ The L10N.md file contains everything you need:
 
 **Don't spawn new terminal windows** - Run commands in the existing terminal session
 
-**Never add strings during translation** - If a string doesn't exist, STOP and report the issue to the user
+**String must exist in English** - If a string doesn't exist in English source file, it cannot be translated. Report to developers.
 
 **NEVER upload to Crowdin** - The `l10n.py` script only manages local files. Crowdin uploads must be done manually via `crowdin upload sources` command and only when explicitly requested by the user.
 
@@ -174,6 +174,5 @@ Settings → การตั้งค่า | Enable → เปิดใช้�
 
 **For complete instructions, commands, examples, and troubleshooting: See [L10N.md](../L10N.md)**
 
-**Last Updated:** November 21, 2025  
+**Last Updated:** November 21, 2025
 **Maintained by:** Fulguris Development Team
-

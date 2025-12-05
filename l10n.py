@@ -197,6 +197,29 @@ def validate_android_string(value):
 
     return True, None
 
+def string_exists_in_english(string_id):
+    """Check if a string exists in the English source file.
+
+    Args:
+        string_id: The string resource ID to check
+
+    Returns:
+        bool: True if the string exists in values/strings.xml
+    """
+    english_file = Path('app/src/main/res/values/strings.xml')
+
+    if not english_file.exists():
+        return False
+
+    try:
+        with open(english_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        escaped_id = re.escape(string_id)
+        return bool(re.search(f'<string name="{escaped_id}">', content))
+    except:
+        return False
+
 def show_help():
     """Display help information about available commands."""
     print("=" * 80)
@@ -222,15 +245,15 @@ def show_help():
     print("    Set one or more string values for a specific language")
     print("    By default, values are XML-escaped (quotes, apostrophes).")
     print("    Use --raw flag for complex XML content (no escaping).")
-    print("    Will ERROR if string doesn't exist - use --add command to add new strings.")
+    print("    Will ERROR if string doesn't exist in English source file.")
     print("    Examples:")
     print("      python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
     print("      python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
     print("      python l10n.py --raw --set ko-rKR test '<xliff:g id=\"x\">%1$d</xliff:g>개'")
     print("    ")
     print("    IMPORTANT - Only updates existing strings!")
-    print("      --set will error if string doesn't exist (prevents accidental additions).")
-    print("      Use --add command to add new strings to ALL language files (keeps files in sync).")
+    print("      --set will error if string doesn't exist in English source file.")
+    print("      Use --add to add new strings to English, then --set to translate them.")
     print("    ")
     print("    IMPORTANT - PowerShell quoting:")
     print("      Use SINGLE quotes for strings with placeholders (%, $, etc.):")
@@ -254,9 +277,9 @@ def show_help():
     print("      python l10n.py --set-plurals ko-rKR notification_title other '%1$d tabs open'")
     print("      python l10n.py --raw --set-plurals ko-rKR cookies other '<xliff:g>%d</xliff:g> cookies'")
     print("\n  python l10n.py --add <string_id> <value>")
-    print("    Add a NEW string to ALL language files")
-    print("    This adds the string with the given English value to ALL language files.")
-    print("    Use this when adding a new string resource to keep all files in sync.")
+    print("    Add a NEW string to the English source file (values/strings.xml)")
+    print("    This adds the string ONLY to English - language files should only contain")
+    print("    translated strings to properly track translation progress.")
     print("    Example:")
     print("      python l10n.py --add new_feature_name \"New Feature\"")
     print("    After adding, translate the new string in each language using --set.")
@@ -481,7 +504,7 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False,
 
         # ADD IT (only if allow_add is True)
         # Find the closing </resources> tag and add before it
-        closing_tag_pattern = r'(\s*)(</resources>)'
+        closing_tag_pattern = r'(</resources>)'
         closing_match = re.search(closing_tag_pattern, content)
 
         if not closing_match:
@@ -492,10 +515,10 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False,
 
         # Create new string entry with proper indentation and line ending
         indent = '    '  # Standard 4-space indent
-        new_entry = f'{indent}<string name="{string_id}">{escaped_value}</string>{line_ending}'
+        new_entry = f'{line_ending}{indent}<string name="{string_id}">{escaped_value}</string>'
 
-        # Insert before closing tag
-        new_content = content[:closing_match.start()] + new_entry + closing_match.group(0)
+        # Insert before closing tag (which should already have proper leading whitespace)
+        new_content = content[:closing_match.start()] + new_entry + line_ending + closing_match.group(0)
         return True, new_content, None, True  # was_added = True
 
     # String exists - UPDATE IT
@@ -508,6 +531,10 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False,
 
 def set_string_value(language, string_id, new_value, skip_escape=False):
     """Set a string value in a specific language file.
+
+    If the string exists in the language file, it will be updated.
+    If it doesn't exist but exists in English, it will be added as a new translation.
+    If it doesn't exist in English, an error is returned.
 
     Args:
         language: Language code (e.g., 'ko-rKR')
@@ -526,6 +553,14 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
             print(f"  python l10n.py --raw --set {language} {string_id} $value")
         sys.exit(1)
 
+    # Check if string exists in English source file
+    if not string_exists_in_english(string_id):
+        print(f"[ERROR] String '{string_id}' does not exist in English source file")
+        print(f"  Cannot add translation for a string that doesn't exist in English.")
+        print(f"  First add the string to English with:")
+        print(f"  python l10n.py --add {string_id} \"English value\"")
+        sys.exit(1)
+
     file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
     if not file_path.exists():
@@ -541,21 +576,21 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
         print(f"Error reading file: {e}")
         sys.exit(1)
 
-    # Replace the string using common function - never allow adding
-    success, new_content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add=False)
+    # Replace the string using common function - allow adding since we verified English exists
+    success, new_content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add=True)
 
     if not success:
         print(f"[ERROR] {error_msg}")
-        print(f"  String '{string_id}' does not exist in {file_path}")
-        print(f"  Use --add command to add new strings to all languages:")
-        print(f"  python l10n.py --add {string_id} \"value\"")
         sys.exit(1)
 
     # Write back to file with UTF-8 encoding (no BOM), preserving line endings
     try:
         with open(file_path, 'w', encoding='utf-8', newline='') as f:
             f.write(new_content)
-        print(f"[OK] Successfully updated {language}:{string_id}")
+        if was_added:
+            print(f"[OK] Added new translation {language}:{string_id}")
+        else:
+            print(f"[OK] Successfully updated {language}:{string_id}")
         print(f"  New value: {new_value}")
     except Exception as e:
         print(f"Error writing file: {e}")
@@ -565,6 +600,10 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
 
 def set_string_values_batch(language, string_pairs, skip_escape=False):
     """Set multiple string values in a specific language file at once.
+
+    If a string exists in the language file, it will be updated.
+    If it doesn't exist but exists in English, it will be added as a new translation.
+    If it doesn't exist in English, it will be skipped with an error.
 
     Args:
         language: Language code (e.g., 'ko-rKR')
@@ -589,7 +628,7 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
     print("=" * 80)
     print(f"BATCH UPDATE: {language}")
     print("=" * 80)
-    print(f"Updating {len(string_pairs)} strings...\n")
+    print(f"Processing {len(string_pairs)} strings...\n")
 
     # Validate all values first before making any changes
     for string_id, new_value in string_pairs:
@@ -602,20 +641,31 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
             sys.exit(1)
 
     success_count = 0
+    added_count = 0
     error_count = 0
-    not_found = []
+    not_in_english = []
 
     # Process all string replacements
     for string_id, new_value in string_pairs:
-        # Use common replacement function - never allow adding
-        success, content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add=False)
-
-        if not success:
-            not_found.append(string_id)
+        # First check if string exists in English
+        if not string_exists_in_english(string_id):
+            not_in_english.append(string_id)
             error_count += 1
             continue
 
-        print(f"[OK] {string_id}")
+        # Use common replacement function - allow adding since we verified English exists
+        success, content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add=True)
+
+        if not success:
+            print(f"[ERROR] {string_id}: {error_msg}")
+            error_count += 1
+            continue
+
+        if was_added:
+            print(f"[OK] {string_id} (added)")
+            added_count += 1
+        else:
+            print(f"[OK] {string_id}")
         success_count += 1
 
     # Write back to file with UTF-8 encoding (no BOM), preserving line endings
@@ -631,19 +681,15 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
     print("\n" + "=" * 80)
     print("SUMMARY")
     print("=" * 80)
-    print(f"Successfully updated: {success_count}")
-    print(f"Not found: {error_count}")
-    if not_found:
-        print(f"\nStrings not found: {', '.join(not_found)}")
-        print(f"Use --add command to add new strings to all languages:")
-        print(f"  python l10n.py --add <string_id> \"value\"")
-    print("=" * 80)
-
-    if not_found:
-        print(f"\nStrings that could not be processed:")
-        for string_id in not_found:
-            print(f"  - {string_id}")
-
+    print(f"Successfully processed: {success_count}")
+    if added_count > 0:
+        print(f"  - Updated: {success_count - added_count}")
+        print(f"  - Added new translations: {added_count}")
+    print(f"Errors: {error_count}")
+    if not_in_english:
+        print(f"\nStrings not found in English source: {', '.join(not_in_english)}")
+        print(f"These strings must be added to English first:")
+        print(f"  python l10n.py --add <string_id> \"English value\"")
     print("=" * 80)
     sys.exit(0)
 
@@ -666,75 +712,62 @@ def list_languages():
     print("=" * 80)
     sys.exit(0)
 
-def add_string_to_all(string_id, value):
-    """Add a string to all language files."""
+def add_string_to_english(string_id, value):
+    """Add a string to the English source file only.
+
+    Language files should only contain translated strings to properly track
+    translation progress. New strings are added to English, then translators
+    use --set to add translations to their language files.
+    """
     res_dir = Path('app/src/main/res')
-
-    # Get all language directories including English
-    all_dirs = [d for d in res_dir.glob('values*')
-                if d.is_dir() and 'night' not in d.name and 'v27' not in d.name and 'v30' not in d.name]
-
-    success_count = 0
-    skip_count = 0
-    error_count = 0
+    english_file = res_dir / 'values' / 'strings.xml'
 
     print("=" * 80)
-    print(f"ADDING STRING: {string_id}")
+    print(f"ADDING STRING TO ENGLISH: {string_id}")
     print("=" * 80)
     print(f"Value: {value}\n")
 
-    for lang_dir in sorted(all_dirs):
-        strings_file = lang_dir / 'strings.xml'
-        lang_name = lang_dir.name
+    if not english_file.exists():
+        print(f"[ERROR] English source file not found: {english_file}")
+        sys.exit(1)
 
-        if not strings_file.exists():
-            print(f"[SKIP] {lang_name}: strings.xml not found")
-            skip_count += 1
-            continue
+    try:
+        # Read the file
+        with open(english_file, 'r', encoding='utf-8') as f:
+            content = f.read()
 
-        try:
-            # Read the file
-            with open(strings_file, 'r', encoding='utf-8') as f:
-                content = f.read()
+        # Check if string already exists
+        escaped_id = re.escape(string_id)
+        if re.search(f'<string name="{escaped_id}">', content):
+            print(f"[SKIP] String already exists in English source file")
+            sys.exit(0)
 
-            # Check if string already exists
-            escaped_id = re.escape(string_id)
-            if re.search(f'<string name="{escaped_id}">', content):
-                print(f"[SKIP] {lang_name}: string already exists")
-                skip_count += 1
-                continue
+        # Find the position to insert (before </resources>)
+        if '</resources>' not in content:
+            print(f"[ERROR] Invalid XML structure in English source file")
+            sys.exit(1)
 
-            # Find the position to insert (before </resources>)
-            if '</resources>' not in content:
-                print(f"[ERROR] {lang_name}: Invalid XML structure")
-                error_count += 1
-                continue
+        # Detect line ending style from existing content (default to Windows CRLF)
+        line_ending = '\r\n' if '\r\n' in content else '\n'
 
-            # Detect line ending style from existing content (default to Windows CRLF)
-            line_ending = '\r\n' if '\r\n' in content else '\n'
+        # Insert the new string before </resources>
+        new_string_line = f'    <string name="{string_id}">{value}</string>{line_ending}'
+        content = content.replace('</resources>', f'{new_string_line}</resources>')
 
-            # Insert the new string before </resources>
-            new_string_line = f'    <string name="{string_id}">{value}</string>{line_ending}'
-            content = content.replace('</resources>', f'{new_string_line}</resources>')
+        # Write back
+        with open(english_file, 'w', encoding='utf-8', newline='') as f:
+            f.write(content)
 
-            # Write back
-            with open(strings_file, 'w', encoding='utf-8', newline='') as f:
-                f.write(content)
+        print(f"[OK] Added to English source file (values/strings.xml)")
+        print(f"\nNext steps:")
+        print(f"  1. Translators can now use --set to add translations:")
+        print(f"     python l10n.py --set <lang> {string_id} '<translated value>'")
+        print(f"  2. Run --check <lang> to see which languages need this translation")
 
-            print(f"[OK] Added to {lang_name}")
-            success_count += 1
+    except Exception as e:
+        print(f"[ERROR] {e}")
+        sys.exit(1)
 
-        except Exception as e:
-            print(f"[ERROR] {lang_name}: {e}")
-            error_count += 1
-
-    print("\n" + "=" * 80)
-    print("SUMMARY")
-    print("=" * 80)
-    print(f"Successfully added: {success_count}")
-    print(f"Skipped: {skip_count}")
-    print(f"Errors: {error_count}")
-    print("=" * 80)
     sys.exit(0)
 
 def add_plural_to_all(plurals_name, quantity_value_pairs):
@@ -955,7 +988,7 @@ if len(sys.argv) > 1:
             print("  python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
             print("  python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\"")
             print("  python l10n.py --raw --set ko-rKR test '<xliff:g>%s</xliff:g>'")
-            print("\nNote: String must exist in the language file. Use --add to add new strings to all languages.")
+            print("\nNote: String must exist in English source. Use --add to add new strings to English first.")
             sys.exit(1)
         language = sys.argv[arg_start + 1]
 
@@ -1009,7 +1042,7 @@ if len(sys.argv) > 1:
             sys.exit(1)
         string_id = sys.argv[arg_start + 1]
         value = sys.argv[arg_start + 2]
-        add_string_to_all(string_id, value)
+        add_string_to_english(string_id, value)
     # Handle add-plural command
     elif arg == '--add-plural':
         if len(sys.argv) < arg_start + 4:
