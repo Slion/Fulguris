@@ -336,7 +336,7 @@
     <string name="pref_title_default_browser">Default browser</string>
     <string name="text_encoding">Text encoding</string>
     <string name="reset_settings">Reset settings</string>
-    <string name="reset_settings_confirmation">You will loose all your settings. Are you sure you want to proceed?</string>
+    <string name="reset_settings_confirmation">You will lose all your settings. Are you sure you want to proceed?</string>
     <string name="invert_color">Invert colour</string>
     <string name="settings_black_status_bar">Black status bar</string>
     <string name="tabs">Tabs</string>
@@ -478,7 +478,7 @@
     </plurals>
     <plurals name="settings_summary_overrides">
         <item quantity="one">1 override</item>
-        <item quantity="other">%d overrides</item>
+        <item quantity="other"><xliff:g id="domain_count" example="5">%d</xliff:g> overrides</item>
     </plurals>
     <string name="settings_summary_no_overrides">No overrides</string>
     <string name="settings_title_task_label">Task label</string>
@@ -625,4 +625,29 @@
     <string name="pref_title_enable_ad_blocker">Ad blocker</string>
     <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
     <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>
+    <string name="action_copy">Copy</string>
+    <string name="settings_help_menus">Drag and swipe items to organize your menus\nBottom toolbar reverses item order</string>
+    <string name="settings_title_reset_menus">Restore default menus</string>
+    <string name="dialog_title_reset_menus">Restore default menus?</string>
+    <string name="action_restore">Restore</string>
+    <string name="dialog_message_reset_menus">You will lose your current setup</string>
+    <string name="settings_title_hidden">Hidden items</string>
+    <string name="settings_title_menus">Menus</string>
+    <string name="settings_summary_menus">Organize your menu items</string>
+    <string name="action_tab_menu">Tab menu</string>
+    <string name="settings_title_main_menu">Main menu</string>
+    <string name="page_requests_title">Requests</string>
+    <string name="page_request_details_title">Request</string>
+    <string name="request_status">Status</string>
+    <string name="request_url_length">%1$d characters</string>
+    <string name="request_domain">Domain</string>
+    <string name="request_path">Path</string>
+    <string name="request_parameters">Parameters</string>
+    <string name="request_timestamp">Timestamp</string>
+    <string name="action_page_requests">Requests</string>
+    <string name="page_requests_blocked">Blocked</string>
+    <string name="page_requests_allowed">Allowed</string>
+    <string name="page_requests_summary">%1$d total – %2$d blocked / %3$d allowed</string>
+    <string name="page_requests_none">No requests recorded for this page</string>
+    <string name="settings_summary_full_menu">Show full menu</string>
 </resources>
