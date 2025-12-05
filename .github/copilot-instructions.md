@@ -8,10 +8,10 @@ This is **Fulguris Web Browser**, an Android application with localization suppo
 
 When the user asks to "work on Thai translation" or similar requests, you should:
 
-1. **Check current status** using `python l10n.py --check th-rTH`
+1. **Check current status** using `python strings.py --check th-rTH`
 2. **Identify untranslated strings** from the check output
 3. **Provide Thai translations** for the untranslated strings
-4. **Apply translations** using the l10n.py tool (PowerShell syntax)
+4. **Apply translations** using the strings.py tool (PowerShell syntax)
 5. **CHECK FOR ERRORS** in command output - look for `[ERROR]` or `[OK]` messages
 6. **Fix any errors** before continuing
 7. **Verify success** and continue with next batch
@@ -27,7 +27,7 @@ When the user asks to "work on Thai translation" or similar requests, you should
 
 The L10N.md file contains everything you need:
 - **Current translation status** for all 37 languages including Thai
-- **Complete l10n.py tool documentation** with all commands
+- **Complete strings.py tool documentation** with all commands
 - **Translation workflow** (check → translate → apply → verify)
 - **Android XML escaping rules** (CRITICAL: use `\'` not `&apos;`)
 - **PowerShell syntax and quoting** (multiple options explained below)
@@ -49,7 +49,7 @@ The L10N.md file contains everything you need:
 
 **String must exist in English** - If a string doesn't exist in English source file, it cannot be translated. Report to developers.
 
-**NEVER upload to Crowdin** - The `l10n.py` script only manages local files. Crowdin uploads must be done manually via `crowdin upload sources` command and only when explicitly requested by the user.
+**NEVER upload to Crowdin** - The `strings.py` script only manages local files. Crowdin uploads must be done manually via `crowdin upload sources` command and only when explicitly requested by the user.
 
 **Read L10N.md first** - All technical details are documented there
 
@@ -61,26 +61,26 @@ The L10N.md file contains everything you need:
 
 ```powershell
 # Simple strings
-python l10n.py --set th-rTH string_id 'คำแปล'
+python strings.py --set th-rTH string_id 'คำแปล'
 
 # Strings with placeholders (%1$s, %d, etc.) - NO escaping needed!
-python l10n.py --set th-rTH string_id 'ดาวน์โหลด %1$s'
+python strings.py --set th-rTH string_id 'ดาวน์โหลด %1$s'
 
 # Strings with double quotes inside - NO escaping needed!
-python l10n.py --set th-rTH string_id 'สลับไปที่ "%s"'
+python strings.py --set th-rTH string_id 'สลับไปที่ "%s"'
 
 # Strings with BOTH quotes and placeholders
-python l10n.py --set th-rTH string_id 'ดาวน์โหลด "%1$s"'
+python strings.py --set th-rTH string_id 'ดาวน์โหลด "%1$s"'
 
 # Strings with newlines (\n) - works perfectly in single quotes
-python l10n.py --set th-rTH string_id 'บรรทัด1\n\nบรรทัด2'
+python strings.py --set th-rTH string_id 'บรรทัด1\n\nบรรทัด2'
 
 # Strings with apostrophes (single quotes) - double them up
-python l10n.py --set th-rTH action_dont_allow 'Don''t allow'
-python l10n.py --set th-rTH save_data 'Request ''Save-Data'''
+python strings.py --set th-rTH action_dont_allow 'Don''t allow'
+python strings.py --set th-rTH save_data 'Request ''Save-Data'''
 
 # Complex XML - single quotes, no escaping needed for double quotes!
-python l10n.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id="example">%1$s</xliff:g>'
+python strings.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id="example">%1$s</xliff:g>'
 ```
 
 **Why single quotes work perfectly:**
@@ -95,29 +95,29 @@ python l10n.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id="
 
 ```powershell
 # Check what needs translation
-python l10n.py --check th-rTH
+python strings.py --check th-rTH
 
 # Simple strings (batch) - use single quotes
-python l10n.py --set th-rTH string_id1 'คำแปล1' string_id2 'คำแปล2'
+python strings.py --set th-rTH string_id1 'คำแปล1' string_id2 'คำแปล2'
 
 # Strings with placeholders - single quotes, no escaping needed for $
-python l10n.py --set th-rTH dialog_download 'คุณต้องการดาวน์โหลดไฟล์นี้หรือไม่? (%1$s)'
+python strings.py --set th-rTH dialog_download 'คุณต้องการดาวน์โหลดไฟล์นี้หรือไม่? (%1$s)'
 
 # Strings with quotes - single quotes, no escaping needed!
-python l10n.py --set th-rTH session_switched 'สลับไปที่ "%s"'
+python strings.py --set th-rTH session_switched 'สลับไปที่ "%s"'
 
 # Strings with apostrophes - double the single quotes
-python l10n.py --set da-rDK action_dont_allow 'Tillad ikke'  # No apostrophe in Danish
-python l10n.py --set en-rUS action_dont_allow 'Don''t allow'  # English has apostrophe - double it
+python strings.py --set da-rDK action_dont_allow 'Tillad ikke'  # No apostrophe in Danish
+python strings.py --set en-rUS action_dont_allow 'Don''t allow'  # English has apostrophe - double it
 
 # Strings with BOTH quotes and placeholders
-python l10n.py --set th-rTH string_id 'ดาวน์โหลด "%1$s"'
+python strings.py --set th-rTH string_id 'ดาวน์โหลด "%1$s"'
 
 # Complex XML - single quotes, no escaping needed for quotes!
-python l10n.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id="example">%s</xliff:g>'
+python strings.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id="example">%s</xliff:g>'
 
 # Complex XML with placeholders - still single quotes!
-python l10n.py --raw --set th-rTH match_x_of_n 'ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g>'
+python strings.py --raw --set th-rTH match_x_of_n 'ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g>'
 ```
 
 ## Error Checking - IMPORTANT!
