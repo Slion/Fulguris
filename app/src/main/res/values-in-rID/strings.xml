@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Mendatar</string>
     <string name="pref_category_portrait">Tegak</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Saringan</string>
     <string name="pref_category_summary_filters">File pengatur isi halaman web</string>
     <string name="pref_category_on_tab_close">Saat menutup tab</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Tab dan Penanda ditampilkan dalam bentuk <i>bottom sheets</i> daripada <i>side drawers</i></string>
     <string name="pref_title_tab_list_item_show_close_button">Tampilkan tombol penutup tab</string>
     <string name="pref_summary_tab_list_item_show_close_button">pada setiap tab pada daftar tab</string>
-    <string name="pref_title_menu_show_exit">Menu untuk keluar</string>
-    <string name="pref_summary_menu_show_exit">Tampilkan pilihan untuk keluar dalam menu. Pilihan untuk keluar akan selalu tampil dalam mode menyamar.</string>
-    <string name="pref_title_menu_new_tab">Menu untuk tab baru</string>
-    <string name="pref_summary_menu_new_tab">Tampilkan pilihan untuk tab baru dalam menu</string>
     <string name="pref_title_crash_report">Laporan crash</string>
     <string name="pref_title_analytics">Analitik</string>
     <string name="pref_title_pull_to_refresh">Tarik untuk memperbarui</string>
@@ -447,9 +442,6 @@
     <string name="settings_summary_on_override">Timpa pengaturan induk</string>
     <string name="settings_summary_off_override">Gunakan pengaturan induk</string>
     <string name="settings_title_launch_app">Luncurkan aplikasi</string>
-    <string name="settings_title_category">Kategori</string>
-    <string name="settings_summary_on_category">Domain utama</string>
-    <string name="settings_summary_off_category">Domain sumber daya</string>
     <string name="action_domain_settings">Domain</string>
     <string name="settings_title_domains_delete_all">Hapus semua</string>
     <string name="settings_summary_domains_delete_all">Hapus semua pengaturan domain</string>

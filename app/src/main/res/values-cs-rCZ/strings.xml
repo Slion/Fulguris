@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Na šířku</string>
     <string name="pref_category_portrait">Na výšku</string>
-    <string name="pref_category_menu">Nabídka</string>
     <string name="pref_category_filters">Filtry</string>
     <string name="pref_category_summary_filters">Místní nebo vzdálené soubory definující pravidla řízení obsahu</string>
     <string name="pref_category_on_tab_close">Při zavření karty</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Karty a záložky se zobrazují ve spodních listech namísto bočních zásuvek</string>
     <string name="pref_title_tab_list_item_show_close_button">Zobrazit tlačítko zavřít kartu</string>
     <string name="pref_summary_tab_list_item_show_close_button">Zobrazit tlačítka pro zavření karty na položkách seznamu karet</string>
-    <string name="pref_title_menu_show_exit">Položka nabídky Ukončit</string>
-    <string name="pref_summary_menu_show_exit">Zobrazit možnost Ukončit aplikaci v nabídce. Anonymní režim ji vždy zobrazuje bez ohledu na toto nastavení.</string>
-    <string name="pref_title_menu_new_tab">Položka nabídky Nová karta</string>
-    <string name="pref_summary_menu_new_tab">Zobrazit možnost Nová karta v nabídce</string>
     <string name="pref_title_crash_report">Zprávy o pádu</string>
     <string name="pref_title_analytics">Analytics</string>
     <string name="pref_title_pull_to_refresh">Potáhnout pro obnovení</string>
@@ -450,9 +445,6 @@
     <string name="settings_summary_on_override">Přepsat nadřazené nastavení</string>
     <string name="settings_summary_off_override">Použít nadřazené nastavení</string>
     <string name="settings_title_launch_app">Spustit aplikaci</string>
-    <string name="settings_title_category">Kategorie</string>
-    <string name="settings_summary_on_category">Hlavní doména</string>
-    <string name="settings_summary_off_category">Doména zdrojů</string>
     <string name="action_domain_settings">Doména</string>
     <string name="settings_title_domains_delete_all">Smazat vše</string>
     <string name="settings_summary_domains_delete_all">Smazat všechna nastavení domén</string>

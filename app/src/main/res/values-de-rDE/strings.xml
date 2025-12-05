@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Querformat</string>
     <string name="pref_category_portrait">Hochformat</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filter</string>
     <string name="pref_category_summary_filters">Lokale oder Online-Dateien, die deine Regeln zur Inhaltskontrolle definieren</string>
     <string name="pref_category_on_tab_close">Beim Schließen des Tab</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Tabs und Lesezeichen werden unten anstatt in den seitlichen Drawern angezeigt</string>
     <string name="pref_title_tab_list_item_show_close_button">Tab schließen Schaltfläche anzeigen</string>
     <string name="pref_summary_tab_list_item_show_close_button">Schaltfläche zum Schließen von Tabs im Tab-Drawer anzeigen</string>
-    <string name="pref_title_menu_show_exit">Menüpunkt verlassen</string>
-    <string name="pref_summary_menu_show_exit">Beenden Option im Menü anzeigen. Der Inkognito-Modus zeigt ihn immer an.</string>
-    <string name="pref_title_menu_new_tab">Neuer Tab-Menüpunkt</string>
-    <string name="pref_summary_menu_new_tab">Neue Tab-Option im Menü anzeigen</string>
     <string name="pref_title_crash_report">Absturzberichte</string>
     <string name="pref_title_analytics">Analyse</string>
     <string name="pref_title_pull_to_refresh">Pull-to-Refresh</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Übergeordnete Einstellungen überschreiben</string>
     <string name="settings_summary_off_override">Übergeordnete Einstellungen verwenden</string>
     <string name="settings_title_launch_app">App starten</string>
-    <string name="settings_title_category">Kategorie</string>
-    <string name="settings_summary_on_category">Hauptdomain</string>
-    <string name="settings_summary_off_category">Ressourcen-Domäne</string>
     <string name="action_domain_settings">Domain</string>
     <string name="settings_title_domains_delete_all">Alle löschen</string>
     <string name="settings_summary_domains_delete_all">Alle Domains-Einstellungen löschen</string>

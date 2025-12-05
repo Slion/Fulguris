@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Peisaj</string>
     <string name="pref_category_portrait">Portret</string>
-    <string name="pref_category_menu">Menu</string>
     <string name="pref_category_filters">Filtre</string>
     <string name="pref_category_summary_filters">Fișiere locale sau remote care definesc regulile de control al conținutului</string>
     <string name="pref_category_on_tab_close">La închiderea filei</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Filele și Marcajele sunt afișate în foi de jos în loc de sertare laterale</string>
     <string name="pref_title_tab_list_item_show_close_button">Arată buton închidere filă</string>
     <string name="pref_summary_tab_list_item_show_close_button">Afișează butoane de închidere filă pe elementele listei de file</string>
-    <string name="pref_title_menu_show_exit">Element meniu ieșire</string>
-    <string name="pref_summary_menu_show_exit">Arată opțiunea Ieșire aplicație în meniu. Modul incognito o afișează întotdeauna.</string>
-    <string name="pref_title_menu_new_tab">Element meniu filă nouă</string>
-    <string name="pref_summary_menu_new_tab">Arată opțiunea Filă nouă în meniu</string>
     <string name="pref_title_crash_report">Rapoarte crash</string>
     <string name="pref_title_analytics">Analiză</string>
     <string name="pref_title_pull_to_refresh">Trage pentru a reîmprospăta</string>
@@ -449,9 +444,6 @@
     <string name="settings_summary_on_override">Suprascrie setările părinte</string>
     <string name="settings_summary_off_override">Folosește setările părinte</string>
     <string name="settings_title_launch_app">Lansează aplicația</string>
-    <string name="settings_title_category">Categorie</string>
-    <string name="settings_summary_on_category">Domeniu principal</string>
-    <string name="settings_summary_off_category">Domeniu resursă</string>
     <string name="action_domain_settings">Domeniu</string>
     <string name="settings_title_domains_delete_all">Șterge toate</string>
     <string name="settings_summary_domains_delete_all">Șterge toate setările domeniilor</string>

@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Vaaka</string>
     <string name="pref_category_portrait">Pysty</string>
-    <string name="pref_category_menu">Menu</string>
     <string name="pref_category_filters">Suodattimet</string>
     <string name="pref_category_summary_filters">Mainokset ja haittaohjelmat</string>
     <string name="pref_category_on_tab_close">Välilehden sulkemisessa</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Näytä asetukset alalaitikossa</string>
     <string name="pref_title_tab_list_item_show_close_button">Näytä sulkemispainike välilehtilistassa</string>
     <string name="pref_summary_tab_list_item_show_close_button">Näytä sulkemispainike jokaisessa välilehtilistassa</string>
-    <string name="pref_title_menu_show_exit">Näytä poistu-vaihtoehto valikossa</string>
-    <string name="pref_summary_menu_show_exit">Lisää poistu-vaihtoehto päävalikkoon</string>
-    <string name="pref_title_menu_new_tab">Uusi välilehti -valikko</string>
-    <string name="pref_summary_menu_new_tab">Määritä uuden välilehden valikko</string>
     <string name="pref_title_crash_report">Kaatumisraportti</string>
     <string name="pref_title_analytics">Analytiikka</string>
     <string name="pref_title_pull_to_refresh">Vedä päivittääksesi</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Ohita vanhempien asetukset</string>
     <string name="settings_summary_off_override">Käytä vanhempien asetuksia</string>
     <string name="settings_title_launch_app">Käynnistä sovellus</string>
-    <string name="settings_title_category">Kategoria</string>
-    <string name="settings_summary_on_category">Pääverkkotunnus</string>
-    <string name="settings_summary_off_category">Resurssin verkkotunnus</string>
     <string name="action_domain_settings">Verkkotunnuksen asetukset</string>
     <string name="settings_title_domains_delete_all">Poista kaikki verkkotunnukset</string>
     <string name="settings_summary_domains_delete_all">Poista kaikki verkkotunnuskohtaiset asetukset</string>

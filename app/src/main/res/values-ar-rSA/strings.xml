@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">أفقي</string>
     <string name="pref_category_portrait">رأسي</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">المرشحات</string>
     <string name="pref_category_summary_filters">ملفات محلية أو بعيدة تحدد قواعد التحكم في المحتوى</string>
     <string name="pref_category_on_tab_close">عند إغلاق التبويب</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">يتم عرض التبويبات والإشارات المرجعية في أوراق سفلية بدلاً من أدراج جانبية</string>
     <string name="pref_title_tab_list_item_show_close_button">إظهار زر إغلاق التبويب</string>
     <string name="pref_summary_tab_list_item_show_close_button">عرض أزرار إغلاق التبويب على عناصر قائمة التبويبات</string>
-    <string name="pref_title_menu_show_exit">عنصر قائمة الخروج</string>
-    <string name="pref_summary_menu_show_exit">إظهار خيار الخروج من التطبيق في القائمة. وضع التصفح الخفي يعرضه دائماً.</string>
-    <string name="pref_title_menu_new_tab">عنصر قائمة تبويب جديد</string>
-    <string name="pref_summary_menu_new_tab">إظهار خيار تبويب جديد في القائمة</string>
     <string name="pref_title_crash_report">تقارير التعطل</string>
     <string name="pref_title_analytics">التحليلات</string>
     <string name="pref_title_pull_to_refresh">اسحب للتحديث</string>
@@ -452,9 +447,6 @@
     <string name="settings_summary_on_override">تجاوز إعدادات الأصل</string>
     <string name="settings_summary_off_override">استخدام إعدادات الأصل</string>
     <string name="settings_title_launch_app">تشغيل التطبيق</string>
-    <string name="settings_title_category">الفئة</string>
-    <string name="settings_summary_on_category">النطاق الرئيسي</string>
-    <string name="settings_summary_off_category">نطاق الموارد</string>
     <string name="action_domain_settings">إعدادات النطاق</string>
     <string name="settings_title_domains_delete_all">حذف الكل</string>
     <string name="settings_summary_domains_delete_all">حذف جميع إعدادات النطاقات</string>

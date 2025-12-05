@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Krajolik</string>
     <string name="pref_category_portrait">Portret</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filteri</string>
     <string name="pref_category_summary_filters">Lokalne ili udaljene datoteke koje definiraju vaša pravila kontrole sadržaja</string>
     <string name="pref_category_on_tab_close">Prilikom zatvaranja kartice</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Kartice i knjižne oznake prikazane su na donjim listovima umjesto u bočnim ladicama</string>
     <string name="pref_title_tab_list_item_show_close_button">Prikaži gumb za zatvaranje kartice</string>
     <string name="pref_summary_tab_list_item_show_close_button">Prikaži gumbe za zatvaranje kartice na stavkama popisa kartica</string>
-    <string name="pref_title_menu_show_exit">Izađite iz stavke izbornika</string>
-    <string name="pref_summary_menu_show_exit">Prikaži opciju Izađi iz aplikacije u izborniku. Bez obzira na to, privatna kartica ga uvijek prikazuje.</string>
-    <string name="pref_title_menu_new_tab">Nova stavka izbornika kartice</string>
-    <string name="pref_summary_menu_new_tab">Prikaži opciju Nova kartica u izborniku</string>
     <string name="pref_title_crash_report">Izvještaji o padovima</string>
     <string name="pref_title_analytics">Analitika</string>
     <string name="pref_title_pull_to_refresh">Prijeđite prstom za osvježavanje</string>
@@ -449,9 +444,6 @@
     <string name="settings_summary_on_override">Nadjačaj roditeljske postavke</string>
     <string name="settings_summary_off_override">Koristite roditeljske postavke</string>
     <string name="settings_title_launch_app">Pokrenite aplikaciju</string>
-    <string name="settings_title_category">Kategorija</string>
-    <string name="settings_summary_on_category">Glavna domena</string>
-    <string name="settings_summary_off_category">Domena resursa</string>
     <string name="action_domain_settings">Domena</string>
     <string name="settings_title_domains_delete_all">Izbrisati sve</string>
     <string name="settings_summary_domains_delete_all">Izbrišite sve postavke domene</string>

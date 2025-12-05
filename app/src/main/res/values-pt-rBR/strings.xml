@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Paisagem</string>
     <string name="pref_category_portrait">Retrato</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filtros</string>
     <string name="pref_category_summary_filters">Arquivos remotos ou locais definem seu controle de conteúdo</string>
     <string name="pref_category_on_tab_close">Quando fechar a aba</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Abas e Favoritos serão exibidos em folhas inferiores em vez de painéis laterais</string>
     <string name="pref_title_tab_list_item_show_close_button">Mostrar botão de fechar aba</string>
     <string name="pref_summary_tab_list_item_show_close_button">Mostrar botão de fechar aba nos itens da lista de abas</string>
-    <string name="pref_title_menu_show_exit">Item de menu Sair</string>
-    <string name="pref_summary_menu_show_exit">Exibir opção de sair do aplicativo no menu. O modo anônimo sempre a exibe.</string>
-    <string name="pref_title_menu_new_tab">Item de menu Nova Aba</string>
-    <string name="pref_summary_menu_new_tab">Exibir opção de abrir nova aba no menu</string>
     <string name="pref_title_crash_report">Relatórios de falhas</string>
     <string name="pref_title_analytics">Análises</string>
     <string name="pref_title_pull_to_refresh">Puxar para atualizar</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Sobrescrever configurações principais</string>
     <string name="settings_summary_off_override">Usar configurações principais</string>
     <string name="settings_title_launch_app">Abrir aplicativo</string>
-    <string name="settings_title_category">Categoria</string>
-    <string name="settings_summary_on_category">Domínio principal</string>
-    <string name="settings_summary_off_category">Recurso de domínio</string>
     <string name="action_domain_settings">Domínio</string>
     <string name="settings_title_domains_delete_all">Excluir tudo</string>
     <string name="settings_summary_domains_delete_all">Excluir todas as configurações do domínio</string>

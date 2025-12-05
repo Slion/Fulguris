@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Pozioma</string>
     <string name="pref_category_portrait">Pionowa</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filtry</string>
     <string name="pref_category_summary_filters">Lokalne lub zdalne pliki definiujące zasady kontrolowania treści</string>
     <string name="pref_category_on_tab_close">Przy zamykaniu karty</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Karty i zakładki będą wyświetlane w dolnym panelu zamiast w bocznym</string>
     <string name="pref_title_tab_list_item_show_close_button">Wyświetlaj przycisk do zamknięcia kart</string>
     <string name="pref_summary_tab_list_item_show_close_button">Wyświetlaj przycisk do zamknięcia karty na liście kart</string>
-    <string name="pref_title_menu_show_exit">Wyjdź z pozycji menu</string>
-    <string name="pref_summary_menu_show_exit">Pokaż opcję Wyjdź w menu. Tryb Incognito zawsze ją wyświetla.</string>
-    <string name="pref_title_menu_new_tab">Nowa karta</string>
-    <string name="pref_summary_menu_new_tab">Pokaż opcję nowej karty w menu</string>
     <string name="pref_title_crash_report">Raporty awarii</string>
     <string name="pref_title_analytics">Analityka</string>
     <string name="pref_title_pull_to_refresh">Pociągnij, aby odświeżyć</string>
@@ -450,9 +445,6 @@
     <string name="settings_summary_on_override">Nadpisz ustawienia nadrzędne</string>
     <string name="settings_summary_off_override">Użyj ustawień nadrzędnych</string>
     <string name="settings_title_launch_app">Uruchom aplikację</string>
-    <string name="settings_title_category">Kategoria</string>
-    <string name="settings_summary_on_category">Główna domena</string>
-    <string name="settings_summary_off_category">Domena zasobowa</string>
     <string name="action_domain_settings">Domena</string>
     <string name="settings_title_domains_delete_all">Usuń wszystko</string>
     <string name="settings_summary_domains_delete_all">Usuń wszystkie ustawienia domen</string>

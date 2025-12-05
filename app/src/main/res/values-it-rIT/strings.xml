@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Paesaggio</string>
     <string name="pref_category_portrait">Ritratto</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filtri</string>
     <string name="pref_category_summary_filters">File locali o remoti che definiscono le regole di controllo dei contenuti</string>
     <string name="pref_category_on_tab_close">Quando si chiude la scheda</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Le schede e i segnalibri sono mostrati nei fogli inferiori invece dei cassetti laterali</string>
     <string name="pref_title_tab_list_item_show_close_button">Mostra pulsante chiusura tab</string>
     <string name="pref_summary_tab_list_item_show_close_button">Mostra pulsanti chiusura tab sugli elementi della lista dei tab</string>
-    <string name="pref_title_menu_show_exit">Voce \"Esci\" nel menu</string>
-    <string name="pref_summary_menu_show_exit">Mostra l\'opzione Esci dall\'app nel menu. La modalità in incognito lo visualizza sempre indipendentemente dal menù.</string>
-    <string name="pref_title_menu_new_tab">Nuova voce di menu scheda</string>
-    <string name="pref_summary_menu_new_tab">Mostra l\'opzione Nuova scheda nel menu</string>
     <string name="pref_title_crash_report">Rapporti di arresto anomalo</string>
     <string name="pref_title_analytics">Analitica</string>
     <string name="pref_title_pull_to_refresh">Tira per rinfrescare</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Sovrascrivi le impostazioni genitore</string>
     <string name="settings_summary_off_override">Usa impostazioni genitore</string>
     <string name="settings_title_launch_app">Avvia l’app</string>
-    <string name="settings_title_category">Categoria</string>
-    <string name="settings_summary_on_category">Dominio principale</string>
-    <string name="settings_summary_off_category">Dominio risorsa</string>
     <string name="action_domain_settings">Dominio</string>
     <string name="settings_title_domains_delete_all">Elimina tutto</string>
     <string name="settings_summary_domains_delete_all">Elimina tutte le impostazioni di dominio</string>

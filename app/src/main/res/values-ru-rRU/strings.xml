@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Альбомная</string>
     <string name="pref_category_portrait">Портретная</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Фильтры</string>
     <string name="pref_category_summary_filters">Локальные или удалённые файлы, определяющие ваши правила управления содержимым</string>
     <string name="pref_category_on_tab_close">При закрытии вкладки</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Вкладки и закладки отображаются на нижних панелях вместо боковых меню</string>
     <string name="pref_title_tab_list_item_show_close_button">Показать кнопку закрытия вкладки</string>
     <string name="pref_summary_tab_list_item_show_close_button">Отображать кнопки закрытия вкладок в списке вкладок</string>
-    <string name="pref_title_menu_show_exit">Пункт \"Выход\" в меню</string>
-    <string name="pref_summary_menu_show_exit">Показать опцию выхода из приложения в меню. В режиме инкогнито он отображается всегда в любом случае.</string>
-    <string name="pref_title_menu_new_tab">Пункт меню \"Новая вкладка\"</string>
-    <string name="pref_summary_menu_new_tab">Показывать в меню пункт \"Новая вкладка\"</string>
     <string name="pref_title_crash_report">Отчеты о сбоях</string>
     <string name="pref_title_analytics">Аналитика</string>
     <string name="pref_title_pull_to_refresh">Потяните для обновления</string>
@@ -450,9 +445,6 @@
     <string name="settings_summary_on_override">Переопределить родительские настройки</string>
     <string name="settings_summary_off_override">Использовать родительские настройки</string>
     <string name="settings_title_launch_app">Запуск приложения</string>
-    <string name="settings_title_category">Категория</string>
-    <string name="settings_summary_on_category">Основной домен</string>
-    <string name="settings_summary_off_category">Домен ресурса</string>
     <string name="action_domain_settings">Домен</string>
     <string name="settings_title_domains_delete_all">Удалить все</string>
     <string name="settings_summary_domains_delete_all">Удалить все настройки домена</string>

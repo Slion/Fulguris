@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landscape</string>
     <string name="pref_category_portrait">Portrait</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filters</string>
     <string name="pref_category_summary_filters">Local or remote files defining your content control rules</string>
     <string name="pref_category_on_tab_close">When closing tab</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Tabs and Bookmarks are shown in bottom sheets instead of side drawers</string>
     <string name="pref_title_tab_list_item_show_close_button">Show close tab button</string>
     <string name="pref_summary_tab_list_item_show_close_button">Display close tab buttons on tab list items</string>
-    <string name="pref_title_menu_show_exit">Exit menu item</string>
-    <string name="pref_summary_menu_show_exit">Show Exit app option in menu. Incognito mode always displays it regardless.</string>
-    <string name="pref_title_menu_new_tab">New tab menu item</string>
-    <string name="pref_summary_menu_new_tab">Show New tab option in menu</string>
     <string name="pref_title_crash_report">Crash reports</string>
     <string name="pref_title_analytics">Analytics</string>
     <string name="pref_title_pull_to_refresh">Pull to refresh</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Override parent settings</string>
     <string name="settings_summary_off_override">Use parent settings</string>
     <string name="settings_title_launch_app">Launch app</string>
-    <string name="settings_title_category">Category</string>
-    <string name="settings_summary_on_category">Main domain</string>
-    <string name="settings_summary_off_category">Resource domain</string>
     <string name="action_domain_settings">Domain</string>
     <string name="settings_title_domains_delete_all">Delete all</string>
     <string name="settings_summary_domains_delete_all">Delete all domain settings</string>

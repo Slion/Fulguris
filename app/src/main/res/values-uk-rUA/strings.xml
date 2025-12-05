@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Альбомна</string>
     <string name="pref_category_portrait">Портретна</string>
-    <string name="pref_category_menu">Menu</string>
     <string name="pref_category_filters">Фільтри</string>
     <string name="pref_category_summary_filters">Локальні або віддалені файли, що визначають правила керування вмістом</string>
     <string name="pref_category_on_tab_close">При закритті вкладки</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Вкладки й закладки показані на нижніх панелях замість бокових меню</string>
     <string name="pref_title_tab_list_item_show_close_button">Показувати кнопку закриття вкладки</string>
     <string name="pref_summary_tab_list_item_show_close_button">Показувати кнопку закриття вкладки в списку вкладок</string>
-    <string name="pref_title_menu_show_exit">Пункт \"Вихід\" в меню</string>
-    <string name="pref_summary_menu_show_exit">Показати опцію виходу з програми в меню. Режим інкогніто показує його завжди.</string>
-    <string name="pref_title_menu_new_tab">Пункт \"Нова вкладка\" в меню</string>
-    <string name="pref_summary_menu_new_tab">Показувати в меню параметр Нова вкладка</string>
     <string name="pref_title_crash_report">Звіти про збої</string>
     <string name="pref_title_analytics">Аналітика</string>
     <string name="pref_title_pull_to_refresh">Потягніть, щоб оновити</string>
@@ -450,9 +445,6 @@
     <string name="settings_summary_on_override">Переписати батьківські налаштування</string>
     <string name="settings_summary_off_override">Використовувати батьківські налаштування</string>
     <string name="settings_title_launch_app">Запуск додатку</string>
-    <string name="settings_title_category">Категорія</string>
-    <string name="settings_summary_on_category">Основний домен</string>
-    <string name="settings_summary_off_category">Домен ресурсів</string>
     <string name="action_domain_settings">Домен</string>
     <string name="settings_title_domains_delete_all">Видалити все</string>
     <string name="settings_summary_domains_delete_all">Видалити всі налаштування домену</string>

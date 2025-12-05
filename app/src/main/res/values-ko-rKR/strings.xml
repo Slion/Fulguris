@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">가로 모드</string>
     <string name="pref_category_portrait">세로 모드</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">필터</string>
     <string name="pref_category_summary_filters">콘텐츠 제어 규칙을 정의하는 로컬 또는 원격 파일</string>
     <string name="pref_category_on_tab_close">탭을 닫을 때</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">탭 및 북마크가 측면 드로어 대신 하단 시트에 표시됩니다</string>
     <string name="pref_title_tab_list_item_show_close_button">탭 닫기 버튼 표시</string>
     <string name="pref_summary_tab_list_item_show_close_button">탭 목록 항목에 탭 닫기 버튼 표시</string>
-    <string name="pref_title_menu_show_exit">종료 메뉴 항목</string>
-    <string name="pref_summary_menu_show_exit">메뉴에 앱 종료 옵션 표시. 시크릿 모드는 항상 표시됩니다.</string>
-    <string name="pref_title_menu_new_tab">새 탭 메뉴 항목</string>
-    <string name="pref_summary_menu_new_tab">메뉴에 새 탭 옵션 표시</string>
     <string name="pref_title_crash_report">충돌 보고서</string>
     <string name="pref_title_analytics">분석</string>
     <string name="pref_title_pull_to_refresh">당겨서 새로고침</string>
@@ -447,9 +442,6 @@
     <string name="settings_summary_on_override">상위 설정 재정의</string>
     <string name="settings_summary_off_override">상위 설정 사용</string>
     <string name="settings_title_launch_app">앱 실행</string>
-    <string name="settings_title_category">카테고리</string>
-    <string name="settings_summary_on_category">기본 도메인</string>
-    <string name="settings_summary_off_category">리소스 도메인</string>
     <string name="action_domain_settings">도메인</string>
     <string name="settings_title_domains_delete_all">모두 삭제</string>
     <string name="settings_summary_domains_delete_all">모든 도메인 설정 삭제</string>

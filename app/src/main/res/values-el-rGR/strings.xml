@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Οριζόντια</string>
     <string name="pref_category_portrait">Κατακόρυφη</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Φίλτρα</string>
     <string name="pref_category_summary_filters">Τοπικά ή απομακρυσμένα αρχεία που ορίζουν τους κανόνες ελέγχου περιεχομένου σας</string>
     <string name="pref_category_on_tab_close">Κατά το κλείσιμο καρτέλας</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Οι καρτέλες και οι σελιδοδείκτες εμφανίζονται σε κάτω φύλλα αντί για πλευρικά συρτάρια</string>
     <string name="pref_title_tab_list_item_show_close_button">Εμφάνιση κουμπιού κλεισίματος καρτέλας</string>
     <string name="pref_summary_tab_list_item_show_close_button">Εμφάνιση κουμπιών κλεισίματος καρτέλας σε στοιχεία λίστας καρτελών</string>
-    <string name="pref_title_menu_show_exit">Στοιχείο μενού εξόδου</string>
-    <string name="pref_summary_menu_show_exit">Εμφάνιση επιλογής εξόδου από την εφαρμογή στο μενού. Η λειτουργία ανώνυμης περιήγησης την εμφανίζει πάντα.</string>
-    <string name="pref_title_menu_new_tab">Στοιχείο μενού νέας καρτέλας</string>
-    <string name="pref_summary_menu_new_tab">Εμφάνιση επιλογής νέας καρτέλας στο μενού</string>
     <string name="pref_title_crash_report">Αναφορές σφαλμάτων</string>
     <string name="pref_title_analytics">Αναλυτικά στοιχεία</string>
     <string name="pref_title_pull_to_refresh">Τράβηγμα για ανανέωση</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Παράκαμψη γονικών ρυθμίσεων</string>
     <string name="settings_summary_off_override">Χρήση γονικών ρυθμίσεων</string>
     <string name="settings_title_launch_app">Εκκίνηση εφαρμογής</string>
-    <string name="settings_title_category">Κατηγορία</string>
-    <string name="settings_summary_on_category">Κύριος τομέας</string>
-    <string name="settings_summary_off_category">Τομέας πόρων</string>
     <string name="action_domain_settings">Τομέας</string>
     <string name="settings_title_domains_delete_all">Διαγραφή όλων</string>
     <string name="settings_summary_domains_delete_all">Διαγραφή όλων των ρυθμίσεων τομέα</string>

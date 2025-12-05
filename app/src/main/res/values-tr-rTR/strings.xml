@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Yatay</string>
     <string name="pref_category_portrait">Dikey</string>
-    <string name="pref_category_menu">Menü</string>
     <string name="pref_category_filters">Filtreler</string>
     <string name="pref_category_summary_filters">İçerik kontrolü kurallarınızı tanımlayan yerel veya uzak dosyalar</string>
     <string name="pref_category_on_tab_close">Sekme kapatıldığında</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Sekmeler ve Yer İmleri yan paneller yerine alt panellerde gösterilir</string>
     <string name="pref_title_tab_list_item_show_close_button">Sekme kapatma düğmesini göster</string>
     <string name="pref_summary_tab_list_item_show_close_button">Sekme listesi öğelerinde sekme kapatma düğmelerini göster</string>
-    <string name="pref_title_menu_show_exit">Çıkış menü öğesi</string>
-    <string name="pref_summary_menu_show_exit">Menüde Uygulamadan Çık seçeneğini göster. Gizli mod bu ayardan bağımsız olarak her zaman gösterir.</string>
-    <string name="pref_title_menu_new_tab">Yeni sekme menü öğesi</string>
-    <string name="pref_summary_menu_new_tab">Menüde Yeni Sekme seçeneğini göster</string>
     <string name="pref_title_crash_report">Çökme raporları</string>
     <string name="pref_title_analytics">Analitik</string>
     <string name="pref_title_pull_to_refresh">Yenilemek için çek</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Üst ayarları geçersiz kıl</string>
     <string name="settings_summary_off_override">Üst ayarları kullan</string>
     <string name="settings_title_launch_app">Uygulamayı başlat</string>
-    <string name="settings_title_category">Kategori</string>
-    <string name="settings_summary_on_category">Ana alan adı</string>
-    <string name="settings_summary_off_category">Kaynak alan adı</string>
     <string name="action_domain_settings">Alan adı</string>
     <string name="settings_title_domains_delete_all">Tümünü sil</string>
     <string name="settings_summary_domains_delete_all">Tüm alan adı ayarlarını sil</string>

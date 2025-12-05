@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Pejzaž</string>
     <string name="pref_category_portrait">Portret</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filteri</string>
     <string name="pref_category_summary_filters">Lokalne ili udaljene datoteke koje definišu vaša pravila kontrole sadržaja</string>
     <string name="pref_category_on_tab_close">Prilikom zatvaranja kartice</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Kartice i obeleživači su prikazani u donjim listovima umesto u bočnim fiokama</string>
     <string name="pref_title_tab_list_item_show_close_button">Prikaži dugme za zatvaranje kartice</string>
     <string name="pref_summary_tab_list_item_show_close_button">Prikažite dugmad za zatvaranje kartica na stavkama liste kartica</string>
-    <string name="pref_title_menu_show_exit">Izađite iz stavke menija</string>
-    <string name="pref_summary_menu_show_exit">Prikaži opciju Izađi iz aplikacije u meniju. Bez obzira na to, privatni jezičak ga uvek prikazuje.</string>
-    <string name="pref_title_menu_new_tab">Nova stavka menija kartice</string>
-    <string name="pref_summary_menu_new_tab">Prikaži opciju Nova kartica u meniju</string>
     <string name="pref_title_crash_report">Izveštaji o padovima</string>
     <string name="pref_title_analytics">Analitika</string>
     <string name="pref_title_pull_to_refresh">Povucite da biste osvežili</string>
@@ -449,9 +444,6 @@
     <string name="settings_summary_on_override">Nadjačajte roditeljska podešavanja</string>
     <string name="settings_summary_off_override">Koristi roditeljska podešavanja</string>
     <string name="settings_title_launch_app">Pokrenite aplikaciju</string>
-    <string name="settings_title_category">Kategorija</string>
-    <string name="settings_summary_on_category">Glavni domen</string>
-    <string name="settings_summary_off_category">Domen resursa</string>
     <string name="action_domain_settings">Domen</string>
     <string name="settings_title_domains_delete_all">Izbriši sve</string>
     <string name="settings_summary_domains_delete_all">Izbrišite sva podešavanja domena</string>

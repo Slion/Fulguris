@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landskap</string>
     <string name="pref_category_portrait">Porträtt</string>
-    <string name="pref_category_menu">Menu</string>
     <string name="pref_category_filters">Filter</string>
     <string name="pref_category_summary_filters">Lokala eller fjärranslutna filer som definierar dina regler för innehållskontroll</string>
     <string name="pref_category_on_tab_close">Vid stängning av flik</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Flikar och bokmärken visas i botten ark istället för sidolådor</string>
     <string name="pref_title_tab_list_item_show_close_button">Visa stängflik knapp</string>
     <string name="pref_summary_tab_list_item_show_close_button">Visa stängflik knapparna i fliklistan</string>
-    <string name="pref_title_menu_show_exit">Avsluta menyobjekt</string>
-    <string name="pref_summary_menu_show_exit">Visa alternativet Avsluta app i menyn. Inkognitoläge visar alltid det oavsett.</string>
-    <string name="pref_title_menu_new_tab">Menuobjjekt för ny flik</string>
-    <string name="pref_summary_menu_new_tab">Visa nytt flikval i menyn</string>
     <string name="pref_title_crash_report">Kraschrapporter</string>
     <string name="pref_title_analytics">Analytiker</string>
     <string name="pref_title_pull_to_refresh">Dra för att uppdatera</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Åsidosätt förälderns inställningar</string>
     <string name="settings_summary_off_override">Använd förälderns inställningar</string>
     <string name="settings_title_launch_app">Starta app</string>
-    <string name="settings_title_category">Kategori</string>
-    <string name="settings_summary_on_category">Huvuddomän</string>
-    <string name="settings_summary_off_category">Resursdomän</string>
     <string name="action_domain_settings">Domän</string>
     <string name="settings_title_domains_delete_all">Ta bort alla</string>
     <string name="settings_summary_domains_delete_all">Ta bort alla domäninställningar</string>

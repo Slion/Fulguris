@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Landskap</string>
     <string name="pref_category_portrait">Portrett</string>
-    <string name="pref_category_menu">Menu</string>
     <string name="pref_category_filters">Filtre</string>
     <string name="pref_category_summary_filters">Styr hvilke eksterne ressurser som lastes inn</string>
     <string name="pref_category_on_tab_close">Ved lukking av fane</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Faner og Bokmerker vises i bunnark i stedet for sideskuffer</string>
     <string name="pref_title_tab_list_item_show_close_button">Vis lukk fane-knapp</string>
     <string name="pref_summary_tab_list_item_show_close_button">Vis lukk fane-knapper på faneliste-elementer</string>
-    <string name="pref_title_menu_show_exit">Avslutt-menyelement</string>
-    <string name="pref_summary_menu_show_exit">Vis Avslutt app-alternativ i menyen. Inkognitomodus viser det alltid uansett.</string>
-    <string name="pref_title_menu_new_tab">Ny fane-menyelement</string>
-    <string name="pref_summary_menu_new_tab">Vis Ny fane-alternativ i menyen</string>
     <string name="pref_title_crash_report">Krasjrapporter</string>
     <string name="pref_title_analytics">Analyse</string>
     <string name="pref_title_pull_to_refresh">Dra for å oppdatere</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Overstyr overordnede innstillinger</string>
     <string name="settings_summary_off_override">Bruk overordnede innstillinger</string>
     <string name="settings_title_launch_app">Start app</string>
-    <string name="settings_title_category">Kategori</string>
-    <string name="settings_summary_on_category">Hoveddomene</string>
-    <string name="settings_summary_off_category">Ressursdomene</string>
     <string name="action_domain_settings">Domene</string>
     <string name="settings_title_domains_delete_all">Slett alle</string>
     <string name="settings_summary_domains_delete_all">Slett alle domeneinnstillinger</string>

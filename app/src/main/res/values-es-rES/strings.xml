@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">Página web</string>
     <string name="pref_category_landscape">Horizontal</string>
     <string name="pref_category_portrait">Vertical</string>
-    <string name="pref_category_menu">Menú</string>
     <string name="pref_category_filters">Filtros</string>
     <string name="pref_category_summary_filters">Archivos locales o remotos que definen sus reglas de control de contenido</string>
     <string name="pref_category_on_tab_close">Al cerrar la pestaña</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Las pestañas y marcadores se muestran en las hojas inferiores en lugar de los cajones laterales</string>
     <string name="pref_title_tab_list_item_show_close_button">Mostrar botón de cerrar pestaña</string>
     <string name="pref_summary_tab_list_item_show_close_button">Mostrar botones de cierre en los elementos de la lista de pestañas</string>
-    <string name="pref_title_menu_show_exit">Elemento salir en el menú</string>
-    <string name="pref_summary_menu_show_exit">Mostrar la opción salir de la aplicación en el menú. El modo incógnito lo muestra indistintamente.</string>
-    <string name="pref_title_menu_new_tab">Elemento nueva pestaña en el menú</string>
-    <string name="pref_summary_menu_new_tab">Mostrar la opción abrir una nueva pestaña en el menú</string>
     <string name="pref_title_crash_report">Informes de fallos</string>
     <string name="pref_title_analytics">Analíticas</string>
     <string name="pref_title_pull_to_refresh">Tirar para actualizar</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Sobreescribir configuración heredada</string>
     <string name="settings_summary_off_override">Usar configuración heredada</string>
     <string name="settings_title_launch_app">Iniciar aplicación</string>
-    <string name="settings_title_category">Categoría</string>
-    <string name="settings_summary_on_category">Dominio principal</string>
-    <string name="settings_summary_off_category">Dominio de recursos</string>
     <string name="action_domain_settings">Dominio</string>
     <string name="settings_title_domains_delete_all">Borrar todo</string>
     <string name="settings_summary_domains_delete_all">Borrar todos los ajustes del dominio</string>

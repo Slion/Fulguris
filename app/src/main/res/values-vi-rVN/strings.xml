@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Ngang</string>
     <string name="pref_category_portrait">Dọc</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Bộ lọc</string>
     <string name="pref_category_summary_filters">Các tệp cục bộ hoặc từ xa xác định quy tắc kiểm soát nội dung của bạn</string>
     <string name="pref_category_on_tab_close">Khi đóng tab</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Tab và Dấu trang được hiển thị ở trang dưới cùng thay vì ngăn kéo bên</string>
     <string name="pref_title_tab_list_item_show_close_button">Hiển thị nút đóng tab</string>
     <string name="pref_summary_tab_list_item_show_close_button">Hiển thị các nút đóng tab trên các mục danh sách tab</string>
-    <string name="pref_title_menu_show_exit">Thoát mục thực đơn</string>
-    <string name="pref_summary_menu_show_exit">Hiển thị tùy chọn Thoát ứng dụng trong thực đơn. Chế độ ẩn danh luôn hiển thị nó bất kể.</string>
-    <string name="pref_title_menu_new_tab">Mục thực đơn tab mới</string>
-    <string name="pref_summary_menu_new_tab">Hiển thị tùy chọn tab mới trong thực đơn</string>
     <string name="pref_title_crash_report">Báo cáo sự cố</string>
     <string name="pref_title_analytics">Phân tích</string>
     <string name="pref_title_pull_to_refresh">Kéo để làm mới</string>
@@ -447,9 +442,6 @@
     <string name="settings_summary_on_override">Ghi đè cài đặt cha</string>
     <string name="settings_summary_off_override">Sử dụng cài đặt cha</string>
     <string name="settings_title_launch_app">Khởi chạy ứng dụng</string>
-    <string name="settings_title_category">Danh mục</string>
-    <string name="settings_summary_on_category">Tên miền chính</string>
-    <string name="settings_summary_off_category">Tên miền tài nguyên</string>
     <string name="action_domain_settings">Tên miền</string>
     <string name="settings_title_domains_delete_all">Xóa hết</string>
     <string name="settings_summary_domains_delete_all">Xóa tất cả thiết đặt tên miền</string>

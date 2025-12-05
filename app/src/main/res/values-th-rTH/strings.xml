@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">แนวนอน</string>
     <string name="pref_category_portrait">แนวตั้ง</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">ฟิลเตอร์</string>
     <string name="pref_category_summary_filters">โฆษณาและมัลแวร์</string>
     <string name="pref_category_on_tab_close">เมื่อปิดแท็บ</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">แสดงตัวเลือกในแผ่นงานด้านล่าง</string>
     <string name="pref_title_tab_list_item_show_close_button">แสดงปุ่มปิดในรายการแท็บ</string>
     <string name="pref_summary_tab_list_item_show_close_button">แสดงปุ่มปิดในแต่ละรายการแท็บ</string>
-    <string name="pref_title_menu_show_exit">แสดงตัวเลือกออกในเมนู</string>
-    <string name="pref_summary_menu_show_exit">เพิ่มตัวเลือกออกในเมนูหลัก</string>
-    <string name="pref_title_menu_new_tab">เมนูแท็บใหม่</string>
-    <string name="pref_summary_menu_new_tab">กำหนดค่าเมนูแท็บใหม่</string>
     <string name="pref_title_crash_report">รายงานข้อขัดข้อง</string>
     <string name="pref_title_analytics">การวิเคราะห์</string>
     <string name="pref_title_pull_to_refresh">ดึงเพื่อรีเฟรช</string>
@@ -447,9 +442,6 @@
     <string name="settings_summary_on_override">แทนที่การตั้งค่าหลัก</string>
     <string name="settings_summary_off_override">ใช้การตั้งค่าหลัก</string>
     <string name="settings_title_launch_app">เปิดแอป</string>
-    <string name="settings_title_category">หมวดหมู่</string>
-    <string name="settings_summary_on_category">โดเมนหลัก</string>
-    <string name="settings_summary_off_category">โดเมนทรัพยากร</string>
     <string name="action_domain_settings">การตั้งค่าโดเมน</string>
     <string name="settings_title_domains_delete_all">ลบโดเมนทั้งหมด</string>
     <string name="settings_summary_domains_delete_all">ลบการตั้งค่าเฉพาะโดเมนทั้งหมด</string>

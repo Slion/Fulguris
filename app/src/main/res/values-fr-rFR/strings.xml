@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Paysage</string>
     <string name="pref_category_portrait">Portrait</string>
-    <string name="pref_category_menu">Menu</string>
     <string name="pref_category_filters">Filtres</string>
     <string name="pref_category_summary_filters">Fichiers locaux ou distants définissant vos règles de contrôle de contenu</string>
     <string name="pref_category_on_tab_close">À la fermeture de l\'onglet</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Onglets et Favoris utiliseront le panneau inférieur à la place des panneaux latéraux</string>
     <string name="pref_title_tab_list_item_show_close_button">Afficher le bouton de fermeture d\'onglet</string>
     <string name="pref_summary_tab_list_item_show_close_button">Afficher les boutons de fermeture d\'onglet sur chaque élément de la liste d\'onglets</string>
-    <string name="pref_title_menu_show_exit">Élément Quitter du menu principal</string>
-    <string name="pref_summary_menu_show_exit">Afficher l\'option Quitter l\'application dans le menu. Le mode incognito l\'affiche en permanence.</string>
-    <string name="pref_title_menu_new_tab">Élément Nouvel onglet du menu principal</string>
-    <string name="pref_summary_menu_new_tab">Afficher l\'option Nouvel onglet dans le menu principal</string>
     <string name="pref_title_crash_report">Rapports de plantage</string>
     <string name="pref_title_analytics">Analytiques</string>
     <string name="pref_title_pull_to_refresh">Tirer pour actualiser</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Remplacer les paramètres parents</string>
     <string name="settings_summary_off_override">Utiliser les paramètres parents</string>
     <string name="settings_title_launch_app">Ouvrir une application</string>
-    <string name="settings_title_category">Catégorie</string>
-    <string name="settings_summary_on_category">Domaine principal</string>
-    <string name="settings_summary_off_category">Domaine ressource</string>
     <string name="action_domain_settings">Domaine</string>
     <string name="settings_title_domains_delete_all">Tout supprimer</string>
     <string name="settings_summary_domains_delete_all">Supprimer tous les paramètres du domaine</string>

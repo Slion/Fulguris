@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Horizontal</string>
     <string name="pref_category_portrait">Vertical</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filtros</string>
     <string name="pref_category_summary_filters">Ficheiros locais ou remotos que especificam as regras de controlo</string>
     <string name="pref_category_on_tab_close">Ao fechar separador</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Os painéis Separadores e Marcadores serão mostrados em baixo e não nos painéis laterais</string>
     <string name="pref_title_tab_list_item_show_close_button">Mostrar botão de fecho</string>
     <string name="pref_summary_tab_list_item_show_close_button">Mostrar botão para fechar separadores nos itens de lista</string>
-    <string name="pref_title_menu_show_exit">Mostrar botão para sair</string>
-    <string name="pref_summary_menu_show_exit">Mostrar botão para sair da aplicação. O modo incógnito mostra-o sempre.</string>
-    <string name="pref_title_menu_new_tab">Mostrar botão Novo separador</string>
-    <string name="pref_summary_menu_new_tab">Mostrar item de menu para criar um separador</string>
     <string name="pref_title_crash_report">Relatórios de falhas</string>
     <string name="pref_title_analytics">Análise</string>
     <string name="pref_title_pull_to_refresh">Puxe para recarregar</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Substituir definições principais</string>
     <string name="settings_summary_off_override">Utilizar definições principais</string>
     <string name="settings_title_launch_app">Abrir aplicação</string>
-    <string name="settings_title_category">Categoria</string>
-    <string name="settings_summary_on_category">Domínio principal</string>
-    <string name="settings_summary_off_category">Domínio de recurso</string>
     <string name="action_domain_settings">Domínio</string>
     <string name="settings_title_domains_delete_all">Apagar tudo</string>
     <string name="settings_summary_domains_delete_all">Apagar todas as definições</string>

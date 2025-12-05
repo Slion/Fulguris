@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">ᱞᱮᱱᱰᱥᱠᱮᱯ</string>
     <string name="pref_category_portrait">ᱯᱳᱨᱴᱨᱮᱴ</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">ᱯᱷᱤᱞᱴᱚᱨ ᱠᱚ</string>
     <string name="pref_category_summary_filters">ᱟᱢᱟᱜ ᱡᱤᱱᱤᱥ ᱠᱚᱸᱴᱨᱚᱞ ᱱᱤᱭᱟᱹᱢ ᱠᱚ ᱵᱟᱛᱟᱣ ᱞᱳᱠᱟᱞ ᱟᱨ ᱨᱤᱢᱳᱴ ᱨᱮᱫᱽ ᱠᱚ</string>
     <string name="pref_category_on_tab_close">ᱴᱮᱵᱽ ᱵᱚᱸᱫᱚ ᱡᱚᱠᱷᱟ</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">ᱴᱮᱵᱽ ᱟᱨ ᱪᱤᱱᱦᱟᱹ ᱞᱟᱛᱟᱨ ᱥᱤᱴ ᱨᱮ ᱩᱫᱩᱜᱼᱟ ᱥᱟᱭᱤᱰ ᱰᱨᱚᱣᱚᱨ ᱵᱚᱫᱚᱞ ᱛᱮ</string>
     <string name="pref_title_tab_list_item_show_close_button">ᱴᱮᱵᱽ ᱵᱚᱸᱫᱚ ᱵᱩᱛᱟᱹᱢ ᱩᱫᱩᱜ</string>
     <string name="pref_summary_tab_list_item_show_close_button">ᱴᱮᱵᱽ ᱞᱤᱥᱴᱤ ᱡᱤᱱᱤᱥ ᱠᱚ ᱨᱮ ᱵᱚᱸᱫᱚ ᱵᱩᱛᱟᱹᱢ ᱩᱫᱩᱜ</string>
-    <string name="pref_title_menu_show_exit">ᱵᱟᱦᱨᱮ ᱚᱰᱚᱠ ᱢᱮᱱᱩ ᱡᱤᱱᱤᱥ</string>
-    <string name="pref_summary_menu_show_exit">ᱢᱮᱱᱩ ᱨᱮ ᱮᱯ ᱵᱟᱦᱨᱮ ᱚᱰᱚᱠ ᱩᱫᱩᱜ ᱾ ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱢᱚᱰ ᱫᱚ ᱡᱷᱚᱛᱚ ᱚᱠᱛᱚ ᱩᱫᱩᱜᱼᱟ ᱾</string>
-    <string name="pref_title_menu_new_tab">ᱱᱟᱶᱟ ᱴᱮᱵᱽ ᱢᱮᱱᱩ ᱡᱤᱱᱤᱥ</string>
-    <string name="pref_summary_menu_new_tab">ᱢᱮᱱᱩ ᱨᱮ ᱱᱟᱶᱟ ᱴᱮᱵᱽ ᱵᱟᱪᱷᱱᱟᱣ ᱩᱫᱩᱜ</string>
     <string name="pref_title_crash_report">ᱠᱨᱟᱥ ᱨᱤᱯᱳᱨᱴ ᱠᱚ</string>
     <string name="pref_title_analytics">ᱮᱱᱟᱞᱤᱴᱤᱠᱥ</string>
     <string name="pref_title_pull_to_refresh">ᱫᱚᱦᱲᱟ ᱫᱚᱦᱚ ᱞᱟᱹᱜᱤᱫ ᱛᱟᱱᱟ</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">ᱟᱭᱳ ᱥᱟᱡᱟᱣ ᱠᱚ ᱚᱵᱷᱟᱨᱨᱟᱭᱤᱰ</string>
     <string name="settings_summary_off_override">ᱟᱭᱳ ᱥᱟᱡᱟᱣ ᱠᱚ ᱵᱮᱵᱷᱟᱨ</string>
     <string name="settings_title_launch_app">ᱮᱯ ᱮᱛᱦᱚᱵ</string>
-    <string name="settings_title_category">ᱛᱷᱚᱠ</string>
-    <string name="settings_summary_on_category">ᱢᱩᱬ ᱰᱳᱢᱮᱱ</string>
-    <string name="settings_summary_off_category">ᱨᱤᱥᱳᱨᱥ ᱰᱳᱢᱮᱱ</string>
     <string name="action_domain_settings">ᱰᱳᱢᱮᱱ</string>
     <string name="settings_title_domains_delete_all">ᱡᱷᱚᱛᱚ ᱢᱮᱴᱟᱣ</string>
     <string name="settings_summary_domains_delete_all">ᱡᱷᱚᱛᱚ ᱰᱳᱢᱮᱱ ᱥᱟᱡᱟᱣ ᱠᱚ ᱢᱮᱴᱟᱣ</string>

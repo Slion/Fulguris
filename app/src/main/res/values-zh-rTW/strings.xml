@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">橫向</string>
     <string name="pref_category_portrait">縱向</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">過濾器</string>
     <string name="pref_category_summary_filters">定義內容控制規則的本機或遠端檔案</string>
     <string name="pref_category_on_tab_close">關閉分頁時</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">分頁和書籤顯示在底部面板而非側邊抽屜中</string>
     <string name="pref_title_tab_list_item_show_close_button">顯示關閉分頁按鈕</string>
     <string name="pref_summary_tab_list_item_show_close_button">在分頁清單項目上顯示關閉分頁按鈕</string>
-    <string name="pref_title_menu_show_exit">結束選單項目</string>
-    <string name="pref_summary_menu_show_exit">在選單中顯示結束應用程式選項。無論如何，無痕模式始終會顯示它。</string>
-    <string name="pref_title_menu_new_tab">新分頁選單項目</string>
-    <string name="pref_summary_menu_new_tab">在選單中顯示新分頁選項</string>
     <string name="pref_title_crash_report">當機報告</string>
     <string name="pref_title_analytics">分析</string>
     <string name="pref_title_pull_to_refresh">下拉重新整理</string>
@@ -447,9 +442,6 @@
     <string name="settings_summary_on_override">覆寫父項設定</string>
     <string name="settings_summary_off_override">使用父項設定</string>
     <string name="settings_title_launch_app">啟動應用程式</string>
-    <string name="settings_title_category">類別</string>
-    <string name="settings_summary_on_category">主要網域</string>
-    <string name="settings_summary_off_category">資源網域</string>
     <string name="action_domain_settings">網域</string>
     <string name="settings_title_domains_delete_all">全部刪除</string>
     <string name="settings_summary_domains_delete_all">刪除所有網域設定</string>

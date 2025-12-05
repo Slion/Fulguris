@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Liggende</string>
     <string name="pref_category_portrait">Højformat</string>
-    <string name="pref_category_menu">Menu</string>
     <string name="pref_category_filters">Filtre</string>
     <string name="pref_category_summary_filters">Lokale eller eksterne filer der definerer dine indholdskontrolregler</string>
     <string name="pref_category_on_tab_close">Ved lukning af fane</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Faner og bogmærker vises i bundark i stedet for sideskuffer</string>
     <string name="pref_title_tab_list_item_show_close_button">Vis luk fane-knap</string>
     <string name="pref_summary_tab_list_item_show_close_button">Vis luk fane-knapper på faneliste-elementer</string>
-    <string name="pref_title_menu_show_exit">Afslut menupunkt</string>
-    <string name="pref_summary_menu_show_exit">Vis Afslut app-mulighed i menuen. Inkognitotilstand viser det altid uanset.</string>
-    <string name="pref_title_menu_new_tab">Ny fane-menupunkt</string>
-    <string name="pref_summary_menu_new_tab">Vis Ny fane-mulighed i menuen</string>
     <string name="pref_title_crash_report">Nedbrudsrapporter</string>
     <string name="pref_title_analytics">Analyser</string>
     <string name="pref_title_pull_to_refresh">Træk for at opdatere</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Tilsidesæt forældreindstillinger</string>
     <string name="settings_summary_off_override">Brug forældreindstillinger</string>
     <string name="settings_title_launch_app">Start app</string>
-    <string name="settings_title_category">Kategori</string>
-    <string name="settings_summary_on_category">Hoveddomæne</string>
-    <string name="settings_summary_off_category">Ressourcedomæne</string>
     <string name="action_domain_settings">Domæne</string>
     <string name="settings_title_domains_delete_all">Slet alle</string>
     <string name="settings_summary_domains_delete_all">Slet alle domæneindstillinger</string>

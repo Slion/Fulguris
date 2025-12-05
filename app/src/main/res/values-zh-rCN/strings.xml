@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">横屏</string>
     <string name="pref_category_portrait">竖屏</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">过滤器</string>
     <string name="pref_category_summary_filters">定义内容控制规则的本地或远程文件</string>
     <string name="pref_category_on_tab_close">标签页关闭时</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">标签和书签显示在底页而不是侧边抽屉中</string>
     <string name="pref_title_tab_list_item_show_close_button">显示关闭标签页的按钮</string>
     <string name="pref_summary_tab_list_item_show_close_button">在网页的标签上显示关闭标签页的按钮</string>
-    <string name="pref_title_menu_show_exit">在菜单中显示“退出”一项</string>
-    <string name="pref_summary_menu_show_exit">在菜单中显示用于退出应用的一项。无论是否打开此选项，无痕模式下都会有“退出”一项。</string>
-    <string name="pref_title_menu_new_tab">在菜单中显示“新建标签页”一项</string>
-    <string name="pref_summary_menu_new_tab">在菜单中显示新标签选项</string>
     <string name="pref_title_crash_report">崩溃报告</string>
     <string name="pref_title_analytics">统计数据</string>
     <string name="pref_title_pull_to_refresh">下拉刷新</string>
@@ -447,9 +442,6 @@
     <string name="settings_summary_on_override">覆盖主设置</string>
     <string name="settings_summary_off_override">使用主设置</string>
     <string name="settings_title_launch_app">启动应用</string>
-    <string name="settings_title_category">类别</string>
-    <string name="settings_summary_on_category">主域名</string>
-    <string name="settings_summary_off_category">资源域</string>
     <string name="action_domain_settings">域名</string>
     <string name="settings_title_domains_delete_all">全部删除</string>
     <string name="settings_summary_domains_delete_all">删除所有域设置</string>

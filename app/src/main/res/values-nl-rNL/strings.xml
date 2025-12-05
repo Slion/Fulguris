@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Liggend</string>
     <string name="pref_category_portrait">Staand</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Filters</string>
     <string name="pref_category_summary_filters">Lokale of externe bestanden die je regels voor inhoudscontrole definiëren</string>
     <string name="pref_category_on_tab_close">Bij het sluiten van een tabblad</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Tabbladen en bladwijzers worden weergegeven in de onderste bladen in plaats van in de zijladen</string>
     <string name="pref_title_tab_list_item_show_close_button">Tabblad sluiten tonen</string>
     <string name="pref_summary_tab_list_item_show_close_button">Tabblad sluiten-knoppen op tabbladlijst-items weergeven</string>
-    <string name="pref_title_menu_show_exit">Menu-item Afsluiten</string>
-    <string name="pref_summary_menu_show_exit">Toon app afsluiten optie in menu. Incognito-modus geeft het altijd weer, ongeacht.</string>
-    <string name="pref_title_menu_new_tab">Nieuw tabblad menu-item</string>
-    <string name="pref_summary_menu_new_tab">Toon de optie Nieuw tabblad in het menu</string>
     <string name="pref_title_crash_report">Crashrapporten</string>
     <string name="pref_title_analytics">Statistieken</string>
     <string name="pref_title_pull_to_refresh">Trekken om te verversen</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Bovenliggende instellingen overschrijven</string>
     <string name="settings_summary_off_override">Ouderinstellingen gebruiken</string>
     <string name="settings_title_launch_app">App starten</string>
-    <string name="settings_title_category">Categorie</string>
-    <string name="settings_summary_on_category">Hoofddomein</string>
-    <string name="settings_summary_off_category">Domein</string>
     <string name="action_domain_settings">Domein</string>
     <string name="settings_title_domains_delete_all">Verwijder alles</string>
     <string name="settings_summary_domains_delete_all">Alle domeininstellingen verwijderen</string>

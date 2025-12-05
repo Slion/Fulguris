@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Пејзаж</string>
     <string name="pref_category_portrait">Портрет</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Филтери</string>
     <string name="pref_category_summary_filters">Локалне или удаљене датотеке које дефинишу ваша правила контроле садржаја</string>
     <string name="pref_category_on_tab_close">Приликом затварања картице</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Картице и обележивачи су приказани у доњим листовима уместо у бочним фиокама</string>
     <string name="pref_title_tab_list_item_show_close_button">Прикажи дугме за затварање картице</string>
     <string name="pref_summary_tab_list_item_show_close_button">Прикажите дугмад за затварање картица на ставкама листе картица</string>
-    <string name="pref_title_menu_show_exit">Изађите из ставке менија</string>
-    <string name="pref_summary_menu_show_exit">Прикажи опцију Изађи из апликације у менију. Без обзира на то, приватни језичак га увек приказује.</string>
-    <string name="pref_title_menu_new_tab">Нова ставка менија картице</string>
-    <string name="pref_summary_menu_new_tab">Прикажи опцију Нова картица у менију</string>
     <string name="pref_title_crash_report">Извештаји о падовима</string>
     <string name="pref_title_analytics">Аналитика</string>
     <string name="pref_title_pull_to_refresh">Повуците да бисте освежили</string>
@@ -449,9 +444,6 @@
     <string name="settings_summary_on_override">Надјачајте родитељска подешавања</string>
     <string name="settings_summary_off_override">Користи родитељска подешавања</string>
     <string name="settings_title_launch_app">Покрените апликацију</string>
-    <string name="settings_title_category">Категорија</string>
-    <string name="settings_summary_on_category">Главни домен</string>
-    <string name="settings_summary_off_category">Домен ресурса</string>
     <string name="action_domain_settings">Домен</string>
     <string name="settings_title_domains_delete_all">Избриши све</string>
     <string name="settings_summary_domains_delete_all">Избришите сва подешавања домена</string>

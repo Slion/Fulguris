@@ -258,7 +258,6 @@
     <string name="pref_category_webpage">@string/action_webpage</string>
     <string name="pref_category_landscape">Fekvő tájolás</string>
     <string name="pref_category_portrait">Álló tájolás</string>
-    <string name="pref_category_menu">@string/action_menu</string>
     <string name="pref_category_filters">Szűrők</string>
     <string name="pref_category_summary_filters">Helyi vagy távoli fájlok amelyek megszabják a tartalomirányítási szabályait</string>
     <string name="pref_category_on_tab_close">Amikor a lap bezárul</string>
@@ -287,10 +286,6 @@
     <string name="pref_summary_use_bottom_sheets">Fülek és Könyvjelzők az alsó lapokban vannak oldalsó lapok helyett</string>
     <string name="pref_title_tab_list_item_show_close_button">Mutasson oldalbezáró gombot</string>
     <string name="pref_summary_tab_list_item_show_close_button">Mutasson oldalbezáró gombokat a lapok listaelemeiben</string>
-    <string name="pref_title_menu_show_exit">Kilépés a menüelemből</string>
-    <string name="pref_summary_menu_show_exit">Mutasson Alkalmazás bezárása opciót a menüben. Inkognitó módban ettől függetlenül mindíg van.</string>
-    <string name="pref_title_menu_new_tab">Új lap menüelem</string>
-    <string name="pref_summary_menu_new_tab">Mutasson Új lap opciót a menüben</string>
     <string name="pref_title_crash_report">Összeomlási jelentések</string>
     <string name="pref_title_analytics">Elemzések</string>
     <string name="pref_title_pull_to_refresh">Húzza le a frissítéshez</string>
@@ -448,9 +443,6 @@
     <string name="settings_summary_on_override">Főbeállítások felülírása</string>
     <string name="settings_summary_off_override">Főbeállítások használata</string>
     <string name="settings_title_launch_app">Alkalmazás indítása</string>
-    <string name="settings_title_category">Kategória</string>
-    <string name="settings_summary_on_category">Főtartomány</string>
-    <string name="settings_summary_off_category">Forrástartomány</string>
     <string name="action_domain_settings">Tartomány</string>
     <string name="settings_title_domains_delete_all">Összes törlése</string>
     <string name="settings_summary_domains_delete_all">Összes tartománybeállítás törlése</string>
