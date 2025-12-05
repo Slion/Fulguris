@@ -1111,7 +1111,7 @@ if len(sys.argv) > 1:
             else:
                 print(f"Error: Unknown option '{sys.argv[i]}' for --check")
                 sys.exit(1)
-        
+
         # Print check mode info
         if show_all_for_lang:
             print(f"Will show ALL issues for language: {show_all_for_lang}")
@@ -1129,6 +1129,7 @@ if len(sys.argv) > 1:
     # Handle summary command
     elif arg == '--summary':
         summary_only = True
+        full_check = False  # Summary uses incremental mode by default
     # Unknown command
     else:
         print(f"Error: Unknown command '{arg}'")
@@ -1234,7 +1235,7 @@ for lang_dir in sorted(lang_dirs):
             match = re.search(pattern, trans_content)
             if match:
                 translated_value = match.group(1)
-                
+
                 # Check if it matches English exactly (possibly not translated)
                 is_exact_match = translated_value == english_value
                 char_diff = _char_difference(translated_value, english_value) if near_threshold > 0 else 999
