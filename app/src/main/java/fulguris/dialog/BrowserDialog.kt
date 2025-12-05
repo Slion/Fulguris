@@ -202,17 +202,15 @@ object BrowserDialog {
         // Show it first as invisible then dismiss and actually show it
         // This works around our broken animations on HONOR Magic V2
         // See: https://github.com/Slion/Fulguris/issues/662
-        dialog.window?.decorView?.visibility = View.INVISIBLE
-        dialog.window?.decorView?.doOnLayout {
-            dialog.dismiss()
-            dialog.window?.decorView?.visibility = View.VISIBLE
-            dialog.show()
+        dialog.setOnShowListener {
+            if (dialog.window?.decorView?.visibility == View.INVISIBLE) {
+                dialog.dismiss()
+                dialog.window?.decorView?.visibility = View.VISIBLE
+                dialog.show()
+            }
         }
+
         dialog.show()
-
-
-
-        //builder.resizeAndShow()
 
         // We want our dialog to close after a configuration change since the resizing is not working properly.
         // It seems AlertDialog was never designed to handle screen rotation properly
