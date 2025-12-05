@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Uredi oznaku</string>
     <string name="action_edit">Uredi</string>
-    <string name="action_incognito">Nova privatna kartica</string>
+    <string name="action_incognito">Privatni režim</string>
     <string name="action_show_homepage">Pokaži početnu stranicu</string>
     <string name="action_back">Nazad</string>
     <string name="action_find">Pronađite na stranici</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">The storage is busy. To allow downloads, touch \'Turn Off USB Storage\' in the notification.</string>
     <string name="download_complete">Download complete</string>
     <string name="download_failed">Download failed</string>
-    <string name="incognito_cookies">Enable cookies in incognito mode</string>
-    <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
+    <string name="incognito_cookies">Omogući kolačiće u privatnom režimu</string>
+    <string name="incognito_cookies_pie">Privatni režim radi u zasebnom procesu koji se resetuje nakon svake sesije. Postavke privatnih kolačića sada kontrolišu regularne postavke kolačića.</string>
     <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Start of tab list</string>
     <string name="new_tab_position_end">End of tab list</string>
     <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Incognito tab</string>
+    <string name="action_incognito_tab">Privatna kartica</string>
     <string name="action_select_browser">Select browser</string>
     <string name="action_block">Block</string>
     <string name="pref_title_default_browser">Default browser</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Log level</string>
     <string name="dialog_open_new_tab">Open in new tab</string>
     <string name="dialog_open_background_tab">Open in background tab</string>
-    <string name="dialog_open_incognito_tab">Open in incognito tab</string>
+    <string name="dialog_open_incognito_tab">Otvori u privatnoj kartici</string>
     <string name="dialog_remove_bookmark">Remove bookmark</string>
     <string name="dialog_edit_bookmark">Edit bookmark</string>
     <string name="dialog_title_bookmark">Bookmark</string>
@@ -411,12 +411,12 @@
     <string name="dialog_toggle_desktop">Toggle desktop user agent</string>
     <string name="search_engine_custom">Custom URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d incognito tab open</item>
-        <item quantity="few">%1$d incognito tabs open</item>
-        <item quantity="other">%1$d incognito tabs open</item>
+        <item quantity="one">%1$d privatna kartica otvorena</item>
+        <item quantity="few">%1$d privatne kartice otvorene</item>
+        <item quantity="other">%1$d privatnih kartica otvoreno</item>
     </plurals>
     <string name="notification_incognito_running_message">Touch to open</string>
-    <string name="notification_incognito_running_description">Ongoing incognito session</string>
+    <string name="notification_incognito_running_description">Aktivna privatna sesija</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Issued by:</string>
     <string name="ssl_info_issued_to">Issued to:</string>
@@ -559,7 +559,7 @@
     <string name="accent_brown">Brown</string>
     <string name="search_homepage">Search</string>
     <string name="search_incognito">Private search</string>
-    <string name="incognito">Incognito</string>
+    <string name="incognito">Privatno</string>
     <string name="unknown">Unknown</string>
     <string name="settings_export_failure">Sorry, settings could not be exported!</string>
     <string name="settings_exported">Settings exported:</string>
@@ -602,7 +602,7 @@
     <string name="intro_title_ad_blocker">Be Safe!</string>
     <string name="intro_description_ad_blocker">Enable our powerful ad blocker to browse faster, safer, and with fewer distractions. You can always change this later in settings.</string>
     <string name="intro_notification_permission_title">Notification permission</string>
-    <string name="intro_notification_permission_description">Allow Fulguris to send notifications, notably for download completion and during incognito sessions.</string>
+    <string name="intro_notification_permission_description">Dozvolite Fulguris da šalje obavještenja, posebno za završetak preuzimanja i tokom privatnih sesija.</string>
     <string name="pref_title_enable_ad_blocker">Ad blocker</string>
     <string name="pref_summary_on_enable_ad_blocker">Enjoy a cleaner, safer web experience</string>
     <string name="pref_summary_off_enable_ad_blocker">Enjoy an unfiltered, original version of the web</string>

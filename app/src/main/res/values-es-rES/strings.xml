@@ -89,7 +89,7 @@
     <string name="hint_url">Dirección URL</string>
     <string name="title_edit_bookmark">Editar marcador</string>
     <string name="action_edit">Editar</string>
-    <string name="action_incognito">Nueva pestaña de incógnito</string>
+    <string name="action_incognito">Modo privado</string>
     <string name="action_show_homepage">Mostrar página de inicio</string>
     <string name="action_back">Atrás</string>
     <string name="action_find">Buscar en la página</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">El almacenamiento está ocupado. Para permitir las descargas, desactive el almacenamiento USB desde el área de notificaciones.</string>
     <string name="download_complete">Descarga completada</string>
     <string name="download_failed">Descarga fallida</string>
-    <string name="incognito_cookies">Activar cookies en el modo incógnito</string>
-    <string name="incognito_cookies_pie">El modo incógnito se ejecuta en un proceso separado que se reinicia tras cada sesión. Las cookies del modo incógnito están ahora controladas por las preferencias generales de cookies.</string>
+    <string name="incognito_cookies">Habilitar cookies en modo privado</string>
+    <string name="incognito_cookies_pie">El modo privado se ejecuta en un proceso separado que se restablece después de cada sesión. Las preferencias de cookies privadas ahora están controladas por las preferencias de cookies normales.</string>
     <string name="pref_title_contact_us">Contáctate con nosotros</string>
     <string name="clear_cache">Limpiar caché</string>
     <string name="message_cache_cleared">La caché se ha eliminado</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Inicio de la lista de pestañas</string>
     <string name="new_tab_position_end">Fin de la lista de pestañas</string>
     <string name="incoming_view_action">Acción de vista entrante</string>
-    <string name="action_incognito_tab">Pestaña de incógnito</string>
+    <string name="action_incognito_tab">Pestaña privada</string>
     <string name="action_select_browser">Seleccionar navegador</string>
     <string name="action_block">Bloquear</string>
     <string name="pref_title_default_browser">Navegador predeterminado</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Nivel de registro</string>
     <string name="dialog_open_new_tab">Abrir en una nueva pestaña</string>
     <string name="dialog_open_background_tab">Abrir en una pestaña de fondo</string>
-    <string name="dialog_open_incognito_tab">Abrir en una pestaña de incógnito</string>
+    <string name="dialog_open_incognito_tab">Abrir en pestaña privada</string>
     <string name="dialog_remove_bookmark">Eliminar marcador</string>
     <string name="dialog_edit_bookmark">Editar marcador</string>
     <string name="dialog_title_bookmark">Marcador</string>
@@ -411,11 +411,11 @@
     <string name="dialog_toggle_desktop">Alternar agente de usuario de escritorio</string>
     <string name="search_engine_custom">Dirección personalizada</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d pestañas de incógnito abiertas</item>
-        <item quantity="other">%1$d pestañas de incógnito abiertas</item>
+        <item quantity="one">%1$d pestaña privada abierta</item>
+        <item quantity="other">%1$d pestañas privadas abiertas</item>
     </plurals>
     <string name="notification_incognito_running_message">Tocar para abrir</string>
-    <string name="notification_incognito_running_description">Sesión de incógnito en curso</string>
+    <string name="notification_incognito_running_description">Sesión privada en curso</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Emitido por</string>
     <string name="ssl_info_issued_to">Emitido a</string>
@@ -556,7 +556,7 @@
     <string name="accent_brown">Marrón</string>
     <string name="search_homepage">Buscar</string>
     <string name="search_incognito">Búsqueda privada</string>
-    <string name="incognito">Incógnito</string>
+    <string name="incognito">Privado</string>
     <string name="unknown">Desconocido</string>
     <string name="settings_export_failure">Lo sentimos, ¡No han podido exportarse los ajustes!</string>
     <string name="settings_exported">Ajustes exportados:</string>
@@ -599,7 +599,7 @@
     <string name="intro_title_ad_blocker">¡Mantente seguro!</string>
     <string name="intro_description_ad_blocker">Activa nuestro potente bloqueador de anuncios para navegar más rápido, con mayor seguridad y menos distracciones. Siempre puedes cambiar esto más tarde en la configuración.</string>
     <string name="intro_notification_permission_title">Permiso de notificación</string>
-    <string name="intro_notification_permission_description">Permite que Fulguris envíe notificaciones, especialmente para la finalización de descargas y durante las sesiones de incógnito.</string>
+    <string name="intro_notification_permission_description">Permite que Fulguris envíe notificaciones, especialmente para la finalización de descargas y durante sesiones privadas.</string>
     <string name="pref_title_enable_ad_blocker">Bloqueador de anuncios</string>
     <string name="pref_summary_on_enable_ad_blocker">Disfruta de una experiencia web más limpia y segura</string>
     <string name="pref_summary_off_enable_ad_blocker">Disfruta de una versión sin filtrar y original de la web</string>

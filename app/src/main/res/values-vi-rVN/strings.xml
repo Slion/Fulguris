@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Chỉnh sửa dấu trang</string>
     <string name="action_edit">Chỉnh sửa</string>
-    <string name="action_incognito">Đến chế độ ẩn danh</string>
+    <string name="action_incognito">Chế độ riêng tư</string>
     <string name="action_show_homepage">Hiển thị trang chủ</string>
     <string name="action_back">Quay lại</string>
     <string name="action_find">Tìm trong trang</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">Bộ lưu trữ đang bận. Để cho phép tải xuống, hãy chạm vào \'Tắt bộ nhớ USB\' trong thông báo.</string>
     <string name="download_complete">Tải xuống xong</string>
     <string name="download_failed">Tải xuống thất bại</string>
-    <string name="incognito_cookies">Bật cookie ở chế độ ẩn danh</string>
-    <string name="incognito_cookies_pie">Chế độ ẩn danh chạy trong một quy trình riêng biệt được đặt lại sau mỗi phiên. Tùy chọn cookie ẩn danh hiện được kiểm soát bởi tùy chọn cookie thông thường.</string>
+    <string name="incognito_cookies">Bật cookie trong chế độ riêng tư</string>
+    <string name="incognito_cookies_pie">Chế độ riêng tư chạy trong một quy trình riêng biệt được đặt lại sau mỗi phiên. Tùy chọn cookie riêng tư hiện được kiểm soát bởi tùy chọn cookie thông thường.</string>
     <string name="pref_title_contact_us">Liên hệ chúng tôi</string>
     <string name="clear_cache">Xóa bộ nhớ đệm</string>
     <string name="message_cache_cleared">Đã xóa bộ nhớ đệm</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Đầu danh sách tab</string>
     <string name="new_tab_position_end">Cuối danh sách tab</string>
     <string name="incoming_view_action">Hành động xem đến</string>
-    <string name="action_incognito_tab">Tab ẩn danh</string>
+    <string name="action_incognito_tab">Thẻ riêng tư</string>
     <string name="action_select_browser">Chọn trình duyệt</string>
     <string name="action_block">Chặn</string>
     <string name="pref_title_default_browser">Trình duyệt mặc định</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Mức nhật ký</string>
     <string name="dialog_open_new_tab">Mở ra trong trang mới</string>
     <string name="dialog_open_background_tab">Mở trong tab nền</string>
-    <string name="dialog_open_incognito_tab">Mở trong tab ẩn danh</string>
+    <string name="dialog_open_incognito_tab">Mở trong thẻ riêng tư</string>
     <string name="dialog_remove_bookmark">Loại bỏ dấu trang</string>
     <string name="dialog_edit_bookmark">Chỉnh sửa dấu trang</string>
     <string name="dialog_title_bookmark">Dấu trang</string>
@@ -411,10 +411,10 @@
     <string name="dialog_toggle_desktop">Chuyển đổi tác nhân người dùng để bàn</string>
     <string name="search_engine_custom">URL tùy chỉnh</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d tab ẩn danh đang mở</item>
+        <item quantity="other">%1$d thẻ riêng tư đang mở</item>
     </plurals>
     <string name="notification_incognito_running_message">Chạm để mở</string>
-    <string name="notification_incognito_running_description">Phiên ẩn danh đang hoạt động</string>
+    <string name="notification_incognito_running_description">Phiên riêng tư đang diễn ra</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Được cấp bởi:</string>
     <string name="ssl_info_issued_to">Được cấp cho:</string>
@@ -553,7 +553,7 @@
     <string name="accent_brown">Nâu</string>
     <string name="search_homepage">Tìm</string>
     <string name="search_incognito">Tìm kiếm riêng tư</string>
-    <string name="incognito">Ẩn danh</string>
+    <string name="incognito">Riêng tư</string>
     <string name="unknown">Không xác định</string>
     <string name="settings_export_failure">Rất tiếc, không thể xuất thiết đặt!</string>
     <string name="settings_exported">Đã xuất thiết đặt:</string>
@@ -596,7 +596,7 @@
     <string name="intro_title_ad_blocker">An toàn!</string>
     <string name="intro_description_ad_blocker">Bật trình chặn quảng cáo mạnh mẽ của chúng tôi để duyệt nhanh hơn, an toàn hơn và ít bị phân tâm hơn. Bạn luôn có thể thay đổi điều này sau trong cài đặt.</string>
     <string name="intro_notification_permission_title">Quyền thông báo</string>
-    <string name="intro_notification_permission_description">Cho phép Fulguris gửi thông báo, đặc biệt là cho việc hoàn thành tải xuống và trong các phiên ẩn danh.</string>
+    <string name="intro_notification_permission_description">Cho phép Fulguris gửi thông báo, đặc biệt là khi hoàn tất tải xuống và trong các phiên riêng tư.</string>
     <string name="pref_title_enable_ad_blocker">Trình chặn quảng cáo</string>
     <string name="pref_summary_on_enable_ad_blocker">Tận hưởng trải nghiệm web sạch hơn, an toàn hơn</string>
     <string name="pref_summary_off_enable_ad_blocker">Tận hưởng phiên bản web gốc không lọc</string>

@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">แก้ไขบุ๊กมาร์ก</string>
     <string name="action_edit">แก้ไข</string>
-    <string name="action_incognito">แท็บไม่ระบุตัวตนใหม่</string>
+    <string name="action_incognito">โหมดส่วนตัว</string>
     <string name="action_show_homepage">แสดงหน้าแรก</string>
     <string name="action_back">ย้อนกลับ</string>
     <string name="action_find">ค้นหาในหน้า</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">พื้นที่จัดเก็บกำลังทำงาน หากต้องการอนุญาตให้ดาวน์โหลด แตะ \'ปิด USB Storage\' ในการแจ้งเตือน</string>
     <string name="download_complete">ดาวน์โหลดเสร็จสิ้น</string>
     <string name="download_failed">ดาวน์โหลดล้มเหลว</string>
-    <string name="incognito_cookies">เปิดใช้งานคุกกี้ในโหมดไม่ระบุตัวตน</string>
-    <string name="incognito_cookies_pie">โหมดไม่ระบุตัวตนทำงานในกระบวนการแยกที่รีเซ็ตหลังจากแต่ละเซสชัน การตั้งค่าคุกกี้ในโหมดไม่ระบุตัวตนจะถูกควบคุมโดยการตั้งค่าคุกกี้ทั่วไป</string>
+    <string name="incognito_cookies">เปิดใช้งานคุกกี้ในโหมดส่วนตัว</string>
+    <string name="incognito_cookies_pie">โหมดส่วนตัวทำงานในกระบวนการแยกต่างหากที่รีเซ็ตหลังจากแต่ละเซสชัน การตั้งค่าคุกกี้ส่วนตัวตอนนี้ถูกควบคุมโดยการตั้งค่าคุกกี้ปกติ</string>
     <string name="pref_title_contact_us">ติดต่อเรา</string>
     <string name="clear_cache">ล้างแคช</string>
     <string name="message_cache_cleared">ล้างแคชแล้ว</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">ต้นรายการแท็บ</string>
     <string name="new_tab_position_end">ท้ายรายการแท็บ</string>
     <string name="incoming_view_action">การดำเนินการดูขาเข้า</string>
-    <string name="action_incognito_tab">แท็บไม่ระบุตัวตน</string>
+    <string name="action_incognito_tab">แท็บส่วนตัว</string>
     <string name="action_select_browser">เลือกเบราว์เซอร์</string>
     <string name="action_block">บล็อก</string>
     <string name="pref_title_default_browser">เบราว์เซอร์เริ่มต้น</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">ระดับบันทึก</string>
     <string name="dialog_open_new_tab">เปิดในแท็บใหม่</string>
     <string name="dialog_open_background_tab">เปิดในแท็บพื้นหลัง</string>
-    <string name="dialog_open_incognito_tab">เปิดในแท็บไม่ระบุตัวตน</string>
+    <string name="dialog_open_incognito_tab">เปิดในแท็บส่วนตัว</string>
     <string name="dialog_remove_bookmark">ลบบุ๊กมาร์ก</string>
     <string name="dialog_edit_bookmark">แก้ไขบุ๊กมาร์ก</string>
     <string name="dialog_title_bookmark">บุ๊กมาร์ก</string>
@@ -411,10 +411,10 @@
     <string name="dialog_toggle_desktop">สลับโหมดเดสก์ท็อป</string>
     <string name="search_engine_custom">เครื่องมือค้นหาที่กำหนดเอง</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d แท็บไม่ระบุตัวตนเปิดอยู่</item>
+        <item quantity="other">%1$d แท็บส่วนตัวเปิดอยู่</item>
     </plurals>
     <string name="notification_incognito_running_message">แตะเพื่อเปิด</string>
-    <string name="notification_incognito_running_description">เซสชันไม่ระบุตัวตนกำลังทำงาน</string>
+    <string name="notification_incognito_running_description">เซสชันส่วนตัวที่กำลังดำเนินอยู่</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">ออกโดย:</string>
     <string name="ssl_info_issued_to">ออกให้:</string>
@@ -553,7 +553,7 @@
     <string name="accent_brown">สีน้ำตาล</string>
     <string name="search_homepage">ค้นหา</string>
     <string name="search_incognito">ค้นหาแบบไม่ระบุตัวตน</string>
-    <string name="incognito">การท่องเว็บแบบไม่ระบุตัวตน</string>
+    <string name="incognito">ส่วนตัว</string>
     <string name="unknown">ไม่ทราบ</string>
     <string name="settings_export_failure">การส่งออกการตั้งค่าล้มเหลว!</string>
     <string name="settings_exported">ส่งออกการตั้งค่า:</string>
@@ -596,7 +596,7 @@
     <string name="intro_title_ad_blocker">ปลอดภัย!</string>
     <string name="intro_description_ad_blocker">เปิดใช้งานตัวบล็อกโฆษณาที่ทรงพลังของเราเพื่อท่องเว็บได้เร็วขึ้น ปลอดภัยขึ้น และมีสิ่งรบกวนน้อยลง คุณสามารถเปลี่ยนแปลงได้ในภายหลังในการตั้งค่า</string>
     <string name="intro_notification_permission_title">สิทธิ์การแจ้งเตือน</string>
-    <string name="intro_notification_permission_description">อนุญาตให้ Fulguris ส่งการแจ้งเตือน โดยเฉพาะสำหรับการดาวน์โหลดเสร็จสมบูรณ์และระหว่างเซสชันไม่ระบุตัวตน</string>
+    <string name="intro_notification_permission_description">อนุญาตให้ Fulguris ส่งการแจ้งเตือน โดยเฉพาะสำหรับการดาวน์โหลดเสร็จสิ้นและระหว่างเซสชันส่วนตัว</string>
     <string name="pref_title_enable_ad_blocker">ตัวบล็อกโฆษณา</string>
     <string name="pref_summary_on_enable_ad_blocker">เพลิดเพลินกับประสบการณ์เว็บที่สะอาดและปลอดภัยยิ่งขึ้น</string>
     <string name="pref_summary_off_enable_ad_blocker">เพลิดเพลินกับเว็บเวอร์ชันต้นฉบับที่ไม่ถูกกรอง</string>

@@ -72,7 +72,7 @@
     <string name="hint_title">शीर्षक</string>
     <string name="title_edit_bookmark">बुकमार्क संपादित करें</string>
     <string name="action_edit">संपादित करें</string>
-    <string name="action_incognito">गुप्त मोड में जाएं</string>
+    <string name="action_incognito">निजी मोड</string>
     <string name="action_show_homepage">होमपेज दिखाएं</string>
     <string name="action_back">पीछे</string>
     <string name="action_find">पेज में खोजें</string>
@@ -93,8 +93,8 @@
     <string name="download_sdcard_busy_dlg_msg">स्टोरेज व्यस्त है। डाउनलोड की अनुमति देने के लिए, सूचना में \</string>
     <string name="download_complete">डाउनलोड पूर्ण</string>
     <string name="download_failed">डाउनलोड विफल</string>
-    <string name="incognito_cookies">गुप्त मोड में कुकीज़ सक्षम करें</string>
-    <string name="incognito_cookies_pie">गुप्त मोड एक अलग प्रक्रिया में चलता है जो प्रत्येक सत्र के बाद रीसेट हो जाती है। गुप्त कुकी प्राथमिकताएं अब नियमित कुकी प्राथमिकताओं द्वारा नियंत्रित होती हैं।</string>
+    <string name="incognito_cookies">निजी मोड में कुकीज़ सक्षम करें</string>
+    <string name="incognito_cookies_pie">निजी मोड एक अलग प्रक्रिया में चलता है जो प्रत्येक सत्र के बाद रीसेट हो जाता है। निजी कुकी प्राथमिकताएँ अब नियमित कुकी प्राथमिकताओं द्वारा नियंत्रित होती हैं।</string>
     <string name="pref_title_contact_us">हमसे संपर्क करें</string>
     <string name="clear_cache">कैश साफ़ करें</string>
     <string name="message_cache_cleared">कैश साफ़ हो गया</string>
@@ -303,7 +303,7 @@
     <string name="new_tab_position_start">टैब सूची की शुरुआत</string>
     <string name="new_tab_position_end">टैब सूची का अंत</string>
     <string name="incoming_view_action">आने वाला व्यू एक्शन</string>
-    <string name="action_incognito_tab">गुप्त टैब</string>
+    <string name="action_incognito_tab">निजी टैब</string>
     <string name="action_select_browser">ब्राउज़र चुनें</string>
     <string name="action_block">ब्लॉक करें</string>
     <string name="pref_title_default_browser">डिफ़ॉल्ट ब्राउज़र</string>
@@ -358,7 +358,7 @@
     <string name="pref_title_log_level">लॉग स्तर</string>
     <string name="dialog_open_new_tab">नए टैब में खोलें</string>
     <string name="dialog_open_background_tab">बैकग्राउंड टैब में खोलें</string>
-    <string name="dialog_open_incognito_tab">गुप्त टैब में खोलें</string>
+    <string name="dialog_open_incognito_tab">निजी टैब में खोलें</string>
     <string name="dialog_remove_bookmark">बुकमार्क हटाएं</string>
     <string name="dialog_edit_bookmark">बुकमार्क संपादित करें</string>
     <string name="dialog_title_bookmark">बुकमार्क</string>
@@ -376,11 +376,11 @@
     <string name="dialog_toggle_desktop">डेस्कटॉप यूज़र एजेंट टॉगल करें</string>
     <string name="search_engine_custom">कस्टम URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d गुप्त टैब खुला है</item>
-        <item quantity="other">%1$d गुप्त टैब खुले हैं</item>
+        <item quantity="one">%1$d निजी टैब खुला</item>
+        <item quantity="other">%1$d निजी टैब खुले</item>
     </plurals>
     <string name="notification_incognito_running_message">खोलने के लिए टच करें</string>
-    <string name="notification_incognito_running_description">चल रहा गुप्त सत्र</string>
+    <string name="notification_incognito_running_description">चालू निजी सत्र</string>
     <string name="ssl_info_issued_by">द्वारा जारी:</string>
     <string name="ssl_info_issued_to">को जारी:</string>
     <string name="ssl_info_issued_on">जारी होने की तिथि:</string>
@@ -517,7 +517,7 @@
     <string name="accent_brown">भूरा</string>
     <string name="search_homepage">खोजें</string>
     <string name="search_incognito">निजी खोज</string>
-    <string name="incognito">गुप्त</string>
+    <string name="incognito">निजी</string>
     <string name="unknown">अज्ञात</string>
     <string name="settings_export_failure">क्षमा करें, सेटिंग्स निर्यात नहीं की जा सकीं!</string>
     <string name="settings_exported">सेटिंग्स निर्यात की गईं:</string>
@@ -553,7 +553,7 @@
     <string name="intro_title_ad_blocker">सुरक्षित रहें!</string>
     <string name="intro_description_ad_blocker">तेज़, सुरक्षित और कम विकर्षणों के साथ ब्राउज़ करने के लिए हमारा शक्तिशाली विज्ञापन अवरोधक सक्षम करें। आप इसे बाद में सेटिंग्स में बदल सकते हैं।</string>
     <string name="intro_notification_permission_title">सूचना अनुमति</string>
-    <string name="intro_notification_permission_description">Fulguris को सूचनाएं भेजने की अनुमति दें, विशेष रूप से डाउनलोड पूर्ण होने और गुप्त सत्रों के दौरान।</string>
+    <string name="intro_notification_permission_description">Fulguris को सूचनाएं भेजने की अनुमति दें, विशेष रूप से डाउनलोड पूर्णता और निजी सत्रों के दौरान।</string>
     <string name="pref_title_enable_ad_blocker">विज्ञापन अवरोधक</string>
     <string name="pref_summary_on_enable_ad_blocker">एक स्वच्छ, सुरक्षित वेब अनुभव का आनंद लें</string>
     <string name="pref_summary_off_enable_ad_blocker">वेब के अनफ़िल्टर्ड, मूल संस्करण का आनंद लें</string>

@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Upravit záložku</string>
     <string name="action_edit">Upravit</string>
-    <string name="action_incognito">Přejít do anonymního režimu</string>
+    <string name="action_incognito">Soukromý režim</string>
     <string name="action_show_homepage">Zobrazit domovskou stránku</string>
     <string name="action_back">Zpět</string>
     <string name="action_find">Najít na stránce</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">Úložiště je zaneprázdněno. Chcete-li povolit stahování, klepněte v oznámení na \'Vypnout úložiště USB\'.</string>
     <string name="download_complete">Stahování dokončeno</string>
     <string name="download_failed">Stahování selhalo</string>
-    <string name="incognito_cookies">Povolit cookies v anonymním režimu</string>
-    <string name="incognito_cookies_pie">Anonymní režim běží v odděleném procesu, který je resetován po každé relaci. Nastavení anonymní cookie jsou nyní řízena běžnými nastaveními cookie.</string>
+    <string name="incognito_cookies">Povolit soubory cookie v soukromém režimu</string>
+    <string name="incognito_cookies_pie">Soukromý režim běží v samostatném procesu, který se po každé relaci resetuje. Předvolby soukromých souborů cookie jsou nyní řízeny běžnými předvolbami souborů cookie.</string>
     <string name="pref_title_contact_us">Kontaktuj nás</string>
     <string name="clear_cache">Vymazat mezipamět</string>
     <string name="message_cache_cleared">Mezipaměť vymazána</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Začátek seznamu karet</string>
     <string name="new_tab_position_end">Konec seznamu karet</string>
     <string name="incoming_view_action">Akce příchozího zobrazení</string>
-    <string name="action_incognito_tab">Anonymní karta</string>
+    <string name="action_incognito_tab">Soukromá karta</string>
     <string name="action_select_browser">Vybrat prohlížeč</string>
     <string name="action_block">Blokovat</string>
     <string name="pref_title_default_browser">Výchozí prohlížeč</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Úroveň protokolování</string>
     <string name="dialog_open_new_tab">Otevřít v nové kartě</string>
     <string name="dialog_open_background_tab">Otevřít v kartě na pozadí</string>
-    <string name="dialog_open_incognito_tab">Otevřít v anonymní kartě</string>
+    <string name="dialog_open_incognito_tab">Otevřít v soukromé kartě</string>
     <string name="dialog_remove_bookmark">Odstranit záložku</string>
     <string name="dialog_edit_bookmark">Upravit záložku</string>
     <string name="dialog_title_bookmark">Záložka</string>
@@ -411,13 +411,13 @@
     <string name="dialog_toggle_desktop">Přepnout uživatelský agent pro počítače</string>
     <string name="search_engine_custom">Vlastní URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d anonymní karta otevřena</item>
-        <item quantity="few">%1$d anonymní karty otevřeny</item>
-        <item quantity="many">%1$d anonymních karet otevřeno</item>
-        <item quantity="other">%1$d anonymních karet otevřeno</item>
+        <item quantity="one">%1$d soukromá karta otevřena</item>
+        <item quantity="few">%1$d soukromé karty otevřeny</item>
+        <item quantity="many">%1$d soukromé karty otevřeno</item>
+        <item quantity="other">%1$d soukromých karet otevřeno</item>
     </plurals>
     <string name="notification_incognito_running_message">Klepnutím otevřete</string>
-    <string name="notification_incognito_running_description">Probíhající anonymní relace</string>
+    <string name="notification_incognito_running_description">Probíhající soukromá relace</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Vydal</string>
     <string name="ssl_info_issued_to">Vydáno pro</string>
@@ -562,7 +562,7 @@
     <string name="accent_brown">Hnědá</string>
     <string name="search_homepage">Hledat</string>
     <string name="search_incognito">Soukromé vyhledávání</string>
-    <string name="incognito">Anonymní</string>
+    <string name="incognito">Soukromé</string>
     <string name="unknown">Neznámý</string>
     <string name="settings_export_failure">Omlouváme se, nastavení nelze exportovat!</string>
     <string name="settings_exported">Nastavení exportováno:</string>
@@ -605,7 +605,7 @@
     <string name="intro_title_ad_blocker">Buďte v bezpečí!</string>
     <string name="intro_description_ad_blocker">Povolte náš výkonný blokovač reklam pro rychlejší, bezpečnější prohlížení s menším rozptylem. Toto můžete později změnit v nastavení.</string>
     <string name="intro_notification_permission_title">Oprávnění k oznámením</string>
-    <string name="intro_notification_permission_description">Povolit Fulguris odesílat oznámení, zejména pro dokončení stahování a během anonymních relací.</string>
+    <string name="intro_notification_permission_description">Povolte aplikaci Fulguris odesílat oznámení, zejména pro dokončení stahování a během soukromých relací.</string>
     <string name="pref_title_enable_ad_blocker">Blokovač reklam</string>
     <string name="pref_summary_on_enable_ad_blocker">Užijte si čistší a bezpečnější webovou zkušenost</string>
     <string name="pref_summary_off_enable_ad_blocker">Užijte si nefiltrovanou, původní verzi webu</string>

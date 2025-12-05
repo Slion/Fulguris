@@ -89,7 +89,7 @@
     <string name="hint_url">Адрес</string>
     <string name="title_edit_bookmark">Редактировать закладку</string>
     <string name="action_edit">Редактировать</string>
-    <string name="action_incognito">Инкогнито-вкладка</string>
+    <string name="action_incognito">Приватный режим</string>
     <string name="action_show_homepage">Показать домашнюю страницу</string>
     <string name="action_back">Назад</string>
     <string name="action_find">Найти на странице</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">Хранилище занято. Чтобы разрешить загрузку, нажмите «Отключить USB-накопитель» в уведомлении.</string>
     <string name="download_complete">Загрузка завершена</string>
     <string name="download_failed">Ошибка загрузки</string>
-    <string name="incognito_cookies">Включить cookie в режиме инкогнито</string>
-    <string name="incognito_cookies_pie">Режим инкогнито запускается в отдельном процессе, который будет сброшен после каждой сессии. Настройки cookie режима инкогнито теперь контролируются обычными настройками cookie.</string>
+    <string name="incognito_cookies">Включить куки в приватном режиме</string>
+    <string name="incognito_cookies_pie">Приватный режим работает в отдельном процессе, который сбрасывается после каждого сеанса. Настройки приватных файлов cookie теперь управляются обычными настройками файлов cookie.</string>
     <string name="pref_title_contact_us">Свяжитесь с нами</string>
     <string name="clear_cache">Очистить кэш</string>
     <string name="message_cache_cleared">Кэш очищен</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Начало списка вкладок</string>
     <string name="new_tab_position_end">Конец списка вкладок</string>
     <string name="incoming_view_action">Действие входящего просмотра</string>
-    <string name="action_incognito_tab">Вкладка инкогнито</string>
+    <string name="action_incognito_tab">Приватная вкладка</string>
     <string name="action_select_browser">Выбрать браузер</string>
     <string name="action_block">Заблокировать</string>
     <string name="pref_title_default_browser">Браузер по умолчанию</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Уровень журнала</string>
     <string name="dialog_open_new_tab">Открыть в новой вкладке</string>
     <string name="dialog_open_background_tab">Открыть вкладку в фоне</string>
-    <string name="dialog_open_incognito_tab">Открыть в инкогнито-вкладке</string>
+    <string name="dialog_open_incognito_tab">Открыть в приватной вкладке</string>
     <string name="dialog_remove_bookmark">Удалить закладку</string>
     <string name="dialog_edit_bookmark">Редактировать закладку</string>
     <string name="dialog_title_bookmark">Закладка</string>
@@ -411,13 +411,13 @@
     <string name="dialog_toggle_desktop">Переключить агент пользователя рабочего стола</string>
     <string name="search_engine_custom">Пользовательский URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d инкогнито вкладка открыта</item>
-        <item quantity="few">%1$d инкогнито вкладки открыто</item>
-        <item quantity="many">%1$d инкогнито вкладок открыто</item>
-        <item quantity="other">%1$d инкогнито вкладок открыто</item>
+        <item quantity="one">%1$d приватная вкладка открыта</item>
+        <item quantity="few">%1$d приватные вкладки открыты</item>
+        <item quantity="many">%1$d приватных вкладок открыто</item>
+        <item quantity="other">%1$d приватных вкладок открыто</item>
     </plurals>
     <string name="notification_incognito_running_message">Нажмите, чтобы открыть</string>
-    <string name="notification_incognito_running_description">Текущая сессия инкогнито</string>
+    <string name="notification_incognito_running_description">Текущий приватный сеанс</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Кем выдан:</string>
     <string name="ssl_info_issued_to">Кому выдан:</string>
@@ -562,7 +562,7 @@
     <string name="accent_brown">Коричневый</string>
     <string name="search_homepage">Поиск</string>
     <string name="search_incognito">Приватный поиск</string>
-    <string name="incognito">Инкогнито</string>
+    <string name="incognito">Приватный</string>
     <string name="unknown">Неизвестно</string>
     <string name="settings_export_failure">Извините, не удалось экспортировать настройки!</string>
     <string name="settings_exported">Настройки экспортированы:</string>
@@ -605,7 +605,7 @@
     <string name="intro_title_ad_blocker">Будьте в безопасности!</string>
     <string name="intro_description_ad_blocker">Включите наш мощный блокировщик рекламы для более быстрого, безопасного просмотра с меньшим количеством отвлекающих факторов. Вы всегда можете изменить это позже в настройках.</string>
     <string name="intro_notification_permission_title">Разрешение на уведомления</string>
-    <string name="intro_notification_permission_description">Разрешите Fulguris отправлять уведомления, особенно о завершении загрузок и во время сеансов инкогнито.</string>
+    <string name="intro_notification_permission_description">Разрешить Fulguris отправлять уведомления, особенно о завершении загрузок и во время приватных сеансов.</string>
     <string name="pref_title_enable_ad_blocker">Блокировщик рекламы</string>
     <string name="pref_summary_on_enable_ad_blocker">Наслаждайтесь более чистым и безопасным интернетом</string>
     <string name="pref_summary_off_enable_ad_blocker">Наслаждайтесь нефильтрованной, оригинальной версией интернета</string>

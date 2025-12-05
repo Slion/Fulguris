@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">즐겨찾기 편집</string>
     <string name="action_edit">편집</string>
-    <string name="action_incognito">새 사생활 보호 탭</string>
+    <string name="action_incognito">비공개 모드</string>
     <string name="action_show_homepage">홈페이지 표시</string>
     <string name="action_back">뒤로</string>
     <string name="action_find">페이지에서 찾기</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">저장소가 사용중입니다. 다운로드를 하려면 USB 저장소를 끄세요.</string>
     <string name="download_complete">다운로드 완료</string>
     <string name="download_failed">다운로드 실패</string>
-    <string name="incognito_cookies">사생활 보호 모드에서 쿠키 사용</string>
-    <string name="incognito_cookies_pie">시크릿 모드는 각 세션 후 재설정되는 별도의 프로세스에서 실행됩니다. 시크릿 쿠키 기본 설정은 이제 일반 쿠키 기본 설정으로 제어됩니다.</string>
+    <string name="incognito_cookies">비공개 모드에서 쿠키 사용</string>
+    <string name="incognito_cookies_pie">비공개 모드는 각 세션 후 초기화되는 별도의 프로세스에서 실행됩니다. 비공개 쿠키 설정은 이제 일반 쿠키 설정에 의해 제어됩니다.</string>
     <string name="pref_title_contact_us">문의하기</string>
     <string name="clear_cache">캐시 지우기</string>
     <string name="message_cache_cleared">캐시를 지웠습니다</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">탭 목록 시작</string>
     <string name="new_tab_position_end">탭 목록 끝</string>
     <string name="incoming_view_action">수신 보기 작업</string>
-    <string name="action_incognito_tab">시크릿 탭</string>
+    <string name="action_incognito_tab">비공개 탭</string>
     <string name="action_select_browser">브라우저 선택</string>
     <string name="action_block">차단</string>
     <string name="pref_title_default_browser">기본 브라우저</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">로그 레벨</string>
     <string name="dialog_open_new_tab">새 탭에서 열기</string>
     <string name="dialog_open_background_tab">배경 탭에서 열기</string>
-    <string name="dialog_open_incognito_tab">사생활 보호 탭에서 열기</string>
+    <string name="dialog_open_incognito_tab">비공개 탭에서 열기</string>
     <string name="dialog_remove_bookmark">즐겨찾기 삭제</string>
     <string name="dialog_edit_bookmark">즐겨찾기 편집</string>
     <string name="dialog_title_bookmark">북마크</string>
@@ -411,10 +411,10 @@
     <string name="dialog_toggle_desktop">데스크톱 사용자 에이전트 전환</string>
     <string name="search_engine_custom">임의의 URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d 시크릿 탭 열림</item>
+        <item quantity="other">%1$d개의 비공개 탭 열림</item>
     </plurals>
     <string name="notification_incognito_running_message">터치해서 열기</string>
-    <string name="notification_incognito_running_description">진행 중인 시크릿 세션</string>
+    <string name="notification_incognito_running_description">진행 중인 비공개 세션</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">발급자:</string>
     <string name="ssl_info_issued_to">발급 대상:</string>
@@ -553,7 +553,7 @@
     <string name="accent_brown">갈색</string>
     <string name="search_homepage">검색</string>
     <string name="search_incognito">비공개 검색</string>
-    <string name="incognito">시크릿</string>
+    <string name="incognito">비공개</string>
     <string name="unknown">알 수 없음</string>
     <string name="settings_export_failure">죄송합니다. 설정을 내보낼 수 없습니다!</string>
     <string name="settings_exported">설정 내보냄:</string>
@@ -596,7 +596,7 @@
     <string name="intro_title_ad_blocker">안전하게!</string>
     <string name="intro_description_ad_blocker">강력한 광고 차단기를 활성화하여 더 빠르고 안전하며 방해 없이 브라우징하세요. 나중에 설정에서 언제든지 변경할 수 있습니다.</string>
     <string name="intro_notification_permission_title">알림 권한</string>
-    <string name="intro_notification_permission_description">Fulguris가 알림을 보낼 수 있도록 허용하세요. 특히 다운로드 완료 및 시크릿 세션 중에 유용합니다.</string>
+    <string name="intro_notification_permission_description">Fulguris가 알림을 보낼 수 있도록 허용합니다. 특히 다운로드 완료 및 비공개 세션 중에 사용됩니다.</string>
     <string name="pref_title_enable_ad_blocker">광고 차단기</string>
     <string name="pref_summary_on_enable_ad_blocker">더 깔끔하고 안전한 웹 경험을 즐기세요</string>
     <string name="pref_summary_off_enable_ad_blocker">필터링되지 않은 원래 버전의 웹을 즐기세요</string>

@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Editează marcaj</string>
     <string name="action_edit">Editează</string>
-    <string name="action_incognito">Mergi incognito</string>
+    <string name="action_incognito">Mod privat</string>
     <string name="action_show_homepage">Arată pagina de start</string>
     <string name="action_back">Înapoi</string>
     <string name="action_find">Găsește în pagină</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">Stocarea este ocupată. Pentru a permite descărcări, apăsați \'Dezactivează stocarea USB\' în notificare.</string>
     <string name="download_complete">Descărcare finalizată</string>
     <string name="download_failed">Descărcare eșuată</string>
-    <string name="incognito_cookies">Activează cookie-uri în modul incognito</string>
-    <string name="incognito_cookies_pie">Modul incognito rulează într-un proces separat care este resetat după fiecare sesiune. Preferințele pentru cookie-uri incognito sunt acum controlate de preferințele obișnuite pentru cookie-uri.</string>
+    <string name="incognito_cookies">Activează cookie-urile în modul privat</string>
+    <string name="incognito_cookies_pie">Modul privat rulează într-un proces separat care este resetat după fiecare sesiune. Preferințele pentru cookie-uri private sunt acum controlate de preferințele pentru cookie-uri obișnuite.</string>
     <string name="pref_title_contact_us">Contactează-ne</string>
     <string name="clear_cache">Șterge cache-ul</string>
     <string name="message_cache_cleared">Cache șters</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Începutul listei de file</string>
     <string name="new_tab_position_end">Sfârșitul listei de file</string>
     <string name="incoming_view_action">Acțiune vizualizare primită</string>
-    <string name="action_incognito_tab">Filă incognito</string>
+    <string name="action_incognito_tab">Filă privată</string>
     <string name="action_select_browser">Selectează browser</string>
     <string name="action_block">Blochează</string>
     <string name="pref_title_default_browser">Browser implicit</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Nivel jurnal</string>
     <string name="dialog_open_new_tab">Deschide în filă nouă</string>
     <string name="dialog_open_background_tab">Deschide în filă fundal</string>
-    <string name="dialog_open_incognito_tab">Deschide în filă incognito</string>
+    <string name="dialog_open_incognito_tab">Deschide în filă privată</string>
     <string name="dialog_remove_bookmark">Elimină marcaj</string>
     <string name="dialog_edit_bookmark">Editează marcaj</string>
     <string name="dialog_title_bookmark">Marcaj</string>
@@ -411,12 +411,12 @@
     <string name="dialog_toggle_desktop">Comută agentul utilizator desktop</string>
     <string name="search_engine_custom">URL personalizat</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d filă incognito deschisă</item>
-        <item quantity="few">%1$d file incognito deschise</item>
-        <item quantity="other">%1$d de file incognito deschise</item>
+        <item quantity="one">%1$d filă privată deschisă</item>
+        <item quantity="few">%1$d file private deschise</item>
+        <item quantity="other">%1$d de file private deschise</item>
     </plurals>
     <string name="notification_incognito_running_message">Atinge pentru a deschide</string>
-    <string name="notification_incognito_running_description">Sesiune incognito în desfășurare</string>
+    <string name="notification_incognito_running_description">Sesiune privată în curs</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Issued by</string>
     <string name="ssl_info_issued_to">Issued to</string>
@@ -559,7 +559,7 @@
     <string name="accent_brown">Maro</string>
     <string name="search_homepage">Căutare</string>
     <string name="search_incognito">Căutare privată</string>
-    <string name="incognito">Incognito</string>
+    <string name="incognito">Privat</string>
     <string name="unknown">Necunoscut</string>
     <string name="settings_export_failure">Ne pare rău, setările nu au putut fi exportate!</string>
     <string name="settings_exported">Setări exportate:</string>
@@ -602,7 +602,7 @@
     <string name="intro_title_ad_blocker">Fii în siguranță!</string>
     <string name="intro_description_ad_blocker">Activează blocarea puternică de reclame pentru a naviga mai rapid, mai sigur și cu mai puține distrageri. Poți schimba asta oricând în setări.</string>
     <string name="intro_notification_permission_title">Permisiune notificări</string>
-    <string name="intro_notification_permission_description">Permite Fulguris să trimită notificări, în special pentru finalizarea descărcărilor și în timpul sesiunilor incognito.</string>
+    <string name="intro_notification_permission_description">Permiteți Fulguris să trimită notificări, în special pentru finalizarea descărcărilor și în timpul sesiunilor private.</string>
     <string name="pref_title_enable_ad_blocker">Blocare reclame</string>
     <string name="pref_summary_on_enable_ad_blocker">Bucură-te de o experiență web mai curată și mai sigură</string>
     <string name="pref_summary_off_enable_ad_blocker">Bucură-te de o versiune nefil trată, originală a web-ului</string>

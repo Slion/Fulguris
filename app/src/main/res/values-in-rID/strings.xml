@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Sunting bookmark</string>
     <string name="action_edit">Sunting</string>
-    <string name="action_incognito">Tab samaran</string>
+    <string name="action_incognito">Mode pribadi</string>
     <string name="action_show_homepage">Tampilkan beranda</string>
     <string name="action_back">Kembali</string>
     <string name="action_find">Cari di halaman</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">Simpanan sedang sibuk. Untuk mengunduh, sentuh \"Matikan simpanan USB\" dalam pemberitahuan.</string>
     <string name="download_complete">Selesai mengunduh</string>
     <string name="download_failed">Gagal mengunduh</string>
-    <string name="incognito_cookies">Izinkan cookies dalam mode menyamar</string>
-    <string name="incognito_cookies_pie">Mode menyamar menggunakan proses terpisah yang selalu diatur ulang pada setiap akhir sesi. Mulai sekarang pengunaan cookies dalam mode menyamar mengikuti penggunaan yang seperti biasa.</string>
+    <string name="incognito_cookies">Aktifkan cookie dalam mode pribadi</string>
+    <string name="incognito_cookies_pie">Mode pribadi berjalan dalam proses terpisah yang direset setelah setiap sesi. Preferensi cookie pribadi sekarang dikontrol oleh preferensi cookie reguler.</string>
     <string name="pref_title_contact_us">Hubungi kami</string>
     <string name="clear_cache">Hapus cache</string>
     <string name="message_cache_cleared">Cache telah dihapus</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Pada awal daftar tab</string>
     <string name="new_tab_position_end">Pada akhir daftar tab</string>
     <string name="incoming_view_action">Tindakan tampilan masuk</string>
-    <string name="action_incognito_tab">Tab penyamaran</string>
+    <string name="action_incognito_tab">Tab pribadi</string>
     <string name="action_select_browser">Pilih peramban</string>
     <string name="action_block">Blokir</string>
     <string name="pref_title_default_browser">Peramban default</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Level log</string>
     <string name="dialog_open_new_tab">Buka di tab baru</string>
     <string name="dialog_open_background_tab">Buka di tab latar belakang</string>
-    <string name="dialog_open_incognito_tab">Buka dengan tab penyamaran</string>
+    <string name="dialog_open_incognito_tab">Buka di tab pribadi</string>
     <string name="dialog_remove_bookmark">Hapus penanda</string>
     <string name="dialog_edit_bookmark">Edit penanda</string>
     <string name="dialog_title_bookmark">Markah</string>
@@ -411,10 +411,10 @@
     <string name="dialog_toggle_desktop">Aktifkan agen pengguna desktop</string>
     <string name="search_engine_custom">URL kustom</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d tab penyamaran sedang terbuka</item>
+        <item quantity="other">%1$d tab pribadi terbuka</item>
     </plurals>
     <string name="notification_incognito_running_message">Sentuh untuk membuka</string>
-    <string name="notification_incognito_running_description">Sesi penyamaran sedang berlangsung</string>
+    <string name="notification_incognito_running_description">Sesi pribadi sedang berlangsung</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Diterbitkan oleh</string>
     <string name="ssl_info_issued_to">Diterbitkan untuk</string>
@@ -553,7 +553,7 @@
     <string name="accent_brown">Coklat</string>
     <string name="search_homepage">Telusuri</string>
     <string name="search_incognito">Cari dalam penyamaran</string>
-    <string name="incognito">Samaran</string>
+    <string name="incognito">Pribadi</string>
     <string name="unknown">Tak diketahui</string>
     <string name="settings_export_failure">Maaf, setelan tidak dapat diekspor!</string>
     <string name="settings_exported">Setelan diekspor:</string>
@@ -596,7 +596,7 @@
     <string name="intro_title_ad_blocker">Tetap Aman!</string>
     <string name="intro_description_ad_blocker">Aktifkan pemblokir iklan kami yang kuat untuk menjelajah lebih cepat, lebih aman, dan dengan lebih sedikit gangguan. Anda selalu dapat mengubah ini nanti di pengaturan.</string>
     <string name="intro_notification_permission_title">Izin notifikasi</string>
-    <string name="intro_notification_permission_description">Izinkan Fulguris mengirim notifikasi, terutama untuk penyelesaian unduhan dan selama sesi penyamaran.</string>
+    <string name="intro_notification_permission_description">Izinkan Fulguris mengirim notifikasi, terutama untuk penyelesaian unduhan dan selama sesi pribadi.</string>
     <string name="pref_title_enable_ad_blocker">Pemblokir iklan</string>
     <string name="pref_summary_on_enable_ad_blocker">Nikmati pengalaman web yang lebih bersih dan aman</string>
     <string name="pref_summary_off_enable_ad_blocker">Nikmati versi web asli tanpa filter</string>

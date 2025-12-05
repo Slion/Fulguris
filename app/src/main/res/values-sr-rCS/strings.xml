@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Uredi obeleživač</string>
     <string name="action_edit">Uredi</string>
-    <string name="action_incognito">Novi privatni jezičak</string>
+    <string name="action_incognito">Приватни режим</string>
     <string name="action_show_homepage">Prikaži početnu stranicu</string>
     <string name="action_back">Nazad</string>
     <string name="action_find">Nađi na stranici</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">Skladište je zauzeto. Da dozvolite preuzimanja, dodirnite „Isključi USB skladište“ u obaveštenju.</string>
     <string name="download_complete">Skidanje završeno</string>
     <string name="download_failed">Preuzimanje nije uspelo</string>
-    <string name="incognito_cookies">Omogući kolačiće u privatnom režimu</string>
-    <string name="incognito_cookies_pie">Režim bez arhiviranja radi u posebnom procesu koji se resetuje nakon svake sesije. Postavke kolačića bez arhiviranja sada kontrolišu uobičajene postavke kolačića.</string>
+    <string name="incognito_cookies">Омогући колачиће у приватном режиму</string>
+    <string name="incognito_cookies_pie">Приватни режим ради у засебном процесу који се ресетује након сваке сесије. Подешавања приватних колачића сада контролишу редовна подешавања колачића.</string>
     <string name="pref_title_contact_us">Kontaktirajte nas</string>
     <string name="clear_cache">Očisti keš</string>
     <string name="message_cache_cleared">Keš je očišćen</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Početak liste jezičaka</string>
     <string name="new_tab_position_end">Kraj liste jezičaka</string>
     <string name="incoming_view_action">Akcija dolaznog prikaza</string>
-    <string name="action_incognito_tab">Inkognito kartica</string>
+    <string name="action_incognito_tab">Приватна картица</string>
     <string name="action_select_browser">Odaberi pretraživač</string>
     <string name="action_block">Blokiraj</string>
     <string name="pref_title_default_browser">Podrazumevani pretraživač</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Log level</string>
     <string name="dialog_open_new_tab">Otvori u novom jezičcku</string>
     <string name="dialog_open_background_tab">Otvori u jezičcku u pozadini</string>
-    <string name="dialog_open_incognito_tab">Otvori u privatnom jezičcku</string>
+    <string name="dialog_open_incognito_tab">Отвори у приватној картици</string>
     <string name="dialog_remove_bookmark">Ukloni obeleživač</string>
     <string name="dialog_edit_bookmark">Uredi obeleživač</string>
     <string name="dialog_title_bookmark">Obeleživač</string>
@@ -411,12 +411,12 @@
     <string name="dialog_toggle_desktop">Uključite korisnički agent za radnu površinu</string>
     <string name="search_engine_custom">Posebna adresa</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d privatni jezičak je otvoren</item>
-        <item quantity="few">%1$d privatna jezička su otvorena</item>
-        <item quantity="other">%1$d privatnih jezičaka je otvoreno</item>
+        <item quantity="one">%1$d приватна картица отворена</item>
+        <item quantity="few">%1$d приватне картице отворене</item>
+        <item quantity="other">%1$d приватних картица отворено</item>
     </plurals>
     <string name="notification_incognito_running_message">Dodirnite za otvaranje</string>
-    <string name="notification_incognito_running_description">Tekuća inkognito sesija</string>
+    <string name="notification_incognito_running_description">Активна приватна сесија</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Izdato od:</string>
     <string name="ssl_info_issued_to">Izdato prema:</string>
@@ -559,7 +559,7 @@
     <string name="accent_brown">Smeđa</string>
     <string name="search_homepage">Pretraga</string>
     <string name="search_incognito">Privatna pretraga</string>
-    <string name="incognito">Incognito</string>
+    <string name="incognito">Приватно</string>
     <string name="unknown">Nepoznato</string>
     <string name="settings_export_failure">Žao nam je, nije moguće izvesti podešavanja!</string>
     <string name="settings_exported">Izvezena podešavanja:</string>
@@ -602,7 +602,7 @@
     <string name="intro_title_ad_blocker">Budite bezbedni!</string>
     <string name="intro_description_ad_blocker">Omogućite naš moćan blokator oglasa za brže, bezbednije pregledanje sa manje ometanja. Uvek možete promeniti ovo kasnije u podešavanjima.</string>
     <string name="intro_notification_permission_title">Dozvola za obaveštenja</string>
-    <string name="intro_notification_permission_description">Dozvolite Fulguris-u da šalje obaveštenja, posebno za završetak preuzimanja i tokom inkognito sesija.</string>
+    <string name="intro_notification_permission_description">Дозволите Fulguris да шаље обавештења, посебно за завршетак преузимања и током приватних сесија.</string>
     <string name="pref_title_enable_ad_blocker">Blokator oglasa</string>
     <string name="pref_summary_on_enable_ad_blocker">Uživajte u čistijem, bezbednijem veb iskustvu</string>
     <string name="pref_summary_off_enable_ad_blocker">Uživajte u nefiltriranoj, originalnoj verziji veba</string>

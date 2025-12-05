@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Lesezeichen bearbeiten</string>
     <string name="action_edit">Bearbeiten</string>
-    <string name="action_incognito">Neuer Inkognito-Tab</string>
+    <string name="action_incognito">Privater Modus</string>
     <string name="action_show_homepage">Startseite</string>
     <string name="action_back">Zurück</string>
     <string name="action_find">Auf Seite suchen</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">Speicher in Benutzung. Um das Herunterladen zu ermöglichen, schalten Sie den USB-Speicher in der Benachrichtigung aus.</string>
     <string name="download_complete">Herunterladen abgeschlossen</string>
     <string name="download_failed">Herunterladen fehlgeschlagen</string>
-    <string name="incognito_cookies">Cookies im Inkognito-Modus aktivieren</string>
-    <string name="incognito_cookies_pie">Der Inkognito-Modus läuft in einem separaten Prozess, der nach jeder Sitzung zurückgesetzt wird. Die Incognito-Cookie-Einstellungen werden jetzt durch die regulären Cookie-Einstellungen gesteuert.</string>
+    <string name="incognito_cookies">Cookies im privaten Modus aktivieren</string>
+    <string name="incognito_cookies_pie">Der private Modus läuft in einem separaten Prozess, der nach jeder Sitzung zurückgesetzt wird. Die Einstellungen für private Cookies werden jetzt durch die regulären Cookie-Einstellungen gesteuert.</string>
     <string name="pref_title_contact_us">Kontakt</string>
     <string name="clear_cache">Cache löschen</string>
     <string name="message_cache_cleared">Cache gelöscht</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Am Start der Tabliste</string>
     <string name="new_tab_position_end">Am Ende der Tabliste</string>
     <string name="incoming_view_action">Eingehende Ansichtsaktion</string>
-    <string name="action_incognito_tab">Inkognito-Tab</string>
+    <string name="action_incognito_tab">Privater Tab</string>
     <string name="action_select_browser">Browser auswählen</string>
     <string name="action_block">Blockieren</string>
     <string name="pref_title_default_browser">Standard-Browser</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Log-Level</string>
     <string name="dialog_open_new_tab">In neuem Tab öffnen</string>
     <string name="dialog_open_background_tab">In Hintergrund-Tab öffnen</string>
-    <string name="dialog_open_incognito_tab">In Inkognito-Tab öffnen</string>
+    <string name="dialog_open_incognito_tab">In privatem Tab öffnen</string>
     <string name="dialog_remove_bookmark">Lesezeichen löschen</string>
     <string name="dialog_edit_bookmark">Lesezeichen bearbeiten</string>
     <string name="dialog_title_bookmark">Lesezeichen</string>
@@ -411,11 +411,11 @@
     <string name="dialog_toggle_desktop">Auf Desktop-Modus User-Agent wechseln</string>
     <string name="search_engine_custom">Benutzerdefinierte URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d Inkognito-Tab geöffnet</item>
-        <item quantity="other">%1$d Inkognito-Tabs geöffnet</item>
+        <item quantity="one">%1$d privater Tab geöffnet</item>
+        <item quantity="other">%1$d private Tabs geöffnet</item>
     </plurals>
     <string name="notification_incognito_running_message">Inkognito-Tab anzeigen</string>
-    <string name="notification_incognito_running_description">Laufende Inkognito-Sitzung</string>
+    <string name="notification_incognito_running_description">Laufende private Sitzung</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Ausgestellt von:</string>
     <string name="ssl_info_issued_to">Ausgestellt für:</string>
@@ -556,7 +556,7 @@
     <string name="accent_brown">Braun</string>
     <string name="search_homepage">Suche</string>
     <string name="search_incognito">Private Suche</string>
-    <string name="incognito">Inkognito</string>
+    <string name="incognito">Privat</string>
     <string name="unknown">Unbekannt</string>
     <string name="settings_export_failure">Einstellungen konnten nicht exportiert werden</string>
     <string name="settings_exported">Einstellungen exportiert:</string>
@@ -599,7 +599,7 @@
     <string name="intro_title_ad_blocker">Bleib sicher!</string>
     <string name="intro_description_ad_blocker">Aktivieren Sie unseren leistungsstarken Werbeblocker, um schneller, sicherer und mit weniger Ablenkungen zu surfen. Sie können dies später jederzeit in den Einstellungen ändern.</string>
     <string name="intro_notification_permission_title">Benachrichtigungsberechtigung</string>
-    <string name="intro_notification_permission_description">Erlauben Sie Fulguris, Benachrichtigungen zu senden, insbesondere für Download-Abschlüsse und während Inkognito-Sitzungen.</string>
+    <string name="intro_notification_permission_description">Erlauben Sie Fulguris, Benachrichtigungen zu senden, insbesondere für Download-Abschlüsse und während privater Sitzungen.</string>
     <string name="pref_title_enable_ad_blocker">Werbeblocker</string>
     <string name="pref_summary_on_enable_ad_blocker">Genießen Sie ein saubereres, sichereres Web-Erlebnis</string>
     <string name="pref_summary_off_enable_ad_blocker">Genießen Sie eine ungefilterte, originale Version des Webs</string>

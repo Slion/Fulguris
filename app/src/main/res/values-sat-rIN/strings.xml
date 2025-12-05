@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">ᱪᱤᱱᱦᱟᱹ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="action_edit">ᱥᱟᱯᱲᱟᱣ</string>
-    <string name="action_incognito">ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱛᱮ ᱪᱟᱞᱟᱜ</string>
+    <string name="action_incognito">ᱱᱤᱡᱮᱨ ᱢᱳᱰ</string>
     <string name="action_show_homepage">ᱚᱲᱟᱜ ᱥᱟᱦᱴᱟ ᱩᱫᱩᱜ</string>
     <string name="action_back">ᱛᱟᱭᱚᱢ</string>
     <string name="action_find">ᱥᱟᱦᱴᱟ ᱨᱮ ᱯᱟᱱᱛᱮ</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">The storage is busy. To allow downloads, touch \'Turn Off USB Storage\' in the notification.</string>
     <string name="download_complete">ᱰᱟᱣᱩᱱᱞᱚᱰ ᱯᱩᱨᱟᱹᱣ</string>
     <string name="download_failed">Download failed</string>
-    <string name="incognito_cookies">Enable cookies in incognito mode</string>
-    <string name="incognito_cookies_pie">Incognito mode runs in a separate process that is reset after each session. Incognito cookie preferences are now controlled by the regular cookie preferences.</string>
+    <string name="incognito_cookies">ᱱᱤᱡᱮᱨ ᱢᱳᱰ ᱨᱮ ᱠᱩᱠᱤᱡ ᱮᱢ ᱠᱟᱹᱢᱤ</string>
+    <string name="incognito_cookies_pie">ᱱᱤᱡᱮᱨ ᱢᱳᱰ ᱟᱞᱜᱟ ᱯᱨᱳᱥᱮᱥ ᱨᱮ ᱪᱟᱞᱩᱭ ᱟᱠᱟᱱᱟ ᱡᱟᱦᱟ ᱢᱤᱫ ᱥᱮᱥᱚᱱ ᱛᱟᱭᱚᱢ ᱨᱤᱥᱮᱴ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ᱾ ᱱᱤᱡᱮᱨ ᱠᱩᱠᱤ ᱯᱚᱥᱚᱱᱫ ᱱᱤᱛ ᱦᱚᱨ ᱠᱩᱠᱤ ᱯᱚᱥᱚᱱᱫ ᱫᱟᱨᱟᱭ ᱛᱮ ᱠᱚᱱᱴᱨᱚᱞ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ᱾</string>
     <string name="pref_title_contact_us">Contact us</string>
     <string name="clear_cache">ᱠᱮᱪ ᱯᱷᱟᱨᱪᱟᱭ</string>
     <string name="message_cache_cleared">ᱠᱮᱪ ᱯᱷᱟᱨᱪᱟᱣ ᱮᱱᱟ</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">ᱴᱮᱵᱽ ᱞᱤᱥᱴᱤ ᱮᱛᱦᱚᱵ</string>
     <string name="new_tab_position_end">ᱴᱮᱵᱽ ᱞᱤᱥᱴᱤ ᱢᱩᱪᱟᱹᱫ</string>
     <string name="incoming_view_action">ᱦᱤᱡᱩᱜ ᱧᱮᱞ ᱠᱟᱹᱢᱤ</string>
-    <string name="action_incognito_tab">ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱴᱮᱵᱽ</string>
+    <string name="action_incognito_tab">ᱱᱤᱡᱮᱨ ᱴᱮᱵ</string>
     <string name="action_select_browser">ᱵᱽᱨᱟᱣᱡᱚᱨ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="action_block">ᱵᱞᱚᱠ</string>
     <string name="pref_title_default_browser">ᱢᱩᱞ ᱵᱽᱨᱟᱣᱡᱚᱨ</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">ᱞᱚᱜᱽ ᱛᱷᱚᱠ</string>
     <string name="dialog_open_new_tab">ᱱᱟᱶᱟ ᱴᱮᱵᱽ ᱨᱮ ᱡᱷᱤᱡ</string>
     <string name="dialog_open_background_tab">ᱛᱟᱭᱚᱢ ᱴᱮᱵᱽ ᱨᱮ ᱡᱷᱤᱡ</string>
-    <string name="dialog_open_incognito_tab">ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱴᱮᱵᱽ ᱨᱮ ᱡᱷᱤᱡ</string>
+    <string name="dialog_open_incognito_tab">ᱱᱤᱡᱮᱨ ᱴᱮᱵ ᱨᱮ ᱡᱷᱤᱡᱽ ᱢᱮ</string>
     <string name="dialog_remove_bookmark">ᱪᱤᱱᱦᱟᱹ ᱚᱪᱚᱜ</string>
     <string name="dialog_edit_bookmark">ᱪᱤᱱᱦᱟᱹ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="dialog_title_bookmark">ᱪᱤᱱᱦᱟᱹ</string>
@@ -412,10 +412,10 @@
     <string name="search_engine_custom">ᱠᱩᱥᱤᱭᱟᱹᱛ URL</string>
     <plurals name="notification_incognito_running_title">
         <item quantity="one">%1$d ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱴᱮᱵᱽ ᱡᱷᱤᱡ ᱠᱟᱱᱟ</item>
-        <item quantity="other">%1$d ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱴᱮᱵᱽ ᱠᱚ ᱡᱷᱤᱡ ᱠᱟᱱᱟ</item>
+        <item quantity="other">%1$d ᱱᱤᱡᱮᱨ ᱴᱮᱵ ᱡᱷᱤᱡᱽ ᱢᱮᱱᱟᱜ ᱟ</item>
     </plurals>
     <string name="notification_incognito_running_message">ᱡᱷᱤᱡ ᱞᱟᱹᱜᱤᱫ ᱴᱤᱯᱟᱹᱣ ᱢᱮ</string>
-    <string name="notification_incognito_running_description">ᱪᱟᱹᱞᱩ ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱥᱮᱥᱚᱱ</string>
+    <string name="notification_incognito_running_description">ᱪᱟᱞᱩ ᱟᱠᱟᱱ ᱱᱤᱡᱮᱨ ᱥᱮᱥᱚᱱ</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Issued by:</string>
     <string name="ssl_info_issued_to">Issued to:</string>
@@ -556,7 +556,7 @@
     <string name="accent_brown">Brown</string>
     <string name="search_homepage">ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="search_incognito">ᱱᱤᱡᱚᱨᱟᱜ ᱥᱮᱸᱫᱽᱨᱟ</string>
-    <string name="incognito">ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ</string>
+    <string name="incognito">ᱱᱤᱡᱮᱨ</string>
     <string name="unknown">ᱵᱟᱝ ᱵᱟᱰᱟᱭ</string>
     <string name="settings_export_failure">ᱢᱟᱯᱷ ᱢᱮ, ᱥᱟᱡᱟᱣ ᱠᱚ ᱮᱠᱥᱯᱳᱨᱴ ᱵᱟᱝ ᱫᱟᱲᱮᱭᱟᱱᱟ!</string>
     <string name="settings_exported">ᱥᱟᱡᱟᱣ ᱮᱠᱥᱯᱳᱨᱴ ᱮᱱᱟ:</string>
@@ -599,7 +599,7 @@
     <string name="intro_title_ad_blocker">ᱨᱩᱠᱷᱤᱭᱟᱹ ᱛᱟᱹᱠᱤᱱ!</string>
     <string name="intro_description_ad_blocker">ᱡᱟᱹᱯᱩᱫ, ᱨᱩᱠᱷᱤᱭᱟᱹ, ᱟᱨ ᱠᱚᱢ ᱵᱟᱧᱪᱟᱣ ᱥᱟᱶ ᱵᱽᱨᱟᱣᱡᱤᱝ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱮᱭᱟᱜ ᱫᱟᱲᱮ ᱮᱰ ᱵᱞᱚᱠᱚᱨ ᱮᱢ ᱪᱷᱚ ᱢᱮ ᱾ ᱟᱢ ᱱᱚᱶᱟ ᱛᱟᱭᱚᱢ ᱥᱟᱡᱟᱣ ᱨᱮ ᱵᱚᱫᱚᱞ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱢ ᱾</string>
     <string name="intro_notification_permission_title">ᱠᱷᱚᱵᱚᱨ ᱪᱷᱟᱹᱰᱤ</string>
-    <string name="intro_notification_permission_description">Fulguris ᱠᱷᱚᱵᱚᱨ ᱵᱷᱮᱡᱟ ᱪᱷᱟᱹᱰᱤ ᱮᱢᱟᱭ ᱢᱮ, ᱥᱮᱫᱟᱭ ᱰᱟᱣᱩᱱᱞᱚᱰ ᱯᱩᱨᱟᱹᱣ ᱟᱨ ᱤᱱᱠᱚᱜᱽᱱᱤᱴᱚ ᱥᱮᱥᱚᱱ ᱚᱠᱛᱚ ᱨᱮ ᱾</string>
+    <string name="intro_notification_permission_description">Fulguris ᱠᱚ ᱱᱚᱴᱤᱯᱷᱤᱠᱮᱥᱚᱱ ᱵᱷᱮᱡᱟ ᱵᱟᱲᱟᱭ ᱢᱮ, ᱠᱷᱟᱥ ᱠᱟᱹᱢᱤ ᱰᱟᱣᱱᱞᱳᱰ ᱯᱩᱨᱟᱹ ᱟᱨ ᱱᱤᱡᱮᱨ ᱥᱮᱥᱚᱱ ᱛᱟᱭᱚᱢ᱾</string>
     <string name="pref_title_enable_ad_blocker">ᱮᱰ ᱵᱞᱚᱠᱚᱨ</string>
     <string name="pref_summary_on_enable_ad_blocker">ᱥᱟᱯᱷᱟ, ᱨᱩᱠᱷᱤᱭᱟᱹ ᱣᱮᱵᱽ ᱮᱱᱮᱢ ᱮᱱᱮᱢ ᱢᱮ</string>
     <string name="pref_summary_off_enable_ad_blocker">ᱵᱟᱝ ᱯᱷᱤᱞᱴᱚᱨ, ᱢᱩᱞ ᱵᱷᱚᱨᱥᱚᱱ ᱣᱮᱵᱽ ᱮᱱᱮᱢ ᱢᱮ</string>

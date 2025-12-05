@@ -89,7 +89,7 @@
     <string name="hint_url">عنوان URL</string>
     <string name="title_edit_bookmark">تعديل العلامة المرجعية</string>
     <string name="action_edit">تعديل</string>
-    <string name="action_incognito">علامة تبويب التخفي</string>
+    <string name="action_incognito">الوضع الخاص</string>
     <string name="action_show_homepage">إظهار الصفحة الرئيسية</string>
     <string name="action_back">عودة</string>
     <string name="action_find">بحث في الصفحة</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">التخزين مشغول. للسماح بالتحميلات، اضغط على \'إيقاف تخزين USB\' في الإشعار.</string>
     <string name="download_complete">إكتمل التنزيل</string>
     <string name="download_failed">فشل التنزيل</string>
-    <string name="incognito_cookies">تمكين ملفات تعريف الارتباط في وضع التصفح المتخفي</string>
-    <string name="incognito_cookies_pie">يتم تشغيل الوضع الخاص في اطار منفصل يتم أعاده تعيينه بعد كل جلسة عمل. يتم التحكم الآن تفضيلات ملف تعريف الارتباط الوضع الخاص بتفضيلات ملف تعريف الارتباط العادي.</string>
+    <string name="incognito_cookies">تمكين ملفات تعريف الارتباط في الوضع الخاص</string>
+    <string name="incognito_cookies_pie">يعمل الوضع الخاص في عملية منفصلة يتم إعادة تعيينها بعد كل جلسة. يتم الآن التحكم في تفضيلات ملفات تعريف الارتباط الخاصة من خلال تفضيلات ملفات تعريف الارتباط العادية.</string>
     <string name="pref_title_contact_us">اتصل بنا</string>
     <string name="clear_cache">مسح ذاكرة التخزين المؤقت</string>
     <string name="message_cache_cleared">تم مسح الذاكرة المؤقتة</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">بداية قائمة التبويبات</string>
     <string name="new_tab_position_end">نهاية قائمة التبويبات</string>
     <string name="incoming_view_action">إجراء العرض الوارد</string>
-    <string name="action_incognito_tab">تبويب التصفح الخفي</string>
+    <string name="action_incognito_tab">علامة تبويب خاصة</string>
     <string name="action_select_browser">تحديد المتصفح</string>
     <string name="action_block">حظر</string>
     <string name="pref_title_default_browser">المتصفح الافتراضي</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">مستوى السجل</string>
     <string name="dialog_open_new_tab">فتح في تبويب جديد</string>
     <string name="dialog_open_background_tab">فتح في تبويب الخلفية</string>
-    <string name="dialog_open_incognito_tab">فتح في تبويب التصفح الخفي</string>
+    <string name="dialog_open_incognito_tab">فتح في علامة تبويب خاصة</string>
     <string name="dialog_remove_bookmark">إزالة الإشارة المرجعية</string>
     <string name="dialog_edit_bookmark">تحرير الإشارة المرجعية</string>
     <string name="dialog_title_bookmark">إشارة مرجعية</string>
@@ -411,15 +411,15 @@
     <string name="dialog_toggle_desktop">تبديل وكيل مستخدم سطح المكتب</string>
     <string name="search_engine_custom">عنوان URL مخصص</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="zero">لا توجد تبويبات تصفح خفي مفتوحة</item>
-        <item quantity="one">تبويب تصفح خفي واحد مفتوح</item>
-        <item quantity="two">تبويبان تصفح خفي مفتوحان</item>
-        <item quantity="few">%1$d تبويبات تصفح خفي مفتوحة</item>
-        <item quantity="many">%1$d تبويب تصفح خفي مفتوح</item>
-        <item quantity="other">%1$d تبويب تصفح خفي مفتوح</item>
+        <item quantity="zero">%1$d علامة تبويب خاصة مفتوحة</item>
+        <item quantity="one">%1$d علامة تبويب خاصة مفتوحة</item>
+        <item quantity="two">%1$d علامتا تبويب خاصتان مفتوحتان</item>
+        <item quantity="few">%1$d علامات تبويب خاصة مفتوحة</item>
+        <item quantity="many">%1$d علامة تبويب خاصة مفتوحة</item>
+        <item quantity="other">%1$d علامة تبويب خاصة مفتوحة</item>
     </plurals>
     <string name="notification_incognito_running_message">انقر للفتح</string>
-    <string name="notification_incognito_running_description">جلسة تصفح خفي جارية</string>
+    <string name="notification_incognito_running_description">جلسة خاصة جارية</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">صدرت من:</string>
     <string name="ssl_info_issued_to">صدرت لـ:</string>
@@ -568,7 +568,7 @@
     <string name="accent_brown">بني</string>
     <string name="search_homepage">البحث</string>
     <string name="search_incognito">بحث خاص</string>
-    <string name="incognito">تصفح خفي</string>
+    <string name="incognito">خاص</string>
     <string name="unknown">غير معروف</string>
     <string name="settings_export_failure">عذراً، تعذر تصدير الإعدادات!</string>
     <string name="settings_exported">تم تصدير الإعدادات:</string>
@@ -611,7 +611,7 @@
     <string name="intro_title_ad_blocker">كن آمناً!</string>
     <string name="intro_description_ad_blocker">فعّل حاجب الإعلانات القوي لتصفح أسرع وأكثر أماناً وبتشتيت أقل. يمكنك تغيير ذلك لاحقاً في الإعدادات.</string>
     <string name="intro_notification_permission_title">إذن الإشعارات</string>
-    <string name="intro_notification_permission_description">السماح لـ Fulguris بإرسال الإشعارات، خاصةً عند اكتمال التنزيل وأثناء جلسات التصفح الخفي.</string>
+    <string name="intro_notification_permission_description">السماح لـ Fulguris بإرسال الإشعارات، خاصة لإكمال التنزيل وأثناء الجلسات الخاصة.</string>
     <string name="pref_title_enable_ad_blocker">حاجب الإعلانات</string>
     <string name="pref_summary_on_enable_ad_blocker">استمتع بتجربة ويب أنظف وأكثر أماناً</string>
     <string name="pref_summary_off_enable_ad_blocker">استمتع بنسخة الويب الأصلية غير المفلترة</string>

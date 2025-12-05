@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Yer imini düzenle</string>
     <string name="action_edit">Düzenle</string>
-    <string name="action_incognito">Gizli moda geç</string>
+    <string name="action_incognito">Gizli mod</string>
     <string name="action_show_homepage">Ana sayfayı göster</string>
     <string name="action_back">Geri</string>
     <string name="action_find">Sayfada bul</string>
@@ -111,7 +111,7 @@
     <string name="download_complete">İndirme tamamlandı</string>
     <string name="download_failed">İndirme başarısız oldu</string>
     <string name="incognito_cookies">Gizli modda çerezleri etkinleştir</string>
-    <string name="incognito_cookies_pie">Gizli mod, her oturumdan sonra sıfırlanan ayrı bir işlemde çalışır. Gizli mod çerez tercihleri artık normal çerez tercihleri tarafından kontrol edilmektedir.</string>
+    <string name="incognito_cookies_pie">Gizli mod, her oturumdan sonra sıfırlanan ayrı bir işlemde çalışır. Özel çerez tercihleri artık normal çerez tercihleri tarafından kontrol edilmektedir.</string>
     <string name="pref_title_contact_us">Bize ulaşın</string>
     <string name="clear_cache">Önbelleği temizle</string>
     <string name="message_cache_cleared">Önbellek temizlendi</string>
@@ -599,7 +599,7 @@
     <string name="intro_title_ad_blocker">Güvende Kalın!</string>
     <string name="intro_description_ad_blocker">Daha hızlı, daha güvenli ve daha az dikkat dağıtıcı şekilde gezinmek için güçlü reklam engelleyicimizi etkinleştirin. Bunu daha sonra ayarlardan her zaman değiştirebilirsiniz.</string>
     <string name="intro_notification_permission_title">Bildirim izni</string>
-    <string name="intro_notification_permission_description">Fulguris\'in özellikle indirme tamamlama ve gizli oturumlar sırasında bildirim göndermesine izin verin.</string>
+    <string name="intro_notification_permission_description">Fulguris\'in bildirim göndermesine izin verin, özellikle indirme tamamlama ve gizli oturumlar sırasında.</string>
     <string name="pref_title_enable_ad_blocker">Reklam engelleyici</string>
     <string name="pref_summary_on_enable_ad_blocker">Daha temiz, daha güvenli bir web deneyiminin keyfini çıkarın</string>
     <string name="pref_summary_off_enable_ad_blocker">Web\'in filtrelenmemiş, orijinal sürümünün keyfini çıkarın</string>

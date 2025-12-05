@@ -89,7 +89,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Wijzig bladwijzer</string>
     <string name="action_edit">Wijzig</string>
-    <string name="action_incognito">Nieuw incognito tabblad</string>
+    <string name="action_incognito">Privémodus</string>
     <string name="action_show_homepage">Homepage tonen</string>
     <string name="action_back">Terug</string>
     <string name="action_find">Vind in pagina</string>
@@ -110,8 +110,8 @@
     <string name="download_sdcard_busy_dlg_msg">Opslag is bezet. Om downloads toe te laten, gelieve USB opslag uit te zetten in het notificatiecentrum.</string>
     <string name="download_complete">Downloaden is klaar</string>
     <string name="download_failed">Downloaden is mislukt</string>
-    <string name="incognito_cookies">Cookies activeren in incognito-modus</string>
-    <string name="incognito_cookies_pie">De incognito-modus draait in een apart proces dat na elke sessie wordt gereset. Incognito cookie-voorkeuren worden nu geregeld door de gewone cookie-voorkeuren.</string>
+    <string name="incognito_cookies">Cookies inschakelen in privémodus</string>
+    <string name="incognito_cookies_pie">Privémodus draait in een apart proces dat na elke sessie wordt gereset. Privé-cookievoorkeuren worden nu beheerd door de reguliere cookievoorkeuren.</string>
     <string name="pref_title_contact_us">Neem contact op</string>
     <string name="clear_cache">Wis cache</string>
     <string name="message_cache_cleared">Cache gewist</string>
@@ -334,7 +334,7 @@
     <string name="new_tab_position_start">Begin van tabbladlijst</string>
     <string name="new_tab_position_end">Einde tabbladlijst</string>
     <string name="incoming_view_action">Inkomende weergave-actie</string>
-    <string name="action_incognito_tab">Incognito-tabblad</string>
+    <string name="action_incognito_tab">Privétabblad</string>
     <string name="action_select_browser">Browser selecteren</string>
     <string name="action_block">Blokkeren</string>
     <string name="pref_title_default_browser">Standaard browser</string>
@@ -393,7 +393,7 @@
     <string name="pref_title_log_level">Logniveau</string>
     <string name="dialog_open_new_tab">Open in een nieuw tabblad</string>
     <string name="dialog_open_background_tab">Open in een achtergrond tabblad</string>
-    <string name="dialog_open_incognito_tab">Open in een incognito tabblad</string>
+    <string name="dialog_open_incognito_tab">Openen in privétabblad</string>
     <string name="dialog_remove_bookmark">Verwijder bladwijzer</string>
     <string name="dialog_edit_bookmark">Bladwijzer bewerken</string>
     <string name="dialog_title_bookmark">Bladwijzer</string>
@@ -411,11 +411,11 @@
     <string name="dialog_toggle_desktop">Schakel bureaublad-gebruikersagent in</string>
     <string name="search_engine_custom">Aangepaste URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d incognito tabblad geopend</item>
-        <item quantity="other">%1$d incognito tabbladen geopend</item>
+        <item quantity="one">%1$d privétabblad open</item>
+        <item quantity="other">%1$d privétabbladen open</item>
     </plurals>
     <string name="notification_incognito_running_message">Aanraken om te openen</string>
-    <string name="notification_incognito_running_description">Lopende incognito-sessie</string>
+    <string name="notification_incognito_running_description">Lopende privésessie</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Uitgegeven door:</string>
     <string name="ssl_info_issued_to">Uitgegeven aan:</string>
@@ -556,7 +556,7 @@
     <string name="accent_brown">Bruin</string>
     <string name="search_homepage">Zoeken</string>
     <string name="search_incognito">Privé zoeken</string>
-    <string name="incognito">Incognito</string>
+    <string name="incognito">Privé</string>
     <string name="unknown">Onbekend</string>
     <string name="settings_export_failure">Sorry, instellingen konden niet worden geëxporteerd!</string>
     <string name="settings_exported">Instellingen geëxporteerd:</string>
@@ -599,7 +599,7 @@
     <string name="intro_title_ad_blocker">Wees veilig!</string>
     <string name="intro_description_ad_blocker">Schakel onze krachtige advertentieblokkering in om sneller, veiliger en met minder afleidingen te browsen. U kunt dit later altijd wijzigen in de instellingen.</string>
     <string name="intro_notification_permission_title">Meldingstoestemming</string>
-    <string name="intro_notification_permission_description">Sta Fulguris toe meldingen te verzenden, met name voor voltooide downloads en tijdens incognito-sessies.</string>
+    <string name="intro_notification_permission_description">Sta Fulguris toe om meldingen te verzenden, met name voor voltooide downloads en tijdens privésessies.</string>
     <string name="pref_title_enable_ad_blocker">Advertentieblokkering</string>
     <string name="pref_summary_on_enable_ad_blocker">Geniet van een schonere, veiligere webervaring</string>
     <string name="pref_summary_off_enable_ad_blocker">Geniet van een ongefilterde, originele versie van het web</string>
