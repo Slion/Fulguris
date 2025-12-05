@@ -416,7 +416,23 @@ def set_plurals_value(language, plurals_name, quantity_value_pairs, skip_escape=
         print(f"Run 'python strings.py --list' to see available languages")
         sys.exit(1)
 
-    # Read the file content
+    # First, verify the plurals exists in English source
+    source_path = Path('app/src/main/res/values/strings.xml')
+    try:
+        with open(source_path, 'r', encoding='utf-8') as f:
+            source_content = f.read()
+    except Exception as e:
+        print(f"Error reading source file: {e}")
+        sys.exit(1)
+
+    escaped_name = re.escape(plurals_name)
+    source_pattern = f'<plurals name="{escaped_name}">'
+    if not re.search(source_pattern, source_content):
+        print(f"Error: Plurals '{plurals_name}' does not exist in English source file")
+        print(f"Available plurals must be defined in values/strings.xml first")
+        sys.exit(1)
+
+    # Read the target file content
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -424,20 +440,14 @@ def set_plurals_value(language, plurals_name, quantity_value_pairs, skip_escape=
         print(f"Error reading file: {e}")
         sys.exit(1)
 
-    # Escape special regex characters in the plurals name
-    escaped_name = re.escape(plurals_name)
+    # Detect line ending style
+    line_ending = '\r\n' if '\r\n' in content else '\n'
 
     # Pattern to match the plurals block
     pattern = f'(<plurals name="{escaped_name}">)(.*?)(</plurals>)'
 
-    # Check if the plurals exists
-    if not re.search(pattern, content, re.DOTALL):
-        print(f"Error: Plurals '{plurals_name}' not found in {file_path}")
-        sys.exit(1)
-
-    # Build new plurals content
-    print(f"Updating plurals: {plurals_name}")
-    print(f"Setting {len(quantity_value_pairs)} quantities...\n")
+    # Check if the plurals exists in target language
+    plurals_exists = bool(re.search(pattern, content, re.DOTALL))
 
     # Validate all values first before making any changes
     for quantity, value in quantity_value_pairs:
@@ -449,45 +459,67 @@ def set_plurals_value(language, plurals_name, quantity_value_pairs, skip_escape=
                 print(f"\nFor PowerShell with --raw, use here-string to preserve quotes.")
             sys.exit(1)
 
-    # For each quantity-value pair, update or add the item
-    def replacer(match):
-        plurals_content = match.group(2)
+    if plurals_exists:
+        # Update existing plurals
+        print(f"Updating plurals: {plurals_name}")
+        print(f"Setting {len(quantity_value_pairs)} quantities...{line_ending}")
 
-        # For each quantity, update or add
+        def replacer(match):
+            plurals_content = match.group(2)
+
+            for quantity, value in quantity_value_pairs:
+                if skip_escape:
+                    escaped_value = value
+                else:
+                    escaped_value = escape_xml_value(value)
+
+                item_pattern = f'<item quantity="{re.escape(quantity)}">.*?</item>'
+                new_item = f'<item quantity="{quantity}">{escaped_value}</item>'
+
+                if re.search(item_pattern, plurals_content):
+                    plurals_content = re.sub(item_pattern, new_item, plurals_content)
+                    print(f"[OK] Updated quantity '{quantity}'")
+                else:
+                    plurals_content = plurals_content.rstrip() + f'{line_ending}        {new_item}{line_ending}    '
+                    print(f"[OK] Added quantity '{quantity}'")
+
+            return match.group(1) + plurals_content + match.group(3)
+
+        new_content = re.sub(pattern, replacer, content, flags=re.DOTALL)
+    else:
+        # Create new plurals block
+        print(f"Adding new plurals: {plurals_name}")
+        print(f"Setting {len(quantity_value_pairs)} quantities...{line_ending}")
+
+        # Build the new plurals block
+        items = []
         for quantity, value in quantity_value_pairs:
-            # Escape XML special characters in the value (unless skip_escape is True)
             if skip_escape:
                 escaped_value = value
             else:
                 escaped_value = escape_xml_value(value)
+            items.append(f'        <item quantity="{quantity}">{escaped_value}</item>')
+            print(f"[OK] Added quantity '{quantity}'")
 
-            item_pattern = f'<item quantity="{re.escape(quantity)}">.*?</item>'
-            new_item = f'<item quantity="{quantity}">{escaped_value}</item>'
+        new_plurals = f'    <plurals name="{plurals_name}">{line_ending}'
+        new_plurals += line_ending.join(items)
+        new_plurals += f'{line_ending}    </plurals>'
 
-            if re.search(item_pattern, plurals_content):
-                # Update existing
-                plurals_content = re.sub(item_pattern, new_item, plurals_content)
-                print(f"[OK] Updated quantity '{quantity}'")
-            else:
-                # Add new item (before closing tag, with proper indentation)
-                # Find the last item to maintain formatting
-                lines = plurals_content.split('\n')
-                indent = '        '  # Default indentation
-                insert_pos = len(lines) - 1
-
-                # Add the new item
-                plurals_content = plurals_content.rstrip() + f'\n{indent}{new_item}\n    '
-                print(f"[OK] Added quantity '{quantity}'")
-
-        return match.group(1) + plurals_content + match.group(3)
-
-    new_content = re.sub(pattern, replacer, content, flags=re.DOTALL)
+        # Insert before closing </resources> tag
+        if '</resources>' in content:
+            new_content = content.replace('</resources>', f'{new_plurals}{line_ending}</resources>')
+        else:
+            print(f"Error: Could not find </resources> tag in {file_path}")
+            sys.exit(1)
 
     # Write back to file
     try:
-        with open(file_path, 'w', encoding='utf-8') as f:
+        with open(file_path, 'w', encoding='utf-8', newline='') as f:
             f.write(new_content)
-        print(f"\n[OK] Successfully updated {language}:{plurals_name}")
+        if plurals_exists:
+            print(f"{line_ending}[OK] Successfully updated {language}:{plurals_name}")
+        else:
+            print(f"{line_ending}[OK] Successfully added {language}:{plurals_name}")
     except Exception as e:
         print(f"Error writing file: {e}")
         sys.exit(1)

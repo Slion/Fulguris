@@ -2,7 +2,7 @@
 
 ## Project Context
 
-This is **Fulguris Web Browser**, an Android application with localization support for 39 languages. You are assisting with the **Thai (th-rTH) translation** project.
+This is **Fulguris Web Browser**, an Android application with localization support for 40 languages. You are assisting with the **Thai (th-rTH) translation** project.
 
 ## Your Role
 
@@ -26,7 +26,7 @@ When the user asks to "work on Thai translation" or similar requests, you should
 📖 **For ALL translation instructions, see [L10N.md](../L10N.md)**
 
 The L10N.md file contains everything you need:
-- **Current translation status** for all 39 languages including Thai
+- **Current translation status** for all 40 languages including Thai
 - **Complete strings.py tool documentation** with all commands
 - **Translation workflow** (check → translate → apply → verify)
 - **Android XML escaping rules** (CRITICAL: use `\'` not `&apos;`)
