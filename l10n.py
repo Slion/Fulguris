@@ -226,15 +226,25 @@ def show_help():
     print("LOCALIZATION (L10N) CHECK TOOL")
     print("=" * 80)
     print("\nSupported Commands:")
-    print("\n  python l10n.py --check [language_code] [--near N]")
+    print("\n  python l10n.py --check [language_code] [--full] [--near N]")
     print("    Check translations for all languages or a specific language")
+    print("    ")
+    print("    Two check modes:")
+    print("      INCREMENTAL (default): Only flags strings MISSING from translated file")
+    print("        - Strings present in translated file are assumed correct")
+    print("        - Use for day-to-day translation work")
+    print("      FULL (--full): Also flags strings that match English exactly")
+    print("        - Catches strings copied but not actually translated")
+    print("        - Use for quality audits or new language setup")
+    print("    ")
     print("    --near N: Also flag strings differing by N or fewer characters from English")
     print("              (default: 0, exact match only)")
     print("    Examples:")
-    print("      python l10n.py --check          # Check all languages (first 20 issues per lang)")
-    print("      python l10n.py --check ru-rRU   # Check Russian (show ALL issues)")
-    print("      python l10n.py --check --near 1 # Flag strings differing by 1 char (e.g. punctuation)")
-    print("      python l10n.py --check ko-rKR --near 2  # Check Korean, flag ≤2 char differences")
+    print("      python l10n.py --check          # Incremental check all languages")
+    print("      python l10n.py --check ru-rRU   # Incremental check Russian (show ALL issues)")
+    print("      python l10n.py --check --full   # Full audit of all languages")
+    print("      python l10n.py --check th-rTH --full  # Full audit of Thai")
+    print("      python l10n.py --check --near 1 # Flag strings differing by 1 char (punctuation)")
     print("\n  python l10n.py --list")
     print("    List all available language codes")
     print("\n  python l10n.py --help, -h")
@@ -1076,6 +1086,7 @@ if len(sys.argv) > 1:
     elif arg == '--check':
         # Parse arguments for check command
         i = arg_start + 1
+        full_check = False  # Default to incremental check
         while i < len(sys.argv):
             if sys.argv[i] == '--near':
                 if i + 1 >= len(sys.argv):
@@ -1090,18 +1101,27 @@ if len(sys.argv) > 1:
                 except ValueError:
                     print(f"Error: --near requires a number, got '{sys.argv[i + 1]}'")
                     sys.exit(1)
+            elif sys.argv[i] == '--full':
+                full_check = True
+                i += 1
             elif not sys.argv[i].startswith('--'):
                 # Language code
                 show_all_for_lang = sys.argv[i]
-                print(f"Will show ALL issues for language: {show_all_for_lang}")
-                if near_threshold > 0:
-                    print(f"Including near matches (≤{near_threshold} char difference)\n")
-                else:
-                    print()
                 i += 1
             else:
                 print(f"Error: Unknown option '{sys.argv[i]}' for --check")
                 sys.exit(1)
+        
+        # Print check mode info
+        if show_all_for_lang:
+            print(f"Will show ALL issues for language: {show_all_for_lang}")
+        if full_check:
+            print("Mode: FULL CHECK (flags strings matching English even if in translated file)")
+        else:
+            print("Mode: INCREMENTAL (only flags missing strings)")
+        if near_threshold > 0:
+            print(f"Including near matches (≤{near_threshold} char difference)")
+        print()
 
         if near_threshold > 0 and not show_all_for_lang:
             print(f"Checking with near matches (≤{near_threshold} char difference)\n")
@@ -1183,43 +1203,63 @@ for lang_dir in sorted(lang_dirs):
     with open(strings_file, 'r', encoding='utf-8') as f:
         trans_content = f.read()
 
-    # Check each translated string
+    # Build set of string IDs present in translated file
+    translated_string_ids = set()
+    for line in trans_content.split('\n'):
+        match = re.search(r'<string name="([^"]+)">', line)
+        if match:
+            translated_string_ids.add(match.group(1))
+
+    # Check each English string
+    for string_name, english_value in english_strings.items():
+        # Skip exclusions
+        if (len(english_value) <= 3 or
+            english_value in international_terms or
+            string_name.startswith('agent_') or
+            string_name.startswith('log_level_') or
+            '@string/' in english_value or
+            string_name in ['android_open_source_project', 'jsoup', 'infinity', 'search_action']):
+            continue
+
+        # Check if string is in translated file
+        if string_name not in translated_string_ids:
+            # String is MISSING from translated file - always flag this
+            lang_issues.append(f"  Missing: {string_name} = '{english_value}'")
+            continue
+
+        # String IS in translated file - only check in FULL mode
+        if full_check:
+            # Get the translated value
+            pattern = f'<string name="{re.escape(string_name)}">(.+?)</string>'
+            match = re.search(pattern, trans_content)
+            if match:
+                translated_value = match.group(1)
+                
+                # Check if it matches English exactly (possibly not translated)
+                is_exact_match = translated_value == english_value
+                char_diff = _char_difference(translated_value, english_value) if near_threshold > 0 else 999
+                is_near_match = char_diff <= near_threshold and char_diff > 0
+
+                if is_exact_match:
+                    lang_issues.append(f"  Untranslated: {string_name} = '{english_value}'")
+                elif is_near_match:
+                    lang_issues.append(f"  Near match ({char_diff} chars): {string_name}")
+                    lang_issues.append(f"    EN: '{english_value}'")
+                    lang_issues.append(f"    TR: '{translated_value}'")
+
+    # Check placeholder consistency for strings that ARE in translated file (always check this)
     for line in trans_content.split('\n'):
         match = re.search(r'<string name="([^"]+)">(.+?)</string>', line)
         if match:
             string_name = match.group(1)
             translated_value = match.group(2)
 
-            # Skip if not in English reference (might be language-specific)
             if string_name not in english_strings:
                 continue
 
             english_value = english_strings[string_name]
 
-            # Check 1: Exact match with English (likely untranslated)
-            # Also check near matches if near_threshold > 0
-            # But exclude short strings, proper nouns, and international technical terms
-            is_exact_match = translated_value == english_value
-            char_diff = _char_difference(translated_value, english_value) if near_threshold > 0 else 999
-            is_near_match = char_diff <= near_threshold and char_diff > 0
-
-            if ((is_exact_match or is_near_match) and
-                len(english_value) > 3 and
-                english_value not in international_terms and
-                not string_name.startswith('agent_') and
-                not string_name.startswith('log_level_') and
-                not '@string/' in translated_value and  # String references
-                string_name not in ['android_open_source_project', 'jsoup', 'infinity', 'search_action']):
-                if is_exact_match:
-                    lang_issues.append(f"  Untranslated: {string_name} = '{english_value}'")
-                else:
-                    lang_issues.append(f"  Near match ({char_diff} chars): {string_name}")
-                    lang_issues.append(f"    EN: '{english_value}'")
-                    lang_issues.append(f"    TR: '{translated_value}'")
-
-            # Check 2: Placeholder consistency - CRITICAL!
-            # Match patterns: %s, %d, %1$s, %2$d, {placeholders}, <xliff:g>...</xliff:g>
-            # Placeholder mismatches can cause app crashes at runtime
+            # Placeholder consistency - CRITICAL!
             english_placeholders = re.findall(r'%\d*\$?[sdif]|\{[^}]+\}|<xliff:g[^>]*>.*?</xliff:g>', english_value)
             trans_placeholders = re.findall(r'%\d*\$?[sdif]|\{[^}]+\}|<xliff:g[^>]*>.*?</xliff:g>', translated_value)
 
@@ -1236,28 +1276,27 @@ for lang_dir in sorted(lang_dirs):
         plurals_match = re.search(plurals_pattern, trans_content, re.DOTALL)
 
         if not plurals_match:
-            # Plurals resource missing entirely
+            # Plurals resource missing entirely - always flag
             lang_issues.append(f"  Missing plurals: {plurals_name}")
             continue
 
         trans_plurals_content = plurals_match.group(1)
         trans_quantities = _extract_plural_items(trans_plurals_content)
 
-        # Only check if existing quantities are untranslated
-        # Don't complain about missing quantities - different languages have different plural rules
-        untranslated_quantities = []
+        # Only check if existing quantities are untranslated in FULL mode
+        if full_check:
+            untranslated_quantities = []
+            for quantity, trans_value in trans_quantities.items():
+                # Check if this quantity exists in English and has the same value (untranslated)
+                if quantity in english_quantities:
+                    english_value = english_quantities[quantity]
+                    if trans_value == english_value and len(english_value) > 3:
+                        untranslated_quantities.append(f"{quantity}: '{english_value}'")
 
-        for quantity, trans_value in trans_quantities.items():
-            # Check if this quantity exists in English and has the same value (untranslated)
-            if quantity in english_quantities:
-                english_value = english_quantities[quantity]
-                if trans_value == english_value and len(english_value) > 3:
-                    untranslated_quantities.append(f"{quantity}: '{english_value}'")
-
-        if untranslated_quantities:
-            lang_issues.append(f"  Plurals '{plurals_name}' untranslated:")
-            for untrans in untranslated_quantities:
-                lang_issues.append(f"    {untrans}")
+            if untranslated_quantities:
+                lang_issues.append(f"  Plurals '{plurals_name}' untranslated:")
+                for untrans in untranslated_quantities:
+                    lang_issues.append(f"    {untrans}")
 
     if lang_issues:
         issues_found[lang_name] = lang_issues
