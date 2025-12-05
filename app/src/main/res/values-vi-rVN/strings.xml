@@ -472,8 +472,8 @@
     <string name="settings_summary_on_task_icon">Sử dụng biểu tượng trang</string>
     <string name="settings_summary_off_task_icon">Sử dụng biểu tượng ứng dụng</string>
     <string name="settings_title_toolbar_label">Nhãn thanh công cụ</string>
-    <string name="dialog_title_third_party_app">Ứng dụng có sẵn của bên thứ ba</string>
-    <string name="dialog_message_third_party_app">Bạn có muốn khởi chạy ứng dụng được liên kết với trang web đó không?</string>
+    <string name="dialog_title_third_party_app">Mở ứng dụng bên thứ ba?</string>
+    <string name="dialog_message_third_party_app">Bạn sẽ rời khỏi Fulguris</string>
     <string name="per_month">\u0020/ tháng</string>
     <string name="per_year">\u0020/ năm</string>
     <string name="session_default">@string/agent_default</string>
@@ -614,4 +614,5 @@
     <string name="page_requests_summary">%1$d tổng – %2$d đã chặn / %3$d đã cho phép</string>
     <string name="page_requests_none">Không có yêu cầu nào được ghi lại cho trang này</string>
     <string name="settings_summary_full_menu">Hiển thị menu đầy đủ</string>
+    <string name="action_launch">Khởi chạy</string>
 </resources>

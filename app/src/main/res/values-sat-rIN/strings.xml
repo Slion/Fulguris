@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">ᱥᱟᱦᱴᱟ ᱪᱤᱱᱦᱟᱹ ᱵᱮᱵᱷᱟᱨ</string>
     <string name="settings_summary_off_task_icon">ᱮᱯ ᱪᱤᱱᱦᱟᱹ ᱵᱮᱵᱷᱟᱨ</string>
     <string name="settings_title_toolbar_label">ᱴᱩᱞᱵᱟᱨ ᱞᱮᱵᱮᱞ</string>
-    <string name="dialog_title_third_party_app">ᱛᱤᱥᱟᱹᱨ ᱯᱟᱴᱤ ᱮᱯ ᱢᱮᱱᱟᱜᱼᱟ</string>
-    <string name="dialog_message_third_party_app">ᱪᱮᱫ ᱟᱢ ᱚᱱᱟ ᱣᱮᱵᱽᱥᱟᱭᱤᱴ ᱥᱟᱶ ᱡᱩᱲᱟᱹᱣ ᱮᱯ ᱮᱛᱦᱚᱵ ᱥᱟᱱᱟᱢᱟ?</string>
+    <string name="dialog_title_third_party_app">ᱥᱟᱹᱨᱤ ᱯᱟᱹᱨᱴᱤ ᱮᱯ ᱪᱟᱞᱩ?</string>
+    <string name="dialog_message_third_party_app">ᱟᱢ Fulguris ᱠᱷᱚᱱ ᱵᱟᱦᱨᱮ ᱥᱮᱱᱟᱢ</string>
     <string name="per_month"> / ᱪᱟᱸᱫᱚ</string>
     <string name="per_year"> / ᱥᱮᱨᱢᱟ</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d ᱥᱚᱵᱷᱮ – %2$d ᱵᱞᱚᱠ / %3$d ᱟᱵᱠᱟᱥ</string>
     <string name="page_requests_none">ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱨᱮ ᱨᱮᱠᱩᱭᱮᱥᱴ ᱵᱟᱹᱱᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="settings_summary_full_menu">ᱯᱩᱨᱟᱹ ᱢᱮᱱᱩ ᱩᱫᱩᱜ ᱢᱮ</string>
+    <string name="action_launch">ᱪᱟᱞᱩ</string>
 </resources>

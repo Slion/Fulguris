@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Använd sidikon</string>
     <string name="settings_summary_off_task_icon">Använd appikon</string>
     <string name="settings_title_toolbar_label">Verktygsfältsetikett</string>
-    <string name="dialog_title_third_party_app">Tredjepartsapp tillgänglig</string>
-    <string name="dialog_message_third_party_app">Vill du starta programmet som är kopplat till den webbplatsen?</string>
+    <string name="dialog_title_third_party_app">Starta tredjepartsapp?</string>
+    <string name="dialog_message_third_party_app">Du lämnar Fulguris</string>
     <string name="per_month">\u0020/ månad</string>
     <string name="per_year">\u0020/ år</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d totalt – %2$d blockerade / %3$d tillåtna</string>
     <string name="page_requests_none">Inga förfrågningar registrerade för denna sida</string>
     <string name="settings_summary_full_menu">Visa fullständig meny</string>
+    <string name="action_launch">Starta</string>
 </resources>

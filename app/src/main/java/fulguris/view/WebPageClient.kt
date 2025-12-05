@@ -27,6 +27,7 @@ import fulguris.utils.*
 import fulguris.view.WebPageTab.Companion.KFetchMetaThemeColorTries
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
@@ -557,7 +558,7 @@ class WebPageClient(
 
     // We use this to prevent opening such dialogs multiple times
     // Notably on Google Play app pages
-    var appLaunchDialog: AlertDialog? = null
+    var appLaunchDialog: Dialog? = null
 
     // TODO: Shall this live somewhere else
     // Load default settings
@@ -683,7 +684,7 @@ class WebPageClient(
                         .setTitle(R.string.dialog_title_third_party_app)
                         .setMessage(R.string.dialog_message_third_party_app)
                         .setView(dialogView)
-                        .setPositiveButton(activity.getText(R.string.yes)) { _, _ ->
+                        .setPositiveButton(activity.getText(R.string.action_launch)) { _, _ ->
                             // If checkbox is checked, save YES preference for this domain
                             if (checkboxView.isChecked) {
                                 domainPreferences.launchAppOverride = true
@@ -693,7 +694,7 @@ class WebPageClient(
                             activity.startActivityWithFallback(view, intent, false)
                             appLaunchDialog = null
                         }
-                        .setNegativeButton(activity.getText(R.string.no)) { _, _ ->
+                        .setNegativeButton(activity.getText(R.string.action_cancel)) { _, _ ->
                             // If checkbox is checked, save NO preference for this domain
                             if (checkboxView.isChecked) {
                                 domainPreferences.launchAppOverride = true
@@ -704,8 +705,7 @@ class WebPageClient(
                             appLaunchDialog = null
                         }.setOnCancelListener {
                             appLaunchDialog = null
-                        }.create()
-                    appLaunchDialog?.show()
+                        }.launch()
                 }
 
                 // Still load the page when asking

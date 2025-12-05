@@ -472,8 +472,8 @@
     <string name="settings_summary_on_task_icon">Gunakan ikon halaman</string>
     <string name="settings_summary_off_task_icon">Gunakan ikon aplikasi</string>
     <string name="settings_title_toolbar_label">Label toolbar</string>
-    <string name="dialog_title_third_party_app">Ada aplikasi pihak ketiga yang bisa digunakan</string>
-    <string name="dialog_message_third_party_app">Maukah Anda membuka aplikasi yang tertaut dengan halaman itu?</string>
+    <string name="dialog_title_third_party_app">Buka aplikasi pihak ketiga?</string>
+    <string name="dialog_message_third_party_app">Anda akan meninggalkan Fulguris</string>
     <string name="per_month">\u0020/ bulan</string>
     <string name="per_year">\u0020/ tahun</string>
     <string name="session_default">@string/agent_default</string>
@@ -614,4 +614,5 @@
     <string name="page_requests_summary">%1$d total – %2$d diblokir / %3$d diizinkan</string>
     <string name="page_requests_none">Tidak ada permintaan tercatat untuk halaman ini</string>
     <string name="settings_summary_full_menu">Tampilkan menu lengkap</string>
+    <string name="action_launch">Luncurkan</string>
 </resources>

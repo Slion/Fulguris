@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Brug sideikon</string>
     <string name="settings_summary_off_task_icon">Brug app-ikon</string>
     <string name="settings_title_toolbar_label">Værktøjslinjeetiket</string>
-    <string name="dialog_title_third_party_app">Tredjepartsapp tilgængelig</string>
-    <string name="dialog_message_third_party_app">Vil du starte applikationen tilknyttet dette websted?</string>
+    <string name="dialog_title_third_party_app">Åbn tredjepartsapp?</string>
+    <string name="dialog_message_third_party_app">Du forlader Fulguris</string>
     <string name="per_month">\u0020/ måned</string>
     <string name="per_year">\u0020/ år</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d i alt – %2$d blokeret / %3$d tilladt</string>
     <string name="page_requests_none">Ingen anmodninger registreret for denne side</string>
     <string name="settings_summary_full_menu">Vis fuld menu</string>
+    <string name="action_launch">Start</string>
 </resources>

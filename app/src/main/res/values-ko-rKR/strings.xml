@@ -472,8 +472,8 @@
     <string name="settings_summary_on_task_icon">페이지 아이콘 사용</string>
     <string name="settings_summary_off_task_icon">앱 아이콘 사용</string>
     <string name="settings_title_toolbar_label">도구 모음 레이블</string>
-    <string name="dialog_title_third_party_app">타사 앱 사용 가능</string>
-    <string name="dialog_message_third_party_app">해당 웹사이트와 관련된 애플리케이션을 실행하시겠습니까?</string>
+    <string name="dialog_title_third_party_app">타사 앱을 실행하시겠습니까?</string>
+    <string name="dialog_message_third_party_app">Fulguris를 떠납니다</string>
     <string name="per_month"> / 월</string>
     <string name="per_year"> / 년</string>
     <string name="session_default">@string/agent_default</string>
@@ -614,4 +614,5 @@
     <string name="page_requests_summary">총 %1$d개 – %2$d개 차단 / %3$d개 허용</string>
     <string name="page_requests_none">이 페이지에 기록된 요청 없음</string>
     <string name="settings_summary_full_menu">전체 메뉴 표시</string>
+    <string name="action_launch">실행</string>
 </resources>

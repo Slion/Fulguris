@@ -481,8 +481,8 @@
     <string name="settings_summary_on_task_icon">Use page icon</string>
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
-    <string name="dialog_title_third_party_app">Third-party app available</string>
-    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
+    <string name="dialog_title_third_party_app">Paleisti trečiosios šalies programą?</string>
+    <string name="dialog_message_third_party_app">Išeisite iš Fulguris</string>
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">@string/agent_default</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_summary">Iš viso %1$d – %2$d užblokuota / %3$d leidžiama</string>
     <string name="page_requests_none">Šiam puslapiui nėra įrašytų užklausų</string>
     <string name="settings_summary_full_menu">Rodyti pilną meniu</string>
+    <string name="action_launch">Paleisti</string>
 </resources>

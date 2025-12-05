@@ -478,8 +478,8 @@
     <string name="settings_summary_on_task_icon">Use page icon</string>
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
-    <string name="dialog_title_third_party_app">Dostupna aplikacija treće strane</string>
-    <string name="dialog_message_third_party_app">Da li želite da pokrenete aplikaciju povezanu sa tom veb lokacijom?</string>
+    <string name="dialog_title_third_party_app">Покренути апликацију треће стране?</string>
+    <string name="dialog_message_third_party_app">Напустићете Fulguris</string>
     <string name="per_month">\у0020/ mesecu</string>
     <string name="per_year">\u0020/ godini</string>
     <string name="session_default">@string/agent_default</string>
@@ -620,4 +620,5 @@
     <string name="page_requests_summary">%1$d укупно – %2$d блокирано / %3$d дозвољено</string>
     <string name="page_requests_none">Нема забележених захтева за ову страницу</string>
     <string name="settings_summary_full_menu">Прикажи пуни мени</string>
+    <string name="action_launch">Покрени</string>
 </resources>

@@ -472,8 +472,8 @@
     <string name="settings_summary_on_task_icon">ページアイコンを使用</string>
     <string name="settings_summary_off_task_icon">アプリのアイコンを使用</string>
     <string name="settings_title_toolbar_label">ツールバーのラベル</string>
-    <string name="dialog_title_third_party_app">サードパーティーのアプリが利用可能です</string>
-    <string name="dialog_message_third_party_app">そのウェブサイトに関連付けられたアプリを起動しますか?</string>
+    <string name="dialog_title_third_party_app">サードパーティアプリを起動しますか？</string>
+    <string name="dialog_message_third_party_app">Fulgurisを離れます</string>
     <string name="per_month">\u0020/ 月</string>
     <string name="per_year">\u0020/ 年</string>
     <string name="session_default">@string/agent_default</string>
@@ -614,4 +614,5 @@
     <string name="page_requests_summary">合計%1$d – %2$dブロック / %3$d許可</string>
     <string name="page_requests_none">このページのリクエストは記録されていません</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
+    <string name="action_launch">起動</string>
 </resources>

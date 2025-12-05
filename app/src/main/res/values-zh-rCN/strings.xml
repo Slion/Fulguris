@@ -472,8 +472,8 @@
     <string name="settings_summary_on_task_icon">使用页面图标</string>
     <string name="settings_summary_off_task_icon">使用应用图标</string>
     <string name="settings_title_toolbar_label">工具栏标签</string>
-    <string name="dialog_title_third_party_app">第三方应用程序可用</string>
-    <string name="dialog_message_third_party_app">是否要启动该网站关联的应用程序?</string>
+    <string name="dialog_title_third_party_app">启动第三方应用？</string>
+    <string name="dialog_message_third_party_app">您将离开 Fulguris</string>
     <string name="per_month">\u0020/ 月</string>
     <string name="per_year">\u0020/ 年</string>
     <string name="session_default">@string/agent_default</string>
@@ -614,4 +614,5 @@
     <string name="page_requests_summary">%1$d 总计 – %2$d 已阻止 / %3$d 已允许</string>
     <string name="page_requests_none">此页面没有记录的请求</string>
     <string name="settings_summary_full_menu">显示完整菜单</string>
+    <string name="action_launch">启动</string>
 </resources>

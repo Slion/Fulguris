@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Use page icon</string>
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
-    <string name="dialog_title_third_party_app">Third-party app available</string>
-    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
+    <string name="dialog_title_third_party_app">Derdeparty-toep oopmaak?</string>
+    <string name="dialog_message_third_party_app">Jy sal Fulguris verlaat</string>
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d totaal – %2$d geblokkeer / %3$d toegelaat</string>
     <string name="page_requests_none">Geen versoeke vir hierdie bladsy aangeteken nie</string>
     <string name="settings_summary_full_menu">Wys volle spyskaart</string>
+    <string name="action_launch">Begin</string>
 </resources>

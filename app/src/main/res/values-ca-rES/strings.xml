@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Use page icon</string>
     <string name="settings_summary_off_task_icon">Use app icon</string>
     <string name="settings_title_toolbar_label">Toolbar label</string>
-    <string name="dialog_title_third_party_app">Third-party app available</string>
-    <string name="dialog_message_third_party_app">Do you want to launch the application associated with that web site?</string>
+    <string name="dialog_title_third_party_app">Obrir aplicació de tercers?</string>
+    <string name="dialog_message_third_party_app">Sortireu de Fulguris</string>
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d total – %2$d bloquejats / %3$d permesos</string>
     <string name="page_requests_none">No hi ha sol·licituds registrades per a aquesta pàgina</string>
     <string name="settings_summary_full_menu">Mostra el menú complet</string>
+    <string name="action_launch">Inicia</string>
 </resources>

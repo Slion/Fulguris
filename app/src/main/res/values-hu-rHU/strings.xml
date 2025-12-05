@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Használja az oldal ikonját</string>
     <string name="settings_summary_off_task_icon">Használja az app ikonját</string>
     <string name="settings_title_toolbar_label">Eszköztár címke</string>
-    <string name="dialog_title_third_party_app">Harmadik-fél app elérhető</string>
-    <string name="dialog_message_third_party_app">Meg akarja nyitni a weboldalhoz kapcsolódó alkalmazást?</string>
+    <string name="dialog_title_third_party_app">Harmadik féltől származó alkalmazás indítása?</string>
+    <string name="dialog_message_third_party_app">Elhagyja a Fulgurist</string>
     <string name="per_month">\u0020/ hónap</string>
     <string name="per_year">\u0020/ év</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d összesen – %2$d letiltva / %3$d engedélyezve</string>
     <string name="page_requests_none">Nincsenek rögzített kérések ezen az oldalon</string>
     <string name="settings_summary_full_menu">Teljes menü megjelenítése</string>
+    <string name="action_launch">Indítás</string>
 </resources>

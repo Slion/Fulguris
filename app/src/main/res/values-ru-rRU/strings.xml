@@ -481,8 +481,8 @@
     <string name="settings_summary_on_task_icon">Использовать значок страницы</string>
     <string name="settings_summary_off_task_icon">Использовать значок приложения</string>
     <string name="settings_title_toolbar_label">Ярлык панели инструментов</string>
-    <string name="dialog_title_third_party_app">Доступно стороннее приложение</string>
-    <string name="dialog_message_third_party_app">Запустить приложение, связанное с этим веб-сайтом?</string>
+    <string name="dialog_title_third_party_app">Запустить стороннее приложение?</string>
+    <string name="dialog_message_third_party_app">Вы покинете Fulguris</string>
     <string name="per_month">\u0020/ месяц</string>
     <string name="per_year">\u0020/ год</string>
     <string name="session_default">@string/agent_default</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_summary">%1$d всего – %2$d заблокировано / %3$d разрешено</string>
     <string name="page_requests_none">Запросы для этой страницы не зарегистрированы</string>
     <string name="settings_summary_full_menu">Показать полное меню</string>
+    <string name="action_launch">Запустить</string>
 </resources>

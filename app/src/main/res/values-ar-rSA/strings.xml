@@ -487,8 +487,8 @@
     <string name="settings_summary_on_task_icon">استخدام أيقونة الصفحة</string>
     <string name="settings_summary_off_task_icon">استخدام أيقونة التطبيق</string>
     <string name="settings_title_toolbar_label">تسمية شريط الأدوات</string>
-    <string name="dialog_title_third_party_app">تطبيق طرف ثالث متاح</string>
-    <string name="dialog_message_third_party_app">هل تريد تشغيل التطبيق المرتبط بهذا الموقع؟</string>
+    <string name="dialog_title_third_party_app">تشغيل تطبيق طرف ثالث؟</string>
+    <string name="dialog_message_third_party_app">ستغادر Fulguris</string>
     <string name="per_month">\u0020/ شهر</string>
     <string name="per_year">\u0020/ سنة</string>
     <string name="session_default">@string/agent_default</string>
@@ -629,4 +629,5 @@
     <string name="page_requests_summary">%1$d إجمالي – %2$d محظور / %3$d مسموح</string>
     <string name="page_requests_none">لا توجد طلبات مسجلة لهذه الصفحة</string>
     <string name="settings_summary_full_menu">إظهار القائمة الكاملة</string>
+    <string name="action_launch">تشغيل</string>
 </resources>

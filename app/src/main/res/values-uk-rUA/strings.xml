@@ -481,8 +481,8 @@
     <string name="settings_summary_on_task_icon">Використовувати значок сторінки</string>
     <string name="settings_summary_off_task_icon">Використовувати значок програми</string>
     <string name="settings_title_toolbar_label">Мітка панелі інструментів</string>
-    <string name="dialog_title_third_party_app">Доступний сторонній додаток</string>
-    <string name="dialog_message_third_party_app">Ви хочете запустити додаток, пов\'язаний з цим вебсайтом?</string>
+    <string name="dialog_title_third_party_app">Запустити сторонній додаток?</string>
+    <string name="dialog_message_third_party_app">Ви залишите Fulguris</string>
     <string name="per_month">\u0020/ місяць</string>
     <string name="per_year">\u0020/ рік</string>
     <string name="session_default">@string/agent_default</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_summary">%1$d всього – %2$d заблоковано / %3$d дозволено</string>
     <string name="page_requests_none">Немає зареєстрованих запитів для цієї сторінки</string>
     <string name="settings_summary_full_menu">Показати повне меню</string>
+    <string name="action_launch">Запустити</string>
 </resources>

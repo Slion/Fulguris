@@ -437,8 +437,8 @@
     <string name="settings_summary_on_task_icon">पेज आइकन का उपयोग करें</string>
     <string name="settings_summary_off_task_icon">ऐप आइकन का उपयोग करें</string>
     <string name="settings_title_toolbar_label">टूलबार लेबल</string>
-    <string name="dialog_title_third_party_app">थर्ड-पार्टी ऐप उपलब्ध</string>
-    <string name="dialog_message_third_party_app">क्या आप इस वेबसाइट से जुड़े एप्लिकेशन को लॉन्च करना चाहते हैं?</string>
+    <string name="dialog_title_third_party_app">तृतीय-पक्ष ऐप खोलें?</string>
+    <string name="dialog_message_third_party_app">आप Fulguris छोड़ देंगे</string>
     <string name="per_month">\u0020/ महीना</string>
     <string name="per_year">\u0020/ वर्ष</string>
     <string name="session_recovery">रिकवरी</string>
@@ -571,4 +571,5 @@
     <string name="page_requests_summary">%1$d कुल – %2$d ब्लॉक / %3$d अनुमत</string>
     <string name="page_requests_none">इस पेज के लिए कोई अनुरोध रिकॉर्ड नहीं</string>
     <string name="settings_summary_full_menu">पूर्ण मेनू दिखाएं</string>
+    <string name="action_launch">लॉन्च करें</string>
 </resources>

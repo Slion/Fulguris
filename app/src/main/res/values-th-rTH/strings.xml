@@ -472,8 +472,8 @@
     <string name="settings_summary_on_task_icon">ใช้ไอคอนหน้า</string>
     <string name="settings_summary_off_task_icon">ใช้ไอคอนแอป</string>
     <string name="settings_title_toolbar_label">ป้ายแถบเครื่องมือ</string>
-    <string name="dialog_title_third_party_app">มีแอปของบุคคลที่สาม</string>
-    <string name="dialog_message_third_party_app">คุณต้องการเปิดแอปพลิเคชันที่เชื่อมโยงกับเว็บไซต์นั้นหรือไม่?</string>
+    <string name="dialog_title_third_party_app">เปิดแอปของบุคคลที่สาม?</string>
+    <string name="dialog_message_third_party_app">คุณจะออกจาก Fulguris</string>
     <string name="per_month">\u0020/ เดือน</string>
     <string name="per_year">\u0020/ ปี</string>
     <string name="session_default">@string/agent_default</string>
@@ -614,4 +614,5 @@
     <string name="page_requests_summary">%1$d ทั้งหมด – %2$d ถูกบล็อก / %3$d อนุญาต</string>
     <string name="page_requests_none">ไม่มีคำขอที่บันทึกสำหรับหน้านี้</string>
     <string name="settings_summary_full_menu">แสดงเมนูเต็ม</string>
+    <string name="action_launch">เปิด</string>
 </resources>

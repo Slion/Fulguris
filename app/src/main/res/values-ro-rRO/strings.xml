@@ -478,8 +478,8 @@
     <string name="settings_summary_on_task_icon">Folosește pictograma paginii</string>
     <string name="settings_summary_off_task_icon">Folosește pictograma aplicației</string>
     <string name="settings_title_toolbar_label">Etichetă bară unelte</string>
-    <string name="dialog_title_third_party_app">Aplicație terță disponibilă</string>
-    <string name="dialog_message_third_party_app">Vrei să lansezi aplicația asociată cu acel site web?</string>
+    <string name="dialog_title_third_party_app">Deschideți aplicația terță?</string>
+    <string name="dialog_message_third_party_app">Veți părăsi Fulguris</string>
     <string name="per_month"> / lună</string>
     <string name="per_year"> / an</string>
     <string name="session_default">@string/agent_default</string>
@@ -620,4 +620,5 @@
     <string name="page_requests_summary">%1$d total – %2$d blocate / %3$d permise</string>
     <string name="page_requests_none">Nicio cerere înregistrată pentru această pagină</string>
     <string name="settings_summary_full_menu">Afișează meniul complet</string>
+    <string name="action_launch">Lansează</string>
 </resources>

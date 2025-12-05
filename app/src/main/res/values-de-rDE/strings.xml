@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Benutze Seitensymbol</string>
     <string name="settings_summary_off_task_icon">Benutze App-Symbol</string>
     <string name="settings_title_toolbar_label">Symbolleisten-Bezeichnung</string>
-    <string name="dialog_title_third_party_app">App von Drittanbietern verfügbar</string>
-    <string name="dialog_message_third_party_app">Möchten Sie die mit dieser Website verbundene Anwendung starten?</string>
+    <string name="dialog_title_third_party_app">Drittanbieter-App starten?</string>
+    <string name="dialog_message_third_party_app">Sie verlassen Fulguris</string>
     <string name="per_month">\u0020/ Monat</string>
     <string name="per_year">\u0020/ Jahr</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d insgesamt – %2$d blockiert / %3$d erlaubt</string>
     <string name="page_requests_none">Keine Anfragen für diese Seite aufgezeichnet</string>
     <string name="settings_summary_full_menu">Vollständiges Menü anzeigen</string>
+    <string name="action_launch">Starten</string>
 </resources>

@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Pagina-icoon gebruiken</string>
     <string name="settings_summary_off_task_icon">App-pictogram gebruiken</string>
     <string name="settings_title_toolbar_label">Label werkbalk</string>
-    <string name="dialog_title_third_party_app">App van derden beschikbaar</string>
-    <string name="dialog_message_third_party_app">Wilt u de applicatie starten die bij die website hoort?</string>
+    <string name="dialog_title_third_party_app">App van derden openen?</string>
+    <string name="dialog_message_third_party_app">U verlaat Fulguris</string>
     <string name="per_month">\u0020/ maand</string>
     <string name="per_year">\u0020/ jaar</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d totaal – %2$d geblokkeerd / %3$d toegestaan</string>
     <string name="page_requests_none">Geen verzoeken geregistreerd voor deze pagina</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
+    <string name="action_launch">Starten</string>
 </resources>

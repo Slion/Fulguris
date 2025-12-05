@@ -61,26 +61,29 @@ The L10N.md file contains everything you need:
 
 ```powershell
 # Simple strings
-python strings.py --set th-rTH string_id 'คำแปล'
+python strings.py --set string_id th-rTH 'คำแปล'
+
+# Multiple languages at once (RECOMMENDED)
+python strings.py --set app_name de-rDE 'Fulguris' fr-rFR 'Fulguris' es-rES 'Fulguris'
 
 # Strings with placeholders (%1$s, %d, etc.) - NO escaping needed!
-python strings.py --set th-rTH string_id 'ดาวน์โหลด %1$s'
+python strings.py --set string_id th-rTH 'ดาวน์โหลด %1$s'
 
 # Strings with double quotes inside - NO escaping needed!
-python strings.py --set th-rTH string_id 'สลับไปที่ "%s"'
+python strings.py --set string_id th-rTH 'สลับไปที่ "%s"'
 
 # Strings with BOTH quotes and placeholders
-python strings.py --set th-rTH string_id 'ดาวน์โหลด "%1$s"'
+python strings.py --set string_id th-rTH 'ดาวน์โหลด "%1$s"'
 
 # Strings with newlines (\n) - works perfectly in single quotes
-python strings.py --set th-rTH string_id 'บรรทัด1\n\nบรรทัด2'
+python strings.py --set string_id th-rTH 'บรรทัด1\n\nบรรทัด2'
 
 # Strings with apostrophes (single quotes) - double them up
-python strings.py --set th-rTH action_dont_allow 'Don''t allow'
-python strings.py --set th-rTH save_data 'Request ''Save-Data'''
+python strings.py --set action_dont_allow th-rTH 'Don''t allow'
+python strings.py --set save_data th-rTH 'Request ''Save-Data'''
 
 # Complex XML - single quotes, no escaping needed for double quotes!
-python strings.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id="example">%1$s</xliff:g>'
+python strings.py --raw --set string_id th-rTH 'ข้อความ <xliff:g id="example">%1$s</xliff:g>'
 ```
 
 **Why single quotes work perfectly:**
@@ -97,31 +100,34 @@ python strings.py --raw --set th-rTH string_id 'ข้อความ <xliff:g i
 # Check what needs translation
 python strings.py --check th-rTH
 
-# Simple strings (batch) - use single quotes
-python strings.py --set th-rTH string_id1 'คำแปล1' string_id2 'คำแปล2'
+# Single language - use single quotes
+python strings.py --set string_id th-rTH 'คำแปล'
+
+# Multiple languages at once (RECOMMENDED for same string)
+python strings.py --set app_name de-rDE 'Fulguris' fr-rFR 'Fulguris' es-rES 'Fulguris'
 
 # Strings with placeholders - single quotes, no escaping needed for $
-python strings.py --set th-rTH dialog_download 'คุณต้องการดาวน์โหลดไฟล์นี้หรือไม่? (%1$s)'
+python strings.py --set dialog_download th-rTH 'คุณต้องการดาวน์โหลดไฟล์นี้หรือไม่? (%1$s)'
 
 # Strings with quotes - single quotes, no escaping needed!
-python strings.py --set th-rTH session_switched 'สลับไปที่ "%s"'
+python strings.py --set session_switched th-rTH 'สลับไปที่ "%s"'
 
 # Strings with apostrophes - double the single quotes
-python strings.py --set da-rDK action_dont_allow 'Tillad ikke'  # No apostrophe in Danish
-python strings.py --set en-rUS action_dont_allow 'Don''t allow'  # English has apostrophe - double it
+python strings.py --set action_dont_allow da-rDK 'Tillad ikke'  # No apostrophe in Danish
+python strings.py --set action_dont_allow en-rUS 'Don''t allow'  # English has apostrophe - double it
 
 # Strings with BOTH quotes and placeholders
-python strings.py --set th-rTH string_id 'ดาวน์โหลด "%1$s"'
+python strings.py --set string_id th-rTH 'ดาวน์โหลด "%1$s"'
 
 # Complex XML - single quotes, no escaping needed for quotes!
-python strings.py --raw --set th-rTH string_id 'ข้อความ <xliff:g id="example">%s</xliff:g>'
+python strings.py --raw --set string_id th-rTH 'ข้อความ <xliff:g id="example">%s</xliff:g>'
 
 # Complex XML with placeholders - still single quotes!
-python strings.py --raw --set th-rTH match_x_of_n 'ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g>'
+python strings.py --raw --set match_x_of_n th-rTH 'ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g>'
 
 # Edit English source strings (developers only) - use 'source' as language code
 python strings.py --get source settings           # Read from English source
-python strings.py --set source settings 'Settings'  # Update English source string
+python strings.py --set settings source 'Settings'  # Update English source string
 ```
 
 ## Error Checking - IMPORTANT!

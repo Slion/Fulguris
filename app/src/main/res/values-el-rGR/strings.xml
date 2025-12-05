@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Χρήση εικονιδίου σελίδας</string>
     <string name="settings_summary_off_task_icon">Χρήση εικονιδίου εφαρμογής</string>
     <string name="settings_title_toolbar_label">Ετικέτα γραμμής εργαλείων</string>
-    <string name="dialog_title_third_party_app">Διαθέσιμη εφαρμογή τρίτου</string>
-    <string name="dialog_message_third_party_app">Θέλετε να εκκινήσετε την εφαρμογή που σχετίζεται με αυτόν τον ιστότοπο;</string>
+    <string name="dialog_title_third_party_app">Εκκίνηση εφαρμογής τρίτου;</string>
+    <string name="dialog_message_third_party_app">Θα αποχωρήσετε από το Fulguris</string>
     <string name="per_month"> / μήνα</string>
     <string name="per_year"> / έτος</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d σύνολο – %2$d αποκλεισμένα / %3$d επιτρεπόμενα</string>
     <string name="page_requests_none">Δεν καταγράφηκαν αιτήματα για αυτή τη σελίδα</string>
     <string name="settings_summary_full_menu">Εμφάνιση πλήρους μενού</string>
+    <string name="action_launch">Εκκίνηση</string>
 </resources>

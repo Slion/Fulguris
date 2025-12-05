@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Sayfa simgesini kullan</string>
     <string name="settings_summary_off_task_icon">Uygulama simgesini kullan</string>
     <string name="settings_title_toolbar_label">Araç çubuğu etiketi</string>
-    <string name="dialog_title_third_party_app">Üçüncü taraf uygulaması mevcut</string>
-    <string name="dialog_message_third_party_app">Bu web sitesiyle ilişkili uygulamayı başlatmak istiyor musunuz?</string>
+    <string name="dialog_title_third_party_app">Üçüncü taraf uygulaması başlatılsın mı?</string>
+    <string name="dialog_message_third_party_app">Fulguris\'ten ayrılacaksınız</string>
     <string name="per_month">\u0020/ ay</string>
     <string name="per_year">\u0020/ yıl</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d toplam – %2$d engellendi / %3$d izin verildi</string>
     <string name="page_requests_none">Bu sayfa için kaydedilen istek yok</string>
     <string name="settings_summary_full_menu">Tam menüyü göster</string>
+    <string name="action_launch">Başlat</string>
 </resources>

@@ -475,8 +475,8 @@
     <string name="settings_summary_on_task_icon">Usar ícone da página</string>
     <string name="settings_summary_off_task_icon">Usar ícone do aplicativo</string>
     <string name="settings_title_toolbar_label">Rótulo da barra de ferramentas</string>
-    <string name="dialog_title_third_party_app">Aplicativo externo disponível</string>
-    <string name="dialog_message_third_party_app">Deseja abrir o aplicativo associado a este site?</string>
+    <string name="dialog_title_third_party_app">Abrir aplicativo de terceiros?</string>
+    <string name="dialog_message_third_party_app">Você sairá do Fulguris</string>
     <string name="per_month">\u0020/ mês</string>
     <string name="per_year">\u0020/ ano</string>
     <string name="session_default">@string/agent_default</string>
@@ -617,4 +617,5 @@
     <string name="page_requests_summary">%1$d total – %2$d bloqueados / %3$d permitidos</string>
     <string name="page_requests_none">Nenhuma solicitação registrada para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menu completo</string>
+    <string name="action_launch">Iniciar</string>
 </resources>

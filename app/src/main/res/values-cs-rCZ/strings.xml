@@ -481,8 +481,8 @@
     <string name="settings_summary_on_task_icon">Použít ikonu stránky</string>
     <string name="settings_summary_off_task_icon">Použít ikonu aplikace</string>
     <string name="settings_title_toolbar_label">Popisek panelu nástrojů</string>
-    <string name="dialog_title_third_party_app">Aplikace třetí strany k dispozici</string>
-    <string name="dialog_message_third_party_app">Chcete spustit aplikaci spojenou s touto webovou stránkou?</string>
+    <string name="dialog_title_third_party_app">Spustit aplikaci třetí strany?</string>
+    <string name="dialog_message_third_party_app">Opustíte Fulguris</string>
     <string name="per_month">\u0020/ month</string>
     <string name="per_year">\u0020/ year</string>
     <string name="session_default">@string/agent_default</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_summary">%1$d celkem – %2$d blokováno / %3$d povoleno</string>
     <string name="page_requests_none">Pro tuto stránku nejsou zaznamenány žádné požadavky</string>
     <string name="settings_summary_full_menu">Zobrazit celou nabídku</string>
+    <string name="action_launch">Spustit</string>
 </resources>
