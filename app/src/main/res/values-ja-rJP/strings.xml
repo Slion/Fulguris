@@ -131,7 +131,7 @@
     <string name="message_updated">v%sを実行しています。オンラインでリリースノートを確認しますか？</string>
     <string name="title_welcome">Fulgurisへようこそ</string>
     <string name="message_welcome">このパワフルなWebブラウザの詳細については、ホームページをご覧ください。</string>
-    <string name="block_ads">コンテンツ制御</string>
+    <string name="block_ads">広告ブロッカー</string>
     <string name="block_remote_frequency_daily">毎日</string>
     <string name="block_remote_frequency_weekly">毎週</string>
     <string name="block_remote_frequency_monthly">毎月</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">タブメニュー</string>
     <string name="settings_title_main_menu">メインメニュー</string>
     <string name="pref_category_filters">フィルター</string>
-    <string name="pref_category_summary_filters">ローカルまたはリモートのコンテンツの制御ルールを定義するファイルです</string>
+    <string name="pref_category_summary_filters">広告ブロッカーのルールを定義するローカルまたはリモートファイル</string>
     <string name="pref_category_on_tab_close">タブを閉じたとき</string>
     <string name="pref_category_on_tab_change">タブを変更するとき</string>
     <string name="pref_category_on_tab_back_forward">進むまたは戻る時</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">終了時に Web storage を消去する</string>
     <string name="message_web_storage_cleared">Web storage を消去しました</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">アドブロッカーとコンテンツフィルター</string>
-    <string name="settings_summary_content_control_toggle">アドブロッカーとコンテンツフィルターを有効にする</string>
     <string name="settings_title_tab_bar_orientation">タブバーの向き</string>
     <string name="settings_summary_on_tab_bar_orientation">縦</string>
     <string name="settings_summary_off_tab_bar_orientation">横</string>

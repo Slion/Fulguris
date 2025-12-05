@@ -131,7 +131,7 @@
     <string name="message_updated">Most a %s verzió fut. szeretnéd megtekinteni a változásokat?</string>
     <string name="title_welcome">Üdvözli a Fulguris</string>
     <string name="message_welcome">Szeretnél többet megtudni erről az erőteljes böngészőről a honlapunkon?</string>
-    <string name="block_ads">Tartalomirányítás</string>
+    <string name="block_ads">Hirdetésblokkoló</string>
     <string name="block_remote_frequency_daily">Napi</string>
     <string name="block_remote_frequency_weekly">Heti</string>
     <string name="block_remote_frequency_monthly">Havi</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Lap menü</string>
     <string name="settings_title_main_menu">Főmenü</string>
     <string name="pref_category_filters">Szűrők</string>
-    <string name="pref_category_summary_filters">Helyi vagy távoli fájlok amelyek megszabják a tartalomirányítási szabályait</string>
+    <string name="pref_category_summary_filters">Helyi vagy távoli fájlok, amelyek meghatározzák a hirdetésblokkoló szabályait</string>
     <string name="pref_category_on_tab_close">Amikor a lap bezárul</string>
     <string name="pref_category_on_tab_change">Amikor lapot vált</string>
     <string name="pref_category_on_tab_back_forward">Amikor vissza vagy előre megy</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Webtárhely törlése kilépéskor</string>
     <string name="message_web_storage_cleared">Webtárhely törölve</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Reklámblokkoló és tartalomszűrő</string>
-    <string name="settings_summary_content_control_toggle">Reklámblokkoló és tartalomszűrő engedélyezése</string>
     <string name="settings_title_tab_bar_orientation">Lap sáv tájolása</string>
     <string name="settings_summary_on_tab_bar_orientation">Függőleges</string>
     <string name="settings_summary_off_tab_bar_orientation">Vízszintes</string>

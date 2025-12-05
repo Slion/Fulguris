@@ -131,7 +131,7 @@
     <string name="message_updated">Está a executar a versão %s. Deseja ver as notas desta versão na web?</string>
     <string name="title_welcome">Bem-vindo ao Fulguris</string>
     <string name="message_welcome">Aceder à nossa página web para saber mais acerca deste navegador web?</string>
-    <string name="block_ads">Controlo de conteúdo</string>
+    <string name="block_ads">Bloqueador de anúncios</string>
     <string name="block_remote_frequency_daily">Diariamente</string>
     <string name="block_remote_frequency_weekly">Semanalmente</string>
     <string name="block_remote_frequency_monthly">Mensalmente</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Menu do separador</string>
     <string name="settings_title_main_menu">Menu principal</string>
     <string name="pref_category_filters">Filtros</string>
-    <string name="pref_category_summary_filters">Ficheiros locais ou remotos que especificam as regras de controlo</string>
+    <string name="pref_category_summary_filters">Ficheiros locais ou remotos que definem as regras do bloqueador de anúncios</string>
     <string name="pref_category_on_tab_close">Ao fechar separador</string>
     <string name="pref_category_on_tab_change">Ao alterar de separador</string>
     <string name="pref_category_on_tab_back_forward">Ao recuar ou avançar</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Limpar armazenamento web ao sair</string>
     <string name="message_web_storage_cleared">Armazenamento web removido</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Bloqueio de anúncios e de conteúdo</string>
-    <string name="settings_summary_content_control_toggle">Ativar bloqueador de anúncios e filtro de conteúdo</string>
     <string name="settings_title_tab_bar_orientation">Orientação da barra de separadores</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>

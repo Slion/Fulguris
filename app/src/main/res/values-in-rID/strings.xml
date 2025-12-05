@@ -131,7 +131,7 @@
     <string name="message_updated">Anda sedang menggunakan v%s. Maukah Anda membaca catatan pengeluarannya?</string>
     <string name="title_welcome">Selamat datang di Fulguris</string>
     <string name="message_welcome">Mau mengunjungi beranda kami untuk tahu lebih banyak tentang browser ini?</string>
-    <string name="block_ads">Pengaturan untuk isi halaman</string>
+    <string name="block_ads">Pemblokir iklan</string>
     <string name="block_remote_frequency_daily">Harian</string>
     <string name="block_remote_frequency_weekly">Mingguan</string>
     <string name="block_remote_frequency_monthly">Bulanan</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Menu tab</string>
     <string name="settings_title_main_menu">Menu utama</string>
     <string name="pref_category_filters">Saringan</string>
-    <string name="pref_category_summary_filters">File pengatur isi halaman web</string>
+    <string name="pref_category_summary_filters">File lokal atau jarak jauh yang menentukan aturan pemblokir iklan Anda</string>
     <string name="pref_category_on_tab_close">Saat menutup tab</string>
     <string name="pref_category_on_tab_change">Saat bertukar tab</string>
     <string name="pref_category_on_tab_back_forward">Saat berganti ke tab sebelumnya atau sesudahnya</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Hapus simpanan dari web saat keluar</string>
     <string name="message_web_storage_cleared">Simpanan dari web telah dihapus</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Pemblokir iklan dan penyaring isi halaman web</string>
-    <string name="settings_summary_content_control_toggle">Nyalakan pemblokir iklan dan penyaring isi halaman web</string>
     <string name="settings_title_tab_bar_orientation">Orientasi bilah tab</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertikal</string>
     <string name="settings_summary_off_tab_bar_orientation">Horisontal</string>

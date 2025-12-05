@@ -131,7 +131,7 @@
     <string name="message_updated">您現在正在執行 v%s。是否要在線上檢查發行說明？</string>
     <string name="title_welcome">歡迎使用 Fulguris</string>
     <string name="message_welcome">造訪我們的首頁以深入了解這個強大的網路瀏覽器？</string>
-    <string name="block_ads">內容控制</string>
+    <string name="block_ads">廣告攔截器</string>
     <string name="block_remote_frequency_daily">每日</string>
     <string name="block_remote_frequency_weekly">每週</string>
     <string name="block_remote_frequency_monthly">每月</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">分頁選單</string>
     <string name="settings_title_main_menu">主選單</string>
     <string name="pref_category_filters">過濾器</string>
-    <string name="pref_category_summary_filters">定義內容控制規則的本機或遠端檔案</string>
+    <string name="pref_category_summary_filters">定義廣告攔截器規則的本機或遠端檔案</string>
     <string name="pref_category_on_tab_close">關閉分頁時</string>
     <string name="pref_category_on_tab_change">變更分頁時</string>
     <string name="pref_category_on_tab_back_forward">返回或前進時</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">結束時清除網頁儲存空間</string>
     <string name="message_web_storage_cleared">網頁儲存空間已清除</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">廣告封鎖器和內容過濾</string>
-    <string name="settings_summary_content_control_toggle">啟動廣告封鎖器和內容過濾</string>
     <string name="settings_title_tab_bar_orientation">分頁列方向</string>
     <string name="settings_summary_on_tab_bar_orientation">垂直</string>
     <string name="settings_summary_off_tab_bar_orientation">水平</string>

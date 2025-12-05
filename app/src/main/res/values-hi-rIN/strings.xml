@@ -114,7 +114,7 @@
     <string name="message_updated">अब आप v%s चला रहे हैं। क्या आप ऑनलाइन रिलीज़ नोट्स देखना चाहते हैं?</string>
     <string name="title_welcome">Fulguris में आपका स्वागत है</string>
     <string name="message_welcome">इस शक्तिशाली वेब ब्राउज़र के बारे में अधिक जानने के लिए हमारे होम पेज पर जाएं?</string>
-    <string name="block_ads">सामग्री नियंत्रण</string>
+    <string name="block_ads">विज्ञापन अवरोधक</string>
     <string name="block_remote_frequency_daily">दैनिक</string>
     <string name="block_remote_frequency_weekly">साप्ताहिक</string>
     <string name="block_remote_frequency_monthly">मासिक</string>
@@ -233,7 +233,7 @@
     <string name="action_tab_menu">टैब मेन्यू</string>
     <string name="settings_title_main_menu">मुख्य मेन्यू</string>
     <string name="pref_category_filters">फ़िल्टर</string>
-    <string name="pref_category_summary_filters">आपके सामग्री नियंत्रण नियमों को परिभाषित करने वाली स्थानीय या रिमोट फ़ाइलें</string>
+    <string name="pref_category_summary_filters">स्थानीय या दूरस्थ फ़ाइलें जो आपके विज्ञापन अवरोधक नियमों को परिभाषित करती हैं</string>
     <string name="pref_category_on_tab_close">टैब बंद करते समय</string>
     <string name="pref_category_on_tab_change">टैब बदलते समय</string>
     <string name="pref_category_on_tab_back_forward">पीछे या आगे जाते समय</string>
@@ -323,8 +323,6 @@
     <string name="clear_web_storage">वेब संग्रहण साफ़ करें</string>
     <string name="clear_web_storage_exit">बाहर निकलने पर वेब संग्रहण साफ़ करें</string>
     <string name="message_web_storage_cleared">वेब संग्रहण साफ़ किया गया</string>
-    <string name="settings_summary_content_control">विज्ञापन अवरोधक और सामग्री फ़िल्टरिंग</string>
-    <string name="settings_summary_content_control_toggle">विज्ञापन अवरोधक और सामग्री फ़िल्टरिंग सक्रिय करें</string>
     <string name="settings_title_tab_bar_orientation">टैब बार ओरिएंटेशन</string>
     <string name="settings_summary_on_tab_bar_orientation">लंबवत</string>
     <string name="settings_summary_off_tab_bar_orientation">क्षैतिज</string>

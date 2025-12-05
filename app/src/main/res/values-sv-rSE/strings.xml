@@ -131,7 +131,7 @@
     <string name="message_updated">Du kör nu v%s. Vill du kontrollera versionsfakta online?</string>
     <string name="title_welcome">Välkommen till Fulguris</string>
     <string name="message_welcome">Besök vår hemsida för att få veta mer om denna kraftfulla webbläsare?</string>
-    <string name="block_ads">Innehållskontroll</string>
+    <string name="block_ads">Annonsblockerare</string>
     <string name="block_remote_frequency_daily">Dagligen</string>
     <string name="block_remote_frequency_weekly">Veckovis</string>
     <string name="block_remote_frequency_monthly">Månadsvis</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Flikmeny</string>
     <string name="settings_title_main_menu">Huvudmeny</string>
     <string name="pref_category_filters">Filter</string>
-    <string name="pref_category_summary_filters">Lokala eller fjärranslutna filer som definierar dina regler för innehållskontroll</string>
+    <string name="pref_category_summary_filters">Lokala eller fjärrfiler som definierar dina annonsblockerings-regler</string>
     <string name="pref_category_on_tab_close">Vid stängning av flik</string>
     <string name="pref_category_on_tab_change">Vid ändring av flik</string>
     <string name="pref_category_on_tab_back_forward">När du går bakåt eller framåt</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Rensa webblagring vid avslut</string>
     <string name="message_web_storage_cleared">Webblagring rensad</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Annonsblockerare och innehållsfiltrering</string>
-    <string name="settings_summary_content_control_toggle">Aktivera annonsblockering och innehållsfiltrering</string>
     <string name="settings_title_tab_bar_orientation">Flikladens orientering</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertikal</string>
     <string name="settings_summary_off_tab_bar_orientation">Horisontell</string>

@@ -131,7 +131,7 @@
     <string name="message_updated">Käytät nyt versiota %s. Haluatko tarkistaa julkaisumuistiinpanot verkossa?</string>
     <string name="title_welcome">Tervetuloa Fulguriin</string>
     <string name="message_welcome">Vieraile sivustollamme saadaksesi lisätietoja tästä tehokkaasta verkkoselaimesta?</string>
-    <string name="block_ads">Estä mainokset</string>
+    <string name="block_ads">Mainosten esto</string>
     <string name="block_remote_frequency_daily">Päivittäin</string>
     <string name="block_remote_frequency_weekly">Viikoittain</string>
     <string name="block_remote_frequency_monthly">Kuukausittain</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Välilehden valikko</string>
     <string name="settings_title_main_menu">Päävalikko</string>
     <string name="pref_category_filters">Suodattimet</string>
-    <string name="pref_category_summary_filters">Mainokset ja haittaohjelmat</string>
+    <string name="pref_category_summary_filters">Paikalliset tai etätiedostot, jotka määrittävät mainosten eston säännöt</string>
     <string name="pref_category_on_tab_close">Välilehden sulkemisessa</string>
     <string name="pref_category_on_tab_change">Välilehden vaihdossa</string>
     <string name="pref_category_on_tab_back_forward">Välilehden edestakaisin</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Tyhjennä verkkovarasto poistuttaessa</string>
     <string name="message_web_storage_cleared">Verkkovarasto tyhjennetty</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Mainosten esto ja sisällön suodatus</string>
-    <string name="settings_summary_content_control_toggle">Aktivoi mainosten esto ja sisällön suodatus</string>
     <string name="settings_title_tab_bar_orientation">Välilehtirivin suunta</string>
     <string name="settings_summary_on_tab_bar_orientation">Pysty</string>
     <string name="settings_summary_off_tab_bar_orientation">Vaaka</string>

@@ -131,7 +131,7 @@
     <string name="message_updated">Sada koristite v%s. Da li želite da proverite beleške o izdanju na mreži?</string>
     <string name="title_welcome">Dobrodošli u Fulguris</string>
     <string name="message_welcome">Posetite našu početnu stranicu da biste saznali više o ovom moćnom veb pretraživaču?</string>
-    <string name="block_ads">Kontrola sadržaja</string>
+    <string name="block_ads">Блокатор реклама</string>
     <string name="block_remote_frequency_daily">Dnevno</string>
     <string name="block_remote_frequency_weekly">Nedeljno</string>
     <string name="block_remote_frequency_monthly">Mesečno</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Мени картице</string>
     <string name="settings_title_main_menu">Главни мени</string>
     <string name="pref_category_filters">Filteri</string>
-    <string name="pref_category_summary_filters">Lokalne ili udaljene datoteke koje definišu vaša pravila kontrole sadržaja</string>
+    <string name="pref_category_summary_filters">Локалне или удаљене датотеке које дефинишу правила блокатора реклама</string>
     <string name="pref_category_on_tab_close">Prilikom zatvaranja kartice</string>
     <string name="pref_category_on_tab_change">Prilikom promene kartice</string>
     <string name="pref_category_on_tab_back_forward">Kada ide nazad ili napred</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Očisti veb skladište po zatvaranju</string>
     <string name="message_web_storage_cleared">Veb skladište je očišćeno</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Blokator oglasa i filtriranje sadržaja</string>
-    <string name="settings_summary_content_control_toggle">Aktivirajte blokator oglasa i filtriranje sadržaja</string>
     <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>

@@ -131,7 +131,7 @@
     <string name="message_updated">Nyní používáte verzi v%s. Chcete zkontrolovat online změny této aktualizace?</string>
     <string name="title_welcome">Vítejte v Fulguris</string>
     <string name="message_welcome">Navštivte naši domovskou stránku a zjistěte více o tomto webovém prohlížeči.</string>
-    <string name="block_ads">Správa obsahu</string>
+    <string name="block_ads">Blokátor reklam</string>
     <string name="block_remote_frequency_daily">Denně</string>
     <string name="block_remote_frequency_weekly">Týdně</string>
     <string name="block_remote_frequency_monthly">Měsíčně</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Nabídka karty</string>
     <string name="settings_title_main_menu">Hlavní nabídka</string>
     <string name="pref_category_filters">Filtry</string>
-    <string name="pref_category_summary_filters">Místní nebo vzdálené soubory definující pravidla řízení obsahu</string>
+    <string name="pref_category_summary_filters">Místní nebo vzdálené soubory definující pravidla blokátoru reklam</string>
     <string name="pref_category_on_tab_close">Při zavření karty</string>
     <string name="pref_category_on_tab_change">Při změně karty</string>
     <string name="pref_category_on_tab_back_forward">Při přechodu zpět nebo vpřed</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Vymazat webové úložiště při ukončení</string>
     <string name="message_web_storage_cleared">Webové úložiště vymazáno</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Blokování reklam a filtrování obsahu</string>
-    <string name="settings_summary_content_control_toggle">Aktivovat blokování reklam a filtrování obsahu</string>
     <string name="settings_title_tab_bar_orientation">Orientace lišty karet</string>
     <string name="settings_summary_on_tab_bar_orientation">Svislá</string>
     <string name="settings_summary_off_tab_bar_orientation">Vodorovná</string>

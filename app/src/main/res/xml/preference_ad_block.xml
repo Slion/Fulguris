@@ -6,8 +6,9 @@
     <x.SwitchPreference
         android:defaultValue="false"
         android:key="@string/pref_key_content_control"
-        android:title="@string/enable"
-        android:summary="@string/settings_summary_content_control_toggle"
+        android:title="@string/settings_adblock"
+        android:summaryOn="@string/pref_summary_on_enable_ad_blocker"
+        android:summaryOff="@string/pref_summary_off_enable_ad_blocker"
         app:icon="@drawable/ic_block"
         app:singleLineTitle="false" />
 

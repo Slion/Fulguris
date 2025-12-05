@@ -131,7 +131,7 @@
     <string name="message_updated">현재 v%s를 실행 중입니다. 온라인에서 릴리스 노트를 확인하시겠습니까?</string>
     <string name="title_welcome">Fulguris에 오신 것을 환영합니다</string>
     <string name="message_welcome">이 강력한 웹 브라우저에 대해 자세히 알아보려면 홈페이지를 방문하시겠습니까?</string>
-    <string name="block_ads">콘텐츠 제어</string>
+    <string name="block_ads">광고 차단기</string>
     <string name="block_remote_frequency_daily">매일</string>
     <string name="block_remote_frequency_weekly">매주</string>
     <string name="block_remote_frequency_monthly">매월</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">탭 메뉴</string>
     <string name="settings_title_main_menu">메인 메뉴</string>
     <string name="pref_category_filters">필터</string>
-    <string name="pref_category_summary_filters">콘텐츠 제어 규칙을 정의하는 로컬 또는 원격 파일</string>
+    <string name="pref_category_summary_filters">광고 차단기 규칙을 정의하는 로컬 또는 원격 파일</string>
     <string name="pref_category_on_tab_close">탭을 닫을 때</string>
     <string name="pref_category_on_tab_change">탭을 변경할 때</string>
     <string name="pref_category_on_tab_back_forward">뒤로 또는 앞으로 이동할 때</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">종료 시 웹 저장소 비우기</string>
     <string name="message_web_storage_cleared">웹 저장소를 비웠습니다</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">광고 차단기 및 콘텐츠 필터링</string>
-    <string name="settings_summary_content_control_toggle">광고 차단기 및 콘텐츠 필터링 활성화</string>
     <string name="settings_title_tab_bar_orientation">탭 바 방향</string>
     <string name="settings_summary_on_tab_bar_orientation">세로</string>
     <string name="settings_summary_off_tab_bar_orientation">가로</string>

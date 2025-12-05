@@ -131,7 +131,7 @@
     <string name="message_updated">Bạn hiện đang chạy v%s. Bạn có muốn kiểm tra ghi chú phát hành trực tuyến?</string>
     <string name="title_welcome">Chào mừng đến với Fulguris</string>
     <string name="message_welcome">Truy cập trang chủ của chúng tôi để tìm hiểu thêm về trình duyệt web mạnh mẽ này?</string>
-    <string name="block_ads">Kiểm soát nội dung</string>
+    <string name="block_ads">Trình chặn quảng cáo</string>
     <string name="block_remote_frequency_daily">Hàng ngày</string>
     <string name="block_remote_frequency_weekly">Hàng tuần</string>
     <string name="block_remote_frequency_monthly">Hàng tháng</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Menu tab</string>
     <string name="settings_title_main_menu">Menu chính</string>
     <string name="pref_category_filters">Bộ lọc</string>
-    <string name="pref_category_summary_filters">Các tệp cục bộ hoặc từ xa xác định quy tắc kiểm soát nội dung của bạn</string>
+    <string name="pref_category_summary_filters">Các tệp cục bộ hoặc từ xa xác định quy tắc trình chặn quảng cáo của bạn</string>
     <string name="pref_category_on_tab_close">Khi đóng tab</string>
     <string name="pref_category_on_tab_change">Khi thay đổi tab</string>
     <string name="pref_category_on_tab_back_forward">Khi quay lại hoặc tiến tới</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Xóa dữ liệu web khi thoát</string>
     <string name="message_web_storage_cleared">Đã xóa dữ liệu web</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Trình chặn quảng cáo và lọc nội dung</string>
-    <string name="settings_summary_content_control_toggle">Kích hoạt trình chặn quảng cáo và lọc nội dung</string>
     <string name="settings_title_tab_bar_orientation">Hướng thanh tab</string>
     <string name="settings_summary_on_tab_bar_orientation">Dọc</string>
     <string name="settings_summary_off_tab_bar_orientation">Ngang</string>

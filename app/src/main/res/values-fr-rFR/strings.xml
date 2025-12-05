@@ -131,7 +131,7 @@
     <string name="message_updated">Vous utilisez maintenant v%s. Voulez-vous vérifier les notes de version en ligne ?</string>
     <string name="title_welcome">Bienvenue sur Fulguris</string>
     <string name="message_welcome">Visiter notre page d\'accueil pour en savoir plus sur ce puissant navigateur web ?</string>
-    <string name="block_ads">Contrôle de contenu</string>
+    <string name="block_ads">Bloqueur de publicités</string>
     <string name="block_remote_frequency_daily">Chaque jour</string>
     <string name="block_remote_frequency_weekly">Chaque semaine</string>
     <string name="block_remote_frequency_monthly">Chaque mois</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Menu de l\'onglet</string>
     <string name="settings_title_main_menu">Menu principal</string>
     <string name="pref_category_filters">Filtres</string>
-    <string name="pref_category_summary_filters">Fichiers locaux ou distants définissant vos règles de contrôle de contenu</string>
+    <string name="pref_category_summary_filters">Fichiers locaux ou distants définissant vos règles de blocage des publicités</string>
     <string name="pref_category_on_tab_close">À la fermeture de l\'onglet</string>
     <string name="pref_category_on_tab_change">Au changement d\'onglet</string>
     <string name="pref_category_on_tab_back_forward">En revenant en arrière ou en avant</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Effacer le stockage internet en quittant</string>
     <string name="message_web_storage_cleared">Stockage internet effacé</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Bloqueur de publicités et filtre de contenu</string>
-    <string name="settings_summary_content_control_toggle">Activer le bloqueur de publicités et le filtre de contenu</string>
     <string name="settings_title_tab_bar_orientation">Orientation de la barre d\'onglets</string>
     <string name="settings_summary_on_tab_bar_orientation">Verticale</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontale</string>

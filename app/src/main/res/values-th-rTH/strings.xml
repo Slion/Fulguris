@@ -131,7 +131,7 @@
     <string name="message_updated">คุณกำลังใช้ v%s ต้องการตรวจสอบบันทึกการอัปเดตออนไลน์หรือไม่?</string>
     <string name="title_welcome">ยินดีต้อนรับสู่ Fulguris</string>
     <string name="message_welcome">เยี่ยมชมหน้าแรกของเราเพื่อหาข้อมูลเพิ่มเติมเกี่ยวกับเว็บเบราว์เซอร์ที่ทรงพลังนี้?</string>
-    <string name="block_ads">บล็อกโฆษณา</string>
+    <string name="block_ads">ตัวบล็อกโฆษณา</string>
     <string name="block_remote_frequency_daily">รายวัน</string>
     <string name="block_remote_frequency_weekly">รายสัปดาห์</string>
     <string name="block_remote_frequency_monthly">รายเดือน</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">เมนูแท็บ</string>
     <string name="settings_title_main_menu">เมนูหลัก</string>
     <string name="pref_category_filters">ฟิลเตอร์</string>
-    <string name="pref_category_summary_filters">โฆษณาและมัลแวร์</string>
+    <string name="pref_category_summary_filters">ไฟล์ในเครื่องหรือระยะไกลที่กำหนดกฎตัวบล็อกโฆษณาของคุณ</string>
     <string name="pref_category_on_tab_close">เมื่อปิดแท็บ</string>
     <string name="pref_category_on_tab_change">เมื่อเปลี่ยนแท็บ</string>
     <string name="pref_category_on_tab_back_forward">การนำทางแท็บไปข้างหน้า/ย้อนกลับ</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">ล้างที่เก็บข้อมูลเว็บเมื่อออก</string>
     <string name="message_web_storage_cleared">ล้างที่เก็บข้อมูลเว็บแล้ว</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">ตัวบล็อกโฆษณาและการกรองเนื้อหา</string>
-    <string name="settings_summary_content_control_toggle">เปิดใช้งานตัวบล็อกโฆษณาและการกรองเนื้อหา</string>
     <string name="settings_title_tab_bar_orientation">การวางแนวแถบแท็บ</string>
     <string name="settings_summary_on_tab_bar_orientation">แนวตั้ง</string>
     <string name="settings_summary_off_tab_bar_orientation">แนวนอน</string>

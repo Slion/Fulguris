@@ -131,7 +131,7 @@
     <string name="message_updated">Şu anda v%s sürümünü kullanıyorsunuz. Sürüm notlarını çevrimiçi kontrol etmek ister misiniz?</string>
     <string name="title_welcome">Fulguris\'e hoş geldiniz</string>
     <string name="message_welcome">Bu güçlü web tarayıcısı hakkında daha fazla bilgi edinmek için ana sayfamızı ziyaret etmek ister misiniz?</string>
-    <string name="block_ads">İçerik kontrolü</string>
+    <string name="block_ads">Reklam engelleyici</string>
     <string name="block_remote_frequency_daily">Günlük</string>
     <string name="block_remote_frequency_weekly">Haftalık</string>
     <string name="block_remote_frequency_monthly">Aylık</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Sekme menüsü</string>
     <string name="settings_title_main_menu">Ana menü</string>
     <string name="pref_category_filters">Filtreler</string>
-    <string name="pref_category_summary_filters">İçerik kontrolü kurallarınızı tanımlayan yerel veya uzak dosyalar</string>
+    <string name="pref_category_summary_filters">Reklam engelleyici kurallarınızı tanımlayan yerel veya uzak dosyalar</string>
     <string name="pref_category_on_tab_close">Sekme kapatıldığında</string>
     <string name="pref_category_on_tab_change">Sekme değiştirildiğinde</string>
     <string name="pref_category_on_tab_back_forward">Geri veya ileri gidildiğinde</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Çıkışta web depolamasını temizle</string>
     <string name="message_web_storage_cleared">Web depolaması temizlendi</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Reklam engelleyici ve içerik filtreleme</string>
-    <string name="settings_summary_content_control_toggle">Reklam engelleyici ve içerik filtrelemeyi etkinleştir</string>
     <string name="settings_title_tab_bar_orientation">Sekme çubuğu yönü</string>
     <string name="settings_summary_on_tab_bar_orientation">Dikey</string>
     <string name="settings_summary_off_tab_bar_orientation">Yatay</string>

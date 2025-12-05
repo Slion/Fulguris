@@ -131,7 +131,7 @@
     <string name="message_updated">Теперь вы используете версию%s. Вы хотите ознакомиться с примечаниями к выпуску онлайн?</string>
     <string name="title_welcome">Добро пожаловать в Fulguris</string>
     <string name="message_welcome">Посетить нашу домашнюю страницу, чтобы узнать больше об этом мощном веб-браузере?</string>
-    <string name="block_ads">Управление содержимым</string>
+    <string name="block_ads">Блокировщик рекламы</string>
     <string name="block_remote_frequency_daily">Ежедневно</string>
     <string name="block_remote_frequency_weekly">Еженедельно</string>
     <string name="block_remote_frequency_monthly">Ежемесячно</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Меню вкладки</string>
     <string name="settings_title_main_menu">Главное меню</string>
     <string name="pref_category_filters">Фильтры</string>
-    <string name="pref_category_summary_filters">Локальные или удалённые файлы, определяющие ваши правила управления содержимым</string>
+    <string name="pref_category_summary_filters">Локальные или удалённые файлы, определяющие правила блокировщика рекламы</string>
     <string name="pref_category_on_tab_close">При закрытии вкладки</string>
     <string name="pref_category_on_tab_change">При смене вкладки</string>
     <string name="pref_category_on_tab_back_forward">При возвращении или переходе</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Очистить веб-хранилище при выходе</string>
     <string name="message_web_storage_cleared">Веб-хранилище очищено</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Блокировщик рекламы и фильтрация содержимого</string>
-    <string name="settings_summary_content_control_toggle">Включить блокировку рекламы и фильтрацию содержимого</string>
     <string name="settings_title_tab_bar_orientation">Ориентация панели вкладок</string>
     <string name="settings_summary_on_tab_bar_orientation">Вертикальная</string>
     <string name="settings_summary_off_tab_bar_orientation">Горизонтальная</string>

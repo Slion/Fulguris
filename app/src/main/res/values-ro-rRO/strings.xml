@@ -131,7 +131,7 @@
     <string name="message_updated">Rulezi acum v%s. Vrei să vezi notele de lansare online?</string>
     <string name="title_welcome">Bine ai venit la Fulguris</string>
     <string name="message_welcome">Vizitează pagina noastră pentru a afla mai multe despre acest browser puternic?</string>
-    <string name="block_ads">Control conținut</string>
+    <string name="block_ads">Blocarea reclamelor</string>
     <string name="block_remote_frequency_daily">Zilnic</string>
     <string name="block_remote_frequency_weekly">Săptămânal</string>
     <string name="block_remote_frequency_monthly">Lunar</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Meniu filă</string>
     <string name="settings_title_main_menu">Meniu principal</string>
     <string name="pref_category_filters">Filtre</string>
-    <string name="pref_category_summary_filters">Fișiere locale sau remote care definesc regulile de control al conținutului</string>
+    <string name="pref_category_summary_filters">Fișiere locale sau la distanță care definesc regulile de blocare a reclamelor</string>
     <string name="pref_category_on_tab_close">La închiderea filei</string>
     <string name="pref_category_on_tab_change">La schimbarea filei</string>
     <string name="pref_category_on_tab_back_forward">La navigare înapoi sau înainte</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Șterge stocarea web la ieșire</string>
     <string name="message_web_storage_cleared">Stocare web ștearsă</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Blocare reclame și filtrare conținut</string>
-    <string name="settings_summary_content_control_toggle">Activează blocarea reclamelor și filtrarea conținutului</string>
     <string name="settings_title_tab_bar_orientation">Orientare bară file</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Orizontal</string>

@@ -131,7 +131,7 @@
     <string name="message_updated">You are now running v%s. Do you want to check release notes online?</string>
     <string name="title_welcome">Welcome to Fulguris</string>
     <string name="message_welcome">Visit our home page to find out more about this powerful web browser?</string>
-    <string name="block_ads">Content control</string>
+    <string name="block_ads">Advertensieblokkeerder</string>
     <string name="block_remote_frequency_daily">Daily</string>
     <string name="block_remote_frequency_weekly">Weekly</string>
     <string name="block_remote_frequency_monthly">Monthly</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Oortjie-spyskaart</string>
     <string name="settings_title_main_menu">Hoofspyskaart</string>
     <string name="pref_category_filters">Filters</string>
-    <string name="pref_category_summary_filters">Local or remote files defining your content control rules</string>
+    <string name="pref_category_summary_filters">Plaaslike of afgeleë lêers wat jou advertensieblokkeerder-reëls definieer</string>
     <string name="pref_category_on_tab_close">When closing tab</string>
     <string name="pref_category_on_tab_change">When changing tab</string>
     <string name="pref_category_on_tab_back_forward">When going back or forward</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Clear web storage on exit</string>
     <string name="message_web_storage_cleared">Web storage cleared</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Ad blocker and content filtering</string>
-    <string name="settings_summary_content_control_toggle">Activate ad blocker and content filtering</string>
     <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>

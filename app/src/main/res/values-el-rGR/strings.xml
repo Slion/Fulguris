@@ -131,7 +131,7 @@
     <string name="message_updated">Εκτελείτε τώρα την έκδοση v%s. Θέλετε να ελέγξετε τις σημειώσεις έκδοσης στο διαδίκτυο;</string>
     <string name="title_welcome">Καλώς ήρθατε στο Fulguris</string>
     <string name="message_welcome">Επισκεφτείτε την αρχική μας σελίδα για να μάθετε περισσότερα για αυτό το ισχυρό πρόγραμμα περιήγησης ιστού;</string>
-    <string name="block_ads">Έλεγχος περιεχομένου</string>
+    <string name="block_ads">Αποκλεισμός διαφημίσεων</string>
     <string name="block_remote_frequency_daily">Καθημερινά</string>
     <string name="block_remote_frequency_weekly">Εβδομαδιαία</string>
     <string name="block_remote_frequency_monthly">Μηνιαία</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Μενού καρτέλας</string>
     <string name="settings_title_main_menu">Κύριο μενού</string>
     <string name="pref_category_filters">Φίλτρα</string>
-    <string name="pref_category_summary_filters">Τοπικά ή απομακρυσμένα αρχεία που ορίζουν τους κανόνες ελέγχου περιεχομένου σας</string>
+    <string name="pref_category_summary_filters">Τοπικά ή απομακρυσμένα αρχεία που ορίζουν τους κανόνες αποκλεισμού διαφημίσεων</string>
     <string name="pref_category_on_tab_close">Κατά το κλείσιμο καρτέλας</string>
     <string name="pref_category_on_tab_change">Κατά την αλλαγή καρτέλας</string>
     <string name="pref_category_on_tab_back_forward">Κατά την επιστροφή ή προώθηση</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Εκκαθάριση αποθηκευτικού χώρου ιστού κατά την έξοδο</string>
     <string name="message_web_storage_cleared">Ο αποθηκευτικός χώρος ιστού εκκαθαρίστηκε</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Αποκλεισμός διαφημίσεων και φιλτράρισμα περιεχομένου</string>
-    <string name="settings_summary_content_control_toggle">Ενεργοποίηση αποκλεισμού διαφημίσεων και φιλτραρίσματος περιεχομένου</string>
     <string name="settings_title_tab_bar_orientation">Προσανατολισμός γραμμής καρτελών</string>
     <string name="settings_summary_on_tab_bar_orientation">Κατακόρυφος</string>
     <string name="settings_summary_off_tab_bar_orientation">Οριζόντιος</string>

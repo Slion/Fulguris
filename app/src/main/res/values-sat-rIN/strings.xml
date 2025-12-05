@@ -131,7 +131,7 @@
     <string name="message_updated">ᱟᱢ ᱱᱤᱛᱚᱜ v%s ᱪᱟᱹᱞᱩ ᱮᱫᱟᱢ ᱾ ᱪᱮᱫ ᱚᱱᱞᱟᱭᱤᱱ ᱨᱤᱞᱤᱡᱽ ᱱᱳᱴᱥ ᱠᱚ ᱧᱮᱞ ᱥᱟᱱᱟᱢᱟ?</string>
     <string name="title_welcome">Fulguris ᱨᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ</string>
     <string name="message_welcome">ᱱᱚᱶᱟ ᱫᱟᱲᱮ ᱵᱽᱨᱟᱣᱡᱚᱨ ᱵᱟᱵᱚᱛ ᱵᱟᱹᱲᱛᱤ ᱵᱟᱰᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱮᱭᱟᱜ ᱚᱲᱟᱜ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱢᱮ?</string>
-    <string name="block_ads">ᱡᱤᱱᱤᱥ ᱠᱚᱸᱴᱨᱚᱞ</string>
+    <string name="block_ads">ᱮᱰ ᱵᱞᱚᱠᱚᱨ</string>
     <string name="block_remote_frequency_daily">ᱢᱟᱦᱟᱸ ᱢᱟᱦᱟᱸ</string>
     <string name="block_remote_frequency_weekly">ᱦᱟᱯᱛᱟ ᱦᱟᱯᱛᱟ</string>
     <string name="block_remote_frequency_monthly">ᱪᱟᱸᱫᱚ ᱪᱟᱸᱫᱚ</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">ᱴᱮᱵᱽ ᱢᱮᱱᱩ</string>
     <string name="settings_title_main_menu">ᱢᱩᱞ ᱢᱮᱱᱩ</string>
     <string name="pref_category_filters">ᱯᱷᱤᱞᱴᱚᱨ ᱠᱚ</string>
-    <string name="pref_category_summary_filters">ᱟᱢᱟᱜ ᱡᱤᱱᱤᱥ ᱠᱚᱸᱴᱨᱚᱞ ᱱᱤᱭᱟᱹᱢ ᱠᱚ ᱵᱟᱛᱟᱣ ᱞᱳᱠᱟᱞ ᱟᱨ ᱨᱤᱢᱳᱴ ᱨᱮᱫᱽ ᱠᱚ</string>
+    <string name="pref_category_summary_filters">ᱞᱳᱠᱟᱞ ᱟᱨᱵᱟᱝ ᱨᱤᱢᱳᱴ ᱯᱷᱟᱭᱤᱞ ᱡᱟᱦᱟ ᱟᱢᱟᱜ ᱮᱰ ᱵᱞᱚᱠᱚᱨ ᱱᱤᱭᱚᱢ ᱠᱚ ᱵᱮᱵᱷᱟᱨᱟ</string>
     <string name="pref_category_on_tab_close">ᱴᱮᱵᱽ ᱵᱚᱸᱫᱚ ᱡᱚᱠᱷᱟ</string>
     <string name="pref_category_on_tab_change">ᱴᱮᱵᱽ ᱵᱚᱫᱚᱞ ᱡᱚᱠᱷᱟ</string>
     <string name="pref_category_on_tab_back_forward">ᱛᱟᱭᱚᱢ ᱟᱨ ᱞᱟᱦᱟ ᱪᱟᱞᱟᱜ ᱡᱚᱠᱷᱟ</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">ᱵᱟᱦᱨᱮ ᱚᱰᱚᱠ ᱡᱚᱠᱷᱟ ᱣᱮᱵᱽ ᱥᱴᱚᱨᱮᱡᱽ ᱯᱷᱟᱨᱪᱟᱭ</string>
     <string name="message_web_storage_cleared">ᱣᱮᱵᱽ ᱥᱴᱚᱨᱮᱡᱽ ᱯᱷᱟᱨᱪᱟᱣ ᱮᱱᱟ</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">ᱮᱰ ᱵᱞᱚᱠᱚᱨ ᱟᱨ ᱡᱤᱱᱤᱥ ᱯᱷᱤᱞᱴᱚᱨᱤᱝ</string>
-    <string name="settings_summary_content_control_toggle">ᱮᱰ ᱵᱞᱚᱠᱚᱨ ᱟᱨ ᱡᱤᱱᱤᱥ ᱯᱷᱤᱞᱴᱚᱨᱤᱝ ᱮᱢ ᱪᱷᱚ</string>
     <string name="settings_title_tab_bar_orientation">ᱴᱮᱵᱽ ᱵᱟᱨ ᱦᱩᱲᱟᱹᱜ</string>
     <string name="settings_summary_on_tab_bar_orientation">ᱥᱤᱫᱟᱹ</string>
     <string name="settings_summary_off_tab_bar_orientation">ᱞᱤᱸᱜᱤᱱ</string>

@@ -131,7 +131,7 @@
     <string name="message_updated">Używasz teraz wersji %s. Chcesz sprawdzić informacje o tej wersji w sieci?</string>
     <string name="title_welcome">Witamy w Fulguris</string>
     <string name="message_welcome">Czy chcesz odwiedzić naszą stronę główną, aby dowiedzieć się więcej o tej przeglądarce?</string>
-    <string name="block_ads">Kontrola treści</string>
+    <string name="block_ads">Blokowanie reklam</string>
     <string name="block_remote_frequency_daily">Codziennie</string>
     <string name="block_remote_frequency_weekly">Cotygodniowo</string>
     <string name="block_remote_frequency_monthly">Comiesięcznie</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Menu karty</string>
     <string name="settings_title_main_menu">Menu główne</string>
     <string name="pref_category_filters">Filtry</string>
-    <string name="pref_category_summary_filters">Lokalne lub zdalne pliki definiujące zasady kontrolowania treści</string>
+    <string name="pref_category_summary_filters">Lokalne lub zdalne pliki definiujące reguły blokowania reklam</string>
     <string name="pref_category_on_tab_close">Przy zamykaniu karty</string>
     <string name="pref_category_on_tab_change">Przy zmianie karty</string>
     <string name="pref_category_on_tab_back_forward">Podczas cofania się lub do przodu</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Wyczyść dane i ustawienia witryn po zamknięciu</string>
     <string name="message_web_storage_cleared">Dane i ustawienia witryn zostały wyczyszczone</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Blokowanie reklam i filtrowanie treści</string>
-    <string name="settings_summary_content_control_toggle">Aktywuj blokowanie reklam i filtrowanie treści</string>
     <string name="settings_title_tab_bar_orientation">Orientacja paska kart</string>
     <string name="settings_summary_on_tab_bar_orientation">Pionowa</string>
     <string name="settings_summary_off_tab_bar_orientation">Pozioma</string>

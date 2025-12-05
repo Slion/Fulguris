@@ -131,7 +131,7 @@
     <string name="message_updated">Je draait nu v%s. Wilt u de release-opmerkingen online bekijken?</string>
     <string name="title_welcome">Welkom bij Fulguris</string>
     <string name="message_welcome">Bezoek onze homepage voor meer informatie over deze krachtige webbrowser?</string>
-    <string name="block_ads">Controle over inhoud</string>
+    <string name="block_ads">Advertentieblokkeerder</string>
     <string name="block_remote_frequency_daily">Dagelijks</string>
     <string name="block_remote_frequency_weekly">Wekelijks</string>
     <string name="block_remote_frequency_monthly">Maandelijks</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Tabmenu</string>
     <string name="settings_title_main_menu">Hoofdmenu</string>
     <string name="pref_category_filters">Filters</string>
-    <string name="pref_category_summary_filters">Lokale of externe bestanden die je regels voor inhoudscontrole definiëren</string>
+    <string name="pref_category_summary_filters">Lokale of externe bestanden die uw advertentieblokkeerder-regels definiëren</string>
     <string name="pref_category_on_tab_close">Bij het sluiten van een tabblad</string>
     <string name="pref_category_on_tab_change">Bij het veranderen van tab</string>
     <string name="pref_category_on_tab_back_forward">Wanneer je terug of vooruit gaat</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Wis web opslag bij beëindigen</string>
     <string name="message_web_storage_cleared">Web opslag gewist</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Advertentieblokkering en inhoud filteren</string>
-    <string name="settings_summary_content_control_toggle">Advertentieblokker en inhoudsfilter activeren</string>
     <string name="settings_title_tab_bar_orientation">Tabbalkoriëntatie</string>
     <string name="settings_summary_on_tab_bar_orientation">Verticaal</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontaal</string>

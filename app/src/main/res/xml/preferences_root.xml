@@ -17,11 +17,10 @@
         app:icon="@drawable/ic_palette"
         app:singleLineTitle="false"
         />
-    
+
     <Preference
         app:fragment="fulguris.settings.fragment.AdBlockSettingsFragment"
         app:title="@string/settings_adblock"
-        app:summary="@string/settings_summary_content_control"
         app:icon="@drawable/ic_block"
         app:singleLineTitle="false"
         />
@@ -81,5 +80,3 @@
         />
 
 </PreferenceScreen>
-
-

@@ -131,7 +131,7 @@
     <string name="message_updated">Тепер ви використовуєте v%s. Хочете переглянути примітки до випуску?</string>
     <string name="title_welcome">Ласкаво просимо в Fulguris</string>
     <string name="message_welcome">Відвідати нашу домашню сторінку, щоб дізнатися більше про цей потужний веббраузер?</string>
-    <string name="block_ads">Керування вмістом</string>
+    <string name="block_ads">Блокувальник реклами</string>
     <string name="block_remote_frequency_daily">Щодня</string>
     <string name="block_remote_frequency_weekly">Щотижня</string>
     <string name="block_remote_frequency_monthly">Щомісяця</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Меню вкладки</string>
     <string name="settings_title_main_menu">Головне меню</string>
     <string name="pref_category_filters">Фільтри</string>
-    <string name="pref_category_summary_filters">Локальні або віддалені файли, що визначають правила керування вмістом</string>
+    <string name="pref_category_summary_filters">Локальні або віддалені файли, що визначають правила блокувальника реклами</string>
     <string name="pref_category_on_tab_close">При закритті вкладки</string>
     <string name="pref_category_on_tab_change">При зміні вкладки</string>
     <string name="pref_category_on_tab_back_forward">При поверненні чи переході</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Очищати вебсховище при виході</string>
     <string name="message_web_storage_cleared">Вебсховище очищено</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Блокування реклами та фільтрування вмісту</string>
-    <string name="settings_summary_content_control_toggle">Активувати блокування реклами та фільтрування вмісту</string>
     <string name="settings_title_tab_bar_orientation">Орієнтація панелі вкладок</string>
     <string name="settings_summary_on_tab_bar_orientation">Вертикальна</string>
     <string name="settings_summary_off_tab_bar_orientation">Горизонтальна</string>

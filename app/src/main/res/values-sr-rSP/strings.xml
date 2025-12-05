@@ -131,7 +131,7 @@
     <string name="message_updated">Сада користите v%s. Да ли желите да проверите белешке о издању на мрежи?</string>
     <string name="title_welcome">Добродошли у Фулгурис</string>
     <string name="message_welcome">Посетите нашу почетну страницу да бисте сазнали више о овом моћном веб претраживачу?</string>
-    <string name="block_ads">Контрола садржаја</string>
+    <string name="block_ads">Blokator reklama</string>
     <string name="block_remote_frequency_daily">Дневно</string>
     <string name="block_remote_frequency_weekly">Недељно</string>
     <string name="block_remote_frequency_monthly">Месечно</string>
@@ -262,7 +262,7 @@
     <string name="action_tab_menu">Meni kartice</string>
     <string name="settings_title_main_menu">Glavni meni</string>
     <string name="pref_category_filters">Филтери</string>
-    <string name="pref_category_summary_filters">Локалне или удаљене датотеке које дефинишу ваша правила контроле садржаја</string>
+    <string name="pref_category_summary_filters">Lokalne ili udaljene datoteke koje definišu pravila blokatora reklama</string>
     <string name="pref_category_on_tab_close">Приликом затварања картице</string>
     <string name="pref_category_on_tab_change">Приликом промене картице</string>
     <string name="pref_category_on_tab_back_forward">Када иде назад или напред</string>
@@ -356,8 +356,6 @@
     <string name="clear_web_storage_exit">Очисти веб складиште по затварању</string>
     <string name="message_web_storage_cleared">Веб складиште је очишћено</string>
     <string name="settings_adblock">@string/block_ads</string>
-    <string name="settings_summary_content_control">Блокатор огласа и филтрирање садржаја</string>
-    <string name="settings_summary_content_control_toggle">Активирајте блокатор огласа и филтрирање садржаја</string>
     <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
