@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>手動設定</item>
     </string-array>
-    <string name="port">連線埠：</string>
     <string name="yes">確定</string>
     <string name="no">取消</string>
     <string name="clear_cookies_exit">結束時清除 Cookies</string>

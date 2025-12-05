@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Manuell</item>
     </string-array>
-    <string name="port">Port:</string>
     <string name="yes">Ja</string>
     <string name="no">Nej</string>
     <string name="clear_cookies_exit">Rensa cookies vid avslut</string>

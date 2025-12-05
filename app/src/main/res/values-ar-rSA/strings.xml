@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>يدوي</item>
     </string-array>
-    <string name="port">Port:</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="clear_cookies_exit">مسح ملفات تعريف الارتباط عند الخروج</string>

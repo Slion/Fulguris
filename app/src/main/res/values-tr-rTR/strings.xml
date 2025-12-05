@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Manuel</item>
     </string-array>
-    <string name="port">Port:</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
     <string name="clear_cookies_exit">Çıkışta çerezleri temizle</string>

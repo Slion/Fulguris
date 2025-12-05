@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Handmatig</item>
     </string-array>
-    <string name="port">Poort:</string>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
     <string name="clear_cookies_exit">Wis cookies bij beëindigen</string>

@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Manual</item>
     </string-array>
-    <string name="port">Portas:</string>
     <string name="yes">Taip</string>
     <string name="no">Ne</string>
     <string name="clear_cookies_exit">Clear cookies on exit</string>

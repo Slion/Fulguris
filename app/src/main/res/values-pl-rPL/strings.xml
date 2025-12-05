@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Ręczne ustawienia</item>
     </string-array>
-    <string name="port">Port:</string>
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
     <string name="clear_cookies_exit">Wyczyść pliki cookie po zamknięciu</string>

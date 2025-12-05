@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Manual</item>
     </string-array>
-    <string name="port">포트:</string>
     <string name="yes">예</string>
     <string name="no">아니오</string>
     <string name="clear_cookies_exit">종료할 때 쿠키 지우기</string>

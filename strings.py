@@ -940,13 +940,20 @@ def remove_string_from_all(string_id):
     sys.exit(0)
 
 def find_unused_strings():
-    """Find strings defined in English but not used anywhere in the source code."""
+    """Find strings defined in English but not used anywhere in the source code.
+
+    Optimized approach: Read each source file once, use a single regex to find
+    ALL string references, then compute the difference.
+    """
+    import time
+    start_time = time.time()
+
     # Parse strings.xml to get all string names
     strings_file = Path('app/src/main/res/values/strings.xml')
     with open(strings_file, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    string_names = re.findall(r'<string name="([^"]+)"', content)
+    string_names = set(re.findall(r'<string name="([^"]+)"', content))
     total_strings = len(string_names)
     print(f"Total strings defined: {total_strings}")
 
@@ -959,49 +966,67 @@ def find_unused_strings():
     # Exclude translation strings.xml files but keep arrays.xml and donottranslate.xml
     source_files = [f for f in source_files if 'values-' not in str(f) or 'strings.xml' not in str(f)]
 
-    print(f"Total source files to check: {len(source_files)}")
-    print(f"\nScanning for unused strings...")
+    total_files = len(source_files)
+    print(f"Total source files to check: {total_files}")
 
-    unused = []
+    file_discovery_time = time.time()
+    print(f"  File discovery: {file_discovery_time - start_time:.2f}s")
+
+    print(f"\nScanning files for string usage...")
+
+    # Track all used strings
+    used_strings = set()
     checked = 0
     bar_width = 40
 
-    for string_name in string_names:
+    # Patterns to find any string reference (captures the string name)
+    patterns = [
+        r'R\.string\.(\w+)',           # R.string.name
+        r'@string/(\w+)',              # @string/name
+        r'"pref_key_(\w+)"',           # "pref_key_name"
+    ]
+    combined_pattern = '|'.join(patterns)
+
+    # Read each file once and extract all string references
+    for source_file in source_files:
         checked += 1
         # Update progress bar
-        percent = (checked * 100) // total_strings
-        filled = (checked * bar_width) // total_strings
+        percent = (checked * 100) // total_files
+        filled = (checked * bar_width) // total_files
         bar = '█' * filled + '░' * (bar_width - filled)
-        print(f"\r  [{bar}] {percent:3d}% ({checked}/{total_strings})", end="", flush=True)
+        print(f"\r  [{bar}] {percent:3d}% ({checked}/{total_files})", end="", flush=True)
 
-        found = False
-        patterns = [
-            rf'R\.string\.{string_name}\b',
-            rf'@string/{string_name}\b',
-            rf'pref_key_{string_name}',
-            rf'"pref_key_{string_name}"',  # Preference key in strings
-        ]
+        try:
+            with open(source_file, 'r', encoding='utf-8', errors='ignore') as f:
+                file_content = f.read()
+        except Exception as e:
+            print(f"\nError reading {source_file}: {e}")
+            continue
 
-        for source_file in source_files:
-            try:
-                with open(source_file, 'r', encoding='utf-8', errors='ignore') as f:
-                    file_content = f.read()
-                    if any(re.search(pattern, file_content) for pattern in patterns):
-                        found = True
-                        break
-            except Exception as e:
-                print(f"\nError reading {source_file}: {e}")
-                continue
-
-        if not found:
-            unused.append(string_name)
+        # Find all string references in this file
+        matches = re.findall(combined_pattern, file_content)
+        for match in matches:
+            # match is a tuple of groups, only one will be non-empty
+            string_name = next((m for m in match if m), None)
+            if string_name:
+                used_strings.add(string_name)
+                # Also check for pref_key_ prefix pattern
+                if string_name.startswith('pref_key_'):
+                    used_strings.add(string_name[9:])  # Remove pref_key_ prefix
 
     # Complete the progress bar
     bar = '█' * bar_width
-    print(f"\r  [{bar}] 100% ({total_strings}/{total_strings}) Done!")
+    scan_time = time.time()
+    print(f"\r  [{bar}] 100% ({total_files}/{total_files}) Done! ({scan_time - file_discovery_time:.2f}s)")
+
+    # Find unused strings
+    unused = sorted(string_names - used_strings)
+
+    total_time = time.time() - start_time
+    print(f"\nTotal time: {total_time:.2f}s")
 
     if not unused:
-        print("\nNo unused strings found!")
+        print("No unused strings found!")
         sys.exit(0)
 
     print(f"\nTotal unused strings: {len(unused)}")

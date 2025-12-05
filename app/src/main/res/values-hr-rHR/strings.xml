@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Ručno</item>
     </string-array>
-    <string name="port">Port:</string>
     <string name="yes">Da</string>
     <string name="no">Ne</string>
     <string name="clear_cookies_exit">Očisti kolačiće pri zatvaranju</string>

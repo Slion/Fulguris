@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Manuální</item>
     </string-array>
-    <string name="port">Port:</string>
     <string name="yes">Ano</string>
     <string name="no">Ne</string>
     <string name="clear_cookies_exit">Vymazat cookie při ukončení</string>

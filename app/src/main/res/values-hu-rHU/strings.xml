@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Manuális</item>
     </string-array>
-    <string name="port">Port:</string>
     <string name="yes">Igen</string>
     <string name="no">Nem</string>
     <string name="clear_cookies_exit">Cookie-ek törlése kilépéskor</string>

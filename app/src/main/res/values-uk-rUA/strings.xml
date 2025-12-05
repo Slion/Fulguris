@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Вручну</item>
     </string-array>
-    <string name="port">Порт:</string>
     <string name="yes">Так</string>
     <string name="no">Ні</string>
     <string name="clear_cookies_exit">Очистити куки під час виходу</string>

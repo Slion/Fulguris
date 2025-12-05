@@ -204,7 +204,6 @@
         <item>I2P</item>
         <item>Thủ công</item>
     </string-array>
-    <string name="port">Cổng:</string>
     <string name="yes">Đồng ý</string>
     <string name="no">Không</string>
     <string name="clear_cookies_exit">Xóa cookie khi thoát</string>
