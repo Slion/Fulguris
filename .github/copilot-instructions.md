@@ -2,7 +2,7 @@
 
 ## Project Context
 
-This is **Fulguris Web Browser**, an Android application with localization support for 37 languages. You are assisting with the **Thai (th-rTH) translation** project.
+This is **Fulguris Web Browser**, an Android application with localization support for 39 languages. You are assisting with the **Thai (th-rTH) translation** project.
 
 ## Your Role
 
@@ -26,7 +26,7 @@ When the user asks to "work on Thai translation" or similar requests, you should
 📖 **For ALL translation instructions, see [L10N.md](../L10N.md)**
 
 The L10N.md file contains everything you need:
-- **Current translation status** for all 37 languages including Thai
+- **Current translation status** for all 39 languages including Thai
 - **Complete strings.py tool documentation** with all commands
 - **Translation workflow** (check → translate → apply → verify)
 - **Android XML escaping rules** (CRITICAL: use `\'` not `&apos;`)
@@ -118,6 +118,10 @@ python strings.py --raw --set th-rTH string_id 'ข้อความ <xliff:g i
 
 # Complex XML with placeholders - still single quotes!
 python strings.py --raw --set th-rTH match_x_of_n 'ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g>'
+
+# Edit English source strings (developers only) - use 'source' as language code
+python strings.py --get source settings           # Read from English source
+python strings.py --set source settings 'Settings'  # Update English source string
 ```
 
 ## Error Checking - IMPORTANT!
@@ -174,5 +178,5 @@ Settings → การตั้งค่า | Enable → เปิดใช้�
 
 **For complete instructions, commands, examples, and troubleshooting: See [L10N.md](../L10N.md)**
 
-**Last Updated:** November 21, 2025
+**Last Updated:** December 5, 2025
 **Maintained by:** Fulguris Development Team

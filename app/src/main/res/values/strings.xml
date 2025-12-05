@@ -239,7 +239,7 @@
     <string name="settings_title_reset_menus">Restore default menus</string>
     <string name="dialog_title_reset_menus">Restore default menus?</string>
     <string name="action_restore">Restore</string>
-    <string name="dialog_message_reset_menus">You will lose you current setup</string>
+    <string name="dialog_message_reset_menus">You will lose your current setup</string>
     <string name="export_bookmarks">Export bookmarks to backup</string>
     <string name="import_backup">Import bookmarks from backup</string>
     <string name="bookmark_export_path">Bookmarks exported to</string>
@@ -718,5 +718,3 @@
     <string name="page_requests_none">No requests recorded for this page</string>
     <string name="settings_summary_full_menu">Show full menu</string>
 </resources>
-
-

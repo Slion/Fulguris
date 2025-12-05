@@ -256,10 +256,15 @@ def show_help():
     print("    By default, values are XML-escaped (quotes, apostrophes).")
     print("    Use --raw flag for complex XML content (no escaping).")
     print("    Will ERROR if string doesn't exist in English source file.")
+    print("    ")
+    print("    Special language code 'source': Edit the English source file directly")
+    print("      python strings.py --set source string_id 'Updated English text'")
+    print("    ")
     print("    Examples:")
     print("      python strings.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
     print("      python strings.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
     print("      python strings.py --raw --set ko-rKR test '<xliff:g id=\"x\">%1$d</xliff:g>개'")
+    print("      python strings.py --set source settings 'Settings'  # Edit English source")
     print("    ")
     print("    IMPORTANT - Only updates existing strings!")
     print("      --set will error if string doesn't exist in English source file.")
@@ -273,8 +278,10 @@ def show_help():
     print("      See L10N.md for complete PowerShell quoting guide.")
     print("\n  python strings.py --get <lang> <string_id>")
     print("    Get a string value from a specific language")
-    print("    Example:")
+    print("    Use 'source' as language code to read from English source file")
+    print("    Examples:")
     print("      python strings.py --get ru-rRU locale_app_name")
+    print("      python strings.py --get source settings  # Read from English source")
     print("\n  python strings.py --get-plurals <lang> <plurals_name>")
     print("    Get all plural items for a plurals resource")
     print("    Example:")
@@ -309,8 +316,16 @@ def show_help():
     sys.exit(0)
 
 def get_string_value(language, string_id):
-    """Get a string value from a specific language file."""
-    file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
+    """Get a string value from a specific language file.
+
+    Special language codes:
+        'source' or 'values' - Read from English source file (values/strings.xml)
+    """
+    # Handle special 'source' or 'values' language code for English source file
+    if language in ('source', 'values'):
+        file_path = Path('app/src/main/res/values/strings.xml')
+    else:
+        file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
     if not file_path.exists():
         print(f"Error: Language file not found: {file_path}")
@@ -527,12 +542,22 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False,
         # Detect line ending style from existing content (default to Windows CRLF)
         line_ending = '\r\n' if '\r\n' in content else '\n'
 
-        # Create new string entry with proper indentation and line ending
+        # Create new string entry with proper indentation
         indent = '    '  # Standard 4-space indent
-        new_entry = f'{line_ending}{indent}<string name="{string_id}">{escaped_value}</string>'
+        new_entry = f'{indent}<string name="{string_id}">{escaped_value}</string>{line_ending}'
 
-        # Insert before closing tag (which should already have proper leading whitespace)
-        new_content = content[:closing_match.start()] + new_entry + line_ending + closing_match.group(0)
+        # Check if there's already a newline before </resources>
+        pos = closing_match.start()
+        has_newline_before = pos > 0 and content[pos-1] in '\r\n'
+
+        # Insert before closing tag
+        if has_newline_before:
+            # Already has newline, just insert the entry
+            new_content = content[:pos] + new_entry + closing_match.group(0)
+        else:
+            # Need to add newline before our entry
+            new_content = content[:pos] + line_ending + new_entry + closing_match.group(0)
+
         return True, new_content, None, True  # was_added = True
 
     # String exists - UPDATE IT
@@ -550,8 +575,11 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
     If it doesn't exist but exists in English, it will be added as a new translation.
     If it doesn't exist in English, an error is returned.
 
+    Special language codes:
+        'source' or 'values' - Edit the English source file (values/strings.xml)
+
     Args:
-        language: Language code (e.g., 'ko-rKR')
+        language: Language code (e.g., 'ko-rKR') or 'source'/'values' for English
         string_id: The string resource ID
         new_value: The new value to set
         skip_escape: If True, skip XML escaping (for --raw)
@@ -567,15 +595,19 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
             print(f"  python strings.py --raw --set {language} {string_id} $value")
         sys.exit(1)
 
-    # Check if string exists in English source file
-    if not string_exists_in_english(string_id):
-        print(f"[ERROR] String '{string_id}' does not exist in English source file")
-        print(f"  Cannot add translation for a string that doesn't exist in English.")
-        print(f"  First add the string to English with:")
-        print(f"  python strings.py --add {string_id} \"English value\"")
-        sys.exit(1)
-
-    file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
+    # Handle special 'source' or 'values' language code for English source file
+    is_source = language in ('source', 'values')
+    if is_source:
+        file_path = Path('app/src/main/res/values/strings.xml')
+    else:
+        # Check if string exists in English source file (only for non-source languages)
+        if not string_exists_in_english(string_id):
+            print(f"[ERROR] String '{string_id}' does not exist in English source file")
+            print(f"  Cannot add translation for a string that doesn't exist in English.")
+            print(f"  First add the string to English with:")
+            print(f"  python strings.py --add {string_id} \"English value\"")
+            sys.exit(1)
+        file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
     if not file_path.exists():
         print(f"Error: Language file not found: {file_path}")
@@ -590,21 +622,27 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
         print(f"Error reading file: {e}")
         sys.exit(1)
 
-    # Replace the string using common function - allow adding since we verified English exists
-    success, new_content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add=True)
+    # Replace the string using common function
+    # For source file: don't allow adding (use --add for that)
+    # For translations: allow adding since we verified English exists
+    success, new_content, error_msg, was_added = _replace_string_in_content(
+        content, string_id, new_value, skip_escape, allow_add=not is_source)
 
     if not success:
         print(f"[ERROR] {error_msg}")
+        if is_source and "not found" in error_msg.lower():
+            print(f"  Use --add to add new strings to English source file.")
         sys.exit(1)
 
     # Write back to file with UTF-8 encoding (no BOM), preserving line endings
     try:
         with open(file_path, 'w', encoding='utf-8', newline='') as f:
             f.write(new_content)
+        display_lang = "source" if is_source else language
         if was_added:
-            print(f"[OK] Added new translation {language}:{string_id}")
+            print(f"[OK] Added new translation {display_lang}:{string_id}")
         else:
-            print(f"[OK] Successfully updated {language}:{string_id}")
+            print(f"[OK] Successfully updated {display_lang}:{string_id}")
         print(f"  New value: {new_value}")
     except Exception as e:
         print(f"Error writing file: {e}")
@@ -619,12 +657,22 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
     If it doesn't exist but exists in English, it will be added as a new translation.
     If it doesn't exist in English, it will be skipped with an error.
 
+    Special language codes:
+        'source' or 'values' - Edit the English source file (values/strings.xml)
+
     Args:
-        language: Language code (e.g., 'ko-rKR')
+        language: Language code (e.g., 'ko-rKR') or 'source'/'values' for English
         string_pairs: List of tuples [(string_id, value), ...]
         skip_escape: If True, skip XML escaping (for --set-raw)
     """
-    file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
+    # Handle special 'source' or 'values' language code for English source file
+    is_source = language in ('source', 'values')
+    if is_source:
+        file_path = Path('app/src/main/res/values/strings.xml')
+        display_lang = "source"
+    else:
+        file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
+        display_lang = language
 
     if not file_path.exists():
         print(f"Error: Language file not found: {file_path}")
@@ -640,7 +688,7 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
         sys.exit(1)
 
     print("=" * 80)
-    print(f"BATCH UPDATE: {language}")
+    print(f"BATCH UPDATE: {display_lang}")
     print("=" * 80)
     print(f"Processing {len(string_pairs)} strings...\n")
 
@@ -661,14 +709,17 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
 
     # Process all string replacements
     for string_id, new_value in string_pairs:
-        # First check if string exists in English
-        if not string_exists_in_english(string_id):
+        # For non-source languages, check if string exists in English first
+        if not is_source and not string_exists_in_english(string_id):
             not_in_english.append(string_id)
             error_count += 1
             continue
 
-        # Use common replacement function - allow adding since we verified English exists
-        success, content, error_msg, was_added = _replace_string_in_content(content, string_id, new_value, skip_escape, allow_add=True)
+        # Use common replacement function
+        # For source file: don't allow adding (strings must exist)
+        # For translations: allow adding since we verified English exists
+        success, content, error_msg, was_added = _replace_string_in_content(
+            content, string_id, new_value, skip_escape, allow_add=not is_source)
 
         if not success:
             print(f"[ERROR] {string_id}: {error_msg}")
