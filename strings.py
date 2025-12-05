@@ -1282,7 +1282,10 @@ if len(sys.argv) > 1:
         if show_all_for_lang:
             print(f"Will show ALL issues for language: {show_all_for_lang}")
         if full_check:
-            print("Mode: FULL CHECK (flags strings matching English even if in translated file)")
+            if show_all_for_lang and show_all_for_lang.startswith('en-'):
+                print("Mode: FULL CHECK (flags strings DIFFERING from English source)")
+            else:
+                print("Mode: FULL CHECK (flags strings matching English even if in translated file)")
         else:
             print("Mode: INCREMENTAL (only flags missing strings)")
         if near_threshold > 0:
@@ -1405,17 +1408,29 @@ for lang_dir in sorted(lang_dirs):
             if match:
                 translated_value = match.group(1)
 
-                # Check if it matches English exactly (possibly not translated)
+                # Check if it matches English exactly
                 is_exact_match = translated_value == english_value
                 char_diff = _char_difference(translated_value, english_value) if near_threshold > 0 else 999
                 is_near_match = char_diff <= near_threshold and char_diff > 0
 
-                if is_exact_match:
-                    lang_issues.append(f"  Untranslated: {string_name} = '{english_value}'")
-                elif is_near_match:
-                    lang_issues.append(f"  Near match ({char_diff} chars): {string_name}")
-                    lang_issues.append(f"    EN: '{english_value}'")
-                    lang_issues.append(f"    TR: '{translated_value}'")
+                # For English variants (en-rUS, en-rGB), flag strings that DON'T match
+                # For other languages, flag strings that DO match (untranslated)
+                is_english_variant = lang_name.startswith('en-')
+
+                if is_english_variant:
+                    # English variants: flag differences (potential issues to review)
+                    if not is_exact_match:
+                        lang_issues.append(f"  Differs from source: {string_name}")
+                        lang_issues.append(f"    Source: '{english_value}'")
+                        lang_issues.append(f"    en-rUS:  '{translated_value}'")
+                else:
+                    # Other languages: flag matches (untranslated)
+                    if is_exact_match:
+                        lang_issues.append(f"  Untranslated: {string_name} = '{english_value}'")
+                    elif is_near_match:
+                        lang_issues.append(f"  Near match ({char_diff} chars): {string_name}")
+                        lang_issues.append(f"    EN: '{english_value}'")
+                        lang_issues.append(f"    TR: '{translated_value}'")
 
     # Check placeholder consistency for strings that ARE in translated file (always check this)
     for line in trans_content.split('\n'):
@@ -1440,6 +1455,8 @@ for lang_dir in sorted(lang_dirs):
                 lang_issues.append(f"    WARNING: This WILL cause app crashes!")
 
     # Check plurals
+    is_english_variant = lang_name.startswith('en-')
+
     for plurals_name, english_quantities in english_plurals.items():
         # Find the plurals block in translated content
         plurals_pattern = f'<plurals name="{re.escape(plurals_name)}">(.*?)</plurals>'
@@ -1453,20 +1470,34 @@ for lang_dir in sorted(lang_dirs):
         trans_plurals_content = plurals_match.group(1)
         trans_quantities = _extract_plural_items(trans_plurals_content)
 
-        # Only check if existing quantities are untranslated in FULL mode
+        # Only check plurals content in FULL mode
         if full_check:
-            untranslated_quantities = []
-            for quantity, trans_value in trans_quantities.items():
-                # Check if this quantity exists in English and has the same value (untranslated)
-                if quantity in english_quantities:
-                    english_value = english_quantities[quantity]
-                    if trans_value == english_value and len(english_value) > 3:
-                        untranslated_quantities.append(f"{quantity}: '{english_value}'")
+            if is_english_variant:
+                # English variants: flag plurals that DIFFER from source
+                differing_quantities = []
+                for quantity, trans_value in trans_quantities.items():
+                    if quantity in english_quantities:
+                        english_value = english_quantities[quantity]
+                        if trans_value != english_value:
+                            differing_quantities.append(f"{quantity}: '{trans_value}' (source: '{english_value}')")
 
-            if untranslated_quantities:
-                lang_issues.append(f"  Plurals '{plurals_name}' untranslated:")
-                for untrans in untranslated_quantities:
-                    lang_issues.append(f"    {untrans}")
+                if differing_quantities:
+                    lang_issues.append(f"  Plurals '{plurals_name}' differs from source:")
+                    for diff in differing_quantities:
+                        lang_issues.append(f"    {diff}")
+            else:
+                # Other languages: flag plurals that MATCH source (untranslated)
+                untranslated_quantities = []
+                for quantity, trans_value in trans_quantities.items():
+                    if quantity in english_quantities:
+                        english_value = english_quantities[quantity]
+                        if trans_value == english_value and len(english_value) > 3:
+                            untranslated_quantities.append(f"{quantity}: '{english_value}'")
+
+                if untranslated_quantities:
+                    lang_issues.append(f"  Plurals '{plurals_name}' untranslated:")
+                    for untrans in untranslated_quantities:
+                        lang_issues.append(f"    {untrans}")
 
     if lang_issues:
         issues_found[lang_name] = lang_issues
@@ -1514,10 +1545,4 @@ print(f"Languages with potential issues: {len(issues_found)}")
 print(f"Languages with clean translations: {len(lang_dirs) - len(issues_found)}")
 if total_critical > 0:
     print(f"\n*** CRITICAL ISSUES FOUND: {total_critical} placeholder mismatches that WILL cause crashes! ***")
-print("\nNote: Some 'untranslated' strings may be intentional (proper nouns, etc.)")
-print("\nUsage:")
-print("  python strings.py --check                   # Check all languages")
-print("  python strings.py --check <lang>            # Check specific language (e.g., ru-rRU)")
-print("  python strings.py --list                    # List all available languages")
-print("  python strings.py --help                    # Show detailed help")
 print("="*80)

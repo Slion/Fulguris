@@ -478,7 +478,7 @@
     </plurals>
     <plurals name="settings_summary_overrides">
         <item quantity="one">1 override</item>
-        <item quantity="other">%d overrides</item>
+        <item quantity="other"><xliff:g id="domain_count" example="5">%d</xliff:g> overrides</item>
     </plurals>
     <string name="settings_summary_no_overrides">No overrides</string>
     <string name="settings_title_task_label">Task label</string>

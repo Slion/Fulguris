@@ -362,7 +362,7 @@
     <string name="pref_title_default_browser">Default browser</string>
     <string name="text_encoding">Text encoding</string>
     <string name="reset_settings">Reset settings</string>
-    <string name="reset_settings_confirmation">You will loose all your settings. Are you sure you want to proceed?</string>
+    <string name="reset_settings_confirmation">You will lose all your settings. Are you sure you want to proceed?</string>
     <string name="invert_color">Invert color</string>
     <string name="settings_black_status_bar">Black status bar</string>
     <string name="tabs">Tabs</string>
