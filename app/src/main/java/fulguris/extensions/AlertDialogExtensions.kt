@@ -1,6 +1,7 @@
 package fulguris.extensions
 
 import android.app.Dialog
+import android.content.DialogInterface
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
@@ -38,3 +39,18 @@ fun MaterialAlertDialogBuilder.launch(): Dialog {
     //
     return dialog
 }
+
+/**
+ * Execute the given [action] when the dialog is shown.
+ * This is a convenience extension that wraps setOnShowListener with a cleaner API.
+ * The listener is automatically removed after being called once.
+ */
+inline fun Dialog.doOnShow(crossinline action: (DialogInterface) -> Unit) {
+    setOnShowListener { dialog ->
+        // Deregister the listener after first execution
+        setOnShowListener(null)
+        // Execute
+        action(dialog)
+    }
+}
+

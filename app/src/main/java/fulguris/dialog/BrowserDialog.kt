@@ -32,10 +32,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
-import fulguris.extensions.doOnLayout
 import fulguris.extensions.inflater
 import fulguris.extensions.onConfigurationChange
 import fulguris.extensions.launch
+import fulguris.extensions.doOnShow
 
 object BrowserDialog {
 
@@ -202,12 +202,11 @@ object BrowserDialog {
         // Show it first as invisible then dismiss and actually show it
         // This works around our broken animations on HONOR Magic V2
         // See: https://github.com/Slion/Fulguris/issues/662
-        dialog.setOnShowListener {
-            if (dialog.window?.decorView?.visibility == View.INVISIBLE) {
-                dialog.dismiss()
-                dialog.window?.decorView?.visibility = View.VISIBLE
-                dialog.show()
-            }
+        dialog.window?.decorView?.visibility = View.INVISIBLE
+        dialog.doOnShow {
+            dialog.dismiss()
+            dialog.window?.decorView?.visibility = View.VISIBLE
+            dialog.show()
         }
 
         dialog.show()
