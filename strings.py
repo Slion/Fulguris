@@ -226,7 +226,7 @@ def show_help():
     print("LOCALIZATION (L10N) CHECK TOOL")
     print("=" * 80)
     print("\nSupported Commands:")
-    print("\n  python l10n.py --check [language_code] [--full] [--near N]")
+    print("\n  python strings.py --check [language_code] [--full] [--near N]")
     print("    Check translations for all languages or a specific language")
     print("    ")
     print("    Two check modes:")
@@ -240,26 +240,26 @@ def show_help():
     print("    --near N: Also flag strings differing by N or fewer characters from English")
     print("              (default: 0, exact match only)")
     print("    Examples:")
-    print("      python l10n.py --check          # Incremental check all languages")
-    print("      python l10n.py --check ru-rRU   # Incremental check Russian (show ALL issues)")
-    print("      python l10n.py --check --full   # Full audit of all languages")
-    print("      python l10n.py --check th-rTH --full  # Full audit of Thai")
-    print("      python l10n.py --check --near 1 # Flag strings differing by 1 char (punctuation)")
-    print("\n  python l10n.py --list")
+    print("      python strings.py --check          # Incremental check all languages")
+    print("      python strings.py --check ru-rRU   # Incremental check Russian (show ALL issues)")
+    print("      python strings.py --check --full   # Full audit of all languages")
+    print("      python strings.py --check th-rTH --full  # Full audit of Thai")
+    print("      python strings.py --check --near 1 # Flag strings differing by 1 char (punctuation)")
+    print("\n  python strings.py --list")
     print("    List all available language codes")
-    print("\n  python l10n.py --help, -h")
+    print("\n  python strings.py --help, -h")
     print("    Show this help message")
-    print("\n  python l10n.py --summary")
+    print("\n  python strings.py --summary")
     print("    Show only summary statistics for all languages")
-    print("\n  python l10n.py [--raw] --set <lang> <string_id> <value> [<string_id> <value> ...]")
+    print("\n  python strings.py [--raw] --set <lang> <string_id> <value> [<string_id> <value> ...]")
     print("    Set one or more string values for a specific language")
     print("    By default, values are XML-escaped (quotes, apostrophes).")
     print("    Use --raw flag for complex XML content (no escaping).")
     print("    Will ERROR if string doesn't exist in English source file.")
     print("    Examples:")
-    print("      python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
-    print("      python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
-    print("      python l10n.py --raw --set ko-rKR test '<xliff:g id=\"x\">%1$d</xliff:g>개'")
+    print("      python strings.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
+    print("      python strings.py --set ko-rKR enable \"사용\" disable \"사용 안 함\" show \"표시\"")
+    print("      python strings.py --raw --set ko-rKR test '<xliff:g id=\"x\">%1$d</xliff:g>개'")
     print("    ")
     print("    IMPORTANT - Only updates existing strings!")
     print("      --set will error if string doesn't exist in English source file.")
@@ -267,36 +267,40 @@ def show_help():
     print("    ")
     print("    IMPORTANT - PowerShell quoting:")
     print("      Use SINGLE quotes for strings with placeholders (%, $, etc.):")
-    print("        python l10n.py --set ko-rKR dialog_title '%1$s 열기'")
+    print("        python strings.py --set ko-rKR dialog_title '%1$s 열기'")
     print("      Escape inner double quotes with backslash:")
-    print("        python l10n.py --set ko-rKR string_id 'Text with \"quotes\"'")
+    print("        python strings.py --set ko-rKR string_id 'Text with \"quotes\"'")
     print("      See L10N.md for complete PowerShell quoting guide.")
-    print("\n  python l10n.py --get <lang> <string_id>")
+    print("\n  python strings.py --get <lang> <string_id>")
     print("    Get a string value from a specific language")
     print("    Example:")
-    print("      python l10n.py --get ru-rRU locale_app_name")
-    print("\n  python l10n.py --get-plurals <lang> <plurals_name>")
+    print("      python strings.py --get ru-rRU locale_app_name")
+    print("\n  python strings.py --get-plurals <lang> <plurals_name>")
     print("    Get all plural items for a plurals resource")
     print("    Example:")
-    print("      python l10n.py --get-plurals ko-rKR notification_incognito_running_title")
-    print("\n  python l10n.py [--raw] --set-plurals <lang> <plurals_name> <quantity> <value> [<quantity> <value> ...]")
+    print("      python strings.py --get-plurals ko-rKR notification_incognito_running_title")
+    print("\n  python strings.py [--raw] --set-plurals <lang> <plurals_name> <quantity> <value> [<quantity> <value> ...]")
     print("    Set plural items for a plurals resource")
     print("    Quantities: zero, one, two, few, many, other")
     print("    Use --raw flag for complex XML content (no escaping).")
     print("    Example:")
-    print("      python l10n.py --set-plurals ko-rKR notification_title other '%1$d tabs open'")
-    print("      python l10n.py --raw --set-plurals ko-rKR cookies other '<xliff:g>%d</xliff:g> cookies'")
-    print("\n  python l10n.py --add <string_id> <value>")
+    print("      python strings.py --set-plurals ko-rKR notification_title other '%1$d tabs open'")
+    print("      python strings.py --raw --set-plurals ko-rKR cookies other '<xliff:g>%d</xliff:g> cookies'")
+    print("\n  python strings.py --add <string_id> <value>")
     print("    Add a NEW string to the English source file (values/strings.xml)")
     print("    This adds the string ONLY to English - language files should only contain")
     print("    translated strings to properly track translation progress.")
     print("    Example:")
-    print("      python l10n.py --add new_feature_name \"New Feature\"")
+    print("      python strings.py --add new_feature_name \"New Feature\"")
     print("    After adding, translate the new string in each language using --set.")
-    print("\n  python l10n.py --remove <string_id>")
+    print("\n  python strings.py --remove <string_id>")
     print("    Remove a string from ALL language files")
     print("    Example:")
-    print("      python l10n.py --remove obsolete_string")
+    print("      python strings.py --remove obsolete_string")
+    print("\n  python strings.py --unused")
+    print("    Find strings defined in English but not used in source code")
+    print("    Searches .kt, .java, and .xml files for R.string.* and @string/* references")
+    print("    Outputs a command to remove all unused strings")
     print("\nOutput Information:")
     print("  - Untranslated strings that match English")
     print("  - Placeholder mismatches (e.g., missing %s, %1$s)")
@@ -310,7 +314,7 @@ def get_string_value(language, string_id):
 
     if not file_path.exists():
         print(f"Error: Language file not found: {file_path}")
-        print(f"Run 'python l10n.py --list' to see available languages")
+        print(f"Run 'python strings.py --list' to see available languages")
         sys.exit(1)
 
     # Read the file content
@@ -344,7 +348,7 @@ def get_plurals_value(language, plurals_name):
 
     if not file_path.exists():
         print(f"Error: Language file not found: {file_path}")
-        print(f"Run 'python l10n.py --list' to see available languages")
+        print(f"Run 'python strings.py --list' to see available languages")
         sys.exit(1)
 
     # Read the file content
@@ -394,7 +398,7 @@ def set_plurals_value(language, plurals_name, quantity_value_pairs, skip_escape=
 
     if not file_path.exists():
         print(f"Error: Language file not found: {file_path}")
-        print(f"Run 'python l10n.py --list' to see available languages")
+        print(f"Run 'python strings.py --list' to see available languages")
         sys.exit(1)
 
     # Read the file content
@@ -560,7 +564,7 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
         if skip_escape:
             print(f"\nFor PowerShell with --raw, use here-string to preserve quotes:")
             print(f"  $value = @'\n{new_value}\n'@")
-            print(f"  python l10n.py --raw --set {language} {string_id} $value")
+            print(f"  python strings.py --raw --set {language} {string_id} $value")
         sys.exit(1)
 
     # Check if string exists in English source file
@@ -568,14 +572,14 @@ def set_string_value(language, string_id, new_value, skip_escape=False):
         print(f"[ERROR] String '{string_id}' does not exist in English source file")
         print(f"  Cannot add translation for a string that doesn't exist in English.")
         print(f"  First add the string to English with:")
-        print(f"  python l10n.py --add {string_id} \"English value\"")
+        print(f"  python strings.py --add {string_id} \"English value\"")
         sys.exit(1)
 
     file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
 
     if not file_path.exists():
         print(f"Error: Language file not found: {file_path}")
-        print(f"Run 'python l10n.py --list' to see available languages")
+        print(f"Run 'python strings.py --list' to see available languages")
         sys.exit(1)
 
     # Read the file content, preserving line endings
@@ -624,7 +628,7 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
 
     if not file_path.exists():
         print(f"Error: Language file not found: {file_path}")
-        print(f"Run 'python l10n.py --list' to see available languages")
+        print(f"Run 'python strings.py --list' to see available languages")
         sys.exit(1)
 
     # Read the file content, preserving line endings
@@ -699,7 +703,7 @@ def set_string_values_batch(language, string_pairs, skip_escape=False):
     if not_in_english:
         print(f"\nStrings not found in English source: {', '.join(not_in_english)}")
         print(f"These strings must be added to English first:")
-        print(f"  python l10n.py --add <string_id> \"English value\"")
+        print(f"  python strings.py --add <string_id> \"English value\"")
     print("=" * 80)
     sys.exit(0)
 
@@ -771,7 +775,7 @@ def add_string_to_english(string_id, value):
         print(f"[OK] Added to English source file (values/strings.xml)")
         print(f"\nNext steps:")
         print(f"  1. Translators can now use --set to add translations:")
-        print(f"     python l10n.py --set <lang> {string_id} '<translated value>'")
+        print(f"     python strings.py --set <lang> {string_id} '<translated value>'")
         print(f"  2. Run --check <lang> to see which languages need this translation")
 
     except Exception as e:
@@ -935,6 +939,92 @@ def remove_string_from_all(string_id):
     print("=" * 80)
     sys.exit(0)
 
+def find_unused_strings():
+    """Find strings defined in English but not used anywhere in the source code."""
+    # Parse strings.xml to get all string names
+    strings_file = Path('app/src/main/res/values/strings.xml')
+    with open(strings_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    string_names = re.findall(r'<string name="([^"]+)"', content)
+    total_strings = len(string_names)
+    print(f"Total strings defined: {total_strings}")
+
+    # Get all source files
+    source_patterns = ['**/*.kt', '**/*.java', '**/*.xml']
+    source_files = []
+    for pattern in source_patterns:
+        source_files.extend(list(Path('app/src').rglob(pattern)))
+
+    # Exclude translation strings.xml files but keep arrays.xml and donottranslate.xml
+    source_files = [f for f in source_files if 'values-' not in str(f) or 'strings.xml' not in str(f)]
+
+    print(f"Total source files to check: {len(source_files)}")
+    print(f"\nScanning for unused strings...")
+
+    unused = []
+    checked = 0
+    bar_width = 40
+
+    for string_name in string_names:
+        checked += 1
+        # Update progress bar
+        percent = (checked * 100) // total_strings
+        filled = (checked * bar_width) // total_strings
+        bar = '█' * filled + '░' * (bar_width - filled)
+        print(f"\r  [{bar}] {percent:3d}% ({checked}/{total_strings})", end="", flush=True)
+
+        found = False
+        patterns = [
+            rf'R\.string\.{string_name}\b',
+            rf'@string/{string_name}\b',
+            rf'pref_key_{string_name}',
+            rf'"pref_key_{string_name}"',  # Preference key in strings
+        ]
+
+        for source_file in source_files:
+            try:
+                with open(source_file, 'r', encoding='utf-8', errors='ignore') as f:
+                    file_content = f.read()
+                    if any(re.search(pattern, file_content) for pattern in patterns):
+                        found = True
+                        break
+            except Exception as e:
+                print(f"\nError reading {source_file}: {e}")
+                continue
+
+        if not found:
+            unused.append(string_name)
+
+    # Complete the progress bar
+    bar = '█' * bar_width
+    print(f"\r  [{bar}] 100% ({total_strings}/{total_strings}) Done!")
+
+    if not unused:
+        print("\nNo unused strings found!")
+        sys.exit(0)
+
+    print(f"\nTotal unused strings: {len(unused)}")
+    print("\n" + "="*60)
+    print("UNUSED STRINGS FOUND:")
+    print("="*60)
+
+    # Simple list
+    print("\nUnused strings:")
+    for string_name in unused:
+        print(f"  - {string_name}")
+
+    # Output command to remove them
+    print("\n" + "="*60)
+    print("TO REMOVE THESE STRINGS, RUN:")
+    print("="*60)
+    print("python strings.py --remove", end="")
+    for string_name in unused:
+        print(f" {string_name}", end="")
+    print("\n")
+
+    sys.exit(0)
+
 # Check for command-line argument
 show_all_for_lang = None
 summary_only = False
@@ -961,7 +1051,7 @@ if len(sys.argv) > 1:
 
     if arg_start >= len(sys.argv):
         print("Error: Flags must be followed by a command")
-        print("Example: python l10n.py --raw --set th-rTH string_id \"value\"")
+        print("Example: python strings.py --raw --set th-rTH string_id \"value\"")
         sys.exit(1)
 
     arg = sys.argv[arg_start]
@@ -976,7 +1066,7 @@ if len(sys.argv) > 1:
     elif arg == '--get':
         if len(sys.argv) < arg_start + 3:
             print("Error: --get requires 2 arguments: <language> <string_id>")
-            print("Example: python l10n.py --get ru-rRU locale_app_name")
+            print("Example: python strings.py --get ru-rRU locale_app_name")
             sys.exit(1)
         language = sys.argv[arg_start + 1]
         string_id = sys.argv[arg_start + 2]
@@ -985,7 +1075,7 @@ if len(sys.argv) > 1:
     elif arg == '--get-plurals':
         if len(sys.argv) < arg_start + 3:
             print("Error: --get-plurals requires 2 arguments: <language> <plurals_name>")
-            print("Example: python l10n.py --get-plurals ko-rKR notification_incognito_running_title")
+            print("Example: python strings.py --get-plurals ko-rKR notification_incognito_running_title")
             sys.exit(1)
         language = sys.argv[arg_start + 1]
         plurals_name = sys.argv[arg_start + 2]
@@ -995,9 +1085,9 @@ if len(sys.argv) > 1:
         if len(sys.argv) < arg_start + 4:
             print("Error: --set requires at least 3 arguments: <language> <string_id> <value> [<string_id> <value> ...]")
             print("Examples:")
-            print("  python l10n.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
-            print("  python l10n.py --set ko-rKR enable \"사용\" disable \"사용 안 함\"")
-            print("  python l10n.py --raw --set ko-rKR test '<xliff:g>%s</xliff:g>'")
+            print("  python strings.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
+            print("  python strings.py --set ko-rKR enable \"사용\" disable \"사용 안 함\"")
+            print("  python strings.py --raw --set ko-rKR test '<xliff:g>%s</xliff:g>'")
             print("\nNote: String must exist in English source. Use --add to add new strings to English first.")
             sys.exit(1)
         language = sys.argv[arg_start + 1]
@@ -1024,9 +1114,9 @@ if len(sys.argv) > 1:
         if len(sys.argv) < arg_start + 5:
             print("Error: --set-plurals requires at least 4 arguments: <language> <plurals_name> <quantity> <value> [<quantity> <value> ...]")
             print("Examples:")
-            print("  python l10n.py --set-plurals ko-rKR notification_incognito_running_title other '%1$d 시크릿 탭 열림'")
-            print("  python l10n.py --set-plurals ko-rKR tabs_count one '1 tab' other '%1$d tabs'")
-            print("  python l10n.py --raw --set-plurals ko-rKR cookies other '<xliff:g>%d</xliff:g> cookies'")
+            print("  python strings.py --set-plurals ko-rKR notification_incognito_running_title other '%1$d 시크릿 탭 열림'")
+            print("  python strings.py --set-plurals ko-rKR tabs_count one '1 tab' other '%1$d tabs'")
+            print("  python strings.py --raw --set-plurals ko-rKR cookies other '<xliff:g>%d</xliff:g> cookies'")
             sys.exit(1)
         language = sys.argv[arg_start + 1]
         plurals_name = sys.argv[arg_start + 2]
@@ -1048,7 +1138,7 @@ if len(sys.argv) > 1:
     elif arg == '--add':
         if len(sys.argv) < arg_start + 3:
             print("Error: --add requires 2 arguments: <string_id> <value>")
-            print("Example: python l10n.py --add new_feature_name \"New Feature\"")
+            print("Example: python strings.py --add new_feature_name \"New Feature\"")
             sys.exit(1)
         string_id = sys.argv[arg_start + 1]
         value = sys.argv[arg_start + 2]
@@ -1057,7 +1147,7 @@ if len(sys.argv) > 1:
     elif arg == '--add-plural':
         if len(sys.argv) < arg_start + 4:
             print("Error: --add-plural requires at least 3 arguments: <plurals_name> <quantity> <value> [<quantity> <value> ...]")
-            print("Example: python l10n.py --add-plural item_count one '1 item' other '%d items'")
+            print("Example: python strings.py --add-plural item_count one '1 item' other '%d items'")
             sys.exit(1)
         plurals_name = sys.argv[arg_start + 1]
 
@@ -1078,7 +1168,7 @@ if len(sys.argv) > 1:
     elif arg == '--remove':
         if len(sys.argv) < arg_start + 2:
             print("Error: --remove requires 1 argument: <string_id>")
-            print("Example: python l10n.py --remove obsolete_string")
+            print("Example: python strings.py --remove obsolete_string")
             sys.exit(1)
         string_id = sys.argv[arg_start + 1]
         remove_string_from_all(string_id)
@@ -1130,10 +1220,13 @@ if len(sys.argv) > 1:
     elif arg == '--summary':
         summary_only = True
         full_check = False  # Summary uses incremental mode by default
+    # Handle unused strings command
+    elif arg == '--unused':
+        find_unused_strings()
     # Unknown command
     else:
         print(f"Error: Unknown command '{arg}'")
-        print("Run 'python l10n.py --help' for usage information")
+        print("Run 'python strings.py --help' for usage information")
         sys.exit(1)
 
 # Parse main English strings.xml
@@ -1347,8 +1440,8 @@ if total_critical > 0:
     print(f"\n*** CRITICAL ISSUES FOUND: {total_critical} placeholder mismatches that WILL cause crashes! ***")
 print("\nNote: Some 'untranslated' strings may be intentional (proper nouns, etc.)")
 print("\nUsage:")
-print("  python l10n.py --check                   # Check all languages")
-print("  python l10n.py --check <lang>            # Check specific language (e.g., ru-rRU)")
-print("  python l10n.py --list                    # List all available languages")
-print("  python l10n.py --help                    # Show detailed help")
+print("  python strings.py --check                   # Check all languages")
+print("  python strings.py --check <lang>            # Check specific language (e.g., ru-rRU)")
+print("  python strings.py --list                    # List all available languages")
+print("  python strings.py --help                    # Show detailed help")
 print("="*80)
