@@ -503,7 +503,7 @@ class WebPageClient(
         val alertMessage = activity.getText(R.string.message_ssl_error, domainPreferences.domain, stringBuilder.toString().trim() + "\n")?.trim()
 
         MaterialAlertDialogBuilder(activity).apply {
-            val view = LayoutInflater.from(activity).inflate(R.layout.dialog_ssl_warning, null)
+            val view = LayoutInflater.from(activity).inflate(R.layout.dialog_with_checkbox, null)
             val dontAskAgain = view.findViewById<CheckBox>(R.id.checkBoxDontAskAgain)
             setTitle(activity.getString(R.string.title_warning))
             setMessage(alertMessage)
@@ -675,15 +675,31 @@ class WebPageClient(
                 Timber.d("Launch app - ASK")
 
                 if (appLaunchDialog == null) {
+                    // Inflate layout with checkbox
+                    val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_with_checkbox, null)
+                    val checkboxView = dialogView.findViewById<CheckBox>(R.id.checkBoxDontAskAgain)
 
                     appLaunchDialog = MaterialAlertDialogBuilder(activity)
                         .setTitle(R.string.dialog_title_third_party_app)
                         .setMessage(R.string.dialog_message_third_party_app)
+                        .setView(dialogView)
                         .setPositiveButton(activity.getText(R.string.yes)) { _, _ ->
+                            // If checkbox is checked, save YES preference for this domain
+                            if (checkboxView.isChecked) {
+                                domainPreferences.launchAppOverride = true
+                                domainPreferences.launchAppLocal = NoYesAsk.YES
+                                Timber.d("Saved preference: Launch app = YES for domain ${domainPreferences.domain}")
+                            }
                             activity.startActivityWithFallback(view, intent, false)
                             appLaunchDialog = null
                         }
                         .setNegativeButton(activity.getText(R.string.no)) { _, _ ->
+                            // If checkbox is checked, save NO preference for this domain
+                            if (checkboxView.isChecked) {
+                                domainPreferences.launchAppOverride = true
+                                domainPreferences.launchAppLocal = NoYesAsk.NO
+                                Timber.d("Saved preference: Launch app = NO for domain ${domainPreferences.domain}")
+                            }
                             activity.startActivityWithFallback(view, intent, true)
                             appLaunchDialog = null
                         }.setOnCancelListener {
