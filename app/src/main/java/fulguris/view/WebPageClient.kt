@@ -30,6 +30,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.net.http.SslError
@@ -41,8 +42,8 @@ import android.view.LayoutInflater
 import android.webkit.*
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
@@ -676,8 +677,52 @@ class WebPageClient(
                 Timber.d("Launch app - ASK")
 
                 if (appLaunchDialog == null) {
-                    // Inflate layout with checkbox
-                    val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_with_checkbox, null)
+                    // Get app info from the intent
+                    val packageManager = activity.packageManager
+                    // Query for all apps that can handle this intent
+                    val allResolveInfos = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+
+                    // Filter to get specialized apps (non-browser apps)
+                    val specializedApps = allResolveInfos.filter { info ->
+                        val filter = info.filter
+                        // Look for apps with specific schemes or data authorities (specialized apps)
+                        filter != null && (filter.countDataAuthorities() > 0 ||
+                            (filter.countDataSchemes() > 0 && !filter.hasDataScheme("http") && !filter.hasDataScheme("https")))
+                    }
+
+                    // Use specialized apps if available, otherwise use all
+                    val resolveInfos = if (specializedApps.isNotEmpty()) specializedApps else allResolveInfos
+
+                    if (resolveInfos.isEmpty()) {
+                        Timber.w("No apps found to handle intent")
+                        return false
+                    }
+
+                    // Determine if we have a single app or multiple apps
+                    val hasSingleApp = resolveInfos.size == 1
+
+                    // Choose layout based on number of apps
+                    val dialogView: android.view.View
+
+                    if (hasSingleApp) {
+                        // Single app - use special layout with app icon and label
+                        val resolveInfo = resolveInfos.first()
+                        val appLabel = resolveInfo.loadLabel(packageManager).toString()
+                        val appIcon = resolveInfo.loadIcon(packageManager)
+
+                        // Inflate layout with app info and checkbox
+                        dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_app_launch, null)
+                        dialogView.findViewById<android.widget.ImageView>(R.id.app_icon)?.setImageDrawable(appIcon)
+                        dialogView.findViewById<TextView>(R.id.app_label)?.text = appLabel
+
+                        Timber.d("Single app: $appLabel")
+                    } else {
+                        // Multiple apps - use simple layout with just checkbox
+                        dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_with_checkbox, null)
+
+                        Timber.d("Multiple apps available (${resolveInfos.size})")
+                    }
+
                     val checkboxView = dialogView.findViewById<CheckBox>(R.id.checkBoxDontAskAgain)
 
                     appLaunchDialog = MaterialAlertDialogBuilder(activity)

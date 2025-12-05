@@ -179,6 +179,11 @@ import java.util.regex.Pattern
                 Intent(Intent.ACTION_DIAL).setData(uri)
             }
 
+            "geo" -> {
+                Timber.d("Detected geo scheme")
+                Intent(Intent.ACTION_VIEW).setData(uri)
+            }
+
             "intent" -> {
                 return try {
                     Timber.d("Detected intent scheme")
