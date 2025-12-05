@@ -27,7 +27,7 @@
     <string name="version">Έκδοση εφαρμογής</string>
     <string name="update_available">Διαθέσιμη ενημέρωση</string>
     <string name="update_check_error">Σφάλμα ελέγχου ενημέρωσης, δοκιμάστε ξανά αργότερα</string>
-    <string name="up_to_date">Αυτή είναι η νεότερη έκδοση</string>
+    <string name="up_to_date">Το Fulguris είναι ενημερωμένο</string>
     <string name="show">Εμφάνιση</string>
     <string name="cache">Καθαρισμός cache στο κλείσιμο</string>
     <string name="reflow">Ενεργοποίηση αναδιαμόρφωσης κειμένου</string>

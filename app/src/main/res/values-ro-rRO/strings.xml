@@ -27,7 +27,7 @@
     <string name="version">Versiune aplicație</string>
     <string name="update_available">Actualizare disponibilă</string>
     <string name="update_check_error">Eroare verificare actualizare, încearcă mai târziu</string>
-    <string name="up_to_date">Aceasta este cea mai nouă versiune</string>
+    <string name="up_to_date">Fulguris este actualizat</string>
     <string name="show">Arată</string>
     <string name="cache">Șterge cache-ul la ieșire</string>
     <string name="reflow">Activează redistribuirea textului</string>

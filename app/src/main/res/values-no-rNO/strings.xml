@@ -27,7 +27,7 @@
     <string name="version">Applikasjonsversjon</string>
     <string name="update_available">Oppdatering tilgjengelig</string>
     <string name="update_check_error">Feil ved oppdateringssjekk, prøv igjen senere</string>
-    <string name="up_to_date">Dette er den nyeste versjonen</string>
+    <string name="up_to_date">Fulguris er oppdatert</string>
     <string name="show">Vis</string>
     <string name="cache">Tøm buffer ved avslutning</string>
     <string name="reflow">Aktiver tekstomflyt</string>

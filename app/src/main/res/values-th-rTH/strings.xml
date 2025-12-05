@@ -27,7 +27,7 @@
     <string name="version">เวอร์ชันแอปพลิเคชัน</string>
     <string name="update_available">มีอัปเดตใหม่</string>
     <string name="update_check_error">ข้อผิดพลาดในการตรวจสอบอัปเดต ลองอีกครั้งในภายหลัง</string>
-    <string name="up_to_date">นี่คือเวอร์ชันล่าสุด</string>
+    <string name="up_to_date">Fulguris เป็นเวอร์ชันล่าสุด</string>
     <string name="show">แสดง</string>
     <string name="cache">ล้างแคชเมื่อออก</string>
     <string name="reflow">เปิดใช้งานการจัดข้อความใหม่</string>

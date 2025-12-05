@@ -27,7 +27,7 @@
     <string name="version">Версія програми</string>
     <string name="update_available">Доступне оновлення</string>
     <string name="update_check_error">Помилка перевірки оновлень, спробуйте пізніше</string>
-    <string name="up_to_date">Це найновіша версія</string>
+    <string name="up_to_date">Fulguris оновлено</string>
     <string name="show">Показати</string>
     <string name="cache">Очистити кеш під час виходу</string>
     <string name="reflow">Увімкнути перекомпонування тексту</string>

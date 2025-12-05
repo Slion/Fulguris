@@ -27,7 +27,7 @@
     <string name="version">アプリのバージョン</string>
     <string name="update_available">更新があります</string>
     <string name="update_check_error">アップデートチェックエラー。後でもう一度お試しください。</string>
-    <string name="up_to_date">お使いのバージョンは最新です。</string>
+    <string name="up_to_date">Fulgurisは最新です</string>
     <string name="show">表示</string>
     <string name="cache">終了時にキャッシュを消去する</string>
     <string name="reflow">テキストを右端で折り返す</string>

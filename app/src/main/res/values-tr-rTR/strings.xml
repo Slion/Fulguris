@@ -27,7 +27,7 @@
     <string name="version">Uygulama sürümü</string>
     <string name="update_available">Güncelleme mevcut</string>
     <string name="update_check_error">Güncelleme kontrolü hatası, lütfen daha sonra tekrar deneyin</string>
-    <string name="up_to_date">Bu en yeni sürüm</string>
+    <string name="up_to_date">Fulguris güncel</string>
     <string name="show">Göster</string>
     <string name="cache">Çıkışta önbelleği temizle</string>
     <string name="reflow">Metni yeniden akıtmayı etkinleştir</string>

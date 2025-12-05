@@ -27,7 +27,7 @@
     <string name="version">एप्लिकेशन संस्करण</string>
     <string name="update_available">अपडेट उपलब्ध</string>
     <string name="update_check_error">अपडेट जांच में त्रुटि, बाद में पुनः प्रयास करें</string>
-    <string name="up_to_date">यह नवीनतम संस्करण है</string>
+    <string name="up_to_date">Fulguris अद्यतित है</string>
     <string name="show">दिखाएं</string>
     <string name="cache">बाहर निकलने पर कैश साफ़ करें</string>
     <string name="reflow">टेक्स्ट रीफ़्लो सक्षम करें</string>

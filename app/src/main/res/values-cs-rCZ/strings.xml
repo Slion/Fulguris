@@ -27,7 +27,7 @@
     <string name="version">Verze aplikace</string>
     <string name="update_available">Aktualizace je k dispozici</string>
     <string name="update_check_error">Chyba kontroly aktualizace, zkuste to znovu později</string>
-    <string name="up_to_date">Toto je nejnovější verze</string>
+    <string name="up_to_date">Fulguris je aktuální</string>
     <string name="show">Ukázat</string>
     <string name="cache">Vymazat mezipaměť při ukončení</string>
     <string name="reflow">Povolit přeformátování textu</string>

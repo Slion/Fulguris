@@ -27,7 +27,7 @@
     <string name="version">앱 버전</string>
     <string name="update_available">업데이트 사용 가능</string>
     <string name="update_check_error">업데이트 확인 오류, 나중에 다시 시도하세요</string>
-    <string name="up_to_date">최신 버전입니다</string>
+    <string name="up_to_date">Fulguris가 최신 상태입니다</string>
     <string name="show">표시</string>
     <string name="cache">종료할 때 캐시 지우기</string>
     <string name="reflow">텍스트 재정렬 (화면 맞춤 줄바꿈) 사용</string>

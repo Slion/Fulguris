@@ -27,7 +27,7 @@
     <string name="version">Appversion</string>
     <string name="update_available">Uppdatering tillgänglig</string>
     <string name="update_check_error">Fel vid uppdatering, försök igen senare</string>
-    <string name="up_to_date">Det här är den senaste versionen</string>
+    <string name="up_to_date">Fulguris är uppdaterad</string>
     <string name="show">Visa</string>
     <string name="cache">Rensa cache vid avslut</string>
     <string name="reflow">Activera textåterflöde</string>

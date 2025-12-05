@@ -27,7 +27,7 @@
     <string name="version">Версия приложения</string>
     <string name="update_available">Доступно обновление</string>
     <string name="update_check_error">Ошибка проверки обновлений, попробуйте позже</string>
-    <string name="up_to_date">Это последняя версия</string>
+    <string name="up_to_date">Fulguris обновлён</string>
     <string name="show">Показать</string>
     <string name="cache">Очищать кэш при выходе</string>
     <string name="reflow">Включить перекомпоновку</string>

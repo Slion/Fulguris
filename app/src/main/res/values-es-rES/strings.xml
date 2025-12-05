@@ -27,7 +27,7 @@
     <string name="version">Versión de la aplicación</string>
     <string name="update_available">Actualización disponible</string>
     <string name="update_check_error">Error de comprobación de actualización, inténtelo más tarde</string>
-    <string name="up_to_date">Esta es la versión más reciente</string>
+    <string name="up_to_date">Fulguris está actualizado</string>
     <string name="show">Mostrar</string>
     <string name="cache">Vaciar caché al salir</string>
     <string name="reflow">Activar el reajuste dinámico de texto</string>

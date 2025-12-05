@@ -27,7 +27,7 @@
     <string name="version">Sovelluksen versio</string>
     <string name="update_available">Päivitys saatavilla</string>
     <string name="update_check_error">Päivityksen tarkistusvirhe, yritä myöhemmin uudelleen</string>
-    <string name="up_to_date">Tämä on uusin versio</string>
+    <string name="up_to_date">Fulguris on ajan tasalla</string>
     <string name="show">Näytä</string>
     <string name="cache">Tyhjennä välimuisti poistuessa</string>
     <string name="reflow">Ota käyttöön tekstin uudelleenlataus</string>

@@ -27,7 +27,7 @@
     <string name="version">Puštanje aplikacije</string>
     <string name="update_available">Dostupna je novija verzija</string>
     <string name="update_check_error">Pogreška prilikom provjere ažuriranja, pokušajte ponovno kasnije</string>
-    <string name="up_to_date">Ovo je najnovija verzija</string>
+    <string name="up_to_date">Fulguris je ažuran</string>
     <string name="show">Prikaži</string>
     <string name="cache">Očisti predmemoriju pri zatvaranju</string>
     <string name="reflow">Prilagodba teksta</string>

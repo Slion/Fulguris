@@ -27,7 +27,7 @@
     <string name="version">Application versie</string>
     <string name="update_available">Update beschikbaar</string>
     <string name="update_check_error">Fout updatecontrole, probeer het later opnieuw</string>
-    <string name="up_to_date">Dit is de nieuwste versie</string>
+    <string name="up_to_date">Fulguris is up-to-date</string>
     <string name="show">Toon</string>
     <string name="cache">Wis cache bij beëindigen</string>
     <string name="reflow">Text herschikking activeren</string>

@@ -27,7 +27,7 @@
     <string name="version">Alkalmazás Verzió</string>
     <string name="update_available">Frissítés elérhető</string>
     <string name="update_check_error">Frissítés keresése sikertelen, próbáld újra később</string>
-    <string name="up_to_date">Ez a legújabb verzió</string>
+    <string name="up_to_date">A Fulguris naprakész</string>
     <string name="show">Mutatás</string>
     <string name="cache">Gyorsítótár törlése kilépéskor</string>
     <string name="reflow">Szövegtördelés bekapcsolása</string>

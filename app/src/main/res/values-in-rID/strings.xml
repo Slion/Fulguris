@@ -27,7 +27,7 @@
     <string name="version">Versi aplikasi</string>
     <string name="update_available">Update tersedia</string>
     <string name="update_check_error">Error saat memeriksa update, coba lagi nanti</string>
-    <string name="up_to_date">Versi ini sudah yang terbaru</string>
+    <string name="up_to_date">Fulguris sudah terbaru</string>
     <string name="show">Tampilkan</string>
     <string name="cache">Hapus cache saat keluar</string>
     <string name="reflow">Aktifkan text reflow</string>

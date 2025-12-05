@@ -27,7 +27,7 @@
     <string name="version">إصدار التطبيق</string>
     <string name="update_available">تحديث متاح</string>
     <string name="update_check_error">خطأ في الخادم ، يرجى المحاولة مرة أخرى لاحقًا</string>
-    <string name="up_to_date">هذا أحدث إصدار بالفعل.</string>
+    <string name="up_to_date">Fulguris محدث</string>
     <string name="show">إظهار</string>
     <string name="cache"> مسح ذاكرة التخزين المؤقتة عند الخروج</string>
     <string name="reflow">تفعيل إلتفاف النص</string>

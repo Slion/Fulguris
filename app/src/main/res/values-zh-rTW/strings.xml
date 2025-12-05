@@ -27,7 +27,7 @@
     <string name="version">應用程式版本</string>
     <string name="update_available">有可用的更新</string>
     <string name="update_check_error">更新檢查錯誤，請稍後再試</string>
-    <string name="up_to_date">這是最新版本</string>
+    <string name="up_to_date">Fulguris 已是最新版本</string>
     <string name="show">顯示</string>
     <string name="cache">結束時清除快取</string>
     <string name="reflow">啟用文字重排</string>
