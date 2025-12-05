@@ -449,7 +449,7 @@
     <string name="settings_summary_ssl_error">Šta učiniti kada se otkrije SSL greška</string>
     <string name="settings_title_incoming_url_action">Akcija dolazećeg linka</string>
     <string name="settings_summary_incoming_url_action">Kako rukovati linkovima iz drugih aplikacija</string>
-    <string name="checkbox_remember_domain_choice">Zapamti svoj izbor za ovu domenu</string>
+    <string name="checkbox_remember_domain_choice">Zapamti za ovu stranicu</string>
     <string name="settings_title_third_party_cookies">Kolačići trećih strana</string>
     <string name="settings_summary_on_third_party_cookies">Prihvatite kolačiće koji se koriste za praćenje vaših aktivnosti na web stranicama</string>
     <string name="settings_summary_off_third_party_cookies">Odbijte kolačiće koji se koriste za praćenje vaših aktivnosti na web stranicama</string>

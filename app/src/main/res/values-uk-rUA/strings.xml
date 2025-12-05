@@ -450,7 +450,7 @@
     <string name="settings_summary_ssl_error">Що робити при виявленні помилки SSL</string>
     <string name="settings_title_incoming_url_action">Дія вхідного посилання</string>
     <string name="settings_summary_incoming_url_action">Як обробляти посилання з інших програм</string>
-    <string name="checkbox_remember_domain_choice">Запам\'ятати ваш вибір для цього домену</string>
+    <string name="checkbox_remember_domain_choice">Запам\'ятати для цього сайту</string>
     <string name="settings_title_third_party_cookies">Сторонні cookies</string>
     <string name="settings_summary_on_third_party_cookies">Приймати cookies, які використовуються для відстеження вашої активності на веб-сайтах</string>
     <string name="settings_summary_off_third_party_cookies">Відхиляти cookies, які використовуються для відстеження вашої активності на веб-сайтах</string>

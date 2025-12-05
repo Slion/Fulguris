@@ -412,7 +412,7 @@
     <string name="settings_summary_ssl_error">SSL त्रुटि का पता चलने पर क्या करें</string>
     <string name="settings_title_incoming_url_action">इनकमिंग लिंक एक्शन</string>
     <string name="settings_summary_incoming_url_action">अन्य ऐप्स से लिंक कैसे हैंडल करें</string>
-    <string name="checkbox_remember_domain_choice">इस डोमेन के लिए अपनी पसंद याद रखें</string>
+    <string name="checkbox_remember_domain_choice">इस साइट के लिए याद रखें</string>
     <string name="settings_title_third_party_cookies">थर्ड-पार्टी कुकीज़</string>
     <string name="settings_summary_on_third_party_cookies">वेबसाइटों पर आपकी गतिविधियों को ट्रैक करने के लिए उपयोग की जाने वाली कुकीज़ स्वीकार करें</string>
     <string name="settings_summary_off_third_party_cookies">वेबसाइटों पर आपकी गतिविधियों को ट्रैक करने के लिए उपयोग की जाने वाली कुकीज़ अस्वीकार करें</string>

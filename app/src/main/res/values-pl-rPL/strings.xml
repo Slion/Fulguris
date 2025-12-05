@@ -450,7 +450,7 @@
     <string name="settings_summary_ssl_error">Co zrobić, gdy wykryty został błąd SSL</string>
     <string name="settings_title_incoming_url_action">Akcja przychodzącego linku</string>
     <string name="settings_summary_incoming_url_action">Jak obsługiwać linki z innych aplikacji</string>
-    <string name="checkbox_remember_domain_choice">Zapamiętaj swój wybór dla tej domeny</string>
+    <string name="checkbox_remember_domain_choice">Zapamiętaj dla tej strony</string>
     <string name="settings_title_third_party_cookies">Pliki cookie firm trzecich</string>
     <string name="settings_summary_on_third_party_cookies">Akceptuj pliki cookie używane do śledzenia aktywności pomiędzy stronami</string>
     <string name="settings_summary_off_third_party_cookies">Odrzuć pliki cookie używane do śledzenia aktywności pomiędzy stronami</string>

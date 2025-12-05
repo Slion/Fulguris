@@ -447,7 +447,7 @@
     <string name="settings_summary_ssl_error">检测到 SSL 错误时应做什么</string>
     <string name="settings_title_incoming_url_action">传入链接操作</string>
     <string name="settings_summary_incoming_url_action">如何处理来自其他应用的链接</string>
-    <string name="checkbox_remember_domain_choice">记住您对此域名的选择</string>
+    <string name="checkbox_remember_domain_choice">记住此网站</string>
     <string name="settings_title_third_party_cookies">第三方 Cookie</string>
     <string name="settings_summary_on_third_party_cookies">接受用于跟踪您在所有网站上活动的 Cookie</string>
     <string name="settings_summary_off_third_party_cookies">拒绝用于跟踪您所有网站活动的 Cookie</string>

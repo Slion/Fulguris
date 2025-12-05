@@ -449,7 +449,7 @@
     <string name="settings_summary_ssl_error">Ce să faci când este detectată o eroare SSL</string>
     <string name="settings_title_incoming_url_action">Acțiune link primită</string>
     <string name="settings_summary_incoming_url_action">Cum să gestionezi linkurile din alte aplicații</string>
-    <string name="checkbox_remember_domain_choice">Reține alegerea ta pentru acest domeniu</string>
+    <string name="checkbox_remember_domain_choice">Reține pentru acest site</string>
     <string name="settings_title_third_party_cookies">Cookie-uri terți</string>
     <string name="settings_summary_on_third_party_cookies">Acceptă cookie-uri folosite pentru a urmări activitățile pe site-uri web</string>
     <string name="settings_summary_off_third_party_cookies">Respinge cookie-uri folosite pentru a urmări activitățile pe site-uri web</string>

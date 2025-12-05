@@ -448,7 +448,7 @@
     <string name="settings_summary_ssl_error">Bir SSL hatası algılandığında ne yapılmalı</string>
     <string name="settings_title_incoming_url_action">Gelen bağlantı eylemi</string>
     <string name="settings_summary_incoming_url_action">Diğer uygulamalardan gelen bağlantıların nasıl işleneceği</string>
-    <string name="checkbox_remember_domain_choice">Bu alan adı için seçimimi hatırla</string>
+    <string name="checkbox_remember_domain_choice">Bu site için hatırla</string>
     <string name="settings_title_third_party_cookies">Üçüncü taraf çerezleri</string>
     <string name="settings_summary_on_third_party_cookies">Web siteleri arasındaki etkinliklerinizi izlemek için kullanılan çerezleri kabul et</string>
     <string name="settings_summary_off_third_party_cookies">Web siteleri arasındaki etkinliklerinizi izlemek için kullanılan çerezleri reddet</string>

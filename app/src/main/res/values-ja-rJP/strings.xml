@@ -447,7 +447,7 @@
     <string name="settings_summary_ssl_error">SSLエラーが検出されたときの対処方法</string>
     <string name="settings_title_incoming_url_action">受信リンクアクション</string>
     <string name="settings_summary_incoming_url_action">他のアプリからのリンクの処理方法</string>
-    <string name="checkbox_remember_domain_choice">このドメインの選択を記憶する</string>
+    <string name="checkbox_remember_domain_choice">このサイトで記憶する</string>
     <string name="settings_title_third_party_cookies">サードパーティのクッキー</string>
     <string name="settings_summary_on_third_party_cookies">複数のウェブサイトで行動を追跡するために使用されるクッキーを受け入れます</string>
     <string name="settings_summary_off_third_party_cookies">複数のウェブサイトで行動を追跡するために使用されるクッキーを拒否します</string>

@@ -448,7 +448,7 @@
     <string name="settings_summary_ssl_error">Τι να γίνει όταν ανιχνευτεί σφάλμα SSL</string>
     <string name="settings_title_incoming_url_action">Ενέργεια εισερχόμενου συνδέσμου</string>
     <string name="settings_summary_incoming_url_action">Πώς να χειριστείτε συνδέσμους από άλλες εφαρμογές</string>
-    <string name="checkbox_remember_domain_choice">Απομνημόνευση της επιλογής σας για αυτόν τον τομέα</string>
+    <string name="checkbox_remember_domain_choice">Απομνημόνευση για αυτόν τον ιστότοπο</string>
     <string name="settings_title_third_party_cookies">Cookies τρίτων</string>
     <string name="settings_summary_on_third_party_cookies">Αποδοχή cookies που χρησιμοποιούνται για παρακολούθηση δραστηριοτήτων σας σε ιστότοπους</string>
     <string name="settings_summary_off_third_party_cookies">Απόρριψη cookies που χρησιμοποιούνται για παρακολούθηση δραστηριοτήτων σας σε ιστότοπους</string>

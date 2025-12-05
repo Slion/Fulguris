@@ -448,7 +448,7 @@
     <string name="settings_summary_ssl_error">Hvad skal gøres, når en SSL-fejl registreres</string>
     <string name="settings_title_incoming_url_action">Indgående linkhandling</string>
     <string name="settings_summary_incoming_url_action">Hvordan man håndterer links fra andre apps</string>
-    <string name="checkbox_remember_domain_choice">Husk dit valg for dette domæne</string>
+    <string name="checkbox_remember_domain_choice">Husk for dette websted</string>
     <string name="settings_title_third_party_cookies">Tredjeparts cookies</string>
     <string name="settings_summary_on_third_party_cookies">Accepter cookies brugt til at spore dine aktiviteter på tværs af websteder</string>
     <string name="settings_summary_off_third_party_cookies">Afvis cookies brugt til at spore dine aktiviteter på tværs af websteder</string>

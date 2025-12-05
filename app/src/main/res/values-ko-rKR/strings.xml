@@ -447,7 +447,7 @@
     <string name="settings_summary_ssl_error">SSL 오류가 감지될 때 수행할 작업</string>
     <string name="settings_title_incoming_url_action">수신 링크 작업</string>
     <string name="settings_summary_incoming_url_action">다른 앱의 링크를 처리하는 방법</string>
-    <string name="checkbox_remember_domain_choice">이 도메인에 대한 선택 기억</string>
+    <string name="checkbox_remember_domain_choice">이 사이트에서 기억</string>
     <string name="settings_title_third_party_cookies">타사 쿠키</string>
     <string name="settings_summary_on_third_party_cookies">여러 웹사이트에서 귀하의 활동을 추적하는 데 사용되는 쿠키 수락</string>
     <string name="settings_summary_off_third_party_cookies">여러 웹사이트에서 귀하의 활동을 추적하는 데 사용되는 쿠키 거부</string>

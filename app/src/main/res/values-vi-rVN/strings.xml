@@ -447,7 +447,7 @@
     <string name="settings_summary_ssl_error">Những gì cần làm khi phát hiện lỗi SSL</string>
     <string name="settings_title_incoming_url_action">Hành động liên kết đến</string>
     <string name="settings_summary_incoming_url_action">Cách xử lý liên kết từ ứng dụng khác</string>
-    <string name="checkbox_remember_domain_choice">Hãy nhớ lựa chọn của bạn cho tên miền này</string>
+    <string name="checkbox_remember_domain_choice">Ghi nhớ cho trang này</string>
     <string name="settings_title_third_party_cookies">Cookie của bên thứ ba</string>
     <string name="settings_summary_on_third_party_cookies">Chấp nhận cookie được sử dụng để theo dõi hoạt động của bạn trên các trang web</string>
     <string name="settings_summary_off_third_party_cookies">Từ chối cookie được sử dụng để theo dõi hoạt động của bạn trên các trang web</string>

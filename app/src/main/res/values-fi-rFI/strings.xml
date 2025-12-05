@@ -448,7 +448,7 @@
     <string name="settings_summary_ssl_error">Miten käsitellä SSL-virheet</string>
     <string name="settings_title_incoming_url_action">Saapuvan URL-osoitteen toiminto</string>
     <string name="settings_summary_incoming_url_action">Mitä tehdä kun URL saapuu</string>
-    <string name="checkbox_remember_domain_choice">Muista valinta tälle verkkotunnukselle</string>
+    <string name="checkbox_remember_domain_choice">Muista tälle sivustolle</string>
     <string name="settings_title_third_party_cookies">Kolmannen osapuolen evästeet</string>
     <string name="settings_summary_on_third_party_cookies">Salli kolmannen osapuolen evästeet</string>
     <string name="settings_summary_off_third_party_cookies">Estä kolmannen osapuolen evästeet</string>

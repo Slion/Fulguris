@@ -448,7 +448,7 @@
     <string name="settings_summary_ssl_error">Vad som ska göras när ett SSL-fel upptäcks</string>
     <string name="settings_title_incoming_url_action">Åtgärd för inkommande länk</string>
     <string name="settings_summary_incoming_url_action">Hur länkar från andra appar ska hanteras</string>
-    <string name="checkbox_remember_domain_choice">Kom ihåg ditt val för denna domän</string>
+    <string name="checkbox_remember_domain_choice">Kom ihåg för denna webbplats</string>
     <string name="settings_title_third_party_cookies">Tredjepartscookies</string>
     <string name="settings_summary_on_third_party_cookies">Acceptera cookies som används för att spåra dina aktiviteter över webbplatser</string>
     <string name="settings_summary_off_third_party_cookies">Avvisa cookies som används för att spåra dina aktiviteter över webbplatser</string>

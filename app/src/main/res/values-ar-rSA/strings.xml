@@ -452,7 +452,7 @@
     <string name="settings_summary_ssl_error">ما يجب فعله عند اكتشاف خطأ SSL</string>
     <string name="settings_title_incoming_url_action">إجراء الرابط الوارد</string>
     <string name="settings_summary_incoming_url_action">كيفية التعامل مع الروابط من التطبيقات الأخرى</string>
-    <string name="checkbox_remember_domain_choice">تذكر اختيارك لهذا النطاق</string>
+    <string name="checkbox_remember_domain_choice">تذكر لهذا الموقع</string>
     <string name="settings_title_third_party_cookies">ملفات تعريف ارتباط الطرف الثالث</string>
     <string name="settings_summary_on_third_party_cookies">قبول ملفات تعريف الارتباط المستخدمة لتتبع أنشطتك عبر المواقع</string>
     <string name="settings_summary_off_third_party_cookies">رفض ملفات تعريف الارتباط المستخدمة لتتبع أنشطتك عبر المواقع</string>

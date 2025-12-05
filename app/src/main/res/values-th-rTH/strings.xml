@@ -447,7 +447,7 @@
     <string name="settings_summary_ssl_error">วิธีจัดการข้อผิดพลาด SSL</string>
     <string name="settings_title_incoming_url_action">การดำเนินการ URL ขาเข้า</string>
     <string name="settings_summary_incoming_url_action">ทำอะไรเมื่อ URL เข้ามา</string>
-    <string name="checkbox_remember_domain_choice">จดจำตัวเลือกสำหรับโดเมนนี้</string>
+    <string name="checkbox_remember_domain_choice">จดจำสำหรับเว็บไซต์นี้</string>
     <string name="settings_title_third_party_cookies">คุกกี้บุคคลที่สาม</string>
     <string name="settings_summary_on_third_party_cookies">อนุญาตคุกกี้บุคคลที่สาม</string>
     <string name="settings_summary_off_third_party_cookies">บล็อกคุกกี้บุคคลที่สาม</string>

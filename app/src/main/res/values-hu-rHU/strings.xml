@@ -448,7 +448,7 @@
     <string name="settings_summary_ssl_error">Mit tegyen, ha SSL hibát tapasztal</string>
     <string name="settings_title_incoming_url_action">Bejövő link művelet</string>
     <string name="settings_summary_incoming_url_action">Hogyan kezeld a más alkalmazásokból származó linkeket</string>
-    <string name="checkbox_remember_domain_choice">Jegyezze meg döntésemet ezen tartományhoz</string>
+    <string name="checkbox_remember_domain_choice">Megjegyzés ehhez a webhelyhez</string>
     <string name="settings_title_third_party_cookies">Harmadik felek sütijei</string>
     <string name="settings_summary_on_third_party_cookies">Azon sütik elfogadása, amelyek más weboldalakon is követnek</string>
     <string name="settings_summary_off_third_party_cookies">Azon sütik elutasítása, amelyek más weboldalakon is követnek</string>

@@ -448,7 +448,7 @@
     <string name="settings_summary_ssl_error">Wat te doen als er een SSL-fout is gedetecteerd</string>
     <string name="settings_title_incoming_url_action">Inkomende linkactie</string>
     <string name="settings_summary_incoming_url_action">Hoe links van andere apps te behandelen</string>
-    <string name="checkbox_remember_domain_choice">Onthoud je keuze voor dit domein</string>
+    <string name="checkbox_remember_domain_choice">Onthouden voor deze site</string>
     <string name="settings_title_third_party_cookies">Cookies van derden</string>
     <string name="settings_summary_on_third_party_cookies">Cookies accepteren die worden gebruikt om uw activiteiten op websites te volgen</string>
     <string name="settings_summary_off_third_party_cookies">Cookies weigeren die worden gebruikt om uw activiteiten op verschillende websites te volgen</string>

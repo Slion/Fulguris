@@ -619,6 +619,41 @@ def _replace_string_in_content(content, string_id, new_value, skip_escape=False,
     new_content = re.sub(pattern, replacer, content, flags=re.DOTALL)
     return True, new_content, None, False  # was_added = False
 
+def set_string_value_quiet(language, string_id, new_value, skip_escape=False):
+    """Set a string value in a specific language file (quiet mode for batch operations).
+
+    Returns True on success, raises Exception on failure.
+    """
+    # Handle special 'source' or 'values' language code for English source file
+    is_source = language in ('source', 'values')
+    if is_source:
+        file_path = Path('app/src/main/res/values/strings.xml')
+    else:
+        # Check if string exists in English source file (only for non-source languages)
+        if not string_exists_in_english(string_id):
+            raise Exception(f"String '{string_id}' does not exist in English source")
+        file_path = Path(f'app/src/main/res/values-{language}/strings.xml')
+
+    if not file_path.exists():
+        raise Exception(f"Language file not found: {file_path}")
+
+    # Read the file content
+    with open(file_path, 'r', encoding='utf-8', newline='') as f:
+        content = f.read()
+
+    # Replace the string
+    success, new_content, error_msg, was_added = _replace_string_in_content(
+        content, string_id, new_value, skip_escape, allow_add=not is_source)
+
+    if not success:
+        raise Exception(error_msg)
+
+    # Write back to file
+    with open(file_path, 'w', encoding='utf-8', newline='') as f:
+        f.write(new_content)
+
+    return True
+
 def set_string_value(language, string_id, new_value, skip_escape=False):
     """Set a string value in a specific language file.
 
@@ -1539,32 +1574,50 @@ if len(sys.argv) > 1:
     # Handle set command
     elif arg == '--set':
         if len(sys.argv) < arg_start + 4:
-            print("Error: --set requires at least 3 arguments: <language> <string_id> <value> [<string_id> <value> ...]")
+            print("Error: --set requires: <string_id> <lang> <value> [<lang> <value> ...]")
             print("Examples:")
-            print("  python strings.py --set ru-rRU locale_app_name \"Веб-браузер Fulguris\"")
-            print("  python strings.py --set ko-rKR enable \"사용\" disable \"사용 안 함\"")
-            print("  python strings.py --raw --set ko-rKR test '<xliff:g>%s</xliff:g>'")
+            print("  python strings.py --set app_name ru-rRU 'Fulguris'")
+            print("  python strings.py --set app_name de-rDE 'Fulguris' fr-rFR 'Fulguris' es-rES 'Fulguris'")
+            print("  python strings.py --raw --set test ko-rKR '<xliff:g>%s</xliff:g>'")
             print("\nNote: String must exist in English source. Use --add to add new strings to English first.")
             sys.exit(1)
-        language = sys.argv[arg_start + 1]
 
-        # Parse pairs of string_id and value
-        string_pairs = []
+        string_id = sys.argv[arg_start + 1]
+
+        # Parse pairs of language and value
+        updates = []  # List of (language, value)
         i = arg_start + 2
         while i < len(sys.argv):
             if i + 1 >= len(sys.argv):
-                print(f"Error: Missing value for string_id '{sys.argv[i]}'")
+                print(f"Error: Missing value for language '{sys.argv[i]}'")
                 sys.exit(1)
-            string_id = sys.argv[i]
+            language = sys.argv[i]
             value = sys.argv[i + 1]
-            string_pairs.append((string_id, value))
+            updates.append((language, value))
             i += 2
 
-        # If only one pair, use single-string output format
-        if len(string_pairs) == 1:
-            set_string_value(language, string_pairs[0][0], string_pairs[0][1], skip_escape=skip_escape)
-        else:
-            set_string_values_batch(language, string_pairs, skip_escape=skip_escape)
+        # Process all updates
+        success_count = 0
+        error_count = 0
+        for language, value in updates:
+            # Validate value first
+            is_valid, error_msg = validate_android_string(value)
+            if not is_valid:
+                print(f"[ERROR] {language}:{string_id} - {error_msg}")
+                error_count += 1
+                continue
+
+            try:
+                set_string_value_quiet(language, string_id, value, skip_escape=skip_escape)
+                print(f"[OK] {language}:{string_id}")
+                success_count += 1
+            except Exception as e:
+                print(f"[ERROR] {language}:{string_id} - {e}")
+                error_count += 1
+
+        if len(updates) > 1:
+            print(f"\nUpdated: {success_count}, Errors: {error_count}")
+        sys.exit(0 if error_count == 0 else 1)
     # Handle set-plurals command
     elif arg == '--set-plurals':
         if len(sys.argv) < arg_start + 5:

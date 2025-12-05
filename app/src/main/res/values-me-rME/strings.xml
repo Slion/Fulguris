@@ -449,7 +449,7 @@
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
     <string name="settings_title_incoming_url_action">Incoming link action</string>
     <string name="settings_summary_incoming_url_action">How to handle links from other apps</string>
-    <string name="checkbox_remember_domain_choice">Remember your choice for this domain</string>
+    <string name="checkbox_remember_domain_choice">Zapamti za ovu stranicu</string>
     <string name="settings_title_third_party_cookies">Third-party cookies</string>
     <string name="settings_summary_on_third_party_cookies">Accept cookies used to track your activities across websites</string>
     <string name="settings_summary_off_third_party_cookies">Reject cookies used to track your activities across websites</string>

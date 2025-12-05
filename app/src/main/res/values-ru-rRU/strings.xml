@@ -450,7 +450,7 @@
     <string name="settings_summary_ssl_error">Что делать при обнаружении ошибки SSL</string>
     <string name="settings_title_incoming_url_action">Действие входящей ссылки</string>
     <string name="settings_summary_incoming_url_action">Как обрабатывать ссылки из других приложений</string>
-    <string name="checkbox_remember_domain_choice">Запомнить свой выбор для этого домена</string>
+    <string name="checkbox_remember_domain_choice">Запомнить для этого сайта</string>
     <string name="settings_title_third_party_cookies">Сторонние файлы-cookie</string>
     <string name="settings_summary_on_third_party_cookies">Принимать файлы cookie, используемые для отслеживания ваших действий на веб-сайтах</string>
     <string name="settings_summary_off_third_party_cookies">Отклонить файлы cookie, используемые для отслеживания ваших действий на веб-сайтах</string>

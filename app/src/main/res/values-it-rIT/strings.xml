@@ -448,7 +448,7 @@
     <string name="settings_summary_ssl_error">Cosa fare quando un errore SSL è rilevato</string>
     <string name="settings_title_incoming_url_action">Azione link in arrivo</string>
     <string name="settings_summary_incoming_url_action">Come gestire i link da altre app</string>
-    <string name="checkbox_remember_domain_choice">Ricorda la scelta per questo dominio</string>
+    <string name="checkbox_remember_domain_choice">Ricorda per questo sito</string>
     <string name="settings_title_third_party_cookies">Cookie di terze parti</string>
     <string name="settings_summary_on_third_party_cookies">Accetta i cookie usati per tracciare le tue attività su siti web</string>
     <string name="settings_summary_off_third_party_cookies">Rifiuta i cookie usati per tracciare le tue attività su siti web</string>

@@ -448,7 +448,7 @@
     <string name="settings_summary_ssl_error">SSL ᱵᱷᱩᱞ ᱧᱟᱢ ᱡᱚᱠᱷᱟ ᱪᱮᱫ ᱞᱟᱹᱜᱤᱫ</string>
     <string name="settings_title_incoming_url_action">ᱦᱤᱡᱩᱜ ᱞᱤᱝᱠ ᱠᱟᱹᱢᱤ</string>
     <string name="settings_summary_incoming_url_action">ᱮᱴᱟᱜ ᱮᱯ ᱠᱷᱚᱱ ᱞᱤᱝᱠ ᱠᱚ ᱪᱮᱫ ᱞᱮᱠᱟ ᱥᱟᱢᱵᱽᱲᱟᱣ</string>
-    <string name="checkbox_remember_domain_choice">ᱱᱚᱶᱟ ᱰᱳᱢᱮᱱ ᱞᱟᱹᱜᱤᱫ ᱟᱢᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱫᱚᱦᱚ ᱫᱚᱦᱚ</string>
+    <string name="checkbox_remember_domain_choice">ᱱᱚᱶᱟ ᱥᱟᱭᱤᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱚᱱᱮ ᱢᱮ</string>
     <string name="settings_title_third_party_cookies">ᱛᱤᱥᱟᱹᱨ ᱯᱟᱴᱤ ᱠᱩᱠᱤᱡᱽ ᱠᱚ</string>
     <string name="settings_summary_on_third_party_cookies">ᱣᱮᱵᱽᱥᱟᱭᱤᱴ ᱠᱚ ᱨᱮ ᱟᱢᱟᱜ ᱠᱟᱹᱢᱤ ᱠᱚ ᱯᱟᱸᱡᱟ ᱞᱟᱹᱜᱤᱫ ᱵᱮᱵᱷᱟᱨ ᱠᱩᱠᱤᱡᱽ ᱠᱚ ᱢᱟᱱᱟᱣ</string>
     <string name="settings_summary_off_third_party_cookies">ᱣᱮᱵᱽᱥᱟᱭᱤᱴ ᱠᱚ ᱨᱮ ᱟᱢᱟᱜ ᱠᱟᱹᱢᱤ ᱠᱚ ᱯᱟᱸᱡᱟ ᱞᱟᱹᱜᱤᱫ ᱵᱮᱵᱷᱟᱨ ᱠᱩᱠᱤᱡᱽ ᱠᱚ ᱵᱟᱝ ᱢᱟᱱᱟᱣ</string>

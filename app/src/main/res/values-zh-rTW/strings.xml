@@ -447,7 +447,7 @@
     <string name="settings_summary_ssl_error">偵測到 SSL 錯誤時該怎麼做</string>
     <string name="settings_title_incoming_url_action">傳入連結操作</string>
     <string name="settings_summary_incoming_url_action">如何處理來自其他應用程式的連結</string>
-    <string name="checkbox_remember_domain_choice">記住您對此網域的選擇</string>
+    <string name="checkbox_remember_domain_choice">記住此網站</string>
     <string name="settings_title_third_party_cookies">第三方 Cookie</string>
     <string name="settings_summary_on_third_party_cookies">接受用於追蹤您跨網站活動的 Cookie</string>
     <string name="settings_summary_off_third_party_cookies">拒絕用於追蹤您跨網站活動的 Cookie</string>

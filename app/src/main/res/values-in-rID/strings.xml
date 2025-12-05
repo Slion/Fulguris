@@ -447,7 +447,7 @@
     <string name="settings_summary_ssl_error">Apa yang harus dilakukan saat kesalahan SSL terdeteksi</string>
     <string name="settings_title_incoming_url_action">Aksi tautan masuk</string>
     <string name="settings_summary_incoming_url_action">Cara menangani tautan dari aplikasi lain</string>
-    <string name="checkbox_remember_domain_choice">Ingat pilihan Anda untuk domain ini</string>
+    <string name="checkbox_remember_domain_choice">Ingat untuk situs ini</string>
     <string name="settings_title_third_party_cookies">Cookie pihak ketiga</string>
     <string name="settings_summary_on_third_party_cookies">Terima cookie yang digunakan untuk melacak aktivitas Anda di seluruh situs web</string>
     <string name="settings_summary_off_third_party_cookies">Tolak cookie yang digunakan untuk melacak aktivitas Anda di seluruh situs web</string>
