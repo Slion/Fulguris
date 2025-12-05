@@ -698,7 +698,7 @@ def list_languages():
     res_dir = Path('app/src/main/res')
     lang_dirs = sorted([d.name.replace('values-', '') for d in res_dir.glob('values-*')
                        if d.is_dir() and 'night' not in d.name and 'v27' not in d.name
-                       and 'v30' not in d.name and 'en-' not in d.name])
+                       and 'v30' not in d.name])
 
     print("=" * 80)
     print(f"AVAILABLE LANGUAGES ({len(lang_dirs)})")
@@ -1148,18 +1148,17 @@ lang_dirs = [d for d in res_dir.glob('values-*')
              if d.is_dir()
              and 'night' not in d.name
              and 'v27' not in d.name
-             and 'v30' not in d.name
-             and 'en-' not in d.name]  # Exclude English variants
+             and 'v30' not in d.name]
 
 # Filter to only the requested language if specified
 if show_all_for_lang:
     lang_dirs = [d for d in lang_dirs if d.name == f'values-{show_all_for_lang}']
     if not lang_dirs:
         print(f"Error: Language '{show_all_for_lang}' not found!")
-        print(f"Available languages: {', '.join([d.name.replace('values-', '') for d in sorted(res_dir.glob('values-*')) if d.is_dir() and 'night' not in d.name and 'v27' not in d.name and 'v30' not in d.name and 'en-' not in d.name])}")
+        print(f"Available languages: {', '.join([d.name.replace('values-', '') for d in sorted(res_dir.glob('values-*')) if d.is_dir() and 'night' not in d.name and 'v27' not in d.name and 'v30' not in d.name])}")
         sys.exit(1)
 
-print(f"Checking {len(lang_dirs)} {'language' if len(lang_dirs) == 1 else 'non-English languages'} for translation quality\n")
+print(f"Checking {len(lang_dirs)} {'language' if len(lang_dirs) == 1 else 'languages'} for translation quality\n")
 print("="*80)
 print("TRANSLATION QUALITY CHECK")
 print("="*80)
