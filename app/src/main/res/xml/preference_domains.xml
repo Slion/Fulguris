@@ -26,6 +26,7 @@
 
 <!--
 ⚠️: Needed to use orders as the Default domain settings is added on top dynamically
+To limit the number of items initial shown you can use: a:initialExpandedChildrenCount="6"
 -->
 
     <x.PreferenceCategory
@@ -33,7 +34,6 @@
         a:icon="@drawable/ic_domain"
         a:title="@string/settings_title_domains"
         a:singleLineTitle="false"
-        a:initialExpandedChildrenCount="6"
         a:order="10"/>
 
     <Preference
