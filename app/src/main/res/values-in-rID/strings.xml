@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Aktifkan cookie dalam mode pribadi</string>
     <string name="incognito_cookies_pie">Mode pribadi berjalan dalam proses terpisah yang direset setelah setiap sesi. Preferensi cookie pribadi sekarang dikontrol oleh preferensi cookie reguler.</string>
     <string name="pref_category_title_contact_us">Hubungi kami</string>
+    <string name="pref_category_title_legal">Hukum</string>
+    <string name="pref_title_email">Email</string>
     <string name="clear_cache">Hapus cache</string>
     <string name="message_cache_cleared">Cache telah dihapus</string>
     <string name="message_import">Penanda telah dibawa masuk</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Tambah konfigurasi</string>
     <string name="settings_privacy">Privasi</string>
     <string name="settings_about">Mengenai Fulguris</string>
+    <string name="settings_summary_about">Versi, kontak, dan detail hukum</string>
     <string name="settings_contribute">Berkontribusi</string>
     <string name="settings_summary_contribute">Membantu Fulguris tumbuh dan berkembang</string>
     <string name="settings_title_privacy_policy">Kebijakan Privasi</string>
@@ -613,6 +616,4 @@
     <string name="page_requests_none">Tidak ada permintaan tercatat untuk halaman ini</string>
     <string name="settings_summary_full_menu">Tampilkan menu lengkap</string>
     <string name="action_launch">Luncurkan</string>
-    <string name="pref_category_title_legal">Hukum</string>
-    <string name="pref_title_email">Email</string>
 </resources>

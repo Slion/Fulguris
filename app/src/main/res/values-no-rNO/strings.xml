@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Aktiver informasjonskapsler i privat modus</string>
     <string name="incognito_cookies_pie">Privat modus kjører i en separat prosess som tilbakestilles etter hver økt. Private informasjonskapselinnstillinger kontrolleres nå av de vanlige informasjonskapselinnstillingene.</string>
     <string name="pref_category_title_contact_us">Kontakt oss</string>
+    <string name="pref_category_title_legal">Juridisk</string>
+    <string name="pref_title_email">E-post</string>
     <string name="clear_cache">Tøm buffer</string>
     <string name="message_cache_cleared">Buffer tømt</string>
     <string name="message_import">Bokmerker ble importert</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Legg til konfigurasjon</string>
     <string name="settings_privacy">Personvern</string>
     <string name="settings_about">Om</string>
+    <string name="settings_summary_about">Versjon, kontakt og juridiske detaljer</string>
     <string name="settings_contribute">Bidra</string>
     <string name="settings_summary_contribute">Hjelp til med å gjøre Fulguris enda bedre</string>
     <string name="settings_title_privacy_policy">Personvernpolicy</string>
@@ -616,6 +619,4 @@
     <string name="page_requests_none">Ingen forespørsler registrert for denne siden</string>
     <string name="settings_summary_full_menu">Vis fullstendig meny</string>
     <string name="action_launch">Start</string>
-    <string name="pref_category_title_legal">Juridisk</string>
-    <string name="pref_title_email">E-post</string>
 </resources>

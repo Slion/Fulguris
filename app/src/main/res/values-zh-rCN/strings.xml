@@ -113,6 +113,8 @@
     <string name="incognito_cookies">在隐私模式下启用Cookie</string>
     <string name="incognito_cookies_pie">隐私模式在单独的进程中运行，每次会话后重置。隐私Cookie偏好现在由常规Cookie偏好控制。</string>
     <string name="pref_category_title_contact_us">联系我们</string>
+    <string name="pref_category_title_legal">法律</string>
+    <string name="pref_title_email">电子邮件</string>
     <string name="clear_cache">清除缓存</string>
     <string name="message_cache_cleared">缓存已清除</string>
     <string name="message_import">书签已经导入</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">添加配置</string>
     <string name="settings_privacy">隐私设置</string>
     <string name="settings_about">关于</string>
+    <string name="settings_summary_about">版本、联系方式和法律详情</string>
     <string name="settings_contribute">贡献</string>
     <string name="settings_summary_contribute">帮助 Fulguris 成长并成功</string>
     <string name="settings_title_privacy_policy">隐私政策</string>
@@ -613,6 +616,4 @@
     <string name="page_requests_none">此页面没有记录的请求</string>
     <string name="settings_summary_full_menu">显示完整菜单</string>
     <string name="action_launch">启动</string>
-    <string name="pref_category_title_legal">法律</string>
-    <string name="pref_title_email">电子邮件</string>
 </resources>

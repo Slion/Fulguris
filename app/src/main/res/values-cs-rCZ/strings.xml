@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Povolit soubory cookie v soukromém režimu</string>
     <string name="incognito_cookies_pie">Soukromý režim běží v samostatném procesu, který se po každé relaci resetuje. Předvolby soukromých souborů cookie jsou nyní řízeny běžnými předvolbami souborů cookie.</string>
     <string name="pref_category_title_contact_us">Kontaktuj nás</string>
+    <string name="pref_category_title_legal">Právní</string>
+    <string name="pref_title_email">E-mail</string>
     <string name="clear_cache">Vymazat mezipamět</string>
     <string name="message_cache_cleared">Mezipaměť vymazána</string>
     <string name="message_import">Záložky byly importovány</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Přidat konfiguraci</string>
     <string name="settings_privacy">Soukromí</string>
     <string name="settings_about">O aplikaci</string>
+    <string name="settings_summary_about">Verze, kontakt a právní údaje</string>
     <string name="settings_contribute">Přispět</string>
     <string name="settings_summary_contribute">Pomozte Fulguris růst a uspět</string>
     <string name="settings_title_privacy_policy">Zásady ochrany soukromí</string>
@@ -622,6 +625,4 @@
     <string name="page_requests_none">Pro tuto stránku nejsou zaznamenány žádné požadavky</string>
     <string name="settings_summary_full_menu">Zobrazit celou nabídku</string>
     <string name="action_launch">Spustit</string>
-    <string name="pref_category_title_legal">Právní</string>
-    <string name="pref_title_email">E-mail</string>
 </resources>

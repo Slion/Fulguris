@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Увімкнути файли cookie в приватному режимі</string>
     <string name="incognito_cookies_pie">Приватний режим працює в окремому процесі, який скидається після кожного сеансу. Налаштування приватних файлів cookie тепер контролюються звичайними налаштуваннями файлів cookie.</string>
     <string name="pref_category_title_contact_us">Звʼяжіться з нами</string>
+    <string name="pref_category_title_legal">Правова інформація</string>
+    <string name="pref_title_email">Ел. пошта</string>
     <string name="clear_cache">Очистити кеш</string>
     <string name="message_cache_cleared">Кеш очищено</string>
     <string name="message_import">Закладки імпортовано</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Додати конфігурацію</string>
     <string name="settings_privacy">Приватність</string>
     <string name="settings_about">Про програму</string>
+    <string name="settings_summary_about">Версія, контакт та правова інформація</string>
     <string name="settings_contribute">Співпраця</string>
     <string name="settings_summary_contribute">Допомогти Fulguris розвиватися і досягти успіхів</string>
     <string name="settings_title_privacy_policy">Політика конфіденційності</string>
@@ -622,6 +625,4 @@
     <string name="page_requests_none">Немає зареєстрованих запитів для цієї сторінки</string>
     <string name="settings_summary_full_menu">Показати повне меню</string>
     <string name="action_launch">Запустити</string>
-    <string name="pref_category_title_legal">Правова інформація</string>
-    <string name="pref_title_email">Ел. пошта</string>
 </resources>

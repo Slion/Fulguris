@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Activer les cookies en mode privé</string>
     <string name="incognito_cookies_pie">Le mode privé s\'exécute dans un processus séparé qui est réinitialisé après chaque session. Les préférences de cookies privés sont maintenant contrôlées par les préférences de cookies normales.</string>
     <string name="pref_category_title_contact_us">Nous contacter</string>
+    <string name="pref_category_title_legal">Mentions légales</string>
+    <string name="pref_title_email">Courriel</string>
     <string name="clear_cache">Effacer le cache</string>
     <string name="message_cache_cleared">Cache effacé</string>
     <string name="message_import">Favoris ont été importés</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Ajouter une configuration</string>
     <string name="settings_privacy">Vie privée</string>
     <string name="settings_about">À propos</string>
+    <string name="settings_summary_about">Version, contact et mentions légales</string>
     <string name="settings_contribute">Contribuer</string>
     <string name="settings_summary_contribute">Aidez Fulguris à grandir et à réussir</string>
     <string name="settings_title_privacy_policy">Politique de Confidentialité</string>
@@ -616,6 +619,4 @@
     <string name="page_requests_none">Aucune requête enregistrée pour cette page</string>
     <string name="settings_summary_full_menu">Afficher le menu complet</string>
     <string name="action_launch">Lancer</string>
-    <string name="pref_category_title_legal">Mentions légales</string>
-    <string name="pref_title_email">Courriel</string>
 </resources>

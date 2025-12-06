@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Включить куки в приватном режиме</string>
     <string name="incognito_cookies_pie">Приватный режим работает в отдельном процессе, который сбрасывается после каждого сеанса. Настройки приватных файлов cookie теперь управляются обычными настройками файлов cookie.</string>
     <string name="pref_category_title_contact_us">Свяжитесь с нами</string>
+    <string name="pref_category_title_legal">Правовая информация</string>
+    <string name="pref_title_email">Эл. почта</string>
     <string name="clear_cache">Очистить кэш</string>
     <string name="message_cache_cleared">Кэш очищен</string>
     <string name="message_import">Закладки импортированы</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Добавить конфигурацию</string>
     <string name="settings_privacy">Конфиденциальность</string>
     <string name="settings_about">О программе</string>
+    <string name="settings_summary_about">Версия, контакт и правовая информация</string>
     <string name="settings_contribute">Внести вклад</string>
     <string name="settings_summary_contribute">Помогите Fulguris расти и достичь успеха</string>
     <string name="settings_title_privacy_policy">Политика конфиденциальности</string>
@@ -622,6 +625,4 @@
     <string name="page_requests_none">Запросы для этой страницы не зарегистрированы</string>
     <string name="settings_summary_full_menu">Показать полное меню</string>
     <string name="action_launch">Запустить</string>
-    <string name="pref_category_title_legal">Правовая информация</string>
-    <string name="pref_title_email">Эл. почта</string>
 </resources>

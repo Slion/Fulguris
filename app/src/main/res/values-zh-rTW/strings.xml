@@ -113,6 +113,8 @@
     <string name="incognito_cookies">在私密模式下啟用Cookie</string>
     <string name="incognito_cookies_pie">私密模式在單獨的程序中運行，每次會話後重置。私密Cookie偏好現在由常規Cookie偏好控制。</string>
     <string name="pref_category_title_contact_us">聯絡我們</string>
+    <string name="pref_category_title_legal">法律</string>
+    <string name="pref_title_email">電子郵件</string>
     <string name="clear_cache">清除快取</string>
     <string name="message_cache_cleared">已清除快取</string>
     <string name="message_import">書籤已匯入</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">新增設定</string>
     <string name="settings_privacy">隱私設定</string>
     <string name="settings_about">關於</string>
+    <string name="settings_summary_about">版本、聯絡方式和法律詳情</string>
     <string name="settings_contribute">貢獻</string>
     <string name="settings_summary_contribute">協助 Fulguris 成長和成功</string>
     <string name="settings_title_privacy_policy">隱私權政策</string>
@@ -613,6 +616,4 @@
     <string name="page_requests_none">此頁面沒有記錄的請求</string>
     <string name="settings_summary_full_menu">顯示完整選單</string>
     <string name="action_launch">啟動</string>
-    <string name="pref_category_title_legal">法律</string>
-    <string name="pref_title_email">電子郵件</string>
 </resources>

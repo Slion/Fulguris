@@ -113,6 +113,8 @@
     <string name="incognito_cookies">เปิดใช้งานคุกกี้ในโหมดส่วนตัว</string>
     <string name="incognito_cookies_pie">โหมดส่วนตัวทำงานในกระบวนการแยกต่างหากที่รีเซ็ตหลังจากแต่ละเซสชัน การตั้งค่าคุกกี้ส่วนตัวตอนนี้ถูกควบคุมโดยการตั้งค่าคุกกี้ปกติ</string>
     <string name="pref_category_title_contact_us">ติดต่อเรา</string>
+    <string name="pref_category_title_legal">กฎหมาย</string>
+    <string name="pref_title_email">อีเมล</string>
     <string name="clear_cache">ล้างแคช</string>
     <string name="message_cache_cleared">ล้างแคชแล้ว</string>
     <string name="message_import">นำเข้าบุ๊กมาร์กแล้ว</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">เพิ่มการกำหนดค่า</string>
     <string name="settings_privacy">ความเป็นส่วนตัวและความปลอดภัย</string>
     <string name="settings_about">เกี่ยวกับ</string>
+    <string name="settings_summary_about">เวอร์ชัน การติดต่อ และรายละเอียดทางกฎหมาย</string>
     <string name="settings_contribute">มีส่วนร่วม</string>
     <string name="settings_summary_contribute">ช่วยปรับปรุง Fulguris</string>
     <string name="settings_title_privacy_policy">นโยบายความเป็นส่วนตัว</string>
@@ -613,6 +616,4 @@
     <string name="page_requests_none">ไม่มีคำขอที่บันทึกสำหรับหน้านี้</string>
     <string name="settings_summary_full_menu">แสดงเมนูเต็ม</string>
     <string name="action_launch">เปิด</string>
-    <string name="pref_category_title_legal">กฎหมาย</string>
-    <string name="pref_title_email">อีเมล</string>
 </resources>

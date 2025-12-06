@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Aktiver cookies i privat tilstand</string>
     <string name="incognito_cookies_pie">Privat tilstand kører i en separat proces, der nulstilles efter hver session. Private cookie-præferencer styres nu af de almindelige cookie-præferencer.</string>
     <string name="pref_category_title_contact_us">Kontakt os</string>
+    <string name="pref_category_title_legal">Juridisk</string>
+    <string name="pref_title_email">E-mail</string>
     <string name="clear_cache">Ryd cache</string>
     <string name="message_cache_cleared">Cache ryddet</string>
     <string name="message_import">Bogmærker blev importeret</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Tilføj konfiguration</string>
     <string name="settings_privacy">Privatliv</string>
     <string name="settings_about">Om</string>
+    <string name="settings_summary_about">Version, kontakt og juridiske detaljer</string>
     <string name="settings_contribute">Bidrag</string>
     <string name="settings_summary_contribute">Hjælp Fulguris med at vokse og få succes</string>
     <string name="settings_title_privacy_policy">Fortrolighedspolitik</string>
@@ -616,6 +619,4 @@
     <string name="page_requests_none">Ingen anmodninger registreret for denne side</string>
     <string name="settings_summary_full_menu">Vis fuld menu</string>
     <string name="action_launch">Start</string>
-    <string name="pref_category_title_legal">Juridisk</string>
-    <string name="pref_title_email">E-mail</string>
 </resources>

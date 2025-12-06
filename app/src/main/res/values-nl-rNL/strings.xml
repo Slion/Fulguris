@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Cookies inschakelen in privémodus</string>
     <string name="incognito_cookies_pie">Privémodus draait in een apart proces dat na elke sessie wordt gereset. Privé-cookievoorkeuren worden nu beheerd door de reguliere cookievoorkeuren.</string>
     <string name="pref_category_title_contact_us">Neem contact op</string>
+    <string name="pref_category_title_legal">Juridisch</string>
+    <string name="pref_title_email">E-mail</string>
     <string name="clear_cache">Wis cache</string>
     <string name="message_cache_cleared">Cache gewist</string>
     <string name="message_import">Bladwijzers zijn geïmporteerd</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Configuratie toevoegen</string>
     <string name="settings_privacy">Privacy instellingen</string>
     <string name="settings_about">Over</string>
+    <string name="settings_summary_about">Versie, contact en juridische details</string>
     <string name="settings_contribute">Help mee</string>
     <string name="settings_summary_contribute">Help Fulguris groeien en slagen</string>
     <string name="settings_title_privacy_policy">Privacybeleid</string>
@@ -616,6 +619,4 @@
     <string name="page_requests_none">Geen verzoeken geregistreerd voor deze pagina</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
     <string name="action_launch">Starten</string>
-    <string name="pref_category_title_legal">Juridisch</string>
-    <string name="pref_title_email">E-mail</string>
 </resources>

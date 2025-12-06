@@ -113,6 +113,8 @@
     <string name="incognito_cookies">プライベートモードでCookieを有効にする</string>
     <string name="incognito_cookies_pie">プライベートモードは各セッション後にリセットされる別プロセスで実行されます。プライベートCookie設定は通常のCookie設定で制御されるようになりました。</string>
     <string name="pref_category_title_contact_us">お問い合わせ</string>
+    <string name="pref_category_title_legal">法的情報</string>
+    <string name="pref_title_email">メール</string>
     <string name="clear_cache">キャッシュを消去する</string>
     <string name="message_cache_cleared">キャッシュを消去しました</string>
     <string name="message_import">ブックマークをインポートしました</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">設定を追加</string>
     <string name="settings_privacy">プライバシー</string>
     <string name="settings_about">このアプリについて</string>
+    <string name="settings_summary_about">バージョン、連絡先、法的情報</string>
     <string name="settings_contribute">貢献する</string>
     <string name="settings_summary_contribute">Fulgurisの成長と成功を助けます</string>
     <string name="settings_title_privacy_policy">プライバシーポリシー</string>
@@ -613,6 +616,4 @@
     <string name="page_requests_none">このページのリクエストは記録されていません</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
     <string name="action_launch">起動</string>
-    <string name="pref_category_title_legal">法的情報</string>
-    <string name="pref_title_email">メール</string>
 </resources>

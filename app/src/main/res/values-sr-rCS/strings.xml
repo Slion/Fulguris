@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Омогући колачиће у приватном режиму</string>
     <string name="incognito_cookies_pie">Приватни режим ради у засебном процесу који се ресетује након сваке сесије. Подешавања приватних колачића сада контролишу редовна подешавања колачића.</string>
     <string name="pref_category_title_contact_us">Kontaktirajte nas</string>
+    <string name="pref_category_title_legal">Правно</string>
+    <string name="pref_title_email">Е-пошта</string>
     <string name="clear_cache">Očisti keš</string>
     <string name="message_cache_cleared">Keš je očišćen</string>
     <string name="message_import">Obeleživači su uvezeni</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Add configuration</string>
     <string name="settings_privacy">Postavke privatnosti</string>
     <string name="settings_about">O programu</string>
+    <string name="settings_summary_about">Верзија, контакт и правне информације</string>
     <string name="settings_contribute">Doprinijeti</string>
     <string name="settings_summary_contribute">Pomozite Fulgurisu da raste i uspe</string>
     <string name="settings_title_privacy_policy">Pravila o privatnosti</string>
@@ -619,6 +622,4 @@
     <string name="page_requests_none">Нема забележених захтева за ову страницу</string>
     <string name="settings_summary_full_menu">Прикажи пуни мени</string>
     <string name="action_launch">Покрени</string>
-    <string name="pref_category_title_legal">Правно</string>
-    <string name="pref_title_email">Е-пошта</string>
 </resources>

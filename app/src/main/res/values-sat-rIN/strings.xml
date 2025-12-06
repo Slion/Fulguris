@@ -113,6 +113,8 @@
     <string name="incognito_cookies">ᱱᱤᱡᱮᱨ ᱢᱳᱰ ᱨᱮ ᱠᱩᱠᱤᱡ ᱮᱢ ᱠᱟᱹᱢᱤ</string>
     <string name="incognito_cookies_pie">ᱱᱤᱡᱮᱨ ᱢᱳᱰ ᱟᱞᱜᱟ ᱯᱨᱳᱥᱮᱥ ᱨᱮ ᱪᱟᱞᱩᱭ ᱟᱠᱟᱱᱟ ᱡᱟᱦᱟ ᱢᱤᱫ ᱥᱮᱥᱚᱱ ᱛᱟᱭᱚᱢ ᱨᱤᱥᱮᱴ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ᱾ ᱱᱤᱡᱮᱨ ᱠᱩᱠᱤ ᱯᱚᱥᱚᱱᱫ ᱱᱤᱛ ᱦᱚᱨ ᱠᱩᱠᱤ ᱯᱚᱥᱚᱱᱫ ᱫᱟᱨᱟᱭ ᱛᱮ ᱠᱚᱱᱴᱨᱚᱞ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ᱾</string>
     <string name="pref_category_title_contact_us">Contact us</string>
+    <string name="pref_category_title_legal">ᱱᱤᱭᱚᱢ</string>
+    <string name="pref_title_email">ᱤᱢᱮᱞ</string>
     <string name="clear_cache">ᱠᱮᱪ ᱯᱷᱟᱨᱪᱟᱭ</string>
     <string name="message_cache_cleared">ᱠᱮᱪ ᱯᱷᱟᱨᱪᱟᱣ ᱮᱱᱟ</string>
     <string name="message_import">ᱪᱤᱱᱦᱟᱹ ᱠᱚ ᱤᱢᱯᱳᱨᱴ ᱮᱱᱟ</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">ᱥᱟᱡᱟᱣ ᱥᱮᱞᱮᱫ</string>
     <string name="settings_privacy">ᱱᱤᱡᱚᱨᱟᱜ</string>
     <string name="settings_about">ᱵᱟᱵᱚᱛ</string>
+    <string name="settings_summary_about">ᱵᱷᱚᱨᱥᱚᱱ, ᱥᱚᱢᱯᱚᱨᱠ ᱟᱨ ᱱᱤᱭᱚᱢ ᱵᱤᱵᱚᱨᱚᱬ</string>
     <string name="settings_contribute">ᱮᱱᱮᱢ</string>
     <string name="settings_summary_contribute">Fulguris ᱵᱟᱹᱲᱛᱤ ᱟᱨ ᱥᱚᱠᱥᱮᱥ ᱞᱟᱹᱜᱤᱫ ᱜᱚᱲᱚ</string>
     <string name="settings_title_privacy_policy">ᱱᱤᱡᱚᱨᱟᱜ ᱱᱤᱛᱤ</string>
@@ -616,6 +619,4 @@
     <string name="page_requests_none">ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱨᱮ ᱨᱮᱠᱩᱭᱮᱥᱴ ᱵᱟᱹᱱᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="settings_summary_full_menu">ᱯᱩᱨᱟᱹ ᱢᱮᱱᱩ ᱩᱫᱩᱜ ᱢᱮ</string>
     <string name="action_launch">ᱪᱟᱞᱩ</string>
-    <string name="pref_category_title_legal">ᱱᱤᱭᱚᱢ</string>
-    <string name="pref_title_email">ᱤᱢᱮᱞ</string>
 </resources>

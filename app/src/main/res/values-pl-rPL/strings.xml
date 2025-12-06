@@ -113,6 +113,8 @@
     <string name="incognito_cookies">Włącz ciasteczka w trybie prywatnym</string>
     <string name="incognito_cookies_pie">Tryb prywatny działa w osobnym procesie, który jest resetowany po każdej sesji. Preferencje prywatnych ciasteczek są teraz kontrolowane przez zwykłe preferencje ciasteczek.</string>
     <string name="pref_category_title_contact_us">Kontakt</string>
+    <string name="pref_category_title_legal">Informacje prawne</string>
+    <string name="pref_title_email">E-mail</string>
     <string name="clear_cache">Wyczyść pamięć podręczną</string>
     <string name="message_cache_cleared">Pamięć podręczna została wyczyszczona</string>
     <string name="message_import">Zakładki zostały zaimportowane</string>
@@ -243,6 +245,7 @@
     <string name="settings_title_add_configuration">Dodaj konfigurację</string>
     <string name="settings_privacy">Prywatność</string>
     <string name="settings_about">O przeglądarce</string>
+    <string name="settings_summary_about">Wersja, kontakt i informacje prawne</string>
     <string name="settings_contribute">Współtwórz</string>
     <string name="settings_summary_contribute">Przyczyń się do rozwoju Fulguris</string>
     <string name="settings_title_privacy_policy">Polityka Prywatności</string>
@@ -622,6 +625,4 @@
     <string name="page_requests_none">Brak zarejestrowanych żądań dla tej strony</string>
     <string name="settings_summary_full_menu">Pokaż pełne menu</string>
     <string name="action_launch">Uruchom</string>
-    <string name="pref_category_title_legal">Informacje prawne</string>
-    <string name="pref_title_email">E-mail</string>
 </resources>
