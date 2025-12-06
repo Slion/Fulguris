@@ -112,7 +112,7 @@
     <string name="download_failed">Falha ao descarregar</string>
     <string name="incognito_cookies">Ativar cookies no modo privado</string>
     <string name="incognito_cookies_pie">O modo privado é executado num processo separado que é reposto após cada sessão. As preferências de cookies privados são agora controladas pelas preferências de cookies regulares.</string>
-    <string name="pref_title_contact_us">Contacte-nos</string>
+    <string name="pref_category_title_contact_us">Contacte-nos</string>
     <string name="clear_cache">Limpar cache</string>
     <string name="message_cache_cleared">Cache limpa</string>
     <string name="message_import">Marcadores importados</string>
@@ -616,4 +616,6 @@
     <string name="page_requests_none">Nenhum pedido registado para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menu completo</string>
     <string name="action_launch">Iniciar</string>
+    <string name="pref_category_title_legal">Jurídico</string>
+    <string name="pref_title_email">E-mail</string>
 </resources>

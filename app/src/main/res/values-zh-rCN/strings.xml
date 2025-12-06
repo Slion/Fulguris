@@ -112,7 +112,7 @@
     <string name="download_failed">下载失败</string>
     <string name="incognito_cookies">在隐私模式下启用Cookie</string>
     <string name="incognito_cookies_pie">隐私模式在单独的进程中运行，每次会话后重置。隐私Cookie偏好现在由常规Cookie偏好控制。</string>
-    <string name="pref_title_contact_us">联系我们</string>
+    <string name="pref_category_title_contact_us">联系我们</string>
     <string name="clear_cache">清除缓存</string>
     <string name="message_cache_cleared">缓存已清除</string>
     <string name="message_import">书签已经导入</string>
@@ -613,4 +613,6 @@
     <string name="page_requests_none">此页面没有记录的请求</string>
     <string name="settings_summary_full_menu">显示完整菜单</string>
     <string name="action_launch">启动</string>
+    <string name="pref_category_title_legal">法律</string>
+    <string name="pref_title_email">电子邮件</string>
 </resources>

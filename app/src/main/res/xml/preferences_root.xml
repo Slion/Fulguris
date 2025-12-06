@@ -75,7 +75,7 @@
     <Preference
         app:fragment="fulguris.settings.fragment.AboutSettingsFragment"
         app:title="@string/settings_about"
-        app:icon="@drawable/ic_about"
+        app:icon="@drawable/ic_info"
         app:singleLineTitle="false"
         />
 

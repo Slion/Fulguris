@@ -112,7 +112,7 @@
     <string name="download_failed">Download failed</string>
     <string name="incognito_cookies">Activa les galetes en mode privat</string>
     <string name="incognito_cookies_pie">El mode privat s\'executa en un procés separat que es reinicia després de cada sessió. Les preferències de galetes privades ara es controlen amb les preferències de galetes normals.</string>
-    <string name="pref_title_contact_us">Contact us</string>
+    <string name="pref_category_title_contact_us">Contact us</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
     <string name="message_import">Bookmarks were imported</string>
@@ -616,4 +616,6 @@
     <string name="page_requests_none">No hi ha sol·licituds registrades per a aquesta pàgina</string>
     <string name="settings_summary_full_menu">Mostra el menú complet</string>
     <string name="action_launch">Inicia</string>
+    <string name="pref_category_title_legal">Legal</string>
+    <string name="pref_title_email">Correu electrònic</string>
 </resources>

@@ -112,7 +112,7 @@
     <string name="download_failed">Nedladdning misslyckad</string>
     <string name="incognito_cookies">Aktivera kakor i privat läge</string>
     <string name="incognito_cookies_pie">Privat läge körs i en separat process som återställs efter varje session. Privata cookie-inställningar styrs nu av de vanliga cookie-inställningarna.</string>
-    <string name="pref_title_contact_us">Kontakta oss</string>
+    <string name="pref_category_title_contact_us">Kontakta oss</string>
     <string name="clear_cache">Rensa cacheminne</string>
     <string name="message_cache_cleared">Cachen rensad</string>
     <string name="message_import">Bokmärken importerades</string>
@@ -616,4 +616,6 @@
     <string name="page_requests_none">Inga förfrågningar registrerade för denna sida</string>
     <string name="settings_summary_full_menu">Visa fullständig meny</string>
     <string name="action_launch">Starta</string>
+    <string name="pref_category_title_legal">Juridiskt</string>
+    <string name="pref_title_email">E-post</string>
 </resources>

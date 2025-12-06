@@ -112,7 +112,7 @@
     <string name="download_failed">Download failed</string>
     <string name="incognito_cookies">Įgalinti slapukus privačiame režime</string>
     <string name="incognito_cookies_pie">Privatus režimas veikia atskirame procese, kuris nustatomas iš naujo po kiekvienos sesijos. Privatūs slapukų nustatymai dabar valdomi įprastais slapukų nustatymais.</string>
-    <string name="pref_title_contact_us">Contact us</string>
+    <string name="pref_category_title_contact_us">Contact us</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
     <string name="message_import">Bookmarks were imported</string>
@@ -622,4 +622,6 @@
     <string name="page_requests_none">Šiam puslapiui nėra įrašytų užklausų</string>
     <string name="settings_summary_full_menu">Rodyti pilną meniu</string>
     <string name="action_launch">Paleisti</string>
+    <string name="pref_category_title_legal">Teisinė informacija</string>
+    <string name="pref_title_email">El. paštas</string>
 </resources>

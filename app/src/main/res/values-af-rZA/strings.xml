@@ -112,7 +112,7 @@
     <string name="download_failed">Download failed</string>
     <string name="incognito_cookies">Aktiveer koekies in privaatmodus</string>
     <string name="incognito_cookies_pie">Privaatmodus loop in \'n aparte proses wat na elke sessie teruggestel word. Privaat koekie-voorkeure word nou deur die gewone koekie-voorkeure beheer.</string>
-    <string name="pref_title_contact_us">Contact us</string>
+    <string name="pref_category_title_contact_us">Contact us</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
     <string name="message_import">Bookmarks were imported</string>
@@ -616,4 +616,6 @@
     <string name="page_requests_none">Geen versoeke vir hierdie bladsy aangeteken nie</string>
     <string name="settings_summary_full_menu">Wys volle spyskaart</string>
     <string name="action_launch">Begin</string>
+    <string name="pref_category_title_legal">Regsgeldig</string>
+    <string name="pref_title_email">E-pos</string>
 </resources>

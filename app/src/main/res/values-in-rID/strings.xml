@@ -112,7 +112,7 @@
     <string name="download_failed">Gagal mengunduh</string>
     <string name="incognito_cookies">Aktifkan cookie dalam mode pribadi</string>
     <string name="incognito_cookies_pie">Mode pribadi berjalan dalam proses terpisah yang direset setelah setiap sesi. Preferensi cookie pribadi sekarang dikontrol oleh preferensi cookie reguler.</string>
-    <string name="pref_title_contact_us">Hubungi kami</string>
+    <string name="pref_category_title_contact_us">Hubungi kami</string>
     <string name="clear_cache">Hapus cache</string>
     <string name="message_cache_cleared">Cache telah dihapus</string>
     <string name="message_import">Penanda telah dibawa masuk</string>
@@ -613,4 +613,6 @@
     <string name="page_requests_none">Tidak ada permintaan tercatat untuk halaman ini</string>
     <string name="settings_summary_full_menu">Tampilkan menu lengkap</string>
     <string name="action_launch">Luncurkan</string>
+    <string name="pref_category_title_legal">Hukum</string>
+    <string name="pref_title_email">Email</string>
 </resources>

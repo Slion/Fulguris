@@ -112,7 +112,7 @@
     <string name="download_failed">Sikertelen letöltés</string>
     <string name="incognito_cookies">Sütik engedélyezése privát módban</string>
     <string name="incognito_cookies_pie">A privát mód egy külön folyamatban fut, amely minden munkamenet után visszaáll. A privát süti beállításokat most a normál süti beállítások vezérlik.</string>
-    <string name="pref_title_contact_us">Kapcsolat</string>
+    <string name="pref_category_title_contact_us">Kapcsolat</string>
     <string name="clear_cache">Gyorsítótár törlése</string>
     <string name="message_cache_cleared">Gyorsítótár törölve</string>
     <string name="message_import">Könyvjelzők importálva</string>
@@ -616,4 +616,6 @@
     <string name="page_requests_none">Nincsenek rögzített kérések ezen az oldalon</string>
     <string name="settings_summary_full_menu">Teljes menü megjelenítése</string>
     <string name="action_launch">Indítás</string>
+    <string name="pref_category_title_legal">Jogi</string>
+    <string name="pref_title_email">E-mail</string>
 </resources>

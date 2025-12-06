@@ -112,7 +112,7 @@
     <string name="download_failed">فشل التنزيل</string>
     <string name="incognito_cookies">تمكين ملفات تعريف الارتباط في الوضع الخاص</string>
     <string name="incognito_cookies_pie">يعمل الوضع الخاص في عملية منفصلة يتم إعادة تعيينها بعد كل جلسة. يتم الآن التحكم في تفضيلات ملفات تعريف الارتباط الخاصة من خلال تفضيلات ملفات تعريف الارتباط العادية.</string>
-    <string name="pref_title_contact_us">اتصل بنا</string>
+    <string name="pref_category_title_contact_us">اتصل بنا</string>
     <string name="clear_cache">مسح ذاكرة التخزين المؤقت</string>
     <string name="message_cache_cleared">تم مسح الذاكرة المؤقتة</string>
     <string name="message_import">تم استيراد الإشارات المرجعية</string>
@@ -628,4 +628,6 @@
     <string name="page_requests_none">لا توجد طلبات مسجلة لهذه الصفحة</string>
     <string name="settings_summary_full_menu">إظهار القائمة الكاملة</string>
     <string name="action_launch">تشغيل</string>
+    <string name="pref_category_title_legal">قانوني</string>
+    <string name="pref_title_email">البريد الإلكتروني</string>
 </resources>

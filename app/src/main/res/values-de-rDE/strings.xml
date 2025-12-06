@@ -112,7 +112,7 @@
     <string name="download_failed">Herunterladen fehlgeschlagen</string>
     <string name="incognito_cookies">Cookies im privaten Modus aktivieren</string>
     <string name="incognito_cookies_pie">Der private Modus läuft in einem separaten Prozess, der nach jeder Sitzung zurückgesetzt wird. Die Einstellungen für private Cookies werden jetzt durch die regulären Cookie-Einstellungen gesteuert.</string>
-    <string name="pref_title_contact_us">Kontakt</string>
+    <string name="pref_category_title_contact_us">Kontakt</string>
     <string name="clear_cache">Cache löschen</string>
     <string name="message_cache_cleared">Cache gelöscht</string>
     <string name="message_import">Lesezeichen wurden importiert</string>
@@ -616,4 +616,6 @@
     <string name="page_requests_none">Keine Anfragen für diese Seite aufgezeichnet</string>
     <string name="settings_summary_full_menu">Vollständiges Menü anzeigen</string>
     <string name="action_launch">Starten</string>
+    <string name="pref_category_title_legal">Rechtliches</string>
+    <string name="pref_title_email">E-Mail</string>
 </resources>

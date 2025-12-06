@@ -112,7 +112,7 @@
     <string name="download_failed">İndirme başarısız oldu</string>
     <string name="incognito_cookies">Gizli modda çerezleri etkinleştir</string>
     <string name="incognito_cookies_pie">Gizli mod, her oturumdan sonra sıfırlanan ayrı bir işlemde çalışır. Özel çerez tercihleri artık normal çerez tercihleri tarafından kontrol edilmektedir.</string>
-    <string name="pref_title_contact_us">Bize ulaşın</string>
+    <string name="pref_category_title_contact_us">Bize ulaşın</string>
     <string name="clear_cache">Önbelleği temizle</string>
     <string name="message_cache_cleared">Önbellek temizlendi</string>
     <string name="message_import">Yer imleri içe aktarıldı</string>
@@ -616,4 +616,6 @@
     <string name="page_requests_none">Bu sayfa için kaydedilen istek yok</string>
     <string name="settings_summary_full_menu">Tam menüyü göster</string>
     <string name="action_launch">Başlat</string>
+    <string name="pref_category_title_legal">Yasal</string>
+    <string name="pref_title_email">E-posta</string>
 </resources>

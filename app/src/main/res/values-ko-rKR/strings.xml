@@ -112,7 +112,7 @@
     <string name="download_failed">다운로드 실패</string>
     <string name="incognito_cookies">비공개 모드에서 쿠키 사용</string>
     <string name="incognito_cookies_pie">비공개 모드는 각 세션 후 초기화되는 별도의 프로세스에서 실행됩니다. 비공개 쿠키 설정은 이제 일반 쿠키 설정에 의해 제어됩니다.</string>
-    <string name="pref_title_contact_us">문의하기</string>
+    <string name="pref_category_title_contact_us">문의하기</string>
     <string name="clear_cache">캐시 지우기</string>
     <string name="message_cache_cleared">캐시를 지웠습니다</string>
     <string name="message_import">즐겨찾기를 가져왔습니다</string>
@@ -613,4 +613,6 @@
     <string name="page_requests_none">이 페이지에 기록된 요청 없음</string>
     <string name="settings_summary_full_menu">전체 메뉴 표시</string>
     <string name="action_launch">실행</string>
+    <string name="pref_category_title_legal">법적 정보</string>
+    <string name="pref_title_email">이메일</string>
 </resources>

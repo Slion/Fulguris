@@ -112,7 +112,7 @@
     <string name="download_failed">ダウンロード失敗</string>
     <string name="incognito_cookies">プライベートモードでCookieを有効にする</string>
     <string name="incognito_cookies_pie">プライベートモードは各セッション後にリセットされる別プロセスで実行されます。プライベートCookie設定は通常のCookie設定で制御されるようになりました。</string>
-    <string name="pref_title_contact_us">お問い合わせ</string>
+    <string name="pref_category_title_contact_us">お問い合わせ</string>
     <string name="clear_cache">キャッシュを消去する</string>
     <string name="message_cache_cleared">キャッシュを消去しました</string>
     <string name="message_import">ブックマークをインポートしました</string>
@@ -613,4 +613,6 @@
     <string name="page_requests_none">このページのリクエストは記録されていません</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
     <string name="action_launch">起動</string>
+    <string name="pref_category_title_legal">法的情報</string>
+    <string name="pref_title_email">メール</string>
 </resources>

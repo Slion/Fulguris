@@ -112,7 +112,7 @@
     <string name="download_failed">Η λήψη απέτυχε</string>
     <string name="incognito_cookies">Ενεργοποίηση cookies σε ιδιωτική λειτουργία</string>
     <string name="incognito_cookies_pie">Η ιδιωτική λειτουργία εκτελείται σε ξεχωριστή διαδικασία που επαναφέρεται μετά από κάθε συνεδρία. Οι προτιμήσεις ιδιωτικών cookies ελέγχονται τώρα από τις κανονικές προτιμήσεις cookies.</string>
-    <string name="pref_title_contact_us">Επικοινωνήστε μαζί μας</string>
+    <string name="pref_category_title_contact_us">Επικοινωνήστε μαζί μας</string>
     <string name="clear_cache">Καθαρισμός cache</string>
     <string name="message_cache_cleared">Cache καθαρίστηκε</string>
     <string name="message_import">Εισήχθησαν οι σελιδοδείκτες</string>
@@ -616,4 +616,6 @@
     <string name="page_requests_none">Δεν καταγράφηκαν αιτήματα για αυτή τη σελίδα</string>
     <string name="settings_summary_full_menu">Εμφάνιση πλήρους μενού</string>
     <string name="action_launch">Εκκίνηση</string>
+    <string name="pref_category_title_legal">Νομικά</string>
+    <string name="pref_title_email">Email</string>
 </resources>

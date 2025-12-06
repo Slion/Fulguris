@@ -114,7 +114,9 @@
     <string name="download_failed">Download failed</string>
     <string name="incognito_cookies">Enable cookies in private mode</string>
     <string name="incognito_cookies_pie">Private mode runs in a separate process that is reset after each session. Private cookie preferences are now controlled by the regular cookie preferences.</string>
-    <string name="pref_title_contact_us">Contact us</string>
+    <string name="pref_category_title_contact_us">Contact us</string>
+    <string name="pref_category_title_legal">Legal</string>
+    <string name="pref_title_email">Email</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
     <string name="message_import">Bookmarks were imported</string>

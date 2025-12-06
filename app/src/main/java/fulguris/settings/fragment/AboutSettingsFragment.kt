@@ -110,7 +110,7 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
 
         var webViewSummary = resources.getString(R.string.unknown)
         WebViewCompat.getCurrentWebViewPackage(requireContext())?.let {
-            webViewSummary = "${it.packageName} - v${it.versionName}"
+            webViewSummary = "${it.packageName}\nv${it.versionName}"
         }
 
         clickablePreference(
@@ -142,7 +142,7 @@ class AboutSettingsFragment : AbstractSettingsFragment() {
     }
 
     val versionString
-        get() = BuildConfig.APPLICATION_ID + " - v" + BuildConfig.VERSION_NAME
+        get() =  "${BuildConfig.APPLICATION_ID}\nv${BuildConfig.VERSION_NAME}"
 
     val androidInfo
         get() = "Android ${Build.VERSION.RELEASE} - API ${Build.VERSION.SDK_INT}"

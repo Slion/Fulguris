@@ -112,7 +112,7 @@
     <string name="download_failed">Lataus epäonnistui</string>
     <string name="incognito_cookies">Ota evästeet käyttöön yksityisessä tilassa</string>
     <string name="incognito_cookies_pie">Yksityinen tila toimii erillisessä prosessissa, joka nollataan jokaisen istunnon jälkeen. Yksityisiä evästeasetuksia hallitaan nyt tavallisilla evästeasetuksilla.</string>
-    <string name="pref_title_contact_us">Ota yhteyttä</string>
+    <string name="pref_category_title_contact_us">Ota yhteyttä</string>
     <string name="clear_cache">Tyhjennä välimuisti</string>
     <string name="message_cache_cleared">Välimuisti tyhjennetty</string>
     <string name="message_import">Kirjanmerkit tuotu</string>
@@ -616,4 +616,6 @@
     <string name="page_requests_none">Ei tallennettuja pyyntöjä tälle sivulle</string>
     <string name="settings_summary_full_menu">Näytä koko valikko</string>
     <string name="action_launch">Käynnistä</string>
+    <string name="pref_category_title_legal">Oikeudelliset tiedot</string>
+    <string name="pref_title_email">Sähköposti</string>
 </resources>
