@@ -276,6 +276,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
     override fun closeActivity(aIntent: Intent) {
         //performExitCleanUp()
 
+        //aIntent.log("CloseActivity")
+
         mainHandler.postDelayed({
             // TODO: All extras name in one place
             try {

@@ -75,7 +75,7 @@ fun WebBrowserActivity.doOnNewIntent(aIntent: Intent?, aIncognitoStartup: Boolea
                 extractedUrl
             } else {
                 // Fallback to trying to parse the entire text as URI
-                subject?.let { setAddressBarText(it) }
+                setAddressBarText(subject)
                 // Cancel other operation as we won't open a tab here
                 null
             }

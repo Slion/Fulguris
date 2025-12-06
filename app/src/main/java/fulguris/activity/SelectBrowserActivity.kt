@@ -48,10 +48,13 @@ class SelectBrowserActivity : Activity() {
             return
         }
 
+        // Extract extras from the intent to pass to the target browser
+        val extras = intent?.extras
+
         // Show the browser chooser dialog
         // excludeThisApp is false, so both MainActivity and IncognitoActivity will be included
         // SelectBrowserActivity is always excluded automatically
-        BrowserChooser.open(this, url, excludeThisApp = false) {
+        BrowserChooser.open(this, url, excludeThisApp = false, extras = extras) {
             // Finish this activity when the dialog is dismissed
             finish()
         }

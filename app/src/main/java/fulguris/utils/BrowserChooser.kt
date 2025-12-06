@@ -1,6 +1,5 @@
 package fulguris.utils
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -34,17 +33,21 @@ object BrowserChooser {
      * @param context The context to show the bottom sheet
      * @param url     The URL to open
      * @param excludeThisApp Whether to exclude the current app from the browser list (default: true)
+     * @param extras Optional Bundle of extras to pass to the target intent
      * @param onDismiss Optional callback to be executed when the dialog is dismissed
      */
-    fun open(context: Context, url: String, excludeThisApp: Boolean = true, onDismiss: (() -> Unit)? = null) {
+    fun open(context: Context, url: String, excludeThisApp: Boolean = true, extras: android.os.Bundle? = null, onDismiss: (() -> Unit)? = null) {
         Timber.d("DBG: BrowserChooser.open called with URL: $url, excludeThisApp: $excludeThisApp")
-        showBrowserChooserBottomSheet(context, url, excludeThisApp, onDismiss)
+        showBrowserChooserBottomSheet(context, url, excludeThisApp, extras, onDismiss)
     }
 
-    private fun showBrowserChooserBottomSheet(context: Context, url: String, excludeThisApp: Boolean, onDismiss: (() -> Unit)?) {
+    /**
+     * Show a browser chooser bottom sheet.
+     */
+    private fun showBrowserChooserBottomSheet(context: Context, aUrl: String, excludeThisApp: Boolean, extras: android.os.Bundle?, onDismiss: (() -> Unit)?) {
         try {
-            Timber.d("DBG: showBrowserChooserBottomSheet starting for URL: $url")
-            val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+            Timber.d("DBG: showBrowserChooserBottomSheet starting for URL: $aUrl")
+            val intent = Intent(Intent.ACTION_VIEW, aUrl.toUri())
             val packageManager = context.packageManager
 
             // Use MATCH_ALL flag to find all browsers, including those hidden by Samsung
@@ -90,7 +93,7 @@ object BrowserChooser {
                 // Add MainActivity if not present
                 if (!hasMainActivity) {
                     try {
-                        val mainIntent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
+                        val mainIntent = Intent(Intent.ACTION_VIEW, aUrl.toUri()).apply {
                             setClassName(context.packageName, mainActivityName)
                         }
                         val mainResolveInfo = packageManager.resolveActivity(mainIntent, 0)
@@ -112,7 +115,7 @@ object BrowserChooser {
                 // Add IncognitoActivity if not present
                 if (!hasIncognitoActivity) {
                     try {
-                        val incognitoIntent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
+                        val incognitoIntent = Intent(Intent.ACTION_VIEW, aUrl.toUri()).apply {
                             setClassName(context.packageName, incognitoActivityName)
                         }
                         val incognitoResolveInfo = packageManager.resolveActivity(incognitoIntent, 0)
@@ -128,23 +131,27 @@ object BrowserChooser {
 
             Timber.d("DBG: After filtering: ${resolveInfos.size} activities found")
 
-            when {
-                resolveInfos.isEmpty() -> {
-                    Timber.w("DBG: No browser apps found for URL: $url")
+            when (resolveInfos.size) {
+                0 -> {
+                    Timber.w("DBG: No browser apps found for URL: $aUrl")
                     android.widget.Toast.makeText(context, "No browser apps found", android.widget.Toast.LENGTH_SHORT).show()
                 }
 
-                resolveInfos.size == 1 -> {
+                1 -> {
                     // Only one browser available, open directly
                     val resolveInfo = resolveInfos[0]
                     Timber.d("DBG: Only one browser found: ${resolveInfo.activityInfo.packageName}/${resolveInfo.activityInfo.name}, opening directly")
-                    val targetIntent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
+                    val targetIntent = Intent(Intent.ACTION_VIEW, aUrl.toUri()).apply {
                         // Use setComponent instead of setPackage to specify exact activity
                         component = android.content.ComponentName(
                             resolveInfo.activityInfo.packageName,
                             resolveInfo.activityInfo.name
                         )
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        // Add extras if provided
+                        if (extras != null) {
+                            putExtras(extras)
+                        }
                     }
                     context.startActivity(targetIntent)
                 }
@@ -152,12 +159,12 @@ object BrowserChooser {
                 else -> {
                     // Multiple browsers - show bottom sheet with icons
                     Timber.d("DBG: Multiple browsers found (${resolveInfos.size}), showing bottom sheet")
-                    createBrowserBottomSheet(context, url, resolveInfos, onDismiss)
+                    createBrowserBottomSheet(context, aUrl, resolveInfos, extras, onDismiss)
                 }
             }
 
         } catch (e: Exception) {
-            Timber.e(e, "DBG: Failed to show browser chooser for URL: $url")
+            Timber.e(e, "DBG: Failed to show browser chooser for URL: $aUrl")
             android.widget.Toast.makeText(context, "Failed to open URL", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
@@ -204,7 +211,10 @@ object BrowserChooser {
         Timber.d("DBG: Saved MRU browser: $componentName, MRU list: $mruString")
     }
 
-    private fun createBrowserBottomSheet(context: Context, url: String, resolveInfos: List<android.content.pm.ResolveInfo>, onDismiss: (() -> Unit)?) {
+    /**
+     *
+     */
+    private fun createBrowserBottomSheet(context: Context, url: String, resolveInfos: List<android.content.pm.ResolveInfo>, extras: android.os.Bundle?, onDismiss: (() -> Unit)?) {
         Timber.d("DBG: createBrowserBottomSheet called with ${resolveInfos.size} browsers")
         val packageManager = context.packageManager
 
@@ -273,6 +283,10 @@ object BrowserChooser {
                             selectedBrowser.activityName
                         )
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        // Add extras if provided
+                        if (extras != null) {
+                            putExtras(extras)
+                        }
                     }
                     Timber.d("DBG: Launching browser: ${selectedBrowser.packageName}/${selectedBrowser.activityName}")
                     context.startActivity(targetIntent)
