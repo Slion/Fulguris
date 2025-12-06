@@ -24,7 +24,6 @@
     <string name="home">Αρχική σελίδα</string>
     <string name="download">Κατέβασμα τοποθεσίας</string>
     <string name="settings_advanced">Προχωρημένες ρυθμίσεις</string>
-    <string name="version">Έκδοση εφαρμογής</string>
     <string name="update_available">Διαθέσιμη ενημέρωση</string>
     <string name="update_check_error">Σφάλμα ελέγχου ενημέρωσης, δοκιμάστε ξανά αργότερα</string>
     <string name="up_to_date">Το Fulguris είναι ενημερωμένο</string>

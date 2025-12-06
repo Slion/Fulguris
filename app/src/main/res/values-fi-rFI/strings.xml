@@ -24,7 +24,6 @@
     <string name="home">Aloitussivu</string>
     <string name="download">Lataussijainti</string>
     <string name="settings_advanced">Lisäasetukset</string>
-    <string name="version">Sovelluksen versio</string>
     <string name="update_available">Päivitys saatavilla</string>
     <string name="update_check_error">Päivityksen tarkistusvirhe, yritä myöhemmin uudelleen</string>
     <string name="up_to_date">Fulguris on ajan tasalla</string>

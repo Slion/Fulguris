@@ -24,7 +24,6 @@
     <string name="home">Página de inicio</string>
     <string name="download">Ruta de descargas</string>
     <string name="settings_advanced">Ajustes avanzados</string>
-    <string name="version">Versión de la aplicación</string>
     <string name="update_available">Actualización disponible</string>
     <string name="update_check_error">Error de comprobación de actualización, inténtelo más tarde</string>
     <string name="up_to_date">Fulguris está actualizado</string>

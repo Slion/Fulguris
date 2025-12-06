@@ -24,7 +24,6 @@
     <string name="home">Startside</string>
     <string name="download">Downloadplacering</string>
     <string name="settings_advanced">Avanceret</string>
-    <string name="version">Programversion</string>
     <string name="update_available">Opdatering tilgængelig</string>
     <string name="update_check_error">Fejl ved opdateringstjek, prøv igen senere</string>
     <string name="up_to_date">Fulguris er opdateret</string>

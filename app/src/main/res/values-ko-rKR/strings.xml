@@ -24,7 +24,6 @@
     <string name="home">홈페이지</string>
     <string name="download">다운로드 위치</string>
     <string name="settings_advanced">고급 설정</string>
-    <string name="version">앱 버전</string>
     <string name="update_available">업데이트 사용 가능</string>
     <string name="update_check_error">업데이트 확인 오류, 나중에 다시 시도하세요</string>
     <string name="up_to_date">Fulguris가 최신 상태입니다</string>

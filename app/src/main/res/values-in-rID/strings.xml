@@ -24,7 +24,6 @@
     <string name="home">Beranda</string>
     <string name="download">Lokasi download</string>
     <string name="settings_advanced">Tingkat lanjut</string>
-    <string name="version">Versi aplikasi</string>
     <string name="update_available">Update tersedia</string>
     <string name="update_check_error">Error saat memeriksa update, coba lagi nanti</string>
     <string name="up_to_date">Fulguris sudah terbaru</string>

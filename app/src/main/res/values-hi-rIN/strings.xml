@@ -24,7 +24,6 @@
     <string name="home">होमपेज</string>
     <string name="download">डाउनलोड स्थान</string>
     <string name="settings_advanced">उन्नत</string>
-    <string name="version">एप्लिकेशन संस्करण</string>
     <string name="update_available">अपडेट उपलब्ध</string>
     <string name="update_check_error">अपडेट जांच में त्रुटि, बाद में पुनः प्रयास करें</string>
     <string name="up_to_date">Fulguris अद्यतित है</string>

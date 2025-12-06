@@ -24,7 +24,6 @@
     <string name="home">الصفحة الرئيسية</string>
     <string name="download">مسار التحميلات</string>
     <string name="settings_advanced">الإعدادات المتقدمة</string>
-    <string name="version">إصدار التطبيق</string>
     <string name="update_available">تحديث متاح</string>
     <string name="update_check_error">خطأ في الخادم ، يرجى المحاولة مرة أخرى لاحقًا</string>
     <string name="up_to_date">Fulguris محدث</string>

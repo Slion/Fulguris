@@ -24,7 +24,6 @@
     <string name="home">Pagină de start</string>
     <string name="download">Locație descărcare</string>
     <string name="settings_advanced">Avansat</string>
-    <string name="version">Versiune aplicație</string>
     <string name="update_available">Actualizare disponibilă</string>
     <string name="update_check_error">Eroare verificare actualizare, încearcă mai târziu</string>
     <string name="up_to_date">Fulguris este actualizat</string>

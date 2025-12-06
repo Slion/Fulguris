@@ -24,7 +24,6 @@
     <string name="home">首頁</string>
     <string name="download">下載位置</string>
     <string name="settings_advanced">進階設定</string>
-    <string name="version">應用程式版本</string>
     <string name="update_available">有可用的更新</string>
     <string name="update_check_error">更新檢查錯誤，請稍後再試</string>
     <string name="up_to_date">Fulguris 已是最新版本</string>

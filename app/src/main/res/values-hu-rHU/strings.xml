@@ -24,7 +24,6 @@
     <string name="home">Főoldal</string>
     <string name="download">Letöltési hely</string>
     <string name="settings_advanced">Speciális Beállítások</string>
-    <string name="version">Alkalmazás Verzió</string>
     <string name="update_available">Frissítés elérhető</string>
     <string name="update_check_error">Frissítés keresése sikertelen, próbáld újra később</string>
     <string name="up_to_date">A Fulguris naprakész</string>

@@ -24,7 +24,6 @@
     <string name="home">Домівка</string>
     <string name="download">Тека для завантажень</string>
     <string name="settings_advanced">Розширені</string>
-    <string name="version">Версія програми</string>
     <string name="update_available">Доступне оновлення</string>
     <string name="update_check_error">Помилка перевірки оновлень, спробуйте пізніше</string>
     <string name="up_to_date">Fulguris оновлено</string>

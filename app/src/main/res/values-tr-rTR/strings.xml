@@ -24,7 +24,6 @@
     <string name="home">Ana sayfa</string>
     <string name="download">İndirme konumu</string>
     <string name="settings_advanced">Gelişmiş</string>
-    <string name="version">Uygulama sürümü</string>
     <string name="update_available">Güncelleme mevcut</string>
     <string name="update_check_error">Güncelleme kontrolü hatası, lütfen daha sonra tekrar deneyin</string>
     <string name="up_to_date">Fulguris güncel</string>

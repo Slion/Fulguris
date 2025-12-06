@@ -24,7 +24,6 @@
     <string name="home">หน้าแรก</string>
     <string name="download">ตำแหน่งดาวน์โหลด</string>
     <string name="settings_advanced">ขั้นสูง</string>
-    <string name="version">เวอร์ชันแอปพลิเคชัน</string>
     <string name="update_available">มีอัปเดตใหม่</string>
     <string name="update_check_error">ข้อผิดพลาดในการตรวจสอบอัปเดต ลองอีกครั้งในภายหลัง</string>
     <string name="up_to_date">Fulguris เป็นเวอร์ชันล่าสุด</string>

@@ -24,7 +24,6 @@
     <string name="home">Новая вкладка</string>
     <string name="download">Путь загрузки</string>
     <string name="settings_advanced">Дополнительно</string>
-    <string name="version">Версия приложения</string>
     <string name="update_available">Доступно обновление</string>
     <string name="update_check_error">Ошибка проверки обновлений, попробуйте позже</string>
     <string name="up_to_date">Fulguris обновлён</string>

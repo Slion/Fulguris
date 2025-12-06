@@ -24,7 +24,6 @@
     <string name="home">Početna stranica</string>
     <string name="download">Fascikla preuzimanja</string>
     <string name="settings_advanced">Napredne postavke</string>
-    <string name="version">Izdanje aplikacije</string>
     <string name="update_available">Raspolaganju novija verzija</string>
     <string name="update_check_error">Greška provere ažuriranja, pokušajte ponovo kasnije</string>
     <string name="up_to_date">Fulguris је ажуриран</string>

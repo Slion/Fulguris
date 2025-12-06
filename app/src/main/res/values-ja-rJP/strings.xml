@@ -24,7 +24,6 @@
     <string name="home">ホームページ</string>
     <string name="download">ダウンロードフォルダ</string>
     <string name="settings_advanced">詳細</string>
-    <string name="version">アプリのバージョン</string>
     <string name="update_available">更新があります</string>
     <string name="update_check_error">アップデートチェックエラー。後でもう一度お試しください。</string>
     <string name="up_to_date">Fulgurisは最新です</string>
