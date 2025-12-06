@@ -22,5 +22,5 @@
 -->
 <resources>
     <!-- Night theme to be used when following system default dark theme -->
-    <style name="Theme.App.DayNight" parent="Theme.App.Black" />
+    <style name="Theme.App.DayNight" parent="Theme.App.Dark" />
 </resources>
