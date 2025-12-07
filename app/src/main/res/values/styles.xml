@@ -775,8 +775,11 @@ colorControlNormal:
     <!--
         Applied as materialAlertDialogTheme
         Modify the style of dialogs constructed through MaterialAlertDialogBuilder.
+        Now using the centered variant of MaterialAlertDialog as per MD3 specs.
+        See: https://m3.material.io/components/dialogs/guidelines
+        See: https://github.com/material-components/material-components-android/issues/4121
     -->
-    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
         <!-- Have colorful current radio button as per M3 design specs -->
         <item name="colorSecondary">?attr/colorPrimary</item>
         <!-- Make background color a bit darker -->
