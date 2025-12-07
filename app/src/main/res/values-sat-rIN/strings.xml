@@ -128,8 +128,8 @@
     <string name="licenses">ᱚᱯᱮᱱ ᱥᱳᱨᱥ ᱞᱟᱭᱥᱮᱱᱥ ᱠᱚ</string>
     <string name="suggestion">ᱯᱟᱱᱛᱮ</string>
     <string name="checking_for_updates">ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱠ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ…</string>
-    <string name="title_updated">Fulguris ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱮᱱᱟ</string>
-    <string name="message_updated">ᱟᱢ ᱱᱤᱛᱚᱜ v%s ᱪᱟᱹᱞᱩ ᱮᱫᱟᱢ ᱾ ᱪᱮᱫ ᱚᱱᱞᱟᱭᱤᱱ ᱨᱤᱞᱤᱡᱽ ᱱᱳᱴᱥ ᱠᱚ ᱧᱮᱞ ᱥᱟᱱᱟᱢᱟ?</string>
+    <string name="dialog_title_updated">ᱱᱟᱶᱟ ᱪᱤᱫ ᱢᱮᱱᱟᱜᱼᱟ ᱧᱮᱞᱢᱮ?</string>
+    <string name="dialog_message_updated">Fulguris ᱫᱚ v%s ᱨᱮ ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱮᱱᱟ</string>
     <string name="title_welcome">Fulguris ᱨᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ</string>
     <string name="message_welcome">ᱱᱚᱶᱟ ᱫᱟᱲᱮ ᱵᱽᱨᱟᱣᱡᱚᱨ ᱵᱟᱵᱚᱛ ᱵᱟᱹᱲᱛᱤ ᱵᱟᱰᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱮᱭᱟᱜ ᱚᱲᱟᱜ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱢᱮ?</string>
     <string name="block_ads">ᱮᱰ ᱵᱞᱚᱠᱚᱨ</string>

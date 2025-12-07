@@ -128,8 +128,8 @@
     <string name="licenses">Лиценце отвореног кôда</string>
     <string name="suggestion">Тражи</string>
     <string name="checking_for_updates">Провера ажурирања…</string>
-    <string name="title_updated">Фулгурис је ажуриран</string>
-    <string name="message_updated">Сада користите v%s. Да ли желите да проверите белешке о издању на мрежи?</string>
+    <string name="dialog_title_updated">Vidjeti šta je novo?</string>
+    <string name="dialog_message_updated">Fulguris je ažuriran na v%s</string>
     <string name="title_welcome">Добродошли у Фулгурис</string>
     <string name="message_welcome">Посетите нашу почетну страницу да бисте сазнали више о овом моћном веб претраживачу?</string>
     <string name="block_ads">Blokator reklama</string>

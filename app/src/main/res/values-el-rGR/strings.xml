@@ -128,8 +128,8 @@
     <string name="licenses">Άδειες ανοιχτού κώδικα</string>
     <string name="suggestion">Αναζήτηση για</string>
     <string name="checking_for_updates">Έλεγχος για ενημερώσεις</string>
-    <string name="title_updated">Το Fulguris ενημερώθηκε</string>
-    <string name="message_updated">Εκτελείτε τώρα την έκδοση v%s. Θέλετε να ελέγξετε τις σημειώσεις έκδοσης στο διαδίκτυο;</string>
+    <string name="dialog_title_updated">Δείτε τι νέο υπάρχει;</string>
+    <string name="dialog_message_updated">Το Fulguris ενημερώθηκε στην έκδοση v%s</string>
     <string name="title_welcome">Καλώς ήρθατε στο Fulguris</string>
     <string name="message_welcome">Επισκεφτείτε την αρχική μας σελίδα για να μάθετε περισσότερα για αυτό το ισχυρό πρόγραμμα περιήγησης ιστού;</string>
     <string name="block_ads">Αποκλεισμός διαφημίσεων</string>

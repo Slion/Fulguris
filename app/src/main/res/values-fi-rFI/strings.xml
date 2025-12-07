@@ -128,8 +128,8 @@
     <string name="licenses">Avoimen lähdekoodin lisenssit</string>
     <string name="suggestion">Hae</string>
     <string name="checking_for_updates">Tarkistetaan päivityksiä</string>
-    <string name="title_updated">Fulguris päivitettiin</string>
-    <string name="message_updated">Käytät nyt versiota %s. Haluatko tarkistaa julkaisumuistiinpanot verkossa?</string>
+    <string name="dialog_title_updated">Näytä uudet ominaisuudet?</string>
+    <string name="dialog_message_updated">Fulguris päivitettiin versioon v%s</string>
     <string name="title_welcome">Tervetuloa Fulguriin</string>
     <string name="message_welcome">Vieraile sivustollamme saadaksesi lisätietoja tästä tehokkaasta verkkoselaimesta?</string>
     <string name="block_ads">Mainosten esto</string>

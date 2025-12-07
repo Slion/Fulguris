@@ -4676,8 +4676,9 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // TODO: Consider using snackbar instead to be less intrusive, make it a settings option?
         MaterialAlertDialogBuilder(this)
                 .setCancelable(true)
-                .setTitle(R.string.title_updated)
-                .setMessage(getString(R.string.message_updated, BuildConfig.VERSION_NAME))
+                .setIcon(R.drawable.ic_lightning)
+                .setTitle(R.string.dialog_title_updated)
+                .setMessage(getString(R.string.dialog_message_updated, BuildConfig.VERSION_NAME))
                 .setNegativeButton(R.string.no, null)
                 .setPositiveButton(R.string.yes) { _, _ -> val url = getString(R.string.url_app_updates)
                     val i = Intent(Intent.ACTION_VIEW)

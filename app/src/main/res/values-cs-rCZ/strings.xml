@@ -128,8 +128,8 @@
     <string name="licenses">Licence Open Source</string>
     <string name="suggestion">Hledat</string>
     <string name="checking_for_updates">Kontrola aktualizací…</string>
-    <string name="title_updated">Fulguris byl aktualizován</string>
-    <string name="message_updated">Nyní používáte verzi v%s. Chcete zkontrolovat online změny této aktualizace?</string>
+    <string name="dialog_title_updated">Zobrazit novinky?</string>
+    <string name="dialog_message_updated">Fulguris byl aktualizován na v%s</string>
     <string name="title_welcome">Vítejte v Fulguris</string>
     <string name="message_welcome">Navštivte naši domovskou stránku a zjistěte více o tomto webovém prohlížeči.</string>
     <string name="block_ads">Blokátor reklam</string>

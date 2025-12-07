@@ -128,8 +128,8 @@
     <string name="licenses">Open Source-lisenser</string>
     <string name="suggestion">Søk etter</string>
     <string name="checking_for_updates">Sjekker etter oppdateringer</string>
-    <string name="title_updated">Fulguris ble oppdatert</string>
-    <string name="message_updated">Du kjører nå v%s. Vil du sjekke utgivelsesnotatene på nett?</string>
+    <string name="dialog_title_updated">Se hva som er nytt?</string>
+    <string name="dialog_message_updated">Fulguris ble oppdatert til v%s</string>
     <string name="title_welcome">Velkommen til Fulguris</string>
     <string name="message_welcome">Besøk hjemmesiden vår for å finne ut mer om denne kraftige nettleseren?</string>
     <string name="block_ads">Annonseblokkering</string>

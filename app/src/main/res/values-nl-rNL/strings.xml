@@ -128,8 +128,8 @@
     <string name="licenses">Open-bron licenties</string>
     <string name="suggestion">Zoek voor</string>
     <string name="checking_for_updates">Controleren op updates…</string>
-    <string name="title_updated">Fulguris werd bijgewerkt</string>
-    <string name="message_updated">Je draait nu v%s. Wilt u de release-opmerkingen online bekijken?</string>
+    <string name="dialog_title_updated">Bekijk wat er nieuw is?</string>
+    <string name="dialog_message_updated">Fulguris is bijgewerkt naar v%s</string>
     <string name="title_welcome">Welkom bij Fulguris</string>
     <string name="message_welcome">Bezoek onze homepage voor meer informatie over deze krachtige webbrowser?</string>
     <string name="block_ads">Advertentieblokkeerder</string>

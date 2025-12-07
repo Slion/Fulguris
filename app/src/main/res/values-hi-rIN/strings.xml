@@ -111,8 +111,8 @@
     <string name="licenses">ओपन सोर्स लाइसेंस</string>
     <string name="suggestion">खोजें</string>
     <string name="checking_for_updates">अपडेट की जांच हो रही है…</string>
-    <string name="title_updated">Fulguris अपडेट हो गया</string>
-    <string name="message_updated">अब आप v%s चला रहे हैं। क्या आप ऑनलाइन रिलीज़ नोट्स देखना चाहते हैं?</string>
+    <string name="dialog_title_updated">नया क्या है देखें?</string>
+    <string name="dialog_message_updated">Fulguris को v%s में अपडेट किया गया</string>
     <string name="title_welcome">Fulguris में आपका स्वागत है</string>
     <string name="message_welcome">इस शक्तिशाली वेब ब्राउज़र के बारे में अधिक जानने के लिए हमारे होम पेज पर जाएं?</string>
     <string name="block_ads">विज्ञापन अवरोधक</string>

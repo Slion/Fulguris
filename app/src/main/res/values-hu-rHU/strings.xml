@@ -128,8 +128,8 @@
     <string name="licenses">Nyílt forráskódú licencek</string>
     <string name="suggestion">Keresés</string>
     <string name="checking_for_updates">Frissítések keresése…</string>
-    <string name="title_updated">A Fulguris frissítve lett</string>
-    <string name="message_updated">Most a %s verzió fut. szeretnéd megtekinteni a változásokat?</string>
+    <string name="dialog_title_updated">Megnézi az újdonságokat?</string>
+    <string name="dialog_message_updated">A Fulguris frissítve lett a v%s verzióra</string>
     <string name="title_welcome">Üdvözli a Fulguris</string>
     <string name="message_welcome">Szeretnél többet megtudni erről az erőteljes böngészőről a honlapunkon?</string>
     <string name="block_ads">Hirdetésblokkoló</string>

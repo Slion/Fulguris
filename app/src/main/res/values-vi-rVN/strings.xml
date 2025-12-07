@@ -128,8 +128,8 @@
     <string name="licenses">Giấy phép nguồn mở</string>
     <string name="suggestion">Tìm kiếm</string>
     <string name="checking_for_updates">Đang kiểm tra cập nhật…</string>
-    <string name="title_updated">Đã cập nhật Fulguris</string>
-    <string name="message_updated">Bạn hiện đang chạy v%s. Bạn có muốn kiểm tra ghi chú phát hành trực tuyến?</string>
+    <string name="dialog_title_updated">Xem có gì mới?</string>
+    <string name="dialog_message_updated">Fulguris đã được cập nhật lên v%s</string>
     <string name="title_welcome">Chào mừng đến với Fulguris</string>
     <string name="message_welcome">Truy cập trang chủ của chúng tôi để tìm hiểu thêm về trình duyệt web mạnh mẽ này?</string>
     <string name="block_ads">Trình chặn quảng cáo</string>

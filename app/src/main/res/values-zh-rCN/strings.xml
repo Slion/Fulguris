@@ -128,8 +128,8 @@
     <string name="licenses">开放源代码许可</string>
     <string name="suggestion">搜索</string>
     <string name="checking_for_updates">正在检查更新……</string>
-    <string name="title_updated">Fulguris已更新</string>
-    <string name="message_updated">你正在运行 v%s。你想要在线检查发行通知吗？</string>
+    <string name="dialog_title_updated">查看新功能？</string>
+    <string name="dialog_message_updated">Fulguris 已更新到 v%s</string>
     <string name="title_welcome">欢迎使用 Fulguris</string>
     <string name="message_welcome">要不要访问一下我们的主页，了解这个强大的浏览器的更多信息？</string>
     <string name="block_ads">广告拦截器</string>

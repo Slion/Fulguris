@@ -128,8 +128,8 @@
     <string name="licenses">오픈 소스 라이선스</string>
     <string name="suggestion">다음을 검색</string>
     <string name="checking_for_updates">업데이트 확인 중…</string>
-    <string name="title_updated">Fulguris가 업데이트되었습니다</string>
-    <string name="message_updated">현재 v%s를 실행 중입니다. 온라인에서 릴리스 노트를 확인하시겠습니까?</string>
+    <string name="dialog_title_updated">새로운 기능을 확인하시겠습니까?</string>
+    <string name="dialog_message_updated">Fulguris가 v%s로 업데이트되었습니다</string>
     <string name="title_welcome">Fulguris에 오신 것을 환영합니다</string>
     <string name="message_welcome">이 강력한 웹 브라우저에 대해 자세히 알아보려면 홈페이지를 방문하시겠습니까?</string>
     <string name="block_ads">광고 차단기</string>

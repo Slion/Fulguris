@@ -128,8 +128,8 @@
     <string name="licenses">Açık Kaynak Lisansları</string>
     <string name="suggestion">Bunu ara:</string>
     <string name="checking_for_updates">Güncellemeler kontrol ediliyor…</string>
-    <string name="title_updated">Fulguris güncellendi</string>
-    <string name="message_updated">Şu anda v%s sürümünü kullanıyorsunuz. Sürüm notlarını çevrimiçi kontrol etmek ister misiniz?</string>
+    <string name="dialog_title_updated">Yenilikleri gör?</string>
+    <string name="dialog_message_updated">Fulguris v%s sürümüne güncellendi</string>
     <string name="title_welcome">Fulguris\'e hoş geldiniz</string>
     <string name="message_welcome">Bu güçlü web tarayıcısı hakkında daha fazla bilgi edinmek için ana sayfamızı ziyaret etmek ister misiniz?</string>
     <string name="block_ads">Reklam engelleyici</string>

@@ -128,8 +128,8 @@
     <string name="licenses">Licențe Open Source</string>
     <string name="suggestion">Caută</string>
     <string name="checking_for_updates">Verificare actualizări…</string>
-    <string name="title_updated">Fulguris a fost actualizat</string>
-    <string name="message_updated">Rulezi acum v%s. Vrei să vezi notele de lansare online?</string>
+    <string name="dialog_title_updated">Vedeți ce este nou?</string>
+    <string name="dialog_message_updated">Fulguris a fost actualizat la v%s</string>
     <string name="title_welcome">Bine ai venit la Fulguris</string>
     <string name="message_welcome">Vizitează pagina noastră pentru a afla mai multe despre acest browser puternic?</string>
     <string name="block_ads">Blocarea reclamelor</string>

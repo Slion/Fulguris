@@ -128,8 +128,8 @@
     <string name="licenses">Lisensi Open Source</string>
     <string name="suggestion">Cari</string>
     <string name="checking_for_updates">Mengecek adanya pembaruan…</string>
-    <string name="title_updated">Versi Fulguris sekarang sudah yang terbaru</string>
-    <string name="message_updated">Anda sedang menggunakan v%s. Maukah Anda membaca catatan pengeluarannya?</string>
+    <string name="dialog_title_updated">Lihat apa yang baru?</string>
+    <string name="dialog_message_updated">Fulguris telah diperbarui ke v%s</string>
     <string name="title_welcome">Selamat datang di Fulguris</string>
     <string name="message_welcome">Mau mengunjungi beranda kami untuk tahu lebih banyak tentang browser ini?</string>
     <string name="block_ads">Pemblokir iklan</string>
