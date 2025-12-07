@@ -76,6 +76,9 @@ class RequestFragment : AbstractSettingsFragment() {
             setIcon(R.drawable.ic_link)
             intent = android.content.Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url)).apply {
                 setPackage(requireContext().packageName)
+                // Make sure we tell ourselves where this is coming from
+                // Avoid sending ourselves to the background when closing this tab
+                putExtra("PACKAGE", requireContext().packageName)
             }
         }
         preferenceScreen.addPreference(openPref)

@@ -40,12 +40,7 @@
         Launch WebView DevTools, see https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/developer-ui.md#launching-webview-devtools
         See also: https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/webview-shell.md
         -->
-        <intent
-            a:action="com.android.webview.SHOW_DEV_UI">
-            <extra
-                a:name="SOURCE"
-                a:value="SELF" />
-        </intent>
+        <intent a:action="com.android.webview.SHOW_DEV_UI" />
     </Preference>
 
     <Preference
@@ -59,9 +54,6 @@
             a:action="android.intent.action.VIEW"
             a:targetClass="fulguris.activity.IntroActivity"
             a:targetPackage="@string/application_id">
-            <extra
-                a:name="SOURCE"
-                a:value="SELF" />
         </intent>
 
     </Preference>

@@ -20,45 +20,62 @@
  All portions of the code written by Stéphane Lenclud are Copyright © 2023 Stéphane Lenclud.
  All Rights Reserved.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:a="http://schemas.android.com/apk/res-auto"
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
+    xmlns:x="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <x.Preference
-        a:key="@string/pref_key_back"
-        a:title="@string/action_domain_settings"
-        a:summary="@string/settings_summary_domains"
-        a:icon="@drawable/ic_arrow_back_ios"
-        a:fragment="back"
-        a:layout="@layout/preference_category_material"
-        a:allCapsTitle="true"
+        x:key="@string/pref_key_back"
+        x:title="@string/action_domain_settings"
+        x:summary="@string/settings_summary_domains"
+        x:icon="@drawable/ic_arrow_back_ios"
+        x:fragment="back"
+        x:layout="@layout/preference_category_material"
+        x:allCapsTitle="true"
         tools:ignore="PrivateResource" />
 
     <Preference
-        android:key="@string/pref_key_visit_domain"
-        android:title="@string/action_domain_settings"
-        a:icon="@drawable/ic_link"
-        a:iconSpaceReserved="false"
-        a:singleLineTitle="false"
+        a:key="@string/pref_key_visit_domain"
+        a:title="@string/action_domain_settings"
+        x:icon="@drawable/ic_link"
+        x:iconSpaceReserved="false"
+        x:singleLineTitle="false"
         >
 
         <intent
-            android:action="android.intent.action.VIEW"
-            android:data=""
-            android:targetPackage="@string/application_id"
-            android:targetClass="fulguris.activity.MainActivity"
-            >
+            a:action="android.intent.action.VIEW"
+            a:data=""
+            a:targetPackage="@string/application_id"
+            a:targetClass="fulguris.activity.MainActivity">
+
+            <!--
+            That means closing a tab opened with this intent will send us to the domain settings.
+            It fine when doing this from the settings. But it's a bit weird when doing this from the options bottom sheet.
+            Really just a weird edge case. Should we really allow opening domains from the bottom sheet?
+            Right now they open below the bottom sheet so you can't even see anything until you close it.
+            -->
+            <extra
+                a:name="PACKAGE"
+                a:value="@string/application_id" />
+
+            <extra
+                a:name="ACTIVITY"
+                a:value="fulguris.activity.SettingsActivity" />
+
+            <extra
+                a:name="FRAGMENT"
+                a:value="fulguris.settings.fragment.DomainsSettingsFragment" />
 
         </intent>
 
     </Preference>
 
     <x.Preference
-        a:fragment="fulguris.settings.fragment.DomainSettingsFragment"
-        a:key="@string/pref_key_parent"
-        a:title="@string/settings_title_parent"
-        a:icon="@drawable/ic_domain"
-        a:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.DomainSettingsFragment"
+        x:key="@string/pref_key_parent"
+        x:title="@string/settings_title_parent"
+        x:icon="@drawable/ic_domain"
+        x:singleLineTitle="false"
         />
 
 <!--    <x.SwitchPreference-->
@@ -71,190 +88,190 @@
 
 
     <x.PreferenceCategory
-        a:title="@string/settings_title_dark_mode_default">
+        x:title="@string/settings_title_dark_mode_default">
 
     <x.SwitchPreference
-        a:defaultValue="false"
-        a:key="@string/pref_key_dark_mode_override"
-        a:title="@string/settings_title_override"
-        a:summaryOn="@string/settings_summary_on_override"
-        a:summaryOff="@string/settings_summary_off_override"
-        a:iconSpaceReserved="true"
-        a:singleLineTitle="false" />
+        x:defaultValue="false"
+        x:key="@string/pref_key_dark_mode_override"
+        x:title="@string/settings_title_override"
+        x:summaryOn="@string/settings_summary_on_override"
+        x:summaryOff="@string/settings_summary_off_override"
+        x:iconSpaceReserved="true"
+        x:singleLineTitle="false" />
 
     <x.SwitchPreference
-        a:defaultValue="false"
-        a:key="@string/pref_key_dark_mode"
-        a:title="@string/settings_title_dark_mode_default"
-        a:summary="@string/settings_summary_dark_mode_default"
-        a:dependency="@string/pref_key_dark_mode_override"
-        a:iconSpaceReserved="false"
-        a:icon="@drawable/ic_dark_mode"
-        a:singleLineTitle="false" />
+        x:defaultValue="false"
+        x:key="@string/pref_key_dark_mode"
+        x:title="@string/settings_title_dark_mode_default"
+        x:summary="@string/settings_summary_dark_mode_default"
+        x:dependency="@string/pref_key_dark_mode_override"
+        x:iconSpaceReserved="false"
+        x:icon="@drawable/ic_dark_mode"
+        x:singleLineTitle="false" />
 
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        a:title="@string/settings_title_desktop_mode_default">
+        x:title="@string/settings_title_desktop_mode_default">
 
         <x.SwitchPreference
-            a:defaultValue="false"
-            a:key="@string/pref_key_desktop_mode_override"
-            a:title="@string/settings_title_override"
-            a:summaryOn="@string/settings_summary_on_override"
-            a:summaryOff="@string/settings_summary_off_override"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false" />
+            x:defaultValue="false"
+            x:key="@string/pref_key_desktop_mode_override"
+            x:title="@string/settings_title_override"
+            x:summaryOn="@string/settings_summary_on_override"
+            x:summaryOff="@string/settings_summary_off_override"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false" />
 
         <x.SwitchPreference
-            a:defaultValue="false"
-            a:key="@string/pref_key_desktop_mode"
-            a:title="@string/settings_title_desktop_mode_default"
-            a:summary="@string/settings_summary_desktop_mode_default"
-            a:dependency="@string/pref_key_desktop_mode_override"
-            a:iconSpaceReserved="false"
-            a:icon="@drawable/ic_desktop"
-            a:singleLineTitle="false" />
+            x:defaultValue="false"
+            x:key="@string/pref_key_desktop_mode"
+            x:title="@string/settings_title_desktop_mode_default"
+            x:summary="@string/settings_summary_desktop_mode_default"
+            x:dependency="@string/pref_key_desktop_mode_override"
+            x:iconSpaceReserved="false"
+            x:icon="@drawable/ic_desktop"
+            x:singleLineTitle="false" />
 
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        a:title="@string/settings_title_javascript">
+        x:title="@string/settings_title_javascript">
 
         <x.SwitchPreference
-            a:defaultValue="false"
-            a:key="@string/pref_key_javascript_override"
-            a:title="@string/settings_title_override"
-            a:summaryOn="@string/settings_summary_on_override"
-            a:summaryOff="@string/settings_summary_off_override"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false" />
+            x:defaultValue="false"
+            x:key="@string/pref_key_javascript_override"
+            x:title="@string/settings_title_override"
+            x:summaryOn="@string/settings_summary_on_override"
+            x:summaryOff="@string/settings_summary_off_override"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false" />
 
         <x.SwitchPreference
-            a:defaultValue="true"
-            a:key="@string/pref_key_javascript"
-            a:title="@string/settings_title_javascript"
-            a:summaryOn="@string/settings_summary_on_javascript"
-            a:summaryOff="@string/settings_summary_off_javascript"
-            a:dependency="@string/pref_key_javascript_override"
-            a:icon="@drawable/ic_script"
-            a:iconSpaceReserved="false"
-            a:singleLineTitle="false" />
+            x:defaultValue="true"
+            x:key="@string/pref_key_javascript"
+            x:title="@string/settings_title_javascript"
+            x:summaryOn="@string/settings_summary_on_javascript"
+            x:summaryOff="@string/settings_summary_off_javascript"
+            x:dependency="@string/pref_key_javascript_override"
+            x:icon="@drawable/ic_script"
+            x:iconSpaceReserved="false"
+            x:singleLineTitle="false" />
 
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        a:title="@string/settings_title_third_party_cookies">
+        x:title="@string/settings_title_third_party_cookies">
 
         <x.SwitchPreference
-            a:defaultValue="false"
-            a:key="@string/pref_key_third_party_cookies_override"
-            a:title="@string/settings_title_override"
-            a:summaryOn="@string/settings_summary_on_override"
-            a:summaryOff="@string/settings_summary_off_override"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false" />
+            x:defaultValue="false"
+            x:key="@string/pref_key_third_party_cookies_override"
+            x:title="@string/settings_title_override"
+            x:summaryOn="@string/settings_summary_on_override"
+            x:summaryOff="@string/settings_summary_off_override"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false" />
 
         <x.SwitchPreference
-            a:defaultValue="true"
-            a:key="@string/pref_key_third_party_cookies"
-            a:title="@string/settings_title_third_party_cookies"
-            a:summaryOn="@string/settings_summary_on_third_party_cookies"
-            a:summaryOff="@string/settings_summary_off_third_party_cookies"
-            a:dependency="@string/pref_key_third_party_cookies_override"
-            a:icon="@drawable/ic_cookie"
-            a:iconSpaceReserved="false"
-            a:singleLineTitle="false" />
+            x:defaultValue="true"
+            x:key="@string/pref_key_third_party_cookies"
+            x:title="@string/settings_title_third_party_cookies"
+            x:summaryOn="@string/settings_summary_on_third_party_cookies"
+            x:summaryOff="@string/settings_summary_off_third_party_cookies"
+            x:dependency="@string/pref_key_third_party_cookies_override"
+            x:icon="@drawable/ic_cookie"
+            x:iconSpaceReserved="false"
+            x:singleLineTitle="false" />
 
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        a:title="@string/settings_title_launch_app"
-        a:summary="@string/dialog_message_third_party_app">
+        x:title="@string/settings_title_launch_app"
+        x:summary="@string/dialog_message_third_party_app">
 
         <x.SwitchPreference
-            a:defaultValue="false"
-            a:key="@string/pref_key_launch_app_override"
-            a:title="@string/settings_title_override"
-            a:summaryOn="@string/settings_summary_on_override"
-            a:summaryOff="@string/settings_summary_off_override"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false" />
+            x:defaultValue="false"
+            x:key="@string/pref_key_launch_app_override"
+            x:title="@string/settings_title_override"
+            x:summaryOn="@string/settings_summary_on_override"
+            x:summaryOff="@string/settings_summary_off_override"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false" />
 
         <x.EnumListPreference
-            a:key="@string/pref_key_launch_app"
-            a:title="@string/settings_title_launch_app"
-            a:useSimpleSummaryProvider="true"
-            a:defaultValue="YES"
-            a:entries="@array/NoYesAsk"
-            a:icon="@drawable/ic_apps"
-            a:singleLineTitle="false"
-            a:enumClassName="fulguris.settings.NoYesAsk"
-            a:dependency="@string/pref_key_launch_app_override"
+            x:key="@string/pref_key_launch_app"
+            x:title="@string/settings_title_launch_app"
+            x:useSimpleSummaryProvider="true"
+            x:defaultValue="YES"
+            x:entries="@array/NoYesAsk"
+            x:icon="@drawable/ic_apps"
+            x:singleLineTitle="false"
+            x:enumClassName="fulguris.settings.NoYesAsk"
+            x:dependency="@string/pref_key_launch_app_override"
             />
 
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        a:title="@string/settings_title_ssl_error"
-        a:summary="@string/settings_summary_ssl_error">
+        x:title="@string/settings_title_ssl_error"
+        x:summary="@string/settings_summary_ssl_error">
 
         <x.SwitchPreference
-            a:defaultValue="false"
-            a:key="@string/pref_key_ssl_error_override"
-            a:title="@string/settings_title_override"
-            a:summaryOn="@string/settings_summary_on_override"
-            a:summaryOff="@string/settings_summary_off_override"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false" />
+            x:defaultValue="false"
+            x:key="@string/pref_key_ssl_error_override"
+            x:title="@string/settings_title_override"
+            x:summaryOn="@string/settings_summary_on_override"
+            x:summaryOff="@string/settings_summary_off_override"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false" />
 
         <x.EnumListPreference
-            a:key="@string/pref_key_ssl_error"
-            a:title="@string/settings_title_ssl_error"
-            a:useSimpleSummaryProvider="true"
-            a:defaultValue="ASK"
-            a:entries="@array/AbortProceedAsk"
-            a:icon="@drawable/ic_unsecured"
-            a:singleLineTitle="false"
-            a:enumClassName="fulguris.settings.NoYesAsk"
-            a:dependency="@string/pref_key_ssl_error_override"
+            x:key="@string/pref_key_ssl_error"
+            x:title="@string/settings_title_ssl_error"
+            x:useSimpleSummaryProvider="true"
+            x:defaultValue="ASK"
+            x:entries="@array/AbortProceedAsk"
+            x:icon="@drawable/ic_unsecured"
+            x:singleLineTitle="false"
+            x:enumClassName="fulguris.settings.NoYesAsk"
+            x:dependency="@string/pref_key_ssl_error_override"
             />
 
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        a:title="@string/settings_title_incoming_url_action"
-        a:summary="@string/settings_summary_incoming_url_action">
+        x:title="@string/settings_title_incoming_url_action"
+        x:summary="@string/settings_summary_incoming_url_action">
 
         <x.SwitchPreference
-            a:defaultValue="false"
-            a:key="@string/pref_key_incoming_url_action_override"
-            a:title="@string/settings_title_override"
-            a:summaryOn="@string/settings_summary_on_override"
-            a:summaryOff="@string/settings_summary_off_override"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false" />
+            x:defaultValue="false"
+            x:key="@string/pref_key_incoming_url_action_override"
+            x:title="@string/settings_title_override"
+            x:summaryOn="@string/settings_summary_on_override"
+            x:summaryOff="@string/settings_summary_off_override"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false" />
 
         <x.EnumListPreference
-            a:key="@string/pref_key_incoming_url_action"
-            a:title="@string/settings_title_incoming_url_action"
-            a:useSimpleSummaryProvider="true"
-            a:defaultValue="NEW_TAB"
-            a:entries="@array/incoming_url_actions"
-            a:icon="@drawable/ic_baseline_open_in_new_24"
-            a:singleLineTitle="false"
-            a:enumClassName="fulguris.enums.IncomingUrlAction"
-            a:dependency="@string/pref_key_incoming_url_action_override"
+            x:key="@string/pref_key_incoming_url_action"
+            x:title="@string/settings_title_incoming_url_action"
+            x:useSimpleSummaryProvider="true"
+            x:defaultValue="NEW_TAB"
+            x:entries="@array/incoming_url_actions"
+            x:icon="@drawable/ic_baseline_open_in_new_24"
+            x:singleLineTitle="false"
+            x:enumClassName="fulguris.enums.IncomingUrlAction"
+            x:dependency="@string/pref_key_incoming_url_action_override"
             />
 
     </x.PreferenceCategory>
 
 
     <x.Preference
-        a:key="@string/pref_key_delete"
-        a:title="@string/settings_title_delete_domain_settings"
-        a:icon="@drawable/ic_delete_forever_outline"
-        a:allowDividerAbove="true"
+        x:key="@string/pref_key_delete"
+        x:title="@string/settings_title_delete_domain_settings"
+        x:icon="@drawable/ic_delete_forever_outline"
+        x:allowDividerAbove="true"
         tools:ignore="PrivateResource" />
 
 

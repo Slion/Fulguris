@@ -285,14 +285,21 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 val className = aIntent.getStringExtra("ACTIVITY")
                 val fragment = aIntent.getStringExtra(FRAGMENT_CLASS_NAME)
                 // Check if the tab was open by ourselves
-                if (fromSelf && className != null) {
-                    // Go back to the activity that opened the closing tab
-                    val intent: Intent = Intent(this, Class.forName(className)).apply {
-                        // For settings to open the proper page
-                        putExtra(FRAGMENT_CLASS_NAME, fragment)
+                if (fromSelf) {
+                    if (className != null) {
+                        // Go back to the activity that opened the closing tab
+                        val intent: Intent = Intent(this, Class.forName(className)).apply {
+                            // For settings to open the proper page
+                            putExtra(FRAGMENT_CLASS_NAME, fragment)
+                        }
+                        // You can notably test this code path through Settings > About > Privacy Policy
+                        startActivity(intent)
+                    } else {
+                        // If from ourselves and no activity specified then just close the tab
+                        // Don't send ourselves to the background or launch an activity
+                        // Notably the case when opening URL from page request list
+                        Timber.i("Just close that tab we opened ourselves")
                     }
-                    // You can notably test this code path through Settings > About > Privacy Policy
-                    startActivity(intent)
                 } else {
                     // Opening tab intent did not belong to us, just send ourselves to the background for user to resume where it was
                     moveTaskToBack(true)
@@ -420,7 +427,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             makeSnackbar("",5000, Gravity.TOP).setAction("Powered by ?Fulguris") {
                 Intent(Intent.ACTION_VIEW).apply{
                     data = Uri.parse(getString(R.string.url_fulguris_home_page))
-                    putExtra("SOURCE", "SELF")
+                    putExtra("PACKAGE", packageName)
                     startActivity(this)
                 }
             }.show()
@@ -4655,8 +4662,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 .setPositiveButton(R.string.yes) { _, _ -> val url = getString(R.string.url_app_home_page)
                     val i = Intent(Intent.ACTION_VIEW)
                     i.data = Uri.parse(url)
-                    // Not sure that does anything
-                    i.putExtra("SOURCE", "SELF")
+                    // Make sure we don't send ourselves to the background when closing a tab we opened ourselves
+                    i.putExtra("PACKAGE", packageName)
                     startActivity(i)}
                 .launch()
     }
@@ -4675,8 +4682,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 .setPositiveButton(R.string.yes) { _, _ -> val url = getString(R.string.url_app_updates)
                     val i = Intent(Intent.ACTION_VIEW)
                     i.data = Uri.parse(url)
-                    // Not sure that does anything
-                    i.putExtra("SOURCE", "SELF")
+                    // Make sure we don't send ourselves to the background when closing a tab we opened ourselves
+                    i.putExtra("PACKAGE", packageName)
                     startActivity(i)}
                 .launch()
     }
@@ -4700,8 +4707,8 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                                     val url = getString(R.string.url_app_home_page)
                                     val i = Intent(Intent.ACTION_VIEW)
                                     i.data = Uri.parse(url)
-                                    // Not sure that does anything
-                                    i.putExtra("SOURCE", "SELF")
+                                    // Make sure we don't send ourselves to the background when closing a tab we opened ourselves
+                                    i.putExtra("PACKAGE", packageName)
                                     startActivity(i)
                                 }).show()
                     }

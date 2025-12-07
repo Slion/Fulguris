@@ -21,7 +21,146 @@
  All Rights Reserved.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android"
+    xmlns:x="http://schemas.android.com/apk/res-auto"
+    xmlns:t="http://schemas.android.com/tools">
+
+    <Preference
+        a:key="pref_key_google_play_store"
+        a:title="@string/pref_title_no_sponsorship"
+        a:summary="@string/pref_summary_no_sponsorship"
+        x:icon="@drawable/ic_google_play"
+        x:singleLineTitle="false"
+        x:isPreferenceVisible="false"
+        t:isPreferenceVisible="true">
+
+        <intent
+            a:action="android.intent.action.VIEW"
+            a:data="@string/url_playstore_app">
+            <extra
+                a:name="PACKAGE"
+                a:value="@string/application_id" />
+            <extra
+                a:name="ACTIVITY"
+                a:value="fulguris.activity.SettingsActivity" />
+            <extra
+                a:name="FRAGMENT"
+                a:value="fulguris.settings.fragment.SponsorshipSettingsFragment" />
+        </intent>
+
+    </Preference>
+
+    <!--
+    Set order so that it comes below the Google Play Subscriptions plan
+    -->
+    <x.PreferenceCategory
+        a:title="@string/settings_contribute"
+        a:order="1">
+
+        <Preference
+            a:title="@string/pref_title_sponsorship_five_stars"
+            a:summary="@string/pref_summary_sponsorship_five_stars"
+            x:icon="@drawable/ic_star_full"
+            x:singleLineTitle="false">
+
+            <intent
+                a:action="android.intent.action.VIEW"
+                a:data="@string/url_playstore_app">
+                <extra
+                    a:name="PACKAGE"
+                    a:value="@string/application_id" />
+                <extra
+                    a:name="ACTIVITY"
+                    a:value="fulguris.activity.SettingsActivity" />
+                <extra
+                    a:name="FRAGMENT"
+                    a:value="fulguris.settings.fragment.SponsorshipSettingsFragment" />
+            </intent>
+
+        </Preference>
+
+        <Preference
+            a:title="@string/pref_title_sponsorship_github"
+            a:summary="@string/pref_summary_sponsorship_github"
+            x:icon="@drawable/ic_github_mark"
+            x:singleLineTitle="false">
+
+            <!--
+            Force opening it ourselves as GitHub app has a nasty bug:
+            See: https://github.com/Slion/Fulguris/issues/725
+            -->
+            <intent
+                a:action="android.intent.action.VIEW"
+                a:targetPackage="@string/application_id"
+                a:targetClass="fulguris.activity.MainActivity"
+                a:data="@string/url_github_sponsors">
+                <extra
+                    a:name="PACKAGE"
+                    a:value="@string/application_id" />
+                <extra
+                    a:name="ACTIVITY"
+                    a:value="fulguris.activity.SettingsActivity" />
+                <extra
+                    a:name="FRAGMENT"
+                    a:value="fulguris.settings.fragment.SponsorshipSettingsFragment" />
+            </intent>
+
+        </Preference>
+
+        <Preference
+            a:key="pref_key_contribute_share"
+            a:title="@string/pref_title_contribute_share"
+            a:summary="@string/pref_summary_contribute_share"
+            x:icon="@drawable/ic_share"
+            x:singleLineTitle="false" />
+
+        <Preference
+            a:title="@string/pref_title_contribute_translations"
+            a:summary="@string/pref_summary_contribute_translations"
+            x:icon="@drawable/ic_translate"
+            x:singleLineTitle="false">
+
+            <intent
+                a:action="android.intent.action.VIEW"
+                a:data="@string/url_crowdin_project">
+                <extra
+                    a:name="PACKAGE"
+                    a:value="@string/application_id" />
+                <extra
+                    a:name="ACTIVITY"
+                    a:value="fulguris.activity.SettingsActivity" />
+                <extra
+                    a:name="FRAGMENT"
+                    a:value="fulguris.settings.fragment.SponsorshipSettingsFragment" />
+            </intent>
+
+        </Preference>
+
+        <Preference
+            a:key="pref_key_fulguris_home"
+            a:title="@string/pref_title_free_download"
+            a:summary="@string/pref_summary_free_download"
+            x:icon="@drawable/ic_free_breakfast"
+            x:singleLineTitle="false"
+            x:isPreferenceVisible="false"
+            t:isPreferenceVisible="true">
+
+            <intent
+                a:action="android.intent.action.VIEW"
+                a:data="@string/url_app_home_page">
+                <extra
+                    a:name="PACKAGE"
+                    a:value="@string/application_id" />
+                <extra
+                    a:name="ACTIVITY"
+                    a:value="fulguris.activity.SettingsActivity" />
+                <extra
+                    a:name="FRAGMENT"
+                    a:value="fulguris.settings.fragment.SponsorshipSettingsFragment" />
+            </intent>
+
+        </Preference>
+
+    </x.PreferenceCategory>
 
 </PreferenceScreen>

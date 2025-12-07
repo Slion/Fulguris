@@ -28,6 +28,9 @@
     <string name="url_terms_and_conditions">https://slions.net/threads/fulguris-terms-conditions.100/</string>
     <string name="url_discord">https://discord.com/invite/7M4Ms5dMZE</string>
     <string name="url_fulguris_home_page">http://fulguris.slions.net</string>
+    <string name="url_playstore_app">https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore</string>
+    <string name="url_github_sponsors">https://github.com/sponsors/Slion</string>
+    <string name="url_crowdin_project">https://crowdin.com/project/fulguris-web-browser</string>
 
     <!-- Settings keys -->
     <string name="pref_key_hide_status_bar">pref_key_hide_status_bar</string>

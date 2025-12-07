@@ -24,20 +24,14 @@ package fulguris.settings.fragment
 
 import fulguris.R
 import fulguris.activity.SettingsActivity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.XmlRes
-import androidx.core.content.res.ResourcesCompat
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
 import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreference
-import androidx.recyclerview.widget.RecyclerView
-import fulguris.utils.shareUrl
 import x.PreferenceFragmentBase
 import timber.log.Timber
 
@@ -239,92 +233,6 @@ abstract class AbstractSettingsFragment : PreferenceFragmentBase() {
         }
     }
 
-
-    /**
-     *
-     */
-    fun addCategoryContribute() {
-        val prefCat = x.PreferenceCategory(requireContext())
-        prefCat.key = getString(R.string.pref_key_contribute_category)
-        prefCat.title = getString(R.string.settings_contribute)
-        //prefCat.summary = getString(R.string.pref_summary_subscriptions)
-        prefCat.order = 1 // Important so that it comes after the subscriptions category
-        prefCat.isIconSpaceReserved = true
-        preferenceScreen.addPreference(prefCat)
-        prefGroup = prefCat
-    }
-
-    /**
-     * Add a preference that links to GitHub sponsor.
-     */
-    protected fun addPreferenceLinkToGitHubSponsor() {
-        // We invite user to installer our Google Play Store release
-        val pref = Preference(requireContext())
-        pref.isSingleLineTitle = false
-        pref.title = resources.getString(R.string.pref_title_sponsorship_github)
-        pref.summary = resources.getString(R.string.pref_summary_sponsorship_github)
-        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_github_mark, activity?.theme)
-        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // Open up Fulguris play store page
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sponsors/Slion")))
-            true
-        }
-        prefGroup.addPreference(pref)
-    }
-
-    /**
-     * Add a preference that opens up our play store page.
-     */
-    protected fun addPreferenceLinkToGooglePlayStoreFiveStarsReview() {
-        // We invite user to installer our Google Play Store release
-        val pref = Preference(requireContext())
-        pref.isSingleLineTitle = false
-        pref.title = resources.getString(R.string.pref_title_sponsorship_five_stars)
-        pref.summary = resources.getString(R.string.pref_summary_sponsorship_five_stars)
-        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_full, activity?.theme)
-        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // Open up Fulguris play store page
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore")))
-            true
-        }
-        prefGroup.addPreference(pref)
-    }
-
-    /**
-     * Add a preference that opens up our Crowdin project page.
-     */
-    protected fun addPreferenceLinkToCrowdin() {
-        // We invite user to installer our Google Play Store release
-        val pref = Preference(requireContext())
-        pref.isSingleLineTitle = false
-        pref.title = resources.getString(R.string.pref_title_contribute_translations)
-        pref.summary = resources.getString(R.string.pref_summary_contribute_translations)
-        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_translate, activity?.theme)
-        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // Open up Fulguris Crowdin project page
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://crowdin.com/project/fulguris-web-browser")))
-            true
-        }
-        prefGroup.addPreference(pref)
-    }
-
-    /**
-     * Add a preference to share Fulguris.
-     */
-    protected fun addPreferenceShareLink() {
-        // We invite user to installer our Google Play Store release
-        val pref = Preference(requireContext())
-        pref.isSingleLineTitle = false
-        pref.title = resources.getString(R.string.pref_title_contribute_share)
-        pref.summary = resources.getString(R.string.pref_summary_contribute_share)
-        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_share, activity?.theme)
-        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // Share Fulguris
-            requireActivity().shareUrl(getString(R.string.url_app_home_page), getString(R.string.locale_app_name),R.string.pref_title_contribute_share)
-            true
-        }
-        prefGroup.addPreference(pref)
-    }
 
     /**
      * Hook-in our own list preference dialog.

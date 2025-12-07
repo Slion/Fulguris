@@ -26,17 +26,17 @@ import fulguris.BuildConfig
 import fulguris.R
 import fulguris.Sponsorship
 import fulguris.settings.preferences.UserPreferences
+import fulguris.utils.shareUrl
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.preference.Preference
 import com.android.billingclient.api.*
 import dagger.hilt.android.AndroidEntryPoint
 // See: https://stackoverflow.com/a/54188472/3969362
-import org.threeten.bp.Period;
+import org.threeten.bp.Period
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -155,10 +155,14 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
      * That can include in-apps and subscriptions.
      */
     private fun populatePreferenceScreen() {
-        // First remove all preferences
-        preferenceScreen.removeAll()
-
-        addCategorySubscriptions()
+        // First remove all subscriptions if any
+        var prefCat: x.PreferenceCategory? = preferenceScreen.findPreference(getString(R.string.pref_key_subscriptions_category))
+        if (prefCat != null) {
+            prefCat.removeAll()
+        } else {
+            // Create it if not yet present
+            addCategorySubscriptions()
+        }
         populatePreferenceScreenStaticItems()
         populateSubscriptions()
     }
@@ -167,17 +171,19 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
      *
      */
     private fun populatePreferenceScreenStaticItems() {
-        addCategoryContribute()
-        // Show link to five stars review
-        addPreferenceLinkToGooglePlayStoreFiveStarsReview()
-        //
-        addPreferenceShareLink()
-        // Crowdin link
-        addPreferenceLinkToCrowdin()
-        // Show GitHub sponsorship option
-        addPreferenceLinkToGitHubSponsor()
-        // Add preference with link to Fulguris download page
-        addPreferenceLinkToFulgurisHome()
+        // Make Fulguris home page preference visible (it's hidden by default in XML)
+        findPreference<Preference>("pref_key_fulguris_home")?.isVisible = true
+
+        // Handle share preference programmatically since ACTION_SEND doesn't work from XML
+        findPreference<Preference>("pref_key_contribute_share")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                requireActivity().shareUrl(
+                    getString(R.string.url_app_home_page),
+                    getString(R.string.locale_app_name),
+                    R.string.pref_title_contribute_share
+                )
+                true
+            }
     }
 
     /**
@@ -277,7 +283,7 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         prefCat.title = getString(R.string.pref_category_subscriptions)
         prefCat.summary = getString(R.string.pref_summary_subscriptions)
         prefCat.order = 0 // We want it at the top
-        prefCat.isIconSpaceReserved = true
+        prefCat.isIconSpaceReserved = false
         preferenceScreen.addPreference(prefCat)
         return prefCat
     }
@@ -293,22 +299,6 @@ class SponsorshipSettingsFragment : AbstractSettingsFragment(),
         }
     }
 
-    /**
-     *
-     */
-    private fun addPreferenceLinkToFulgurisHome() {
-        val pref = Preference(requireContext())
-        pref.isSingleLineTitle = false
-        pref.title = resources.getString(R.string.pref_title_free_download)
-        pref.summary = resources.getString(R.string.pref_summary_free_download)
-        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_free_breakfast, activity?.theme)
-        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // Open Fulguris home page
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.url_app_home_page))))
-            true
-        }
-        prefGroup.addPreference(pref)
-    }
 
     /**
      * TODO: Improve that I guess

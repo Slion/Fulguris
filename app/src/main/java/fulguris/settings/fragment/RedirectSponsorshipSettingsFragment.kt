@@ -23,11 +23,9 @@
 package fulguris.settings.fragment
 
 import fulguris.R
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import androidx.core.content.res.ResourcesCompat
 import androidx.preference.Preference
+import fulguris.utils.shareUrl
 
 /**
  * Sponsorship settings for non Google Play Store variants.
@@ -47,34 +45,20 @@ abstract class RedirectSponsorshipSettingsFragment : AbstractSettingsFragment() 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-        addCategoryContribute()
-        addPreferenceLinkToGooglePlayStoreFiveStarsReview()
-        addPreferenceLinkToGitHubSponsor()
-        addPreferenceShareLink()
-        addPreferenceLinkToCrowdin()
-        addPreferenceLinkToGooglePlayStore()
+        // Make Google Play Store preference visible for non-playstore variants
+        findPreference<Preference>("pref_key_google_play_store")?.isVisible = true
+
+        // Handle share preference programmatically since ACTION_SEND doesn't work from XML
+        findPreference<Preference>("pref_key_contribute_share")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                requireActivity().shareUrl(
+                    getString(R.string.url_app_home_page),
+                    getString(R.string.locale_app_name),
+                    R.string.pref_title_contribute_share
+                )
+                true
+            }
     }
-
-    /**
-     * Add a preference that opens up our play store page.
-     */
-    private fun addPreferenceLinkToGooglePlayStore() {
-        // We invite user to install our Google Play Store release
-        val pref = Preference(requireContext())
-        pref.isSingleLineTitle = false
-        pref.title = resources.getString(R.string.pref_title_no_sponsorship)
-        pref.summary = resources.getString(R.string.pref_summary_no_sponsorship)
-        pref.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_google_play, activity?.theme)
-        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            // Open up Fulguris play store page
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore")))
-            true
-        }
-        preferenceScreen.addPreference(pref)
-    }
-
-
-
 
 
 
