@@ -10,12 +10,14 @@
   <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
   <script>
     function theme(color) {
-      ui("theme", color || "#f9bd49");
+      ui("theme", color || "#FF5722");
+      localStorage.setItem('themeColor', color || "#FF6B35");
     }
 
     const mode = () => {
       let newMode = ui("mode") == "dark" ? "light" : "dark";
       ui("mode", newMode);
+      localStorage.setItem('themeMode', newMode);
       updateModeIcon();
     }
 
@@ -29,8 +31,32 @@
       theme(color);
     }
 
+    function openColorPicker() {
+      const input = document.createElement('input');
+      input.type = 'color';
+      input.value = localStorage.getItem('themeColor') || '#FF6B35';
+      input.addEventListener('change', (e) => {
+        changeThemeColor(e.target.value);
+        ui('#colorMenu');
+      });
+      input.click();
+    }
+
     window.addEventListener("DOMContentLoaded", () => {
-      theme();
+      // Restore saved theme color and mode
+      const savedColor = localStorage.getItem('themeColor');
+      const savedMode = localStorage.getItem('themeMode');
+
+      if (savedColor) {
+        theme(savedColor);
+      } else {
+        theme();
+      }
+
+      if (savedMode) {
+        ui("mode", savedMode);
+      }
+
       updateModeIcon();
     });
   </script>
@@ -53,18 +79,16 @@
   <dialog id="colorMenu">
     <h5>Choose Theme Color</h5>
     <nav class="wrap">
-      <button class="circle" style="background:#f9bd49" onclick="changeThemeColor('#f9bd49'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#1976D2" onclick="changeThemeColor('#1976D2'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#D32F2F" onclick="changeThemeColor('#D32F2F'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#388E3C" onclick="changeThemeColor('#388E3C'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#7B1FA2" onclick="changeThemeColor('#7B1FA2'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#E64A19" onclick="changeThemeColor('#E64A19'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#0097A7" onclick="changeThemeColor('#0097A7'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#512DA8" onclick="changeThemeColor('#512DA8'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#FBC02D" onclick="changeThemeColor('#FBC02D'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#C2185B" onclick="changeThemeColor('#C2185B'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#00796B" onclick="changeThemeColor('#00796B'); ui('#colorMenu')"><i>check</i></button>
-      <button class="circle" style="background:#5D4037" onclick="changeThemeColor('#5D4037'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#FF5722" onclick="changeThemeColor('#FF5722'); ui('#colorMenu')" title="Deep Orange"><i>check</i></button>
+      <button class="circle" style="background:#2196F3" onclick="changeThemeColor('#2196F3'); ui('#colorMenu')" title="Blue"><i>check</i></button>
+      <button class="circle" style="background:#4CAF50" onclick="changeThemeColor('#4CAF50'); ui('#colorMenu')" title="Green"><i>check</i></button>
+      <button class="circle" style="background:#9C27B0" onclick="changeThemeColor('#9C27B0'); ui('#colorMenu')" title="Purple"><i>check</i></button>
+      <button class="circle" style="background:#E91E63" onclick="changeThemeColor('#E91E63'); ui('#colorMenu')" title="Pink"><i>check</i></button>
+      <button class="circle" style="background:#00BCD4" onclick="changeThemeColor('#00BCD4'); ui('#colorMenu')" title="Cyan"><i>check</i></button>
+      <button class="circle" style="background:#FFC107" onclick="changeThemeColor('#FFC107'); ui('#colorMenu')" title="Amber"><i>check</i></button>
+      <button class="circle" style="background:#009688" onclick="changeThemeColor('#009688'); ui('#colorMenu')" title="Teal"><i>check</i></button>
+      <button class="circle" style="background:#FF9800" onclick="changeThemeColor('#FF9800'); ui('#colorMenu')" title="Orange"><i>check</i></button>
+      <button class="circle border" onclick="openColorPicker()" title="Custom Color"><i>palette</i></button>
     </nav>
     <nav class="right-align">
       <button class="border" onclick="ui('#colorMenu')">Close</button>
