@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Test Page - Fulguris</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.10/dist/cdn/beer.min.css" rel="stylesheet">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.10/dist/cdn/beer.min.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+</head>
+<body>
+  <nav class="right-align">
+    <button class="circle transparent" onclick="ui('mode')">
+      <i>dark_mode</i>
+    </button>
+  </nav>
+
+  <main class="responsive">
+    <h3 class="large-text"><i>star</i> Page 2 - Navigation Test</h3>
+    <p>This is the second page for testing browser navigation, history, and back/forward functionality.</p>
+
+    <article class="border">
+      <h5><i>sync</i> Navigation Controls</h5>
+      <div class="row">
+        <a href="index.html" class="chip"><i>home</i><span>Home</span></a>
+        <a href="tests.html" class="chip"><i>arrow_back</i><span>Tests Page</span></a>
+        <a href="minimal.html" class="chip"><i>bolt</i><span>Minimal Page</span></a>
+      </div>
+      <div class="row">
+        <button onclick="window.history.back()"><i>arrow_back</i><span>History Back</span></button>
+        <button onclick="window.history.forward()"><i>arrow_forward</i><span>History Forward</span></button>
+        <button onclick="window.history.go(-2)"><i>fast_rewind</i><span>Go Back 2</span></button>
+      </div>
+      <div class="row">
+        <button onclick="location.reload()"><i>refresh</i><span>Reload</span></button>
+        <button onclick="location.reload(true)"><i>sync</i><span>Hard Reload</span></button>
+      </div>
+    </article>
+
+    <article class="border">
+      <h5><i>bar_chart</i> Page State Test</h5>
+      <p class="small-text"><strong>Visit Counter:</strong> This counter increments on each page load to test navigation and caching.</p>
+      <div class="center-align">
+        <h1 class="extra" id="counter">0</h1>
+      </div>
+      <div class="row">
+        <button onclick="incrementCounter()"><i>add</i><span>Increment</span></button>
+        <button onclick="resetCounter()"><i>refresh</i><span>Reset</span></button>
+        <button onclick="saveState()"><i>save</i><span>Save State</span></button>
+        <button onclick="restoreState()"><i>file_download</i><span>Restore State</span></button>
+      </div>
+    </article>
+
+    <article class="border">
+      <h5><i>link</i> Link Navigation Tests</h5>
+      <div class="row">
+        <a href="tests.html#dialogs" class="chip">Go to Dialogs Section</a>
+        <a href="tests.html#maps" class="chip">Go to Maps Section</a>
+        <button onclick="window.open('tests.html', '_blank'); return false;">Open Tests in New Tab</button>
+        <button onclick="window.open('page.html', '_blank'); return false;">Open Page 2 in New Tab</button>
+      </div>
+    </article>
+
+    <article class="border">
+      <h5><i>warning</i> Navigation Events Test</h5>
+      <div class="row">
+        <button onclick="testBeforeUnload()">Test beforeunload</button>
+        <button onclick="testHashChange()">Test hashchange</button>
+        <button onclick="showNavigationInfo()">Show Nav Info</button>
+        <button onclick="testPageVisibility()">Test Visibility API</button>
+      </div>
+      <div id="eventLog" class="surface-container padding small-text" style="margin-top: 15px; font-family: monospace; max-height: 200px; overflow-y: auto;"></div>
+    </article>
+
+    <article class="border">
+      <h5><i>assignment</i> Form Test (for Back Navigation)</h5>
+      <p class="small-text">Fill out the form, navigate away, and come back to test form persistence.</p>
+      <form id="testForm">
+        <div class="field label border">
+          <input type="text" id="nameInput">
+          <label>Enter your name</label>
+        </div>
+        <div class="field textarea label border">
+          <textarea id="messageInput" rows="3"></textarea>
+          <label>Enter a message</label>
+        </div>
+        <label>
+          <input type="checkbox" id="agreeCheck">
+          <span>I agree to test this form</span>
+        </label>
+      </form>
+    </article>
+  </main>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const icon = document.getElementById('themeIcon');
+      if (body.classList.contains('light')) {
+        body.classList.remove('light');
+        body.classList.add('dark');
+        icon.textContent = 'light_mode';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.classList.remove('dark');
+        body.classList.add('light');
+        icon.textContent = 'dark_mode';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Restore theme from localStorage or use browser preference
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+      const icon = document.getElementById('themeIcon');
+
+      document.body.classList.remove('light', 'dark');
+      document.body.classList.add(theme);
+      icon.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
+
+      if (!savedTheme) {
+        localStorage.setItem('theme', theme);
+      }
+    });
+
+    // Counter functionality
+    let counter = 0;
+    const counterElement = document.getElementById('counter');
+
+    function loadCounter() {
+      const saved = sessionStorage.getItem('pageCounter');
+      counter = saved ? parseInt(saved) : 0;
+      counter++;
+      sessionStorage.setItem('pageCounter', counter);
+      updateCounterDisplay();
+    }
+
+    function updateCounterDisplay() {
+      counterElement.textContent = counter;
+    }
+
+    function incrementCounter() {
+      counter++;
+      sessionStorage.setItem('pageCounter', counter);
+      updateCounterDisplay();
+      logEvent('Counter incremented to ' + counter);
+    }
+
+    function resetCounter() {
+      counter = 0;
+      sessionStorage.setItem('pageCounter', counter);
+      updateCounterDisplay();
+      logEvent('Counter reset to 0');
+    }
+
+    function saveState() {
+      const state = {
+        counter: counter,
+        name: document.getElementById('nameInput').value,
+        message: document.getElementById('messageInput').value,
+        agreed: document.getElementById('agreeCheck').checked
+      };
+      localStorage.setItem('page2State', JSON.stringify(state));
+      logEvent('State saved to localStorage');
+      alert('State saved successfully!');
+    }
+
+    function restoreState() {
+      const saved = localStorage.getItem('page2State');
+      if (saved) {
+        const state = JSON.parse(saved);
+        counter = state.counter || 0;
+        updateCounterDisplay();
+        document.getElementById('nameInput').value = state.name || '';
+        document.getElementById('messageInput').value = state.message || '';
+        document.getElementById('agreeCheck').checked = state.agreed || false;
+        logEvent('State restored from localStorage');
+        alert('State restored successfully!');
+      } else {
+        logEvent('No saved state found');
+        alert('No saved state found!');
+      }
+    }
+
+    // Event logging
+    function logEvent(message) {
+      const log = document.getElementById('eventLog');
+      const timestamp = new Date().toLocaleTimeString();
+      log.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+      log.scrollTop = log.scrollHeight;
+    }
+
+    // Navigation tests
+    function testBeforeUnload() {
+      window.onbeforeunload = function() {
+        return "Are you sure you want to leave? This tests the beforeunload event.";
+      };
+      logEvent('beforeunload handler set (try navigating away)');
+      alert('beforeunload handler set. Try navigating away or closing the tab.');
+      setTimeout(function() {
+        window.onbeforeunload = null;
+        logEvent('beforeunload handler removed');
+      }, 10000);
+    }
+
+    function testHashChange() {
+      window.addEventListener('hashchange', function() {
+        logEvent('hashchange detected: ' + location.hash);
+      });
+      location.hash = '#test-' + Date.now();
+      logEvent('Hash changed to ' + location.hash);
+    }
+
+    function showNavigationInfo() {
+      const info = {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        cookieEnabled: navigator.cookieEnabled,
+        onLine: navigator.onLine,
+        historyLength: history.length,
+        locationHref: location.href,
+        referrer: document.referrer || 'none'
+      };
+      logEvent('Navigation Info:');
+      for (let key in info) {
+        logEvent(`  ${key}: ${info[key]}`);
+      }
+    }
+
+    function testPageVisibility() {
+      if (typeof document.hidden !== "undefined") {
+        document.addEventListener('visibilitychange', function() {
+          logEvent('Page visibility changed: ' + (document.hidden ? 'hidden' : 'visible'));
+        });
+        logEvent('Page Visibility API listener added (try switching tabs)');
+        alert('Page Visibility listener added. Try switching tabs to see events.');
+      } else {
+        logEvent('Page Visibility API not supported');
+        alert('Page Visibility API not supported in this browser.');
+      }
+    }
+
+    // Page load events
+    window.addEventListener('load', function() {
+      loadCounter();
+      logEvent('Page loaded (load event)');
+    });
+
+    window.addEventListener('pageshow', function(event) {
+      logEvent('pageshow event (persisted: ' + event.persisted + ')');
+    });
+
+    window.addEventListener('pagehide', function(event) {
+      logEvent('pagehide event (persisted: ' + event.persisted + ')');
+    });
+
+    // Log initial page load
+    logEvent('Page 2 initialized');
+
+    // Detect browser's preferred color scheme on first visit
+    if (!localStorage.getItem('theme')) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = prefersDark ? 'dark' : 'light';
+      document.documentElement.className = theme;
+    }
+  </script>
+</body>
+</html>

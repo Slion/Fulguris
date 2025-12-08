@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Test Page</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <h1>Minimal Test Page</h1>
+
+  <p>This page loads <strong>no external resources</strong> (no CSS, no JavaScript files, no images). It's designed to test:</p>
+  <ul>
+    <li>Pure HTML rendering</li>
+    <li>Minimal page load time</li>
+    <li>Basic browser functionality without dependencies</li>
+    <li>Navigation and history without external resources</li>
+  </ul>
+
+  <h2>Navigation</h2>
+  <p>
+    <a href="index.html">Home</a> |
+    <a href="tests.html">Tests Page</a> |
+    <a href="page.html">Page 2</a>
+  </p>
+
+  <h2>Basic Tests</h2>
+
+  <h3>JavaScript (Inline Only)</h3>
+  <p>
+    <button onclick="alert('JavaScript is working!')">Test Alert</button>
+    <button onclick="if(confirm('Click OK or Cancel')) alert('You clicked OK'); else alert('You clicked Cancel')">Test Confirm</button>
+    <button onclick="var name = prompt('Enter your name:'); if(name) alert('Hello, ' + name)">Test Prompt</button>
+  </p>
+
+  <h3>Form Elements</h3>
+  <form onsubmit="alert('Form submitted!'); return false;">
+    <p>
+      <label for="textInput">Text Input:</label><br>
+      <input type="text" id="textInput" name="text" placeholder="Enter text">
+    </p>
+    <p>
+      <label for="emailInput">Email:</label><br>
+      <input type="email" id="emailInput" name="email" placeholder="email@example.com">
+    </p>
+    <p>
+      <label for="numberInput">Number:</label><br>
+      <input type="number" id="numberInput" name="number" min="0" max="100" value="50">
+    </p>
+    <p>
+      <label for="rangeInput">Range (0-100):</label><br>
+      <input type="range" id="rangeInput" name="range" min="0" max="100" value="50"
+             oninput="document.getElementById('rangeValue').textContent = this.value">
+      <span id="rangeValue">50</span>
+    </p>
+    <p>
+      <label for="selectInput">Select:</label><br>
+      <select id="selectInput" name="select">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+      </select>
+    </p>
+    <p>
+      <label>
+        <input type="checkbox" name="agree" checked>
+        I agree to test this form
+      </label>
+    </p>
+    <p>
+      <label>
+        <input type="radio" name="choice" value="yes" checked> Yes
+      </label>
+      <label>
+        <input type="radio" name="choice" value="no"> No
+      </label>
+    </p>
+    <p>
+      <label for="textareaInput">Textarea:</label><br>
+      <textarea id="textareaInput" name="message" rows="4" cols="40" placeholder="Enter message..."></textarea>
+    </p>
+    <p>
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </p>
+  </form>
+
+  <h3>Links and Navigation</h3>
+  <ul>
+    <li><a href="#top">Link to top (hash)</a></li>
+    <li><a href="#section2">Link to section 2 (hash)</a></li>
+    <li><a href="javascript:alert('JavaScript protocol')">JavaScript protocol link</a></li>
+    <li><a href="tel:+1234567890">Tel link (tel:)</a></li>
+    <li><a href="mailto:test@example.com">Mailto link</a></li>
+    <li><a href="https://www.example.com" target="_blank">External link (new tab)</a></li>
+  </ul>
+
+  <h3>Media (No External Resources)</h3>
+  <p>
+    <audio controls>
+      <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+      Your browser does not support the audio element.
+    </audio>
+  </p>
+  <p>
+    <video width="320" height="240" controls>
+      <source src="data:video/mp4;base64," type="video/mp4">
+      Your browser does not support the video element.
+    </video>
+  </p>
+
+  <h3>History Controls</h3>
+  <p>
+    <button onclick="window.history.back()">← Back</button>
+    <button onclick="window.history.forward()">Forward →</button>
+    <button onclick="location.reload()">⟳ Reload</button>
+  </p>
+
+  <h3>Page Info</h3>
+  <p>
+    <button onclick="alert('URL: ' + location.href + '\nReferrer: ' + (document.referrer || 'none') + '\nUser Agent: ' + navigator.userAgent)">Show Page Info</button>
+    <button onclick="alert('Cookies Enabled: ' + navigator.cookieEnabled + '\nOnline: ' + navigator.onLine + '\nPlatform: ' + navigator.platform + '\nLanguage: ' + navigator.language)">Show Browser Info</button>
+  </p>
+
+  <hr>
+  <h2 id="section2">Section 2</h2>
+  <p>This section is used to test hash navigation. Use the link above to jump here.</p>
+  <p><a href="#top">Back to top</a></p>
+
+  <hr>
+  <h2>Performance Test</h2>
+  <p>
+    <button onclick="var start = performance.now(); for(var i=0; i<1000000; i++); var end = performance.now(); alert('1 million iterations: ' + (end-start).toFixed(2) + 'ms')">Run Performance Test</button>
+  </p>
+
+  <h2>Storage Test</h2>
+  <p>
+    <button onclick="localStorage.setItem('test', 'value'); alert('Saved to localStorage')">Save to localStorage</button>
+    <button onclick="alert('localStorage value: ' + (localStorage.getItem('test') || 'not found'))">Read localStorage</button>
+    <button onclick="localStorage.removeItem('test'); alert('Cleared localStorage')">Clear localStorage</button>
+  </p>
+  <p>
+    <button onclick="sessionStorage.setItem('test', 'session-value'); alert('Saved to sessionStorage')">Save to sessionStorage</button>
+    <button onclick="alert('sessionStorage value: ' + (sessionStorage.getItem('test') || 'not found'))">Read sessionStorage</button>
+    <button onclick="sessionStorage.removeItem('test'); alert('Cleared sessionStorage')">Clear sessionStorage</button>
+  </p>
+
+  <hr>
+  <footer>
+    <p><small>Minimal Test Page - No external resources loaded | <a href="index.html">Home</a></small></p>
+  </footer>
+</body>
+</html>

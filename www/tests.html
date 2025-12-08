@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Feature Tests - Fulguris</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.10/dist/cdn/beer.min.css" rel="stylesheet">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.10/dist/cdn/beer.min.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+</head>
+<body>
+  <nav class="right-align">
+    <button class="circle transparent" onclick="ui('mode')">
+      <i>dark_mode</i>
+    </button>
+  </nav>
+
+  <main class="responsive">
+    <h3 class="large-text">Browser Tests</h3>
+
+    <article class="border primary-container">
+      <strong><i>link</i> Navigation:</strong>
+      <a href="page.html">Go to Page 2</a> |
+      <a href="minimal.html">Minimal Page</a> |
+      <a href="index.html">Home</a>
+    </article>
+
+    <p>This page tests various browser features including deep links, URI schemes, dialogs, and JavaScript functionality.</p>
+
+    <article class="border">
+      <h5><i>map</i> Map Links</h5>
+      <ul>
+        <li><a href="geo:48.8584,2.2945?q=Eiffel+Tower">Geo URI (Eiffel Tower)</a></li>
+        <li><a href="https://maps.google.com/?q=Eiffel+Tower,Paris">Google Maps (Eiffel Tower)</a></li>
+        <li><a href="maps://?q=Eiffel+Tower,Paris">Apple Maps (Eiffel Tower)</a></li>
+        <li><a href="https://www.google.com/maps/dir/?api=1&destination=Eiffel+Tower,Paris&travelmode=walking">Google Maps Directions (Walking)</a></li>
+      </ul>
+    </article>
+
+    <article class="border">
+      <h5><i>phone</i> Phone & Messaging</h5>
+      <ul>
+        <li><a href="tel:+33123456789">Telephone (call +33 1 23 45 67 89)</a></li>
+        <li><a href="sms:+33123456789?body=Hello%20from%20deep%20link%20test">SMS (send to +33 1 23 45 67 89)</a></li>
+        <li><a href="mailto:test@example.com?subject=Deep%20Link%20Test&body=This%20is%20a%20test">Email (mailto)</a></li>
+      </ul>
+    </article>
+
+    <article class="border">
+      <h5><i>apps</i> Media & Apps</h5>
+      <ul>
+        <li><a href="spotify://track/3n3Ppam7vgaVa1iaRUc9Lp">Spotify (example track)</a></li>
+        <li><a href="youtube://www.youtube.com/watch?v=dQw4w9WgXcQ">YouTube (example video)</a></li>
+        <li><a href="whatsapp://send?text=Hello%20from%20deep%20link%20test">WhatsApp (send message)</a></li>
+      </ul>
+    </article>
+
+    <article class="border">
+      <h5><i>settings</i> Custom Schemes</h5>
+      <ul>
+        <li><a href="myapp://open/settings">Custom App Scheme (myapp://)</a></li>
+        <li><a href="intent://scan/#Intent;scheme=zxing;package=com.google.zxing.client.android;end">Android Intent (Barcode Scanner)</a></li>
+        <li><a href="fulguris://open/home">Fulguris Scheme (open home)</a></li>
+        <li><a href="fulguris://open/settings">Fulguris Scheme (open settings)</a></li>
+        <li><a href="fulguris://open/privacy">Fulguris Scheme (open privacy)</a></li>
+      </ul>
+    </article>
+
+    <article class="border">
+      <h5><i>public</i> Chrome Schemes</h5>
+      <ul>
+        <li><a href="chrome://settings/">Chrome Settings</a></li>
+        <li><a href="chrome://flags/">Chrome Flags</a></li>
+        <li><a href="chrome://version/">Chrome Version Info</a></li>
+        <li><a href="chrome://history/">Chrome History</a></li>
+        <li><a href="chrome://extensions/">Chrome Extensions</a></li>
+      </ul>
+    </article>
+
+    <article class="border">
+      <h5><i>code</i> JavaScript URLs</h5>
+      <ul>
+        <li><a href="javascript:alert('Hello from JavaScript!')">Alert Dialog</a></li>
+        <li><a href="javascript:document.body.style.backgroundColor='#ff0000'">Change Background to Red</a></li>
+        <li><a href="javascript:void(window.open('https://www.google.com'))">Open Google in New Window</a></li>
+        <li><a href="javascript:console.log('Test console message')">Log to Console</a></li>
+        <li><a href="javascript:document.body.innerHTML='<h1>Content Replaced!</h1>'">Replace Page Content</a></li>
+        <li><a href="javascript:(function(){var s=document.createElement('script');s.src='https://example.com/script.js';document.head.appendChild(s);})()">, External Script</a></li>
+      </ul>
+    </article>
+
+    <article class="border">
+      <h5><i>chat_bubble</i> Dialog Tests</h5>
+      <p><em>Note: Standard HTML dialogs don't support custom icons - they use browser defaults.</em></p>
+
+      <h6>Basic Dialogs</h6>
+      <div class="row">
+        <button onclick="alert('Simple alert dialog')">Simple Alert</button>
+        <button onclick="if(confirm('Do you want to proceed?')) alert('You clicked OK'); else alert('You clicked Cancel')">Confirm Dialog</button>
+        <button onclick="var name = prompt('What is your name?', 'Guest'); if(name) alert('Hello, ' + name + '!')">Prompt Dialog</button>
+        <button onclick="var age = prompt('Enter your age:', ''); if(age !== null) alert('You entered: ' + age)">Prompt with Validation</button>
+      </div>
+
+      <h6>Special Characters & Formatting</h6>
+      <div class="row">
+        <button onclick="alert('Line 1\nLine 2\nLine 3')">Multiline Alert</button>
+        <button onclick="alert('Text with &quot;quotes&quot; and apostrophes')">Quotes Test</button>
+        <button onclick="alert('Unicode: Japanese emoji checkmark arrow euro pound yen')">Unicode Characters</button>
+        <button onclick="alert('Special chars: &lt;html&gt; &amp; &copy; &#169;')">HTML Entities</button>
+        <button onclick="alert('Tabs:\t\tIndented\nBackslash: \\ Forward: /')">Escape Sequences</button>
+      </div>
+
+      <h6>Edge Cases</h6>
+      <div class="row">
+        <button onclick="alert('')">Empty Alert</button>
+        <button onclick="confirm('')">Empty Confirm</button>
+        <button onclick="prompt('', '')">Empty Prompt</button>
+        <button onclick="alert('This is a dialog with a very long message that should test text wrapping and scrolling behavior in the dialog. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.')">Very Long Message</button>
+        <button onclick="for(var i=0; i<3; i++) alert('Dialog ' + (i+1) + ' of 3')">Multiple Sequential Dialogs</button>
+      </div>
+
+      <h6>Advanced Tests</h6>
+      <div class="row">
+        <button onclick="var result = confirm('First confirm'); if(result) alert('You clicked OK on first'); if(confirm('Second confirm?')) alert('You clicked OK on second')">Nested Dialogs</button>
+        <button onclick="setTimeout(function(){ alert('Delayed alert (1 second)'); }, 1000)">Delayed Alert (1s)</button>
+        <button onclick="try { window.external.notify('Test notification'); } catch(e) { alert('Notification API not available:\n' + e.message); }">External Notify Test</button>
+        <button onclick="var xhr = new XMLHttpRequest(); xhr.onload = function(){ alert('XHR completed'); }; xhr.onerror = function(){ alert('XHR failed'); }; xhr.open('GET', 'https://httpbin.org/delay/1'); xhr.send();">Alert After XHR</button>
+        <button onclick="window.onbeforeunload = function(){ return 'Are you sure you want to leave?'; }; alert('Try navigating away or closing the page'); setTimeout(function(){ window.onbeforeunload = null; alert('beforeunload handler removed'); }, 5000);">beforeunload Test (5s)</button>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    // Detect browser's preferred color scheme on first visit
+    if (!localStorage.getItem('theme')) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = prefersDark ? 'dark' : 'light';
+      document.documentElement.className = theme;
+    }
+  </script>
+</body>
+</html>
