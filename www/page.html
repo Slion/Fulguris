@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FF5722">
   <title>Navigation Test Page - Fulguris</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link href="https://cdn.jsdelivr.net/npm/beercss@3.13.1/dist/cdn/beer.min.css" rel="stylesheet">
@@ -12,10 +13,13 @@
     function theme(color) {
       ui("theme", color || "#FF5722");
       localStorage.setItem('themeColor', color || "#FF5722");
+      // Update meta theme-color
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', color || "#FF5722");
     }
 
     const mode = () => {
-      let newMode = ui("mode") == "dark" ? "light" : "dark";
+      const currentMode = ui("mode");
+      const newMode = currentMode === 'dark' ? 'light' : 'dark';
       ui("mode", newMode);
       localStorage.setItem('themeMode', newMode);
       updateModeIcon();
@@ -43,21 +47,15 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      // Restore saved theme color and mode
-      const savedColor = localStorage.getItem('themeColor');
       const savedMode = localStorage.getItem('themeMode');
-
-      if (savedColor) {
-        theme(savedColor);
-      } else {
-        theme();
-      }
-
       if (savedMode) {
         ui("mode", savedMode);
       }
-
       updateModeIcon();
+
+      // Restore saved theme color
+      const savedColor = localStorage.getItem('themeColor');
+      theme(savedColor || "#FF5722");
     });
   </script>
 </head>
