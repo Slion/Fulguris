@@ -36,14 +36,19 @@
   </script>
 </head>
 <body>
-  <nav class="right-align">
-    <button class="circle transparent" onclick="ui('#colorMenu')">
-      <i>palette</i>
-    </button>
-    <button class="circle transparent" onclick="mode()">
-      <i id="modeIcon">dark_mode</i>
-    </button>
-  </nav>
+
+  <header class="fixed transparent right-align">
+    <div class="margin">
+      <nav class="toolbar tertiary elevate min">
+        <button class="circle transparent" onclick="ui('#colorMenu')">
+          <i>palette</i>
+        </button>
+        <button class="circle transparent" onclick="mode()">
+          <i id="modeIcon">dark_mode</i>
+        </button>
+      </nav>
+    </div>
+  </header>
 
   <dialog id="colorMenu">
     <h5>Choose Theme Color</h5>
