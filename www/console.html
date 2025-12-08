@@ -9,6 +9,40 @@
   <link href="https://cdn.jsdelivr.net/npm/beercss@3.13.1/dist/cdn/beer.min.css" rel="stylesheet" />
   <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.13.1/dist/cdn/beer.min.js"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+  <style>
+    #consoleOutput {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      padding: 1rem;
+      height: 300px;
+      overflow-y: auto;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .console-entry {
+      padding: 0.25rem 0;
+      border-bottom: 1px solid rgba(var(--outline), 0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .console-entry:last-child {
+      border-bottom: none;
+    }
+
+    .console-log { color: var(--on-surface); }
+    .console-info { color: rgb(33, 150, 243); }
+    .console-warn { color: rgb(255, 152, 0); }
+    .console-error { color: rgb(244, 67, 54); }
+    .console-debug { color: rgb(156, 39, 176); }
+
+    .small-text {
+      font-size: 0.8em;
+      opacity: 0.7;
+    }
+  </style>
   <script>
     function theme(color) {
       ui("theme", color || "#FF5722");
@@ -54,7 +88,82 @@
 
       const savedColor = localStorage.getItem('themeColor');
       theme(savedColor || "#FF5722");
+
+      // Override console methods to capture output
+      interceptConsole();
     });
+
+    // Console output capture
+    function addOutput(message, type = 'log') {
+      const output = document.getElementById('consoleOutput');
+      const entry = document.createElement('div');
+      entry.className = `console-entry console-${type}`;
+
+      const timestamp = new Date().toLocaleTimeString();
+      const icon = {
+        log: 'description',
+        info: 'info',
+        warn: 'warning',
+        error: 'error',
+        debug: 'bug_report'
+      }[type] || 'description';
+
+      entry.innerHTML = `<i class="small">${icon}</i> <span class="small-text">[${timestamp}]</span> ${escapeHtml(message)}`;
+      output.appendChild(entry);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = String(text);
+      return div.innerHTML;
+    }
+
+    function clearOutput() {
+      document.getElementById('consoleOutput').innerHTML = '';
+    }
+
+    // Intercept console methods
+    const originalConsole = {
+      log: console.log,
+      info: console.info,
+      warn: console.warn,
+      error: console.error,
+      debug: console.debug,
+      clear: console.clear
+    };
+
+    function interceptConsole() {
+      console.log = function(...args) {
+        originalConsole.log.apply(console, args);
+        addOutput(args.join(' '), 'log');
+      };
+
+      console.info = function(...args) {
+        originalConsole.info.apply(console, args);
+        addOutput(args.join(' '), 'info');
+      };
+
+      console.warn = function(...args) {
+        originalConsole.warn.apply(console, args);
+        addOutput(args.join(' '), 'warn');
+      };
+
+      console.error = function(...args) {
+        originalConsole.error.apply(console, args);
+        addOutput(args.join(' '), 'error');
+      };
+
+      console.debug = function(...args) {
+        originalConsole.debug.apply(console, args);
+        addOutput(args.join(' '), 'debug');
+      };
+
+      console.clear = function() {
+        originalConsole.clear.apply(console);
+        clearOutput();
+      };
+    }
 
     // Console test functions
     function testLog() {
@@ -84,6 +193,7 @@
         { name: 'Charlie', age: 35, city: 'Tokyo' }
       ];
       console.table(data);
+      addOutput('console.table() called (see browser console for table)', 'log');
     }
 
     function testGroup() {
@@ -96,6 +206,7 @@
     function testTrace() {
       function innerFunction() {
         console.trace('Stack trace');
+        addOutput('console.trace() called (see browser console for stack trace)', 'log');
       }
       innerFunction();
     }
@@ -107,11 +218,13 @@
         sum += i;
       }
       console.timeEnd('timer');
+      addOutput('console.time() completed (see browser console for timing)', 'log');
     }
 
     function testAssert() {
       console.assert(1 === 1, 'This should not show');
       console.assert(1 === 2, 'This assertion failed: 1 !== 2');
+      addOutput('console.assert() called (see browser console for failed assertions)', 'log');
     }
 
     function testMultiple() {
@@ -163,7 +276,16 @@
 
   <main class="responsive">
     <h3><i>terminal</i> JavaScript Console Test</h3>
-    <p>Test various JavaScript console methods. Open your browser's developer console to see the output.</p>
+    <p>Console output is shown below and also in your browser's developer console (F12).</p>
+
+    <article class="border">
+      <h5><i>monitor</i> Console Output</h5>
+      <div id="consoleOutput" class="surface-container"></div>
+      <button onclick="clearOutput()">
+        <i>clear_all</i>
+        <span>Clear Output</span>
+      </button>
+    </article>
 
     <article class="border">
       <h5><i>code</i> Basic Console Methods</h5>
