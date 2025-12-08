@@ -5,14 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fulguris Test Suite</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link href="https://cdn.jsdelivr.net/npm/beercss@3.7.10/dist/cdn/beer.min.css" rel="stylesheet">
-  <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.7.10/dist/cdn/beer.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/beercss@3.13.1/dist/cdn/beer.min.css" rel="stylesheet" />
+  <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.13.1/dist/cdn/beer.min.js"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
+  <script>
+    function theme(color) {
+      ui("theme", color || "#f9bd49");
+    }
+
+    const mode = () => {
+      let newMode = ui("mode") == "dark" ? "light" : "dark";
+      ui("mode", newMode);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => theme());
+  </script>
 </head>
 <body>
   <nav class="right-align">
-    <button class="circle transparent" onclick="toggleTheme()">
-      <i id="themeIcon">dark_mode</i>
+    <button class="circle transparent" onclick="mode()">
+      <i>dark_mode</i>
     </button>
   </nav>
 
@@ -102,14 +114,5 @@
       <p>Fulguris Browser Test Suite | <a href="https://github.com/Slion/Fulguris">GitHub</a></p>
     </div>
   </main>
-
-  <script>
-    // Detect browser's preferred color scheme on first visit
-    if (!localStorage.getItem('theme')) {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = prefersDark ? 'dark' : 'light';
-      document.documentElement.className = theme;
-    }
-  </script>
 </body>
 </html>
