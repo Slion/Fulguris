@@ -51,7 +51,7 @@
 
   <dialog id="colorMenu">
     <h5>Choose Theme Color</h5>
-    <div class="grid">
+    <nav class="wrap">
       <button class="circle" style="background:#f9bd49" onclick="changeThemeColor('#f9bd49'); ui('#colorMenu')"><i>check</i></button>
       <button class="circle" style="background:#1976D2" onclick="changeThemeColor('#1976D2'); ui('#colorMenu')"><i>check</i></button>
       <button class="circle" style="background:#D32F2F" onclick="changeThemeColor('#D32F2F'); ui('#colorMenu')"><i>check</i></button>
@@ -64,7 +64,7 @@
       <button class="circle" style="background:#C2185B" onclick="changeThemeColor('#C2185B'); ui('#colorMenu')"><i>check</i></button>
       <button class="circle" style="background:#00796B" onclick="changeThemeColor('#00796B'); ui('#colorMenu')"><i>check</i></button>
       <button class="circle" style="background:#5D4037" onclick="changeThemeColor('#5D4037'); ui('#colorMenu')"><i>check</i></button>
-    </div>
+    </nav>
     <nav class="right-align">
       <button class="border" onclick="ui('#colorMenu')">Close</button>
     </nav>
@@ -149,39 +149,39 @@
       <p><em>Note: Standard HTML dialogs don't support custom icons - they use browser defaults.</em></p>
 
       <h6>Basic Dialogs</h6>
-      <div class="row">
+      <nav class="wrap">
         <button onclick="alert('Simple alert dialog')">Simple Alert</button>
         <button onclick="if(confirm('Do you want to proceed?')) alert('You clicked OK'); else alert('You clicked Cancel')">Confirm Dialog</button>
         <button onclick="var name = prompt('What is your name?', 'Guest'); if(name) alert('Hello, ' + name + '!')">Prompt Dialog</button>
         <button onclick="var age = prompt('Enter your age:', ''); if(age !== null) alert('You entered: ' + age)">Prompt with Validation</button>
-      </div>
+      </nav>
 
       <h6>Special Characters & Formatting</h6>
-      <div class="row">
+      <nav class="wrap">
         <button onclick="alert('Line 1\nLine 2\nLine 3')">Multiline Alert</button>
         <button onclick="alert('Text with &quot;quotes&quot; and apostrophes')">Quotes Test</button>
         <button onclick="alert('Unicode: Japanese emoji checkmark arrow euro pound yen')">Unicode Characters</button>
         <button onclick="alert('Special chars: &lt;html&gt; &amp; &copy; &#169;')">HTML Entities</button>
         <button onclick="alert('Tabs:\t\tIndented\nBackslash: \\ Forward: /')">Escape Sequences</button>
-      </div>
+      </nav>
 
       <h6>Edge Cases</h6>
-      <div class="row">
+      <nav class="wrap">
         <button onclick="alert('')">Empty Alert</button>
         <button onclick="confirm('')">Empty Confirm</button>
         <button onclick="prompt('', '')">Empty Prompt</button>
         <button onclick="alert('This is a dialog with a very long message that should test text wrapping and scrolling behavior in the dialog. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.')">Very Long Message</button>
         <button onclick="for(var i=0; i<3; i++) alert('Dialog ' + (i+1) + ' of 3')">Multiple Sequential Dialogs</button>
-      </div>
+      </nav>
 
       <h6>Advanced Tests</h6>
-      <div class="row">
+      <nav class="wrap">
         <button onclick="var result = confirm('First confirm'); if(result) alert('You clicked OK on first'); if(confirm('Second confirm?')) alert('You clicked OK on second')">Nested Dialogs</button>
         <button onclick="setTimeout(function(){ alert('Delayed alert (1 second)'); }, 1000)">Delayed Alert (1s)</button>
         <button onclick="try { window.external.notify('Test notification'); } catch(e) { alert('Notification API not available:\n' + e.message); }">External Notify Test</button>
         <button onclick="var xhr = new XMLHttpRequest(); xhr.onload = function(){ alert('XHR completed'); }; xhr.onerror = function(){ alert('XHR failed'); }; xhr.open('GET', 'https://httpbin.org/delay/1'); xhr.send();">Alert After XHR</button>
         <button onclick="window.onbeforeunload = function(){ return 'Are you sure you want to leave?'; }; alert('Try navigating away or closing the page'); setTimeout(function(){ window.onbeforeunload = null; alert('beforeunload handler removed'); }, 5000);">beforeunload Test (5s)</button>
-      </div>
+      </nav>
     </article>
   </main>
 </body>

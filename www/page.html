@@ -51,7 +51,7 @@
 
   <dialog id="colorMenu">
     <h5>Choose Theme Color</h5>
-    <div class="grid">
+    <nav class="wrap">
       <button class="circle" style="background:#f9bd49" onclick="changeThemeColor('#f9bd49'); ui('#colorMenu')"><i>check</i></button>
       <button class="circle" style="background:#1976D2" onclick="changeThemeColor('#1976D2'); ui('#colorMenu')"><i>check</i></button>
       <button class="circle" style="background:#D32F2F" onclick="changeThemeColor('#D32F2F'); ui('#colorMenu')"><i>check</i></button>
@@ -64,7 +64,7 @@
       <button class="circle" style="background:#C2185B" onclick="changeThemeColor('#C2185B'); ui('#colorMenu')"><i>check</i></button>
       <button class="circle" style="background:#00796B" onclick="changeThemeColor('#00796B'); ui('#colorMenu')"><i>check</i></button>
       <button class="circle" style="background:#5D4037" onclick="changeThemeColor('#5D4037'); ui('#colorMenu')"><i>check</i></button>
-    </div>
+    </nav>
     <nav class="right-align">
       <button class="border" onclick="ui('#colorMenu')">Close</button>
     </nav>
@@ -76,20 +76,20 @@
 
     <article class="border">
       <h5><i>sync</i> Navigation Controls</h5>
-      <div class="row">
+      <nav class="wrap">
         <a href="index.html" class="chip"><i>home</i><span>Home</span></a>
         <a href="tests.html" class="chip"><i>arrow_back</i><span>Tests Page</span></a>
         <a href="minimal.html" class="chip"><i>bolt</i><span>Minimal Page</span></a>
-      </div>
-      <div class="row">
+      </nav>
+      <nav class="wrap">
         <button onclick="window.history.back()"><i>arrow_back</i><span>History Back</span></button>
         <button onclick="window.history.forward()"><i>arrow_forward</i><span>History Forward</span></button>
         <button onclick="window.history.go(-2)"><i>fast_rewind</i><span>Go Back 2</span></button>
-      </div>
-      <div class="row">
+      </nav>
+      <nav class="wrap">
         <button onclick="location.reload()"><i>refresh</i><span>Reload</span></button>
         <button onclick="location.reload(true)"><i>sync</i><span>Hard Reload</span></button>
-      </div>
+      </nav>
     </article>
 
     <article class="border">
@@ -98,32 +98,32 @@
       <div class="center-align">
         <h1 class="extra" id="counter">0</h1>
       </div>
-      <div class="row">
+      <nav class="wrap">
         <button onclick="incrementCounter()"><i>add</i><span>Increment</span></button>
         <button onclick="resetCounter()"><i>refresh</i><span>Reset</span></button>
         <button onclick="saveState()"><i>save</i><span>Save State</span></button>
         <button onclick="restoreState()"><i>file_download</i><span>Restore State</span></button>
-      </div>
+      </nav>
     </article>
 
     <article class="border">
       <h5><i>link</i> Link Navigation Tests</h5>
-      <div class="row">
+      <nav class="wrap">
         <a href="tests.html#dialogs" class="chip">Go to Dialogs Section</a>
         <a href="tests.html#maps" class="chip">Go to Maps Section</a>
         <button onclick="window.open('tests.html', '_blank'); return false;">Open Tests in New Tab</button>
         <button onclick="window.open('page.html', '_blank'); return false;">Open Page 2 in New Tab</button>
-      </div>
+      </nav>
     </article>
 
     <article class="border">
       <h5><i>warning</i> Navigation Events Test</h5>
-      <div class="row">
+      <nav class="wrap">
         <button onclick="testBeforeUnload()">Test beforeunload</button>
         <button onclick="testHashChange()">Test hashchange</button>
         <button onclick="showNavigationInfo()">Show Nav Info</button>
         <button onclick="testPageVisibility()">Test Visibility API</button>
-      </div>
+      </nav>
       <div id="eventLog" class="surface-container padding small-text" style="margin-top: 15px; font-family: monospace; max-height: 200px; overflow-y: auto;"></div>
     </article>
 
