@@ -16,17 +16,55 @@
     const mode = () => {
       let newMode = ui("mode") == "dark" ? "light" : "dark";
       ui("mode", newMode);
+      updateModeIcon();
     }
 
-    window.addEventListener("DOMContentLoaded", () => theme());
+    function updateModeIcon() {
+      const icon = document.getElementById('modeIcon');
+      const currentMode = ui("mode");
+      icon.textContent = currentMode === "dark" ? "light_mode" : "dark_mode";
+    }
+
+    function changeThemeColor(color) {
+      theme(color);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      theme();
+      updateModeIcon();
+    });
   </script>
 </head>
 <body>
   <nav class="right-align">
+    <button class="circle transparent" onclick="ui('#colorMenu')">
+      <i>palette</i>
+    </button>
     <button class="circle transparent" onclick="mode()">
-      <i>dark_mode</i>
+      <i id="modeIcon">dark_mode</i>
     </button>
   </nav>
+
+  <dialog id="colorMenu">
+    <h5>Choose Theme Color</h5>
+    <div class="grid">
+      <button class="circle" style="background:#f9bd49" onclick="changeThemeColor('#f9bd49'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#1976D2" onclick="changeThemeColor('#1976D2'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#D32F2F" onclick="changeThemeColor('#D32F2F'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#388E3C" onclick="changeThemeColor('#388E3C'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#7B1FA2" onclick="changeThemeColor('#7B1FA2'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#E64A19" onclick="changeThemeColor('#E64A19'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#0097A7" onclick="changeThemeColor('#0097A7'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#512DA8" onclick="changeThemeColor('#512DA8'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#FBC02D" onclick="changeThemeColor('#FBC02D'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#C2185B" onclick="changeThemeColor('#C2185B'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#00796B" onclick="changeThemeColor('#00796B'); ui('#colorMenu')"><i>check</i></button>
+      <button class="circle" style="background:#5D4037" onclick="changeThemeColor('#5D4037'); ui('#colorMenu')"><i>check</i></button>
+    </div>
+    <nav class="right-align">
+      <button class="border" onclick="ui('#colorMenu')">Close</button>
+    </nav>
+  </dialog>
 
   <main class="responsive">
     <h3 class="large-text">Browser Tests</h3>
