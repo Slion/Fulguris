@@ -216,7 +216,7 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
             }
         }
 
-	// TODO: Remove that once we are done with ReactiveX
+	    // TODO: Remove that once we are done with ReactiveX
         RxJavaPlugins.setErrorHandler { throwable: Throwable? ->
             if (userPreferences.crashLogs && throwable != null) {
                 fulguris.utils.FileUtils.writeCrashToStorage(throwable)
@@ -243,6 +243,69 @@ class App : Application(), SharedPreferences.OnSharedPreferenceChangeListener,
         // Set up the correct activity alias based on the incoming view action preference
         fulguris.utils.ActivityAliasManager.updateEnabledActivity(this, userPreferences.incomingViewAction)
 
+        // Log build and device information
+        logBuildInfo()
+
+    }
+
+    /**
+     * Logs comprehensive build, device, and environment information for debugging.
+     */
+    private fun logBuildInfo() {
+        // App package and version
+        try {
+            val packageInfo = packageManager.getPackageInfo(packageName, 0)
+            val versionName = packageInfo.versionName ?: "unknown"
+            val versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                packageInfo.longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                packageInfo.versionCode.toLong()
+            }
+            Timber.i("App: package=$packageName, versionName=$versionName, versionCode=$versionCode, flavor=${BuildConfig.FLAVOR}, buildType=${BuildConfig.BUILD_TYPE}")
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to read package info")
+        }
+
+        // Android OS version
+        val securityPatch = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Build.VERSION.SECURITY_PATCH
+        } else {
+            "N/A"
+        }
+        Timber.i("Android: SDK=${Build.VERSION.SDK_INT}, release=${Build.VERSION.RELEASE}, securityPatch=$securityPatch, codename=${Build.VERSION.CODENAME}")
+
+        // Device information
+        Timber.i("Device: brand=${Build.BRAND}, manufacturer=${Build.MANUFACTURER}, model=${Build.MODEL}, product=${Build.PRODUCT}, device=${Build.DEVICE}")
+        Timber.i("Build: id=${Build.ID}, display=${Build.DISPLAY}, fingerprint=${Build.FINGERPRINT}")
+        Timber.i("Hardware: board=${Build.BOARD}, hardware=${Build.HARDWARE}, supportedAbis=${Build.SUPPORTED_ABIS.joinToString(",")}")
+
+        // Locale
+        val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            resources.configuration.locales.get(0)
+        } else {
+            @Suppress("DEPRECATION")
+            resources.configuration.locale
+        }
+        Timber.i("Locale: ${locale.toLanguageTag()} (${locale.displayName})")
+
+        // Screen metrics
+        try {
+            val displayMetrics = resources.displayMetrics
+            Timber.i("Screen: width=${displayMetrics.widthPixels}px, height=${displayMetrics.heightPixels}px, density=${displayMetrics.density}, densityDpi=${displayMetrics.densityDpi}")
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to read screen metrics")
+        }
+
+        // Memory info
+        val runtime = Runtime.getRuntime()
+        val maxMemory = runtime.maxMemory() / (1024 * 1024)
+        val totalMemory = runtime.totalMemory() / (1024 * 1024)
+        val freeMemory = runtime.freeMemory() / (1024 * 1024)
+        Timber.i("Memory: max=${maxMemory}MB, total=${totalMemory}MB, free=${freeMemory}MB")
+
+        // Process info
+        Timber.i("Process: incognito=$incognito, debuggable=${BuildConfig.DEBUG}")
     }
 
 
