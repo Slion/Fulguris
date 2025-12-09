@@ -21,6 +21,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.Reusable
 import io.reactivex.Scheduler
 import io.reactivex.rxkotlin.subscribeBy
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -228,7 +229,22 @@ abstract class BundleInitializer(private val bundle: Bundle?) :
     TabInitializer {
 
     override fun initialize(webView: WebView, headers: Map<String, String>) {
-        bundle?.let {webView.restoreState(it)}
+        bundle?.let { 
+            val backForwardList = webView.restoreState(it)
+            if (backForwardList == null) {
+                // Restore failed - likely due to WebView incompatibility
+                // Fall back to loading the URL directly
+                Timber.w("WebView.restoreState() failed - likely incompatible WebView (e.g., Vanadium -> Official). Falling back to URL: ${url()}")
+                val targetUrl = url()
+                if (targetUrl.isNotEmpty()) {
+                    webView.loadUrl(targetUrl, headers)
+                } else {
+                    Timber.e("Cannot fall back to URL loading - URL is empty")
+                }
+            } else {
+                Timber.d("WebView.restoreState() succeeded")
+            }
+        }
     }
 }
 
