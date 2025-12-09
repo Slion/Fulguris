@@ -235,9 +235,8 @@ abstract class BundleInitializer(private val bundle: Bundle?) :
                 // Restore failed - likely due to WebView incompatibility
                 // Fall back to loading the URL directly
                 Timber.w("WebView.restoreState() failed - likely incompatible WebView (e.g., Vanadium -> Official). Falling back to URL: ${url()}")
-                val targetUrl = url()
-                if (targetUrl.isNotEmpty()) {
-                    webView.loadUrl(targetUrl, headers)
+                if (url().isNotEmpty()) {
+                    webView.loadUrl(url(), headers)
                 } else {
                     Timber.e("Cannot fall back to URL loading - URL is empty")
                 }
