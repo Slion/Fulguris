@@ -1,15 +1,5 @@
 package fulguris.view
 
-import fulguris.R
-import fulguris.browser.WebBrowser
-import fulguris.di.HiltEntryPoint
-import fulguris.dialog.BrowserDialog
-import fulguris.dialog.DialogItem
-import fulguris.extensions.launch
-import fulguris.favicon.FaviconModel
-import fulguris.settings.preferences.UserPreferences
-import fulguris.view.webrtc.WebRtcPermissionsModel
-import fulguris.view.webrtc.WebRtcPermissionsView
 import android.Manifest
 import android.annotation.TargetApi
 import android.app.Activity
@@ -20,13 +10,30 @@ import android.os.Build
 import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
-import android.webkit.*
+import android.webkit.ConsoleMessage
+import android.webkit.GeolocationPermissions
+import android.webkit.JsPromptResult
+import android.webkit.JsResult
+import android.webkit.PermissionRequest
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.WebView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
+import fulguris.R
+import fulguris.browser.WebBrowser
+import fulguris.di.HiltEntryPoint
+import fulguris.dialog.BrowserDialog
+import fulguris.dialog.DialogItem
+import fulguris.extensions.launch
+import fulguris.favicon.FaviconModel
 import fulguris.permissions.PermissionsManager
 import fulguris.permissions.PermissionsResultAction
+import fulguris.settings.preferences.UserPreferences
+import fulguris.view.webrtc.WebRtcPermissionsModel
+import fulguris.view.webrtc.WebRtcPermissionsView
 import io.reactivex.Scheduler
 import timber.log.Timber
 
@@ -55,37 +62,73 @@ class WebPageChromeClient(
 
         // We don't need to run that when color mode is disabled
         if (userPreferences.colorModeEnabled) {
-            if (newProgress > 10 && webPageTab.fetchMetaThemeColorTries > 0)
+            if (newProgress > 10 && webPageTab.shouldFetchMetaTags)
             {
-                val triesLeft = webPageTab.fetchMetaThemeColorTries - 1
-                webPageTab.fetchMetaThemeColorTries = 0
+                webPageTab.shouldFetchMetaTags = false
 
-                // Extract meta theme-color
-                Timber.w("evaluateJavascript: theme color extraction")
-                view.evaluateJavascript("(function() { " +
-                        "let e = document.querySelector('meta[name=\"theme-color\"]');" +
-                        "if (e==null) return null;" +
-                        "return e.content; })();") { themeColor ->
-                    try {
-                        webPageTab.htmlMetaThemeColor = Color.parseColor(themeColor.trim('\'').trim('"'));
-                        // We did find a valid theme-color, tell our controller about it
-                        webBrowser.onTabChanged(webPageTab)
-                    }
-                    catch (e: Exception) {
-                        if (triesLeft==0 || newProgress==100)
-                        {
-                            // Exhausted all our tries or the page finished loading before we did
-                            // Just give up then and reset our theme color
-                            webPageTab.htmlMetaThemeColor = WebPageTab.KHtmlMetaThemeColorInvalid
-                            webBrowser.onTabChanged(webPageTab)
+                // Extract meta theme-color and setup observer for changes
+                // Results are parsed from onConsoleMessage
+                Timber.i("evaluateJavascript: theme color extraction and observer setup")
+                view.evaluateJavascript("""
+                    (function() {
+                        // Get current theme-color and color-scheme
+                        let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+                        let metaColorScheme = document.querySelector('meta[name="color-scheme"]');
+                        let currentThemeColor = metaThemeColor ? metaThemeColor.content : null;
+                        let currentColorScheme = metaColorScheme ? metaColorScheme.content : null;
+                        
+                        // Send initial values via console
+                        if (currentThemeColor) {
+                            console.log('fulguris: meta-theme-color: ' + currentThemeColor);
                         }
-                        else
-                        {
-                            // Try it again next time around
-                            webPageTab.fetchMetaThemeColorTries = triesLeft
+                        if (currentColorScheme) {
+                            console.log('fulguris: meta-color-scheme: ' + currentColorScheme);
                         }
-                    }
-                }
+                        
+                        // Observer for attribute changes on existing meta tags
+                        const observer = new MutationObserver(function(mutations) {
+                            mutations.forEach(function(mutation) {
+                                if (mutation.type === 'attributes' && mutation.attributeName === 'content') {
+                                    let tagName = mutation.target.getAttribute('name');
+                                    let newValue = mutation.target.content;
+                                    if (tagName === 'theme-color') {
+                                        console.log('fulguris: meta-theme-color: ' + newValue);
+                                    } else if (tagName === 'color-scheme') {
+                                        console.log('fulguris: meta-color-scheme: ' + newValue);
+                                    }
+                                }
+                            });
+                        });
+                        
+                        // Observer for DOM changes (meta tags added/removed)
+                        const headObserver = new MutationObserver(function(mutations) {
+                            mutations.forEach(function(mutation) {
+                                mutation.addedNodes.forEach(function(node) {
+                                    if (node.nodeName === 'META') {
+                                        let tagName = node.getAttribute('name');
+                                        let newValue = node.content;
+                                        if (tagName === 'theme-color') {
+                                            console.log('fulguris: meta-theme-color: ' + newValue);
+                                            observer.observe(node, { attributes: true, attributeFilter: ['content'] });
+                                        } else if (tagName === 'color-scheme') {
+                                            console.log('fulguris: meta-color-scheme: ' + newValue);
+                                            observer.observe(node, { attributes: true, attributeFilter: ['content'] });
+                                        }
+                                    }
+                                });
+                            });
+                        });
+                        
+                        // Start observing existing meta tags
+                        if (metaThemeColor) {
+                            observer.observe(metaThemeColor, { attributes: true, attributeFilter: ['content'] });
+                        }
+                        if (metaColorScheme) {
+                            observer.observe(metaColorScheme, { attributes: true, attributeFilter: ['content'] });
+                        }
+                        headObserver.observe(document.head, { childList: true, subtree: true });
+                    })();
+                """.trimIndent(), null)
             }
         }
     }
@@ -188,6 +231,7 @@ class WebPageChromeClient(
     /**
      *
      */
+    @Deprecated("Deprecated in Java")
     override fun onJsTimeout(): Boolean {
         // Should never get there
         Timber.d("onJsTimeout")
@@ -305,9 +349,13 @@ class WebPageChromeClient(
 
     override fun onShowFileChooser(webView: WebView, filePathCallback: ValueCallback<Array<Uri>>,
                                    fileChooserParams: FileChooserParams): Boolean {
+        Timber.d("onShowFileChooser - acceptTypes: ${fileChooserParams.acceptTypes.contentToString()}")
+
+        // Default file chooser for file inputs
         webBrowser.showFileChooser(filePathCallback)
         return true
     }
+
 
     /**
      * Obtain an image that is displayed as a placeholder on a video until the video has initialized
@@ -359,11 +407,53 @@ class WebPageChromeClient(
     /**
      * Needed to display javascript console message in logcat.
      */
-    override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+    override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
+        //Timber.tag(tag).d("message")
+
         // TODO: Collect those in the tab so that we could display them
-        consoleMessage?.apply {
-            val tag = "JavaScript";
+        consoleMessage.apply {
+            val tag = "JavaScript"
             val log = "${messageLevel()} - ${message()} -- from line ${lineNumber()} of ${sourceId()}"
+
+            // Check if this is a Fulguris meta tag notification from our MutationObserver
+            val msg = message()
+            if (userPreferences.colorModeEnabled && msg.startsWith("fulguris: ")) {
+                when {
+                    msg.startsWith("fulguris: meta-theme-color: ") -> {
+                        // Extract theme-color value after the prefix
+                        val colorValue = msg.substringAfter("fulguris: meta-theme-color: ").trim()
+                        try {
+                            val color = Color.parseColor(colorValue)
+                            if (webPageTab.htmlMetaThemeColor != color) {
+                                Timber.i("Theme color changed dynamically to: $colorValue (parsed as #${Integer.toHexString(color)})")
+                                webPageTab.htmlMetaThemeColor = color
+                                webBrowser.onTabChanged(webPageTab)
+                            }
+                        } catch (e: Exception) {
+                            Timber.w("Could not parse theme color: $colorValue - ${e.message}")
+                        }
+                    }
+                    msg.startsWith("fulguris: meta-color-scheme: ") -> {
+                        // Extract color-scheme value after the prefix
+                        val schemeValue = msg.substringAfter("fulguris: meta-color-scheme: ").trim()
+                        Timber.i("Color scheme changed dynamically to: $schemeValue")
+                        // TODO: Handle color-scheme changes (light, dark, light dark, etc.)
+                        // This could be used to automatically switch between light/dark themes
+                    }
+                }
+            }
+
+            // Here is what we got on HONOR Magic V2:
+            // - console.log: LOG
+            // - console.info: LOG
+            // - console.trace: LOG
+            // - console.group: LOG
+            // - console.error: ERROR
+            // - console.assert: ERROR
+            // - console.warn: WARNING
+            // - console.debug: TIP
+            // - console.timer: TIP
+
             when (messageLevel()) {
                 ConsoleMessage.MessageLevel.DEBUG -> Timber.tag(tag).d(log)
                 ConsoleMessage.MessageLevel.WARNING -> Timber.tag(tag).w(log)
