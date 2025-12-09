@@ -4,12 +4,13 @@
     xmlns:x="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <Preference
+    <x.Preference
         a:key="pref_version"
         a:title="@string/app_name"
         x:iconSpaceReserved="false"
         x:icon="@drawable/ic_lightning"
-        x:singleLineTitle="false">
+        x:singleLineTitle="false"
+        x:enableCopying="true">
 
         <intent
             a:action="android.intent.action.VIEW"
@@ -28,20 +29,21 @@
 
         </intent>
 
-    </Preference>
+    </x.Preference>
 
-    <Preference
+    <x.Preference
         a:key="@string/pref_key_webview"
         a:title="@string/agent_web_view"
         x:icon="@drawable/ic_web_outline"
-        x:singleLineTitle="false">
+        x:singleLineTitle="false"
+        x:enableCopying="true">
 
         <!--
         Launch WebView DevTools, see https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/developer-ui.md#launching-webview-devtools
         See also: https://chromium.googlesource.com/chromium/src/+/HEAD/android_webview/docs/webview-shell.md
         -->
         <intent a:action="com.android.webview.SHOW_DEV_UI" />
-    </Preference>
+    </x.Preference>
 
     <Preference
         a:title="@string/settings_title_introduction"
