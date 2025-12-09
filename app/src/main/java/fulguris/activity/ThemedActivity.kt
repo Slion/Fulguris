@@ -47,6 +47,7 @@ abstract class ThemedActivity : LocaleAwareActivity() {
             AppTheme.DARK -> R.style.Theme_App_Dark
             AppTheme.BLACK -> R.style.Theme_App_Black
             AppTheme.DEFAULT -> R.style.Theme_App_DayNight
+            AppTheme.WHITE -> R.style.Theme_App_White
         }
     }
 

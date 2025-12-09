@@ -264,10 +264,11 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
     }
 
     private fun AppTheme.toDisplayString(): String = getString(when (this) {
+        AppTheme.DEFAULT -> R.string.default_theme
         AppTheme.LIGHT -> R.string.light_theme
+        AppTheme.WHITE -> R.string.white_theme
         AppTheme.DARK -> R.string.dark_theme
         AppTheme.BLACK -> R.string.black_theme
-        AppTheme.DEFAULT -> R.string.default_theme
     })
 
     private fun showAccentPicker(summaryUpdater: SummaryUpdater) : Boolean {

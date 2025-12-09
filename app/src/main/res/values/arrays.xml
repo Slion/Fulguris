@@ -23,6 +23,7 @@
 
     <string-array name="themes">
         <item>@string/light_theme</item>
+        <item>@string/white_theme</item>
         <item>@string/dark_theme</item>
         <item>@string/black_theme</item>
     </string-array>

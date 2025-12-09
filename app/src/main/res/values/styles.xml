@@ -273,6 +273,185 @@ colorControlNormal:
     </style>
 
 
+    <!-- White theme -->
+    <style name="Theme.App.White.Base" parent="Theme.Material3.Light.NoActionBar">
+        <!--        Use this for larger preferences titles and summaries-->
+        <!--        <item name="android:textAppearanceListItem">@style/TextAppearance.Material3.TitleLarge</item>-->
+        <!--        <item name="android:textAppearanceListItemSecondary">@style/TextAppearance.Material3.BodyLarge</item>-->
+        <!--        Needed for preference dialogs such as in TermsActivity -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Slions</item>
+        <!-- Theme colors
+        See: https://material.io/develop/android/theming/color
+        -->
+        <!-- Material Design colors -->
+<!--=============================================================================================-->
+        <!--
+        Usage:
+        - Switch toggle knob when enabled
+        - Dialog background tint derived from it
+        - Dialog text button
+        - Offset background tint of toolbar and status bar in drawers and bottom sheet
+        -->
+        <item name="colorPrimary">@color/md_theme_white_primary</item>
+        <!--
+        Usage:
+        -->
+        <item name="colorOnPrimary">@color/md_theme_white_onPrimary</item>
+        <!--
+        Usage:
+        - Switch toggle background when enabled
+        -->
+        <item name="colorPrimaryContainer">@color/md_theme_white_primaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnPrimaryContainer">@color/md_theme_white_onPrimaryContainer</item>
+        <!--
+        Usage:
+        - List card view current item highlight and checked icon tint
+        - Settings:
+            - Category titles
+        - Dialog:
+            - Current radio button
+        - Find in page text field highlight when selected
+        - Selected checkbox tick background in tab menu
+        -->
+        <item name="colorSecondary">@color/md_theme_white_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_white_onSecondary</item>
+        <!-- ? -->
+        <item name="colorSecondaryContainer">@color/md_theme_white_secondaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnSecondaryContainer">@color/md_theme_white_onSecondaryContainer</item>
+        <!-- ? -->
+        <item name="colorTertiary">@color/md_theme_white_tertiary</item>
+        <!-- ? -->
+        <item name="colorOnTertiary">@color/md_theme_white_onTertiary</item>
+        <!-- ? -->
+        <item name="colorTertiaryContainer">@color/md_theme_white_tertiaryContainer</item>
+        <!-- ? -->
+        <item name="colorOnTertiaryContainer">@color/md_theme_white_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_white_error</item>
+        <item name="colorErrorContainer">@color/md_theme_white_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_white_onError</item>
+        <!-- ? -->
+        <item name="colorOnErrorContainer">@color/md_theme_white_onErrorContainer</item>
+        <!--
+        Usage:
+        - Settings background
+        - Settings status bar background
+        - Tab list background (drawers and bottom sheet)
+        -->
+        <item name="android:colorBackground">@color/md_theme_white_background</item>
+        <!-- ? -->
+        <item name="colorOnBackground">@color/md_theme_white_onBackground</item>
+        <!--
+        Usage:
+        - Tab list toolbar background
+        - Session list background
+        - Menus background
+        - Settings top bar
+        -->
+        <item name="colorSurface">@color/md_theme_white_surface</item>
+        <!--
+        Usage:
+        - Settings dialog title
+        - Disabled switch toggle knob
+        -->
+        <item name="colorOnSurface">@color/md_theme_white_onSurface</item>
+        <!--
+        Usage:
+        - Card view background, tabs and sessions
+        -->
+        <item name="colorSurfaceVariant">@color/md_theme_white_surfaceVariant</item>
+        <!--
+        Settings:
+        - Dialog radio button text
+        -->
+        <item name="colorOnSurfaceVariant">@color/md_theme_white_onSurfaceVariant</item>
+        <!--
+        Usage:
+        - Disabled switch toggle knob background
+        -->
+        <item name="colorOutline">@color/md_theme_white_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_white_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_white_inverseOnSurface</item>
+        <!--
+        Usage:
+        - Snackbar background
+        -->
+        <item name="colorSurfaceInverse">@color/md_theme_white_inverseSurface</item>
+        <!--
+        Usage:
+        - Snackbar action text
+        -->
+        <item name="colorPrimaryInverse">@color/md_theme_white_inversePrimary</item>
+
+        <!-- Fixed Colors (for accessibility) -->
+        <item name="colorPrimaryFixed">@color/md_theme_white_primaryContainer</item>
+        <item name="colorOnPrimaryFixed">@color/md_theme_white_onPrimaryContainer</item>
+        <item name="colorPrimaryFixedDim">@color/md_theme_white_primary</item>
+        <item name="colorOnPrimaryFixedVariant">@color/md_theme_white_onPrimary</item>
+        <item name="colorSecondaryFixed">@color/md_theme_white_secondaryContainer</item>
+        <item name="colorOnSecondaryFixed">@color/md_theme_white_onSecondaryContainer</item>
+        <item name="colorSecondaryFixedDim">@color/md_theme_white_secondary</item>
+        <item name="colorOnSecondaryFixedVariant">@color/md_theme_white_onSecondary</item>
+        <item name="colorTertiaryFixed">@color/md_theme_white_tertiaryContainer</item>
+        <item name="colorOnTertiaryFixed">@color/md_theme_white_onTertiaryContainer</item>
+        <item name="colorTertiaryFixedDim">@color/md_theme_white_tertiary</item>
+        <item name="colorOnTertiaryFixedVariant">@color/md_theme_white_onTertiary</item>
+
+        <!-- Surface Container Colors -->
+        <item name="colorSurfaceDim">@color/md_theme_white_surfaceVariant</item>
+        <item name="colorSurfaceBright">@color/md_theme_white_surface</item>
+        <item name="colorSurfaceContainerLowest">@color/md_theme_white_surface</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_white_surface</item>
+        <item name="colorSurfaceContainer">@color/md_theme_white_surfaceVariant</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_white_surfaceVariant</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_white_surfaceVariant</item>
+
+<!--=============================================================================================-->
+
+        <!-- Icons color -->
+<!--        <item name="appColorControlEnabled">@color/md_grey_650</item>-->
+<!--        <item name="appColorControlSelected">?attr/colorOnPrimary</item>-->
+<!--        <item name="appColorControlDisabled">@color/md_grey_400</item>-->
+<!--        <item name="colorControlNormal">?attr/colorOnSurface</item>-->
+        <!-- Fix dialog issues -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
+        <!-- Override AppBarLayout background color -->
+<!--        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout.Light</item>-->
+        <!-- Override MaterialCardView styles -->
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        <!-- Override BottomSheetDialog styles -->
+<!--        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>-->
+        <!-- Shapes -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+        <!-- Menu background -->
+        <item name="popupMenuBackground">@drawable/popup_menu_background</item>
+
+        <!-- Legacy -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+
+        <item name="android:windowDisablePreview">false</item>
+        <!-- Make status bar transparent so that it looks better with drawers -->
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <!-- Needed until we remove them from our icons SVG -->
+        <item name="autoCompleteTitleColor">@color/black</item>
+        <item name="autoCompleteUrlColor">@color/hint_text_light_theme</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- Needed for full screen material design bottom sheets -->
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="enableEdgeToEdge">true</item>
+
+<!--        <item name="android:windowFullscreen">true</item>-->
+
+    </style>
+
+
     <!-- Dark theme -->
     <style name="Theme.App.Dark.Base" parent="Theme.Material3.Dark.NoActionBar">
         <!--        Use this for larger preferences titles and summaries-->
@@ -676,6 +855,9 @@ colorControlNormal:
     </style>
 
     <style name="Theme.App.Light" parent="Theme.App.Light.Base">
+    </style>
+
+    <style name="Theme.App.White" parent="Theme.App.White.Base">
     </style>
 
     <style name="Theme.App.Dark" parent="Theme.App.Dark.Base">

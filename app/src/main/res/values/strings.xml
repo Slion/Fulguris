@@ -372,6 +372,7 @@
     <string name="light_theme">Light</string>
     <string name="dark_theme">Dark</string>
     <string name="black_theme">Black</string>
+    <string name="white_theme">White</string>
     <string name="default_theme">@string/agent_default</string>
     <string name="folder">Folder name</string>
     <string name="action_folder">Folder</string>

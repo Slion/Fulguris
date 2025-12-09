@@ -250,6 +250,9 @@ class UserPreferences @Inject constructor(
      */
     var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.DEFAULT)
 
+    /**
+     * Unused
+     */
     var useAccent by preferences.enumPreference(R.string.pref_key_accent, AccentTheme.DEFAULT_ACCENT)
 
     /**

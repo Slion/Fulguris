@@ -7,8 +7,9 @@ import fulguris.settings.preferences.IntEnum
  */
 enum class AppTheme(override val value: Int) :
     IntEnum {
-    LIGHT(0),
-    DARK(1),
-    BLACK(2),
-    DEFAULT(3)
+    DEFAULT(0),
+    LIGHT(1),
+    WHITE(2),
+    DARK(3),
+    BLACK(3),
 }
