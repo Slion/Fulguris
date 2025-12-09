@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Црна статусна трака</string>
     <string name="tabs">Језичци</string>
     <string name="theme">Тема</string>
-    <string name="light_theme">Светла</string>
-    <string name="dark_theme">Тамна</string>
-    <string name="black_theme">Црна (АМОЛЕД)</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatski</string>
+    <string name="theme_light">Светла</string>
+    <string name="theme_white">Bela</string>
+    <string name="theme_dark">Тамна</string>
+    <string name="theme_black">Црна (АМОЛЕД)</string>
     <string name="folder">Назив фасцикле</string>
     <string name="action_folder">Фасцикла</string>
     <string name="title_rename_folder">Преименуј фасциклу</string>

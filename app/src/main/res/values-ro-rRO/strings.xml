@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Bară de stare neagră</string>
     <string name="tabs">File</string>
     <string name="theme">Temă</string>
-    <string name="light_theme">Deschis</string>
-    <string name="dark_theme">Întunecat</string>
-    <string name="black_theme">Negru</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automat</string>
+    <string name="theme_light">Deschis</string>
+    <string name="theme_white">Alb</string>
+    <string name="theme_dark">Întunecat</string>
+    <string name="theme_black">Negru</string>
     <string name="folder">Nume folder</string>
     <string name="action_folder">Dosar</string>
     <string name="title_rename_folder">Redenumește folder</string>

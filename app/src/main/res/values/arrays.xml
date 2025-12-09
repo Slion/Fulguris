@@ -22,10 +22,10 @@
     </string-array>
 
     <string-array name="themes">
-        <item>@string/light_theme</item>
-        <item>@string/white_theme</item>
-        <item>@string/dark_theme</item>
-        <item>@string/black_theme</item>
+        <item>@string/theme_light</item>
+        <item>@string/theme_white</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_black</item>
     </string-array>
 
     <string-array name="new_tab_positions">

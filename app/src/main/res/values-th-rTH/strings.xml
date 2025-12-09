@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">แถบสถานะสีดำ</string>
     <string name="tabs">แท็บ</string>
     <string name="theme">ธีม</string>
-    <string name="light_theme">สว่าง</string>
-    <string name="dark_theme">มืด</string>
-    <string name="black_theme">ดำ</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">อัตโนมัติ</string>
+    <string name="theme_light">สว่าง</string>
+    <string name="theme_white">ขาว</string>
+    <string name="theme_dark">มืด</string>
+    <string name="theme_black">ดำ</string>
     <string name="folder">ชื่อโฟลเดอร์</string>
     <string name="action_folder">โฟลเดอร์</string>
     <string name="title_rename_folder">เปลี่ยนชื่อโฟลเดอร์</string>

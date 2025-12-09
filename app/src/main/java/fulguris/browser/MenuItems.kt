@@ -197,7 +197,7 @@ object MenuItems {
         ),
         MenuItemId.DarkMode to MenuItem(
             id = MenuItemId.DarkMode,
-            labelId = R.string.dark_theme,
+            labelId = R.string.theme_dark,
             iconId = R.drawable.ic_dark_mode,
             viewId = R.id.menuItemDarkMode,
             availableInMainMenu = true,

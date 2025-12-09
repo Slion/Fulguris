@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Musta tilapalkki</string>
     <string name="tabs">Välilehdet</string>
     <string name="theme">Teema</string>
-    <string name="light_theme">Vaalea</string>
-    <string name="dark_theme">Tumma</string>
-    <string name="black_theme">Musta</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automaattinen</string>
+    <string name="theme_light">Vaalea</string>
+    <string name="theme_white">Valkoinen</string>
+    <string name="theme_dark">Tumma</string>
+    <string name="theme_black">Musta</string>
     <string name="folder">Kansio</string>
     <string name="action_folder">Kansio</string>
     <string name="title_rename_folder">Nimeä kansio uudelleen</string>

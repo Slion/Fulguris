@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Černá stavová lišta</string>
     <string name="tabs">Karty</string>
     <string name="theme">Motiv</string>
-    <string name="light_theme">Světlý</string>
-    <string name="dark_theme">Tmavý</string>
-    <string name="black_theme">Černý</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automaticky</string>
+    <string name="theme_light">Světlý</string>
+    <string name="theme_white">Bílá</string>
+    <string name="theme_dark">Tmavý</string>
+    <string name="theme_black">Černý</string>
     <string name="folder">Název složky</string>
     <string name="action_folder">Složka</string>
     <string name="title_rename_folder">Přejmenovat složku</string>

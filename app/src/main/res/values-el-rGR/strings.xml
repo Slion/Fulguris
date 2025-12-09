@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Μαύρη γραμμή κατάστασης</string>
     <string name="tabs">Καρτέλες</string>
     <string name="theme">Θέμα</string>
-    <string name="light_theme">Φωτεινό</string>
-    <string name="dark_theme">Σκοτεινό</string>
-    <string name="black_theme">Μαύρο</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Αυτόματο</string>
+    <string name="theme_light">Φωτεινό</string>
+    <string name="theme_white">Λευκό</string>
+    <string name="theme_dark">Σκοτεινό</string>
+    <string name="theme_black">Μαύρο</string>
     <string name="folder">Όνομα φακέλου</string>
     <string name="action_folder">Φάκελος</string>
     <string name="title_rename_folder">Μετονομασία φακέλου</string>

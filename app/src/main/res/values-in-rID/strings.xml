@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Hitamkan status bar</string>
     <string name="tabs">Tab</string>
     <string name="theme">Tema</string>
-    <string name="light_theme">Terang</string>
-    <string name="dark_theme">Gelap</string>
-    <string name="black_theme">Hitam</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Otomatis</string>
+    <string name="theme_light">Terang</string>
+    <string name="theme_white">Putih</string>
+    <string name="theme_dark">Gelap</string>
+    <string name="theme_black">Hitam</string>
     <string name="folder">Nama folder</string>
     <string name="action_folder">Folder</string>
     <string name="title_rename_folder">Ubah nama folder</string>

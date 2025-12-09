@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Thanh trạng thái màu đen</string>
     <string name="tabs">Các tab</string>
     <string name="theme">Chủ đề</string>
-    <string name="light_theme">Sáng</string>
-    <string name="dark_theme">Tối</string>
-    <string name="black_theme">Đen</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Tự động</string>
+    <string name="theme_light">Sáng</string>
+    <string name="theme_white">Trắng</string>
+    <string name="theme_dark">Tối</string>
+    <string name="theme_black">Đen</string>
     <string name="folder">Tên thư mục</string>
     <string name="action_folder">Thư mục</string>
     <string name="title_rename_folder">Đổi tên thư mục</string>

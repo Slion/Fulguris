@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Barra de estado escura</string>
     <string name="tabs">Separadores</string>
     <string name="theme">Tema</string>
-    <string name="light_theme">Claro</string>
-    <string name="dark_theme">Escuro</string>
-    <string name="black_theme">Preto</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automático</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_white">Branco</string>
+    <string name="theme_dark">Escuro</string>
+    <string name="theme_black">Preto</string>
     <string name="folder">Nome da pasta</string>
     <string name="action_folder">Pasta</string>
     <string name="title_rename_folder">Mudar nome da pasta</string>

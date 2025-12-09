@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Barra de estado negra</string>
     <string name="tabs">Pestañas</string>
     <string name="theme">Tema de la app</string>
-    <string name="light_theme">Tema claro</string>
-    <string name="dark_theme">Tema oscuro</string>
-    <string name="black_theme">Tema negro (AMOLED)</string>
-    <string name="default_theme">Por defecto</string>
+    <string name="theme_default">Automático</string>
+    <string name="theme_light">Tema claro</string>
+    <string name="theme_white">Blanco</string>
+    <string name="theme_dark">Tema oscuro</string>
+    <string name="theme_black">Tema negro (AMOLED)</string>
     <string name="folder">Nombre de la carpeta</string>
     <string name="action_folder">Carpeta</string>
     <string name="title_rename_folder">Renombrar carpeta</string>

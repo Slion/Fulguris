@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Barre de statut noire</string>
     <string name="tabs">Onglets</string>
     <string name="theme">Thème</string>
-    <string name="light_theme">Clair</string>
-    <string name="dark_theme">Sombre</string>
-    <string name="black_theme">Noir</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatique</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_white">Blanc</string>
+    <string name="theme_dark">Sombre</string>
+    <string name="theme_black">Noir</string>
     <string name="folder">Nom du dossier</string>
     <string name="action_folder">Dossier</string>
     <string name="title_rename_folder">Renommer le dossier</string>

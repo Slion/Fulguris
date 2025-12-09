@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">ステータスバーを暗色にする</string>
     <string name="tabs">タブ</string>
     <string name="theme">アプリのテーマ</string>
-    <string name="light_theme">ライト</string>
-    <string name="dark_theme">ダーク</string>
-    <string name="black_theme">ブラック (AMOLED)</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">自動</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_white">白</string>
+    <string name="theme_dark">ダーク</string>
+    <string name="theme_black">ブラック (AMOLED)</string>
     <string name="folder">フォルダ名</string>
     <string name="action_folder">フォルダ</string>
     <string name="title_rename_folder">フォルダ名の変更</string>

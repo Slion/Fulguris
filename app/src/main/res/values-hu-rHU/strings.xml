@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Fekete értesítési sáv</string>
     <string name="tabs">Lapok</string>
     <string name="theme">Alkalmazás Téma</string>
-    <string name="light_theme">Világos Téma</string>
-    <string name="dark_theme">Sötét téma</string>
-    <string name="black_theme">Fekete Téma (AMOLED)</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatikus</string>
+    <string name="theme_light">Világos Téma</string>
+    <string name="theme_white">Fehér</string>
+    <string name="theme_dark">Sötét téma</string>
+    <string name="theme_black">Fekete Téma (AMOLED)</string>
     <string name="folder">Mappanév</string>
     <string name="action_folder">Mappa</string>
     <string name="title_rename_folder">Mappa átnevezése</string>

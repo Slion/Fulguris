@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Черная строка состояния</string>
     <string name="tabs">Вкладки</string>
     <string name="theme">Тема приложения</string>
-    <string name="light_theme">Светлая</string>
-    <string name="dark_theme">Тёмная</string>
-    <string name="black_theme">Чёрная</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Автоматически</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_white">Белая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="theme_black">Чёрная</string>
     <string name="folder">Имя папки</string>
     <string name="action_folder">Папка</string>
     <string name="title_rename_folder">Переименовать папку</string>

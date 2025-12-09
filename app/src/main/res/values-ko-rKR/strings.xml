@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">검정 상태표시줄</string>
     <string name="tabs">탭</string>
     <string name="theme">앱 테마</string>
-    <string name="light_theme">밝은 테마</string>
-    <string name="dark_theme">어두운 테마 사용</string>
-    <string name="black_theme">검정 테마 (AMOLED)</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">자동</string>
+    <string name="theme_light">밝은 테마</string>
+    <string name="theme_white">흰색</string>
+    <string name="theme_dark">어두운 테마 사용</string>
+    <string name="theme_black">검정 테마 (AMOLED)</string>
     <string name="folder">폴더 이름</string>
     <string name="action_folder">폴더</string>
     <string name="title_rename_folder">폴더 이름 바꾸기</string>

@@ -316,9 +316,11 @@
     <string name="settings_black_status_bar">काला स्टेटस बार</string>
     <string name="tabs">टैब</string>
     <string name="theme">थीम</string>
-    <string name="light_theme">लाइट</string>
-    <string name="dark_theme">डार्क</string>
-    <string name="black_theme">ब्लैक</string>
+    <string name="theme_default">स्वचालित</string>
+    <string name="theme_light">लाइट</string>
+    <string name="theme_white">सफ़ेद</string>
+    <string name="theme_dark">डार्क</string>
+    <string name="theme_black">ब्लैक</string>
     <string name="folder">फ़ोल्डर</string>
     <string name="action_folder">फ़ोल्डर</string>
     <string name="title_rename_folder">फ़ोल्डर का नाम बदलें</string>

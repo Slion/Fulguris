@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Czarny pasek stanu</string>
     <string name="tabs">Karty</string>
     <string name="theme">Motyw</string>
-    <string name="light_theme">Jasny</string>
-    <string name="dark_theme">Ciemny</string>
-    <string name="black_theme">Czarny</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatyczny</string>
+    <string name="theme_light">Jasny</string>
+    <string name="theme_white">Biały</string>
+    <string name="theme_dark">Ciemny</string>
+    <string name="theme_black">Czarny</string>
     <string name="folder">Nazwa folderu</string>
     <string name="action_folder">Folder</string>
     <string name="title_rename_folder">Zmień nazwę folderu</string>

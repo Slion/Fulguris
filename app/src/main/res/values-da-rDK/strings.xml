@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Sort statuslinje</string>
     <string name="tabs">Faner</string>
     <string name="theme">Tema</string>
-    <string name="light_theme">Lys</string>
-    <string name="dark_theme">Mørk</string>
-    <string name="black_theme">Sort</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatisk</string>
+    <string name="theme_light">Lys</string>
+    <string name="theme_white">Hvid</string>
+    <string name="theme_dark">Mørk</string>
+    <string name="theme_black">Sort</string>
     <string name="folder">Mappenavn</string>
     <string name="action_folder">Mappe</string>
     <string name="title_rename_folder">Omdøb mappe</string>

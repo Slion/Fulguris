@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Siyah durum çubuğu</string>
     <string name="tabs">Sekmeler</string>
     <string name="theme">Tema</string>
-    <string name="light_theme">Açık</string>
-    <string name="dark_theme">Koyu</string>
-    <string name="black_theme">Siyah</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Otomatik</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_white">Beyaz</string>
+    <string name="theme_dark">Koyu</string>
+    <string name="theme_black">Siyah</string>
     <string name="folder">Klasör adı</string>
     <string name="action_folder">Klasör</string>
     <string name="title_rename_folder">Klasörü yeniden adlandır</string>

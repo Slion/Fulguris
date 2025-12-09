@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">شريط حالة أسود</string>
     <string name="tabs">التبويبات</string>
     <string name="theme">السمة</string>
-    <string name="light_theme">فاتح</string>
-    <string name="dark_theme">داكن</string>
-    <string name="black_theme">أسود</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">تلقائي</string>
+    <string name="theme_light">فاتح</string>
+    <string name="theme_white">أبيض</string>
+    <string name="theme_dark">داكن</string>
+    <string name="theme_black">أسود</string>
     <string name="folder">اسم المجلد</string>
     <string name="action_folder">مجلد</string>
     <string name="title_rename_folder">إعادة تسمية المجلد</string>

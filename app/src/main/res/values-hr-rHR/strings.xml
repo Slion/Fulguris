@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Crna statusna traka</string>
     <string name="tabs">Jezici</string>
     <string name="theme">Tema</string>
-    <string name="light_theme">Svjetla</string>
-    <string name="dark_theme">Tamna</string>
-    <string name="black_theme">Crna (AMOLED)</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatski</string>
+    <string name="theme_light">Svjetla</string>
+    <string name="theme_white">Bijela</string>
+    <string name="theme_dark">Tamna</string>
+    <string name="theme_black">Crna (AMOLED)</string>
     <string name="folder">Ime mape</string>
     <string name="action_folder">Mapa</string>
     <string name="title_rename_folder">Preimenujte mapu</string>

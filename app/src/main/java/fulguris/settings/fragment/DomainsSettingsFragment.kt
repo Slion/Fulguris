@@ -246,7 +246,7 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         // Add default domain settings
         val prefDefault = x.Preference(requireContext())
         prefDefault.isSingleLineTitle = false
-        prefDefault.title = getString(R.string.default_theme)
+        prefDefault.title = getString(R.string.theme_default)
         prefDefault.summary = getString(R.string.settings_summary_default_domain_settings)
         prefDefault.breadcrumb = prefDefault.summary!!
         prefDefault.order = 5

@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Barra di stato nera</string>
     <string name="tabs">Schede</string>
     <string name="theme">Tema app</string>
-    <string name="light_theme">Chiaro</string>
-    <string name="dark_theme">Scuro</string>
-    <string name="black_theme">Nero (AMOLED)</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatico</string>
+    <string name="theme_light">Chiaro</string>
+    <string name="theme_white">Bianco</string>
+    <string name="theme_dark">Scuro</string>
+    <string name="theme_black">Nero (AMOLED)</string>
     <string name="folder">Nome cartella</string>
     <string name="action_folder">Cartella</string>
     <string name="title_rename_folder">Rinomina la cartella</string>

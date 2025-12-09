@@ -280,7 +280,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:button="@null"
-                        android:text="@string/dark_theme"
+                        android:text="@string/theme_dark"
                         android:gravity="center_vertical"
                         android:enabled="true"
                         app:drawableEndCompat="?android:attr/listChoiceIndicatorMultiple"

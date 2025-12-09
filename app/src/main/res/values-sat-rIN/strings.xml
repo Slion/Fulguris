@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">ᱦᱮᱸᱫᱮ ᱥᱴᱮᱴᱚᱥ ᱵᱟᱨ</string>
     <string name="tabs">ᱴᱮᱵᱽ ᱠᱚ</string>
     <string name="theme">ᱛᱷᱤᱢ</string>
-    <string name="light_theme">ᱪᱟᱸᱫᱚᱣᱟ</string>
-    <string name="dark_theme">ᱧᱩᱛ</string>
-    <string name="black_theme">ᱦᱮᱸᱫᱮ</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">ᱟᱡᱛᱮ</string>
+    <string name="theme_light">ᱪᱟᱸᱫᱚᱣᱟ</string>
+    <string name="theme_white">ᱯᱩᱸᱰ</string>
+    <string name="theme_dark">ᱧᱩᱛ</string>
+    <string name="theme_black">ᱦᱮᱸᱫᱮ</string>
     <string name="folder">ᱯᱷᱚᱞᱰᱚᱨ ᱧᱩᱛᱩᱢ</string>
     <string name="action_folder">ᱯᱷᱚᱞᱰᱚᱨ</string>
     <string name="title_rename_folder">ᱯᱷᱚᱞᱰᱚᱨ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ</string>

@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Чорна панель стану</string>
     <string name="tabs">Вкладки</string>
     <string name="theme">Тема</string>
-    <string name="light_theme">Світла</string>
-    <string name="dark_theme">Темна</string>
-    <string name="black_theme">Чорна</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Автоматично</string>
+    <string name="theme_light">Світла</string>
+    <string name="theme_white">Біла</string>
+    <string name="theme_dark">Темна</string>
+    <string name="theme_black">Чорна</string>
     <string name="folder">Назва теки</string>
     <string name="action_folder">Тека</string>
     <string name="title_rename_folder">Перейменувати теку</string>

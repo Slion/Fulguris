@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Schwarze Statusleiste</string>
     <string name="tabs">Tabs</string>
     <string name="theme">App-Design</string>
-    <string name="light_theme">Helles Design</string>
-    <string name="dark_theme">Dunkles Design</string>
-    <string name="black_theme">Schwarzes Design (AMOLED)</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatisch</string>
+    <string name="theme_light">Helles Design</string>
+    <string name="theme_white">Weiß</string>
+    <string name="theme_dark">Dunkles Design</string>
+    <string name="theme_black">Schwarzes Design (AMOLED)</string>
     <string name="folder">Ordnername</string>
     <string name="action_folder">Ordner</string>
     <string name="title_rename_folder">Ordner umbenennen</string>

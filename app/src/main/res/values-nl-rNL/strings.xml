@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Zwarte statusbalk</string>
     <string name="tabs">Tabbladen</string>
     <string name="theme">App thema</string>
-    <string name="light_theme">Licht thema</string>
-    <string name="dark_theme">Donker thema</string>
-    <string name="black_theme">Zwart Thema (AMOLED)</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatisch</string>
+    <string name="theme_light">Licht thema</string>
+    <string name="theme_white">Wit</string>
+    <string name="theme_dark">Donker thema</string>
+    <string name="theme_black">Zwart Thema (AMOLED)</string>
     <string name="folder">Map naam</string>
     <string name="action_folder">Map</string>
     <string name="title_rename_folder">Geef map naam</string>

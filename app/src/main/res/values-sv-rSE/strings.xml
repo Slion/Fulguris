@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">Svart statusfält</string>
     <string name="tabs">Flikar</string>
     <string name="theme">Tema</string>
-    <string name="light_theme">Ljus</string>
-    <string name="dark_theme">Mörk</string>
-    <string name="black_theme">Svart</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">Automatisk</string>
+    <string name="theme_light">Ljus</string>
+    <string name="theme_white">Vit</string>
+    <string name="theme_dark">Mörk</string>
+    <string name="theme_black">Svart</string>
     <string name="folder">Mapp namn</string>
     <string name="action_folder">Mapp</string>
     <string name="title_rename_folder">Byt namn på mapp</string>

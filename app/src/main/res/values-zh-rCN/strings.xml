@@ -347,10 +347,11 @@
     <string name="settings_black_status_bar">黑色状态栏</string>
     <string name="tabs">标签页</string>
     <string name="theme">应用主题</string>
-    <string name="light_theme">亮色</string>
-    <string name="dark_theme">暗色</string>
-    <string name="black_theme">黑色 (AMOLED)</string>
-    <string name="default_theme">@string/agent_default</string>
+    <string name="theme_default">自动</string>
+    <string name="theme_light">亮色</string>
+    <string name="theme_white">白色</string>
+    <string name="theme_dark">暗色</string>
+    <string name="theme_black">黑色 (AMOLED)</string>
     <string name="folder">文件夹名称</string>
     <string name="action_folder">文件夹</string>
     <string name="title_rename_folder">重命名文件夹</string>
