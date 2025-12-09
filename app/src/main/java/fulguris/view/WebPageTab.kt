@@ -868,10 +868,13 @@ class WebPageTab(
      * We get that state bundle either directly from our Web View,
      * or from our frozen tab initializer if ever our Web View was never loaded.
      */
-    private fun webViewState(): Bundle = latentTabInitializer?.tabModel?.webView
-        ?: Bundle(ClassLoader.getSystemClassLoader()).also {
-            webView?.saveState(it)
-        }
+    private fun webViewState(): Bundle {
+        // Use frozen bundle from latent tab initializer if available
+        latentTabInitializer?.tabModel?.webView?.let { return it }
+
+        // Otherwise save current WebView state
+        return Bundle(ClassLoader.getSystemClassLoader()).also { webView?.saveState(it) }
+    }
 
     /**
      *

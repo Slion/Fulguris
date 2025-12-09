@@ -235,10 +235,13 @@ class TabsManager @Inject constructor(
             list.add(newTab(activity, incognitoPageInitializer, NewTabPosition.END_OF_TAB_LIST))
         }
         else {
-            tryRestorePreviousTabs(activity).forEach {
+            val tabInitializers = tryRestorePreviousTabs(activity)
+
+            tabInitializers.forEach { initializer ->
                 try {
-                    list.add(newTab(activity, it, NewTabPosition.END_OF_TAB_LIST))
+                    list.add(newTab(activity, initializer, NewTabPosition.END_OF_TAB_LIST))
                 } catch (ex: Throwable) {
+                    Timber.e(ex, "Failed to create tab for ${initializer.url()}")
                     // That's a corrupted session file, can happen when importing garbage.
                     activity.snackbar(R.string.error_session_file_corrupted)
                 }
@@ -250,6 +253,7 @@ class TabsManager @Inject constructor(
             }
         }
 
+        Timber.d("initializeTabs: created ${list.size} tabs")
         finishInitialization()
 
         return list
@@ -261,28 +265,43 @@ class TabsManager @Inject constructor(
      */
     private fun loadSession(aFilename: String): MutableList<TabInitializer>
     {
+        Timber.d("loadSession: $aFilename")
         val bundle = fulguris.utils.FileUtils.readBundleFromStorage(application, aFilename)
 
         // Defensive. should have happened in the shutdown already
         savedRecentTabsIndices.clear()
         // Read saved current tab index if any
         bundle?.let{
-            it.getIntArray(RECENT_TAB_INDICES)?.toList()?.let { it1 -> savedRecentTabsIndices.addAll(it1) }
+            try {
+                it.getIntArray(RECENT_TAB_INDICES)?.toList()?.let { it1 -> savedRecentTabsIndices.addAll(it1) }
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to read recent tab indices")
+            }
         }
 
         val list = mutableListOf<TabInitializer>()
-        readSavedStateFromDisk(bundle).forEach {
-            list.add(if (it.url.isSpecialUrl()) {
-                tabInitializerForSpecialUrl(it.url)
-            } else {
-                FreezableBundleInitializer(it)
-            })
+        var tabModels = readSavedStateFromDisk(bundle)
+
+        // If normal loading failed or returned no tabs, try binary recovery
+        if (tabModels.isEmpty()) {
+            Timber.w("Normal loading failed, attempting binary recovery")
+            val recoveredTabs = fulguris.utils.SessionRecovery.recoverTabsFromSession(application, aFilename)
+            if (recoveredTabs.isNotEmpty()) {
+                Timber.i("Binary recovery found ${recoveredTabs.size} tabs")
+                tabModels = recoveredTabs.map { RecoveredTabModel(it.url, it.title) }.toMutableList()
+            }
+        }
+
+        tabModels.forEach {
+            list.add(if (it.url.isSpecialUrl()) tabInitializerForSpecialUrl(it.url) else FreezableBundleInitializer(it))
         }
 
         // Make sure we have at least one tab
         if (list.isEmpty()) {
             list.add(homePageInitializer)
         }
+
+        Timber.d("loadSession: ${list.size} tabs loaded")
         return list
     }
 
@@ -313,6 +332,7 @@ class TabsManager @Inject constructor(
         //throw Exception("Hi There!")
         // Check if we have a current session
         val currentSessionName = sessionsManager.currentSessionName()
+
         if (currentSessionName.isBlank()) {
             // No current session name meaning first load with version support
             // Add our default session
@@ -589,7 +609,7 @@ class TabsManager @Inject constructor(
      * Save current session including WebView tab states and recent tab list in the specified file.
      */
     private fun saveCurrentSession(aName: String) {
-        Timber.d("saveCurrentSession - $aName")
+        Timber.d("saveCurrentSession - $aName, ${tabList.size} tabs")
         val outState = Bundle(ClassLoader.getSystemClassLoader())
         tabList
             .withIndex()
@@ -646,15 +666,34 @@ class TabsManager @Inject constructor(
      *
      */
     private fun readSavedStateFromDisk(aBundle: Bundle?): MutableList<TabModel> {
+        if (aBundle == null) {
+            return mutableListOf()
+        }
+
+        // Accessing keySet() can throw BadParcelableException if bundle is corrupted
+        val tabKeys = try {
+            aBundle.keySet().filter { it.startsWith(TAB_KEY_PREFIX) }
+        } catch (e: Exception) {
+            Timber.e(e, "Bundle keySet() failed - data corrupted or incompatible")
+            return mutableListOf()
+        }
 
         val list = mutableListOf<TabModel>()
-        aBundle?.keySet()
-                ?.filter { it.startsWith(TAB_KEY_PREFIX) }
-                ?.mapNotNull { bundleKey ->
-                    aBundle.getBundle(bundleKey)?.let { list.add(TabModelFromBundle(it))}
+        tabKeys.forEach { bundleKey ->
+            try {
+                aBundle.getBundle(bundleKey)?.let { tabBundle ->
+                    val tabModel = TabModelFromBundle(tabBundle)
+                    // Only add tabs that have a valid URL
+                    if (tabModel.url.isNotEmpty()) {
+                        list.add(tabModel)
+                    }
                 }
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to restore tab '$bundleKey'")
+            }
+        }
 
-        return list;
+        return list
     }
 
 

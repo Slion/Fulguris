@@ -123,13 +123,24 @@ public final class FileUtils {
             parcel.unmarshall(data, 0, data.length);
             parcel.setDataPosition(0);
             Bundle out = parcel.readBundle(app.getClassLoader());
-            out.putAll(out);
             parcel.recycle();
-            return out;
+
+            if (out == null) {
+                return null;
+            }
+
+            // Force deserialization by accessing keySet() - can trigger BadParcelableException
+            // If this fails, the bundle is unusable; caller should attempt binary recovery
+            try {
+                out.keySet();
+                return out;
+            } catch (Exception e) {
+                Timber.w(e, "Bundle deserialization failed for '%s' - may need binary recovery", name);
+                return null;
+            }
         } catch (Exception e) {
-            Timber.e(e,"Unable to read bundle from storage");
+            Timber.e(e,"Unable to read bundle from storage: %s", name);
         } finally {
-            //noinspection ResultOfMethodCallIgnored
             Utils.close(inputStream);
         }
         return null;

@@ -88,19 +88,77 @@ open class TabModel (
 
 /**
  * Used to create a Tab Model from a bundle.
+ * When WebView is upgraded, the internal bundle state may become incompatible.
+ * We use defensive parsing to prevent losing tabs when this happens.
  */
-class TabModelFromBundle (
-        var bundle : Bundle
+class TabModelFromBundle private constructor(
+    val bundle: Bundle,
+    extractedUrl: String,
+    extractedTitle: String,
+    extractedDesktopMode: Boolean,
+    extractedDarkMode: Boolean,
+    extractedFavicon: Bitmap,
+    extractedSearchQuery: String,
+    extractedSearchActive: Boolean,
+    extractedWebView: Bundle?
 ): TabModel(
-        bundle.getString(URL_KEY)?:"",
-        bundle.getString(TAB_TITLE_KEY)?:"",
-        bundle.getBoolean(KEY_DESKTOP_MODE),
-        bundle.getBoolean(KEY_DARK_MODE),
-        bundle.getByteArray(TAB_FAVICON_KEY)?.let{BitmapFactory.decodeByteArray(it, 0, it.size)}
-            // That was needed for smooth transition was previous model where favicon could be null
-            // Past that transition it is just defensive code and should not execute anymore
-            ?:app.createDefaultFavicon(),
-        bundle.getString(KEY_SEARCH_QUERY)?:"",
-        bundle.getBoolean(KEY_SEARCH_ACTIVE),
-        bundle.getBundle(WEB_VIEW_KEY)
+    extractedUrl,
+    extractedTitle,
+    extractedDesktopMode,
+    extractedDarkMode,
+    extractedFavicon,
+    extractedSearchQuery,
+    extractedSearchActive,
+    extractedWebView
+) {
+    companion object {
+        /** Helper to safely extract a value from bundle with fallback */
+        private inline fun <T> Bundle.safeGet(key: String, default: T, extractor: Bundle.(String) -> T?): T =
+            try { extractor(key) ?: default } catch (_: Exception) { default }
+
+        /**
+         * Factory method to safely create TabModelFromBundle.
+         * Handles potential deserialization errors from WebView upgrade.
+         */
+        operator fun invoke(bundle: Bundle): TabModelFromBundle {
+            val url = bundle.safeGet(URL_KEY, "") { getString(it) }
+            val title = bundle.safeGet(TAB_TITLE_KEY, "") { getString(it) }
+            val desktopMode = bundle.safeGet(KEY_DESKTOP_MODE, false) { getBoolean(it) }
+            val darkMode = bundle.safeGet(KEY_DARK_MODE, false) { getBoolean(it) }
+            val searchQuery = bundle.safeGet(KEY_SEARCH_QUERY, "") { getString(it) }
+            val searchActive = bundle.safeGet(KEY_SEARCH_ACTIVE, false) { getBoolean(it) }
+
+            val favicon = try {
+                bundle.getByteArray(TAB_FAVICON_KEY)?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+                    ?: app.createDefaultFavicon()
+            } catch (_: Exception) {
+                app.createDefaultFavicon()
+            }
+
+            // WebView bundle extraction can fail after WebView upgrade - fall back to URL loading
+            val webViewBundle = bundle.safeGet(WEB_VIEW_KEY, null) { getBundle(it) }
+
+            return TabModelFromBundle(bundle, url, title, desktopMode, darkMode, favicon, searchQuery, searchActive, webViewBundle)
+        }
+    }
+}
+
+/**
+ * A minimal TabModel created from binary recovery.
+ * Used when normal bundle deserialization fails (e.g., after WebView upgrade).
+ * Only URL and title are recovered; WebView state is not available.
+ */
+class RecoveredTabModel(
+    url: String,
+    title: String
+) : TabModel(
+    url = url,
+    title = title,
+    desktopMode = false,
+    darkMode = false,
+    favicon = app.createDefaultFavicon(),
+    searchQuery = "",
+    searchActive = false,
+    webView = null // No WebView state - will reload URL
 )
+
