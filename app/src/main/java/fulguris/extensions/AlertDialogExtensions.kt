@@ -14,12 +14,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 fun <T> MaterialAlertDialogBuilder.withSingleChoiceItems(
     items: List<Pair<T, String>>,
     checkedItem: T,
-    onClick: (T) -> Unit
+    onClick: (dialog: DialogInterface, T) -> Unit
 ) {
     val checkedIndex = items.map(Pair<T, String>::first).indexOf(checkedItem)
     val titles = items.map(Pair<T, String>::second).toTypedArray()
-    setSingleChoiceItems(titles, checkedIndex) { _, which ->
-        onClick(items[which].first)
+    setSingleChoiceItems(titles, checkedIndex) { dialog, which ->
+        onClick(dialog, items[which].first)
     }
 }
 

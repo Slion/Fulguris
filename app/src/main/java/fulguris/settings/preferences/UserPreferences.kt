@@ -251,6 +251,12 @@ class UserPreferences @Inject constructor(
     var useTheme by preferences.enumPreference(R.string.pref_key_theme, AppTheme.DEFAULT)
 
     /**
+     * Internal flag to track if theme picker dialog should be reopened after activity recreation.
+     * Used to provide live theme preview while keeping the dialog open.
+     */
+    var openThemePicker by preferences.booleanPreference(R.string.pref_key_open_theme_picker, false)
+
+    /**
      * Unused
      */
     var useAccent by preferences.enumPreference(R.string.pref_key_accent, AccentTheme.DEFAULT_ACCENT)

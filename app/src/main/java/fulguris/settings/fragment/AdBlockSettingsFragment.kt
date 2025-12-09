@@ -104,9 +104,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                         activity?.let { MaterialAlertDialogBuilder(it) }?.apply {
                             setTitle(R.string.blocklist_update)
                             val values = AbpUpdateMode.values().map { Pair(it, it.toDisplayString()) }
-                            withSingleChoiceItems(values, userPreferences.blockListAutoUpdate) {
-                                userPreferences.blockListAutoUpdate = it
-                                summaryUpdater.updateSummary(it.toDisplayString())
+                            withSingleChoiceItems(values, userPreferences.blockListAutoUpdate) { _, item ->
+                                userPreferences.blockListAutoUpdate = item
+                                summaryUpdater.updateSummary(item.toDisplayString())
                             }
                             setPositiveButton(resources.getString(R.string.action_ok), null)
                         }?.launch()
@@ -129,9 +129,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             Pair(7, resources.getString(R.string.block_remote_frequency_weekly)),
                             Pair(30, resources.getString(R.string.block_remote_frequency_monthly))
                         )
-                        withSingleChoiceItems(values, userPreferences.blockListAutoUpdateFrequency) {
-                            userPreferences.blockListAutoUpdateFrequency = it
-                            summaryUpdater.updateSummary(it.toUpdateFrequency())
+                        withSingleChoiceItems(values, userPreferences.blockListAutoUpdateFrequency) { _, item ->
+                            userPreferences.blockListAutoUpdateFrequency = item
+                            summaryUpdater.updateSummary(item.toUpdateFrequency())
                         }
                         setPositiveButton(R.string.action_ok, null)
                         setNeutralButton(R.string.blocklist_update_now) {_,_ ->
@@ -157,9 +157,9 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
                             Pair(1, resources.getString(R.string.modify_filters_not_for_main_frame)),
                             Pair(2, resources.getString(R.string.enable))
                         )
-                        withSingleChoiceItems(values, userPreferences.modifyFilters) {
-                            userPreferences.modifyFilters = it
-                            summaryUpdater.updateSummary(it.toModifySetting())
+                        withSingleChoiceItems(values, userPreferences.modifyFilters) { _, item ->
+                            userPreferences.modifyFilters = item
+                            summaryUpdater.updateSummary(item.toModifySetting())
                         }
                         setPositiveButton(R.string.action_ok, null)
                     }?.launch()

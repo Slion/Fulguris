@@ -52,7 +52,6 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-
         catConfigurations = findPreference<x.PreferenceCategory>(resources.getString(R.string.pref_key_configurations))?.apply { isOrderingAsAdded = true }
 
         //injector.inject(this)
@@ -93,12 +92,27 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
 
     }
 
+    @SuppressLint("RestrictedApi")
+    override fun onResume() {
+        super.onResume()
+
+        // Reopen theme picker dialog after activity recreation
+        if (userPreferences.openThemePicker) {
+            userPreferences.openThemePicker = false
+            // Post to ensure view is fully initialized
+            view?.post {
+                findPreference<Preference>(getString(R.string.pref_key_theme))?.performClick()
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Add specific configurations
         populateConfigurations()
     }
+
 
     /**
      * Create an empty configuration file and repopulate our configs
@@ -186,10 +200,9 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
             setTitle(resources.getString(R.string.rendering_mode))
 
             val values = RenderingMode.values().map { Pair(it, it.toDisplayString()) }
-            withSingleChoiceItems(values, userPreferences.renderingMode) {
+            withSingleChoiceItems(values, userPreferences.renderingMode) { _, it ->
                 userPreferences.renderingMode = it
                 summaryUpdater.updateSummary(it.toDisplayString())
-
             }
             setPositiveButton(resources.getString(R.string.action_ok), null)
         }?.launch()
@@ -239,24 +252,29 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
      * Shows the dialog which allows the user to choose the browser's theme.
      */
     private fun showThemePicker(summaryUpdater: SummaryUpdater) : Boolean {
-        val currentTheme = userPreferences.useTheme
         MaterialAlertDialogBuilder(activity as Activity).apply {
             setTitle(resources.getString(R.string.theme))
             val values = AppTheme.values().map { Pair(it, it.toDisplayString()) }
-            withSingleChoiceItems(values, userPreferences.useTheme) {
-                userPreferences.useTheme = it
-                summaryUpdater.updateSummary(it.toDisplayString())
-            }
-            setPositiveButton(resources.getString(R.string.action_ok)) { _, _ ->
-                if (currentTheme != userPreferences.useTheme) {
-                    // Restart our activity so that new theme is applied
+            withSingleChoiceItems(values, userPreferences.useTheme) { dialog, it ->
+                // If our theme.actually changed
+                if (it != userPreferences.useTheme) {
+                    userPreferences.useTheme = it
+                    summaryUpdater.updateSummary(it.toDisplayString())
+                    // Set flag to reopen dialog after activity recreation
+                    userPreferences.openThemePicker = true
+                    // Dismiss dialog otherwise we get an ugly glitch
+                    dialog.dismiss()
+                    // Apply theme immediately by recreating activity
                     requireActivity().recreate()
                 }
             }
+            setPositiveButton(resources.getString(R.string.action_ok)) { _, _ ->
+                // User confirmed - clear flag
+                userPreferences.openThemePicker = false
+            }
             setOnCancelListener {
-                if (currentTheme != userPreferences.useTheme) {
-                    (activity as Activity).onBackPressed()
-                }
+                // User cancelled - clear flag
+                userPreferences.openThemePicker = false
             }
         }.launch()
 
@@ -276,7 +294,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
         MaterialAlertDialogBuilder(activity as AppCompatActivity).apply {
             setTitle(resources.getString(R.string.accent_color))
             val values = AccentTheme.values().map { Pair(it, it.toDisplayString()) }
-            withSingleChoiceItems(values, userPreferences.useAccent) {
+            withSingleChoiceItems(values, userPreferences.useAccent) { _, it ->
                 userPreferences.useAccent = it
                 summaryUpdater.updateSummary(it.toDisplayString())
             }
@@ -339,6 +357,7 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
         const val MAX_BROWSER_TEXT_SIZE = 200
         const val DEFAULT_BROWSER_TEXT_SIZE = 100
         const val MIN_BROWSER_TEXT_SIZE = 50
+
 
         private fun getTextSize(size: Int): Float {
             var ratio : Float = (XX_LARGE - X_SMALL) / (MAX_BROWSER_TEXT_SIZE - MIN_BROWSER_TEXT_SIZE)

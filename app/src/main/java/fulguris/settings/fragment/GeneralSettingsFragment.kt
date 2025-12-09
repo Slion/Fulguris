@@ -265,8 +265,8 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     SuggestionNumChoice.TEN -> stringArray[8]
                 })
             }
-            withSingleChoiceItems(values, userPreferences.suggestionChoice) {
-                updateSearchNum(it, summaryUpdater)
+            withSingleChoiceItems(values, userPreferences.suggestionChoice) { _, item ->
+                updateSearchNum(item, summaryUpdater)
             }
             setPositiveButton(R.string.action_ok, null)
         }
