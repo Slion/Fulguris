@@ -116,9 +116,16 @@ class WebPageTab(
     var htmlMetaThemeColor: Int = KHtmlMetaThemeColorInvalid
 
     /**
-     * Define the number of times we should try to fetch HTML meta tehme-color
+     * Flag to indicate if we should fetch HTML meta theme-color and color-scheme.
+     * Set to false after first extraction attempt.
      */
-    var fetchMetaThemeColorTries = KFetchMetaThemeColorTries
+    var shouldFetchMetaTags = true
+
+    /**
+     * Optional callback to execute after the next page finishes loading or is cancelled.
+     * Will be executed once and then cleared automatically.
+     */
+    internal var onLoadCompleteCallback: (() -> Unit)? = null
 
     /**
      * A tab initializer that should be run when the view is first attached.
@@ -145,6 +152,11 @@ class WebPageTab(
      * The URL we tried to load
      */
     private var iTargetUrl: Uri = Uri.parse("")
+
+    /**
+     * Public getter for the target URL that was attempted to load
+     */
+    val targetUrl: Uri get() = iTargetUrl
 
     private val webBrowser: WebBrowser
     private lateinit var gestureDetector: GestureDetector
@@ -846,9 +858,16 @@ class WebPageTab(
 
     /**
      * Notify the WebView to stop the current load.
+     * Executes callback if present since this is an explicit user action.
      */
     fun stopLoading() {
         webView?.stopLoading()
+
+        // SL: I don't think we need this here as onPageFinished is called when we stop loading
+        // Execute callback since load was explicitly stopped
+        // This ensures proper cleanup (e.g., restoring cache mode after reload)
+        //onLoadCompleteCallback?.invoke()
+        //onLoadCompleteCallback = null
     }
     
     /**
@@ -993,16 +1012,32 @@ class WebPageTab(
 
     /**
      * Tells the WebView to reload the current page.
+     * Forces a fresh fetch from the server bypassing cache.
+     * Cache mode is temporarily changed and will be restored after page finishes loading
+     * or if the load is cancelled.
      * If the proxy settings are not ready then the
      * this method will not have an affect as the
      * proxy must start before the load occurs.
      */
-    fun reload() {
+    fun reload(aForce: Boolean = false) {
+        webView?.let { wv ->
 
-        // Handle the case where we display error page for instance
-        loadUrl(url)
+            if (!aForce) {
+                loadUrl(url)
+            } else {
+                // Store original cache mode
+                val originalCacheMode = wv.settings.cacheMode
 
-        //webView?.reload()
+                // Temporarily disable cache to force fresh reload
+                wv.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+
+                // Handle the case where we display error page for instance
+                // Pass callback to restore cache mode after load completes OR is cancelled
+                loadUrl(url) {
+                    wv.settings.cacheMode = originalCacheMode
+                }
+            }
+        }
     }
 
     /**
@@ -1235,10 +1270,15 @@ class WebPageTab(
      *
      * @param aUrl the non-null URL to attempt to load in
      * the WebView.
+     * @param onLoadComplete optional callback to execute after the page finishes loading or is cancelled.
+     * Will be executed once and then cleared automatically.
      */
-    fun loadUrl(aUrl: String) {
+    fun loadUrl(aUrl: String, onLoadComplete: (() -> Unit)? = null) {
 
         iTargetUrl = Uri.parse(aUrl)
+
+        // Store the callback if provided
+        onLoadCompleteCallback = onLoadComplete
 
         if (iTargetUrl.scheme == Schemes.Fulguris || iTargetUrl.scheme == Schemes.About) {
             //TODO: support more of our custom URLs?
@@ -1489,7 +1529,6 @@ class WebPageTab(
     companion object {
 
         public const val KHtmlMetaThemeColorInvalid: Int = Color.TRANSPARENT
-        public const val KFetchMetaThemeColorTries: Int = 6
 
         const val HEADER_REQUESTED_WITH = "X-Requested-With"
         const val HEADER_WAP_PROFILE = "X-Wap-Profile"

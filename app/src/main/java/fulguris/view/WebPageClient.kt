@@ -24,7 +24,6 @@ import fulguris.settings.preferences.DomainPreferences
 import fulguris.settings.preferences.UserPreferences
 import fulguris.ssl.SslState
 import fulguris.utils.*
-import fulguris.view.WebPageTab.Companion.KFetchMetaThemeColorTries
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
@@ -59,6 +58,15 @@ import kotlin.math.abs
 
 /**
  * We have one instance of this per [WebView] and our [WebPageTab] also as a reference to it.
+ *
+ * Page load events sequence tested against slions.net:
+ * 1. shouldInterceptRequest
+ * 2. onLoadResource - For the page URL is called first
+ * 3. onPageStarted  - Not called if interrupted before the first resource completed
+ * 4. onLoadResource - For each resources
+ * 5. onPageFinished - Also called when cancelled - can be called even though onPageStarted was not called
+ * 6. onLoadResource - Can still occur after onPageFinished even if load was cancelled
+ *
  */
 class WebPageClient(
         private val activity: Activity,
@@ -91,6 +99,9 @@ class WebPageClient(
 
     // Count the number of resources loaded since the page was last started
     private var iResourceCount: Int = 0;
+
+    // Track page load timing for profiling
+    private var pageLoadStartTime: Long = 0
 
     // Track all requests for the current page and whether they were blocked
     data class PageRequest(
@@ -170,7 +181,7 @@ class WebPageClient(
      *   comment Helium314: adBLock.shouldBock always never blocks if url.isSpecialUrl() or url.isAppScheme(), could be moved here
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-        Timber.d("shouldInterceptRequest")
+        Timber.d("$ihs : shouldInterceptRequest")
         // returns some dummy response if blocked, null if not blocked
 
         val response = adBlock.shouldBlock(request, currentUrl)
@@ -199,6 +210,16 @@ class WebPageClient(
      */
     override fun onLoadResource(view: WebView, url: String?) {
         super.onLoadResource(view, url)
+
+        //Timber.d("$ihs : onLoadResource - url: ${webPageTab.webView?.url}")
+        //Timber.d("$ihs : onLoadResource - original: ${webPageTab.webView?.originalUrl}")
+        //Timber.d("$ihs : onLoadResource - target: ${webPageTab.targetUrl}")
+
+        if (webPageTab.targetUrl.toString() == url) {
+            // This resource is the main page target URL
+
+        }
+
         // Count our resources
         iResourceCount++;
         Timber.d("$ihs : onLoadResource - $iResourceCount - $url")
@@ -223,10 +244,18 @@ class WebPageClient(
     }
 
     /**
-     * Overrides [WebViewClient.onPageFinished]
+     * Overrides [WebViewClient.onPageFinished].
+     * Also called when loading is interrupted using stopLoading.
+     * That means this can be called even as onPageStarted was not yet called.
      */
     override fun onPageFinished(view: WebView, url: String) {
-        Timber.d("$ihs : onPageFinished - $url")
+        // Calculate page load duration
+        val pageLoadDuration = System.currentTimeMillis() - pageLoadStartTime
+        Timber.i("$ihs : onPageFinished - $url - Load time: ${pageLoadDuration}ms - Resources: $iResourceCount")
+
+        // Execute and clear callback registered with loadUrl
+        webPageTab.onLoadCompleteCallback?.invoke()
+        webPageTab.onLoadCompleteCallback = null
 
         // Make sure we apply desktop mode now as it may fail when done from onLoadResource
         // In fact the HTML page may not be loaded yet when we hit our condition in onLoadResource
@@ -282,11 +311,16 @@ class WebPageClient(
      */
     @SuppressLint("SetJavaScriptEnabled")
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
-        Timber.d("$ihs : onPageStarted - $url")
+        Timber.i("$ihs : onPageStarted - $url")
+
+        // Record page load start time for profiling
+        pageLoadStartTime = System.currentTimeMillis()
+
         // Reset our resource count
         iResourceCount = 0
         // Clear page requests for the new page
         clearPageRequests()
+
         currentUrl = url
         val uri  = Uri.parse(url)
         loadDomainPreferences(uri.host ?: "", true)
@@ -333,8 +367,8 @@ class WebPageClient(
             webBrowser.showActionBar()
         }
 
-        // Try to fetch meta theme color a few times
-        webPageTab.fetchMetaThemeColorTries = KFetchMetaThemeColorTries;
+        // Reset flag to fetch meta tags for new page
+        webPageTab.shouldFetchMetaTags = true
 
         //uiController.onTabChanged(webPageTab)
         webBrowser.onPageStarted(webPageTab)
@@ -353,7 +387,7 @@ class WebPageClient(
      *
      */
     override fun onReceivedClientCertRequest(view: WebView?, request: ClientCertRequest?) {
-        Timber.d("onReceivedClientCertRequest")
+        Timber.d("$ihs : onReceivedClientCertRequest")
         super.onReceivedClientCertRequest(view, request)
     }
 
@@ -366,7 +400,7 @@ class WebPageClient(
             host: String,
             realm: String
     ) {
-        Timber.d("onReceivedHttpAuthRequest")
+        Timber.d("$ihs : onReceivedHttpAuthRequest")
         MaterialAlertDialogBuilder(activity).apply {
             val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_auth_request, null)
 
@@ -392,9 +426,19 @@ class WebPageClient(
     }
 
     /**
-     * Overrides [WebViewClient.onReceivedError].
+     * Modern version of onReceivedError for API 23+
+     * Called for any resource error (main frame, subframes, images, etc.)
+     */
+    override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+        Timber.w("$ihs : onReceivedError (modern): ${request?.url} - Code: ${error?.errorCode} - ${error?.description}")
+        super.onReceivedError(view, request, error)
+    }
+
+    /**
+     * Deprecated but still called for main frame errors on older APIs
      * This deprecated callback is still in use and conveniently called only when the error affect the page main frame.
      */
+    @Deprecated("Deprecated in Java")
     override fun onReceivedError(webview: WebView, errorCode: Int, error: String, failingUrl: String) {
 
         // None of those were working so we did Base64 encoding instead
@@ -439,7 +483,7 @@ class WebPageClient(
      *
      */
     override fun onScaleChanged(view: WebView, oldScale: Float, newScale: Float) {
-        Timber.d("onScaleChanged")
+        Timber.d("$ihs : onScaleChanged")
         if (view.isShown && webPageTab.userPreferences.textReflowEnabled) {
             if (isRunning)
                 return
@@ -465,7 +509,7 @@ class WebPageClient(
      */
     @SuppressLint("WebViewClientOnReceivedSslError")
     override fun onReceivedSslError(webView: WebView, handler: SslErrorHandler, error: SslError) {
-        Timber.d("onReceivedSslError")
+        Timber.d("$ihs : onReceivedSslError")
         Timber.e("WebView URL: ${webView.url}")
         Timber.e("SSL error URL: ${error.url}")
 
@@ -543,7 +587,7 @@ class WebPageClient(
     }
 
     override fun onFormResubmission(view: WebView, dontResend: Message, resend: Message) {
-        Timber.d("onFormResubmission")
+        Timber.d("$ihs : onFormResubmission")
         MaterialAlertDialogBuilder(activity).apply {
             setTitle(activity.getString(R.string.title_form_resubmission))
             setMessage(activity.getString(R.string.message_form_resubmission))
@@ -573,11 +617,11 @@ class WebPageClient(
         // Don't reload our preferences if we already have it
         // We hit that a lot actually as we load resources
         if (domainPreferences.domain==aHost) {
-            Timber.d("loadDomainPreferences: already loaded")
+            Timber.d("$ihs : loadDomainPreferences: already loaded")
             return
         }
 
-        Timber.d("loadDomainPreferences for $aHost")
+        Timber.d("$ihs : loadDomainPreferences for $aHost")
 
         // Load domain preferences
         // SharedPreferences cache is cleared when files are deleted, so we can safely load
@@ -634,7 +678,7 @@ class WebPageClient(
                 view.postDelayed(debounceLaunch,1000)
 
                 if (appLaunched) {
-                    Timber.d("Override loading after app launch")
+                    Timber.d("$ihs : Override loading after app launch")
                     view.stopLoading()
                     if (activity is WebBrowserActivity) {
                         activity.closeCurrentTabIfEmpty()
@@ -661,20 +705,20 @@ class WebPageClient(
      */
     private fun launchAppIfNeeded(view: WebView, intent: Intent): Boolean {
 
-        Timber.d("launchAppIfNeeded: $intent")
+        Timber.d("$ihs : launchAppIfNeeded: $intent")
 
         when (domainPreferences.launchApp) {
             NoYesAsk.YES -> {
-                Timber.d("Launch app - YES")
+                Timber.d("$ihs : Launch app - YES")
                 return activity.startActivityWithFallback(view, intent, false)
             }
             NoYesAsk.NO -> {
-                Timber.d("Launch app - NO")
+                Timber.d("$ihs : Launch app - NO")
                 // Still load the page when not launching
                 return false
             }
             NoYesAsk.ASK -> {
-                Timber.d("Launch app - ASK")
+                Timber.d("$ihs : Launch app - ASK")
 
                 if (appLaunchDialog == null) {
                     // Get app info from the intent
@@ -715,12 +759,12 @@ class WebPageClient(
                         dialogView.findViewById<android.widget.ImageView>(R.id.app_icon)?.setImageDrawable(appIcon)
                         dialogView.findViewById<TextView>(R.id.app_label)?.text = appLabel
 
-                        Timber.d("Single app: $appLabel")
+                        Timber.d("$ihs : Single app: $appLabel")
                     } else {
                         // Multiple apps - use simple layout with just checkbox
                         dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_with_checkbox, null)
 
-                        Timber.d("Multiple apps available (${resolveInfos.size})")
+                        Timber.d("$ihs : Multiple apps available (${resolveInfos.size})")
                     }
 
                     val checkboxView = dialogView.findViewById<CheckBox>(R.id.checkBoxDontAskAgain)
@@ -734,7 +778,7 @@ class WebPageClient(
                             if (checkboxView.isChecked) {
                                 domainPreferences.launchAppOverride = true
                                 domainPreferences.launchAppLocal = NoYesAsk.YES
-                                Timber.d("Saved preference: Launch app = YES for domain ${domainPreferences.domain}")
+                                Timber.d("$ihs : Saved preference: Launch app = YES for domain ${domainPreferences.domain}")
                             }
                             activity.startActivityWithFallback(view, intent, false)
                             appLaunchDialog = null
@@ -744,7 +788,7 @@ class WebPageClient(
                             if (checkboxView.isChecked) {
                                 domainPreferences.launchAppOverride = true
                                 domainPreferences.launchAppLocal = NoYesAsk.NO
-                                Timber.d("Saved preference: Launch app = NO for domain ${domainPreferences.domain}")
+                                Timber.d("$ihs : Saved preference: Launch app = NO for domain ${domainPreferences.domain}")
                             }
                             activity.startActivityWithFallback(view, intent, true)
                             appLaunchDialog = null
@@ -763,7 +807,7 @@ class WebPageClient(
      * SL: Looks like this does the opposite of what it looks like.
      */
     private fun continueLoadingUrl(webView: WebView, url: String, headers: Map<String, String>): Boolean {
-        Timber.d("continueLoadingUrl")
+        Timber.d("$ihs : continueLoadingUrl")
         if (!URLUtil.isNetworkUrl(url)
             && !URLUtil.isFileUrl(url)
             && !URLUtil.isAboutUrl(url)
@@ -831,7 +875,7 @@ class WebPageClient(
      * See: https://stackoverflow.com/a/56395424/3969362
      */
     override fun doUpdateVisitedHistory(view: WebView, url: String, isReload: Boolean) {
-        Timber.d("doUpdateVisitedHistory: $isReload - $url - ${view.url}")
+        Timber.d("$ihs : doUpdateVisitedHistory: $isReload - $url - ${view.url}")
         super.doUpdateVisitedHistory(view, url, isReload)
 
         if (webPageTab.lastUrl!=url) {
@@ -841,10 +885,24 @@ class WebPageClient(
     }
 
     /**
+     * Called when an HTTP error is received from the server.
+     * HTTP errors have status codes >= 400.
+     * This callback will be called for any resource (main page, image, subframe, etc.)
+     */
+    override fun onReceivedHttpError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        errorResponse: WebResourceResponse?
+    ) {
+        Timber.w("$ihs : onReceivedHttpError: ${request?.url} - Status: ${errorResponse?.statusCode}")
+        super.onReceivedHttpError(view, request, errorResponse)
+    }
+
+    /**
      *
      */
     override fun onPageCommitVisible(view: WebView?, url: String?) {
-        Timber.d("onPageCommitVisible: $url")
+        Timber.d("$ihs : onPageCommitVisible: $url")
         super.onPageCommitVisible(view, url)
     }
 
@@ -852,7 +910,7 @@ class WebPageClient(
      *
      */
     override fun shouldOverrideKeyEvent(view: WebView?, event: KeyEvent?): Boolean {
-        Timber.d("shouldOverrideKeyEvent: $event")
+        Timber.d("$ihs : shouldOverrideKeyEvent: $event")
         return super.shouldOverrideKeyEvent(view, event)
     }
 
@@ -860,7 +918,7 @@ class WebPageClient(
      *
      */
     override fun onUnhandledKeyEvent(view: WebView?, event: KeyEvent?) {
-        Timber.d("onUnhandledKeyEvent: $event")
+        Timber.d("$ihs : onUnhandledKeyEvent: $event")
         super.onUnhandledKeyEvent(view, event)
     }
 
@@ -868,7 +926,7 @@ class WebPageClient(
      *
      */
     override fun onReceivedLoginRequest(view: WebView?, realm: String?, account: String?, args: String?) {
-        Timber.d("onReceivedLoginRequest: $realm")
+        Timber.d("$ihs : onReceivedLoginRequest: $realm")
         super.onReceivedLoginRequest(view, realm, account, args)
     }
 
@@ -876,7 +934,7 @@ class WebPageClient(
      *
      */
     override fun onSafeBrowsingHit(view: WebView?, request: WebResourceRequest?, threatType: Int, callback: SafeBrowsingResponse?) {
-        Timber.d("onSafeBrowsingHit: $threatType")
+        Timber.d("$ihs : onSafeBrowsingHit: $threatType")
         super.onSafeBrowsingHit(view, request, threatType, callback)
     }
 }
