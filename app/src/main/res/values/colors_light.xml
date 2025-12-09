@@ -1,12 +1,12 @@
 <!--
 Generated from https://material-foundation.github.io/material-theme-builder/
-Using source color: #FFDE3F
+Using source color: #92654D (Custom Brown)
 -->
 <resources>
-    <!-- #6D5E0F --> <color name="md_theme_light_primary">#6D5E0F</color>
+    <!-- #92654D --> <color name="md_theme_light_primary">#92654D</color>
     <!-- #FFFFFF --> <color name="md_theme_light_onPrimary">#FFFFFF</color>
-    <!-- #F8E287 --> <color name="md_theme_light_primaryContainer">#F8E287</color>
-    <!-- #534600 --> <color name="md_theme_light_onPrimaryContainer">#534600</color>
+    <!-- #D4AB94 --> <color name="md_theme_light_primaryContainer">#D4AB94</color>
+    <!-- #5D3A2A --> <color name="md_theme_light_onPrimaryContainer">#5D3A2A</color>
     <!-- #665E40 --> <color name="md_theme_light_secondary">#665E40</color>
     <!-- #FFFFFF --> <color name="md_theme_light_onSecondary">#FFFFFF</color>
     <!-- #EEE2BC --> <color name="md_theme_light_secondaryContainer">#EEE2BC</color>
@@ -30,7 +30,7 @@ Using source color: #FFDE3F
     <!-- #000000 --> <color name="md_theme_light_scrim">#000000</color>
     <!-- #333027 --> <color name="md_theme_light_inverseSurface">#333027</color>
     <!-- #F7F0E2 --> <color name="md_theme_light_inverseOnSurface">#F7F0E2</color>
-    <!-- #DBC66E --> <color name="md_theme_light_inversePrimary">#DBC66E</color>
+    <!-- #D4AB94 --> <color name="md_theme_light_inversePrimary">#D4AB94</color>
     <!-- #F8E287 --> <color name="md_theme_light_primaryFixed">#F8E287</color>
     <!-- #221B00 --> <color name="md_theme_light_onPrimaryFixed">#221B00</color>
     <!-- #DBC66E --> <color name="md_theme_light_primaryFixedDim">#DBC66E</color>
