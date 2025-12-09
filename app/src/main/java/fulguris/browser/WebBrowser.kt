@@ -213,6 +213,9 @@ interface WebBrowser {
 
     /**
      * Notify the UI that the [aTab] should be displayed.
+     * This is called when a tab becomes the current tab.
+     * It is also called when a tab is updated and it does not have to be the current tab.
+     * The activity checks the tab manager for the current tab.
      */
     fun onTabChanged(aTab: WebPageTab)
 
