@@ -15,7 +15,7 @@
         x:fragment="fulguris.settings.fragment.GeneralSettingsFragment"
         x:title="@string/pref_title_browser"
         x:summary="@string/pref_summary_browser"
-        x:icon="@drawable/ic_webview"
+        x:icon="@drawable/ic_web"
         x:singleLineTitle="false"
         />
 
