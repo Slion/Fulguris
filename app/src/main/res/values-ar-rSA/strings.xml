@@ -88,7 +88,7 @@
     <string name="hint_url">عنوان URL</string>
     <string name="title_edit_bookmark">تعديل العلامة المرجعية</string>
     <string name="action_edit">تعديل</string>
-    <string name="action_incognito">الوضع الخاص</string>
+    <string name="action_incognito">خفي</string>
     <string name="action_show_homepage">إظهار الصفحة الرئيسية</string>
     <string name="action_back">عودة</string>
     <string name="action_find">بحث في الصفحة</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">التخزين مشغول. للسماح بالتحميلات، اضغط على \'إيقاف تخزين USB\' في الإشعار.</string>
     <string name="download_complete">إكتمل التنزيل</string>
     <string name="download_failed">فشل التنزيل</string>
-    <string name="incognito_cookies">تمكين ملفات تعريف الارتباط في الوضع الخاص</string>
-    <string name="incognito_cookies_pie">يعمل الوضع الخاص في عملية منفصلة يتم إعادة تعيينها بعد كل جلسة. يتم الآن التحكم في تفضيلات ملفات تعريف الارتباط الخاصة من خلال تفضيلات ملفات تعريف الارتباط العادية.</string>
+    <string name="incognito_cookies">تفعيل ملفات تعريف الارتباط في الوضع الخفي</string>
+    <string name="incognito_cookies_pie">يعمل الوضع الخفي في عملية منفصلة يتم إعادة تعيينها بعد كل جلسة. يتم التحكم الآن في تفضيلات ملفات تعريف الارتباط الخفية بواسطة تفضيلات ملفات تعريف الارتباط العادية.</string>
     <string name="pref_category_title_contact_us">اتصل بنا</string>
     <string name="pref_category_title_legal">قانوني</string>
     <string name="pref_title_email">البريد الإلكتروني</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">بداية قائمة التبويبات</string>
     <string name="new_tab_position_end">نهاية قائمة التبويبات</string>
     <string name="incoming_view_action">إجراء العرض الوارد</string>
-    <string name="action_incognito_tab">علامة تبويب خاصة</string>
+    <string name="action_incognito_tab">علامة تبويب خفية</string>
     <string name="action_select_browser">تحديد المتصفح</string>
     <string name="action_block">حظر</string>
     <string name="pref_title_default_browser">المتصفح الافتراضي</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">مستوى السجل</string>
     <string name="dialog_open_new_tab">فتح في تبويب جديد</string>
     <string name="dialog_open_background_tab">فتح في تبويب الخلفية</string>
-    <string name="dialog_open_incognito_tab">فتح في علامة تبويب خاصة</string>
+    <string name="dialog_open_incognito_tab">افتح في علامة تبويب خفية</string>
     <string name="dialog_remove_bookmark">إزالة الإشارة المرجعية</string>
     <string name="dialog_edit_bookmark">تحرير الإشارة المرجعية</string>
     <string name="dialog_title_bookmark">إشارة مرجعية</string>
@@ -417,14 +417,14 @@
     <string name="search_engine_custom">عنوان URL مخصص</string>
     <plurals name="notification_incognito_running_title">
         <item quantity="zero">%1$d علامة تبويب خاصة مفتوحة</item>
-        <item quantity="one">%1$d علامة تبويب خاصة مفتوحة</item>
+        <item quantity="one">علامة تبويب خفية %1$d مفتوحة</item>
         <item quantity="two">%1$d علامتا تبويب خاصتان مفتوحتان</item>
         <item quantity="few">%1$d علامات تبويب خاصة مفتوحة</item>
         <item quantity="many">%1$d علامة تبويب خاصة مفتوحة</item>
-        <item quantity="other">%1$d علامة تبويب خاصة مفتوحة</item>
+        <item quantity="other">%1$d علامات تبويب خفية مفتوحة</item>
     </plurals>
     <string name="notification_incognito_running_message">انقر للفتح</string>
-    <string name="notification_incognito_running_description">جلسة خاصة جارية</string>
+    <string name="notification_incognito_running_description">جلسة خفية مستمرة</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">صدرت من:</string>
     <string name="ssl_info_issued_to">صدرت لـ:</string>
@@ -451,6 +451,7 @@
     <string name="question_delete_all_domain_settings">حذف جميع إعدادات النطاقات؟</string>
     <string name="settings_title_delete_domain_settings">حذف إعدادات النطاق</string>
     <string name="settings_title_parent">الأصل</string>
+    <string name="settings_title_default_domain_settings">الإعدادات الافتراضية</string>
     <string name="settings_summary_default_domain_settings">تطبق على جميع المواقع ما لم يتم تجاوزها</string>
     <string name="settings_summary_loading">جاري التحميل…</string>
     <string name="settings_title_ssl_error">خطأ أمني</string>
@@ -635,5 +636,4 @@
     <string name="page_requests_none">لا توجد طلبات مسجلة لهذه الصفحة</string>
     <string name="settings_summary_full_menu">إظهار القائمة الكاملة</string>
     <string name="action_launch">تشغيل</string>
-    <string name="settings_title_default_domain_settings">الإعدادات الافتراضية</string>
 </resources>

@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Redigera bokmärke</string>
     <string name="action_edit">Redigera</string>
-    <string name="action_incognito">Privat läge</string>
+    <string name="action_incognito">Dold</string>
     <string name="action_show_homepage">Visa hemsida</string>
     <string name="action_back">Tillbaka</string>
     <string name="action_find">Sök på sidan</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">Lagringen är upptagen. För att tillåta hämtningar, tryck på stäng av USB-lagring i meddelandet.</string>
     <string name="download_complete">Nedladdning slutförd</string>
     <string name="download_failed">Nedladdning misslyckad</string>
-    <string name="incognito_cookies">Aktivera kakor i privat läge</string>
-    <string name="incognito_cookies_pie">Privat läge körs i en separat process som återställs efter varje session. Privata cookie-inställningar styrs nu av de vanliga cookie-inställningarna.</string>
+    <string name="incognito_cookies">Aktivera cookies i dolt läge</string>
+    <string name="incognito_cookies_pie">Dolt läge körs i en separat process som återställs efter varje session. Dolda cookie-inställningar styrs nu av de vanliga cookie-inställningarna.</string>
     <string name="pref_category_title_contact_us">Kontakta oss</string>
     <string name="pref_category_title_legal">Juridiskt</string>
     <string name="pref_title_email">E-post</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Start av fliklistan</string>
     <string name="new_tab_position_end">Slutet av fliklistan</string>
     <string name="incoming_view_action">Inkommande vyåtgärd</string>
-    <string name="action_incognito_tab">Privat flik</string>
+    <string name="action_incognito_tab">Dold flik</string>
     <string name="action_select_browser">Välj webbläsare</string>
     <string name="action_block">Blockera</string>
     <string name="pref_title_default_browser">Standardwebbläsare</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Loggnivå</string>
     <string name="dialog_open_new_tab">Öppna i ny flik</string>
     <string name="dialog_open_background_tab">Öppna i bakgrundsflik</string>
-    <string name="dialog_open_incognito_tab">Öppna i privat flik</string>
+    <string name="dialog_open_incognito_tab">Öppna i dold flik</string>
     <string name="dialog_remove_bookmark">Ta bort bokmärke</string>
     <string name="dialog_edit_bookmark">Redigera bokmärke</string>
     <string name="dialog_title_bookmark">Bokmärke</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Växla skrivbords användaragent</string>
     <string name="search_engine_custom">Anpassad URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d privat flik öppen</item>
-        <item quantity="other">%1$d privata flikar öppna</item>
+        <item quantity="one">%1$d dold flik öppen</item>
+        <item quantity="other">%1$d dolda flikar öppna</item>
     </plurals>
     <string name="notification_incognito_running_message">Tryck för att öppna</string>
-    <string name="notification_incognito_running_description">Pågående privat session</string>
+    <string name="notification_incognito_running_description">Pågående dold session</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Utfärdad av:</string>
     <string name="ssl_info_issued_to">Utfärdad till:</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Ta bort alla domäninställningar?</string>
     <string name="settings_title_delete_domain_settings">Ta bort domäninställningar</string>
     <string name="settings_title_parent">Förälder</string>
+    <string name="settings_title_default_domain_settings">Standardinställningar</string>
     <string name="settings_summary_default_domain_settings">Tillämpa på alla webbplatser såvida inte åsidosatt</string>
     <string name="settings_summary_loading">Läser in…</string>
     <string name="settings_title_ssl_error">Säkerhetsfel</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">Inga förfrågningar registrerade för denna sida</string>
     <string name="settings_summary_full_menu">Visa fullständig meny</string>
     <string name="action_launch">Starta</string>
-    <string name="settings_title_default_domain_settings">Standardinställningar</string>
 </resources>

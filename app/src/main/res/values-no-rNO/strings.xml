@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Rediger bokmerke</string>
     <string name="action_edit">Rediger</string>
-    <string name="action_incognito">Privat modus</string>
+    <string name="action_incognito">Skjult</string>
     <string name="action_show_homepage">Vis startside</string>
     <string name="action_back">Tilbake</string>
     <string name="action_find">Finn på siden</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">Lagringen er opptatt. For å tillate nedlastinger, deaktiver USB-lagring i varslingen.</string>
     <string name="download_complete">Nedlasting fullført</string>
     <string name="download_failed">Nedlasting mislyktes</string>
-    <string name="incognito_cookies">Aktiver informasjonskapsler i privat modus</string>
-    <string name="incognito_cookies_pie">Privat modus kjører i en separat prosess som tilbakestilles etter hver økt. Private informasjonskapselinnstillinger kontrolleres nå av de vanlige informasjonskapselinnstillingene.</string>
+    <string name="incognito_cookies">Aktiver informasjonskapsler i skjult modus</string>
+    <string name="incognito_cookies_pie">Skjult modus kjører i en separat prosess som tilbakestilles etter hver økt. Skjulte informasjonskapselinnstillinger styres nå av de vanlige informasjonskapselinnstillingene.</string>
     <string name="pref_category_title_contact_us">Kontakt oss</string>
     <string name="pref_category_title_legal">Juridisk</string>
     <string name="pref_title_email">E-post</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Start av faneliste</string>
     <string name="new_tab_position_end">Slutt av faneliste</string>
     <string name="incoming_view_action">Innkommende visningshandling</string>
-    <string name="action_incognito_tab">Privat fane</string>
+    <string name="action_incognito_tab">Skjult fane</string>
     <string name="action_select_browser">Velg nettleser</string>
     <string name="action_block">Blokker</string>
     <string name="pref_title_default_browser">Standard nettleser</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Loggnivå</string>
     <string name="dialog_open_new_tab">Åpne i ny fane</string>
     <string name="dialog_open_background_tab">Åpne i bakgrunnsfane</string>
-    <string name="dialog_open_incognito_tab">Åpne i privat fane</string>
+    <string name="dialog_open_incognito_tab">Åpne i skjult fane</string>
     <string name="dialog_remove_bookmark">Fjern bokmerke</string>
     <string name="dialog_edit_bookmark">Rediger bokmerke</string>
     <string name="dialog_title_bookmark">Bokmerke</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Bytt skrivebordsbrukeragent</string>
     <string name="search_engine_custom">Tilpasset URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d privat fane åpen</item>
-        <item quantity="other">%1$d private faner åpne</item>
+        <item quantity="one">%1$d skjult fane åpen</item>
+        <item quantity="other">%1$d skjulte faner åpne</item>
     </plurals>
     <string name="notification_incognito_running_message">Trykk for å åpne</string>
-    <string name="notification_incognito_running_description">Pågående privat økt</string>
+    <string name="notification_incognito_running_description">Pågående skjult økt</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Utstedt av:</string>
     <string name="ssl_info_issued_to">Utstedt til:</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Slett alle domeneinnstillinger?</string>
     <string name="settings_title_delete_domain_settings">Slett domeneinnstillinger</string>
     <string name="settings_title_parent">Overordnet</string>
+    <string name="settings_title_default_domain_settings">Standardinnstillinger</string>
     <string name="settings_summary_default_domain_settings">Bruk på alle nettsteder med mindre overstyrt</string>
     <string name="settings_summary_loading">Laster…</string>
     <string name="settings_title_ssl_error">Sikkerhetsfeil</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">Ingen forespørsler registrert for denne siden</string>
     <string name="settings_summary_full_menu">Vis fullstendig meny</string>
     <string name="action_launch">Start</string>
-    <string name="settings_title_default_domain_settings">Standardinnstillinger</string>
 </resources>

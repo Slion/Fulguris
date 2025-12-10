@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">แก้ไขบุ๊กมาร์ก</string>
     <string name="action_edit">แก้ไข</string>
-    <string name="action_incognito">โหมดส่วนตัว</string>
+    <string name="action_incognito">ล่องหน</string>
     <string name="action_show_homepage">แสดงหน้าแรก</string>
     <string name="action_back">ย้อนกลับ</string>
     <string name="action_find">ค้นหาในหน้า</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">พื้นที่จัดเก็บกำลังทำงาน หากต้องการอนุญาตให้ดาวน์โหลด แตะ \'ปิด USB Storage\' ในการแจ้งเตือน</string>
     <string name="download_complete">ดาวน์โหลดเสร็จสิ้น</string>
     <string name="download_failed">ดาวน์โหลดล้มเหลว</string>
-    <string name="incognito_cookies">เปิดใช้งานคุกกี้ในโหมดส่วนตัว</string>
-    <string name="incognito_cookies_pie">โหมดส่วนตัวทำงานในกระบวนการแยกต่างหากที่รีเซ็ตหลังจากแต่ละเซสชัน การตั้งค่าคุกกี้ส่วนตัวตอนนี้ถูกควบคุมโดยการตั้งค่าคุกกี้ปกติ</string>
+    <string name="incognito_cookies">เปิดใช้คุกกี้ในโหมดล่องหน</string>
+    <string name="incognito_cookies_pie">โหมดล่องหนทำงานในกระบวนการแยกต่างหากที่รีเซ็ตหลังจากแต่ละเซสชัน ค่ากำหนดคุกกี้โหมดล่องหนตอนนี้ถูกควบคุมโดยค่ากำหนดคุกกี้ปกติ</string>
     <string name="pref_category_title_contact_us">ติดต่อเรา</string>
     <string name="pref_category_title_legal">กฎหมาย</string>
     <string name="pref_title_email">อีเมล</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">ต้นรายการแท็บ</string>
     <string name="new_tab_position_end">ท้ายรายการแท็บ</string>
     <string name="incoming_view_action">การดำเนินการดูขาเข้า</string>
-    <string name="action_incognito_tab">แท็บส่วนตัว</string>
+    <string name="action_incognito_tab">แท็บล่องหน</string>
     <string name="action_select_browser">เลือกเบราว์เซอร์</string>
     <string name="action_block">บล็อก</string>
     <string name="pref_title_default_browser">เบราว์เซอร์เริ่มต้น</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">ระดับบันทึก</string>
     <string name="dialog_open_new_tab">เปิดในแท็บใหม่</string>
     <string name="dialog_open_background_tab">เปิดในแท็บพื้นหลัง</string>
-    <string name="dialog_open_incognito_tab">เปิดในแท็บส่วนตัว</string>
+    <string name="dialog_open_incognito_tab">เปิดในแท็บล่องหน</string>
     <string name="dialog_remove_bookmark">ลบบุ๊กมาร์ก</string>
     <string name="dialog_edit_bookmark">แก้ไขบุ๊กมาร์ก</string>
     <string name="dialog_title_bookmark">บุ๊กมาร์ก</string>
@@ -416,10 +416,11 @@
     <string name="dialog_toggle_desktop">สลับโหมดเดสก์ท็อป</string>
     <string name="search_engine_custom">เครื่องมือค้นหาที่กำหนดเอง</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d แท็บส่วนตัวเปิดอยู่</item>
+        <item quantity="other">เปิดแท็บล่องหน %1$d แท็บ</item>
+        <item quantity="one">เปิดแท็บล่องหน %1$d แท็บ</item>
     </plurals>
     <string name="notification_incognito_running_message">แตะเพื่อเปิด</string>
-    <string name="notification_incognito_running_description">เซสชันส่วนตัวที่กำลังดำเนินอยู่</string>
+    <string name="notification_incognito_running_description">เซสชันล่องหนที่กำลังดำเนินการ</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">ออกโดย:</string>
     <string name="ssl_info_issued_to">ออกให้:</string>
@@ -446,6 +447,7 @@
     <string name="question_delete_all_domain_settings">ลบการตั้งค่าโดเมนทั้งหมดหรือไม่?</string>
     <string name="settings_title_delete_domain_settings">ลบการตั้งค่าโดเมน</string>
     <string name="settings_title_parent">โดเมนหลัก</string>
+    <string name="settings_title_default_domain_settings">การตั้งค่าเริ่มต้น</string>
     <string name="settings_summary_default_domain_settings">ใช้กับทุกไซต์เว้นแต่จะถูกแทนที่</string>
     <string name="settings_summary_loading">กำลังโหลด…</string>
     <string name="settings_title_ssl_error">ข้อผิดพลาด SSL</string>
@@ -620,5 +622,4 @@
     <string name="page_requests_none">ไม่มีคำขอที่บันทึกสำหรับหน้านี้</string>
     <string name="settings_summary_full_menu">แสดงเมนูเต็ม</string>
     <string name="action_launch">เปิด</string>
-    <string name="settings_title_default_domain_settings">การตั้งค่าเริ่มต้น</string>
 </resources>

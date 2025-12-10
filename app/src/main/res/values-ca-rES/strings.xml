@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Edit bookmark</string>
     <string name="action_edit">Edit</string>
-    <string name="action_incognito">Mode privat</string>
+    <string name="action_incognito">Furtiu</string>
     <string name="action_show_homepage">Show homepage</string>
     <string name="action_back">Back</string>
     <string name="action_find">Find in page</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">The storage is busy. To allow downloads, touch \'Turn Off USB Storage\' in the notification.</string>
     <string name="download_complete">Download complete</string>
     <string name="download_failed">Download failed</string>
-    <string name="incognito_cookies">Activa les galetes en mode privat</string>
-    <string name="incognito_cookies_pie">El mode privat s\'executa en un procés separat que es reinicia després de cada sessió. Les preferències de galetes privades ara es controlen amb les preferències de galetes normals.</string>
+    <string name="incognito_cookies">Activa les galetes en mode furtiu</string>
+    <string name="incognito_cookies_pie">El mode furtiu s\'executa en un procés independent que es reinicia després de cada sessió. Les preferències de galetes furtives ara estan controlades per les preferències de galetes normals.</string>
     <string name="pref_category_title_contact_us">Contact us</string>
     <string name="pref_category_title_legal">Legal</string>
     <string name="pref_title_email">Correu electrònic</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Start of tab list</string>
     <string name="new_tab_position_end">End of tab list</string>
     <string name="incoming_view_action">Incoming view action</string>
-    <string name="action_incognito_tab">Pestanya privada</string>
+    <string name="action_incognito_tab">Pestanya furtiva</string>
     <string name="action_select_browser">Select browser</string>
     <string name="action_block">Block</string>
     <string name="pref_title_default_browser">Default browser</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Log level</string>
     <string name="dialog_open_new_tab">Open in new tab</string>
     <string name="dialog_open_background_tab">Open in background tab</string>
-    <string name="dialog_open_incognito_tab">Obre en una pestanya privada</string>
+    <string name="dialog_open_incognito_tab">Obre a la pestanya furtiva</string>
     <string name="dialog_remove_bookmark">Remove bookmark</string>
     <string name="dialog_edit_bookmark">Edit bookmark</string>
     <string name="dialog_title_bookmark">Bookmark</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Toggle desktop user agent</string>
     <string name="search_engine_custom">Custom URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d pestanya privada oberta</item>
-        <item quantity="other">%1$d pestanyes privades obertes</item>
+        <item quantity="one">%1$d pestanya furtiva oberta</item>
+        <item quantity="other">%1$d pestanyes furtives obertes</item>
     </plurals>
     <string name="notification_incognito_running_message">Touch to open</string>
-    <string name="notification_incognito_running_description">Sessió privada en curs</string>
+    <string name="notification_incognito_running_description">Sessió furtiva en curs</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Issued by</string>
     <string name="ssl_info_issued_to">Issued to</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_title_parent">Parent</string>
+    <string name="settings_title_default_domain_settings">Configuració predeterminada</string>
     <string name="settings_summary_default_domain_settings">Aplicar a tots els llocs tret que se substitueixi</string>
     <string name="settings_summary_loading">Loading…</string>
     <string name="settings_title_ssl_error">Security error</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">No hi ha sol·licituds registrades per a aquesta pàgina</string>
     <string name="settings_summary_full_menu">Mostra el menú complet</string>
     <string name="action_launch">Inicia</string>
-    <string name="settings_title_default_domain_settings">Configuració predeterminada</string>
 </resources>

@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Wijzig bladwijzer</string>
     <string name="action_edit">Wijzig</string>
-    <string name="action_incognito">Privémodus</string>
+    <string name="action_incognito">Stealth</string>
     <string name="action_show_homepage">Homepage tonen</string>
     <string name="action_back">Terug</string>
     <string name="action_find">Vind in pagina</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">Opslag is bezet. Om downloads toe te laten, gelieve USB opslag uit te zetten in het notificatiecentrum.</string>
     <string name="download_complete">Downloaden is klaar</string>
     <string name="download_failed">Downloaden is mislukt</string>
-    <string name="incognito_cookies">Cookies inschakelen in privémodus</string>
-    <string name="incognito_cookies_pie">Privémodus draait in een apart proces dat na elke sessie wordt gereset. Privé-cookievoorkeuren worden nu beheerd door de reguliere cookievoorkeuren.</string>
+    <string name="incognito_cookies">Cookies inschakelen in stealth-modus</string>
+    <string name="incognito_cookies_pie">Stealth-modus draait in een apart proces dat na elke sessie wordt gereset. Stealth-cookievoorkeuren worden nu beheerd door de normale cookievoorkeuren.</string>
     <string name="pref_category_title_contact_us">Neem contact op</string>
     <string name="pref_category_title_legal">Juridisch</string>
     <string name="pref_title_email">E-mail</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Begin van tabbladlijst</string>
     <string name="new_tab_position_end">Einde tabbladlijst</string>
     <string name="incoming_view_action">Inkomende weergave-actie</string>
-    <string name="action_incognito_tab">Privétabblad</string>
+    <string name="action_incognito_tab">Stealth-tabblad</string>
     <string name="action_select_browser">Browser selecteren</string>
     <string name="action_block">Blokkeren</string>
     <string name="pref_title_default_browser">Standaard browser</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Logniveau</string>
     <string name="dialog_open_new_tab">Open in een nieuw tabblad</string>
     <string name="dialog_open_background_tab">Open in een achtergrond tabblad</string>
-    <string name="dialog_open_incognito_tab">Openen in privétabblad</string>
+    <string name="dialog_open_incognito_tab">Openen in stealth-tabblad</string>
     <string name="dialog_remove_bookmark">Verwijder bladwijzer</string>
     <string name="dialog_edit_bookmark">Bladwijzer bewerken</string>
     <string name="dialog_title_bookmark">Bladwijzer</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Schakel bureaublad-gebruikersagent in</string>
     <string name="search_engine_custom">Aangepaste URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d privétabblad open</item>
-        <item quantity="other">%1$d privétabbladen open</item>
+        <item quantity="one">%1$d stealth-tabblad geopend</item>
+        <item quantity="other">%1$d stealth-tabbladen geopend</item>
     </plurals>
     <string name="notification_incognito_running_message">Aanraken om te openen</string>
-    <string name="notification_incognito_running_description">Lopende privésessie</string>
+    <string name="notification_incognito_running_description">Actieve stealth-sessie</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Uitgegeven door:</string>
     <string name="ssl_info_issued_to">Uitgegeven aan:</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Alle domeininstellingen verwijderen?</string>
     <string name="settings_title_delete_domain_settings">Domeininstellingen verwijderen</string>
     <string name="settings_title_parent">Bovenliggende</string>
+    <string name="settings_title_default_domain_settings">Standaardinstellingen</string>
     <string name="settings_summary_default_domain_settings">Toepassen op alle sites tenzij overschreven</string>
     <string name="settings_summary_loading">Laden…</string>
     <string name="settings_title_ssl_error">Beveiligingsfout</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">Geen verzoeken geregistreerd voor deze pagina</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
     <string name="action_launch">Starten</string>
-    <string name="settings_title_default_domain_settings">Standaardinstellingen</string>
 </resources>

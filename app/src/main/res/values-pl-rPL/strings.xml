@@ -88,7 +88,7 @@
     <string name="hint_url">Adres URL</string>
     <string name="title_edit_bookmark">Edytuj zakładkę</string>
     <string name="action_edit">Edytuj</string>
-    <string name="action_incognito">Tryb prywatny</string>
+    <string name="action_incognito">Ukryty</string>
     <string name="action_show_homepage">Wyświetl stronę główną</string>
     <string name="action_back">Wstecz</string>
     <string name="action_find">Znajdź na stronie</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">Pamięć USB jest zablokowana. By umożliwić pobieranie plików, dotknij \"Wyłącz pamięć USB\" w powiadomieniu.</string>
     <string name="download_complete">Pobieranie zakończone</string>
     <string name="download_failed">Błąd pobierania</string>
-    <string name="incognito_cookies">Włącz ciasteczka w trybie prywatnym</string>
-    <string name="incognito_cookies_pie">Tryb prywatny działa w osobnym procesie, który jest resetowany po każdej sesji. Preferencje prywatnych ciasteczek są teraz kontrolowane przez zwykłe preferencje ciasteczek.</string>
+    <string name="incognito_cookies">Włącz pliki cookie w trybie ukrytym</string>
+    <string name="incognito_cookies_pie">Tryb ukryty działa w osobnym procesie, który jest resetowany po każdej sesji. Preferencje ukrytych plików cookie są teraz kontrolowane przez zwykłe preferencje plików cookie.</string>
     <string name="pref_category_title_contact_us">Kontakt</string>
     <string name="pref_category_title_legal">Informacje prawne</string>
     <string name="pref_title_email">E-mail</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Na początku listy kart</string>
     <string name="new_tab_position_end">Na końcu listy kart</string>
     <string name="incoming_view_action">Akcja widoku przychodzącego</string>
-    <string name="action_incognito_tab">Prywatna karta</string>
+    <string name="action_incognito_tab">Ukryta karta</string>
     <string name="action_select_browser">Wybierz przeglądarkę</string>
     <string name="action_block">Zablokuj</string>
     <string name="pref_title_default_browser">Domyślna przeglądarka</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Poziom rejestrowania</string>
     <string name="dialog_open_new_tab">Otwórz w nowej karcie</string>
     <string name="dialog_open_background_tab">Otwórz w nowej karcie w tle</string>
-    <string name="dialog_open_incognito_tab">Otwórz w prywatnej karcie</string>
+    <string name="dialog_open_incognito_tab">Otwórz w ukrytej karcie</string>
     <string name="dialog_remove_bookmark">Usuń zakładkę</string>
     <string name="dialog_edit_bookmark">Edytuj zakładkę</string>
     <string name="dialog_title_bookmark">Zakładka</string>
@@ -416,13 +416,13 @@
     <string name="dialog_toggle_desktop">Przełącz identyfikator wersji komputerowej</string>
     <string name="search_engine_custom">Własny URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d prywatna karta otwarta</item>
+        <item quantity="one">%1$d ukryta karta otwarta</item>
         <item quantity="few">%1$d prywatne karty otwarte</item>
         <item quantity="many">%1$d prywatnych kart otwartych</item>
-        <item quantity="other">%1$d prywatnych kart otwartych</item>
+        <item quantity="other">%1$d ukryte karty otwarte</item>
     </plurals>
     <string name="notification_incognito_running_message">Dotknij, aby otworzyć</string>
-    <string name="notification_incognito_running_description">Trwająca sesja prywatna</string>
+    <string name="notification_incognito_running_description">Trwająca ukryta sesja</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Wystawiony przez:</string>
     <string name="ssl_info_issued_to">Wystawiony dla:</string>
@@ -449,6 +449,7 @@
     <string name="question_delete_all_domain_settings">Usunąć wszystkie ustawienia domen?</string>
     <string name="settings_title_delete_domain_settings">Usuń ustawienia domeny</string>
     <string name="settings_title_parent">Nadrzędne</string>
+    <string name="settings_title_default_domain_settings">Ustawienia domyślne</string>
     <string name="settings_summary_default_domain_settings">Zastosuj do wszystkich witryn, chyba że nadpisane</string>
     <string name="settings_summary_loading">Ładowanie…</string>
     <string name="settings_title_ssl_error">Błąd bezpieczeństwa</string>
@@ -629,5 +630,4 @@
     <string name="page_requests_none">Brak zarejestrowanych żądań dla tej strony</string>
     <string name="settings_summary_full_menu">Pokaż pełne menu</string>
     <string name="action_launch">Uruchom</string>
-    <string name="settings_title_default_domain_settings">Ustawienia domyślne</string>
 </resources>

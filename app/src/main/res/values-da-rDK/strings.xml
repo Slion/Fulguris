@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Rediger bogmærke</string>
     <string name="action_edit">Rediger</string>
-    <string name="action_incognito">Privat tilstand</string>
+    <string name="action_incognito">Stealth</string>
     <string name="action_show_homepage">Vis startside</string>
     <string name="action_back">Tilbage</string>
     <string name="action_find">Find på side</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">Lageret er optaget. For at tillade downloads, tryk på \" Slå USB-lager fra\</string>
     <string name="download_complete">Download fuldført</string>
     <string name="download_failed">Download mislykkedes</string>
-    <string name="incognito_cookies">Aktiver cookies i privat tilstand</string>
-    <string name="incognito_cookies_pie">Privat tilstand kører i en separat proces, der nulstilles efter hver session. Private cookie-præferencer styres nu af de almindelige cookie-præferencer.</string>
+    <string name="incognito_cookies">Aktivér cookies i stealth-tilstand</string>
+    <string name="incognito_cookies_pie">Stealth-tilstand kører i en separat proces, der nulstilles efter hver session. Stealth-cookiepræferencer styres nu af de almindelige cookiepræferencer.</string>
     <string name="pref_category_title_contact_us">Kontakt os</string>
     <string name="pref_category_title_legal">Juridisk</string>
     <string name="pref_title_email">E-mail</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Start af faneliste</string>
     <string name="new_tab_position_end">Slutning af faneliste</string>
     <string name="incoming_view_action">Indgående visningstilstand</string>
-    <string name="action_incognito_tab">Privat fane</string>
+    <string name="action_incognito_tab">Stealth-fane</string>
     <string name="action_select_browser">Vælg browser</string>
     <string name="action_block">Bloker</string>
     <string name="pref_title_default_browser">Standardbrowser</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Log-niveau</string>
     <string name="dialog_open_new_tab">Åbn i ny fane</string>
     <string name="dialog_open_background_tab">Åbn i baggrundsfane</string>
-    <string name="dialog_open_incognito_tab">Åbn i privat fane</string>
+    <string name="dialog_open_incognito_tab">Åbn i stealth-fane</string>
     <string name="dialog_remove_bookmark">Fjern bogmærke</string>
     <string name="dialog_edit_bookmark">Rediger bogmærke</string>
     <string name="dialog_title_bookmark">Bogmærke</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Skift skrivebordets brugeragent</string>
     <string name="search_engine_custom">Brugerdefineret URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d privat fane åben</item>
-        <item quantity="other">%1$d private faner åbne</item>
+        <item quantity="one">%1$d stealth-fane åben</item>
+        <item quantity="other">%1$d stealth-faner åbne</item>
     </plurals>
     <string name="notification_incognito_running_message">Tryk for at åbne</string>
-    <string name="notification_incognito_running_description">Igangværende privat session</string>
+    <string name="notification_incognito_running_description">Igangværende stealth-session</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Udstedt af:</string>
     <string name="ssl_info_issued_to">Udstedt til:</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Slet alle domæneindstillinger?</string>
     <string name="settings_title_delete_domain_settings">Slet domæneindstillinger</string>
     <string name="settings_title_parent">Forælder</string>
+    <string name="settings_title_default_domain_settings">Standardindstillinger</string>
     <string name="settings_summary_default_domain_settings">Gælder for alle websteder, medmindre det tilsidesættes</string>
     <string name="settings_summary_loading">Indlæser…</string>
     <string name="settings_title_ssl_error">Sikkerhedsfejl</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">Ingen anmodninger registreret for denne side</string>
     <string name="settings_summary_full_menu">Vis fuld menu</string>
     <string name="action_launch">Start</string>
-    <string name="settings_title_default_domain_settings">Standardindstillinger</string>
 </resources>

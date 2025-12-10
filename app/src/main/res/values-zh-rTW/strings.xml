@@ -88,7 +88,7 @@
     <string name="hint_url">網址</string>
     <string name="title_edit_bookmark">編輯書籤</string>
     <string name="action_edit">編輯</string>
-    <string name="action_incognito">私密模式</string>
+    <string name="action_incognito">隱身</string>
     <string name="action_show_homepage">顯示首頁</string>
     <string name="action_back">返回</string>
     <string name="action_find">在網頁中尋找</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">此儲存裝置處於忙碌中，若要下載請點觸通知中的「關閉 USB 儲存裝置」。</string>
     <string name="download_complete">下載完成</string>
     <string name="download_failed">下載失敗</string>
-    <string name="incognito_cookies">在私密模式下啟用Cookie</string>
-    <string name="incognito_cookies_pie">私密模式在單獨的程序中運行，每次會話後重置。私密Cookie偏好現在由常規Cookie偏好控制。</string>
+    <string name="incognito_cookies">在隱身模式下啟用Cookie</string>
+    <string name="incognito_cookies_pie">隱身模式在單獨的處理程序中執行，每次工作階段後重設。隱身Cookie偏好設定現在由一般Cookie偏好設定控制。</string>
     <string name="pref_category_title_contact_us">聯絡我們</string>
     <string name="pref_category_title_legal">法律</string>
     <string name="pref_title_email">電子郵件</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">分頁清單開頭</string>
     <string name="new_tab_position_end">分頁清單結尾</string>
     <string name="incoming_view_action">傳入檢視操作</string>
-    <string name="action_incognito_tab">私密分頁</string>
+    <string name="action_incognito_tab">隱身分頁</string>
     <string name="action_select_browser">選擇瀏覽器</string>
     <string name="action_block">封鎖</string>
     <string name="pref_title_default_browser">預設瀏覽器</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">日誌層級</string>
     <string name="dialog_open_new_tab">在新分頁開啟</string>
     <string name="dialog_open_background_tab">在背景分頁開啟</string>
-    <string name="dialog_open_incognito_tab">在私密分頁中開啟</string>
+    <string name="dialog_open_incognito_tab">在隱身分頁中開啟</string>
     <string name="dialog_remove_bookmark">移除書籤</string>
     <string name="dialog_edit_bookmark">編輯書籤</string>
     <string name="dialog_title_bookmark">書籤</string>
@@ -416,10 +416,11 @@
     <string name="dialog_toggle_desktop">切換成桌面版使用者代理</string>
     <string name="search_engine_custom">自訂網址</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d 個私密分頁已開啟</item>
+        <item quantity="other">%1$d個隱身分頁已開啟</item>
+        <item quantity="one">%1$d個隱身分頁已開啟</item>
     </plurals>
     <string name="notification_incognito_running_message">點觸以開啟</string>
-    <string name="notification_incognito_running_description">正在進行的私密工作階段</string>
+    <string name="notification_incognito_running_description">進行中的隱身工作階段</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Issued by</string>
     <string name="ssl_info_issued_to">Issued to</string>
@@ -446,6 +447,7 @@
     <string name="question_delete_all_domain_settings">刪除所有網域設定？</string>
     <string name="settings_title_delete_domain_settings">刪除網域設定</string>
     <string name="settings_title_parent">父項</string>
+    <string name="settings_title_default_domain_settings">預設設定</string>
     <string name="settings_summary_default_domain_settings">套用至所有網站，除非被覆寫</string>
     <string name="settings_summary_loading">載入中…</string>
     <string name="settings_title_ssl_error">安全性錯誤</string>
@@ -620,5 +622,4 @@
     <string name="page_requests_none">此頁面沒有記錄的請求</string>
     <string name="settings_summary_full_menu">顯示完整選單</string>
     <string name="action_launch">啟動</string>
-    <string name="settings_title_default_domain_settings">預設設定</string>
 </resources>

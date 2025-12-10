@@ -88,7 +88,7 @@
     <string name="hint_url">Adresse</string>
     <string name="title_edit_bookmark">Éditer le favori</string>
     <string name="action_edit">Éditer</string>
-    <string name="action_incognito">Mode privé</string>
+    <string name="action_incognito">Furtif</string>
     <string name="action_show_homepage">Afficher la page d\'accueil</string>
     <string name="action_back">Retour</string>
     <string name="action_find">Rechercher dans la page</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">Le stockage est occupé. Pour autoriser les téléchargements, appuyez sur \'Désactiver le stockage USB\' dans la notification.</string>
     <string name="download_complete">Téléchargement terminé</string>
     <string name="download_failed">Échec du téléchargement</string>
-    <string name="incognito_cookies">Activer les cookies en mode privé</string>
-    <string name="incognito_cookies_pie">Le mode privé s\'exécute dans un processus séparé qui est réinitialisé après chaque session. Les préférences de cookies privés sont maintenant contrôlées par les préférences de cookies normales.</string>
+    <string name="incognito_cookies">Activer les cookies en mode furtif</string>
+    <string name="incognito_cookies_pie">Le mode furtif s\'exécute dans un processus séparé qui est réinitialisé après chaque session. Les préférences de cookies furtifs sont désormais contrôlées par les préférences de cookies normales.</string>
     <string name="pref_category_title_contact_us">Nous contacter</string>
     <string name="pref_category_title_legal">Mentions légales</string>
     <string name="pref_title_email">Courriel</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Début de la liste d\'onglets</string>
     <string name="new_tab_position_end">Fin de la liste d\'onglets</string>
     <string name="incoming_view_action">Action de vue entrante</string>
-    <string name="action_incognito_tab">Onglet privé</string>
+    <string name="action_incognito_tab">Onglet furtif</string>
     <string name="action_select_browser">Sélectionner le navigateur</string>
     <string name="action_block">Bloquer</string>
     <string name="pref_title_default_browser">Navigateur par défaut</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Niveau de détail du journal</string>
     <string name="dialog_open_new_tab">Ouvrir dans un nouvel onglet</string>
     <string name="dialog_open_background_tab">Ouvrir en arrière plan</string>
-    <string name="dialog_open_incognito_tab">Ouvrir dans un onglet privé</string>
+    <string name="dialog_open_incognito_tab">Ouvrir dans un onglet furtif</string>
     <string name="dialog_remove_bookmark">Supprimer le favori</string>
     <string name="dialog_edit_bookmark">Éditer le favori</string>
     <string name="dialog_title_bookmark">Ajouter à mes favoris</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Activer/désactiver le mode Bureau</string>
     <string name="search_engine_custom">Adresse personnalisée</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d onglet privé ouvert</item>
-        <item quantity="other">%1$d onglets privés ouverts</item>
+        <item quantity="one">%1$d onglet furtif ouvert</item>
+        <item quantity="other">%1$d onglets furtifs ouverts</item>
     </plurals>
     <string name="notification_incognito_running_message">Appuyer pour ouvrir</string>
-    <string name="notification_incognito_running_description">Session privée en cours</string>
+    <string name="notification_incognito_running_description">Session furtive en cours</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Émis par :</string>
     <string name="ssl_info_issued_to">Délivré à :</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Supprimer tous les paramètres du domaine ?</string>
     <string name="settings_title_delete_domain_settings">Supprimer les paramètres du domaine</string>
     <string name="settings_title_parent">Parent</string>
+    <string name="settings_title_default_domain_settings">Paramètres par défaut</string>
     <string name="settings_summary_default_domain_settings">Appliquer à tous les sites sauf si remplacé</string>
     <string name="settings_summary_loading">Chargement…</string>
     <string name="settings_title_ssl_error">Erreur de sécurité</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">Aucune requête enregistrée pour cette page</string>
     <string name="settings_summary_full_menu">Afficher le menu complet</string>
     <string name="action_launch">Lancer</string>
-    <string name="settings_title_default_domain_settings">Paramètres par défaut</string>
 </resources>

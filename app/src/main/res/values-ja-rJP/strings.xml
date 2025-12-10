@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">ブックマークを編集する</string>
     <string name="action_edit">編集</string>
-    <string name="action_incognito">プライベートモード</string>
+    <string name="action_incognito">ステルス</string>
     <string name="action_show_homepage">ホームページを表示</string>
     <string name="action_back">戻る</string>
     <string name="action_find">ページ内を検索</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">ストレージがビジー状態です。ダウンロードするには、ステータスバーの \"USB ストレージをオフにする\" をタップしてください</string>
     <string name="download_complete">ダウンロード完了</string>
     <string name="download_failed">ダウンロード失敗</string>
-    <string name="incognito_cookies">プライベートモードでCookieを有効にする</string>
-    <string name="incognito_cookies_pie">プライベートモードは各セッション後にリセットされる別プロセスで実行されます。プライベートCookie設定は通常のCookie設定で制御されるようになりました。</string>
+    <string name="incognito_cookies">ステルスモードでCookieを有効にする</string>
+    <string name="incognito_cookies_pie">ステルスモードは各セッション後にリセットされる別のプロセスで実行されます。ステルスCookieの設定は、通常のCookie設定によって制御されるようになりました。</string>
     <string name="pref_category_title_contact_us">お問い合わせ</string>
     <string name="pref_category_title_legal">法的情報</string>
     <string name="pref_title_email">メール</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">タブリストの最初</string>
     <string name="new_tab_position_end">タブリストの最後</string>
     <string name="incoming_view_action">受信ビューアクション</string>
-    <string name="action_incognito_tab">プライベートタブ</string>
+    <string name="action_incognito_tab">ステルスタブ</string>
     <string name="action_select_browser">ブラウザを選択</string>
     <string name="action_block">ブロック</string>
     <string name="pref_title_default_browser">デフォルトブラウザ</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">ログレベル</string>
     <string name="dialog_open_new_tab">新しいタブで開く</string>
     <string name="dialog_open_background_tab">バックグラウンドのタブで開く</string>
-    <string name="dialog_open_incognito_tab">プライベートタブで開く</string>
+    <string name="dialog_open_incognito_tab">ステルスタブで開く</string>
     <string name="dialog_remove_bookmark">ブックマークから削除する</string>
     <string name="dialog_edit_bookmark">ブックマークを編集する</string>
     <string name="dialog_title_bookmark">ブックマーク</string>
@@ -416,10 +416,11 @@
     <string name="dialog_toggle_desktop">デスクトップユーザーエージェントを切り替える</string>
     <string name="search_engine_custom">カスタム URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d 個のプライベートタブが開いています</item>
+        <item quantity="other">%1$dつのステルスタブを開いています</item>
+        <item quantity="one">%1$dつのステルスタブを開いています</item>
     </plurals>
     <string name="notification_incognito_running_message">タップすると開きます</string>
-    <string name="notification_incognito_running_description">進行中のプライベートセッション</string>
+    <string name="notification_incognito_running_description">ステルスセッション実行中</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">発行元:</string>
     <string name="ssl_info_issued_to">発行先</string>
@@ -446,6 +447,7 @@
     <string name="question_delete_all_domain_settings">すべてのドメイン設定を削除しますか？</string>
     <string name="settings_title_delete_domain_settings">ドメイン設定を削除</string>
     <string name="settings_title_parent">親</string>
+    <string name="settings_title_default_domain_settings">デフォルト設定</string>
     <string name="settings_summary_default_domain_settings">オーバーライドされない限りすべてのサイトに適用</string>
     <string name="settings_summary_loading">読み込み中…</string>
     <string name="settings_title_ssl_error">セキュリティエラー</string>
@@ -620,5 +622,4 @@
     <string name="page_requests_none">このページのリクエストは記録されていません</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
     <string name="action_launch">起動</string>
-    <string name="settings_title_default_domain_settings">デフォルト設定</string>
 </resources>

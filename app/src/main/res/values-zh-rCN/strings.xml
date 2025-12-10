@@ -88,7 +88,7 @@
     <string name="hint_url">网址链接</string>
     <string name="title_edit_bookmark">编辑书签</string>
     <string name="action_edit">编辑</string>
-    <string name="action_incognito">隐私模式</string>
+    <string name="action_incognito">隐身</string>
     <string name="action_show_homepage">显示主页</string>
     <string name="action_back">返回</string>
     <string name="action_find">在页面中查找</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">存储设备正忙。要允许下载，请轻触通知中的“关闭 USB 存储”</string>
     <string name="download_complete">下载完成</string>
     <string name="download_failed">下载失败</string>
-    <string name="incognito_cookies">在隐私模式下启用Cookie</string>
-    <string name="incognito_cookies_pie">隐私模式在单独的进程中运行，每次会话后重置。隐私Cookie偏好现在由常规Cookie偏好控制。</string>
+    <string name="incognito_cookies">在隐身模式下启用Cookie</string>
+    <string name="incognito_cookies_pie">隐身模式在单独的进程中运行，每次会话后重置。隐身Cookie偏好设置现在由常规Cookie偏好设置控制。</string>
     <string name="pref_category_title_contact_us">联系我们</string>
     <string name="pref_category_title_legal">法律</string>
     <string name="pref_title_email">电子邮件</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">标签页列表的最前面</string>
     <string name="new_tab_position_end">标签页列表的最后面</string>
     <string name="incoming_view_action">传入视图操作</string>
-    <string name="action_incognito_tab">隐私标签页</string>
+    <string name="action_incognito_tab">隐身标签页</string>
     <string name="action_select_browser">选择浏览器</string>
     <string name="action_block">屏蔽</string>
     <string name="pref_title_default_browser">默认浏览器</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">日志级别</string>
     <string name="dialog_open_new_tab">在新标签页中打开</string>
     <string name="dialog_open_background_tab">在后台标签页中打开</string>
-    <string name="dialog_open_incognito_tab">在隐私标签页中打开</string>
+    <string name="dialog_open_incognito_tab">在隐身标签页中打开</string>
     <string name="dialog_remove_bookmark">移除书签</string>
     <string name="dialog_edit_bookmark">编辑书签</string>
     <string name="dialog_title_bookmark">书签</string>
@@ -416,10 +416,11 @@
     <string name="dialog_toggle_desktop">切换桌面用户代理</string>
     <string name="search_engine_custom">自定义 URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d 个隐私标签页已打开</item>
+        <item quantity="other">%1$d个隐身标签页已打开</item>
+        <item quantity="one">%1$d个隐身标签页已打开</item>
     </plurals>
     <string name="notification_incognito_running_message">轻触以打开</string>
-    <string name="notification_incognito_running_description">正在进行的隐私会话</string>
+    <string name="notification_incognito_running_description">正在进行的隐身会话</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">颁发者</string>
     <string name="ssl_info_issued_to">颁发给</string>
@@ -446,6 +447,7 @@
     <string name="question_delete_all_domain_settings">删除所有域设置？</string>
     <string name="settings_title_delete_domain_settings">删除域设置</string>
     <string name="settings_title_parent">主设置</string>
+    <string name="settings_title_default_domain_settings">默认设置</string>
     <string name="settings_summary_default_domain_settings">应用于所有网站，除非被覆盖</string>
     <string name="settings_summary_loading">加载中…</string>
     <string name="settings_title_ssl_error">安全性错误</string>
@@ -620,5 +622,4 @@
     <string name="page_requests_none">此页面没有记录的请求</string>
     <string name="settings_summary_full_menu">显示完整菜单</string>
     <string name="action_launch">启动</string>
-    <string name="settings_title_default_domain_settings">默认设置</string>
 </resources>

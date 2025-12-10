@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Editar favorito</string>
     <string name="action_edit">Editar</string>
-    <string name="action_incognito">Modo privado</string>
+    <string name="action_incognito">Furtivo</string>
     <string name="action_show_homepage">Mostrar página inicial</string>
     <string name="action_back">Voltar</string>
     <string name="action_find">Localizar na página</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">O cartão SD está ocupado. Para poder transferir arquivos, desative a opção Desativar armazenamento USB na notificação.</string>
     <string name="download_complete">Download completo</string>
     <string name="download_failed">Falha no download</string>
-    <string name="incognito_cookies">Ativar cookies no modo privado</string>
-    <string name="incognito_cookies_pie">O modo privado é executado em um processo separado que é redefinido após cada sessão. As preferências de cookies privados agora são controladas pelas preferências de cookies regulares.</string>
+    <string name="incognito_cookies">Ativar cookies no modo furtivo</string>
+    <string name="incognito_cookies_pie">O modo furtivo é executado em um processo separado que é redefinido após cada sessão. As preferências de cookies furtivos agora são controladas pelas preferências de cookies normais.</string>
     <string name="pref_category_title_contact_us">Fale conosco</string>
     <string name="pref_category_title_legal">Jurídico</string>
     <string name="pref_title_email">E-mail</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Início da lista de abas</string>
     <string name="new_tab_position_end">Fim da lista de abas</string>
     <string name="incoming_view_action">Ação de visualização recebida</string>
-    <string name="action_incognito_tab">Guia privada</string>
+    <string name="action_incognito_tab">Aba furtiva</string>
     <string name="action_select_browser">Selecionar navegador</string>
     <string name="action_block">Bloquear</string>
     <string name="pref_title_default_browser">Navegador padrão</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Nível de log</string>
     <string name="dialog_open_new_tab">Abrir em uma nova aba</string>
     <string name="dialog_open_background_tab">Abrir aba em segundo plano</string>
-    <string name="dialog_open_incognito_tab">Abrir em guia privada</string>
+    <string name="dialog_open_incognito_tab">Abrir em aba furtiva</string>
     <string name="dialog_remove_bookmark">Remover favorito</string>
     <string name="dialog_edit_bookmark">Editar favorito</string>
     <string name="dialog_title_bookmark">Favorito</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Alternar agente de usuário para computador</string>
     <string name="search_engine_custom">URL personalizado</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d guia privada aberta</item>
-        <item quantity="other">%1$d guias privadas abertas</item>
+        <item quantity="one">%1$d aba furtiva aberta</item>
+        <item quantity="other">%1$d abas furtivas abertas</item>
     </plurals>
     <string name="notification_incognito_running_message">Toque para abrir</string>
-    <string name="notification_incognito_running_description">Sessão privada em andamento</string>
+    <string name="notification_incognito_running_description">Sessão furtiva em andamento</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Emitido por:</string>
     <string name="ssl_info_issued_to">Emitido para:</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Excluir todas as configurações do domínio?</string>
     <string name="settings_title_delete_domain_settings">Excluir configurações do domínio</string>
     <string name="settings_title_parent">Domínio pai</string>
+    <string name="settings_title_default_domain_settings">Configurações padrão</string>
     <string name="settings_summary_default_domain_settings">Aplicar a todos os sites, a menos que substituído</string>
     <string name="settings_summary_loading">Carregando…</string>
     <string name="settings_title_ssl_error">Erro de segurança</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">Nenhuma solicitação registrada para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menu completo</string>
     <string name="action_launch">Iniciar</string>
-    <string name="settings_title_default_domain_settings">Configurações padrão</string>
 </resources>

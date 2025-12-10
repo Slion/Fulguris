@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Επεξεργασία σελιδοδείκτη</string>
     <string name="action_edit">Επεξεργασία</string>
-    <string name="action_incognito">Ιδιωτική λειτουργία</string>
+    <string name="action_incognito">Κρυφό</string>
     <string name="action_show_homepage">Εμφάνιση αρχικής σελίδας</string>
     <string name="action_back">Πίσω</string>
     <string name="action_find">Αναζήτηση στην σελίδα</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">Η συσκευή αποθήκευσης είναι απασχολημένη. Για να επιτρέψετε λήψεις πατήστε το Κλείσιμο USB Storage στις ειδοποιήσεις.</string>
     <string name="download_complete">Η λήψη ολοκληρώθηκε</string>
     <string name="download_failed">Η λήψη απέτυχε</string>
-    <string name="incognito_cookies">Ενεργοποίηση cookies σε ιδιωτική λειτουργία</string>
-    <string name="incognito_cookies_pie">Η ιδιωτική λειτουργία εκτελείται σε ξεχωριστή διαδικασία που επαναφέρεται μετά από κάθε συνεδρία. Οι προτιμήσεις ιδιωτικών cookies ελέγχονται τώρα από τις κανονικές προτιμήσεις cookies.</string>
+    <string name="incognito_cookies">Ενεργοποίηση cookies σε κρυφή λειτουργία</string>
+    <string name="incognito_cookies_pie">Η κρυφή λειτουργία εκτελείται σε ξεχωριστή διαδικασία που επαναφέρεται μετά από κάθε περίοδο σύνδεσης. Οι προτιμήσεις κρυφών cookies ελέγχονται πλέον από τις κανονικές προτιμήσεις cookies.</string>
     <string name="pref_category_title_contact_us">Επικοινωνήστε μαζί μας</string>
     <string name="pref_category_title_legal">Νομικά</string>
     <string name="pref_title_email">Email</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Αρχή λίστας καρτελών</string>
     <string name="new_tab_position_end">Τέλος λίστας καρτελών</string>
     <string name="incoming_view_action">Ενέργεια εισερχόμενης προβολής</string>
-    <string name="action_incognito_tab">Ιδιωτική καρτέλα</string>
+    <string name="action_incognito_tab">Κρυφή καρτέλα</string>
     <string name="action_select_browser">Επιλογή προγράμματος περιήγησης</string>
     <string name="action_block">Αποκλεισμός</string>
     <string name="pref_title_default_browser">Προεπιλεγμένο πρόγραμμα περιήγησης</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Επίπεδο καταγραφής</string>
     <string name="dialog_open_new_tab">Άνοιγμα σε νέα καρτέλα</string>
     <string name="dialog_open_background_tab">Άνοιγμα σε καρτέλα παρασκηνίου</string>
-    <string name="dialog_open_incognito_tab">Άνοιγμα σε ιδιωτική καρτέλα</string>
+    <string name="dialog_open_incognito_tab">Άνοιγμα σε κρυφή καρτέλα</string>
     <string name="dialog_remove_bookmark">Αφαίρεση σελιδοδείκτη</string>
     <string name="dialog_edit_bookmark">Επεξεργασία σελιδοδείκτη</string>
     <string name="dialog_title_bookmark">Σελιδοδείκτης</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Εναλλαγή παράγοντα χρήστη επιφάνειας εργασίας</string>
     <string name="search_engine_custom">Ειδικό URL</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d ιδιωτική καρτέλα ανοιχτή</item>
-        <item quantity="other">%1$d ιδιωτικές καρτέλες ανοιχτές</item>
+        <item quantity="one">%1$d κρυφή καρτέλα ανοιχτή</item>
+        <item quantity="other">%1$d κρυφές καρτέλες ανοιχτές</item>
     </plurals>
     <string name="notification_incognito_running_message">Αγγίξτε για άνοιγμα</string>
-    <string name="notification_incognito_running_description">Συνεχιζόμενη ιδιωτική συνεδρία</string>
+    <string name="notification_incognito_running_description">Κρυφή περίοδος σύνδεσης σε εξέλιξη</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Εκδόθηκε από:</string>
     <string name="ssl_info_issued_to">Εκδόθηκε σε:</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Διαγραφή όλων των ρυθμίσεων τομέα;</string>
     <string name="settings_title_delete_domain_settings">Διαγραφή ρυθμίσεων τομέα</string>
     <string name="settings_title_parent">Γονικό</string>
+    <string name="settings_title_default_domain_settings">Προεπιλεγμένες ρυθμίσεις</string>
     <string name="settings_summary_default_domain_settings">Εφαρμογή σε όλους τους ιστότοπους εκτός εάν παρακαμφθεί</string>
     <string name="settings_summary_loading">Φόρτωση…</string>
     <string name="settings_title_ssl_error">Σφάλμα ασφαλείας</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">Δεν καταγράφηκαν αιτήματα για αυτή τη σελίδα</string>
     <string name="settings_summary_full_menu">Εμφάνιση πλήρους μενού</string>
     <string name="action_launch">Εκκίνηση</string>
-    <string name="settings_title_default_domain_settings">Προεπιλεγμένες ρυθμίσεις</string>
 </resources>

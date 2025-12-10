@@ -88,7 +88,7 @@
     <string name="hint_url">Dirección URL</string>
     <string name="title_edit_bookmark">Editar marcador</string>
     <string name="action_edit">Editar</string>
-    <string name="action_incognito">Modo privado</string>
+    <string name="action_incognito">Sigiloso</string>
     <string name="action_show_homepage">Mostrar página de inicio</string>
     <string name="action_back">Atrás</string>
     <string name="action_find">Buscar en la página</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">El almacenamiento está ocupado. Para permitir las descargas, desactive el almacenamiento USB desde el área de notificaciones.</string>
     <string name="download_complete">Descarga completada</string>
     <string name="download_failed">Descarga fallida</string>
-    <string name="incognito_cookies">Habilitar cookies en modo privado</string>
-    <string name="incognito_cookies_pie">El modo privado se ejecuta en un proceso separado que se restablece después de cada sesión. Las preferencias de cookies privadas ahora están controladas por las preferencias de cookies normales.</string>
+    <string name="incognito_cookies">Habilitar cookies en modo sigiloso</string>
+    <string name="incognito_cookies_pie">El modo sigiloso se ejecuta en un proceso separado que se restablece después de cada sesión. Las preferencias de cookies sigilosas ahora están controladas por las preferencias de cookies normales.</string>
     <string name="pref_category_title_contact_us">Contáctate con nosotros</string>
     <string name="pref_category_title_legal">Legal</string>
     <string name="pref_title_email">Correo electrónico</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Inicio de la lista de pestañas</string>
     <string name="new_tab_position_end">Fin de la lista de pestañas</string>
     <string name="incoming_view_action">Acción de vista entrante</string>
-    <string name="action_incognito_tab">Pestaña privada</string>
+    <string name="action_incognito_tab">Pestaña sigilosa</string>
     <string name="action_select_browser">Seleccionar navegador</string>
     <string name="action_block">Bloquear</string>
     <string name="pref_title_default_browser">Navegador predeterminado</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Nivel de registro</string>
     <string name="dialog_open_new_tab">Abrir en una nueva pestaña</string>
     <string name="dialog_open_background_tab">Abrir en una pestaña de fondo</string>
-    <string name="dialog_open_incognito_tab">Abrir en pestaña privada</string>
+    <string name="dialog_open_incognito_tab">Abrir en pestaña sigilosa</string>
     <string name="dialog_remove_bookmark">Eliminar marcador</string>
     <string name="dialog_edit_bookmark">Editar marcador</string>
     <string name="dialog_title_bookmark">Marcador</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Alternar agente de usuario de escritorio</string>
     <string name="search_engine_custom">Dirección personalizada</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d pestaña privada abierta</item>
-        <item quantity="other">%1$d pestañas privadas abiertas</item>
+        <item quantity="one">%1$d pestaña sigilosa abierta</item>
+        <item quantity="other">%1$d pestañas sigilosas abiertas</item>
     </plurals>
     <string name="notification_incognito_running_message">Tocar para abrir</string>
-    <string name="notification_incognito_running_description">Sesión privada en curso</string>
+    <string name="notification_incognito_running_description">Sesión sigilosa en curso</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Emitido por</string>
     <string name="ssl_info_issued_to">Emitido a</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">¿Quiere borrar todos los ajustes del dominio?</string>
     <string name="settings_title_delete_domain_settings">Borrar todos los ajustes del dominio</string>
     <string name="settings_title_parent">Padre</string>
+    <string name="settings_title_default_domain_settings">Configuración predeterminada</string>
     <string name="settings_summary_default_domain_settings">Aplicar a todos los sitios a menos que se anule</string>
     <string name="settings_summary_loading">Cargando…</string>
     <string name="settings_title_ssl_error">Error de seguridad</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">No hay solicitudes registradas para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menú completo</string>
     <string name="action_launch">Iniciar</string>
-    <string name="settings_title_default_domain_settings">Configuración predeterminada</string>
 </resources>

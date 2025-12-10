@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Sunting bookmark</string>
     <string name="action_edit">Sunting</string>
-    <string name="action_incognito">Mode pribadi</string>
+    <string name="action_incognito">Tersembunyi</string>
     <string name="action_show_homepage">Tampilkan beranda</string>
     <string name="action_back">Kembali</string>
     <string name="action_find">Cari di halaman</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">Simpanan sedang sibuk. Untuk mengunduh, sentuh \"Matikan simpanan USB\" dalam pemberitahuan.</string>
     <string name="download_complete">Selesai mengunduh</string>
     <string name="download_failed">Gagal mengunduh</string>
-    <string name="incognito_cookies">Aktifkan cookie dalam mode pribadi</string>
-    <string name="incognito_cookies_pie">Mode pribadi berjalan dalam proses terpisah yang direset setelah setiap sesi. Preferensi cookie pribadi sekarang dikontrol oleh preferensi cookie reguler.</string>
+    <string name="incognito_cookies">Aktifkan cookie dalam mode tersembunyi</string>
+    <string name="incognito_cookies_pie">Mode tersembunyi berjalan dalam proses terpisah yang direset setelah setiap sesi. Preferensi cookie tersembunyi sekarang dikontrol oleh preferensi cookie reguler.</string>
     <string name="pref_category_title_contact_us">Hubungi kami</string>
     <string name="pref_category_title_legal">Hukum</string>
     <string name="pref_title_email">Email</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">Pada awal daftar tab</string>
     <string name="new_tab_position_end">Pada akhir daftar tab</string>
     <string name="incoming_view_action">Tindakan tampilan masuk</string>
-    <string name="action_incognito_tab">Tab pribadi</string>
+    <string name="action_incognito_tab">Tab tersembunyi</string>
     <string name="action_select_browser">Pilih peramban</string>
     <string name="action_block">Blokir</string>
     <string name="pref_title_default_browser">Peramban default</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Level log</string>
     <string name="dialog_open_new_tab">Buka di tab baru</string>
     <string name="dialog_open_background_tab">Buka di tab latar belakang</string>
-    <string name="dialog_open_incognito_tab">Buka di tab pribadi</string>
+    <string name="dialog_open_incognito_tab">Buka di tab tersembunyi</string>
     <string name="dialog_remove_bookmark">Hapus penanda</string>
     <string name="dialog_edit_bookmark">Edit penanda</string>
     <string name="dialog_title_bookmark">Markah</string>
@@ -416,10 +416,11 @@
     <string name="dialog_toggle_desktop">Aktifkan agen pengguna desktop</string>
     <string name="search_engine_custom">URL kustom</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="other">%1$d tab pribadi terbuka</item>
+        <item quantity="other">%1$d tab tersembunyi terbuka</item>
+        <item quantity="one">%1$d tab tersembunyi terbuka</item>
     </plurals>
     <string name="notification_incognito_running_message">Sentuh untuk membuka</string>
-    <string name="notification_incognito_running_description">Sesi pribadi sedang berlangsung</string>
+    <string name="notification_incognito_running_description">Sesi tersembunyi berlangsung</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Diterbitkan oleh</string>
     <string name="ssl_info_issued_to">Diterbitkan untuk</string>
@@ -446,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Hapus semua pengaturan domain?</string>
     <string name="settings_title_delete_domain_settings">Hapus pengaturan domain</string>
     <string name="settings_title_parent">Induk</string>
+    <string name="settings_title_default_domain_settings">Pengaturan default</string>
     <string name="settings_summary_default_domain_settings">Terapkan ke semua situs kecuali diganti</string>
     <string name="settings_summary_loading">Memuat…</string>
     <string name="settings_title_ssl_error">Kesalahan keamanan</string>
@@ -620,5 +622,4 @@
     <string name="page_requests_none">Tidak ada permintaan tercatat untuk halaman ini</string>
     <string name="settings_summary_full_menu">Tampilkan menu lengkap</string>
     <string name="action_launch">Luncurkan</string>
-    <string name="settings_title_default_domain_settings">Pengaturan default</string>
 </resources>

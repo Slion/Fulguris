@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Editar marcador</string>
     <string name="action_edit">Editar</string>
-    <string name="action_incognito">Modo privado</string>
+    <string name="action_incognito">Furtivo</string>
     <string name="action_show_homepage">Mostrar página inicial</string>
     <string name="action_back">Recuar</string>
     <string name="action_find">Localizar na página</string>
@@ -109,8 +109,8 @@
     <string name="download_sdcard_busy_dlg_msg">O cartão SD está ocupado. Para descarregar ficheiros, toque em \"Desativar armazenamento USB\" na notificação.</string>
     <string name="download_complete">Descarga terminada</string>
     <string name="download_failed">Falha ao descarregar</string>
-    <string name="incognito_cookies">Ativar cookies no modo privado</string>
-    <string name="incognito_cookies_pie">O modo privado é executado num processo separado que é reposto após cada sessão. As preferências de cookies privados são agora controladas pelas preferências de cookies regulares.</string>
+    <string name="incognito_cookies">Ativar cookies no modo furtivo</string>
+    <string name="incognito_cookies_pie">O modo furtivo é executado num processo separado que é redefinido após cada sessão. As preferências de cookies furtivos são agora controladas pelas preferências de cookies normais.</string>
     <string name="pref_category_title_contact_us">Contacte-nos</string>
     <string name="pref_category_title_legal">Jurídico</string>
     <string name="pref_title_email">E-mail</string>
@@ -339,7 +339,7 @@
     <string name="new_tab_position_start">No início da lista de separadores</string>
     <string name="new_tab_position_end">No fim da lista de separadores</string>
     <string name="incoming_view_action">Ação de visualização recebida</string>
-    <string name="action_incognito_tab">Separador privado</string>
+    <string name="action_incognito_tab">Separador furtivo</string>
     <string name="action_select_browser">Selecionar navegador</string>
     <string name="action_block">Bloquear</string>
     <string name="pref_title_default_browser">Navegador predefinido</string>
@@ -398,7 +398,7 @@
     <string name="pref_title_log_level">Nível dos registos</string>
     <string name="dialog_open_new_tab">Abrir em novo separador</string>
     <string name="dialog_open_background_tab">Abrir em separador secundário</string>
-    <string name="dialog_open_incognito_tab">Abrir em separador privado</string>
+    <string name="dialog_open_incognito_tab">Abrir em separador furtivo</string>
     <string name="dialog_remove_bookmark">Remover marcador</string>
     <string name="dialog_edit_bookmark">Editar marcador</string>
     <string name="dialog_title_bookmark">Marcador</string>
@@ -416,11 +416,11 @@
     <string name="dialog_toggle_desktop">Alternar agente de utilizador</string>
     <string name="search_engine_custom">URL personalizado</string>
     <plurals name="notification_incognito_running_title">
-        <item quantity="one">%1$d separador privado aberto</item>
-        <item quantity="other">%1$d separadores privados abertos</item>
+        <item quantity="one">%1$d separador furtivo aberto</item>
+        <item quantity="other">%1$d separadores furtivos abertos</item>
     </plurals>
     <string name="notification_incognito_running_message">Toque para abrir</string>
-    <string name="notification_incognito_running_description">Sessão privada em curso</string>
+    <string name="notification_incognito_running_description">Sessão furtiva em curso</string>
     <string name="infinity">∞</string>
     <string name="ssl_info_issued_by">Emitido por:</string>
     <string name="ssl_info_issued_to">Emitido para:</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Apagar todas as definições?</string>
     <string name="settings_title_delete_domain_settings">Apagar definições de domínio</string>
     <string name="settings_title_parent">Principal</string>
+    <string name="settings_title_default_domain_settings">Definições predefinidas</string>
     <string name="settings_summary_default_domain_settings">Aplicar a todos os sites, a menos que substituído</string>
     <string name="settings_summary_loading">A carregar…</string>
     <string name="settings_title_ssl_error">Erro de segurança</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">Nenhum pedido registado para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menu completo</string>
     <string name="action_launch">Iniciar</string>
-    <string name="settings_title_default_domain_settings">Definições predefinidas</string>
 </resources>

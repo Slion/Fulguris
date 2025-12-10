@@ -88,7 +88,7 @@
     <string name="hint_url">URL</string>
     <string name="title_edit_bookmark">Yer imini düzenle</string>
     <string name="action_edit">Düzenle</string>
-    <string name="action_incognito">Gizli mod</string>
+    <string name="action_incognito">Gizli</string>
     <string name="action_show_homepage">Ana sayfayı göster</string>
     <string name="action_back">Geri</string>
     <string name="action_find">Sayfada bul</string>
@@ -110,7 +110,7 @@
     <string name="download_complete">İndirme tamamlandı</string>
     <string name="download_failed">İndirme başarısız oldu</string>
     <string name="incognito_cookies">Gizli modda çerezleri etkinleştir</string>
-    <string name="incognito_cookies_pie">Gizli mod, her oturumdan sonra sıfırlanan ayrı bir işlemde çalışır. Özel çerez tercihleri artık normal çerez tercihleri tarafından kontrol edilmektedir.</string>
+    <string name="incognito_cookies_pie">Gizli mod her oturumdan sonra sıfırlanan ayrı bir işlemde çalışır. Gizli çerez tercihleri artık normal çerez tercihler tarafından kontrol edilir.</string>
     <string name="pref_category_title_contact_us">Bize ulaşın</string>
     <string name="pref_category_title_legal">Yasal</string>
     <string name="pref_title_email">E-posta</string>
@@ -447,6 +447,7 @@
     <string name="question_delete_all_domain_settings">Tüm alan adı ayarları silinsin mi?</string>
     <string name="settings_title_delete_domain_settings">Alan adı ayarlarını sil</string>
     <string name="settings_title_parent">Üst</string>
+    <string name="settings_title_default_domain_settings">Varsayılan ayarlar</string>
     <string name="settings_summary_default_domain_settings">Geçersiz kılınmadıkça tüm sitelere uygula</string>
     <string name="settings_summary_loading">Yükleniyor…</string>
     <string name="settings_title_ssl_error">Güvenlik hatası</string>
@@ -623,5 +624,4 @@
     <string name="page_requests_none">Bu sayfa için kaydedilen istek yok</string>
     <string name="settings_summary_full_menu">Tam menüyü göster</string>
     <string name="action_launch">Başlat</string>
-    <string name="settings_title_default_domain_settings">Varsayılan ayarlar</string>
 </resources>
