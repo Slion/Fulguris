@@ -446,7 +446,7 @@
     <string name="question_delete_all_domain_settings">Xóa tất cả thiết đặt tên miền?</string>
     <string name="settings_title_delete_domain_settings">Xóa thiết đặt tên miền</string>
     <string name="settings_title_parent">Cha</string>
-    <string name="settings_summary_default_domain_settings">Thiết đặt tên miền mặc định</string>
+    <string name="settings_summary_default_domain_settings">Áp dụng cho tất cả các trang trừ khi bị ghi đè</string>
     <string name="settings_summary_loading">Đang tải…</string>
     <string name="settings_title_ssl_error">Lỗi an ninh</string>
     <string name="settings_summary_ssl_error">Những gì cần làm khi phát hiện lỗi SSL</string>
@@ -620,4 +620,5 @@
     <string name="page_requests_none">Không có yêu cầu nào được ghi lại cho trang này</string>
     <string name="settings_summary_full_menu">Hiển thị menu đầy đủ</string>
     <string name="action_launch">Khởi chạy</string>
+    <string name="settings_title_default_domain_settings">Cài đặt mặc định</string>
 </resources>

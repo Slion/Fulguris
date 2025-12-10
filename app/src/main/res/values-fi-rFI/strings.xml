@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">Haluatko poistaa kaikki verkkotunnuskohtaiset asetukset?</string>
     <string name="settings_title_delete_domain_settings">Poista verkkotunnuksen asetukset</string>
     <string name="settings_title_parent">Pääverkkotunnus</string>
-    <string name="settings_summary_default_domain_settings">Oletusverkkotunnuksen asetukset</string>
+    <string name="settings_summary_default_domain_settings">Käytä kaikkiin sivustoihin, ellei ohiteta</string>
     <string name="settings_summary_loading">Ladataan…</string>
     <string name="settings_title_ssl_error">SSL-virhe</string>
     <string name="settings_summary_ssl_error">Miten käsitellä SSL-virheet</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">Ei tallennettuja pyyntöjä tälle sivulle</string>
     <string name="settings_summary_full_menu">Näytä koko valikko</string>
     <string name="action_launch">Käynnistä</string>
+    <string name="settings_title_default_domain_settings">Oletusasetukset</string>
 </resources>

@@ -449,7 +449,7 @@
     <string name="question_delete_all_domain_settings">Видалити всі налаштування домену?</string>
     <string name="settings_title_delete_domain_settings">Видалити налаштування домену</string>
     <string name="settings_title_parent">Батьківський</string>
-    <string name="settings_summary_default_domain_settings">Налаштування домену за замовчуванням</string>
+    <string name="settings_summary_default_domain_settings">Застосовується до всіх сайтів, якщо не перевизначено</string>
     <string name="settings_summary_loading">Завантаження…</string>
     <string name="settings_title_ssl_error">Помилка безпеки</string>
     <string name="settings_summary_ssl_error">Що робити при виявленні помилки SSL</string>
@@ -629,4 +629,5 @@
     <string name="page_requests_none">Немає зареєстрованих запитів для цієї сторінки</string>
     <string name="settings_summary_full_menu">Показати повне меню</string>
     <string name="action_launch">Запустити</string>
+    <string name="settings_title_default_domain_settings">Налаштування за замовчуванням</string>
 </resources>

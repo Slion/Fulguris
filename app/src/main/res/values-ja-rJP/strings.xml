@@ -446,7 +446,7 @@
     <string name="question_delete_all_domain_settings">すべてのドメイン設定を削除しますか？</string>
     <string name="settings_title_delete_domain_settings">ドメイン設定を削除</string>
     <string name="settings_title_parent">親</string>
-    <string name="settings_summary_default_domain_settings">既定のドメイン設定</string>
+    <string name="settings_summary_default_domain_settings">オーバーライドされない限りすべてのサイトに適用</string>
     <string name="settings_summary_loading">読み込み中…</string>
     <string name="settings_title_ssl_error">セキュリティエラー</string>
     <string name="settings_summary_ssl_error">SSLエラーが検出されたときの対処方法</string>
@@ -620,4 +620,5 @@
     <string name="page_requests_none">このページのリクエストは記録されていません</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
     <string name="action_launch">起動</string>
+    <string name="settings_title_default_domain_settings">デフォルト設定</string>
 </resources>

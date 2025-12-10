@@ -448,7 +448,7 @@
     <string name="question_delete_all_domain_settings">Želite li da izbrišete sva podešavanja domena?</string>
     <string name="settings_title_delete_domain_settings">Izbrišite podešavanja domena</string>
     <string name="settings_title_parent">Roditelj</string>
-    <string name="settings_summary_default_domain_settings">Podrazumevana podešavanja domena</string>
+    <string name="settings_summary_default_domain_settings">Примени на све сајтове осим ако није замењено</string>
     <string name="settings_summary_loading">Učitavanje…</string>
     <string name="settings_title_ssl_error">Security error</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
@@ -626,4 +626,5 @@
     <string name="page_requests_none">Нема забележених захтева за ову страницу</string>
     <string name="settings_summary_full_menu">Прикажи пуни мени</string>
     <string name="action_launch">Покрени</string>
+    <string name="settings_title_default_domain_settings">Подразумевана подешавања</string>
 </resources>

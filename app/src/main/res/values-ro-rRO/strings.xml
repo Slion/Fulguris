@@ -448,7 +448,7 @@
     <string name="question_delete_all_domain_settings">Ștergi toate setările domeniilor?</string>
     <string name="settings_title_delete_domain_settings">Șterge setările domeniului</string>
     <string name="settings_title_parent">Părinte</string>
-    <string name="settings_summary_default_domain_settings">Setări domeniu implicite</string>
+    <string name="settings_summary_default_domain_settings">Aplicați la toate site-urile cu excepția cazului în care este suprascris</string>
     <string name="settings_summary_loading">Se încarcă…</string>
     <string name="settings_title_ssl_error">Eroare de securitate</string>
     <string name="settings_summary_ssl_error">Ce să faci când este detectată o eroare SSL</string>
@@ -626,4 +626,5 @@
     <string name="page_requests_none">Nicio cerere înregistrată pentru această pagină</string>
     <string name="settings_summary_full_menu">Afișează meniul complet</string>
     <string name="action_launch">Lansează</string>
+    <string name="settings_title_default_domain_settings">Setări implicite</string>
 </resources>

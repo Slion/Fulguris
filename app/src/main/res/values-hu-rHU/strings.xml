@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">Törli az összes tartománybeállítást?</string>
     <string name="settings_title_delete_domain_settings">Tartománybeállítások törlése</string>
     <string name="settings_title_parent">Szülő</string>
-    <string name="settings_summary_default_domain_settings">Alapértelmezett tartománybeállítások</string>
+    <string name="settings_summary_default_domain_settings">Alkalmazás minden webhelyre, hacsak nem felülbírált</string>
     <string name="settings_summary_loading">Betöltés…</string>
     <string name="settings_title_ssl_error">Biztonsági hiba</string>
     <string name="settings_summary_ssl_error">Mit tegyen, ha SSL hibát tapasztal</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">Nincsenek rögzített kérések ezen az oldalon</string>
     <string name="settings_summary_full_menu">Teljes menü megjelenítése</string>
     <string name="action_launch">Indítás</string>
+    <string name="settings_title_default_domain_settings">Alapértelmezett beállítások</string>
 </resources>

@@ -493,7 +493,8 @@
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_title_parent">Parent</string>
-    <string name="settings_summary_default_domain_settings">Default domain settings</string>
+    <string name="settings_title_default_domain_settings">Default settings</string>
+    <string name="settings_summary_default_domain_settings">Apply to all sites unless overridden</string>
     <string name="settings_summary_loading">Loading…</string>
     <string name="settings_title_ssl_error">Security error</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>

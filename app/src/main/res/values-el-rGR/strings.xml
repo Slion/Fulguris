@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">Διαγραφή όλων των ρυθμίσεων τομέα;</string>
     <string name="settings_title_delete_domain_settings">Διαγραφή ρυθμίσεων τομέα</string>
     <string name="settings_title_parent">Γονικό</string>
-    <string name="settings_summary_default_domain_settings">Προεπιλεγμένες ρυθμίσεις τομέα</string>
+    <string name="settings_summary_default_domain_settings">Εφαρμογή σε όλους τους ιστότοπους εκτός εάν παρακαμφθεί</string>
     <string name="settings_summary_loading">Φόρτωση…</string>
     <string name="settings_title_ssl_error">Σφάλμα ασφαλείας</string>
     <string name="settings_summary_ssl_error">Τι να γίνει όταν ανιχνευτεί σφάλμα SSL</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">Δεν καταγράφηκαν αιτήματα για αυτή τη σελίδα</string>
     <string name="settings_summary_full_menu">Εμφάνιση πλήρους μενού</string>
     <string name="action_launch">Εκκίνηση</string>
+    <string name="settings_title_default_domain_settings">Προεπιλεγμένες ρυθμίσεις</string>
 </resources>

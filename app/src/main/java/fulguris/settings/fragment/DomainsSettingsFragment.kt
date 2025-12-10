@@ -246,9 +246,8 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         // Add default domain settings
         val prefDefault = x.Preference(requireContext())
         prefDefault.isSingleLineTitle = false
-        prefDefault.title = getString(R.string.theme_default)
+        prefDefault.title = getString(R.string.settings_title_default_domain_settings)
         prefDefault.summary = getString(R.string.settings_summary_default_domain_settings)
-        prefDefault.breadcrumb = prefDefault.summary!!
         prefDefault.order = 5
         prefDefault.fragment = "fulguris.settings.fragment.DomainSettingsFragment"
         prefDefault.onPreferenceClickListener = Preference.OnPreferenceClickListener {

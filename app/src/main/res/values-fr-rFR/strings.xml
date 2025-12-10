@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">Supprimer tous les paramètres du domaine ?</string>
     <string name="settings_title_delete_domain_settings">Supprimer les paramètres du domaine</string>
     <string name="settings_title_parent">Parent</string>
-    <string name="settings_summary_default_domain_settings">Paramètres de domaine par défaut</string>
+    <string name="settings_summary_default_domain_settings">Appliquer à tous les sites sauf si remplacé</string>
     <string name="settings_summary_loading">Chargement…</string>
     <string name="settings_title_ssl_error">Erreur de sécurité</string>
     <string name="settings_summary_ssl_error">Que faire si une erreur SSL est détectée</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">Aucune requête enregistrée pour cette page</string>
     <string name="settings_summary_full_menu">Afficher le menu complet</string>
     <string name="action_launch">Lancer</string>
+    <string name="settings_title_default_domain_settings">Paramètres par défaut</string>
 </resources>

@@ -449,7 +449,7 @@
     <string name="question_delete_all_domain_settings">Удалить все настройки домена?</string>
     <string name="settings_title_delete_domain_settings">Удалить настройки домена</string>
     <string name="settings_title_parent">Родительский</string>
-    <string name="settings_summary_default_domain_settings">Настройки домена по умолчанию</string>
+    <string name="settings_summary_default_domain_settings">Применяется ко всем сайтам, если не переопределено</string>
     <string name="settings_summary_loading">Загрузка…</string>
     <string name="settings_title_ssl_error">Ошибка безопасности</string>
     <string name="settings_summary_ssl_error">Что делать при обнаружении ошибки SSL</string>
@@ -629,4 +629,5 @@
     <string name="page_requests_none">Запросы для этой страницы не зарегистрированы</string>
     <string name="settings_summary_full_menu">Показать полное меню</string>
     <string name="action_launch">Запустить</string>
+    <string name="settings_title_default_domain_settings">Настройки по умолчанию</string>
 </resources>

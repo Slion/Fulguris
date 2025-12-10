@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">Alle domeininstellingen verwijderen?</string>
     <string name="settings_title_delete_domain_settings">Domeininstellingen verwijderen</string>
     <string name="settings_title_parent">Bovenliggende</string>
-    <string name="settings_summary_default_domain_settings">Standaard domeininstellingen</string>
+    <string name="settings_summary_default_domain_settings">Toepassen op alle sites tenzij overschreven</string>
     <string name="settings_summary_loading">Laden…</string>
     <string name="settings_title_ssl_error">Beveiligingsfout</string>
     <string name="settings_summary_ssl_error">Wat te doen als er een SSL-fout is gedetecteerd</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">Geen verzoeken geregistreerd voor deze pagina</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
     <string name="action_launch">Starten</string>
+    <string name="settings_title_default_domain_settings">Standaardinstellingen</string>
 </resources>

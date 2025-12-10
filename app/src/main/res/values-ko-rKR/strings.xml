@@ -446,7 +446,7 @@
     <string name="question_delete_all_domain_settings">모든 도메인 설정을 삭제하시겠습니까?</string>
     <string name="settings_title_delete_domain_settings">도메인 설정 삭제</string>
     <string name="settings_title_parent">상위</string>
-    <string name="settings_summary_default_domain_settings">기본 도메인 설정</string>
+    <string name="settings_summary_default_domain_settings">재정의되지 않는 한 모든 사이트에 적용</string>
     <string name="settings_summary_loading">로딩 중…</string>
     <string name="settings_title_ssl_error">보안 오류</string>
     <string name="settings_summary_ssl_error">SSL 오류가 감지될 때 수행할 작업</string>
@@ -620,4 +620,5 @@
     <string name="page_requests_none">이 페이지에 기록된 요청 없음</string>
     <string name="settings_summary_full_menu">전체 메뉴 표시</string>
     <string name="action_launch">실행</string>
+    <string name="settings_title_default_domain_settings">기본 설정</string>
 </resources>

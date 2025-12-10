@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">Ta bort alla domäninställningar?</string>
     <string name="settings_title_delete_domain_settings">Ta bort domäninställningar</string>
     <string name="settings_title_parent">Förälder</string>
-    <string name="settings_summary_default_domain_settings">Standarddomäninställningar</string>
+    <string name="settings_summary_default_domain_settings">Tillämpa på alla webbplatser såvida inte åsidosatt</string>
     <string name="settings_summary_loading">Läser in…</string>
     <string name="settings_title_ssl_error">Säkerhetsfel</string>
     <string name="settings_summary_ssl_error">Vad som ska göras när ett SSL-fel upptäcks</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">Inga förfrågningar registrerade för denna sida</string>
     <string name="settings_summary_full_menu">Visa fullständig meny</string>
     <string name="action_launch">Starta</string>
+    <string name="settings_title_default_domain_settings">Standardinställningar</string>
 </resources>

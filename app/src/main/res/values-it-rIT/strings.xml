@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">Eliminare tutte le impostazioni di dominio?</string>
     <string name="settings_title_delete_domain_settings">Elimina impostazioni dominio</string>
     <string name="settings_title_parent">Genitore</string>
-    <string name="settings_summary_default_domain_settings">Impostazioni dominio predefinite</string>
+    <string name="settings_summary_default_domain_settings">Applica a tutti i siti a meno che non venga sostituito</string>
     <string name="settings_summary_loading">Caricamento…</string>
     <string name="settings_title_ssl_error">Errore di sicurezza</string>
     <string name="settings_summary_ssl_error">Cosa fare quando un errore SSL è rilevato</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">Nessuna richiesta registrata per questa pagina</string>
     <string name="settings_summary_full_menu">Mostra menu completo</string>
     <string name="action_launch">Avvia</string>
+    <string name="settings_title_default_domain_settings">Impostazioni predefinite</string>
 </resources>

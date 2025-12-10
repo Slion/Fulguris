@@ -102,8 +102,10 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
                 breadcrumb = prefs.parent?.domain ?: ""
                 summary = prefs.parent?.getOverridesSummary(requireContext())
             } else {
-                breadcrumb = getString(R.string.settings_summary_default_domain_settings)
-                summary = breadcrumb
+                // The parent of first level domains is the default domain settings
+                summary = getString(R.string.settings_title_default_domain_settings)
+                // Do not show 'Parent' as title we accessing default domain settings through settings activity
+                breadcrumb = getString(R.string.settings_title_default_domain_settings)
             }
 
             setOnPreferenceClickListener {

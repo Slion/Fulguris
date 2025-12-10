@@ -412,7 +412,7 @@
     <string name="question_delete_all_domain_settings">सभी डोमेन सेटिंग्स हटाएं?</string>
     <string name="settings_title_delete_domain_settings">डोमेन सेटिंग्स हटाएं</string>
     <string name="settings_title_parent">पैरेंट</string>
-    <string name="settings_summary_default_domain_settings">डिफ़ॉल्ट डोमेन सेटिंग्स</string>
+    <string name="settings_summary_default_domain_settings">सभी साइटों पर लागू करें जब तक ओवरराइड न किया जाए</string>
     <string name="settings_summary_loading">लोड हो रहा है…</string>
     <string name="settings_title_ssl_error">सुरक्षा त्रुटि</string>
     <string name="settings_summary_ssl_error">SSL त्रुटि का पता चलने पर क्या करें</string>
@@ -578,4 +578,5 @@
     <string name="page_requests_none">इस पेज के लिए कोई अनुरोध रिकॉर्ड नहीं</string>
     <string name="settings_summary_full_menu">पूर्ण मेनू दिखाएं</string>
     <string name="action_launch">लॉन्च करें</string>
+    <string name="settings_title_default_domain_settings">डिफ़ॉल्ट सेटिंग्स</string>
 </resources>

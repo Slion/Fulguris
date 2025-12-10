@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">Slett alle domeneinnstillinger?</string>
     <string name="settings_title_delete_domain_settings">Slett domeneinnstillinger</string>
     <string name="settings_title_parent">Overordnet</string>
-    <string name="settings_summary_default_domain_settings">Standard domeneinnstillinger</string>
+    <string name="settings_summary_default_domain_settings">Bruk på alle nettsteder med mindre overstyrt</string>
     <string name="settings_summary_loading">Laster…</string>
     <string name="settings_title_ssl_error">Sikkerhetsfeil</string>
     <string name="settings_summary_ssl_error">Hva skal gjøres når en SSL-feil oppdages</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">Ingen forespørsler registrert for denne siden</string>
     <string name="settings_summary_full_menu">Vis fullstendig meny</string>
     <string name="action_launch">Start</string>
+    <string name="settings_title_default_domain_settings">Standardinnstillinger</string>
 </resources>

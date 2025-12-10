@@ -448,7 +448,7 @@
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_title_parent">Parent</string>
-    <string name="settings_summary_default_domain_settings">Default domain settings</string>
+    <string name="settings_summary_default_domain_settings">Primijeni na sve stranice osim ako nije nadjačano</string>
     <string name="settings_summary_loading">Loading…</string>
     <string name="settings_title_ssl_error">Security error</string>
     <string name="settings_summary_ssl_error">What to do when an SSL error is detected</string>
@@ -626,4 +626,5 @@
     <string name="page_requests_none">Nema zabilježenih zahtjeva za ovu stranicu</string>
     <string name="settings_summary_full_menu">Prikaži puni meni</string>
     <string name="action_launch">Pokreni</string>
+    <string name="settings_title_default_domain_settings">Zadana podešavanja</string>
 </resources>

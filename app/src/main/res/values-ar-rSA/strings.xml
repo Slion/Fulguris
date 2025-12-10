@@ -451,7 +451,7 @@
     <string name="question_delete_all_domain_settings">حذف جميع إعدادات النطاقات؟</string>
     <string name="settings_title_delete_domain_settings">حذف إعدادات النطاق</string>
     <string name="settings_title_parent">الأصل</string>
-    <string name="settings_summary_default_domain_settings">إعدادات النطاق الافتراضية</string>
+    <string name="settings_summary_default_domain_settings">تطبق على جميع المواقع ما لم يتم تجاوزها</string>
     <string name="settings_summary_loading">جاري التحميل…</string>
     <string name="settings_title_ssl_error">خطأ أمني</string>
     <string name="settings_summary_ssl_error">ما يجب فعله عند اكتشاف خطأ SSL</string>
@@ -635,4 +635,5 @@
     <string name="page_requests_none">لا توجد طلبات مسجلة لهذه الصفحة</string>
     <string name="settings_summary_full_menu">إظهار القائمة الكاملة</string>
     <string name="action_launch">تشغيل</string>
+    <string name="settings_title_default_domain_settings">الإعدادات الافتراضية</string>
 </resources>

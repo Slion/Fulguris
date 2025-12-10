@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">¿Quiere borrar todos los ajustes del dominio?</string>
     <string name="settings_title_delete_domain_settings">Borrar todos los ajustes del dominio</string>
     <string name="settings_title_parent">Padre</string>
-    <string name="settings_summary_default_domain_settings">Configuración de dominio predeterminada</string>
+    <string name="settings_summary_default_domain_settings">Aplicar a todos los sitios a menos que se anule</string>
     <string name="settings_summary_loading">Cargando…</string>
     <string name="settings_title_ssl_error">Error de seguridad</string>
     <string name="settings_summary_ssl_error">Qué hacer cuando se detecte un error SSL</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">No hay solicitudes registradas para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menú completo</string>
     <string name="action_launch">Iniciar</string>
+    <string name="settings_title_default_domain_settings">Configuración predeterminada</string>
 </resources>

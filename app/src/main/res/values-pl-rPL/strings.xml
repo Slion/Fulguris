@@ -449,7 +449,7 @@
     <string name="question_delete_all_domain_settings">Usunąć wszystkie ustawienia domen?</string>
     <string name="settings_title_delete_domain_settings">Usuń ustawienia domeny</string>
     <string name="settings_title_parent">Nadrzędne</string>
-    <string name="settings_summary_default_domain_settings">Domyślne ustawienia domen</string>
+    <string name="settings_summary_default_domain_settings">Zastosuj do wszystkich witryn, chyba że nadpisane</string>
     <string name="settings_summary_loading">Ładowanie…</string>
     <string name="settings_title_ssl_error">Błąd bezpieczeństwa</string>
     <string name="settings_summary_ssl_error">Co zrobić, gdy wykryty został błąd SSL</string>
@@ -629,4 +629,5 @@
     <string name="page_requests_none">Brak zarejestrowanych żądań dla tej strony</string>
     <string name="settings_summary_full_menu">Pokaż pełne menu</string>
     <string name="action_launch">Uruchom</string>
+    <string name="settings_title_default_domain_settings">Ustawienia domyślne</string>
 </resources>

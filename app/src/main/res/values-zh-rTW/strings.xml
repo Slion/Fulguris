@@ -446,7 +446,7 @@
     <string name="question_delete_all_domain_settings">刪除所有網域設定？</string>
     <string name="settings_title_delete_domain_settings">刪除網域設定</string>
     <string name="settings_title_parent">父項</string>
-    <string name="settings_summary_default_domain_settings">預設網域設定</string>
+    <string name="settings_summary_default_domain_settings">套用至所有網站，除非被覆寫</string>
     <string name="settings_summary_loading">載入中…</string>
     <string name="settings_title_ssl_error">安全性錯誤</string>
     <string name="settings_summary_ssl_error">偵測到 SSL 錯誤時該怎麼做</string>
@@ -620,4 +620,5 @@
     <string name="page_requests_none">此頁面沒有記錄的請求</string>
     <string name="settings_summary_full_menu">顯示完整選單</string>
     <string name="action_launch">啟動</string>
+    <string name="settings_title_default_domain_settings">預設設定</string>
 </resources>

@@ -446,7 +446,7 @@
     <string name="question_delete_all_domain_settings">ลบการตั้งค่าโดเมนทั้งหมดหรือไม่?</string>
     <string name="settings_title_delete_domain_settings">ลบการตั้งค่าโดเมน</string>
     <string name="settings_title_parent">โดเมนหลัก</string>
-    <string name="settings_summary_default_domain_settings">การตั้งค่าโดเมนเริ่มต้น</string>
+    <string name="settings_summary_default_domain_settings">ใช้กับทุกไซต์เว้นแต่จะถูกแทนที่</string>
     <string name="settings_summary_loading">กำลังโหลด…</string>
     <string name="settings_title_ssl_error">ข้อผิดพลาด SSL</string>
     <string name="settings_summary_ssl_error">วิธีจัดการข้อผิดพลาด SSL</string>
@@ -620,4 +620,5 @@
     <string name="page_requests_none">ไม่มีคำขอที่บันทึกสำหรับหน้านี้</string>
     <string name="settings_summary_full_menu">แสดงเมนูเต็ม</string>
     <string name="action_launch">เปิด</string>
+    <string name="settings_title_default_domain_settings">การตั้งค่าเริ่มต้น</string>
 </resources>

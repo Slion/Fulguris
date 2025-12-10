@@ -447,7 +447,7 @@
     <string name="question_delete_all_domain_settings">Tüm alan adı ayarları silinsin mi?</string>
     <string name="settings_title_delete_domain_settings">Alan adı ayarlarını sil</string>
     <string name="settings_title_parent">Üst</string>
-    <string name="settings_summary_default_domain_settings">Varsayılan alan adı ayarları</string>
+    <string name="settings_summary_default_domain_settings">Geçersiz kılınmadıkça tüm sitelere uygula</string>
     <string name="settings_summary_loading">Yükleniyor…</string>
     <string name="settings_title_ssl_error">Güvenlik hatası</string>
     <string name="settings_summary_ssl_error">Bir SSL hatası algılandığında ne yapılmalı</string>
@@ -623,4 +623,5 @@
     <string name="page_requests_none">Bu sayfa için kaydedilen istek yok</string>
     <string name="settings_summary_full_menu">Tam menüyü göster</string>
     <string name="action_launch">Başlat</string>
+    <string name="settings_title_default_domain_settings">Varsayılan ayarlar</string>
 </resources>

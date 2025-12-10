@@ -449,7 +449,7 @@
     <string name="question_delete_all_domain_settings">Smazat všechna nastavení domén?</string>
     <string name="settings_title_delete_domain_settings">Smazat nastavení domény</string>
     <string name="settings_title_parent">Nadřazená</string>
-    <string name="settings_summary_default_domain_settings">Výchozí nastavení domény</string>
+    <string name="settings_summary_default_domain_settings">Použít pro všechny stránky, pokud není přepsáno</string>
     <string name="settings_summary_loading">Načítání…</string>
     <string name="settings_title_ssl_error">Bezpečnostní chyba</string>
     <string name="settings_summary_ssl_error">Co dělat, když je zjištěna chyba SSL</string>
@@ -629,4 +629,5 @@
     <string name="page_requests_none">Pro tuto stránku nejsou zaznamenány žádné požadavky</string>
     <string name="settings_summary_full_menu">Zobrazit celou nabídku</string>
     <string name="action_launch">Spustit</string>
+    <string name="settings_title_default_domain_settings">Výchozí nastavení</string>
 </resources>

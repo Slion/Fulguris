@@ -27,7 +27,7 @@
     <x.Preference
         a:key="@string/pref_key_back"
         a:title="@string/action_domain_settings"
-        a:summary="@string/settings_summary_default_domain_settings"
+        a:summary="@string/settings_title_default_domain_settings"
         a:icon="@drawable/ic_arrow_back_ios"
         a:fragment="back"
         a:layout="@layout/preference_category_material"

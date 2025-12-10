@@ -446,7 +446,7 @@
     <string name="question_delete_all_domain_settings">Hapus semua pengaturan domain?</string>
     <string name="settings_title_delete_domain_settings">Hapus pengaturan domain</string>
     <string name="settings_title_parent">Induk</string>
-    <string name="settings_summary_default_domain_settings">Pengaturan domain default</string>
+    <string name="settings_summary_default_domain_settings">Terapkan ke semua situs kecuali diganti</string>
     <string name="settings_summary_loading">Memuat…</string>
     <string name="settings_title_ssl_error">Kesalahan keamanan</string>
     <string name="settings_summary_ssl_error">Apa yang harus dilakukan saat kesalahan SSL terdeteksi</string>
@@ -620,4 +620,5 @@
     <string name="page_requests_none">Tidak ada permintaan tercatat untuk halaman ini</string>
     <string name="settings_summary_full_menu">Tampilkan menu lengkap</string>
     <string name="action_launch">Luncurkan</string>
+    <string name="settings_title_default_domain_settings">Pengaturan default</string>
 </resources>
