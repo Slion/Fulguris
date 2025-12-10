@@ -152,11 +152,23 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
         val savedConfig = menuConfig.loadConfiguration()
 
         if (savedConfig != null) {
-            // Use saved configuration
-            savedConfig.sortedBy { it.order }.forEach { config ->
-                val menuItem = allItems.find { it.id == config.id } ?: return@forEach
+            // Find items that are new (not in saved config)
+            val savedItemIds = savedConfig.map { it.id }.toSet()
+            val newItems = allItems.filter { it.id !in savedItemIds }
 
-                val pref = x.Preference(requireContext()).apply {
+            // Organize new items by their default menu
+            val newMainMenuItems = newItems.filter { it.defaultMenu == MenuType.MainMenu }
+            val newTabMenuItems = newItems.filter { it.defaultMenu == MenuType.TabMenu }
+            val newHiddenItems = newItems.filter { it.defaultMenu == MenuType.HiddenMenu || it.defaultMenu == MenuType.FullMenu }
+
+            // Build menu with saved config, inserting new items in their default positions
+            val mainMenuSaved = savedConfig.filter { it.menu == MenuType.MainMenu }.sortedBy { it.order }
+            val tabMenuSaved = savedConfig.filter { it.menu == MenuType.TabMenu }.sortedBy { it.order }
+            val hiddenSaved = savedConfig.filter { it.menu == MenuType.HiddenMenu || it.menu == MenuType.FullMenu }.sortedBy { it.order }
+
+            // Helper function to create preference
+            fun createPref(menuItem: fulguris.browser.MenuItem): x.Preference {
+                return x.Preference(requireContext()).apply {
                     title = getString(menuItem.labelId)
                     icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_drag_handle_vertical)
                     titleDrawableStart = menuItem.iconId
@@ -165,32 +177,39 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     isSingleLineTitle = false
                     order = currentOrder++
                 }
-                prefScreen.addPreference(pref)
+            }
 
-                // Update header positions as we build
-                when (config.menu) {
-                    MenuType.MainMenu -> {
-                        // Item is in main menu
-                        if (headerTab.order <= pref.order) {
-                            headerTab.order = currentOrder++
-                        }
-                        if (headerHidden.order <= pref.order) {
-                            headerHidden.order = currentOrder++
-                        }
-                    }
-                    MenuType.TabMenu -> {
-                        // Item is in tab menu
-                        if (headerHidden.order <= pref.order) {
-                            headerHidden.order = currentOrder++
-                        }
-                    }
-                    MenuType.HiddenMenu -> {
-                        // Item is hidden
-                    }
-                    MenuType.FullMenu -> {
-                        // All mode is not used in configuration, treat as hidden
-                    }
-                }
+            // Add Main Menu items (saved + new)
+            mainMenuSaved.forEach { config ->
+                val menuItem = allItems.find { it.id == config.id } ?: return@forEach
+                prefScreen.addPreference(createPref(menuItem))
+            }
+            newMainMenuItems.forEach { menuItem ->
+                prefScreen.addPreference(createPref(menuItem))
+            }
+
+            // Update Tab Menu header order
+            headerTab.order = currentOrder++
+
+            // Add Tab Menu items (saved + new)
+            tabMenuSaved.forEach { config ->
+                val menuItem = allItems.find { it.id == config.id } ?: return@forEach
+                prefScreen.addPreference(createPref(menuItem))
+            }
+            newTabMenuItems.forEach { menuItem ->
+                prefScreen.addPreference(createPref(menuItem))
+            }
+
+            // Update Hidden header order
+            headerHidden.order = currentOrder++
+
+            // Add Hidden items (saved + new)
+            hiddenSaved.forEach { config ->
+                val menuItem = allItems.find { it.id == config.id } ?: return@forEach
+                prefScreen.addPreference(createPref(menuItem))
+            }
+            newHiddenItems.forEach { menuItem ->
+                prefScreen.addPreference(createPref(menuItem))
             }
         } else {
             // Use default configuration from MenuItems model

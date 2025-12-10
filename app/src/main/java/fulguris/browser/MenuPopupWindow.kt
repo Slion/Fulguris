@@ -168,10 +168,21 @@ class MenuPopupWindow : PopupWindow {
             }
             savedConfig != null -> {
                 // Use saved configuration (already sorted by order)
-                savedConfig.filter { it.menu == currentMode }
+                val savedItems = savedConfig.filter { it.menu == currentMode }
                     .sortedBy { it.order }
                     .map { it.id }
                     .toMutableList()
+
+                // Find new items that aren't in saved config and should be in current menu
+                val savedItemIds = savedConfig.map { it.id }.toSet()
+                val allItems = MenuItems.getAll()
+                val newItems = allItems.filter {
+                    it.id !in savedItemIds && it.defaultMenu == currentMode
+                }
+
+                // Add new items at the end of their default menu
+                savedItems.addAll(newItems.map { it.id })
+                savedItems
             }
             else -> {
                 // Use default configuration from MenuItems model
@@ -228,16 +239,9 @@ class MenuPopupWindow : PopupWindow {
             view.isVisible = true
         }
 
-        // Special handling based on menu mode
-        if (currentMode == MenuType.MainMenu) {
-            applyMainMenuSpecialRules()
-        } else if (currentMode == MenuType.TabMenu) {
-            applyTabMenuSpecialRules()
-        } else if (currentMode == MenuType.FullMenu) {
-            // All mode: apply both main and tab menu rules
-            applyMainMenuSpecialRules()
-            applyTabMenuSpecialRules()
-        }
+        // Apply special visibility rules (must apply to all items regardless of menu mode
+        // since users can move items between Main Menu and Tab Menu)
+        applyMenuSpecialRules()
 
         scrollToStart()
     }
@@ -263,6 +267,7 @@ class MenuPopupWindow : PopupWindow {
 
         // Tab menu items
         iBinding.menuItemPageHistory.isVisible = false
+        iBinding.menuItemDomainSettings.isVisible = false
         iBinding.menuItemFind.isVisible = false
         iBinding.menuItemPrint.isVisible = false
         iBinding.menuItemReaderMode.isVisible = false
@@ -298,6 +303,7 @@ class MenuPopupWindow : PopupWindow {
 
             // Tab menu items
             MenuItemId.TabHistory -> iBinding.menuItemPageHistory.isVisible = true
+            MenuItemId.DomainSettings -> iBinding.menuItemDomainSettings.isVisible = true
             MenuItemId.Find -> iBinding.menuItemFind.isVisible = true
             MenuItemId.Print -> iBinding.menuItemPrint.isVisible = true
             MenuItemId.ReaderMode -> iBinding.menuItemReaderMode.isVisible = true
@@ -313,29 +319,36 @@ class MenuPopupWindow : PopupWindow {
     }
 
     /**
-     * Apply special visibility rules for main menu items based on incognito mode
+     * Apply special visibility rules for menu items based on incognito mode and current tab state.
+     * These rules apply regardless of which menu (Main/Tab) the items are in, since users can
+     * customize menu layouts and move items between menus.
      */
-    private fun applyMainMenuSpecialRules() {
-        // Hide certain items in incognito mode (from MenuMain logic)
+    private fun applyMenuSpecialRules() {
+        // Rules that apply in incognito mode
         if (isIncognito) {
+            // Hide main menu items
             iBinding.menuItemSessions.isVisible = false
             iBinding.menuItemSettings.isVisible = false
             iBinding.menuItemIncognito.isVisible = false
             // Always ensure EXIT is visible in incognito mode
             iBinding.menuItemExit.isVisible = true
-        }
-    }
 
-    /**
-     * Apply special visibility rules for tab menu items based on current tab state
-     */
-    private fun applyTabMenuSpecialRules() {
+            // Hide tab menu items that don't apply in incognito
+            iBinding.menuItemDomainSettings.isVisible = false
+            iBinding.menuItemReaderMode.isVisible = false
+            iBinding.menuItemShare.isVisible = false
+            iBinding.menuItemPrint.isVisible = false
+            iBinding.menuItemAddToHome.isVisible = false
+        }
+
+        // Rules based on current tab state
         (contentView.context as WebBrowserActivity).tabsManager.let { tm ->
             tm.currentTab?.let { tab ->
                 val isSpecialUrl = tab.url.isSpecialUrl() || tab.url.isAppScheme()
 
-                // Hide certain items for special URLs
+                // Hide certain items for special URLs (internal pages, about:, file:, etc.)
                 if (isSpecialUrl) {
+                    iBinding.menuItemDomainSettings.isVisible = false
                     iBinding.menuItemDesktopMode.isVisible = false
                     iBinding.menuItemDarkMode.isVisible = false
                     iBinding.menuItemAddToHome.isVisible = false
@@ -350,14 +363,6 @@ class MenuPopupWindow : PopupWindow {
                     iBinding.menuItemAdBlock.isVisible = false
                 }
             }
-        }
-
-        // Hide certain items in incognito mode
-        if ((contentView.context as? WebBrowserActivity)?.isIncognito() == true) {
-            iBinding.menuItemReaderMode.isVisible = false
-            iBinding.menuItemShare.isVisible = false
-            iBinding.menuItemPrint.isVisible = false
-            iBinding.menuItemAddToHome.isVisible = false
         }
     }
 

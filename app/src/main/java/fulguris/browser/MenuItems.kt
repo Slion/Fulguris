@@ -213,6 +213,15 @@ object MenuItems {
             availableInTabMenu = true,
             defaultMenu = MenuType.TabMenu
         ),
+        MenuItemId.DomainSettings to MenuItem(
+            id = MenuItemId.DomainSettings,
+            labelId = R.string.settings_title_domains,
+            iconId = R.drawable.ic_domain,
+            viewId = R.id.menuItemDomainSettings,
+            availableInMainMenu = true,
+            availableInTabMenu = true,
+            defaultMenu = MenuType.TabMenu
+        ),
         MenuItemId.AddBookmark to MenuItem(
             id = MenuItemId.AddBookmark,
             labelId = R.string.action_add_bookmark,

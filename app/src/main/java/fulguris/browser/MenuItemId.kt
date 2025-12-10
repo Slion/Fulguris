@@ -44,6 +44,7 @@ enum class MenuItemId {
     TabHistory,
     Share,
     Find,
+    DomainSettings,
     Translate,
     ReaderMode,
     AdBlock,

@@ -231,6 +231,14 @@
                         android:text="@string/settings_title_page_history" />
 
                     <TextView
+                        android:id="@+id/menuItemDomainSettings"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_domain"
+                        android:text="@string/action_domain_settings" />
+
+                    <TextView
                         android:id="@+id/menuItemShare"
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"

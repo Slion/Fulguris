@@ -687,6 +687,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 dismiss()
                 iBottomSheet.setLayout(R.layout.fragment_settings_page_history).show()
             }
+            onMenuItemClicked(iBinding.menuItemDomainSettings) {
+                dismiss()
+                currentHost()?.let { showDomainSettings(it) }
+            }
             onMenuItemClicked(iBinding.menuItemPageRequests) {
                 dismiss()
                 showPageRequests()
