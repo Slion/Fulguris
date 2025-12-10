@@ -234,7 +234,8 @@
     <string name="title_chooser">ᱢᱤᱫ ᱨᱮᱫᱽ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="open_with">ᱥᱟᱶ ᱡᱷᱤᱡ</string>
     <string name="settings_general">ᱥᱟᱫᱷᱟᱨᱚᱱ</string>
-    <string name="settings_display">ᱧᱮᱞ ᱟᱨ ᱢᱚᱱᱮ</string>
+    <string name="pref_title_appearance">ᱩᱫᱩᱜ</string>
+    <string name="pref_summary_appearance">ᱯᱟᱹᱨᱥᱤ, ᱛᱷᱤᱢ, ᱥᱟᱡᱟᱣ, ᱢᱮᱱᱩ, ᱦᱟᱹᱛᱤᱭᱟᱹᱨ, ᱴᱮᱵᱽ ᱟᱨ ᱯᱮᱱᱮᱞ</string>
     <string name="settings_backup">ᱵᱮᱠᱚᱯ</string>
     <string name="settings_title_configuration">ᱥᱟᱡᱟᱣ</string>
     <string name="settings_summary_configuration">ᱯᱳᱨᱴᱨᱮᱴ ᱟᱨ ᱞᱮᱱᱰᱥᱠᱮᱯ ᱥᱟᱡᱟᱣ ᱠᱚ</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">ᱢᱟᱯᱷ ᱢᱮ, ᱟᱢᱟᱜ ᱞᱚᱱᱪᱚᱨ ᱥᱚᱨᱴᱠᱚᱴ ᱵᱟᱝ ᱜᱚᱲᱚᱭᱟ ᱾</string>
     <string name="action_delete_all_bookmarks">ᱡᱷᱚᱛᱚ ᱪᱤᱱᱦᱟᱹ ᱠᱚ ᱢᱮᱴᱟᱣ</string>
     <string name="pref_title_developer">ᱰᱮᱵᱷᱮᱞᱚᱯᱚᱨ</string>
+    <string name="pref_summary_developer">ᱰᱤᱵᱟᱜ ᱟᱨ ᱞᱚᱜᱽ ᱥᱟᱡᱟᱣ</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">ᱵᱚᱫᱚᱞ ᱠᱟᱹᱢᱤ ᱞᱟᱹᱜᱤᱫ ᱫᱟᱭᱟ ᱠᱟᱛᱮ ᱮᱯ ᱫᱚᱦᱲᱟ ᱮᱛᱦᱚᱵ ᱢᱮ</string>
     <string name="pref_title_crash_logs">ᱠᱨᱟᱥ ᱞᱚᱜᱽ ᱠᱚ</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱨᱮ ᱨᱮᱠᱩᱭᱮᱥᱴ ᱵᱟᱹᱱᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="settings_summary_full_menu">ᱯᱩᱨᱟᱹ ᱢᱮᱱᱩ ᱩᱫᱩᱜ ᱢᱮ</string>
     <string name="action_launch">ᱪᱟᱞᱩ</string>
-    <string name="pref_summary_developer">ᱰᱤᱵᱟᱜ ᱟᱨ ᱞᱚᱜᱽ ᱥᱟᱡᱟᱣ</string>
 </resources>

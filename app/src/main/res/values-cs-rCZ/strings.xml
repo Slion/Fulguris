@@ -234,7 +234,8 @@
     <string name="title_chooser">Vyberte soubor</string>
     <string name="open_with">Otevřít pomocí</string>
     <string name="settings_general">Obecné</string>
-    <string name="settings_display">Vzhled a chování</string>
+    <string name="pref_title_appearance">Vzhled</string>
+    <string name="pref_summary_appearance">Jazyk, motiv, konfigurace, nabídky, panely nástrojů, karty a panely</string>
     <string name="settings_backup">Záloha</string>
     <string name="settings_title_configuration">Konfigurace</string>
     <string name="settings_summary_configuration">Nastavení pro na výšku a na šířku</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Omlouváme se, váš spouštěč nepodporuje zkratky.</string>
     <string name="action_delete_all_bookmarks">Smazat všechny záložky</string>
     <string name="pref_title_developer">Vývojář</string>
+    <string name="pref_summary_developer">Nastavení ladění a protokolů</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Restartujte aplikaci, aby se změna projevila</string>
     <string name="pref_title_crash_logs">Protokoly pádů</string>
@@ -625,5 +627,4 @@
     <string name="page_requests_none">Pro tuto stránku nejsou zaznamenány žádné požadavky</string>
     <string name="settings_summary_full_menu">Zobrazit celou nabídku</string>
     <string name="action_launch">Spustit</string>
-    <string name="pref_summary_developer">Nastavení ladění a protokolů</string>
 </resources>

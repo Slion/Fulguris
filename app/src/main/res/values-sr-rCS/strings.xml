@@ -234,7 +234,8 @@
     <string name="title_chooser">Izaberite fajl</string>
     <string name="open_with">Otvori sa</string>
     <string name="settings_general">Opšte</string>
-    <string name="settings_display">Postavke prikaza</string>
+    <string name="pref_title_appearance">Изглед</string>
+    <string name="pref_summary_appearance">Језик, тема, конфигурације, менији, траке са алаткама, картице и панели</string>
     <string name="settings_backup">Rezervna kopija</string>
     <string name="settings_title_configuration">Podešavanja</string>
     <string name="settings_summary_configuration">Podešavanja portreta i pejzaža</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Žao nam je, vaš pokretač ne podržava prečice.</string>
     <string name="action_delete_all_bookmarks">Obriši sve obeleživače</string>
     <string name="pref_title_developer">Програмер</string>
+    <string name="pref_summary_developer">Подешавања отклањања грешака и записа</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Ponovo pokrenite aplikaciju da bi promena stupila na snagu</string>
     <string name="pref_title_crash_logs">Dnevnici pada</string>
@@ -622,5 +624,4 @@
     <string name="page_requests_none">Нема забележених захтева за ову страницу</string>
     <string name="settings_summary_full_menu">Прикажи пуни мени</string>
     <string name="action_launch">Покрени</string>
-    <string name="pref_summary_developer">Подешавања отклањања грешака и записа</string>
 </resources>

@@ -234,7 +234,8 @@
     <string name="title_chooser">Välj en fil</string>
     <string name="open_with">Öppna med</string>
     <string name="settings_general">Allmänt</string>
-    <string name="settings_display">Utseende &amp; känsla</string>
+    <string name="pref_title_appearance">Utseende</string>
+    <string name="pref_summary_appearance">Språk, tema, konfigurationer, menyer, verktygsfält, flikar och paneler</string>
     <string name="settings_backup">Säkerhetskopiering</string>
     <string name="settings_title_configuration">Inställningar</string>
     <string name="settings_summary_configuration">Inställningar för porträtt och landskap</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Tyvärr, din launcher stöder inte genvägar.</string>
     <string name="action_delete_all_bookmarks">Radera alla bokmärken</string>
     <string name="pref_title_developer">Utvecklare</string>
+    <string name="pref_summary_developer">Inställningar för felsökning och loggar</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Vänligen starta om appen för att ändringen ska börja gälla</string>
     <string name="pref_title_crash_logs">Kraschlogg</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Inga förfrågningar registrerade för denna sida</string>
     <string name="settings_summary_full_menu">Visa fullständig meny</string>
     <string name="action_launch">Starta</string>
-    <string name="pref_summary_developer">Inställningar för felsökning och loggar</string>
 </resources>

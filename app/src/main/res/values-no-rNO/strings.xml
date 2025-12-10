@@ -234,7 +234,8 @@
     <string name="title_chooser">Velg en fil</string>
     <string name="open_with">Åpne med</string>
     <string name="settings_general">Generelt</string>
-    <string name="settings_display">Visning</string>
+    <string name="pref_title_appearance">Utseende</string>
+    <string name="pref_summary_appearance">Språk, tema, konfigurasjoner, menyer, verktøylinjer, faner og paneler</string>
     <string name="settings_backup">Sikkerhetskopi</string>
     <string name="settings_title_configuration">Konfigurasjon</string>
     <string name="settings_summary_configuration">Konfigurasjoner er innstillingssett som kan endres avhengig av enhetens orientering og skjermstørrelse</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Beklager, oppstarteren din støtter ikke snarveier.</string>
     <string name="action_delete_all_bookmarks">Slett alle bokmerker</string>
     <string name="pref_title_developer">Utvikler</string>
+    <string name="pref_summary_developer">Feilsøkings- og logginnstillinger</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Vennligst start appen på nytt for at endringen skal tre i kraft</string>
     <string name="pref_title_crash_logs">Krasjlogger</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Ingen forespørsler registrert for denne siden</string>
     <string name="settings_summary_full_menu">Vis fullstendig meny</string>
     <string name="action_launch">Start</string>
-    <string name="pref_summary_developer">Feilsøkings- og logginnstillinger</string>
 </resources>

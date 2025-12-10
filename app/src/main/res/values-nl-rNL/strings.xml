@@ -234,7 +234,8 @@
     <string name="title_chooser">Kies een bestand</string>
     <string name="open_with">Openen met</string>
     <string name="settings_general">Algemene instellingen</string>
-    <string name="settings_display">Scherm instellingen</string>
+    <string name="pref_title_appearance">Uiterlijk</string>
+    <string name="pref_summary_appearance">Taal, thema, configuraties, menu\'s, werkbalken, tabbladen en panelen</string>
     <string name="settings_backup">Back-up</string>
     <string name="settings_title_configuration">Instellingen</string>
     <string name="settings_summary_configuration">Portret- en landschapsinstellingen</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Sorry, je launcher ondersteunt geen snelkoppelingen.</string>
     <string name="action_delete_all_bookmarks">Verwijder alle bladwijzers</string>
     <string name="pref_title_developer">Ontwikkelaar</string>
+    <string name="pref_summary_developer">Debug- en loginstellingen</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Start de app opnieuw op om de wijziging door te voeren</string>
     <string name="pref_title_crash_logs">Crashlogs</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Geen verzoeken geregistreerd voor deze pagina</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
     <string name="action_launch">Starten</string>
-    <string name="pref_summary_developer">Debug- en loginstellingen</string>
 </resources>

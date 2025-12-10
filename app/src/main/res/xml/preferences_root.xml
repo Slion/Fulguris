@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+<PreferenceScreen xmlns:x="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <Preference
-        app:fragment="fulguris.settings.fragment.GeneralSettingsFragment"
-        app:title="@string/settings_general"
-        app:icon="@drawable/ic_settings"
-        app:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.DisplaySettingsFragment"
+        x:title="@string/pref_title_appearance"
+        x:summary="@string/pref_summary_appearance"
+        x:icon="@drawable/ic_palette"
+        x:singleLineTitle="false"
         />
 
     <Preference
-        app:fragment="fulguris.settings.fragment.DisplaySettingsFragment"
-        app:title="@string/settings_display"
-        app:icon="@drawable/ic_palette"
-        app:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.GeneralSettingsFragment"
+        x:title="@string/settings_general"
+        x:icon="@drawable/ic_settings"
+        x:singleLineTitle="false"
         />
 
     <Preference
-        app:fragment="fulguris.settings.fragment.AdBlockSettingsFragment"
-        app:title="@string/settings_adblock"
-        app:icon="@drawable/ic_block"
-        app:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.AdBlockSettingsFragment"
+        x:title="@string/settings_adblock"
+        x:icon="@drawable/ic_block"
+        x:singleLineTitle="false"
         />
 
     <Preference
-        app:fragment="fulguris.settings.fragment.PrivacySettingsFragment"
-        app:title="@string/settings_privacy"
-        app:icon="@drawable/ic_security"
-        app:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.PrivacySettingsFragment"
+        x:title="@string/settings_privacy"
+        x:icon="@drawable/ic_security"
+        x:singleLineTitle="false"
         />
 
     <Preference
-        app:fragment="fulguris.settings.fragment.BackupSettingsFragment"
-        app:title="@string/settings_backup"
-        app:icon="@drawable/ic_cloud_upload"
-        app:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.BackupSettingsFragment"
+        x:title="@string/settings_backup"
+        x:icon="@drawable/ic_cloud_upload"
+        x:singleLineTitle="false"
         />
 
     <!-- Advanced settings are now empty, remove them at some point -->
     <Preference
-        app:fragment="fulguris.settings.fragment.AdvancedSettingsFragment"
-        app:isPreferenceVisible="false"
-        app:title="@string/settings_advanced"
-        app:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.AdvancedSettingsFragment"
+        x:isPreferenceVisible="false"
+        x:title="@string/settings_advanced"
+        x:singleLineTitle="false"
         />
 
     <Preference
-        app:fragment="fulguris.settings.fragment.DomainsSettingsFragment"
-        app:summary="@string/settings_summary_domains"
-        app:title="@string/settings_title_domains"
-        app:icon="@drawable/ic_domain"
-        app:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.DomainsSettingsFragment"
+        x:summary="@string/settings_summary_domains"
+        x:title="@string/settings_title_domains"
+        x:icon="@drawable/ic_domain"
+        x:singleLineTitle="false"
         />
 
     <Preference
-        app:fragment="fulguris.settings.fragment.SponsorshipSettingsFragment"
-        app:title="@string/settings_contribute"
-        app:summary="@string/settings_summary_contribute"
-        app:icon="@drawable/ic_giftcard"
-        app:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.SponsorshipSettingsFragment"
+        x:title="@string/settings_contribute"
+        x:summary="@string/settings_summary_contribute"
+        x:icon="@drawable/ic_giftcard"
+        x:singleLineTitle="false"
         />
 
     <!-- About is traditionally last -->
     <Preference
-        app:fragment="fulguris.settings.fragment.AboutSettingsFragment"
-        app:title="@string/settings_about"
-        app:summary="@string/settings_summary_about"
-        app:icon="@drawable/ic_info"
-        app:singleLineTitle="false"
+        x:fragment="fulguris.settings.fragment.AboutSettingsFragment"
+        x:title="@string/settings_about"
+        x:summary="@string/settings_summary_about"
+        x:icon="@drawable/ic_info"
+        x:singleLineTitle="false"
         />
 
 </PreferenceScreen>

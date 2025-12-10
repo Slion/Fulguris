@@ -234,7 +234,8 @@
     <string name="title_chooser">Escolha um ficheiro</string>
     <string name="open_with">Abrir com</string>
     <string name="settings_general">Gerais</string>
-    <string name="settings_display">Exibição</string>
+    <string name="pref_title_appearance">Aparência</string>
+    <string name="pref_summary_appearance">Idioma, tema, configurações, menus, barras de ferramentas, separadores e painéis</string>
     <string name="settings_backup">Cópia de segurança</string>
     <string name="settings_title_configuration">Configuração</string>
     <string name="settings_summary_configuration">Definições do modo vertical ou horizontal</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Lamentamos mas o seu launcher não permite atalhos.</string>
     <string name="action_delete_all_bookmarks">Apagar todos os marcadores</string>
     <string name="pref_title_developer">Programador</string>
+    <string name="pref_summary_developer">Definições de depuração e registos</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Reinicie a aplicação para aplicar as alterações</string>
     <string name="pref_title_crash_logs">Relatórios de erro</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Nenhum pedido registado para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menu completo</string>
     <string name="action_launch">Iniciar</string>
-    <string name="pref_summary_developer">Definições de depuração e registos</string>
 </resources>

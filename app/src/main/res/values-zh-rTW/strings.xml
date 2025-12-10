@@ -234,7 +234,8 @@
     <string name="title_chooser">選擇一個檔案</string>
     <string name="open_with">開啟方式</string>
     <string name="settings_general">一般設定</string>
-    <string name="settings_display">顯示設定</string>
+    <string name="pref_title_appearance">外觀</string>
+    <string name="pref_summary_appearance">語言、主題、配置、選單、工具列、分頁和面板</string>
     <string name="settings_backup">備份</string>
     <string name="settings_title_configuration">設定</string>
     <string name="settings_summary_configuration">橫向和縱向設定</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">很抱歉，您的啟動器不支援捷徑功能。</string>
     <string name="action_delete_all_bookmarks">刪除所有書籤</string>
     <string name="pref_title_developer">開發者</string>
+    <string name="pref_summary_developer">偵錯和日誌設定</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">請重新啟動此應用程式以使變更生效</string>
     <string name="pref_title_crash_logs">當機日誌</string>
@@ -616,5 +618,4 @@
     <string name="page_requests_none">此頁面沒有記錄的請求</string>
     <string name="settings_summary_full_menu">顯示完整選單</string>
     <string name="action_launch">啟動</string>
-    <string name="pref_summary_developer">偵錯和日誌設定</string>
 </resources>

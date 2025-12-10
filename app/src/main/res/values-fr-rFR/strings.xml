@@ -234,7 +234,8 @@
     <string name="title_chooser">Choisir un fichier</string>
     <string name="open_with">Ouvrir avec</string>
     <string name="settings_general">Général</string>
-    <string name="settings_display">Apparence</string>
+    <string name="pref_title_appearance">Apparence</string>
+    <string name="pref_summary_appearance">Langue, thème, configurations, menus, barres d\'outils, onglets et panneaux</string>
     <string name="settings_backup">Sauvegarde</string>
     <string name="settings_title_configuration">Configuration</string>
     <string name="settings_summary_configuration">Paramètres portrait et paysage</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Désolé, votre lanceur d\'applications ne supporte pas les raccourcis.</string>
     <string name="action_delete_all_bookmarks">Supprimer tous les favoris</string>
     <string name="pref_title_developer">Développeur</string>
+    <string name="pref_summary_developer">Paramètres de débogage et journaux</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Veuillez redémarrer l\'application pour prendre en compte les changements</string>
     <string name="pref_title_crash_logs">Journaux de plantage</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Aucune requête enregistrée pour cette page</string>
     <string name="settings_summary_full_menu">Afficher le menu complet</string>
     <string name="action_launch">Lancer</string>
-    <string name="pref_summary_developer">Paramètres de débogage et journaux</string>
 </resources>

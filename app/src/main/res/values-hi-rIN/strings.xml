@@ -208,7 +208,8 @@
     <string name="title_chooser">फ़ाइल चुनें</string>
     <string name="open_with">इससे खोलें</string>
     <string name="settings_general">सामान्य</string>
-    <string name="settings_display">लुक और फ़ील</string>
+    <string name="pref_title_appearance">दिखावट</string>
+    <string name="pref_summary_appearance">भाषा, थीम, कॉन्फ़िगरेशन, मेनू, टूलबार, टैब और पैनल</string>
     <string name="settings_backup">बैकअप</string>
     <string name="settings_title_configuration">कॉन्फ़िगरेशन</string>
     <string name="settings_summary_configuration">पोर्ट्रेट और लैंडस्केप सेटिंग्स</string>
@@ -351,6 +352,7 @@
     <string name="shortcut_message_failed_to_add">क्षमा करें, आपका लॉन्चर शॉर्टकट का समर्थन नहीं करता।</string>
     <string name="action_delete_all_bookmarks">सभी बुकमार्क हटाएं</string>
     <string name="pref_title_developer">डेवलपर</string>
+    <string name="pref_summary_developer">डिबग और लॉग सेटिंग्स</string>
     <string name="app_restart">परिवर्तन प्रभावी होने के लिए कृपया ऐप पुनः आरंभ करें</string>
     <string name="pref_title_crash_logs">क्रैश लॉग</string>
     <string name="pref_summary_crash_logs">फ़ाइल सिस्टम में क्रैश लॉग लिखें।\nफ़ोल्डर खोलने के लिए टैप करें। बग रिपोर्ट करते समय कृपया प्रासंगिक फ़ाइल प्रदान करें।</string>
@@ -574,5 +576,4 @@
     <string name="page_requests_none">इस पेज के लिए कोई अनुरोध रिकॉर्ड नहीं</string>
     <string name="settings_summary_full_menu">पूर्ण मेनू दिखाएं</string>
     <string name="action_launch">लॉन्च करें</string>
-    <string name="pref_summary_developer">डिबग और लॉग सेटिंग्स</string>
 </resources>

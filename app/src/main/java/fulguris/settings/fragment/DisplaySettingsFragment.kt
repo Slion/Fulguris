@@ -23,6 +23,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -44,13 +45,27 @@ class DisplaySettingsFragment : AbstractSettingsFragment() {
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.settings_display
+        return R.string.pref_title_appearance
     }
 
     override fun providePreferencesXmlResource() = R.xml.preference_display
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
+
+        // Handle locale language selection
+        findPreference<ListPreference>(getString(R.string.pref_key_locale))?.apply {
+            onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, aNewLocale: Any ->
+                // User selected a new locale
+                val newLocaleId = aNewLocale as String
+                val newLocale = fulguris.locale.LocaleUtils.requestedLocale(newLocaleId)
+                // Update app configuration with selected locale
+                fulguris.locale.LocaleUtils.updateLocale(activity, newLocale)
+                // Reload our activity
+                requireActivity().recreate()
+                true
+            }
+        }
 
         catConfigurations = findPreference<x.PreferenceCategory>(resources.getString(R.string.pref_key_configurations))?.apply { isOrderingAsAdded = true }
 

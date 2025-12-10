@@ -234,7 +234,8 @@
     <string name="title_chooser">Alege un fișier</string>
     <string name="open_with">Deschide cu</string>
     <string name="settings_general">General</string>
-    <string name="settings_display">Aspect</string>
+    <string name="pref_title_appearance">Aspect</string>
+    <string name="pref_summary_appearance">Limbă, temă, configurații, meniuri, bare de instrumente, file și panouri</string>
     <string name="settings_backup">Copie de siguranță</string>
     <string name="settings_title_configuration">Configurație</string>
     <string name="settings_summary_configuration">Setări portret și peisaj</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Ne pare rău, launcher-ul tău nu suportă scurtături.</string>
     <string name="action_delete_all_bookmarks">Șterge toate marcajele</string>
     <string name="pref_title_developer">Dezvoltator</string>
+    <string name="pref_summary_developer">Setări depanare și jurnale</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Te rugăm să pornești aplicația pentru ca modificarea să aibă efect</string>
     <string name="pref_title_crash_logs">Jurnale crash</string>
@@ -622,5 +624,4 @@
     <string name="page_requests_none">Nicio cerere înregistrată pentru această pagină</string>
     <string name="settings_summary_full_menu">Afișează meniul complet</string>
     <string name="action_launch">Lansează</string>
-    <string name="pref_summary_developer">Setări depanare și jurnale</string>
 </resources>

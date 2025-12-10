@@ -234,7 +234,8 @@
     <string name="title_chooser">ファイルを選択してください</string>
     <string name="open_with">次で開く</string>
     <string name="settings_general">全般</string>
-    <string name="settings_display">表示</string>
+    <string name="pref_title_appearance">外観</string>
+    <string name="pref_summary_appearance">言語、テーマ、設定、メニュー、ツールバー、タブ、パネル</string>
     <string name="settings_backup">バックアップ</string>
     <string name="settings_title_configuration">設定</string>
     <string name="settings_summary_configuration">縦向きと横向きの設定</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">申し訳ありませんが、ランチャーはショートカットをサポートしていません。</string>
     <string name="action_delete_all_bookmarks">すべてのブックマークを削除する</string>
     <string name="pref_title_developer">開発者</string>
+    <string name="pref_summary_developer">デバッグとログの設定</string>
     <string name="debug_leak_canary">leakcanary</string>
     <string name="app_restart">変更を反映するにはアプリを再起動してください</string>
     <string name="pref_title_crash_logs">クラッシュログ</string>
@@ -616,5 +618,4 @@
     <string name="page_requests_none">このページのリクエストは記録されていません</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
     <string name="action_launch">起動</string>
-    <string name="pref_summary_developer">デバッグとログの設定</string>
 </resources>

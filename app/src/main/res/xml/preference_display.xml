@@ -1,222 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:x="http://schemas.android.com/apk/res-auto"
+    xmlns:a="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Empty default: we use an empty string to indicate "system default" language being selected -->
+    <!--suppress AndroidDomInspection -->
+    <fulguris.settings.preferences.LocaleListPreference
+        a:defaultValue=""
+        a:key="@string/pref_key_locale"
+        a:title="@string/pref_title_language"
+        x:icon="@drawable/ic_translate"
+        x:singleLineTitle="false" />
 
     <Preference
-        android:key="@string/pref_key_theme"
-        android:title="@string/theme"
-        a:icon="@drawable/ic_brush"
-        a:singleLineTitle="false"
+        a:key="@string/pref_key_theme"
+        a:title="@string/theme"
+        x:icon="@drawable/ic_brush"
+        x:singleLineTitle="false"
         />
 
     <!-- Currently not working, therefore hidden for now -->
     <Preference
-        android:key="@string/pref_key_accent"
-        android:title="@string/accent_color"
-        a:icon="@drawable/ic_palette"
-        a:isPreferenceVisible="@bool/const_false"
-        a:singleLineTitle="false"
+        a:key="@string/pref_key_accent"
+        a:title="@string/accent_color"
+        x:icon="@drawable/ic_palette"
+        x:isPreferenceVisible="@bool/const_false"
+        x:singleLineTitle="false"
         />
 
     <Preference
-        android:key="@string/pref_key_browser_text_size"
-        android:title="@string/title_text_size"
-        a:icon="@drawable/ic_text_size"
-        a:singleLineTitle="false"
+        a:key="@string/pref_key_browser_text_size"
+        a:title="@string/title_text_size"
+        x:icon="@drawable/ic_text_size"
+        x:singleLineTitle="false"
         />
 
     <x.PreferenceCategory
-        a:key="@string/pref_key_configurations"
-        android:title="@string/settings_title_configuration"
-        android:summary="@string/settings_summary_configuration"
-        a:singleLineTitle="false"
+        x:key="@string/pref_key_configurations"
+        a:title="@string/settings_title_configuration"
+        a:summary="@string/settings_summary_configuration"
+        x:singleLineTitle="false"
         >
 
         <Preference
-            a:fragment="fulguris.settings.fragment.PortraitSettingsFragment"
-            a:title="@string/settings_title_portrait"
-            a:icon="@drawable/ic_phone"
-            a:singleLineTitle="false"
+            x:fragment="fulguris.settings.fragment.PortraitSettingsFragment"
+            x:title="@string/settings_title_portrait"
+            x:icon="@drawable/ic_phone"
+            x:singleLineTitle="false"
             />
 
         <Preference
-            a:fragment="fulguris.settings.fragment.LandscapeSettingsFragment"
-            a:title="@string/settings_title_landscape"
-            a:icon="@drawable/ic_landscape"
-            a:singleLineTitle="false"
+            x:fragment="fulguris.settings.fragment.LandscapeSettingsFragment"
+            x:title="@string/settings_title_landscape"
+            x:icon="@drawable/ic_landscape"
+            x:singleLineTitle="false"
             />
 
         <Preference
-            a:key="@string/pref_key_add_configuration"
-            a:title="@string/settings_title_add_configuration"
-            a:icon="@drawable/ic_add"
-            a:singleLineTitle="false"
-            a:isPreferenceVisible="false"
+            x:key="@string/pref_key_add_configuration"
+            x:title="@string/settings_title_add_configuration"
+            x:icon="@drawable/ic_add"
+            x:singleLineTitle="false"
+            x:isPreferenceVisible="false"
             tools:isPreferenceVisible="true"
             />
 
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        android:title="@string/settings_general"
-        a:singleLineTitle="false">
+        a:title="@string/settings_general"
+        x:singleLineTitle="false">
 
         <Preference
-            a:fragment="fulguris.settings.fragment.MenusSettingsFragment"
-            a:title="@string/settings_title_menus"
-            a:summary="@string/settings_summary_menus"
-            a:icon="@drawable/ic_menu"
-            a:singleLineTitle="false"
+            x:fragment="fulguris.settings.fragment.MenusSettingsFragment"
+            x:title="@string/settings_title_menus"
+            x:summary="@string/settings_summary_menus"
+            x:icon="@drawable/ic_menu"
+            x:singleLineTitle="false"
             />
 
         <Preference
-            a:fragment="fulguris.settings.fragment.TabSettingsFragment"
-            a:title="@string/settings_title_tab"
-            a:summary="@string/settings_summary_tab"
-            a:icon="@drawable/ic_tab"
-            a:singleLineTitle="false"
+            x:fragment="fulguris.settings.fragment.TabSettingsFragment"
+            x:title="@string/settings_title_tab"
+            x:summary="@string/settings_summary_tab"
+            x:icon="@drawable/ic_tab"
+            x:singleLineTitle="false"
             />
 
         <x.EnumListPreference
-            a:key="@string/pref_key_toolbar_label"
-            a:title="@string/settings_title_toolbar_label"
-            a:useSimpleSummaryProvider="true"
-            a:defaultValue="Title"
-            a:entries="@array/HeaderInfo"
-            a:icon="@drawable/ic_label_outline"
-            a:singleLineTitle="false"
-            a:enumClassName="fulguris.enums.HeaderInfo"
+            x:key="@string/pref_key_toolbar_label"
+            x:title="@string/settings_title_toolbar_label"
+            x:useSimpleSummaryProvider="true"
+            x:defaultValue="Title"
+            x:entries="@array/HeaderInfo"
+            x:icon="@drawable/ic_label_outline"
+            x:singleLineTitle="false"
+            x:enumClassName="fulguris.enums.HeaderInfo"
             />
 
         <x.EnumListPreference
-            a:key="@string/pref_key_task_label"
-            a:title="@string/settings_title_task_label"
-            a:useSimpleSummaryProvider="true"
-            a:defaultValue="AppName"
-            a:entries="@array/HeaderInfo"
-            a:icon="@drawable/ic_label_outline"
-            a:singleLineTitle="false"
-            a:enumClassName="fulguris.enums.HeaderInfo"
+            x:key="@string/pref_key_task_label"
+            x:title="@string/settings_title_task_label"
+            x:useSimpleSummaryProvider="true"
+            x:defaultValue="AppName"
+            x:entries="@array/HeaderInfo"
+            x:icon="@drawable/ic_label_outline"
+            x:singleLineTitle="false"
+            x:enumClassName="fulguris.enums.HeaderInfo"
             />
 
         <x.SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/pref_key_task_icon"
-            android:title="@string/settings_title_task_icon"
-            android:summaryOn="@string/settings_summary_on_task_icon"
-            android:summaryOff="@string/settings_summary_off_task_icon"
-            a:icon="@drawable/ic_image"
-            a:singleLineTitle="false"
+            a:defaultValue="false"
+            a:key="@string/pref_key_task_icon"
+            a:title="@string/settings_title_task_icon"
+            a:summaryOn="@string/settings_summary_on_task_icon"
+            a:summaryOff="@string/settings_summary_off_task_icon"
+            x:icon="@drawable/ic_image"
+            x:singleLineTitle="false"
             />
 
     <x.SwitchPreference
-        android:defaultValue="true"
-        android:key="@string/pref_key_web_page_theme"
-        android:title="@string/color_mode"
-        android:summary="@string/pref_summary_color_mode"
-        a:icon="@drawable/ic_brush"
-        a:iconSpaceReserved="false"
-        a:singleLineTitle="false"
+        a:defaultValue="true"
+        a:key="@string/pref_key_web_page_theme"
+        a:title="@string/color_mode"
+        a:summary="@string/pref_summary_color_mode"
+        x:icon="@drawable/ic_brush"
+        x:iconSpaceReserved="false"
+        x:singleLineTitle="false"
         />
 
     <x.SwitchPreference
-        android:defaultValue="false"
-        android:key="@string/pref_key_black_status_bar"
-        android:title="@string/settings_black_status_bar"
-        a:icon="@drawable/ic_phone"
-        a:iconSpaceReserved="true"
-        a:singleLineTitle="false"
+        a:defaultValue="false"
+        a:key="@string/pref_key_black_status_bar"
+        a:title="@string/settings_black_status_bar"
+        x:icon="@drawable/ic_phone"
+        x:iconSpaceReserved="true"
+        x:singleLineTitle="false"
         />
 
     </x.PreferenceCategory>
 
 
-    <x.PreferenceCategory android:title="@string/pref_category_panels">
+    <x.PreferenceCategory a:title="@string/pref_category_panels">
 
         <x.SwitchPreference
-            android:defaultValue="@bool/pref_default_use_bottom_sheets"
-            android:key="@string/pref_key_use_bottom_sheets"
-            android:title="@string/pref_title_use_bottom_sheets"
-            android:summary="@string/pref_summary_use_bottom_sheets"
-            android:disableDependentsState="true"
-            a:icon="@drawable/ic_fullscreen"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false"
+            a:defaultValue="@bool/pref_default_use_bottom_sheets"
+            a:key="@string/pref_key_use_bottom_sheets"
+            a:title="@string/pref_title_use_bottom_sheets"
+            a:summary="@string/pref_summary_use_bottom_sheets"
+            a:disableDependentsState="true"
+            x:icon="@drawable/ic_fullscreen"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false"
             />
 
         <x.SwitchPreference
-            android:defaultValue="@bool/pref_default_locked_drawers"
-            android:key="@string/pref_key_locked_drawers"
-            android:title="@string/pref_title_locked_drawers"
-            android:summary="@string/pref_summary_locked_drawers"
-            a:icon="@drawable/ic_block"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false"
+            a:defaultValue="@bool/pref_default_locked_drawers"
+            a:key="@string/pref_key_locked_drawers"
+            a:title="@string/pref_title_locked_drawers"
+            a:summary="@string/pref_summary_locked_drawers"
+            x:icon="@drawable/ic_block"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false"
             />
 
         <x.SwitchPreference
-            android:defaultValue="@bool/pref_default_swap_drawer"
-            android:key="@string/pref_key_swap_tabs_and_bookmarks"
-            android:title="@string/settings_title_swap_bookmarks_and_tabs"
-            android:summary="@string/settings_summary_swap_bookmarks_and_tabs"
-            android:dependency="@string/pref_key_use_bottom_sheets"
-            a:icon="@drawable/ic_cache"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false"
+            a:defaultValue="@bool/pref_default_swap_drawer"
+            a:key="@string/pref_key_swap_tabs_and_bookmarks"
+            a:title="@string/settings_title_swap_bookmarks_and_tabs"
+            a:summary="@string/settings_summary_swap_bookmarks_and_tabs"
+            a:dependency="@string/pref_key_use_bottom_sheets"
+            x:icon="@drawable/ic_cache"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false"
             />
 
     </x.PreferenceCategory>
 
 
-    <x.PreferenceCategory android:title="@string/pref_category_webpage">
+    <x.PreferenceCategory a:title="@string/pref_category_webpage">
 
         <x.EnumListPreference
-            a:key="@string/pref_key_layer_type"
-            a:title="@string/settings_title_layer_type"
-            a:useSimpleSummaryProvider="true"
-            a:defaultValue="Hardware"
-            a:entries="@array/LayerTypes"
-            a:icon="@drawable/ic_layers"
-            a:singleLineTitle="false"
-            a:enumClassName="fulguris.enums.LayerType"
+            x:key="@string/pref_key_layer_type"
+            x:title="@string/settings_title_layer_type"
+            x:useSimpleSummaryProvider="true"
+            x:defaultValue="Hardware"
+            x:entries="@array/LayerTypes"
+            x:icon="@drawable/ic_layers"
+            x:singleLineTitle="false"
+            x:enumClassName="fulguris.enums.LayerType"
             />
 
         <Preference
-            android:key="@string/pref_key_rendering_mode"
-            android:title="@string/rendering_mode"
-            a:icon="@drawable/ic_rendering_mode"
-            a:singleLineTitle="false"
+            a:key="@string/pref_key_rendering_mode"
+            a:title="@string/rendering_mode"
+            x:icon="@drawable/ic_rendering_mode"
+            x:singleLineTitle="false"
             />
 
         <!-- SL: not sure what that does -->
         <x.SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/pref_key_overview_mode"
-            android:summary="@string/recommended"
-            android:title="@string/overViewMode"
-            a:icon="@drawable/ic_eye"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false"
+            a:defaultValue="true"
+            a:key="@string/pref_key_overview_mode"
+            a:summary="@string/recommended"
+            a:title="@string/overViewMode"
+            x:icon="@drawable/ic_eye"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false"
             />
 
         <x.SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/pref_key_text_reflow"
-            android:title="@string/reflow"
-            a:icon="@drawable/ic_text_variant"
-            a:iconSpaceReserved="true"
-            a:singleLineTitle="false"
+            a:defaultValue="false"
+            a:key="@string/pref_key_text_reflow"
+            a:title="@string/reflow"
+            x:icon="@drawable/ic_text_variant"
+            x:iconSpaceReserved="true"
+            x:singleLineTitle="false"
             />
 
         <Preference
-            a:fragment="fulguris.settings.fragment.ScrollbarsSettingsFragment"
-            a:title="@string/pref_category_scrollbars"
-            a:summary="@string/pref_summary_scrollbars"
-            a:icon="@drawable/ic_scroll_vertical"
-            a:singleLineTitle="false"
-            a:allowDividerAbove="false"
+            x:fragment="fulguris.settings.fragment.ScrollbarsSettingsFragment"
+            x:title="@string/pref_category_scrollbars"
+            x:summary="@string/pref_summary_scrollbars"
+            x:icon="@drawable/ic_scroll_vertical"
+            x:singleLineTitle="false"
+            x:allowDividerAbove="false"
             />
 
     </x.PreferenceCategory>

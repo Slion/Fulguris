@@ -234,7 +234,8 @@
     <string name="title_chooser">Choose a file</string>
     <string name="open_with">Open with</string>
     <string name="settings_general">General</string>
-    <string name="settings_display">Look &amp; feel</string>
+    <string name="pref_title_appearance">מראה</string>
+    <string name="pref_summary_appearance">שפה, ערכת נושא, תצורות, תפריטים, סרגלי כלים, כרטיסיות ולוחות</string>
     <string name="settings_backup">Backup</string>
     <string name="settings_title_configuration">Configuration</string>
     <string name="settings_summary_configuration">Portrait and landscape settings</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
     <string name="pref_title_developer">מפתח</string>
+    <string name="pref_summary_developer">הגדרות ניפוי באגים ויומנים</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Please restart the app for the change to take effect</string>
     <string name="pref_title_crash_logs">Crash logs</string>
@@ -625,5 +627,4 @@
     <string name="page_requests_none">אין בקשות מתועדות לדף זה</string>
     <string name="settings_summary_full_menu">הצג תפריט מלא</string>
     <string name="action_launch">הפעל</string>
-    <string name="pref_summary_developer">הגדרות ניפוי באגים ויומנים</string>
 </resources>

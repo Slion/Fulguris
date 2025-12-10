@@ -234,7 +234,8 @@
     <string name="title_chooser">Vælg en fil</string>
     <string name="open_with">Åbn med</string>
     <string name="settings_general">Generelt</string>
-    <string name="settings_display">Udseende og fornemmelse</string>
+    <string name="pref_title_appearance">Udseende</string>
+    <string name="pref_summary_appearance">Sprog, tema, konfigurationer, menuer, værktøjslinjer, faner og paneler</string>
     <string name="settings_backup">Sikkerhedskopi</string>
     <string name="settings_title_configuration">Konfiguration</string>
     <string name="settings_summary_configuration">Højformat og liggende indstillinger</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Beklager, din launcher understøtter ikke genveje.</string>
     <string name="action_delete_all_bookmarks">Slet alle bogmærker</string>
     <string name="pref_title_developer">Udvikler</string>
+    <string name="pref_summary_developer">Debug og log indstillinger</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Genstart venligst appen for at ændringen træder i kraft</string>
     <string name="pref_title_crash_logs">Nedbrudslogge</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Ingen anmodninger registreret for denne side</string>
     <string name="settings_summary_full_menu">Vis fuld menu</string>
     <string name="action_launch">Start</string>
-    <string name="pref_summary_developer">Debug og log indstillinger</string>
 </resources>

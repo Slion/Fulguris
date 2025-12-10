@@ -234,7 +234,8 @@
     <string name="title_chooser">Choose a file</string>
     <string name="open_with">Open with</string>
     <string name="settings_general">General</string>
-    <string name="settings_display">Look &amp; feel</string>
+    <string name="pref_title_appearance">Voorkoms</string>
+    <string name="pref_summary_appearance">Taal, tema, konfigurasies, kieslyste, nutsbalke, oortjies en panele</string>
     <string name="settings_backup">Backup</string>
     <string name="settings_title_configuration">Configuration</string>
     <string name="settings_summary_configuration">Portrait and landscape settings</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
     <string name="pref_title_developer">Ontwikkelaar</string>
+    <string name="pref_summary_developer">Ontfout en loggings instellings</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Please restart the app for the change to take effect</string>
     <string name="pref_title_crash_logs">Crash logs</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Geen versoeke vir hierdie bladsy aangeteken nie</string>
     <string name="settings_summary_full_menu">Wys volle spyskaart</string>
     <string name="action_launch">Begin</string>
-    <string name="pref_summary_developer">Ontfout en loggings instellings</string>
 </resources>

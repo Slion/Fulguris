@@ -234,7 +234,8 @@
     <string name="title_chooser">选择一个文件</string>
     <string name="open_with">打开方式</string>
     <string name="settings_general">常规设置</string>
-    <string name="settings_display">显示设置</string>
+    <string name="pref_title_appearance">外观</string>
+    <string name="pref_summary_appearance">语言、主题、配置、菜单、工具栏、标签页和面板</string>
     <string name="settings_backup">备份</string>
     <string name="settings_title_configuration">设置</string>
     <string name="settings_summary_configuration">横竖屏设置</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">抱歉，你的桌面应用不支持快捷方式</string>
     <string name="action_delete_all_bookmarks">删除所有书签</string>
     <string name="pref_title_developer">开发者</string>
+    <string name="pref_summary_developer">调试和日志设置</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">重新启动应用以使更改生效</string>
     <string name="pref_title_crash_logs">崩溃日志记录</string>
@@ -616,5 +618,4 @@
     <string name="page_requests_none">此页面没有记录的请求</string>
     <string name="settings_summary_full_menu">显示完整菜单</string>
     <string name="action_launch">启动</string>
-    <string name="pref_summary_developer">调试和日志设置</string>
 </resources>

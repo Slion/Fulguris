@@ -234,7 +234,8 @@
     <string name="title_chooser">파일 선택</string>
     <string name="open_with">다음으로 열기</string>
     <string name="settings_general">일반 설정</string>
-    <string name="settings_display">디스플레이 설정</string>
+    <string name="pref_title_appearance">외관</string>
+    <string name="pref_summary_appearance">언어, 테마, 구성, 메뉴, 도구 모음, 탭 및 패널</string>
     <string name="settings_backup">백업</string>
     <string name="settings_title_configuration">구성</string>
     <string name="settings_summary_configuration">세로 및 가로 설정</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">죄송합니다, 홈 화면이 바로가기를 지원하지 않습니다.</string>
     <string name="action_delete_all_bookmarks">모든 즐겨찾기 삭제</string>
     <string name="pref_title_developer">개발자</string>
+    <string name="pref_summary_developer">디버그 및 로그 설정</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">변경 사항을 적용하려면 앱을 다시 시작하세요</string>
     <string name="pref_title_crash_logs">충돌 로그</string>
@@ -616,5 +618,4 @@
     <string name="page_requests_none">이 페이지에 기록된 요청 없음</string>
     <string name="settings_summary_full_menu">전체 메뉴 표시</string>
     <string name="action_launch">실행</string>
-    <string name="pref_summary_developer">디버그 및 로그 설정</string>
 </resources>

@@ -3,16 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="non-default-test">
 
-
-    <!-- Empty default: we use an empty string to indicate "system default" language being selected -->
-    <!--suppress AndroidDomInspection -->
-    <fulguris.settings.preferences.LocaleListPreference
-        android:defaultValue=""
-        android:key="@string/pref_key_locale"
-        android:title="@string/pref_title_language"
-        app:icon="@drawable/ic_translate"
-        app:singleLineTitle="false" />
-
     <Preference
         android:key="home"
         android:title="@string/home"

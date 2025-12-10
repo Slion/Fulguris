@@ -234,7 +234,8 @@
     <string name="title_chooser">Válasszon egy fájlt</string>
     <string name="open_with">Megnyitás ezzel</string>
     <string name="settings_general">Általános Beállítások</string>
-    <string name="settings_display">Megjelenítési Beállítások</string>
+    <string name="pref_title_appearance">Megjelenés</string>
+    <string name="pref_summary_appearance">Nyelv, téma, konfigurációk, menük, eszköztárak, fülek és panelek</string>
     <string name="settings_backup">Biztonsági Mentés</string>
     <string name="settings_title_configuration">Beállítás</string>
     <string name="settings_summary_configuration">Álló- és fekvő-képernyő beállítások</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Sajnos az alkalmazásindítód nem támogatja a gyorsindító parancsikonokat.</string>
     <string name="action_delete_all_bookmarks">Összes könyvjelző törlése</string>
     <string name="pref_title_developer">Fejlesztő</string>
+    <string name="pref_summary_developer">Hibakeresési és naplózási beállítások</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Indítsa újra az alkalmazást hogy alkalmazza a változásokat</string>
     <string name="pref_title_crash_logs">Ütközési naplófájlok</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Nincsenek rögzített kérések ezen az oldalon</string>
     <string name="settings_summary_full_menu">Teljes menü megjelenítése</string>
     <string name="action_launch">Indítás</string>
-    <string name="pref_summary_developer">Hibakeresési és naplózási beállítások</string>
 </resources>

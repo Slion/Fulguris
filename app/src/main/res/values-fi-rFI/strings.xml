@@ -234,7 +234,8 @@
     <string name="title_chooser">Valitse sovellus</string>
     <string name="open_with">Avaa sovelluksessa</string>
     <string name="settings_general">Yleiset</string>
-    <string name="settings_display">Näyttö</string>
+    <string name="pref_title_appearance">Ulkoasu</string>
+    <string name="pref_summary_appearance">Kieli, teema, kokoonpanot, valikot, työkalurivit, välilehdet ja paneelit</string>
     <string name="settings_backup">Varmuuskopio</string>
     <string name="settings_title_configuration">Määritykset</string>
     <string name="settings_summary_configuration">Hallinnoi selaimen määrityksiä</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Käynnistinohjelmasi ei tue pikakuvakkeita.</string>
     <string name="action_delete_all_bookmarks">Poista kaikki kirjanmerkit</string>
     <string name="pref_title_developer">Kehittäjä</string>
+    <string name="pref_summary_developer">Virheenkorjaus- ja lokiasetukset</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Käynnistä sovellus uudelleen, jotta muutos tulee voimaan</string>
     <string name="pref_title_crash_logs">Kaatumislokit</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Ei tallennettuja pyyntöjä tälle sivulle</string>
     <string name="settings_summary_full_menu">Näytä koko valikko</string>
     <string name="action_launch">Käynnistä</string>
-    <string name="pref_summary_developer">Virheenkorjaus- ja lokiasetukset</string>
 </resources>

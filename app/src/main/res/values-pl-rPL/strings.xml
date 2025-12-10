@@ -234,7 +234,8 @@
     <string name="title_chooser">Wybierz plik</string>
     <string name="open_with">Otwórz za pomocą</string>
     <string name="settings_general">Ogólne</string>
-    <string name="settings_display">Wygląd</string>
+    <string name="pref_title_appearance">Wygląd</string>
+    <string name="pref_summary_appearance">Język, motyw, konfiguracje, menu, paski narzędzi, karty i panele</string>
     <string name="settings_backup">Kopia zapasowa</string>
     <string name="settings_title_configuration">Konfiguracja</string>
     <string name="settings_summary_configuration">Ustawienia orientacji ekranu</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Twój launcher nie obsługuje skrótów.</string>
     <string name="action_delete_all_bookmarks">Usuń wszystkie zakładki</string>
     <string name="pref_title_developer">Deweloper</string>
+    <string name="pref_summary_developer">Ustawienia debugowania i logów</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Uruchom aplikację ponownie, aby zastosować zmiany</string>
     <string name="pref_title_crash_logs">Rejestry awarii</string>
@@ -625,5 +627,4 @@
     <string name="page_requests_none">Brak zarejestrowanych żądań dla tej strony</string>
     <string name="settings_summary_full_menu">Pokaż pełne menu</string>
     <string name="action_launch">Uruchom</string>
-    <string name="pref_summary_developer">Ustawienia debugowania i logów</string>
 </resources>

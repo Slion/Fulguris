@@ -139,20 +139,6 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             }
         )
 
-        // Handle locale language selection
-        findPreference<ListPreference>(getString(R.string.pref_key_locale))?.apply {
-            onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, aNewLocale: Any ->
-                // User selected a new locale
-                val newLocaleId = aNewLocale as String
-                val newLocale = fulguris.locale.LocaleUtils.requestedLocale(newLocaleId)
-                // Update app configuration with selected locale
-                fulguris.locale.LocaleUtils.updateLocale(activity, newLocale)
-                // Reload our activity
-                requireActivity().recreate()
-                true
-            }
-	    }
-
         switchPreference(
             preference = SETTINGS_FORCE_ZOOM,
             isChecked = userPreferences.forceZoom,

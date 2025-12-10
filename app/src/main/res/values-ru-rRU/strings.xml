@@ -234,7 +234,8 @@
     <string name="title_chooser">Выберите файл</string>
     <string name="open_with">Открыть с помощью</string>
     <string name="settings_general">Основные настройки</string>
-    <string name="settings_display">Настройки отображения</string>
+    <string name="pref_title_appearance">Внешний вид</string>
+    <string name="pref_summary_appearance">Язык, тема, конфигурации, меню, панели инструментов, вкладки и панели</string>
     <string name="settings_backup">Резервное копирование</string>
     <string name="settings_title_configuration">Конфигурация</string>
     <string name="settings_summary_configuration">Настройки портретной и альбомной ориентации</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Извините, ваш лаунчер не поддерживает ярлыки.</string>
     <string name="action_delete_all_bookmarks">Удалить все закладки</string>
     <string name="pref_title_developer">Разработчик</string>
+    <string name="pref_summary_developer">Настройки отладки и журналов</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Чтобы изменения вступили в силу, необходимо перезапустить приложение.</string>
     <string name="pref_title_crash_logs">Журналы сбоев</string>
@@ -625,5 +627,4 @@
     <string name="page_requests_none">Запросы для этой страницы не зарегистрированы</string>
     <string name="settings_summary_full_menu">Показать полное меню</string>
     <string name="action_launch">Запустить</string>
-    <string name="pref_summary_developer">Настройки отладки и журналов</string>
 </resources>

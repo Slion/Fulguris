@@ -234,7 +234,8 @@
     <string name="title_chooser">เลือกแอป</string>
     <string name="open_with">เปิดด้วย</string>
     <string name="settings_general">ทั่วไป</string>
-    <string name="settings_display">การแสดงผล</string>
+    <string name="pref_title_appearance">รูปลักษณ์</string>
+    <string name="pref_summary_appearance">ภาษา ธีม การกำหนดค่า เมนู แถบเครื่องมือ แท็บ และแผง</string>
     <string name="settings_backup">สำรองข้อมูล</string>
     <string name="settings_title_configuration">การกำหนดค่า</string>
     <string name="settings_summary_configuration">จัดการการกำหนดค่าเบราว์เซอร์</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">ขออภัย ตัวเปิดของคุณไม่รองรับทางลัด</string>
     <string name="action_delete_all_bookmarks">ลบบุ๊กมาร์กทั้งหมด</string>
     <string name="pref_title_developer">นักพัฒนา</string>
+    <string name="pref_summary_developer">การตั้งค่าการแก้ไขข้อบกพร่องและบันทึก</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">กรุณารีสตาร์ตแอปเพื่อให้การเปลี่ยนแปลงมีผล</string>
     <string name="pref_title_crash_logs">บันทึกข้อขัดข้อง</string>
@@ -616,5 +618,4 @@
     <string name="page_requests_none">ไม่มีคำขอที่บันทึกสำหรับหน้านี้</string>
     <string name="settings_summary_full_menu">แสดงเมนูเต็ม</string>
     <string name="action_launch">เปิด</string>
-    <string name="pref_summary_developer">การตั้งค่าการแก้ไขข้อบกพร่องและบันทึก</string>
 </resources>

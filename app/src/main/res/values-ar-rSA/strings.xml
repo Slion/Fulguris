@@ -234,7 +234,8 @@
     <string name="title_chooser">اختر ملفاً</string>
     <string name="open_with">فتح باستخدام</string>
     <string name="settings_general">عام</string>
-    <string name="settings_display">المظهر والشعور</string>
+    <string name="pref_title_appearance">المظهر</string>
+    <string name="pref_summary_appearance">اللغة والمظهر والتكوينات والقوائم وأشرطة الأدوات والعلامات واللوحات</string>
     <string name="settings_backup">النسخ الاحتياطي</string>
     <string name="settings_title_configuration">التكوين</string>
     <string name="settings_summary_configuration">إعدادات الصورة الرأسية والأفقية</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">عذراً، المشغل الخاص بك لا يدعم الاختصارات.</string>
     <string name="action_delete_all_bookmarks">حذف جميع الإشارات المرجعية</string>
     <string name="pref_title_developer">مطور</string>
+    <string name="pref_summary_developer">إعدادات التصحيح والسجلات</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">يرجى إعادة تشغيل التطبيق لتفعيل التغيير</string>
     <string name="pref_title_crash_logs">سجلات الأعطال</string>
@@ -631,5 +633,4 @@
     <string name="page_requests_none">لا توجد طلبات مسجلة لهذه الصفحة</string>
     <string name="settings_summary_full_menu">إظهار القائمة الكاملة</string>
     <string name="action_launch">تشغيل</string>
-    <string name="pref_summary_developer">إعدادات التصحيح والسجلات</string>
 </resources>

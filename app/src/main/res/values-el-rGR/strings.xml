@@ -234,7 +234,8 @@
     <string name="title_chooser">Επιλογή αρχείου</string>
     <string name="open_with">Άνοιγμα με</string>
     <string name="settings_general">Γενικές ρυθμίσεις</string>
-    <string name="settings_display">Ρυθμίσεις προβολής</string>
+    <string name="pref_title_appearance">Εμφάνιση</string>
+    <string name="pref_summary_appearance">Γλώσσα, θέμα, διαμορφώσεις, μενού, γραμμές εργαλείων, καρτέλες και πίνακες</string>
     <string name="settings_backup">Αντίγραφο ασφαλείας</string>
     <string name="settings_title_configuration">Διαμόρφωση</string>
     <string name="settings_summary_configuration">Ρυθμίσεις κατακόρυφης και οριζόντιας προβολής</string>
@@ -384,6 +385,7 @@
     <string name="shortcut_message_failed_to_add">Λυπούμαστε, το πρόγραμμα εκκίνησής σας δεν υποστηρίζει συντομεύσεις.</string>
     <string name="action_delete_all_bookmarks">Διαγραφή όλων των σελιδοδεικτών</string>
     <string name="pref_title_developer">Προγραμματιστής</string>
+    <string name="pref_summary_developer">Ρυθμίσεις εντοπισμού σφαλμάτων και αρχείων καταγραφής</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Επανεκκινήστε την εφαρμογή για να τεθεί σε ισχύ η αλλαγή</string>
     <string name="pref_title_crash_logs">Αρχεία καταγραφής σφαλμάτων</string>
@@ -619,5 +621,4 @@
     <string name="page_requests_none">Δεν καταγράφηκαν αιτήματα για αυτή τη σελίδα</string>
     <string name="settings_summary_full_menu">Εμφάνιση πλήρους μενού</string>
     <string name="action_launch">Εκκίνηση</string>
-    <string name="pref_summary_developer">Ρυθμίσεις εντοπισμού σφαλμάτων και αρχείων καταγραφής</string>
 </resources>
