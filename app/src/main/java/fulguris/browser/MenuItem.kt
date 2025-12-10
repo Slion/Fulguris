@@ -33,8 +33,8 @@ import androidx.annotation.StringRes
  * @param labelId String resource ID for the item label
  * @param iconId Drawable resource ID for the item icon
  * @param viewId View resource ID (R.id.menuItem*) in menu_custom.xml, 0 if not in layout
- * @param availableInMainMenu Whether this item can appear in the main menu
- * @param availableInTabMenu Whether this item can appear in the tab menu
+ * @param canBeInMainMenu Whether this item can appear in the main menu
+ * @param canBeInTabMenu Whether this item can appear in the tab menu
  * @param mandatory Whether this item must always be present and cannot be removed
  * @param defaultMenu Which menu this item appears in by default (MainMenu, TabMenu, or Hidden)
  * @param preferredMenu Which menu to use when swiping hidden items back (defaults to defaultMenu for non-hidden items)
@@ -45,8 +45,8 @@ data class MenuItem(
     @StringRes val labelId: Int,
     @DrawableRes val iconId: Int,
     @IdRes val viewId: Int = 0,
-    val availableInMainMenu: Boolean,
-    val availableInTabMenu: Boolean,
+    val canBeInMainMenu: Boolean,
+    val canBeInTabMenu: Boolean,
     val mandatory: Boolean = false,
     val defaultMenu: MenuType = MenuType.HiddenMenu,
     val preferredMenu: MenuType = defaultMenu,

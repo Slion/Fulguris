@@ -433,12 +433,12 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                 if (menuItem != null && fromMenuType != toMenuType) {
                     when (toMenuType) {
                         MenuType.MainMenu -> {
-                            if (!menuItem.availableInMainMenu) {
+                            if (!menuItem.canBeInMainMenu) {
                                 return false
                             }
                         }
                         MenuType.TabMenu -> {
-                            if (!menuItem.availableInTabMenu) {
+                            if (!menuItem.canBeInTabMenu) {
                                 return false
                             }
                         }
@@ -641,18 +641,18 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     val finalTargetMenu = when {
                         targetMenuType == MenuType.FullMenu || targetMenuType == MenuType.HiddenMenu -> {
                             // Fall back to MainMenu if preferred is not a valid target
-                            if (menuItem.availableInMainMenu) MenuType.MainMenu
-                            else if (menuItem.availableInTabMenu) MenuType.TabMenu
+                            if (menuItem.canBeInMainMenu) MenuType.MainMenu
+                            else if (menuItem.canBeInTabMenu) MenuType.TabMenu
                             else MenuType.HiddenMenu // Keep hidden if not available anywhere
                         }
-                        targetMenuType == MenuType.MainMenu && !menuItem.availableInMainMenu -> {
+                        targetMenuType == MenuType.MainMenu && !menuItem.canBeInMainMenu -> {
                             // Can't go to MainMenu, try TabMenu
-                            if (menuItem.availableInTabMenu) MenuType.TabMenu
+                            if (menuItem.canBeInTabMenu) MenuType.TabMenu
                             else MenuType.HiddenMenu
                         }
-                        targetMenuType == MenuType.TabMenu && !menuItem.availableInTabMenu -> {
+                        targetMenuType == MenuType.TabMenu && !menuItem.canBeInTabMenu -> {
                             // Can't go to TabMenu, try MainMenu
-                            if (menuItem.availableInMainMenu) MenuType.MainMenu
+                            if (menuItem.canBeInMainMenu) MenuType.MainMenu
                             else MenuType.HiddenMenu
                         }
                         else -> targetMenuType
