@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Đã thêm lối tắt vào màn hình chính</string>
     <string name="shortcut_message_failed_to_add">Xin lỗi, trình khởi chạy của bạn không hỗ trợ phím tắt.</string>
     <string name="action_delete_all_bookmarks">Xóa mọi dấu trang</string>
-    <string name="debug_title">Gỡ lỗi</string>
+    <string name="pref_title_developer">Nhà phát triển</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Vui lòng khởi động lại ứng dụng để thay đổi có hiệu lực</string>
     <string name="pref_title_crash_logs">Nhật ký sự cố</string>
@@ -616,4 +616,5 @@
     <string name="page_requests_none">Không có yêu cầu nào được ghi lại cho trang này</string>
     <string name="settings_summary_full_menu">Hiển thị menu đầy đủ</string>
     <string name="action_launch">Khởi chạy</string>
+    <string name="pref_summary_developer">Cài đặt gỡ lỗi và nhật ký</string>
 </resources>

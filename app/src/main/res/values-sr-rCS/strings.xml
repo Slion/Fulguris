@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Prečica dodata na početni ekran</string>
     <string name="shortcut_message_failed_to_add">Žao nam je, vaš pokretač ne podržava prečice.</string>
     <string name="action_delete_all_bookmarks">Obriši sve obeleživače</string>
-    <string name="debug_title">Otklanjanje grešaka</string>
+    <string name="pref_title_developer">Програмер</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Ponovo pokrenite aplikaciju da bi promena stupila na snagu</string>
     <string name="pref_title_crash_logs">Dnevnici pada</string>
@@ -622,4 +622,5 @@
     <string name="page_requests_none">Нема забележених захтева за ову страницу</string>
     <string name="settings_summary_full_menu">Прикажи пуни мени</string>
     <string name="action_launch">Покрени</string>
+    <string name="pref_summary_developer">Подешавања отклањања грешака и записа</string>
 </resources>

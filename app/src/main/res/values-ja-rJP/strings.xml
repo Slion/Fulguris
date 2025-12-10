@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">ホーム画面にショートカットを追加しました</string>
     <string name="shortcut_message_failed_to_add">申し訳ありませんが、ランチャーはショートカットをサポートしていません。</string>
     <string name="action_delete_all_bookmarks">すべてのブックマークを削除する</string>
-    <string name="debug_title">デバッグ</string>
+    <string name="pref_title_developer">開発者</string>
     <string name="debug_leak_canary">leakcanary</string>
     <string name="app_restart">変更を反映するにはアプリを再起動してください</string>
     <string name="pref_title_crash_logs">クラッシュログ</string>
@@ -616,4 +616,5 @@
     <string name="page_requests_none">このページのリクエストは記録されていません</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
     <string name="action_launch">起動</string>
+    <string name="pref_summary_developer">デバッグとログの設定</string>
 </resources>

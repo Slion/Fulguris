@@ -56,14 +56,6 @@
         />
 
     <Preference
-        app:fragment="fulguris.settings.fragment.DebugSettingsFragment"
-        app:key="@string/pref_key_debug"
-        app:title="@string/debug_title"
-        app:icon="@drawable/ic_bug"
-        app:singleLineTitle="false"
-        />
-
-    <Preference
         app:fragment="fulguris.settings.fragment.SponsorshipSettingsFragment"
         app:title="@string/settings_contribute"
         app:summary="@string/settings_summary_contribute"

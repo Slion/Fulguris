@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Ярлык добавлен на домашний экран</string>
     <string name="shortcut_message_failed_to_add">Извините, ваш лаунчер не поддерживает ярлыки.</string>
     <string name="action_delete_all_bookmarks">Удалить все закладки</string>
-    <string name="debug_title">Настройки отладки</string>
+    <string name="pref_title_developer">Разработчик</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Чтобы изменения вступили в силу, необходимо перезапустить приложение.</string>
     <string name="pref_title_crash_logs">Журналы сбоев</string>
@@ -625,4 +625,5 @@
     <string name="page_requests_none">Запросы для этой страницы не зарегистрированы</string>
     <string name="settings_summary_full_menu">Показать полное меню</string>
     <string name="action_launch">Запустить</string>
+    <string name="pref_summary_developer">Настройки отладки и журналов</string>
 </resources>

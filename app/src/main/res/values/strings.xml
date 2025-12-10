@@ -408,7 +408,8 @@
 
 
     <!-- debug strings -->
-    <string name="debug_title">Debug</string>
+    <string name="pref_title_developer">Developer</string>
+    <string name="pref_summary_developer">Debug and logs settings</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Please restart the app for the change to take effect</string>
     <string name="pref_title_crash_logs">Crash logs</string>

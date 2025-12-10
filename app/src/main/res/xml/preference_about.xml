@@ -60,6 +60,15 @@
 
     </Preference>
 
+    <Preference
+        a:fragment="fulguris.settings.fragment.DebugSettingsFragment"
+        a:key="@string/pref_key_debug"
+        a:title="@string/pref_title_developer"
+        a:summary="@string/pref_summary_developer"
+        a:icon="@drawable/ic_bug"
+        a:singleLineTitle="false"
+        />
+
     <x.PreferenceCategory a:title="@string/pref_category_title_contact_us">
 
         <Preference

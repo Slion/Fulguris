@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Sorry, your launcher does not support shortcuts.</string>
     <string name="action_delete_all_bookmarks">Delete all bookmarks</string>
-    <string name="debug_title">Debug</string>
+    <string name="pref_title_developer">Kūrėjas</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Please restart the app for the change to take effect</string>
     <string name="pref_title_crash_logs">Crash logs</string>
@@ -625,4 +625,5 @@
     <string name="page_requests_none">Šiam puslapiui nėra įrašytų užklausų</string>
     <string name="settings_summary_full_menu">Rodyti pilną meniu</string>
     <string name="action_launch">Paleisti</string>
+    <string name="pref_summary_developer">Derinimo ir žurnalų nustatymai</string>
 </resources>

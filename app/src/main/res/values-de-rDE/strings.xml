@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Verknüpfung wurde zum Startbildschirm hinzugefügt</string>
     <string name="shortcut_message_failed_to_add">Ihr Launcher unterstützt keine Verknüpfungen!</string>
     <string name="action_delete_all_bookmarks">Alle Lesezeichen löschen</string>
-    <string name="debug_title">Debug Einstellungen</string>
+    <string name="pref_title_developer">Entwickler</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Bitte starten Sie die App neu, damit die Änderung wirksam wird.</string>
     <string name="pref_title_crash_logs">Absturzberichte</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Keine Anfragen für diese Seite aufgezeichnet</string>
     <string name="settings_summary_full_menu">Vollständiges Menü anzeigen</string>
     <string name="action_launch">Starten</string>
+    <string name="pref_summary_developer">Debug- und Protokolleinstellungen</string>
 </resources>

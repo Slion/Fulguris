@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Genvej tilføjet til hjemmeskærm</string>
     <string name="shortcut_message_failed_to_add">Beklager, din launcher understøtter ikke genveje.</string>
     <string name="action_delete_all_bookmarks">Slet alle bogmærker</string>
-    <string name="debug_title">Fejlfind</string>
+    <string name="pref_title_developer">Udvikler</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Genstart venligst appen for at ændringen træder i kraft</string>
     <string name="pref_title_crash_logs">Nedbrudslogge</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Ingen anmodninger registreret for denne side</string>
     <string name="settings_summary_full_menu">Vis fuld menu</string>
     <string name="action_launch">Start</string>
+    <string name="pref_summary_developer">Debug og log indstillinger</string>
 </resources>

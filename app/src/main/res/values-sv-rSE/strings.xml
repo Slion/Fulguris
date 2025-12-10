@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Genväg tillagd till hemskärm</string>
     <string name="shortcut_message_failed_to_add">Tyvärr, din launcher stöder inte genvägar.</string>
     <string name="action_delete_all_bookmarks">Radera alla bokmärken</string>
-    <string name="debug_title">Felsöka</string>
+    <string name="pref_title_developer">Utvecklare</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Vänligen starta om appen för att ändringen ska börja gälla</string>
     <string name="pref_title_crash_logs">Kraschlogg</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Inga förfrågningar registrerade för denna sida</string>
     <string name="settings_summary_full_menu">Visa fullständig meny</string>
     <string name="action_launch">Starta</string>
+    <string name="pref_summary_developer">Inställningar för felsökning och loggar</string>
 </resources>

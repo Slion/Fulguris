@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Shortcut added to home screen</string>
     <string name="shortcut_message_failed_to_add">Omlouváme se, váš spouštěč nepodporuje zkratky.</string>
     <string name="action_delete_all_bookmarks">Smazat všechny záložky</string>
-    <string name="debug_title">Ladění</string>
+    <string name="pref_title_developer">Vývojář</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Restartujte aplikaci, aby se změna projevila</string>
     <string name="pref_title_crash_logs">Protokoly pádů</string>
@@ -625,4 +625,5 @@
     <string name="page_requests_none">Pro tuto stránku nejsou zaznamenány žádné požadavky</string>
     <string name="settings_summary_full_menu">Zobrazit celou nabídku</string>
     <string name="action_launch">Spustit</string>
+    <string name="pref_summary_developer">Nastavení ladění a protokolů</string>
 </resources>

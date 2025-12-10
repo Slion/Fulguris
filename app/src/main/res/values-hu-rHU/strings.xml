@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Parancsikon hozzáadva a kezdőképernyőhöz</string>
     <string name="shortcut_message_failed_to_add">Sajnos az alkalmazásindítód nem támogatja a gyorsindító parancsikonokat.</string>
     <string name="action_delete_all_bookmarks">Összes könyvjelző törlése</string>
-    <string name="debug_title">Hibakeresés</string>
+    <string name="pref_title_developer">Fejlesztő</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Indítsa újra az alkalmazást hogy alkalmazza a változásokat</string>
     <string name="pref_title_crash_logs">Ütközési naplófájlok</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Nincsenek rögzített kérések ezen az oldalon</string>
     <string name="settings_summary_full_menu">Teljes menü megjelenítése</string>
     <string name="action_launch">Indítás</string>
+    <string name="pref_summary_developer">Hibakeresési és naplózási beállítások</string>
 </resources>

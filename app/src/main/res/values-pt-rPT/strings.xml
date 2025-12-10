@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Atalho adicionado ao ecrã</string>
     <string name="shortcut_message_failed_to_add">Lamentamos mas o seu launcher não permite atalhos.</string>
     <string name="action_delete_all_bookmarks">Apagar todos os marcadores</string>
-    <string name="debug_title">Depuração</string>
+    <string name="pref_title_developer">Programador</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Reinicie a aplicação para aplicar as alterações</string>
     <string name="pref_title_crash_logs">Relatórios de erro</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Nenhum pedido registado para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menu completo</string>
     <string name="action_launch">Iniciar</string>
+    <string name="pref_summary_developer">Definições de depuração e registos</string>
 </resources>

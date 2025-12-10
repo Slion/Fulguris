@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Kısayol ana ekrana eklendi</string>
     <string name="shortcut_message_failed_to_add">Üzgünüz, başlatıcınız kısayolları desteklemiyor.</string>
     <string name="action_delete_all_bookmarks">Tüm yer imlerini sil</string>
-    <string name="debug_title">Hata Ayıklama</string>
+    <string name="pref_title_developer">Geliştirici</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Değişikliğin etkili olması için lütfen uygulamayı yeniden başlatın</string>
     <string name="pref_title_crash_logs">Çökme günlükleri</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Bu sayfa için kaydedilen istek yok</string>
     <string name="settings_summary_full_menu">Tam menüyü göster</string>
     <string name="action_launch">Başlat</string>
+    <string name="pref_summary_developer">Hata ayıklama ve günlük ayarları</string>
 </resources>

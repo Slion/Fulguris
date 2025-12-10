@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">เพิ่มทางลัดไปยังหน้าจอหลักแล้ว</string>
     <string name="shortcut_message_failed_to_add">ขออภัย ตัวเปิดของคุณไม่รองรับทางลัด</string>
     <string name="action_delete_all_bookmarks">ลบบุ๊กมาร์กทั้งหมด</string>
-    <string name="debug_title">ดีบัก</string>
+    <string name="pref_title_developer">นักพัฒนา</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">กรุณารีสตาร์ตแอปเพื่อให้การเปลี่ยนแปลงมีผล</string>
     <string name="pref_title_crash_logs">บันทึกข้อขัดข้อง</string>
@@ -616,4 +616,5 @@
     <string name="page_requests_none">ไม่มีคำขอที่บันทึกสำหรับหน้านี้</string>
     <string name="settings_summary_full_menu">แสดงเมนูเต็ม</string>
     <string name="action_launch">เปิด</string>
+    <string name="pref_summary_developer">การตั้งค่าการแก้ไขข้อบกพร่องและบันทึก</string>
 </resources>

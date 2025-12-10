@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Ajouté à l\'écran d\'accueil</string>
     <string name="shortcut_message_failed_to_add">Désolé, votre lanceur d\'applications ne supporte pas les raccourcis.</string>
     <string name="action_delete_all_bookmarks">Supprimer tous les favoris</string>
-    <string name="debug_title">Paramètres de déboggage</string>
+    <string name="pref_title_developer">Développeur</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Veuillez redémarrer l\'application pour prendre en compte les changements</string>
     <string name="pref_title_crash_logs">Journaux de plantage</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Aucune requête enregistrée pour cette page</string>
     <string name="settings_summary_full_menu">Afficher le menu complet</string>
     <string name="action_launch">Lancer</string>
+    <string name="pref_summary_developer">Paramètres de débogage et journaux</string>
 </resources>

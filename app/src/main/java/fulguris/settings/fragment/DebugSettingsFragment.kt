@@ -6,7 +6,6 @@ import fulguris.extensions.onceOnLayoutChange
 import fulguris.extensions.snackbar
 import fulguris.settings.preferences.DeveloperPreferences
 import fulguris.settings.preferences.UserPreferences
-import fulguris.utils.FileUtils
 import fulguris.utils.Utils.startActivityForFolder
 import android.os.Bundle
 import android.view.View
@@ -24,7 +23,7 @@ class DebugSettingsFragment : AbstractSettingsFragment() {
      * See [AbstractSettingsFragment.titleResourceId]
      */
     override fun titleResourceId(): Int {
-        return R.string.debug_title
+        return R.string.pref_title_developer
     }
 
     override fun providePreferencesXmlResource() = R.xml.preference_debug

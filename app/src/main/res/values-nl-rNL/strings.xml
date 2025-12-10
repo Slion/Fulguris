@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Snelkoppeling aan startscherm toegevoegd</string>
     <string name="shortcut_message_failed_to_add">Sorry, je launcher ondersteunt geen snelkoppelingen.</string>
     <string name="action_delete_all_bookmarks">Verwijder alle bladwijzers</string>
-    <string name="debug_title">Debug</string>
+    <string name="pref_title_developer">Ontwikkelaar</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Start de app opnieuw op om de wijziging door te voeren</string>
     <string name="pref_title_crash_logs">Crashlogs</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Geen verzoeken geregistreerd voor deze pagina</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
     <string name="action_launch">Starten</string>
+    <string name="pref_summary_developer">Debug- en loginstellingen</string>
 </resources>

@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Acceso directo añadido a la pantalla de inicio</string>
     <string name="shortcut_message_failed_to_add">Lo sentimos, su lanzador no soporta atajos.</string>
     <string name="action_delete_all_bookmarks">Eliminar todos los marcadores</string>
-    <string name="debug_title">Ajustes de depuración</string>
+    <string name="pref_title_developer">Desarrollador</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Por favor reinicie la aplicación para que el cambio tenga efecto</string>
     <string name="pref_title_crash_logs">Registros de errores</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">No hay solicitudes registradas para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menú completo</string>
     <string name="action_launch">Iniciar</string>
+    <string name="pref_summary_developer">Configuración de depuración y registros</string>
 </resources>

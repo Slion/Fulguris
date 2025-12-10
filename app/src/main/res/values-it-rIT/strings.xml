@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Scorciatoia aggiunta</string>
     <string name="shortcut_message_failed_to_add">Spiacenti, il tuo launcher non supporta le scorciatoie.</string>
     <string name="action_delete_all_bookmarks">Cancella tutti i segnalibri</string>
-    <string name="debug_title">Impostazioni di debug</string>
+    <string name="pref_title_developer">Sviluppatore</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Si prega di riavviare l\'app per rendere effettive le modifiche</string>
     <string name="pref_title_crash_logs">Registri crash</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Nessuna richiesta registrata per questa pagina</string>
     <string name="settings_summary_full_menu">Mostra menu completo</string>
     <string name="action_launch">Avvia</string>
+    <string name="pref_summary_developer">Impostazioni debug e log</string>
 </resources>

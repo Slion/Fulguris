@@ -350,7 +350,7 @@
     <string name="message_added_to_homescreen">होम स्क्रीन में शॉर्टकट जोड़ा गया</string>
     <string name="shortcut_message_failed_to_add">क्षमा करें, आपका लॉन्चर शॉर्टकट का समर्थन नहीं करता।</string>
     <string name="action_delete_all_bookmarks">सभी बुकमार्क हटाएं</string>
-    <string name="debug_title">डीबग</string>
+    <string name="pref_title_developer">डेवलपर</string>
     <string name="app_restart">परिवर्तन प्रभावी होने के लिए कृपया ऐप पुनः आरंभ करें</string>
     <string name="pref_title_crash_logs">क्रैश लॉग</string>
     <string name="pref_summary_crash_logs">फ़ाइल सिस्टम में क्रैश लॉग लिखें।\nफ़ोल्डर खोलने के लिए टैप करें। बग रिपोर्ट करते समय कृपया प्रासंगिक फ़ाइल प्रदान करें।</string>
@@ -574,4 +574,5 @@
     <string name="page_requests_none">इस पेज के लिए कोई अनुरोध रिकॉर्ड नहीं</string>
     <string name="settings_summary_full_menu">पूर्ण मेनू दिखाएं</string>
     <string name="action_launch">लॉन्च करें</string>
+    <string name="pref_summary_developer">डिबग और लॉग सेटिंग्स</string>
 </resources>

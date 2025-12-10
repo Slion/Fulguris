@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Snarvei lagt til på startskjermen</string>
     <string name="shortcut_message_failed_to_add">Beklager, oppstarteren din støtter ikke snarveier.</string>
     <string name="action_delete_all_bookmarks">Slett alle bokmerker</string>
-    <string name="debug_title">Feilsøk</string>
+    <string name="pref_title_developer">Utvikler</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Vennligst start appen på nytt for at endringen skal tre i kraft</string>
     <string name="pref_title_crash_logs">Krasjlogger</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Ingen forespørsler registrert for denne siden</string>
     <string name="settings_summary_full_menu">Vis fullstendig meny</string>
     <string name="action_launch">Start</string>
+    <string name="pref_summary_developer">Feilsøkings- og logginnstillinger</string>
 </resources>

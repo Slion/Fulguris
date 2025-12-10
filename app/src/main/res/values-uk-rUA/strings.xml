@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Ярлик додано на головний екран</string>
     <string name="shortcut_message_failed_to_add">На жаль, ваш лаунчер не підтримує ярлики.</string>
     <string name="action_delete_all_bookmarks">Видалити всі закладки</string>
-    <string name="debug_title">Налагодження</string>
+    <string name="pref_title_developer">Розробник</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Перезапустіть додаток, щоб зміни набрали чинності</string>
     <string name="pref_title_crash_logs">Журнали збоїв</string>
@@ -625,4 +625,5 @@
     <string name="page_requests_none">Немає зареєстрованих запитів для цієї сторінки</string>
     <string name="settings_summary_full_menu">Показати повне меню</string>
     <string name="action_launch">Запустити</string>
+    <string name="pref_summary_developer">Налаштування налагодження та журналів</string>
 </resources>

@@ -383,7 +383,7 @@
     <string name="message_added_to_homescreen">Η συντόμευση προστέθηκε στην αρχική οθόνη</string>
     <string name="shortcut_message_failed_to_add">Λυπούμαστε, το πρόγραμμα εκκίνησής σας δεν υποστηρίζει συντομεύσεις.</string>
     <string name="action_delete_all_bookmarks">Διαγραφή όλων των σελιδοδεικτών</string>
-    <string name="debug_title">Αποσφαλμάτωση</string>
+    <string name="pref_title_developer">Προγραμματιστής</string>
     <string name="debug_leak_canary">LeakCanary</string>
     <string name="app_restart">Επανεκκινήστε την εφαρμογή για να τεθεί σε ισχύ η αλλαγή</string>
     <string name="pref_title_crash_logs">Αρχεία καταγραφής σφαλμάτων</string>
@@ -619,4 +619,5 @@
     <string name="page_requests_none">Δεν καταγράφηκαν αιτήματα για αυτή τη σελίδα</string>
     <string name="settings_summary_full_menu">Εμφάνιση πλήρους μενού</string>
     <string name="action_launch">Εκκίνηση</string>
+    <string name="pref_summary_developer">Ρυθμίσεις εντοπισμού σφαλμάτων και αρχείων καταγραφής</string>
 </resources>
