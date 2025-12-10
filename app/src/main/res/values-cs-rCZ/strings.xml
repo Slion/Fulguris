@@ -234,6 +234,8 @@
     <string name="title_chooser">Vyberte soubor</string>
     <string name="open_with">Otevřít pomocí</string>
     <string name="settings_general">Obecné</string>
+    <string name="pref_title_browser">Prohlížeč</string>
+    <string name="pref_summary_browser">Domovská stránka, vyhledávač, systém a správa karet</string>
     <string name="pref_title_appearance">Vzhled</string>
     <string name="pref_summary_appearance">Jazyk, motiv, konfigurace, nabídky, panely nástrojů, karty a panely</string>
     <string name="settings_backup">Záloha</string>

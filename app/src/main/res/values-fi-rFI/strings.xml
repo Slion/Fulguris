@@ -234,6 +234,8 @@
     <string name="title_chooser">Valitse sovellus</string>
     <string name="open_with">Avaa sovelluksessa</string>
     <string name="settings_general">Yleiset</string>
+    <string name="pref_title_browser">Selain</string>
+    <string name="pref_summary_browser">Aloitussivu, hakukone, järjestelmä ja välilehtien hallinta</string>
     <string name="pref_title_appearance">Ulkoasu</string>
     <string name="pref_summary_appearance">Kieli, teema, kokoonpanot, valikot, työkalurivit, välilehdet ja paneelit</string>
     <string name="settings_backup">Varmuuskopio</string>

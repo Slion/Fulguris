@@ -234,6 +234,8 @@
     <string name="title_chooser">Wybierz plik</string>
     <string name="open_with">Otwórz za pomocą</string>
     <string name="settings_general">Ogólne</string>
+    <string name="pref_title_browser">Przeglądarka</string>
+    <string name="pref_summary_browser">Strona główna, wyszukiwarka, system i zarządzanie kartami</string>
     <string name="pref_title_appearance">Wygląd</string>
     <string name="pref_summary_appearance">Język, motyw, konfiguracje, menu, paski narzędzi, karty i panele</string>
     <string name="settings_backup">Kopia zapasowa</string>

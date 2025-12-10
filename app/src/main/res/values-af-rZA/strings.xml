@@ -234,6 +234,8 @@
     <string name="title_chooser">Choose a file</string>
     <string name="open_with">Open with</string>
     <string name="settings_general">General</string>
+    <string name="pref_title_browser">Blaaier</string>
+    <string name="pref_summary_browser">Tuisblad, soekenjin, stelsel en oortjiebestuur</string>
     <string name="pref_title_appearance">Voorkoms</string>
     <string name="pref_summary_appearance">Taal, tema, konfigurasies, kieslyste, nutsbalke, oortjies en panele</string>
     <string name="settings_backup">Backup</string>

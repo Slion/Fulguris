@@ -6,7 +6,7 @@
     <Preference
         android:key="home"
         android:title="@string/home"
-        app:icon="@drawable/ic_action_home"
+        app:icon="@drawable/ic_home_outline"
         app:singleLineTitle="false" />
 
     <Preference
@@ -96,7 +96,7 @@
             app:title="@string/homepage_in_new_tab"
             app:defaultValue="@bool/pref_default_homepage_in_new_tab"
             app:iconSpaceReserved="false"
-            app:icon="@drawable/ic_action_home"
+            app:icon="@drawable/ic_home_outline"
             app:singleLineTitle="false" />
 
         <x.SwitchPreference

@@ -234,6 +234,8 @@
     <string name="title_chooser">選擇一個檔案</string>
     <string name="open_with">開啟方式</string>
     <string name="settings_general">一般設定</string>
+    <string name="pref_title_browser">瀏覽器</string>
+    <string name="pref_summary_browser">首頁、搜尋引擎、系統和分頁管理</string>
     <string name="pref_title_appearance">外觀</string>
     <string name="pref_summary_appearance">語言、主題、配置、選單、工具列、分頁和面板</string>
     <string name="settings_backup">備份</string>

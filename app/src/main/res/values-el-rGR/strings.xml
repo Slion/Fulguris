@@ -234,6 +234,8 @@
     <string name="title_chooser">Επιλογή αρχείου</string>
     <string name="open_with">Άνοιγμα με</string>
     <string name="settings_general">Γενικές ρυθμίσεις</string>
+    <string name="pref_title_browser">Πρόγραμμα περιήγησης</string>
+    <string name="pref_summary_browser">Αρχική σελίδα, μηχανή αναζήτησης, σύστημα και διαχείριση καρτελών</string>
     <string name="pref_title_appearance">Εμφάνιση</string>
     <string name="pref_summary_appearance">Γλώσσα, θέμα, διαμορφώσεις, μενού, γραμμές εργαλείων, καρτέλες και πίνακες</string>
     <string name="settings_backup">Αντίγραφο ασφαλείας</string>

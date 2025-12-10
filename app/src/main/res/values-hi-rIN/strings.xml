@@ -208,6 +208,8 @@
     <string name="title_chooser">फ़ाइल चुनें</string>
     <string name="open_with">इससे खोलें</string>
     <string name="settings_general">सामान्य</string>
+    <string name="pref_title_browser">ब्राउज़र</string>
+    <string name="pref_summary_browser">होमपेज, सर्च इंजन, सिस्टम और टैब प्रबंधन</string>
     <string name="pref_title_appearance">दिखावट</string>
     <string name="pref_summary_appearance">भाषा, थीम, कॉन्फ़िगरेशन, मेनू, टूलबार, टैब और पैनल</string>
     <string name="settings_backup">बैकअप</string>

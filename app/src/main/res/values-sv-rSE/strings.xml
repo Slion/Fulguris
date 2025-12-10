@@ -234,6 +234,8 @@
     <string name="title_chooser">Välj en fil</string>
     <string name="open_with">Öppna med</string>
     <string name="settings_general">Allmänt</string>
+    <string name="pref_title_browser">Webbläsare</string>
+    <string name="pref_summary_browser">Startsida, sökmotor, system och flikhantering</string>
     <string name="pref_title_appearance">Utseende</string>
     <string name="pref_summary_appearance">Språk, tema, konfigurationer, menyer, verktygsfält, flikar och paneler</string>
     <string name="settings_backup">Säkerhetskopiering</string>

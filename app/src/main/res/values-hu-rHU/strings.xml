@@ -234,6 +234,8 @@
     <string name="title_chooser">Válasszon egy fájlt</string>
     <string name="open_with">Megnyitás ezzel</string>
     <string name="settings_general">Általános Beállítások</string>
+    <string name="pref_title_browser">Böngésző</string>
+    <string name="pref_summary_browser">Kezdőlap, keresőmotor, rendszer és lapkezelés</string>
     <string name="pref_title_appearance">Megjelenés</string>
     <string name="pref_summary_appearance">Nyelv, téma, konfigurációk, menük, eszköztárak, fülek és panelek</string>
     <string name="settings_backup">Biztonsági Mentés</string>

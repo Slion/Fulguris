@@ -234,6 +234,8 @@
     <string name="title_chooser">Изаберите фајл</string>
     <string name="open_with">Отвори са</string>
     <string name="settings_general">Опште поставке</string>
+    <string name="pref_title_browser">Pregledač</string>
+    <string name="pref_summary_browser">Početna stranica, pretraživač, sistem i upravljanje karticama</string>
     <string name="pref_title_appearance">Izgled</string>
     <string name="pref_summary_appearance">Jezik, tema, konfiguracije, meniji, trake sa alatima, kartice i paneli</string>
     <string name="settings_backup">Резервна копија</string>

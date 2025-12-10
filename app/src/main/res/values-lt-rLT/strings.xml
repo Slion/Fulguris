@@ -234,6 +234,8 @@
     <string name="title_chooser">Choose a file</string>
     <string name="open_with">Open with</string>
     <string name="settings_general">General</string>
+    <string name="pref_title_browser">Naršyklė</string>
+    <string name="pref_summary_browser">Pradinis puslapis, paieškos sistema, sistema ir kortelių valdymas</string>
     <string name="pref_title_appearance">Išvaizda</string>
     <string name="pref_summary_appearance">Kalba, tema, konfigūracijos, meniu, įrankių juostos, kortelės ir skydeliai</string>
     <string name="settings_backup">Backup</string>

@@ -234,6 +234,8 @@
     <string name="title_chooser">Bir dosya seçin</string>
     <string name="open_with">Şununla aç</string>
     <string name="settings_general">Genel</string>
+    <string name="pref_title_browser">Tarayıcı</string>
+    <string name="pref_summary_browser">Ana sayfa, arama motoru, sistem ve sekme yönetimi</string>
     <string name="pref_title_appearance">Görünüm</string>
     <string name="pref_summary_appearance">Dil, tema, yapılandırmalar, menüler, araç çubukları, sekmeler ve paneller</string>
     <string name="settings_backup">Yedekleme</string>

@@ -94,7 +94,7 @@
         android:layout_gravity="center"
         android:contentDescription="@string/home"
         app:tooltipText="@{@string/home}"
-        app:srcCompat="@drawable/ic_action_home"
+        app:srcCompat="@drawable/ic_home_outline"
         android:nextFocusDown="@id/web_view"
         />
 

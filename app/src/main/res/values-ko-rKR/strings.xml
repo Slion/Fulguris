@@ -234,6 +234,8 @@
     <string name="title_chooser">파일 선택</string>
     <string name="open_with">다음으로 열기</string>
     <string name="settings_general">일반 설정</string>
+    <string name="pref_title_browser">브라우저</string>
+    <string name="pref_summary_browser">홈페이지, 검색 엔진, 시스템 및 탭 관리</string>
     <string name="pref_title_appearance">외관</string>
     <string name="pref_summary_appearance">언어, 테마, 구성, 메뉴, 도구 모음, 탭 및 패널</string>
     <string name="settings_backup">백업</string>

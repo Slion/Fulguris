@@ -234,6 +234,8 @@
     <string name="title_chooser">Pilih file</string>
     <string name="open_with">Buka dengan</string>
     <string name="settings_general">Umum</string>
+    <string name="pref_title_browser">Peramban</string>
+    <string name="pref_summary_browser">Beranda, mesin pencari, sistem dan manajemen tab</string>
     <string name="pref_title_appearance">Tampilan</string>
     <string name="pref_summary_appearance">Bahasa, tema, konfigurasi, menu, toolbar, tab dan panel</string>
     <string name="settings_backup">Cadangan</string>

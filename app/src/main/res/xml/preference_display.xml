@@ -23,7 +23,7 @@
     <Preference
         a:key="@string/pref_key_accent"
         a:title="@string/accent_color"
-        x:icon="@drawable/ic_palette"
+        x:icon="@drawable/ic_palette_outline"
         x:isPreferenceVisible="@bool/const_false"
         x:singleLineTitle="false"
         />

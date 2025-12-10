@@ -234,6 +234,8 @@
     <string name="title_chooser">ᱢᱤᱫ ᱨᱮᱫᱽ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="open_with">ᱥᱟᱶ ᱡᱷᱤᱡ</string>
     <string name="settings_general">ᱥᱟᱫᱷᱟᱨᱚᱱ</string>
+    <string name="pref_title_browser">ᱵᱽᱨᱟᱩᱡᱚᱨ</string>
+    <string name="pref_summary_browser">ᱚᱲᱟᱜ ᱥᱟᱦᱴᱟ, ᱥᱮᱸᱫᱽᱨᱟ ᱤᱧᱡᱤᱱ, ᱥᱤᱥᱴᱮᱢ ᱟᱨ ᱴᱮᱵᱽ ᱪᱟᱪᱞᱟᱣ</string>
     <string name="pref_title_appearance">ᱩᱫᱩᱜ</string>
     <string name="pref_summary_appearance">ᱯᱟᱹᱨᱥᱤ, ᱛᱷᱤᱢ, ᱥᱟᱡᱟᱣ, ᱢᱮᱱᱩ, ᱦᱟᱹᱛᱤᱭᱟᱹᱨ, ᱴᱮᱵᱽ ᱟᱨ ᱯᱮᱱᱮᱞ</string>
     <string name="settings_backup">ᱵᱮᱠᱚᱯ</string>

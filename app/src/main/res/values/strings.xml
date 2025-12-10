@@ -252,6 +252,8 @@
     <string name="title_chooser">Choose a file</string>
     <string name="open_with">Open with</string>
     <string name="settings_general">General</string>
+    <string name="pref_title_browser">Browser</string>
+    <string name="pref_summary_browser">Homepage, search engine, system and tabs management</string>
     <string name="pref_title_appearance">Appearance</string>
     <string name="pref_summary_appearance">Language, theme, configurations, menus, toolbars, tabs and panels</string>
     <string name="settings_backup">Backup</string>

@@ -7,14 +7,15 @@
         x:fragment="fulguris.settings.fragment.DisplaySettingsFragment"
         x:title="@string/pref_title_appearance"
         x:summary="@string/pref_summary_appearance"
-        x:icon="@drawable/ic_palette"
+        x:icon="@drawable/ic_palette_outline"
         x:singleLineTitle="false"
         />
 
     <Preference
         x:fragment="fulguris.settings.fragment.GeneralSettingsFragment"
-        x:title="@string/settings_general"
-        x:icon="@drawable/ic_settings"
+        x:title="@string/pref_title_browser"
+        x:summary="@string/pref_summary_browser"
+        x:icon="@drawable/ic_webview"
         x:singleLineTitle="false"
         />
 

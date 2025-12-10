@@ -234,6 +234,8 @@
     <string name="title_chooser">Choose a file</string>
     <string name="open_with">Open with</string>
     <string name="settings_general">General</string>
+    <string name="pref_title_browser">דפדפן</string>
+    <string name="pref_summary_browser">דף הבית, מנוע חיפוש, מערכת וניהול כרטיסיות</string>
     <string name="pref_title_appearance">מראה</string>
     <string name="pref_summary_appearance">שפה, ערכת נושא, תצורות, תפריטים, סרגלי כלים, כרטיסיות ולוחות</string>
     <string name="settings_backup">Backup</string>

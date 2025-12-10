@@ -234,6 +234,8 @@
     <string name="title_chooser">اختر ملفاً</string>
     <string name="open_with">فتح باستخدام</string>
     <string name="settings_general">عام</string>
+    <string name="pref_title_browser">المتصفح</string>
+    <string name="pref_summary_browser">الصفحة الرئيسية ومحرك البحث والنظام وإدارة علامات التبويب</string>
     <string name="pref_title_appearance">المظهر</string>
     <string name="pref_summary_appearance">اللغة والمظهر والتكوينات والقوائم وأشرطة الأدوات والعلامات واللوحات</string>
     <string name="settings_backup">النسخ الاحتياطي</string>

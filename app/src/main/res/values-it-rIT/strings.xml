@@ -234,6 +234,8 @@
     <string name="title_chooser">Scegli un file</string>
     <string name="open_with">Apri con</string>
     <string name="settings_general">Generale</string>
+    <string name="pref_title_browser">Browser</string>
+    <string name="pref_summary_browser">Pagina iniziale, motore di ricerca, sistema e gestione schede</string>
     <string name="pref_title_appearance">Aspetto</string>
     <string name="pref_summary_appearance">Lingua, tema, configurazioni, menu, barre degli strumenti, schede e pannelli</string>
     <string name="settings_backup">Backup</string>

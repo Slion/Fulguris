@@ -234,6 +234,8 @@
     <string name="title_chooser">Elige un archivo</string>
     <string name="open_with">Abrir con</string>
     <string name="settings_general">Ajustes generales</string>
+    <string name="pref_title_browser">Navegador</string>
+    <string name="pref_summary_browser">Página de inicio, motor de búsqueda, sistema y gestión de pestañas</string>
     <string name="pref_title_appearance">Apariencia</string>
     <string name="pref_summary_appearance">Idioma, tema, configuraciones, menús, barras de herramientas, pestañas y paneles</string>
     <string name="settings_backup">Copia de seguridad</string>

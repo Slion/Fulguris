@@ -94,7 +94,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/action_show_homepage"
                 app:tooltipText="@{@string/action_show_homepage}"
-                app:srcCompat="@drawable/ic_action_home" />
+                app:srcCompat="@drawable/ic_home_outline" />
 
         </LinearLayout>
 

@@ -234,6 +234,8 @@
     <string name="title_chooser">Choose a file</string>
     <string name="open_with">Open with</string>
     <string name="settings_general">General</string>
+    <string name="pref_title_browser">Navegador</string>
+    <string name="pref_summary_browser">Pàgina d\'inici, motor de cerca, sistema i gestió de pestanyes</string>
     <string name="pref_title_appearance">Aparença</string>
     <string name="pref_summary_appearance">Idioma, tema, configuracions, menús, barres d\'eines, pestanyes i panells</string>
     <string name="settings_backup">Backup</string>

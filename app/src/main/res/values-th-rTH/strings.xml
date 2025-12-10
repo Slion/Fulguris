@@ -234,6 +234,8 @@
     <string name="title_chooser">เลือกแอป</string>
     <string name="open_with">เปิดด้วย</string>
     <string name="settings_general">ทั่วไป</string>
+    <string name="pref_title_browser">เบราว์เซอร์</string>
+    <string name="pref_summary_browser">หน้าแรก เครื่องมือค้นหา ระบบ และการจัดการแท็บ</string>
     <string name="pref_title_appearance">รูปลักษณ์</string>
     <string name="pref_summary_appearance">ภาษา ธีม การกำหนดค่า เมนู แถบเครื่องมือ แท็บ และแผง</string>
     <string name="settings_backup">สำรองข้อมูล</string>

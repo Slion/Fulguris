@@ -234,6 +234,8 @@
     <string name="title_chooser">Kies een bestand</string>
     <string name="open_with">Openen met</string>
     <string name="settings_general">Algemene instellingen</string>
+    <string name="pref_title_browser">Browser</string>
+    <string name="pref_summary_browser">Startpagina, zoekmachine, systeem en tabbladbeheer</string>
     <string name="pref_title_appearance">Uiterlijk</string>
     <string name="pref_summary_appearance">Taal, thema, configuraties, menu\'s, werkbalken, tabbladen en panelen</string>
     <string name="settings_backup">Back-up</string>

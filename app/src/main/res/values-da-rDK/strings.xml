@@ -234,6 +234,8 @@
     <string name="title_chooser">Vælg en fil</string>
     <string name="open_with">Åbn med</string>
     <string name="settings_general">Generelt</string>
+    <string name="pref_title_browser">Browser</string>
+    <string name="pref_summary_browser">Startside, søgemaskine, system og fanehåndtering</string>
     <string name="pref_title_appearance">Udseende</string>
     <string name="pref_summary_appearance">Sprog, tema, konfigurationer, menuer, værktøjslinjer, faner og paneler</string>
     <string name="settings_backup">Sikkerhedskopi</string>

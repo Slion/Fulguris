@@ -234,6 +234,8 @@
     <string name="title_chooser">Chọn một tệp</string>
     <string name="open_with">Mở bằng</string>
     <string name="settings_general">Tổng quan</string>
+    <string name="pref_title_browser">Trình duyệt</string>
+    <string name="pref_summary_browser">Trang chủ, công cụ tìm kiếm, hệ thống và quản lý tab</string>
     <string name="pref_title_appearance">Giao diện</string>
     <string name="pref_summary_appearance">Ngôn ngữ, giao diện, cấu hình, menu, thanh công cụ, tab và bảng điều khiển</string>
     <string name="settings_backup">Sao lưu</string>

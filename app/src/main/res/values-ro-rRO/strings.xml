@@ -234,6 +234,8 @@
     <string name="title_chooser">Alege un fișier</string>
     <string name="open_with">Deschide cu</string>
     <string name="settings_general">General</string>
+    <string name="pref_title_browser">Navigator</string>
+    <string name="pref_summary_browser">Pagină principală, motor de căutare, sistem și gestionare file</string>
     <string name="pref_title_appearance">Aspect</string>
     <string name="pref_summary_appearance">Limbă, temă, configurații, meniuri, bare de instrumente, file și panouri</string>
     <string name="settings_backup">Copie de siguranță</string>

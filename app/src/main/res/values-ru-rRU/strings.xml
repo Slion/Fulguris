@@ -234,6 +234,8 @@
     <string name="title_chooser">Выберите файл</string>
     <string name="open_with">Открыть с помощью</string>
     <string name="settings_general">Основные настройки</string>
+    <string name="pref_title_browser">Браузер</string>
+    <string name="pref_summary_browser">Домашняя страница, поисковая система, система и управление вкладками</string>
     <string name="pref_title_appearance">Внешний вид</string>
     <string name="pref_summary_appearance">Язык, тема, конфигурации, меню, панели инструментов, вкладки и панели</string>
     <string name="settings_backup">Резервное копирование</string>
