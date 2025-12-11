@@ -166,7 +166,7 @@ class MenuPopupWindow : PopupWindow {
                     .map { it.id }
                     .toMutableList()
             }
-            savedConfig != null -> {
+            else -> {
                 // Use saved configuration (already sorted by order)
                 val savedItems = savedConfig.filter { it.menu == currentMode }
                     .sortedBy { it.order }
@@ -183,13 +183,6 @@ class MenuPopupWindow : PopupWindow {
                 // Add new items at the end of their default menu
                 savedItems.addAll(newItems.map { it.id })
                 savedItems
-            }
-            else -> {
-                // Use default configuration from MenuItems model
-                MenuItems.getAll()
-                    .filter { it.defaultMenu == currentMode }
-                    .map { it.id }
-                    .toMutableList()
             }
         }
 

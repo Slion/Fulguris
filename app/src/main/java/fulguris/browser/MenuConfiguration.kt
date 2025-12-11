@@ -62,12 +62,12 @@ class MenuConfiguration(context: Context) {
 
     /**
      * Load the saved menu configuration
-     * Returns null if no configuration is saved
+     * Returns empty list if no configuration is saved
      */
-    fun loadConfiguration(): List<MenuItemConfig>? {
-        val configString = prefs.getString(PREF_MENU_CONFIG, null) ?: return null
+    fun loadConfiguration(): List<MenuItemConfig> {
+        val configString = prefs.getString(PREF_MENU_CONFIG, null) ?: return emptyList()
 
-        if (configString.isEmpty()) return null
+        if (configString.isEmpty()) return emptyList()
 
         return try {
             configString.split(SEPARATOR_ITEM).mapNotNull { itemStr ->
@@ -81,7 +81,7 @@ class MenuConfiguration(context: Context) {
                 MenuItemConfig(id, menu, order)
             }
         } catch (e: Exception) {
-            null
+            emptyList()
         }
     }
 
