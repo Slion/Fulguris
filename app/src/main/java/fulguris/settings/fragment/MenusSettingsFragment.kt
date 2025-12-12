@@ -261,9 +261,136 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
     }
 
     /**
+     * Move a preference to a specific order position, shifting all items as needed.
+     * This handles the reordering logic consistently across drag, swipe, and validation.
+     *
+     * @param pref The preference to move
+     * @param targetOrder The desired order value for the preference
+     */
+    private fun moveToPosition(pref: Preference, targetOrder: Int) {
+        val prefScreen = preferenceScreen
+        val currentOrder = pref.order
+
+        if (currentOrder == targetOrder) {
+            return // Already at target position
+        }
+
+        val movingDown = targetOrder > currentOrder
+
+        // Collect all preferences that need to be shifted
+        val prefsToShift = mutableListOf<Preference>()
+        val startOrder = if (movingDown) currentOrder else targetOrder
+        val endOrder = if (movingDown) targetOrder else currentOrder
+
+        for (i in startOrder .. endOrder) {
+            val p = prefScreen.getPreference(i)
+            prefsToShift.add(p)
+        }
+
+        // Compute the increment: -1 when moving down (items shift up), +1 when moving up (items shift down)
+        val increment = if (movingDown) -1 else +1
+
+        // Shift all affected items
+        for (p in prefsToShift) {
+            p.order += increment
+        }
+
+        // Move the target preference to its new position
+        pref.order = targetOrder
+
+        Timber.d("moveToPosition: ${pref.key} from $currentOrder to $targetOrder (shifted ${prefsToShift.size} items)")
+    }
+
+    /**
+     * Move a preference to a specified menu, placing it at the end of that menu section.
+     *
+     * @param aPref The preference to move
+     * @param aMenu The target menu type
+     * @return The new position of the item in the preference screen
+     */
+    private fun moveToMenu(aPref: Preference, aMenu: MenuType): Int {
+        val prefScreen = preferenceScreen
+
+        // Lets work out the position we need to love our preference to
+        val position = if (aMenu==MenuType.HiddenMenu) {
+            // Moving to hidden menu means it needs to be the last item on our screen
+            prefScreen.preferenceCount-1
+        } else if (aMenu==MenuType.TabMenu) {
+            // Moving to tab menu means it takes the position of the hidden menu label
+            findPreference<Preference>(KEY_HEADER_HIDDEN)!!.order
+        } else {
+            // Moving to main menu means it takes the position of the tab menu label
+            findPreference<Preference>(KEY_HEADER_TAB)!!.order
+        }
+
+        // Use moveToPosition to handle the actual move and shifting
+        moveToPosition(aPref, position)
+        //
+        return position
+    }
+
+    /**
+     * Validate and fix the current configuration before saving.
+     * Ensures:
+     * - All items are in valid menus (canBeInMainMenu/canBeInTabMenu)
+     * - Mandatory items are not hidden
+     * - Items that violate rules are moved back to their default menu
+     *
+     * @return true if any corrections were made
+     */
+    private fun checkAndFixConfiguration(): Boolean {
+        val prefScreen = preferenceScreen
+        var correctionsMade = false
+
+        for (i in 0 until prefScreen.preferenceCount) {
+            val pref = prefScreen.getPreference(i)
+
+            // Skip headers and fixed preferences
+            if (isFixedPreference(pref.key)) continue
+
+            // Get menu item ID and metadata
+            val menuItemId = try {
+                MenuItemId.valueOf(pref.key ?: continue)
+            } catch (e: Exception) {
+                continue
+            }
+
+            val menuItem = MenuItems.getItem(menuItemId) ?: continue
+            val currentMenu = getMenuTypeForPreference(pref)
+
+            // Check if item is in a valid menu
+            val isValid = when (currentMenu) {
+                MenuType.MainMenu -> menuItem.canBeInMainMenu
+                MenuType.TabMenu -> menuItem.canBeInTabMenu
+                MenuType.HiddenMenu -> !menuItem.mandatory
+                MenuType.FullMenu -> true
+            }
+
+            // Check if mandatory item is hidden
+            val mandatoryViolation = menuItem.mandatory &&
+                (currentMenu == MenuType.HiddenMenu || currentMenu == MenuType.FullMenu)
+
+            if (!isValid || mandatoryViolation) {
+                // Move item back to its default menu using moveToMenu helper
+                val targetMenu = menuItem.defaultMenu
+                moveToMenu(pref, targetMenu)
+
+                val reason = if (mandatoryViolation) "mandatory item was hidden" else "item not allowed in ${currentMenu}"
+                Timber.w("Configuration fix: ${menuItem.id} moved to ${targetMenu} (${reason})")
+                correctionsMade = true
+            }
+        }
+
+        return correctionsMade
+    }
+
+    /**
      * Save the current menu configuration
      */
     private fun saveCurrentConfiguration() {
+        // First, validate and fix any configuration issues
+        checkAndFixConfiguration()
+
         val prefScreen = preferenceScreen
         val items = mutableListOf<MenuItemConfig>()
 
@@ -339,7 +466,9 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                 if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
                     Timber.d("Drag stops at ${iDrag.currentPosition}")
                     iDrag.active = false
-                    saveCurrentConfiguration()
+                    // Need delay otherwise you could get stuck duplicate item view
+                    // Notably when moving up tab menu item into tab menu section which triggers a move to main menu
+                    view.postDelayed({saveCurrentConfiguration()},300)
                 } else if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                     // We must always keep order and position in sync as that's how we manipulate the preference model
                     iDrag.apply {
@@ -381,7 +510,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                 // Avoid spamming with logs
                 if (iDrag.currentPosition != toPosition) {
                     iDrag.currentPosition = toPosition
-                    Timber.d("onMove from $fromPosition to $toPosition ")
+                    Timber.d("onMove from $fromPosition to $toPosition")
                 }
 
                 // Find the Main menu header order
@@ -393,33 +522,8 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                 }
 
                 // Allow every other placement, we check for consistency when drag ends
-                // Handle the reordering
-                val prefsToOffset = mutableListOf<Preference>()
-                val startPos = if (toPosition > fromPosition) fromPosition else toPosition
-                val endPos = if (toPosition > fromPosition) toPosition else fromPosition
-
-                // Collect all preferences EXCEPT the dragged item
-                for (i in startPos..endPos) {
-                    if (i != fromPosition) {
-                        val pref = ps.getPreference(i)
-                        prefsToOffset.add(pref)
-                    }
-                }
-
-                // Compute the increment: +1 for moving up, -1 for moving down
-                val increment = if (toPosition > fromPosition) -1 else +1
-
-                if (prefsToOffset.size>1) {
-                    Timber.i("onMove jump over ${prefsToOffset.size} items")
-                }
-
-                // Shift all affected items
-                for (pref in prefsToOffset) {
-                    pref.order += increment
-                }
-
-                // Put dragged item at target position
-                draggedPref.order = iDrag.currentPosition
+                // Use moveToPosition to handle the reordering with proper shifting
+                moveToPosition(draggedPref, toPref.order)
 
                 return true
             }
@@ -451,32 +555,11 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     return
                 }
 
-                // Find all header orders
-                var mainHeaderOrder = -1
-                var tabHeaderOrder = -1
-                var hiddenHeaderOrder = -1
-                for (i in 0 until prefScreen.preferenceCount) {
-                    val p = prefScreen.getPreference(i)
-                    when (p.key) {
-                        KEY_HEADER_MAIN -> mainHeaderOrder = p.order
-                        KEY_HEADER_TAB -> tabHeaderOrder = p.order
-                        KEY_HEADER_HIDDEN -> hiddenHeaderOrder = p.order
-                    }
-                }
-
-                if (hiddenHeaderOrder == -1) {
-                    // Hidden header not found, restore item
-                    listView.adapter?.notifyItemChanged(position)
-                    return
-                }
-
                 // Determine current menu type
                 val currentMenuType = getMenuTypeForPreference(pref)
 
-                // Variable to store the new order for position calculation
-                var newOrder: Int = -1
-
-                if (currentMenuType == MenuType.HiddenMenu) {
+                // Determine target menu
+                val targetMenu = if (currentMenuType == MenuType.HiddenMenu) {
                     // Item is in Hidden section - move to its preferred menu
                     if (menuItem == null) {
                         listView.adapter?.notifyItemChanged(position)
@@ -486,7 +569,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     val targetMenuType = menuItem.preferredMenu
 
                     // Ensure target menu type is valid (not FullMenu or HiddenMenu)
-                    val finalTargetMenu = when {
+                    when {
                         targetMenuType == MenuType.FullMenu || targetMenuType == MenuType.HiddenMenu -> {
                             // Fall back to MainMenu if preferred is not a valid target
                             if (menuItem.canBeInMainMenu) MenuType.MainMenu
@@ -505,74 +588,21 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                         }
                         else -> targetMenuType
                     }
-
-                    if (finalTargetMenu == MenuType.HiddenMenu) {
-                        // Can't move anywhere, restore it
-                        listView.adapter?.notifyItemChanged(position)
-                        return
-                    }
-
-                    // Find the target section to place the item
-                    val targetHeaderOrder = if (finalTargetMenu == MenuType.MainMenu) mainHeaderOrder else tabHeaderOrder
-                    val nextHeaderOrder = if (finalTargetMenu == MenuType.MainMenu) tabHeaderOrder else hiddenHeaderOrder
-
-                    // Find the maximum order in the target section
-                    var maxOrderInTargetSection = targetHeaderOrder
-                    for (i in 0 until prefScreen.preferenceCount) {
-                        val p = prefScreen.getPreference(i)
-                        // Find items between the target header and next header (excluding our moving item)
-                        if (p != pref && p.order > targetHeaderOrder && p.order < nextHeaderOrder &&
-                            !isHeaderPreference(p.key) && !isFixedPreference(p.key)) {
-                            if (p.order > maxOrderInTargetSection) {
-                                maxOrderInTargetSection = p.order
-                            }
-                        }
-                    }
-
-                    // Place item right after the last item in target section (or right after header if empty)
-                    newOrder = maxOrderInTargetSection + 1
-
-                    // If the new order would overlap with the next header, we need to shift the next header
-                    if (newOrder >= nextHeaderOrder) {
-                        // Shift the next header and all items after it
-                        val shiftAmount = newOrder - nextHeaderOrder + 1
-                        for (i in 0 until prefScreen.preferenceCount) {
-                            val p = prefScreen.getPreference(i)
-                            if (p != pref && p.order >= nextHeaderOrder) {
-                                p.order += shiftAmount
-                            }
-                        }
-                    }
                 } else {
                     // Item is in MainMenu or TabMenu - move to Hidden section
-                    // Move to end of Hidden section
-                    var maxOrder = hiddenHeaderOrder
-                    for (i in 0 until prefScreen.preferenceCount) {
-                        val p = prefScreen.getPreference(i)
-                        if (p.order > maxOrder && !isHeaderPreference(p.key)) {
-                            maxOrder = p.order
-                        }
-                    }
-
-                    newOrder = maxOrder + 1
+                    MenuType.HiddenMenu
                 }
 
-                // Calculate the new position BEFORE changing pref.order
-                // Count how many preferences will have a lower order than the item's new position
-                var newPosition = 0
-                for (i in 0 until prefScreen.preferenceCount) {
-                    val p = prefScreen.getPreference(i)
-                    if (p != pref && p.order < newOrder) {
-                        newPosition++
-                    }
+                if (targetMenu == MenuType.HiddenMenu && currentMenuType == MenuType.HiddenMenu) {
+                    // Can't move anywhere, restore it
+                    listView.adapter?.notifyItemChanged(position)
+                    return
                 }
 
-                // Now set the new order
-                // That's taking notifying the list view adapter of what was changed
-                // However I'm guessing because of the swipe the new item position is left blank
-                pref.order = newOrder
-                //Timber.d("Moving item from $position to $newPosition")
-                // That's the only workaround that worked, it nicely triggers the missing item to animate in
+                // Use moveToMenu to handle the move with proper shifting
+                val newPosition = moveToMenu(pref, targetMenu)
+
+                // Notify adapter to animate the item into its new position
                 listView.postDelayed({listView.adapter?.notifyItemChanged(newPosition)}, 200)
 
                 // Save configuration after swipe
