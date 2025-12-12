@@ -85,8 +85,15 @@ class WebPageChromeClient(
                             console.log('fulguris: meta-color-scheme: ' + currentColorScheme);
                         }
                         
-                        // Observer for attribute changes on existing meta tags
-                        const observer = new MutationObserver(function(mutations) {
+                        // Helper function to observe a meta tag node
+                        function observeMetaTag(node) {
+                            if (node && node.nodeType === Node.ELEMENT_NODE) {
+                                attributeObserver.observe(node, { attributes: true, attributeFilter: ['content'] });
+                            }
+                        }
+                        
+                        // Observer for attribute changes on meta tags
+                        const attributeObserver = new MutationObserver(function(mutations) {
                             mutations.forEach(function(mutation) {
                                 if (mutation.type === 'attributes' && mutation.attributeName === 'content') {
                                     let tagName = mutation.target.getAttribute('name');
@@ -106,13 +113,14 @@ class WebPageChromeClient(
                                 mutation.addedNodes.forEach(function(node) {
                                     if (node.nodeName === 'META') {
                                         let tagName = node.getAttribute('name');
-                                        let newValue = node.content;
-                                        if (tagName === 'theme-color') {
-                                            console.log('fulguris: meta-theme-color: ' + newValue);
-                                            observer.observe(node, { attributes: true, attributeFilter: ['content'] });
-                                        } else if (tagName === 'color-scheme') {
-                                            console.log('fulguris: meta-color-scheme: ' + newValue);
-                                            observer.observe(node, { attributes: true, attributeFilter: ['content'] });
+                                        if (tagName === 'theme-color' || tagName === 'color-scheme') {
+                                            let newValue = node.content;
+                                            if (tagName === 'theme-color') {
+                                                console.log('fulguris: meta-theme-color: ' + newValue);
+                                            } else if (tagName === 'color-scheme') {
+                                                console.log('fulguris: meta-color-scheme: ' + newValue);
+                                            }
+                                            observeMetaTag(node);
                                         }
                                     }
                                 });
@@ -121,12 +129,16 @@ class WebPageChromeClient(
                         
                         // Start observing existing meta tags
                         if (metaThemeColor) {
-                            observer.observe(metaThemeColor, { attributes: true, attributeFilter: ['content'] });
+                            observeMetaTag(metaThemeColor);
                         }
                         if (metaColorScheme) {
-                            observer.observe(metaColorScheme, { attributes: true, attributeFilter: ['content'] });
+                            observeMetaTag(metaColorScheme);
                         }
-                        headObserver.observe(document.head, { childList: true, subtree: true });
+                        
+                        // Observe document.head for new meta tags
+                        if (document.head) {
+                            headObserver.observe(document.head, { childList: true, subtree: true });
+                        }
                     })();
                 """.trimIndent(), null)
             }
