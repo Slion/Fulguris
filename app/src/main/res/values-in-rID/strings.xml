@@ -623,4 +623,5 @@
     <string name="page_requests_none">Tidak ada permintaan tercatat untuk halaman ini</string>
     <string name="settings_summary_full_menu">Tampilkan menu lengkap</string>
     <string name="action_launch">Luncurkan</string>
+    <string name="action_launch_app">Luncurkan</string>
 </resources>

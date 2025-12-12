@@ -623,4 +623,5 @@
     <string name="page_requests_none">此页面没有记录的请求</string>
     <string name="settings_summary_full_menu">显示完整菜单</string>
     <string name="action_launch">启动</string>
+    <string name="action_launch_app">启动</string>
 </resources>

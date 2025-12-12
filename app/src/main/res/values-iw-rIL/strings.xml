@@ -631,4 +631,5 @@
     <string name="page_requests_none">אין בקשות מתועדות לדף זה</string>
     <string name="settings_summary_full_menu">הצג תפריט מלא</string>
     <string name="action_launch">הפעל</string>
+    <string name="action_launch_app">הפעל</string>
 </resources>

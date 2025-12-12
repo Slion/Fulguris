@@ -623,4 +623,5 @@
     <string name="page_requests_none">이 페이지에 기록된 요청 없음</string>
     <string name="settings_summary_full_menu">전체 메뉴 표시</string>
     <string name="action_launch">실행</string>
+    <string name="action_launch_app">실행</string>
 </resources>

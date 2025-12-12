@@ -637,4 +637,5 @@
     <string name="page_requests_none">لا توجد طلبات مسجلة لهذه الصفحة</string>
     <string name="settings_summary_full_menu">إظهار القائمة الكاملة</string>
     <string name="action_launch">تشغيل</string>
+    <string name="action_launch_app">تشغيل</string>
 </resources>

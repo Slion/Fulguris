@@ -623,4 +623,5 @@
     <string name="page_requests_none">Không có yêu cầu nào được ghi lại cho trang này</string>
     <string name="settings_summary_full_menu">Hiển thị menu đầy đủ</string>
     <string name="action_launch">Khởi chạy</string>
+    <string name="action_launch_app">Khởi chạy</string>
 </resources>

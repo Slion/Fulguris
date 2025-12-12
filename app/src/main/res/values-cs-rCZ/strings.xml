@@ -631,4 +631,5 @@
     <string name="page_requests_none">Pro tuto stránku nejsou zaznamenány žádné požadavky</string>
     <string name="settings_summary_full_menu">Zobrazit celou nabídku</string>
     <string name="action_launch">Spustit</string>
+    <string name="action_launch_app">Spustit</string>
 </resources>

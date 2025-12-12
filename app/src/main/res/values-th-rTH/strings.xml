@@ -623,4 +623,5 @@
     <string name="page_requests_none">ไม่มีคำขอที่บันทึกสำหรับหน้านี้</string>
     <string name="settings_summary_full_menu">แสดงเมนูเต็ม</string>
     <string name="action_launch">เปิด</string>
+    <string name="action_launch_app">เปิด</string>
 </resources>

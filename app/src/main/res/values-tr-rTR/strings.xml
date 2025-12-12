@@ -625,4 +625,5 @@
     <string name="page_requests_none">Bu sayfa için kaydedilen istek yok</string>
     <string name="settings_summary_full_menu">Tam menüyü göster</string>
     <string name="action_launch">Başlat</string>
+    <string name="action_launch_app">Başlat</string>
 </resources>

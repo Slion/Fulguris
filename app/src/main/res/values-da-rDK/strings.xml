@@ -625,4 +625,5 @@
     <string name="page_requests_none">Ingen anmodninger registreret for denne side</string>
     <string name="settings_summary_full_menu">Vis fuld menu</string>
     <string name="action_launch">Start</string>
+    <string name="action_launch_app">Start</string>
 </resources>

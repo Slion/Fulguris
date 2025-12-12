@@ -623,4 +623,5 @@
     <string name="page_requests_none">このページのリクエストは記録されていません</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
     <string name="action_launch">起動</string>
+    <string name="action_launch_app">起動</string>
 </resources>

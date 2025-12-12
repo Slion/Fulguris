@@ -625,4 +625,5 @@
     <string name="page_requests_none">Inga förfrågningar registrerade för denna sida</string>
     <string name="settings_summary_full_menu">Visa fullständig meny</string>
     <string name="action_launch">Starta</string>
+    <string name="action_launch_app">Starta</string>
 </resources>

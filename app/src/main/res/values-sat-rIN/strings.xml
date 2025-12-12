@@ -625,4 +625,5 @@
     <string name="page_requests_none">ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱨᱮ ᱨᱮᱠᱩᱭᱮᱥᱴ ᱵᱟᱹᱱᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="settings_summary_full_menu">ᱯᱩᱨᱟᱹ ᱢᱮᱱᱩ ᱩᱫᱩᱜ ᱢᱮ</string>
     <string name="action_launch">ᱪᱟᱞᱩ</string>
+    <string name="action_launch_app">ᱮᱛᱦᱚᱵᱽ ᱢᱮ</string>
 </resources>

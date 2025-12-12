@@ -625,4 +625,5 @@
     <string name="page_requests_none">No hi ha sol·licituds registrades per a aquesta pàgina</string>
     <string name="settings_summary_full_menu">Mostra el menú complet</string>
     <string name="action_launch">Inicia</string>
+    <string name="action_launch_app">Llançar</string>
 </resources>

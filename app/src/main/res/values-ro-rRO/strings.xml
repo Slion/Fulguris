@@ -628,4 +628,5 @@
     <string name="page_requests_none">Nicio cerere înregistrată pentru această pagină</string>
     <string name="settings_summary_full_menu">Afișează meniul complet</string>
     <string name="action_launch">Lansează</string>
+    <string name="action_launch_app">Lansează</string>
 </resources>

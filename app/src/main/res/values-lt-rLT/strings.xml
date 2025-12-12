@@ -631,4 +631,5 @@
     <string name="page_requests_none">Šiam puslapiui nėra įrašytų užklausų</string>
     <string name="settings_summary_full_menu">Rodyti pilną meniu</string>
     <string name="action_launch">Paleisti</string>
+    <string name="action_launch_app">Paleisti</string>
 </resources>

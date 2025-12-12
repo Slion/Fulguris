@@ -625,4 +625,5 @@
     <string name="page_requests_none">Nincsenek rögzített kérések ezen az oldalon</string>
     <string name="settings_summary_full_menu">Teljes menü megjelenítése</string>
     <string name="action_launch">Indítás</string>
+    <string name="action_launch_app">Indítás</string>
 </resources>

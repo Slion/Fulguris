@@ -625,4 +625,5 @@
     <string name="page_requests_none">Δεν καταγράφηκαν αιτήματα για αυτή τη σελίδα</string>
     <string name="settings_summary_full_menu">Εμφάνιση πλήρους μενού</string>
     <string name="action_launch">Εκκίνηση</string>
+    <string name="action_launch_app">Εκκίνηση</string>
 </resources>

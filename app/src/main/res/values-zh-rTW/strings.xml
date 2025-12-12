@@ -623,4 +623,5 @@
     <string name="page_requests_none">此頁面沒有記錄的請求</string>
     <string name="settings_summary_full_menu">顯示完整選單</string>
     <string name="action_launch">啟動</string>
+    <string name="action_launch_app">啟動</string>
 </resources>

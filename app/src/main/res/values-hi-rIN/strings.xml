@@ -580,4 +580,5 @@
     <string name="page_requests_none">इस पेज के लिए कोई अनुरोध रिकॉर्ड नहीं</string>
     <string name="settings_summary_full_menu">पूर्ण मेनू दिखाएं</string>
     <string name="action_launch">लॉन्च करें</string>
+    <string name="action_launch_app">लॉन्च करें</string>
 </resources>

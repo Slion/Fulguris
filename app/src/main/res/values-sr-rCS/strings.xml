@@ -628,4 +628,5 @@
     <string name="page_requests_none">Нема забележених захтева за ову страницу</string>
     <string name="settings_summary_full_menu">Прикажи пуни мени</string>
     <string name="action_launch">Покрени</string>
+    <string name="action_launch_app">Покрени</string>
 </resources>

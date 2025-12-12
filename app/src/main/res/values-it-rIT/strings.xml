@@ -625,4 +625,5 @@
     <string name="page_requests_none">Nessuna richiesta registrata per questa pagina</string>
     <string name="settings_summary_full_menu">Mostra menu completo</string>
     <string name="action_launch">Avvia</string>
+    <string name="action_launch_app">Avvia</string>
 </resources>

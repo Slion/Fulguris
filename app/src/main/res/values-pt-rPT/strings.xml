@@ -625,4 +625,5 @@
     <string name="page_requests_none">Nenhum pedido registado para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menu completo</string>
     <string name="action_launch">Iniciar</string>
+    <string name="action_launch_app">Iniciar</string>
 </resources>

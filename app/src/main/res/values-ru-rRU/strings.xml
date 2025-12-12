@@ -631,4 +631,5 @@
     <string name="page_requests_none">Запросы для этой страницы не зарегистрированы</string>
     <string name="settings_summary_full_menu">Показать полное меню</string>
     <string name="action_launch">Запустить</string>
+    <string name="action_launch_app">Запустить</string>
 </resources>

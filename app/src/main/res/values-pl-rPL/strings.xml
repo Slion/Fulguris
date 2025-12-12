@@ -631,4 +631,5 @@
     <string name="page_requests_none">Brak zarejestrowanych żądań dla tej strony</string>
     <string name="settings_summary_full_menu">Pokaż pełne menu</string>
     <string name="action_launch">Uruchom</string>
+    <string name="action_launch_app">Uruchom</string>
 </resources>
