@@ -370,8 +370,8 @@ class MenuPopupWindow : PopupWindow {
     }
 
     /**
-     * Update LaunchApp menu item visibility and icon based on available apps for the URL.
-     * Shows app icon when only one app is available, otherwise uses default icon from MenuItem.
+     * Update LaunchApp menu item visibility, icon, and label based on available apps for the URL.
+     * Shows app icon and label when only one app is available, otherwise uses defaults from MenuItem.
      */
     private fun updateLaunchAppMenuItem(url: String) {
         val context = contentView.context
@@ -396,16 +396,22 @@ class MenuPopupWindow : PopupWindow {
             // Convert 24dp to pixels
             val iconSizePx = (24 * context.resources.displayMetrics.density).toInt()
 
-            // If only one app is available, use its icon
+            // If only one app is available, use its icon and label
             if (availableApps.size == 1) {
-                val appIcon = availableApps[0].loadIcon(packageManager)
+                val appInfo = availableApps[0]
+                val appIcon = appInfo.loadIcon(packageManager)
+                val appLabel = appInfo.loadLabel(packageManager).toString()
+
                 // Scale the icon to 24dp
                 appIcon.setBounds(0, 0, iconSizePx, iconSizePx)
                 iBinding.menuItemLaunchApp.setCompoundDrawablesRelative(
                     appIcon, null, null, null
                 )
+
+                // Set the app label
+                iBinding.menuItemLaunchApp.text = appLabel
             } else {
-                // Multiple apps available, use default icon from MenuItem configuration
+                // Multiple apps available, use default icon and label from MenuItem configuration
                 val menuItem = MenuItems.getItem(MenuItemId.LaunchApp)
                 val defaultIcon = menuItem?.iconId?.let {
                     androidx.core.content.ContextCompat.getDrawable(context, it)
@@ -414,6 +420,10 @@ class MenuPopupWindow : PopupWindow {
                 iBinding.menuItemLaunchApp.setCompoundDrawablesRelative(
                     defaultIcon, null, null, null
                 )
+
+                // Set the default label
+                val defaultLabel = menuItem?.labelId?.let { context.getString(it) }
+                iBinding.menuItemLaunchApp.text = defaultLabel
             }
         }
     }
