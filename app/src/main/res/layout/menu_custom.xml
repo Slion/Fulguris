@@ -363,6 +363,15 @@
                         android:text="@string/action_force_reload"
                         />
 
+                    <TextView
+                        android:id="@+id/menuItemLaunchApp"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_apps"
+                        android:text="@string/action_launch_app"
+                        />
+
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

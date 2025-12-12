@@ -35,6 +35,7 @@
     <item name="action_settings" type="id" />
     <item name="action_reload" type="id" />
     <item name="action_force_reload" type="id" />
+    <item name="action_launch_app" type="id" />
     <item name="action_forward" type="id" />
     <item name="action_back" type="id" />
     <item name="action_bookmarks" type="id" />

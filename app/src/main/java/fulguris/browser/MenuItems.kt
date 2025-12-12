@@ -281,6 +281,15 @@ object MenuItems {
             canBeInTabMenu = true,
             defaultMenu = MenuType.HiddenMenu,
             preferredMenu = MenuType.TabMenu
+        ),
+        MenuItemId.LaunchApp to MenuItem(
+            id = MenuItemId.LaunchApp,
+            labelId = R.string.action_launch_app,
+            iconId = R.drawable.ic_apps,
+            viewId = R.id.menuItemLaunchApp,
+            canBeInMainMenu = true,
+            canBeInTabMenu = true,
+            defaultMenu = MenuType.TabMenu
         )
     )
 

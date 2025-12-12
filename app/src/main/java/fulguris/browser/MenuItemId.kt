@@ -55,5 +55,6 @@ enum class MenuItemId {
     Requests,
     AddToHome,
     ForceReload,
+    LaunchApp,
 }
 

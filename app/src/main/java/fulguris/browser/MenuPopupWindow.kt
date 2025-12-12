@@ -273,6 +273,7 @@ class MenuPopupWindow : PopupWindow {
         iBinding.menuItemTranslate.isVisible = false
         iBinding.menuItemPageRequests.isVisible = false
         iBinding.menuItemForceReload.isVisible = false
+        iBinding.menuItemLaunchApp.isVisible = false
     }
 
     /**
@@ -310,6 +311,7 @@ class MenuPopupWindow : PopupWindow {
             MenuItemId.Translate -> iBinding.menuItemTranslate.isVisible = true
             MenuItemId.Requests -> iBinding.menuItemPageRequests.isVisible = true
             MenuItemId.ForceReload -> iBinding.menuItemForceReload.isVisible = true
+            MenuItemId.LaunchApp -> iBinding.menuItemLaunchApp.isVisible = true
         }
     }
 
@@ -358,6 +360,60 @@ class MenuPopupWindow : PopupWindow {
                 if (!iUserPreferences.adBlockEnabled) {
                     iBinding.menuItemAdBlock.isVisible = false
                 }
+
+                // Handle LaunchApp visibility and icon only if it's in the current menu
+                if (iBinding.menuItemLaunchApp.isVisible) {
+                    updateLaunchAppMenuItem(tab.url)
+                }
+            }
+        }
+    }
+
+    /**
+     * Update LaunchApp menu item visibility and icon based on available apps for the URL.
+     * Shows app icon when only one app is available, otherwise uses default icon from MenuItem.
+     */
+    private fun updateLaunchAppMenuItem(url: String) {
+        val context = contentView.context
+        val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))
+        val packageManager = context.packageManager
+
+        // Get list of apps that can handle this URL
+        val resolveInfos = packageManager.queryIntentActivities(intent, android.content.pm.PackageManager.MATCH_DEFAULT_ONLY)
+
+        // Filter out this browser itself
+        val availableApps = resolveInfos.filter {
+            it.activityInfo.packageName != context.packageName
+        }
+
+        if (availableApps.isEmpty()) {
+            // No apps available, hide the menu item
+            iBinding.menuItemLaunchApp.isVisible = false
+        } else {
+            // Apps available, show the menu item
+            iBinding.menuItemLaunchApp.isVisible = true
+
+            // Convert 24dp to pixels
+            val iconSizePx = (24 * context.resources.displayMetrics.density).toInt()
+
+            // If only one app is available, use its icon
+            if (availableApps.size == 1) {
+                val appIcon = availableApps[0].loadIcon(packageManager)
+                // Scale the icon to 24dp
+                appIcon.setBounds(0, 0, iconSizePx, iconSizePx)
+                iBinding.menuItemLaunchApp.setCompoundDrawablesRelative(
+                    appIcon, null, null, null
+                )
+            } else {
+                // Multiple apps available, use default icon from MenuItem configuration
+                val menuItem = MenuItems.getItem(MenuItemId.LaunchApp)
+                val defaultIcon = menuItem?.iconId?.let {
+                    androidx.core.content.ContextCompat.getDrawable(context, it)
+                }
+                defaultIcon?.setBounds(0, 0, iconSizePx, iconSizePx)
+                iBinding.menuItemLaunchApp.setCompoundDrawablesRelative(
+                    defaultIcon, null, null, null
+                )
             }
         }
     }

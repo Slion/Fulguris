@@ -706,6 +706,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onMenuItemClicked(iBinding.menuItemAdBlock) { dismiss(); executeAction(R.id.action_block) }
             onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
             onMenuItemClicked(iBinding.menuItemForceReload) { dismiss(); executeAction(R.id.action_force_reload) }
+            onMenuItemClicked(iBinding.menuItemLaunchApp) { dismiss(); executeAction(R.id.action_launch_app) }
 
             // Popup menu action shortcut icons (work for both modes)
             onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
@@ -2301,6 +2302,35 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             R.id.action_force_reload -> {
                 // Force reload bypasses cache to get fresh content from server
                 tabsManager.currentTab?.reload(aForce = true)
+                return true
+            }
+            R.id.action_launch_app -> {
+                // Launch external app with current URL
+                tabsManager.currentTab?.url?.let { url ->
+                    val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))
+                    // Exclude this app from the chooser
+                    intent.setPackage(null)
+
+                    // Get list of apps that can handle this URL
+                    val resolveInfos = packageManager.queryIntentActivities(intent, android.content.pm.PackageManager.MATCH_DEFAULT_ONLY)
+                    val availableApps = resolveInfos.filter { it.activityInfo.packageName != packageName }
+
+                    when (availableApps.size) {
+                        0 -> {
+                            // No apps available, defensive
+                            snackbar(R.string.message_no_app_available)
+                        }
+                        1 -> {
+                            // Only one app, launch it directly
+                            intent.setPackage(availableApps[0].activityInfo.packageName)
+                            startActivity(intent)
+                        }
+                        else -> {
+                            // Multiple apps, show chooser
+                            startActivity(android.content.Intent.createChooser(intent, getString(R.string.action_launch_app)))
+                        }
+                    }
+                }
                 return true
             }
             R.id.action_incognito -> {
