@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Recharger</string>
+    <string name="action_force_reload">Forcer le rechargement</string>
     <string name="action_menu">Plus</string>
     <string name="action_new_tab">Nouvel onglet</string>
     <string name="action_duplicate_tab">Dupliquer l\'onglet</string>

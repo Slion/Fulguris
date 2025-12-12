@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="action_reload">पुनः लोड करें</string>
+    <string name="action_force_reload">बलपूर्वक पुनः लोड करें</string>
     <string name="action_menu">मेन्यू</string>
     <string name="action_new_tab">नया टैब</string>
     <string name="action_duplicate_tab">टैब डुप्लिकेट करें</string>

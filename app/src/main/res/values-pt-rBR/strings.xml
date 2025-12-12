@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Recarregar</string>
+    <string name="action_force_reload">Forçar recarregamento</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Nova aba</string>
     <string name="action_duplicate_tab">Duplicar aba</string>
