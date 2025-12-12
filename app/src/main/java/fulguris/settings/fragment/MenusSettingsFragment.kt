@@ -535,68 +535,21 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                 val position = viewHolder.bindingAdapterPosition
                 val prefScreen = preferenceScreen
 
-                if (position >= prefScreen.preferenceCount) {
-                    return
-                }
-
                 val pref = prefScreen.getPreference(position)
 
-                // Check if item is mandatory
-                val menuItemId = try {
-                    MenuItemId.valueOf(pref.key ?: "")
-                } catch (e: Exception) {
-                    null
-                }
-
-                val menuItem = menuItemId?.let { MenuItems.getItem(it) }
-                if (menuItem?.mandatory == true) {
-                    // Don't allow swiping mandatory items - restore it
-                    listView.adapter?.notifyItemChanged(position)
-                    return
-                }
-
+                // Should always work as we won't let user swipe preferences that are not items
+                val menuItemId = MenuItemId.valueOf(pref.key ?: "")
+                val menuItem = MenuItems.getItem(menuItemId)
                 // Determine current menu type
                 val currentMenuType = getMenuTypeForPreference(pref)
 
                 // Determine target menu
                 val targetMenu = if (currentMenuType == MenuType.HiddenMenu) {
-                    // Item is in Hidden section - move to its preferred menu
-                    if (menuItem == null) {
-                        listView.adapter?.notifyItemChanged(position)
-                        return
-                    }
-
-                    val targetMenuType = menuItem.preferredMenu
-
-                    // Ensure target menu type is valid (not FullMenu or HiddenMenu)
-                    when {
-                        targetMenuType == MenuType.FullMenu || targetMenuType == MenuType.HiddenMenu -> {
-                            // Fall back to MainMenu if preferred is not a valid target
-                            if (menuItem.canBeInMainMenu) MenuType.MainMenu
-                            else if (menuItem.canBeInTabMenu) MenuType.TabMenu
-                            else MenuType.HiddenMenu // Keep hidden if not available anywhere
-                        }
-                        targetMenuType == MenuType.MainMenu && !menuItem.canBeInMainMenu -> {
-                            // Can't go to MainMenu, try TabMenu
-                            if (menuItem.canBeInTabMenu) MenuType.TabMenu
-                            else MenuType.HiddenMenu
-                        }
-                        targetMenuType == MenuType.TabMenu && !menuItem.canBeInTabMenu -> {
-                            // Can't go to TabMenu, try MainMenu
-                            if (menuItem.canBeInMainMenu) MenuType.MainMenu
-                            else MenuType.HiddenMenu
-                        }
-                        else -> targetMenuType
-                    }
+                    // Move to preferred menu
+                   menuItem!!.preferredMenu
                 } else {
                     // Item is in MainMenu or TabMenu - move to Hidden section
                     MenuType.HiddenMenu
-                }
-
-                if (targetMenu == MenuType.HiddenMenu && currentMenuType == MenuType.HiddenMenu) {
-                    // Can't move anywhere, restore it
-                    listView.adapter?.notifyItemChanged(position)
-                    return
                 }
 
                 // Use moveToMenu to handle the move with proper shifting
@@ -616,25 +569,16 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                 val position = viewHolder.bindingAdapterPosition
                 val prefScreen = preferenceScreen
 
-                if (position >= prefScreen.preferenceCount) {
-                    return 0
-                }
-
                 val pref = prefScreen.getPreference(position)
 
-                // Don't allow swiping fixed preferences (reset button and headers)
-                if (isFixedPreference(pref.key)) {
+                // Don't allow swiping fixed preferences and menu section headers
+                if (isFixedPreference(pref.key) || isHeaderPreference(pref.key)) {
                     return 0
                 }
-
-                val menuItemId = try {
-                    MenuItemId.valueOf(pref.key ?: "")
-                } catch (e: Exception) {
-                    null
-                }
-
+                // We should be dealing with an actual menu item then
+                val menuItemId = MenuItemId.valueOf(pref.key)
                 // Check if item is mandatory
-                val menuItem = menuItemId?.let { MenuItems.getItem(it) }
+                val menuItem = MenuItems.getItem(menuItemId)
                 if (menuItem?.mandatory == true) {
                     return 0 // No swipe for mandatory items
                 }
