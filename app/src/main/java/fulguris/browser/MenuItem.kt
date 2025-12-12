@@ -35,7 +35,7 @@ import androidx.annotation.StringRes
  * @param viewId View resource ID (R.id.menuItem*) in menu_custom.xml, 0 if not in layout
  * @param canBeInMainMenu Whether this item can appear in the main menu
  * @param canBeInTabMenu Whether this item can appear in the tab menu
- * @param mandatory Whether this item must always be present and cannot be removed
+ * @param canBeHidden Whether this item must always be present and cannot be removed
  * @param defaultMenu Which menu this item appears in by default (MainMenu, TabMenu, or Hidden)
  * @param preferredMenu Which menu to use when swiping hidden items back (defaults to defaultMenu for non-hidden items)
  * @param optional Optional items are not shown in the full menu (MenuType.FullMenu)
@@ -47,7 +47,7 @@ data class MenuItem(
     @IdRes val viewId: Int = 0,
     val canBeInMainMenu: Boolean,
     val canBeInTabMenu: Boolean,
-    val mandatory: Boolean = false,
+    val canBeHidden: Boolean = true,
     val defaultMenu: MenuType = MenuType.HiddenMenu,
     val preferredMenu: MenuType = defaultMenu,
     val optional: Boolean = false

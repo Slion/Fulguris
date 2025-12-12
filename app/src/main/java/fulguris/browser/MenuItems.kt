@@ -125,8 +125,8 @@ object MenuItems {
             iconId = R.drawable.ic_settings,
             viewId = R.id.menuItemSettings,
             canBeInMainMenu = true,
-            canBeInTabMenu = true,
-            mandatory = true,
+            canBeInTabMenu = false,
+            canBeHidden = false,
             defaultMenu = MenuType.MainMenu
         ),
         MenuItemId.Exit to MenuItem(

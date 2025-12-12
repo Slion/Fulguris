@@ -362,21 +362,16 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
             val isValid = when (currentMenu) {
                 MenuType.MainMenu -> menuItem.canBeInMainMenu
                 MenuType.TabMenu -> menuItem.canBeInTabMenu
-                MenuType.HiddenMenu -> !menuItem.mandatory
+                MenuType.HiddenMenu -> menuItem.canBeHidden
                 MenuType.FullMenu -> true
             }
 
-            // Check if mandatory item is hidden
-            val mandatoryViolation = menuItem.mandatory &&
-                (currentMenu == MenuType.HiddenMenu || currentMenu == MenuType.FullMenu)
-
-            if (!isValid || mandatoryViolation) {
+            if (!isValid) {
                 // Move item back to its default menu using moveToMenu helper
                 val targetMenu = menuItem.defaultMenu
                 moveToMenu(pref, targetMenu)
 
-                val reason = if (mandatoryViolation) "mandatory item was hidden" else "item not allowed in ${currentMenu}"
-                Timber.w("Configuration fix: ${menuItem.id} moved to ${targetMenu} (${reason})")
+                Timber.w("Configuration fix: ${menuItem.id} moved to $targetMenu")
                 correctionsMade = true
             }
         }
@@ -579,7 +574,7 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                 val menuItemId = MenuItemId.valueOf(pref.key)
                 // Check if item is mandatory
                 val menuItem = MenuItems.getItem(menuItemId)
-                if (menuItem?.mandatory == true) {
+                if (menuItem?.canBeHidden == false) {
                     return 0 // No swipe for mandatory items
                 }
 
