@@ -79,10 +79,10 @@ class WebPageChromeClient(
                         
                         // Send initial values via console
                         if (currentThemeColor) {
-                            console.log('fulguris: meta-theme-color: ' + currentThemeColor);
+                            console.debug('fulguris: meta-theme-color: ' + currentThemeColor);
                         }
                         if (currentColorScheme) {
-                            console.log('fulguris: meta-color-scheme: ' + currentColorScheme);
+                            console.debug('fulguris: meta-color-scheme: ' + currentColorScheme);
                         }
                         
                         // Helper function to observe a meta tag node
@@ -99,9 +99,9 @@ class WebPageChromeClient(
                                     let tagName = mutation.target.getAttribute('name');
                                     let newValue = mutation.target.content;
                                     if (tagName === 'theme-color') {
-                                        console.log('fulguris: meta-theme-color: ' + newValue);
+                                        console.debug('fulguris: meta-theme-color: ' + newValue);
                                     } else if (tagName === 'color-scheme') {
-                                        console.log('fulguris: meta-color-scheme: ' + newValue);
+                                        console.debug('fulguris: meta-color-scheme: ' + newValue);
                                     }
                                 }
                             });
@@ -116,9 +116,9 @@ class WebPageChromeClient(
                                         if (tagName === 'theme-color' || tagName === 'color-scheme') {
                                             let newValue = node.content;
                                             if (tagName === 'theme-color') {
-                                                console.log('fulguris: meta-theme-color: ' + newValue);
+                                                console.debug('fulguris: meta-theme-color: ' + newValue);
                                             } else if (tagName === 'color-scheme') {
-                                                console.log('fulguris: meta-color-scheme: ' + newValue);
+                                                console.debug('fulguris: meta-color-scheme: ' + newValue);
                                             }
                                             observeMetaTag(node);
                                         }
@@ -429,15 +429,20 @@ class WebPageChromeClient(
 
             // Check if this is a Fulguris meta tag notification from our MutationObserver
             val msg = message()
-            if (userPreferences.colorModeEnabled && msg.startsWith("fulguris: ")) {
+            if (messageLevel() == ConsoleMessage.MessageLevel.TIP
+                && userPreferences.colorModeEnabled
+                && msg.startsWith("fulguris: ")) {
                 when {
                     msg.startsWith("fulguris: meta-theme-color: ") -> {
                         // Extract theme-color value after the prefix
                         val colorValue = msg.substringAfter("fulguris: meta-theme-color: ").trim()
                         try {
+                            // Color.parseColor handles hex (#RGB, #RRGGBB, #AARRGGBB), rgb(), rgba(), and named colors
                             val color = Color.parseColor(colorValue)
                             if (webPageTab.htmlMetaThemeColor != color) {
-                                Timber.i("Theme color changed dynamically to: $colorValue (parsed as #${Integer.toHexString(color)})")
+                                // Format as 8-digit hex with alpha (AARRGGBB)
+                                val hexColor = String.format("#%08X", color)
+                                Timber.i("New meta theme-color: '$colorValue' == $hexColor (ARGB: ${Color.alpha(color)}, ${Color.red(color)}, ${Color.green(color)}, ${Color.blue(color)})")
                                 webPageTab.htmlMetaThemeColor = color
                                 webBrowser.onTabChanged(webPageTab)
                             }
@@ -448,7 +453,7 @@ class WebPageChromeClient(
                     msg.startsWith("fulguris: meta-color-scheme: ") -> {
                         // Extract color-scheme value after the prefix
                         val schemeValue = msg.substringAfter("fulguris: meta-color-scheme: ").trim()
-                        Timber.i("Color scheme changed dynamically to: $schemeValue")
+                        Timber.i("New meta color-scheme: $schemeValue")
                         // TODO: Handle color-scheme changes (light, dark, light dark, etc.)
                         // This could be used to automatically switch between light/dark themes
                     }
