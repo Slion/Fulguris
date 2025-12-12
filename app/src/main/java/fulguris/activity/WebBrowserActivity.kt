@@ -705,6 +705,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onMenuItemClicked(iBinding.menuItemDarkMode) { dismiss(); executeAction(R.id.action_toggle_dark_mode) }
             onMenuItemClicked(iBinding.menuItemAdBlock) { dismiss(); executeAction(R.id.action_block) }
             onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
+            onMenuItemClicked(iBinding.menuItemForceReload) { dismiss(); executeAction(R.id.action_force_reload) }
 
             // Popup menu action shortcut icons (work for both modes)
             onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }
@@ -2295,6 +2296,11 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 } else {
                     refreshOrStop()
                 }
+                return true
+            }
+            R.id.action_force_reload -> {
+                // Force reload bypasses cache to get fresh content from server
+                tabsManager.currentTab?.reload(aForce = true)
                 return true
             }
             R.id.action_incognito -> {

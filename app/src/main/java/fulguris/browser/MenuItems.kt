@@ -25,7 +25,20 @@ package fulguris.browser
 import fulguris.R
 
 /**
- * Registry of all available menu items for both main menu and tab menu
+ * Registry of all menu items for main menu and tab menu.
+ *
+ * ## Adding a New Menu Item
+ *
+ * 1. Add enum value in `MenuItemId.kt` (note: names persisted in SharedPreferences)
+ * 2. Add string resource in `res/values/strings.xml`
+ * 3. Add TextView/CheckBox in `res/layout/menu_custom.xml` with `android:visibility="gone"`
+ * 4. Register MenuItem in this file's map with matching viewId
+ * 5. Add visibility management in `MenuPopupWindow.kt`: `hideAllMenuItems()` and `showMenuItem()`
+ * 6. Add click handler in `WebBrowserActivity.kt` setup
+ * 7. Add action ID in `res/values/ids.xml`
+ * 8. Implement action handler in `WebBrowserActivity.executeAction()`
+ *
+ * See ForceReload (Dec 2025) as complete example.
  */
 object MenuItems {
 
@@ -258,6 +271,16 @@ object MenuItems {
             canBeInMainMenu = true,
             canBeInTabMenu = true,
             defaultMenu = MenuType.TabMenu
+        ),
+        MenuItemId.ForceReload to MenuItem(
+            id = MenuItemId.ForceReload,
+            labelId = R.string.action_force_reload,
+            iconId = R.drawable.ic_action_refresh,
+            viewId = R.id.menuItemForceReload,
+            canBeInMainMenu = true,
+            canBeInTabMenu = true,
+            defaultMenu = MenuType.HiddenMenu,
+            preferredMenu = MenuType.TabMenu
         )
     )
 

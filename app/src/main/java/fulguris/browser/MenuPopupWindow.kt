@@ -272,6 +272,7 @@ class MenuPopupWindow : PopupWindow {
         iBinding.menuItemAdBlock.isVisible = false
         iBinding.menuItemTranslate.isVisible = false
         iBinding.menuItemPageRequests.isVisible = false
+        iBinding.menuItemForceReload.isVisible = false
     }
 
     /**
@@ -308,6 +309,7 @@ class MenuPopupWindow : PopupWindow {
             MenuItemId.AdBlock -> iBinding.menuItemAdBlock.isVisible = true
             MenuItemId.Translate -> iBinding.menuItemTranslate.isVisible = true
             MenuItemId.Requests -> iBinding.menuItemPageRequests.isVisible = true
+            MenuItemId.ForceReload -> iBinding.menuItemForceReload.isVisible = true
         }
     }
 
@@ -349,6 +351,7 @@ class MenuPopupWindow : PopupWindow {
                     iBinding.menuItemShare.isVisible = false
                     iBinding.menuItemAdBlock.isVisible = false
                     iBinding.menuItemTranslate.isVisible = false
+                    iBinding.menuItemForceReload.isVisible = false
                 }
 
                 // Hide ad block if not enabled in settings

@@ -54,5 +54,6 @@ enum class MenuItemId {
     Print,
     Requests,
     AddToHome,
+    ForceReload,
 }
 

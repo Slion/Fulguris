@@ -354,6 +354,15 @@
                         android:text="@string/action_add_to_homescreen"
                         />
 
+                    <TextView
+                        android:id="@+id/menuItemForceReload"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_action_refresh"
+                        android:text="@string/action_force_reload"
+                        />
+
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
