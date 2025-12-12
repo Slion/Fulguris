@@ -245,28 +245,18 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
     /**
      * Determine which menu type a preference belongs to based on its order
      */
-    private fun getMenuTypeForPreference(pref: androidx.preference.Preference): MenuType {
-        val prefScreen = preferenceScreen
+    private fun getMenuTypeForPreference(pref: Preference): MenuType {
 
         // Find header orders
-        var mainHeaderOrder = -1
-        var tabHeaderOrder = -1
-        var hiddenHeaderOrder = -1
-
-        for (i in 0 until prefScreen.preferenceCount) {
-            val p = prefScreen.getPreference(i)
-            when (p.key) {
-                KEY_HEADER_MAIN -> mainHeaderOrder = p.order
-                KEY_HEADER_TAB -> tabHeaderOrder = p.order
-                KEY_HEADER_HIDDEN -> hiddenHeaderOrder = p.order
-            }
-        }
+        //val mainHeaderOrder = findPreference<Preference>(KEY_HEADER_MAIN)!!.order
+        val tabHeaderOrder = findPreference<Preference>(KEY_HEADER_TAB)!!.order
+        val hiddenHeaderOrder = findPreference<Preference>(KEY_HEADER_HIDDEN)!!.order
 
         // Determine menu based on order relative to headers
         return when {
-            pref.order < tabHeaderOrder -> MenuType.MainMenu
-            pref.order < hiddenHeaderOrder -> MenuType.TabMenu
-            else -> MenuType.HiddenMenu
+            pref.order > hiddenHeaderOrder -> MenuType.HiddenMenu
+            pref.order > tabHeaderOrder -> MenuType.TabMenu
+            else -> MenuType.MainMenu
         }
     }
 
@@ -310,6 +300,14 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.START or ItemTouchHelper.END // Enable swipe left/right
         ) {
+            override fun isLongPressDragEnabled(): Boolean {
+                return true
+            }
+
+            override fun isItemViewSwipeEnabled(): Boolean {
+                return true
+            }
+
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
@@ -331,6 +329,31 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
             }
 
             /**
+             * From [ItemTouchHelper.SimpleCallback.onSelectedChanged]
+             * That's where drag starts and stops.
+             */
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                super.onSelectedChanged(viewHolder, actionState)
+
+                // Save configuration when drag ends
+                if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
+                    Timber.d("Drag stops at ${iDrag.currentPosition}")
+                    iDrag.active = false
+                    saveCurrentConfiguration()
+                } else if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                    // We must always keep order and position in sync as that's how we manipulate the preference model
+                    iDrag.apply {
+                        active = true
+                        startPosition = viewHolder!!.bindingAdapterPosition
+                        startOrder = getOrder(viewHolder)
+                        currentPosition = viewHolder.bindingAdapterPosition
+                    }
+
+                    Timber.d("Drag starts at ${iDrag.startPosition} order ${iDrag.startOrder}")
+                }
+            }
+
+            /**
              * From [ItemTouchHelper.SimpleCallback.onMove]
              */
             override fun onMove(
@@ -349,77 +372,27 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                     return false
                 }
 
-                // Avoid spamming with logs
-                if (iDrag.currentPosition != toPosition) {
-                    iDrag.currentPosition = toPosition
-                    Timber.d("onMove from $fromPosition to $toPosition")
-                }
-
                 val ps = preferenceScreen
 
                 // Get preferences at both positions
                 val draggedPref = ps.getPreference(fromPosition)
                 val toPref = ps.getPreference(toPosition)
 
-                // Don't allow dragging fixed preferences (reset button and headers)
-                if (isFixedPreference(draggedPref.key)) {
-                    Timber.e("Should never be moving fixed items as getMovementFlags disallows it")
-                    return false
+                // Avoid spamming with logs
+                if (iDrag.currentPosition != toPosition) {
+                    iDrag.currentPosition = toPosition
+                    Timber.d("onMove from $fromPosition to $toPosition ")
                 }
-
-                // Block dropping on non-header fixed items (help, reset)
-//                if (!isHeaderPreference(toPref.key) && isFixedPreference(toPref.key)) {
-//                    return false
-//                }
 
                 // Find the Main menu header order
                 val mainHeaderOrder = findPreference<Preference>(KEY_HEADER_MAIN)!!.order
 
-                // Don't allow moving items above or onto Main menu header
+                // Don't allow moving items above Main menu header
                 if (toPref.order <= mainHeaderOrder) {
                     return false
                 }
 
-                // Determine source and target menu sections
-                val fromMenuType = getMenuTypeForPreference(draggedPref)
-                val toMenuType = getMenuTypeForPreference(toPref)
-
-                // Check menu restrictions for the item
-                val menuItemId = try {
-                    MenuItemId.valueOf(draggedPref.key ?: "")
-                } catch (e: Exception) {
-                    null
-                }
-
-                val menuItem = menuItemId?.let { MenuItems.getItem(it) }
-
-                // Enforce availableInMainMenu and availableInTabMenu restrictions
-                // Only check if moving to a different menu section
-                if (menuItem != null && fromMenuType != toMenuType) {
-                    when (toMenuType) {
-                        MenuType.MainMenu -> {
-                            if (!menuItem.canBeInMainMenu) {
-                                return false
-                            }
-                        }
-                        MenuType.TabMenu -> {
-                            if (!menuItem.canBeInTabMenu) {
-                                return false
-                            }
-                        }
-                        MenuType.HiddenMenu -> {
-                            // Mandatory items cannot be hidden
-                            if (menuItem.mandatory) {
-                                return false
-                            }
-                        }
-                        MenuType.FullMenu -> {
-                            // All mode is not used in drag and drop, should never reach here
-                            // But if it does, don't block the move
-                        }
-                    }
-                }
-
+                // Allow every other placement, we check for consistency when drag ends
                 // Handle the reordering
                 val prefsToOffset = mutableListOf<Preference>()
                 val startPos = if (toPosition > fromPosition) fromPosition else toPosition
@@ -449,30 +422,6 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
                 draggedPref.order = iDrag.currentPosition
 
                 return true
-            }
-
-            /**
-             * From [ItemTouchHelper.SimpleCallback.onSelectedChanged]
-             */
-            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-                super.onSelectedChanged(viewHolder, actionState)
-
-                // Save configuration when drag ends
-                if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
-                    Timber.d("Drag stops at ${iDrag.currentPosition}")
-                    iDrag.active = false
-                    saveCurrentConfiguration()
-                } else if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-                    // We must always keep order and position in sync as that's how we manipulate the preference model
-                    iDrag.apply {
-                        active = true
-                        startPosition = viewHolder!!.bindingAdapterPosition
-                        startOrder = getOrder(viewHolder)
-                        currentPosition = viewHolder.bindingAdapterPosition
-                    }
-
-                    Timber.d("Drag starts at ${iDrag.startPosition} order ${iDrag.startOrder}")
-                }
             }
 
             /**
@@ -628,14 +577,6 @@ class MenusSettingsFragment : AbstractSettingsFragment() {
 
                 // Save configuration after swipe
                 saveCurrentConfiguration()
-            }
-
-            override fun isLongPressDragEnabled(): Boolean {
-                return true
-            }
-
-            override fun isItemViewSwipeEnabled(): Boolean {
-                return true
             }
 
             /**
