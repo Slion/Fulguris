@@ -117,6 +117,9 @@
     <string name="incognito_cookies_pie">Stealth mode runs in a separate process that is reset after each session. Stealth cookie preferences are now controlled by the regular cookie preferences.</string>
     <string name="pref_category_title_contact_us">Contact us</string>
     <string name="pref_category_title_legal">Legal</string>
+    <string name="pref_category_title_telemetry">Telemetry</string>
+    <string name="pref_category_title_permissions">Permissions</string>
+    <string name="pref_category_title_storage">Storage</string>
     <string name="pref_title_email">Email</string>
     <string name="clear_cache">Clear cache</string>
     <string name="message_cache_cleared">Cache cleared</string>
@@ -260,6 +263,7 @@
     <string name="pref_title_appearance">Appearance</string>
     <string name="pref_summary_appearance">Language, theme, configurations, menus, toolbars, tabs and panels</string>
     <string name="settings_backup">Backup</string>
+    <string name="pref_summary_backup">Export and import bookmarks and sessions</string>
     <string name="settings_title_configuration">Configuration</string>
     <string name="settings_summary_configuration">Portrait and landscape settings</string>
     <string name="settings_title_delete_configuration">Delete configuration</string>
@@ -267,6 +271,7 @@
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_title_add_configuration">Add configuration</string>
     <string name="settings_privacy">Privacy</string>
+    <string name="pref_summary_privacy">Storage, telemetry and permissions</string>
     <string name="settings_about">About</string>
     <string name="settings_summary_about">Version, contact, and legal details</string>
     <string name="settings_contribute">Contribute</string>
@@ -387,6 +392,7 @@
     <string name="clear_web_storage_exit">Clear web storage on exit</string>
     <string name="message_web_storage_cleared">Web storage cleared</string>
     <string name="settings_adblock">@string/block_ads</string>
+    <string name="pref_summary_adblock">Manage ad blocker filters</string>
     <string name="settings_title_tab_bar_orientation">Tab bar orientation</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>

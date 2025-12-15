@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Recarregar</string>
     <string name="action_force_reload">Forçar recarregamento</string>
+    <string name="action_launch_app">Iniciar</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Nova aba</string>
     <string name="action_duplicate_tab">Duplicar aba</string>
@@ -114,6 +115,9 @@
     <string name="incognito_cookies_pie">O modo furtivo é executado em um processo separado que é redefinido após cada sessão. As preferências de cookies furtivos agora são controladas pelas preferências de cookies normais.</string>
     <string name="pref_category_title_contact_us">Fale conosco</string>
     <string name="pref_category_title_legal">Jurídico</string>
+    <string name="pref_category_title_telemetry">Telemetria</string>
+    <string name="pref_category_title_permissions">Permissões</string>
+    <string name="pref_category_title_storage">Armazenamento</string>
     <string name="pref_title_email">E-mail</string>
     <string name="clear_cache">Limpar cache</string>
     <string name="message_cache_cleared">Cache limpo</string>
@@ -240,6 +244,7 @@
     <string name="pref_title_appearance">Aparência</string>
     <string name="pref_summary_appearance">Idioma, tema, configurações, menus, barras de ferramentas, abas e painéis</string>
     <string name="settings_backup">Cópia de Segurança</string>
+    <string name="pref_summary_backup">Exportar e importar favoritos e sessões</string>
     <string name="settings_title_configuration">Configuração</string>
     <string name="settings_summary_configuration">Configurações de retrato e paisagem</string>
     <string name="settings_title_delete_configuration">Excluir configuração</string>
@@ -247,6 +252,7 @@
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_title_add_configuration">Adicionar configuração</string>
     <string name="settings_privacy">Configurações de privacidade</string>
+    <string name="pref_summary_privacy">Armazenamento, telemetria e permissões</string>
     <string name="settings_about">Sobre</string>
     <string name="settings_summary_about">Versão, contato e detalhes legais</string>
     <string name="settings_contribute">Contribuir</string>
@@ -363,6 +369,7 @@
     <string name="clear_web_storage_exit">Limpar dados de navegação ao sair</string>
     <string name="message_web_storage_cleared">Dados de navegação removidos</string>
     <string name="settings_adblock">@string/block_ads</string>
+    <string name="pref_summary_adblock">Gerenciar filtros do bloqueador de anúncios</string>
     <string name="settings_title_tab_bar_orientation">Orientação da barra de abas</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertical</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontal</string>
@@ -625,5 +632,4 @@
     <string name="page_requests_none">Nenhuma solicitação registrada para esta página</string>
     <string name="settings_summary_full_menu">Mostrar menu completo</string>
     <string name="action_launch">Iniciar</string>
-    <string name="action_launch_app">Iniciar</string>
 </resources>

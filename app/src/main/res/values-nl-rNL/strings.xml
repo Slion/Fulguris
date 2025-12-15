@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Ververs</string>
     <string name="action_force_reload">Geforceerd herladen</string>
+    <string name="action_launch_app">Starten</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Nieuw Tabblad</string>
     <string name="action_duplicate_tab">Tabblad Duplicaten</string>
@@ -114,6 +115,9 @@
     <string name="incognito_cookies_pie">Stealth-modus draait in een apart proces dat na elke sessie wordt gereset. Stealth-cookievoorkeuren worden nu beheerd door de normale cookievoorkeuren.</string>
     <string name="pref_category_title_contact_us">Neem contact op</string>
     <string name="pref_category_title_legal">Juridisch</string>
+    <string name="pref_category_title_telemetry">Telemetrie</string>
+    <string name="pref_category_title_permissions">Machtigingen</string>
+    <string name="pref_category_title_storage">Opslag</string>
     <string name="pref_title_email">E-mail</string>
     <string name="clear_cache">Wis cache</string>
     <string name="message_cache_cleared">Cache gewist</string>
@@ -240,6 +244,7 @@
     <string name="pref_title_appearance">Uiterlijk</string>
     <string name="pref_summary_appearance">Taal, thema, configuraties, menu\'s, werkbalken, tabbladen en panelen</string>
     <string name="settings_backup">Back-up</string>
+    <string name="pref_summary_backup">Bladwijzers en sessies exporteren en importeren</string>
     <string name="settings_title_configuration">Instellingen</string>
     <string name="settings_summary_configuration">Portret- en landschapsinstellingen</string>
     <string name="settings_title_delete_configuration">Configuratie verwijderen</string>
@@ -247,6 +252,7 @@
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_title_add_configuration">Configuratie toevoegen</string>
     <string name="settings_privacy">Privacy instellingen</string>
+    <string name="pref_summary_privacy">Opslag, telemetrie en machtigingen</string>
     <string name="settings_about">Over</string>
     <string name="settings_summary_about">Versie, contact en juridische details</string>
     <string name="settings_contribute">Help mee</string>
@@ -363,6 +369,7 @@
     <string name="clear_web_storage_exit">Wis web opslag bij beëindigen</string>
     <string name="message_web_storage_cleared">Web opslag gewist</string>
     <string name="settings_adblock">@string/block_ads</string>
+    <string name="pref_summary_adblock">Adblocker-filters beheren</string>
     <string name="settings_title_tab_bar_orientation">Tabbalkoriëntatie</string>
     <string name="settings_summary_on_tab_bar_orientation">Verticaal</string>
     <string name="settings_summary_off_tab_bar_orientation">Horizontaal</string>
@@ -625,5 +632,4 @@
     <string name="page_requests_none">Geen verzoeken geregistreerd voor deze pagina</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
     <string name="action_launch">Starten</string>
-    <string name="action_launch_app">Starten</string>
 </resources>

@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">Muat ulang</string>
     <string name="action_force_reload">Paksa muat ulang</string>
+    <string name="action_launch_app">Luncurkan</string>
     <string name="action_menu">Menu</string>
     <string name="action_new_tab">Tab baru</string>
     <string name="action_duplicate_tab">Duplikat tab</string>
@@ -114,6 +115,9 @@
     <string name="incognito_cookies_pie">Mode tersembunyi berjalan dalam proses terpisah yang direset setelah setiap sesi. Preferensi cookie tersembunyi sekarang dikontrol oleh preferensi cookie reguler.</string>
     <string name="pref_category_title_contact_us">Hubungi kami</string>
     <string name="pref_category_title_legal">Hukum</string>
+    <string name="pref_category_title_telemetry">Telemetri</string>
+    <string name="pref_category_title_permissions">Izin</string>
+    <string name="pref_category_title_storage">Penyimpanan</string>
     <string name="pref_title_email">Email</string>
     <string name="clear_cache">Hapus cache</string>
     <string name="message_cache_cleared">Cache telah dihapus</string>
@@ -240,6 +244,7 @@
     <string name="pref_title_appearance">Tampilan</string>
     <string name="pref_summary_appearance">Bahasa, tema, konfigurasi, menu, toolbar, tab dan panel</string>
     <string name="settings_backup">Cadangan</string>
+    <string name="pref_summary_backup">Ekspor dan impor bookmark dan sesi</string>
     <string name="settings_title_configuration">Setelan</string>
     <string name="settings_summary_configuration">Setelan tampilan tegak dan mendatar</string>
     <string name="settings_title_delete_configuration">Hapus konfigurasi</string>
@@ -247,6 +252,7 @@
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_title_add_configuration">Tambah konfigurasi</string>
     <string name="settings_privacy">Privasi</string>
+    <string name="pref_summary_privacy">Penyimpanan, telemetri dan izin</string>
     <string name="settings_about">Mengenai Fulguris</string>
     <string name="settings_summary_about">Versi, kontak, dan detail hukum</string>
     <string name="settings_contribute">Berkontribusi</string>
@@ -363,6 +369,7 @@
     <string name="clear_web_storage_exit">Hapus simpanan dari web saat keluar</string>
     <string name="message_web_storage_cleared">Simpanan dari web telah dihapus</string>
     <string name="settings_adblock">@string/block_ads</string>
+    <string name="pref_summary_adblock">Kelola filter pemblokir iklan</string>
     <string name="settings_title_tab_bar_orientation">Orientasi bilah tab</string>
     <string name="settings_summary_on_tab_bar_orientation">Vertikal</string>
     <string name="settings_summary_off_tab_bar_orientation">Horisontal</string>
@@ -623,5 +630,4 @@
     <string name="page_requests_none">Tidak ada permintaan tercatat untuk halaman ini</string>
     <string name="settings_summary_full_menu">Tampilkan menu lengkap</string>
     <string name="action_launch">Luncurkan</string>
-    <string name="action_launch_app">Luncurkan</string>
 </resources>

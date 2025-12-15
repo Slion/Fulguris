@@ -2,6 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="action_reload">पुनः लोड करें</string>
     <string name="action_force_reload">बलपूर्वक पुनः लोड करें</string>
+    <string name="action_launch_app">लॉन्च करें</string>
     <string name="action_menu">मेन्यू</string>
     <string name="action_new_tab">नया टैब</string>
     <string name="action_duplicate_tab">टैब डुप्लिकेट करें</string>
@@ -97,6 +98,9 @@
     <string name="incognito_cookies_pie">गुप्त मोड एक अलग प्रक्रिया में चलता है जो प्रत्येक सत्र के बाद रीसेट हो जाता है। गुप्त कुकी प्राथमिकताएं अब नियमित कुकी प्राथमिकताओं द्वारा नियंत्रित की जाती हैं।</string>
     <string name="pref_category_title_contact_us">हमसे संपर्क करें</string>
     <string name="pref_category_title_legal">कानूनी</string>
+    <string name="pref_category_title_telemetry">टेलीमेट्री</string>
+    <string name="pref_category_title_permissions">अनुमतियाँ</string>
+    <string name="pref_category_title_storage">संग्रहण</string>
     <string name="pref_title_email">ईमेल</string>
     <string name="clear_cache">कैश साफ़ करें</string>
     <string name="message_cache_cleared">कैश साफ़ हो गया</string>
@@ -214,11 +218,13 @@
     <string name="pref_title_appearance">दिखावट</string>
     <string name="pref_summary_appearance">भाषा, थीम, कॉन्फ़िगरेशन, मेनू, टूलबार, टैब और पैनल</string>
     <string name="settings_backup">बैकअप</string>
+    <string name="pref_summary_backup">बुकमार्क और सत्र निर्यात और आयात करें</string>
     <string name="settings_title_configuration">कॉन्फ़िगरेशन</string>
     <string name="settings_summary_configuration">पोर्ट्रेट और लैंडस्केप सेटिंग्स</string>
     <string name="settings_title_delete_configuration">कॉन्फ़िगरेशन हटाएं</string>
     <string name="settings_title_add_configuration">कॉन्फ़िगरेशन जोड़ें</string>
     <string name="settings_privacy">गोपनीयता</string>
+    <string name="pref_summary_privacy">संग्रहण, टेलीमेट्री और अनुमतियाँ</string>
     <string name="settings_about">बारे में</string>
     <string name="settings_summary_about">संस्करण, संपर्क और कानूनी विवरण</string>
     <string name="settings_contribute">योगदान करें</string>
@@ -331,6 +337,7 @@
     <string name="clear_web_storage">वेब संग्रहण साफ़ करें</string>
     <string name="clear_web_storage_exit">बाहर निकलने पर वेब संग्रहण साफ़ करें</string>
     <string name="message_web_storage_cleared">वेब संग्रहण साफ़ किया गया</string>
+    <string name="pref_summary_adblock">विज्ञापन अवरोधक फ़िल्टर प्रबंधित करें</string>
     <string name="settings_title_tab_bar_orientation">टैब बार ओरिएंटेशन</string>
     <string name="settings_summary_on_tab_bar_orientation">लंबवत</string>
     <string name="settings_summary_off_tab_bar_orientation">क्षैतिज</string>
@@ -580,5 +587,4 @@
     <string name="page_requests_none">इस पेज के लिए कोई अनुरोध रिकॉर्ड नहीं</string>
     <string name="settings_summary_full_menu">पूर्ण मेनू दिखाएं</string>
     <string name="action_launch">लॉन्च करें</string>
-    <string name="action_launch_app">लॉन्च करें</string>
 </resources>

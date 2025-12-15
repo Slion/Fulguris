@@ -8,14 +8,14 @@
             android:key="import_bookmark"
             android:title="@string/generic_import"
             android:summary="@string/import_backup"
-            app:icon="@drawable/ic_cloud_download"
+            app:icon="@drawable/ic_cloud_download_outline"
             app:singleLineTitle="false" />
 
         <Preference
             android:key="export_bookmark"
             android:title="@string/generic_export"
             android:summary="@string/export_bookmarks"
-            app:icon="@drawable/ic_cloud_upload"
+            app:icon="@drawable/ic_cloud_upload_outline"
             app:singleLineTitle="false" />
 
         <Preference
@@ -63,7 +63,7 @@
         <Preference
             android:key="@string/pref_key_sessions_import"
             android:title="@string/generic_import"
-            app:icon="@drawable/ic_cloud_download" />
+            app:icon="@drawable/ic_cloud_download_outline" />
         <!--
         <Preference
             android:key="@string/pref_key_sessions_reset"

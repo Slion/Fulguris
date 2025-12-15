@@ -20,31 +20,10 @@
         />
 
     <Preference
-        x:fragment="fulguris.settings.fragment.AdBlockSettingsFragment"
-        x:title="@string/settings_adblock"
-        x:icon="@drawable/ic_block"
-        x:singleLineTitle="false"
-        />
-
-    <Preference
         x:fragment="fulguris.settings.fragment.PrivacySettingsFragment"
         x:title="@string/settings_privacy"
-        x:icon="@drawable/ic_security"
-        x:singleLineTitle="false"
-        />
-
-    <Preference
-        x:fragment="fulguris.settings.fragment.BackupSettingsFragment"
-        x:title="@string/settings_backup"
-        x:icon="@drawable/ic_cloud_upload"
-        x:singleLineTitle="false"
-        />
-
-    <!-- Advanced settings are now empty, remove them at some point -->
-    <Preference
-        x:fragment="fulguris.settings.fragment.AdvancedSettingsFragment"
-        x:isPreferenceVisible="false"
-        x:title="@string/settings_advanced"
+        x:summary="@string/pref_summary_privacy"
+        x:icon="@drawable/ic_shield_person_outline"
         x:singleLineTitle="false"
         />
 
@@ -53,6 +32,30 @@
         x:summary="@string/settings_summary_domains"
         x:title="@string/settings_title_domains"
         x:icon="@drawable/ic_domain"
+        x:singleLineTitle="false"
+        />
+
+    <Preference
+        x:fragment="fulguris.settings.fragment.AdBlockSettingsFragment"
+        x:title="@string/settings_adblock"
+        x:summary="@string/pref_summary_adblock"
+        x:icon="@drawable/ic_block"
+        x:singleLineTitle="false"
+        />
+
+    <Preference
+        x:fragment="fulguris.settings.fragment.BackupSettingsFragment"
+        x:title="@string/settings_backup"
+        x:summary="@string/pref_summary_backup"
+        x:icon="@drawable/ic_backup_outline"
+        x:singleLineTitle="false"
+        />
+
+    <!-- Advanced settings are now empty, remove them at some point -->
+    <Preference
+        x:fragment="fulguris.settings.fragment.AdvancedSettingsFragment"
+        x:isPreferenceVisible="false"
+        x:title="@string/settings_advanced"
         x:singleLineTitle="false"
         />
 

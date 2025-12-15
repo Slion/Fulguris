@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <string name="action_reload">ᱫᱩᱦᱲᱟᱹ ᱞᱟᱫᱮ</string>
     <string name="action_force_reload">ᱡᱚᱨ ᱠᱟᱛᱮ ᱫᱚᱦᱲᱟ ᱞᱳᱰ ᱢᱮ</string>
+    <string name="action_launch_app">ᱮᱛᱦᱚᱵᱽ ᱢᱮ</string>
     <string name="action_menu">ᱰᱷᱮᱨ</string>
     <string name="action_new_tab">ᱱᱟᱶᱟ ᱴᱮᱵᱽ</string>
     <string name="action_duplicate_tab">ᱴᱮᱵᱽ ᱰᱩᱯᱞᱤᱠᱮᱴ ᱢᱮ</string>
@@ -114,6 +115,9 @@
     <string name="incognito_cookies_pie">ᱫᱟᱱᱟᱝ ᱢᱳᱰ ᱮᱴᱟᱜ ᱯᱨᱚᱥᱮᱥ ᱨᱮ ᱪᱟᱹᱞᱩᱜᱼᱟ ᱡᱟᱦᱟᱸ ᱫᱚ ᱡᱷᱚᱛᱚ ᱥᱮᱥᱚᱱ ᱛᱟᱭᱚᱢ ᱨᱤᱥᱮᱴ ᱦᱩᱭᱩᱜᱼᱟ᱾ ᱫᱟᱱᱟᱝ ᱠᱩᱠᱤ ᱠᱩᱥᱤᱭᱟᱹᱨ ᱱᱤᱛᱚᱜ ᱱᱤᱭᱚᱢᱤᱛ ᱠᱩᱠᱤ ᱠᱩᱥᱤᱭᱟᱹᱨ ᱛᱮ ᱠᱚᱱᱴᱨᱚᱞᱚᱜᱼᱟ᱾</string>
     <string name="pref_category_title_contact_us">Contact us</string>
     <string name="pref_category_title_legal">ᱱᱤᱭᱚᱢ</string>
+    <string name="pref_category_title_telemetry">ᱴᱮᱞᱤᱢᱮᱴᱨᱤ</string>
+    <string name="pref_category_title_permissions">ᱟᱫᱮᱥ</string>
+    <string name="pref_category_title_storage">ᱫᱚᱦᱚᱭ</string>
     <string name="pref_title_email">ᱤᱢᱮᱞ</string>
     <string name="clear_cache">ᱠᱮᱪ ᱯᱷᱟᱨᱪᱟᱭ</string>
     <string name="message_cache_cleared">ᱠᱮᱪ ᱯᱷᱟᱨᱪᱟᱣ ᱮᱱᱟ</string>
@@ -240,6 +244,7 @@
     <string name="pref_title_appearance">ᱩᱫᱩᱜ</string>
     <string name="pref_summary_appearance">ᱯᱟᱹᱨᱥᱤ, ᱛᱷᱤᱢ, ᱥᱟᱡᱟᱣ, ᱢᱮᱱᱩ, ᱦᱟᱹᱛᱤᱭᱟᱹᱨ, ᱴᱮᱵᱽ ᱟᱨ ᱯᱮᱱᱮᱞ</string>
     <string name="settings_backup">ᱵᱮᱠᱚᱯ</string>
+    <string name="pref_summary_backup">ᱪᱤᱱᱦᱟᱹᱠᱩ ᱟᱨ ᱥᱮᱥᱚᱱᱠᱩ ᱮᱠᱥᱯᱚᱴ ᱟᱨ ᱤᱢᱯᱚᱴ</string>
     <string name="settings_title_configuration">ᱥᱟᱡᱟᱣ</string>
     <string name="settings_summary_configuration">ᱯᱳᱨᱴᱨᱮᱴ ᱟᱨ ᱞᱮᱱᱰᱥᱠᱮᱯ ᱥᱟᱡᱟᱣ ᱠᱚ</string>
     <string name="settings_title_delete_configuration">ᱥᱟᱡᱟᱣ ᱢᱮᱴᱟᱣ</string>
@@ -247,6 +252,7 @@
     <string name="settings_title_landscape">@string/pref_category_landscape</string>
     <string name="settings_title_add_configuration">ᱥᱟᱡᱟᱣ ᱥᱮᱞᱮᱫ</string>
     <string name="settings_privacy">ᱱᱤᱡᱚᱨᱟᱜ</string>
+    <string name="pref_summary_privacy">ᱫᱚᱦᱚᱭ, ᱴᱮᱞᱤᱢᱮᱴᱨᱤ ᱟᱨ ᱪᱷᱟᱰᱟᱣᱠᱩ</string>
     <string name="settings_about">ᱵᱟᱵᱚᱛ</string>
     <string name="settings_summary_about">ᱵᱷᱚᱨᱥᱚᱱ, ᱥᱚᱢᱯᱚᱨᱠ ᱟᱨ ᱱᱤᱭᱚᱢ ᱵᱤᱵᱚᱨᱚᱬ</string>
     <string name="settings_contribute">ᱮᱱᱮᱢ</string>
@@ -363,6 +369,7 @@
     <string name="clear_web_storage_exit">ᱵᱟᱦᱨᱮ ᱚᱰᱚᱠ ᱡᱚᱠᱷᱟ ᱣᱮᱵᱽ ᱥᱴᱚᱨᱮᱡᱽ ᱯᱷᱟᱨᱪᱟᱭ</string>
     <string name="message_web_storage_cleared">ᱣᱮᱵᱽ ᱥᱴᱚᱨᱮᱡᱽ ᱯᱷᱟᱨᱪᱟᱣ ᱮᱱᱟ</string>
     <string name="settings_adblock">@string/block_ads</string>
+    <string name="pref_summary_adblock">ᱤᱥᱛᱤᱦᱟᱨ ᱛᱮᱫᱚᱜ ᱯᱷᱤᱞᱴᱚᱨᱠᱩ ᱢᱮᱱᱮᱡ</string>
     <string name="settings_title_tab_bar_orientation">ᱴᱮᱵᱽ ᱵᱟᱨ ᱦᱩᱲᱟᱹᱜ</string>
     <string name="settings_summary_on_tab_bar_orientation">ᱥᱤᱫᱟᱹ</string>
     <string name="settings_summary_off_tab_bar_orientation">ᱞᱤᱸᱜᱤᱱ</string>
@@ -625,5 +632,4 @@
     <string name="page_requests_none">ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱨᱮ ᱨᱮᱠᱩᱭᱮᱥᱴ ᱵᱟᱹᱱᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="settings_summary_full_menu">ᱯᱩᱨᱟᱹ ᱢᱮᱱᱩ ᱩᱫᱩᱜ ᱢᱮ</string>
     <string name="action_launch">ᱪᱟᱞᱩ</string>
-    <string name="action_launch_app">ᱮᱛᱦᱚᱵᱽ ᱢᱮ</string>
 </resources>
