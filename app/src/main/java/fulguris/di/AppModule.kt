@@ -13,7 +13,6 @@ import fulguris.js.TextReflow
 import fulguris.js.ThemeColor
 import fulguris.js.SetMetaViewport
 import fulguris.search.suggestions.RequestFactory
-import fulguris.utils.FileUtils
 import android.app.Application
 import android.app.DownloadManager
 import android.app.NotificationManager

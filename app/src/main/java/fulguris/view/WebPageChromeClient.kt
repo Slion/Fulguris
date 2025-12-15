@@ -54,6 +54,7 @@ class WebPageChromeClient(
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
     val webRtcPermissionsModel: WebRtcPermissionsModel = hiltEntryPoint.webRtcPermissionsModel
     val diskScheduler: Scheduler = hiltEntryPoint.diskScheduler()
+    private val themeColorJs = hiltEntryPoint.themeColorJs
 
     override fun onProgressChanged(view: WebView, newProgress: Int) {
         Timber.v("onProgressChanged: $newProgress")
@@ -69,78 +70,7 @@ class WebPageChromeClient(
                 // Extract meta theme-color and setup observer for changes
                 // Results are parsed from onConsoleMessage
                 Timber.i("evaluateJavascript: theme color extraction and observer setup")
-                view.evaluateJavascript("""
-                    (function() {
-                        // Get current theme-color and color-scheme
-                        let metaThemeColor = document.querySelector('meta[name="theme-color"]');
-                        let metaColorScheme = document.querySelector('meta[name="color-scheme"]');
-                        let currentThemeColor = metaThemeColor ? metaThemeColor.content : null;
-                        let currentColorScheme = metaColorScheme ? metaColorScheme.content : null;
-                        
-                        // Send initial values via console
-                        if (currentThemeColor) {
-                            console.debug('fulguris: meta-theme-color: ' + currentThemeColor);
-                        }
-                        if (currentColorScheme) {
-                            console.debug('fulguris: meta-color-scheme: ' + currentColorScheme);
-                        }
-                        
-                        // Helper function to observe a meta tag node
-                        function observeMetaTag(node) {
-                            if (node && node.nodeType === Node.ELEMENT_NODE) {
-                                attributeObserver.observe(node, { attributes: true, attributeFilter: ['content'] });
-                            }
-                        }
-                        
-                        // Observer for attribute changes on meta tags
-                        const attributeObserver = new MutationObserver(function(mutations) {
-                            mutations.forEach(function(mutation) {
-                                if (mutation.type === 'attributes' && mutation.attributeName === 'content') {
-                                    let tagName = mutation.target.getAttribute('name');
-                                    let newValue = mutation.target.content;
-                                    if (tagName === 'theme-color') {
-                                        console.debug('fulguris: meta-theme-color: ' + newValue);
-                                    } else if (tagName === 'color-scheme') {
-                                        console.debug('fulguris: meta-color-scheme: ' + newValue);
-                                    }
-                                }
-                            });
-                        });
-                        
-                        // Observer for DOM changes (meta tags added/removed)
-                        const headObserver = new MutationObserver(function(mutations) {
-                            mutations.forEach(function(mutation) {
-                                mutation.addedNodes.forEach(function(node) {
-                                    if (node.nodeName === 'META') {
-                                        let tagName = node.getAttribute('name');
-                                        if (tagName === 'theme-color' || tagName === 'color-scheme') {
-                                            let newValue = node.content;
-                                            if (tagName === 'theme-color') {
-                                                console.debug('fulguris: meta-theme-color: ' + newValue);
-                                            } else if (tagName === 'color-scheme') {
-                                                console.debug('fulguris: meta-color-scheme: ' + newValue);
-                                            }
-                                            observeMetaTag(node);
-                                        }
-                                    }
-                                });
-                            });
-                        });
-                        
-                        // Start observing existing meta tags
-                        if (metaThemeColor) {
-                            observeMetaTag(metaThemeColor);
-                        }
-                        if (metaColorScheme) {
-                            observeMetaTag(metaColorScheme);
-                        }
-                        
-                        // Observe document.head for new meta tags
-                        if (document.head) {
-                            headObserver.observe(document.head, { childList: true, subtree: true });
-                        }
-                    })();
-                """.trimIndent(), null)
+                view.evaluateJavascript(themeColorJs.provideJs(), null)
             }
         }
     }

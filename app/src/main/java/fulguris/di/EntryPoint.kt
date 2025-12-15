@@ -14,6 +14,7 @@ import fulguris.html.homepage.HomePageFactory
 import fulguris.js.InvertPage
 import fulguris.js.SetMetaViewport
 import fulguris.js.TextReflow
+import fulguris.js.ThemeColor
 import fulguris.network.NetworkConnectivityModel
 import fulguris.search.SearchEngineProvider
 import fulguris.settings.preferences.UserPreferences
@@ -56,6 +57,7 @@ interface HiltEntryPoint {
     val textReflowJs: TextReflow
     val invertPageJs: InvertPage
     val setMetaViewport: SetMetaViewport
+    val themeColorJs: ThemeColor
     val homePageFactory: HomePageFactory
     val abpBlockerManager: AbpBlockerManager
     val noopBlocker: NoOpAdBlocker
