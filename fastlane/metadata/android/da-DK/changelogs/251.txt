@@ -1,0 +1,9 @@
+⚙️ Nye tilpassede menuer
+🎭 Opdater temaer
+🇮🇳 Tilføj understøttelse af hindi-sprog
+🌍 Flere lokaliseringsopdateringer
+🧪 Sideanmodningsfunktion nu i beta
+🚀 Forbedre app-startfunktioner
+🗺️ Tilføj understøttelse af geo-skema – kortlinks
+🪲 Ret kontekstmenu-hop på nogle foldbare indvendige skærme
+🐛 Forskellige forbedringer af brugergrænsefladen og fejlrettelser

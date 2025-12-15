@@ -1,0 +1,9 @@
+⚙️ Nouveaux menus personnalisés
+🎭 Mise à jour des thèmes
+🇮🇳 Ajout de la prise en charge de la langue hindi
+🌍 Plusieurs mises à jour de localisation
+🧪 Fonction de requêtes de page maintenant en bêta
+🚀 Améliorer les fonctionnalités de lancement d'application
+🗺️ Ajouter la prise en charge du schéma géo – liens de cartes
+🪲 Corriger les sauts de menu contextuel sur certains écrans intérieurs pliables
+🐛 Diverses améliorations de l'interface utilisateur et corrections de bugs

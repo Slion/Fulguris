@@ -1,0 +1,9 @@
+⚙️ Neue benutzerdefinierte Menüs
+🎭 Themes aktualisiert
+🇮🇳 Hindi-Sprachunterstützung hinzugefügt
+🌍 Mehrere Lokalisierungsaktualisierungen
+🧪 Seitenanforderungsfunktion jetzt in Beta
+🚀 Verbesserte App-Startfunktionen
+🗺️ Unterstützung für Geo-Schema hinzugefügt – Kartenlinks
+🪲 Kontextmenü-Sprünge auf einigen faltbaren Innenbildschirmen behoben
+🐛 Verschiedene UI-Verbesserungen und Fehlerbehebungen

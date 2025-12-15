@@ -1,0 +1,9 @@
+⚙️ Yeni özel menüler
+🎭 Temaları güncelle
+🇮🇳 Hintçe dil desteği ekle
+🌍 Birden fazla yerelleştirme güncellemesi
+🧪 Sayfa istekleri özelliği artık beta sürümünde
+🚀 Uygulama başlatma özelliklerini geliştir
+🗺️ Coğrafi şema desteği ekle – harita bağlantıları
+🪲 Bazı katlanabilir iç ekranlarda bağlam menüsü atlamalarını düzelt
+🐛 Çeşitli kullanıcı arayüzü iyileştirmeleri ve hata düzeltmeleri

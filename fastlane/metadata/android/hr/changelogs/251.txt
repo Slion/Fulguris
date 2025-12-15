@@ -1,0 +1,9 @@
+⚙️ Novi prilagođeni izbornici
+🎭ažurirane teme
+🇮🇳 Dodana podrška za hindski jezik
+🌍 Višestruka ažuriranja lokalizacije
+🧪 Funkcija zahtjeva stranice sada u beta verziji
+🚀 Poboljšane funkcije pokretanja aplikacije
+🗺️ Dodana podrška za geo shemu – linkovi karata
+🪲 Ispravljeni skokovi kontekstnog izbornika na nekim preklopnim unutarnjim ekranima
+🐛 Razna poboljšanja korisničkog sučelja i ispravke grešaka

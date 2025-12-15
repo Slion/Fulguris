@@ -1,0 +1,9 @@
+⚙️ New custom menus
+🎭 Update themes
+🇮🇳 Add Hindi language support
+🌍 Multiple localization updates
+🧪 Page requests feature now in beta
+🚀 Improve app launch features
+🗺️ Add support for geo scheme – map links
+🪲 Fix context menu jumps on some foldables inner screen
+🐛 Various UI improvements and bug fixes

@@ -1,0 +1,9 @@
+⚙️ Novi prilagođeni meniji
+🎭 Ažurirane teme
+🇮🇳 Dodana podrška za hindski jezik
+🌍 Višestruka ažuriranja lokalizacije
+🧪 Funkcija zahtjeva stranice sada u beta verziji
+🚀 Poboljšane funkcije pokretanja aplikacije
+🗺️ Dodana podrška za geo šemu – linkovi mapa
+🪲 Ispravljeni skokovi kontekstnog menija na nekim preklopnim unutrašnjim ekranima
+🐛 Razna poboljšanja korisničkog interfejsa i ispravke grešaka

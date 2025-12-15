@@ -1,7 +1,7 @@
 [versions]
-# App versions
-slions-version-code = "245"
-slions-version-name = "1.11.7"
+# App versions, references using periods like: slions.version.code
+slions-version-code = "251"
+slions-version-name = "2.0.0"
 styx-version-code = "1"
 styx-version-name = "20.0"
 

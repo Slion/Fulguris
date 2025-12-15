@@ -1,0 +1,9 @@
+⚙️ Novos menus personalizados
+🎭 Atualizar temas
+🇮🇳 Adicionar suporte ao idioma hindi
+🌍 Várias atualizações de localização
+🧪 Funcionalidade de pedidos de página agora em beta
+🚀 Melhorar funcionalidades de arranque da aplicação
+🗺️ Adicionar suporte para esquema geo – ligações de mapas
+🪲 Corrigir saltos do menu de contexto em alguns ecrãs internos dobráveis
+🐛 Várias melhorias de UI e correções de erros

@@ -1,0 +1,9 @@
+⚙️ Menu khusus baru
+🎭 Perbarui tema
+🇮🇳 Tambahkan dukungan bahasa Hindi
+🌍 Beberapa pembaruan lokalisasi
+🧪 Fitur permintaan halaman sekarang dalam beta
+🚀 Tingkatkan fitur peluncuran aplikasi
+🗺️ Tambahkan dukungan untuk skema geo – tautan peta
+🪲 Perbaiki lompatan menu konteks pada beberapa layar dalam lipatan
+🐛 Berbagai perbaikan UI dan perbaikan bug

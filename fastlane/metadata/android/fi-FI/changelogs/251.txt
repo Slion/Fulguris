@@ -1,0 +1,9 @@
+⚙️ Uudet mukautetut valikot
+🎭 Päivitä teemat
+🇮🇳 Lisää hindin kielen tuki
+🌍 Useita lokalisointipäivityksiä
+🧪 Sivupyyntöominaisuus nyt betassa
+🚀 Paranna sovelluksen käynnistystoimintoja
+🗺️ Lisää tuki geo-kaavalle – karttalinkit
+🪲 Korjaa kontekstivalikon hyppääminen joissakin taiteltavien sisänäytöissä
+🐛 Erilaisia käyttöliittymäparannuksia ja virheiden korjauksia
