@@ -2230,6 +2230,7 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
         // Had to delay that otherwise we could get there too early on the url still contains the download link
         // URL is later on reset to null by WebView internal mechanics.
         mainHandler.postDelayed({
+            // Should we also check if the page history is empty?
             if (currentTabView?.url.isNullOrBlank()) {
                 skipNextTabClosedSnackbar = true
                 tabsManager.deleteTab(tabsManager.indexOfCurrentTab())

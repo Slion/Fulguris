@@ -41,7 +41,6 @@ import android.view.LayoutInflater
 import android.webkit.*
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.graphics.drawable.toBitmap
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -617,7 +616,7 @@ class WebPageClient(
         // Don't reload our preferences if we already have it
         // We hit that a lot actually as we load resources
         if (domainPreferences.domain==aHost) {
-            Timber.d("$ihs : loadDomainPreferences: already loaded")
+            Timber.v("$ihs : loadDomainPreferences: already loaded")
             return
         }
 
@@ -633,11 +632,26 @@ class WebPageClient(
 
     /**
      * Overrides [WebViewClient.shouldOverrideUrlLoading].
-     * This is not hit for every page. For instance dreamhost default landing page on http://specs.slions.net
+     * It looks like this is only called when user navigates by following a link.
+     * The following actions notably do not typically call this method:
+     * - Opening a new tab if no redirect
+     * - Loading a new URL without redirect
+     * - Page reload or force reload
+     * - Back and forward in tab history
+     *
+     * The following actions should call this method:
+     * - Redirect, like when opening http://slions.net will redirect to https://slions.net
+     * - When user clicks on a like
+     * - Basically whenever the URL of the tab should change except when going back and forward weirdly
+     *
+     * It's notably called before the first [WebViewClient.onLoadResource] for the main page.
+     * I reckon returning true should cancel that main page [WebViewClient.onLoadResource] callback.
+     *
+     * We are using it to trigger app launch according to user preferences.
      */
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
 
-        Timber.d("$ihs : shouldOverrideUrlLoading - ${request.url}")
+        Timber.i("$ihs : shouldOverrideUrlLoading - ${request.url}")
 
         val url = request.url.toString()
         val uri = Uri.parse(url)
@@ -645,28 +659,28 @@ class WebPageClient(
 
         if (webPageTab.isIncognito) {
             // If we are in incognito, immediately load, we don't want the url to leave the app
-            return continueLoadingUrl(view, url, headers)
+            return shouldStopUrlLoading(view, url, headers)
         }
 
         if (URLUtil.isAboutUrl(url)) {
             // If this is an about page, immediately load, we don't need to leave the app
-            return continueLoadingUrl(view, url, headers)
+            return shouldStopUrlLoading(view, url, headers)
         }
 
         loadDomainPreferences(uri.host ?: "", false)
 
-        // Don't launch apps from background tab
-        if (webPageTab.isForeground) {
-            // Regardless of app launch we do not cancel URL loading
-            // Doing so would require we deal with empty pages in new tab and such issues
-            activity.intentForUrl(view, uri)?.let {
-
+        // Regardless of app launch we do not cancel URL loading
+        // Doing so would require we deal with empty pages in new tab and such issues
+        val intent = activity.intentForUrl(view, uri)
+        if (intent != null) {
+            // Don't launch apps from background tab
+            if (webPageTab.isForeground) {
                 var appLaunched = false
 
                 // That debounce logic allows us launch our app ASAP while cancelling repeat launch
                 if (debounceLaunch==null) {
                     // No pending debounce, just launch our app then
-                    appLaunched = launchAppIfNeeded(view, it)
+                    appLaunched = launchAppIfNeeded(view, intent)
                 }
                 // Cancel debounce if any
                 view.removeCallbacks(debounceLaunch)
@@ -677,6 +691,7 @@ class WebPageClient(
                 // Schedule our debounce
                 view.postDelayed(debounceLaunch,1000)
 
+                // Not sure how to test that now
                 if (appLaunched) {
                     Timber.d("$ihs : Override loading after app launch")
                     view.stopLoading()
@@ -688,13 +703,10 @@ class WebPageClient(
             }
         }
 
-
-
         // Continue with loading the url
-        return continueLoadingUrl(view, url, headers)
-
-        // Don't override, keep on loading that page
-        // return false
+        // Don't show error page if we have an intent to launch an app
+        // Still show error page if no intent to signal unsupported scheme
+        return shouldStopUrlLoading(view, url, headers, intent != null)
     }
 
     /**
@@ -804,22 +816,39 @@ class WebPageClient(
     }
 
     /**
-     * SL: Looks like this does the opposite of what it looks like.
+     * Called as last step from [shouldOverrideUrlLoading] to decide whether to stop loading the URL
+     * [aSkipErrorPage] True if you don't want to show ERR_UNKNOWN_URL_SCHEME error page after app launch for instance.
      */
-    private fun continueLoadingUrl(webView: WebView, url: String, headers: Map<String, String>): Boolean {
-        Timber.d("$ihs : continueLoadingUrl")
+    private fun shouldStopUrlLoading(webView: WebView, url: String, headers: Map<String, String>, aSkipErrorPage: Boolean = true): Boolean {
+        Timber.d("$ihs : shouldStopUrlLoading")
+
+        // Looks like it's intended to block everything that's not one of those
+        // Will stop loading custom app schemes like: spotify:// or whatsapp://
+        // That basically prevents showing the error page saying ERR_UNKNOWN_URL_SCHEME
+        // But in some situations we may actually want to show it
         if (!URLUtil.isNetworkUrl(url)
             && !URLUtil.isFileUrl(url)
             && !URLUtil.isAboutUrl(url)
             && !URLUtil.isDataUrl(url)
             && !URLUtil.isJavaScriptUrl(url)) {
-            webView.stopLoading()
-            return true
+            if (aSkipErrorPage) {
+                webView.stopLoading()
+                Timber.w("$ihs : Stop loading")
+                return true
+            }
+            // Should load error page
+            // Test this by navigating to an unknown scheme like youtube:// as it's not a thing apparently
+            // or simply use something like unsupported://example.com
+            return false
         }
         return when {
             headers.isEmpty() -> false
             else -> {
+                // I reckon this is what breaks page history when using custom headers
+                // See: https://github.com/Slion/Fulguris/issues/414
+                // TODO: There must be a way to make custom headers work without calling loadUrl from here
                 webView.loadUrl(url, headers)
+                Timber.w("$ihs : Load URL with headers")
                 true
             }
         }

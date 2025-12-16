@@ -153,6 +153,7 @@ class DomainPreferences constructor(
      * - Yes: Launch the app
      * - No: Do not launch the app
      * - Ask: Ask the user whether or not to launch the app
+     * TODO: Add fourth option to show a snackbar with an option the launch the app?
      *
      * Changed to ASK by default to give users more control over app launches.
      */

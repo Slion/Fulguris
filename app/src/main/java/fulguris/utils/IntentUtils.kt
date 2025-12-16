@@ -154,68 +154,96 @@ import java.util.regex.Pattern
     }
 
     /**
-     * Handles URLs with special schemes such as mailto, tel, intent and file by
-     * providing corresponding Intent. If the URL does not match any
-     * special scheme or if an error occurs (e.g., URISyntaxException), null is returned.
+     * Handles URLs with special schemes by querying the system for apps that can handle them.
+     * This dynamically detects which schemes have registered handlers on the device,
+     * eliminating the need to hardcode specific schemes like mailto, tel, geo, etc.
      *
-     * @param url The URL to be handled. It can be a special scheme URL or a file URL.
-     * @return An Intent that corresponds to the action required by the URL's scheme,
-     * or null if the URL does not match a special scheme or an error occurs.
+     * Special cases handled explicitly:
+     * - "intent" scheme: Parsed using Intent.URI_INTENT_SCHEME
+     * - "file" scheme: Uses FileProvider for secure file access
+     * - "mailto" scheme: Uses MailTo.parse() for better email parsing
+     * - Other schemes: Queries system for registered handlers
+     *
+     * @param uri The URI to be handled
+     * @return An Intent that corresponds to the action required by the URI's scheme,
+     * or null if no app can handle the scheme or an error occurs
      */
     private fun Activity.intentForScheme(uri: Uri): Intent? {
         val url = uri.toString()
-        Timber.d("Handling special schemes for URL: $uri")
-        val scheme = uri.scheme!!.lowercase()
-        Timber.d("Detected scheme: $scheme")
-        return when (scheme) {
-            "mailto" -> {
-                Timber.d("Detected mailto scheme")
-                val mailTo = MailTo.parse(url)
-                Utils.newEmailIntent(mailTo.to, mailTo.subject, mailTo.body, mailTo.cc)
-            }
+        val scheme = uri.scheme?.lowercase() ?: return null
 
-            "tel" -> {
-                Timber.d("Detected tel scheme")
-                Intent(Intent.ACTION_DIAL).setData(uri)
-            }
+        Timber.d("Handling scheme: $scheme for URL: $uri")
 
-            "geo" -> {
-                Timber.d("Detected geo scheme")
-                Intent(Intent.ACTION_VIEW).setData(uri)
+        // Special case: intent scheme requires specific parsing
+        // intent:// scheme is how webpages are explicitly requesting app launch, try https://maps.google.com for instance
+        if (scheme == "intent") {
+            return try {
+                Timber.d("Parsing intent scheme")
+                val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                intent.addCategory(Intent.CATEGORY_BROWSABLE)
+                intent.setComponent(null)
+                intent.selector = null
+                intent
+            } catch (e: URISyntaxException) {
+                Timber.e(e, "URISyntaxException for URL: $url")
+                null
             }
+        }
 
-            "intent" -> {
-                return try {
-                    Timber.d("Detected intent scheme")
-                    val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE)
-                    intent.setComponent(null)
-                    intent.selector = null
-                    intent
-                } catch (e: URISyntaxException) {
-                    Timber.e(e,"URISyntaxException for URL: $url")
-                    null
-                }
+        // Special case: file URLs need FileProvider for security
+        if (URLUtil.isFileUrl(url) && !url.isSpecialUrl()) {
+            Timber.d("Handling file URL")
+            val file = File(url.replace("file://", ""))
+            return if (file.exists()) {
+                val newMimeType = MimeTypeMap.getSingleton()
+                    .getMimeTypeFromExtension(Utils.guessFileExtension(file.toString()))
+                val intentFile = Intent(Intent.ACTION_VIEW)
+                intentFile.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                val contentUri = FileProvider.getUriForFile(
+                    this,
+                    BuildConfig.APPLICATION_ID + ".fileprovider",
+                    file
+                )
+                intentFile.setDataAndType(contentUri, newMimeType)
+                intentFile
+            } else {
+                Timber.d("File not found for URL: $url")
+                null
             }
+        }
 
-            else -> {
-                if (URLUtil.isFileUrl(url) && !url.isSpecialUrl()) {
-                    Timber.d("Detected file URL")
-                    val file = File(url.replace("file://", ""))
-                    return if (file.exists()) {
-                        val newMimeType = MimeTypeMap.getSingleton()
-                            .getMimeTypeFromExtension(Utils.guessFileExtension(file.toString()))
-                        val intentFile = Intent(Intent.ACTION_VIEW)
-                        intentFile.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        val contentUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", file)
-                        intentFile.setDataAndType(contentUri, newMimeType)
-                        intentFile
-                    } else {
-                        Timber.d("File not found for URL: $url")
-                        null
-                    }
-                }
-                Timber.d("No special handling required for URL: $url")
+        // Special case: mailto scheme has better parsing with MailTo.parse()
+        if (scheme == "mailto") {
+            Timber.d("Parsing mailto URL")
+            val mailTo = MailTo.parse(url)
+            return Utils.newEmailIntent(mailTo.to, mailTo.subject, mailTo.body, mailTo.cc)
+        }
+
+        // For all other schemes, create a generic intent and check if any specialized app can handle it
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.addCategory(Intent.CATEGORY_BROWSABLE)
+
+        // For non-web schemes (tel:, geo:, sms:, etc.), we want to launch any available handler
+        // For web schemes (http/https), use isSpecializedHandlerAvailable to filter out browsers
+        val isWebScheme = scheme == "http" || scheme == "https"
+
+        if (isWebScheme) {
+            // For web schemes, only return intent if there's a specialized (non-browser) handler
+            return if (isSpecializedHandlerAvailable(intent)) {
+                Timber.d("Found specialized handler for web scheme: $scheme")
+                intent
+            } else {
+                Timber.d("Only generic browser handlers found for scheme: $scheme, not launching external app")
+                null
+            }
+        } else {
+            // For non-web schemes, check if any handler exists (don't filter out browsers)
+            val handlers = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+            return if (handlers.isNotEmpty()) {
+                Timber.d("Found handler for scheme: $scheme")
+                intent
+            } else {
+                Timber.d("No handler found for scheme: $scheme")
                 null
             }
         }
