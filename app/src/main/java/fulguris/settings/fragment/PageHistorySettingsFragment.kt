@@ -122,7 +122,8 @@ class PageHistorySettingsFragment : AbstractSettingsFragment() {
                         (activity as WebBrowserActivity).animateTabFlipRight()
                     }
 
-                    tabsManager.currentTab?.webView?.goBackOrForward(steps)
+                    // Use WebPageTab's method to ensure targetUrl is updated before navigation
+                    tabsManager.currentTab?.goBackOrForward(steps)
                     // Remove tick from former current item
                     category.findPreference<Preference>("item$currentIndex")?.title = history.getItemAtIndex(currentIndex).title
                     // Update current item

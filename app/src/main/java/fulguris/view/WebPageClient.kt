@@ -902,6 +902,7 @@ class WebPageClient(
     }
 
     /**
+     * From [WebViewClient.doUpdateVisitedHistory]
      * Should we use this to build our history?
      * Though to be fair the system we had thus far seems to be working fine too.
      *
