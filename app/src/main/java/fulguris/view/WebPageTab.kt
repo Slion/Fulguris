@@ -1163,42 +1163,27 @@ class WebPageTab(
     /**
      * Tell the WebView to navigate backwards
      * in its history to the previous page.
-     * Updates targetUrl before navigation so shouldInterceptRequest has the correct target.
      */
     fun goBack() {
-        goBackOrForward(-1)
+        webView?.goBack()
     }
 
     /**
      * Tell the WebView to navigate forwards
      * in its history to the next page.
-     * Updates targetUrl before navigation so shouldInterceptRequest has the correct target.
      */
     fun goForward() {
-        goBackOrForward(1)
+        webView?.goForward()
     }
 
     /**
      * Navigate forward or backward by the specified number of steps in the history.
      * Positive steps go forward, negative steps go backward.
-     * Updates targetUrl before navigation so shouldInterceptRequest has the correct target.
      *
      * @param steps Number of steps to navigate (negative for back, positive for forward)
      */
     fun goBackOrForward(steps: Int) {
-        webView?.let { wv ->
-            // Update targetUrl to the destination URL before navigating
-            wv.copyBackForwardList()?.let { history ->
-                val currentIndex = history.currentIndex
-                val targetIndex = currentIndex + steps
-                if (targetIndex in 0 until history.size) {
-                    val targetItem = history.getItemAtIndex(targetIndex)
-                    targetUrl = Uri.parse(targetItem.url)
-                    Timber.d("goBackOrForward($steps): Updated targetUrl to ${targetItem.url}")
-                }
-            }
-            wv.goBackOrForward(steps)
-        }
+        webView?.goBackOrForward(steps)
     }
 
     /**

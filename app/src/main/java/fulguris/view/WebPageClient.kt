@@ -188,8 +188,18 @@ class WebPageClient(
         val wasBlocked = response != null
 
         val url = request.url.toString()
-        if (webPageTab.targetUrl.toString() == url) {
-            // This resource is the main page target URL
+
+        // Detect if this is a main document request (page navigation) vs subresource
+        // Main document requests have isForMainFrame == true
+        if (request.isForMainFrame) {
+            // Update targetUrl if this is a new navigation (including JavaScript history navigation)
+            // This ensures targetUrl is always accurate for domain preferences and other logic
+            if (webPageTab.targetUrl != request.url) {
+                Timber.i("$ihs : Main frame navigation detected, updating targetUrl: $url")
+                webPageTab.targetUrl = request.url
+            }
+
+            // This resource request is the main frame
             // Record page load start time for profiling
             pageLoadStartTime = System.currentTimeMillis()
             // Reset our resource count
@@ -658,8 +668,12 @@ class WebPageClient(
         val uri = Uri.parse(url)
         val headers = webPageTab.requestHeaders
 
-        // Update the target URL
-        webPageTab.targetUrl = uri
+        // This callback comes in before [shouldInterceptRequest] giving us an opportunity to update the target URL earlier
+        // Though I reckon this is just defensive and could be removed, isForMainFrame should always be true here
+        if (request.isForMainFrame) {
+            // Update the target URL
+            webPageTab.targetUrl = uri
+        }
 
         if (webPageTab.isIncognito) {
             // If we are in incognito, immediately load, we don't want the url to leave the app
