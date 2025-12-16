@@ -154,9 +154,13 @@ class WebPageTab(
     private var iTargetUrl: Uri = Uri.parse("")
 
     /**
-     * Public getter for the target URL that was attempted to load
+     * Public getter and setter for the target URL that we are attempting to load
      */
-    val targetUrl: Uri get() = iTargetUrl
+    var targetUrl: Uri
+        get() = iTargetUrl
+        set(value) {
+            iTargetUrl = value
+        }
 
     private val webBrowser: WebBrowser
     private lateinit var gestureDetector: GestureDetector

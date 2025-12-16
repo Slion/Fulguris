@@ -59,12 +59,13 @@ import kotlin.math.abs
  * We have one instance of this per [WebView] and our [WebPageTab] also as a reference to it.
  *
  * Page load events sequence tested against slions.net:
- * 1. shouldInterceptRequest
- * 2. onLoadResource - For the page URL is called first
- * 3. onPageStarted  - Not called if interrupted before the first resource completed
- * 4. onLoadResource - For each resources
- * 5. onPageFinished - Also called when cancelled - can be called even though onPageStarted was not called
- * 6. onLoadResource - Can still occur after onPageFinished even if load was cancelled
+ * - [shouldOverrideUrlLoading] when applicable
+ * - [shouldInterceptRequest]
+ * - [onLoadResource] - For the page URL is called first
+ * - [onPageStarted]  - Not called if interrupted before the first resource completed
+ * - [onLoadResource] - For each resources
+ * - [onPageFinished] - Also called when cancelled - can be called even though onPageStarted was not called
+ * - [onLoadResource] - Can still occur after onPageFinished even if load was cancelled
  *
  */
 class WebPageClient(
@@ -180,15 +181,26 @@ class WebPageClient(
      *   comment Helium314: adBLock.shouldBock always never blocks if url.isSpecialUrl() or url.isAppScheme(), could be moved here
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-        Timber.d("$ihs : shouldInterceptRequest")
+        Timber.v("$ihs : shouldInterceptRequest")
         // returns some dummy response if blocked, null if not blocked
 
         val response = adBlock.shouldBlock(request, currentUrl)
         val wasBlocked = response != null
 
+        val url = request.url.toString()
+        if (webPageTab.targetUrl.toString() == url) {
+            // This resource is the main page target URL
+            // Record page load start time for profiling
+            pageLoadStartTime = System.currentTimeMillis()
+            // Reset our resource count
+            iResourceCount = 0
+            // Clear page requests for the new page
+            clearPageRequests()
+        }
+
         // Track this request
         synchronized(pageRequests) {
-            pageRequests.add(PageRequest(request.url.toString(), wasBlocked))
+            pageRequests.add(PageRequest(url, wasBlocked))
         }
 
         //SL: Use this when debugging
@@ -213,11 +225,6 @@ class WebPageClient(
         //Timber.d("$ihs : onLoadResource - url: ${webPageTab.webView?.url}")
         //Timber.d("$ihs : onLoadResource - original: ${webPageTab.webView?.originalUrl}")
         //Timber.d("$ihs : onLoadResource - target: ${webPageTab.targetUrl}")
-
-        if (webPageTab.targetUrl.toString() == url) {
-            // This resource is the main page target URL
-
-        }
 
         // Count our resources
         iResourceCount++;
@@ -307,18 +314,12 @@ class WebPageClient(
     /**
      * Overrides [WebViewClient.onPageStarted]
      * You have no guarantee that the root HTML document has been loaded when this is called.
+     * However I believe it means the first and main resource of the page has been downloaded.
+     * Or it least it has started downloading as this is called after the first [onLoadResource].
      */
     @SuppressLint("SetJavaScriptEnabled")
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         Timber.i("$ihs : onPageStarted - $url")
-
-        // Record page load start time for profiling
-        pageLoadStartTime = System.currentTimeMillis()
-
-        // Reset our resource count
-        iResourceCount = 0
-        // Clear page requests for the new page
-        clearPageRequests()
 
         currentUrl = url
         val uri  = Uri.parse(url)
@@ -656,6 +657,9 @@ class WebPageClient(
         val url = request.url.toString()
         val uri = Uri.parse(url)
         val headers = webPageTab.requestHeaders
+
+        // Update the target URL
+        webPageTab.targetUrl = uri
 
         if (webPageTab.isIncognito) {
             // If we are in incognito, immediately load, we don't want the url to leave the app
