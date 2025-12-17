@@ -439,6 +439,61 @@ class MenuPopupWindow : PopupWindow {
     }
 
     /**
+     * Format menu item label with superscript count badge
+     * @param label The base label text
+     * @param count The count to display as superscript
+     * @return SpannableString with formatted label and superscript count
+     */
+    private fun formatMenuItemWithCount(label: String, count: Int): CharSequence {
+        if (count <= 0) {
+            return label
+        }
+
+        val countText = "  $count"
+        val fullText = label + countText
+        val spannable = android.text.SpannableString(fullText)
+
+        // Make count superscript
+//        spannable.setSpan(
+//            android.text.style.SubscriptSpan(),
+//            label.length,
+//            fullText.length,
+//            android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//        )
+
+        // Make count smaller (0.6x size for superscript)
+        spannable.setSpan(
+            android.text.style.RelativeSizeSpan(1f),
+            label.length,
+            fullText.length,
+            android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        // Use theme color for count with disabled alpha for dimming
+        val colorValue = android.util.TypedValue()
+        contentView.context.theme.resolveAttribute(R.attr.colorOnBackground, colorValue, true)
+
+        // Get disabled alpha from theme
+        val alphaValue = android.util.TypedValue()
+        contentView.context.theme.resolveAttribute(android.R.attr.disabledAlpha, alphaValue, true)
+        val disabledAlpha = alphaValue.float
+
+        // Apply disabled alpha to the color
+        val color = colorValue.data
+        val alpha = (disabledAlpha * 255).toInt()
+        val colorWithAlpha = (color and 0x00FFFFFF) or (alpha shl 24)
+
+        spannable.setSpan(
+            android.text.style.ForegroundColorSpan(colorWithAlpha),
+            label.length,
+            fullText.length,
+            android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        return spannable
+    }
+
+    /**
      * Open up this popup menu
      */
     fun show(aAnchor: View) {
@@ -460,24 +515,18 @@ class MenuPopupWindow : PopupWindow {
                 val consoleMenuItem = MenuItems.getItem(MenuItemId.Console)
                 val consoleLabel = consoleMenuItem?.labelId?.let { labelId ->
                     contentView.context.getString(labelId)
-                }
-                iBinding.menuItemConsole.text = if (consoleCount > 0) {
-                    "$consoleLabel – $consoleCount"
-                } else {
-                    consoleLabel
-                }
+                } ?: return@let
+
+                iBinding.menuItemConsole.text = formatMenuItemWithCount(consoleLabel, consoleCount)
 
                 // Update Requests menu item with count
                 val requestsCount = tab.webPageClient.getPageRequests().size
                 val requestsMenuItem = MenuItems.getItem(MenuItemId.Requests)
                 val requestsLabel = requestsMenuItem?.labelId?.let { labelId ->
                     contentView.context.getString(labelId)
-                }
-                iBinding.menuItemPageRequests.text = if (requestsCount > 0) {
-                    "$requestsLabel – $requestsCount"
-                } else {
-                    requestsLabel
-                }
+                } ?: return@let
+
+                iBinding.menuItemPageRequests.text = formatMenuItemWithCount(requestsLabel, requestsCount)
             }
         }
 
