@@ -105,8 +105,8 @@ class RequestsFragment : AbstractSettingsFragment() {
                     title = extractPath(request.url).substringBefore('?')
                     isSingleLineTitle = true
                     titleEllipsize = TextUtils.TruncateAt.MIDDLE
-                    // Show only URL parameters in summary
-                    summary = extractParams(request.url)
+                    // Show URL parameters, file type, or scheme in summary
+                    summary = extractSummary(request.url)
                     isSingleLineSummary = true
                     summaryEllipsize = TextUtils.TruncateAt.MIDDLE
                     isIconSpaceReserved = false
@@ -117,6 +117,13 @@ class RequestsFragment : AbstractSettingsFragment() {
                         R.drawable.ic_block
                     } else {
                         R.drawable.ic_check
+                    }
+
+                    // Set encryption icons
+                    summaryDrawableStart = if (request.url.startsWith("https://", ignoreCase = true)) {
+                        R.drawable.ic_encrypted_outline
+                    } else {
+                        R.drawable.ic_encrypted_off_outline
                     }
 
                     // Set fragment navigation with arguments
@@ -161,14 +168,34 @@ class RequestsFragment : AbstractSettingsFragment() {
     }
 
     /**
-     * Extract URL parameters for display as summary
+     * Extract summary information for display.
+     * Priority: 1) URL parameters, 2) File type/extension, 3) URL scheme in uppercase
      */
-    private fun extractParams(url: String): String {
+    private fun extractSummary(url: String): String {
         return try {
             val uri = Uri.parse(url)
-            uri.query ?: ""
+
+            // First priority: return query parameters if they exist
+            if (!uri.query.isNullOrEmpty()) {
+                return uri.query!!
+            }
+
+            // Second priority: extract file type/extension from path
+            val path = uri.path
+            if (!path.isNullOrEmpty()) {
+                val lastSegment = path.substringAfterLast('/')
+                if (lastSegment.contains('.')) {
+                    val extension = lastSegment.substringAfterLast('.').uppercase()
+                    if (extension.isNotEmpty()) {
+                        return extension
+                    }
+                }
+            }
+
+            // Third priority: return scheme in uppercase
+            uri.scheme?.uppercase() ?: " "
         } catch (e: Exception) {
-            ""
+            " "
         }
     }
 }
