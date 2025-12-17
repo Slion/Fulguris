@@ -10,9 +10,7 @@ import fulguris.R
 import fulguris.activity.ThemedActivity
 import fulguris.browser.TabModel
 import fulguris.activity.WebBrowserActivity
-import fulguris.constant.*
 import fulguris.browser.WebBrowser
-import fulguris.di.*
 import fulguris.dialog.LightningDialogBuilder
 import fulguris.download.LightningDownloadListener
 import fulguris.extensions.*
@@ -25,7 +23,6 @@ import fulguris.settings.preferences.userAgent
 import fulguris.settings.preferences.webViewEngineVersionDesktop
 import fulguris.settings.preferences.setReducedClientHints
 import fulguris.ssl.SslState
-import fulguris.utils.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
@@ -126,6 +123,38 @@ class WebPageTab(
      * Will be executed once and then cleared automatically.
      */
     internal var onLoadCompleteCallback: (() -> Unit)? = null
+
+    /**
+     * Wrapper class to store ConsoleMessage with timestamp since webkit.ConsoleMessage doesn't expose timestamp
+     */
+    data class ConsoleMessage(
+        val consoleMessage: android.webkit.ConsoleMessage,
+        val timestamp: Long = System.currentTimeMillis()
+    )
+
+    // Track all console messages for the current page
+    private val consoleMessages = mutableListOf<ConsoleMessage>()
+
+    /**
+     * Get all console messages for the current page
+     */
+    fun getConsoleMessages(): List<ConsoleMessage> = consoleMessages.toList()
+
+    /**
+     * Clear tracked console messages
+     */
+    fun clearConsoleMessages() {
+        consoleMessages.clear()
+    }
+
+    /**
+     * Add a console message to the collection with timestamp
+     */
+    fun addConsoleMessage(consoleMessage: android.webkit.ConsoleMessage) {
+        synchronized(consoleMessages) {
+            consoleMessages.add(ConsoleMessage(consoleMessage))
+        }
+    }
 
     /**
      * A tab initializer that should be run when the view is first attached.
@@ -1105,9 +1134,9 @@ class WebPageTab(
             iNumberOfMatches = numberOfMatches
 
             // Empty search query just dismisses any results previously displayed
+            // Notably useful when doing backspace on the search field until no characters are left
             if (searchQuery.isEmpty()) {
                 // Hide last snackbar to avoid having outdated stats lingering
-                // Notably useful when doing backspace on the search field until no characters are left
                 iSnackbar?.dismiss()
             }
             // Check if our search is reporting any match

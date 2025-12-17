@@ -695,6 +695,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 dismiss()
                 showPageRequests()
             }
+            onMenuItemClicked(iBinding.menuItemConsole) {
+                dismiss()
+                showConsole()
+            }
             onMenuItemClicked(iBinding.menuItemShare) { dismiss(); executeAction(R.id.action_share) }
             onMenuItemClicked(iBinding.menuItemAddBookmark) { dismiss(); executeAction(R.id.action_add_bookmark) }
             onMenuItemClicked(iBinding.menuItemFind) { dismiss(); executeAction(R.id.action_find) }
@@ -734,6 +738,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     private fun showPageRequests() {
         iBottomSheet.setLayout(R.layout.fragment_page_requests).show()
+    }
+
+    /**
+     * Show all console messages from the current page in a bottom sheet
+     */
+    private fun showConsole() {
+        iBottomSheet.setLayout(R.layout.fragment_console).show()
     }
 
     /**

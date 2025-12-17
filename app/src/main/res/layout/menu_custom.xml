@@ -337,6 +337,14 @@
                         android:text="@string/action_page_requests" />
 
                     <TextView
+                        android:id="@+id/menuItemConsole"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_terminal_outline"
+                        android:text="@string/action_console" />
+
+                    <TextView
                         android:id="@+id/menuItemPrint"
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"

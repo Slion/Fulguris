@@ -49,6 +49,7 @@ class WebPageChromeClient(
     private val geoLocationPermissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     private val webBrowser: WebBrowser = activity as WebBrowser
 
+
     private val hiltEntryPoint = EntryPointAccessors.fromApplication(activity.applicationContext, HiltEntryPoint::class.java)
     val faviconModel: FaviconModel = hiltEntryPoint.faviconModel
     val userPreferences: UserPreferences = hiltEntryPoint.userPreferences
@@ -340,6 +341,7 @@ class WebPageChromeClient(
     }
 
 
+    @Deprecated("Deprecated in Java")
     override fun onShowCustomView(view: View, requestedOrientation: Int, callback: CustomViewCallback) {
         Timber.d("onShowCustomView: $requestedOrientation")
         webBrowser.onShowCustomView(view, callback, requestedOrientation)
@@ -352,10 +354,12 @@ class WebPageChromeClient(
     override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
         //Timber.tag(tag).d("message")
 
-        // TODO: Collect those in the tab so that we could display them
         consoleMessage.apply {
             val tag = "JavaScript"
             val log = "${messageLevel()} - ${message()} -- from line ${lineNumber()} of ${sourceId()}"
+
+            // Collect the console message object in WebPageTab
+            webPageTab.addConsoleMessage(consoleMessage)
 
             // Check if this is a Fulguris meta tag notification from our MutationObserver
             val msg = message()

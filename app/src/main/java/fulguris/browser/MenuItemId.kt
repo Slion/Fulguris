@@ -53,6 +53,7 @@ enum class MenuItemId {
     AddBookmark,
     Print,
     Requests,
+    Console,
     AddToHome,
     ForceReload,
     LaunchApp,

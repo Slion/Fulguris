@@ -263,6 +263,16 @@ object MenuItems {
             defaultMenu = MenuType.HiddenMenu,
             preferredMenu = MenuType.TabMenu
         ),
+        MenuItemId.Console to MenuItem(
+            id = MenuItemId.Console,
+            labelId = R.string.action_console,
+            iconId = R.drawable.ic_terminal_outline,
+            viewId = R.id.menuItemConsole,
+            canBeInMainMenu = true,
+            canBeInTabMenu = true,
+            defaultMenu = MenuType.HiddenMenu,
+            preferredMenu = MenuType.TabMenu
+        ),
         MenuItemId.AddToHome to MenuItem(
             id = MenuItemId.AddToHome,
             labelId = R.string.action_add_to_homescreen,

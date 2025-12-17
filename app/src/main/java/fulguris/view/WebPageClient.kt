@@ -206,6 +206,8 @@ class WebPageClient(
             iResourceCount = 0
             // Clear page requests for the new page
             clearPageRequests()
+            // Clear console messages for the new page
+            webPageTab.clearConsoleMessages()
         }
 
         // Track this request

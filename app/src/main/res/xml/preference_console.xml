@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:a="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <x.Preference
+        a:key="@string/pref_key_back"
+        a:title="@string/pref_category_title_console"
+        tools:summary="24 messages – 3 errors / 5 warnings"
+        a:icon="@drawable/ic_arrow_back_ios"
+        a:fragment="back"
+        a:layout="@layout/preference_category_material"
+        a:allCapsTitle="true"
+        tools:ignore="PrivateResource" />
+
+    <!-- Console messages will be dynamically added here -->
+
+</androidx.preference.PreferenceScreen>
+
