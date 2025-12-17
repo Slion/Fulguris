@@ -105,7 +105,8 @@ class RequestsFragment : AbstractSettingsFragment() {
                     title = extractPath(request.url).substringBefore('?')
                     isSingleLineTitle = true
                     titleEllipsize = TextUtils.TruncateAt.MIDDLE
-                    summary = request.url
+                    // Show only URL parameters in summary
+                    summary = extractParams(request.url)
                     isSingleLineSummary = true
                     summaryEllipsize = TextUtils.TruncateAt.MIDDLE
                     isIconSpaceReserved = true
@@ -156,6 +157,18 @@ class RequestsFragment : AbstractSettingsFragment() {
             }
         } catch (e: Exception) {
             url
+        }
+    }
+
+    /**
+     * Extract URL parameters for display as summary
+     */
+    private fun extractParams(url: String): String {
+        return try {
+            val uri = Uri.parse(url)
+            uri.query ?: ""
+        } catch (e: Exception) {
+            ""
         }
     }
 }
