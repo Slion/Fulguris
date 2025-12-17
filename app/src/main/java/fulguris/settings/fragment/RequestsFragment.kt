@@ -187,7 +187,7 @@ class RequestsFragment : AbstractSettingsFragment() {
                 if (lastSegment.contains('.')) {
                     val extension = lastSegment.substringAfterLast('.').lowercase()
                     if (extension.isNotEmpty()) {
-                        val contentType = getContentTypeCategory(extension)
+                        val contentType = getMimeTypeOrExtension(extension)
                         if (contentType != null) {
                             return contentType
                         }
@@ -203,65 +203,16 @@ class RequestsFragment : AbstractSettingsFragment() {
     }
 
     /**
-     * Map file extension to a user-friendly content type category.
-     * Uses Android's MimeTypeMap to get MIME type, then maps to categories.
-     * Returns formatted as "EXT - Type" (e.g., "JS - Script", "CSS - Style")
+     * Get MIME type from file extension using Android's MimeTypeMap.
+     * Returns the MIME type if known (e.g., "text/javascript"), otherwise returns the uppercase extension (e.g., "JS")
      */
-    private fun getContentTypeCategory(extension: String): String? {
+    private fun getMimeTypeOrExtension(extension: String): String? {
         // Get MIME type from Android's MimeTypeMap
         val mimeType = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
         val ext = extension.uppercase()
 
-        // Map MIME type to user-friendly category
-        val category = when {
-            // JavaScript and related scripts
-            extension in listOf("js", "mjs", "cjs") || mimeType?.startsWith("application/javascript") == true || mimeType?.startsWith("text/javascript") == true -> "Script"
-
-            // Stylesheets
-            extension in listOf("css", "scss", "sass", "less") || mimeType == "text/css" -> "Style"
-
-            // Images
-            mimeType?.startsWith("image/") == true -> when {
-                extension in listOf("svg") -> "Vector"
-                extension in listOf("ico", "icon") -> "Icon"
-                else -> "Image"
-            }
-
-            // Fonts
-            mimeType?.startsWith("font/") == true || extension in listOf("woff", "woff2", "ttf", "otf", "eot") -> "Font"
-
-            // Video
-            mimeType?.startsWith("video/") == true -> "Video"
-
-            // Audio
-            mimeType?.startsWith("audio/") == true -> "Audio"
-
-            // Documents
-            mimeType?.startsWith("application/pdf") == true -> "Document"
-            extension in listOf("json") || mimeType == "application/json" -> "Data"
-            extension in listOf("xml") || mimeType?.endsWith("/xml") == true -> "Data"
-            extension in listOf("txt") || mimeType == "text/plain" -> "Text"
-            extension in listOf("html", "htm") || mimeType == "text/html" -> "Document"
-
-            // Archives
-            extension in listOf("zip", "gz", "tar", "7z", "rar") || mimeType?.contains("zip") == true || mimeType?.contains("compressed") == true -> "Archive"
-
-            // Binary/Executables
-            extension in listOf("wasm") -> "Binary"
-            extension in listOf("dll", "so", "dylib") -> "Library"
-
-            // Manifests and configs
-            extension in listOf("manifest", "webmanifest") -> "Manifest"
-
-            // If we have a MIME type but no specific category, return just the extension
-            mimeType != null -> return ext
-
-            // Unknown
-            else -> return null
-        }
-
-        // Format as "EXT - Type"
-        return "$ext - $category"
+        // Return MIME type if available, otherwise just the extension
+        return mimeType ?: ext
     }
 }
 
