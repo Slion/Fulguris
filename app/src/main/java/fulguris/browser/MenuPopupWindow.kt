@@ -453,6 +453,32 @@ class MenuPopupWindow : PopupWindow {
             iBinding.menuItemAdBlock.isChecked = it.currentTab?.url?.let { url ->
                 !abpUserRules.isAllowed(Uri.parse(url))
             } ?: false
+
+            // Update Console menu item with count
+            it.currentTab?.let { tab ->
+                val consoleCount = tab.getConsoleMessages().size
+                val consoleMenuItem = MenuItems.getItem(MenuItemId.Console)
+                val consoleLabel = consoleMenuItem?.labelId?.let { labelId ->
+                    contentView.context.getString(labelId)
+                }
+                iBinding.menuItemConsole.text = if (consoleCount > 0) {
+                    "$consoleLabel – $consoleCount"
+                } else {
+                    consoleLabel
+                }
+
+                // Update Requests menu item with count
+                val requestsCount = tab.webPageClient.getPageRequests().size
+                val requestsMenuItem = MenuItems.getItem(MenuItemId.Requests)
+                val requestsLabel = requestsMenuItem?.labelId?.let { labelId ->
+                    contentView.context.getString(labelId)
+                }
+                iBinding.menuItemPageRequests.text = if (requestsCount > 0) {
+                    "$requestsLabel – $requestsCount"
+                } else {
+                    requestsLabel
+                }
+            }
         }
 
         // Get our anchor location
