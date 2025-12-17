@@ -677,13 +677,9 @@ class WebPageClient(
             webPageTab.targetUrl = uri
         }
 
-        if (webPageTab.isIncognito) {
-            // If we are in incognito, immediately load, we don't want the url to leave the app
-            return shouldStopUrlLoading(view, url, headers)
-        }
-
-        if (URLUtil.isAboutUrl(url)) {
-            // If this is an about page, immediately load, we don't need to leave the app
+        // If this is an about page, immediately load, we don't need to leave the app
+        // If we are in incognito, immediately load, we don't want the url to leave the app
+        if (webPageTab.isIncognito || url.isSpecialUrl() || URLUtil.isAboutUrl(url)) {
             return shouldStopUrlLoading(view, url, headers)
         }
 
