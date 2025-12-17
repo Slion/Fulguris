@@ -237,7 +237,7 @@ class WebPageClient(
         //Timber.d("$ihs : onLoadResource - target: ${webPageTab.targetUrl}")
 
         // Count our resources
-        iResourceCount++;
+        iResourceCount++
         Timber.d("$ihs : onLoadResource - $iResourceCount - $url")
         val uri  = Uri.parse(url)
         loadDomainPreferences(uri.host ?: "", false)

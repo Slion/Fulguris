@@ -34,6 +34,7 @@ import fulguris.view.WebPageClient
 /**
  * Fragment to display all page requests and their blocked status
  * Groups requests by domain using preference categories
+ * TODO: Add sort preference to toggle between sort by domain and sort by timestamp or order in our requests collection
  */
 @AndroidEntryPoint
 class RequestsFragment : AbstractSettingsFragment() {
