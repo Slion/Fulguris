@@ -109,14 +109,14 @@ class RequestsFragment : AbstractSettingsFragment() {
                     summary = extractParams(request.url)
                     isSingleLineSummary = true
                     summaryEllipsize = TextUtils.TruncateAt.MIDDLE
-                    isIconSpaceReserved = true
+                    isIconSpaceReserved = false
                     isSingleLineTitle = true
 
-                    // Set icon based on blocked status
-                    if (request.wasBlocked) {
-                        setIcon(R.drawable.ic_block)
+                    // Set drawable start icon based on blocked status
+                    titleDrawableStart = if (request.wasBlocked) {
+                        R.drawable.ic_block
                     } else {
-                        setIcon(R.drawable.ic_check)
+                        R.drawable.ic_check
                     }
 
                     // Set fragment navigation with arguments
