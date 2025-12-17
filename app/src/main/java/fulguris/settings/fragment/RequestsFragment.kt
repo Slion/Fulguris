@@ -169,7 +169,7 @@ class RequestsFragment : AbstractSettingsFragment() {
 
     /**
      * Extract summary information for display.
-     * Priority: 1) URL parameters, 2) File type/extension, 3) URL scheme in uppercase
+     * Priority: 1) URL parameters, 2) Content type category (Script, Style, Image, Font, etc.), 3) URL scheme in uppercase
      */
     private fun extractSummary(url: String): String {
         return try {
@@ -180,14 +180,17 @@ class RequestsFragment : AbstractSettingsFragment() {
                 return uri.query!!
             }
 
-            // Second priority: extract file type/extension from path
+            // Second priority: extract file type/extension and map to content category
             val path = uri.path
             if (!path.isNullOrEmpty()) {
                 val lastSegment = path.substringAfterLast('/')
                 if (lastSegment.contains('.')) {
-                    val extension = lastSegment.substringAfterLast('.').uppercase()
+                    val extension = lastSegment.substringAfterLast('.').lowercase()
                     if (extension.isNotEmpty()) {
-                        return extension
+                        val contentType = getContentTypeCategory(extension)
+                        if (contentType != null) {
+                            return contentType
+                        }
                     }
                 }
             }
@@ -197,6 +200,68 @@ class RequestsFragment : AbstractSettingsFragment() {
         } catch (e: Exception) {
             " "
         }
+    }
+
+    /**
+     * Map file extension to a user-friendly content type category.
+     * Uses Android's MimeTypeMap to get MIME type, then maps to categories.
+     * Returns formatted as "EXT - Type" (e.g., "JS - Script", "CSS - Style")
+     */
+    private fun getContentTypeCategory(extension: String): String? {
+        // Get MIME type from Android's MimeTypeMap
+        val mimeType = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        val ext = extension.uppercase()
+
+        // Map MIME type to user-friendly category
+        val category = when {
+            // JavaScript and related scripts
+            extension in listOf("js", "mjs", "cjs") || mimeType?.startsWith("application/javascript") == true || mimeType?.startsWith("text/javascript") == true -> "Script"
+
+            // Stylesheets
+            extension in listOf("css", "scss", "sass", "less") || mimeType == "text/css" -> "Style"
+
+            // Images
+            mimeType?.startsWith("image/") == true -> when {
+                extension in listOf("svg") -> "Vector"
+                extension in listOf("ico", "icon") -> "Icon"
+                else -> "Image"
+            }
+
+            // Fonts
+            mimeType?.startsWith("font/") == true || extension in listOf("woff", "woff2", "ttf", "otf", "eot") -> "Font"
+
+            // Video
+            mimeType?.startsWith("video/") == true -> "Video"
+
+            // Audio
+            mimeType?.startsWith("audio/") == true -> "Audio"
+
+            // Documents
+            mimeType?.startsWith("application/pdf") == true -> "Document"
+            extension in listOf("json") || mimeType == "application/json" -> "Data"
+            extension in listOf("xml") || mimeType?.endsWith("/xml") == true -> "Data"
+            extension in listOf("txt") || mimeType == "text/plain" -> "Text"
+            extension in listOf("html", "htm") || mimeType == "text/html" -> "Document"
+
+            // Archives
+            extension in listOf("zip", "gz", "tar", "7z", "rar") || mimeType?.contains("zip") == true || mimeType?.contains("compressed") == true -> "Archive"
+
+            // Binary/Executables
+            extension in listOf("wasm") -> "Binary"
+            extension in listOf("dll", "so", "dylib") -> "Library"
+
+            // Manifests and configs
+            extension in listOf("manifest", "webmanifest") -> "Manifest"
+
+            // If we have a MIME type but no specific category, return just the extension
+            mimeType != null -> return ext
+
+            // Unknown
+            else -> return null
+        }
+
+        // Format as "EXT - Type"
+        return "$ext - $category"
     }
 }
 
