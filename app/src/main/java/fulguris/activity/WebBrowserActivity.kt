@@ -3593,7 +3593,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
 
         val (url, isSearch) = smartUrlFilter(query.trim(), true, searchUrl)
 
-        if ((userPreferences.searchInNewTab && isSearch) or (userPreferences.urlInNewTab && !isSearch)) {
+        // JavaScript URLs should always execute in current tab, not open in new tab
+        val isJavaScript = url.startsWith("javascript:", ignoreCase = true)
+
+        if ((userPreferences.searchInNewTab && isSearch) or (userPreferences.urlInNewTab && !isSearch && !isJavaScript)) {
             // Create a new tab according to user preference
             // TODO: URI resolution should not be here really
             // That's also done in [WebPageTab].loadURL
