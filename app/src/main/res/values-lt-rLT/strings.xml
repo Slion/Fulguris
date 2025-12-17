@@ -636,6 +636,10 @@
     <string name="page_requests_allowed">Leidžiama</string>
     <string name="page_requests_summary">Iš viso %1$d – %2$d užblokuota / %3$d leidžiama</string>
     <string name="page_requests_none">Šiam puslapiui nėra įrašytų užklausų</string>
+    <string name="pref_category_title_console">Konsolė</string>
+    <string name="pref_category_summary_console">%1$d iš viso – %2$d klaidų / %3$d įspėjimų</string>
+    <string name="pref_summary_console_empty">Šiame puslapyje nėra konsolės pranešimų</string>
+    <string name="action_console">Konsolė</string>
     <string name="settings_summary_full_menu">Rodyti pilną meniu</string>
     <string name="action_launch">Paleisti</string>
 </resources>

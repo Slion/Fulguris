@@ -628,6 +628,10 @@
     <string name="page_requests_allowed">허용됨</string>
     <string name="page_requests_summary">총 %1$d개 – %2$d개 차단 / %3$d개 허용</string>
     <string name="page_requests_none">이 페이지에 기록된 요청 없음</string>
+    <string name="pref_category_title_console">콘솔</string>
+    <string name="pref_category_summary_console">%1$d 전체 – %2$d 오류 / %3$d 경고</string>
+    <string name="pref_summary_console_empty">이 페이지에 대한 콘솔 메시지 없음</string>
+    <string name="action_console">콘솔</string>
     <string name="settings_summary_full_menu">전체 메뉴 표시</string>
     <string name="action_launch">실행</string>
 </resources>

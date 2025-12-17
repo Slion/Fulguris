@@ -642,6 +642,10 @@
     <string name="page_requests_allowed">مسموح</string>
     <string name="page_requests_summary">%1$d إجمالي – %2$d محظور / %3$d مسموح</string>
     <string name="page_requests_none">لا توجد طلبات مسجلة لهذه الصفحة</string>
+    <string name="pref_category_title_console">وحدة التحكم</string>
+    <string name="pref_category_summary_console">%1$d إجمالي – %2$d أخطاء / %3$d تحذيرات</string>
+    <string name="pref_summary_console_empty">لا توجد رسائل وحدة تحكم لهذه الصفحة</string>
+    <string name="action_console">وحدة التحكم</string>
     <string name="settings_summary_full_menu">إظهار القائمة الكاملة</string>
     <string name="action_launch">تشغيل</string>
 </resources>

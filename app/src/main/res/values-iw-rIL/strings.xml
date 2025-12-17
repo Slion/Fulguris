@@ -636,6 +636,10 @@
     <string name="page_requests_allowed">מותר</string>
     <string name="page_requests_summary">%1$d סה\"כ – %2$d חסומים / %3$d מותרים</string>
     <string name="page_requests_none">אין בקשות מתועדות לדף זה</string>
+    <string name="pref_category_title_console">קונסולה</string>
+    <string name="pref_category_summary_console">%1$d סה\"כ – %2$d שגיאות / %3$d אזהרות</string>
+    <string name="pref_summary_console_empty">אין הודעות קונסולה עבור דף זה</string>
+    <string name="action_console">קונסולה</string>
     <string name="settings_summary_full_menu">הצג תפריט מלא</string>
     <string name="action_launch">הפעל</string>
 </resources>

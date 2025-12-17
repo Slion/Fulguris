@@ -633,6 +633,10 @@
     <string name="page_requests_allowed">Дозвољено</string>
     <string name="page_requests_summary">%1$d укупно – %2$d блокирано / %3$d дозвољено</string>
     <string name="page_requests_none">Нема забележених захтева за ову страницу</string>
+    <string name="pref_category_title_console">Конзола</string>
+    <string name="pref_category_summary_console">%1$d укупно – %2$d грешака / %3$d упозорења</string>
+    <string name="pref_summary_console_empty">Нема конзолних порука за ову страницу</string>
+    <string name="action_console">Конзола</string>
     <string name="settings_summary_full_menu">Прикажи пуни мени</string>
     <string name="action_launch">Покрени</string>
 </resources>

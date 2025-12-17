@@ -633,6 +633,10 @@
     <string name="page_requests_allowed">Permis</string>
     <string name="page_requests_summary">%1$d total – %2$d blocate / %3$d permise</string>
     <string name="page_requests_none">Nicio cerere înregistrată pentru această pagină</string>
+    <string name="pref_category_title_console">Consolă</string>
+    <string name="pref_category_summary_console">%1$d total – %2$d erori / %3$d avertismente</string>
+    <string name="pref_summary_console_empty">Niciun mesaj de consolă pentru această pagină</string>
+    <string name="action_console">Consolă</string>
     <string name="settings_summary_full_menu">Afișează meniul complet</string>
     <string name="action_launch">Lansează</string>
 </resources>

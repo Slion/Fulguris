@@ -630,6 +630,10 @@
     <string name="page_requests_allowed">Permès</string>
     <string name="page_requests_summary">%1$d total – %2$d bloquejats / %3$d permesos</string>
     <string name="page_requests_none">No hi ha sol·licituds registrades per a aquesta pàgina</string>
+    <string name="pref_category_title_console">Consola</string>
+    <string name="pref_category_summary_console">%1$d total – %2$d errors / %3$d avisos</string>
+    <string name="pref_summary_console_empty">No hi ha missatges de consola per a aquesta pàgina</string>
+    <string name="action_console">Consola</string>
     <string name="settings_summary_full_menu">Mostra el menú complet</string>
     <string name="action_launch">Inicia</string>
 </resources>

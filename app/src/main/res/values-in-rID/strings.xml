@@ -628,6 +628,10 @@
     <string name="page_requests_allowed">Diizinkan</string>
     <string name="page_requests_summary">%1$d total – %2$d diblokir / %3$d diizinkan</string>
     <string name="page_requests_none">Tidak ada permintaan tercatat untuk halaman ini</string>
+    <string name="pref_category_title_console">Konsol</string>
+    <string name="pref_category_summary_console">%1$d total – %2$d kesalahan / %3$d peringatan</string>
+    <string name="pref_summary_console_empty">Tidak ada pesan konsol untuk halaman ini</string>
+    <string name="action_console">Konsol</string>
     <string name="settings_summary_full_menu">Tampilkan menu lengkap</string>
     <string name="action_launch">Luncurkan</string>
 </resources>

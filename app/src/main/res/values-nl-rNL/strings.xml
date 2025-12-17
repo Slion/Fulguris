@@ -630,6 +630,10 @@
     <string name="page_requests_allowed">Toegestaan</string>
     <string name="page_requests_summary">%1$d totaal – %2$d geblokkeerd / %3$d toegestaan</string>
     <string name="page_requests_none">Geen verzoeken geregistreerd voor deze pagina</string>
+    <string name="pref_category_title_console">Console</string>
+    <string name="pref_category_summary_console">%1$d totaal – %2$d fouten / %3$d waarschuwingen</string>
+    <string name="pref_summary_console_empty">Geen consoleberichten voor deze pagina</string>
+    <string name="action_console">Console</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
     <string name="action_launch">Starten</string>
 </resources>

@@ -630,6 +630,10 @@
     <string name="page_requests_allowed">Tillatt</string>
     <string name="page_requests_summary">%1$d totalt – %2$d blokkert / %3$d tillatt</string>
     <string name="page_requests_none">Ingen forespørsler registrert for denne siden</string>
+    <string name="pref_category_title_console">Konsoll</string>
+    <string name="pref_category_summary_console">%1$d totalt – %2$d feil / %3$d advarsler</string>
+    <string name="pref_summary_console_empty">Ingen konsolmeldinger for denne siden</string>
+    <string name="action_console">Konsoll</string>
     <string name="settings_summary_full_menu">Vis fullstendig meny</string>
     <string name="action_launch">Start</string>
 </resources>

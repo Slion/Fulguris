@@ -628,6 +628,10 @@
     <string name="page_requests_allowed">已允許</string>
     <string name="page_requests_summary">%1$d 總計 – %2$d 已封鎖 / %3$d 已允許</string>
     <string name="page_requests_none">此頁面沒有記錄的請求</string>
+    <string name="pref_category_title_console">主控台</string>
+    <string name="pref_category_summary_console">%1$d 總數 – %2$d 錯誤 / %3$d 警告</string>
+    <string name="pref_summary_console_empty">此頁面沒有主控台訊息</string>
+    <string name="action_console">主控台</string>
     <string name="settings_summary_full_menu">顯示完整選單</string>
     <string name="action_launch">啟動</string>
 </resources>

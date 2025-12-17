@@ -630,6 +630,10 @@
     <string name="page_requests_allowed">Toegelaat</string>
     <string name="page_requests_summary">%1$d totaal – %2$d geblokkeer / %3$d toegelaat</string>
     <string name="page_requests_none">Geen versoeke vir hierdie bladsy aangeteken nie</string>
+    <string name="pref_category_title_console">Konsole</string>
+    <string name="pref_category_summary_console">%1$d totaal – %2$d foute / %3$d waarskuwings</string>
+    <string name="pref_summary_console_empty">Geen konsole boodskappe vir hierdie bladsy nie</string>
+    <string name="action_console">Konsole</string>
     <string name="settings_summary_full_menu">Wys volle spyskaart</string>
     <string name="action_launch">Begin</string>
 </resources>

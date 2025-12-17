@@ -630,6 +630,10 @@
     <string name="page_requests_allowed">Consentito</string>
     <string name="page_requests_summary">%1$d totale – %2$d bloccate / %3$d consentite</string>
     <string name="page_requests_none">Nessuna richiesta registrata per questa pagina</string>
+    <string name="pref_category_title_console">Console</string>
+    <string name="pref_category_summary_console">%1$d totale – %2$d errori / %3$d avvisi</string>
+    <string name="pref_summary_console_empty">Nessun messaggio della console per questa pagina</string>
+    <string name="action_console">Console</string>
     <string name="settings_summary_full_menu">Mostra menu completo</string>
     <string name="action_launch">Avvia</string>
 </resources>

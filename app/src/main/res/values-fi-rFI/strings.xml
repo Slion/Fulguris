@@ -630,6 +630,10 @@
     <string name="page_requests_allowed">Sallittu</string>
     <string name="page_requests_summary">%1$d yhteensä – %2$d estetty / %3$d sallittu</string>
     <string name="page_requests_none">Ei tallennettuja pyyntöjä tälle sivulle</string>
+    <string name="pref_category_title_console">Konsoli</string>
+    <string name="pref_category_summary_console">%1$d yhteensä – %2$d virhettä / %3$d varoitusta</string>
+    <string name="pref_summary_console_empty">Ei konsoli viestejä tälle sivulle</string>
+    <string name="action_console">Konsoli</string>
     <string name="settings_summary_full_menu">Näytä koko valikko</string>
     <string name="action_launch">Käynnistä</string>
 </resources>

@@ -636,6 +636,10 @@
     <string name="page_requests_allowed">Dozwolone</string>
     <string name="page_requests_summary">%1$d łącznie – %2$d zablokowanych / %3$d dozwolonych</string>
     <string name="page_requests_none">Brak zarejestrowanych żądań dla tej strony</string>
+    <string name="pref_category_title_console">Konsola</string>
+    <string name="pref_category_summary_console">%1$d łącznie – %2$d błędów / %3$d ostrzeżeń</string>
+    <string name="pref_summary_console_empty">Brak komunikatów konsoli dla tej strony</string>
+    <string name="action_console">Konsola</string>
     <string name="settings_summary_full_menu">Pokaż pełne menu</string>
     <string name="action_launch">Uruchom</string>
 </resources>

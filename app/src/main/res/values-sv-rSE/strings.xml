@@ -630,6 +630,10 @@
     <string name="page_requests_allowed">Tillåten</string>
     <string name="page_requests_summary">%1$d totalt – %2$d blockerade / %3$d tillåtna</string>
     <string name="page_requests_none">Inga förfrågningar registrerade för denna sida</string>
+    <string name="pref_category_title_console">Konsol</string>
+    <string name="pref_category_summary_console">%1$d totalt – %2$d fel / %3$d varningar</string>
+    <string name="pref_summary_console_empty">Inga konsolmeddelanden för denna sida</string>
+    <string name="action_console">Konsol</string>
     <string name="settings_summary_full_menu">Visa fullständig meny</string>
     <string name="action_launch">Starta</string>
 </resources>

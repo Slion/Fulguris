@@ -630,6 +630,10 @@
     <string name="page_requests_allowed">İzin verildi</string>
     <string name="page_requests_summary">%1$d toplam – %2$d engellendi / %3$d izin verildi</string>
     <string name="page_requests_none">Bu sayfa için kaydedilen istek yok</string>
+    <string name="pref_category_title_console">Konsol</string>
+    <string name="pref_category_summary_console">%1$d toplam – %2$d hata / %3$d uyarı</string>
+    <string name="pref_summary_console_empty">Bu sayfa için konsol mesajı yok</string>
+    <string name="action_console">Konsol</string>
     <string name="settings_summary_full_menu">Tam menüyü göster</string>
     <string name="action_launch">Başlat</string>
 </resources>

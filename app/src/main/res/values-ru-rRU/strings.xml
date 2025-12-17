@@ -636,6 +636,10 @@
     <string name="page_requests_allowed">Разрешено</string>
     <string name="page_requests_summary">%1$d всего – %2$d заблокировано / %3$d разрешено</string>
     <string name="page_requests_none">Запросы для этой страницы не зарегистрированы</string>
+    <string name="pref_category_title_console">Консоль</string>
+    <string name="pref_category_summary_console">%1$d всего – %2$d ошибок / %3$d предупреждений</string>
+    <string name="pref_summary_console_empty">Нет сообщений консоли для этой страницы</string>
+    <string name="action_console">Консоль</string>
     <string name="settings_summary_full_menu">Показать полное меню</string>
     <string name="action_launch">Запустить</string>
 </resources>
