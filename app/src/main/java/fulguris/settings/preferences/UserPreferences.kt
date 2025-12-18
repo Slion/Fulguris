@@ -59,6 +59,12 @@ class UserPreferences @Inject constructor(
     var loadImages by preferences.booleanPreference(R.string.pref_key_load_images, true)
 
     /**
+     * The network engine implementation to use for handling network requests.
+     * Values: "webview" (default), "okhttp", etc.
+     */
+    var networkEngine by preferences.stringPreference(R.string.pref_key_network_engine, "webview")
+
+    /**
      * True if the browser should clear the browser cache when the app is exited, false otherwise.
      */
     var clearCacheExit by preferences.booleanPreference(CLEAR_CACHE_EXIT, false)
@@ -457,6 +463,7 @@ class UserPreferences @Inject constructor(
 }
 
 // SL: Looks like those are the actual shared property keys thus overriding what ever was defined in our XML
+// TODO: Remove those at some point and put new keys in resources
 // TODO: That does not make sense, we need to sort this out
 private const val BLOCK_ADS = "AdBlock"
 private const val CLEAR_CACHE_EXIT = "cache"
@@ -476,6 +483,4 @@ private const val CLEAR_WEB_STORAGE_EXIT = "clearWebStorageExit"
 private const val DO_NOT_TRACK = "doNotTrack"
 private const val IDENTIFYING_HEADERS = "removeIdentifyingHeaders"
 private const val BOOKMARKS_CHANGED = "bookmarksChanged"
-private const val USE_PROXY_HOST = "useProxyHost"
-private const val USE_PROXY_PORT = "useProxyPort"
 private const val SEARCH_SUGGESTIONS = "searchSuggestionsChoice"

@@ -34,6 +34,12 @@
         app:icon="@drawable/ic_list_number"
         app:singleLineTitle="false" />
 
+    <Preference
+        android:key="@string/pref_key_network_engine"
+        android:title="@string/pref_title_network_engine"
+        android:summary="@string/pref_summary_network_engine"
+        app:icon="@drawable/ic_network_node_outline"
+        app:singleLineTitle="false" />
 
 
     <x.PreferenceCategory

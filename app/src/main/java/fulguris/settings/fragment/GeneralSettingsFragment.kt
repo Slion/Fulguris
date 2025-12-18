@@ -26,7 +26,6 @@ import android.webkit.URLUtil
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,6 +48,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
     @Inject lateinit var searchEngineProvider: SearchEngineProvider
     @Inject lateinit var userPreferences: UserPreferences
+    @Inject lateinit var networkEngineManager: fulguris.network.NetworkEngineManager
 
     private lateinit var iPrefSearchCustomImageUrl: Preference
     private var defaultBrowserPreference: Preference? = null
@@ -109,6 +109,13 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             preference = getString(R.string.pref_key_default_text_encoding),
             summary = userPreferences.textEncoding,
             onClick = this::showTextEncodingDialogPicker
+        )
+
+        // Network engine preference
+        clickableDynamicPreference(
+            preference = getString(R.string.pref_key_network_engine),
+            summary = getNetworkEngineDisplayName(userPreferences.networkEngine),
+            onClick = ::showNetworkEngineDialog
         )
 
         val incognitoCheckboxPreference = switchPreference(
@@ -556,6 +563,39 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             }
         }
 
+        return true
+    }
+
+    /**
+     * Get the display name for a network engine ID.
+     */
+    private fun getNetworkEngineDisplayName(engineId: String): String {
+        return networkEngineManager.getEngine(engineId)?.displayName
+            ?: engineId
+    }
+
+    /**
+     * Show dialog to select network engine implementation.
+     */
+    private fun showNetworkEngineDialog(summaryUpdater: SummaryUpdater): Boolean {
+        activity?.let {
+            val availableEngines = networkEngineManager.getAvailableEngines()
+            val names = availableEngines.map { it.second }.toTypedArray()
+            val ids = availableEngines.map { it.first }
+            val currentIndex = ids.indexOf(userPreferences.networkEngine).coerceAtLeast(0)
+
+            MaterialAlertDialogBuilder(it).apply {
+                setTitle(R.string.pref_title_network_engine)
+                setSingleChoiceItems(names, currentIndex) { dialog, which ->
+                    val selectedId = ids[which]
+                    userPreferences.networkEngine = selectedId
+                    networkEngineManager.selectEngine(selectedId)
+                    summaryUpdater.updateSummary(names[which])
+                    dialog.dismiss()
+                }
+                setNegativeButton(R.string.action_cancel, null)
+            }.show()
+        }
         return true
     }
 

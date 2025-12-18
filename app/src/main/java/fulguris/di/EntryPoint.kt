@@ -61,6 +61,7 @@ interface HiltEntryPoint {
     val homePageFactory: HomePageFactory
     val abpBlockerManager: AbpBlockerManager
     val noopBlocker: NoOpAdBlocker
+    val networkEngineManager: fulguris.network.NetworkEngineManager
     val dialogBuilder: LightningDialogBuilder
     val networkConnectivityModel: NetworkConnectivityModel
     val faviconModel: FaviconModel

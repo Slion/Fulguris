@@ -46,6 +46,7 @@
     <string name="pref_key_use_cutout_area">pref_key_use_cutout_area</string>
     <string name="pref_key_system_gesture_clearance">pref_key_system_gesture_clearance</string>
     <string name="pref_key_user_agent">pref_key_user_agent</string>
+    <string name="pref_key_network_engine">pref_key_network_engine</string>
 
 
     <!-- On tab close -->

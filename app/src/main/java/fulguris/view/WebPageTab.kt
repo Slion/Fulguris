@@ -620,6 +620,10 @@ class WebPageTab(
 
         webPageClient.updatePreferences()
 
+        // SL: Not sure that really belongs here?
+        // Initialize network engine based on user preference
+        webPageClient.networkEngineManager.selectEngine(userPreferences.networkEngine)
+
         val modifiesHeaders = userPreferences.doNotTrackEnabled
             || userPreferences.saveDataEnabled
             || userPreferences.removeIdentifyingHeadersEnabled

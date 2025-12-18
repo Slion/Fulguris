@@ -85,6 +85,7 @@ class WebPageClient(
     val homePageFactory: HomePageFactory = hiltEntryPoint.homePageFactory
     val abpBlockerManager: AbpBlockerManager = hiltEntryPoint.abpBlockerManager
     val noopBlocker: NoOpAdBlocker = hiltEntryPoint.noopBlocker
+    val networkEngineManager: fulguris.network.NetworkEngineManager = hiltEntryPoint.networkEngineManager
 
     private var adBlock: AdBlocker
 
@@ -182,8 +183,8 @@ class WebPageClient(
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
         Timber.v("$ihs : shouldInterceptRequest")
-        // returns some dummy response if blocked, null if not blocked
 
+        // First, check if ad blocker blocks this request (returns dummy response if blocked, null if not)
         val response = adBlock.shouldBlock(request, currentUrl)
         val wasBlocked = response != null
 
@@ -224,7 +225,25 @@ class WebPageClient(
 //            )
 //        }
 
-        return response
+        // If ad blocker blocked this request, return the block response immediately
+        // Don't waste bandwidth downloading blocked content
+        if (response != null) {
+            return response
+        }
+
+        // Ad blocker did not block this request
+        // Now try the network engine if one is selected
+        val engine = networkEngineManager.getCurrentEngine()
+        if (engine != null) {
+            val engineResponse = engine.handleRequest(request)
+            if (engineResponse != null) {
+                Timber.v("$ihs : Request handled by ${engine.displayName}: ${request.url}")
+                return engineResponse
+            }
+        }
+
+        // Let WebView handle the request normally
+        return null
     }
 
     /**
