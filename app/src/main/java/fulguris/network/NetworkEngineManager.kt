@@ -32,6 +32,7 @@ class NetworkEngineManager @Inject constructor() {
     private fun discoverEngines() {
         registerEngine(NetworkEngineWebView())
         registerEngine(NetworkEngineOkHttp())
+        registerEngine(NetworkEngineHttpUrlConnection())
 
         Timber.i("Discovered ${availableEngines.size} network engines: ${availableEngines.keys}")
     }
