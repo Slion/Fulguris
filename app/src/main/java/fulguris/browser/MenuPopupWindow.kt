@@ -558,6 +558,15 @@ class MenuPopupWindow : PopupWindow {
                 } ?: return@let
 
                 iBinding.menuItemCookies.text = formatMenuItemWithCount(cookiesLabel, cookieCount)
+
+                // Update Ad Block menu item with blocked request count
+                val blockedCount = tab.webPageClient.getPageRequests().count { it.wasBlocked }
+                val adBlockMenuItem = MenuItems.getItem(MenuItemId.AdBlock)
+                val adBlockLabel = adBlockMenuItem?.labelId?.let { labelId ->
+                    contentView.context.getString(labelId)
+                } ?: return@let
+
+                iBinding.menuItemAdBlock.text = formatMenuItemWithCount(adBlockLabel, blockedCount)
             }
         }
 
