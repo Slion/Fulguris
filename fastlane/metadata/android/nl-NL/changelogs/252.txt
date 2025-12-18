@@ -1,0 +1,3 @@
+🖥️ JavaScript-console toevoegen
+📊 Weergave van verzoeken verbeteren
+🐛 Diverse UI-verbeteringen en bugfixes

@@ -1,0 +1,3 @@
+🖥️ Thêm bảng điều khiển JavaScript
+📊 Cải thiện hiển thị yêu cầu
+🐛 Nhiều cải tiến giao diện người dùng và sửa lỗi

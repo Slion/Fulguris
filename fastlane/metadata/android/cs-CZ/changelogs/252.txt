@@ -1,0 +1,3 @@
+🖥️ Přidání JavaScript konzole
+📊 Vylepšení zobrazení požadavků
+🐛 Různá vylepšení uživatelského rozhraní a opravy chyb

@@ -18,6 +18,7 @@ import os
 # See: https://support.google.com/googleplay/android-developer/table/4419860?hl=en
 languages = [
     'en-US',  # English (US)
+    'en-GB',  # English (UK)
     'ar',     # Arabic
     'cs-CZ',  # Czech
     'da-DK',  # Danish
@@ -26,6 +27,7 @@ languages = [
     'es-ES',  # Spanish
     'fi-FI',  # Finnish
     'fr-FR',  # French
+    'hi-IN',  # Hindi
     'hr',     # Croatian
     'hu-HU',  # Hungarian
     'id',     # Indonesian

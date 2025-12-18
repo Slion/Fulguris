@@ -1,0 +1,3 @@
+🖥️ Tambahkan konsol JavaScript
+📊 Tingkatkan tampilan permintaan
+🐛 Berbagai perbaikan UI dan perbaikan bug

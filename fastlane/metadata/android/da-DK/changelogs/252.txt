@@ -1,0 +1,3 @@
+🖥️ Tilføj JavaScript-konsol
+📊 Forbedre anmodningsvisning
+🐛 Forskellige forbedringer af brugergrænsefladen og fejlrettelser

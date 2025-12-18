@@ -2,7 +2,7 @@
 
 ## Project Context
 
-This is **Fulguris Web Browser**, an Android application with localization support for 40 languages. You are assisting with the **Thai (th-rTH) translation** project.
+This is **Fulguris Web Browser**, an Android application with localization support for 40 languages and Google Play metadata for 33 languages. You are assisting with translation and localization tasks.
 
 ## Your Role
 
@@ -170,19 +170,115 @@ Successfully updated: 2
 4. **Retry the failed string**
 5. **Only continue** after seeing `[OK]`
 
-## Thai Language Guidelines
+## Google Play Metadata
 
-- **Formality:** Use polite/formal register (ภาษาเป็นทางการ) for software UI
-- **Technical terms:** Keep widely-understood English terms (JavaScript, Cookies, WebView)
-- **Consistency:** Use same Thai words for same English concepts throughout
-- **Natural phrasing:** Translate meaning, not word-by-word
+The project maintains **33 Google Play language listings** with store metadata:
+- **Languages:** en-US, en-GB, ar, cs-CZ, da-DK, de-DE, el-GR, es-ES, fi-FI, fr-FR, hi-IN, hr, hu-HU, id, it-IT, ja-JP, ko-KR, lt, nl-NL, no-NO, pl-PL, pt-BR, pt-PT, ro, ru-RU, sr, sv-SE, th, tr-TR, uk, vi, zh-CN, zh-TW
+- **Directory:** `fastlane/metadata/android/{language}/`
+- **Files:** `title.txt`, `short_description.txt`, `full_description.txt`, `changelogs/{version}.txt`
 
-**Common translations:**
-Settings → การตั้งค่า | Enable → เปิดใช้งาน | Disable → ปิดใช้งาน | Delete → ลบ | Cancel → ยกเลิก | Save → บันทึก | OK → ตกลง
+### Language Code Differences
+
+**IMPORTANT:** Android resource codes ≠ Google Play codes
+
+| Android Resource | Google Play | Example Language |
+|------------------|-------------|------------------|
+| `en-rUS` | `en-US` | English (US) |
+| `en-rGB` | `en-GB` | English (UK) |
+| `ar-rSA` | `ar` | Arabic |
+| `hi-rIN` | `hi-IN` | Hindi |
+| `in-rID` | `id` | Indonesian |
+| `zh-rCN` | `zh-CN` | Chinese (Simplified) |
+
+**Pattern:**
+- **Android**: `{lang}-r{REGION}` (e.g., `en-rGB`, `pt-rBR`)
+- **Google Play**: `{lang}-{REGION}` or just `{lang}` (e.g., `en-GB`, `pt-BR`, `ar`)
+
+**Note:** Some Android languages are **NOT supported** by Google Play Console:
+- `bs-rBA` (Bosnian), `sat-rIN` (Santali), `af-rZA` (Afrikaans), `ca-rES` (Catalan), `iw-rIL` (Hebrew), `me-rME` (Montenegro)
+
+### Adding a New Metadata Language
+
+**Prerequisites:** Android string translations should already exist in `app/src/main/res/values-{lang}/strings.xml`
+
+**Steps:**
+
+1. **Create directory structure:**
+```powershell
+mkdir fastlane\metadata\android\{google-play-code}
+mkdir fastlane\metadata\android\{google-play-code}\changelogs
+```
+
+2. **Create metadata files:**
+```powershell
+# title.txt (30 chars max)
+echo "Fulguris" > fastlane\metadata\android\{google-play-code}\title.txt
+
+# short_description.txt (80 chars max)
+echo "Your tagline here" > fastlane\metadata\android\{google-play-code}\short_description.txt
+
+# full_description.txt (4000 chars max) - copy and translate from en-US
+copy fastlane\metadata\android\en-US\full_description.txt fastlane\metadata\android\{google-play-code}\full_description.txt
+```
+
+3. **Update `fastlane/changelogs.py`:**
+Add the Google Play language code to the `languages` list:
+```python
+languages = [
+    'en-US',  # English (US)
+    'new-CODE',  # Your New Language - ADD HERE
+    'ar',     # Arabic
+    # ... rest of languages
+]
+```
+
+4. **Create changelogs for recent versions:**
+```powershell
+# Copy from en-US and translate
+copy fastlane\metadata\android\en-US\changelogs\251.txt fastlane\metadata\android\{google-play-code}\changelogs\251.txt
+copy fastlane\metadata\android\en-US\changelogs\252.txt fastlane\metadata\android\{google-play-code}\changelogs\252.txt
+```
+
+5. **Test changelog compilation:**
+```powershell
+python fastlane\changelogs.py 252
+# Should show "Found changelogs for X/X languages" with incremented count
+```
+
+6. **Verify with Google Play Console:**
+   - Go to Store presence → Main store listing
+   - Click "Add language"
+   - Ensure your language code is supported by Google Play
+
+**Example - Adding English (UK):**
+```powershell
+# Already translated in app/src/main/res/values-en-rGB/strings.xml ✓
+
+# 1. Create directory
+mkdir fastlane\metadata\android\en-GB
+mkdir fastlane\metadata\android\en-GB\changelogs
+
+# 2. Create metadata files (British English spellings)
+echo "Fulguris Web Browser" > fastlane\metadata\android\en-GB\title.txt
+echo "Fast, customisable with sessions, ad blocking & privacy features" > fastlane\metadata\android\en-GB\short_description.txt
+copy fastlane\metadata\android\en-US\full_description.txt fastlane\metadata\android\en-GB\full_description.txt
+# Edit full_description.txt: organize→organised, color→colour, trash→rubbish bin
+
+# 3. Update changelogs.py (add 'en-GB' after 'en-US')
+
+# 4. Create changelogs
+copy fastlane\metadata\android\en-US\changelogs\*.txt fastlane\metadata\android\en-GB\changelogs\
+# Edit for British English: localization→localisation
+
+# 5. Test
+python fastlane\changelogs.py 252
+```
+
+**See [L10N.md](../L10N.md#adding-a-new-language) for complete documentation.**
 
 ---
 
 **For complete instructions, commands, examples, and troubleshooting: See [L10N.md](../L10N.md)**
 
-**Last Updated:** December 5, 2025
+**Last Updated:** December 18, 2025
 **Maintained by:** Fulguris Development Team

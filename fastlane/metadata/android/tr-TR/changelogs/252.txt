@@ -1,0 +1,3 @@
+🖥️ JavaScript konsolu ekle
+📊 İstek görüntülemesini geliştir
+🐛 Çeşitli kullanıcı arayüzü iyileştirmeleri ve hata düzeltmeleri

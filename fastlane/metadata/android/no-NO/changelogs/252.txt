@@ -1,0 +1,3 @@
+🖥️ Legg til JavaScript-konsoll
+📊 Forbedre forespørselsvisning
+🐛 Diverse UI-forbedringer og feilrettinger

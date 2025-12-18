@@ -1,0 +1,3 @@
+🖥️ JavaScript konzol hozzáadása
+📊 Kérések megjelenítésének javítása
+🐛 Különféle felhasználói felület javítások és hibajavítások

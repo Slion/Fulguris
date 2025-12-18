@@ -1,0 +1,3 @@
+🖥️ Adăugare consolă JavaScript
+📊 Îmbunătățire afișare cereri
+🐛 Diverse îmbunătățiri UI și corecții de erori

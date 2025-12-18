@@ -1,0 +1,3 @@
+🖥️ Pridėta JavaScript konsolė
+📊 Patobulintas užklausų rodymas
+🐛 Įvairūs vartotojo sąsajos patobulinimai ir klaidų taisymai
