@@ -17,6 +17,14 @@ import java.net.URL
 /**
  * Network engine that uses HttpURLConnection to handle all network requests.
  * This is Java's standard HTTP client - simple, lightweight, and available on all Android versions.
+ *
+ * **Known Limitations:**
+ * - Does not work with YouTube (use OkHttp or WebView instead)
+ * - No HTTP/2 support (only HTTP/1.1)
+ * - Limited connection pooling compared to OkHttp
+ * - May have issues with some modern websites that require advanced HTTP features
+ *
+ * **Best for:** Simple websites, testing, or when you want minimal dependencies
  */
 class NetworkEngineHttpUrlConnection : NetworkEngine {
 

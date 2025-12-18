@@ -18,6 +18,15 @@ import java.util.concurrent.TimeUnit
 /**
  * Network engine that uses OkHttp to handle all network requests.
  * This gives us more control over networking, caching, and connection pooling.
+ *
+ * **Benefits:**
+ * - Works with YouTube and most modern websites
+ * - Excellent connection pooling and reuse
+ * - Better performance than HttpURLConnection
+ * - Supports HTTP/2 and modern protocols
+ * - Actively maintained and widely used
+ *
+ * **Best for:** Advanced users who want better performance and control over networking
  */
 class NetworkEngineOkHttp : NetworkEngine {
 

@@ -13,6 +13,14 @@ import android.webkit.WebResourceResponse
 /**
  * Default network engine that lets WebView handle all networking.
  * This is the standard behavior - returns null to allow WebView's built-in networking.
+ *
+ * **Benefits:**
+ * - Full compatibility with all websites including YouTube
+ * - Handles all modern web standards (HTTP/2, WebSockets, etc.)
+ * - Managed by the Android system and kept up-to-date
+ * - Best overall compatibility and reliability
+ *
+ * **Best for:** General browsing, maximum compatibility (recommended default)
  */
 class NetworkEngineWebView : NetworkEngine {
 
