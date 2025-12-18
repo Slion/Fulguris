@@ -634,6 +634,7 @@
     <string name="pref_category_summary_console">%1$d total – %2$d errores / %3$d advertencias</string>
     <string name="pref_summary_console_empty">No hay mensajes de consola para esta página</string>
     <string name="action_console">Consola</string>
+    <string name="action_full_menu">Menú completo</string>
     <string name="settings_summary_full_menu">Mostrar menú completo</string>
     <string name="action_launch">Iniciar</string>
 </resources>

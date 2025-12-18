@@ -634,6 +634,7 @@
     <string name="pref_category_summary_console">%1$d yhteensä – %2$d virhettä / %3$d varoitusta</string>
     <string name="pref_summary_console_empty">Ei konsoli viestejä tälle sivulle</string>
     <string name="action_console">Konsoli</string>
+    <string name="action_full_menu">Täysi valikko</string>
     <string name="settings_summary_full_menu">Näytä koko valikko</string>
     <string name="action_launch">Käynnistä</string>
 </resources>

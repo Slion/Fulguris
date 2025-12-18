@@ -640,6 +640,7 @@
     <string name="pref_category_summary_console">%1$d łącznie – %2$d błędów / %3$d ostrzeżeń</string>
     <string name="pref_summary_console_empty">Brak komunikatów konsoli dla tej strony</string>
     <string name="action_console">Konsola</string>
+    <string name="action_full_menu">Pełne menu</string>
     <string name="settings_summary_full_menu">Pokaż pełne menu</string>
     <string name="action_launch">Uruchom</string>
 </resources>

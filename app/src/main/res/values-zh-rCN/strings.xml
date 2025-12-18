@@ -632,6 +632,7 @@
     <string name="pref_category_summary_console">%1$d 总数 – %2$d 错误 / %3$d 警告</string>
     <string name="pref_summary_console_empty">此页面没有控制台消息</string>
     <string name="action_console">控制台</string>
+    <string name="action_full_menu">完整菜单</string>
     <string name="settings_summary_full_menu">显示完整菜单</string>
     <string name="action_launch">启动</string>
 </resources>

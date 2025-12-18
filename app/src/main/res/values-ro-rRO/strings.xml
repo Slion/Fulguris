@@ -637,6 +637,7 @@
     <string name="pref_category_summary_console">%1$d total – %2$d erori / %3$d avertismente</string>
     <string name="pref_summary_console_empty">Niciun mesaj de consolă pentru această pagină</string>
     <string name="action_console">Consolă</string>
+    <string name="action_full_menu">Meniu complet</string>
     <string name="settings_summary_full_menu">Afișează meniul complet</string>
     <string name="action_launch">Lansează</string>
 </resources>

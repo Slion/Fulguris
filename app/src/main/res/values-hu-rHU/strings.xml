@@ -634,6 +634,7 @@
     <string name="pref_category_summary_console">%1$d összesen – %2$d hiba / %3$d figyelmeztetés</string>
     <string name="pref_summary_console_empty">Nincsenek konzolüzenetek ehhez az oldalhoz</string>
     <string name="action_console">Konzol</string>
+    <string name="action_full_menu">Teljes menü</string>
     <string name="settings_summary_full_menu">Teljes menü megjelenítése</string>
     <string name="action_launch">Indítás</string>
 </resources>

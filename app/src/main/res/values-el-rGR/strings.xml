@@ -634,6 +634,7 @@
     <string name="pref_category_summary_console">%1$d σύνολο – %2$d σφάλματα / %3$d προειδοποιήσεις</string>
     <string name="pref_summary_console_empty">Δεν υπάρχουν μηνύματα κονσόλας για αυτήν τη σελίδα</string>
     <string name="action_console">Κονσόλα</string>
+    <string name="action_full_menu">Πλήρες μενού</string>
     <string name="settings_summary_full_menu">Εμφάνιση πλήρους μενού</string>
     <string name="action_launch">Εκκίνηση</string>
 </resources>

@@ -632,6 +632,7 @@
     <string name="pref_category_summary_console">%1$d 合計 – %2$d エラー / %3$d 警告</string>
     <string name="pref_summary_console_empty">このページのコンソールメッセージはありません</string>
     <string name="action_console">コンソール</string>
+    <string name="action_full_menu">フルメニュー</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
     <string name="action_launch">起動</string>
 </resources>

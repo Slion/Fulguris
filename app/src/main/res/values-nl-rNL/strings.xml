@@ -634,6 +634,7 @@
     <string name="pref_category_summary_console">%1$d totaal – %2$d fouten / %3$d waarschuwingen</string>
     <string name="pref_summary_console_empty">Geen consoleberichten voor deze pagina</string>
     <string name="action_console">Console</string>
+    <string name="action_full_menu">Volledig menu</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
     <string name="action_launch">Starten</string>
 </resources>

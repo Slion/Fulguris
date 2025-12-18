@@ -632,6 +632,7 @@
     <string name="pref_category_summary_console">%1$d tổng – %2$d lỗi / %3$d cảnh báo</string>
     <string name="pref_summary_console_empty">Không có thông báo bảng điều khiển cho trang này</string>
     <string name="action_console">Bảng điều khiển</string>
+    <string name="action_full_menu">Menu đầy đủ</string>
     <string name="settings_summary_full_menu">Hiển thị menu đầy đủ</string>
     <string name="action_launch">Khởi chạy</string>
 </resources>

@@ -640,6 +640,7 @@
     <string name="pref_category_summary_console">%1$d celkem – %2$d chyb / %3$d varování</string>
     <string name="pref_summary_console_empty">Žádné konzolové zprávy pro tuto stránku</string>
     <string name="action_console">Konzole</string>
+    <string name="action_full_menu">Úplná nabídka</string>
     <string name="settings_summary_full_menu">Zobrazit celou nabídku</string>
     <string name="action_launch">Spustit</string>
 </resources>

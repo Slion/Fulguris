@@ -640,6 +640,7 @@
     <string name="pref_category_summary_console">%1$d всего – %2$d ошибок / %3$d предупреждений</string>
     <string name="pref_summary_console_empty">Нет сообщений консоли для этой страницы</string>
     <string name="action_console">Консоль</string>
+    <string name="action_full_menu">Полное меню</string>
     <string name="settings_summary_full_menu">Показать полное меню</string>
     <string name="action_launch">Запустить</string>
 </resources>

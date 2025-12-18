@@ -589,6 +589,7 @@
     <string name="pref_category_summary_console">%1$d कुल – %2$d त्रुटियाँ / %3$d चेतावनियाँ</string>
     <string name="pref_summary_console_empty">इस पृष्ठ के लिए कोई कंसोल संदेश नहीं</string>
     <string name="action_console">कंसोल</string>
+    <string name="action_full_menu">पूर्ण मेनू</string>
     <string name="settings_summary_full_menu">पूर्ण मेनू दिखाएं</string>
     <string name="action_launch">लॉन्च करें</string>
 </resources>
