@@ -314,7 +314,7 @@ object MenuItems {
         MenuItemId.FullMenu to MenuItem(
             id = MenuItemId.FullMenu,
             labelId = R.string.action_full_menu,
-            iconId = R.drawable.ic_list,
+            iconId = R.drawable.ic_reorder_outline,
             viewId = R.id.menuItemFullMenu,
             canBeInMainMenu = true,
             canBeInTabMenu = true,

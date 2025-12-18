@@ -393,7 +393,7 @@
                         style="@style/BrowserTextMenuItem"
                         android:visibility="gone"
                         tools:visibility="visible"
-                        app:drawableStartCompat="@drawable/ic_list"
+                        app:drawableStartCompat="@drawable/ic_reorder_outline"
                         android:text="@string/action_full_menu"
                         />
 
