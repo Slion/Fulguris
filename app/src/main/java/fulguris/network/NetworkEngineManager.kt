@@ -7,6 +7,8 @@
 
 package fulguris.network
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,7 +17,9 @@ import javax.inject.Singleton
  * Manager that discovers and manages available network engine implementations.
  */
 @Singleton
-class NetworkEngineManager @Inject constructor() {
+class NetworkEngineManager @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 
     private val availableEngines = mutableMapOf<String, NetworkEngine>()
     private var currentEngine: NetworkEngine? = null
@@ -31,7 +35,7 @@ class NetworkEngineManager @Inject constructor() {
      */
     private fun discoverEngines() {
         registerEngine(NetworkEngineWebView())
-        registerEngine(NetworkEngineOkHttp())
+        registerEngine(NetworkEngineOkHttp(context))
         registerEngine(NetworkEngineHttpUrlConnection())
 
         Timber.i("Discovered ${availableEngines.size} network engines: ${availableEngines.keys}")

@@ -23,6 +23,12 @@ import java.net.URL
  * - No HTTP/2 support (only HTTP/1.1)
  * - Limited connection pooling compared to OkHttp
  * - May have issues with some modern websites that require advanced HTTP features
+ * - **No HTTP caching configured** (could be added with HttpResponseCache)
+ *
+ * **Caching:**
+ * - No cache currently configured
+ * - Every request hits the network (slower performance)
+ * - Could add HttpResponseCache if needed
  *
  * **Best for:** Simple websites, testing, or when you want minimal dependencies
  */

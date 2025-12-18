@@ -9,10 +9,12 @@ package fulguris.network
 
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber
 import java.io.ByteArrayInputStream
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 /**
@@ -25,17 +27,31 @@ import java.util.concurrent.TimeUnit
  * - Better performance than HttpURLConnection
  * - Supports HTTP/2 and modern protocols
  * - Actively maintained and widely used
+ * - Configurable HTTP disk cache (currently 50MB)
+ *
+ * **Caching:**
+ * - 50MB disk cache configured (can be adjusted in code)
+ * - Cache location: app's cache directory (okhttp_cache subfolder)
+ * - Respects HTTP caching headers (Cache-Control, ETag, etc.)
+ * - LRU eviction policy
  *
  * **Best for:** Advanced users who want better performance and control over networking
  */
-class NetworkEngineOkHttp : NetworkEngine {
+class NetworkEngineOkHttp(
+    private val context: android.content.Context
+) : NetworkEngine {
 
     override val displayName: String = "OkHttp"
 
     override val id: String = "okhttp"
 
     private val client: OkHttpClient by lazy {
+        // Create cache directory in app's cache folder
+        val cacheDir = File(context.cacheDir, "okhttp_cache")
+        val cache = Cache(cacheDir, 50L * 1024L * 1024L) // 50 MB cache
+
         OkHttpClient.Builder()
+            .cache(cache)
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)

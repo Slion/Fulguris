@@ -19,6 +19,12 @@ import android.webkit.WebResourceResponse
  * - Handles all modern web standards (HTTP/2, WebSockets, etc.)
  * - Managed by the Android system and kept up-to-date
  * - Best overall compatibility and reliability
+ * - Automatic HTTP caching (system-managed, size cannot be configured)
+ *
+ * **Caching:**
+ * - Cache size is managed by Android system automatically
+ * - Cannot be configured programmatically (setAppCacheMaxSize was deprecated/removed)
+ * - Cache location: managed by system in app's cache directory
  *
  * **Best for:** General browsing, maximum compatibility (recommended default)
  */
