@@ -699,6 +699,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
                 dismiss()
                 showConsole()
             }
+            onMenuItemClicked(iBinding.menuItemCookies) {
+                dismiss()
+                showCookies()
+            }
             onMenuItemClicked(iBinding.menuItemShare) { dismiss(); executeAction(R.id.action_share) }
             onMenuItemClicked(iBinding.menuItemAddBookmark) { dismiss(); executeAction(R.id.action_add_bookmark) }
             onMenuItemClicked(iBinding.menuItemFind) { dismiss(); executeAction(R.id.action_find) }
@@ -749,6 +753,13 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
      */
     private fun showConsole() {
         iBottomSheet.setLayout(R.layout.fragment_console).show()
+    }
+
+    /**
+     * Show all cookies for the current page in a bottom sheet
+     */
+    private fun showCookies() {
+        iBottomSheet.setLayout(R.layout.fragment_cookies).show()
     }
 
     /**

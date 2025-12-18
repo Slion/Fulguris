@@ -273,6 +273,16 @@ object MenuItems {
             defaultMenu = MenuType.HiddenMenu,
             preferredMenu = MenuType.TabMenu
         ),
+        MenuItemId.Cookies to MenuItem(
+            id = MenuItemId.Cookies,
+            labelId = R.string.action_cookies,
+            iconId = R.drawable.ic_cookie,
+            viewId = R.id.menuItemCookies,
+            canBeInMainMenu = true,
+            canBeInTabMenu = true,
+            defaultMenu = MenuType.HiddenMenu,
+            preferredMenu = MenuType.TabMenu
+        ),
         MenuItemId.AddToHome to MenuItem(
             id = MenuItemId.AddToHome,
             labelId = R.string.action_add_to_homescreen,

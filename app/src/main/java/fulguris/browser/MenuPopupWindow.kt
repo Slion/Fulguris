@@ -273,6 +273,7 @@ class MenuPopupWindow : PopupWindow {
         iBinding.menuItemTranslate.isVisible = false
         iBinding.menuItemPageRequests.isVisible = false
         iBinding.menuItemConsole.isVisible = false
+        iBinding.menuItemCookies.isVisible = false
         iBinding.menuItemForceReload.isVisible = false
         iBinding.menuItemLaunchApp.isVisible = false
         iBinding.menuItemFullMenu.isVisible = false
@@ -313,6 +314,7 @@ class MenuPopupWindow : PopupWindow {
             MenuItemId.Translate -> iBinding.menuItemTranslate.isVisible = true
             MenuItemId.Requests -> iBinding.menuItemPageRequests.isVisible = true
             MenuItemId.Console -> iBinding.menuItemConsole.isVisible = true
+            MenuItemId.Cookies -> iBinding.menuItemCookies.isVisible = true
             MenuItemId.ForceReload -> iBinding.menuItemForceReload.isVisible = true
             MenuItemId.LaunchApp -> iBinding.menuItemLaunchApp.isVisible = true
             MenuItemId.FullMenu -> iBinding.menuItemFullMenu.isVisible = true
@@ -547,6 +549,15 @@ class MenuPopupWindow : PopupWindow {
                 } ?: return@let
 
                 iBinding.menuItemPageRequests.text = formatMenuItemWithCount(requestsLabel, requestsCount)
+
+                // Update Cookies menu item with count
+                val cookieCount = android.webkit.CookieManager.getInstance().getCookie(tab.url)?.split(';')?.size ?: 0
+                val cookiesMenuItem = MenuItems.getItem(MenuItemId.Cookies)
+                val cookiesLabel = cookiesMenuItem?.labelId?.let { labelId ->
+                    contentView.context.getString(labelId)
+                } ?: return@let
+
+                iBinding.menuItemCookies.text = formatMenuItemWithCount(cookiesLabel, cookieCount)
             }
         }
 

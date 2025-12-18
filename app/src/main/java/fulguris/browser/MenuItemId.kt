@@ -54,6 +54,7 @@ enum class MenuItemId {
     Print,
     Requests,
     Console,
+    Cookies,
     AddToHome,
     ForceReload,
     LaunchApp,
