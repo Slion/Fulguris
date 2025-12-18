@@ -637,6 +637,7 @@
     <string name="pref_category_summary_console">%1$d укупно – %2$d грешака / %3$d упозорења</string>
     <string name="pref_summary_console_empty">Нема конзолних порука за ову страницу</string>
     <string name="action_console">Конзола</string>
+    <string name="action_cookies">Колачићи</string>
     <string name="action_full_menu">Потпуни мени</string>
     <string name="settings_summary_full_menu">Прикажи пуни мени</string>
     <string name="action_launch">Покрени</string>

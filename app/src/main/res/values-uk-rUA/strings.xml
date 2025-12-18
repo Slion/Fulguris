@@ -640,6 +640,7 @@
     <string name="pref_category_summary_console">%1$d всього – %2$d помилок / %3$d попереджень</string>
     <string name="pref_summary_console_empty">Немає повідомлень консолі для цієї сторінки</string>
     <string name="action_console">Консоль</string>
+    <string name="action_cookies">Файли cookie</string>
     <string name="action_full_menu">Повне меню</string>
     <string name="settings_summary_full_menu">Показати повне меню</string>
     <string name="action_launch">Запустити</string>

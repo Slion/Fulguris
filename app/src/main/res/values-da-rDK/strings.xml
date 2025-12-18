@@ -634,6 +634,7 @@
     <string name="pref_category_summary_console">%1$d i alt – %2$d fejl / %3$d advarsler</string>
     <string name="pref_summary_console_empty">Ingen konsolbeskeder for denne side</string>
     <string name="action_console">Konsol</string>
+    <string name="action_cookies">Cookies</string>
     <string name="action_full_menu">Fuld menu</string>
     <string name="settings_summary_full_menu">Vis fuld menu</string>
     <string name="action_launch">Start</string>

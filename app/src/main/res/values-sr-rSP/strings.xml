@@ -637,6 +637,7 @@
     <string name="pref_category_summary_console">%1$d ukupno – %2$d grešaka / %3$d upozorenja</string>
     <string name="pref_summary_console_empty">Nema konzolnih poruka za ovu stranicu</string>
     <string name="action_console">Konzola</string>
+    <string name="action_cookies">Kolačići</string>
     <string name="action_full_menu">Potpuni meni</string>
     <string name="settings_summary_full_menu">Prikaži puni meni</string>
     <string name="action_launch">Pokreni</string>

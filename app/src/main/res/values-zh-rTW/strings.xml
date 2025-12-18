@@ -632,6 +632,7 @@
     <string name="pref_category_summary_console">%1$d 總數 – %2$d 錯誤 / %3$d 警告</string>
     <string name="pref_summary_console_empty">此頁面沒有主控台訊息</string>
     <string name="action_console">主控台</string>
+    <string name="action_cookies">Cookie</string>
     <string name="action_full_menu">完整選單</string>
     <string name="settings_summary_full_menu">顯示完整選單</string>
     <string name="action_launch">啟動</string>

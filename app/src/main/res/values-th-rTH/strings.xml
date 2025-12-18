@@ -632,6 +632,7 @@
     <string name="pref_category_summary_console">%1$d ทั้งหมด – %2$d ข้อผิดพลาด / %3$d คำเตือน</string>
     <string name="pref_summary_console_empty">ไม่มีข้อความคอนโซลสำหรับหน้านี้</string>
     <string name="action_console">คอนโซล</string>
+    <string name="action_cookies">คุกกี้</string>
     <string name="action_full_menu">เมนูเต็มรูปแบบ</string>
     <string name="settings_summary_full_menu">แสดงเมนูเต็ม</string>
     <string name="action_launch">เปิด</string>

@@ -640,6 +640,7 @@
     <string name="pref_category_summary_console">%1$d סה\"כ – %2$d שגיאות / %3$d אזהרות</string>
     <string name="pref_summary_console_empty">אין הודעות קונסולה עבור דף זה</string>
     <string name="action_console">קונסולה</string>
+    <string name="action_cookies">עוגיות</string>
     <string name="action_full_menu">תפריט מלא</string>
     <string name="settings_summary_full_menu">הצג תפריט מלא</string>
     <string name="action_launch">הפעל</string>

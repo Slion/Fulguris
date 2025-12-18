@@ -634,6 +634,7 @@
     <string name="pref_category_summary_console">%1$d ᱜᱚᱴᱟ – %2$d ᱵᱷᱩᱞᱠᱩ / %3$d ᱦᱩᱥᱤᱭᱟᱹᱨᱠᱩ</string>
     <string name="pref_summary_console_empty">ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱞᱟᱹᱜᱤᱫ ᱠᱚᱱᱥᱳᱞ ᱠᱷᱚᱵᱚᱨᱠᱩ ᱵᱟᱹᱱᱩᱜ-ᱟ</string>
     <string name="action_console">ᱠᱚᱱᱥᱳᱞ</string>
+    <string name="action_cookies">ᱠᱩᱠᱤᱠᱩ</string>
     <string name="action_full_menu">ᱯᱩᱨᱟᱹ ᱢᱮᱱᱩ</string>
     <string name="settings_summary_full_menu">ᱯᱩᱨᱟᱹ ᱢᱮᱱᱩ ᱩᱫᱩᱜ ᱢᱮ</string>
     <string name="action_launch">ᱪᱟᱞᱩ</string>
