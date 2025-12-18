@@ -439,29 +439,20 @@ class MenuPopupWindow : PopupWindow {
     }
 
     /**
-     * Format menu item label with superscript count badge
+     * Format menu item label with a dimmed badge (count or text)
      * @param label The base label text
-     * @param count The count to display as superscript
-     * @return SpannableString with formatted label and superscript count
+     * @param badgeText The badge text to display (empty to show just label)
+     * @return SpannableString with formatted label and dimmed badge
      */
-    private fun formatMenuItemWithCount(label: String, count: Int): CharSequence {
-        if (count <= 0) {
+    private fun formatMenuItemWithBadge(label: String, badgeText: String): CharSequence {
+        if (badgeText.isEmpty()) {
             return label
         }
 
-        val countText = "  $count"
-        val fullText = label + countText
+        val fullText = "$label  $badgeText"
         val spannable = android.text.SpannableString(fullText)
 
-        // Make count superscript
-//        spannable.setSpan(
-//            android.text.style.SubscriptSpan(),
-//            label.length,
-//            fullText.length,
-//            android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-//        )
-
-        // Make count smaller (0.6x size for superscript)
+        // Make badge smaller (keep at normal size for now)
         spannable.setSpan(
             android.text.style.RelativeSizeSpan(1f),
             label.length,
@@ -469,7 +460,7 @@ class MenuPopupWindow : PopupWindow {
             android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        // Use theme color for count with disabled alpha for dimming
+        // Use theme color for badge with disabled alpha for dimming
         val colorValue = android.util.TypedValue()
         contentView.context.theme.resolveAttribute(R.attr.colorOnBackground, colorValue, true)
 
@@ -494,6 +485,16 @@ class MenuPopupWindow : PopupWindow {
     }
 
     /**
+     * Format menu item label with count badge
+     * @param label The base label text
+     * @param count The count to display
+     * @return SpannableString with formatted label and count badge
+     */
+    private fun formatMenuItemWithCount(label: String, count: Int): CharSequence {
+        return formatMenuItemWithBadge(label, if (count > 0) count.toString() else "")
+    }
+
+    /**
      * Open up this popup menu
      */
     fun show(aAnchor: View) {
@@ -508,6 +509,18 @@ class MenuPopupWindow : PopupWindow {
             iBinding.menuItemAdBlock.isChecked = it.currentTab?.url?.let { url ->
                 !abpUserRules.isAllowed(Uri.parse(url))
             } ?: false
+
+            // Update Sessions menu item with current session name
+            val sessionName = (contentView.context as? WebBrowserActivity)?.tabsManager?.iCurrentSessionName ?: ""
+            if (sessionName.isNotEmpty()) {
+                val sessionsMenuItem = MenuItems.getItem(MenuItemId.Sessions)
+                val sessionsLabel = sessionsMenuItem?.labelId?.let { labelId ->
+                    contentView.context.getString(labelId)
+                }
+                if (sessionsLabel != null) {
+                    iBinding.menuItemSessions.text = formatMenuItemWithBadge(sessionsLabel, sessionName)
+                }
+            }
 
             // Update Console menu item with count
             it.currentTab?.let { tab ->
