@@ -300,6 +300,16 @@ object MenuItems {
             canBeInMainMenu = true,
             canBeInTabMenu = true,
             defaultMenu = MenuType.TabMenu
+        ),
+        MenuItemId.FullMenu to MenuItem(
+            id = MenuItemId.FullMenu,
+            labelId = R.string.action_full_menu,
+            iconId = R.drawable.ic_list,
+            viewId = R.id.menuItemFullMenu,
+            canBeInMainMenu = true,
+            canBeInTabMenu = true,
+            defaultMenu = MenuType.HiddenMenu,
+            preferredMenu = MenuType.MainMenu
         )
     )
 

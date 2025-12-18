@@ -711,6 +711,10 @@ abstract class WebBrowserActivity : ThemedBrowserActivity(),
             onMenuItemClicked(iBinding.menuItemTranslate) { dismiss(); executeAction(R.id.action_translate) }
             onMenuItemClicked(iBinding.menuItemForceReload) { dismiss(); executeAction(R.id.action_force_reload) }
             onMenuItemClicked(iBinding.menuItemLaunchApp) { dismiss(); executeAction(R.id.action_launch_app) }
+            onMenuItemClicked(iBinding.menuItemFullMenu) {
+                dismiss()
+                showMenuFull()
+            }
 
             // Popup menu action shortcut icons (work for both modes)
             onMenuItemClicked(iBinding.menuShortcutRefresh) { dismiss(); executeAction(R.id.action_reload) }

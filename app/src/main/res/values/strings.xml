@@ -734,6 +734,7 @@
     <string name="pref_category_summary_console">%1$d total – %2$d errors / %3$d warnings</string>
     <string name="pref_summary_console_empty">No console messages for this page</string>
     <string name="action_console">Console</string>
+    <string name="action_full_menu">Full menu</string>
     <string name="settings_summary_full_menu">Show full menu</string>
     <string name="action_launch">Launch</string>
 </resources>

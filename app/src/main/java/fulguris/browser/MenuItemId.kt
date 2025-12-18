@@ -57,5 +57,6 @@ enum class MenuItemId {
     AddToHome,
     ForceReload,
     LaunchApp,
+    FullMenu,
 }
 

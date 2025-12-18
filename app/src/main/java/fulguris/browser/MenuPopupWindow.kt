@@ -275,6 +275,7 @@ class MenuPopupWindow : PopupWindow {
         iBinding.menuItemConsole.isVisible = false
         iBinding.menuItemForceReload.isVisible = false
         iBinding.menuItemLaunchApp.isVisible = false
+        iBinding.menuItemFullMenu.isVisible = false
     }
 
     /**
@@ -314,6 +315,7 @@ class MenuPopupWindow : PopupWindow {
             MenuItemId.Console -> iBinding.menuItemConsole.isVisible = true
             MenuItemId.ForceReload -> iBinding.menuItemForceReload.isVisible = true
             MenuItemId.LaunchApp -> iBinding.menuItemLaunchApp.isVisible = true
+            MenuItemId.FullMenu -> iBinding.menuItemFullMenu.isVisible = true
         }
     }
 
@@ -323,6 +325,11 @@ class MenuPopupWindow : PopupWindow {
      * customize menu layouts and move items between menus.
      */
     private fun applyMenuSpecialRules() {
+        // Hide FullMenu item when already in full menu mode
+        if (currentMode == MenuType.FullMenu) {
+            iBinding.menuItemFullMenu.isVisible = false
+        }
+
         // Rules that apply in incognito mode
         if (isIncognito) {
             // Hide main menu items

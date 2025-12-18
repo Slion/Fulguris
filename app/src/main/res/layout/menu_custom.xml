@@ -380,6 +380,15 @@
                         android:text="@string/action_launch_app"
                         />
 
+                    <TextView
+                        android:id="@+id/menuItemFullMenu"
+                        style="@style/BrowserTextMenuItem"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:drawableStartCompat="@drawable/ic_list"
+                        android:text="@string/action_full_menu"
+                        />
+
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
