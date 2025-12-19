@@ -12,6 +12,7 @@ import android.webkit.WebResourceResponse
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -65,19 +66,30 @@ class NetworkEngineOkHttp(
      */
     private fun createClient(): OkHttpClient {
         // Get cache size from preferences (convert MB to bytes)
-        val cacheSizeMB = userPreferences.okHttpCacheSize.coerceIn(10, 500).toLong()
+        // Parse string to int with default fallback
+        val cacheSizeMB = userPreferences.okHttpCacheSize.toIntOrNull()?.coerceIn(0, 500)?.toLong() ?: 50L
         val cacheSizeBytes = cacheSizeMB * 1024L * 1024L
 
-        val cache = Cache(getCacheDir(), cacheSizeBytes)
+        Timber.i("Creating OkHttp client with cache size: $cacheSizeMB MB ($cacheSizeBytes bytes)")
+        Timber.i("Cache directory: ${getCacheDir().absolutePath}")
 
-        return OkHttpClient.Builder()
-            .cache(cache)
+        val builder = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .followRedirects(true)
             .followSslRedirects(true)
-            .build()
+
+        // Only add cache if size > 0
+        if (cacheSizeBytes > 0) {
+            val cache = Cache(getCacheDir(), cacheSizeBytes)
+            builder.cache(cache)
+            Timber.i("OkHttp cache enabled with max size: $cacheSizeBytes bytes")
+        } else {
+            Timber.i("OkHttp cache disabled (size = 0)")
+        }
+
+        return builder.build()
     }
 
     /**
@@ -100,20 +112,44 @@ class NetworkEngineOkHttp(
 
     override fun handleRequest(request: WebResourceRequest): WebResourceResponse? {
         try {
+            val url = request.url.toString()
+
+            // OkHttp only supports http and https schemes, let WebView handle others
+            if (!url.startsWith("http://", ignoreCase = true) && !url.startsWith("https://", ignoreCase = true)) {
+                return null
+            }
+
             // Build OkHttp request from WebResourceRequest
-            val okHttpRequest = Request.Builder()
-                .url(request.url.toString())
-                .method(request.method, null) // TODO: Handle POST body if needed
-                .apply {
-                    // Copy headers from WebResourceRequest
-                    request.requestHeaders?.forEach { (key, value) ->
-                        addHeader(key, value)
-                    }
+            val requestBuilder = Request.Builder().url(url)
+
+            // Copy headers from WebResourceRequest
+            request.requestHeaders?.forEach { (key, value) ->
+                requestBuilder.addHeader(key, value)
+            }
+
+            // Handle request method - POST/PUT/PATCH require a body
+            val okHttpRequest = when (request.method.uppercase()) {
+                "GET", "HEAD", "DELETE" -> requestBuilder.method(request.method, null).build()
+                "POST", "PUT", "PATCH" -> {
+                    // TODO: Get actual POST body from WebResourceRequest if available
+                    // For now, use empty body to prevent crashes
+                    val emptyBody = ByteArray(0).toRequestBody(null)
+                    requestBuilder.method(request.method, emptyBody).build()
                 }
-                .build()
+                else -> requestBuilder.method(request.method, null).build()
+            }
 
             // Execute request
             val response = getClient().newCall(okHttpRequest).execute()
+
+            // Log cache hit/miss for debugging
+            val cacheResponse = response.cacheResponse
+            val networkResponse = response.networkResponse
+            if (cacheResponse != null) {
+                Timber.v("Cache HIT: ${request.url}")
+            } else if (networkResponse != null) {
+                Timber.v("Cache MISS: ${request.url}")
+            }
 
             if (!response.isSuccessful) {
                 Timber.w("OkHttp request failed: ${response.code} ${request.url}")
@@ -133,11 +169,14 @@ class NetworkEngineOkHttp(
             }
 
             // Create WebResourceResponse
+            // HTTP/2 responses may have empty message, but Android requires non-empty reason phrase
+            val reasonPhrase = response.message.ifEmpty { getDefaultReasonPhrase(response.code) }
+
             return WebResourceResponse(
                 mimeType,
                 encoding,
                 response.code,
-                response.message,
+                reasonPhrase,
                 responseHeaders,
                 body?.byteStream() ?: ByteArrayInputStream(ByteArray(0))
             )
@@ -177,13 +216,24 @@ class NetworkEngineOkHttp(
 
     override fun cacheUsedSize(): Long {
         return try {
+            val client = getClient()
+            val cache = client.cache
+
+            if (cache == null) {
+                Timber.w("OkHttp cache is null! Client was not initialized with cache.")
+                return 0L
+            }
+
             // Flush the cache to ensure all pending writes are complete
-            getClient().cache?.flush()
+            cache.flush()
 
             // Get the actual used size from OkHttp cache
-            val usedSize = getClient().cache?.size() ?: 0L
+            val usedSize = cache.size()
+            val maxSize = cache.maxSize()
 
-            Timber.d("Cache used size: $usedSize bytes")
+            Timber.d("Cache used size: $usedSize bytes (max: $maxSize bytes)")
+            Timber.d("Cache directory: ${getCacheDir().absolutePath}, exists: ${getCacheDir().exists()}")
+
             usedSize
         } catch (e: Exception) {
             Timber.e(e, "Error calculating cache size")
@@ -228,6 +278,36 @@ class NetworkEngineOkHttp(
             .firstOrNull { it.startsWith("charset=", ignoreCase = true) }
             ?.substringAfter("=")
             ?.trim()
+    }
+
+    /**
+     * Get standard HTTP reason phrase for a status code.
+     * HTTP/2 responses may have empty message, but Android requires non-empty reason phrase.
+     */
+    private fun getDefaultReasonPhrase(code: Int): String {
+        return when (code) {
+            200 -> "OK"
+            201 -> "Created"
+            202 -> "Accepted"
+            204 -> "No Content"
+            301 -> "Moved Permanently"
+            302 -> "Found"
+            304 -> "Not Modified"
+            307 -> "Temporary Redirect"
+            308 -> "Permanent Redirect"
+            400 -> "Bad Request"
+            401 -> "Unauthorized"
+            403 -> "Forbidden"
+            404 -> "Not Found"
+            405 -> "Method Not Allowed"
+            408 -> "Request Timeout"
+            429 -> "Too Many Requests"
+            500 -> "Internal Server Error"
+            502 -> "Bad Gateway"
+            503 -> "Service Unavailable"
+            504 -> "Gateway Timeout"
+            else -> "Unknown"
+        }
     }
 }
 
