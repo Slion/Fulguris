@@ -24,11 +24,16 @@ import java.net.URL
  * - Limited connection pooling compared to OkHttp
  * - May have issues with some modern websites that require advanced HTTP features
  * - **No HTTP caching configured** (could be added with HttpResponseCache)
+ * - POST/PUT/PATCH requests are delegated to WebView (Android API doesn't provide request body)
  *
  * **Caching:**
  * - No cache currently configured
  * - Every request hits the network (slower performance)
  * - Could add HttpResponseCache if needed
+ *
+ * **Limitations:**
+ * - POST/PUT/PATCH requests are delegated to WebView (Android API doesn't provide request body)
+ * - Only GET, HEAD, DELETE, and OPTIONS requests are handled by HttpURLConnection
  *
  * **Best for:** Simple websites, testing, or when you want minimal dependencies
  */
@@ -41,11 +46,29 @@ class NetworkEngineHttpUrlConnection : NetworkEngine {
     override fun handleRequest(request: WebResourceRequest): WebResourceResponse? {
         var connection: HttpURLConnection? = null
         try {
+            val urlString = request.url.toString()
+
+            // HttpURLConnection only supports http and https schemes, let WebView handle others
+            if (!urlString.startsWith("http://", ignoreCase = true) && !urlString.startsWith("https://", ignoreCase = true)) {
+                return null
+            }
+
             // Open connection
-            val url = URL(request.url.toString())
+            val url = URL(urlString)
             connection = url.openConnection() as HttpURLConnection
 
-            // Set request method
+            // Handle request method
+            // Note: WebResourceRequest doesn't provide access to POST body, so we let WebView handle POST/PUT/PATCH
+            when (request.method.uppercase()) {
+                "POST", "PUT", "PATCH" -> {
+                    // WebView API limitation: We cannot access the request body from WebResourceRequest
+                    // Return null to let WebView handle these requests with the proper body
+                    Timber.v("Delegating ${request.method} request to WebView: ${request.url}")
+                    return null
+                }
+            }
+
+            // Set request method (GET/HEAD/DELETE/OPTIONS)
             connection.requestMethod = request.method
 
             // Set timeouts
@@ -92,11 +115,15 @@ class NetworkEngineHttpUrlConnection : NetworkEngine {
             }
 
             // Create WebResourceResponse
+            // HTTP/2 responses may have empty message, but Android requires non-empty reason phrase
+            val reasonPhrase = connection.responseMessage?.ifEmpty { getDefaultReasonPhrase(responseCode) }
+                ?: getDefaultReasonPhrase(responseCode)
+
             return WebResourceResponse(
                 mimeType,
                 encoding,
                 responseCode,
-                connection.responseMessage ?: "OK",
+                reasonPhrase,
                 responseHeaders,
                 inputStream
             )
@@ -129,6 +156,36 @@ class NetworkEngineHttpUrlConnection : NetworkEngine {
             .firstOrNull { it.startsWith("charset=", ignoreCase = true) }
             ?.substringAfter("=")
             ?.trim()
+    }
+
+    /**
+     * Get standard HTTP reason phrase for a status code.
+     * HTTP/2 responses may have empty message, but Android requires non-empty reason phrase.
+     */
+    private fun getDefaultReasonPhrase(code: Int): String {
+        return when (code) {
+            200 -> "OK"
+            201 -> "Created"
+            202 -> "Accepted"
+            204 -> "No Content"
+            301 -> "Moved Permanently"
+            302 -> "Found"
+            304 -> "Not Modified"
+            307 -> "Temporary Redirect"
+            308 -> "Permanent Redirect"
+            400 -> "Bad Request"
+            401 -> "Unauthorized"
+            403 -> "Forbidden"
+            404 -> "Not Found"
+            405 -> "Method Not Allowed"
+            408 -> "Request Timeout"
+            429 -> "Too Many Requests"
+            500 -> "Internal Server Error"
+            502 -> "Bad Gateway"
+            503 -> "Service Unavailable"
+            504 -> "Gateway Timeout"
+            else -> "Unknown"
+        }
     }
 }
 
