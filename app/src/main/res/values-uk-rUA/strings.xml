@@ -130,6 +130,7 @@
     <string name="message_text_copied">Текст скопійовано до буфера</string>
     <string name="message_link_copied">Посилання скопійовано до буфера</string>
     <string name="message_blocked_local">Локальний файл було заблоковано для завантаження</string>
+    <string name="message_no_app_available">Немає доступного додатка для відкриття цього посилання</string>
     <string name="licenses">Ліцензії з відкритим кодом</string>
     <string name="suggestion">Шукати</string>
     <string name="checking_for_updates">Перевірка оновлень…</string>
@@ -644,4 +645,15 @@
     <string name="action_full_menu">Повне меню</string>
     <string name="settings_summary_full_menu">Показати повне меню</string>
     <string name="action_launch">Запустити</string>
+    <string name="pref_title_network_engine">Мережевий двигун</string>
+    <string name="pref_summary_network_engine">Виберіть мережевий двигун для обробки запитів</string>
+    <string name="settings_network">Мережа</string>
+    <string name="pref_title_network_cache_size">Розмір кешу</string>
+    <string name="pref_message_network_cache_size">Введіть розмір мережевого кешу до %s</string>
+    <string name="pref_title_clear_cache">Очистити кеш</string>
+    <string name="pref_summary_clear_cache">Зараз використовується: %s</string>
+    <string name="error_invalid_number">Будь ласка, введіть дійсне число</string>
+    <string name="error_cache_negative">Розмір кешу не може бути негативним</string>
+    <string name="error_cache_too_large">Кеш занадто великий</string>
+    <string name="hint_available_space">Доступно: %s</string>
 </resources>

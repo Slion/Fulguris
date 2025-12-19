@@ -130,6 +130,7 @@
     <string name="message_text_copied">Tekst je kopiran u međuspremnik</string>
     <string name="message_link_copied">Veza je kopirana u međuspremnik</string>
     <string name="message_blocked_local">Učitavanje lokalne datoteke je blokirano</string>
+    <string name="message_no_app_available">Nema dostupne aplikacije za otvaranje ove poveznice</string>
     <string name="licenses">Licence otvorenog koda</string>
     <string name="suggestion">Traži</string>
     <string name="checking_for_updates">Provjera ažuriranja…</string>
@@ -641,4 +642,15 @@
     <string name="action_full_menu">Potpuni izbornik</string>
     <string name="settings_summary_full_menu">Prikaži cijeli izbornik</string>
     <string name="action_launch">Pokreni</string>
+    <string name="pref_title_network_engine">Mrežni mehanizam</string>
+    <string name="pref_summary_network_engine">Odaberite koji mrežni mehanizam obrađuje zahtjeve</string>
+    <string name="settings_network">Mreža</string>
+    <string name="pref_title_network_cache_size">Veličina predmemorije</string>
+    <string name="pref_message_network_cache_size">Unesite veličinu mrežne predmemorije do %s</string>
+    <string name="pref_title_clear_cache">Očisti predmemoriju</string>
+    <string name="pref_summary_clear_cache">Trenutno koristi: %s</string>
+    <string name="error_invalid_number">Molimo unesite ispravan broj</string>
+    <string name="error_cache_negative">Veličina predmemorije ne može biti negativna</string>
+    <string name="error_cache_too_large">Predmemorija prevelika</string>
+    <string name="hint_available_space">Dostupno: %s</string>
 </resources>

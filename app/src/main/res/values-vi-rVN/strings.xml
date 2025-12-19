@@ -130,6 +130,7 @@
     <string name="message_text_copied">Đã sao chép văn bản vào clipboard</string>
     <string name="message_link_copied">Đã sao chép liên kết vào clipboard</string>
     <string name="message_blocked_local">Tệp cục bộ đã bị chặn tải</string>
+    <string name="message_no_app_available">Không có ứng dụng nào để mở liên kết này</string>
     <string name="licenses">Giấy phép nguồn mở</string>
     <string name="suggestion">Tìm kiếm</string>
     <string name="checking_for_updates">Đang kiểm tra cập nhật…</string>
@@ -636,4 +637,15 @@
     <string name="action_full_menu">Menu đầy đủ</string>
     <string name="settings_summary_full_menu">Hiển thị menu đầy đủ</string>
     <string name="action_launch">Khởi chạy</string>
+    <string name="pref_title_network_engine">Công cụ mạng</string>
+    <string name="pref_summary_network_engine">Chọn công cụ mạng xử lý các yêu cầu</string>
+    <string name="settings_network">Mạng</string>
+    <string name="pref_title_network_cache_size">Kích thước bộ nhớ đệm</string>
+    <string name="pref_message_network_cache_size">Nhập kích thước bộ nhớ đệm mạng tối đa %s</string>
+    <string name="pref_title_clear_cache">Xóa bộ nhớ đệm</string>
+    <string name="pref_summary_clear_cache">Hiện đang sử dụng: %s</string>
+    <string name="error_invalid_number">Vui lòng nhập số hợp lệ</string>
+    <string name="error_cache_negative">Kích thước bộ nhớ đệm không được âm</string>
+    <string name="error_cache_too_large">Bộ nhớ đệm quá lớn</string>
+    <string name="hint_available_space">Có sẵn: %s</string>
 </resources>

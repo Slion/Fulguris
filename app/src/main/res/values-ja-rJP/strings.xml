@@ -130,6 +130,7 @@
     <string name="message_text_copied">テキストをクリップボードにコピーしました</string>
     <string name="message_link_copied">リンクをクリップボードにコピーしました</string>
     <string name="message_blocked_local">ファイルを読み込めませんでした</string>
+    <string name="message_no_app_available">このリンクを開くアプリが利用できません</string>
     <string name="licenses">オープンソース ライセンス</string>
     <string name="suggestion">検索 :</string>
     <string name="checking_for_updates">アップデートを確認しています…</string>
@@ -636,4 +637,15 @@
     <string name="action_full_menu">フルメニュー</string>
     <string name="settings_summary_full_menu">フルメニューを表示</string>
     <string name="action_launch">起動</string>
+    <string name="pref_title_network_engine">ネットワークエンジン</string>
+    <string name="pref_summary_network_engine">リクエストを処理するネットワークエンジンを選択</string>
+    <string name="settings_network">ネットワーク</string>
+    <string name="pref_title_network_cache_size">キャッシュサイズ</string>
+    <string name="pref_message_network_cache_size">ネットワークキャッシュサイズを %s まで入力</string>
+    <string name="pref_title_clear_cache">キャッシュをクリア</string>
+    <string name="pref_summary_clear_cache">現在使用中: %s</string>
+    <string name="error_invalid_number">有効な数字を入力してください</string>
+    <string name="error_cache_negative">キャッシュサイズは負の値にできません</string>
+    <string name="error_cache_too_large">キャッシュが大きすぎます</string>
+    <string name="hint_available_space">利用可能: %s</string>
 </resources>

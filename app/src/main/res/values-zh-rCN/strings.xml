@@ -130,6 +130,7 @@
     <string name="message_text_copied">文本已复制到剪切板</string>
     <string name="message_link_copied">链接已复制到剪切板</string>
     <string name="message_blocked_local">已阻止本地文件加载</string>
+    <string name="message_no_app_available">没有可用的应用程序打开此链接</string>
     <string name="licenses">开放源代码许可</string>
     <string name="suggestion">搜索</string>
     <string name="checking_for_updates">正在检查更新……</string>
@@ -636,4 +637,15 @@
     <string name="action_full_menu">完整菜单</string>
     <string name="settings_summary_full_menu">显示完整菜单</string>
     <string name="action_launch">启动</string>
+    <string name="pref_title_network_engine">网络引擎</string>
+    <string name="pref_summary_network_engine">选择处理请求的网络引擎</string>
+    <string name="settings_network">网络</string>
+    <string name="pref_title_network_cache_size">缓存大小</string>
+    <string name="pref_message_network_cache_size">输入网络缓存大小最多 %s</string>
+    <string name="pref_title_clear_cache">清除缓存</string>
+    <string name="pref_summary_clear_cache">当前使用: %s</string>
+    <string name="error_invalid_number">请输入有效数字</string>
+    <string name="error_cache_negative">缓存大小不能为负数</string>
+    <string name="error_cache_too_large">缓存过大</string>
+    <string name="hint_available_space">可用: %s</string>
 </resources>

@@ -130,6 +130,7 @@
     <string name="message_text_copied">Tekst kopieret til udklipsholder</string>
     <string name="message_link_copied">Link kopieret til udklipsholder</string>
     <string name="message_blocked_local">Lokal fil blev blokeret fra at indlæse</string>
+    <string name="message_no_app_available">Ingen app tilgængelig til at åbne dette link</string>
     <string name="licenses">Open Source-licenser</string>
     <string name="suggestion">Søg efter</string>
     <string name="checking_for_updates">Tjekker for opdateringer</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">Fuld menu</string>
     <string name="settings_summary_full_menu">Vis fuld menu</string>
     <string name="action_launch">Start</string>
+    <string name="pref_title_network_engine">Netværksmotor</string>
+    <string name="pref_summary_network_engine">Vælg hvilken netværksmotor der håndterer anmodninger</string>
+    <string name="settings_network">Netværk</string>
+    <string name="pref_title_network_cache_size">Cachestørrelse</string>
+    <string name="pref_message_network_cache_size">Indtast netværkscachestørrelse op til %s</string>
+    <string name="pref_title_clear_cache">Ryd cache</string>
+    <string name="pref_summary_clear_cache">Bruger i øjeblikket: %s</string>
+    <string name="error_invalid_number">Indtast venligst et gyldigt tal</string>
+    <string name="error_cache_negative">Cachestørrelse kan ikke være negativ</string>
+    <string name="error_cache_too_large">Cache for stor</string>
+    <string name="hint_available_space">Tilgængeligt: %s</string>
 </resources>

@@ -130,6 +130,7 @@
     <string name="message_text_copied">텍스트가 클립보드로 복사되었습니다</string>
     <string name="message_link_copied">링크가 클립보드로 복사되었습니다</string>
     <string name="message_blocked_local">로컬 파일 불러오기가 차단되었습니다</string>
+    <string name="message_no_app_available">이 링크를 열 수 있는 앱이 없습니다</string>
     <string name="licenses">오픈 소스 라이선스</string>
     <string name="suggestion">다음을 검색</string>
     <string name="checking_for_updates">업데이트 확인 중…</string>
@@ -636,4 +637,15 @@
     <string name="action_full_menu">전체 메뉴</string>
     <string name="settings_summary_full_menu">전체 메뉴 표시</string>
     <string name="action_launch">실행</string>
+    <string name="pref_title_network_engine">네트워크 엔진</string>
+    <string name="pref_summary_network_engine">요청을 처리할 네트워크 엔진 선택</string>
+    <string name="settings_network">네트워크</string>
+    <string name="pref_title_network_cache_size">캐시 크기</string>
+    <string name="pref_message_network_cache_size">네트워크 캐시 크기를 %s까지 입력하세요</string>
+    <string name="pref_title_clear_cache">캐시 지우기</string>
+    <string name="pref_summary_clear_cache">현재 사용 중: %s</string>
+    <string name="error_invalid_number">유효한 숫자를 입력하세요</string>
+    <string name="error_cache_negative">캐시 크기는 음수일 수 없습니다</string>
+    <string name="error_cache_too_large">캐시가 너무 큽니다</string>
+    <string name="hint_available_space">사용 가능: %s</string>
 </resources>

@@ -130,6 +130,7 @@
     <string name="message_text_copied">Text copied to clipboard</string>
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
+    <string name="message_no_app_available">אין אפליקציה זמינה לפתיחת קישור זה</string>
     <string name="licenses">Open Source Licenses</string>
     <string name="suggestion">Search for</string>
     <string name="checking_for_updates">Checking for updates…</string>
@@ -644,4 +645,15 @@
     <string name="action_full_menu">תפריט מלא</string>
     <string name="settings_summary_full_menu">הצג תפריט מלא</string>
     <string name="action_launch">הפעל</string>
+    <string name="pref_title_network_engine">מנוע רשת</string>
+    <string name="pref_summary_network_engine">בחר איזה מנוע רשת מטפל בבקשות</string>
+    <string name="settings_network">רשת</string>
+    <string name="pref_title_network_cache_size">גודל מטמון</string>
+    <string name="pref_message_network_cache_size">הזן גודל מטמון רשת עד %s</string>
+    <string name="pref_title_clear_cache">נקה מטמון</string>
+    <string name="pref_summary_clear_cache">בשימוש כרגע: %s</string>
+    <string name="error_invalid_number">אנא הזן מספר חוקי</string>
+    <string name="error_cache_negative">גודל המטמון לא יכול להיות שלילי</string>
+    <string name="error_cache_too_large">מטמון גדול מדי</string>
+    <string name="hint_available_space">זמין: %s</string>
 </resources>

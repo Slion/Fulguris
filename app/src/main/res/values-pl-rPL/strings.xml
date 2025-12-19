@@ -130,6 +130,7 @@
     <string name="message_text_copied">Tekst został skopiowany do schowka</string>
     <string name="message_link_copied">Odnośnik został skopiowany do schowka</string>
     <string name="message_blocked_local">Wczytywanie lokalnego pliku zostało zablokowane</string>
+    <string name="message_no_app_available">Brak dostępnej aplikacji do otwarcia tego linku</string>
     <string name="licenses">Licencje Open Source</string>
     <string name="suggestion">Szukaj</string>
     <string name="checking_for_updates">Sprawdzanie aktualizacji…</string>
@@ -644,4 +645,15 @@
     <string name="action_full_menu">Pełne menu</string>
     <string name="settings_summary_full_menu">Pokaż pełne menu</string>
     <string name="action_launch">Uruchom</string>
+    <string name="pref_title_network_engine">Silnik sieciowy</string>
+    <string name="pref_summary_network_engine">Wybierz silnik sieciowy obsługujący żądania</string>
+    <string name="settings_network">Sieć</string>
+    <string name="pref_title_network_cache_size">Rozmiar pamięci podręcznej</string>
+    <string name="pref_message_network_cache_size">Wprowadź rozmiar pamięci podręcznej sieci do %s</string>
+    <string name="pref_title_clear_cache">Wyczyść pamięć podręczną</string>
+    <string name="pref_summary_clear_cache">Obecnie używane: %s</string>
+    <string name="error_invalid_number">Proszę wprowadzić prawidłową liczbę</string>
+    <string name="error_cache_negative">Rozmiar pamięci podręcznej nie może być ujemny</string>
+    <string name="error_cache_too_large">Pamięć podręczna zbyt duża</string>
+    <string name="hint_available_space">Dostępne: %s</string>
 </resources>

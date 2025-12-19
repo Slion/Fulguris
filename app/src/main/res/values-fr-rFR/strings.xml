@@ -130,6 +130,7 @@
     <string name="message_text_copied">Texte copié dans le presse-papiers</string>
     <string name="message_link_copied">Adresse copiée dans le presse-papiers</string>
     <string name="message_blocked_local">Le fichier local a été bloqué au chargement</string>
+    <string name="message_no_app_available">Aucune application disponible pour ouvrir ce lien</string>
     <string name="licenses">Licences open source</string>
     <string name="suggestion">Recherche</string>
     <string name="checking_for_updates">Recherche de mises à jour…</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">Menu complet</string>
     <string name="settings_summary_full_menu">Afficher le menu complet</string>
     <string name="action_launch">Lancer</string>
+    <string name="pref_title_network_engine">Moteur réseau</string>
+    <string name="pref_summary_network_engine">Choisissez quel moteur réseau gère les requêtes</string>
+    <string name="settings_network">Réseau</string>
+    <string name="pref_title_network_cache_size">Taille du cache</string>
+    <string name="pref_message_network_cache_size">Entrez la taille du cache réseau jusqu\'à %s</string>
+    <string name="pref_title_clear_cache">Vider le cache</string>
+    <string name="pref_summary_clear_cache">Actuellement utilisé: %s</string>
+    <string name="error_invalid_number">Veuillez entrer un nombre valide</string>
+    <string name="error_cache_negative">La taille du cache ne peut pas être négative</string>
+    <string name="error_cache_too_large">Cache trop volumineux</string>
+    <string name="hint_available_space">Disponible: %s</string>
 </resources>

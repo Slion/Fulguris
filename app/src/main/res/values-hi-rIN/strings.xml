@@ -113,6 +113,7 @@
     <string name="message_text_copied">टेक्स्ट क्लिपबोर्ड पर कॉपी हो गया</string>
     <string name="message_link_copied">लिंक क्लिपबोर्ड पर कॉपी हो गया</string>
     <string name="message_blocked_local">स्थानीय फ़ाइल लोड होने से रोकी गई</string>
+    <string name="message_no_app_available">इस लिंक को खोलने के लिए कोई ऐप उपलब्ध नहीं है</string>
     <string name="licenses">ओपन सोर्स लाइसेंस</string>
     <string name="suggestion">खोजें</string>
     <string name="checking_for_updates">अपडेट की जांच हो रही है…</string>
@@ -593,4 +594,15 @@
     <string name="action_full_menu">पूर्ण मेनू</string>
     <string name="settings_summary_full_menu">पूर्ण मेनू दिखाएं</string>
     <string name="action_launch">लॉन्च करें</string>
+    <string name="pref_title_network_engine">नेटवर्क इंजन</string>
+    <string name="pref_summary_network_engine">चुनें कि कौन सा नेटवर्क इंजन अनुरोधों को संभालता है</string>
+    <string name="settings_network">नेटवर्क</string>
+    <string name="pref_title_network_cache_size">कैश का आकार</string>
+    <string name="pref_message_network_cache_size">नेटवर्क कैश का आकार %s तक दर्ज करें</string>
+    <string name="pref_title_clear_cache">कैश साफ़ करें</string>
+    <string name="pref_summary_clear_cache">वर्तमान में उपयोग: %s</string>
+    <string name="error_invalid_number">कृपया एक मान्य संख्या दर्ज करें</string>
+    <string name="error_cache_negative">कैश का आकार नकारात्मक नहीं हो सकता</string>
+    <string name="error_cache_too_large">कैश बहुत बड़ा</string>
+    <string name="hint_available_space">उपलब्ध: %s</string>
 </resources>

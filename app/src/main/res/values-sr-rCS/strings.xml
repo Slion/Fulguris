@@ -130,6 +130,7 @@
     <string name="message_text_copied">Tekst kopiran na klipbord</string>
     <string name="message_link_copied">Veza kopirana na klipbord</string>
     <string name="message_blocked_local">Učitavanje lokalnog fajla je blokirano</string>
+    <string name="message_no_app_available">Нема доступне апликације за отварање ове везе</string>
     <string name="licenses">Licence otvorenog kôda</string>
     <string name="suggestion">Traži</string>
     <string name="checking_for_updates">Provera ažuriranja…</string>
@@ -641,4 +642,15 @@
     <string name="action_full_menu">Потпуни мени</string>
     <string name="settings_summary_full_menu">Прикажи пуни мени</string>
     <string name="action_launch">Покрени</string>
+    <string name="pref_title_network_engine">Мрежни механизам</string>
+    <string name="pref_summary_network_engine">Одаберите који мрежни механизам обрађује захтеве</string>
+    <string name="settings_network">Мрежа</string>
+    <string name="pref_title_network_cache_size">Величина кеша</string>
+    <string name="pref_message_network_cache_size">Унесите величину мрежног кеша до %s</string>
+    <string name="pref_title_clear_cache">Обриши кеш</string>
+    <string name="pref_summary_clear_cache">Тренутно користи: %s</string>
+    <string name="error_invalid_number">Молимо унесите исправан број</string>
+    <string name="error_cache_negative">Величина кеша не може бити негативна</string>
+    <string name="error_cache_too_large">Кеш превелик</string>
+    <string name="hint_available_space">Доступно: %s</string>
 </resources>

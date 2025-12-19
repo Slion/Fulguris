@@ -130,6 +130,7 @@
     <string name="message_text_copied">Tekst gekopieerd naar klembord</string>
     <string name="message_link_copied">Link gekopieerd naar klembord</string>
     <string name="message_blocked_local">Lokaal bestand werd geblokkeerd</string>
+    <string name="message_no_app_available">Geen app beschikbaar om deze link te openen</string>
     <string name="licenses">Open-bron licenties</string>
     <string name="suggestion">Zoek voor</string>
     <string name="checking_for_updates">Controleren op updates…</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">Volledig menu</string>
     <string name="settings_summary_full_menu">Volledig menu weergeven</string>
     <string name="action_launch">Starten</string>
+    <string name="pref_title_network_engine">Netwerkengine</string>
+    <string name="pref_summary_network_engine">Kies welke netwerkengine verzoeken afhandelt</string>
+    <string name="settings_network">Netwerk</string>
+    <string name="pref_title_network_cache_size">Cachegrootte</string>
+    <string name="pref_message_network_cache_size">Voer netwerkcachegrootte in tot %s</string>
+    <string name="pref_title_clear_cache">Cache wissen</string>
+    <string name="pref_summary_clear_cache">Momenteel in gebruik: %s</string>
+    <string name="error_invalid_number">Voer een geldig getal in</string>
+    <string name="error_cache_negative">Cachegrootte kan niet negatief zijn</string>
+    <string name="error_cache_too_large">Cache te groot</string>
+    <string name="hint_available_space">Beschikbaar: %s</string>
 </resources>

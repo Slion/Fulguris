@@ -130,6 +130,7 @@
     <string name="message_text_copied">คัดลอกข้อความไปยังคลิปบอร์ดแล้ว</string>
     <string name="message_link_copied">คัดลอกลิงก์ไปยังคลิปบอร์ดแล้ว</string>
     <string name="message_blocked_local">การโหลดไฟล์ท้องถิ่นถูกบล็อก</string>
+    <string name="message_no_app_available">ไม่มีแอปที่สามารถเปิดลิงก์นี้ได้</string>
     <string name="licenses">ใบอนุญาตโอเพนซอร์ส</string>
     <string name="suggestion">ค้นหา</string>
     <string name="checking_for_updates">กำลังตรวจสอบอัปเดต</string>
@@ -636,4 +637,15 @@
     <string name="action_full_menu">เมนูเต็มรูปแบบ</string>
     <string name="settings_summary_full_menu">แสดงเมนูเต็ม</string>
     <string name="action_launch">เปิด</string>
+    <string name="pref_title_network_engine">เครื่องมือเครือข่าย</string>
+    <string name="pref_summary_network_engine">เลือกเครื่องมือเครือข่ายที่จัดการคำขอ</string>
+    <string name="settings_network">เครือข่าย</string>
+    <string name="pref_title_network_cache_size">ขนาดแคช</string>
+    <string name="pref_message_network_cache_size">ป้อนขนาดแคชเครือข่ายได้ถึง %s</string>
+    <string name="pref_title_clear_cache">ล้างแคช</string>
+    <string name="pref_summary_clear_cache">กำลังใช้งาน: %s</string>
+    <string name="error_invalid_number">กรุณาป้อนตัวเลขที่ถูกต้อง</string>
+    <string name="error_cache_negative">ขนาดแคชไม่สามารถเป็นค่าลบได้</string>
+    <string name="error_cache_too_large">แคชใหญ่เกินไป</string>
+    <string name="hint_available_space">ว่าง: %s</string>
 </resources>

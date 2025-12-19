@@ -130,6 +130,7 @@
     <string name="message_text_copied">Text zkopírován do schránky</string>
     <string name="message_link_copied">Odkaz zkopírován do schránky</string>
     <string name="message_blocked_local">Načítání místního souboru bylo zablokováno</string>
+    <string name="message_no_app_available">Žádná aplikace není k dispozici pro otevření tohoto odkazu</string>
     <string name="licenses">Licence Open Source</string>
     <string name="suggestion">Hledat</string>
     <string name="checking_for_updates">Kontrola aktualizací…</string>
@@ -644,4 +645,15 @@
     <string name="action_full_menu">Úplná nabídka</string>
     <string name="settings_summary_full_menu">Zobrazit celou nabídku</string>
     <string name="action_launch">Spustit</string>
+    <string name="pref_title_network_engine">Síťový engine</string>
+    <string name="pref_summary_network_engine">Vyberte, který síťový engine zpracovává požadavky</string>
+    <string name="settings_network">Síť</string>
+    <string name="pref_title_network_cache_size">Velikost mezipaměti</string>
+    <string name="pref_message_network_cache_size">Zadejte velikost síťové mezipaměti až %s</string>
+    <string name="pref_title_clear_cache">Vymazat mezipaměť</string>
+    <string name="pref_summary_clear_cache">Aktuálně využito: %s</string>
+    <string name="error_invalid_number">Prosím zadejte platné číslo</string>
+    <string name="error_cache_negative">Velikost mezipaměti nemůže být záporná</string>
+    <string name="error_cache_too_large">Mezipaměť příliš velká</string>
+    <string name="hint_available_space">Dostupné: %s</string>
 </resources>

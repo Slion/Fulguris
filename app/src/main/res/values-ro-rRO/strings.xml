@@ -130,6 +130,7 @@
     <string name="message_text_copied">Text copiat în clipboard</string>
     <string name="message_link_copied">Link copiat în clipboard</string>
     <string name="message_blocked_local">Fișierul local a fost blocat de la încărcare</string>
+    <string name="message_no_app_available">Nu există nicio aplicație disponibilă pentru a deschide acest link</string>
     <string name="licenses">Licențe Open Source</string>
     <string name="suggestion">Caută</string>
     <string name="checking_for_updates">Verificare actualizări…</string>
@@ -641,4 +642,15 @@
     <string name="action_full_menu">Meniu complet</string>
     <string name="settings_summary_full_menu">Afișează meniul complet</string>
     <string name="action_launch">Lansează</string>
+    <string name="pref_title_network_engine">Motor de rețea</string>
+    <string name="pref_summary_network_engine">Alegeți ce motor de rețea gestionează cererile</string>
+    <string name="settings_network">Rețea</string>
+    <string name="pref_title_network_cache_size">Dimensiunea cache-ului</string>
+    <string name="pref_message_network_cache_size">Introduceți dimensiunea cache-ului de rețea până la %s</string>
+    <string name="pref_title_clear_cache">Șterge cache-ul</string>
+    <string name="pref_summary_clear_cache">În prezent folosit: %s</string>
+    <string name="error_invalid_number">Vă rugăm să introduceți un număr valid</string>
+    <string name="error_cache_negative">Dimensiunea cache-ului nu poate fi negativă</string>
+    <string name="error_cache_too_large">Cache prea mare</string>
+    <string name="hint_available_space">Disponibil: %s</string>
 </resources>

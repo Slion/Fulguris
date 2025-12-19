@@ -130,6 +130,7 @@
     <string name="message_text_copied">Text copied to clipboard</string>
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
+    <string name="message_no_app_available">No app available to open this link</string>
     <string name="licenses">Open Source Licences</string>
     <string name="suggestion">Search for</string>
     <string name="checking_for_updates">Checking for updates…</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">Full menu</string>
     <string name="settings_summary_full_menu">Show full menu</string>
     <string name="action_launch">Launch</string>
+    <string name="pref_title_network_engine">Network engine</string>
+    <string name="pref_summary_network_engine">Choose which network engine handles requests</string>
+    <string name="settings_network">Network</string>
+    <string name="pref_title_network_cache_size">Cache size</string>
+    <string name="pref_message_network_cache_size">Input network cache size up to %s</string>
+    <string name="pref_title_clear_cache">Clear cache</string>
+    <string name="pref_summary_clear_cache">Currently using: %s</string>
+    <string name="error_invalid_number">Please enter a valid number</string>
+    <string name="error_cache_negative">Cache size cannot be negative</string>
+    <string name="error_cache_too_large">Cache too large</string>
+    <string name="hint_available_space">Available: %s</string>
 </resources>

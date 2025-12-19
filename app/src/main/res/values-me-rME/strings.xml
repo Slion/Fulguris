@@ -130,6 +130,7 @@
     <string name="message_text_copied">Text copied to clipboard</string>
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
+    <string name="message_no_app_available">Nema dostupne aplikacije za otvaranje ove veze</string>
     <string name="licenses">Open Source Licenses</string>
     <string name="suggestion">Search for</string>
     <string name="checking_for_updates">Checking for updates…</string>
@@ -641,4 +642,15 @@
     <string name="action_full_menu">Potpuni meni</string>
     <string name="settings_summary_full_menu">Prikaži puni meni</string>
     <string name="action_launch">Pokreni</string>
+    <string name="pref_title_network_engine">Mrežni mehanizam</string>
+    <string name="pref_summary_network_engine">Odaberite koji mrežni mehanizam obrađuje zahtjeve</string>
+    <string name="settings_network">Mreža</string>
+    <string name="pref_title_network_cache_size">Veličina keša</string>
+    <string name="pref_message_network_cache_size">Unesite veličinu mrežnog keša do %s</string>
+    <string name="pref_title_clear_cache">Očisti keš</string>
+    <string name="pref_summary_clear_cache">Trenutno koristi: %s</string>
+    <string name="error_invalid_number">Molimo unesite ispravan broj</string>
+    <string name="error_cache_negative">Veličina keša ne može biti negativna</string>
+    <string name="error_cache_too_large">Keš prevelik</string>
+    <string name="hint_available_space">Dostupno: %s</string>
 </resources>

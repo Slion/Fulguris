@@ -130,6 +130,7 @@
     <string name="message_text_copied">Text copied to clipboard</string>
     <string name="message_link_copied">Link copied to clipboard</string>
     <string name="message_blocked_local">Local file has been blocked from loading</string>
+    <string name="message_no_app_available">No hi ha cap aplicació disponible per obrir aquest enllaç</string>
     <string name="licenses">Open Source Licenses</string>
     <string name="suggestion">Search for</string>
     <string name="checking_for_updates">Checking for updates…</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">Menú complet</string>
     <string name="settings_summary_full_menu">Mostra el menú complet</string>
     <string name="action_launch">Inicia</string>
+    <string name="pref_title_network_engine">Motor de xarxa</string>
+    <string name="pref_summary_network_engine">Tria quin motor de xarxa gestiona les sol·licituds</string>
+    <string name="settings_network">Xarxa</string>
+    <string name="pref_title_network_cache_size">Mida de la memòria cau</string>
+    <string name="pref_message_network_cache_size">Introduïu la mida de la memòria cau de xarxa fins a %s</string>
+    <string name="pref_title_clear_cache">Esborra la memòria cau</string>
+    <string name="pref_summary_clear_cache">Actualment fent servir: %s</string>
+    <string name="error_invalid_number">Introduïu un número vàlid</string>
+    <string name="error_cache_negative">La mida de la memòria cau no pot ser negativa</string>
+    <string name="error_cache_too_large">Memòria cau massa gran</string>
+    <string name="hint_available_space">Disponible: %s</string>
 </resources>

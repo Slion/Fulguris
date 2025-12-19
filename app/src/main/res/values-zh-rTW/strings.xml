@@ -130,6 +130,7 @@
     <string name="message_text_copied">文字已複製至剪貼簿</string>
     <string name="message_link_copied">連結已複製至剪貼簿</string>
     <string name="message_blocked_local">本機檔已被封鎖載入</string>
+    <string name="message_no_app_available">沒有可用的應用程式開啟此連結</string>
     <string name="licenses">開放原始碼授權</string>
     <string name="suggestion">搜尋…</string>
     <string name="checking_for_updates">正在檢查更新…</string>
@@ -636,4 +637,15 @@
     <string name="action_full_menu">完整選單</string>
     <string name="settings_summary_full_menu">顯示完整選單</string>
     <string name="action_launch">啟動</string>
+    <string name="pref_title_network_engine">網路引擎</string>
+    <string name="pref_summary_network_engine">選擇處理請求的網路引擎</string>
+    <string name="settings_network">網路</string>
+    <string name="pref_title_network_cache_size">快取大小</string>
+    <string name="pref_message_network_cache_size">輸入網路快取大小最多 %s</string>
+    <string name="pref_title_clear_cache">清除快取</string>
+    <string name="pref_summary_clear_cache">目前使用: %s</string>
+    <string name="error_invalid_number">請輸入有效數字</string>
+    <string name="error_cache_negative">快取大小不能為負數</string>
+    <string name="error_cache_too_large">快取過大</string>
+    <string name="hint_available_space">可用: %s</string>
 </resources>

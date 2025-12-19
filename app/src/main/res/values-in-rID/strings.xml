@@ -130,6 +130,7 @@
     <string name="message_text_copied">Teks telah tersalin ke dalam clipboard</string>
     <string name="message_link_copied">Tautan telah tersalin ke dalam clipboard</string>
     <string name="message_blocked_local">Tidak bisa memuat file yang tersimpan</string>
+    <string name="message_no_app_available">Tidak ada aplikasi yang tersedia untuk membuka tautan ini</string>
     <string name="licenses">Lisensi Open Source</string>
     <string name="suggestion">Cari</string>
     <string name="checking_for_updates">Mengecek adanya pembaruan…</string>
@@ -636,4 +637,15 @@
     <string name="action_full_menu">Menu lengkap</string>
     <string name="settings_summary_full_menu">Tampilkan menu lengkap</string>
     <string name="action_launch">Luncurkan</string>
+    <string name="pref_title_network_engine">Mesin jaringan</string>
+    <string name="pref_summary_network_engine">Pilih mesin jaringan mana yang menangani permintaan</string>
+    <string name="settings_network">Jaringan</string>
+    <string name="pref_title_network_cache_size">Ukuran cache</string>
+    <string name="pref_message_network_cache_size">Masukkan ukuran cache jaringan hingga %s</string>
+    <string name="pref_title_clear_cache">Hapus cache</string>
+    <string name="pref_summary_clear_cache">Saat ini menggunakan: %s</string>
+    <string name="error_invalid_number">Harap masukkan angka yang valid</string>
+    <string name="error_cache_negative">Ukuran cache tidak boleh negatif</string>
+    <string name="error_cache_too_large">Cache terlalu besar</string>
+    <string name="hint_available_space">Tersedia: %s</string>
 </resources>

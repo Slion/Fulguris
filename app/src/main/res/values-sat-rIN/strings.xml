@@ -130,6 +130,7 @@
     <string name="message_text_copied">ᱚᱞ ᱠᱞᱤᱯᱵᱳᱨᱰ ᱨᱮ ᱱᱚᱠᱚᱞ ᱮᱱᱟ</string>
     <string name="message_link_copied">ᱞᱤᱝᱠ ᱠᱞᱤᱯᱵᱳᱨᱰ ᱨᱮ ᱱᱚᱠᱚᱞ ᱮᱱᱟ</string>
     <string name="message_blocked_local">ᱞᱳᱠᱟᱞ ᱨᱮᱫᱽ ᱞᱚᱰ ᱠᱷᱚᱱ ᱵᱞᱚᱠ ᱮᱱᱟ</string>
+    <string name="message_no_app_available">नोआ ऐप लिङ्क खोल लागि उपलब्ध बाहरे</string>
     <string name="licenses">ᱚᱯᱮᱱ ᱥᱳᱨᱥ ᱞᱟᱭᱥᱮᱱᱥ ᱠᱚ</string>
     <string name="suggestion">ᱯᱟᱱᱛᱮ</string>
     <string name="checking_for_updates">ᱦᱟᱹᱞᱤᱭᱟᱹᱠ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱠ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ…</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">ᱯᱩᱨᱟᱹ ᱢᱮᱱᱩ</string>
     <string name="settings_summary_full_menu">ᱯᱩᱨᱟᱹ ᱢᱮᱱᱩ ᱩᱫᱩᱜ ᱢᱮ</string>
     <string name="action_launch">ᱪᱟᱞᱩ</string>
+    <string name="pref_title_network_engine">नेटवर्क इंजिन</string>
+    <string name="pref_summary_network_engine">नेटवर्क इंजिन रिक्वेस्ट हैंडल लागि चुनऽ</string>
+    <string name="settings_network">नेटवर्क</string>
+    <string name="pref_title_network_cache_size">कैश आकार</string>
+    <string name="pref_message_network_cache_size">नेटवर्क कैश आकार %s समेतो इनपुट दिनुं</string>
+    <string name="pref_title_clear_cache">कैश सफा करऽ</string>
+    <string name="pref_summary_clear_cache">हिंजुक् लागि: %s</string>
+    <string name="error_invalid_number">कृपया मान्य नंबर दर्ज करऽ</string>
+    <string name="error_cache_negative">कैश आकार नकारात्मक बाहरे</string>
+    <string name="error_cache_too_large">कैश बहुत घना</string>
+    <string name="hint_available_space">उपलब्ध: %s</string>
 </resources>

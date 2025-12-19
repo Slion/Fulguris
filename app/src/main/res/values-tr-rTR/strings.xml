@@ -130,6 +130,7 @@
     <string name="message_text_copied">Metin panoya kopyalandı</string>
     <string name="message_link_copied">Bağlantı panoya kopyalandı</string>
     <string name="message_blocked_local">Yerel dosyanın yüklenmesi engellendi</string>
+    <string name="message_no_app_available">Bu bağlantıyı açacak uygulama yok</string>
     <string name="licenses">Açık Kaynak Lisansları</string>
     <string name="suggestion">Bunu ara:</string>
     <string name="checking_for_updates">Güncellemeler kontrol ediliyor…</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">Tam menü</string>
     <string name="settings_summary_full_menu">Tam menüyü göster</string>
     <string name="action_launch">Başlat</string>
+    <string name="pref_title_network_engine">Ağ motoru</string>
+    <string name="pref_summary_network_engine">Hangi ağ motorunun istekleri işleyeceğini seçin</string>
+    <string name="settings_network">Ağ</string>
+    <string name="pref_title_network_cache_size">Önbellek boyutu</string>
+    <string name="pref_message_network_cache_size">Ağ önbellek boyutunu %s\'ye kadar girin</string>
+    <string name="pref_title_clear_cache">Önbelleği temizle</string>
+    <string name="pref_summary_clear_cache">Şu anda kullanılıyor: %s</string>
+    <string name="error_invalid_number">Lütfen geçerli bir sayı girin</string>
+    <string name="error_cache_negative">Önbellek boyutu negatif olamaz</string>
+    <string name="error_cache_too_large">Önbellek çok büyük</string>
+    <string name="hint_available_space">Kullanılabilir: %s</string>
 </resources>

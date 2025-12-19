@@ -130,6 +130,7 @@
     <string name="message_text_copied">Текст скопирован в буфер обмена</string>
     <string name="message_link_copied">Ссылка скопирована в буфер обмена</string>
     <string name="message_blocked_local">Загрузка локального файла заблокирована</string>
+    <string name="message_no_app_available">Нет доступного приложения для открытия этой ссылки</string>
     <string name="licenses">Лицензии с открытым исходным кодом</string>
     <string name="suggestion">Искать</string>
     <string name="checking_for_updates">Проверка обновлений...</string>
@@ -644,4 +645,15 @@
     <string name="action_full_menu">Полное меню</string>
     <string name="settings_summary_full_menu">Показать полное меню</string>
     <string name="action_launch">Запустить</string>
+    <string name="pref_title_network_engine">Сетевой движок</string>
+    <string name="pref_summary_network_engine">Выберите сетевой движок для обработки запросов</string>
+    <string name="settings_network">Сеть</string>
+    <string name="pref_title_network_cache_size">Размер кэша</string>
+    <string name="pref_message_network_cache_size">Введите размер сетевого кэша до %s</string>
+    <string name="pref_title_clear_cache">Очистить кэш</string>
+    <string name="pref_summary_clear_cache">Сейчас используется: %s</string>
+    <string name="error_invalid_number">Пожалуйста, введите допустимое число</string>
+    <string name="error_cache_negative">Размер кэша не может быть отрицательным</string>
+    <string name="error_cache_too_large">Кэш слишком большой</string>
+    <string name="hint_available_space">Доступно: %s</string>
 </resources>

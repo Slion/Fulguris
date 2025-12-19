@@ -130,6 +130,7 @@
     <string name="message_text_copied">Teksti kopioitu leikepöydälle</string>
     <string name="message_link_copied">Linkki kopioitu leikepöydälle</string>
     <string name="message_blocked_local">Paikallisten tiedostojen lataaminen on estetty</string>
+    <string name="message_no_app_available">Ei sovellusta saatavilla tämän linkin avaamiseen</string>
     <string name="licenses">Avoimen lähdekoodin lisenssit</string>
     <string name="suggestion">Hae</string>
     <string name="checking_for_updates">Tarkistetaan päivityksiä</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">Täysi valikko</string>
     <string name="settings_summary_full_menu">Näytä koko valikko</string>
     <string name="action_launch">Käynnistä</string>
+    <string name="pref_title_network_engine">Verkkomoottori</string>
+    <string name="pref_summary_network_engine">Valitse verkkomoottori, joka käsittelee pyynnöt</string>
+    <string name="settings_network">Verkko</string>
+    <string name="pref_title_network_cache_size">Välimuistin koko</string>
+    <string name="pref_message_network_cache_size">Syötä verkkovälimuistin koko enintään %s</string>
+    <string name="pref_title_clear_cache">Tyhjennä välimuisti</string>
+    <string name="pref_summary_clear_cache">Käytössä: %s</string>
+    <string name="error_invalid_number">Syötä kelvollinen luku</string>
+    <string name="error_cache_negative">Välimuistin koko ei voi olla negatiivinen</string>
+    <string name="error_cache_too_large">Välimuisti liian suuri</string>
+    <string name="hint_available_space">Saatavilla: %s</string>
 </resources>

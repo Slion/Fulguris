@@ -130,6 +130,7 @@
     <string name="message_text_copied">Το κείμενο αντιγράφτηκε</string>
     <string name="message_link_copied">Ο σύνδεσμος αντιγράφτηκε</string>
     <string name="message_blocked_local">Τοπικά αρχεία εχουν μπλοκαριστεί απο την φόρτωση</string>
+    <string name="message_no_app_available">Δεν υπάρχει διαθέσιμη εφαρμογή για να ανοίξετε αυτόν τον σύνδεσμο</string>
     <string name="licenses">Άδειες ανοιχτού κώδικα</string>
     <string name="suggestion">Αναζήτηση για</string>
     <string name="checking_for_updates">Έλεγχος για ενημερώσεις</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">Πλήρες μενού</string>
     <string name="settings_summary_full_menu">Εμφάνιση πλήρους μενού</string>
     <string name="action_launch">Εκκίνηση</string>
+    <string name="pref_title_network_engine">Μηχανή δικτύου</string>
+    <string name="pref_summary_network_engine">Επιλέξτε ποια μηχανή δικτύου χειρίζεται τα αιτήματα</string>
+    <string name="settings_network">Δίκτυο</string>
+    <string name="pref_title_network_cache_size">Μέγεθος προσωρινής μνήμης</string>
+    <string name="pref_message_network_cache_size">Εισάγετε μέγεθος προσωρινής μνήμης δικτύου έως %s</string>
+    <string name="pref_title_clear_cache">Εκκαθάριση προσωρινής μνήμης</string>
+    <string name="pref_summary_clear_cache">Χρήση αυτή τη στιγμή: %s</string>
+    <string name="error_invalid_number">Παρακαλώ εισάγετε έγκυρο αριθμό</string>
+    <string name="error_cache_negative">Το μέγεθος προσωρινής μνήμης δεν μπορεί να είναι αρνητικό</string>
+    <string name="error_cache_too_large">Προσωρινή μνήμη πολύ μεγάλη</string>
+    <string name="hint_available_space">Διαθέσιμο: %s</string>
 </resources>

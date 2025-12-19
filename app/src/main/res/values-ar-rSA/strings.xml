@@ -130,6 +130,7 @@
     <string name="message_text_copied">تم نسخ النص إلى الحافظة</string>
     <string name="message_link_copied">تم نسخ الرابط إلى الحافظة</string>
     <string name="message_blocked_local">تم حظر المِلَفّ المحلي من التحميل</string>
+    <string name="message_no_app_available">لا يوجد تطبيق متاح لفتح هذا الرابط</string>
     <string name="licenses">التراخيص المفتوحة المصدر</string>
     <string name="suggestion">البحث عن</string>
     <string name="checking_for_updates">جارٍ التحقق من وجود تحديثات…</string>
@@ -650,4 +651,15 @@
     <string name="action_full_menu">القائمة الكاملة</string>
     <string name="settings_summary_full_menu">إظهار القائمة الكاملة</string>
     <string name="action_launch">تشغيل</string>
+    <string name="pref_title_network_engine">محرك الشبكة</string>
+    <string name="pref_summary_network_engine">اختر محرك الشبكة الذي يتعامل مع الطلبات</string>
+    <string name="settings_network">الشبكة</string>
+    <string name="pref_title_network_cache_size">حجم ذاكرة التخزين المؤقت</string>
+    <string name="pref_message_network_cache_size">أدخل حجم ذاكرة التخزين المؤقت للشبكة حتى %s</string>
+    <string name="pref_title_clear_cache">مسح ذاكرة التخزين المؤقت</string>
+    <string name="pref_summary_clear_cache">قيد الاستخدام حاليًا: %s</string>
+    <string name="error_invalid_number">الرجاء إدخال رقم صالح</string>
+    <string name="error_cache_negative">لا يمكن أن يكون حجم ذاكرة التخزين المؤقت سالبًا</string>
+    <string name="error_cache_too_large">ذاكرة التخزين المؤقت كبيرة جدًا</string>
+    <string name="hint_available_space">متاح: %s</string>
 </resources>

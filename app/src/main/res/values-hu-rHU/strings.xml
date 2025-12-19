@@ -130,6 +130,7 @@
     <string name="message_text_copied">Szöveg másolva a vágólapra</string>
     <string name="message_link_copied">Link másolva a vágólapra</string>
     <string name="message_blocked_local">Helyi fájl betöltése blokkolva</string>
+    <string name="message_no_app_available">Nincs elérhető alkalmazás a link megnyitásához</string>
     <string name="licenses">Nyílt forráskódú licencek</string>
     <string name="suggestion">Keresés</string>
     <string name="checking_for_updates">Frissítések keresése…</string>
@@ -638,4 +639,15 @@
     <string name="action_full_menu">Teljes menü</string>
     <string name="settings_summary_full_menu">Teljes menü megjelenítése</string>
     <string name="action_launch">Indítás</string>
+    <string name="pref_title_network_engine">Hálózati motor</string>
+    <string name="pref_summary_network_engine">Válassza ki, melyik hálózati motor kezelje a kéréseket</string>
+    <string name="settings_network">Hálózat</string>
+    <string name="pref_title_network_cache_size">Gyorsítótár mérete</string>
+    <string name="pref_message_network_cache_size">Adja meg a hálózati gyorsítótár méretét, legfeljebb %s</string>
+    <string name="pref_title_clear_cache">Gyorsítótár törlése</string>
+    <string name="pref_summary_clear_cache">Jelenleg használva: %s</string>
+    <string name="error_invalid_number">Kérjük, adjon meg érvényes számot</string>
+    <string name="error_cache_negative">A gyorsítótár mérete nem lehet negatív</string>
+    <string name="error_cache_too_large">A gyorsítótár túl nagy</string>
+    <string name="hint_available_space">Elérhető: %s</string>
 </resources>
