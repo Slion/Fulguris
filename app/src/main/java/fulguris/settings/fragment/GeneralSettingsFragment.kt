@@ -120,11 +120,12 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
         // OkHttp cache size preference - only enabled when OkHttp engine is selected
         findPreference<x.EditTextPreference>(getString(R.string.pref_key_network_cache_size))?.apply {
-            isEnabled = userPreferences.networkEngine == "okhttp"
+            val currentEngine = networkEngineManager.getCurrentEngine()
+            isEnabled = currentEngine != null && currentEngine.supportsCache()
 
             // Calculate available disk space and format hint
-            val cacheDir = requireContext().cacheDir
-            val availableBytes = cacheDir.usableSpace
+            // Use the parent directory (cacheDir) for available space, not the cache subdirectory
+            val availableBytes = requireContext().cacheDir.usableSpace
             val availableMB = availableBytes / (1024L * 1024L)
             val availableGB = availableBytes / (1024L * 1024L * 1024L)
 
@@ -159,6 +160,21 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                 // Now notify the OkHttp engine to recreate its client with new cache size
                 (networkEngineManager.getCurrentEngine() as? fulguris.network.NetworkEngineOkHttp)?.recreateClient()
                 true // Accept the change
+            }
+        }
+
+        // Clear cache preference - shows current cache size and allows clearing
+        findPreference<Preference>(getString(R.string.pref_key_clear_network_cache))?.apply {
+            // Update summary with current cache size
+            updateCacheSizeSummary()
+
+            // Only enabled when current engine supports caching
+            val currentEngine = networkEngineManager.getCurrentEngine()
+            isEnabled = currentEngine != null && currentEngine.supportsCache()
+
+            setOnPreferenceClickListener {
+                clearNetworkCache()
+                true
             }
         }
 
@@ -636,9 +652,17 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     networkEngineManager.selectEngine(selectedId)
                     summaryUpdater.updateSummary(names[which])
 
-                    // Enable/disable cache size preference based on selected engine
+                    // Enable/disable cache size preference based on selected engine's cache support
                     findPreference<androidx.preference.EditTextPreference>(getString(R.string.pref_key_network_cache_size))?.apply {
-                        isEnabled = networkEngineManager.getCurrentEngine() is fulguris.network.NetworkEngineOkHttp
+                        val selectedEngine = networkEngineManager.getCurrentEngine()
+                        isEnabled = selectedEngine != null && selectedEngine.supportsCache()
+                    }
+
+                    // Enable/disable clear cache preference based on selected engine's cache support
+                    findPreference<Preference>(getString(R.string.pref_key_clear_network_cache))?.apply {
+                        val selectedEngine = networkEngineManager.getCurrentEngine()
+                        isEnabled = selectedEngine != null && selectedEngine.supportsCache()
+                        updateCacheSizeSummary()
                     }
 
                     dialog.dismiss()
@@ -649,10 +673,66 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         return true
     }
 
+    /**
+     * Format cache size in bytes to human-readable string (MB or GB)
+     */
+    private fun formatCacheSize(sizeBytes: Long): String {
+        val sizeMB = sizeBytes / (1024L * 1024L)
+        val sizeGB = sizeBytes / (1024L * 1024L * 1024L)
+
+        return if (sizeMB >= 1024) {
+            "$sizeGB GB"
+        } else {
+            "$sizeMB MB"
+        }
+    }
+
+    /**
+     * Update the clear cache preference summary with current cache size from the engine
+     */
+    private fun Preference.updateCacheSizeSummary() {
+        val engine = networkEngineManager.getCurrentEngine()
+        val cacheSize = if (engine != null && engine.supportsCache()) {
+            formatCacheSize(engine.cacheUsedSize())
+        } else {
+            "0 MB"
+        }
+        summary = getString(R.string.pref_summary_clear_cache, cacheSize)
+    }
+
+    /**
+     * Clear the cache using the engine's cache management
+     */
+    private fun clearNetworkCache() {
+        val engine = networkEngineManager.getCurrentEngine()
+        if (engine != null && engine.supportsCache()) {
+            val success = engine.clearCache()
+
+            if (success) {
+                // Show success message
+                android.widget.Toast.makeText(
+                    requireContext(),
+                    R.string.message_cache_cleared,
+                    android.widget.Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            // Update the summary to show current size (should be 0 MB after clearing)
+            findPreference<Preference>(getString(R.string.pref_key_clear_network_cache))?.apply {
+                updateCacheSizeSummary()
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         // Update default browser preference summary when returning to settings screen
         defaultBrowserPreference?.updateDefaultBrowserInfo()
+
+        // Update cache size summary
+        findPreference<Preference>(getString(R.string.pref_key_clear_network_cache))?.apply {
+            updateCacheSizeSummary()
+        }
     }
 
     companion object {

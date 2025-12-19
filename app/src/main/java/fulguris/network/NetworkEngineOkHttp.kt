@@ -46,6 +46,8 @@ class NetworkEngineOkHttp(
 
     override val id: String = "okhttp"
 
+    override fun getCacheDir(): File = File(context.cacheDir, "okhttp_cache")
+
     @Volatile
     private var client: OkHttpClient? = null
 
@@ -62,14 +64,11 @@ class NetworkEngineOkHttp(
      * Create a new OkHttp client with current cache size from preferences
      */
     private fun createClient(): OkHttpClient {
-        // Create cache directory in app's cache folder
-        val cacheDir = File(context.cacheDir, "okhttp_cache")
-
         // Get cache size from preferences (convert MB to bytes)
         val cacheSizeMB = userPreferences.okHttpCacheSize.coerceIn(10, 500).toLong()
         val cacheSizeBytes = cacheSizeMB * 1024L * 1024L
 
-        val cache = Cache(cacheDir, cacheSizeBytes)
+        val cache = Cache(getCacheDir(), cacheSizeBytes)
 
         return OkHttpClient.Builder()
             .cache(cache)
@@ -161,6 +160,53 @@ class NetworkEngineOkHttp(
             client = null
         } catch (e: Exception) {
             Timber.e(e, "Error cleaning up OkHttp client")
+        }
+    }
+
+    override fun supportsCache(): Boolean = true
+
+    override fun cacheMaxSize(): Long {
+        return try {
+            // Get the max size from the OkHttp cache
+            getClient().cache?.maxSize() ?: 0L
+        } catch (e: Exception) {
+            Timber.e(e, "Error getting max cache size")
+            0L
+        }
+    }
+
+    override fun cacheUsedSize(): Long {
+        return try {
+            // Flush the cache to ensure all pending writes are complete
+            getClient().cache?.flush()
+
+            // Get the actual used size from OkHttp cache
+            val usedSize = getClient().cache?.size() ?: 0L
+
+            Timber.d("Cache used size: $usedSize bytes")
+            usedSize
+        } catch (e: Exception) {
+            Timber.e(e, "Error calculating cache size")
+            0L
+        }
+    }
+
+    override fun clearCache(): Boolean {
+        return try {
+            // First, try to evict the cache through OkHttp API
+            getClient().cache?.evictAll()
+
+            // Then delete the cache directory to ensure everything is cleared
+            val cacheDir = getCacheDir()
+            if (cacheDir.exists()) {
+                cacheDir.deleteRecursively()
+            }
+
+            Timber.i("OkHttp cache cleared successfully")
+            true
+        } catch (e: Exception) {
+            Timber.e(e, "Error clearing OkHttp cache")
+            false
         }
     }
 

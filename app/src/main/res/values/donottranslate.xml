@@ -48,6 +48,7 @@
     <string name="pref_key_user_agent">pref_key_user_agent</string>
     <string name="pref_key_network_engine">pref_key_network_engine</string>
     <string name="pref_key_network_cache_size">pref_key_network_cache_size</string>
+    <string name="pref_key_clear_network_cache">pref_key_clear_network_cache</string>
 
 
     <!-- On tab close -->

@@ -29,6 +29,12 @@ interface NetworkEngine {
     val id: String
 
     /**
+     * Get the cache directory used by this engine.
+     * Returns null if this engine doesn't use a cache directory.
+     */
+    fun getCacheDir(): java.io.File? = null
+
+    /**
      * Handle a network request and optionally provide a custom response.
      *
      * @param request The WebResourceRequest to handle
@@ -48,5 +54,28 @@ interface NetworkEngine {
      * Use this to clean up any resources.
      */
     fun onDeselected() {}
+
+    /**
+     * Get the maximum configured cache size in bytes.
+     * Returns 0 if this engine doesn't use a cache.
+     */
+    fun cacheMaxSize(): Long = 0L
+
+    /**
+     * Get the currently used cache size in bytes.
+     * Returns 0 if this engine doesn't use a cache.
+     */
+    fun cacheUsedSize(): Long = 0L
+
+    /**
+     * Clear the cache for this engine.
+     * Returns true if cache was cleared successfully, false otherwise.
+     */
+    fun clearCache(): Boolean = false
+
+    /**
+     * Check if this engine supports caching.
+     */
+    fun supportsCache(): Boolean = false
 }
 

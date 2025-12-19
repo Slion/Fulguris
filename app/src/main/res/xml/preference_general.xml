@@ -84,6 +84,13 @@
             app:textGravity="right"
             app:enabled="false" />
 
+        <Preference
+            android:key="@string/pref_key_clear_network_cache"
+            android:title="@string/pref_title_clear_cache"
+            app:icon="@drawable/ic_delete"
+            app:singleLineTitle="false"
+            app:enabled="false" />
+
     </x.PreferenceCategory>
 
 
