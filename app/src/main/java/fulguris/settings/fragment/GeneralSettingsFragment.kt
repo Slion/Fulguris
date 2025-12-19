@@ -133,6 +133,14 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     else -> null // Valid
                 }
             }
+
+            // Notify OkHttp engine when cache size changes
+            setOnPreferenceChangeListener { _, _ ->
+                // Preference is already validated by the validator above
+                // Now notify the OkHttp engine to recreate its client with new cache size
+                (networkEngineManager.getCurrentEngine() as? fulguris.network.NetworkEngineOkHttp)?.recreateClient()
+                true // Accept the change
+            }
         }
 
         val incognitoCheckboxPreference = switchPreference(
@@ -611,7 +619,7 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
 
                     // Enable/disable cache size preference based on selected engine
                     findPreference<androidx.preference.EditTextPreference>(getString(R.string.pref_key_network_cache_size))?.apply {
-                        isEnabled = selectedId == "okhttp"
+                        isEnabled = networkEngineManager.getCurrentEngine() is fulguris.network.NetworkEngineOkHttp
                     }
 
                     dialog.dismiss()

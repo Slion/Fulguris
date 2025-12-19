@@ -46,7 +46,22 @@ class NetworkEngineOkHttp(
 
     override val id: String = "okhttp"
 
-    private val client: OkHttpClient by lazy {
+    @Volatile
+    private var client: OkHttpClient? = null
+
+    /**
+     * Get or create the OkHttp client with current cache settings
+     */
+    private fun getClient(): OkHttpClient {
+        return client ?: synchronized(this) {
+            client ?: createClient().also { client = it }
+        }
+    }
+
+    /**
+     * Create a new OkHttp client with current cache size from preferences
+     */
+    private fun createClient(): OkHttpClient {
         // Create cache directory in app's cache folder
         val cacheDir = File(context.cacheDir, "okhttp_cache")
 
@@ -56,7 +71,7 @@ class NetworkEngineOkHttp(
 
         val cache = Cache(cacheDir, cacheSizeBytes)
 
-        OkHttpClient.Builder()
+        return OkHttpClient.Builder()
             .cache(cache)
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -64,6 +79,24 @@ class NetworkEngineOkHttp(
             .followRedirects(true)
             .followSslRedirects(true)
             .build()
+    }
+
+    /**
+     * Recreate the OkHttp client with updated cache size.
+     * Call this when the cache size preference changes.
+     */
+    fun recreateClient() {
+        synchronized(this) {
+            // Close old client resources
+            client?.apply {
+                dispatcher.executorService.shutdown()
+                connectionPool.evictAll()
+                cache?.close()
+            }
+            // Clear reference so it will be recreated on next request
+            client = null
+        }
+        Timber.i("OkHttp client will be recreated with new cache size on next request")
     }
 
     override fun handleRequest(request: WebResourceRequest): WebResourceResponse? {
@@ -81,7 +114,7 @@ class NetworkEngineOkHttp(
                 .build()
 
             // Execute request
-            val response = client.newCall(okHttpRequest).execute()
+            val response = getClient().newCall(okHttpRequest).execute()
 
             if (!response.isSuccessful) {
                 Timber.w("OkHttp request failed: ${response.code} ${request.url}")
@@ -120,8 +153,12 @@ class NetworkEngineOkHttp(
     override fun onDeselected() {
         // Clean up OkHttp client resources
         try {
-            client.dispatcher.executorService.shutdown()
-            client.connectionPool.evictAll()
+            client?.apply {
+                dispatcher.executorService.shutdown()
+                connectionPool.evictAll()
+                cache?.close()
+            }
+            client = null
         } catch (e: Exception) {
             Timber.e(e, "Error cleaning up OkHttp client")
         }
