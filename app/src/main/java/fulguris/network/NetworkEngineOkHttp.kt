@@ -97,17 +97,30 @@ class NetworkEngineOkHttp(
      * Call this when the cache size preference changes.
      */
     fun recreateClient() {
-        synchronized(this) {
-            // Close old client resources
-            client?.apply {
-                dispatcher.executorService.shutdown()
-                connectionPool.evictAll()
-                cache?.close()
-            }
+        val clientToClose = synchronized(this) {
+            val old = client
             // Clear reference so it will be recreated on next request
             client = null
+            old
         }
+
         Timber.i("OkHttp client will be recreated with new cache size on next request")
+
+        // Close old client resources on background thread to avoid NetworkOnMainThreadException
+        if (clientToClose != null) {
+            Thread {
+                try {
+                    clientToClose.apply {
+                        dispatcher.executorService.shutdown()
+                        connectionPool.evictAll()
+                        cache?.close()
+                    }
+                    Timber.d("Old OkHttp client cleaned up successfully")
+                } catch (e: Exception) {
+                    Timber.e(e, "Error cleaning up old OkHttp client")
+                }
+            }.start()
+        }
     }
 
     override fun handleRequest(request: WebResourceRequest): WebResourceResponse? {
@@ -189,16 +202,24 @@ class NetworkEngineOkHttp(
     }
 
     override fun onDeselected() {
-        // Clean up OkHttp client resources
-        try {
-            client?.apply {
-                dispatcher.executorService.shutdown()
-                connectionPool.evictAll()
-                cache?.close()
-            }
-            client = null
-        } catch (e: Exception) {
-            Timber.e(e, "Error cleaning up OkHttp client")
+        // Clean up OkHttp client resources on background thread to avoid NetworkOnMainThreadException
+        val clientToClose = client
+        client = null
+
+        if (clientToClose != null) {
+            // Execute cleanup in background thread
+            Thread {
+                try {
+                    clientToClose.apply {
+                        dispatcher.executorService.shutdown()
+                        connectionPool.evictAll()
+                        cache?.close()
+                    }
+                    Timber.i("OkHttp client cleaned up successfully")
+                } catch (e: Exception) {
+                    Timber.e(e, "Error cleaning up OkHttp client")
+                }
+            }.start()
         }
     }
 
