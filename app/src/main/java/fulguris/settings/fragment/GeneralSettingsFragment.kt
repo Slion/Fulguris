@@ -119,17 +119,36 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
         )
 
         // OkHttp cache size preference - only enabled when OkHttp engine is selected
-        // TODO: Set dialog message to show free space / drive capacity
         findPreference<x.EditTextPreference>(getString(R.string.pref_key_network_cache_size))?.apply {
             isEnabled = userPreferences.networkEngine == "okhttp"
 
-            // Set up validator for cache size (10-500 MB)
+            // Calculate available disk space and format hint
+            val cacheDir = requireContext().cacheDir
+            val availableBytes = cacheDir.usableSpace
+            val availableMB = availableBytes / (1024L * 1024L)
+            val availableGB = availableBytes / (1024L * 1024L * 1024L)
+
+            // Format as GB if >= 1024 MB, otherwise as MB (hardcoded units - no translation needed)
+            val availableFormatted = if (availableMB >= 1024) {
+                "$availableGB GB"
+            } else {
+                "$availableMB MB"
+            }
+            hint = getString(R.string.hint_available_space, availableFormatted)
+
+            // Calculate max cache size (10% of available space, in MB)
+            val maxCacheSizeMB = (availableMB * 0.1).toInt().coerceAtLeast(10)
+
+            // Set dialog message showing the max cache size (hardcoded MB - no translation needed)
+            dialogMessage = getString(R.string.pref_message_network_cache_size, "$maxCacheSizeMB MB")
+
+            // Set up validator for cache size (0 to 10% of available space)
             validator = { input ->
                 val value = input?.toIntOrNull()
                 when {
                     value == null -> getString(R.string.error_invalid_number)
-                    value < 10 -> getString(R.string.error_cache_too_small)
-                    value > 500 -> getString(R.string.error_cache_too_large)
+                    value < 0 -> getString(R.string.error_cache_negative)
+                    value > maxCacheSizeMB -> getString(R.string.error_cache_too_large)
                     else -> null // Valid
                 }
             }

@@ -74,7 +74,7 @@
         <x.EditTextPreference
             app:key="@string/pref_key_network_cache_size"
             app:title="@string/pref_title_network_cache_size"
-            app:dialogMessage="@string/pref_summary_network_cache_size"
+            app:dialogMessage="@string/pref_message_network_cache_size"
             app:dialogIcon="@drawable/ic_storage_outline"
             app:defaultValue="50"
             app:icon="@drawable/ic_storage_outline"
