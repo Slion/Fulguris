@@ -67,7 +67,8 @@ class NetworkEngineOkHttp(
     private fun createClient(): OkHttpClient {
         // Get cache size from preferences (convert MB to bytes)
         // Parse string to int with default fallback
-        val cacheSizeMB = userPreferences.okHttpCacheSize.toIntOrNull()?.coerceIn(0, 500)?.toLong() ?: 50L
+        // No upper limit here - validator enforces max based on available space
+        val cacheSizeMB = userPreferences.okHttpCacheSize.toIntOrNull()?.coerceAtLeast(0)?.toLong() ?: 50L
         val cacheSizeBytes = cacheSizeMB * 1024L * 1024L
 
         Timber.i("Creating OkHttp client with cache size: $cacheSizeMB MB ($cacheSizeBytes bytes)")
