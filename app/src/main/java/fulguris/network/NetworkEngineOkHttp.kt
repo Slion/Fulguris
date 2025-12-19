@@ -136,14 +136,6 @@ class NetworkEngineOkHttp(
                 return null
             }
 
-            // Build OkHttp request from WebResourceRequest
-            val requestBuilder = Request.Builder().url(url)
-
-            // Copy headers from WebResourceRequest
-            request.requestHeaders?.forEach { (key, value) ->
-                requestBuilder.addHeader(key, value)
-            }
-
             // Handle request method
             // Note: WebResourceRequest doesn't provide access to POST body, so we let WebView handle POST/PUT/PATCH
             when (request.method.uppercase()) {
@@ -153,6 +145,14 @@ class NetworkEngineOkHttp(
                     Timber.v("Delegating ${request.method} request to WebView: ${request.url}")
                     return null
                 }
+            }
+
+            // Build OkHttp request from WebResourceRequest
+            val requestBuilder = Request.Builder().url(url)
+
+            // Copy headers from WebResourceRequest
+            request.requestHeaders?.forEach { (key, value) ->
+                requestBuilder.addHeader(key, value)
             }
 
             // For GET/HEAD/DELETE/OPTIONS, we can handle them (no body needed)

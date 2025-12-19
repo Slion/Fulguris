@@ -53,10 +53,6 @@ class NetworkEngineHttpUrlConnection : NetworkEngine {
                 return null
             }
 
-            // Open connection
-            val url = URL(urlString)
-            connection = url.openConnection() as HttpURLConnection
-
             // Handle request method
             // Note: WebResourceRequest doesn't provide access to POST body, so we let WebView handle POST/PUT/PATCH
             when (request.method.uppercase()) {
@@ -67,6 +63,10 @@ class NetworkEngineHttpUrlConnection : NetworkEngine {
                     return null
                 }
             }
+
+            // Open connection
+            val url = URL(urlString)
+            connection = url.openConnection() as HttpURLConnection
 
             // Set request method (GET/HEAD/DELETE/OPTIONS)
             connection.requestMethod = request.method
