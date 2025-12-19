@@ -23,7 +23,8 @@ class NetworkEngineManager @Inject constructor(
     private val userPreferences: UserPreferences
 ) {
 
-    private val availableEngines = mutableMapOf<String, NetworkEngine>()
+    // LinkedHashMap preserves insertion order
+    private val availableEngines = linkedMapOf<String, NetworkEngine>()
     private var currentEngine: NetworkEngine? = null
 
     init {
@@ -32,10 +33,11 @@ class NetworkEngineManager @Inject constructor(
 
     /**
      * Discover all NetworkEngine implementations.
-     * Manually registers known implementations.
+     * Manually registers known implementations in preferred display order.
      * In the future, could use reflection or annotation processing for automatic discovery.
      */
     private fun discoverEngines() {
+        // Register in preferred display order: WebView, OkHttp, HttpURLConnection
         registerEngine(NetworkEngineWebView())
         registerEngine(NetworkEngineOkHttp(context, userPreferences))
         registerEngine(NetworkEngineHttpUrlConnection())
@@ -52,13 +54,14 @@ class NetworkEngineManager @Inject constructor(
     }
 
     /**
-     * Get all available network engine implementations.
+     * Get all available network engine implementations in registration order.
      * @return List of pairs (id, displayName)
      */
     fun getAvailableEngines(): List<Pair<String, String>> {
+        // LinkedHashMap preserves insertion order, so just map the entries
         return availableEngines.map { (id, engine) ->
             id to engine.displayName
-        }.sortedBy { it.second }
+        }
     }
 
     /**
