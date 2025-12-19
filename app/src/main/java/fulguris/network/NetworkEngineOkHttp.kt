@@ -12,7 +12,6 @@ import android.webkit.WebResourceResponse
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -31,10 +30,14 @@ import java.util.concurrent.TimeUnit
  * - User-configurable HTTP disk cache (default 50MB)
  *
  * **Caching:**
- * - Configurable disk cache size via preferences (10-500 MB)
+ * - Configurable disk cache size via preferences
  * - Cache location: app's cache directory (okhttp_cache subfolder)
  * - Respects HTTP caching headers (Cache-Control, ETag, etc.)
  * - LRU eviction policy
+ *
+ * **Limitations:**
+ * - POST/PUT/PATCH requests are delegated to WebView (Android API doesn't provide request body)
+ * - Only GET, HEAD, DELETE, and OPTIONS requests are handled by OkHttp
  *
  * **Best for:** Advanced users who want better performance and control over networking
  */
@@ -141,17 +144,19 @@ class NetworkEngineOkHttp(
                 requestBuilder.addHeader(key, value)
             }
 
-            // Handle request method - POST/PUT/PATCH require a body
-            val okHttpRequest = when (request.method.uppercase()) {
-                "GET", "HEAD", "DELETE" -> requestBuilder.method(request.method, null).build()
+            // Handle request method
+            // Note: WebResourceRequest doesn't provide access to POST body, so we let WebView handle POST/PUT/PATCH
+            when (request.method.uppercase()) {
                 "POST", "PUT", "PATCH" -> {
-                    // TODO: Get actual POST body from WebResourceRequest if available
-                    // For now, use empty body to prevent crashes
-                    val emptyBody = ByteArray(0).toRequestBody(null)
-                    requestBuilder.method(request.method, emptyBody).build()
+                    // WebView API limitation: We cannot access the request body from WebResourceRequest
+                    // Return null to let WebView handle these requests with the proper body
+                    Timber.v("Delegating ${request.method} request to WebView: ${request.url}")
+                    return null
                 }
-                else -> requestBuilder.method(request.method, null).build()
             }
+
+            // For GET/HEAD/DELETE/OPTIONS, we can handle them (no body needed)
+            val okHttpRequest = requestBuilder.method(request.method, null).build()
 
             // Execute request
             val response = getClient().newCall(okHttpRequest).execute()
