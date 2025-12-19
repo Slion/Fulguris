@@ -9,6 +9,7 @@ package fulguris.network
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import fulguris.settings.preferences.UserPreferences
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,7 +19,8 @@ import javax.inject.Singleton
  */
 @Singleton
 class NetworkEngineManager @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val userPreferences: UserPreferences
 ) {
 
     private val availableEngines = mutableMapOf<String, NetworkEngine>()
@@ -35,7 +37,7 @@ class NetworkEngineManager @Inject constructor(
      */
     private fun discoverEngines() {
         registerEngine(NetworkEngineWebView())
-        registerEngine(NetworkEngineOkHttp(context))
+        registerEngine(NetworkEngineOkHttp(context, userPreferences))
         registerEngine(NetworkEngineHttpUrlConnection())
 
         Timber.i("Discovered ${availableEngines.size} network engines: ${availableEngines.keys}")

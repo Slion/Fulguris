@@ -118,6 +118,23 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
             onClick = ::showNetworkEngineDialog
         )
 
+        // OkHttp cache size preference - only enabled when OkHttp engine is selected
+        // TODO: Set dialog message to show free space / drive capacity
+        findPreference<x.EditTextPreference>(getString(R.string.pref_key_network_cache_size))?.apply {
+            isEnabled = userPreferences.networkEngine == "okhttp"
+
+            // Set up validator for cache size (10-500 MB)
+            validator = { input ->
+                val value = input?.toIntOrNull()
+                when {
+                    value == null -> getString(R.string.error_invalid_number)
+                    value < 10 -> getString(R.string.error_cache_too_small)
+                    value > 500 -> getString(R.string.error_cache_too_large)
+                    else -> null // Valid
+                }
+            }
+        }
+
         val incognitoCheckboxPreference = switchPreference(
             preference = getString(R.string.pref_key_cookies_incognito),
             isEnabled = !Capabilities.FULL_INCOGNITO.isSupported,
@@ -591,6 +608,12 @@ class GeneralSettingsFragment : AbstractSettingsFragment() {
                     userPreferences.networkEngine = selectedId
                     networkEngineManager.selectEngine(selectedId)
                     summaryUpdater.updateSummary(names[which])
+
+                    // Enable/disable cache size preference based on selected engine
+                    findPreference<androidx.preference.EditTextPreference>(getString(R.string.pref_key_network_cache_size))?.apply {
+                        isEnabled = selectedId == "okhttp"
+                    }
+
                     dialog.dismiss()
                 }
                 setNegativeButton(R.string.action_cancel, null)

@@ -34,12 +34,6 @@
         app:icon="@drawable/ic_list_number"
         app:singleLineTitle="false" />
 
-    <Preference
-        android:key="@string/pref_key_network_engine"
-        android:title="@string/pref_title_network_engine"
-        android:summary="@string/pref_summary_network_engine"
-        app:icon="@drawable/ic_network_node_outline"
-        app:singleLineTitle="false" />
 
 
     <x.PreferenceCategory
@@ -63,6 +57,32 @@
             app:icon="@drawable/ic_baseline_open_in_new_24"
             app:singleLineTitle="false"
             app:enumClassName="fulguris.enums.IncomingViewAction" />
+
+    </x.PreferenceCategory>
+
+    <x.PreferenceCategory
+        android:title="@string/settings_network"
+        app:singleLineTitle="false">
+
+        <Preference
+            android:key="@string/pref_key_network_engine"
+            android:title="@string/pref_title_network_engine"
+            android:summary="@string/pref_summary_network_engine"
+            app:icon="@drawable/ic_network_node_outline"
+            app:singleLineTitle="false" />
+
+        <x.EditTextPreference
+            app:key="@string/pref_key_network_cache_size"
+            app:title="@string/pref_title_network_cache_size"
+            app:dialogMessage="@string/pref_summary_network_cache_size"
+            app:dialogIcon="@drawable/ic_storage_outline"
+            app:defaultValue="50"
+            app:icon="@drawable/ic_storage_outline"
+            app:singleLineTitle="false"
+            android:inputType="number"
+            app:suffixText=" MB"
+            app:textGravity="right"
+            app:enabled="false" />
 
     </x.PreferenceCategory>
 

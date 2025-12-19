@@ -47,6 +47,7 @@
     <string name="pref_key_system_gesture_clearance">pref_key_system_gesture_clearance</string>
     <string name="pref_key_user_agent">pref_key_user_agent</string>
     <string name="pref_key_network_engine">pref_key_network_engine</string>
+    <string name="pref_key_network_cache_size">pref_key_network_cache_size</string>
 
 
     <!-- On tab close -->

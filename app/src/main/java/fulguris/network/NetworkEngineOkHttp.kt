@@ -27,10 +27,10 @@ import java.util.concurrent.TimeUnit
  * - Better performance than HttpURLConnection
  * - Supports HTTP/2 and modern protocols
  * - Actively maintained and widely used
- * - Configurable HTTP disk cache (currently 50MB)
+ * - User-configurable HTTP disk cache (default 50MB)
  *
  * **Caching:**
- * - 50MB disk cache configured (can be adjusted in code)
+ * - Configurable disk cache size via preferences (10-500 MB)
  * - Cache location: app's cache directory (okhttp_cache subfolder)
  * - Respects HTTP caching headers (Cache-Control, ETag, etc.)
  * - LRU eviction policy
@@ -38,7 +38,8 @@ import java.util.concurrent.TimeUnit
  * **Best for:** Advanced users who want better performance and control over networking
  */
 class NetworkEngineOkHttp(
-    private val context: android.content.Context
+    private val context: android.content.Context,
+    private val userPreferences: fulguris.settings.preferences.UserPreferences
 ) : NetworkEngine {
 
     override val displayName: String = "OkHttp"
@@ -48,7 +49,12 @@ class NetworkEngineOkHttp(
     private val client: OkHttpClient by lazy {
         // Create cache directory in app's cache folder
         val cacheDir = File(context.cacheDir, "okhttp_cache")
-        val cache = Cache(cacheDir, 50L * 1024L * 1024L) // 50 MB cache
+
+        // Get cache size from preferences (convert MB to bytes)
+        val cacheSizeMB = userPreferences.okHttpCacheSize.coerceIn(10, 500).toLong()
+        val cacheSizeBytes = cacheSizeMB * 1024L * 1024L
+
+        val cache = Cache(cacheDir, cacheSizeBytes)
 
         OkHttpClient.Builder()
             .cache(cache)

@@ -740,4 +740,10 @@
     <string name="action_launch">Launch</string>
     <string name="pref_title_network_engine">Network engine</string>
     <string name="pref_summary_network_engine">Choose which network engine handles requests</string>
+    <string name="settings_network">Network</string>
+    <string name="pref_title_network_cache_size">Cache size</string>
+    <string name="pref_summary_network_cache_size">Disk cache size in MB (10-500)</string>
+    <string name="error_invalid_number">Please enter a valid number</string>
+    <string name="error_cache_too_small">Cache too small, minimum is 10 MB</string>
+    <string name="error_cache_too_large">Cache too large, maximum is 500 MB</string>
 </resources>

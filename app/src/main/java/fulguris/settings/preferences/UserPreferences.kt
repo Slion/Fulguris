@@ -65,6 +65,12 @@ class UserPreferences @Inject constructor(
     var networkEngine by preferences.stringPreference(R.string.pref_key_network_engine, "webview")
 
     /**
+     * OkHttp cache size in megabytes (10-500 MB).
+     * Default: 50 MB
+     */
+    var okHttpCacheSize by preferences.intPreference(R.string.pref_key_network_cache_size, 50)
+
+    /**
      * True if the browser should clear the browser cache when the app is exited, false otherwise.
      */
     var clearCacheExit by preferences.booleanPreference(CLEAR_CACHE_EXIT, false)
