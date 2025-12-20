@@ -29,6 +29,8 @@ class NetworkEngineManager @Inject constructor(
 
     init {
         discoverEngines()
+        // Select the engine based on user preference
+        selectEngine(userPreferences.networkEngine)
     }
 
     /**
@@ -80,6 +82,12 @@ class NetworkEngineManager @Inject constructor(
         if (newEngine == null) {
             Timber.w("Network engine not found: $engineId")
             return false
+        }
+
+        // Only switch engines if it's actually different
+        if (currentEngine == newEngine) {
+            Timber.d("Engine already selected: ${newEngine.displayName}")
+            return true
         }
 
         // Deselect current engine
