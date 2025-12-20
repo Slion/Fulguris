@@ -20,7 +20,7 @@
     <string name="disable">Dezactivează</string>
     <string name="settings">Setări</string>
     <string name="options">Opțiuni</string>
-    <string name="location">Acces locație</string>
+    <string name="pref_title_location">Locație</string>
     <string name="password">Salvează parolele</string>
     <string name="agent">Agent utilizator</string>
     <string name="home">Pagină de start</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\ndonește să folosească:\n\n%2$s</string>
     <string name="title_form_resubmission">Retransmitere formular</string>
     <string name="message_form_resubmission">Dorești să retrimiți datele?</string>
-    <string name="message_location">\nDoește să folosească locația ta</string>
+    <string name="dialog_title_grant_location_access">Utilizați locația?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> dorește să utilizeze locația dispozitivului dvs.]]></string>
     <string name="action_allow">Permite</string>
     <string name="action_dont_allow">Nu permite</string>
     <string name="title_sign_in">Autentificare</string>
@@ -453,7 +454,7 @@
     <string name="settings_title_launch_app">Lansează aplicația</string>
     <string name="action_domain_settings">Domeniu</string>
     <string name="settings_title_domains_delete_all">Șterge toate</string>
-    <string name="settings_summary_domains_delete_all">Șterge toate setările domeniilor</string>
+    <string name="settings_summary_domains_delete_all">Resetează toate setările de domeniu</string>
     <string name="question_delete_all_domain_settings">Ștergi toate setările domeniilor?</string>
     <string name="settings_title_delete_domain_settings">Șterge setările domeniului</string>
     <string name="settings_title_parent">Părinte</string>
@@ -653,4 +654,10 @@
     <string name="error_cache_negative">Dimensiunea cache-ului nu poate fi negativă</string>
     <string name="error_cache_too_large">Cache prea mare</string>
     <string name="hint_available_space">Disponibil: %s</string>
+    <string name="action_reset">Resetare</string>
+    <string name="question_clear_location_permissions">Resetați permisiunile de locație?</string>
+    <string name="settings_title_clear_location_permissions">Resetează permisiunile de locație</string>
+    <string name="settings_summary_clear_location_permissions">Toate site-urile vor trebui să solicite din nou acces la locație</string>
+    <string name="settings_title_geolocation_granted">Locație acordată</string>
+    <string name="settings_title_geolocation_denied">Locație refuzată</string>
 </resources>

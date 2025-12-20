@@ -20,7 +20,7 @@
     <string name="disable">Désactiver</string>
     <string name="settings">Paramètres</string>
     <string name="options">Options</string>
-    <string name="location">Accéder à ma position</string>
+    <string name="pref_title_location">Position</string>
     <string name="password">Enregistrer les mots de passe</string>
     <string name="agent">Agent utilisateur</string>
     <string name="home">Page d\'accueil</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nsouhaite utiliser :\n\n%2$s</string>
     <string name="title_form_resubmission">Nouvel envoi du formulaire</string>
     <string name="message_form_resubmission">Voulez-vous renvoyer les données ?</string>
-    <string name="message_location">\nSouhaiterait utiliser votre position</string>
+    <string name="dialog_title_grant_location_access">Utiliser la position ?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> souhaite utiliser la position de votre appareil]]></string>
     <string name="action_allow">Autoriser</string>
     <string name="action_dont_allow">Refuser</string>
     <string name="title_sign_in">Connexion</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Ouvrir une application</string>
     <string name="action_domain_settings">Domaine</string>
     <string name="settings_title_domains_delete_all">Tout supprimer</string>
-    <string name="settings_summary_domains_delete_all">Supprimer tous les paramètres du domaine</string>
+    <string name="settings_summary_domains_delete_all">Réinitialiser tous les paramètres de domaine</string>
     <string name="question_delete_all_domain_settings">Supprimer tous les paramètres du domaine ?</string>
     <string name="settings_title_delete_domain_settings">Supprimer les paramètres du domaine</string>
     <string name="settings_title_parent">Parent</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">La taille du cache ne peut pas être négative</string>
     <string name="error_cache_too_large">Cache trop volumineux</string>
     <string name="hint_available_space">Disponible: %s</string>
+    <string name="action_reset">Réinitialiser</string>
+    <string name="question_clear_location_permissions">Réinitialiser les autorisations de position ?</string>
+    <string name="settings_title_clear_location_permissions">Réinitialiser les autorisations de position</string>
+    <string name="settings_summary_clear_location_permissions">Tous les sites devront redemander l\'accès à la position</string>
+    <string name="settings_title_geolocation_granted">Position accordée</string>
+    <string name="settings_title_geolocation_denied">Position refusée</string>
 </resources>

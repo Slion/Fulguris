@@ -20,7 +20,7 @@
     <string name="disable">تعطيل</string>
     <string name="settings">إعدادات المتصفح</string>
     <string name="options">خيارات</string>
-    <string name="location">الوصول إلى موقعك</string>
+    <string name="pref_title_location">الموقع</string>
     <string name="password">حفظ كلمات السر</string>
     <string name="agent">وكيل المستخدم</string>
     <string name="home">الصفحة الرئيسية</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nيرغب في استخدام:\n\n%2$s</string>
     <string name="title_form_resubmission">إعادة تقديم الاستمارة</string>
     <string name="message_form_resubmission">هل ترغب في إِعادة إرسال البيانات؟</string>
-    <string name="message_location">\nترغب في استخدام موقعك</string>
+    <string name="dialog_title_grant_location_access">استخدام الموقع؟</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> يريد استخدام موقع جهازك]]></string>
     <string name="action_allow">السماح</string>
     <string name="action_dont_allow">عدم السماح</string>
     <string name="title_sign_in">تسجل الدخول</string>
@@ -456,7 +457,7 @@
     <string name="settings_title_launch_app">تشغيل التطبيق</string>
     <string name="action_domain_settings">إعدادات النطاق</string>
     <string name="settings_title_domains_delete_all">حذف الكل</string>
-    <string name="settings_summary_domains_delete_all">حذف جميع إعدادات النطاقات</string>
+    <string name="settings_summary_domains_delete_all">إعادة تعيين جميع إعدادات النطاق</string>
     <string name="question_delete_all_domain_settings">حذف جميع إعدادات النطاقات؟</string>
     <string name="settings_title_delete_domain_settings">حذف إعدادات النطاق</string>
     <string name="settings_title_parent">الأصل</string>
@@ -662,4 +663,10 @@
     <string name="error_cache_negative">لا يمكن أن يكون حجم ذاكرة التخزين المؤقت سالبًا</string>
     <string name="error_cache_too_large">ذاكرة التخزين المؤقت كبيرة جدًا</string>
     <string name="hint_available_space">متاح: %s</string>
+    <string name="action_reset">إعادة تعيين</string>
+    <string name="question_clear_location_permissions">إعادة تعيين أذونات الموقع؟</string>
+    <string name="settings_title_clear_location_permissions">إعادة تعيين أذونات الموقع</string>
+    <string name="settings_summary_clear_location_permissions">سيتعين على جميع المواقع أن تطلب مرة أخرى للوصول إلى الموقع</string>
+    <string name="settings_title_geolocation_granted">تم منح الموقع</string>
+    <string name="settings_title_geolocation_denied">تم رفض الموقع</string>
 </resources>

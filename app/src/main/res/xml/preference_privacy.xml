@@ -107,13 +107,6 @@
             app:singleLineTitle="false"
             />
 
-        <x.SwitchPreference
-            android:defaultValue="true"
-            android:key="location"
-            android:title="@string/location"
-            app:icon="@drawable/ic_location"
-            app:singleLineTitle="false"
-            />
 
         <x.SwitchPreference
             android:defaultValue="true"

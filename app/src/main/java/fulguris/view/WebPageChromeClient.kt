@@ -20,6 +20,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.text.parseAsHtml
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.EntryPointAccessors
 import fulguris.R
@@ -56,6 +57,7 @@ class WebPageChromeClient(
     val webRtcPermissionsModel: WebRtcPermissionsModel = hiltEntryPoint.webRtcPermissionsModel
     val diskScheduler: Scheduler = hiltEntryPoint.diskScheduler()
     private val themeColorJs = hiltEntryPoint.themeColorJs
+
 
     override fun onProgressChanged(view: WebView, newProgress: Int) {
         Timber.v("onProgressChanged: $newProgress")
@@ -238,32 +240,55 @@ class WebPageChromeClient(
         }
     }
 
+    /**
+     * From [WebChromeClient.onGeolocationPermissionsShowPrompt]
+     *
+     * NOTE: This callback will ONLY be triggered if:
+     * 1. WebView geolocation is enabled via settings.setGeolocationEnabled(true)
+     *    (controlled per-domain via DomainPreferences.location)
+     * 2. Android system location permissions are ALREADY granted (ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION)
+     * 3. A website requests geolocation access via JavaScript (navigator.geolocation.getCurrentPosition)
+     * 4. The site hasn't already been granted/denied permission
+     *
+     * If this is not being called:
+     * - Check the domain-specific location permission in domain settings
+     * - Check Android location permissions are granted (Settings > Apps > Fulguris > Permissions > Location)
+     * - Look for "cr_LocationProvider" errors in logcat indicating missing Android permissions
+     */
     override fun onGeolocationPermissionsShowPrompt(origin: String,
-                                                    callback: GeolocationPermissions.Callback) =
+                                                    callback: GeolocationPermissions.Callback) {
+        Timber.d("onGeolocationPermissionsShowPrompt: $origin")
+
+        // Request Android permissions if not granted
         PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, geoLocationPermissions, object : PermissionsResultAction() {
             override fun onGranted() {
                 val remember = true
                 MaterialAlertDialogBuilder(activity).apply {
-                    setTitle(activity.getString(R.string.location))
-                    val org = if (origin.length > 50) {
-                        "${origin.subSequence(0, 50)}..."
+                    setIcon(R.drawable.ic_location)
+                    setTitle(activity.getString(R.string.dialog_title_grant_location_access))
+                    // Strip URL scheme, trailing slash, and truncate if needed
+                    val domain = origin.removePrefix("https://").removePrefix("http://").removeSuffix("/")
+                    val displayDomain = if (domain.length > 50) {
+                        "${domain.subSequence(0, 50)}..."
                     } else {
-                        origin
+                        domain
                     }
-                    setMessage(org + activity.getString(R.string.message_location))
+                    setMessage(activity.getString(R.string.dialog_message_grant_location_access, displayDomain).parseAsHtml())
                     setCancelable(true)
-                    setPositiveButton(activity.getString(R.string.action_allow)) { _, _ ->
+                    setPositiveButton(activity.getString(R.string.action_yes)) { _, _ ->
                         callback.invoke(origin, true, remember)
                     }
-                    setNegativeButton(activity.getString(R.string.action_dont_allow)) { _, _ ->
+                    setNegativeButton(activity.getString(R.string.action_no)) { _, _ ->
                         callback.invoke(origin, false, remember)
                     }
                 }.launch()
             }
 
-            override fun onDenied(permission: String) =//TODO show message and/or turn off setting
-                Unit
+            override fun onDenied(permission: String) {
+                callback.invoke(origin, false, false)
+            }
         })
+    }
 
     override fun onCreateWindow(view: WebView, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message): Boolean {
         Timber.d("onCreateWindow")

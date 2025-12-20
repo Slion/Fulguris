@@ -20,7 +20,7 @@
     <string name="disable">Deaktivieren</string>
     <string name="settings">Einstellungen</string>
     <string name="options">Optionen</string>
-    <string name="location">Standortzugriff erlauben</string>
+    <string name="pref_title_location">Standort</string>
     <string name="password">Deine Passwörter speichern</string>
     <string name="agent">User-Agent</string>
     <string name="home">Startseite</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nwürde gerne \n\n%2$s benutzen.</string>
     <string name="title_form_resubmission">Formularneuzustellung</string>
     <string name="message_form_resubmission">Daten erneut senden?</string>
-    <string name="message_location">Meine Position verwenden?</string>
+    <string name="dialog_title_grant_location_access">Standort verwenden?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> möchte den Standort Ihres Geräts verwenden]]></string>
     <string name="action_allow">Erlauben</string>
     <string name="action_dont_allow">Nicht erlauben</string>
     <string name="title_sign_in">Anmelden</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">App starten</string>
     <string name="action_domain_settings">Domain</string>
     <string name="settings_title_domains_delete_all">Alle löschen</string>
-    <string name="settings_summary_domains_delete_all">Alle Domains-Einstellungen löschen</string>
+    <string name="settings_summary_domains_delete_all">Alle Domain-Einstellungen zurücksetzen</string>
     <string name="question_delete_all_domain_settings">Möchten sie alle Domains-Einstellungen löschen?</string>
     <string name="settings_title_delete_domain_settings">Domain-Einstellungen löschen</string>
     <string name="settings_title_parent">Übergeordnet</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">Cache-Größe darf nicht negativ sein</string>
     <string name="error_cache_too_large">Cache zu groß</string>
     <string name="hint_available_space">Verfügbar: %s</string>
+    <string name="action_reset">Zurücksetzen</string>
+    <string name="question_clear_location_permissions">Standortberechtigungen zurücksetzen?</string>
+    <string name="settings_title_clear_location_permissions">Standortberechtigungen zurücksetzen</string>
+    <string name="settings_summary_clear_location_permissions">Alle Websites müssen erneut um Standortzugriff bitten</string>
+    <string name="settings_title_geolocation_granted">Standort gewährt</string>
+    <string name="settings_title_geolocation_denied">Standort abgelehnt</string>
 </resources>

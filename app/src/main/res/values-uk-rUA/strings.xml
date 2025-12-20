@@ -20,7 +20,7 @@
     <string name="disable">Вимкнути</string>
     <string name="settings">Налаштування</string>
     <string name="options">Опції</string>
-    <string name="location">Доступ до місцеперебування</string>
+    <string name="pref_title_location">Місцезнаходження</string>
     <string name="password">Зберігати паролі</string>
     <string name="agent">Агент користувача</string>
     <string name="home">Домівка</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nбажає використовувати:\n\n%2$s</string>
     <string name="title_form_resubmission">Повторне подання форми</string>
     <string name="message_form_resubmission">Відправити повторно дані?</string>
-    <string name="message_location">\nПовідомляти Ваше місцеперебування?</string>
+    <string name="dialog_title_grant_location_access">Використовувати місцезнаходження?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> хоче використовувати місцезнаходження вашого пристрою]]></string>
     <string name="action_allow">Дозволити</string>
     <string name="action_dont_allow">Не дозволяти</string>
     <string name="title_sign_in">Увійти</string>
@@ -454,7 +455,7 @@
     <string name="settings_title_launch_app">Запуск додатку</string>
     <string name="action_domain_settings">Домен</string>
     <string name="settings_title_domains_delete_all">Видалити все</string>
-    <string name="settings_summary_domains_delete_all">Видалити всі налаштування домену</string>
+    <string name="settings_summary_domains_delete_all">Скинути всі налаштування домену</string>
     <string name="question_delete_all_domain_settings">Видалити всі налаштування домену?</string>
     <string name="settings_title_delete_domain_settings">Видалити налаштування домену</string>
     <string name="settings_title_parent">Батьківський</string>
@@ -656,4 +657,10 @@
     <string name="error_cache_negative">Розмір кешу не може бути негативним</string>
     <string name="error_cache_too_large">Кеш занадто великий</string>
     <string name="hint_available_space">Доступно: %s</string>
+    <string name="action_reset">Скинути</string>
+    <string name="question_clear_location_permissions">Скинути дозволи на місцезнаходження?</string>
+    <string name="settings_title_clear_location_permissions">Скинути дозволи на місцезнаходження</string>
+    <string name="settings_summary_clear_location_permissions">Усі сайти повинні будуть знову запитати доступ до місцезнаходження</string>
+    <string name="settings_title_geolocation_granted">Місцезнаходження надано</string>
+    <string name="settings_title_geolocation_denied">Місцезнаходження відхилено</string>
 </resources>

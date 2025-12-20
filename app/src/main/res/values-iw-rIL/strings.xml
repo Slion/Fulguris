@@ -20,7 +20,7 @@
     <string name="disable">Disable</string>
     <string name="settings">הגדרות דפדפן</string>
     <string name="options">Options</string>
-    <string name="location">מאפשר לאתרים לגשת למיקומך</string>
+    <string name="pref_title_location">מיקום</string>
     <string name="password">שמור את הסיסמאות שלך</string>
     <string name="agent">סוכן משתמש</string>
     <string name="home">דף הבית</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nwould like to use:\n\n%2$s</string>
     <string name="title_form_resubmission">Form resubmission</string>
     <string name="message_form_resubmission">Would you like to resend the data?</string>
-    <string name="message_location">\nWould like to use your location</string>
+    <string name="dialog_title_grant_location_access">להשתמש במיקום?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> רוצה להשתמש במיקום המכשיר שלך]]></string>
     <string name="action_allow">Allow</string>
     <string name="action_dont_allow">Don\'t allow</string>
     <string name="title_sign_in">Sign in</string>
@@ -454,7 +455,7 @@
     <string name="settings_title_launch_app">Launch app</string>
     <string name="action_domain_settings">Domain</string>
     <string name="settings_title_domains_delete_all">Delete all</string>
-    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
+    <string name="settings_summary_domains_delete_all">אפס את כל הגדרות הדומיין</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_title_parent">Parent</string>
@@ -656,4 +657,10 @@
     <string name="error_cache_negative">גודל המטמון לא יכול להיות שלילי</string>
     <string name="error_cache_too_large">מטמון גדול מדי</string>
     <string name="hint_available_space">זמין: %s</string>
+    <string name="action_reset">איפוס</string>
+    <string name="question_clear_location_permissions">לאפס הרשאות מיקום?</string>
+    <string name="settings_title_clear_location_permissions">אפס הרשאות מיקום</string>
+    <string name="settings_summary_clear_location_permissions">כל האתרים יצטרכו לבקש שוב גישה למיקום</string>
+    <string name="settings_title_geolocation_granted">מיקום הוענק</string>
+    <string name="settings_title_geolocation_denied">מיקום נדחה</string>
 </resources>

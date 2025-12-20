@@ -20,7 +20,7 @@
     <string name="disable">Inaktivera</string>
     <string name="settings">Inställningar</string>
     <string name="options">Alternativ</string>
-    <string name="location">Platsåtkomst</string>
+    <string name="pref_title_location">Plats</string>
     <string name="password">Spara dina lösenord</string>
     <string name="agent">Använderagent</string>
     <string name="home">Startsida</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nvill använda:\n\n%2$s</string>
     <string name="title_form_resubmission">Återinlämning av formulär</string>
     <string name="message_form_resubmission">Vill du skicka in uppgifterna igen?</string>
-    <string name="message_location">\nVill använda din plats</string>
+    <string name="dialog_title_grant_location_access">Använda plats?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> vill använda din enhets plats]]></string>
     <string name="action_allow">Tillåt</string>
     <string name="action_dont_allow">Tillåt inte</string>
     <string name="title_sign_in">Logga in</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Starta app</string>
     <string name="action_domain_settings">Domän</string>
     <string name="settings_title_domains_delete_all">Ta bort alla</string>
-    <string name="settings_summary_domains_delete_all">Ta bort alla domäninställningar</string>
+    <string name="settings_summary_domains_delete_all">Återställ alla domäninställningar</string>
     <string name="question_delete_all_domain_settings">Ta bort alla domäninställningar?</string>
     <string name="settings_title_delete_domain_settings">Ta bort domäninställningar</string>
     <string name="settings_title_parent">Förälder</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">Cachestorlek kan inte vara negativ</string>
     <string name="error_cache_too_large">Cache för stor</string>
     <string name="hint_available_space">Tillgängligt: %s</string>
+    <string name="action_reset">Återställ</string>
+    <string name="question_clear_location_permissions">Återställ platsbehörigheter?</string>
+    <string name="settings_title_clear_location_permissions">Återställ platsbehörigheter</string>
+    <string name="settings_summary_clear_location_permissions">Alla webbplatser måste be om platsåtkomst igen</string>
+    <string name="settings_title_geolocation_granted">Plats beviljad</string>
+    <string name="settings_title_geolocation_denied">Plats nekad</string>
 </resources>

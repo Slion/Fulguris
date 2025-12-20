@@ -35,6 +35,14 @@
         tools:ignore="PrivateResource" />
 
     <x.SwitchPreference
+        a:defaultValue="true"
+        a:key="@string/pref_key_location"
+        a:title="@string/pref_title_location"
+        a:icon="@drawable/ic_location"
+        a:iconSpaceReserved="false"
+        a:singleLineTitle="false" />
+
+    <x.SwitchPreference
         a:defaultValue="false"
         a:key="@string/pref_key_dark_mode"
         a:title="@string/settings_title_dark_mode_default"

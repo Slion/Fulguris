@@ -20,7 +20,7 @@
     <string name="disable">Desabilitar</string>
     <string name="settings">Configurações</string>
     <string name="options">Opções</string>
-    <string name="location">Acesso à localização</string>
+    <string name="pref_title_location">Localização</string>
     <string name="password">Salvar senhas</string>
     <string name="agent">Agente de usuário</string>
     <string name="home">Página inicial</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\ngostaria de usar:\n\n%2$s</string>
     <string name="title_form_resubmission">Submissão de formulário</string>
     <string name="message_form_resubmission">Gostaria de reenviar os dados?</string>
-    <string name="message_location">\nGostaria de utilizar a sua localização</string>
+    <string name="dialog_title_grant_location_access">Usar localização?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> quer usar a localização do seu dispositivo]]></string>
     <string name="action_allow">Sim</string>
     <string name="action_dont_allow">Não</string>
     <string name="title_sign_in">Iniciar sessão</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Abrir aplicativo</string>
     <string name="action_domain_settings">Domínio</string>
     <string name="settings_title_domains_delete_all">Excluir tudo</string>
-    <string name="settings_summary_domains_delete_all">Excluir todas as configurações do domínio</string>
+    <string name="settings_summary_domains_delete_all">Redefinir todas as configurações de domínio</string>
     <string name="question_delete_all_domain_settings">Excluir todas as configurações do domínio?</string>
     <string name="settings_title_delete_domain_settings">Excluir configurações do domínio</string>
     <string name="settings_title_parent">Domínio pai</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">O tamanho do cache não pode ser negativo</string>
     <string name="error_cache_too_large">Cache muito grande</string>
     <string name="hint_available_space">Disponível: %s</string>
+    <string name="action_reset">Redefinir</string>
+    <string name="question_clear_location_permissions">Redefinir permissões de localização?</string>
+    <string name="settings_title_clear_location_permissions">Redefinir permissões de localização</string>
+    <string name="settings_summary_clear_location_permissions">Todos os sites terão que pedir acesso à localização novamente</string>
+    <string name="settings_title_geolocation_granted">Localização concedida</string>
+    <string name="settings_title_geolocation_denied">Localização negada</string>
 </resources>

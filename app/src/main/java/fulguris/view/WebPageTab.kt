@@ -650,7 +650,7 @@ class WebPageTab(
         setColorMode(userPreferences.renderingMode)
 
         if (!isIncognito) {
-            settings.setGeolocationEnabled(userPreferences.locationEnabled)
+            settings.setGeolocationEnabled(defaultDomainSettings.locationEnabled)
         } else {
             settings.setGeolocationEnabled(false)
         }

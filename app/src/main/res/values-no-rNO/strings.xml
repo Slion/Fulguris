@@ -20,7 +20,7 @@
     <string name="disable">Deaktiver</string>
     <string name="settings">Innstillinger</string>
     <string name="options">Alternativer</string>
-    <string name="location">Plasseringstilgang</string>
+    <string name="pref_title_location">Plassering</string>
     <string name="password">Lagre passordene dine</string>
     <string name="agent">Brukeragent</string>
     <string name="home">Startside</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nønsker å bruke:\n\n%2$s</string>
     <string name="title_form_resubmission">Skjemainnsending på nytt</string>
     <string name="message_form_resubmission">Vil du sende dataene på nytt?</string>
-    <string name="message_location">\nØnsker å bruke plasseringen din</string>
+    <string name="dialog_title_grant_location_access">Bruke plassering?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> vil bruke enhetens plassering]]></string>
     <string name="action_allow">Tillat</string>
     <string name="action_dont_allow">Ikke tillat</string>
     <string name="title_sign_in">Logg inn</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Start app</string>
     <string name="action_domain_settings">Domene</string>
     <string name="settings_title_domains_delete_all">Slett alle</string>
-    <string name="settings_summary_domains_delete_all">Slett alle domeneinnstillinger</string>
+    <string name="settings_summary_domains_delete_all">Tilbakestill alle domeneinnstillinger</string>
     <string name="question_delete_all_domain_settings">Slett alle domeneinnstillinger?</string>
     <string name="settings_title_delete_domain_settings">Slett domeneinnstillinger</string>
     <string name="settings_title_parent">Overordnet</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">Hurtigbufferstørrelse kan ikke være negativ</string>
     <string name="error_cache_too_large">Hurtigbuffer for stor</string>
     <string name="hint_available_space">Tilgjengelig: %s</string>
+    <string name="action_reset">Tilbakestill</string>
+    <string name="question_clear_location_permissions">Tilbakestill plasseringstillatelser?</string>
+    <string name="settings_title_clear_location_permissions">Tilbakestill plasseringstillatelser</string>
+    <string name="settings_summary_clear_location_permissions">Alle nettsteder må be om plasseringstilgang på nytt</string>
+    <string name="settings_title_geolocation_granted">Plassering gitt</string>
+    <string name="settings_title_geolocation_denied">Plassering nektet</string>
 </resources>

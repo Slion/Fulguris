@@ -20,7 +20,7 @@
     <string name="disable">Onemogući</string>
     <string name="settings">Postavke</string>
     <string name="options">Opcije</string>
-    <string name="location">Pristup lokaciji</string>
+    <string name="pref_title_location">Lokacija</string>
     <string name="password">Spremi lozinke</string>
     <string name="agent">Identifikacija</string>
     <string name="home">Početna stranica</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nželi koristiti:\n\n%2$s</string>
     <string name="title_form_resubmission">Ponovno slanje obrasca</string>
     <string name="message_form_resubmission">Želite li ponovno poslati podatke?</string>
-    <string name="message_location">\nŽelite li koristiti svoju lokaciju</string>
+    <string name="dialog_title_grant_location_access">Koristiti lokaciju?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> želi koristiti lokaciju vašeg uređaja]]></string>
     <string name="action_allow">Dopusti</string>
     <string name="action_dont_allow">Ne dopusti</string>
     <string name="title_sign_in">Prijava</string>
@@ -453,7 +454,7 @@
     <string name="settings_title_launch_app">Pokrenite aplikaciju</string>
     <string name="action_domain_settings">Domena</string>
     <string name="settings_title_domains_delete_all">Izbrisati sve</string>
-    <string name="settings_summary_domains_delete_all">Izbrišite sve postavke domene</string>
+    <string name="settings_summary_domains_delete_all">Resetuj sve postavke domena</string>
     <string name="question_delete_all_domain_settings">Želite li izbrisati sve postavke domene?</string>
     <string name="settings_title_delete_domain_settings">Izbrišite postavke domene</string>
     <string name="settings_title_parent">Roditelj</string>
@@ -653,4 +654,10 @@
     <string name="error_cache_negative">Veličina predmemorije ne može biti negativna</string>
     <string name="error_cache_too_large">Predmemorija prevelika</string>
     <string name="hint_available_space">Dostupno: %s</string>
+    <string name="action_reset">Resetuj</string>
+    <string name="question_clear_location_permissions">Resetovati dozvole za lokaciju?</string>
+    <string name="settings_title_clear_location_permissions">Resetuj dozvole za lokaciju</string>
+    <string name="settings_summary_clear_location_permissions">Svi sajtovi će morati ponovo tražiti pristup lokaciji</string>
+    <string name="settings_title_geolocation_granted">Lokacija odobrena</string>
+    <string name="settings_title_geolocation_denied">Lokacija odbijena</string>
 </resources>

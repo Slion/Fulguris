@@ -20,7 +20,7 @@
     <string name="disable">Откл.</string>
     <string name="settings">Настройки</string>
     <string name="options">Опции</string>
-    <string name="location">Доступ к местоположению</string>
+    <string name="pref_title_location">Местоположение</string>
     <string name="password">Сохранять пароли</string>
     <string name="agent">Агент пользователя</string>
     <string name="home">Новая вкладка</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nхотел бы использовать:\n\n%2$s</string>
     <string name="title_form_resubmission">Повторная отправка формы</string>
     <string name="message_form_resubmission">Хотите отправить данные повторно?</string>
-    <string name="message_location">\nХотите использовать своё местоположение?</string>
+    <string name="dialog_title_grant_location_access">Использовать местоположение?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> хочет использовать местоположение вашего устройства]]></string>
     <string name="action_allow">Разрешить</string>
     <string name="action_dont_allow">Не разрешать</string>
     <string name="title_sign_in">Войти</string>
@@ -454,7 +455,7 @@
     <string name="settings_title_launch_app">Запуск приложения</string>
     <string name="action_domain_settings">Домен</string>
     <string name="settings_title_domains_delete_all">Удалить все</string>
-    <string name="settings_summary_domains_delete_all">Удалить все настройки домена</string>
+    <string name="settings_summary_domains_delete_all">Сбросить все настройки домена</string>
     <string name="question_delete_all_domain_settings">Удалить все настройки домена?</string>
     <string name="settings_title_delete_domain_settings">Удалить настройки домена</string>
     <string name="settings_title_parent">Родительский</string>
@@ -656,4 +657,10 @@
     <string name="error_cache_negative">Размер кэша не может быть отрицательным</string>
     <string name="error_cache_too_large">Кэш слишком большой</string>
     <string name="hint_available_space">Доступно: %s</string>
+    <string name="action_reset">Сбросить</string>
+    <string name="question_clear_location_permissions">Сбросить разрешения на местоположение?</string>
+    <string name="settings_title_clear_location_permissions">Сбросить разрешения на местоположение</string>
+    <string name="settings_summary_clear_location_permissions">Все сайты должны будут снова запросить доступ к местоположению</string>
+    <string name="settings_title_geolocation_granted">Местоположение предоставлено</string>
+    <string name="settings_title_geolocation_denied">Местоположение отклонено</string>
 </resources>

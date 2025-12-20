@@ -9,9 +9,12 @@ import fulguris.dialog.BrowserDialog
 import fulguris.dialog.DialogItem
 import fulguris.extensions.snackbar
 import fulguris.isSupported
+import fulguris.permissions.PermissionsManager
+import fulguris.permissions.PermissionsResultAction
 import fulguris.settings.preferences.UserPreferences
 import fulguris.utils.WebUtils
 import fulguris.view.WebPageTab
+import android.Manifest
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +23,7 @@ import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Completable
 import io.reactivex.Scheduler
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -64,11 +68,8 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
         clickablePreference(preference = SETTINGS_CLEARCOOKIES, onClick = this::clearCookiesDialog)
         clickablePreference(preference = SETTINGS_CLEARWEBSTORAGE, onClick = this::clearWebStorage)
 
-        switchPreference(
-            preference = SETTINGS_LOCATION,
-            isChecked = userPreferences.locationEnabled,
-            onCheckChange = { userPreferences.locationEnabled = it }
-        )
+        // Location/geolocation is now a domain-specific preference
+        // See Settings > Domain settings for per-domain geolocation control
 
         switchPreference(
             preference = SETTINGS_SAVEPASSWORD,
@@ -188,7 +189,6 @@ class PrivacySettingsFragment : AbstractSettingsFragment() {
     }
 
     companion object {
-        private const val SETTINGS_LOCATION = "location"
         private const val SETTINGS_SAVEPASSWORD = "password"
         private const val SETTINGS_CACHEEXIT = "clear_cache_exit"
         private const val SETTINGS_HISTORYEXIT = "clear_history_exit"

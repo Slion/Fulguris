@@ -142,12 +142,6 @@ class UserPreferences @Inject constructor(
      */
     var incognitoPage by preferences.stringPreference(INCOGNITO, Uris.AboutIncognito)
 
-    /**
-     * True if the device location should be accessible by websites, false otherwise.
-     *
-     * NOTE: If this is enabled, permission will still need to be granted on a per-site basis.
-     */
-    var locationEnabled by preferences.booleanPreference(LOCATION, false)
 
     /**
      * True if the browser should load pages zoomed out instead of zoomed in so that the text is
@@ -480,7 +474,6 @@ private const val CLEAR_CACHE_EXIT = "cache"
 private const val DOWNLOAD_DIRECTORY = "downloadLocation"
 private const val HOMEPAGE = "home"
 private const val INCOGNITO = "incognito"
-private const val LOCATION = "location"
 private const val SAVE_PASSWORDS = "passwords"
 private const val SEARCH = "search"
 private const val SEARCH_URL = "searchurl"

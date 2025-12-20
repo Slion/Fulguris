@@ -27,10 +27,8 @@ import fulguris.R
 import fulguris.extensions.reverseDomainName
 import fulguris.settings.NoYesAsk
 import fulguris.enums.IncomingUrlAction
-import fulguris.settings.preferences.delegates.*
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.MODE_MULTI_PROCESS
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
@@ -125,6 +123,13 @@ class DomainPreferences constructor(
     }
 
     /**
+     * Enable or disable geolocation access for this domain (stored preference).
+     * For default domain: stores whether location should be enabled globally.
+     * For specific domains: this property is not used, use [hasLocationPermission] function instead.
+     */
+    var locationEnabled by preferences.booleanPreference(R.string.pref_key_location, true)
+
+    /**
      * True if desktop mode should be enabled by default for new tabs, false otherwise.
      */
     var desktopModeOverride by preferences.booleanPreference(R.string.pref_key_desktop_mode_override, false)
@@ -200,7 +205,7 @@ class DomainPreferences constructor(
     /**
      * Is this the default domain settings?
      */
-    val isDefault: Boolean get() = domain==""
+    val isDefault: Boolean get() = domain.isEmpty()
 
     /**
      * Is this a subdomain settings?
@@ -245,11 +250,21 @@ class DomainPreferences constructor(
      * Generate a summary string showing which overrides are active for this domain
      * Order matches the preference XML file order
      * Returns the domain name if it doesn't exist or has no overrides
+     * @param callback Called with the summary string
      */
-    fun getOverridesSummary(context: Context): String {
-        // If domain settings don't exist, just return the domain name
-        if (!exists(domain)) {
-            return domain.ifEmpty { context.getString(R.string.settings_summary_no_overrides) }
+    fun getOverridesSummary(context: Context, callback: (String) -> Unit) {
+        // If domain settings don't exist and this is not default, just return the domain name
+        if (!isDefault && !exists(domain)) {
+            // Still check for geolocation permission even if no settings file exists
+            checkLocationPermission { geoStatus ->
+                val summary = when (geoStatus) {
+                    true -> context.getString(R.string.settings_title_geolocation_granted)
+                    false -> context.getString(R.string.settings_title_geolocation_denied)
+                    null -> domain.ifEmpty { context.getString(R.string.settings_summary_no_overrides) }
+                }
+                callback(summary)
+            }
+            return
         }
 
         val overrides = mutableListOf<String>()
@@ -277,12 +292,110 @@ class DomainPreferences constructor(
             overrides.add(context.getString(R.string.settings_title_incoming_url_action))
         }
 
-        return if (overrides.isEmpty()) {
-            // Return domain name if no overrides exist
-            domain.ifEmpty { context.getString(R.string.settings_summary_no_overrides) }
-        } else {
-            overrides.joinToString(", ")
+        // Check geolocation permission asynchronously
+        checkLocationPermission { geoStatus ->
+            when (geoStatus) {
+                true -> overrides.add(context.getString(R.string.settings_title_geolocation_granted))
+                false -> overrides.add(context.getString(R.string.settings_title_geolocation_denied))
+                null -> {} // No permission set, don't add to overrides
+            }
+
+            val result = if (overrides.isEmpty()) {
+                // Return domain name if no overrides exist
+                domain.ifEmpty { context.getString(R.string.settings_summary_no_overrides) }
+            } else {
+                overrides.joinToString(", ")
+            }
+            callback(result)
         }
+    }
+
+    /**
+     * Query geolocation permission status for this domain.
+     * Uses WebView's GeolocationPermissions API.
+     * @param callback Called with true if permission is granted, false otherwise
+     */
+    fun hasLocationPermission(callback: (Boolean) -> Unit) {
+        if (isDefault) {
+            callback(locationEnabled)
+            return
+        }
+
+        val origin = "https://$domain"
+        android.webkit.GeolocationPermissions.getInstance().getAllowed(origin) { allowed ->
+            callback(allowed == true)
+        }
+    }
+
+    /**
+     * Check geolocation permission status for this domain.
+     * Since getOrigins() returns both granted and denied origins, we need to:
+     * 1. Check if domain is in the origins list
+     * 2. If yes, use getAllowed() to check if it's granted or denied
+     * @param callback Called with: null if no permission set, true if granted, false if denied
+     */
+    fun checkLocationPermission(callback: (Boolean?) -> Unit) {
+        if (isDefault) {
+            callback(locationEnabled)
+            return
+        }
+
+        // First, check if this domain exists in the origins list
+        android.webkit.GeolocationPermissions.getInstance().getOrigins { origins: Set<String>? ->
+            val matchingOrigin = origins?.firstOrNull { origin ->
+                try {
+                    // Parse the origin as a URI to properly extract just the host
+                    val uri = java.net.URI(origin)
+                    val originDomain = uri.host ?: origin.removePrefix("https://").removePrefix("http://").substringBefore("/").substringBefore(":")
+                    originDomain == domain
+                } catch (e: Exception) {
+                    Timber.w(e, "Failed to parse geolocation origin: $origin")
+                    false
+                }
+            }
+
+            if (matchingOrigin != null) {
+                // Domain has a permission state, check if it's granted or denied
+                android.webkit.GeolocationPermissions.getInstance().getAllowed(matchingOrigin) { allowed ->
+                    callback(allowed)
+                }
+            } else {
+                // Domain not in origins list, no permission set
+                callback(null)
+            }
+        }
+    }
+
+    /**
+     * Grant geolocation permission for this domain.
+     * Uses WebView's GeolocationPermissions API.
+     * This domain will be able to access location without calling [fulguris.view.WebPageChromeClient.onGeolocationPermissionsShowPrompt].
+     */
+    fun grantLocationPermission() {
+        if (isDefault) {
+            Timber.w("grantLocationPermission is noop for default domain settings")
+            return
+        }
+
+        val origin = "https://$domain"
+        android.webkit.GeolocationPermissions.getInstance().allow(origin)
+        Timber.d("Granted geolocation permission for: $origin")
+    }
+
+    /**
+     * Revoke geolocation permission for this domain.
+     * Uses WebView's GeolocationPermissions API.
+     * Next time this domain tries to access location [fulguris.view.WebPageChromeClient.onGeolocationPermissionsShowPrompt] will be called.
+     */
+    fun clearLocationPermission() {
+        if (isDefault) {
+            Timber.w("clearLocationPermission is noop for default domain settings")
+            return
+        }
+
+        val origin = "https://$domain"
+        android.webkit.GeolocationPermissions.getInstance().clear(origin)
+        Timber.d("Revoked geolocation permission for: $origin")
     }
 
     companion object {
@@ -303,10 +416,32 @@ class DomainPreferences constructor(
             get() = "[Domain]" // $packageName
 
         /**
-         *
+         * Check if we have a settings file for the specified domain.
          */
         fun exists(domain: String) : Boolean {
             return File(fileName(domain)).exists()
+        }
+
+        /**
+         * Check if domain should be visible in the domains list.
+         * A domain is visible if:
+         * - It has a settings file, OR
+         * - It has geolocation permission set (granted or denied)
+         * @param domain The domain to check
+         * @param callback Called with true if domain should be visible, false otherwise
+         */
+        fun visible(domain: String, callback: (Boolean) -> Unit) {
+            // Check if settings file exists
+            if (exists(domain)) {
+                callback(true)
+                return
+            }
+
+            // Check if domain has geolocation permission
+            val domainPrefs = DomainPreferences(app, domain)
+            domainPrefs.checkLocationPermission { geoStatus ->
+                callback(geoStatus != null)
+            }
         }
 
         /**
@@ -320,6 +455,7 @@ class DomainPreferences constructor(
         /**
          * Delete all our domain settings
          * Also clears SharedPreferences cache for each domain by calling delete() for each
+         * Note: This does NOT delete the default domain settings (empty domain)
          * TODO: Make it async
          */
         fun deleteAll(ctx : Context) {
@@ -331,6 +467,11 @@ class DomainPreferences constructor(
                     // Extract domain name from filename (remove prefix and .xml suffix)
                     val domainName = file.nameWithoutExtension.substring(prefix.length)
                     val reversedDomain = domainName.reverseDomainName
+
+                    // Skip the default domain settings (empty domain)
+                    if (reversedDomain.isEmpty()) {
+                        return@forEach
+                    }
 
                     // Call delete() to handle both file deletion and cache clearing
                     delete(reversedDomain)
@@ -357,6 +498,14 @@ class DomainPreferences constructor(
             val file = File(fileName(domain))
             val deleted = file.delete()
             Timber.d("Delete ${file.absolutePath}: $deleted")
+        }
+
+        /**
+         * Delete the default domain settings (empty domain).
+         * Also clears the SharedPreferences cache to prevent stale values.
+         */
+        fun deleteDefault() {
+            delete("")
         }
     }
 }

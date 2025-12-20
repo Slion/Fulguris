@@ -300,10 +300,11 @@ def show_help():
     print("    Example:")
     print("      python strings.py --add new_feature_name \"New Feature\"")
     print("    After adding, translate the new string in each language using --set.")
-    print("\n  python strings.py --remove <string_id>")
-    print("    Remove a string from ALL language files")
+    print("\n  python strings.py --remove <string_id> [<string_id2> ...]")
+    print("    Remove one or more strings from ALL language files")
     print("    Example:")
     print("      python strings.py --remove obsolete_string")
+    print("      python strings.py --remove string1 string2 string3")
     print("\n  python strings.py --unused")
     print("    Find strings defined in English but not used in source code")
     print("    Searches .kt, .java, and .xml files for R.string.* and @string/* references")
@@ -1074,7 +1075,6 @@ def remove_string_from_all(string_id):
     print(f"Skipped: {skip_count}")
     print(f"Errors: {error_count}")
     print("=" * 80)
-    sys.exit(0)
 
 def find_changed_strings():
     """Find source strings that have changed and need translation updates.
@@ -1676,11 +1676,17 @@ if len(sys.argv) > 1:
     # Handle remove command
     elif arg == '--remove':
         if len(sys.argv) < arg_start + 2:
-            print("Error: --remove requires 1 argument: <string_id>")
+            print("Error: --remove requires at least 1 argument: <string_id> [<string_id2> ...]")
             print("Example: python strings.py --remove obsolete_string")
+            print("Example: python strings.py --remove string1 string2 string3")
             sys.exit(1)
-        string_id = sys.argv[arg_start + 1]
-        remove_string_from_all(string_id)
+        # Collect all string IDs to remove
+        string_ids = sys.argv[arg_start + 1:]
+        for string_id in string_ids:
+            remove_string_from_all(string_id)
+            if string_id != string_ids[-1]:
+                print()  # Add blank line between removals
+        sys.exit(0)
     # Handle check command
     elif arg == '--check':
         # Parse arguments for check command

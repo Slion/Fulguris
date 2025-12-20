@@ -20,7 +20,7 @@
     <string name="disable">अक्षम करें</string>
     <string name="settings">सेटिंग्स</string>
     <string name="options">विकल्प</string>
-    <string name="location">स्थान एक्सेस</string>
+    <string name="pref_title_location">स्थान</string>
     <string name="password">अपने पासवर्ड सहेजें</string>
     <string name="agent">यूज़र एजेंट</string>
     <string name="home">होमपेज</string>
@@ -169,7 +169,8 @@
     <string name="message_permission_request">%1$s\n\nइसका उपयोग करना चाहेगा:\n\n%2$s</string>
     <string name="title_form_resubmission">फ़ॉर्म पुनः सबमिशन</string>
     <string name="message_form_resubmission">क्या आप डेटा पुनः भेजना चाहते हैं?</string>
-    <string name="message_location">\nआपका स्थान उपयोग करना चाहता है</string>
+    <string name="dialog_title_grant_location_access">स्थान उपयोग करें?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> आपके डिवाइस का स्थान उपयोग करना चाहता है]]></string>
     <string name="action_allow">अनुमति दें</string>
     <string name="action_dont_allow">अनुमति न दें</string>
     <string name="title_sign_in">साइन इन करें</string>
@@ -417,7 +418,7 @@
     <string name="settings_title_launch_app">ऐप लॉन्च करें</string>
     <string name="action_domain_settings">डोमेन</string>
     <string name="settings_title_domains_delete_all">सभी हटाएं</string>
-    <string name="settings_summary_domains_delete_all">सभी डोमेन सेटिंग्स हटाएं</string>
+    <string name="settings_summary_domains_delete_all">सभी डोमेन सेटिंग रीसेट करें</string>
     <string name="question_delete_all_domain_settings">सभी डोमेन सेटिंग्स हटाएं?</string>
     <string name="settings_title_delete_domain_settings">डोमेन सेटिंग्स हटाएं</string>
     <string name="settings_title_parent">पैरेंट</string>
@@ -605,4 +606,10 @@
     <string name="error_cache_negative">कैश का आकार नकारात्मक नहीं हो सकता</string>
     <string name="error_cache_too_large">कैश बहुत बड़ा</string>
     <string name="hint_available_space">उपलब्ध: %s</string>
+    <string name="action_reset">रीसेट करें</string>
+    <string name="question_clear_location_permissions">स्थान अनुमतियाँ रीसेट करें?</string>
+    <string name="settings_title_clear_location_permissions">स्थान अनुमतियाँ रीसेट करें</string>
+    <string name="settings_summary_clear_location_permissions">सभी साइटों को स्थान तक पहुँच के लिए फिर से पूछना होगा</string>
+    <string name="settings_title_geolocation_granted">स्थान दिया गया</string>
+    <string name="settings_title_geolocation_denied">स्थान अस्वीकृत</string>
 </resources>

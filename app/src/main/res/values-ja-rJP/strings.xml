@@ -20,7 +20,7 @@
     <string name="disable">無効化</string>
     <string name="settings">設定</string>
     <string name="options">オプション</string>
-    <string name="location">位置情報の使用を許可する</string>
+    <string name="pref_title_location">位置情報</string>
     <string name="password">パスワードを記憶する</string>
     <string name="agent">ユーザーエージェント</string>
     <string name="home">ホームページ</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nを使用します:\n\n%2$s</string>
     <string name="title_form_resubmission">フォームの再送信</string>
     <string name="message_form_resubmission">データを再送信しますか?</string>
-    <string name="message_location">\n位置情報の使用を要求しています</string>
+    <string name="dialog_title_grant_location_access">位置情報を使用しますか？</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> がデバイスの位置情報を使用したいとしています]]></string>
     <string name="action_allow">許可する</string>
     <string name="action_dont_allow">許可しない</string>
     <string name="title_sign_in">サインイン</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">アプリを起動</string>
     <string name="action_domain_settings">ドメイン</string>
     <string name="settings_title_domains_delete_all">すべて削除</string>
-    <string name="settings_summary_domains_delete_all">すべてのドメイン設定を削除</string>
+    <string name="settings_summary_domains_delete_all">すべてのドメイン設定をリセット</string>
     <string name="question_delete_all_domain_settings">すべてのドメイン設定を削除しますか？</string>
     <string name="settings_title_delete_domain_settings">ドメイン設定を削除</string>
     <string name="settings_title_parent">親</string>
@@ -648,4 +649,10 @@
     <string name="error_cache_negative">キャッシュサイズは負の値にできません</string>
     <string name="error_cache_too_large">キャッシュが大きすぎます</string>
     <string name="hint_available_space">利用可能: %s</string>
+    <string name="action_reset">リセット</string>
+    <string name="question_clear_location_permissions">位置情報の権限をリセットしますか？</string>
+    <string name="settings_title_clear_location_permissions">位置情報の権限をリセット</string>
+    <string name="settings_summary_clear_location_permissions">すべてのサイトが再度位置情報へのアクセスを求める必要があります</string>
+    <string name="settings_title_geolocation_granted">位置情報が許可されました</string>
+    <string name="settings_title_geolocation_denied">位置情報が拒否されました</string>
 </resources>

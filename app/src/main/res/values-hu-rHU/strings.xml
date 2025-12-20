@@ -20,7 +20,7 @@
     <string name="disable">Letilt</string>
     <string name="settings">Beállítások</string>
     <string name="options">Opciók</string>
-    <string name="location">Hely hozzáférés</string>
+    <string name="pref_title_location">Helymeghatározás</string>
     <string name="password">Jelszavak mentése</string>
     <string name="agent">Felhasználó Ügynök</string>
     <string name="home">Főoldal</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nSzeretné ezt használni:\n\n%2$s</string>
     <string name="title_form_resubmission">Űrlap újraküldése</string>
     <string name="message_form_resubmission">Szeretnél újból elküldi az adatokat?</string>
-    <string name="message_location">\nSzeretné használni a saját helyét?</string>
+    <string name="dialog_title_grant_location_access">Helymeghatározás használata?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> használni szeretné az eszköz tartózkodási helyét]]></string>
     <string name="action_allow">Engedélyez</string>
     <string name="action_dont_allow">Ne engedélyezze</string>
     <string name="title_sign_in">Bejelentkezés</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Alkalmazás indítása</string>
     <string name="action_domain_settings">Tartomány</string>
     <string name="settings_title_domains_delete_all">Összes törlése</string>
-    <string name="settings_summary_domains_delete_all">Összes tartománybeállítás törlése</string>
+    <string name="settings_summary_domains_delete_all">Összes domain beállítás visszaállítása</string>
     <string name="question_delete_all_domain_settings">Törli az összes tartománybeállítást?</string>
     <string name="settings_title_delete_domain_settings">Tartománybeállítások törlése</string>
     <string name="settings_title_parent">Szülő</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">A gyorsítótár mérete nem lehet negatív</string>
     <string name="error_cache_too_large">A gyorsítótár túl nagy</string>
     <string name="hint_available_space">Elérhető: %s</string>
+    <string name="action_reset">Visszaállítás</string>
+    <string name="question_clear_location_permissions">Helymeghatározási engedélyek visszaállítása?</string>
+    <string name="settings_title_clear_location_permissions">Helymeghatározási engedélyek visszaállítása</string>
+    <string name="settings_summary_clear_location_permissions">Minden weboldalnak újra kell kérnie a helymeghatározáshoz való hozzáférést</string>
+    <string name="settings_title_geolocation_granted">Helymeghatározás engedélyezve</string>
+    <string name="settings_title_geolocation_denied">Helymeghatározás megtagadva</string>
 </resources>

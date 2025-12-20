@@ -20,7 +20,7 @@
     <string name="disable">Zakázat</string>
     <string name="settings">Nastavení</string>
     <string name="options">Možnosti</string>
-    <string name="location">Přístup k poloze</string>
+    <string name="pref_title_location">Poloha</string>
     <string name="password">Uložit hesla</string>
     <string name="agent">User agent</string>
     <string name="home">Domovská stránka</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nby chtěl používat:\n\n%2$s</string>
     <string name="title_form_resubmission">Opětovné odeslání formuláře</string>
     <string name="message_form_resubmission">Chcete znovu odeslat data?</string>
-    <string name="message_location">\nChce používat vaši polohu</string>
+    <string name="dialog_title_grant_location_access">Použít polohu?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> chce použít polohu vašeho zařízení]]></string>
     <string name="action_allow">Povolit</string>
     <string name="action_dont_allow">Don\'t allow</string>
     <string name="title_sign_in">Přihlásit se</string>
@@ -454,7 +455,7 @@
     <string name="settings_title_launch_app">Spustit aplikaci</string>
     <string name="action_domain_settings">Doména</string>
     <string name="settings_title_domains_delete_all">Smazat vše</string>
-    <string name="settings_summary_domains_delete_all">Smazat všechna nastavení domén</string>
+    <string name="settings_summary_domains_delete_all">Obnovit všechna nastavení domén</string>
     <string name="question_delete_all_domain_settings">Smazat všechna nastavení domén?</string>
     <string name="settings_title_delete_domain_settings">Smazat nastavení domény</string>
     <string name="settings_title_parent">Nadřazená</string>
@@ -656,4 +657,10 @@
     <string name="error_cache_negative">Velikost mezipaměti nemůže být záporná</string>
     <string name="error_cache_too_large">Mezipaměť příliš velká</string>
     <string name="hint_available_space">Dostupné: %s</string>
+    <string name="action_reset">Obnovit</string>
+    <string name="question_clear_location_permissions">Obnovit oprávnění k poloze?</string>
+    <string name="settings_title_clear_location_permissions">Obnovit oprávnění k poloze</string>
+    <string name="settings_summary_clear_location_permissions">Všechny stránky budou muset znovu požádat o přístup k poloze</string>
+    <string name="settings_title_geolocation_granted">Poloha povolena</string>
+    <string name="settings_title_geolocation_denied">Poloha zamítnuta</string>
 </resources>

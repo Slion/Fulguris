@@ -32,6 +32,10 @@ import android.os.Bundle
 import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Used for both default domain settings and sub-domain settings.
+ * We simply load a different XML file for default domain settings.
+ */
 @AndroidEntryPoint
 class DomainSettingsFragment : AbstractSettingsFragment() {
 
@@ -77,6 +81,9 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
 
         // Parent link setup is done in onResume() to ensure it's always up-to-date
 
+        // Geolocation permission setup
+        setupGeolocationPreferences()
+
         // Delete this domain settings
         find<Preference>(R.string.pref_key_delete)?.setOnPreferenceClickListener {
             DomainPreferences.delete(domain)
@@ -100,7 +107,7 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
         find<x.Preference>(R.string.pref_key_parent)?.apply {
             if (prefs.isSubDomain) {
                 breadcrumb = prefs.parent?.domain ?: ""
-                summary = prefs.parent?.getOverridesSummary(requireContext())
+                prefs.parent?.getOverridesSummary(requireContext()) { summary = it }
             } else {
                 // The parent of first level domains is the default domain settings
                 summary = getString(R.string.settings_title_default_domain_settings)
@@ -122,5 +129,47 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
         // Clean up domain settings file if no overrides are actually enabled
         // This keeps the domain settings list clean - only showing domains with actual customizations
         prefs.deleteIfNoOverrides()
+    }
+
+    /**
+     * Setup geolocation permission switch
+     * - For default domain: Manages Android system location permissions
+     * - For specific domains: Displays WebKit permission status and allows granting/revoking
+     */
+    private fun setupGeolocationPreferences() {
+        val locationSwitch = find<x.SwitchPreference>(R.string.pref_key_location)
+
+        if (prefs.isDefault) {
+            // Default domain: Manage Android system permissions
+            // The switch is handled normally by the preference framework
+            // When disabled, geolocation requests are blocked at the domain level
+            return
+        }
+
+        // Specific domains: Manage WebKit geolocation permissions
+        locationSwitch?.apply {
+            // Query current permission status using the domain preferences location method
+            prefs.hasLocationPermission { isEnabled ->
+                activity?.runOnUiThread {
+                    // Update switch state to reflect current permission
+                    isChecked = isEnabled
+                }
+            }
+
+            // Handle switch changes
+            setOnPreferenceChangeListener { _, newValue ->
+                val enabled = newValue as Boolean
+
+                if (!enabled) {
+                    // Revoke permission immediately
+                    prefs.clearLocationPermission()
+                    true
+                } else {
+                    // Grant permission immediately
+                    prefs.grantLocationPermission()
+                    true
+                }
+            }
+        }
     }
 }

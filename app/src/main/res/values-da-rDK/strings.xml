@@ -20,7 +20,7 @@
     <string name="disable">Deaktivér</string>
     <string name="settings">Indstillinger</string>
     <string name="options">Valgmuligheder</string>
-    <string name="location">Placeringsadgang</string>
+    <string name="pref_title_location">Placering</string>
     <string name="password">Gem dine adgangskoder</string>
     <string name="agent">Brugeragent</string>
     <string name="home">Startside</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nVil gerne bruge:\n\n%2$s</string>
     <string name="title_form_resubmission">Genindend formular</string>
     <string name="message_form_resubmission">Vil du gensende dataene?</string>
-    <string name="message_location">\nVil gerne bruge din placering</string>
+    <string name="dialog_title_grant_location_access">Brug placering?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> vil bruge din enheds placering]]></string>
     <string name="action_allow">Tillad</string>
     <string name="action_dont_allow">Tillad ikke</string>
     <string name="title_sign_in">Log ind</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Start app</string>
     <string name="action_domain_settings">Domæne</string>
     <string name="settings_title_domains_delete_all">Slet alle</string>
-    <string name="settings_summary_domains_delete_all">Slet alle domæneindstillinger</string>
+    <string name="settings_summary_domains_delete_all">Nulstil alle domæneindstillinger</string>
     <string name="question_delete_all_domain_settings">Slet alle domæneindstillinger?</string>
     <string name="settings_title_delete_domain_settings">Slet domæneindstillinger</string>
     <string name="settings_title_parent">Forælder</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">Cachestørrelse kan ikke være negativ</string>
     <string name="error_cache_too_large">Cache for stor</string>
     <string name="hint_available_space">Tilgængeligt: %s</string>
+    <string name="action_reset">Nulstil</string>
+    <string name="question_clear_location_permissions">Nulstil placeringstilladelser?</string>
+    <string name="settings_title_clear_location_permissions">Nulstil placeringstilladelser</string>
+    <string name="settings_summary_clear_location_permissions">Alle websteder skal bede om adgang til placering igen</string>
+    <string name="settings_title_geolocation_granted">Placering givet</string>
+    <string name="settings_title_geolocation_denied">Placering nægtet</string>
 </resources>

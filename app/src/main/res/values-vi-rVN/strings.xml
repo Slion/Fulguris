@@ -20,7 +20,7 @@
     <string name="disable">Tắt</string>
     <string name="settings">Thiết đặt</string>
     <string name="options">Tùy chọn</string>
-    <string name="location">Truy cập vị trí</string>
+    <string name="pref_title_location">Vị trí</string>
     <string name="password">Lưu mật khẩu của bạn</string>
     <string name="agent">Tác nhân người dùng</string>
     <string name="home">Trang chủ</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nmuốn sử dụng:\n\n%2$s</string>
     <string name="title_form_resubmission">Gửi lại biểu mẫu</string>
     <string name="message_form_resubmission">Bạn có muốn gửi lại dữ liệu không?</string>
-    <string name="message_location">\nMuốn sử dụng vị trí của bạn</string>
+    <string name="dialog_title_grant_location_access">Sử dụng vị trí?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> muốn sử dụng vị trí thiết bị của bạn]]></string>
     <string name="action_allow">Cho phép</string>
     <string name="action_dont_allow">Không cho phép</string>
     <string name="title_sign_in">Đăng nhập</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Khởi chạy ứng dụng</string>
     <string name="action_domain_settings">Tên miền</string>
     <string name="settings_title_domains_delete_all">Xóa hết</string>
-    <string name="settings_summary_domains_delete_all">Xóa tất cả thiết đặt tên miền</string>
+    <string name="settings_summary_domains_delete_all">Đặt lại tất cả cài đặt miền</string>
     <string name="question_delete_all_domain_settings">Xóa tất cả thiết đặt tên miền?</string>
     <string name="settings_title_delete_domain_settings">Xóa thiết đặt tên miền</string>
     <string name="settings_title_parent">Cha</string>
@@ -648,4 +649,10 @@
     <string name="error_cache_negative">Kích thước bộ nhớ đệm không được âm</string>
     <string name="error_cache_too_large">Bộ nhớ đệm quá lớn</string>
     <string name="hint_available_space">Có sẵn: %s</string>
+    <string name="action_reset">Đặt lại</string>
+    <string name="question_clear_location_permissions">Đặt lại quyền vị trí?</string>
+    <string name="settings_title_clear_location_permissions">Đặt lại quyền vị trí</string>
+    <string name="settings_summary_clear_location_permissions">Tất cả các trang web sẽ phải yêu cầu lại quyền truy cập vị trí</string>
+    <string name="settings_title_geolocation_granted">Vị trí đã được cấp</string>
+    <string name="settings_title_geolocation_denied">Vị trí bị từ chối</string>
 </resources>

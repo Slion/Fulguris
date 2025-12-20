@@ -20,7 +20,7 @@
     <string name="disable">사용 안 함</string>
     <string name="settings">설정</string>
     <string name="options">옵션</string>
-    <string name="location">위치 접근</string>
+    <string name="pref_title_location">위치</string>
     <string name="password">암호 저장</string>
     <string name="agent">사용자 에이전트</string>
     <string name="home">홈페이지</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s  다음 권한을 사용하려 합니다:  %2$s</string>
     <string name="title_form_resubmission">양식 다시 제출</string>
     <string name="message_form_resubmission">다시 전송할까요?</string>
-    <string name="message_location">\n 이(가) 위치를 사용하고자 합니다</string>
+    <string name="dialog_title_grant_location_access">위치 사용?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> 이(가) 기기의 위치를 사용하려고 합니다]]></string>
     <string name="action_allow">허용</string>
     <string name="action_dont_allow">거부</string>
     <string name="title_sign_in">로그인</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">앱 실행</string>
     <string name="action_domain_settings">도메인</string>
     <string name="settings_title_domains_delete_all">모두 삭제</string>
-    <string name="settings_summary_domains_delete_all">모든 도메인 설정 삭제</string>
+    <string name="settings_summary_domains_delete_all">모든 도메인 설정 재설정</string>
     <string name="question_delete_all_domain_settings">모든 도메인 설정을 삭제하시겠습니까?</string>
     <string name="settings_title_delete_domain_settings">도메인 설정 삭제</string>
     <string name="settings_title_parent">상위</string>
@@ -648,4 +649,10 @@
     <string name="error_cache_negative">캐시 크기는 음수일 수 없습니다</string>
     <string name="error_cache_too_large">캐시가 너무 큽니다</string>
     <string name="hint_available_space">사용 가능: %s</string>
+    <string name="action_reset">재설정</string>
+    <string name="question_clear_location_permissions">위치 권한을 재설정하시겠습니까?</string>
+    <string name="settings_title_clear_location_permissions">위치 권한 재설정</string>
+    <string name="settings_summary_clear_location_permissions">모든 사이트가 다시 위치 액세스를 요청해야 합니다</string>
+    <string name="settings_title_geolocation_granted">위치 허용됨</string>
+    <string name="settings_title_geolocation_denied">위치 거부됨</string>
 </resources>

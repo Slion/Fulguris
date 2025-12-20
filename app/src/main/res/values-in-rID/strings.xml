@@ -20,7 +20,7 @@
     <string name="disable">Nonaktifkan</string>
     <string name="settings">Setelan</string>
     <string name="options">Opsi</string>
-    <string name="location">Akses lokasi</string>
+    <string name="pref_title_location">Lokasi</string>
     <string name="password">Simpan sandi Anda</string>
     <string name="agent">Agen pengguna</string>
     <string name="home">Beranda</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\ningin menggunakan:\n\n%2$s</string>
     <string name="title_form_resubmission">Pengulangan pengiriman formulir</string>
     <string name="message_form_resubmission">Kirim ulang datanya?</string>
-    <string name="message_location">\nMau menggunakan lokasi Anda</string>
+    <string name="dialog_title_grant_location_access">Gunakan lokasi?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> ingin menggunakan lokasi perangkat Anda]]></string>
     <string name="action_allow">Izinkan</string>
     <string name="action_dont_allow">Jangan izinkan</string>
     <string name="title_sign_in">Masuk</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Luncurkan aplikasi</string>
     <string name="action_domain_settings">Domain</string>
     <string name="settings_title_domains_delete_all">Hapus semua</string>
-    <string name="settings_summary_domains_delete_all">Hapus semua pengaturan domain</string>
+    <string name="settings_summary_domains_delete_all">Setel ulang semua pengaturan domain</string>
     <string name="question_delete_all_domain_settings">Hapus semua pengaturan domain?</string>
     <string name="settings_title_delete_domain_settings">Hapus pengaturan domain</string>
     <string name="settings_title_parent">Induk</string>
@@ -648,4 +649,10 @@
     <string name="error_cache_negative">Ukuran cache tidak boleh negatif</string>
     <string name="error_cache_too_large">Cache terlalu besar</string>
     <string name="hint_available_space">Tersedia: %s</string>
+    <string name="action_reset">Setel ulang</string>
+    <string name="question_clear_location_permissions">Setel ulang izin lokasi?</string>
+    <string name="settings_title_clear_location_permissions">Setel ulang izin lokasi</string>
+    <string name="settings_summary_clear_location_permissions">Semua situs harus meminta akses lokasi lagi</string>
+    <string name="settings_title_geolocation_granted">Lokasi diberikan</string>
+    <string name="settings_title_geolocation_denied">Lokasi ditolak</string>
 </resources>

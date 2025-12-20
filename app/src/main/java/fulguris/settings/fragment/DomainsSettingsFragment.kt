@@ -70,9 +70,28 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
 
     private var catDomains: PreferenceCategory? = null
     private var deleteAll: Preference? = null
+    private var clearLocation: Preference? = null
 
     // Track how many domains with overrides we have
     private var domainCount = 0
+
+    // Track if we've already populated the list on first load
+    private var populated = false
+
+    // Set to the domain settings the user last opened
+    var domain: String = ""
+
+    // Track if we have any preference files
+    private var hasPreferenceFiles = false
+    // Track if we have any geolocation origins
+    private var hasGeolocationOrigins = false
+
+    companion object {
+        // Delay increment for staggered domain preference creation (in milliseconds)
+        private const val delayIncrement = 1L
+        // Initial delay before starting domain creation
+        private const val initialDelay = 300L
+    }
 
     /**
      * See [AbstractSettingsFragment.titleResourceId]
@@ -80,10 +99,6 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
     override fun titleResourceId(): Int {
         return R.string.settings_title_domains
     }
-
-    // Set to the domain settings the user last opened
-    var domain: String = ""
-
 
     override fun providePreferencesXmlResource() = R.xml.preference_domains
 
@@ -106,19 +121,44 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
                 MaterialAlertDialogBuilder(requireContext())
                     .setCancelable(true)
                     .setTitle(R.string.question_delete_all_domain_settings)
+                    .setIcon(R.drawable.ic_delete_forever_outline)
                     //.setMessage(R.string.prompt_please_confirm)
                     .setNegativeButton(R.string.action_cancel, null)
                     .setPositiveButton(R.string.action_delete) { _, _ ->
                         DomainPreferences.deleteAll(requireContext())
-                        catDomains?.removeAll()
-                        domainCount = 0
-                        updateDomainCountSummary()
+                        hasPreferenceFiles = false
+                        deleteAll?.isEnabled = false
+                        // Update the list to remove domains that no longer have settings files
+                        updateDomainList()
                     }
                     .launch()
 
                 true
             }
-        ).apply { isVisible = false }
+        ).apply { isEnabled = false }
+
+        // Hook in delete all location permissions
+        clearLocation = clickablePreference(
+            preference = getString(R.string.pref_key_clear_location_permissions),
+            onClick = {
+                // Show confirmation dialog and proceed if needed
+                MaterialAlertDialogBuilder(requireContext())
+                    .setCancelable(true)
+                    .setTitle(R.string.question_clear_location_permissions)
+                    .setIcon(R.drawable.ic_wrong_location_outline)
+                    .setNegativeButton(R.string.action_cancel, null)
+                    .setPositiveButton(R.string.action_reset) { _, _ ->
+                        clearGeolocationPermissions()
+                        hasGeolocationOrigins = false
+                        clearLocation?.isEnabled = false
+                        // Update the list to remove domains that no longer have geolocation permissions
+                        updateDomainList()
+                    }
+                    .launch()
+
+                true
+            }
+        ).apply { isEnabled = false }
     }
 
     /**
@@ -137,6 +177,87 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
+    /**
+     * Update the enabled state of delete all and clear location buttons.
+     * Checks if there are any preference files (excluding default) and geolocation origins.
+     */
+    private fun updateButtonStates() {
+        // Check for preference files (excluding default domain)
+        val prefsDir = File(requireContext().applicationInfo.dataDir, "shared_prefs")
+        hasPreferenceFiles = false
+
+        prefsDir.takeIf {
+            it.exists() && it.isDirectory
+        }?.list { _, name ->
+            name.startsWith(DomainPreferences.prefix)
+        }?.forEach {
+            val domainName = it.substring(DomainPreferences.prefix.length).dropLast(4)
+            val reversedDomain = domainName.reverseDomainName
+
+            // Skip default domain settings file when counting
+            if (reversedDomain.isNotEmpty()) {
+                hasPreferenceFiles = true
+                return@forEach
+            }
+        }
+
+        // Check for geolocation origins
+        android.webkit.GeolocationPermissions.getInstance().getOrigins { origins: Set<String>? ->
+            hasGeolocationOrigins = !origins.isNullOrEmpty()
+
+            // Update button states
+            deleteAll?.isEnabled = hasPreferenceFiles
+            clearLocation?.isEnabled = hasGeolocationOrigins
+        }
+    }
+
+    /**
+     * Update the domain list by re-evaluating which domains should be visible.
+     * This is called after clearing geolocation permissions or deleting domain settings.
+     */
+    private fun updateDomainList() {
+        // Get all current domain preferences
+        val currentDomains = mutableListOf<String>()
+        for (i in 0 until (catDomains?.preferenceCount ?: 0)) {
+            catDomains?.getPreference(i)?.key?.let { currentDomains.add(it) }
+        }
+
+        // Re-evaluate each domain and remove if no longer visible
+        domainCount = 0
+        currentDomains.forEach { domain ->
+            DomainPreferences.visible(domain) { shouldBeVisible ->
+                val pref = findPreference<Preference>(domain)
+                if (!shouldBeVisible && pref != null) {
+                    // Remove preference if it should no longer be visible
+                    pref.parent?.removePreference(pref)
+                } else if (shouldBeVisible) {
+                    // Keep count of visible domains
+                    domainCount++
+                    // Update summary for visible domains
+                    pref?.let {
+                        val domainPref = DomainPreferences(requireContext(), domain)
+                        domainPref.getOverridesSummary(requireContext()) { summary ->
+                            it.summary = summary
+                        }
+                    }
+                }
+            }
+        }
+
+        // Update the summary after processing all domains
+        view?.postDelayed({
+            updateDomainCountSummary()
+        }, 100)
+    }
+
+    /**
+     *
+     */
+    private fun clearGeolocationPermissions() {
+        android.webkit.GeolocationPermissions.getInstance().clearAll()
+        //activity?.snackbar("Geolocation permissions cleared")
+    }
+
 
     /**
      *
@@ -147,204 +268,212 @@ class DomainsSettingsFragment : AbstractSettingsFragment() {
         populateDomainList(view)
     }
 
-    var populated = false
-
     /**
-     *
+     * Create or update a domain preference in the list.
+     * @param domain The domain name to create/update preference for
+     * @param isNewPreference Whether this is a new preference being added (affects count)
      */
-    @SuppressLint("CheckResult")
-    fun populateDomainList(view: View) {
+    private fun createOrUpdateDomainPreference(domain: String, isNewPreference: Boolean = false) {
+        val domainPref = DomainPreferences(requireContext(), domain)
 
-        // Make sure we only do that once
-        // Otherwise we would populate duplicates each time we come back from a domain settings page
-        if (populated) {
-            Timber.d("populateDomainList populated")
+        // Check if domain should be visible
+        DomainPreferences.visible(domain) { shouldBeVisible ->
+            val existingPref = findPreference<Preference>(domain)
 
-            if (domain.isEmpty()) {
-                // Happens if visiting default domain settings
-                return
-            }
-
-            // Update the summary for the domain we just came back from
-            // This shows any changes made to overrides
-            if (DomainPreferences.exists(domain)) {
-                findPreference<Preference>(domain)?.let { pref ->
-                    val domainPref = DomainPreferences(requireContext(), domain)
-                    pref.summary = domainPref.getOverridesSummary(requireContext())
-                }
-            }
-
-            // Check if our domain was deleted when coming back from a specific domain preference page
-            if (!DomainPreferences.exists(domain)) {
-                // Domain settings was deleted, remove the preference then
-                findPreference<Preference>(domain)?.let {
+            if (!shouldBeVisible) {
+                // Remove preference if it exists but shouldn't
+                existingPref?.let {
                     it.parent?.removePreference(it)
                     domainCount--
                     updateDomainCountSummary()
                 }
+                // Clean up settings file if no overrides
+                domainPref.deleteIfNoOverrides()
+                return@visible
             }
 
-            // Handle parent domain changes (created or deleted)
-            val tpd = "http://$domain".toHttpUrl().topPrivateDomain()
-            if (tpd?.isNotEmpty() == true) {
-                if (!DomainPreferences.exists(tpd)) {
-                    // Parent domain was deleted, remove its preference
-                    findPreference<Preference>(tpd)?.let {
-                        it.parent?.removePreference(it)
-                        domainCount--
-                        updateDomainCountSummary()
-                    }
-                } else {
-                    // Parent domain exists - check if preference already exists
-                    val existingPref = findPreference<Preference>(tpd)
-                    if (existingPref != null) {
-                        // Update existing parent domain summary
-                        val domainPref = DomainPreferences(requireContext(), tpd)
-                        existingPref.summary = domainPref.getOverridesSummary(requireContext())
-                    } else {
-                        // Parent domain was just created - add it to the list
-                        val domainPref = DomainPreferences(requireContext(), tpd)
-                        if (domainPref.hasAnyOverrides()) {
-                            Timber.d("Adding newly created parent domain: $tpd")
+            // Update existing preference or create new one
+            if (existingPref != null) {
+                // Update summary for existing preference
+                domainPref.getOverridesSummary(requireContext()) { existingPref.summary = it }
+            } else if (isNewPreference) {
+                // Create new preference
+                createDomainPreference(domain, domainPref)
+            }
+        }
+    }
 
-                            // Create new preference for parent domain
-                            val pref = x.Preference(requireContext())
-                            pref.isSingleLineTitle = false
-                            pref.key = tpd
-                            pref.title = tpd
-                            pref.summary = domainPref.getOverridesSummary(requireContext())
-                            pref.breadcrumb = tpd
-                            pref.fragment = "fulguris.settings.fragment.DomainSettingsFragment"
-                            pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                                this.domain = tpd
-                                app.domain = tpd
-                                false
-                            }
+    /**
+     * Creates a new domain preference with favicon and adds it to the list.
+     */
+    private fun createDomainPreference(domain: String, domainPref: DomainPreferences) {
+        val pref = x.Preference(requireContext()).apply {
+            isSingleLineTitle = false
+            key = domain
+            title = domain.reverseDomainName  // For sorting
+            displayedTitle = domain  // For display
+            breadcrumb = domain
+            fragment = "fulguris.settings.fragment.DomainSettingsFragment"
+            onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                this@DomainsSettingsFragment.domain = domain
+                app.domain = domain
+                false
+            }
+        }
 
-                            // Add favicon
-                            faviconModel.faviconForUrl("http://$tpd", "", (activity as? ThemedActivity)?.isDarkTheme() == true)
-                                .subscribeOn(networkScheduler)
-                                .observeOn(mainScheduler)
-                                .subscribeBy(
-                                    onSuccess = { bitmap ->
-                                        pref.icon = bitmap.scale(Utils.dpToPx(24f), Utils.dpToPx(24f)).toDrawable(resources)
-                                    }
-                                )
+        // Set summary asynchronously
+        domainPref.getOverridesSummary(requireContext()) { pref.summary = it }
 
-                            catDomains?.addPreference(pref)
-                            domainCount++
-                            updateDomainCountSummary()
-                        }
-                    }
+        // Add favicon
+        faviconModel.faviconForUrl(
+            "http://$domain",
+            "",
+            (activity as? ThemedActivity)?.isDarkTheme() == true
+        )
+            .subscribeOn(networkScheduler)
+            .observeOn(mainScheduler)
+            .subscribeBy(
+                onSuccess = { bitmap ->
+                    pref.icon = bitmap.scale(
+                        Utils.dpToPx(24f),
+                        Utils.dpToPx(24f)
+                    ).toDrawable(resources)
                 }
+            )
+
+        catDomains?.addPreference(pref)
+        domainCount++
+        updateDomainCountSummary()
+    }
+
+    /**
+     * Populate or update the domain list.
+     */
+    @SuppressLint("CheckResult")
+    fun populateDomainList(view: View) {
+        // Handle updates when returning from domain settings
+        if (populated) {
+            Timber.d("populateDomainList: updating after domain settings visit")
+
+            if (domain.isEmpty()) {
+                // Returning from default domain settings - check if we need to update button states
+                updateButtonStates()
+                return
             }
+
+            // Update the visited domain
+            createOrUpdateDomainPreference(domain, isNewPreference = false)
+
+            // Check parent domain for changes
+            "http://$domain".toHttpUrl().topPrivateDomain()?.takeIf { it.isNotEmpty() }?.let { tpd ->
+                createOrUpdateDomainPreference(tpd, isNewPreference = findPreference<Preference>(tpd) == null)
+            }
+
+            // Update button states after processing domain changes
+            updateButtonStates()
+
             return
         }
 
         populated = true
 
-        // Add default domain settings
-        val prefDefault = x.Preference(requireContext())
-        prefDefault.isSingleLineTitle = false
-        prefDefault.title = getString(R.string.settings_title_default_domain_settings)
-        prefDefault.summary = getString(R.string.settings_summary_default_domain_settings)
-        prefDefault.order = 5
-        prefDefault.fragment = "fulguris.settings.fragment.DomainSettingsFragment"
-        prefDefault.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            domain = ""
-            app.domain = ""
-            false
+        // Add default domain settings entry
+        x.Preference(requireContext()).apply {
+            isSingleLineTitle = false
+            title = getString(R.string.settings_title_default_domain_settings)
+            summary = getString(R.string.settings_summary_default_domain_settings)
+            order = 5
+            fragment = "fulguris.settings.fragment.DomainSettingsFragment"
+            onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                domain = ""
+                app.domain = ""
+                false
+            }
+        }.also { preferenceScreen.addPreference(it) }
+
+        // Collect and populate all domains
+        collectAllDomains { allDomains ->
+            populateDomainsUI(allDomains)
         }
-        preferenceScreen.addPreference(prefDefault)
+    }
 
-        // Fetch category to add
+    /**
+     * Collect all domains that should be displayed.
+     * Includes domains with settings files and domains with geolocation permissions.
+     */
+    private fun collectAllDomains(callback: (Set<String>) -> Unit) {
+        val candidateDomains = mutableSetOf<String>()
 
-        // Build our list of known domains
-        val directory = File(requireContext().applicationInfo.dataDir, "shared_prefs")
-        if (directory.exists() && directory.isDirectory) {
-            val list = directory.list { _, name -> name.startsWith(DomainPreferences.prefix) }
-            // Sorting is not needed anymore as we let the PreferenceGroup do it for us now
-            //list?.sortWith ( compareBy(String.CASE_INSENSITIVE_ORDER){it})
-            // Sort our domains using reversed string so that subdomains are grouped together
-            var delay = 300L
-            val delayIncrement = 1L
-            // Reset domain count before scanning
-            domainCount = 0
+        // 1. Add domains with settings files (excluding default domain)
+        val prefsDir = File(requireContext().applicationInfo.dataDir, "shared_prefs")
+        hasPreferenceFiles = false
 
-            // Fill our list asynchronously
-            list?.forEach {
-                view.postDelayed({
-                    // Create preferences entry
-                    // Workout our domain name from the file name, skip [Domain] prefix and drop .xml suffix
-                    val domainReverse = it.substring(DomainPreferences.prefix.length).dropLast(4)
-                    val domain = domainReverse.reverseDomainName
-                    //Timber.d(title.reverseDomainName)
+        prefsDir.takeIf {
+            it.exists() && it.isDirectory
+        }?.list { _, name ->
+            name.startsWith(DomainPreferences.prefix)
+        }?.forEach {
+            val domainName = it.substring(DomainPreferences.prefix.length).dropLast(4)
+            val reversedDomain = domainName.reverseDomainName
 
-                    if (domainReverse.isEmpty()) {
-                        // We skip the default preferences as it was already added above
-                        return@postDelayed
-                    }
-
-                    // Check if this domain has any overrides, delete if none
-                    // Depollute existing installations as it should not be needed for new ones
-                    val domainPref = DomainPreferences(requireContext(), domain)
-                    if (domainPref.deleteIfNoOverrides()) {
-                        // Domain settings was deleted, don't add it to the list
-                        Timber.d("Deleted domain settings with no overrides: $domain")
-                        return@postDelayed
-                    }
-
-                    // Count this domain
-                    domainCount++
-
-                    // Update summary as we add domains to show progress
-                    updateDomainCountSummary()
-
-                    // Create domain preference
-                    val pref = x.Preference(requireContext())
-                    // Make sure domains are shown as titles
-                    pref.isSingleLineTitle = false
-                    pref.key = domain
-                    // Use reversed domain as title for sorting
-                    // Sorting by reversed domain makes sure subdomains and parent are grouped together
-                    pref.title = domainReverse
-                    // But actually show the domain name
-                    pref.displayedTitle = domain
-                    // Show active overrides in summary
-                    pref.summary = domainPref.getOverridesSummary(requireContext())
-                    pref.breadcrumb = domain
-                    pref.fragment = "fulguris.settings.fragment.DomainSettingsFragment"
-                    pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                        this.domain = domain
-                        app.domain = domain
-                        false
-                    }
-
-                    faviconModel.faviconForUrl("http://$domain","",(activity as? ThemedActivity)?.isDarkTheme() == true)
-                        .subscribeOn(networkScheduler)
-                        .observeOn(mainScheduler)
-                        .subscribeBy(
-                            onSuccess = { bitmap ->
-                                pref.icon = bitmap.scale(fulguris.utils.Utils.dpToPx(24f), fulguris.utils.Utils.dpToPx(24f)).toDrawable(resources)
-                            }
-                        )
-
-                    catDomains?.addPreference(pref)
-
-                },delay)
-                // We could lower or just remove the delay as it seems to be smooth without it too
-                // However having a bit of a delay does make it look prettier
-                delay+=delayIncrement
+            // Skip default domain settings file when counting
+            if (reversedDomain.isEmpty()) {
+                return@forEach
             }
 
-            // Show delete button once our list is parsed and update summary
-            view.postDelayed({
-                deleteAll?.isVisible = true
-                // Update category summary with domain count
-                // Note: English doesn't support quantity="zero" in plurals
-                updateDomainCountSummary()
-            }, delay)
+            hasPreferenceFiles = true
+            reversedDomain.takeIf { domain -> domain.isNotEmpty() }
+                ?.let { domain -> candidateDomains.add(domain) }
         }
+
+        // 2. Add domains with geolocation permissions
+        android.webkit.GeolocationPermissions.getInstance().getOrigins { origins: Set<String>? ->
+            hasGeolocationOrigins = !origins.isNullOrEmpty()
+
+            origins?.forEach { origin ->
+                try {
+                    java.net.URI(origin).host?.takeIf { it.isNotEmpty() }?.let { candidateDomains.add(it) }
+                } catch (e: Exception) {
+                    Timber.w(e, "Failed to parse geolocation origin: $origin")
+                }
+            }
+
+            // Update button states based on what we found
+            deleteAll?.isEnabled = hasPreferenceFiles
+            clearLocation?.isEnabled = hasGeolocationOrigins
+
+            // Return all collected domains (we'll filter with visible() later)
+            callback(candidateDomains)
+        }
+    }
+
+    /**
+     * Populate the domains list UI with the given set of domains.
+     * Processes domains asynchronously with progressive UI updates.
+     */
+    private fun populateDomainsUI(domains: Set<String>) {
+        if (domains.isEmpty()) {
+            // Update summary and show buttons even when empty
+            updateDomainCountSummary()
+            return
+        }
+
+        domainCount = 0
+        val sortedDomains = domains.sortedBy { it.reverseDomainName }
+        var delay = initialDelay
+
+        // Process each domain asynchronously with staggered delays
+        sortedDomains.forEach { domain ->
+            view?.postDelayed({
+                createOrUpdateDomainPreference(domain, isNewPreference = true)
+            }, delay)
+            delay += delayIncrement
+        }
+
+        // Show delete button after all domains are processed
+        view?.postDelayed({
+            updateDomainCountSummary()
+        }, delay)
     }
 
 }

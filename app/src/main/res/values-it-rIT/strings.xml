@@ -20,7 +20,7 @@
     <string name="disable">Disattivare</string>
     <string name="settings">Impostazioni</string>
     <string name="options">Opzioni</string>
-    <string name="location">Posizione</string>
+    <string name="pref_title_location">Posizione</string>
     <string name="password">Salva password</string>
     <string name="agent">User Agent</string>
     <string name="home">Pagina iniziale</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nvorrebbe usare:\n\n%2$s</string>
     <string name="title_form_resubmission">Reinvio modulo</string>
     <string name="message_form_resubmission">Vuoi inviare nuovamente i dati?</string>
-    <string name="message_location">\nVorrebbe usare la tua posizione</string>
+    <string name="dialog_title_grant_location_access">Usare la posizione?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> vuole usare la posizione del tuo dispositivo]]></string>
     <string name="action_allow">Consenti</string>
     <string name="action_dont_allow">Non consentire</string>
     <string name="title_sign_in">Registrati</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Avvia l’app</string>
     <string name="action_domain_settings">Dominio</string>
     <string name="settings_title_domains_delete_all">Elimina tutto</string>
-    <string name="settings_summary_domains_delete_all">Elimina tutte le impostazioni di dominio</string>
+    <string name="settings_summary_domains_delete_all">Ripristina tutte le impostazioni di dominio</string>
     <string name="question_delete_all_domain_settings">Eliminare tutte le impostazioni di dominio?</string>
     <string name="settings_title_delete_domain_settings">Elimina impostazioni dominio</string>
     <string name="settings_title_parent">Genitore</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">La dimensione della cache non può essere negativa</string>
     <string name="error_cache_too_large">Cache troppo grande</string>
     <string name="hint_available_space">Disponibile: %s</string>
+    <string name="action_reset">Ripristina</string>
+    <string name="question_clear_location_permissions">Ripristinare i permessi di posizione?</string>
+    <string name="settings_title_clear_location_permissions">Ripristina permessi di posizione</string>
+    <string name="settings_summary_clear_location_permissions">Tutti i siti dovranno chiedere nuovamente l\'accesso alla posizione</string>
+    <string name="settings_title_geolocation_granted">Posizione concessa</string>
+    <string name="settings_title_geolocation_denied">Posizione negata</string>
 </resources>

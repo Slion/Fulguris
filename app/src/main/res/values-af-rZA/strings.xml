@@ -20,7 +20,7 @@
     <string name="disable">Disable</string>
     <string name="settings">Settings</string>
     <string name="options">Options</string>
-    <string name="location">Location access</string>
+    <string name="pref_title_location">Ligging</string>
     <string name="password">Save your passwords</string>
     <string name="agent">User agent</string>
     <string name="home">Homepage</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nwould like to use:\n\n%2$s</string>
     <string name="title_form_resubmission">Form resubmission</string>
     <string name="message_form_resubmission">Would you like to resend the data?</string>
-    <string name="message_location">\nWould like to use your location</string>
+    <string name="dialog_title_grant_location_access">Ligging gebruik?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> wil jou toestel se ligging gebruik]]></string>
     <string name="action_allow">Allow</string>
     <string name="action_dont_allow">Don\'t allow</string>
     <string name="title_sign_in">Sign in</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Launch app</string>
     <string name="action_domain_settings">Domain</string>
     <string name="settings_title_domains_delete_all">Delete all</string>
-    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
+    <string name="settings_summary_domains_delete_all">Herstel alle domein instellings</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_title_parent">Parent</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">Kasgrootte kan nie negatief wees nie</string>
     <string name="error_cache_too_large">Kas te groot</string>
     <string name="hint_available_space">Beskikbaar: %s</string>
+    <string name="action_reset">Herstel</string>
+    <string name="question_clear_location_permissions">Herstel ligging toestemmings?</string>
+    <string name="settings_title_clear_location_permissions">Herstel ligging toestemmings</string>
+    <string name="settings_summary_clear_location_permissions">Alle webwerwe sal weer moet vra vir ligging toegang</string>
+    <string name="settings_title_geolocation_granted">Ligging toegestaan</string>
+    <string name="settings_title_geolocation_denied">Ligging geweier</string>
 </resources>

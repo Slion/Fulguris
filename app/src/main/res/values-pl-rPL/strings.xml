@@ -20,7 +20,7 @@
     <string name="disable">Wyłącz</string>
     <string name="settings">Ustawienia</string>
     <string name="options">Opcje</string>
-    <string name="location">Dostęp do lokalizacji</string>
+    <string name="pref_title_location">Lokalizacja</string>
     <string name="password">Zapisuj hasła</string>
     <string name="agent">Przedstawiaj się jako</string>
     <string name="home">Strona główna</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nchciałby użyć:\n\n%2$s</string>
     <string name="title_form_resubmission">Ponowne wysyłanie formularza</string>
     <string name="message_form_resubmission">Czy chcesz ponownie wysłać dane?</string>
-    <string name="message_location">\nTa strona prosi o dostęp do twojej lokalizacji</string>
+    <string name="dialog_title_grant_location_access">Użyć lokalizacji?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> chce użyć lokalizacji Twojego urządzenia]]></string>
     <string name="action_allow">Zezwalaj</string>
     <string name="action_dont_allow">Blokuj</string>
     <string name="title_sign_in">Zaloguj się</string>
@@ -454,7 +455,7 @@
     <string name="settings_title_launch_app">Uruchom aplikację</string>
     <string name="action_domain_settings">Domena</string>
     <string name="settings_title_domains_delete_all">Usuń wszystko</string>
-    <string name="settings_summary_domains_delete_all">Usuń wszystkie ustawienia domen</string>
+    <string name="settings_summary_domains_delete_all">Resetuj wszystkie ustawienia domen</string>
     <string name="question_delete_all_domain_settings">Usunąć wszystkie ustawienia domen?</string>
     <string name="settings_title_delete_domain_settings">Usuń ustawienia domeny</string>
     <string name="settings_title_parent">Nadrzędne</string>
@@ -656,4 +657,10 @@
     <string name="error_cache_negative">Rozmiar pamięci podręcznej nie może być ujemny</string>
     <string name="error_cache_too_large">Pamięć podręczna zbyt duża</string>
     <string name="hint_available_space">Dostępne: %s</string>
+    <string name="action_reset">Resetuj</string>
+    <string name="question_clear_location_permissions">Zresetować uprawnienia lokalizacji?</string>
+    <string name="settings_title_clear_location_permissions">Resetuj uprawnienia lokalizacji</string>
+    <string name="settings_summary_clear_location_permissions">Wszystkie witryny będą musiały ponownie poprosić o dostęp do lokalizacji</string>
+    <string name="settings_title_geolocation_granted">Lokalizacja przyznana</string>
+    <string name="settings_title_geolocation_denied">Lokalizacja odmówiona</string>
 </resources>

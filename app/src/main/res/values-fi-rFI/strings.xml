@@ -20,7 +20,7 @@
     <string name="disable">Pois käytöstä</string>
     <string name="settings">Asetukset</string>
     <string name="options">Valinnat</string>
-    <string name="location">Sijaintioikeus</string>
+    <string name="pref_title_location">Sijainti</string>
     <string name="password">Tallenna salasanat</string>
     <string name="agent">Käyttäjäagentti</string>
     <string name="home">Aloitussivu</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nhaluaa käyttää:\n\n%2$s</string>
     <string name="title_form_resubmission">Lomakkeen uudelleenlähetys</string>
     <string name="message_form_resubmission">Haluatko lähettää tiedot uudelleen?</string>
-    <string name="message_location">\nHaluaa käyttää sijaintiasi</string>
+    <string name="dialog_title_grant_location_access">Käytetäänkö sijaintia?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> haluaa käyttää laitteesi sijaintia]]></string>
     <string name="action_allow">Salli</string>
     <string name="action_dont_allow">Älä salli</string>
     <string name="title_sign_in">Kirjaudu sisään</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Käynnistä sovellus</string>
     <string name="action_domain_settings">Verkkotunnuksen asetukset</string>
     <string name="settings_title_domains_delete_all">Poista kaikki verkkotunnukset</string>
-    <string name="settings_summary_domains_delete_all">Poista kaikki verkkotunnuskohtaiset asetukset</string>
+    <string name="settings_summary_domains_delete_all">Palauta kaikki verkkotunnusasetukset</string>
     <string name="question_delete_all_domain_settings">Haluatko poistaa kaikki verkkotunnuskohtaiset asetukset?</string>
     <string name="settings_title_delete_domain_settings">Poista verkkotunnuksen asetukset</string>
     <string name="settings_title_parent">Pääverkkotunnus</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">Välimuistin koko ei voi olla negatiivinen</string>
     <string name="error_cache_too_large">Välimuisti liian suuri</string>
     <string name="hint_available_space">Saatavilla: %s</string>
+    <string name="action_reset">Palauta</string>
+    <string name="question_clear_location_permissions">Palauta sijaintiluvat?</string>
+    <string name="settings_title_clear_location_permissions">Palauta sijaintiluvat</string>
+    <string name="settings_summary_clear_location_permissions">Kaikkien sivustojen on pyydettävä sijaintiin pääsyä uudelleen</string>
+    <string name="settings_title_geolocation_granted">Sijainti myönnetty</string>
+    <string name="settings_title_geolocation_denied">Sijainti estetty</string>
 </resources>

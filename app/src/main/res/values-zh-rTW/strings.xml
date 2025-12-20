@@ -20,7 +20,7 @@
     <string name="disable">停用</string>
     <string name="settings">設定</string>
     <string name="options">選項</string>
-    <string name="location">允許網站存取地理位置</string>
+    <string name="pref_title_location">位置</string>
     <string name="password">儲存密碼</string>
     <string name="agent">使用者代理</string>
     <string name="home">首頁</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\n想使用：\n\n%2$s</string>
     <string name="title_form_resubmission">重新送出表單</string>
     <string name="message_form_resubmission">確定重新傳送資料？</string>
-    <string name="message_location">\n確定使用您的位置？</string>
+    <string name="dialog_title_grant_location_access">使用位置？</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> 想要使用您裝置的位置]]></string>
     <string name="action_allow">允許</string>
     <string name="action_dont_allow">不允許</string>
     <string name="title_sign_in">登入</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">啟動應用程式</string>
     <string name="action_domain_settings">網域</string>
     <string name="settings_title_domains_delete_all">全部刪除</string>
-    <string name="settings_summary_domains_delete_all">刪除所有網域設定</string>
+    <string name="settings_summary_domains_delete_all">重設所有網域設定</string>
     <string name="question_delete_all_domain_settings">刪除所有網域設定？</string>
     <string name="settings_title_delete_domain_settings">刪除網域設定</string>
     <string name="settings_title_parent">父項</string>
@@ -648,4 +649,10 @@
     <string name="error_cache_negative">快取大小不能為負數</string>
     <string name="error_cache_too_large">快取過大</string>
     <string name="hint_available_space">可用: %s</string>
+    <string name="action_reset">重設</string>
+    <string name="question_clear_location_permissions">重設位置權限？</string>
+    <string name="settings_title_clear_location_permissions">重設位置權限</string>
+    <string name="settings_summary_clear_location_permissions">所有網站都必須再次請求位置存取權限</string>
+    <string name="settings_title_geolocation_granted">位置已授予</string>
+    <string name="settings_title_geolocation_denied">位置已拒絕</string>
 </resources>

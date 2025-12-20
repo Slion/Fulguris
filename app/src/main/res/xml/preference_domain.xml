@@ -88,6 +88,19 @@
 
 
     <x.PreferenceCategory
+        x:title="@string/pref_category_title_permissions">
+
+        <x.SwitchPreference
+            x:defaultValue="false"
+            x:key="@string/pref_key_location"
+            x:title="@string/pref_title_location"
+            x:icon="@drawable/ic_location"
+            x:iconSpaceReserved="false"
+            x:singleLineTitle="false" />
+
+    </x.PreferenceCategory>
+
+    <x.PreferenceCategory
         x:title="@string/settings_title_dark_mode_default">
 
     <x.SwitchPreference
@@ -265,7 +278,6 @@
             />
 
     </x.PreferenceCategory>
-
 
     <x.Preference
         x:key="@string/pref_key_delete"

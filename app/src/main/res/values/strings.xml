@@ -21,7 +21,7 @@
     <string name="disable">Disable</string>
     <string name="settings">Settings</string>
     <string name="options">Options</string>
-    <string name="location">Location access</string>
+    <string name="pref_title_location">Location</string>
     <string name="password">Save your passwords</string>
     <string name="agent">User agent</string>
     <string name="home">Homepage</string>
@@ -51,6 +51,7 @@
     <string name="dialog_title_share">Share this page</string>
     <string name="action_delete">Delete</string>
     <string name="action_blank">Blank page</string>
+    <string name="action_reset">Reset</string>
 
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Custom</string>
@@ -204,7 +205,8 @@
 
     <string name="title_form_resubmission">Form resubmission</string>
     <string name="message_form_resubmission">Would you like to resend the data?</string>
-    <string name="message_location">\nWould like to use your location</string>
+    <string name="dialog_title_grant_location_access">Use location?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> wants to use your device\'s location]]></string>
     <string name="action_allow">Allow</string>
     <string name="action_dont_allow">Don\'t allow</string>
     <string name="title_sign_in">Sign in</string>
@@ -498,8 +500,11 @@
     <string name="settings_title_launch_app">Launch app</string>
     <string name="action_domain_settings">Domain</string>
     <string name="settings_title_domains_delete_all">Delete all</string>
-    <string name="settings_summary_domains_delete_all">Delete all domain settings</string>
+    <string name="settings_summary_domains_delete_all">Reset all domain settings</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
+    <string name="question_clear_location_permissions">Reset location permissions?</string>
+    <string name="settings_title_clear_location_permissions">Reset location permissions</string>
+    <string name="settings_summary_clear_location_permissions">All sites will have to ask again for location access</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_title_default_domain_settings">Default settings</string>
@@ -516,6 +521,8 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
     <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="settings_title_geolocation_granted">Location granted</string>
+    <string name="settings_title_geolocation_denied">Location denied</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Current page has no cookies</string>
     <string name="settings_summary_manage_cookies">Manage current page cookies</string>

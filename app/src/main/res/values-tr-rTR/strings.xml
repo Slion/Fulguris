@@ -20,7 +20,7 @@
     <string name="disable">Devre dışı bırak</string>
     <string name="settings">Ayarlar</string>
     <string name="options">Seçenekler</string>
-    <string name="location">Konum erişimi</string>
+    <string name="pref_title_location">Konum</string>
     <string name="password">Parolalarınızı kaydedin</string>
     <string name="agent">Kullanıcı aracısı</string>
     <string name="home">Ana sayfa</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nşunu kullanmak istiyor:\n\n%2$s</string>
     <string name="title_form_resubmission">Formu yeniden gönderme</string>
     <string name="message_form_resubmission">Verileri yeniden göndermek ister misiniz?</string>
-    <string name="message_location">\nKonumunuzu kullanmak istiyor</string>
+    <string name="dialog_title_grant_location_access">Konum kullanılsın mı?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> cihazınızın konumunu kullanmak istiyor]]></string>
     <string name="action_allow">İzin ver</string>
     <string name="action_dont_allow">İzin verme</string>
     <string name="title_sign_in">Oturum aç</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Uygulamayı başlat</string>
     <string name="action_domain_settings">Alan adı</string>
     <string name="settings_title_domains_delete_all">Tümünü sil</string>
-    <string name="settings_summary_domains_delete_all">Tüm alan adı ayarlarını sil</string>
+    <string name="settings_summary_domains_delete_all">Tüm alan adı ayarlarını sıfırla</string>
     <string name="question_delete_all_domain_settings">Tüm alan adı ayarları silinsin mi?</string>
     <string name="settings_title_delete_domain_settings">Alan adı ayarlarını sil</string>
     <string name="settings_title_parent">Üst</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">Önbellek boyutu negatif olamaz</string>
     <string name="error_cache_too_large">Önbellek çok büyük</string>
     <string name="hint_available_space">Kullanılabilir: %s</string>
+    <string name="action_reset">Sıfırla</string>
+    <string name="question_clear_location_permissions">Konum izinleri sıfırlansın mı?</string>
+    <string name="settings_title_clear_location_permissions">Konum izinlerini sıfırla</string>
+    <string name="settings_summary_clear_location_permissions">Tüm siteler konum erişimi için tekrar sormalıdır</string>
+    <string name="settings_title_geolocation_granted">Konum verildi</string>
+    <string name="settings_title_geolocation_denied">Konum reddedildi</string>
 </resources>

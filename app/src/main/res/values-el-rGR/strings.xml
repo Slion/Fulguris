@@ -20,7 +20,7 @@
     <string name="disable">Απενεργοποίηση</string>
     <string name="settings">Ρυθμίσειs</string>
     <string name="options">Επιλογές</string>
-    <string name="location">Πρόσβαση σε τοποθεσία</string>
+    <string name="pref_title_location">Τοποθεσία</string>
     <string name="password">Αποθήκευση κωδικών</string>
     <string name="agent">Παράγοντας χρήστη</string>
     <string name="home">Αρχική σελίδα</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nθα ήθελε να χρησιμοποιήσει:\n\n%2$s</string>
     <string name="title_form_resubmission">Επαναυποβολή φόρμας</string>
     <string name="message_form_resubmission">Θα θέλατε να ξαναστείλετε τα στοιχεία;</string>
-    <string name="message_location">\nΘα θέλατε να χρησιμοποιήσετε την τοποθεσία σας;</string>
+    <string name="dialog_title_grant_location_access">Χρήση τοποθεσίας;</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> θέλει να χρησιμοποιήσει την τοποθεσία της συσκευής σας]]></string>
     <string name="action_allow">Αποδοχή</string>
     <string name="action_dont_allow">Μη αποδοχή</string>
     <string name="title_sign_in">Εγγραφή</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">Εκκίνηση εφαρμογής</string>
     <string name="action_domain_settings">Τομέας</string>
     <string name="settings_title_domains_delete_all">Διαγραφή όλων</string>
-    <string name="settings_summary_domains_delete_all">Διαγραφή όλων των ρυθμίσεων τομέα</string>
+    <string name="settings_summary_domains_delete_all">Επαναφορά όλων των ρυθμίσεων τομέα</string>
     <string name="question_delete_all_domain_settings">Διαγραφή όλων των ρυθμίσεων τομέα;</string>
     <string name="settings_title_delete_domain_settings">Διαγραφή ρυθμίσεων τομέα</string>
     <string name="settings_title_parent">Γονικό</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">Το μέγεθος προσωρινής μνήμης δεν μπορεί να είναι αρνητικό</string>
     <string name="error_cache_too_large">Προσωρινή μνήμη πολύ μεγάλη</string>
     <string name="hint_available_space">Διαθέσιμο: %s</string>
+    <string name="action_reset">Επαναφορά</string>
+    <string name="question_clear_location_permissions">Επαναφορά αδειών τοποθεσίας;</string>
+    <string name="settings_title_clear_location_permissions">Επαναφορά αδειών τοποθεσίας</string>
+    <string name="settings_summary_clear_location_permissions">Όλοι οι ιστότοποι θα πρέπει να ζητήσουν ξανά πρόσβαση στην τοποθεσία</string>
+    <string name="settings_title_geolocation_granted">Τοποθεσία παραχωρήθηκε</string>
+    <string name="settings_title_geolocation_denied">Τοποθεσία απορρίφθηκε</string>
 </resources>

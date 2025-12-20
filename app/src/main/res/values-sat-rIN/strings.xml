@@ -20,7 +20,7 @@
     <string name="disable">ᱵᱚᱸᱫ</string>
     <string name="settings">ᱥᱟᱡᱟᱣᱠᱚ</string>
     <string name="options">ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
-    <string name="location">ᱡᱟᱭᱜᱟ ᱟᱫᱮᱨ</string>
+    <string name="pref_title_location">जायगा:</string>
     <string name="password">ᱟᱢᱟᱜ ᱫᱚᱱᱟᱝᱥᱟᱵᱟᱫᱠᱚ ᱥᱟᱧᱪᱟᱣ ᱢᱮ</string>
     <string name="agent">ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱮᱡᱮᱱᱴ</string>
     <string name="home">ᱚᱲᱟᱜ ᱥᱟᱦᱴᱟ</string>
@@ -186,7 +186,8 @@
     <string name="message_permission_request">%1$s\n\nᱵᱮᱵᱷᱟᱨ ᱥᱟᱱᱟᱢᱟᱭ:\n\n%2$s</string>
     <string name="title_form_resubmission">ᱯᱷᱚᱨᱚᱢ ᱫᱚᱦᱲᱟ ᱡᱚᱢᱟ</string>
     <string name="message_form_resubmission">ᱪᱮᱫ ᱟᱢ ᱰᱟᱴᱟ ᱫᱚᱦᱲᱟ ᱵᱷᱮᱡᱟ ᱥᱟᱱᱟᱢᱟ?</string>
-    <string name="message_location">\nᱟᱢᱟᱜ ᱡᱟᱭᱜᱟ ᱵᱮᱵᱷᱟᱨ ᱥᱟᱱᱟᱢᱟᱭ</string>
+    <string name="dialog_title_grant_location_access">जायगा: बाभाव्?</string>
+    <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> आपको:आक् डिभाइस:रे:आक् जायगा: बाभाव् दाक\' याना]]></string>
     <string name="action_allow">ᱪᱷᱟᱹᱰᱤ ᱮᱢᱟᱭ ᱢᱮ</string>
     <string name="action_dont_allow">ᱪᱷᱟᱹᱰᱤ ᱟᱞᱚᱢ ᱮᱢᱟᱭ ᱢᱮ</string>
     <string name="title_sign_in">ᱵᱚᱞᱚᱱ</string>
@@ -452,7 +453,7 @@
     <string name="settings_title_launch_app">ᱮᱯ ᱮᱛᱦᱚᱵ</string>
     <string name="action_domain_settings">ᱰᱳᱢᱮᱱ</string>
     <string name="settings_title_domains_delete_all">ᱡᱷᱚᱛᱚ ᱢᱮᱴᱟᱣ</string>
-    <string name="settings_summary_domains_delete_all">ᱡᱷᱚᱛᱚ ᱰᱳᱢᱮᱱ ᱥᱟᱡᱟᱣ ᱠᱚ ᱢᱮᱴᱟᱣ</string>
+    <string name="settings_summary_domains_delete_all">सगेन् डोमेन जोजोना: रिसेट</string>
     <string name="question_delete_all_domain_settings">ᱡᱷᱚᱛᱚ ᱰᱳᱢᱮᱱ ᱥᱟᱡᱟᱣ ᱠᱚ ᱢᱮᱴᱟᱣ ᱥᱟᱱᱟᱢᱟ?</string>
     <string name="settings_title_delete_domain_settings">ᱰᱳᱢᱮᱱ ᱥᱟᱡᱟᱣ ᱠᱚ ᱢᱮᱴᱟᱣ</string>
     <string name="settings_title_parent">ᱟᱭᱳ</string>
@@ -650,4 +651,10 @@
     <string name="error_cache_negative">कैश आकार नकारात्मक बाहरे</string>
     <string name="error_cache_too_large">कैश बहुत घना</string>
     <string name="hint_available_space">उपलब्ध: %s</string>
+    <string name="action_reset">रिसेट</string>
+    <string name="question_clear_location_permissions">जायगा: मञ्जुरी रिसेट?</string>
+    <string name="settings_title_clear_location_permissions">जायगा: मञ्जुरी रिसेट</string>
+    <string name="settings_summary_clear_location_permissions">सगेन् साइट जायगा: आनचो: लागित् आबार् नेदे\' लागती:आ</string>
+    <string name="settings_title_geolocation_granted">जायगा: एम् हुआ</string>
+    <string name="settings_title_geolocation_denied">जायगा: बाकाय् हुआ</string>
 </resources>
