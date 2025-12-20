@@ -648,7 +648,7 @@
     <string name="pref_title_network_cache_size">Veličina keša</string>
     <string name="pref_message_network_cache_size">Unesite veličinu mrežnog keša do %s</string>
     <string name="pref_title_clear_cache">Obriši keš</string>
-    <string name="pref_summary_clear_cache">Trenutno koristi: %s</string>
+    <string name="pref_summary_clear_cache">Koristi: %s</string>
     <string name="error_invalid_number">Molimo unesite ispravan broj</string>
     <string name="error_cache_negative">Veličina keša ne može biti negativna</string>
     <string name="error_cache_too_large">Keš prevelik</string>

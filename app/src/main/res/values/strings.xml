@@ -744,7 +744,7 @@
     <string name="pref_title_network_cache_size">Cache size</string>
     <string name="pref_message_network_cache_size">Input network cache size up to %s</string>
     <string name="pref_title_clear_cache">Clear cache</string>
-    <string name="pref_summary_clear_cache">Currently using: %s</string>
+    <string name="pref_summary_clear_cache">Used: %s</string>
     <string name="error_invalid_number">Please enter a valid number</string>
     <string name="error_cache_negative">Cache size cannot be negative</string>
     <string name="error_cache_too_large">Cache too large</string>

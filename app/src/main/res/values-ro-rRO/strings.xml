@@ -648,7 +648,7 @@
     <string name="pref_title_network_cache_size">Dimensiunea cache-ului</string>
     <string name="pref_message_network_cache_size">Introduceți dimensiunea cache-ului de rețea până la %s</string>
     <string name="pref_title_clear_cache">Șterge cache-ul</string>
-    <string name="pref_summary_clear_cache">În prezent folosit: %s</string>
+    <string name="pref_summary_clear_cache">Folosit: %s</string>
     <string name="error_invalid_number">Vă rugăm să introduceți un număr valid</string>
     <string name="error_cache_negative">Dimensiunea cache-ului nu poate fi negativă</string>
     <string name="error_cache_too_large">Cache prea mare</string>

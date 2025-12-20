@@ -645,7 +645,7 @@
     <string name="pref_title_network_cache_size">Hurtigbufferstørrelse</string>
     <string name="pref_message_network_cache_size">Skriv inn nettverkshurtigbufferstørrelse opptil %s</string>
     <string name="pref_title_clear_cache">Tøm hurtigbuffer</string>
-    <string name="pref_summary_clear_cache">For øyeblikket i bruk: %s</string>
+    <string name="pref_summary_clear_cache">Brukt: %s</string>
     <string name="error_invalid_number">Vennligst skriv inn et gyldig tall</string>
     <string name="error_cache_negative">Hurtigbufferstørrelse kan ikke være negativ</string>
     <string name="error_cache_too_large">Hurtigbuffer for stor</string>

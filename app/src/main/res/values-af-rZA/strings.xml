@@ -645,7 +645,7 @@
     <string name="pref_title_network_cache_size">Kasgrootte</string>
     <string name="pref_message_network_cache_size">Voer netwerkkas-grootte in tot %s</string>
     <string name="pref_title_clear_cache">Maak kas skoon</string>
-    <string name="pref_summary_clear_cache">Tans in gebruik: %s</string>
+    <string name="pref_summary_clear_cache">Gebruik: %s</string>
     <string name="error_invalid_number">Voer asseblief \'n geldige nommer in</string>
     <string name="error_cache_negative">Kasgrootte kan nie negatief wees nie</string>
     <string name="error_cache_too_large">Kas te groot</string>

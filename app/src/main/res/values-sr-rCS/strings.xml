@@ -648,7 +648,7 @@
     <string name="pref_title_network_cache_size">Величина кеша</string>
     <string name="pref_message_network_cache_size">Унесите величину мрежног кеша до %s</string>
     <string name="pref_title_clear_cache">Обриши кеш</string>
-    <string name="pref_summary_clear_cache">Тренутно користи: %s</string>
+    <string name="pref_summary_clear_cache">Користи: %s</string>
     <string name="error_invalid_number">Молимо унесите исправан број</string>
     <string name="error_cache_negative">Величина кеша не може бити негативна</string>
     <string name="error_cache_too_large">Кеш превелик</string>

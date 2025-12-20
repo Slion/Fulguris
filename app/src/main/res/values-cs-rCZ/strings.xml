@@ -651,7 +651,7 @@
     <string name="pref_title_network_cache_size">Velikost mezipaměti</string>
     <string name="pref_message_network_cache_size">Zadejte velikost síťové mezipaměti až %s</string>
     <string name="pref_title_clear_cache">Vymazat mezipaměť</string>
-    <string name="pref_summary_clear_cache">Aktuálně využito: %s</string>
+    <string name="pref_summary_clear_cache">Použito: %s</string>
     <string name="error_invalid_number">Prosím zadejte platné číslo</string>
     <string name="error_cache_negative">Velikost mezipaměti nemůže být záporná</string>
     <string name="error_cache_too_large">Mezipaměť příliš velká</string>

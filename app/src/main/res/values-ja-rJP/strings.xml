@@ -643,7 +643,7 @@
     <string name="pref_title_network_cache_size">キャッシュサイズ</string>
     <string name="pref_message_network_cache_size">ネットワークキャッシュサイズを %s まで入力</string>
     <string name="pref_title_clear_cache">キャッシュをクリア</string>
-    <string name="pref_summary_clear_cache">現在使用中: %s</string>
+    <string name="pref_summary_clear_cache">使用中: %s</string>
     <string name="error_invalid_number">有効な数字を入力してください</string>
     <string name="error_cache_negative">キャッシュサイズは負の値にできません</string>
     <string name="error_cache_too_large">キャッシュが大きすぎます</string>

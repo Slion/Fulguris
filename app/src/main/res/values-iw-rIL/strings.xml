@@ -651,7 +651,7 @@
     <string name="pref_title_network_cache_size">גודל מטמון</string>
     <string name="pref_message_network_cache_size">הזן גודל מטמון רשת עד %s</string>
     <string name="pref_title_clear_cache">נקה מטמון</string>
-    <string name="pref_summary_clear_cache">בשימוש כרגע: %s</string>
+    <string name="pref_summary_clear_cache">בשימוש: %s</string>
     <string name="error_invalid_number">אנא הזן מספר חוקי</string>
     <string name="error_cache_negative">גודל המטמון לא יכול להיות שלילי</string>
     <string name="error_cache_too_large">מטמון גדול מדי</string>

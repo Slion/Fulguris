@@ -645,7 +645,7 @@
     <string name="pref_title_network_cache_size">Cachestorlek</string>
     <string name="pref_message_network_cache_size">Ange nätverkscachestorlek upp till %s</string>
     <string name="pref_title_clear_cache">Rensa cache</string>
-    <string name="pref_summary_clear_cache">För närvarande använder: %s</string>
+    <string name="pref_summary_clear_cache">Används: %s</string>
     <string name="error_invalid_number">Ange ett giltigt nummer</string>
     <string name="error_cache_negative">Cachestorlek kan inte vara negativ</string>
     <string name="error_cache_too_large">Cache för stor</string>

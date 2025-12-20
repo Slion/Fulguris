@@ -645,7 +645,7 @@
     <string name="pref_title_network_cache_size">Cache-Größe</string>
     <string name="pref_message_network_cache_size">Geben Sie die Netzwerk-Cache-Größe bis zu %s ein</string>
     <string name="pref_title_clear_cache">Cache leeren</string>
-    <string name="pref_summary_clear_cache">Derzeit verwendet: %s</string>
+    <string name="pref_summary_clear_cache">Verwendet: %s</string>
     <string name="error_invalid_number">Bitte geben Sie eine gültige Zahl ein</string>
     <string name="error_cache_negative">Cache-Größe darf nicht negativ sein</string>
     <string name="error_cache_too_large">Cache zu groß</string>

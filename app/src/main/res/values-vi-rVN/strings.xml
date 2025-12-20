@@ -643,7 +643,7 @@
     <string name="pref_title_network_cache_size">Kích thước bộ nhớ đệm</string>
     <string name="pref_message_network_cache_size">Nhập kích thước bộ nhớ đệm mạng tối đa %s</string>
     <string name="pref_title_clear_cache">Xóa bộ nhớ đệm</string>
-    <string name="pref_summary_clear_cache">Hiện đang sử dụng: %s</string>
+    <string name="pref_summary_clear_cache">Đang dùng: %s</string>
     <string name="error_invalid_number">Vui lòng nhập số hợp lệ</string>
     <string name="error_cache_negative">Kích thước bộ nhớ đệm không được âm</string>
     <string name="error_cache_too_large">Bộ nhớ đệm quá lớn</string>

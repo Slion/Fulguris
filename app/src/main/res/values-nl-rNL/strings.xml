@@ -645,7 +645,7 @@
     <string name="pref_title_network_cache_size">Cachegrootte</string>
     <string name="pref_message_network_cache_size">Voer netwerkcachegrootte in tot %s</string>
     <string name="pref_title_clear_cache">Cache wissen</string>
-    <string name="pref_summary_clear_cache">Momenteel in gebruik: %s</string>
+    <string name="pref_summary_clear_cache">Gebruikt: %s</string>
     <string name="error_invalid_number">Voer een geldig getal in</string>
     <string name="error_cache_negative">Cachegrootte kan niet negatief zijn</string>
     <string name="error_cache_too_large">Cache te groot</string>

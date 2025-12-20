@@ -651,7 +651,7 @@
     <string name="pref_title_network_cache_size">Talpyklos dydis</string>
     <string name="pref_message_network_cache_size">Įveskite tinklo talpyklos dydį iki %s</string>
     <string name="pref_title_clear_cache">Išvalyti talpyklą</string>
-    <string name="pref_summary_clear_cache">Šiuo metu naudojama: %s</string>
+    <string name="pref_summary_clear_cache">Naudojama: %s</string>
     <string name="error_invalid_number">Įveskite galiojantį skaičių</string>
     <string name="error_cache_negative">Talpyklos dydis negali būti neigiamas</string>
     <string name="error_cache_too_large">Talpykla per didelė</string>
