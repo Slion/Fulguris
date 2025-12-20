@@ -667,6 +667,11 @@
     <string name="question_clear_location_permissions">إعادة تعيين أذونات الموقع؟</string>
     <string name="settings_title_clear_location_permissions">إعادة تعيين أذونات الموقع</string>
     <string name="settings_summary_clear_location_permissions">سيتعين على جميع المواقع أن تطلب مرة أخرى للوصول إلى الموقع</string>
-    <string name="settings_title_geolocation_granted">تم منح الموقع</string>
-    <string name="settings_title_geolocation_denied">تم رفض الموقع</string>
+    <string name="pref_summary_override_location_granted">تم منح الموقع</string>
+    <string name="pref_summary_override_location_denied">تم رفض الموقع</string>
+    <string name="pref_summary_on_location">يجب أن تطلب المواقع الوصول إلى موقع جهازك</string>
+    <string name="pref_summary_off_location">لا يمكن للمواقع الوصول إلى موقع جهازك</string>
+    <string name="pref_summary_location_granted">ممنوح</string>
+    <string name="pref_summary_location_denied">مرفوض</string>
+    <string name="pref_summary_location_ask">سؤال</string>
 </resources>

@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Nulstil placeringstilladelser?</string>
     <string name="settings_title_clear_location_permissions">Nulstil placeringstilladelser</string>
     <string name="settings_summary_clear_location_permissions">Alle websteder skal bede om adgang til placering igen</string>
-    <string name="settings_title_geolocation_granted">Placering givet</string>
-    <string name="settings_title_geolocation_denied">Placering nægtet</string>
+    <string name="pref_summary_override_location_granted">Placering givet</string>
+    <string name="pref_summary_override_location_denied">Placering nægtet</string>
+    <string name="pref_summary_on_location">Websteder skal bede om adgang til din enheds placering</string>
+    <string name="pref_summary_off_location">Websteder kan ikke få adgang til din enheds placering</string>
+    <string name="pref_summary_location_granted">Givet</string>
+    <string name="pref_summary_location_denied">Nægtet</string>
+    <string name="pref_summary_location_ask">Spørg</string>
 </resources>

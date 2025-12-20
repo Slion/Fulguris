@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Επαναφορά αδειών τοποθεσίας;</string>
     <string name="settings_title_clear_location_permissions">Επαναφορά αδειών τοποθεσίας</string>
     <string name="settings_summary_clear_location_permissions">Όλοι οι ιστότοποι θα πρέπει να ζητήσουν ξανά πρόσβαση στην τοποθεσία</string>
-    <string name="settings_title_geolocation_granted">Τοποθεσία παραχωρήθηκε</string>
-    <string name="settings_title_geolocation_denied">Τοποθεσία απορρίφθηκε</string>
+    <string name="pref_summary_override_location_granted">Τοποθεσία παραχωρήθηκε</string>
+    <string name="pref_summary_override_location_denied">Τοποθεσία απορρίφθηκε</string>
+    <string name="pref_summary_on_location">Οι ιστότοποι πρέπει να ζητήσουν πρόσβαση στην τοποθεσία της συσκευής σας</string>
+    <string name="pref_summary_off_location">Οι ιστότοποι δεν μπορούν να αποκτήσουν πρόσβαση στην τοποθεσία της συσκευής σας</string>
+    <string name="pref_summary_location_granted">Παραχωρήθηκε</string>
+    <string name="pref_summary_location_denied">Απορρίφθηκε</string>
+    <string name="pref_summary_location_ask">Ερώτηση</string>
 </resources>

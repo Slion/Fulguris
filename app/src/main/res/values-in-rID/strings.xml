@@ -653,6 +653,11 @@
     <string name="question_clear_location_permissions">Setel ulang izin lokasi?</string>
     <string name="settings_title_clear_location_permissions">Setel ulang izin lokasi</string>
     <string name="settings_summary_clear_location_permissions">Semua situs harus meminta akses lokasi lagi</string>
-    <string name="settings_title_geolocation_granted">Lokasi diberikan</string>
-    <string name="settings_title_geolocation_denied">Lokasi ditolak</string>
+    <string name="pref_summary_override_location_granted">Lokasi diberikan</string>
+    <string name="pref_summary_override_location_denied">Lokasi ditolak</string>
+    <string name="pref_summary_on_location">Situs harus meminta akses ke lokasi perangkat Anda</string>
+    <string name="pref_summary_off_location">Situs tidak dapat mengakses lokasi perangkat Anda</string>
+    <string name="pref_summary_location_granted">Diberikan</string>
+    <string name="pref_summary_location_denied">Ditolak</string>
+    <string name="pref_summary_location_ask">Tanya</string>
 </resources>

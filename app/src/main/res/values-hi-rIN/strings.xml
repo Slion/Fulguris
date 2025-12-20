@@ -610,6 +610,11 @@
     <string name="question_clear_location_permissions">स्थान अनुमतियाँ रीसेट करें?</string>
     <string name="settings_title_clear_location_permissions">स्थान अनुमतियाँ रीसेट करें</string>
     <string name="settings_summary_clear_location_permissions">सभी साइटों को स्थान तक पहुँच के लिए फिर से पूछना होगा</string>
-    <string name="settings_title_geolocation_granted">स्थान दिया गया</string>
-    <string name="settings_title_geolocation_denied">स्थान अस्वीकृत</string>
+    <string name="pref_summary_override_location_granted">स्थान दिया गया</string>
+    <string name="pref_summary_override_location_denied">स्थान अस्वीकृत</string>
+    <string name="pref_summary_on_location">साइटों को आपके डिवाइस के स्थान तक पहुँच के लिए पूछना होगा</string>
+    <string name="pref_summary_off_location">साइटें आपके डिवाइस के स्थान तक नहीं पहुँच सकतीं</string>
+    <string name="pref_summary_location_granted">दिया गया</string>
+    <string name="pref_summary_location_denied">अस्वीकृत</string>
+    <string name="pref_summary_location_ask">पूछें</string>
 </resources>

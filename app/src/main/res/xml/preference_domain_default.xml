@@ -37,8 +37,10 @@
     <x.SwitchPreference
         a:defaultValue="true"
         a:key="@string/pref_key_location"
-        a:title="@string/pref_title_location"
         a:icon="@drawable/ic_location"
+        a:title="@string/pref_title_location"
+        a:summaryOn="@string/pref_summary_on_location"
+        a:summaryOff="@string/pref_summary_off_location"
         a:iconSpaceReserved="false"
         a:singleLineTitle="false" />
 

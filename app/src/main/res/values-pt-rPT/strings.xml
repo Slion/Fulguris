@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Repor permissões de localização?</string>
     <string name="settings_title_clear_location_permissions">Repor permissões de localização</string>
     <string name="settings_summary_clear_location_permissions">Todos os sites terão que pedir acesso à localização novamente</string>
-    <string name="settings_title_geolocation_granted">Localização concedida</string>
-    <string name="settings_title_geolocation_denied">Localização negada</string>
+    <string name="pref_summary_override_location_granted">Localização concedida</string>
+    <string name="pref_summary_override_location_denied">Localização negada</string>
+    <string name="pref_summary_on_location">Sites devem pedir acesso à localização do seu dispositivo</string>
+    <string name="pref_summary_off_location">Sites não podem aceder à localização do seu dispositivo</string>
+    <string name="pref_summary_location_granted">Concedido</string>
+    <string name="pref_summary_location_denied">Negado</string>
+    <string name="pref_summary_location_ask">Perguntar</string>
 </resources>

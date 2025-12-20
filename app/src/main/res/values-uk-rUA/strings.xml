@@ -661,6 +661,11 @@
     <string name="question_clear_location_permissions">Скинути дозволи на місцезнаходження?</string>
     <string name="settings_title_clear_location_permissions">Скинути дозволи на місцезнаходження</string>
     <string name="settings_summary_clear_location_permissions">Усі сайти повинні будуть знову запитати доступ до місцезнаходження</string>
-    <string name="settings_title_geolocation_granted">Місцезнаходження надано</string>
-    <string name="settings_title_geolocation_denied">Місцезнаходження відхилено</string>
+    <string name="pref_summary_override_location_granted">Місцезнаходження надано</string>
+    <string name="pref_summary_override_location_denied">Місцезнаходження відхилено</string>
+    <string name="pref_summary_on_location">Сайти повинні запитати доступ до місцезнаходження вашого пристрою</string>
+    <string name="pref_summary_off_location">Сайти не можуть отримати доступ до місцезнаходження вашого пристрою</string>
+    <string name="pref_summary_location_granted">Надано</string>
+    <string name="pref_summary_location_denied">Відхилено</string>
+    <string name="pref_summary_location_ask">Запитати</string>
 </resources>

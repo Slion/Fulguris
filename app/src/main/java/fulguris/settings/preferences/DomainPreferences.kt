@@ -258,8 +258,8 @@ class DomainPreferences constructor(
             // Still check for geolocation permission even if no settings file exists
             checkLocationPermission { geoStatus ->
                 val summary = when (geoStatus) {
-                    true -> context.getString(R.string.settings_title_geolocation_granted)
-                    false -> context.getString(R.string.settings_title_geolocation_denied)
+                    true -> context.getString(R.string.pref_summary_override_location_granted)
+                    false -> context.getString(R.string.pref_summary_override_location_denied)
                     null -> domain.ifEmpty { context.getString(R.string.settings_summary_no_overrides) }
                 }
                 callback(summary)
@@ -295,8 +295,8 @@ class DomainPreferences constructor(
         // Check geolocation permission asynchronously
         checkLocationPermission { geoStatus ->
             when (geoStatus) {
-                true -> overrides.add(context.getString(R.string.settings_title_geolocation_granted))
-                false -> overrides.add(context.getString(R.string.settings_title_geolocation_denied))
+                true -> overrides.add(context.getString(R.string.pref_summary_override_location_granted))
+                false -> overrides.add(context.getString(R.string.pref_summary_override_location_denied))
                 null -> {} // No permission set, don't add to overrides
             }
 

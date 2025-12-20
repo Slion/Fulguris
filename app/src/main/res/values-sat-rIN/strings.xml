@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">जायगा: मञ्जुरी रिसेट?</string>
     <string name="settings_title_clear_location_permissions">जायगा: मञ्जुरी रिसेट</string>
     <string name="settings_summary_clear_location_permissions">सगेन् साइट जायगा: आनचो: लागित् आबार् नेदे\' लागती:आ</string>
-    <string name="settings_title_geolocation_granted">जायगा: एम् हुआ</string>
-    <string name="settings_title_geolocation_denied">जायगा: बाकाय् हुआ</string>
+    <string name="pref_summary_override_location_granted">जायगा: एम् हुआ</string>
+    <string name="pref_summary_override_location_denied">जायगा: बाकाय् हुआ</string>
+    <string name="pref_summary_on_location">साइट आपको:आक् डिभाइस:रे:आक् जायगा: आनचो: लागित् नेदे\' लागती:आ</string>
+    <string name="pref_summary_off_location">साइट आपको:आक् डिभाइस:रे:आक् जायगा: आनचो: दाड़ेयाक् आ</string>
+    <string name="pref_summary_location_granted">एम् हुआ</string>
+    <string name="pref_summary_location_denied">बाकाय् हुआ</string>
+    <string name="pref_summary_location_ask">नेदे\'</string>
 </resources>

@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Herstel ligging toestemmings?</string>
     <string name="settings_title_clear_location_permissions">Herstel ligging toestemmings</string>
     <string name="settings_summary_clear_location_permissions">Alle webwerwe sal weer moet vra vir ligging toegang</string>
-    <string name="settings_title_geolocation_granted">Ligging toegestaan</string>
-    <string name="settings_title_geolocation_denied">Ligging geweier</string>
+    <string name="pref_summary_override_location_granted">Ligging toegestaan</string>
+    <string name="pref_summary_override_location_denied">Ligging geweier</string>
+    <string name="pref_summary_on_location">Webwerwe moet vra om jou toestel se ligging te gebruik</string>
+    <string name="pref_summary_off_location">Webwerwe kan nie jou toestel se ligging gebruik nie</string>
+    <string name="pref_summary_location_granted">Toegestaan</string>
+    <string name="pref_summary_location_denied">Geweier</string>
+    <string name="pref_summary_location_ask">Vra</string>
 </resources>

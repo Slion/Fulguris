@@ -653,6 +653,11 @@
     <string name="question_clear_location_permissions">รีเซ็ตสิทธิ์การเข้าถึงตำแหน่ง?</string>
     <string name="settings_title_clear_location_permissions">รีเซ็ตสิทธิ์การเข้าถึงตำแหน่ง</string>
     <string name="settings_summary_clear_location_permissions">ไซต์ทั้งหมดจะต้องขออนุญาตเข้าถึงตำแหน่งอีกครั้ง</string>
-    <string name="settings_title_geolocation_granted">ตำแหน่งที่ได้รับอนุญาต</string>
-    <string name="settings_title_geolocation_denied">ตำแหน่งถูกปฏิเสธ</string>
+    <string name="pref_summary_override_location_granted">ตำแหน่งที่ได้รับอนุญาต</string>
+    <string name="pref_summary_override_location_denied">ตำแหน่งถูกปฏิเสธ</string>
+    <string name="pref_summary_on_location">ไซต์ต้องขออนุญาตเข้าถึงตำแหน่งของอุปกรณ์ของคุณ</string>
+    <string name="pref_summary_off_location">ไซต์ไม่สามารถเข้าถึงตำแหน่งของอุปกรณ์ของคุณได้</string>
+    <string name="pref_summary_location_granted">อนุญาตแล้ว</string>
+    <string name="pref_summary_location_denied">ปฏิเสธแล้ว</string>
+    <string name="pref_summary_location_ask">ถาม</string>
 </resources>

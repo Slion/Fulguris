@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Helymeghatározási engedélyek visszaállítása?</string>
     <string name="settings_title_clear_location_permissions">Helymeghatározási engedélyek visszaállítása</string>
     <string name="settings_summary_clear_location_permissions">Minden weboldalnak újra kell kérnie a helymeghatározáshoz való hozzáférést</string>
-    <string name="settings_title_geolocation_granted">Helymeghatározás engedélyezve</string>
-    <string name="settings_title_geolocation_denied">Helymeghatározás megtagadva</string>
+    <string name="pref_summary_override_location_granted">Helymeghatározás engedélyezve</string>
+    <string name="pref_summary_override_location_denied">Helymeghatározás megtagadva</string>
+    <string name="pref_summary_on_location">A weboldalaknak kérniük kell az eszköz helymeghatározásához való hozzáférést</string>
+    <string name="pref_summary_off_location">A weboldalak nem férhetnek hozzá az eszköz helymeghatározásához</string>
+    <string name="pref_summary_location_granted">Engedélyezve</string>
+    <string name="pref_summary_location_denied">Megtagadva</string>
+    <string name="pref_summary_location_ask">Kérdezzen</string>
 </resources>

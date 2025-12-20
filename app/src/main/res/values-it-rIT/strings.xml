@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Ripristinare i permessi di posizione?</string>
     <string name="settings_title_clear_location_permissions">Ripristina permessi di posizione</string>
     <string name="settings_summary_clear_location_permissions">Tutti i siti dovranno chiedere nuovamente l\'accesso alla posizione</string>
-    <string name="settings_title_geolocation_granted">Posizione concessa</string>
-    <string name="settings_title_geolocation_denied">Posizione negata</string>
+    <string name="pref_summary_override_location_granted">Posizione concessa</string>
+    <string name="pref_summary_override_location_denied">Posizione negata</string>
+    <string name="pref_summary_on_location">I siti devono chiedere l\'accesso alla posizione del tuo dispositivo</string>
+    <string name="pref_summary_off_location">I siti non possono accedere alla posizione del tuo dispositivo</string>
+    <string name="pref_summary_location_granted">Concesso</string>
+    <string name="pref_summary_location_denied">Negato</string>
+    <string name="pref_summary_location_ask">Chiedi</string>
 </resources>

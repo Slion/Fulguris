@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Restablir permisos d\'ubicació?</string>
     <string name="settings_title_clear_location_permissions">Restablir permisos d\'ubicació</string>
     <string name="settings_summary_clear_location_permissions">Tots els llocs hauran de tornar a demanar accés a la ubicació</string>
-    <string name="settings_title_geolocation_granted">Ubicació concedida</string>
-    <string name="settings_title_geolocation_denied">Ubicació denegada</string>
+    <string name="pref_summary_override_location_granted">Ubicació concedida</string>
+    <string name="pref_summary_override_location_denied">Ubicació denegada</string>
+    <string name="pref_summary_on_location">Els llocs han de demanar accés a la ubicació del teu dispositiu</string>
+    <string name="pref_summary_off_location">Els llocs no poden accedir a la ubicació del teu dispositiu</string>
+    <string name="pref_summary_location_granted">Concedit</string>
+    <string name="pref_summary_location_denied">Denegat</string>
+    <string name="pref_summary_location_ask">Pregunta</string>
 </resources>

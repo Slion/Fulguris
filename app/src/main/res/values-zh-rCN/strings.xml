@@ -653,6 +653,11 @@
     <string name="question_clear_location_permissions">重置位置权限？</string>
     <string name="settings_title_clear_location_permissions">重置位置权限</string>
     <string name="settings_summary_clear_location_permissions">所有网站都必须再次请求位置访问权限</string>
-    <string name="settings_title_geolocation_granted">位置已授予</string>
-    <string name="settings_title_geolocation_denied">位置已拒绝</string>
+    <string name="pref_summary_override_location_granted">位置已授予</string>
+    <string name="pref_summary_override_location_denied">位置已拒绝</string>
+    <string name="pref_summary_on_location">网站必须请求访问您设备的位置</string>
+    <string name="pref_summary_off_location">网站无法访问您设备的位置</string>
+    <string name="pref_summary_location_granted">已授予</string>
+    <string name="pref_summary_location_denied">已拒绝</string>
+    <string name="pref_summary_location_ask">询问</string>
 </resources>

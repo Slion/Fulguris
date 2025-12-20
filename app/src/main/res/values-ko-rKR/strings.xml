@@ -653,6 +653,11 @@
     <string name="question_clear_location_permissions">위치 권한을 재설정하시겠습니까?</string>
     <string name="settings_title_clear_location_permissions">위치 권한 재설정</string>
     <string name="settings_summary_clear_location_permissions">모든 사이트가 다시 위치 액세스를 요청해야 합니다</string>
-    <string name="settings_title_geolocation_granted">위치 허용됨</string>
-    <string name="settings_title_geolocation_denied">위치 거부됨</string>
+    <string name="pref_summary_override_location_granted">위치 허용됨</string>
+    <string name="pref_summary_override_location_denied">위치 거부됨</string>
+    <string name="pref_summary_on_location">사이트가 기기 위치에 액세스하려면 먼저 물어봐야 합니다</string>
+    <string name="pref_summary_off_location">사이트가 기기 위치에 액세스할 수 없습니다</string>
+    <string name="pref_summary_location_granted">허용됨</string>
+    <string name="pref_summary_location_denied">거부됨</string>
+    <string name="pref_summary_location_ask">확인</string>
 </resources>

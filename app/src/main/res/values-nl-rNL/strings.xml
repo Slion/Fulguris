@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Locatietoestemmingen herstellen?</string>
     <string name="settings_title_clear_location_permissions">Locatietoestemmingen herstellen</string>
     <string name="settings_summary_clear_location_permissions">Alle sites moeten opnieuw toestemming vragen voor locatietoegang</string>
-    <string name="settings_title_geolocation_granted">Locatie toegestaan</string>
-    <string name="settings_title_geolocation_denied">Locatie geweigerd</string>
+    <string name="pref_summary_override_location_granted">Locatie toegestaan</string>
+    <string name="pref_summary_override_location_denied">Locatie geweigerd</string>
+    <string name="pref_summary_on_location">Sites moeten toestemming vragen om toegang tot de locatie van je apparaat</string>
+    <string name="pref_summary_off_location">Sites hebben geen toegang tot de locatie van je apparaat</string>
+    <string name="pref_summary_location_granted">Toegestaan</string>
+    <string name="pref_summary_location_denied">Geweigerd</string>
+    <string name="pref_summary_location_ask">Vragen</string>
 </resources>

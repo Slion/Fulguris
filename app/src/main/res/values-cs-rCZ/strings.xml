@@ -661,6 +661,11 @@
     <string name="question_clear_location_permissions">Obnovit oprávnění k poloze?</string>
     <string name="settings_title_clear_location_permissions">Obnovit oprávnění k poloze</string>
     <string name="settings_summary_clear_location_permissions">Všechny stránky budou muset znovu požádat o přístup k poloze</string>
-    <string name="settings_title_geolocation_granted">Poloha povolena</string>
-    <string name="settings_title_geolocation_denied">Poloha zamítnuta</string>
+    <string name="pref_summary_override_location_granted">Poloha povolena</string>
+    <string name="pref_summary_override_location_denied">Poloha zamítnuta</string>
+    <string name="pref_summary_on_location">Stránky musí požádat o přístup k poloze vašeho zařízení</string>
+    <string name="pref_summary_off_location">Stránky nemají přístup k poloze vašeho zařízení</string>
+    <string name="pref_summary_location_granted">Povoleno</string>
+    <string name="pref_summary_location_denied">Zamítnuto</string>
+    <string name="pref_summary_location_ask">Zeptat se</string>
 </resources>

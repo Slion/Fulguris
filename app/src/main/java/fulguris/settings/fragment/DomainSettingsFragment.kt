@@ -148,12 +148,21 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
 
         // Specific domains: Manage WebKit geolocation permissions
         locationSwitch?.apply {
-            // Query current permission status using the domain preferences location method
-            prefs.hasLocationPermission { isEnabled ->
+            // Helper function to update summary based on permission state
+            fun updateSummary(granted: Boolean?) {
                 activity?.runOnUiThread {
-                    // Update switch state to reflect current permission
-                    isChecked = isEnabled
+                    summary = when (granted) {
+                        true -> getString(R.string.pref_summary_location_granted)
+                        false -> getString(R.string.pref_summary_location_denied)
+                        null -> getString(R.string.pref_summary_location_ask)
+                    }
+                    isChecked = granted == true
                 }
+            }
+
+            // Query current permission status using checkLocationPermission
+            prefs.checkLocationPermission { granted ->
+                updateSummary(granted)
             }
 
             // Handle switch changes
@@ -163,10 +172,12 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
                 if (!enabled) {
                     // Revoke permission immediately
                     prefs.clearLocationPermission()
+                    updateSummary(null) // Will be "Ask" state
                     true
                 } else {
                     // Grant permission immediately
                     prefs.grantLocationPermission()
+                    updateSummary(true)
                     true
                 }
             }

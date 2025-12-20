@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Konum izinleri sıfırlansın mı?</string>
     <string name="settings_title_clear_location_permissions">Konum izinlerini sıfırla</string>
     <string name="settings_summary_clear_location_permissions">Tüm siteler konum erişimi için tekrar sormalıdır</string>
-    <string name="settings_title_geolocation_granted">Konum verildi</string>
-    <string name="settings_title_geolocation_denied">Konum reddedildi</string>
+    <string name="pref_summary_override_location_granted">Konum verildi</string>
+    <string name="pref_summary_override_location_denied">Konum reddedildi</string>
+    <string name="pref_summary_on_location">Siteler cihazınızın konumuna erişim için sormalıdır</string>
+    <string name="pref_summary_off_location">Siteler cihazınızın konumuna erişemez</string>
+    <string name="pref_summary_location_granted">Verildi</string>
+    <string name="pref_summary_location_denied">Reddedildi</string>
+    <string name="pref_summary_location_ask">Sor</string>
 </resources>

@@ -653,6 +653,11 @@
     <string name="question_clear_location_permissions">位置情報の権限をリセットしますか？</string>
     <string name="settings_title_clear_location_permissions">位置情報の権限をリセット</string>
     <string name="settings_summary_clear_location_permissions">すべてのサイトが再度位置情報へのアクセスを求める必要があります</string>
-    <string name="settings_title_geolocation_granted">位置情報が許可されました</string>
-    <string name="settings_title_geolocation_denied">位置情報が拒否されました</string>
+    <string name="pref_summary_override_location_granted">位置情報が許可されました</string>
+    <string name="pref_summary_override_location_denied">位置情報が拒否されました</string>
+    <string name="pref_summary_on_location">サイトはデバイスの位置情報へのアクセスを求める必要があります</string>
+    <string name="pref_summary_off_location">サイトはデバイスの位置情報にアクセスできません</string>
+    <string name="pref_summary_location_granted">許可済み</string>
+    <string name="pref_summary_location_denied">拒否済み</string>
+    <string name="pref_summary_location_ask">確認</string>
 </resources>

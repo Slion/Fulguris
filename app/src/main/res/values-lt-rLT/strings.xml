@@ -661,6 +661,11 @@
     <string name="question_clear_location_permissions">Iš naujo nustatyti vietos leidimus?</string>
     <string name="settings_title_clear_location_permissions">Iš naujo nustatyti vietos leidimus</string>
     <string name="settings_summary_clear_location_permissions">Visos svetainės turės vėl prašyti prieigos prie vietos</string>
-    <string name="settings_title_geolocation_granted">Vieta suteikta</string>
-    <string name="settings_title_geolocation_denied">Vieta atmesta</string>
+    <string name="pref_summary_override_location_granted">Vieta suteikta</string>
+    <string name="pref_summary_override_location_denied">Vieta atmesta</string>
+    <string name="pref_summary_on_location">Svetainės turi prašyti prieigos prie jūsų įrenginio vietos</string>
+    <string name="pref_summary_off_location">Svetainės negali pasiekti jūsų įrenginio vietos</string>
+    <string name="pref_summary_location_granted">Suteikta</string>
+    <string name="pref_summary_location_denied">Atmesta</string>
+    <string name="pref_summary_location_ask">Klausti</string>
 </resources>

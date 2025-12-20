@@ -655,6 +655,11 @@
     <string name="question_clear_location_permissions">Palauta sijaintiluvat?</string>
     <string name="settings_title_clear_location_permissions">Palauta sijaintiluvat</string>
     <string name="settings_summary_clear_location_permissions">Kaikkien sivustojen on pyydettävä sijaintiin pääsyä uudelleen</string>
-    <string name="settings_title_geolocation_granted">Sijainti myönnetty</string>
-    <string name="settings_title_geolocation_denied">Sijainti estetty</string>
+    <string name="pref_summary_override_location_granted">Sijainti myönnetty</string>
+    <string name="pref_summary_override_location_denied">Sijainti estetty</string>
+    <string name="pref_summary_on_location">Sivustojen on pyydettävä pääsyä laitteesi sijaintiin</string>
+    <string name="pref_summary_off_location">Sivustot eivät voi käyttää laitteesi sijaintia</string>
+    <string name="pref_summary_location_granted">Myönnetty</string>
+    <string name="pref_summary_location_denied">Estetty</string>
+    <string name="pref_summary_location_ask">Kysy</string>
 </resources>

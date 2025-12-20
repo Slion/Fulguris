@@ -653,6 +653,11 @@
     <string name="question_clear_location_permissions">Đặt lại quyền vị trí?</string>
     <string name="settings_title_clear_location_permissions">Đặt lại quyền vị trí</string>
     <string name="settings_summary_clear_location_permissions">Tất cả các trang web sẽ phải yêu cầu lại quyền truy cập vị trí</string>
-    <string name="settings_title_geolocation_granted">Vị trí đã được cấp</string>
-    <string name="settings_title_geolocation_denied">Vị trí bị từ chối</string>
+    <string name="pref_summary_override_location_granted">Vị trí đã được cấp</string>
+    <string name="pref_summary_override_location_denied">Vị trí bị từ chối</string>
+    <string name="pref_summary_on_location">Các trang web phải yêu cầu quyền truy cập vị trí thiết bị của bạn</string>
+    <string name="pref_summary_off_location">Các trang web không thể truy cập vị trí thiết bị của bạn</string>
+    <string name="pref_summary_location_granted">Đã cấp</string>
+    <string name="pref_summary_location_denied">Bị từ chối</string>
+    <string name="pref_summary_location_ask">Hỏi</string>
 </resources>

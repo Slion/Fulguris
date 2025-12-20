@@ -658,6 +658,11 @@
     <string name="question_clear_location_permissions">Ресетовати дозволе за локацију?</string>
     <string name="settings_title_clear_location_permissions">Ресетуј дозволе за локацију</string>
     <string name="settings_summary_clear_location_permissions">Сви сајтови ће морати поново тражити приступ локацији</string>
-    <string name="settings_title_geolocation_granted">Локација одобрена</string>
-    <string name="settings_title_geolocation_denied">Локација одбијена</string>
+    <string name="pref_summary_override_location_granted">Локација одобрена</string>
+    <string name="pref_summary_override_location_denied">Локација одбијена</string>
+    <string name="pref_summary_on_location">Сајтови морају тражити приступ локацији вашег уређаја</string>
+    <string name="pref_summary_off_location">Сајтови не могу приступити локацији вашег уређаја</string>
+    <string name="pref_summary_location_granted">Одобрено</string>
+    <string name="pref_summary_location_denied">Одбијено</string>
+    <string name="pref_summary_location_ask">Питај</string>
 </resources>

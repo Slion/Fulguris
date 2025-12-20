@@ -658,6 +658,11 @@
     <string name="question_clear_location_permissions">Resetați permisiunile de locație?</string>
     <string name="settings_title_clear_location_permissions">Resetează permisiunile de locație</string>
     <string name="settings_summary_clear_location_permissions">Toate site-urile vor trebui să solicite din nou acces la locație</string>
-    <string name="settings_title_geolocation_granted">Locație acordată</string>
-    <string name="settings_title_geolocation_denied">Locație refuzată</string>
+    <string name="pref_summary_override_location_granted">Locație acordată</string>
+    <string name="pref_summary_override_location_denied">Locație refuzată</string>
+    <string name="pref_summary_on_location">Site-urile trebuie să solicite acces la locația dispozitivului dvs.</string>
+    <string name="pref_summary_off_location">Site-urile nu pot accesa locația dispozitivului dvs.</string>
+    <string name="pref_summary_location_granted">Acordat</string>
+    <string name="pref_summary_location_denied">Refuzat</string>
+    <string name="pref_summary_location_ask">Întreabă</string>
 </resources>

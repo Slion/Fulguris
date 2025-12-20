@@ -661,6 +661,11 @@
     <string name="question_clear_location_permissions">Zresetować uprawnienia lokalizacji?</string>
     <string name="settings_title_clear_location_permissions">Resetuj uprawnienia lokalizacji</string>
     <string name="settings_summary_clear_location_permissions">Wszystkie witryny będą musiały ponownie poprosić o dostęp do lokalizacji</string>
-    <string name="settings_title_geolocation_granted">Lokalizacja przyznana</string>
-    <string name="settings_title_geolocation_denied">Lokalizacja odmówiona</string>
+    <string name="pref_summary_override_location_granted">Lokalizacja przyznana</string>
+    <string name="pref_summary_override_location_denied">Lokalizacja odmówiona</string>
+    <string name="pref_summary_on_location">Witryny muszą poprosić o dostęp do lokalizacji Twojego urządzenia</string>
+    <string name="pref_summary_off_location">Witryny nie mogą uzyskać dostępu do lokalizacji Twojego urządzenia</string>
+    <string name="pref_summary_location_granted">Przyznane</string>
+    <string name="pref_summary_location_denied">Odmówione</string>
+    <string name="pref_summary_location_ask">Zapytaj</string>
 </resources>
