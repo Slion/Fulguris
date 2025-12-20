@@ -253,43 +253,32 @@ class DomainPreferences constructor(
      * @param callback Called with the summary string
      */
     fun getOverridesSummary(context: Context, callback: (String) -> Unit) {
-        // If domain settings don't exist and this is not default, just return the domain name
-        if (!isDefault && !exists(domain)) {
-            // Still check for geolocation permission even if no settings file exists
-            checkLocationPermission { geoStatus ->
-                val summary = when (geoStatus) {
-                    true -> context.getString(R.string.pref_summary_override_location_granted)
-                    false -> context.getString(R.string.pref_summary_override_location_denied)
-                    null -> domain.ifEmpty { context.getString(R.string.settings_summary_no_overrides) }
-                }
-                callback(summary)
-            }
-            return
-        }
 
         val overrides = mutableListOf<String>()
 
-        // Order matches preference_domain_default.xml
-        if (darkModeOverride) {
-            overrides.add(context.getString(R.string.settings_title_dark_mode_default))
-        }
-        if (desktopModeOverride) {
-            overrides.add(context.getString(R.string.settings_title_desktop_mode_default))
-        }
-        if (javaScriptEnabledOverride) {
-            overrides.add(context.getString(R.string.settings_title_javascript))
-        }
-        if (thirdPartyCookiesOverride) {
-            overrides.add(context.getString(R.string.settings_title_third_party_cookies))
-        }
-        if (launchAppOverride) {
-            overrides.add(context.getString(R.string.settings_title_launch_app))
-        }
-        if (sslErrorOverride) {
-            overrides.add(context.getString(R.string.settings_title_ssl_error))
-        }
-        if (incomingUrlActionOverride) {
-            overrides.add(context.getString(R.string.settings_title_incoming_url_action))
+        if (!isDefault && exists(domain)) {
+            // Order matches preference_domain_default.xml
+            if (darkModeOverride) {
+                overrides.add(context.getString(R.string.settings_title_dark_mode_default))
+            }
+            if (desktopModeOverride) {
+                overrides.add(context.getString(R.string.settings_title_desktop_mode_default))
+            }
+            if (javaScriptEnabledOverride) {
+                overrides.add(context.getString(R.string.settings_title_javascript))
+            }
+            if (thirdPartyCookiesOverride) {
+                overrides.add(context.getString(R.string.settings_title_third_party_cookies))
+            }
+            if (launchAppOverride) {
+                overrides.add(context.getString(R.string.settings_title_launch_app))
+            }
+            if (sslErrorOverride) {
+                overrides.add(context.getString(R.string.settings_title_ssl_error))
+            }
+            if (incomingUrlActionOverride) {
+                overrides.add(context.getString(R.string.settings_title_incoming_url_action))
+            }
         }
 
         // Check geolocation permission asynchronously
@@ -302,7 +291,10 @@ class DomainPreferences constructor(
 
             val result = if (overrides.isEmpty()) {
                 // Return domain name if no overrides exist
-                domain.ifEmpty { context.getString(R.string.settings_summary_no_overrides) }
+                domain.ifEmpty {
+                    Timber.w("getOverridesSummary does not make sense for default domain settings")
+                    context.getString(R.string.settings_summary_no_overrides)
+                }
             } else {
                 overrides.joinToString(", ")
             }
