@@ -46,23 +46,12 @@ class NetworkEngineHttpUrlConnection : NetworkEngine {
     override fun handleRequest(request: WebResourceRequest): WebResourceResponse? {
         var connection: HttpURLConnection? = null
         try {
-            val urlString = request.url.toString()
-
-            // HttpURLConnection only supports http and https schemes, let WebView handle others
-            if (!urlString.startsWith("http://", ignoreCase = true) && !urlString.startsWith("https://", ignoreCase = true)) {
+            // Check if we can handle this request (scheme and method checks)
+            if (!canHandleRequest(request)) {
                 return null
             }
 
-            // Handle request method
-            // Note: WebResourceRequest doesn't provide access to POST body, so we let WebView handle POST/PUT/PATCH
-            when (request.method.uppercase()) {
-                "POST", "PUT", "PATCH" -> {
-                    // WebView API limitation: We cannot access the request body from WebResourceRequest
-                    // Return null to let WebView handle these requests with the proper body
-                    Timber.v("Delegating ${request.method} request to WebView: ${request.url}")
-                    return null
-                }
-            }
+            val urlString = request.url.toString()
 
             // Open connection
             val url = URL(urlString)
@@ -114,6 +103,12 @@ class NetworkEngineHttpUrlConnection : NetworkEngine {
                 ByteArrayInputStream(ByteArray(0))
             }
 
+            // Process Set-Cookie headers using base interface method
+            val setCookieHeaders = connection.headerFields["Set-Cookie"]
+            if (!setCookieHeaders.isNullOrEmpty()) {
+                processCookies(request.url.toString(), setCookieHeaders.filterNotNull())
+            }
+
             // Create WebResourceResponse
             // HTTP/2 responses may have empty message, but Android requires non-empty reason phrase
             val reasonPhrase = connection.responseMessage?.ifEmpty { getDefaultReasonPhrase(responseCode) }
@@ -156,36 +151,6 @@ class NetworkEngineHttpUrlConnection : NetworkEngine {
             .firstOrNull { it.startsWith("charset=", ignoreCase = true) }
             ?.substringAfter("=")
             ?.trim()
-    }
-
-    /**
-     * Get standard HTTP reason phrase for a status code.
-     * HTTP/2 responses may have empty message, but Android requires non-empty reason phrase.
-     */
-    private fun getDefaultReasonPhrase(code: Int): String {
-        return when (code) {
-            200 -> "OK"
-            201 -> "Created"
-            202 -> "Accepted"
-            204 -> "No Content"
-            301 -> "Moved Permanently"
-            302 -> "Found"
-            304 -> "Not Modified"
-            307 -> "Temporary Redirect"
-            308 -> "Permanent Redirect"
-            400 -> "Bad Request"
-            401 -> "Unauthorized"
-            403 -> "Forbidden"
-            404 -> "Not Found"
-            405 -> "Method Not Allowed"
-            408 -> "Request Timeout"
-            429 -> "Too Many Requests"
-            500 -> "Internal Server Error"
-            502 -> "Bad Gateway"
-            503 -> "Service Unavailable"
-            504 -> "Gateway Timeout"
-            else -> "Unknown"
-        }
     }
 }
 

@@ -129,23 +129,12 @@ class NetworkEngineOkHttp(
 
     override fun handleRequest(request: WebResourceRequest): WebResourceResponse? {
         try {
-            val url = request.url.toString()
-
-            // OkHttp only supports http and https schemes, let WebView handle others
-            if (!url.startsWith("http://", ignoreCase = true) && !url.startsWith("https://", ignoreCase = true)) {
+            // Check if we can handle this request (scheme and method checks)
+            if (!canHandleRequest(request)) {
                 return null
             }
 
-            // Handle request method
-            // Note: WebResourceRequest doesn't provide access to POST body, so we let WebView handle POST/PUT/PATCH
-            when (request.method.uppercase()) {
-                "POST", "PUT", "PATCH" -> {
-                    // WebView API limitation: We cannot access the request body from WebResourceRequest
-                    // Return null to let WebView handle these requests with the proper body
-                    Timber.v("Delegating ${request.method} request to WebView: ${request.url}")
-                    return null
-                }
-            }
+            val url = request.url.toString()
 
             // Build OkHttp request from WebResourceRequest
             val requestBuilder = Request.Builder().url(url)
@@ -185,6 +174,12 @@ class NetworkEngineOkHttp(
             val responseHeaders = mutableMapOf<String, String>()
             response.headers.forEach { (name, value) ->
                 responseHeaders[name] = value
+            }
+
+            // Process Set-Cookie headers using base interface method
+            val setCookieHeaders = response.headers("Set-Cookie")
+            if (setCookieHeaders.isNotEmpty()) {
+                processCookies(response.request.url.toString(), setCookieHeaders)
             }
 
             // Create WebResourceResponse
@@ -305,36 +300,6 @@ class NetworkEngineOkHttp(
             .firstOrNull { it.startsWith("charset=", ignoreCase = true) }
             ?.substringAfter("=")
             ?.trim()
-    }
-
-    /**
-     * Get standard HTTP reason phrase for a status code.
-     * HTTP/2 responses may have empty message, but Android requires non-empty reason phrase.
-     */
-    private fun getDefaultReasonPhrase(code: Int): String {
-        return when (code) {
-            200 -> "OK"
-            201 -> "Created"
-            202 -> "Accepted"
-            204 -> "No Content"
-            301 -> "Moved Permanently"
-            302 -> "Found"
-            304 -> "Not Modified"
-            307 -> "Temporary Redirect"
-            308 -> "Permanent Redirect"
-            400 -> "Bad Request"
-            401 -> "Unauthorized"
-            403 -> "Forbidden"
-            404 -> "Not Found"
-            405 -> "Method Not Allowed"
-            408 -> "Request Timeout"
-            429 -> "Too Many Requests"
-            500 -> "Internal Server Error"
-            502 -> "Bad Gateway"
-            503 -> "Service Unavailable"
-            504 -> "Gateway Timeout"
-            else -> "Unknown"
-        }
     }
 }
 
