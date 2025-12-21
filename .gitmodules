@@ -4,3 +4,6 @@
 [submodule "subs/AppIntro"]
 	path = subs/AppIntro
 	url = https://github.com/Slion/AppIntro
+[submodule "subs/wiki"]
+	path = subs/wiki
+	url = https://github.com/Slion/Fulguris.wiki.git
