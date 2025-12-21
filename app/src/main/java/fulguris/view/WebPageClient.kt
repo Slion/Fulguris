@@ -62,9 +62,11 @@ import kotlin.math.abs
  * - [shouldOverrideUrlLoading] when applicable
  * - [shouldInterceptRequest]
  * - [onLoadResource] - For the page URL is called first
- * - [onPageStarted]  - Not called if interrupted before the first resource completed
+ * - [onPageStarted]  - Not called if interrupted before the first main frame resource completed
+ * - [shouldInterceptRequest] For each resources
  * - [onLoadResource] - For each resources
  * - [onPageFinished] - Also called when cancelled - can be called even though onPageStarted was not called
+ * - [shouldInterceptRequest] - Can still occur after onPageFinished even if load was cancelled
  * - [onLoadResource] - Can still occur after onPageFinished even if load was cancelled
  *
  */
@@ -249,6 +251,8 @@ class WebPageClient(
     /**
      * Overrides [WebViewClient.onLoadResource]
      * Called multiple times during page load, once for every resource we load.
+     * I reckon this happens after the resource has been downloaded but possibly before it's loaded in the page.
+     * For each one of those there was a matching [shouldInterceptRequest]
      */
     override fun onLoadResource(view: WebView, url: String?) {
         super.onLoadResource(view, url)
@@ -259,12 +263,12 @@ class WebPageClient(
 
         // Count our resources
         iResourceCount++
-        Timber.d("$ihs : onLoadResource - $iResourceCount - $url")
-        val uri  = Uri.parse(url)
-        loadDomainPreferences(uri.host ?: "", false)
 
-        // Only do that on the first resource load
+        // Only do that on the first resource load which is the main frame
         if (iResourceCount==1) {
+            Timber.d("$ihs : onLoadResource - $iResourceCount - $url")
+            val uri  = Uri.parse(url)
+            loadDomainPreferences(uri.host ?: "", false)
             // Now assuming our root HTML document has been loaded
             applyDesktopModeIfNeeded(view)
         }
@@ -353,8 +357,6 @@ class WebPageClient(
         Timber.i("$ihs : onPageStarted - $url")
 
         currentUrl = url
-        val uri  = Uri.parse(url)
-        loadDomainPreferences(uri.host ?: "", true)
 
         (view as WebViewEx).proxy.apply {
             // Only apply domain settings dark mode if no bypass
@@ -636,8 +638,9 @@ class WebPageClient(
     // Notably on Google Play app pages
     var appLaunchDialog: Dialog? = null
 
-    // TODO: Shall this live somewhere else
     // Load default settings
+    // We will then load the domain settings for the main frame
+    // Should never be set to domain settings from resources
     var domainPreferences = DomainPreferences(app)
 
     /**
@@ -673,7 +676,7 @@ class WebPageClient(
      *
      * The following actions should call this method:
      * - Redirect, like when opening http://slions.net will redirect to https://slions.net
-     * - When user clicks on a like
+     * - When user clicks on a link
      * - Basically whenever the URL of the tab should change except when going back and forward weirdly
      *
      * It's notably called before the first [WebViewClient.onLoadResource] for the main page.
@@ -694,6 +697,7 @@ class WebPageClient(
         if (request.isForMainFrame) {
             // Update the target URL
             webPageTab.targetUrl = uri
+            loadDomainPreferences(uri.host ?: "", true)
         }
 
         // If this is an about page, immediately load, we don't need to leave the app
@@ -701,8 +705,6 @@ class WebPageClient(
         if (webPageTab.isIncognito || url.isSpecialUrl() || URLUtil.isAboutUrl(url)) {
             return shouldStopUrlLoading(view, url, headers)
         }
-
-        loadDomainPreferences(uri.host ?: "", false)
 
         // Regardless of app launch we do not cancel URL loading
         // Doing so would require we deal with empty pages in new tab and such issues
