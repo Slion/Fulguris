@@ -19,6 +19,7 @@ import fulguris.html.homepage.HomePageFactory
 import fulguris.js.InvertPage
 import fulguris.js.SetMetaViewport
 import fulguris.js.TextReflow
+import fulguris.permissions.PermissionsManager
 import fulguris.settings.NoYesAsk
 import fulguris.settings.preferences.DomainPreferences
 import fulguris.settings.preferences.UserPreferences
@@ -249,6 +250,43 @@ class WebPageClient(
     }
 
     /**
+     * Reset location permissions for current domain if Android location permission is missing.
+     *
+     * This handles the case where:
+     * - A website was previously granted location access
+     * - The Android location permission was revoked (e.g., temporary permission expired)
+     * - Location requests now fail silently without prompting the user
+     *
+     * By clearing WebView's geolocation permissions when Android permission is missing,
+     * we ensure [WebPageChromeClient.onGeolocationPermissionsShowPrompt] will be called
+     * the next time a site requests location access, giving the user a chance to grant
+     * Android permissions again.
+     */
+    fun resetLocationPermission() {
+
+        if (domainPreferences.isDefault) {
+            // No business here, though I'm not sure how we could get there
+            return
+        }
+
+        // Check if we have Android location permissions
+        val hasLocationPermission = PermissionsManager.getInstance().hasPermission(
+            activity,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) || PermissionsManager.getInstance().hasPermission(
+            activity,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+        if (!hasLocationPermission) {
+            // Android permission missing - revoke all WebView geolocation permissions
+            // so sites will trigger onGeolocationPermissionsShowPrompt again
+            domainPreferences.clearLocationPermission()
+            Timber.d("Revoked location permission for ${domainPreferences.domain} due to missing Android permission")
+        }
+    }
+
+    /**
      * Overrides [WebViewClient.onLoadResource]
      * Called multiple times during page load, once for every resource we load.
      * I reckon this happens after the resource has been downloaded but possibly before it's loaded in the page.
@@ -269,6 +307,8 @@ class WebPageClient(
             Timber.d("$ihs : onLoadResource - $iResourceCount - $url")
             val uri  = Uri.parse(url)
             loadDomainPreferences(uri.host ?: "", false)
+            //
+            resetLocationPermission()
             // Now assuming our root HTML document has been loaded
             applyDesktopModeIfNeeded(view)
         }
