@@ -29,7 +29,7 @@ We have three official public release channels linked above and described below.
 Considered the most stable release channel. Optional [Firebase] statistics and crash report.
 If you have more than twenty tabs in a session, it will gently remind you to go for the low cost yearly subscription, every time you open a new tab.
 
-### 🟡 Download 
+### 🟡 Download
 
 Provides release candidates and stable releases. Optional [Firebase] statistics and crash report.
 Unlimited tabs without subscription. From here you get the most up to date versions.
@@ -49,8 +49,8 @@ Please report issues on [GitHub](https://github.com/slion/fulguris/issues).
 
 ## Rate
 
-Give us ⭐⭐⭐⭐⭐ on [Google Play].  
-If you don't think it is worth five stars yet then just [open an issue](https://github.com/slion/fulguris/issues) instead. 
+Give us ⭐⭐⭐⭐⭐ on [Google Play].
+If you don't think it is worth five stars yet then just [open an issue](https://github.com/slion/fulguris/issues) instead.
 
 ## Engage
 
@@ -71,26 +71,26 @@ Please consider [sponsoring us on GitHub](https://github.com/sponsors/Slion) or 
 The ability of this project to finance itself is what will ultimately determine its long term success.
 
 # Features
-📑Sessions  
-🌍 Address bar  
-🚦Vertical tab panel  
-🚥Horizontal tab bar  
-⚙Tabs management  
-🏞Screen orientations  
-🔖Bookmarks  
-⌚History  
-🌗Force dark mode  
-🎨Themes for app and pages  
-⛔Ad blocker  
-🔒Privacy – Incognito mode  
-🔎Search & suggestions – Google, Bing, Yahoo, StartPage, DuckDuckGo…  
-♿Accessibility  
-⌨Keyboard support  
-⚡Hardware accelerated  
-🖥️ Desktop rendering  
-🖥️ Android desktop support – Samsung Dex, EMUI Desktop  
-🌐 Languages  
-🔧Settings – lots  
+📑Sessions
+🌍 Address bar
+🚦Vertical tab panel
+🚥Horizontal tab bar
+⚙Tabs management
+🏞Screen orientations
+🔖Bookmarks
+⌚History
+🌗Force dark mode
+🎨Themes for app and pages
+⛔Ad blocker
+🔒Privacy – Incognito mode
+🔎Search & suggestions – Google, Bing, Yahoo, StartPage, DuckDuckGo…
+♿Accessibility
+⌨Keyboard support
+⚡Hardware accelerated
+🖥️ Desktop rendering
+🖥️ Android desktop support – Samsung Dex, EMUI Desktop
+🌐 Languages
+🔧Settings – lots
 📶 Orbot Proxy support and I2P support – Beta
 
 # Permissions
@@ -110,12 +110,7 @@ The ability of this project to finance itself is what will ultimately determine 
 
 # Tools
 
-Here are some of the tools we use to develop Fulguris:
-
-* [Android Studio]
-* [SVG path editor]: Most useful to quickly modify icons
-* [Affinity Designer]: Vector graphics
-
+See the [Tools wiki page](/Slion/Fulguris/wiki/Tools) for information about the development and testing tools we use.
 
 [slions.net]: https://slions.net/resources/fulguris.10/
 [earlier version]: https://slions.net/resources/fulguris.10/history
@@ -124,6 +119,3 @@ Here are some of the tools we use to develop Fulguris:
 [Discord]: https://discord.com/invite/7M4Ms5dMZE
 [Web browser]: https://en.wikipedia.org/wiki/Web_browser
 [Firebase]: https://firebase.google.com
-[SVG path editor]: https://yqnn.github.io/svg-path-editor/
-[Android Studio]: https://developer.android.com/studio
-[Affinity Designer]: https://affinity.serif.com/en-us/designer/
