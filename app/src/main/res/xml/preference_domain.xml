@@ -199,8 +199,7 @@
     </x.PreferenceCategory>
 
     <x.PreferenceCategory
-        x:title="@string/settings_title_launch_app"
-        x:summary="@string/dialog_message_third_party_app">
+        x:title="@string/settings_title_launch_app">
 
         <x.SwitchPreference
             x:defaultValue="false"
