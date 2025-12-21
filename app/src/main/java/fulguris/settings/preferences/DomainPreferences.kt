@@ -24,6 +24,7 @@ package fulguris.settings.preferences
 
 import fulguris.app
 import fulguris.R
+import fulguris.extensions.originToDomain
 import fulguris.extensions.reverseDomainName
 import fulguris.settings.NoYesAsk
 import fulguris.enums.IncomingUrlAction
@@ -338,7 +339,7 @@ class DomainPreferences constructor(
                 try {
                     // Parse the origin as a URI to properly extract just the host
                     val uri = java.net.URI(origin)
-                    val originDomain = uri.host ?: origin.removePrefix("https://").removePrefix("http://").substringBefore("/").substringBefore(":")
+                    val originDomain = uri.host ?: origin.originToDomain()
                     originDomain == domain
                 } catch (e: Exception) {
                     Timber.w(e, "Failed to parse geolocation origin: $origin")

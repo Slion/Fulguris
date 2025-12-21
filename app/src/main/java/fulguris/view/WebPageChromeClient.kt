@@ -29,6 +29,7 @@ import fulguris.di.HiltEntryPoint
 import fulguris.dialog.BrowserDialog
 import fulguris.dialog.DialogItem
 import fulguris.extensions.launch
+import fulguris.extensions.originToDomain
 import fulguris.favicon.FaviconModel
 import fulguris.permissions.PermissionsManager
 import fulguris.permissions.PermissionsResultAction
@@ -249,8 +250,8 @@ class WebPageChromeClient(
                                                     callback: GeolocationPermissions.Callback) {
         Timber.d("onGeolocationPermissionsShowPrompt: $origin")
 
-        // Strip URL scheme, trailing slash, and truncate if needed
-        val domain = origin.removePrefix("https://").removePrefix("http://").removeSuffix("/")
+        // Strip URL scheme, port, and trailing slash
+        val domain = origin.originToDomain()
         val displayDomain = if (domain.length > 50) {
             "${domain.subSequence(0, 50)}..."
         } else {

@@ -21,3 +21,19 @@ val String.topPrivateDomain: String?
             null
         }
     } else null
+
+/**
+ * Converts an origin URL string to a domain string by:
+ * - Removing scheme (https://, http://)
+ * - Removing port number
+ * - Removing trailing slash
+ *
+ * Example: "https://example.com:8080/" -> "example.com"
+ */
+fun String.originToDomain(): String {
+    return this.removePrefix("https://")
+        .removePrefix("http://")
+        .substringBefore(":")
+        .removeSuffix("/")
+}
+
