@@ -243,52 +243,58 @@ class WebPageChromeClient(
     /**
      * From [WebChromeClient.onGeolocationPermissionsShowPrompt]
      *
-     * NOTE: This callback will ONLY be triggered if:
-     * 1. WebView geolocation is enabled via settings.setGeolocationEnabled(true)
-     *    (controlled per-domain via DomainPreferences.location)
-     * 2. Android system location permissions are ALREADY granted (ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION)
-     * 3. A website requests geolocation access via JavaScript (navigator.geolocation.getCurrentPosition)
-     * 4. The site hasn't already been granted/denied permission
-     *
-     * If this is not being called:
-     * - Check the domain-specific location permission in domain settings
-     * - Check Android location permissions are granted (Settings > Apps > Fulguris > Permissions > Location)
-     * - Look for "cr_LocationProvider" errors in logcat indicating missing Android permissions
+     * Called when a domain location permission is requested.
      */
     override fun onGeolocationPermissionsShowPrompt(origin: String,
                                                     callback: GeolocationPermissions.Callback) {
         Timber.d("onGeolocationPermissionsShowPrompt: $origin")
 
-        // Request Android permissions if not granted
-        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity, geoLocationPermissions, object : PermissionsResultAction() {
-            override fun onGranted() {
-                val remember = true
-                MaterialAlertDialogBuilder(activity).apply {
-                    setIcon(R.drawable.ic_location)
-                    setTitle(activity.getString(R.string.dialog_title_grant_location_access))
-                    // Strip URL scheme, trailing slash, and truncate if needed
-                    val domain = origin.removePrefix("https://").removePrefix("http://").removeSuffix("/")
-                    val displayDomain = if (domain.length > 50) {
-                        "${domain.subSequence(0, 50)}..."
-                    } else {
-                        domain
-                    }
-                    setMessage(activity.getString(R.string.dialog_message_grant_location_access, displayDomain).parseAsHtml())
-                    setCancelable(true)
-                    setPositiveButton(activity.getString(R.string.action_yes)) { _, _ ->
-                        callback.invoke(origin, true, remember)
-                    }
-                    setNegativeButton(activity.getString(R.string.action_no)) { _, _ ->
-                        callback.invoke(origin, false, remember)
-                    }
-                }.launch()
-            }
+        // Strip URL scheme, trailing slash, and truncate if needed
+        val domain = origin.removePrefix("https://").removePrefix("http://").removeSuffix("/")
+        val displayDomain = if (domain.length > 50) {
+            "${domain.subSequence(0, 50)}..."
+        } else {
+            domain
+        }
 
-            override fun onDenied(permission: String) {
+        // Inflate layout with checkbox
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_with_checkbox, null)
+        val checkboxView = dialogView.findViewById<android.widget.CheckBox>(R.id.checkBoxDontAskAgain)
+
+        // Show dialog first
+        MaterialAlertDialogBuilder(activity).apply {
+            setIcon(R.drawable.ic_location)
+            setTitle(activity.getString(R.string.dialog_title_grant_location_access))
+            setMessage(activity.getString(R.string.dialog_message_grant_location_access, displayDomain).parseAsHtml())
+            setView(dialogView)
+            setCancelable(true)
+            setPositiveButton(activity.getString(R.string.action_yes)) { _, _ ->
+                val remember = checkboxView.isChecked
+                // User accepted in dialog, now request Android permissions if needed
+                PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(
+                    activity,
+                    geoLocationPermissions,
+                    object : PermissionsResultAction() {
+                        override fun onGranted() {
+                            callback.invoke(origin, true, remember)
+                        }
+
+                        override fun onDenied(permission: String) {
+                            callback.invoke(origin, false, false)
+                        }
+                    }
+                )
+            }
+            setNegativeButton(activity.getString(R.string.action_no)) { _, _ ->
+                val remember = checkboxView.isChecked
+                callback.invoke(origin, false, remember)
+            }
+            setOnCancelListener {
                 callback.invoke(origin, false, false)
             }
-        })
+        }.launch()
     }
+
 
     override fun onCreateWindow(view: WebView, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message): Boolean {
         Timber.d("onCreateWindow")
