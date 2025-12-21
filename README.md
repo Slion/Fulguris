@@ -108,9 +108,9 @@ The ability of this project to finance itself is what will ultimately determine 
 * `CAMERA`: needed to support WebRTC, requires "WebRTC Support" option to be enabled (default disabled).
 * `MODIFY_AUDIO_SETTINGS`: needed to support WebRTC, requires "WebRTC Support" option to be enabled (default disabled).
 
-# Tools
+# Documentation
 
-See the [Tools wiki page](/Slion/Fulguris/wiki/Tools) for information about the development and testing tools we use.
+Visit our [wiki](https://github.com/Slion/Fulguris/wiki) for information about the development and testing tools we use.
 
 [slions.net]: https://slions.net/resources/fulguris.10/
 [earlier version]: https://slions.net/resources/fulguris.10/history
