@@ -509,6 +509,7 @@
     <string name="settings_title_clear_location_permissions">Reset location permissions</string>
     <string name="settings_summary_clear_location_permissions">All sites will have to ask again for location access</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
+    <string name="settings_title_reset_default_domain">Reset default settings</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_title_default_domain_settings">Default settings</string>
     <string name="settings_summary_default_domain_settings">Apply to all sites unless overridden</string>

@@ -84,6 +84,21 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
         // Geolocation permission setup
         setupGeolocationPreferences()
 
+        // Reset default domain settings
+        find<Preference>(R.string.pref_key_reset_default_domain)?.setOnPreferenceClickListener {
+            DomainPreferences.deleteDefault()
+            // Pop back stack and update breadcrumbs properly
+            val responsiveParent = parentFragment as? ResponsiveSettingsFragment
+            if (responsiveParent != null) {
+                // Use breadcrumb-aware navigation for responsive settings
+                responsiveParent.popBackStackWithBreadcrumbs()
+            } else {
+                // Fallback for bottom sheet or other non-responsive contexts
+                parentFragmentManager.popBackStack()
+            }
+            true
+        }
+
         // Delete this domain settings
         find<Preference>(R.string.pref_key_delete)?.setOnPreferenceClickListener {
             DomainPreferences.delete(domain)
