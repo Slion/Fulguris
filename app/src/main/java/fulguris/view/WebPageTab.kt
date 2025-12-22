@@ -473,6 +473,8 @@ class WebPageTab(
                     webView?.settings?.setGeolocationEnabled(defaultDomainSettings.locationEnabled)
                 }
             }
+
+            // TODO: Handle other settings, or we could just call initializePreferences()
         }
     }
 
