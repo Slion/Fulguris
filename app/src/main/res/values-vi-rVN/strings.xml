@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Chia sẻ trang này</string>
     <string name="action_delete">Xóa</string>
     <string name="action_blank">Trang trắng</string>
+    <string name="action_reset">Đặt lại</string>
     <string name="agent_android_mobile">Android (Di động)</string>
     <string name="agent_custom">Tuỳ chỉnh</string>
     <string name="agent_default">Mặc định</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> muốn sử dụng vị trí thiết bị của bạn]]></string>
     <string name="action_allow">Cho phép</string>
     <string name="action_dont_allow">Không cho phép</string>
+    <string name="pref_summary_location_granted">Đã cấp</string>
+    <string name="pref_summary_location_denied">Bị từ chối</string>
+    <string name="pref_summary_location_ask">Hỏi</string>
     <string name="title_sign_in">Đăng nhập</string>
     <string name="label_realm">Thông báo từ máy chủ: %s</string>
     <string name="hint_username">Tên tài khoản</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Xóa hết</string>
     <string name="settings_summary_domains_delete_all">Đặt lại tất cả cài đặt miền</string>
     <string name="question_delete_all_domain_settings">Xóa tất cả thiết đặt tên miền?</string>
+    <string name="question_clear_location_permissions">Đặt lại quyền vị trí?</string>
+    <string name="settings_title_clear_location_permissions">Đặt lại quyền vị trí</string>
+    <string name="settings_summary_clear_location_permissions">Tất cả các trang web sẽ phải yêu cầu lại quyền truy cập vị trí</string>
     <string name="settings_title_delete_domain_settings">Xóa thiết đặt tên miền</string>
+    <string name="settings_title_reset_default_domain">Đặt lại cài đặt mặc định</string>
     <string name="settings_title_parent">Cha</string>
     <string name="settings_title_default_domain_settings">Cài đặt mặc định</string>
     <string name="settings_summary_default_domain_settings">Áp dụng cho tất cả các trang trừ khi bị ghi đè</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Tất cả các tính năng của trang web và trình duyệt sẽ hoạt động</string>
     <string name="settings_summary_off_javascript">Một số tính năng của trang web và trình duyệt sẽ không hoạt động</string>
+    <string name="pref_summary_override_location_granted">Vị trí đã được cấp</string>
+    <string name="pref_summary_override_location_denied">Vị trí bị từ chối</string>
+    <string name="pref_summary_on_location">Các trang web phải yêu cầu quyền truy cập vị trí thiết bị của bạn</string>
+    <string name="pref_summary_off_location">Các trang web không thể truy cập vị trí thiết bị của bạn</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Trang hiện tại không có cookie</string>
     <string name="settings_summary_manage_cookies">Quản lý cookie trang hiện tại</string>
@@ -649,15 +661,4 @@
     <string name="error_cache_negative">Kích thước bộ nhớ đệm không được âm</string>
     <string name="error_cache_too_large">Bộ nhớ đệm quá lớn</string>
     <string name="hint_available_space">Có sẵn: %s</string>
-    <string name="action_reset">Đặt lại</string>
-    <string name="question_clear_location_permissions">Đặt lại quyền vị trí?</string>
-    <string name="settings_title_clear_location_permissions">Đặt lại quyền vị trí</string>
-    <string name="settings_summary_clear_location_permissions">Tất cả các trang web sẽ phải yêu cầu lại quyền truy cập vị trí</string>
-    <string name="pref_summary_override_location_granted">Vị trí đã được cấp</string>
-    <string name="pref_summary_override_location_denied">Vị trí bị từ chối</string>
-    <string name="pref_summary_on_location">Các trang web phải yêu cầu quyền truy cập vị trí thiết bị của bạn</string>
-    <string name="pref_summary_off_location">Các trang web không thể truy cập vị trí thiết bị của bạn</string>
-    <string name="pref_summary_location_granted">Đã cấp</string>
-    <string name="pref_summary_location_denied">Bị từ chối</string>
-    <string name="pref_summary_location_ask">Hỏi</string>
 </resources>

@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Compartilhar esta página</string>
     <string name="action_delete">Remover</string>
     <string name="action_blank">Página em branco</string>
+    <string name="action_reset">Redefinir</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Personalizado</string>
     <string name="agent_default">Padrão</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> quer usar a localização do seu dispositivo]]></string>
     <string name="action_allow">Sim</string>
     <string name="action_dont_allow">Não</string>
+    <string name="pref_summary_location_granted">Concedido</string>
+    <string name="pref_summary_location_denied">Negado</string>
+    <string name="pref_summary_location_ask">Perguntar</string>
     <string name="title_sign_in">Iniciar sessão</string>
     <string name="label_realm">Mensagem do servidor: %s</string>
     <string name="hint_username">Usuário</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Excluir tudo</string>
     <string name="settings_summary_domains_delete_all">Redefinir todas as configurações de domínio</string>
     <string name="question_delete_all_domain_settings">Excluir todas as configurações do domínio?</string>
+    <string name="question_clear_location_permissions">Redefinir permissões de localização?</string>
+    <string name="settings_title_clear_location_permissions">Redefinir permissões de localização</string>
+    <string name="settings_summary_clear_location_permissions">Todos os sites terão que pedir acesso à localização novamente</string>
     <string name="settings_title_delete_domain_settings">Excluir configurações do domínio</string>
+    <string name="settings_title_reset_default_domain">Redefinir configurações padrão</string>
     <string name="settings_title_parent">Domínio pai</string>
     <string name="settings_title_default_domain_settings">Configurações padrão</string>
     <string name="settings_summary_default_domain_settings">Aplicar a todos os sites, a menos que substituído</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Todos os recursos de sites e do navegador devem funcionar</string>
     <string name="settings_summary_off_javascript">Alguns recursos de sites e do navegador não funcionarão</string>
+    <string name="pref_summary_override_location_granted">Localização concedida</string>
+    <string name="pref_summary_override_location_denied">Localização negada</string>
+    <string name="pref_summary_on_location">Sites devem pedir acesso à localização do seu dispositivo</string>
+    <string name="pref_summary_off_location">Sites não podem acessar a localização do seu dispositivo</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">A página atual não possui cookies</string>
     <string name="settings_summary_manage_cookies">Gerenciar cookies da página atual</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">O tamanho do cache não pode ser negativo</string>
     <string name="error_cache_too_large">Cache muito grande</string>
     <string name="hint_available_space">Disponível: %s</string>
-    <string name="action_reset">Redefinir</string>
-    <string name="question_clear_location_permissions">Redefinir permissões de localização?</string>
-    <string name="settings_title_clear_location_permissions">Redefinir permissões de localização</string>
-    <string name="settings_summary_clear_location_permissions">Todos os sites terão que pedir acesso à localização novamente</string>
-    <string name="pref_summary_override_location_granted">Localização concedida</string>
-    <string name="pref_summary_override_location_denied">Localização negada</string>
-    <string name="pref_summary_on_location">Sites devem pedir acesso à localização do seu dispositivo</string>
-    <string name="pref_summary_off_location">Sites não podem acessar a localização do seu dispositivo</string>
-    <string name="pref_summary_location_granted">Concedido</string>
-    <string name="pref_summary_location_denied">Negado</string>
-    <string name="pref_summary_location_ask">Perguntar</string>
 </resources>

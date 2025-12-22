@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Διαμοιρασμός της σελίδας</string>
     <string name="action_delete">Διαγραφή</string>
     <string name="action_blank">Κενή σελίδα</string>
+    <string name="action_reset">Επαναφορά</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Συγκεκριμένο</string>
     <string name="agent_default">Προεπιλογή</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> θέλει να χρησιμοποιήσει την τοποθεσία της συσκευής σας]]></string>
     <string name="action_allow">Αποδοχή</string>
     <string name="action_dont_allow">Μη αποδοχή</string>
+    <string name="pref_summary_location_granted">Παραχωρήθηκε</string>
+    <string name="pref_summary_location_denied">Απορρίφθηκε</string>
+    <string name="pref_summary_location_ask">Ερώτηση</string>
     <string name="title_sign_in">Εγγραφή</string>
     <string name="label_realm">Μήνυμα διακομιστή: %s</string>
     <string name="hint_username">Όνομα χρήστη</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Διαγραφή όλων</string>
     <string name="settings_summary_domains_delete_all">Επαναφορά όλων των ρυθμίσεων τομέα</string>
     <string name="question_delete_all_domain_settings">Διαγραφή όλων των ρυθμίσεων τομέα;</string>
+    <string name="question_clear_location_permissions">Επαναφορά αδειών τοποθεσίας;</string>
+    <string name="settings_title_clear_location_permissions">Επαναφορά αδειών τοποθεσίας</string>
+    <string name="settings_summary_clear_location_permissions">Όλοι οι ιστότοποι θα πρέπει να ζητήσουν ξανά πρόσβαση στην τοποθεσία</string>
     <string name="settings_title_delete_domain_settings">Διαγραφή ρυθμίσεων τομέα</string>
+    <string name="settings_title_reset_default_domain">Επαναφορά προεπιλεγμένων ρυθμίσεων</string>
     <string name="settings_title_parent">Γονικό</string>
     <string name="settings_title_default_domain_settings">Προεπιλεγμένες ρυθμίσεις</string>
     <string name="settings_summary_default_domain_settings">Εφαρμογή σε όλους τους ιστότοπους εκτός εάν παρακαμφθεί</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Όλες οι λειτουργίες ιστότοπων και προγράμματος περιήγησης θα πρέπει να λειτουργούν</string>
     <string name="settings_summary_off_javascript">Ορισμένες λειτουργίες ιστότοπων και προγράμματος περιήγησης δεν θα λειτουργήσουν</string>
+    <string name="pref_summary_override_location_granted">Τοποθεσία παραχωρήθηκε</string>
+    <string name="pref_summary_override_location_denied">Τοποθεσία απορρίφθηκε</string>
+    <string name="pref_summary_on_location">Οι ιστότοποι πρέπει να ζητήσουν πρόσβαση στην τοποθεσία της συσκευής σας</string>
+    <string name="pref_summary_off_location">Οι ιστότοποι δεν μπορούν να αποκτήσουν πρόσβαση στην τοποθεσία της συσκευής σας</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Η τρέχουσα σελίδα δεν έχει cookies</string>
     <string name="settings_summary_manage_cookies">Διαχείριση cookies τρέχουσας σελίδας</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">Το μέγεθος προσωρινής μνήμης δεν μπορεί να είναι αρνητικό</string>
     <string name="error_cache_too_large">Προσωρινή μνήμη πολύ μεγάλη</string>
     <string name="hint_available_space">Διαθέσιμο: %s</string>
-    <string name="action_reset">Επαναφορά</string>
-    <string name="question_clear_location_permissions">Επαναφορά αδειών τοποθεσίας;</string>
-    <string name="settings_title_clear_location_permissions">Επαναφορά αδειών τοποθεσίας</string>
-    <string name="settings_summary_clear_location_permissions">Όλοι οι ιστότοποι θα πρέπει να ζητήσουν ξανά πρόσβαση στην τοποθεσία</string>
-    <string name="pref_summary_override_location_granted">Τοποθεσία παραχωρήθηκε</string>
-    <string name="pref_summary_override_location_denied">Τοποθεσία απορρίφθηκε</string>
-    <string name="pref_summary_on_location">Οι ιστότοποι πρέπει να ζητήσουν πρόσβαση στην τοποθεσία της συσκευής σας</string>
-    <string name="pref_summary_off_location">Οι ιστότοποι δεν μπορούν να αποκτήσουν πρόσβαση στην τοποθεσία της συσκευής σας</string>
-    <string name="pref_summary_location_granted">Παραχωρήθηκε</string>
-    <string name="pref_summary_location_denied">Απορρίφθηκε</string>
-    <string name="pref_summary_location_ask">Ερώτηση</string>
 </resources>

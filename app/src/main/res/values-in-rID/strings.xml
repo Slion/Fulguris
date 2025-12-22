@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Bagikan halaman ini</string>
     <string name="action_delete">Hapus</string>
     <string name="action_blank">Halaman kosong</string>
+    <string name="action_reset">Setel ulang</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Kustom</string>
     <string name="agent_default">Default</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> ingin menggunakan lokasi perangkat Anda]]></string>
     <string name="action_allow">Izinkan</string>
     <string name="action_dont_allow">Jangan izinkan</string>
+    <string name="pref_summary_location_granted">Diberikan</string>
+    <string name="pref_summary_location_denied">Ditolak</string>
+    <string name="pref_summary_location_ask">Tanya</string>
     <string name="title_sign_in">Masuk</string>
     <string name="label_realm">Pesan dari server: %s</string>
     <string name="hint_username">Nama Pengguna</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Hapus semua</string>
     <string name="settings_summary_domains_delete_all">Setel ulang semua pengaturan domain</string>
     <string name="question_delete_all_domain_settings">Hapus semua pengaturan domain?</string>
+    <string name="question_clear_location_permissions">Setel ulang izin lokasi?</string>
+    <string name="settings_title_clear_location_permissions">Setel ulang izin lokasi</string>
+    <string name="settings_summary_clear_location_permissions">Semua situs harus meminta akses lokasi lagi</string>
     <string name="settings_title_delete_domain_settings">Hapus pengaturan domain</string>
+    <string name="settings_title_reset_default_domain">Atur ulang pengaturan default</string>
     <string name="settings_title_parent">Induk</string>
     <string name="settings_title_default_domain_settings">Pengaturan default</string>
     <string name="settings_summary_default_domain_settings">Terapkan ke semua situs kecuali diganti</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Semua fitur situs web dan peramban akan berfungsi</string>
     <string name="settings_summary_off_javascript">Beberapa fitur situs web dan peramban mungkin tidak berfungsi</string>
+    <string name="pref_summary_override_location_granted">Lokasi diberikan</string>
+    <string name="pref_summary_override_location_denied">Lokasi ditolak</string>
+    <string name="pref_summary_on_location">Situs harus meminta akses ke lokasi perangkat Anda</string>
+    <string name="pref_summary_off_location">Situs tidak dapat mengakses lokasi perangkat Anda</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Halaman saat ini tidak memiliki cookie</string>
     <string name="settings_summary_manage_cookies">Kelola cookie halaman saat ini</string>
@@ -649,15 +661,4 @@
     <string name="error_cache_negative">Ukuran cache tidak boleh negatif</string>
     <string name="error_cache_too_large">Cache terlalu besar</string>
     <string name="hint_available_space">Tersedia: %s</string>
-    <string name="action_reset">Setel ulang</string>
-    <string name="question_clear_location_permissions">Setel ulang izin lokasi?</string>
-    <string name="settings_title_clear_location_permissions">Setel ulang izin lokasi</string>
-    <string name="settings_summary_clear_location_permissions">Semua situs harus meminta akses lokasi lagi</string>
-    <string name="pref_summary_override_location_granted">Lokasi diberikan</string>
-    <string name="pref_summary_override_location_denied">Lokasi ditolak</string>
-    <string name="pref_summary_on_location">Situs harus meminta akses ke lokasi perangkat Anda</string>
-    <string name="pref_summary_off_location">Situs tidak dapat mengakses lokasi perangkat Anda</string>
-    <string name="pref_summary_location_granted">Diberikan</string>
-    <string name="pref_summary_location_denied">Ditolak</string>
-    <string name="pref_summary_location_ask">Tanya</string>
 </resources>

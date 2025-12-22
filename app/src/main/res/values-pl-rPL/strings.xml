@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Udostępnij tę stronę</string>
     <string name="action_delete">Usuń</string>
     <string name="action_blank">Pusta strona</string>
+    <string name="action_reset">Resetuj</string>
     <string name="agent_android_mobile">Android (mobilne)</string>
     <string name="agent_custom">Własny identyfikator</string>
     <string name="agent_default">Domyślne</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> chce użyć lokalizacji Twojego urządzenia]]></string>
     <string name="action_allow">Zezwalaj</string>
     <string name="action_dont_allow">Blokuj</string>
+    <string name="pref_summary_location_granted">Przyznane</string>
+    <string name="pref_summary_location_denied">Odmówione</string>
+    <string name="pref_summary_location_ask">Zapytaj</string>
     <string name="title_sign_in">Zaloguj się</string>
     <string name="label_realm">Wiadomość serwera: %s</string>
     <string name="hint_username">Nazwa użytkownika</string>
@@ -457,7 +461,11 @@
     <string name="settings_title_domains_delete_all">Usuń wszystko</string>
     <string name="settings_summary_domains_delete_all">Resetuj wszystkie ustawienia domen</string>
     <string name="question_delete_all_domain_settings">Usunąć wszystkie ustawienia domen?</string>
+    <string name="question_clear_location_permissions">Zresetować uprawnienia lokalizacji?</string>
+    <string name="settings_title_clear_location_permissions">Resetuj uprawnienia lokalizacji</string>
+    <string name="settings_summary_clear_location_permissions">Wszystkie witryny będą musiały ponownie poprosić o dostęp do lokalizacji</string>
     <string name="settings_title_delete_domain_settings">Usuń ustawienia domeny</string>
+    <string name="settings_title_reset_default_domain">Przywróć ustawienia domyślne</string>
     <string name="settings_title_parent">Nadrzędne</string>
     <string name="settings_title_default_domain_settings">Ustawienia domyślne</string>
     <string name="settings_summary_default_domain_settings">Zastosuj do wszystkich witryn, chyba że nadpisane</string>
@@ -473,6 +481,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Wszystkie funkcje stron i przeglądarki powinny działać</string>
     <string name="settings_summary_off_javascript">Niektóre funkcje stron i przeglądarki nie będą działać</string>
+    <string name="pref_summary_override_location_granted">Lokalizacja przyznana</string>
+    <string name="pref_summary_override_location_denied">Lokalizacja odmówiona</string>
+    <string name="pref_summary_on_location">Witryny muszą poprosić o dostęp do lokalizacji Twojego urządzenia</string>
+    <string name="pref_summary_off_location">Witryny nie mogą uzyskać dostępu do lokalizacji Twojego urządzenia</string>
     <string name="settings_title_cookies">Pliki cookie</string>
     <string name="settings_summary_cookies">Bieżąca strona nie ma plików cookie</string>
     <string name="settings_summary_manage_cookies">Zarządzaj plikami cookie bieżącej strony</string>
@@ -657,15 +669,4 @@
     <string name="error_cache_negative">Rozmiar pamięci podręcznej nie może być ujemny</string>
     <string name="error_cache_too_large">Pamięć podręczna zbyt duża</string>
     <string name="hint_available_space">Dostępne: %s</string>
-    <string name="action_reset">Resetuj</string>
-    <string name="question_clear_location_permissions">Zresetować uprawnienia lokalizacji?</string>
-    <string name="settings_title_clear_location_permissions">Resetuj uprawnienia lokalizacji</string>
-    <string name="settings_summary_clear_location_permissions">Wszystkie witryny będą musiały ponownie poprosić o dostęp do lokalizacji</string>
-    <string name="pref_summary_override_location_granted">Lokalizacja przyznana</string>
-    <string name="pref_summary_override_location_denied">Lokalizacja odmówiona</string>
-    <string name="pref_summary_on_location">Witryny muszą poprosić o dostęp do lokalizacji Twojego urządzenia</string>
-    <string name="pref_summary_off_location">Witryny nie mogą uzyskać dostępu do lokalizacji Twojego urządzenia</string>
-    <string name="pref_summary_location_granted">Przyznane</string>
-    <string name="pref_summary_location_denied">Odmówione</string>
-    <string name="pref_summary_location_ask">Zapytaj</string>
 </resources>

@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Compartir esta página</string>
     <string name="action_delete">Eliminar</string>
     <string name="action_blank">Página en blanco</string>
+    <string name="action_reset">Restablecer</string>
     <string name="agent_android_mobile">Android (Móvil)</string>
     <string name="agent_custom">Personalizado</string>
     <string name="agent_default">Por defecto</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> quiere usar la ubicación de tu dispositivo]]></string>
     <string name="action_allow">Permitir</string>
     <string name="action_dont_allow">No permitir</string>
+    <string name="pref_summary_location_granted">Concedido</string>
+    <string name="pref_summary_location_denied">Denegado</string>
+    <string name="pref_summary_location_ask">Preguntar</string>
     <string name="title_sign_in">Iniciar sesión</string>
     <string name="label_realm">Mensaje del servidor: %s</string>
     <string name="hint_username">Nombre de usuario</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Borrar todo</string>
     <string name="settings_summary_domains_delete_all">Restablecer toda la configuración de dominios</string>
     <string name="question_delete_all_domain_settings">¿Quiere borrar todos los ajustes del dominio?</string>
+    <string name="question_clear_location_permissions">¿Restablecer permisos de ubicación?</string>
+    <string name="settings_title_clear_location_permissions">Restablecer permisos de ubicación</string>
+    <string name="settings_summary_clear_location_permissions">Todos los sitios tendrán que volver a pedir acceso a la ubicación</string>
     <string name="settings_title_delete_domain_settings">Borrar todos los ajustes del dominio</string>
+    <string name="settings_title_reset_default_domain">Restablecer configuración predeterminada</string>
     <string name="settings_title_parent">Padre</string>
     <string name="settings_title_default_domain_settings">Configuración predeterminada</string>
     <string name="settings_summary_default_domain_settings">Aplicar a todos los sitios a menos que se anule</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Todas las funciones de los sitios web y el navegador deberían funcionar</string>
     <string name="settings_summary_off_javascript">Algunas características del navegador y distintos sitios web no funcionarán</string>
+    <string name="pref_summary_override_location_granted">Ubicación concedida</string>
+    <string name="pref_summary_override_location_denied">Ubicación denegada</string>
+    <string name="pref_summary_on_location">Los sitios deben pedir acceso a la ubicación de tu dispositivo</string>
+    <string name="pref_summary_off_location">Los sitios no pueden acceder a la ubicación de tu dispositivo</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">La página actual no tiene cookies</string>
     <string name="settings_summary_manage_cookies">Administrar las cookies de la página actual</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">El tamaño de caché no puede ser negativo</string>
     <string name="error_cache_too_large">Caché demasiado grande</string>
     <string name="hint_available_space">Disponible: %s</string>
-    <string name="action_reset">Restablecer</string>
-    <string name="question_clear_location_permissions">¿Restablecer permisos de ubicación?</string>
-    <string name="settings_title_clear_location_permissions">Restablecer permisos de ubicación</string>
-    <string name="settings_summary_clear_location_permissions">Todos los sitios tendrán que volver a pedir acceso a la ubicación</string>
-    <string name="pref_summary_override_location_granted">Ubicación concedida</string>
-    <string name="pref_summary_override_location_denied">Ubicación denegada</string>
-    <string name="pref_summary_on_location">Los sitios deben pedir acceso a la ubicación de tu dispositivo</string>
-    <string name="pref_summary_off_location">Los sitios no pueden acceder a la ubicación de tu dispositivo</string>
-    <string name="pref_summary_location_granted">Concedido</string>
-    <string name="pref_summary_location_denied">Denegado</string>
-    <string name="pref_summary_location_ask">Preguntar</string>
 </resources>

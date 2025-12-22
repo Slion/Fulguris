@@ -50,6 +50,7 @@
     <string name="dialog_title_share">分享此页面</string>
     <string name="action_delete">删除</string>
     <string name="action_blank">空白页</string>
+    <string name="action_reset">重置</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">自定义</string>
     <string name="agent_default">默认</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> 想要使用您设备的位置]]></string>
     <string name="action_allow">允许</string>
     <string name="action_dont_allow">不允许</string>
+    <string name="pref_summary_location_granted">已授予</string>
+    <string name="pref_summary_location_denied">已拒绝</string>
+    <string name="pref_summary_location_ask">询问</string>
     <string name="title_sign_in">登录</string>
     <string name="label_realm">来自服务器的消息：%s</string>
     <string name="hint_username">用户名</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">全部删除</string>
     <string name="settings_summary_domains_delete_all">重置所有域名设置</string>
     <string name="question_delete_all_domain_settings">删除所有域设置？</string>
+    <string name="question_clear_location_permissions">重置位置权限？</string>
+    <string name="settings_title_clear_location_permissions">重置位置权限</string>
+    <string name="settings_summary_clear_location_permissions">所有网站都必须再次请求位置访问权限</string>
     <string name="settings_title_delete_domain_settings">删除域设置</string>
+    <string name="settings_title_reset_default_domain">重置默认设置</string>
     <string name="settings_title_parent">主设置</string>
     <string name="settings_title_default_domain_settings">默认设置</string>
     <string name="settings_summary_default_domain_settings">应用于所有网站，除非被覆盖</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">所有网站和浏览器的功能都应该正常工作</string>
     <string name="settings_summary_off_javascript">某些网站和浏览器的功能将无法工作</string>
+    <string name="pref_summary_override_location_granted">位置已授予</string>
+    <string name="pref_summary_override_location_denied">位置已拒绝</string>
+    <string name="pref_summary_on_location">网站必须请求访问您设备的位置</string>
+    <string name="pref_summary_off_location">网站无法访问您设备的位置</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">当前页面没有 cookies</string>
     <string name="settings_summary_manage_cookies">管理当前页面 cookie</string>
@@ -649,15 +661,4 @@
     <string name="error_cache_negative">缓存大小不能为负数</string>
     <string name="error_cache_too_large">缓存过大</string>
     <string name="hint_available_space">可用: %s</string>
-    <string name="action_reset">重置</string>
-    <string name="question_clear_location_permissions">重置位置权限？</string>
-    <string name="settings_title_clear_location_permissions">重置位置权限</string>
-    <string name="settings_summary_clear_location_permissions">所有网站都必须再次请求位置访问权限</string>
-    <string name="pref_summary_override_location_granted">位置已授予</string>
-    <string name="pref_summary_override_location_denied">位置已拒绝</string>
-    <string name="pref_summary_on_location">网站必须请求访问您设备的位置</string>
-    <string name="pref_summary_off_location">网站无法访问您设备的位置</string>
-    <string name="pref_summary_location_granted">已授予</string>
-    <string name="pref_summary_location_denied">已拒绝</string>
-    <string name="pref_summary_location_ask">询问</string>
 </resources>

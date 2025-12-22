@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Deel deze pagina</string>
     <string name="action_delete">Verwijderen</string>
     <string name="action_blank">Witte pagina</string>
+    <string name="action_reset">Herstellen</string>
     <string name="agent_android_mobile">Android (Mobiel)</string>
     <string name="agent_custom">Aangepast</string>
     <string name="agent_default">Standaard</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> wil de locatie van je apparaat gebruiken]]></string>
     <string name="action_allow">Toestaan</string>
     <string name="action_dont_allow">Niet toestaan</string>
+    <string name="pref_summary_location_granted">Toegestaan</string>
+    <string name="pref_summary_location_denied">Geweigerd</string>
+    <string name="pref_summary_location_ask">Vragen</string>
     <string name="title_sign_in">Inloggen</string>
     <string name="label_realm">Serverbericht: %s</string>
     <string name="hint_username">Gebruiksnaam</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Verwijder alles</string>
     <string name="settings_summary_domains_delete_all">Alle domeininstellingen herstellen</string>
     <string name="question_delete_all_domain_settings">Alle domeininstellingen verwijderen?</string>
+    <string name="question_clear_location_permissions">Locatietoestemmingen herstellen?</string>
+    <string name="settings_title_clear_location_permissions">Locatietoestemmingen herstellen</string>
+    <string name="settings_summary_clear_location_permissions">Alle sites moeten opnieuw toestemming vragen voor locatietoegang</string>
     <string name="settings_title_delete_domain_settings">Domeininstellingen verwijderen</string>
+    <string name="settings_title_reset_default_domain">Standaardinstellingen herstellen</string>
     <string name="settings_title_parent">Bovenliggende</string>
     <string name="settings_title_default_domain_settings">Standaardinstellingen</string>
     <string name="settings_summary_default_domain_settings">Toepassen op alle sites tenzij overschreven</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Alle functies van websites en browsers moeten werken</string>
     <string name="settings_summary_off_javascript">Sommige functies van websites en browsers werken niet</string>
+    <string name="pref_summary_override_location_granted">Locatie toegestaan</string>
+    <string name="pref_summary_override_location_denied">Locatie geweigerd</string>
+    <string name="pref_summary_on_location">Sites moeten toestemming vragen om toegang tot de locatie van je apparaat</string>
+    <string name="pref_summary_off_location">Sites hebben geen toegang tot de locatie van je apparaat</string>
     <string name="settings_title_cookies">Koekjes</string>
     <string name="settings_summary_cookies">Huidige pagina bevat geen cookies</string>
     <string name="settings_summary_manage_cookies">Cookies voor huidige pagina beheren</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">Cachegrootte kan niet negatief zijn</string>
     <string name="error_cache_too_large">Cache te groot</string>
     <string name="hint_available_space">Beschikbaar: %s</string>
-    <string name="action_reset">Herstellen</string>
-    <string name="question_clear_location_permissions">Locatietoestemmingen herstellen?</string>
-    <string name="settings_title_clear_location_permissions">Locatietoestemmingen herstellen</string>
-    <string name="settings_summary_clear_location_permissions">Alle sites moeten opnieuw toestemming vragen voor locatietoegang</string>
-    <string name="pref_summary_override_location_granted">Locatie toegestaan</string>
-    <string name="pref_summary_override_location_denied">Locatie geweigerd</string>
-    <string name="pref_summary_on_location">Sites moeten toestemming vragen om toegang tot de locatie van je apparaat</string>
-    <string name="pref_summary_off_location">Sites hebben geen toegang tot de locatie van je apparaat</string>
-    <string name="pref_summary_location_granted">Toegestaan</string>
-    <string name="pref_summary_location_denied">Geweigerd</string>
-    <string name="pref_summary_location_ask">Vragen</string>
 </resources>

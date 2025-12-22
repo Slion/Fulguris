@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Dela den här sidan</string>
     <string name="action_delete">Radera</string>
     <string name="action_blank">Tom sida</string>
+    <string name="action_reset">Återställ</string>
     <string name="agent_android_mobile">Android (Mobil)</string>
     <string name="agent_custom">Anpassad</string>
     <string name="agent_default">Standard</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> vill använda din enhets plats]]></string>
     <string name="action_allow">Tillåt</string>
     <string name="action_dont_allow">Tillåt inte</string>
+    <string name="pref_summary_location_granted">Beviljad</string>
+    <string name="pref_summary_location_denied">Nekad</string>
+    <string name="pref_summary_location_ask">Fråga</string>
     <string name="title_sign_in">Logga in</string>
     <string name="label_realm">Servermeddelande: %s</string>
     <string name="hint_username">Användarnamn</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Ta bort alla</string>
     <string name="settings_summary_domains_delete_all">Återställ alla domäninställningar</string>
     <string name="question_delete_all_domain_settings">Ta bort alla domäninställningar?</string>
+    <string name="question_clear_location_permissions">Återställ platsbehörigheter?</string>
+    <string name="settings_title_clear_location_permissions">Återställ platsbehörigheter</string>
+    <string name="settings_summary_clear_location_permissions">Alla webbplatser måste be om platsåtkomst igen</string>
     <string name="settings_title_delete_domain_settings">Ta bort domäninställningar</string>
+    <string name="settings_title_reset_default_domain">Återställ standardinställningar</string>
     <string name="settings_title_parent">Förälder</string>
     <string name="settings_title_default_domain_settings">Standardinställningar</string>
     <string name="settings_summary_default_domain_settings">Tillämpa på alla webbplatser såvida inte åsidosatt</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Alla webbplatsers och webbläsarens funktioner bör fungera</string>
     <string name="settings_summary_off_javascript">Vissa webbplatsers och webbläsarens funktioner fungerar inte</string>
+    <string name="pref_summary_override_location_granted">Plats beviljad</string>
+    <string name="pref_summary_override_location_denied">Plats nekad</string>
+    <string name="pref_summary_on_location">Webbplatser måste be om åtkomst till din enhets plats</string>
+    <string name="pref_summary_off_location">Webbplatser kan inte komma åt din enhets plats</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Aktuell sida har inga cookies</string>
     <string name="settings_summary_manage_cookies">Hantera cookies för aktuell sida</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">Cachestorlek kan inte vara negativ</string>
     <string name="error_cache_too_large">Cache för stor</string>
     <string name="hint_available_space">Tillgängligt: %s</string>
-    <string name="action_reset">Återställ</string>
-    <string name="question_clear_location_permissions">Återställ platsbehörigheter?</string>
-    <string name="settings_title_clear_location_permissions">Återställ platsbehörigheter</string>
-    <string name="settings_summary_clear_location_permissions">Alla webbplatser måste be om platsåtkomst igen</string>
-    <string name="pref_summary_override_location_granted">Plats beviljad</string>
-    <string name="pref_summary_override_location_denied">Plats nekad</string>
-    <string name="pref_summary_on_location">Webbplatser måste be om åtkomst till din enhets plats</string>
-    <string name="pref_summary_off_location">Webbplatser kan inte komma åt din enhets plats</string>
-    <string name="pref_summary_location_granted">Beviljad</string>
-    <string name="pref_summary_location_denied">Nekad</string>
-    <string name="pref_summary_location_ask">Fråga</string>
 </resources>

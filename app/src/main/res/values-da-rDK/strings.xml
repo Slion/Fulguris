@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Del denne side</string>
     <string name="action_delete">Slet</string>
     <string name="action_blank">Tom side</string>
+    <string name="action_reset">Nulstil</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Custom</string>
     <string name="agent_default">Default</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> vil bruge din enheds placering]]></string>
     <string name="action_allow">Tillad</string>
     <string name="action_dont_allow">Tillad ikke</string>
+    <string name="pref_summary_location_granted">Givet</string>
+    <string name="pref_summary_location_denied">Nægtet</string>
+    <string name="pref_summary_location_ask">Spørg</string>
     <string name="title_sign_in">Log ind</string>
     <string name="label_realm">Serverbesked: %s</string>
     <string name="hint_username">Brugernavn</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Slet alle</string>
     <string name="settings_summary_domains_delete_all">Nulstil alle domæneindstillinger</string>
     <string name="question_delete_all_domain_settings">Slet alle domæneindstillinger?</string>
+    <string name="question_clear_location_permissions">Nulstil placeringstilladelser?</string>
+    <string name="settings_title_clear_location_permissions">Nulstil placeringstilladelser</string>
+    <string name="settings_summary_clear_location_permissions">Alle websteder skal bede om adgang til placering igen</string>
     <string name="settings_title_delete_domain_settings">Slet domæneindstillinger</string>
+    <string name="settings_title_reset_default_domain">Nulstil standardindstillinger</string>
     <string name="settings_title_parent">Forælder</string>
     <string name="settings_title_default_domain_settings">Standardindstillinger</string>
     <string name="settings_summary_default_domain_settings">Gælder for alle websteder, medmindre det tilsidesættes</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Alle websteders og browserens funktioner skal virke</string>
     <string name="settings_summary_off_javascript">Nogle websteders og browserens funktioner virker ikke</string>
+    <string name="pref_summary_override_location_granted">Placering givet</string>
+    <string name="pref_summary_override_location_denied">Placering nægtet</string>
+    <string name="pref_summary_on_location">Websteder skal bede om adgang til din enheds placering</string>
+    <string name="pref_summary_off_location">Websteder kan ikke få adgang til din enheds placering</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Nuværende side har ingen cookies</string>
     <string name="settings_summary_manage_cookies">Administrer nuværende sides cookies</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">Cachestørrelse kan ikke være negativ</string>
     <string name="error_cache_too_large">Cache for stor</string>
     <string name="hint_available_space">Tilgængeligt: %s</string>
-    <string name="action_reset">Nulstil</string>
-    <string name="question_clear_location_permissions">Nulstil placeringstilladelser?</string>
-    <string name="settings_title_clear_location_permissions">Nulstil placeringstilladelser</string>
-    <string name="settings_summary_clear_location_permissions">Alle websteder skal bede om adgang til placering igen</string>
-    <string name="pref_summary_override_location_granted">Placering givet</string>
-    <string name="pref_summary_override_location_denied">Placering nægtet</string>
-    <string name="pref_summary_on_location">Websteder skal bede om adgang til din enheds placering</string>
-    <string name="pref_summary_off_location">Websteder kan ikke få adgang til din enheds placering</string>
-    <string name="pref_summary_location_granted">Givet</string>
-    <string name="pref_summary_location_denied">Nægtet</string>
-    <string name="pref_summary_location_ask">Spørg</string>
 </resources>

@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Diese Webseite teilen</string>
     <string name="action_delete">Löschen</string>
     <string name="action_blank">Leere Seite</string>
+    <string name="action_reset">Zurücksetzen</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Benutzerdefiniert</string>
     <string name="agent_default">Standard</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> möchte den Standort Ihres Geräts verwenden]]></string>
     <string name="action_allow">Erlauben</string>
     <string name="action_dont_allow">Nicht erlauben</string>
+    <string name="pref_summary_location_granted">Gewährt</string>
+    <string name="pref_summary_location_denied">Abgelehnt</string>
+    <string name="pref_summary_location_ask">Fragen</string>
     <string name="title_sign_in">Anmelden</string>
     <string name="label_realm">Server Nachricht: %s</string>
     <string name="hint_username">Benutzername</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Alle löschen</string>
     <string name="settings_summary_domains_delete_all">Alle Domain-Einstellungen zurücksetzen</string>
     <string name="question_delete_all_domain_settings">Möchten sie alle Domains-Einstellungen löschen?</string>
+    <string name="question_clear_location_permissions">Standortberechtigungen zurücksetzen?</string>
+    <string name="settings_title_clear_location_permissions">Standortberechtigungen zurücksetzen</string>
+    <string name="settings_summary_clear_location_permissions">Alle Websites müssen erneut um Standortzugriff bitten</string>
     <string name="settings_title_delete_domain_settings">Domain-Einstellungen löschen</string>
+    <string name="settings_title_reset_default_domain">Standardeinstellungen zurücksetzen</string>
     <string name="settings_title_parent">Übergeordnet</string>
     <string name="settings_title_default_domain_settings">Standardeinstellungen</string>
     <string name="settings_summary_default_domain_settings">Gilt für alle Websites, sofern nicht überschrieben</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Einige Webseiten und Browser Funktionen funktionieren nicht</string>
     <string name="settings_summary_off_javascript">Einige Webseiten und Browser Funktionen funktionieren nicht</string>
+    <string name="pref_summary_override_location_granted">Standort gewährt</string>
+    <string name="pref_summary_override_location_denied">Standort abgelehnt</string>
+    <string name="pref_summary_on_location">Websites müssen um Zugriff auf den Standort Ihres Geräts bitten</string>
+    <string name="pref_summary_off_location">Websites können nicht auf den Standort Ihres Geräts zugreifen</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Aktuelle Seite hat keine Cookies</string>
     <string name="settings_summary_manage_cookies">Aktuelle Seitencookies verwalten</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">Cache-Größe darf nicht negativ sein</string>
     <string name="error_cache_too_large">Cache zu groß</string>
     <string name="hint_available_space">Verfügbar: %s</string>
-    <string name="action_reset">Zurücksetzen</string>
-    <string name="question_clear_location_permissions">Standortberechtigungen zurücksetzen?</string>
-    <string name="settings_title_clear_location_permissions">Standortberechtigungen zurücksetzen</string>
-    <string name="settings_summary_clear_location_permissions">Alle Websites müssen erneut um Standortzugriff bitten</string>
-    <string name="pref_summary_override_location_granted">Standort gewährt</string>
-    <string name="pref_summary_override_location_denied">Standort abgelehnt</string>
-    <string name="pref_summary_on_location">Websites müssen um Zugriff auf den Standort Ihres Geräts bitten</string>
-    <string name="pref_summary_off_location">Websites können nicht auf den Standort Ihres Geräts zugreifen</string>
-    <string name="pref_summary_location_granted">Gewährt</string>
-    <string name="pref_summary_location_denied">Abgelehnt</string>
-    <string name="pref_summary_location_ask">Fragen</string>
 </resources>

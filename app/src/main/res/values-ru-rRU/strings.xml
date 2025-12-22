@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Поделиться страницей</string>
     <string name="action_delete">Удалить</string>
     <string name="action_blank">Пустая страница</string>
+    <string name="action_reset">Сбросить</string>
     <string name="agent_android_mobile">Android (мобильный)</string>
     <string name="agent_custom">Выбрать</string>
     <string name="agent_default">По умолчанию</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> хочет использовать местоположение вашего устройства]]></string>
     <string name="action_allow">Разрешить</string>
     <string name="action_dont_allow">Не разрешать</string>
+    <string name="pref_summary_location_granted">Предоставлено</string>
+    <string name="pref_summary_location_denied">Отклонено</string>
+    <string name="pref_summary_location_ask">Спросить</string>
     <string name="title_sign_in">Войти</string>
     <string name="label_realm">Сообщение сервера: %s</string>
     <string name="hint_username">Имя пользователя</string>
@@ -457,7 +461,11 @@
     <string name="settings_title_domains_delete_all">Удалить все</string>
     <string name="settings_summary_domains_delete_all">Сбросить все настройки домена</string>
     <string name="question_delete_all_domain_settings">Удалить все настройки домена?</string>
+    <string name="question_clear_location_permissions">Сбросить разрешения на местоположение?</string>
+    <string name="settings_title_clear_location_permissions">Сбросить разрешения на местоположение</string>
+    <string name="settings_summary_clear_location_permissions">Все сайты должны будут снова запросить доступ к местоположению</string>
     <string name="settings_title_delete_domain_settings">Удалить настройки домена</string>
+    <string name="settings_title_reset_default_domain">Сбросить настройки по умолчанию</string>
     <string name="settings_title_parent">Родительский</string>
     <string name="settings_title_default_domain_settings">Настройки по умолчанию</string>
     <string name="settings_summary_default_domain_settings">Применяется ко всем сайтам, если не переопределено</string>
@@ -473,6 +481,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Все функции веб-сайтов и браузера должны работать</string>
     <string name="settings_summary_off_javascript">Функции некоторых веб-сайтов и браузеров не будут работать</string>
+    <string name="pref_summary_override_location_granted">Местоположение предоставлено</string>
+    <string name="pref_summary_override_location_denied">Местоположение отклонено</string>
+    <string name="pref_summary_on_location">Сайты должны запросить доступ к местоположению вашего устройства</string>
+    <string name="pref_summary_off_location">Сайты не могут получить доступ к местоположению вашего устройства</string>
     <string name="settings_title_cookies">Файлы cookies</string>
     <string name="settings_summary_cookies">На текущей странице нет файлов cookie</string>
     <string name="settings_summary_manage_cookies">Управление файлами cookie текущей страницы</string>
@@ -657,15 +669,4 @@
     <string name="error_cache_negative">Размер кэша не может быть отрицательным</string>
     <string name="error_cache_too_large">Кэш слишком большой</string>
     <string name="hint_available_space">Доступно: %s</string>
-    <string name="action_reset">Сбросить</string>
-    <string name="question_clear_location_permissions">Сбросить разрешения на местоположение?</string>
-    <string name="settings_title_clear_location_permissions">Сбросить разрешения на местоположение</string>
-    <string name="settings_summary_clear_location_permissions">Все сайты должны будут снова запросить доступ к местоположению</string>
-    <string name="pref_summary_override_location_granted">Местоположение предоставлено</string>
-    <string name="pref_summary_override_location_denied">Местоположение отклонено</string>
-    <string name="pref_summary_on_location">Сайты должны запросить доступ к местоположению вашего устройства</string>
-    <string name="pref_summary_off_location">Сайты не могут получить доступ к местоположению вашего устройства</string>
-    <string name="pref_summary_location_granted">Предоставлено</string>
-    <string name="pref_summary_location_denied">Отклонено</string>
-    <string name="pref_summary_location_ask">Спросить</string>
 </resources>

@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Share this page</string>
     <string name="action_delete">Delete</string>
     <string name="action_blank">Blank page</string>
+    <string name="action_reset">Restablir</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Custom</string>
     <string name="agent_default">Default</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> vol utilitzar la ubicació del teu dispositiu]]></string>
     <string name="action_allow">Allow</string>
     <string name="action_dont_allow">Don\'t allow</string>
+    <string name="pref_summary_location_granted">Concedit</string>
+    <string name="pref_summary_location_denied">Denegat</string>
+    <string name="pref_summary_location_ask">Pregunta</string>
     <string name="title_sign_in">Sign in</string>
     <string name="label_realm">Server message: %s</string>
     <string name="hint_username">Username</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Delete all</string>
     <string name="settings_summary_domains_delete_all">Restablir tota la configuració de dominis</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
+    <string name="question_clear_location_permissions">Restablir permisos d\'ubicació?</string>
+    <string name="settings_title_clear_location_permissions">Restablir permisos d\'ubicació</string>
+    <string name="settings_summary_clear_location_permissions">Tots els llocs hauran de tornar a demanar accés a la ubicació</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
+    <string name="settings_title_reset_default_domain">Restablir configuració per defecte</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_title_default_domain_settings">Configuració predeterminada</string>
     <string name="settings_summary_default_domain_settings">Aplicar a tots els llocs tret que se substitueixi</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
     <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="pref_summary_override_location_granted">Ubicació concedida</string>
+    <string name="pref_summary_override_location_denied">Ubicació denegada</string>
+    <string name="pref_summary_on_location">Els llocs han de demanar accés a la ubicació del teu dispositiu</string>
+    <string name="pref_summary_off_location">Els llocs no poden accedir a la ubicació del teu dispositiu</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Current page has no cookies</string>
     <string name="settings_summary_manage_cookies">Manage current page cookies</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">La mida de la memòria cau no pot ser negativa</string>
     <string name="error_cache_too_large">Memòria cau massa gran</string>
     <string name="hint_available_space">Disponible: %s</string>
-    <string name="action_reset">Restablir</string>
-    <string name="question_clear_location_permissions">Restablir permisos d\'ubicació?</string>
-    <string name="settings_title_clear_location_permissions">Restablir permisos d\'ubicació</string>
-    <string name="settings_summary_clear_location_permissions">Tots els llocs hauran de tornar a demanar accés a la ubicació</string>
-    <string name="pref_summary_override_location_granted">Ubicació concedida</string>
-    <string name="pref_summary_override_location_denied">Ubicació denegada</string>
-    <string name="pref_summary_on_location">Els llocs han de demanar accés a la ubicació del teu dispositiu</string>
-    <string name="pref_summary_off_location">Els llocs no poden accedir a la ubicació del teu dispositiu</string>
-    <string name="pref_summary_location_granted">Concedit</string>
-    <string name="pref_summary_location_denied">Denegat</string>
-    <string name="pref_summary_location_ask">Pregunta</string>
 </resources>

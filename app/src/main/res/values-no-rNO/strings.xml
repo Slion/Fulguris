@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Del denne siden</string>
     <string name="action_delete">Slett</string>
     <string name="action_blank">Tom side</string>
+    <string name="action_reset">Tilbakestill</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Egendefinert</string>
     <string name="agent_default">Standard</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> vil bruke enhetens plassering]]></string>
     <string name="action_allow">Tillat</string>
     <string name="action_dont_allow">Ikke tillat</string>
+    <string name="pref_summary_location_granted">Gitt</string>
+    <string name="pref_summary_location_denied">Nektet</string>
+    <string name="pref_summary_location_ask">Spør</string>
     <string name="title_sign_in">Logg inn</string>
     <string name="label_realm">Servermelding: %s</string>
     <string name="hint_username">Brukernavn</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Slett alle</string>
     <string name="settings_summary_domains_delete_all">Tilbakestill alle domeneinnstillinger</string>
     <string name="question_delete_all_domain_settings">Slett alle domeneinnstillinger?</string>
+    <string name="question_clear_location_permissions">Tilbakestill plasseringstillatelser?</string>
+    <string name="settings_title_clear_location_permissions">Tilbakestill plasseringstillatelser</string>
+    <string name="settings_summary_clear_location_permissions">Alle nettsteder må be om plasseringstilgang på nytt</string>
     <string name="settings_title_delete_domain_settings">Slett domeneinnstillinger</string>
+    <string name="settings_title_reset_default_domain">Tilbakestill standardinnstillinger</string>
     <string name="settings_title_parent">Overordnet</string>
     <string name="settings_title_default_domain_settings">Standardinnstillinger</string>
     <string name="settings_summary_default_domain_settings">Bruk på alle nettsteder med mindre overstyrt</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Alle nettsteder og nettleserens funksjoner bør fungere</string>
     <string name="settings_summary_off_javascript">Noen nettsteder og nettleserens funksjoner vil ikke fungere</string>
+    <string name="pref_summary_override_location_granted">Plassering gitt</string>
+    <string name="pref_summary_override_location_denied">Plassering nektet</string>
+    <string name="pref_summary_on_location">Nettsteder må be om tilgang til enhetens plassering</string>
+    <string name="pref_summary_off_location">Nettsteder kan ikke få tilgang til enhetens plassering</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Gjeldende side har ingen informasjonskapsler</string>
     <string name="settings_summary_manage_cookies">Håndter gjeldende sides informasjonskapsler</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">Hurtigbufferstørrelse kan ikke være negativ</string>
     <string name="error_cache_too_large">Hurtigbuffer for stor</string>
     <string name="hint_available_space">Tilgjengelig: %s</string>
-    <string name="action_reset">Tilbakestill</string>
-    <string name="question_clear_location_permissions">Tilbakestill plasseringstillatelser?</string>
-    <string name="settings_title_clear_location_permissions">Tilbakestill plasseringstillatelser</string>
-    <string name="settings_summary_clear_location_permissions">Alle nettsteder må be om plasseringstilgang på nytt</string>
-    <string name="pref_summary_override_location_granted">Plassering gitt</string>
-    <string name="pref_summary_override_location_denied">Plassering nektet</string>
-    <string name="pref_summary_on_location">Nettsteder må be om tilgang til enhetens plassering</string>
-    <string name="pref_summary_off_location">Nettsteder kan ikke få tilgang til enhetens plassering</string>
-    <string name="pref_summary_location_granted">Gitt</string>
-    <string name="pref_summary_location_denied">Nektet</string>
-    <string name="pref_summary_location_ask">Spør</string>
 </resources>

@@ -50,6 +50,7 @@
     <string name="dialog_title_share">ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱦᱟᱹᱴᱤᱧ</string>
     <string name="action_delete">ᱢᱮᱴᱟᱣ</string>
     <string name="action_blank">ᱠᱷᱟᱹᱞᱤ ᱥᱟᱦᱴᱟ</string>
+    <string name="action_reset">रिसेट</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Custom</string>
     <string name="agent_default">Default</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> आपको:आक् डिभाइस:रे:आक् जायगा: बाभाव् दाक\' याना]]></string>
     <string name="action_allow">ᱪᱷᱟᱹᱰᱤ ᱮᱢᱟᱭ ᱢᱮ</string>
     <string name="action_dont_allow">ᱪᱷᱟᱹᱰᱤ ᱟᱞᱚᱢ ᱮᱢᱟᱭ ᱢᱮ</string>
+    <string name="pref_summary_location_granted">एम् हुआ</string>
+    <string name="pref_summary_location_denied">बाकाय् हुआ</string>
+    <string name="pref_summary_location_ask">नेदे\'</string>
     <string name="title_sign_in">ᱵᱚᱞᱚᱱ</string>
     <string name="label_realm">ᱥᱚᱨᱵᱷᱚᱨ ᱠᱷᱚᱵᱚᱨ: %s</string>
     <string name="hint_username">ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱧᱩᱛᱩᱢ</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">ᱡᱷᱚᱛᱚ ᱢᱮᱴᱟᱣ</string>
     <string name="settings_summary_domains_delete_all">सगेन् डोमेन जोजोना: रिसेट</string>
     <string name="question_delete_all_domain_settings">ᱡᱷᱚᱛᱚ ᱰᱳᱢᱮᱱ ᱥᱟᱡᱟᱣ ᱠᱚ ᱢᱮᱴᱟᱣ ᱥᱟᱱᱟᱢᱟ?</string>
+    <string name="question_clear_location_permissions">जायगा: मञ्जुरी रिसेट?</string>
+    <string name="settings_title_clear_location_permissions">जायगा: मञ्जुरी रिसेट</string>
+    <string name="settings_summary_clear_location_permissions">सगेन् साइट जायगा: आनचो: लागित् आबार् नेदे\' लागती:आ</string>
     <string name="settings_title_delete_domain_settings">ᱰᱳᱢᱮᱱ ᱥᱟᱡᱟᱣ ᱠᱚ ᱢᱮᱴᱟᱣ</string>
+    <string name="settings_title_reset_default_domain">ᱢᱩᱞ ᱥᱟᱡᱟᱣ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
     <string name="settings_title_parent">ᱟᱭᱳ</string>
     <string name="settings_title_default_domain_settings">ᱢᱩᱞ ᱥᱟᱡᱟᱣ</string>
     <string name="settings_summary_default_domain_settings">ᱡᱚᱛᱚ ᱥᱟᱭᱤᱴ ᱨᱮ ᱞᱟᱜᱩ ᱢᱮ ᱡᱟᱦᱟᱸ ᱫᱷᱟᱹᱵᱤᱡ ᱵᱚᱫᱚᱞ ᱵᱟᱝ</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">ᱡᱷᱚᱛᱚ ᱣᱮᱵᱽᱥᱟᱭᱤᱴ ᱟᱨ ᱵᱽᱨᱟᱣᱡᱚᱨ ᱯᱷᱤᱪᱚᱨ ᱠᱚ ᱠᱟᱹᱢᱤᱭᱟ</string>
     <string name="settings_summary_off_javascript">ᱛᱤᱱᱟᱹᱜ ᱜᱟᱱ ᱣᱮᱵᱽᱥᱟᱭᱤᱴ ᱟᱨ ᱵᱽᱨᱟᱣᱡᱚᱨ ᱯᱷᱤᱪᱚᱨ ᱵᱟᱠᱚ ᱠᱟᱹᱢᱤᱭᱟ</string>
+    <string name="pref_summary_override_location_granted">जायगा: एम् हुआ</string>
+    <string name="pref_summary_override_location_denied">जायगा: बाकाय् हुआ</string>
+    <string name="pref_summary_on_location">साइट आपको:आक् डिभाइस:रे:आक् जायगा: आनचो: लागित् नेदे\' लागती:आ</string>
+    <string name="pref_summary_off_location">साइट आपको:आक् डिभाइस:रे:आक् जायगा: आनचो: दाड़ेयाक् आ</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱦᱴᱟ ᱨᱮ ᱠᱩᱠᱤᱡᱽ ᱵᱟᱹᱱᱩᱜ</string>
     <string name="settings_summary_manage_cookies">ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱦᱴᱟ ᱠᱩᱠᱤᱡᱽ ᱠᱚ ᱥᱟᱢᱵᱽᱲᱟᱣ</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">कैश आकार नकारात्मक बाहरे</string>
     <string name="error_cache_too_large">कैश बहुत घना</string>
     <string name="hint_available_space">उपलब्ध: %s</string>
-    <string name="action_reset">रिसेट</string>
-    <string name="question_clear_location_permissions">जायगा: मञ्जुरी रिसेट?</string>
-    <string name="settings_title_clear_location_permissions">जायगा: मञ्जुरी रिसेट</string>
-    <string name="settings_summary_clear_location_permissions">सगेन् साइट जायगा: आनचो: लागित् आबार् नेदे\' लागती:आ</string>
-    <string name="pref_summary_override_location_granted">जायगा: एम् हुआ</string>
-    <string name="pref_summary_override_location_denied">जायगा: बाकाय् हुआ</string>
-    <string name="pref_summary_on_location">साइट आपको:आक् डिभाइस:रे:आक् जायगा: आनचो: लागित् नेदे\' लागती:आ</string>
-    <string name="pref_summary_off_location">साइट आपको:आक् डिभाइस:रे:आक् जायगा: आनचो: दाड़ेयाक् आ</string>
-    <string name="pref_summary_location_granted">एम् हुआ</string>
-    <string name="pref_summary_location_denied">बाकाय् हुआ</string>
-    <string name="pref_summary_location_ask">नेदे\'</string>
 </resources>

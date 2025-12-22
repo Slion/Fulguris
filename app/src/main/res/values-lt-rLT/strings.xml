@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Share this page</string>
     <string name="action_delete">Ištrinti</string>
     <string name="action_blank">Tuščias puslapis</string>
+    <string name="action_reset">Iš naujo nustatyti</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Custom</string>
     <string name="agent_default">Default</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> nori naudoti jūsų įrenginio vietą]]></string>
     <string name="action_allow">Leisti</string>
     <string name="action_dont_allow">Neleisti</string>
+    <string name="pref_summary_location_granted">Suteikta</string>
+    <string name="pref_summary_location_denied">Atmesta</string>
+    <string name="pref_summary_location_ask">Klausti</string>
     <string name="title_sign_in">Sign in</string>
     <string name="label_realm">Server message: %s</string>
     <string name="hint_username">Username</string>
@@ -457,7 +461,11 @@
     <string name="settings_title_domains_delete_all">Delete all</string>
     <string name="settings_summary_domains_delete_all">Iš naujo nustatyti visus domeno nustatymus</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
+    <string name="question_clear_location_permissions">Iš naujo nustatyti vietos leidimus?</string>
+    <string name="settings_title_clear_location_permissions">Iš naujo nustatyti vietos leidimus</string>
+    <string name="settings_summary_clear_location_permissions">Visos svetainės turės vėl prašyti prieigos prie vietos</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
+    <string name="settings_title_reset_default_domain">Atkurti numatytuosius nustatymus</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_title_default_domain_settings">Numatytieji nustatymai</string>
     <string name="settings_summary_default_domain_settings">Taikyti visoms svetainėms, nebent perrašyta</string>
@@ -473,6 +481,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
     <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="pref_summary_override_location_granted">Vieta suteikta</string>
+    <string name="pref_summary_override_location_denied">Vieta atmesta</string>
+    <string name="pref_summary_on_location">Svetainės turi prašyti prieigos prie jūsų įrenginio vietos</string>
+    <string name="pref_summary_off_location">Svetainės negali pasiekti jūsų įrenginio vietos</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Current page has no cookies</string>
     <string name="settings_summary_manage_cookies">Manage current page cookies</string>
@@ -657,15 +669,4 @@
     <string name="error_cache_negative">Talpyklos dydis negali būti neigiamas</string>
     <string name="error_cache_too_large">Talpykla per didelė</string>
     <string name="hint_available_space">Prieinama: %s</string>
-    <string name="action_reset">Iš naujo nustatyti</string>
-    <string name="question_clear_location_permissions">Iš naujo nustatyti vietos leidimus?</string>
-    <string name="settings_title_clear_location_permissions">Iš naujo nustatyti vietos leidimus</string>
-    <string name="settings_summary_clear_location_permissions">Visos svetainės turės vėl prašyti prieigos prie vietos</string>
-    <string name="pref_summary_override_location_granted">Vieta suteikta</string>
-    <string name="pref_summary_override_location_denied">Vieta atmesta</string>
-    <string name="pref_summary_on_location">Svetainės turi prašyti prieigos prie jūsų įrenginio vietos</string>
-    <string name="pref_summary_off_location">Svetainės negali pasiekti jūsų įrenginio vietos</string>
-    <string name="pref_summary_location_granted">Suteikta</string>
-    <string name="pref_summary_location_denied">Atmesta</string>
-    <string name="pref_summary_location_ask">Klausti</string>
 </resources>

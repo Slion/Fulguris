@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Sdílet tuto stránku</string>
     <string name="action_delete">Odstranit</string>
     <string name="action_blank">Prázdná stránka</string>
+    <string name="action_reset">Obnovit</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Vlastní</string>
     <string name="agent_default">Výchozí</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> chce použít polohu vašeho zařízení]]></string>
     <string name="action_allow">Povolit</string>
     <string name="action_dont_allow">Don\'t allow</string>
+    <string name="pref_summary_location_granted">Povoleno</string>
+    <string name="pref_summary_location_denied">Zamítnuto</string>
+    <string name="pref_summary_location_ask">Zeptat se</string>
     <string name="title_sign_in">Přihlásit se</string>
     <string name="label_realm">Server message: %s</string>
     <string name="hint_username">Uživatelské jméno</string>
@@ -457,7 +461,11 @@
     <string name="settings_title_domains_delete_all">Smazat vše</string>
     <string name="settings_summary_domains_delete_all">Obnovit všechna nastavení domén</string>
     <string name="question_delete_all_domain_settings">Smazat všechna nastavení domén?</string>
+    <string name="question_clear_location_permissions">Obnovit oprávnění k poloze?</string>
+    <string name="settings_title_clear_location_permissions">Obnovit oprávnění k poloze</string>
+    <string name="settings_summary_clear_location_permissions">Všechny stránky budou muset znovu požádat o přístup k poloze</string>
     <string name="settings_title_delete_domain_settings">Smazat nastavení domény</string>
+    <string name="settings_title_reset_default_domain">Obnovit výchozí nastavení</string>
     <string name="settings_title_parent">Nadřazená</string>
     <string name="settings_title_default_domain_settings">Výchozí nastavení</string>
     <string name="settings_summary_default_domain_settings">Použít pro všechny stránky, pokud není přepsáno</string>
@@ -473,6 +481,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Všechny funkce webových stránek a prohlížeče by měly fungovat</string>
     <string name="settings_summary_off_javascript">Některé funkce webových stránek a prohlížeče nebudou fungovat</string>
+    <string name="pref_summary_override_location_granted">Poloha povolena</string>
+    <string name="pref_summary_override_location_denied">Poloha zamítnuta</string>
+    <string name="pref_summary_on_location">Stránky musí požádat o přístup k poloze vašeho zařízení</string>
+    <string name="pref_summary_off_location">Stránky nemají přístup k poloze vašeho zařízení</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Aktuální stránka nemá žádné cookies</string>
     <string name="settings_summary_manage_cookies">Spravovat cookies aktuální stránky</string>
@@ -657,15 +669,4 @@
     <string name="error_cache_negative">Velikost mezipaměti nemůže být záporná</string>
     <string name="error_cache_too_large">Mezipaměť příliš velká</string>
     <string name="hint_available_space">Dostupné: %s</string>
-    <string name="action_reset">Obnovit</string>
-    <string name="question_clear_location_permissions">Obnovit oprávnění k poloze?</string>
-    <string name="settings_title_clear_location_permissions">Obnovit oprávnění k poloze</string>
-    <string name="settings_summary_clear_location_permissions">Všechny stránky budou muset znovu požádat o přístup k poloze</string>
-    <string name="pref_summary_override_location_granted">Poloha povolena</string>
-    <string name="pref_summary_override_location_denied">Poloha zamítnuta</string>
-    <string name="pref_summary_on_location">Stránky musí požádat o přístup k poloze vašeho zařízení</string>
-    <string name="pref_summary_off_location">Stránky nemají přístup k poloze vašeho zařízení</string>
-    <string name="pref_summary_location_granted">Povoleno</string>
-    <string name="pref_summary_location_denied">Zamítnuto</string>
-    <string name="pref_summary_location_ask">Zeptat se</string>
 </resources>

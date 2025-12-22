@@ -49,6 +49,7 @@
     <string name="dialog_title_share">इस पेज को शेयर करें</string>
     <string name="action_delete">हटाएं</string>
     <string name="action_blank">खाली पेज</string>
+    <string name="action_reset">रीसेट करें</string>
     <string name="title_search_engine">खोज इंजन</string>
     <string name="dialog_download">क्या आप इस फ़ाइल को डाउनलोड करना चाहते हैं? (%1$s)</string>
     <string name="unknown_size">अज्ञात आकार</string>
@@ -173,6 +174,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> आपके डिवाइस का स्थान उपयोग करना चाहता है]]></string>
     <string name="action_allow">अनुमति दें</string>
     <string name="action_dont_allow">अनुमति न दें</string>
+    <string name="pref_summary_location_granted">दिया गया</string>
+    <string name="pref_summary_location_denied">अस्वीकृत</string>
+    <string name="pref_summary_location_ask">पूछें</string>
     <string name="title_sign_in">साइन इन करें</string>
     <string name="label_realm">सर्वर संदेश: %s</string>
     <string name="hint_username">उपयोगकर्ता नाम</string>
@@ -420,7 +424,11 @@
     <string name="settings_title_domains_delete_all">सभी हटाएं</string>
     <string name="settings_summary_domains_delete_all">सभी डोमेन सेटिंग रीसेट करें</string>
     <string name="question_delete_all_domain_settings">सभी डोमेन सेटिंग्स हटाएं?</string>
+    <string name="question_clear_location_permissions">स्थान अनुमतियाँ रीसेट करें?</string>
+    <string name="settings_title_clear_location_permissions">स्थान अनुमतियाँ रीसेट करें</string>
+    <string name="settings_summary_clear_location_permissions">सभी साइटों को स्थान तक पहुँच के लिए फिर से पूछना होगा</string>
     <string name="settings_title_delete_domain_settings">डोमेन सेटिंग्स हटाएं</string>
+    <string name="settings_title_reset_default_domain">डिफ़ॉल्ट सेटिंग रीसेट करें</string>
     <string name="settings_title_parent">पैरेंट</string>
     <string name="settings_title_default_domain_settings">डिफ़ॉल्ट सेटिंग्स</string>
     <string name="settings_summary_default_domain_settings">सभी साइटों पर लागू करें जब तक ओवरराइड न किया जाए</string>
@@ -435,6 +443,10 @@
     <string name="settings_summary_off_third_party_cookies">वेबसाइटों पर आपकी गतिविधियों को ट्रैक करने के लिए उपयोग की जाने वाली कुकीज़ अस्वीकार करें</string>
     <string name="settings_summary_on_javascript">सभी वेबसाइटों और ब्राउज़र की सुविधाएं काम करनी चाहिए</string>
     <string name="settings_summary_off_javascript">कुछ वेबसाइटों और ब्राउज़र की सुविधाएं काम नहीं करेंगी</string>
+    <string name="pref_summary_override_location_granted">स्थान दिया गया</string>
+    <string name="pref_summary_override_location_denied">स्थान अस्वीकृत</string>
+    <string name="pref_summary_on_location">साइटों को आपके डिवाइस के स्थान तक पहुँच के लिए पूछना होगा</string>
+    <string name="pref_summary_off_location">साइटें आपके डिवाइस के स्थान तक नहीं पहुँच सकतीं</string>
     <string name="settings_summary_cookies">वर्तमान पेज पर कोई कुकीज़ नहीं</string>
     <string name="settings_summary_manage_cookies">वर्तमान पेज की कुकीज़ प्रबंधित करें</string>
     <string name="settings_title_cookies_delete_all">सभी हटाएं</string>
@@ -606,15 +618,4 @@
     <string name="error_cache_negative">कैश का आकार नकारात्मक नहीं हो सकता</string>
     <string name="error_cache_too_large">कैश बहुत बड़ा</string>
     <string name="hint_available_space">उपलब्ध: %s</string>
-    <string name="action_reset">रीसेट करें</string>
-    <string name="question_clear_location_permissions">स्थान अनुमतियाँ रीसेट करें?</string>
-    <string name="settings_title_clear_location_permissions">स्थान अनुमतियाँ रीसेट करें</string>
-    <string name="settings_summary_clear_location_permissions">सभी साइटों को स्थान तक पहुँच के लिए फिर से पूछना होगा</string>
-    <string name="pref_summary_override_location_granted">स्थान दिया गया</string>
-    <string name="pref_summary_override_location_denied">स्थान अस्वीकृत</string>
-    <string name="pref_summary_on_location">साइटों को आपके डिवाइस के स्थान तक पहुँच के लिए पूछना होगा</string>
-    <string name="pref_summary_off_location">साइटें आपके डिवाइस के स्थान तक नहीं पहुँच सकतीं</string>
-    <string name="pref_summary_location_granted">दिया गया</string>
-    <string name="pref_summary_location_denied">अस्वीकृत</string>
-    <string name="pref_summary_location_ask">पूछें</string>
 </resources>

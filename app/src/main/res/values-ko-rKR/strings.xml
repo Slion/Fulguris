@@ -50,6 +50,7 @@
     <string name="dialog_title_share">이 페이지 공유</string>
     <string name="action_delete">삭제</string>
     <string name="action_blank">빈 페이지</string>
+    <string name="action_reset">재설정</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">임의의 UA</string>
     <string name="agent_default">기본값</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> 이(가) 기기의 위치를 사용하려고 합니다]]></string>
     <string name="action_allow">허용</string>
     <string name="action_dont_allow">거부</string>
+    <string name="pref_summary_location_granted">허용됨</string>
+    <string name="pref_summary_location_denied">거부됨</string>
+    <string name="pref_summary_location_ask">확인</string>
     <string name="title_sign_in">로그인</string>
     <string name="label_realm">서버 메시지: %s</string>
     <string name="hint_username">사용자 이름</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">모두 삭제</string>
     <string name="settings_summary_domains_delete_all">모든 도메인 설정 재설정</string>
     <string name="question_delete_all_domain_settings">모든 도메인 설정을 삭제하시겠습니까?</string>
+    <string name="question_clear_location_permissions">위치 권한을 재설정하시겠습니까?</string>
+    <string name="settings_title_clear_location_permissions">위치 권한 재설정</string>
+    <string name="settings_summary_clear_location_permissions">모든 사이트가 다시 위치 액세스를 요청해야 합니다</string>
     <string name="settings_title_delete_domain_settings">도메인 설정 삭제</string>
+    <string name="settings_title_reset_default_domain">기본 설정 재설정</string>
     <string name="settings_title_parent">상위</string>
     <string name="settings_title_default_domain_settings">기본 설정</string>
     <string name="settings_summary_default_domain_settings">재정의되지 않는 한 모든 사이트에 적용</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">모든 웹사이트 및 브라우저 기능이 작동해야 합니다</string>
     <string name="settings_summary_off_javascript">일부 웹사이트 및 브라우저 기능이 작동하지 않습니다</string>
+    <string name="pref_summary_override_location_granted">위치 허용됨</string>
+    <string name="pref_summary_override_location_denied">위치 거부됨</string>
+    <string name="pref_summary_on_location">사이트가 기기 위치에 액세스하려면 먼저 물어봐야 합니다</string>
+    <string name="pref_summary_off_location">사이트가 기기 위치에 액세스할 수 없습니다</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">현재 페이지에 쿠키가 없습니다</string>
     <string name="settings_summary_manage_cookies">현재 페이지 쿠키 관리</string>
@@ -649,15 +661,4 @@
     <string name="error_cache_negative">캐시 크기는 음수일 수 없습니다</string>
     <string name="error_cache_too_large">캐시가 너무 큽니다</string>
     <string name="hint_available_space">사용 가능: %s</string>
-    <string name="action_reset">재설정</string>
-    <string name="question_clear_location_permissions">위치 권한을 재설정하시겠습니까?</string>
-    <string name="settings_title_clear_location_permissions">위치 권한 재설정</string>
-    <string name="settings_summary_clear_location_permissions">모든 사이트가 다시 위치 액세스를 요청해야 합니다</string>
-    <string name="pref_summary_override_location_granted">위치 허용됨</string>
-    <string name="pref_summary_override_location_denied">위치 거부됨</string>
-    <string name="pref_summary_on_location">사이트가 기기 위치에 액세스하려면 먼저 물어봐야 합니다</string>
-    <string name="pref_summary_off_location">사이트가 기기 위치에 액세스할 수 없습니다</string>
-    <string name="pref_summary_location_granted">허용됨</string>
-    <string name="pref_summary_location_denied">거부됨</string>
-    <string name="pref_summary_location_ask">확인</string>
 </resources>

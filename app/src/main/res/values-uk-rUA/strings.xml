@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Поділитися цією сторінкою</string>
     <string name="action_delete">Видалити</string>
     <string name="action_blank">Порожня сторінка</string>
+    <string name="action_reset">Скинути</string>
     <string name="agent_android_mobile">Android (мобільний)</string>
     <string name="agent_custom">Власний</string>
     <string name="agent_default">За стандартом</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> хоче використовувати місцезнаходження вашого пристрою]]></string>
     <string name="action_allow">Дозволити</string>
     <string name="action_dont_allow">Не дозволяти</string>
+    <string name="pref_summary_location_granted">Надано</string>
+    <string name="pref_summary_location_denied">Відхилено</string>
+    <string name="pref_summary_location_ask">Запитати</string>
     <string name="title_sign_in">Увійти</string>
     <string name="label_realm">Повідомлення сервера: %s</string>
     <string name="hint_username">Імʼя користувача</string>
@@ -457,7 +461,11 @@
     <string name="settings_title_domains_delete_all">Видалити все</string>
     <string name="settings_summary_domains_delete_all">Скинути всі налаштування домену</string>
     <string name="question_delete_all_domain_settings">Видалити всі налаштування домену?</string>
+    <string name="question_clear_location_permissions">Скинути дозволи на місцезнаходження?</string>
+    <string name="settings_title_clear_location_permissions">Скинути дозволи на місцезнаходження</string>
+    <string name="settings_summary_clear_location_permissions">Усі сайти повинні будуть знову запитати доступ до місцезнаходження</string>
     <string name="settings_title_delete_domain_settings">Видалити налаштування домену</string>
+    <string name="settings_title_reset_default_domain">Скинути налаштування за замовчуванням</string>
     <string name="settings_title_parent">Батьківський</string>
     <string name="settings_title_default_domain_settings">Налаштування за замовчуванням</string>
     <string name="settings_summary_default_domain_settings">Застосовується до всіх сайтів, якщо не перевизначено</string>
@@ -473,6 +481,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Всі функції веб-сайтів та браузера повинні працювати</string>
     <string name="settings_summary_off_javascript">Деякі функції веб-сайтів та браузера не працюватимуть</string>
+    <string name="pref_summary_override_location_granted">Місцезнаходження надано</string>
+    <string name="pref_summary_override_location_denied">Місцезнаходження відхилено</string>
+    <string name="pref_summary_on_location">Сайти повинні запитати доступ до місцезнаходження вашого пристрою</string>
+    <string name="pref_summary_off_location">Сайти не можуть отримати доступ до місцезнаходження вашого пристрою</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Поточна сторінка не має cookies</string>
     <string name="settings_summary_manage_cookies">Керування cookies поточної сторінки</string>
@@ -657,15 +669,4 @@
     <string name="error_cache_negative">Розмір кешу не може бути негативним</string>
     <string name="error_cache_too_large">Кеш занадто великий</string>
     <string name="hint_available_space">Доступно: %s</string>
-    <string name="action_reset">Скинути</string>
-    <string name="question_clear_location_permissions">Скинути дозволи на місцезнаходження?</string>
-    <string name="settings_title_clear_location_permissions">Скинути дозволи на місцезнаходження</string>
-    <string name="settings_summary_clear_location_permissions">Усі сайти повинні будуть знову запитати доступ до місцезнаходження</string>
-    <string name="pref_summary_override_location_granted">Місцезнаходження надано</string>
-    <string name="pref_summary_override_location_denied">Місцезнаходження відхилено</string>
-    <string name="pref_summary_on_location">Сайти повинні запитати доступ до місцезнаходження вашого пристрою</string>
-    <string name="pref_summary_off_location">Сайти не можуть отримати доступ до місцезнаходження вашого пристрою</string>
-    <string name="pref_summary_location_granted">Надано</string>
-    <string name="pref_summary_location_denied">Відхилено</string>
-    <string name="pref_summary_location_ask">Запитати</string>
 </resources>

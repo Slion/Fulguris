@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Partager cette page</string>
     <string name="action_delete">Supprimer</string>
     <string name="action_blank">Page vide</string>
+    <string name="action_reset">Réinitialiser</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Personnalisé</string>
     <string name="agent_default">Par défaut</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> souhaite utiliser la position de votre appareil]]></string>
     <string name="action_allow">Autoriser</string>
     <string name="action_dont_allow">Refuser</string>
+    <string name="pref_summary_location_granted">Accordé</string>
+    <string name="pref_summary_location_denied">Refusé</string>
+    <string name="pref_summary_location_ask">Demander</string>
     <string name="title_sign_in">Connexion</string>
     <string name="label_realm">Message du serveur : %s</string>
     <string name="hint_username">Nom d\'utilisateur</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Tout supprimer</string>
     <string name="settings_summary_domains_delete_all">Réinitialiser tous les paramètres de domaine</string>
     <string name="question_delete_all_domain_settings">Supprimer tous les paramètres du domaine ?</string>
+    <string name="question_clear_location_permissions">Réinitialiser les autorisations de position ?</string>
+    <string name="settings_title_clear_location_permissions">Réinitialiser les autorisations de position</string>
+    <string name="settings_summary_clear_location_permissions">Tous les sites devront redemander l\'accès à la position</string>
     <string name="settings_title_delete_domain_settings">Supprimer les paramètres du domaine</string>
+    <string name="settings_title_reset_default_domain">Réinitialiser les paramètres par défaut</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_title_default_domain_settings">Paramètres par défaut</string>
     <string name="settings_summary_default_domain_settings">Appliquer à tous les sites sauf si remplacé</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Toutes les fonctionnalités des sites web et du navigateur devraient fonctionner</string>
     <string name="settings_summary_off_javascript">Certaines fonctionnalités des sites web et du navigateur ne fonctionneront pas</string>
+    <string name="pref_summary_override_location_granted">Position accordée</string>
+    <string name="pref_summary_override_location_denied">Position refusée</string>
+    <string name="pref_summary_on_location">Les sites doivent demander l\'accès à la position de votre appareil</string>
+    <string name="pref_summary_off_location">Les sites ne peuvent pas accéder à la position de votre appareil</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">La page actuelle ne contient aucun cookie</string>
     <string name="settings_summary_manage_cookies">Gérer les cookies de la page actuelle</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">La taille du cache ne peut pas être négative</string>
     <string name="error_cache_too_large">Cache trop volumineux</string>
     <string name="hint_available_space">Disponible: %s</string>
-    <string name="action_reset">Réinitialiser</string>
-    <string name="question_clear_location_permissions">Réinitialiser les autorisations de position ?</string>
-    <string name="settings_title_clear_location_permissions">Réinitialiser les autorisations de position</string>
-    <string name="settings_summary_clear_location_permissions">Tous les sites devront redemander l\'accès à la position</string>
-    <string name="pref_summary_override_location_granted">Position accordée</string>
-    <string name="pref_summary_override_location_denied">Position refusée</string>
-    <string name="pref_summary_on_location">Les sites doivent demander l\'accès à la position de votre appareil</string>
-    <string name="pref_summary_off_location">Les sites ne peuvent pas accéder à la position de votre appareil</string>
-    <string name="pref_summary_location_granted">Accordé</string>
-    <string name="pref_summary_location_denied">Refusé</string>
-    <string name="pref_summary_location_ask">Demander</string>
 </resources>

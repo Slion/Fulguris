@@ -50,6 +50,7 @@
     <string name="dialog_title_share">مشاركة هذه الصفحة</string>
     <string name="action_delete">حذف</string>
     <string name="action_blank">صفحة فارغة</string>
+    <string name="action_reset">إعادة تعيين</string>
     <string name="agent_android_mobile">أندرويد (الجوال)</string>
     <string name="agent_custom">مخصص</string>
     <string name="agent_default">الافتراضي</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> يريد استخدام موقع جهازك]]></string>
     <string name="action_allow">السماح</string>
     <string name="action_dont_allow">عدم السماح</string>
+    <string name="pref_summary_location_granted">ممنوح</string>
+    <string name="pref_summary_location_denied">مرفوض</string>
+    <string name="pref_summary_location_ask">سؤال</string>
     <string name="title_sign_in">تسجل الدخول</string>
     <string name="label_realm">رسالة الخادم: %s</string>
     <string name="hint_username">اسم المستخدم</string>
@@ -459,7 +463,11 @@
     <string name="settings_title_domains_delete_all">حذف الكل</string>
     <string name="settings_summary_domains_delete_all">إعادة تعيين جميع إعدادات النطاق</string>
     <string name="question_delete_all_domain_settings">حذف جميع إعدادات النطاقات؟</string>
+    <string name="question_clear_location_permissions">إعادة تعيين أذونات الموقع؟</string>
+    <string name="settings_title_clear_location_permissions">إعادة تعيين أذونات الموقع</string>
+    <string name="settings_summary_clear_location_permissions">سيتعين على جميع المواقع أن تطلب مرة أخرى للوصول إلى الموقع</string>
     <string name="settings_title_delete_domain_settings">حذف إعدادات النطاق</string>
+    <string name="settings_title_reset_default_domain">إعادة تعيين الإعدادات الافتراضية</string>
     <string name="settings_title_parent">الأصل</string>
     <string name="settings_title_default_domain_settings">الإعدادات الافتراضية</string>
     <string name="settings_summary_default_domain_settings">تطبق على جميع المواقع ما لم يتم تجاوزها</string>
@@ -475,6 +483,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">يجب أن تعمل جميع ميزات المواقع والمتصفح</string>
     <string name="settings_summary_off_javascript">لن تعمل بعض ميزات المواقع والمتصفح</string>
+    <string name="pref_summary_override_location_granted">تم منح الموقع</string>
+    <string name="pref_summary_override_location_denied">تم رفض الموقع</string>
+    <string name="pref_summary_on_location">يجب أن تطلب المواقع الوصول إلى موقع جهازك</string>
+    <string name="pref_summary_off_location">لا يمكن للمواقع الوصول إلى موقع جهازك</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">الصفحة الحالية ليس بها ملفات تعريف ارتباط</string>
     <string name="settings_summary_manage_cookies">إدارة ملفات تعريف ارتباط الصفحة الحالية</string>
@@ -663,15 +675,4 @@
     <string name="error_cache_negative">لا يمكن أن يكون حجم ذاكرة التخزين المؤقت سالبًا</string>
     <string name="error_cache_too_large">ذاكرة التخزين المؤقت كبيرة جدًا</string>
     <string name="hint_available_space">متاح: %s</string>
-    <string name="action_reset">إعادة تعيين</string>
-    <string name="question_clear_location_permissions">إعادة تعيين أذونات الموقع؟</string>
-    <string name="settings_title_clear_location_permissions">إعادة تعيين أذونات الموقع</string>
-    <string name="settings_summary_clear_location_permissions">سيتعين على جميع المواقع أن تطلب مرة أخرى للوصول إلى الموقع</string>
-    <string name="pref_summary_override_location_granted">تم منح الموقع</string>
-    <string name="pref_summary_override_location_denied">تم رفض الموقع</string>
-    <string name="pref_summary_on_location">يجب أن تطلب المواقع الوصول إلى موقع جهازك</string>
-    <string name="pref_summary_off_location">لا يمكن للمواقع الوصول إلى موقع جهازك</string>
-    <string name="pref_summary_location_granted">ممنوح</string>
-    <string name="pref_summary_location_denied">مرفوض</string>
-    <string name="pref_summary_location_ask">سؤال</string>
 </resources>

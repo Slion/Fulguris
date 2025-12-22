@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Distribuie această pagină</string>
     <string name="action_delete">Șterge</string>
     <string name="action_blank">Pagină goală</string>
+    <string name="action_reset">Resetare</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Custom</string>
     <string name="agent_default">Default</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> dorește să utilizeze locația dispozitivului dvs.]]></string>
     <string name="action_allow">Permite</string>
     <string name="action_dont_allow">Nu permite</string>
+    <string name="pref_summary_location_granted">Acordat</string>
+    <string name="pref_summary_location_denied">Refuzat</string>
+    <string name="pref_summary_location_ask">Întreabă</string>
     <string name="title_sign_in">Autentificare</string>
     <string name="label_realm">Mesaj server: %s</string>
     <string name="hint_username">Nume utilizator</string>
@@ -456,7 +460,11 @@
     <string name="settings_title_domains_delete_all">Șterge toate</string>
     <string name="settings_summary_domains_delete_all">Resetează toate setările de domeniu</string>
     <string name="question_delete_all_domain_settings">Ștergi toate setările domeniilor?</string>
+    <string name="question_clear_location_permissions">Resetați permisiunile de locație?</string>
+    <string name="settings_title_clear_location_permissions">Resetează permisiunile de locație</string>
+    <string name="settings_summary_clear_location_permissions">Toate site-urile vor trebui să solicite din nou acces la locație</string>
     <string name="settings_title_delete_domain_settings">Șterge setările domeniului</string>
+    <string name="settings_title_reset_default_domain">Resetare setări implicite</string>
     <string name="settings_title_parent">Părinte</string>
     <string name="settings_title_default_domain_settings">Setări implicite</string>
     <string name="settings_summary_default_domain_settings">Aplicați la toate site-urile cu excepția cazului în care este suprascris</string>
@@ -472,6 +480,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Toate funcțiile site-urilor și browserului ar trebui să funcționeze</string>
     <string name="settings_summary_off_javascript">Unele funcții ale site-urilor și browserului nu vor funcționa</string>
+    <string name="pref_summary_override_location_granted">Locație acordată</string>
+    <string name="pref_summary_override_location_denied">Locație refuzată</string>
+    <string name="pref_summary_on_location">Site-urile trebuie să solicite acces la locația dispozitivului dvs.</string>
+    <string name="pref_summary_off_location">Site-urile nu pot accesa locația dispozitivului dvs.</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Pagina curentă nu are cookie-uri</string>
     <string name="settings_summary_manage_cookies">Gestionează cookie-urile paginii curente</string>
@@ -654,15 +666,4 @@
     <string name="error_cache_negative">Dimensiunea cache-ului nu poate fi negativă</string>
     <string name="error_cache_too_large">Cache prea mare</string>
     <string name="hint_available_space">Disponibil: %s</string>
-    <string name="action_reset">Resetare</string>
-    <string name="question_clear_location_permissions">Resetați permisiunile de locație?</string>
-    <string name="settings_title_clear_location_permissions">Resetează permisiunile de locație</string>
-    <string name="settings_summary_clear_location_permissions">Toate site-urile vor trebui să solicite din nou acces la locație</string>
-    <string name="pref_summary_override_location_granted">Locație acordată</string>
-    <string name="pref_summary_override_location_denied">Locație refuzată</string>
-    <string name="pref_summary_on_location">Site-urile trebuie să solicite acces la locația dispozitivului dvs.</string>
-    <string name="pref_summary_off_location">Site-urile nu pot accesa locația dispozitivului dvs.</string>
-    <string name="pref_summary_location_granted">Acordat</string>
-    <string name="pref_summary_location_denied">Refuzat</string>
-    <string name="pref_summary_location_ask">Întreabă</string>
 </resources>

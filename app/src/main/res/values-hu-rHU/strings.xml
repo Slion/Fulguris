@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Oldal megosztása</string>
     <string name="action_delete">Törlés</string>
     <string name="action_blank">Üres oldal</string>
+    <string name="action_reset">Visszaállítás</string>
     <string name="agent_android_mobile">Android (Telefon)</string>
     <string name="agent_custom">Egyéni</string>
     <string name="agent_default">Alapértelmezett</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> használni szeretné az eszköz tartózkodási helyét]]></string>
     <string name="action_allow">Engedélyez</string>
     <string name="action_dont_allow">Ne engedélyezze</string>
+    <string name="pref_summary_location_granted">Engedélyezve</string>
+    <string name="pref_summary_location_denied">Megtagadva</string>
+    <string name="pref_summary_location_ask">Kérdezzen</string>
     <string name="title_sign_in">Bejelentkezés</string>
     <string name="label_realm">Szerver üzenet: %s</string>
     <string name="hint_username">Felhasználónév</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Összes törlése</string>
     <string name="settings_summary_domains_delete_all">Összes domain beállítás visszaállítása</string>
     <string name="question_delete_all_domain_settings">Törli az összes tartománybeállítást?</string>
+    <string name="question_clear_location_permissions">Helymeghatározási engedélyek visszaállítása?</string>
+    <string name="settings_title_clear_location_permissions">Helymeghatározási engedélyek visszaállítása</string>
+    <string name="settings_summary_clear_location_permissions">Minden weboldalnak újra kell kérnie a helymeghatározáshoz való hozzáférést</string>
     <string name="settings_title_delete_domain_settings">Tartománybeállítások törlése</string>
+    <string name="settings_title_reset_default_domain">Alapértelmezett beállítások visszaállítása</string>
     <string name="settings_title_parent">Szülő</string>
     <string name="settings_title_default_domain_settings">Alapértelmezett beállítások</string>
     <string name="settings_summary_default_domain_settings">Alkalmazás minden webhelyre, hacsak nem felülbírált</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">Minden weboldal- és böngészőfunkcionalitásnak működnie kell</string>
     <string name="settings_summary_off_javascript">Valamennyi weboldal- és böngészőfunkcionalitás nem fog működni</string>
+    <string name="pref_summary_override_location_granted">Helymeghatározás engedélyezve</string>
+    <string name="pref_summary_override_location_denied">Helymeghatározás megtagadva</string>
+    <string name="pref_summary_on_location">A weboldalaknak kérniük kell az eszköz helymeghatározásához való hozzáférést</string>
+    <string name="pref_summary_off_location">A weboldalak nem férhetnek hozzá az eszköz helymeghatározásához</string>
     <string name="settings_title_cookies">Sütik</string>
     <string name="settings_summary_cookies">Ezen oldalnak nincsenek sütijei</string>
     <string name="settings_summary_manage_cookies">Ezen oldal sütijeinek kezelése</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">A gyorsítótár mérete nem lehet negatív</string>
     <string name="error_cache_too_large">A gyorsítótár túl nagy</string>
     <string name="hint_available_space">Elérhető: %s</string>
-    <string name="action_reset">Visszaállítás</string>
-    <string name="question_clear_location_permissions">Helymeghatározási engedélyek visszaállítása?</string>
-    <string name="settings_title_clear_location_permissions">Helymeghatározási engedélyek visszaállítása</string>
-    <string name="settings_summary_clear_location_permissions">Minden weboldalnak újra kell kérnie a helymeghatározáshoz való hozzáférést</string>
-    <string name="pref_summary_override_location_granted">Helymeghatározás engedélyezve</string>
-    <string name="pref_summary_override_location_denied">Helymeghatározás megtagadva</string>
-    <string name="pref_summary_on_location">A weboldalaknak kérniük kell az eszköz helymeghatározásához való hozzáférést</string>
-    <string name="pref_summary_off_location">A weboldalak nem férhetnek hozzá az eszköz helymeghatározásához</string>
-    <string name="pref_summary_location_granted">Engedélyezve</string>
-    <string name="pref_summary_location_denied">Megtagadva</string>
-    <string name="pref_summary_location_ask">Kérdezzen</string>
 </resources>

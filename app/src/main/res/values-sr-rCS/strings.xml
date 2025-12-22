@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Podeli ovu stranicu</string>
     <string name="action_delete">Obriši</string>
     <string name="action_blank">Prazna stranica</string>
+    <string name="action_reset">Ресетуј</string>
     <string name="agent_android_mobile">Android (mobilni)</string>
     <string name="agent_custom">Posebna</string>
     <string name="agent_default">Podrazumevano</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> жели да користи локацију вашег уређаја]]></string>
     <string name="action_allow">Dozvoli</string>
     <string name="action_dont_allow">Ne dozvoli</string>
+    <string name="pref_summary_location_granted">Одобрено</string>
+    <string name="pref_summary_location_denied">Одбијено</string>
+    <string name="pref_summary_location_ask">Питај</string>
     <string name="title_sign_in">Prijava</string>
     <string name="label_realm">Poruka servera: %s</string>
     <string name="hint_username">Korisničko ime</string>
@@ -456,7 +460,11 @@
     <string name="settings_title_domains_delete_all">Izbriši sve</string>
     <string name="settings_summary_domains_delete_all">Ресетуј сва подешавања домена</string>
     <string name="question_delete_all_domain_settings">Želite li da izbrišete sva podešavanja domena?</string>
+    <string name="question_clear_location_permissions">Ресетовати дозволе за локацију?</string>
+    <string name="settings_title_clear_location_permissions">Ресетуј дозволе за локацију</string>
+    <string name="settings_summary_clear_location_permissions">Сви сајтови ће морати поново тражити приступ локацији</string>
     <string name="settings_title_delete_domain_settings">Izbrišite podešavanja domena</string>
+    <string name="settings_title_reset_default_domain">Ресетуј подразумеване поставке</string>
     <string name="settings_title_parent">Roditelj</string>
     <string name="settings_title_default_domain_settings">Подразумевана подешавања</string>
     <string name="settings_summary_default_domain_settings">Примени на све сајтове осим ако није замењено</string>
@@ -472,6 +480,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
     <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="pref_summary_override_location_granted">Локација одобрена</string>
+    <string name="pref_summary_override_location_denied">Локација одбијена</string>
+    <string name="pref_summary_on_location">Сајтови морају тражити приступ локацији вашег уређаја</string>
+    <string name="pref_summary_off_location">Сајтови не могу приступити локацији вашег уређаја</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Current page has no cookies</string>
     <string name="settings_summary_manage_cookies">Manage current page cookies</string>
@@ -654,15 +666,4 @@
     <string name="error_cache_negative">Величина кеша не може бити негативна</string>
     <string name="error_cache_too_large">Кеш превелик</string>
     <string name="hint_available_space">Доступно: %s</string>
-    <string name="action_reset">Ресетуј</string>
-    <string name="question_clear_location_permissions">Ресетовати дозволе за локацију?</string>
-    <string name="settings_title_clear_location_permissions">Ресетуј дозволе за локацију</string>
-    <string name="settings_summary_clear_location_permissions">Сви сајтови ће морати поново тражити приступ локацији</string>
-    <string name="pref_summary_override_location_granted">Локација одобрена</string>
-    <string name="pref_summary_override_location_denied">Локација одбијена</string>
-    <string name="pref_summary_on_location">Сајтови морају тражити приступ локацији вашег уређаја</string>
-    <string name="pref_summary_off_location">Сајтови не могу приступити локацији вашег уређаја</string>
-    <string name="pref_summary_location_granted">Одобрено</string>
-    <string name="pref_summary_location_denied">Одбијено</string>
-    <string name="pref_summary_location_ask">Питај</string>
 </resources>

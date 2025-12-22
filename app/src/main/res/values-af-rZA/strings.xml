@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Share this page</string>
     <string name="action_delete">Delete</string>
     <string name="action_blank">Blank page</string>
+    <string name="action_reset">Herstel</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Custom</string>
     <string name="agent_default">Default</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> wil jou toestel se ligging gebruik]]></string>
     <string name="action_allow">Allow</string>
     <string name="action_dont_allow">Don\'t allow</string>
+    <string name="pref_summary_location_granted">Toegestaan</string>
+    <string name="pref_summary_location_denied">Geweier</string>
+    <string name="pref_summary_location_ask">Vra</string>
     <string name="title_sign_in">Sign in</string>
     <string name="label_realm">Server message: %s</string>
     <string name="hint_username">Username</string>
@@ -455,7 +459,11 @@
     <string name="settings_title_domains_delete_all">Delete all</string>
     <string name="settings_summary_domains_delete_all">Herstel alle domein instellings</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
+    <string name="question_clear_location_permissions">Herstel ligging toestemmings?</string>
+    <string name="settings_title_clear_location_permissions">Herstel ligging toestemmings</string>
+    <string name="settings_summary_clear_location_permissions">Alle webwerwe sal weer moet vra vir ligging toegang</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
+    <string name="settings_title_reset_default_domain">Herstel verstekstellings</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_title_default_domain_settings">Verstekinstellings</string>
     <string name="settings_summary_default_domain_settings">Geld vir alle webwerwe tensy oorgeskryf</string>
@@ -471,6 +479,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
     <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="pref_summary_override_location_granted">Ligging toegestaan</string>
+    <string name="pref_summary_override_location_denied">Ligging geweier</string>
+    <string name="pref_summary_on_location">Webwerwe moet vra om jou toestel se ligging te gebruik</string>
+    <string name="pref_summary_off_location">Webwerwe kan nie jou toestel se ligging gebruik nie</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Current page has no cookies</string>
     <string name="settings_summary_manage_cookies">Manage current page cookies</string>
@@ -651,15 +663,4 @@
     <string name="error_cache_negative">Kasgrootte kan nie negatief wees nie</string>
     <string name="error_cache_too_large">Kas te groot</string>
     <string name="hint_available_space">Beskikbaar: %s</string>
-    <string name="action_reset">Herstel</string>
-    <string name="question_clear_location_permissions">Herstel ligging toestemmings?</string>
-    <string name="settings_title_clear_location_permissions">Herstel ligging toestemmings</string>
-    <string name="settings_summary_clear_location_permissions">Alle webwerwe sal weer moet vra vir ligging toegang</string>
-    <string name="pref_summary_override_location_granted">Ligging toegestaan</string>
-    <string name="pref_summary_override_location_denied">Ligging geweier</string>
-    <string name="pref_summary_on_location">Webwerwe moet vra om jou toestel se ligging te gebruik</string>
-    <string name="pref_summary_off_location">Webwerwe kan nie jou toestel se ligging gebruik nie</string>
-    <string name="pref_summary_location_granted">Toegestaan</string>
-    <string name="pref_summary_location_denied">Geweier</string>
-    <string name="pref_summary_location_ask">Vra</string>
 </resources>

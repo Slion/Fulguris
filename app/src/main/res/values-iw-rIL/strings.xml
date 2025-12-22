@@ -50,6 +50,7 @@
     <string name="dialog_title_share">Share this page</string>
     <string name="action_delete">Delete</string>
     <string name="action_blank">Blank page</string>
+    <string name="action_reset">איפוס</string>
     <string name="agent_android_mobile">Android (Mobile)</string>
     <string name="agent_custom">Custom</string>
     <string name="agent_default">Default</string>
@@ -190,6 +191,9 @@
     <string name="dialog_message_grant_location_access"><![CDATA[<b>%s</b> רוצה להשתמש במיקום המכשיר שלך]]></string>
     <string name="action_allow">Allow</string>
     <string name="action_dont_allow">Don\'t allow</string>
+    <string name="pref_summary_location_granted">הוענק</string>
+    <string name="pref_summary_location_denied">נדחה</string>
+    <string name="pref_summary_location_ask">שאל</string>
     <string name="title_sign_in">Sign in</string>
     <string name="label_realm">Server message: %s</string>
     <string name="hint_username">Username</string>
@@ -457,7 +461,11 @@
     <string name="settings_title_domains_delete_all">Delete all</string>
     <string name="settings_summary_domains_delete_all">אפס את כל הגדרות הדומיין</string>
     <string name="question_delete_all_domain_settings">Delete all domain settings?</string>
+    <string name="question_clear_location_permissions">לאפס הרשאות מיקום?</string>
+    <string name="settings_title_clear_location_permissions">אפס הרשאות מיקום</string>
+    <string name="settings_summary_clear_location_permissions">כל האתרים יצטרכו לבקש שוב גישה למיקום</string>
     <string name="settings_title_delete_domain_settings">Delete domain settings</string>
+    <string name="settings_title_reset_default_domain">איפוס הגדרות ברירת מחדל</string>
     <string name="settings_title_parent">Parent</string>
     <string name="settings_title_default_domain_settings">הגדרות ברירת מחדל</string>
     <string name="settings_summary_default_domain_settings">החל על כל האתרים אלא אם כן נדרס</string>
@@ -473,6 +481,10 @@
     <string name="settings_title_javascript">JavaScript</string>
     <string name="settings_summary_on_javascript">All websites\' and browser\'s features should work</string>
     <string name="settings_summary_off_javascript">Some websites\' and browser\'s features won\'t work</string>
+    <string name="pref_summary_override_location_granted">מיקום הוענק</string>
+    <string name="pref_summary_override_location_denied">מיקום נדחה</string>
+    <string name="pref_summary_on_location">אתרים חייבים לבקש גישה למיקום המכשיר שלך</string>
+    <string name="pref_summary_off_location">אתרים לא יכולים לגשת למיקום המכשיר שלך</string>
     <string name="settings_title_cookies">Cookies</string>
     <string name="settings_summary_cookies">Current page has no cookies</string>
     <string name="settings_summary_manage_cookies">Manage current page cookies</string>
@@ -657,15 +669,4 @@
     <string name="error_cache_negative">גודל המטמון לא יכול להיות שלילי</string>
     <string name="error_cache_too_large">מטמון גדול מדי</string>
     <string name="hint_available_space">זמין: %s</string>
-    <string name="action_reset">איפוס</string>
-    <string name="question_clear_location_permissions">לאפס הרשאות מיקום?</string>
-    <string name="settings_title_clear_location_permissions">אפס הרשאות מיקום</string>
-    <string name="settings_summary_clear_location_permissions">כל האתרים יצטרכו לבקש שוב גישה למיקום</string>
-    <string name="pref_summary_override_location_granted">מיקום הוענק</string>
-    <string name="pref_summary_override_location_denied">מיקום נדחה</string>
-    <string name="pref_summary_on_location">אתרים חייבים לבקש גישה למיקום המכשיר שלך</string>
-    <string name="pref_summary_off_location">אתרים לא יכולים לגשת למיקום המכשיר שלך</string>
-    <string name="pref_summary_location_granted">הוענק</string>
-    <string name="pref_summary_location_denied">נדחה</string>
-    <string name="pref_summary_location_ask">שאל</string>
 </resources>
