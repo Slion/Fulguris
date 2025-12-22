@@ -1,0 +1,6 @@
+🗺️ Dozvole za lokaciju po domenu
+🌐 Dodaj izbor mrežnog motora (OkHttp, HttpUrlConnection)
+🍪 Dodaj stavku menija za kolačiće i prikaz broja
+🚫 Stavka menija blokatora reklama prikazuje broj blokiranih zahteva
+📋 Prikaži naziv trenutne sesije na meniju
+🐛 Razna poboljšanja korisničkog interfejsa i ispravke grešaka

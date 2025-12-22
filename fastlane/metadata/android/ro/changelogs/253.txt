@@ -1,0 +1,6 @@
+🗺️ Permisiuni de localizare pe domeniu
+🌐 Adăugare selecție motor de rețea (OkHttp, HttpUrlConnection)
+🍪 Adăugare element meniu cookie-uri și afișare număr
+🚫 Elementul de meniu al blocatorului de reclame afișează numărul de cereri blocate
+📋 Afișare nume sesiune curentă în meniu
+🐛 Diverse îmbunătățiri de interfață și remedieri de erori

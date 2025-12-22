@@ -1,0 +1,6 @@
+🗺️ Dopuštenja za lokaciju po domeni
+🌐 Dodaj odabir mrežnog pogona (OkHttp, HttpUrlConnection)
+🍪 Dodaj stavku izbornika za kolačiće i prikaz broja
+🚫 Stavka izbornika blokatora oglasa prikazuje broj blokiranih zahtjeva
+📋 Prikaži naziv trenutne sesije na izborniku
+🐛 Razna poboljšanja korisničkog sučelja i ispravke grešaka

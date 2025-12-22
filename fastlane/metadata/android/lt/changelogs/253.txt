@@ -1,0 +1,6 @@
+🗺️ Vietos leidimai pagal domeną
+🌐 Pridėti tinklo variklio pasirinkimą (OkHttp, HttpUrlConnection)
+🍪 Pridėti slapukų meniu elementą ir skaičiavimo rodymą
+🚫 Reklamos blokavimo meniu elementas rodo užblokuotų užklausų skaičių
+📋 Rodyti dabartinio seanso pavadinimą meniu
+🐛 Įvairūs UI patobulinimai ir klaidų taisymai

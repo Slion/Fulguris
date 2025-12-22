@@ -1,0 +1,6 @@
+🗺️ Standortberechtigungen pro Domain
+🌐 Netzwerk-Engine-Auswahl hinzugefügt (OkHttp, HttpUrlConnection)
+🍪 Cookie-Menüpunkt und Anzahleanzeige hinzugefügt
+🚫 Werbeblocker-Menüpunkt zeigt Anzahl blockierter Anfragen
+📋 Aktuellen Sitzungsnamen im Menü anzeigen
+🐛 Verschiedene UI-Verbesserungen und Fehlerbehebungen

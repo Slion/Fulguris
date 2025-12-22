@@ -1,0 +1,6 @@
+🗺️ Plasseringstillatelser per domene
+🌐 Legg til valg av nettverksmotor (OkHttp, HttpUrlConnection)
+🍪 Legg til informasjonskapsel-menyelement og tellevisning
+🚫 Annonseblokkerings-menyelement viser antall blokkerte forespørsler
+📋 Vis gjeldende øktnavn i menyen
+🐛 Diverse UI-forbedringer og feilrettinger

@@ -278,7 +278,125 @@ python fastlane\changelogs.py 252
 
 ---
 
+## Creating Release Notes
+
+When the user asks to "create release notes for version X" or "work on changelog for version X":
+
+### Process Overview
+
+1. **Identify the last release tag**
+2. **Get all commits since that tag**
+3. **Analyze and categorize the changes**
+4. **Create concise, user-focused changelog**
+5. **Follow the emoji-based format**
+
+### Step-by-Step Commands
+
+```powershell
+# 1. Find the most recent release tag
+git tag --sort=-creatordate | Select-Object -First 5
+
+# 2. Get commit log since last tag (replace TAG_NAME with actual tag)
+git log TAG_NAME..HEAD --oneline --no-merges
+
+# 3. Get full commit messages for analysis
+git log TAG_NAME..HEAD --pretty=format:"%s" --no-merges | Out-String
+
+# 4. Count commits (optional, for context)
+git log TAG_NAME..HEAD --oneline --no-merges | Measure-Object -Line
+```
+
+### Changelog Format
+
+**File location:** `fastlane/metadata/android/en-US/changelogs/{version}.txt`
+
+**Format rules:**
+- **Emoji prefix** for each feature (🗺️ 🌐 🍪 🚫 📋 ⚙️ 🐛 etc.)
+- **Brief, user-focused descriptions** (not technical implementation details)
+- **Group related changes** into single lines when possible
+- **Keep total to 3-7 lines** (Google Play limit: 500 chars)
+- **Bug fixes always last** with generic "Various improvements and bug fixes"
+
+**Common emojis:**
+- 🗺️ Location/Maps features
+- 🌐 Network/Web features
+- 🍪 Cookies
+- 🚫 Ad blocking
+- 📋 Menu/UI
+- ⚙️ Settings/Configuration
+- 🖥️ Developer/Console features
+- 📊 Stats/Display
+- 🎭 Themes
+- 🌍 Localization
+- 🐛 Bug fixes (always last line)
+
+### Analysis Workflow
+
+**Group commits by category:**
+1. **Major features** - New functionality users will notice
+2. **Enhancements** - Improvements to existing features
+3. **UI/Menu changes** - Visible interface updates
+4. **Bug fixes** - Group generically unless critical fix
+5. **L10N/Docs** - Usually omit from user-facing changelog
+
+**Example categorization from 44 commits:**
+```
+Location/Domain Settings (16 commits):
+  → 🗺️ Location permissions per domain
+
+Network Engine (11 commits):
+  → 🌐 Add network engine selection (OkHttp, HttpUrlConnection)
+  → ⚙️ Network cache size configuration
+
+Menu Enhancements (5 commits):
+  → 🍪 Add cookies menu item & count display
+  → 🚫 Ad blocker shows blocked requests count
+  → 📋 Display current session name on menu
+
+Bug Fixes (multiple):
+  → 🐛 Various UI improvements and bug fixes
+```
+
+### Example Session
+
+```powershell
+# Find last tag
+git tag --sort=-creatordate | Select-Object -First 5
+# Output: Fulguris-v2.0.1, Fulguris-v2.0.0, ...
+
+# Get commits since v2.0.1
+git log Fulguris-v2.0.1..HEAD --pretty=format:"%s" --no-merges | Out-String
+
+# Analyze output and create changelog
+# Result: fastlane/metadata/android/en-US/changelogs/253.txt
+```
+
+**Example changelog (253.txt):**
+```
+🗺️ Location permissions per domain
+🌐 Add network engine selection (OkHttp, HttpUrlConnection)
+🍪 Add cookies menu item & count display
+🚫 Ad blocker shows blocked requests count
+📋 Display current session name on menu
+⚙️ Network cache size configuration
+🐛 Various UI improvements and bug fixes
+```
+
+### Translation to Other Languages
+
+After creating English changelog, translate to all 33 Play Store languages if needed (see Google Play Metadata section in L10N.md).
+
+### Tips
+
+- **Focus on user-visible changes** - Skip internal refactoring
+- **Combine related commits** - Don't list every fix separately
+- **Check previous changelogs** - Match style and emoji usage
+- **Keep concise** - Play Store has 500 char limit per language
+- **Test length** - Longer descriptions may need trimming
+
+---
+
 **For complete instructions, commands, examples, and troubleshooting: See [L10N.md](../L10N.md)**
 
-**Last Updated:** December 18, 2025
+**Last Updated:** December 22, 2025
 **Maintained by:** Fulguris Development Team

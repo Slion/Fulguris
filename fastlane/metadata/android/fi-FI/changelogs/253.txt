@@ -1,0 +1,6 @@
+🗺️ Sijaintiluvat verkkotunnuskohtaisesti
+🌐 Lisää verkkomoottorin valinta (OkHttp, HttpUrlConnection)
+🍪 Lisää evästeiden valikkovaihtoehto ja lukumäärän näyttö
+🚫 Mainosten estovalikkovaihtoehto näyttää estettyjen pyyntöjen määrän
+📋 Näytä nykyisen istunnon nimi valikossa
+🐛 Erilaisia käyttöliittymän parannuksia ja virheiden korjauksia

@@ -1,0 +1,6 @@
+🗺️ Placeringstilladelser pr. domæne
+🌐 Tilføj netværksmotorvalg (OkHttp, HttpUrlConnection)
+🍪 Tilføj menupunkt for cookies og visning af antal
+🚫 Annonceblokeringsmenupunkt viser antal blokerede anmodninger
+📋 Vis nuværende sessionsnavn i menuen
+🐛 Forskellige forbedringer af brugergrænsefladen og fejlrettelser

@@ -1,0 +1,6 @@
+🗺️ Oprávnění k poloze podle domény
+🌐 Přidání výběru síťového enginu (OkHttp, HttpUrlConnection)
+🍪 Přidání položky nabídky cookies a zobrazení počtu
+🚫 Položka nabídky blokátoru reklam zobrazuje počet blokovaných požadavků
+📋 Zobrazení názvu aktuální relace v nabídce
+🐛 Různá vylepšení uživatelského rozhraní a opravy chyb
