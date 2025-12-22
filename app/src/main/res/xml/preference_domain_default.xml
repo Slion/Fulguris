@@ -86,7 +86,7 @@
         a:key="@string/pref_key_launch_app"
         a:title="@string/settings_title_launch_app"
         a:useSimpleSummaryProvider="true"
-        a:defaultValue="YES"
+        a:defaultValue="ASK"
         a:entries="@array/NoYesAsk"
         a:icon="@drawable/ic_apps"
         a:singleLineTitle="false"
