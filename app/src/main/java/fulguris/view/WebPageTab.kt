@@ -466,6 +466,13 @@ class WebPageTab(
 
             activity.getString(R.string.pref_key_scrollbar_fade_duration) ->
                 webView?.scrollBarFadeDuration = userPreferences.scrollbarFadeDuration.toInt()
+
+            activity.getString(R.string.pref_key_location) -> {
+                // Handle location permission changes from default domain settings
+                if (!isIncognito) {
+                    webView?.settings?.setGeolocationEnabled(defaultDomainSettings.locationEnabled)
+                }
+            }
         }
     }
 
@@ -475,6 +482,7 @@ class WebPageTab(
     private fun createWebView() {
 
         userPreferences.preferences.registerOnSharedPreferenceChangeListener(this)
+        defaultDomainSettings.preferences.registerOnSharedPreferenceChangeListener(this)
 
         webPageClient = WebPageClient(activity, this)
         // Inflate our WebView as loading it from XML layout is needed to be able to set scrollbars color
@@ -1184,6 +1192,7 @@ class WebPageTab(
      */
     private fun destroyWebView() {
         userPreferences.preferences.unregisterOnSharedPreferenceChangeListener(this)
+        defaultDomainSettings.preferences.unregisterOnSharedPreferenceChangeListener(this)
         destroyDownloadListener()
         // No need to do anything for the touch listeners they are owned by the WebView anyway
         webView?.autoDestruction()
