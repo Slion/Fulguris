@@ -119,6 +119,7 @@
         a:key="@string/pref_key_reset_default_domain"
         a:title="@string/settings_title_reset_default_domain"
         a:icon="@drawable/ic_delete_forever_outline"
+        a:fragment="back"
         a:allowDividerAbove="true"
         tools:ignore="PrivateResource" />
 

@@ -283,6 +283,7 @@
         x:title="@string/settings_title_delete_domain_settings"
         x:icon="@drawable/ic_delete_forever_outline"
         x:allowDividerAbove="true"
+        x:fragment="back"
         tools:ignore="PrivateResource" />
 
 

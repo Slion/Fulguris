@@ -92,11 +92,13 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
             if (responsiveParent != null) {
                 // Use breadcrumb-aware navigation for responsive settings
                 responsiveParent.popBackStackWithBreadcrumbs()
+                true
             } else {
                 // Fallback for bottom sheet or other non-responsive contexts
-                parentFragmentManager.popBackStack()
+                // Let WebBrowserActivity.onPreferenceStartFragment handle our fragment="back"
+                // Should pop our stack and close the bottom sheet if needed
+                false
             }
-            true
         }
 
         // Delete this domain settings
@@ -107,11 +109,13 @@ class DomainSettingsFragment : AbstractSettingsFragment() {
             if (responsiveParent != null) {
                 // Use breadcrumb-aware navigation for responsive settings
                 responsiveParent.popBackStackWithBreadcrumbs()
+                true
             } else {
                 // Fallback for bottom sheet or other non-responsive contexts
-                parentFragmentManager.popBackStack()
+                // Let WebBrowserActivity.onPreferenceStartFragment handle our fragment="back"
+                // Should pop our stack and close the bottom sheet if needed
+                false
             }
-            true
         }
     }
 
