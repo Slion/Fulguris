@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:x="http://schemas.android.com/apk/res-auto"
+    xmlns:a="http://schemas.android.com/apk/res/android">
+
+    <!-- Back button for navigation in options menu bottom sheet -->
+    <Preference
+        x:key="@string/pref_key_back"
+        x:title="@string/settings"
+        x:icon="@drawable/ic_action_back"
+        x:singleLineTitle="false"
+        x:iconSpaceReserved="true"/>
+
+    <!-- Global enable/disable switch -->
+    <x.SwitchPreference
+        x:key="@string/pref_key_extensions_enabled"
+        x:title="@string/settings_title_enable_extensions"
+        x:summaryOn="@string/settings_summary_on_enable_extensions"
+        x:summaryOff="@string/settings_summary_off_enable_extensions"
+        x:defaultValue="false"
+        x:singleLineTitle="false"
+        x:iconSpaceReserved="false"/>
+
+    <!-- Link to Greasy Fork -->
+    <Preference
+        x:title="@string/name_greasy_fork"
+        x:summary="@string/settings_summary_greasy_fork"
+        x:icon="@drawable/ic_fork_outline"
+        a:dependency="@string/pref_key_extensions_enabled"
+        x:iconSpaceReserved="false"
+        x:singleLineTitle="false">
+
+        <!-- Explicit intent so that we install scripts in this browser -->
+        <intent
+            a:action="android.intent.action.VIEW"
+            a:targetPackage="@string/application_id"
+            a:targetClass="fulguris.activity.MainActivity"
+            a:data="@string/url_greasy_fork">
+            <extra
+                a:name="PACKAGE"
+                a:value="@string/application_id" />
+
+            <extra
+                a:name="ACTIVITY"
+                a:value="fulguris.activity.SettingsActivity" />
+
+            <extra
+                a:name="FRAGMENT"
+                a:value="fulguris.settings.fragment.ExtensionsSettingsFragment" />
+
+        </intent>
+
+    </Preference>
+
+    <!-- Category for installed scripts -->
+    <x.PreferenceCategory
+        x:key="@string/pref_key_extensions_list"
+        x:title="@string/pref_category_title_installed_extensions"
+        a:dependency="@string/pref_key_extensions_enabled"
+        x:singleLineTitle="false">
+        <!-- Scripts will be dynamically added here -->
+    </x.PreferenceCategory>
+
+</PreferenceScreen>
+

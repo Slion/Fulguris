@@ -9,7 +9,6 @@ import fulguris.extensions.toast
 import fulguris.extensions.withSingleChoiceItems
 import fulguris.settings.preferences.UserPreferences
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -33,8 +32,6 @@ import java.io.IOException
 import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject
-import androidx.preference.PreferenceViewHolder
-import com.google.android.material.materialswitch.MaterialSwitch
 import fulguris.extensions.px
 
 /**
@@ -48,7 +45,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
     @Inject internal lateinit var abpBlockerManager: AbpBlockerManager
 
     private lateinit var abpDao: AbpDao
-    private val entityPrefs = mutableMapOf<Int, FilterListSwitchPreference>()
+    private val entityPrefs = mutableMapOf<Int, DetailSwitchPreference>()
 
     // if blocklist changed, they need to be reloaded, but this should happen only once
     //  if reloadLists is true, list reload will be launched onDestroy
@@ -177,6 +174,7 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         // "new list" button
         val newList = Preference(requireContext())
         newList.isSingleLineTitle = false
+        newList.isIconSpaceReserved = false
         newList.title = resources.getString(R.string.add_blocklist)
         newList.icon = ResourcesCompat.getDrawable(resources,R.drawable.ic_add,requireActivity().theme)
         newList.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -195,7 +193,23 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
 
         // list of blocklists/entities
         for (entity in abpDao.getAll().sortedBy { it.title?.lowercase() }) {
-            val entityPref = FilterListSwitchPreference(context, entity)
+            val entityPref = DetailSwitchPreference(
+                requireContext(),
+                onSwitchChanged = { enabled ->
+                    entity.enabled = enabled
+                    abpDao.update(entity)
+                    if (enabled)
+                        updateFilterList(entity, false) // check for update, entity may have been disabled for a longer time
+                    reloadBlockLists()
+                },
+                onPreferenceClicked = {
+                    showBlockList(entity)
+                }
+            ).apply {
+                title = entity.title
+                isChecked = entity.enabled
+                isSingleLineTitle = false
+            }
             entityPrefs[entity.entityId] = entityPref
             updateSummary(entity)
             filtersCategory.addPreference(entityPrefs[entity.entityId]!!)
@@ -459,41 +473,6 @@ class AdBlockSettingsFragment : AbstractSettingsFragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    // class necessary to allow separate onClickListener for the switch
-    private inner class FilterListSwitchPreference(context : Context?, val entity: AbpEntity) : x.SwitchPreference(requireContext()) {
-
-        init {
-            isSingleLineTitle = false
-        }
-
-        override fun onBindViewHolder(holder: PreferenceViewHolder) {
-            super.onBindViewHolder(holder)
-            val switch: MaterialSwitch? = holder?.itemView?.findViewById(R.id.filter_list_switch_widget)
-            switch?.isChecked = entity.enabled
-            switch?.setOnClickListener {
-                isChecked = (it as MaterialSwitch).isChecked
-                entity.enabled = isChecked
-                abpDao.update(entity)
-                if (isChecked)
-                    updateFilterList(entity, false) // check for update, entity may have been disabled for a longer time
-                reloadBlockLists()
-            }
-            onPreferenceClickListener = OnPreferenceClickListener {
-                (it as FilterListSwitchPreference).isChecked = entity.enabled // avoid flipping the switch on click
-                showBlockList(entity)
-                true
-            }
-        }
-
-        // layout resource must be set before onBindViewHolder
-        // title and isChecked can't be changed in onBindViewHolder, so also set it now
-        override fun onAttached() {
-            super.onAttached()
-            title = entity.title
-            isChecked = entity.enabled
-            widgetLayoutResource = R.layout.filter_list_preference_widget
-        }
-    }
 
     companion object {
         private const val FILE_REQUEST_CODE = 100

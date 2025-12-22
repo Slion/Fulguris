@@ -89,7 +89,7 @@ android {
 
         release {
             debuggable = false
-            multiDexEnabled = false
+            multiDexEnabled = true // Required for core library desugaring
             // If you disable minify you need to make sure multi DEX library is loaded in release or you will get crashed on Android 5 devices and below
             minifyEnabled = true
             shrinkResources = true
@@ -245,6 +245,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
     }
 
     buildFeatures {
@@ -270,11 +271,13 @@ unMock {
 }
 
 dependencies {
-    // Multi DEX is only needed in debug and on older devices from Android 5 and below.
-    // If you disable minify in release mode you also need to load and install that library in release for those devices.
+    // Multi DEX is needed for core library desugaring and when minify is disabled
     // See [BrowserApp.attachBaseContext]
     // See: https://github.com/Slion/Fulguris/issues/116
-    debugImplementation libs.androidx.multidex
+    implementation libs.androidx.multidex
+
+    // Core library desugaring for Sora Editor TextMate support
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
     // test dependencies
     implementation 'junit:junit:4.13.2'
@@ -328,6 +331,11 @@ dependencies {
 
     // reading mode
     implementation 'net.dankito.readability4j:readability4j:1.0.8'
+
+    // Sora Editor for viewing userscript source code
+    implementation platform('io.github.Rosemoe.sora-editor:bom:0.23.4')
+    implementation 'io.github.Rosemoe.sora-editor:editor'
+    implementation 'io.github.Rosemoe.sora-editor:language-textmate'
 
     // Built-in files support
     implementation(libs.mezzanine.core)

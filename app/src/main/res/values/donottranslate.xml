@@ -22,15 +22,17 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_name">Lightning</string>
-    <string name="url_app_home_page">https://github.com/anthonycr/Lightning-Browser</string>
+    <string name="app_name">Fulguris</string>
+    <string name="url_app_home_page">http://fulguris.slions.net</string>
     <string name="url_privacy_policy">https://slions.net/threads/fulguris-privacy-policy.99/</string>
     <string name="url_terms_and_conditions">https://slions.net/threads/fulguris-terms-conditions.100/</string>
     <string name="url_discord">https://discord.com/invite/7M4Ms5dMZE</string>
     <string name="url_fulguris_home_page">http://fulguris.slions.net</string>
-    <string name="url_playstore_app">https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore</string>
+    <string name="url_google_play_app">https://play.google.com/store/apps/details?id=net.slions.fulguris.full.playstore</string>
     <string name="url_github_sponsors">https://github.com/sponsors/Slion</string>
     <string name="url_crowdin_project">https://crowdin.com/project/fulguris-web-browser</string>
+    <string name="url_greasy_fork">https://greasyfork.org</string>
+    <string name="name_greasy_fork">Greasy Fork</string>
 
     <!-- Settings keys -->
     <string name="pref_key_hide_status_bar">pref_key_hide_status_bar</string>
@@ -103,6 +105,8 @@
     <string name="pref_key_location_override">pref_key_location_override</string>
     <string name="pref_key_content_control">pref_key_content_control</string>
     <string name="pref_key_content_control_filters">pref_key_content_control_filters</string>
+    <string name="pref_key_extensions_enabled">pref_key_extensions_enabled</string>
+    <string name="pref_key_extensions_list">pref_key_extensions_list</string>
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>
@@ -240,6 +244,5 @@
 
     <!-- Universal technical terms -->
     <string name="request_url">URL</string>
-
 
 </resources>

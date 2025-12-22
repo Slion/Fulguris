@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:x="http://schemas.android.com/apk/res-auto"
+    xmlns:a="http://schemas.android.com/apk/res/android">
+
+    <!-- Back button for navigation -->
+    <Preference
+        x:key="@string/pref_key_back"
+        x:title="@string/pref_category_title_installed_extensions"
+        x:icon="@drawable/ic_action_back"
+        x:singleLineTitle="false"
+        x:iconSpaceReserved="true"/>
+
+    <!-- Show popup when script runs -->
+    <x.SwitchPreference
+        x:key="show_popup"
+        x:title="@string/settings_title_extension_show_popup"
+        x:summary="@string/settings_summary_extension_show_popup"
+        x:defaultValue="false"
+        x:singleLineTitle="false"
+        x:iconSpaceReserved="false"/>
+
+    <!-- Script info category -->
+    <x.PreferenceCategory
+        x:title="@string/settings_title_extension_info"
+        x:singleLineTitle="false">
+
+        <!-- Name -->
+        <Preference
+            x:key="script_name"
+            x:title="@string/settings_title_extension_name"
+            x:selectable="false"
+            x:iconSpaceReserved="false"/>
+
+        <!-- Description -->
+        <Preference
+            x:key="script_description"
+            x:title="@string/settings_title_extension_description"
+            x:selectable="false"
+            x:singleLineTitle="false"
+            x:iconSpaceReserved="false"/>
+
+        <!-- Version -->
+        <Preference
+            x:key="script_version"
+            x:title="@string/settings_title_extension_version"
+            x:selectable="false"
+            x:iconSpaceReserved="false"/>
+
+        <!-- Author -->
+        <Preference
+            x:key="script_author"
+            x:title="@string/settings_title_extension_author"
+            x:selectable="false"
+            x:iconSpaceReserved="false"/>
+
+        <!-- Namespace -->
+        <Preference
+            x:key="script_namespace"
+            x:title="@string/settings_title_extension_namespace"
+            x:selectable="false"
+            x:iconSpaceReserved="false"/>
+
+    </x.PreferenceCategory>
+
+    <!-- URL patterns category -->
+    <x.PreferenceCategory
+        x:title="@string/settings_title_extension_patterns"
+        x:singleLineTitle="false">
+
+        <!-- Match URLs -->
+        <Preference
+            x:key="script_match_urls"
+            x:title="@string/settings_title_extension_match_urls"
+            x:selectable="false"
+            x:singleLineTitle="false"
+            x:iconSpaceReserved="false"/>
+
+        <!-- Exclude URLs -->
+        <Preference
+            x:key="script_exclude_urls"
+            x:title="@string/settings_title_extension_exclude_urls"
+            x:selectable="false"
+            x:singleLineTitle="false"
+            x:iconSpaceReserved="false"/>
+
+    </x.PreferenceCategory>
+
+    <!-- Actions category -->
+    <x.PreferenceCategory
+        x:title="@string/settings_title_extension_actions"
+        x:singleLineTitle="false">
+
+        <!-- View source code -->
+        <Preference
+            x:key="view_source"
+            x:title="@string/action_view_source"
+            x:summary="@string/settings_summary_extension_view_source"
+            x:icon="@drawable/ic_code"
+            x:singleLineTitle="false"
+            x:iconSpaceReserved="true"/>
+
+        <!-- Delete script -->
+        <Preference
+            x:key="delete_script"
+            x:title="@string/action_delete"
+            x:summary="@string/settings_summary_extension_delete"
+            x:icon="@drawable/ic_delete_forever_outline"
+            x:singleLineTitle="false"
+            x:iconSpaceReserved="true"/>
+
+    </x.PreferenceCategory>
+
+</PreferenceScreen>
+

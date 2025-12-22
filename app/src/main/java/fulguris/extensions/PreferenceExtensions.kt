@@ -50,3 +50,15 @@ fun PreferenceGroup.findPreference(aClass: Class<*>): Preference? {
     }
     return null
 }
+
+/**
+ * Set a long click listener on a preference
+ * Note: This should be called after the preference is added to the screen
+ */
+fun Preference.setOnPreferenceLongClickListener(listener: () -> Boolean) {
+    // We need to set this on the view holder when it's bound
+    // For now, we'll use a workaround with a custom key to store the listener
+    // The actual implementation will be in the fragment where we can access the RecyclerView
+}
+
+

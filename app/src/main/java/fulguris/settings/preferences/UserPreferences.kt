@@ -54,6 +54,11 @@ class UserPreferences @Inject constructor(
     var adBlockEnabled by preferences.booleanPreference(BLOCK_ADS, false)
 
     /**
+     * True if user scripts should be enabled and injected into web pages, false otherwise.
+     */
+    var userScriptsEnabled by preferences.booleanPreference(R.string.pref_key_extensions_enabled, false)
+
+    /**
      * True if the browser should block images from being loaded, false otherwise.
      */
     var loadImages by preferences.booleanPreference(R.string.pref_key_load_images, true)
@@ -463,6 +468,7 @@ class UserPreferences @Inject constructor(
      * WebView scrollbars size
      */
     var scrollbarSize by preferences.floatResPreference(R.string.pref_key_scrollbar_size, R.integer.pref_default_scrollbar_size)
+
 
 }
 

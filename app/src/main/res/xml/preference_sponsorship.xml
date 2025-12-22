@@ -36,7 +36,7 @@
 
         <intent
             a:action="android.intent.action.VIEW"
-            a:data="@string/url_playstore_app">
+            a:data="@string/url_google_play_app">
             <extra
                 a:name="PACKAGE"
                 a:value="@string/application_id" />
@@ -65,7 +65,7 @@
 
             <intent
                 a:action="android.intent.action.VIEW"
-                a:data="@string/url_playstore_app">
+                a:data="@string/url_google_play_app">
                 <extra
                     a:name="PACKAGE"
                     a:value="@string/application_id" />

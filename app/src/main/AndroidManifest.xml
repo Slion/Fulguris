@@ -365,6 +365,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="fulguris.activity.CodeEditorActivity"
+            android:label="@string/action_view_source"
+            android:parentActivityName="fulguris.activity.SettingsActivity"
+            android:theme="@style/Theme.App.DayNight"
+            android:exported="false" />
         <activity
             android:name="fulguris.activity.ReadingActivity"
             android:colorMode="wideColorGamut"

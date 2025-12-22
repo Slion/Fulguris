@@ -762,4 +762,47 @@
     <string name="error_cache_negative">Cache size cannot be negative</string>
     <string name="error_cache_too_large">Cache too large</string>
     <string name="hint_available_space">Available: %s</string>
+
+    <!-- Userscripts -->
+    <string name="settings_title_extensions">Extensions</string>
+    <string name="settings_summary_extensions">Manage extension scripts</string>
+    <string name="settings_title_enable_extensions">Enable extensions</string>
+    <string name="settings_summary_enable_extensions">Allow custom JavaScript code to run on web pages</string>
+    <string name="settings_summary_on_enable_extensions">Extensions can inject JavaScript code into web pages</string>
+    <string name="settings_summary_off_enable_extensions">Web pages load without modifications</string>
+    <string name="settings_summary_greasy_fork">Browse and install extensions from Greasy Fork</string>
+    <string name="pref_category_title_installed_extensions">Installed extensions</string>
+    <string name="pref_category_summary_no_extensions">No user scripts installed yet</string>
+    <string name="settings_title_extension_show_popup">Show popup notification</string>
+    <string name="settings_summary_extension_show_popup">Display a notification when this extension runs</string>
+    <string name="settings_title_extension_info">Extension information</string>
+    <string name="settings_title_extension_name">Name</string>
+    <string name="settings_title_extension_description">Description</string>
+    <string name="settings_title_extension_version">Version</string>
+    <string name="settings_title_extension_author">Author</string>
+    <string name="settings_title_extension_namespace">Namespace</string>
+    <string name="settings_title_extension_patterns">URL patterns</string>
+    <string name="settings_title_extension_match_urls">Matches</string>
+    <string name="settings_title_extension_exclude_urls">Excludes</string>
+    <string name="settings_title_extension_actions">Actions</string>
+    <string name="settings_summary_extension_view_source">View the JavaScript source code</string>
+    <string name="settings_summary_extension_delete">Remove this extension from your browser</string>
+    <string name="message_code_copied">Code copied to clipboard</string>
+    <string name="settings_userscript_no_info">No information available</string>
+    <string name="dialog_message_delete_extension">Extension \"%1$s\" will be permanently removed</string>
+    <string name="dialog_title_delete_extension">Delete extension?</string>
+    <string name="userscripts_name_hint">Script name</string>
+    <string name="userscripts_content_hint">JavaScript code</string>
+    <string name="error_parsing_userscript">Failed to parse userscript</string>
+    <string name="error_installing_userscript">Failed to install userscript</string>
+    <string name="error_downloading_userscript">Failed to download userscript</string>
+    <string name="userscript_installed_successfully">Userscript \"%1$s\" installed successfully</string>
+    <string name="userscript_version">Version: %s</string>
+    <string name="userscript_author">Author: %s</string>
+    <string name="userscript_install_warning">This userscript will be able to access and modify web pages. Only install scripts from trusted sources.</string>
+    <string name="userscript_install_title">Install userscript \"%s\"?</string>
+    <string name="action_details">Details</string>
+    <string name="action_install">Install</string>
+    <string name="action_close">Close</string>
+    <string name="action_view_source">View Source</string>
 </resources>

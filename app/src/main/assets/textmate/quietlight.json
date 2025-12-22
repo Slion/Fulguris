@@ -1,0 +1,66 @@
+{
+  "name": "Quiet Light",
+  "type": "light",
+  "colors": {
+    "editor.background": "#F5F5F5",
+    "editor.foreground": "#333333",
+    "editor.lineHighlightBackground": "#E8F2FF",
+    "editor.selectionBackground": "#C0D8F0",
+    "editorLineNumber.foreground": "#999999",
+    "editorLineNumber.activeForeground": "#666666"
+  },
+  "tokenColors": [
+    {
+      "name": "Default",
+      "scope": "",
+      "settings": {
+        "foreground": "#333333"
+      }
+    },
+    {
+      "name": "Text",
+      "scope": ["text", "source"],
+      "settings": {
+        "foreground": "#333333"
+      }
+    },
+    {
+      "scope": ["comment"],
+      "settings": {
+        "foreground": "#AAAAAA",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "scope": ["string"],
+      "settings": {
+        "foreground": "#448C27"
+      }
+    },
+    {
+      "scope": ["keyword.control", "storage.type"],
+      "settings": {
+        "foreground": "#794938"
+      }
+    },
+    {
+      "scope": ["constant.language", "constant.numeric"],
+      "settings": {
+        "foreground": "#AB4642"
+      }
+    },
+    {
+      "scope": ["entity.name.function"],
+      "settings": {
+        "foreground": "#7A3E9D"
+      }
+    },
+    {
+      "scope": ["constant.character.escape"],
+      "settings": {
+        "foreground": "#794938"
+      }
+    }
+  ]
+}
+

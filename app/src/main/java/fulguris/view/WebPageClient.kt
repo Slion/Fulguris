@@ -12,9 +12,14 @@ import fulguris.di.configPrefs
 import fulguris.extensions.getDrawable
 import fulguris.extensions.getText
 import fulguris.extensions.ihs
+import fulguris.extensions.KDuration
 import fulguris.extensions.makeSnackbar
 import fulguris.extensions.launch
 import fulguris.extensions.setIcon
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch as coroutineLaunch
+import kotlinx.coroutines.withContext
 import fulguris.html.homepage.HomePageFactory
 import fulguris.js.InvertPage
 import fulguris.js.SetMetaViewport
@@ -24,6 +29,7 @@ import fulguris.settings.NoYesAsk
 import fulguris.settings.preferences.DomainPreferences
 import fulguris.settings.preferences.UserPreferences
 import fulguris.ssl.SslState
+import fulguris.userscript.UserScript
 import fulguris.utils.*
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -89,6 +95,7 @@ class WebPageClient(
     val abpBlockerManager: AbpBlockerManager = hiltEntryPoint.abpBlockerManager
     val noopBlocker: NoOpAdBlocker = hiltEntryPoint.noopBlocker
     val networkEngineManager: fulguris.network.NetworkEngineManager = hiltEntryPoint.networkEngineManager
+    val userScriptManager: fulguris.userscript.UserScriptManager = hiltEntryPoint.userScriptManager
 
     private var adBlock: AdBlocker
 
@@ -196,6 +203,14 @@ class WebPageClient(
         // Detect if this is a main document request (page navigation) vs subresource
         // Main document requests have isForMainFrame == true
         if (request.isForMainFrame) {
+            // Check if this is a userscript file (.user.js) and handle installation
+            // We check this BEFORE updating targetUrl to prevent page navigation
+            if (url.endsWith(".user.js")) {
+                handleUserScriptInstallation(url)
+                // Return an empty response to prevent the browser from downloading/displaying the script
+                //return WebResourceResponse("text/plain", "utf-8", java.io.ByteArrayInputStream("".toByteArray()))
+            }
+
             // Update targetUrl if this is a new navigation (including JavaScript history navigation)
             // This ensures targetUrl is always accurate for domain preferences and other logic
             if (webPageTab.targetUrl != request.url) {
@@ -374,6 +389,15 @@ class WebPageClient(
             )
         }
 
+        // Inject enabled userscripts if userscripts are enabled
+        if (userPreferences.userScriptsEnabled) {
+            val scriptCode = userScriptManager.getInjectionCode(url, fulguris.userscript.RunAt.DOCUMENT_END)
+            if (scriptCode != null) {
+                Timber.d("Injecting userscripts for $url")
+                view.evaluateJavascript(scriptCode, null)
+            }
+        }
+
         webBrowser.onTabChanged(webPageTab)
 
         // To prevent potential overhead when logs are not needed
@@ -503,7 +527,11 @@ class WebPageClient(
      * Called for any resource error (main frame, subframes, images, etc.)
      */
     override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-        Timber.w("$ihs : onReceivedError (modern): ${request?.url} - Code: ${error?.errorCode} - ${error?.description}")
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            Timber.w("$ihs : onReceivedError (modern): ${request?.url} - Code: ${error?.errorCode} - ${error?.description}")
+        } else {
+            Timber.w("$ihs : onReceivedError (modern): ${request?.url}")
+        }
         super.onReceivedError(view, request, error)
     }
 
@@ -746,6 +774,12 @@ class WebPageClient(
             return shouldStopUrlLoading(view, url, headers)
         }
 
+        // Check if this is a userscript file (.user.js) and handle installation
+        if (url.endsWith(".user.js") && userPreferences.userScriptsEnabled && request.isForMainFrame) {
+            handleUserScriptInstallation(url)
+            return true
+        }
+
         // Regardless of app launch we do not cancel URL loading
         // Doing so would require we deal with empty pages in new tab and such issues
         val intent = activity.intentForUrl(view, uri)
@@ -929,6 +963,126 @@ class WebPageClient(
                 true
             }
         }
+    }
+
+    /**
+     * Handle installation of userscripts from .user.js URLs.
+     * Downloads the script and prompts the user to install it.
+     */
+    private fun handleUserScriptInstallation(url: String) {
+        Timber.i("$ihs : Detected userscript URL: $url")
+
+        // Download the script content
+        CoroutineScope(Dispatchers.IO).coroutineLaunch {
+            try {
+                val connection = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.connect()
+
+                if (connection.responseCode == java.net.HttpURLConnection.HTTP_OK) {
+                    val scriptContent = connection.inputStream.bufferedReader().use { it.readText() }
+
+                    withContext(Dispatchers.Main) {
+                        showUserScriptInstallDialog(scriptContent)
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        activity.makeSnackbar(activity.getString(R.string.error_downloading_userscript), KDuration, Gravity.BOTTOM).show()
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to download userscript")
+                withContext(Dispatchers.Main) {
+                    activity.makeSnackbar(activity.getString(R.string.error_downloading_userscript), KDuration, Gravity.BOTTOM).show()
+                }
+            }
+        }
+    }
+
+    /**
+     * Show a dialog to confirm userscript installation.
+     */
+    private fun showUserScriptInstallDialog(scriptContent: String) {
+        try {
+            // Parse script metadata
+            val metadata = UserScript.extractMetadata(scriptContent)
+            val scriptName = metadata["name"] ?: "Unnamed Script"
+            val description = metadata["description"] ?: ""
+            val version = metadata["version"] ?: ""
+            val author = metadata["author"] ?: ""
+
+            // Build dialog message
+            val message = buildString {
+                if (description.isNotEmpty()) {
+                    append(description)
+                    append("\n\n")
+                }
+                if (version.isNotEmpty()) {
+                    append(activity.getString(R.string.userscript_version, version))
+                    append("\n")
+                }
+                if (author.isNotEmpty()) {
+                    append(activity.getString(R.string.userscript_author, author))
+                    append("\n")
+                }
+                append("\n")
+                append(activity.getString(R.string.userscript_install_warning))
+            }
+
+            MaterialAlertDialogBuilder(activity).apply {
+                setTitle(activity.getString(R.string.userscript_install_title, scriptName))
+                setMessage(message)
+                setPositiveButton(R.string.action_install) { _, _ ->
+                    installUserScript(scriptContent, scriptName)
+                }
+                setNegativeButton(R.string.action_cancel, null)
+                setNeutralButton(R.string.action_view_source) { _, _ ->
+                    showUserScriptSource(scriptContent, scriptName)
+                }
+            }.launch()
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to parse userscript")
+            activity.makeSnackbar(activity.getString(R.string.error_parsing_userscript), KDuration, Gravity.BOTTOM).show()
+        }
+    }
+
+
+    /**
+     * Install the userscript.
+     */
+    private fun installUserScript(scriptContent: String, scriptName: String) {
+        val scriptId = userScriptManager.installScript(scriptContent)
+        if (scriptId != null) {
+            activity.makeSnackbar(activity.getString(R.string.userscript_installed_successfully, scriptName), KDuration, Gravity.BOTTOM).show()
+            Timber.i("Userscript installed: $scriptName")
+        } else {
+            activity.makeSnackbar(activity.getString(R.string.error_installing_userscript), KDuration, Gravity.BOTTOM).show()
+            Timber.e("Failed to install userscript: $scriptName")
+        }
+    }
+
+    /**
+     * Show userscript source code in a dialog.
+     */
+    private fun showUserScriptSource(scriptContent: String, scriptName: String) {
+        val scrollView = android.widget.ScrollView(activity).apply {
+            val textView = TextView(activity).apply {
+                text = scriptContent
+                typeface = android.graphics.Typeface.MONOSPACE
+                setPadding(16, 16, 16, 16)
+                setTextIsSelectable(true)
+            }
+            addView(textView)
+        }
+
+        MaterialAlertDialogBuilder(activity).apply {
+            setTitle(scriptName)
+            setView(scrollView)
+            setPositiveButton(R.string.action_install) { _, _ ->
+                installUserScript(scriptContent, scriptName)
+            }
+            setNegativeButton(R.string.action_close, null)
+        }.launch()
     }
 
     /**

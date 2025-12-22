@@ -44,6 +44,14 @@
         />
 
     <Preference
+        x:fragment="fulguris.settings.fragment.ExtensionsSettingsFragment"
+        x:title="@string/settings_title_extensions"
+        x:summary="@string/settings_summary_extensions"
+        x:icon="@drawable/ic_extension_outline"
+        x:singleLineTitle="false"
+        />
+
+    <Preference
         x:fragment="fulguris.settings.fragment.BackupSettingsFragment"
         x:title="@string/settings_backup"
         x:summary="@string/pref_summary_backup"
