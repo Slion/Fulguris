@@ -67,6 +67,9 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
         populateUserScripts()
     }
 
+    /**
+     * Populate list of installed scripts.
+     */
     private fun populateUserScripts() {
         val scripts = userScriptManager.getInstalledScripts()
 

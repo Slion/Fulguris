@@ -74,7 +74,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
 
         // Show popup switch
         switchPreference(
-            preference = "show_popup",
+            preference = getString(R.string.pref_key_extension_show_popup),
             isChecked = scriptPrefs.getBoolean("show_popup", false),
             onCheckChange = { enabled ->
                 scriptPrefs.edit().putBoolean("show_popup", enabled).apply()
@@ -86,7 +86,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
 
         // View Source button
         clickablePreference(
-            preference = "view_source",
+            preference = getString(R.string.pref_key_extension_view_source),
             onClick = {
                 openCodeEditor(scriptId)
                 true
@@ -95,7 +95,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
 
         // Delete button
         clickablePreference(
-            preference = "delete_script",
+            preference = getString(R.string.pref_key_extension_delete),
             onClick = {
                 confirmDeleteScript(script)
                 true
@@ -110,7 +110,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
 
     private fun populateScriptInfo(script: fulguris.userscript.UserScript) {
         // Name with icon
-        findPreference<Preference>("script_name")?.apply {
+        findPreference<Preference>(getString(R.string.pref_key_extension_name))?.apply {
             summary = script.name
             isVisible = script.name.isNotEmpty()
             isIconSpaceReserved = true
@@ -129,7 +129,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
         }
 
         // Description
-        findPreference<Preference>("script_description")?.apply {
+        findPreference<Preference>(getString(R.string.pref_key_extension_description))?.apply {
             summary = script.description.ifEmpty {
                 getString(R.string.settings_userscript_no_info)
             }
@@ -137,7 +137,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
         }
 
         // Version
-        findPreference<Preference>("script_version")?.apply {
+        findPreference<Preference>(getString(R.string.pref_key_extension_version))?.apply {
             summary = script.version.ifEmpty {
                 getString(R.string.settings_userscript_no_info)
             }
@@ -145,7 +145,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
         }
 
         // Author
-        findPreference<Preference>("script_author")?.apply {
+        findPreference<Preference>(getString(R.string.pref_key_extension_author))?.apply {
             summary = script.author.ifEmpty {
                 getString(R.string.settings_userscript_no_info)
             }
@@ -153,7 +153,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
         }
 
         // Namespace
-        findPreference<Preference>("script_namespace")?.apply {
+        findPreference<Preference>(getString(R.string.pref_key_extension_namespace))?.apply {
             summary = script.namespace.ifEmpty {
                 getString(R.string.settings_userscript_no_info)
             }
@@ -161,7 +161,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
         }
 
         // Match URLs
-        findPreference<Preference>("script_match_urls")?.apply {
+        findPreference<Preference>(getString(R.string.pref_key_extension_match_urls))?.apply {
             summary = if (script.matchUrls.isNotEmpty()) {
                 script.matchUrls.joinToString("\n") { it }
             } else {
@@ -171,7 +171,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
         }
 
         // Exclude URLs
-        findPreference<Preference>("script_exclude_urls")?.apply {
+        findPreference<Preference>(getString(R.string.pref_key_extension_exclude_urls))?.apply {
             summary = if (script.excludeUrls.isNotEmpty()) {
                 script.excludeUrls.joinToString("\n") { it }
             } else {

@@ -107,6 +107,16 @@
     <string name="pref_key_content_control_filters">pref_key_content_control_filters</string>
     <string name="pref_key_extensions_enabled">pref_key_extensions_enabled</string>
     <string name="pref_key_extensions_list">pref_key_extensions_list</string>
+    <string name="pref_key_extension_show_popup">pref_key_extension_show_popup</string>
+    <string name="pref_key_extension_name">pref_key_extension_name</string>
+    <string name="pref_key_extension_description">pref_key_extension_description</string>
+    <string name="pref_key_extension_version">pref_key_extension_version</string>
+    <string name="pref_key_extension_author">pref_key_extension_author</string>
+    <string name="pref_key_extension_namespace">pref_key_extension_namespace</string>
+    <string name="pref_key_extension_match_urls">pref_key_extension_match_urls</string>
+    <string name="pref_key_extension_exclude_urls">pref_key_extension_exclude_urls</string>
+    <string name="pref_key_extension_view_source">pref_key_extension_view_source</string>
+    <string name="pref_key_extension_delete">pref_key_extension_delete</string>
 
     <string name="pref_key_search_in_new_tab">pref_key_search_in_new_tab</string>
     <string name="pref_key_url_in_new_tab">pref_key_url_in_new_tab</string>
