@@ -93,6 +93,7 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
                     isChecked = script.enabled
                     icon = script.getDefaultIcon(requireContext())
                     order = index + 2
+                    layoutResource = R.layout.detail_switch_preference  // Use custom layout with icon inline with title
                     // Set fragment for navigation
                     fragment = "fulguris.settings.fragment.ExtensionSettingsFragment"
                     // Add script ID to extras
