@@ -22,9 +22,7 @@
 
 package fulguris.settings.fragment
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
@@ -32,14 +30,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
 import fulguris.settings.preferences.UserPreferences
 import fulguris.userscript.UserScriptManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
-import java.net.URL
 import javax.inject.Inject
-import androidx.core.graphics.scale
-import androidx.core.graphics.drawable.toDrawable
 
 /**
  * Settings screen for user scripts management.
@@ -99,7 +91,7 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
                     summary = buildScriptSummary(script)
                     isSingleLineTitle = false
                     isChecked = script.enabled
-                    icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_script)
+                    icon = script.getDefaultIcon(requireContext())
                     order = index + 2
                     // Set fragment for navigation
                     fragment = "fulguris.settings.fragment.ExtensionSettingsFragment"
@@ -110,7 +102,11 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
 
                 // Load icon asynchronously if available
                 if (script.iconUrl.isNotEmpty()) {
-                    loadScriptIcon(script.iconUrl, scriptPref)
+                    lifecycleScope.launch {
+                        script.loadIcon(requireContext())?.let { drawable ->
+                            scriptPref.icon = drawable
+                        }
+                    }
                 }
             }
         }
@@ -139,45 +135,6 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
-
-    /**
-     * Load and set a script icon from a URL asynchronously.
-     */
-    private fun loadScriptIcon(iconUrl: String, preference: Preference) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                // Download icon from URL
-                val connection = URL(iconUrl).openConnection()
-                connection.connectTimeout = 5000
-                connection.readTimeout = 5000
-                connection.connect()
-
-                val inputStream = connection.getInputStream()
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                inputStream.close()
-
-                if (bitmap != null) {
-                    withContext(Dispatchers.Main) {
-                        // Convert 24dp to pixels based on screen density
-                        val iconSizePx = (24 * resources.displayMetrics.density).toInt()
-
-                        // Scale bitmap to proper size
-                        val scaledBitmap = bitmap.scale(iconSizePx, iconSizePx)
-
-                        // Set the icon on the preference
-                        val drawable = scaledBitmap.toDrawable(resources)
-                        preference.icon = drawable
-                        Timber.d("Loaded icon for ${preference.title}")
-                    }
-                } else {
-                    Timber.w("Failed to decode icon bitmap from $iconUrl")
-                }
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to load icon from $iconUrl")
-                // Keep default icon on failure
-            }
-        }
-    }
 
     override fun onResume() {
         super.onResume()

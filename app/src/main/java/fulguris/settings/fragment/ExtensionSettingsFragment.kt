@@ -25,12 +25,14 @@ package fulguris.settings.fragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
 import fulguris.extensions.launch
 import fulguris.userscript.UserScriptManager
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -107,10 +109,23 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
     }
 
     private fun populateScriptInfo(script: fulguris.userscript.UserScript) {
-        // Name
+        // Name with icon
         findPreference<Preference>("script_name")?.apply {
             summary = script.name
             isVisible = script.name.isNotEmpty()
+            isIconSpaceReserved = true
+
+            // Set default icon
+            icon = script.getDefaultIcon(requireContext())
+
+            // Load script icon asynchronously if available
+            if (script.iconUrl.isNotEmpty()) {
+                lifecycleScope.launch {
+                    script.loadIcon(requireContext())?.let { drawable ->
+                        icon = drawable
+                    }
+                }
+            }
         }
 
         // Description
@@ -166,6 +181,7 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
         }
     }
 
+
     private fun confirmDeleteScript(script: fulguris.userscript.UserScript) {
         activity?.let { activity ->
             MaterialAlertDialogBuilder(activity).apply {
@@ -181,12 +197,10 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
                     if (responsiveParent != null) {
                         // Use breadcrumb-aware navigation for responsive settings
                         responsiveParent.popBackStackWithBreadcrumbs()
-                        true
                     } else {
                         // Fallback for bottom sheet or other non-responsive contexts
                         // Let WebBrowserActivity.onPreferenceStartFragment handle our fragment="back"
                         // Should pop our stack and close the bottom sheet if needed
-                        false
                     }
                 }
                 setNegativeButton(R.string.action_cancel, null)

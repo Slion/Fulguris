@@ -22,6 +22,18 @@
 
 package fulguris.userscript
 
+import android.content.Context
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.graphics.scale
+import fulguris.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import timber.log.Timber
+import java.net.URL
+
 /**
  * Specifies when a user script should be injected into the page.
  */
@@ -92,6 +104,64 @@ data class UserScript(
             Regex(regexPattern).matches(url)
         } catch (e: Exception) {
             false
+        }
+    }
+
+    /**
+     * Load the script icon from the iconUrl.
+     * Returns a default icon immediately and can load custom icon asynchronously.
+     *
+     * @param context Android context for loading resources
+     * @return Default icon drawable
+     */
+    fun getDefaultIcon(context: Context): Drawable? {
+        return AppCompatResources.getDrawable(context, R.drawable.ic_script)
+    }
+
+    /**
+     * Load the script icon from the iconUrl asynchronously.
+     * Must be called from a coroutine context.
+     *
+     * @param context Android context for loading resources
+     * @param iconSizeDp Size of icon in dp (default 24)
+     * @return Drawable if loading succeeds, null otherwise
+     */
+    suspend fun loadIcon(context: Context, iconSizeDp: Int = 24): Drawable? {
+        if (iconUrl.isEmpty()) {
+            return null
+        }
+
+        return withContext(Dispatchers.IO) {
+            try {
+                // Download icon from URL
+                val connection = URL(iconUrl).openConnection()
+                connection.connectTimeout = 5000
+                connection.readTimeout = 5000
+                connection.connect()
+
+                val inputStream = connection.getInputStream()
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                inputStream.close()
+
+                if (bitmap != null) {
+                    // Convert dp to pixels based on screen density
+                    val iconSizePx = (iconSizeDp * context.resources.displayMetrics.density).toInt()
+
+                    // Scale bitmap to proper size
+                    val scaledBitmap = bitmap.scale(iconSizePx, iconSizePx)
+
+                    // Convert to drawable
+                    val drawable = scaledBitmap.toDrawable(context.resources)
+                    Timber.d("Loaded icon for script: $name")
+                    drawable
+                } else {
+                    Timber.w("Failed to decode icon bitmap from $iconUrl")
+                    null
+                }
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to load icon from $iconUrl")
+                null
+            }
         }
     }
 
