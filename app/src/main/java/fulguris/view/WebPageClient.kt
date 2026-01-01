@@ -389,12 +389,23 @@ class WebPageClient(
             )
         }
 
-        // Inject enabled userscripts if userscripts are enabled
+        // Inject DOCUMENT_END userscripts (after DOM is loaded)
         if (userPreferences.userScriptsEnabled) {
             val scriptCode = userScriptManager.getInjectionCode(url, fulguris.userscript.RunAt.DOCUMENT_END)
             if (scriptCode != null) {
-                Timber.d("Injecting userscripts for $url")
+                Timber.d("Injecting DOCUMENT_END userscripts for $url")
+                // Errors are captured by console.error() in the injected code and reported via onConsoleMessage
                 view.evaluateJavascript(scriptCode, null)
+            }
+
+            // Inject DOCUMENT_IDLE userscripts (after page is completely loaded)
+            // Use a delayed post to ensure all resources are loaded
+            val idleScriptCode = userScriptManager.getInjectionCode(url, fulguris.userscript.RunAt.DOCUMENT_IDLE)
+            if (idleScriptCode != null) {
+                view.postDelayed({
+                    Timber.d("Injecting DOCUMENT_IDLE userscripts for $url")
+                    view.evaluateJavascript(idleScriptCode, null)
+                }, 3000) // Delay to ensure page is fully idle
             }
         }
 
@@ -421,6 +432,15 @@ class WebPageClient(
         Timber.i("$ihs : onPageStarted - $url")
 
         currentUrl = url
+
+        // Inject DOCUMENT_START userscripts as early as possible
+        if (userPreferences.userScriptsEnabled) {
+            val scriptCode = userScriptManager.getInjectionCode(url, fulguris.userscript.RunAt.DOCUMENT_START)
+            if (scriptCode != null) {
+                Timber.d("Injecting DOCUMENT_START userscripts for $url")
+                view.evaluateJavascript(scriptCode, null)
+            }
+        }
 
         (view as WebViewEx).proxy.apply {
             // Only apply domain settings dark mode if no bypass

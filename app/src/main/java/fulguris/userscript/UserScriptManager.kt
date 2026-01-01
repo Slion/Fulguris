@@ -259,19 +259,31 @@ class UserScriptManager @Inject constructor(
 
     /**
      * Get JavaScript code to inject for the given URL at the specified timing.
+     * Each script is wrapped in its own try-catch to isolate errors.
      */
     fun getInjectionCode(url: String, runAt: RunAt): String? {
         val scripts = getScriptsForUrl(url).filter { it.runAt == runAt }
 
         if (scripts.isEmpty()) return null
 
-        // Combine all matching scripts
+        // Log which scripts are being injected
+        scripts.forEach { script ->
+            Timber.d("Injecting userscript: '${script.name}' (ID: ${script.id}, version: ${script.version})")
+        }
+
+        // Combine all matching scripts with error handling
         return scripts.joinToString("\n\n") { script ->
             """
-            // User Script: ${script.name}
+            // === User Script: ${script.name} ===
             // Version: ${script.version}
+            // ID: ${script.id}
             (function() {
-                ${script.code}
+                try {
+                    ${script.code}
+                    console.log('fulguris: ex: loaded "${script.name}"');
+                } catch (e) {
+                    console.error('fulguris: ex: "${script.name}" - ' + (e.stack || e.toString()));
+                }
             })();
             """.trimIndent()
         }
