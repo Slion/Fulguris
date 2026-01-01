@@ -124,9 +124,9 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
             parts.add(script.description)
         }
 
-        if (script.matchUrls.isNotEmpty()) {
-            parts.add("Matches: ${script.matchUrls.size} pattern(s)")
-        }
+//        if (script.matchUrls.isNotEmpty()) {
+//            parts.add("Matches: ${script.matchUrls.size} pattern(s)")
+//        }
 
         if (script.version.isNotEmpty()) {
             parts.add("v${script.version}")
@@ -135,7 +135,7 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
         return if (parts.isEmpty()) {
             getString(R.string.settings_userscript_no_info)
         } else {
-            parts.joinToString(" • ")
+            parts.joinToString(" - ")
         }
     }
 
