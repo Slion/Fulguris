@@ -129,8 +129,8 @@ fun WebSettings.setReducedClientHints() {
                 .build()
         )
 
-        Timber.d("Client Hints original brand list: ${metadata.brandVersionList}")
-        Timber.d("Client Hints reduced brand list: $reducedBrandList")
+        //Timber.v("Client Hints original brand list: ${metadata.brandVersionList}")
+        //Timber.v("Client Hints reduced brand list: $reducedBrandList")
 
         // Create reduced metadata matching our User-Agent: Android 10, model "K"
         val reducedMetadata = androidx.webkit.UserAgentMetadata.Builder()
@@ -151,7 +151,7 @@ fun WebSettings.setReducedClientHints() {
             .build()
 
         androidx.webkit.WebSettingsCompat.setUserAgentMetadata(this, reducedMetadata)
-        Timber.d("Client Hints configured for privacy: Android 10, model K, Chrome $chromeMajorVersion.0.0.0")
+        //Timber.v("Client Hints configured for privacy: Android 10, model K, Chrome $chromeMajorVersion.0.0.0")
     } catch (e: Exception) {
         Timber.e(e, "Failed to set Client Hints")
     }

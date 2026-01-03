@@ -388,7 +388,7 @@ class DomainPreferences constructor(
 
         val origin = "https://$domain"
         android.webkit.GeolocationPermissions.getInstance().clear(origin)
-        Timber.d("Revoked geolocation permission for: $origin")
+        Timber.i("Revoked geolocation permission for: $origin")
     }
 
     companion object {

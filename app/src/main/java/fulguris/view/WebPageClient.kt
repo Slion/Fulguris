@@ -192,7 +192,7 @@ class WebPageClient(
      *   comment Helium314: adBLock.shouldBock always never blocks if url.isSpecialUrl() or url.isAppScheme(), could be moved here
      */
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-        Timber.v("$ihs : shouldInterceptRequest")
+        Timber.v("$ihs : shouldInterceptRequest - ${if (request.isForMainFrame) "Main frame" else "Resource"} - ${request.url}")
 
         // First, check if ad blocker blocks this request (returns dummy response if blocked, null if not)
         val response = adBlock.shouldBlock(request, currentUrl)
@@ -221,12 +221,6 @@ class WebPageClient(
             // This resource request is the main frame
             // Record page load start time for profiling
             pageLoadStartTime = System.currentTimeMillis()
-            // Reset our resource count
-            iResourceCount = 0
-            // Clear page requests for the new page
-            clearPageRequests()
-            // Clear console messages for the new page
-            webPageTab.clearConsoleMessages()
         }
 
         // Track this request
@@ -277,7 +271,7 @@ class WebPageClient(
      * the next time a site requests location access, giving the user a chance to grant
      * Android permissions again.
      */
-    fun resetLocationPermission() {
+    fun resetLocationPermissionIfNeeded() {
 
         if (domainPreferences.isDefault) {
             // No business here, though I'm not sure how we could get there
@@ -294,10 +288,14 @@ class WebPageClient(
         )
 
         if (!hasLocationPermission) {
-            // Android permission missing - revoke all WebView geolocation permissions
-            // so sites will trigger onGeolocationPermissionsShowPrompt again
-            domainPreferences.clearLocationPermission()
-            Timber.d("Revoked location permission for ${domainPreferences.domain} due to missing Android permission")
+            // Android permission missing - check for WebView geolocation permissions
+            domainPreferences.hasLocationPermission {
+                if (it) {
+                    // WebView has location permissions for that domain/origin but we lack android permission
+                    // Clear WebView geolocation permissions for this domain so that onGeolocationPermissionsShowPrompt is called again
+                    domainPreferences.clearLocationPermission()
+                }
+            }
         }
     }
 
@@ -314,19 +312,21 @@ class WebPageClient(
         //Timber.d("$ihs : onLoadResource - original: ${webPageTab.webView?.originalUrl}")
         //Timber.d("$ihs : onLoadResource - target: ${webPageTab.targetUrl}")
 
+        // Check if this resource if our main frame
+        val isMainFrame = webPageTab.targetUrl.toString()==url
+        if (isMainFrame) {
+            // Only now reset our counters to minimize cross-fire
+            // Reset our resource count
+            iResourceCount = 0
+            // Clear page requests for the new page
+            clearPageRequests()
+            // Clear console messages for the new page
+            webPageTab.clearConsoleMessages()
+        }
+
         // Count our resources
         iResourceCount++
-
-        // Only do that on the first resource load which is the main frame
-        if (iResourceCount==1) {
-            Timber.d("$ihs : onLoadResource - $iResourceCount - $url")
-            val uri  = Uri.parse(url)
-            loadDomainPreferences(uri.host ?: "", false)
-            //
-            resetLocationPermission()
-            // Now assuming our root HTML document has been loaded
-            applyDesktopModeIfNeeded(view)
-        }
+        Timber.d("$ihs : onLoadResource - ${if (isMainFrame) "Main frame" else "Resource"} - $iResourceCount - $url")
     }
 
     /**
@@ -431,7 +431,19 @@ class WebPageClient(
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         Timber.i("$ihs : onPageStarted - $url")
 
+        //TODO: Could update targetUrl?
+        // When opening bbc.com in a new tab resolved as http://bbc.com - onLoadResource for main frame was still the targetUrl http://bbc.com
+        // But onPageStarted is actually https://www.bbc.com so in this case we have like a discreet redirect
+        // However when opening bbc.co.uk we get an actual redirect to bbc.com somehow
+
         currentUrl = url
+
+        val uri  = Uri.parse(url)
+        loadDomainPreferences(uri.host ?: "", false)
+        //
+        resetLocationPermissionIfNeeded()
+        // Now assuming our root HTML document has been loaded
+        applyDesktopModeIfNeeded(view)
 
         // Inject DOCUMENT_START userscripts as early as possible
         if (userPreferences.userScriptsEnabled) {
@@ -779,14 +791,6 @@ class WebPageClient(
         val url = request.url.toString()
         val uri = Uri.parse(url)
         val headers = webPageTab.requestHeaders
-
-        // This callback comes in before [shouldInterceptRequest] giving us an opportunity to update the target URL earlier
-        // Though I reckon this is just defensive and could be removed, isForMainFrame should always be true here
-        if (request.isForMainFrame) {
-            // Update the target URL
-            webPageTab.targetUrl = uri
-            loadDomainPreferences(uri.host ?: "", true)
-        }
 
         // If this is an about page, immediately load, we don't need to leave the app
         // If we are in incognito, immediately load, we don't want the url to leave the app
