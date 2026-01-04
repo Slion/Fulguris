@@ -51,7 +51,7 @@ class TabsDrawerAdapter(
 
     private fun updateViewHolderBackground(viewHolder: TabViewHolder, isForeground: Boolean) {
 
-        Timber.d("updateViewHolderBackground: $isForeground - ${viewHolder.txtTitle.text}")
+        Timber.v("updateViewHolderBackground: $isForeground - ${viewHolder.txtTitle.text}")
         viewHolder.iCardView.apply {
             isChecked = isForeground
             // Adjust tab item height depending of foreground state

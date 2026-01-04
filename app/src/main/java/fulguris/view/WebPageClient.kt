@@ -72,14 +72,14 @@ import kotlin.math.abs
  * - [onPageStarted]  - Not called if interrupted before the first main frame resource completed
  * - [shouldInterceptRequest] For each resources
  * - [onLoadResource] - For each resources
- * - [onPageFinished] - Also called when cancelled - can be called even though onPageStarted was not called
+ * - [onPageFinished] - Also called when cancelled - can be called even though onPageStarted was not called - YouTube can call it multiple times
  * - [shouldInterceptRequest] - Can still occur after onPageFinished even if load was cancelled
  * - [onLoadResource] - Can still occur after onPageFinished even if load was cancelled
  *
  */
 class WebPageClient(
-        private val activity: Activity,
-        private val webPageTab: WebPageTab
+    private val activity: Activity,
+    private val webPageTab: WebPageTab
 ) : WebViewClient() {
 
     private val webBrowser: WebBrowser = activity as WebBrowser
@@ -113,6 +113,9 @@ class WebPageClient(
 
     // Track page load timing for profiling
     private var pageLoadStartTime: Long = 0
+
+    // Used to skip operations when onPageFinished is called multiple times, YouTube.com does that for instance
+    private var onPageFinishedDone = false
 
     // Track all requests for the current page and whether they were blocked
     data class PageRequest(
@@ -181,7 +184,7 @@ class WebPageClient(
                 // Just pass on user defined viewport width in percentage of the actual viewport to the JavaScript
                 aView.settings.useWideViewPort = true
                 Timber.w("evaluateJavascript: desktop mode")
-                aView.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$","${aView.context.configPrefs.desktopWidth}"), null)
+                aView.evaluateJavascript(setMetaViewport.provideJs().replaceFirst("\$width\$", "${aView.context.configPrefs.desktopWidth}"), null)
             }
         }
     }
@@ -221,6 +224,8 @@ class WebPageClient(
             // This resource request is the main frame
             // Record page load start time for profiling
             pageLoadStartTime = System.currentTimeMillis()
+            // Rearm
+            onPageFinishedDone = false
         }
 
         // Track this request
@@ -313,8 +318,8 @@ class WebPageClient(
         //Timber.d("$ihs : onLoadResource - target: ${webPageTab.targetUrl}")
 
         // Check if this resource if our main frame
-        val isMainFrame = webPageTab.targetUrl.toString()==url
-        if (isMainFrame) {
+        val isForMainFrame = webPageTab.targetUrl.toString() == url
+        if (isForMainFrame) {
             // Only now reset our counters to minimize cross-fire
             // Reset our resource count
             iResourceCount = 0
@@ -326,7 +331,7 @@ class WebPageClient(
 
         // Count our resources
         iResourceCount++
-        Timber.d("$ihs : onLoadResource - ${if (isMainFrame) "Main frame" else "Resource"} - $iResourceCount - $url")
+        Timber.d("$ihs : onLoadResource - ${if (isForMainFrame) "Main frame" else "Resource"} - $iResourceCount - $url")
     }
 
     /**
@@ -334,20 +339,38 @@ class WebPageClient(
      */
     private fun updateUrlIfNeeded(url: String, isLoading: Boolean) {
         // Update URL unless we are dealing with our special internal URL
-        (url.isSpecialUrl()). let { dontDoUpdate ->
+        (url.isSpecialUrl()).let { dontDoUpdate ->
             webBrowser.updateUrl(if (dontDoUpdate) webPageTab.url else url, isLoading)
         }
     }
 
     /**
      * Overrides [WebViewClient.onPageFinished].
-     * Also called when loading is interrupted using stopLoading.
+     * Also called when loading is interrupted using [WebView.stopLoading].
      * That means this can be called even as onPageStarted was not yet called.
+     * Can be called multiple times for the same page notably on YouTube.com and bbc.com.
+     * On YouTybe.com [WebView.getProgress] is always 100% when onPageFinished is called even when aborted with stopLoading.
+     * However on bbc.com first call progress was below 100% and then 100% on the second call.
      */
     override fun onPageFinished(view: WebView, url: String) {
         // Calculate page load duration
         val pageLoadDuration = System.currentTimeMillis() - pageLoadStartTime
-        Timber.i("$ihs : onPageFinished - $url - Load time: ${pageLoadDuration}ms - Resources: $iResourceCount")
+        // Only perform actions when fully loaded
+        // Though arguably we could perform them on the first call and not wait for 100% progress
+        // We are assuming progress is 100% in at least one of the onPageFinished calls even as a result of stopLoading
+        // Otherwise onLoadCompleteCallback would not be called which could cause issues
+        val skip = onPageFinishedDone || view.progress!=100
+        Timber.i("$ihs : onPageFinished ${if (skip) "- skipping -" else "-"} Progress: ${view.progress} - $url - Load time: ${pageLoadDuration}ms - Resources: $iResourceCount")
+
+        if (skip) {
+            // onPageFinished was already called for this page load.
+            // It sometimes called multiple times, notably from YouTube.com and bbc.com
+            // No need to perform those actions again then
+            return
+        }
+
+        // Flag that we have called onPageFinished
+        onPageFinishedDone = true
 
         // Execute and clear callback registered with loadUrl
         webPageTab.onLoadCompleteCallback?.invoke()
@@ -367,7 +390,7 @@ class WebPageClient(
         if (view.title == null || (view.title as String).isEmpty()) {
             webPageTab.titleInfo.setTitle(activity.getString(R.string.untitled))
         } else {
-            view.title?.let {webPageTab.titleInfo.setTitle(it)}
+            view.title?.let { webPageTab.titleInfo.setTitle(it) }
         }
         if (webPageTab.invertPage) {
             Timber.w("evaluateJavascript: invert page colors")
@@ -524,10 +547,10 @@ class WebPageClient(
      *
      */
     override fun onReceivedHttpAuthRequest(
-            view: WebView,
-            handler: HttpAuthHandler,
-            host: String,
-            realm: String
+        view: WebView,
+        handler: HttpAuthHandler,
+        host: String,
+        realm: String
     ) {
         Timber.d("$ihs : onReceivedHttpAuthRequest")
         MaterialAlertDialogBuilder(activity).apply {
@@ -587,7 +610,7 @@ class WebPageClient(
         val bitmap = activity.getDrawable(R.drawable.ic_about, android.R.attr.state_enabled).toBitmap()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
         val imageBytes: ByteArray = output.toByteArray()
-        val imageString = "data:image/png;base64,"+Base64.encodeToString(imageBytes, Base64.NO_WRAP)
+        val imageString = "data:image/png;base64," + Base64.encodeToString(imageBytes, Base64.NO_WRAP)
 
         // Generate a JavaScript that's going to modify the standard WebView error page for us.
         // It saves us from making up our own error texts and having to manage the translations ourselves.
@@ -657,7 +680,7 @@ class WebPageClient(
                 //activity.snackbar(activity.getString(R.string.message_ssl_error_aborted, domainPreferences.domain))
                 // Capture error domain cause it will have changed by the time we run the action
                 val errorDomain = domainPreferences.domain
-                activity.makeSnackbar(activity.getString(R.string.message_ssl_error_aborted),5000, Gravity.BOTTOM)
+                activity.makeSnackbar(activity.getString(R.string.message_ssl_error_aborted), 5000, Gravity.BOTTOM)
                     .setIcon(R.drawable.ic_unsecured)
                     .setAction(R.string.settings) {
                         (activity as? WebBrowserActivity)?.showDomainSettings(errorDomain)
@@ -665,6 +688,7 @@ class WebPageClient(
                     .show()
                 return handler.cancel()
             }
+
             else -> {}
         }
 
@@ -746,11 +770,11 @@ class WebPageClient(
     /**
      * Load domain preferences
      */
-    private fun loadDomainPreferences(aHost :String, aEntryPoint: Boolean = false) {
+    private fun loadDomainPreferences(aHost: String, aEntryPoint: Boolean = false) {
 
         // Don't reload our preferences if we already have it
         // We hit that a lot actually as we load resources
-        if (domainPreferences.domain==aHost) {
+        if (domainPreferences.domain == aHost) {
             Timber.v("$ihs : loadDomainPreferences: already loaded")
             return
         }
@@ -813,7 +837,7 @@ class WebPageClient(
                 var appLaunched = false
 
                 // That debounce logic allows us launch our app ASAP while cancelling repeat launch
-                if (debounceLaunch==null) {
+                if (debounceLaunch == null) {
                     // No pending debounce, just launch our app then
                     appLaunched = launchAppIfNeeded(view, intent)
                 }
@@ -824,7 +848,7 @@ class WebPageClient(
                     debounceLaunch = null
                 }
                 // Schedule our debounce
-                view.postDelayed(debounceLaunch,1000)
+                view.postDelayed(debounceLaunch, 1000)
 
                 // Not sure how to test that now
                 if (appLaunched) {
@@ -859,11 +883,13 @@ class WebPageClient(
                 Timber.d("$ihs : Launch app - YES")
                 return activity.startActivityWithFallback(view, intent, false)
             }
+
             NoYesAsk.NO -> {
                 Timber.d("$ihs : Launch app - NO")
                 // Still load the page when not launching
                 return false
             }
+
             NoYesAsk.ASK -> {
                 Timber.d("$ihs : Launch app - ASK")
 
@@ -878,7 +904,7 @@ class WebPageClient(
                         val filter = info.filter
                         // Look for apps with specific schemes or data authorities (specialized apps)
                         filter != null && (filter.countDataAuthorities() > 0 ||
-                            (filter.countDataSchemes() > 0 && !filter.hasDataScheme("http") && !filter.hasDataScheme("https")))
+                                (filter.countDataSchemes() > 0 && !filter.hasDataScheme("http") && !filter.hasDataScheme("https")))
                     }
 
                     // Use specialized apps if available, otherwise use all
@@ -965,7 +991,8 @@ class WebPageClient(
             && !URLUtil.isFileUrl(url)
             && !URLUtil.isAboutUrl(url)
             && !URLUtil.isDataUrl(url)
-            && !URLUtil.isJavaScriptUrl(url)) {
+            && !URLUtil.isJavaScriptUrl(url)
+        ) {
             if (aSkipErrorPage) {
                 webView.stopLoading()
                 Timber.w("$ihs : Stop loading")
@@ -1149,7 +1176,7 @@ class WebPageClient(
      */
     override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
         Timber.e("onRenderProcessGone")
-        return webPageTab.onRenderProcessGone(view,detail)
+        return webPageTab.onRenderProcessGone(view, detail)
     }
 
     /**
@@ -1163,8 +1190,8 @@ class WebPageClient(
         Timber.d("$ihs : doUpdateVisitedHistory: $isReload - $url - ${view.url}")
         super.doUpdateVisitedHistory(view, url, isReload)
 
-        if (webPageTab.lastUrl!=url) {
-            webPageTab.lastUrl=url
+        if (webPageTab.lastUrl != url) {
+            webPageTab.lastUrl = url
             webBrowser.onTabChangedUrl(webPageTab)
         }
     }

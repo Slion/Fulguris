@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import androidx.annotation.ColorInt
+import fulguris.extensions.ihs
 import timber.log.Timber
 
 /**
@@ -135,6 +136,22 @@ class WebViewEx : WebView {
     override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
         //Timber.d("dispatchTouchEvent $event")
         return super.dispatchTouchEvent(event)
+    }
+
+    /**
+     * Overrides [WebView.loadUrl(String)].
+     */
+    override fun loadUrl(url: String) {
+        Timber.i("$ihs : loadUrl: $url")
+        super.loadUrl(url)
+    }
+
+    /**
+     * Overrides [WebView.loadUrl(String, Map)].
+     */
+    override fun loadUrl(url: String, additionalHttpHeaders: MutableMap<String, String>) {
+        Timber.i("$ihs : loadUrl: $url (${additionalHttpHeaders.size} headers)")
+        super.loadUrl(url, additionalHttpHeaders)
     }
 
 }
