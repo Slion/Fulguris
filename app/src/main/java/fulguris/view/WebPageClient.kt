@@ -413,7 +413,7 @@ class WebPageClient(
         }
 
         // Inject DOCUMENT_END userscripts (after DOM is loaded)
-        if (userPreferences.userScriptsEnabled) {
+        if (userPreferences.extensionsEnabled) {
             val scriptCode = userScriptManager.getInjectionCode(url, fulguris.userscript.RunAt.DOCUMENT_END)
             if (scriptCode != null) {
                 Timber.d("Injecting DOCUMENT_END userscripts for $url")
@@ -469,7 +469,7 @@ class WebPageClient(
         applyDesktopModeIfNeeded(view)
 
         // Inject DOCUMENT_START userscripts as early as possible
-        if (userPreferences.userScriptsEnabled) {
+        if (userPreferences.extensionsEnabled) {
             val scriptCode = userScriptManager.getInjectionCode(url, fulguris.userscript.RunAt.DOCUMENT_START)
             if (scriptCode != null) {
                 Timber.d("Injecting DOCUMENT_START userscripts for $url")
@@ -823,7 +823,7 @@ class WebPageClient(
         }
 
         // Check if this is a userscript file (.user.js) and handle installation
-        if (url.endsWith(".user.js") && userPreferences.userScriptsEnabled && request.isForMainFrame) {
+        if (url.endsWith(".user.js") && userPreferences.extensionsEnabled && request.isForMainFrame) {
             handleUserScriptInstallation(url)
             return true
         }
@@ -1057,39 +1057,19 @@ class WebPageClient(
         try {
             // Parse script metadata
             val metadata = UserScript.extractMetadata(scriptContent)
-            val scriptName = metadata["name"] ?: "Unnamed Script"
-            val description = metadata["description"] ?: ""
-            val version = metadata["version"] ?: ""
-            val author = metadata["author"] ?: ""
-
-            // Build dialog message
-            val message = buildString {
-                if (description.isNotEmpty()) {
-                    append(description)
-                    append("\n\n")
-                }
-                if (version.isNotEmpty()) {
-                    append(activity.getString(R.string.userscript_version, version))
-                    append("\n")
-                }
-                if (author.isNotEmpty()) {
-                    append(activity.getString(R.string.userscript_author, author))
-                    append("\n")
-                }
-                append("\n")
-                append(activity.getString(R.string.userscript_install_warning))
-            }
+            val scriptName = metadata["name"] ?: activity.getString(R.string.extension_name_not_specified)
+            //val description = metadata["description"] ?: ""
+            val version = metadata["version"] ?: activity.getString(R.string.extension_version_not_specified)
+            val author = metadata["author"] ?: activity.getString(R.string.extension_author_not_specified)
 
             MaterialAlertDialogBuilder(activity).apply {
-                setTitle(activity.getString(R.string.userscript_install_title, scriptName))
-                setMessage(message)
+                setIcon(R.drawable.ic_extension_outline)
+                setTitle(R.string.dialog_title_install_extension)
+                setMessage(activity.getString(R.string.dialog_message_install_extension,scriptName,version,author))
                 setPositiveButton(R.string.action_install) { _, _ ->
                     installUserScript(scriptContent, scriptName)
                 }
                 setNegativeButton(R.string.action_cancel, null)
-                setNeutralButton(R.string.action_view_source) { _, _ ->
-                    showUserScriptSource(scriptContent, scriptName)
-                }
             }.launch()
         } catch (e: Exception) {
             Timber.e(e, "Failed to parse userscript")
@@ -1110,30 +1090,6 @@ class WebPageClient(
             activity.makeSnackbar(activity.getString(R.string.error_installing_userscript), KDuration, Gravity.BOTTOM).show()
             Timber.e("Failed to install userscript: $scriptName")
         }
-    }
-
-    /**
-     * Show userscript source code in a dialog.
-     */
-    private fun showUserScriptSource(scriptContent: String, scriptName: String) {
-        val scrollView = android.widget.ScrollView(activity).apply {
-            val textView = TextView(activity).apply {
-                text = scriptContent
-                typeface = android.graphics.Typeface.MONOSPACE
-                setPadding(16, 16, 16, 16)
-                setTextIsSelectable(true)
-            }
-            addView(textView)
-        }
-
-        MaterialAlertDialogBuilder(activity).apply {
-            setTitle(scriptName)
-            setView(scrollView)
-            setPositiveButton(R.string.action_install) { _, _ ->
-                installUserScript(scriptContent, scriptName)
-            }
-            setNegativeButton(R.string.action_close, null)
-        }.launch()
     }
 
     /**

@@ -797,10 +797,11 @@
     <string name="error_installing_userscript">Failed to install userscript</string>
     <string name="error_downloading_userscript">Failed to download userscript</string>
     <string name="userscript_installed_successfully">Userscript \"%1$s\" installed successfully</string>
-    <string name="userscript_version">Version: %s</string>
-    <string name="userscript_author">Author: %s</string>
-    <string name="userscript_install_warning">This userscript will be able to access and modify web pages. Only install scripts from trusted sources.</string>
-    <string name="userscript_install_title">Install userscript \"%s\"?</string>
+    <string name="dialog_message_install_extension">Extension \"%1$s\" version \"%2$s\" by \"%3$s\" will be installed. Extensions can access and modify web pages you visit. Only install them from trusted sources</string>
+    <string name="dialog_title_install_extension">Install extension?</string>
+    <string name="extension_name_not_specified">Not specified</string>
+    <string name="extension_version_not_specified">Not specified</string>
+    <string name="extension_author_not_specified">Not specified</string>
     <string name="action_details">Details</string>
     <string name="action_install">Install</string>
     <string name="action_close">Close</string>

@@ -55,8 +55,9 @@ class UserPreferences @Inject constructor(
 
     /**
      * True if user scripts should be enabled and injected into web pages, false otherwise.
+     * TODO: Consider making this a domain settings option
      */
-    var userScriptsEnabled by preferences.booleanPreference(R.string.pref_key_extensions_enabled, false)
+    var extensionsEnabled by preferences.booleanPreference(R.string.pref_key_extensions_enabled, false)
 
     /**
      * True if the browser should block images from being loaded, false otherwise.

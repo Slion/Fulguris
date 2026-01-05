@@ -24,7 +24,6 @@ package fulguris.settings.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
 import dagger.hilt.android.AndroidEntryPoint
 import fulguris.R
@@ -55,9 +54,9 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
         // Enable/disable userscripts globally
         switchPreference(
             preference = getString(R.string.pref_key_extensions_enabled),
-            isChecked = userPreferences.userScriptsEnabled,
+            isChecked = userPreferences.extensionsEnabled,
             onCheckChange = { enabled ->
-                userPreferences.userScriptsEnabled = enabled
+                userPreferences.extensionsEnabled = enabled
             }
         )
 
