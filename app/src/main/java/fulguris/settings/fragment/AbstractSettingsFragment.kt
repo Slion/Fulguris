@@ -24,6 +24,7 @@ package fulguris.settings.fragment
 
 import fulguris.R
 import fulguris.activity.SettingsActivity
+import fulguris.extensions.flash
 import android.os.Bundle
 import androidx.annotation.XmlRes
 import androidx.preference.CheckBoxPreference
@@ -34,6 +35,9 @@ import androidx.preference.PreferenceScreen
 import androidx.preference.SwitchPreference
 import x.PreferenceFragmentBase
 import timber.log.Timber
+
+// Intent extra key for passing preference key to flash
+const val PREFERENCE_KEY = "PREFERENCE"
 
 /**
  * An abstract settings fragment which performs wiring for an instance of [PreferenceFragmentBase].
@@ -103,6 +107,44 @@ abstract class AbstractSettingsFragment : PreferenceFragmentBase() {
     override fun onNavigateToScreen(preferenceScreen: PreferenceScreen) {
         super.onNavigateToScreen(preferenceScreen)
         Timber.d("onNavigateToScreen")
+    }
+
+    /**
+     * Checks if a preference key was passed via intent extra and flashes that preference.
+     * Should be called after preferences are populated (e.g., in onResume).
+     *
+     * @param times Number of times to flash (default: 2)
+     * @param delayMs Delay in milliseconds before starting flash and between flashes (default: 500ms initial, 800ms between)
+     */
+    protected fun flashPreferenceIfRequested(times: Int = 2, delayMs: Long = 800, initialDelayMs: Long = 500) {
+        val preferenceKey = activity?.intent?.getStringExtra(PREFERENCE_KEY)
+        Timber.d("${this::class.simpleName}: flashPreferenceIfRequested - $PREFERENCE_KEY extra = $preferenceKey")
+
+        preferenceKey?.let { key ->
+            Timber.d("${this::class.simpleName}: Attempting to flash preference with key: $key")
+
+            // Flash the preference to draw attention to it
+            view?.postDelayed({
+                // Check if preference exists
+                val pref = findPreference<Preference>(key)
+                Timber.d("${this::class.simpleName}: Found preference: ${pref != null}, key: $key")
+
+                if (pref != null) {
+                    // Scroll to the preference first to ensure it's visible
+                    scrollToPreference(pref)
+
+                    // Then flash it after a short delay
+                    view?.postDelayed({
+                        flash(key, times, delayMs)
+                    }, 200)
+                } else {
+                    Timber.w("${this::class.simpleName}: Could not find preference with key: $key")
+                }
+
+                // Clear the extra so we don't flash again on configuration change
+                activity?.intent?.removeExtra(PREFERENCE_KEY)
+            }, initialDelayMs)
+        }
     }
 
 

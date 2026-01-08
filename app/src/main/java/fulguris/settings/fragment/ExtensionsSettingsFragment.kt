@@ -144,6 +144,9 @@ class ExtensionsSettingsFragment : AbstractSettingsFragment() {
         // Refresh list in case scripts were installed from web
         scriptsCategory.removeAll()
         populateUserScripts()
+
+        // Flash preference if requested via intent extra
+        flashPreferenceIfRequested()
     }
 }
 

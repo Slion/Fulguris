@@ -6,7 +6,10 @@ import fulguris.adblock.AbpBlockerManager
 import fulguris.adblock.AdBlocker
 import fulguris.adblock.NoOpAdBlocker
 import fulguris.browser.WebBrowser
+import fulguris.activity.FRAGMENT_CLASS_NAME
+import fulguris.activity.SettingsActivity
 import fulguris.activity.WebBrowserActivity
+import fulguris.settings.fragment.PREFERENCE_KEY
 import fulguris.di.HiltEntryPoint
 import fulguris.di.configPrefs
 import fulguris.extensions.getDrawable
@@ -1079,12 +1082,26 @@ class WebPageClient(
 
 
     /**
-     * Install the userscript.
+     * Install the userscript and show snackbar with action to view it.
      */
     private fun installUserScript(scriptContent: String, scriptName: String) {
         val scriptId = userScriptManager.installScript(scriptContent)
         if (scriptId != null) {
-            activity.makeSnackbar(activity.getString(R.string.userscript_installed_successfully, scriptName), KDuration, Gravity.BOTTOM).show()
+            val snackbar = activity.makeSnackbar(
+                activity.getString(R.string.extension_installed_successfully, scriptName),
+                KDuration,
+                Gravity.BOTTOM
+            )
+            snackbar.setAction(R.string.settings) {
+                // Launch settings activity and navigate to extensions fragment
+                val intent = Intent(activity, SettingsActivity::class.java).apply {
+                    putExtra(FRAGMENT_CLASS_NAME, "fulguris.settings.fragment.ExtensionsSettingsFragment")
+                    // Pass preference key so it can be highlighted/flashed
+                    putExtra(PREFERENCE_KEY, "script_$scriptId")
+                }
+                activity.startActivity(intent)
+            }
+            snackbar.show()
             Timber.i("Userscript installed: $scriptName")
         } else {
             activity.makeSnackbar(activity.getString(R.string.error_installing_userscript), KDuration, Gravity.BOTTOM).show()
