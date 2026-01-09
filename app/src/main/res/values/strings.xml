@@ -767,7 +767,6 @@
     <string name="settings_title_extensions">Extensions</string>
     <string name="settings_summary_extensions">Manage extension scripts</string>
     <string name="settings_title_enable_extensions">Enable extensions</string>
-    <string name="settings_summary_enable_extensions">Allow custom JavaScript code to run on web pages</string>
     <string name="settings_summary_on_enable_extensions">Extensions can inject JavaScript code into web pages</string>
     <string name="settings_summary_off_enable_extensions">Web pages load without modifications</string>
     <string name="settings_summary_greasy_fork">Browse and install extensions from Greasy Fork</string>
@@ -802,8 +801,6 @@
     <string name="extension_name_not_specified">Not specified</string>
     <string name="extension_version_not_specified">Not specified</string>
     <string name="extension_author_not_specified">Not specified</string>
-    <string name="action_details">Details</string>
     <string name="action_install">Install</string>
-    <string name="action_close">Close</string>
     <string name="action_view_source">View Source</string>
 </resources>
