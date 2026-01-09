@@ -32,6 +32,9 @@ Araç çubuğu ve durum çubuğu renk teması favori web sitelerinizle zarif bir
 ⛔Reklam engelleyici
 Yerel ve çevrimiçi dosyalardan reklam engelleme tanımlarını kullanın. Hosts dosyalarını ve Adblock Plus sözdiziminin çoğunu destekler, böylece hemen hemen her yaygın filtre listesini kullanabilirsiniz.
 
+🧩Uzantılar
+Tarayıcınızın işlevselliğini kullanıcı betikleriyle genişletin. Greasy Fork'tan yükleyin veya web sayfalarını değiştirmek, görevleri otomatikleştirmek ve tarama deneyiminizi geliştirmek için kendi özel betiklerinizi oluşturun.
+
 🔒Gizlilik
 Fulguris gizliliğinizi korur ve saygı gösterir. Gizli mod. İzleme çerezlerini atabilir. Sekmeleri, geçmişi, çerezleri ve önbellekleri temizleme işlevleri. Üçüncü taraf uygulama yönetimi.
 

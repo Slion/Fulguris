@@ -9,6 +9,9 @@ FITUR UTAMA:
 • Hapus data browsing dengan satu ketukan
 • Manajemen cookie dan kontrol izin
 
+🧩 EKSTENSI
+Perluas fungsionalitas browser Anda dengan userscripts. Instal dari Greasy Fork atau buat skrip kustom Anda sendiri untuk memodifikasi halaman web, mengotomatiskan tugas, dan meningkatkan pengalaman browsing Anda.
+
 ⚡ PERFORMA
 • Pemuatan halaman yang cepat
 • Penggunaan memori minimal

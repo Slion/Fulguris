@@ -32,6 +32,9 @@ O tema de cor da barra de ferramentas e barra de estado integra-se elegantemente
 ⛔Bloqueador de anúncios
 Use definições de bloqueio de anúncios de ficheiros locais e online. Suporta ficheiros hosts e a maioria da sintaxe do Adblock Plus, para que possa usar quase qualquer lista de filtros comum.
 
+🧩Extensões
+Estenda a funcionalidade do seu navegador com userscripts. Instale do Greasy Fork ou crie os seus próprios scripts personalizados para modificar páginas web, automatizar tarefas e melhorar a sua experiência de navegação.
+
 🔒Privacidade
 Fulguris protege e respeita a sua privacidade. Modo de navegação anónima. Pode descartar cookies de rastreamento. Funcionalidades de limpeza de separadores, histórico, cookies e caches. Gestão de aplicações de terceiros.
 

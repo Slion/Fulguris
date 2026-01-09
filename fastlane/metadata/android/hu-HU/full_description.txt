@@ -32,6 +32,9 @@ Az eszköztár és állapotsáv színtémája elegánsan integrálódik kedvenc 
 ⛔Hirdetésblokkoló
 Használj hirdetésblokkolási definíciókat helyi és online fájlokból. Támogatja a hosts fájlokat és az Adblock Plus szintaxis nagy részét, így szinte bármilyen gyakori szűrőlistát használhatsz.
 
+🧩Bővítmények
+Bővítsd böngésződ funkcióit felhasználói szkriptekkel. Telepíts a Greasy Forkról, vagy hozz létre saját egyéni szkripteket weboldalak módosításához, feladatok automatizálásához és böngészési élményed javításához.
+
 🔒Adatvédelem
 A Fulguris védi és tiszteletben tartja az adatvédelmedet. Inkognitó mód. Eldobhatja a követési cookie-kat. Lapok, előzmények, cookie-k és gyorsítótár törlési funkciók. Harmadik féltől származó alkalmazások kezelése.
 

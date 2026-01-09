@@ -9,6 +9,9 @@ PAGRINDINĖS FUNKCIJOS:
 • Galimybė išvalyti naršymo duomenis vienu paspaudimu
 • Slapukų valdymas ir leidimų kontrolė
 
+🧩 PLĖČINIAI
+Išplėskite naršyklės funkcionalumą naudotojų scenarijais. Įdiekite iš Greasy Fork arba sukurkite savo pritaikytus scenarijus, kad modifikuotumėte tinklalapiuos, automatizuotumėte užduotis ir pagerintumėte naršymo patirtį.
+
 ⚡ NAŠUMAS
 • Greitas puslapių įkėlimas
 • Minimalus atminties naudojimas

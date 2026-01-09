@@ -32,6 +32,9 @@ Værktøjslinje- og statuslinje-farvetema integreres elegant med dine foretrukne
 ⛔Annonceblokering
 Brug annonceblokering-definitioner fra lokale og online-filer. Understøtter hosts-filer og det meste af Adblock Plus-syntaks, så du kan bruge næsten enhver almindelig filterliste.
 
+🧩Udvidelser
+Udvid din browsers funktionalitet med brugerscripts. Installer fra Greasy Fork eller opret dine egne tilpassede scripts til at ændre websider, automatisere opgaver og forbedre din browsing-oplevelse.
+
 🔒Privatliv
 Fulguris beskytter og respekterer dit privatliv. Inkognito-tilstand. Kan kassere sporingscookies. Ryd faner, historik, cookies og cache-funktioner. Administration af tredjepartsapps.
 

@@ -9,6 +9,9 @@ TÍNH NĂNG CHÍNH:
 • Xóa dữ liệu duyệt web chỉ với một chạm
 • Quản lý cookie và kiểm soát quyền
 
+🧩 TIỆN ÍCH MỞ RỘNG
+Mở rộng chức năng của trình duyệt với các tập lệnh người dùng. Cài đặt từ Greasy Fork hoặc tạo các tập lệnh tùy chỉnh của riêng bạn để sửa đổi trang web, tự động hóa các tác vụ và nâng cao trải nghiệm duyệt web của bạn.
+
 ⚡ HIỆU SUẤT
 • Tải trang nhanh
 • Sử dụng bộ nhớ tối thiểu

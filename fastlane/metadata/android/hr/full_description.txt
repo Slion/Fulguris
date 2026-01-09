@@ -32,6 +32,9 @@ Tema boje alatne trake i trake stanja elegantno se integrira s vašim omiljenim 
 ⛔Blokator oglasa
 Koristite definicije blokiranja oglasa iz lokalnih i online datoteka. Podržava hosts datoteke i većinu Adblock Plus sintakse, tako da možete koristiti gotovo bilo koju uobičajenu listu filtera.
 
+🧩Proširenja
+Proširite funkcionalnost svog preglednika s korisnikom skriptama. Instalirajte s Greasy Fork ili izradite vlastite prilagođene skripte za izmjenu web stranica, automatizaciju zadataka i poboljšanje iskustva pregledavanja.
+
 🔒Privatnost
 Fulguris štiti i poštuje vašu privatnost. Inkognito način rada. Može odbaciti kolačiće za praćenje. Funkcionalnosti čišćenja kartica, povijesti, kolačića i predmemorije. Upravljanje aplikacijama trećih strana.
 

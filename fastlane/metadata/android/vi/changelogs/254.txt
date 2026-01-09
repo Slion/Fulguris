@@ -1,0 +1,3 @@
+🧩 Thêm hỗ trợ cho tiện ích mở rộng
+🪲 Sửa lỗi chế độ tối và các cài đặt tên miền khác không phải lúc nào cũng được áp dụng chính xác
+🐛 Các cải tiến và sửa lỗi khác nhau

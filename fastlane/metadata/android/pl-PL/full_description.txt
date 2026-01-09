@@ -32,6 +32,9 @@ Motyw kolorystyczny paska narzędzi i paska stanu integruje się elegancko z two
 ⛔Blokowanie reklam
 Używaj definicji blokowania reklam z plików lokalnych i online. Obsługuje pliki hosts i większość składni Adblock Plus, dzięki czemu możesz używać prawie dowolnej popularnej listy filtrów.
 
+🧩Rozszerzenia
+Rozszerz funkcjonalność przeglądarki za pomocą skryptów użytkownika. Instaluj z Greasy Fork lub twórz własne niestandardowe skrypty, aby modyfikować strony internetowe, automatyzować zadania i ulepszać wrażenia z przeglądania.
+
 🔒Prywatność
 Fulguris chroni i szanuje twoją prywatność. Tryb incognito. Może odrzucać pliki cookie śledzące. Funkcje czyszczenia kart, historii, plików cookie i pamięci podręcznej. Zarządzanie aplikacjami innych firm.
 

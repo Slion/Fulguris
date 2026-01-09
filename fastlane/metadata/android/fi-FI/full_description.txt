@@ -32,6 +32,9 @@ Työkalupalkki- ja tilapalkki-väriteema integroituu tyylikkäästi suosikkisivu
 ⛔Mainosten esto
 Käytä mainosten eston määritelmiä paikallisista ja online-tiedostoista. Tukee hosts-tiedostoja ja suurinta osaa Adblock Plus -syntaksista, joten voit käyttää lähes mitä tahansa yleistä suodatinlistaa.
 
+🧩Laajennukset
+Laajenna selaimesi toiminnallisuutta käyttäjäskripteillä. Asenna Greasy Forkista tai luo omat mukautetut skriptisi verkkosivujen muokkaamiseen, tehtävien automatisoitiin ja selauskokemuksesi parantamiseen.
+
 🔒Yksityisyys
 Fulguris suojaa ja kunnioittaa yksityisyyttäsi. Incognito-tila. Voi hylätä seurantaevästeet. Tyhjennä välilehdet, historia, evästeet ja välimuistit. Kolmannen osapuolen sovellusten hallinta.
 

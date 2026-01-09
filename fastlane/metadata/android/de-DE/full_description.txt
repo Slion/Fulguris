@@ -32,6 +32,9 @@ Symbolleisten- und Statusleisten-Farbthema integriert sich elegant in Ihre Liebl
 ⛔Werbeblocker
 Verwenden Sie Werbeblocker-Definitionen aus lokalen und Online-Dateien. Unterstützt Hosts-Dateien und die meiste Adblock Plus-Syntax, sodass Sie fast jede gängige Filterliste verwenden können.
 
+🧩Erweiterungen
+Erweitern Sie die Funktionalität Ihres Browsers mit Benutzer-Skripten. Installieren Sie von Greasy Fork oder erstellen Sie Ihre eigenen benutzerdefinierten Skripte, um Webseiten zu ändern, Aufgaben zu automatisieren und Ihr Surferlebnis zu verbessern.
+
 🔒Datenschutz
 Fulguris schützt und respektiert Ihre Privatsphäre. Inkognito-Modus. Kann Tracking-Cookies verwerfen. Tabs, Verlauf, Cookies und Caches löschen. Verwaltung von Drittanbieter-Apps.
 

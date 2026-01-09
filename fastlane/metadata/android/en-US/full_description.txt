@@ -32,6 +32,9 @@ Tool bar and status bar colour theme integrates gracefully with your favourite w
 ⛔Ad blocker
 Use ad blocker definitions from local and online files. Suppports hosts files and most of Adblock Plus syntax, so you can use almost any common filter list.
 
+🧩Extensions
+Extend your browser's functionality with userscripts. Install from Greasy Fork or create your own custom scripts to modify web pages, automate tasks, and enhance your browsing experience.
+
 🔒Privacy
 Fulguris protects and respects your privacy. Incognito mode. Can discard tracking cookies. Clear tabs, history, cookies and caches functionalities. Third-party apps management.
 

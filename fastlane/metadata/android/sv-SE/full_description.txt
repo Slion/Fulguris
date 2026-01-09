@@ -32,6 +32,9 @@ Verktygsfält och statusfält färgtema integreras elegant med dina favoritwebbp
 ⛔Annonsblockering
 Använd annonsblockeringsdefinitioner från lokala och online-filer. Stöder hosts-filer och det mesta av Adblock Plus-syntax, så du kan använda nästan vilken vanlig filterlista som helst.
 
+🧩Tillägg
+Utöka din webbläsares funktionalitet med användarskript. Installera från Greasy Fork eller skapa dina egna anpassade skript för att ändra webbsidor, automatisera uppgifter och förbättra din surfupplevelse.
+
 🔒Integritet
 Fulguris skyddar och respekterar din integritet. Inkognitoläge. Kan slänga spårningskakor. Rensa flikar, historik, kakor och cache-funktioner. Hantering av tredjepartsappar.
 

@@ -1,0 +1,3 @@
+🧩 Dodaj podršku za proširenja
+🪲 Ispravi problem gdje tamni način i druge postavke domene nisu uvijek bile ispravno primijenjene
+🐛 Razna poboljšanja i ispravke grešaka

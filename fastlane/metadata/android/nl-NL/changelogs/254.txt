@@ -1,0 +1,3 @@
+🧩 Voeg ondersteuning voor extensies toe
+🪲 Los probleem op waarbij donkere modus en andere domeininstellingen niet altijd correct werden toegepast
+🐛 Diverse verbeteringen en bugfixes

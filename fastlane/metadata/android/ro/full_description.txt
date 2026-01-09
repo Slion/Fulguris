@@ -32,6 +32,9 @@ Tema de culoare a barei de unelte și a barei de stare se integrează elegant cu
 ⛔Blocare reclame
 Folosește definiții de blocare reclame din fișiere locale și online. Suportă fișiere hosts și majoritatea sintaxei Adblock Plus, astfel încât poți folosi aproape orice listă de filtre comună.
 
+🧩Extensii
+Extinde funcționalitatea browserului tău cu scripturi utilizator. Instalează de pe Greasy Fork sau creează propriile scripturi personalizate pentru a modifica paginile web, automatiza sarcini și îmbunătăți experiența de navigare.
+
 🔒Confidențialitate
 Fulguris protejează și respectă confidențialitatea ta. Mod incognito. Poate elimina cookie-urile de urmărire. Funcționalități de ștergere file, istoric, cookie-uri și cache-uri. Gestionarea aplicațiilor terțe.
 

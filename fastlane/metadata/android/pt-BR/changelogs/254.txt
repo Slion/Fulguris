@@ -1,0 +1,3 @@
+🧩 Adicionar suporte para extensões
+🪲 Corrigir problema em que o modo escuro e outras configurações de domínio nem sempre eram aplicadas corretamente
+🐛 Várias melhorias e correções de bugs

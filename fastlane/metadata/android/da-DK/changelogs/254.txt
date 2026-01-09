@@ -1,0 +1,3 @@
+🧩 Tilføj understøttelse af udvidelser
+🪲 Ret fejl, hvor mørk tilstand og andre domæneindstillinger ikke altid blev anvendt korrekt
+🐛 Diverse forbedringer og fejlrettelser

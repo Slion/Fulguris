@@ -1,0 +1,3 @@
+🧩 Bővítmények támogatásának hozzáadása
+🪲 Probléma javítása, ahol a sötét mód és más domain beállítások nem mindig alkalmazódtak helyesen
+🐛 Különböző fejlesztések és hibajavítások

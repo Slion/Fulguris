@@ -1,0 +1,3 @@
+🧩 Přidat podporu pro rozšíření
+🪲 Opravit problém, kdy tmavý režim a další nastavení domény nebyly vždy správně aplikovány
+🐛 Různá vylepšení a opravy chyb

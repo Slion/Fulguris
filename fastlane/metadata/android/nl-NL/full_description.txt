@@ -22,6 +22,9 @@ BELANGRIJKSTE FUNCTIES:
 • Flexibele browse-instellingen
 • Aanpassing actiebalk
 
+🧩 EXTENSIES
+Breid de functionaliteit van uw browser uit met userscripts. Installeer vanaf Greasy Fork of maak uw eigen aangepaste scripts om webpagina's te wijzigen, taken te automatiseren en uw browse-ervaring te verbeteren.
+
 📑 SESSIEBEHEER
 • Browsesessies opslaan en herstellen
 • Ondersteuning voor meerdere sessies

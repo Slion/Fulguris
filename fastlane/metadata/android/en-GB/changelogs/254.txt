@@ -1,0 +1,3 @@
+🧩 Add support for extensions
+🪲 Fix issue where dark mode and other domain settings override did not always apply correctly
+🐛 Various improvements and bug fixes

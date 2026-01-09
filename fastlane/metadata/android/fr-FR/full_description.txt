@@ -32,6 +32,9 @@ Le thème de couleur de la barre d'outils et de la barre d'état s'intègre él�
 ⛔Bloqueur de publicités
 Utilisez des définitions de blocage de publicités à partir de fichiers locaux et en ligne. Prend en charge les fichiers hosts et la plupart de la syntaxe Adblock Plus, vous pouvez donc utiliser presque n'importe quelle liste de filtres courante.
 
+🧩Extensions
+Étendez les fonctionnalités de votre navigateur avec des userscripts. Installez depuis Greasy Fork ou créez vos propres scripts personnalisés pour modifier des pages web, automatiser des tâches et améliorer votre expérience de navigation.
+
 🔒Confidentialité
 Fulguris protège et respecte votre vie privée. Mode incognito. Peut rejeter les cookies de suivi. Fonctionnalités d'effacement des onglets, historique, cookies et caches. Gestion des applications tierces.
 

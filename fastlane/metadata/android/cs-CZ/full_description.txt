@@ -32,6 +32,9 @@ Barevný motiv panelu nástrojů a stavového řádku se elegantně integruje s 
 ⛔Blokování reklam
 Používejte definice blokování reklam z místních a online souborů. Podporuje soubory hosts a většinu syntaxe Adblock Plus, takže můžete používat téměř jakýkoli běžný seznam filtrů.
 
+🧩Rozšíření
+Rozšiřte funkčnost svého prohlížeče pomocí uživatelských skriptů. Instalujte z Greasy Fork nebo vytvořte vlastní přizpůsobené skripty pro úpravy webových stránek, automatizaci úkolů a vylepšení vašeho prohlížení.
+
 🔒Soukromí
 Fulguris chrání a respektuje vaše soukromí. Režim inkognito. Může zahodit sledovací cookies. Funkce mazání karet, historie, cookies a cache. Správa aplikací třetích stran.
 

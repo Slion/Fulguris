@@ -1,0 +1,3 @@
+🧩 Adăugare suport pentru extensii
+🪲 Rezolvarea problemei în care modul întunecat și alte setări de domeniu nu erau întotdeauna aplicate corect
+🐛 Diverse îmbunătățiri și remedieri de erori
