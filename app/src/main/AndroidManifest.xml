@@ -368,7 +368,7 @@
 
         <activity
             android:name="fulguris.activity.CodeEditorActivity"
-            android:label="@string/action_view_source"
+            android:label="@string/pref_title_source_code"
             android:parentActivityName="fulguris.activity.SettingsActivity"
             android:theme="@style/Theme.App.DayNight"
             android:exported="false" />

@@ -90,8 +90,7 @@
         <!-- View source code -->
         <Preference
             x:key="@string/pref_key_extension_view_source"
-            x:title="@string/action_view_source"
-            x:summary="@string/settings_summary_extension_view_source"
+            x:title="@string/pref_title_source_code"
             x:icon="@drawable/ic_code"
             x:singleLineTitle="false"
             x:iconSpaceReserved="true"/>
