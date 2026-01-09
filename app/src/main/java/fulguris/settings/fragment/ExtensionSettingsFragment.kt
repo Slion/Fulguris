@@ -78,7 +78,9 @@ class ExtensionSettingsFragment : AbstractSettingsFragment() {
             isChecked = scriptPrefs.getBoolean("show_popup", false),
             onCheckChange = { enabled ->
                 scriptPrefs.edit().putBoolean("show_popup", enabled).apply()
-            }
+            },
+            // Not actually using it for now
+            isVisible = false
         )
 
         // Populate script information

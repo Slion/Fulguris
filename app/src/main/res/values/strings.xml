@@ -763,7 +763,7 @@
     <string name="error_cache_too_large">Cache too large</string>
     <string name="hint_available_space">Available: %s</string>
 
-    <!-- Userscripts -->
+    <!-- Extensions -->
     <string name="settings_title_extensions">Extensions</string>
     <string name="settings_summary_extensions">Manage extension scripts</string>
     <string name="settings_title_enable_extensions">Enable extensions</string>
@@ -774,7 +774,6 @@
     <string name="pref_category_summary_no_extensions">No user scripts installed yet</string>
     <string name="settings_title_extension_show_popup">Show popup notification</string>
     <string name="settings_summary_extension_show_popup">Display a notification when this extension runs</string>
-    <string name="settings_title_extension_info">Extension information</string>
     <string name="settings_title_extension_name">Name</string>
     <string name="settings_title_extension_description">Description</string>
     <string name="settings_title_extension_version">Version</string>

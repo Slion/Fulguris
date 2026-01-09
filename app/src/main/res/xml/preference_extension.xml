@@ -10,57 +10,54 @@
         x:singleLineTitle="false"
         x:iconSpaceReserved="true"/>
 
-    <!-- Show popup when script runs -->
+    <!--
+    Show popup when script runs.
+    Not used but kept in place as an example of extension specific settings option.
+    -->
     <x.SwitchPreference
         x:key="@string/pref_key_extension_show_popup"
         x:title="@string/settings_title_extension_show_popup"
         x:summary="@string/settings_summary_extension_show_popup"
         x:defaultValue="false"
         x:singleLineTitle="false"
+        x:iconSpaceReserved="false"
+        x:isPreferenceVisible="false" />
+
+    <!-- Name -->
+    <Preference
+        x:key="@string/pref_key_extension_name"
+        x:title="@string/settings_title_extension_name"
+        x:selectable="false"
         x:iconSpaceReserved="false"/>
 
-    <!-- Script info category -->
-    <x.PreferenceCategory
-        x:title="@string/settings_title_extension_info"
-        x:singleLineTitle="false">
+    <!-- Description -->
+    <Preference
+        x:key="@string/pref_key_extension_description"
+        x:title="@string/settings_title_extension_description"
+        x:selectable="false"
+        x:singleLineTitle="false"
+        x:iconSpaceReserved="false"/>
 
-        <!-- Name -->
-        <Preference
-            x:key="@string/pref_key_extension_name"
-            x:title="@string/settings_title_extension_name"
-            x:selectable="false"
-            x:iconSpaceReserved="false"/>
+    <!-- Version -->
+    <Preference
+        x:key="@string/pref_key_extension_version"
+        x:title="@string/settings_title_extension_version"
+        x:selectable="false"
+        x:iconSpaceReserved="false"/>
 
-        <!-- Description -->
-        <Preference
-            x:key="@string/pref_key_extension_description"
-            x:title="@string/settings_title_extension_description"
-            x:selectable="false"
-            x:singleLineTitle="false"
-            x:iconSpaceReserved="false"/>
+    <!-- Author -->
+    <Preference
+        x:key="@string/pref_key_extension_author"
+        x:title="@string/settings_title_extension_author"
+        x:selectable="false"
+        x:iconSpaceReserved="false"/>
 
-        <!-- Version -->
-        <Preference
-            x:key="@string/pref_key_extension_version"
-            x:title="@string/settings_title_extension_version"
-            x:selectable="false"
-            x:iconSpaceReserved="false"/>
-
-        <!-- Author -->
-        <Preference
-            x:key="@string/pref_key_extension_author"
-            x:title="@string/settings_title_extension_author"
-            x:selectable="false"
-            x:iconSpaceReserved="false"/>
-
-        <!-- Namespace -->
-        <Preference
-            x:key="@string/pref_key_extension_namespace"
-            x:title="@string/settings_title_extension_namespace"
-            x:selectable="false"
-            x:iconSpaceReserved="false"/>
-
-    </x.PreferenceCategory>
+    <!-- Namespace -->
+    <Preference
+        x:key="@string/pref_key_extension_namespace"
+        x:title="@string/settings_title_extension_namespace"
+        x:selectable="false"
+        x:iconSpaceReserved="false"/>
 
     <!-- URL patterns category -->
     <x.PreferenceCategory
