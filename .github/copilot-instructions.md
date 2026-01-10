@@ -59,6 +59,12 @@ When the user asks to work on translations:
 6. **Fix any errors** before continuing
 7. **Verify success** and continue with next batch
 
+### Publishing to Google Play
+
+```bash
+python subs\l10n\android\publish_google_play.py "S:\Dev\Keys\fulguris-play-store-85a67838990f.json" net.slions.fulguris.full.playstore
+```
+
 **Don't stop translation work until complete**, even if it takes many batches. Continue systematically through all untranslated strings.
 
 ## PowerShell Quick Guide
