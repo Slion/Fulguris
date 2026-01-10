@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Приховати пристрій</string>
     <string name="title_search_engine">Пошуковий рушій</string>
     <string name="action_ok">Гаразд</string>
-    <string name="dialog_download">Завантажити цей файл? (%1$s)</string>
     <string name="unknown_file_size">Невідомий розмір</string>
     <string name="action_cancel">Скасувати</string>
     <string name="title_warning">Попередження</string>

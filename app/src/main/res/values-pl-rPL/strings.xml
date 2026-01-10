@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Ukryj urządzenie</string>
     <string name="title_search_engine">Wyszukiwarka</string>
     <string name="action_ok">OK</string>
-    <string name="dialog_download">Czy chcesz pobrać ten plik? (%1$s)</string>
     <string name="unknown_file_size">Nieznany rozmiar</string>
     <string name="action_cancel">Anuluj</string>
     <string name="title_warning">Ostrzeżenie</string>

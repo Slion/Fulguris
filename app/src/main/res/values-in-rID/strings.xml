@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Sembunyikan perangkat</string>
     <string name="title_search_engine">Mesin penelusuran</string>
     <string name="action_ok">Oke</string>
-    <string name="dialog_download">Apakah Anda ingin mendownload file ini? (%1$s)</string>
     <string name="unknown_file_size">Ukuran tak diketahui</string>
     <string name="action_cancel">Batal</string>
     <string name="title_warning">Peringatan</string>

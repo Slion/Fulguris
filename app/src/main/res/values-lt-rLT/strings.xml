@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Search engine</string>
     <string name="action_ok">Gerai</string>
-    <string name="dialog_download">Do you want to download this file? (%1$s)</string>
     <string name="unknown_file_size">Unknown size</string>
     <string name="action_cancel">Atšaukti</string>
     <string name="title_warning">Warning</string>

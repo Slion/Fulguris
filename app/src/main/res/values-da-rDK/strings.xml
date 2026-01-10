@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Skjul enhed</string>
     <string name="title_search_engine">Søgemaskine</string>
     <string name="action_ok">OK</string>
-    <string name="dialog_download">Vil du downloade denne fil? (%1$s)</string>
     <string name="unknown_file_size">Ukendt størrelse</string>
     <string name="action_cancel">Annuller</string>
     <string name="title_warning">Advarsel</string>

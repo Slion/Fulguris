@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Eszköz elrejtése</string>
     <string name="title_search_engine">Keresőmotor</string>
     <string name="action_ok">OK</string>
-    <string name="dialog_download">Le szeretnéd tölteni ezt a fájlt? (%1$s)</string>
     <string name="unknown_file_size">Ismeretlen méret</string>
     <string name="action_cancel">Mégse</string>
     <string name="title_warning">Figyelmeztetés</string>

@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">搜尋引擎</string>
     <string name="action_ok">確定</string>
-    <string name="dialog_download">您是否想下載此檔案？（%1$s）</string>
     <string name="unknown_file_size">未知大小</string>
     <string name="action_cancel">取消</string>
     <string name="title_warning">警告</string>

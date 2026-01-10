@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Sakrij uređaj</string>
     <string name="title_search_engine">Motor pretrage</string>
     <string name="action_ok">U redu</string>
-    <string name="dialog_download">Želite li da preuzmete ovaj fajl? (%1$s)</string>
     <string name="unknown_file_size">Nepoznata veličina</string>
     <string name="action_cancel">Odustani</string>
     <string name="title_warning">Upozorenje</string>

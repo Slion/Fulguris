@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Μηχανή Αναζήτησης</string>
     <string name="action_ok">OK</string>
-    <string name="dialog_download">Θα θέλατε να κατεβάσετε αυτό το αρχείο; (%1$s)</string>
     <string name="unknown_file_size">Άγνωστο μέγεθος</string>
     <string name="action_cancel">Ακύρωση</string>
     <string name="title_warning">Προσοχή</string>

@@ -64,7 +64,6 @@
     <string name="agent_hide_device">기기 숨기기</string>
     <string name="title_search_engine">검색 엔진</string>
     <string name="action_ok">확인</string>
-    <string name="dialog_download">파일을 다운로드할까요? (%1$s)</string>
     <string name="unknown_file_size">크기 모름</string>
     <string name="action_cancel">취소</string>
     <string name="title_warning">경고</string>

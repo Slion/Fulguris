@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Dölj enheten</string>
     <string name="title_search_engine">Sökmotor</string>
     <string name="action_ok">OK</string>
-    <string name="dialog_download">Vill du ladda ner den här filen? (%1$s)</string>
     <string name="unknown_file_size">Okänd storlek</string>
     <string name="action_cancel">Avbryt</string>
     <string name="title_warning">Varning</string>

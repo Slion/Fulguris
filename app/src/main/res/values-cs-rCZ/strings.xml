@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Skrýt zařízení</string>
     <string name="title_search_engine">Výchozí vyhledávač</string>
     <string name="action_ok">OK</string>
-    <string name="dialog_download">Chcete stáhnout tento soubor? (%1$s)</string>
     <string name="unknown_file_size">Neznámá velikost</string>
     <string name="action_cancel">Zrušit</string>
     <string name="title_warning">Varování</string>

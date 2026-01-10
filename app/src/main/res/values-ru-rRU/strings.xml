@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Скрыть устройство</string>
     <string name="title_search_engine">Поисковая система</string>
     <string name="action_ok">ОК</string>
-    <string name="dialog_download">Загрузить файл? (%1$s)</string>
     <string name="unknown_file_size">Неизвестный размер</string>
     <string name="action_cancel">Отмена</string>
     <string name="title_warning">Внимание</string>

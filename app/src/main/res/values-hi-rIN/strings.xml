@@ -51,7 +51,6 @@
     <string name="action_blank">खाली पेज</string>
     <string name="action_reset">रीसेट करें</string>
     <string name="title_search_engine">खोज इंजन</string>
-    <string name="dialog_download">क्या आप इस फ़ाइल को डाउनलोड करना चाहते हैं? (%1$s)</string>
     <string name="unknown_file_size">अज्ञात आकार</string>
     <string name="action_cancel">रद्द करें</string>
     <string name="title_warning">चेतावनी</string>

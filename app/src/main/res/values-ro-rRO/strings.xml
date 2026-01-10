@@ -64,7 +64,6 @@
     <string name="agent_hide_device">Hide device</string>
     <string name="title_search_engine">Motor de căutare</string>
     <string name="action_ok">OK</string>
-    <string name="dialog_download">Doriți să descărcați acest fișier? (%1$s)</string>
     <string name="unknown_file_size">Dimensiune necunoscută</string>
     <string name="action_cancel">Anulează</string>
     <string name="title_warning">Avertisment</string>
