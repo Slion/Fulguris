@@ -24,6 +24,7 @@ import android.os.Build
 import android.text.format.Formatter
 import android.view.Gravity
 import android.webkit.DownloadListener
+import android.webkit.MimeTypeMap
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.text.parseAsHtml
@@ -196,16 +197,35 @@ class LightningDownloadListener     //Injector.getInjector(context).inject(this)
             mActivity.getString(R.string.unknown_file_size)
         }
 
-        // Check if there's an extension mismatch using the ORIGINAL filename
-        val (hasMismatch, correctedFilename) = fulguris.utils.hasExtensionMismatch(originalFileName, mimetype)
-
         val builder = MaterialAlertDialogBuilder(mActivity)
 
         // Build descriptive message following MD3 guidelines
-        val fileType = if (mimetype.isNotEmpty()) {
-            mimetype
+        // If server sends generic octet-stream, infer MIME type from file extension
+        // Notably the case for Fulguris APK download from slions.net
+        val mimeTypeDetectedFromExtension = mimetype == "application/octet-stream" || mimetype.isBlank()
+        val fileType = when {
+            mimeTypeDetectedFromExtension -> {
+                val extension = originalFileName.substringAfterLast('.', "").lowercase()
+                if (extension.isNotEmpty()) {
+                    val detectedMimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+                    Timber.d("Server sent octet-stream for .$extension file, detected MIME type: $detectedMimeType")
+                    detectedMimeType ?: mimetype.ifEmpty { mActivity.getString(R.string.unknown_file_type) }
+                } else {
+                    mimetype.ifEmpty { mActivity.getString(R.string.unknown_file_type) }
+                }
+            }
+            mimetype.isNotEmpty() -> mimetype
+            else -> mActivity.getString(R.string.unknown_file_type)
+        }
+
+        Timber.d("Final MIME type for display: $fileType (original server MIME: $mimetype)")
+
+        // Only check for extension mismatch if server provided a real MIME type (not octet-stream)
+        // If we detected type from extension, don't offer "Download as" button since we already fixed it
+        val (hasMismatch, correctedFilename) = if (!mimeTypeDetectedFromExtension) {
+            fulguris.utils.hasExtensionMismatch(originalFileName, mimetype)
         } else {
-            mActivity.getString(R.string.unknown_file_type)
+            Pair(false, null)
         }
 
         // Parameters: filename, type, size (size is last)
