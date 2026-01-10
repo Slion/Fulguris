@@ -8,7 +8,7 @@ This is **Fulguris Web Browser**, an Android application with localization suppo
 
 When the user asks to "work on Thai translation" or similar requests, you should:
 
-1. **Check current status** using `python strings.py --check th-rTH`
+1. **Check current status** using `python subs\l10n\android\strings.py --check th-rTH`
 2. **Identify untranslated strings** from the check output
 3. **Provide Thai translations** for the untranslated strings
 4. **Apply translations** using the strings.py tool (PowerShell syntax)
@@ -25,9 +25,9 @@ When the user asks to "work on Thai translation" or similar requests, you should
 
 📖 **For ALL translation instructions, see [L10N.md](../L10N.md)**
 
-The L10N.md file contains everything you need:
-- **Current translation status** for all 40 languages including Thai
-- **Complete strings.py tool documentation** with all commands
+The L10N.md file and the l10n submodule documentation contain everything you need:
+- **Current translation status** for all 40 languages
+- **Complete strings.py tool documentation** - see [subs/l10n/docs/android/L10N.md](../subs/l10n/docs/android/L10N.md)
 - **Translation workflow** (check → translate → apply → verify)
 - **Android XML escaping rules** (CRITICAL: use `\'` not `&apos;`)
 - **PowerShell syntax and quoting** (multiple options explained below)
@@ -61,29 +61,29 @@ The L10N.md file contains everything you need:
 
 ```powershell
 # Simple strings
-python strings.py --set string_id th-rTH 'คำแปล'
+python subs\l10n\android\strings.py --set string_id th-rTH 'คำแปล'
 
 # Multiple languages at once (RECOMMENDED)
-python strings.py --set app_name de-rDE 'Fulguris' fr-rFR 'Fulguris' es-rES 'Fulguris'
+python subs\l10n\android\strings.py --set app_name de-rDE 'Fulguris' fr-rFR 'Fulguris' es-rES 'Fulguris'
 
 # Strings with placeholders (%1$s, %d, etc.) - NO escaping needed!
-python strings.py --set string_id th-rTH 'ดาวน์โหลด %1$s'
+python subs\l10n\android\strings.py --set string_id th-rTH 'ดาวน์โหลด %1$s'
 
 # Strings with double quotes inside - NO escaping needed!
-python strings.py --set string_id th-rTH 'สลับไปที่ "%s"'
+python subs\l10n\android\strings.py --set string_id th-rTH 'สลับไปที่ "%s"'
 
 # Strings with BOTH quotes and placeholders
-python strings.py --set string_id th-rTH 'ดาวน์โหลด "%1$s"'
+python subs\l10n\android\strings.py --set string_id th-rTH 'ดาวน์โหลด "%1$s"'
 
 # Strings with newlines (\n) - works perfectly in single quotes
-python strings.py --set string_id th-rTH 'บรรทัด1\n\nบรรทัด2'
+python subs\l10n\android\strings.py --set string_id th-rTH 'บรรทัด1\n\nบรรทัด2'
 
 # Strings with apostrophes (single quotes) - double them up
-python strings.py --set action_dont_allow th-rTH 'Don''t allow'
-python strings.py --set save_data th-rTH 'Request ''Save-Data'''
+python subs\l10n\android\strings.py --set action_dont_allow th-rTH 'Don''t allow'
+python subs\l10n\android\strings.py --set save_data th-rTH 'Request ''Save-Data'''
 
 # Complex XML - single quotes, no escaping needed for double quotes!
-python strings.py --raw --set string_id th-rTH 'ข้อความ <xliff:g id="example">%1$s</xliff:g>'
+python subs\l10n\android\strings.py --raw --set string_id th-rTH 'ข้อความ <xliff:g id="example">%1$s</xliff:g>'
 ```
 
 **Why single quotes work perfectly:**
@@ -98,36 +98,36 @@ python strings.py --raw --set string_id th-rTH 'ข้อความ <xliff:g i
 
 ```powershell
 # Check what needs translation
-python strings.py --check th-rTH
+python subs\l10n\android\strings.py --check th-rTH
 
 # Single language - use single quotes
-python strings.py --set string_id th-rTH 'คำแปล'
+python subs\l10n\android\strings.py --set string_id th-rTH 'คำแปล'
 
 # Multiple languages at once (RECOMMENDED for same string)
-python strings.py --set app_name de-rDE 'Fulguris' fr-rFR 'Fulguris' es-rES 'Fulguris'
+python subs\l10n\android\strings.py --set app_name de-rDE 'Fulguris' fr-rFR 'Fulguris' es-rES 'Fulguris'
 
 # Strings with placeholders - single quotes, no escaping needed for $
-python strings.py --set dialog_download th-rTH 'คุณต้องการดาวน์โหลดไฟล์นี้หรือไม่? (%1$s)'
+python subs\l10n\android\strings.py --set dialog_download th-rTH 'คุณต้องการดาวน์โหลดไฟล์นี้หรือไม่? (%1$s)'
 
 # Strings with quotes - single quotes, no escaping needed!
-python strings.py --set session_switched th-rTH 'สลับไปที่ "%s"'
+python subs\l10n\android\strings.py --set session_switched th-rTH 'สลับไปที่ "%s"'
 
 # Strings with apostrophes - double the single quotes
-python strings.py --set action_dont_allow da-rDK 'Tillad ikke'  # No apostrophe in Danish
-python strings.py --set action_dont_allow en-rUS 'Don''t allow'  # English has apostrophe - double it
+python subs\l10n\android\strings.py --set action_dont_allow da-rDK 'Tillad ikke'  # No apostrophe in Danish
+python subs\l10n\android\strings.py --set action_dont_allow en-rUS 'Don''t allow'  # English has apostrophe - double it
 
 # Strings with BOTH quotes and placeholders
-python strings.py --set string_id th-rTH 'ดาวน์โหลด "%1$s"'
+python subs\l10n\android\strings.py --set string_id th-rTH 'ดาวน์โหลด "%1$s"'
 
 # Complex XML - single quotes, no escaping needed for quotes!
-python strings.py --raw --set string_id th-rTH 'ข้อความ <xliff:g id="example">%s</xliff:g>'
+python subs\l10n\android\strings.py --raw --set string_id th-rTH 'ข้อความ <xliff:g id="example">%s</xliff:g>'
 
 # Complex XML with placeholders - still single quotes!
-python strings.py --raw --set match_x_of_n th-rTH 'ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g>'
+python subs\l10n\android\strings.py --raw --set match_x_of_n th-rTH 'ตรงกัน <xliff:g id="current_match" example="1">%1$d</xliff:g> จาก <xliff:g id="match_count" example="10">%2$d</xliff:g>'
 
 # Edit English source strings (developers only) - use 'source' as language code
-python strings.py --get source settings           # Read from English source
-python strings.py --set settings source 'Settings'  # Update English source string
+python subs\l10n\android\strings.py --get source settings           # Read from English source
+python subs\l10n\android\strings.py --set settings source 'Settings'  # Update English source string
 ```
 
 ## Error Checking - IMPORTANT!

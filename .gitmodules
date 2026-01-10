@@ -7,3 +7,6 @@
 [submodule "subs/wiki"]
 	path = subs/wiki
 	url = https://github.com/Slion/Fulguris.wiki.git
+[submodule "subs/l10n"]
+	path = subs/l10n
+	url = https://github.com/Slion/l10n.git
